@@ -31,6 +31,7 @@ const filter: IMeasureValueFilter = {
     },
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters/MeasureValueFilter",
 };

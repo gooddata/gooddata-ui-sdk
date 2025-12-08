@@ -11,7 +11,7 @@ import {
     MeasureValueFilterDropdown,
 } from "../MeasureValueFilterDropdown.js";
 import { IWarningMessage } from "../typings.js";
-import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown.js";
+import { MeasureValueFilterFragment as MVFDropdownFragment } from "./fragments/MeasureValueFilterDropdown.js";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {

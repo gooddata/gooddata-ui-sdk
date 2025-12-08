@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -18,12 +18,12 @@ import {
 } from "../../constants/bubble.js";
 import { AxisType } from "../../interfaces/AxisType.js";
 import { noColumnsAndHasOneMeasure, noRowsAndHasOneMeasure } from "../../utils/bucketHelper.js";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
-import NameSubsection from "../configurationControls/axis/NameSubsection.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.js";
+import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 
-export default class HeatMapConfigurationPanel extends ConfigurationPanelContent {
+export class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData } = this.props;
         const { xAxisVisible, yAxisVisible } = this.getControlProperties();

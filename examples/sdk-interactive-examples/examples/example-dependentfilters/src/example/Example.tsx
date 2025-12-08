@@ -12,9 +12,9 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
-function Example() {
+export function Example() {
     const [filter1, setFilter1] = useState<IAttributeFilter>(
         newNegativeAttributeFilter(Catalog.CustomerCountry, ["United States"]),
     );
@@ -70,5 +70,3 @@ function Example() {
         </>
     );
 }
-
-export default Example;

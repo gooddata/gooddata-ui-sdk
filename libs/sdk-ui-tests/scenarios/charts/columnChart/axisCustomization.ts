@@ -159,4 +159,4 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         },
     });
 
-export default [axisConfig, singleAxisNameConfig, dualAxisNameConfig];
+export const axisCustomization = [axisConfig, singleAxisNameConfig, dualAxisNameConfig];

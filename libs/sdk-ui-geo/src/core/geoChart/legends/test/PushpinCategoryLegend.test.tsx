@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 import { VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
 import { PositionType } from "@gooddata/sdk-ui-vis-commons";
 
-import PushpinCategoryLegend, { IPushpinCategoryLegendProps } from "../PushpinCategoryLegend.js";
+import { IPushpinCategoryLegendProps, PushpinCategoryLegend } from "../PushpinCategoryLegend.js";
 
 const segmentData = [
     {

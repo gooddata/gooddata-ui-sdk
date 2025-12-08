@@ -22,7 +22,7 @@ export const HeadlineWithThreeMeasures = {
     secondaryMeasures: [ReferenceMd.Probability, ReferenceMd.Amount],
 };
 
-export default scenariosFor<IHeadlineProps>("Headline", Headline)
+export const base = scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

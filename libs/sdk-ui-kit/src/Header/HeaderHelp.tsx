@@ -34,7 +34,7 @@ interface IHeaderHelpProps {
     helpRedirectUrl?: string;
 }
 
-export function CoreHeaderHelp({
+function CoreHeaderHelp({
     className,
     items,
     helpMenuDropdownAlignPoints,

@@ -102,6 +102,7 @@ function MeasureNumberFormatTest() {
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "12 UI Kit/MeasureNumberFormat",
 };

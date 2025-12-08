@@ -8,6 +8,7 @@ import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
+import type { MetricType } from '@gooddata/sdk-model';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import type { ObjectType as ObjectType_2 } from '@gooddata/sdk-model';
 import { ReactNode } from 'react';
@@ -102,11 +103,15 @@ export interface ICatalogItem extends ICatalogItemRef {
     // (undocumented)
     description: string;
     // (undocumented)
+    format?: string | null;
+    // (undocumented)
     isEditable: boolean;
     // (undocumented)
     isHidden?: boolean;
     // (undocumented)
     isLocked: boolean;
+    // (undocumented)
+    metricType?: MetricType;
     // (undocumented)
     tags: string[];
     // (undocumented)

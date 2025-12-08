@@ -115,41 +115,38 @@ export function useDateFilterConfigurationHandling(
 
     const handleDateFilterEnabled = useCallback(
         (enabled: boolean, dateDatasetRef: ObjRef | undefined) => {
-            const getPreselectedDateDataset = () => {
-                if (!relatedDateDatasets?.length) {
-                    return null;
-                }
+            const isInsight = isInsightWidget(widget);
+            const isRichText = isRichTextWidget(widget);
 
-                // preselect the recommended if any, or the first one
-                const recommendedDateDataSet = getRecommendedCatalogDateDataset(relatedDateDatasets);
-                const firstDataSet = relatedDateDatasets.at(0);
-
-                return recommendedDateDataSet
-                    ? recommendedDateDataSet.dataSet.ref
-                    : firstDataSet!.dataSet.ref;
-            };
-
-            const enable = isInsightWidget(widget)
+            const enable = isInsight
                 ? enableInsightDateFilter
-                : isRichTextWidget(widget)
+                : isRichText
                   ? enableRichTextDateFilter
                   : enableKpiDateFilter;
-            const disable = isInsightWidget(widget)
+            const disable = isInsight
                 ? disableInsightDateFilter
-                : isRichTextWidget(widget)
+                : isRichText
                   ? disableRichTextDateFilter
                   : disableKpiDateFilter;
 
-            if (enabled) {
-                if (dateDatasetRef) {
-                    enable(ref, dateDatasetRef);
-                } else {
-                    const preselectedDateDataSetRef = getPreselectedDateDataset();
-                    enable(ref, preselectedDateDataSetRef ?? "default");
-                }
-            } else {
+            if (!enabled) {
                 disable(ref);
+                return;
             }
+
+            if (dateDatasetRef) {
+                enable(ref, dateDatasetRef);
+                return;
+            }
+
+            // preselect the recommended if any, or the first one
+            const recommendedDateDataSet = relatedDateDatasets?.length
+                ? getRecommendedCatalogDateDataset(relatedDateDatasets)
+                : null;
+            const preselectedRef = recommendedDateDataSet
+                ? recommendedDateDataSet.dataSet.ref
+                : (relatedDateDatasets?.at(0)?.dataSet.ref ?? null);
+            enable(ref, preselectedRef ?? "default");
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [

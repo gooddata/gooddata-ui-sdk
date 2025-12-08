@@ -9,7 +9,7 @@ import { IInsightDefinition, bucketIsEmpty, insightBucket, insightHasMeasures } 
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -17,14 +17,14 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
-import ColorsSection from "../configurationControls/colors/ColorsSection.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import LegendSection from "../configurationControls/legend/LegendSection.js";
-import PushpinSizeControl from "../configurationControls/PushpinSizeControl.js";
-import PushpinViewportControl from "../configurationControls/PushpinViewportControl.js";
+import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
+import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { LegendSection } from "../configurationControls/legend/LegendSection.js";
+import { PushpinSizeControl } from "../configurationControls/PushpinSizeControl.js";
+import { PushpinViewportControl } from "../configurationControls/PushpinViewportControl.js";
 
-export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
+export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     protected getControlProperties(): { groupNearbyPoints: boolean } {
         const groupNearbyPoints = this.props.properties?.controls?.["points"]?.groupNearbyPoints ?? true;
         return {

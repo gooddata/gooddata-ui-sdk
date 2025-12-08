@@ -9,9 +9,9 @@ import { ComparisonColorType, getComparisonRgbColor } from "@gooddata/sdk-ui-cha
 
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
-import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
-import ColorDropdown from "../../../colors/colorDropdown/ColorDropdown.js";
-import ColoredItemContent from "../../../colors/coloredItemsList/ColoredItemContent.js";
+import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
+import { ColorDropdown } from "../../../colors/colorDropdown/ColorDropdown.js";
+import { ColoredItemContent } from "../../../colors/coloredItemsList/ColoredItemContent.js";
 
 interface IColorItemProps {
     disabled: boolean;
@@ -25,7 +25,7 @@ interface IColorItemProps {
     pushData: PushDataCallback;
 }
 
-function ColorItem({
+export function ColorItem({
     disabled,
     showDisabledMessage,
     color,
@@ -62,5 +62,3 @@ function ColorItem({
         </DisabledBubbleMessage>
     );
 }
-
-export default ColorItem;

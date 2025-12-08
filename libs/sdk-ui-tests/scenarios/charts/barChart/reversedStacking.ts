@@ -8,7 +8,7 @@ import { BarChartWithArithmeticMeasuresAndViewBy, BarChartWithTwoMeasuresAndTwoV
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IBarChartProps>("BarChart", BarChart)
+export const reversedStacking = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.StackingReverse)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 600 },

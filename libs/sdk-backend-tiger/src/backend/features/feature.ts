@@ -39,6 +39,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableMetricFormatOverrides,
+            "enableMetricFormatOverrides",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMetricFormatOverrides,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDescriptions,
             "enableDescriptions",
             "BOOLEAN",
@@ -855,6 +862,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enablePivotTablePagination",
             "BOOLEAN",
             FeatureFlagsValues.enablePivotTablePagination,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableImplicitDrillToUrl,
+            "enableImplicitDrillToUrl",
+            "BOOLEAN",
+            FeatureFlagsValues.enableImplicitDrillToUrl,
         ),
     };
 }

@@ -48,4 +48,4 @@ const colorAssignment = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPl
         (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Amount)),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

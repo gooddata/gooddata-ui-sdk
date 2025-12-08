@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { LineChart } from "@gooddata/sdk-ui-charts";
 
@@ -43,4 +44,4 @@ const complexScenarios = responsiveScenarios(
     false,
 );
 
-export default [...complexScenarios, ...simpleScenarios];
+export const responsive = [...complexScenarios, ...simpleScenarios];

@@ -93,6 +93,22 @@ export interface ISettings {
     aiRateLimit?: number;
 
     /**
+     * Metric format override configuration.
+     * @alpha
+     */
+    metricFormatOverride?: IMetricFormatOverrideSetting;
+    /**
+     * Enables UI and API support for metric type selection and metric format overrides management.
+     */
+    enableMetricFormatOverrides?: boolean;
+    /**
+     * Resolved currency format override from metricFormatOverride.formats["CURRENCY"].
+     * This is a convenience property normalized during settings resolution.
+     * @alpha
+     */
+    currencyFormatOverride?: string | null;
+
+    /**
      * LLM endpoint id as default for the platform.
      */
     llmEndpoint?: ILlmEndpoint;
@@ -620,6 +636,17 @@ export interface ISettings {
     enablePivotTableAutoSizeReset?: boolean;
 
     /**
+     * This setting enables drills into URL in pivot table charts by default on all available attributes.
+     * Renders table cells as hyperlinks.
+     */
+    enableDrillToUrlByDefault?: boolean;
+
+    /**
+     * This feature flag enables automatic drill to url setting feature.
+     */
+    enableImplicitDrillToUrl?: boolean;
+
+    /**
      * Enable preserving filter selection during initialization
      */
     enablePreserveFilterSelectionDuringInit?: boolean;
@@ -640,6 +667,19 @@ export interface ISettings {
     enablePivotTablePagination?: boolean;
 
     [key: string]: number | boolean | string | object | undefined | null;
+}
+
+/**
+ * Describes metric format override configuration.
+ *
+ * @alpha
+ */
+export interface IMetricFormatOverrideSetting {
+    /**
+     * Mapping of metric type to custom format string.
+     * When undefined or null, backend defaults are used.
+     */
+    formats?: Record<string, string> | null;
 }
 
 /**

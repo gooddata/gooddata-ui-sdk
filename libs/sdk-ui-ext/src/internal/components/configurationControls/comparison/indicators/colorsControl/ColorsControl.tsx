@@ -4,9 +4,9 @@ import { IColorPalette } from "@gooddata/sdk-model";
 import { PushDataCallback } from "@gooddata/sdk-ui";
 import { ComparisonColorType } from "@gooddata/sdk-ui-charts";
 
-import ColorCheckbox from "./ColorCheckbox.js";
-import ColorItem from "./ColorItem.js";
-import ColorResetButton from "./ColorResetButton.js";
+import { ColorCheckbox } from "./ColorCheckbox.js";
+import { ColorItem } from "./ColorItem.js";
+import { ColorResetButton } from "./ColorResetButton.js";
 import { comparisonMessages } from "../../../../../../locales.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
@@ -24,7 +24,7 @@ interface IColorControlProps {
     pushData: PushDataCallback;
 }
 
-function ColorsControl({
+export function ColorsControl({
     disabled,
     showDisabledMessage,
     properties,
@@ -81,5 +81,3 @@ function ColorsControl({
         </div>
     );
 }
-
-export default ColorsControl;

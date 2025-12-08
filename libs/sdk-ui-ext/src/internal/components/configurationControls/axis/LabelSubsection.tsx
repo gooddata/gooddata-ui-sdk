@@ -2,14 +2,12 @@
 
 import { memo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
-
 import { LabelFormatControl } from "./LabelFormatControl.js";
-import LabelRotationControl from "./LabelRotationControl.js";
+import { LabelRotationControl } from "./LabelRotationControl.js";
 import { messages } from "../../../../locales.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
+import { ConfigSubsection } from "../../configurationControls/ConfigSubsection.js";
 
 export interface ILabelSubsection {
     disabled: boolean;
@@ -20,7 +18,7 @@ export interface ILabelSubsection {
     showFormat?: boolean;
 }
 
-function LabelSubsection(props: ILabelSubsection & WrappedComponentProps) {
+export const LabelSubsection = memo(function LabelSubsection(props: ILabelSubsection) {
     const getControlProperties = (): IVisualizationProperties => {
         const axisProperties = props.properties?.controls?.[props.axis];
 
@@ -65,6 +63,4 @@ function LabelSubsection(props: ILabelSubsection & WrappedComponentProps) {
             />
         </ConfigSubsection>
     );
-}
-
-export default memo(injectIntl(LabelSubsection));
+});

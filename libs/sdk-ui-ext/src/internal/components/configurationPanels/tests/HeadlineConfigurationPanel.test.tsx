@@ -12,12 +12,12 @@ import { createTestProperties, newInsight } from "../../../tests/testDataProvide
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import * as ComparisonSection from "../../configurationControls/comparison/ComparisonSection.js";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
-import HeadlineConfigurationPanel from "../HeadlineConfigurationPanel.js";
+import { HeadlineConfigurationPanel } from "../HeadlineConfigurationPanel.js";
 
 describe("HeadlineComparisonPanel", () => {
     const mockPushData = vi.fn();
 
-    const mockComparisonSection = () => vi.spyOn(ComparisonSection, "default");
+    const mockComparisonSection = () => vi.spyOn(ComparisonSection, "ComparisonSection");
 
     const DEFAULT_PROPERTIES = createTestProperties<HeadlineControlProperties>({
         comparison: { enabled: true },

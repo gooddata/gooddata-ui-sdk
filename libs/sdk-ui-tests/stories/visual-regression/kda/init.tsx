@@ -26,6 +26,7 @@ function formatValue(val: number) {
 
 const backend = StorybookBackend();
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "18 Kda/Dialog",
 };

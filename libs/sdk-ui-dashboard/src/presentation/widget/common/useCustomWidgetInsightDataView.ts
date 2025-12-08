@@ -1,9 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useEffect, useMemo } from "react";
 
 import stringify from "json-stable-stringify";
 
-import { IInsightDefinition, ObjRef, insightSetFilters, isInsight } from "@gooddata/sdk-model";
+import { IFilter, IInsightDefinition, ObjRef, insightSetFilters, isInsight } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     GoodDataSdkError,
@@ -17,10 +18,65 @@ import {
 
 import {
     ICustomWidget,
+    QueryProcessingState,
     selectEnableExecutionCancelling,
     useDashboardSelector,
     useWidgetFilters,
 } from "../../../model/index.js";
+
+type InsightTaskState = UseCancelablePromiseState<IInsightDefinition, GoodDataSdkError>;
+type FilterQueryTaskState = QueryProcessingState<IFilter[]>;
+type DataViewTaskState = UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+function deriveResultState(
+    effectiveInsightTask: InsightTaskState,
+    filterQueryTask: FilterQueryTaskState,
+    dataViewTask: DataViewTaskState,
+): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
+    // insight non-success status has precedence, other things cannot run without an insight
+    const isInsightNonSuccess =
+        effectiveInsightTask.status === "error" ||
+        effectiveInsightTask.status === "loading" ||
+        effectiveInsightTask.status === "pending";
+
+    if (isInsightNonSuccess) {
+        return {
+            error: effectiveInsightTask.error,
+            result: undefined,
+            status: effectiveInsightTask.status,
+        } as UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+    }
+
+    if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
+        return {
+            error: undefined,
+            result: undefined,
+            status: "pending",
+        };
+    }
+
+    if (filterQueryTask.status === "running" || dataViewTask.status === "loading") {
+        return {
+            error: undefined,
+            result: undefined,
+            status: "loading",
+        };
+    }
+
+    if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
+        return {
+            error: (dataViewTask.error ?? filterQueryTask.error)!,
+            result: undefined,
+            status: "error",
+        };
+    }
+
+    return {
+        error: undefined,
+        result: dataViewTask.result,
+        status: "success",
+    };
+}
 
 /**
  * Configuration options for the {@link useCustomWidgetInsightDataView} hook.
@@ -147,46 +203,5 @@ export function useCustomWidgetInsightDataView({
         }
     }, [filterQueryTask.error, filterQueryTask.status, onError]);
 
-    // insight non-success status has precedence, other things cannot run without an insight
-    if (
-        effectiveInsightTask.status === "error" ||
-        effectiveInsightTask.status === "loading" ||
-        effectiveInsightTask.status === "pending"
-    ) {
-        return {
-            error: effectiveInsightTask.error,
-            result: undefined,
-            status: effectiveInsightTask.status,
-        } as UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
-    }
-
-    if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
-        return {
-            error: undefined,
-            result: undefined,
-            status: "pending",
-        };
-    }
-
-    if (filterQueryTask.status === "running" || dataViewTask.status === "loading") {
-        return {
-            error: undefined,
-            result: undefined,
-            status: "loading",
-        };
-    }
-
-    if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
-        return {
-            error: (dataViewTask.error ?? filterQueryTask.error)!,
-            result: undefined,
-            status: "error",
-        };
-    }
-
-    return {
-        error: undefined,
-        result: dataViewTask.result,
-        status: "success",
-    };
+    return deriveResultState(effectiveInsightTask, filterQueryTask, dataViewTask);
 }

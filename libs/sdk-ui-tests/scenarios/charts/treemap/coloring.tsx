@@ -53,4 +53,4 @@ const colorAssignment = scenariosFor<ITreemapProps>("Treemap", Treemap)
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

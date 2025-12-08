@@ -5,7 +5,7 @@ import { PushDataCallback } from "@gooddata/sdk-ui";
 import { comparisonMessages } from "../../../../../locales.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import CheckboxControl from "../../CheckboxControl.js";
+import { CheckboxControl } from "../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../ComparisonValuePath.js";
 
 interface IArrowControlProps {
@@ -15,7 +15,7 @@ interface IArrowControlProps {
     pushData: PushDataCallback;
 }
 
-function ArrowControl({ disabled, showDisabledMessage, properties, pushData }: IArrowControlProps) {
+export function ArrowControl({ disabled, showDisabledMessage, properties, pushData }: IArrowControlProps) {
     const isArrowEnabled = properties?.controls?.comparison?.isArrowEnabled;
 
     return (
@@ -32,5 +32,3 @@ function ArrowControl({ disabled, showDisabledMessage, properties, pushData }: I
         </div>
     );
 }
-
-export default ArrowControl;

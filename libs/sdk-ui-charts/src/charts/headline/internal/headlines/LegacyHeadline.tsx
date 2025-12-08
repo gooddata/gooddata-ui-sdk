@@ -42,7 +42,7 @@ export interface IHeadlineVisualizationProps {
 /**
  * The React component that renders the Headline visualisation.
  */
-function LegacyHeadline({
+export function LegacyHeadline({
     data,
     config = {},
     onDrill = () => true,
@@ -311,5 +311,3 @@ function LegacyHeadline({
         </Measure>
     );
 }
-
-export default LegacyHeadline;

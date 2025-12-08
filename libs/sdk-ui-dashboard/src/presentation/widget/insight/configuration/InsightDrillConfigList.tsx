@@ -3,7 +3,7 @@
 import { InsightDrillDefinition } from "@gooddata/sdk-model";
 import { ScrollableItem } from "@gooddata/sdk-ui-kit";
 
-import InsightDrillConfigItem from "./InsightDrillConfigItem.js";
+import { DrillConfigItem } from "./InsightDrillConfigItem.js";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems.js";
 import { IDrillConfigItem, IDrillDownAttributeHierarchyDefinition } from "../../../drill/types.js";
 
@@ -44,7 +44,7 @@ export function InsightDrillConfigList({
                         scrollIntoView={shouldScroll}
                         key={item.localIdentifier + item.drillTargetType}
                     >
-                        <InsightDrillConfigItem
+                        <DrillConfigItem
                             item={item}
                             key={item.localIdentifier + item.drillTargetType}
                             onDelete={onDelete}

@@ -619,6 +619,9 @@ export { OrganizationUtilities } from "./organizationUtilities.js";
 
 export { ActionsUtilities } from "./actionsUtilities.js";
 
-const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
-
+export const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
+/**
+ * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
+ */
+// eslint-disable-next-line no-restricted-exports
 export default defaultTigerClient;

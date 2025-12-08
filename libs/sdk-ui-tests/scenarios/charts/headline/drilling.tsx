@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 
@@ -11,7 +12,7 @@ import {
 } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IHeadlineProps>("Headline", Headline)
+export const drilling = scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.Drilling)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("multi measures with drilling on single measure", {

@@ -6,9 +6,9 @@ import { WrappedComponentProps } from "react-intl";
 
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import DocumentationLink from "./DocumentationLink.js";
-import FormatInput from "./FormatInput.js";
-import Preview from "./previewSection/Preview.js";
+import { DocumentationLink } from "./DocumentationLink.js";
+import { FormatInputWithIntl } from "./FormatInput.js";
+import { Preview } from "./previewSection/Preview.js";
 import { Button } from "../../Button/index.js";
 import { Overlay } from "../../Overlay/index.js";
 import { IPositioning, SnapPoint } from "../../typings/positioning.js";
@@ -74,7 +74,7 @@ export const CustomFormatDialog = memo(function CustomFormatDialog({
                         <span>{intl.formatMessage({ id: "measureNumberCustomFormatDialog.title" })}</span>
                     </div>
                     <div className="gd-measure-custom-format-dialog-content">
-                        <FormatInput
+                        <FormatInputWithIntl
                             format={format}
                             templates={templates}
                             separators={separators}

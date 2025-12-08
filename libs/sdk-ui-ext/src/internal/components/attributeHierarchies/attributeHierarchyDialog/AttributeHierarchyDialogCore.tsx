@@ -2,13 +2,13 @@
 
 import { Dialog, useId } from "@gooddata/sdk-ui-kit";
 
-import AttributeHierarchyDialogContent from "./AttributeHierarchyDialogContent.js";
-import AttributeHierarchyDialogFooter from "./AttributeHierarchyDialogFooter.js";
-import AttributeHierarchyDialogHeader from "./AttributeHierarchyDialogHeader.js";
+import { AttributeHierarchyDialogContent } from "./AttributeHierarchyDialogContent.js";
+import { AttributeHierarchyDialogFooter } from "./AttributeHierarchyDialogFooter.js";
+import { AttributeHierarchyDialogHeader } from "./AttributeHierarchyDialogHeader.js";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
-import DeleteAttributeHierarchyConfirmation from "./DeleteAttributeHieraryConfirmation.js";
+import { DeleteAttributeHierarchyConfirmation } from "./DeleteAttributeHieraryConfirmation.js";
 
-function AttributeHierarchyDialogCore() {
+export function AttributeHierarchyDialogCore() {
     const { onClose, shouldDisplayDeleteConfirmation, title } = useAttributeHierarchyDialog();
 
     const titleElementId = useId();
@@ -33,5 +33,3 @@ function AttributeHierarchyDialogCore() {
         </Dialog>
     );
 }
-
-export default AttributeHierarchyDialogCore;

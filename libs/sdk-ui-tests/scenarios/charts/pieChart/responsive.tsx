@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { PieChart } from "@gooddata/sdk-ui-charts";
 
 import { PieChartWithSingleMeasureAndViewBy } from "./base.js";
@@ -28,4 +29,4 @@ const scenarios = responsiveScenarios(
     false,
 );
 
-export default [...scenarios];
+export const responsive = [...scenarios];

@@ -10,7 +10,7 @@ let { extractProps } = vi.hoisted(() => ({
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IComboChartProps } from "@gooddata/sdk-ui-charts";
 
-import comboChartScenarios from "../../../scenarios/charts/comboChart/index.js";
+import { comboChart as comboChartScenarios } from "../../../scenarios/charts/comboChart/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";

@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
-import LegendItem from "../LegendItem.js";
+import { LegendItem } from "../LegendItem.js";
 import { ISeriesItem, ISeriesItemMetric, isSeriesItemMetric } from "../types.js";
 
 describe("LegendItem", () => {

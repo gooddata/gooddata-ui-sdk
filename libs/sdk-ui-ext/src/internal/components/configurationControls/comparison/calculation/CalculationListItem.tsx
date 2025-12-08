@@ -5,13 +5,13 @@ import cx from "classnames";
 import { CalculationType } from "@gooddata/sdk-ui-charts";
 import { Bubble, BubbleHoverTrigger, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
 
-import CalculationListItemInfo from "./CalculationListItemInfo.js";
+import { CalculationListItemInfo } from "./CalculationListItemInfo.js";
 import { HIDE_DELAY_DEFAULT, SHOW_DELAY_DEFAULT } from "../../../../constants/bubble.js";
 
 const BUBBLE_INFO_ALIGN_POINTS = [{ align: "cr cl" }];
 const BUBBLE_INFO_ARROW_OFFSETS = { "cr cl": [15, 0] };
 
-function CalculationListItem({ title, icon, info, isSelected, onClick }: ISingleSelectListItemProps) {
+export function CalculationListItem({ title, icon, info, isSelected, onClick }: ISingleSelectListItemProps) {
     const classNames = cx(
         ["gd-list-item", "calculation-list-item", "s-calculation-list-item", `s-${title}`],
         {
@@ -42,5 +42,3 @@ function CalculationListItem({ title, icon, info, isSelected, onClick }: ISingle
         </div>
     );
 }
-
-export default CalculationListItem;

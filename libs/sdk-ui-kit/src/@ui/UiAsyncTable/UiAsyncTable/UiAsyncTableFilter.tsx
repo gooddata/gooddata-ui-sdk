@@ -12,7 +12,7 @@ import {
     FILTER_OPTION_ALL_VALUE,
     SCROLLBAR_WIDTH,
 } from "./constants.js";
-import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
+import { UiAsyncTableDropdownItem } from "./UiAsyncTableDropdownItem.js";
 import { getFilterDropdownId, getFilterOptionsMap } from "./utils.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
@@ -63,6 +63,7 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                         isActive={isOpen}
                         accessibilityConfig={{
                             ariaControls: getFilterDropdownId(label),
+                            ariaHaspopup: "true",
                         }}
                     />
                 )}

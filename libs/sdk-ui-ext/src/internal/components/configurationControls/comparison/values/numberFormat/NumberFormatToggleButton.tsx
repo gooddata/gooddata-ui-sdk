@@ -2,7 +2,7 @@
 
 import { DropdownButton, IToggleButtonProps } from "@gooddata/sdk-ui-kit";
 
-function NumberFormatToggleButton({
+export function NumberFormatToggleButton({
     disabled,
     isOpened,
     selectedPreset,
@@ -20,5 +20,3 @@ function NumberFormatToggleButton({
         </div>
     );
 }
-
-export default NumberFormatToggleButton;

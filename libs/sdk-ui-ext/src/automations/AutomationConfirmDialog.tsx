@@ -6,6 +6,16 @@ import { useIntl } from "react-intl";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
+import {
+    BULK_DELETE_CONFIRM_DIALOG_ID,
+    BULK_PAUSE_CONFIRM_DIALOG_ID,
+    BULK_RESUME_CONFIRM_DIALOG_ID,
+    BULK_UNSUBSCRIBE_CONFIRM_DIALOG_ID,
+    DELETE_CONFIRM_DIALOG_ID,
+    PAUSE_CONFIRM_DIALOG_ID,
+    RESUME_CONFIRM_DIALOG_ID,
+    UNSUBSCRIBE_CONFIRM_DIALOG_ID,
+} from "./constants.js";
 import { messages } from "./messages.js";
 import { IAutomationsPendingAction } from "./types.js";
 
@@ -125,6 +135,29 @@ export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAu
         return intl.formatMessage(messages.confirmDialogButtonConfirm);
     };
 
+    const getDialogId = () => {
+        switch (type) {
+            case "delete":
+                return DELETE_CONFIRM_DIALOG_ID;
+            case "unsubscribe":
+                return UNSUBSCRIBE_CONFIRM_DIALOG_ID;
+            case "pause":
+                return PAUSE_CONFIRM_DIALOG_ID;
+            case "resume":
+                return RESUME_CONFIRM_DIALOG_ID;
+            case "bulkDelete":
+                return BULK_DELETE_CONFIRM_DIALOG_ID;
+            case "bulkUnsubscribe":
+                return BULK_UNSUBSCRIBE_CONFIRM_DIALOG_ID;
+            case "bulkPause":
+                return BULK_PAUSE_CONFIRM_DIALOG_ID;
+            case "bulkResume":
+                return BULK_RESUME_CONFIRM_DIALOG_ID;
+            default:
+                return undefined;
+        }
+    };
+
     const handleSubmit = () => {
         setPendingAction(undefined);
         pendingAction?.onConfirm();
@@ -146,6 +179,9 @@ export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAu
             onCancel={handleClose}
             className="automations-confirm-dialog"
             containerClassName="automations-confirm-dialog-overlay"
+            accessibilityConfig={{
+                dialogId: getDialogId(),
+            }}
         >
             {getContent()}
         </ConfirmDialog>

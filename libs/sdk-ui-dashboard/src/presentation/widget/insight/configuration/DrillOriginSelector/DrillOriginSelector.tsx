@@ -6,7 +6,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-import DrillOriginSelectorBody from "./DrillOriginSelectorBody.js";
+import { DrillOriginSelectorBody } from "./DrillOriginSelectorBody.js";
 import { useDashboardUserInteraction } from "../../../../../model/index.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 

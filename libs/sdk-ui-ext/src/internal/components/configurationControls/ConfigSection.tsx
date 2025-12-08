@@ -4,12 +4,12 @@ import { ChangeEvent, ReactNode, useCallback, useEffect, useMemo, useState } fro
 
 import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { getTranslation } from "../../utils/translations.js";
-import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
+import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
-export interface IConfigSectionOwnProps {
+export interface IConfigSectionProps {
     id: string;
     valuePath?: string;
     canBeToggled?: boolean;
@@ -26,8 +26,6 @@ export interface IConfigSectionOwnProps {
     toggleMessageId?: string;
 }
 
-export type IConfigSectionProps = IConfigSectionOwnProps & WrappedComponentProps;
-
 export function ConfigSection({
     id,
     valuePath,
@@ -43,8 +41,8 @@ export function ConfigSection({
     pushData = () => {},
     children,
     toggleMessageId,
-    intl,
 }: IConfigSectionProps) {
+    const intl = useIntl();
     const [collapsed, setCollapsed] = useState(() => propertiesMeta?.[id]?.collapsed ?? true);
 
     useEffect(() => {
@@ -147,5 +145,3 @@ export function ConfigSection({
         </div>
     );
 }
-
-export default injectIntl<"intl", IConfigSectionProps>(ConfigSection);

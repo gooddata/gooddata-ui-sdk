@@ -35,6 +35,7 @@ function FlexAIBase({ width = 500 }: { width?: number }) {
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "14 GenAI/Chat",
 };

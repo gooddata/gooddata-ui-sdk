@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import ColorPaletteItem, { IColorPaletteItemProps } from "../ColorPaletteItem.js";
+import { ColorPaletteItem, IColorPaletteItemProps } from "../ColorPaletteItem.js";
 
 const defaultProps: IColorPaletteItemProps = {
     selected: false,

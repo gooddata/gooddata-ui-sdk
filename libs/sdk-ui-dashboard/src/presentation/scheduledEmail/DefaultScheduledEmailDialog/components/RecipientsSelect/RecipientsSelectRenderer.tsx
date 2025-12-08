@@ -57,6 +57,75 @@ const MENU_LIST_ID = "gd-recipients-menu-list-id";
 const { Menu, Input, MultiValueRemove, MenuList } = ReactSelectComponents;
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
+interface RecipientTooltipOptions {
+    hasEmail?: boolean;
+    noExternal?: boolean;
+    invalidExternal?: boolean;
+    invalidLoggedUser?: boolean;
+    type?: "externalUser";
+    email?: string;
+}
+
+interface TooltipConfig {
+    content: ReactElement | string;
+    variant: "error" | "default";
+    arrowPlacement: "left" | "right";
+}
+
+function getRecipientTooltipConfig(options: RecipientTooltipOptions, label: string): TooltipConfig | null {
+    if (options.invalidLoggedUser === true) {
+        return {
+            content: <FormattedMessage id="dialogs.schedule.email.user.notMe" />,
+            variant: "error",
+            arrowPlacement: "left",
+        };
+    }
+
+    if (options.invalidExternal === true) {
+        return {
+            content: <FormattedMessage id="dialogs.schedule.email.user.unknown" />,
+            variant: "error",
+            arrowPlacement: "left",
+        };
+    }
+
+    if (options.hasEmail === false) {
+        return {
+            content: <FormattedMessage id="dialogs.schedule.email.user.missing.email.tooltip" />,
+            variant: "error",
+            arrowPlacement: "left",
+        };
+    }
+
+    if (options.noExternal === true) {
+        return {
+            content: <FormattedMessage id="dialogs.schedule.email.user.invalid.external.tooltip" />,
+            variant: "error",
+            arrowPlacement: "left",
+        };
+    }
+
+    if (options.type === "externalUser") {
+        return {
+            content: (
+                <FormattedMessage id="dialogs.schedule.email.user.used.external" values={{ email: label }} />
+            ),
+            variant: "default",
+            arrowPlacement: "right",
+        };
+    }
+
+    if (options.email) {
+        return {
+            content: options.email,
+            variant: "default",
+            arrowPlacement: "left",
+        };
+    }
+
+    return null;
+}
+
 export interface IRecipientsSelectRendererProps {
     /**
      * Currently selected recipients.
@@ -405,136 +474,69 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
             const isFocused = recipientIndex === state.focusedRecipientIndex;
 
-            const render = () => {
-                const showErrorIcon =
-                    options.noExternal ||
-                    options.invalidExternal ||
-                    options.invalidLoggedUser ||
-                    !options.hasEmail;
+            const showErrorIcon =
+                options.noExternal ||
+                options.invalidExternal ||
+                options.invalidLoggedUser ||
+                !options.hasEmail;
 
-                const ariaLabel = options.email
-                    ? intl.formatMessage(
-                          { id: "dialogs.schedule.email.userAndEmail.remove" },
-                          { name: label, email: options.email },
-                      )
-                    : intl.formatMessage({ id: "dialogs.schedule.email.user.remove" }, { name: label });
+            const ariaLabel = options.email
+                ? intl.formatMessage(
+                      { id: "dialogs.schedule.email.userAndEmail.remove" },
+                      { name: label, email: options.email },
+                  )
+                : intl.formatMessage({ id: "dialogs.schedule.email.user.remove" }, { name: label });
 
-                return (
-                    <div
-                        role="button"
-                        ref={(el) => {
-                            if (el) {
-                                recipientRefs.current.set(recipientIndex, el);
-                            } else {
-                                recipientRefs.current.delete(recipientIndex);
-                            }
-                        }}
-                        tabIndex={isFocused ? 0 : -1}
-                        style={{ maxWidth: style.maxWidth }}
-                        className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
-                            "invalid-email": !options.hasEmail,
-                            "invalid-external": options.noExternal || options.invalidExternal,
-                            "invalid-user": options.invalidLoggedUser,
-                            "gd-recipient-focused": isFocused,
-                        })}
-                        aria-label={ariaLabel}
-                    >
-                        {showErrorIcon ? (
-                            <div className="gd-recipient-label-error">
-                                <UiIcon type="crossCircle" size={12} color="error" />
-                            </div>
-                        ) : null}
-                        <div className="gd-recipient-label">{label}</div>
-                        {options.type === "externalUser" ? (
-                            <div className="gd-recipient-quest">
-                                <FormattedMessage id="dialogs.schedule.email.user.guest" />
-                            </div>
-                        ) : null}
-                        <div className="gd-recipient-remove-icon s-gd-recipient-remove">{removeIcon}</div>
-                    </div>
-                );
-            };
-
-            if (options.invalidLoggedUser === true) {
-                return (
-                    <UiTooltip
-                        anchor={render()}
-                        content={<FormattedMessage id="dialogs.schedule.email.user.notMe" />}
-                        variant="error"
-                        arrowPlacement="left"
-                        triggerBy={["hover", "focus"]}
-                    />
-                );
-            }
-
-            if (options.invalidExternal === true) {
-                return (
-                    <UiTooltip
-                        anchor={render()}
-                        content={<FormattedMessage id="dialogs.schedule.email.user.unknown" />}
-                        variant="error"
-                        arrowPlacement="left"
-                        triggerBy={["hover", "focus"]}
-                    />
-                );
-            }
-
-            if (options.hasEmail === false) {
-                return (
-                    <UiTooltip
-                        anchor={render()}
-                        content={<FormattedMessage id="dialogs.schedule.email.user.missing.email.tooltip" />}
-                        variant="error"
-                        arrowPlacement="left"
-                        triggerBy={["hover", "focus"]}
-                    />
-                );
-            }
-
-            if (options.noExternal === true) {
-                return (
-                    <UiTooltip
-                        anchor={render()}
-                        content={
-                            <FormattedMessage id="dialogs.schedule.email.user.invalid.external.tooltip" />
+            const recipientElement = (
+                <div
+                    role="button"
+                    ref={(el) => {
+                        if (el) {
+                            recipientRefs.current.set(recipientIndex, el);
+                        } else {
+                            recipientRefs.current.delete(recipientIndex);
                         }
-                        variant="error"
-                        arrowPlacement="left"
-                        triggerBy={["hover", "focus"]}
-                    />
-                );
+                    }}
+                    tabIndex={isFocused ? 0 : -1}
+                    style={{ maxWidth: style.maxWidth }}
+                    className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
+                        "invalid-email": !options.hasEmail,
+                        "invalid-external": options.noExternal || options.invalidExternal,
+                        "invalid-user": options.invalidLoggedUser,
+                        "gd-recipient-focused": isFocused,
+                    })}
+                    aria-label={ariaLabel}
+                >
+                    {showErrorIcon ? (
+                        <div className="gd-recipient-label-error">
+                            <UiIcon type="crossCircle" size={12} color="error" />
+                        </div>
+                    ) : null}
+                    <div className="gd-recipient-label">{label}</div>
+                    {options.type === "externalUser" ? (
+                        <div className="gd-recipient-quest">
+                            <FormattedMessage id="dialogs.schedule.email.user.guest" />
+                        </div>
+                    ) : null}
+                    <div className="gd-recipient-remove-icon s-gd-recipient-remove">{removeIcon}</div>
+                </div>
+            );
+
+            const tooltipConfig = getRecipientTooltipConfig(options, label);
+
+            if (!tooltipConfig) {
+                return recipientElement;
             }
 
-            if (options.type === "externalUser") {
-                return (
-                    <UiTooltip
-                        anchor={render()}
-                        content={
-                            <FormattedMessage
-                                id="dialogs.schedule.email.user.used.external"
-                                values={{ email: label }}
-                            />
-                        }
-                        variant="default"
-                        arrowPlacement="right"
-                        triggerBy={["hover", "focus"]}
-                    />
-                );
-            }
-
-            if (options.email) {
-                return (
-                    <UiTooltip
-                        anchor={render()}
-                        content={options.email}
-                        variant="default"
-                        arrowPlacement="left"
-                        triggerBy={["hover", "focus"]}
-                    />
-                );
-            }
-
-            return render();
+            return (
+                <UiTooltip
+                    anchor={recipientElement}
+                    content={tooltipConfig.content}
+                    variant={tooltipConfig.variant}
+                    arrowPlacement={tooltipConfig.arrowPlacement}
+                    triggerBy={["hover", "focus"]}
+                />
+            );
         },
         [getStyle, state.focusedRecipientIndex, intl],
     );

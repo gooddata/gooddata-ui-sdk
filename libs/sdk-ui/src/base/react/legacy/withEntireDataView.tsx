@@ -236,6 +236,105 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new NegativeValuesSdkError());
         }
 
+        private isRequestStale(fingerprint: string): boolean {
+            return this.lastInitRequestFingerprint !== fingerprint || this.hasUnmounted;
+        }
+
+        private async loadClusteringData(
+            dataView: IDataView,
+            executionResult: IExecutionResult,
+            clusteringConfig: IClusteringConfig,
+        ): Promise<IDataView> {
+            let result = dataView.withClustering(clusteringConfig);
+            try {
+                const clusteringResult = await executionResult.readClusteringAll(clusteringConfig);
+                result = result.withClustering(clusteringConfig, clusteringResult);
+            } catch (e) {
+                result = result.withClustering(clusteringConfig, {
+                    attribute: [],
+                    clusters: [],
+                    xcoord: [],
+                    ycoord: [],
+                });
+
+                const err = e as any;
+                throw new ClusteringNotReceivedSdkError(
+                    err.responseBody?.reason || err.message || "Unknown error",
+                    err,
+                );
+            }
+            return result;
+        }
+
+        private async loadForecastData(
+            dataView: IDataView,
+            executionResult: IExecutionResult,
+            forecastConfig: IForecastConfig,
+        ): Promise<void> {
+            const { pushData } = this.props;
+            try {
+                const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig!);
+                const updatedDataView = dataView.withForecast(dataView.forecastConfig, forecastResult);
+                this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                if (pushData) {
+                    pushData({
+                        dataView: updatedDataView,
+                        propertiesMeta: {
+                            slicedForecast:
+                                forecastConfig.forecastPeriod !== dataView.forecastConfig?.forecastPeriod,
+                        },
+                    });
+                }
+            } catch (e) {
+                const updatedDataView = dataView.withForecast(undefined);
+                this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                if (pushData) {
+                    pushData({ dataView: updatedDataView });
+                }
+
+                const err = e as any;
+                throw new ForecastNotReceivedSdkError(
+                    err.responseBody?.reason || err.message || "Unknown error",
+                    err,
+                );
+            }
+        }
+
+        private handleLoadingSuccess(dataView: IDataView, executionResult: IExecutionResult): void {
+            const { onExportReady, pushData, exportTitle } = this.props;
+
+            this.setState({ dataView, error: null, executionResult });
+            this.onLoadingChanged({ isLoading: false });
+            this.onDataView(dataView);
+
+            if (onExportReady) {
+                onExportReady(createExportFunction(dataView.result, exportTitle));
+            }
+
+            if (pushData) {
+                const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
+                pushData({ dataView, availableDrillTargets });
+            }
+        }
+
+        private handleLoadingError(error: unknown, fingerprint: string): void {
+            if (this.isRequestStale(fingerprint)) {
+                return;
+            }
+
+            const { pushData } = this.props;
+            /*
+             * There can be situations, where there is no data to visualize but the result / dataView contains
+             * metadata essential for setup of drilling. Look for that and if available push up.
+             */
+            if (isNoDataError(error) && error.dataView && pushData) {
+                const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(error.dataView));
+                pushData({ availableDrillTargets });
+            }
+
+            this.onError(convertError(error));
+        }
+
         private async initDataLoading(
             originalExecution: IPreparedExecution,
             forecastConfig?: IForecastConfig,
@@ -245,18 +344,15 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             if (this.props.enableExecutionCancelling) {
                 execution = execution.withSignal(this.abortController.signal);
             }
-            const { onExportReady, pushData, exportTitle } = this.props;
+            const { pushData } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
-            this.lastInitRequestFingerprint = defFingerprint(execution.definition);
+            const fingerprint = defFingerprint(execution.definition);
+            this.lastInitRequestFingerprint = fingerprint;
 
             try {
                 const executionResult = await execution.execute();
-                if (this.lastInitRequestFingerprint !== defFingerprint(execution.definition)) {
-                    return;
-                }
-
-                if (this.hasUnmounted) {
+                if (this.isRequestStale(fingerprint)) {
                     return;
                 }
 
@@ -276,11 +372,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     throw err;
                 });
 
-                if (this.hasUnmounted) {
-                    return;
-                }
-
-                if (this.lastInitRequestFingerprint !== defFingerprint(originalDataView.definition)) {
+                if (this.isRequestStale(defFingerprint(originalDataView.definition))) {
                     /*
                      * Stop right now if the data are not relevant anymore because there was another
                      * initialize request in the meantime.
@@ -295,98 +387,27 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 }
 
                 if (clusteringConfig) {
-                    dataView = originalDataView.withClustering(clusteringConfig);
-                    try {
-                        const clusteringResult = await executionResult.readClusteringAll(clusteringConfig);
-                        dataView = dataView.withClustering(clusteringConfig, clusteringResult);
-                    } catch (e) {
-                        dataView = dataView.withClustering(clusteringConfig, {
-                            attribute: [],
-                            clusters: [],
-                            xcoord: [],
-                            ycoord: [],
-                        });
-
-                        const err = e as any;
-                        throw new ClusteringNotReceivedSdkError(
-                            err.responseBody?.reason || err.message || "Unknown error",
-                            err,
-                        );
+                    dataView = await this.loadClusteringData(
+                        originalDataView,
+                        executionResult,
+                        clusteringConfig,
+                    );
+                    if (forecastConfig) {
+                        dataView = dataView.withForecast(forecastConfig);
                     }
                 }
 
-                this.setState({ dataView, error: null, executionResult });
-                this.onLoadingChanged({ isLoading: false });
-                this.onDataView(dataView);
-
-                if (onExportReady) {
-                    onExportReady(createExportFunction(dataView.result, exportTitle));
-                }
-
-                if (pushData) {
-                    const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
-
-                    pushData({ dataView, availableDrillTargets });
-                }
+                this.handleLoadingSuccess(dataView, executionResult);
 
                 if (this.hasUnmounted) {
                     return;
                 }
 
                 if (dataView.forecastConfig && forecastConfig) {
-                    try {
-                        const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig);
-                        const updatedDataView = dataView.withForecast(
-                            dataView.forecastConfig,
-                            forecastResult,
-                        );
-                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                        if (pushData) {
-                            pushData({
-                                dataView: updatedDataView,
-                                propertiesMeta: {
-                                    slicedForecast:
-                                        forecastConfig.forecastPeriod !==
-                                        dataView.forecastConfig?.forecastPeriod,
-                                },
-                            });
-                        }
-                    } catch (e) {
-                        const updatedDataView = dataView.withForecast(undefined);
-                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                        if (pushData) {
-                            pushData({ dataView: updatedDataView });
-                        }
-
-                        const err = e as any;
-                        throw new ForecastNotReceivedSdkError(
-                            err.responseBody?.reason || err.message || "Unknown error",
-                            err,
-                        );
-                    }
+                    await this.loadForecastData(dataView, executionResult, forecastConfig);
                 }
             } catch (error) {
-                if (this.lastInitRequestFingerprint !== defFingerprint(execution.definition)) {
-                    return;
-                }
-
-                if (this.hasUnmounted) {
-                    return;
-                }
-
-                /*
-                 * There can be situations, where there is no data to visualize but the result / dataView contains
-                 * metadata essential for setup of drilling. Look for that and if available push up.
-                 */
-                if (isNoDataError(error) && error.dataView && pushData) {
-                    const availableDrillTargets = getAvailableDrillTargets(
-                        DataViewFacade.for(error.dataView),
-                    );
-
-                    pushData({ availableDrillTargets });
-                }
-
-                this.onError(convertError(error));
+                this.handleLoadingError(error, fingerprint);
             }
         }
 

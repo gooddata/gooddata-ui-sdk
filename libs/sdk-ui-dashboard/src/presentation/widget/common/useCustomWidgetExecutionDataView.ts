@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useEffect, useMemo } from "react";
 
 import {
@@ -17,6 +18,67 @@ import {
     useDashboardSelector,
     useWidgetFilters,
 } from "../../../model/index.js";
+
+type DataViewResult = UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+function createPendingResult(): DataViewResult {
+    return {
+        error: undefined,
+        result: undefined,
+        status: "pending",
+    };
+}
+
+function createLoadingResult(): DataViewResult {
+    return {
+        error: undefined,
+        result: undefined,
+        status: "loading",
+    };
+}
+
+function createErrorResult(error: GoodDataSdkError): DataViewResult {
+    return {
+        error,
+        result: undefined,
+        status: "error",
+    };
+}
+
+function createSuccessResult(result: DataViewFacade | undefined): DataViewResult {
+    return {
+        error: undefined,
+        result: result,
+        status: "success",
+    } as DataViewResult;
+}
+
+function computeDataViewResult(
+    filterQueryTask: ReturnType<typeof useWidgetFilters>,
+    dataViewTask: ReturnType<typeof useExecutionDataView>,
+    rejectError: GoodDataSdkError | undefined,
+): DataViewResult {
+    const isPending = filterQueryTask.status === "pending" || dataViewTask.status === "pending";
+    if (isPending) {
+        return createPendingResult();
+    }
+
+    const isLoading = filterQueryTask.status === "running" || dataViewTask.status === "loading";
+    if (isLoading) {
+        return createLoadingResult();
+    }
+
+    const hasError = filterQueryTask.status === "error" || dataViewTask.status === "error";
+    if (hasError) {
+        return createErrorResult((filterQueryTask.error ?? dataViewTask.error)!);
+    }
+
+    if (filterQueryTask.status === "rejected") {
+        return createErrorResult(rejectError!);
+    }
+
+    return createSuccessResult(dataViewTask.result);
+}
 
 /**
  * Configuration options for the {@link useCustomWidgetExecutionDataView} hook.
@@ -109,41 +171,5 @@ export function useCustomWidgetExecutionDataView({
         }
     }, [filterQueryTask.error, filterQueryTask.status, onError]);
 
-    if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
-        return {
-            error: undefined,
-            result: undefined,
-            status: "pending",
-        };
-    }
-
-    if (filterQueryTask.status === "running" || dataViewTask.status === "loading") {
-        return {
-            error: undefined,
-            result: undefined,
-            status: "loading",
-        };
-    }
-
-    if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
-        return {
-            error: (filterQueryTask.error ?? dataViewTask.error)!,
-            result: undefined,
-            status: "error",
-        };
-    }
-
-    if (filterQueryTask.status === "rejected") {
-        return {
-            error: rejectError!,
-            result: undefined,
-            status: "error",
-        };
-    }
-
-    return {
-        error: undefined,
-        result: dataViewTask.result,
-        status: "success",
-    };
+    return computeDataViewResult(filterQueryTask, dataViewTask, rejectError);
 }

@@ -5,7 +5,7 @@ import cx from "classnames";
 
 import { HEADER_LABEL_CLASS } from "../../base/constants.js";
 
-export default function MixedValuesColumnHeader(_props: IHeaderGroupParams) {
+export function MixedValuesColumnHeader(_props: IHeaderGroupParams) {
     return (
         <div
             className={cx(

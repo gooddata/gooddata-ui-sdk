@@ -3,7 +3,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import PushpinSizeLegend, { IPushpinSizeLegendProps } from "../PushpinSizeLegend.js";
+import { IPushpinSizeLegendProps, PushpinSizeLegend } from "../PushpinSizeLegend.js";
 
 function createComponent(customProps: IPushpinSizeLegendProps) {
     const legendProps = {

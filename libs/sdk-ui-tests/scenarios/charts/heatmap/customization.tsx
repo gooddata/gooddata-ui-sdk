@@ -43,4 +43,4 @@ const dataLabelScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", HeatmapWithMeasureRowsAndColumns, dataLabelCustomizer);
 
-export default [legendScenarios, ...legendResponziveScenarios, dataLabelScenarios];
+export const customization = [legendScenarios, ...legendResponziveScenarios, dataLabelScenarios];

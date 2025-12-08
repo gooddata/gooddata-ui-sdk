@@ -48,7 +48,7 @@ import {
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
 import { DEFAULT_TAB_ID, TabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
-import { selectBasicLayout, selectLayoutByTab } from "../tabs/layout/layoutSelectors.js";
+import { selectBasicLayout, selectBasicLayoutByTab } from "../tabs/layout/layoutSelectors.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -1033,11 +1033,14 @@ export const selectIsTitleChanged: DashboardSelector<boolean> = createSelector(
 /**
  * Selects a boolean indication if he dashboard has any changes to the layout compared to the persisted version (if any)
  *
+ * Note: This uses selectBasicLayoutByTab which filters out custom/plugin widgets to avoid false positives
+ * when comparing layouts, as plugin widgets are client-side extensions that should not trigger dirty state.
+ *
  * @internal
  */
 export const selectIsLayoutChanged: DashboardSelector<boolean> = createSelector(
     selectPersistedDashboardLayoutByTab,
-    selectLayoutByTab,
+    selectBasicLayoutByTab,
     (persistedLayoutByTab, currentLayoutByTab) => {
         const tabIdentifiers = collectTabIdentifiers(persistedLayoutByTab, currentLayoutByTab);
 

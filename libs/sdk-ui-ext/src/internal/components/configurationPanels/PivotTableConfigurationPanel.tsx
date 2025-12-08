@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { insightHasAttributes, insightHasMeasures, insightMeasures } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { SectionName } from "./sectionName.js";
 import { messages } from "../../../locales.js";
 import {
@@ -18,17 +18,22 @@ import {
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
-import CellsControl from "../configurationControls/CellsControl.js";
-import ColumnHeadersPositionControl from "../configurationControls/ColumnHeadersPositionControl.js";
+import { CellsControl } from "../configurationControls/CellsControl.js";
+import { ColumnHeadersPositionControl } from "../configurationControls/ColumnHeadersPositionControl.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import GrandTotalsControl from "../configurationControls/GrandTotalsControl.js";
-import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
-import PagingSection from "../configurationControls/PagingSection.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { GrandTotalsControl } from "../configurationControls/GrandTotalsControl.js";
+import { MetricsPositionControl } from "../configurationControls/MetricsPositionControl.js";
+import { PagingSection } from "../configurationControls/PagingSection.js";
 
-export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
+export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected override isControlDisabled(sectionName?: SectionName): boolean {
-        if (sectionName === "interactions.scheduled_exports" || sectionName === "interactions.drill_down") {
+        const enableImplicitDrillToUrl = this.props.featureFlags?.enableImplicitDrillToUrl;
+        if (
+            sectionName === "interactions.scheduled_exports" ||
+            sectionName === "interactions.drill_down" ||
+            (sectionName === "interactions.drill_into_url" && enableImplicitDrillToUrl)
+        ) {
             const { insight, isError, isLoading } = this.props;
             // enable if there is at least one attribute (metrics not required)
             return (

@@ -14,7 +14,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import DrillTargetAttributeHierarchyItem from "./DrillTargetAttributeHierarchyItem.js";
+import { DrillTargetAttributeHierarchyItem } from "./DrillTargetAttributeHierarchyItem.js";
 import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
 import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
 import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";

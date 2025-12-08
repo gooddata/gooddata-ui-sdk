@@ -11,7 +11,7 @@ interface IAttributeHierarchyListFooterProps {
     onClick: () => void;
 }
 
-function AttributeHierarchyListFooter({ onClick }: IAttributeHierarchyListFooterProps) {
+export function AttributeHierarchyListFooter({ onClick }: IAttributeHierarchyListFooterProps) {
     const { formatMessage } = useIntl();
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
 
@@ -28,5 +28,3 @@ function AttributeHierarchyListFooter({ onClick }: IAttributeHierarchyListFooter
         </div>
     ) : null;
 }
-
-export default AttributeHierarchyListFooter;

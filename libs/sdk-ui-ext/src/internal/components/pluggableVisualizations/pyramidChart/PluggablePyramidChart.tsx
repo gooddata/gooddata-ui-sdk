@@ -10,7 +10,7 @@ import {
     IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { setPyramidChartUiConfig } from "../../../utils/uiConfigHelpers/pyramidChartUiConfigHelper.js";
-import PyramidChartConfigurationPanel from "../../configurationPanels/PyramidChartConfigurationPanel.js";
+import { PyramidChartConfigurationPanel } from "../../configurationPanels/PyramidChartConfigurationPanel.js";
 import { PluggablePieChart } from "../pieChart/PluggablePieChart.js";
 
 /**

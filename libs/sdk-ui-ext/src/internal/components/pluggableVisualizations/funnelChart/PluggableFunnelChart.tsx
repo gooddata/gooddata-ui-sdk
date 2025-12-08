@@ -11,7 +11,7 @@ import {
     IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { setFunnelChartUiConfig } from "../../../utils/uiConfigHelpers/funnelChartUiConfigHelper.js";
-import FunnelChartConfigurationPanel from "../../configurationPanels/FunnelChartConfigurationPanel.js";
+import { FunnelChartConfigurationPanel } from "../../configurationPanels/FunnelChartConfigurationPanel.js";
 import { PluggablePieChart } from "../pieChart/PluggablePieChart.js";
 
 /**

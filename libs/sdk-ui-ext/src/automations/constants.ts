@@ -106,6 +106,20 @@ export const EMPTY_CELL_VALUES: Record<CellValueType, string> = {
 
 export const AUTOMATION_FILTER_EXCLUDE_THRESHOLD = 10;
 
+export const AUTOMATIONS_ID_PREFIX = "gd-automations-";
+
+// Single item confirm dialog IDs
+export const DELETE_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}delete-confirm-dialog`;
+export const UNSUBSCRIBE_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}unsubscribe-confirm-dialog`;
+export const PAUSE_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}pause-confirm-dialog`;
+export const RESUME_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}resume-confirm-dialog`;
+
+// Bulk action confirm dialog IDs
+export const BULK_DELETE_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}bulk-delete-confirm-dialog`;
+export const BULK_UNSUBSCRIBE_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}bulk-unsubscribe-confirm-dialog`;
+export const BULK_PAUSE_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}bulk-pause-confirm-dialog`;
+export const BULK_RESUME_CONFIRM_DIALOG_ID = `${AUTOMATIONS_ID_PREFIX}bulk-resume-confirm-dialog`;
+
 export const AUTOMATIONS_SMALL_LAYOUT_SEARCH_THRESHOLD = 7;
 export const AUTOMATIONS_SMALL_LAYOUT_BULK_ACTIONS_THRESHOLD = 1;
 

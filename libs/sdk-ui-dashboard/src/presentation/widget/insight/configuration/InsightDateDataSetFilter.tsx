@@ -22,7 +22,7 @@ export interface IConfigurationPanelProps {
     widget: IInsightWidget;
 }
 
-export default function InsightDateDataSetFilter({ widget }: IConfigurationPanelProps) {
+export function InsightDateDataSetFilter({ widget }: IConfigurationPanelProps) {
     const {
         status,
         run: queryDateDatasets,

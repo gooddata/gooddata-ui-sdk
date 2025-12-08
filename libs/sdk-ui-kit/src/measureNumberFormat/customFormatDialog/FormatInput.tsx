@@ -3,7 +3,7 @@
 import { memo, useCallback } from "react";
 
 import { StreamLanguage } from "@codemirror/language";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -126,17 +126,16 @@ export const formattingLanguage = StreamLanguage.define<LanguageState>({
 
 const codeMirrorExtensions = [formattingLanguage];
 
-interface IFormatInputOwnProps {
+interface IFormatInputProps {
     format: string;
     onFormatChange: (format: string) => void;
     separators?: ISeparators;
     templates?: ReadonlyArray<IFormatTemplate>;
 }
 
-type IFormatInputProps = IFormatInputOwnProps & WrappedComponentProps;
-
-const FormatInput = memo(function FormatInput(props: IFormatInputProps) {
-    const { format, onFormatChange, separators, templates, intl } = props;
+export const FormatInputWithIntl = memo(function FormatInputWithIntl(props: IFormatInputProps) {
+    const { format, onFormatChange, separators, templates } = props;
+    const intl = useIntl();
 
     const handleInputChange = useCallback(
         (value: string) => {
@@ -166,7 +165,3 @@ const FormatInput = memo(function FormatInput(props: IFormatInputProps) {
         </div>
     );
 });
-
-const FormatInputWithIntl = injectIntl(FormatInput);
-
-export default FormatInputWithIntl;

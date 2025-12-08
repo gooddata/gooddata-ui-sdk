@@ -111,6 +111,12 @@ export type { UiButtonSegmentedControlProps } from "./@ui/UiButtonSegmentedContr
 export { UiIconButton } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";
+export { UiPaginationButton } from "./@ui/UiPaginationButton/UiPaginationButton.js";
+export type {
+    UiPaginationButtonProps,
+    UiPaginationButtonSize,
+    UiPaginationButtonDirection,
+} from "./@ui/UiPaginationButton/UiPaginationButton.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";
 export type { UiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/types.js";
 export { UiCheckbox } from "./@ui/UiCheckbox/UiCheckbox.js";

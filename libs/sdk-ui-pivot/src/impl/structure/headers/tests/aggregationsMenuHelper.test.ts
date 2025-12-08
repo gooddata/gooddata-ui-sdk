@@ -4,7 +4,12 @@ import { describe, expect, it } from "vitest";
 import { ITotal } from "@gooddata/sdk-model";
 
 import { IMenuAggregationClickConfig } from "../../../privateTypes.js";
-import aggregationsMenuHelper, { getUpdatedColumnOrRowTotals } from "../aggregationsMenuHelper.js";
+import {
+    getTotalsForAttributeHeader,
+    getTotalsForMeasureHeader,
+    getUpdatedColumnOrRowTotals,
+    isTotalEnabledForAttribute,
+} from "../aggregationsMenuHelper.js";
 import { IColumnTotal, IRowTotal } from "../aggregationsMenuTypes.js";
 
 describe("aggregationsMenuHelper", () => {
@@ -19,7 +24,7 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
 
-            expect(aggregationsMenuHelper.getTotalsForMeasureHeader(totals, measure)).toEqual([]);
+            expect(getTotalsForMeasureHeader(totals, measure)).toEqual([]);
         });
 
         it("should return totals for measure when multiple totals defined", () => {
@@ -37,7 +42,7 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
 
-            expect(aggregationsMenuHelper.getTotalsForMeasureHeader(totals, measure)).toEqual([
+            expect(getTotalsForMeasureHeader(totals, measure)).toEqual([
                 {
                     type: "sum",
                     attributes: ["a1"],
@@ -64,7 +69,7 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
 
-            expect(aggregationsMenuHelper.getTotalsForMeasureHeader(totals, measure)).toEqual([
+            expect(getTotalsForMeasureHeader(totals, measure)).toEqual([
                 {
                     type: "sum",
                     attributes: ["a1", "a2"],
@@ -89,7 +94,7 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
 
-            expect(aggregationsMenuHelper.getTotalsForAttributeHeader(totals, measures)).toEqual([]);
+            expect(getTotalsForAttributeHeader(totals, measures)).toEqual([]);
         });
 
         it("should return empty totals when totals are defined for all measures but different attributes", () => {
@@ -107,7 +112,7 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
 
-            expect(aggregationsMenuHelper.getTotalsForAttributeHeader(totals, measures)).toEqual([]);
+            expect(getTotalsForAttributeHeader(totals, measures)).toEqual([]);
         });
 
         it("should return sum total when totals are defined for all measures and single attribute", () => {
@@ -125,7 +130,7 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
 
-            expect(aggregationsMenuHelper.getTotalsForAttributeHeader(totals, measures)).toEqual([
+            expect(getTotalsForAttributeHeader(totals, measures)).toEqual([
                 {
                     type: "sum",
                     attributes: ["a1"],
@@ -148,7 +153,7 @@ describe("aggregationsMenuHelper", () => {
                 },
             ];
 
-            expect(aggregationsMenuHelper.getTotalsForAttributeHeader(totals, measures)).toEqual([
+            expect(getTotalsForAttributeHeader(totals, measures)).toEqual([
                 {
                     type: "sum",
                     attributes: ["a1"],
@@ -185,7 +190,7 @@ describe("aggregationsMenuHelper", () => {
         ];
 
         it("should return false when there is no column and row total defined", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(["a1"], ["a2"], "sum", [], []);
+            const result = isTotalEnabledForAttribute(["a1"], ["a2"], "sum", [], []);
             expect(result).toBe(false);
         });
 
@@ -202,57 +207,27 @@ describe("aggregationsMenuHelper", () => {
                     attributes: ["a3", "a4"],
                 },
             ];
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                ["a1"],
-                ["a3"],
-                "sum",
-                columnTotals,
-                rowTotals,
-            );
+            const result = isTotalEnabledForAttribute(["a1"], ["a3"], "sum", columnTotals, rowTotals);
             expect(result).toBe(false);
         });
 
         it("should return false when the provided column and row total is not defined for an attribute", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                ["a1"],
-                ["a3"],
-                "min",
-                columnTotals,
-                rowTotals,
-            );
+            const result = isTotalEnabledForAttribute(["a1"], ["a3"], "min", columnTotals, rowTotals);
             expect(result).toBe(false);
         });
 
         it("should return false when no column and row total is not defined for an attribute", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                ["a4"],
-                ["a6"],
-                "sum",
-                columnTotals,
-                rowTotals,
-            );
+            const result = isTotalEnabledForAttribute(["a4"], ["a6"], "sum", columnTotals, rowTotals);
             expect(result).toBe(false);
         });
 
         it("should return true when the provided row total is defined for an attribute", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                ["a1"],
-                [""],
-                "sum",
-                columnTotals,
-                rowTotals,
-            );
+            const result = isTotalEnabledForAttribute(["a1"], [""], "sum", columnTotals, rowTotals);
             expect(result).toBe(true);
         });
 
         it("should return true when the provided column total is defined for an attribute", () => {
-            const result = aggregationsMenuHelper.isTotalEnabledForAttribute(
-                [""],
-                ["a3"],
-                "max",
-                columnTotals,
-                rowTotals,
-            );
+            const result = isTotalEnabledForAttribute([""], ["a3"], "max", columnTotals, rowTotals);
             expect(result).toBe(true);
         });
     });

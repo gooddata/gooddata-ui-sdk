@@ -70,6 +70,75 @@ export interface IUseAutomationFiltersSelect {
 }
 
 /**
+ * Checks if automation has all-time date filters stored in flat structure.
+ */
+function hasAllTimeDateFiltersInFlatStructure(
+    automationToEdit: IAutomationMetadataObject | undefined,
+): boolean {
+    return automationToEdit?.metadata?.visibleFilters?.some((f) => f.isAllTimeDateFilter) ?? false;
+}
+
+/**
+ * Checks if automation has filters stored in export definitions (flat structure).
+ */
+function hasFiltersInExportDefinitions(automationToEdit: IAutomationMetadataObject | undefined): boolean {
+    return (
+        automationToEdit?.exportDefinitions?.some((exportDefinition) => {
+            return !!exportDefinition.requestPayload.content.filters;
+        }) ?? false
+    );
+}
+
+/**
+ * Checks if automation has all-time date filters stored per tab.
+ */
+function hasAllTimeDateFiltersPerTab(automationToEdit: IAutomationMetadataObject | undefined): boolean {
+    if (!automationToEdit?.metadata?.visibleFiltersByTab) {
+        return false;
+    }
+    return Object.values(automationToEdit.metadata.visibleFiltersByTab).some((tabFilters) =>
+        tabFilters.some((f) => f.isAllTimeDateFilter),
+    );
+}
+
+/**
+ * Checks if automation has filters stored per tab in export definitions.
+ */
+function hasFiltersByTabInExportDefinitions(
+    automationToEdit: IAutomationMetadataObject | undefined,
+): boolean {
+    return (
+        automationToEdit?.exportDefinitions?.some((exportDefinition) => {
+            return (
+                isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload) &&
+                !!exportDefinition.requestPayload.content.filtersByTab
+            );
+        }) ?? false
+    );
+}
+
+/**
+ * Determines if the automation has any stored filters (either flat or per-tab structure).
+ */
+function checkAreFiltersStored(automationToEdit: IAutomationMetadataObject | undefined): boolean {
+    // Check old flat filters structure
+    const hasSavedSomeAllTimeDateFilters = hasAllTimeDateFiltersInFlatStructure(automationToEdit);
+    const hasSavedFiltersInExportDefinitions = hasFiltersInExportDefinitions(automationToEdit);
+
+    // Check new per-tab filters structure
+    const hasSavedSomeAllTimeDateFiltersPerTab = hasAllTimeDateFiltersPerTab(automationToEdit);
+    const hasSavedFiltersByTabInExportDefinitions = hasFiltersByTabInExportDefinitions(automationToEdit);
+
+    // Filters are stored if either old OR new structure has filters
+    return (
+        hasSavedFiltersInExportDefinitions ||
+        hasSavedSomeAllTimeDateFilters ||
+        hasSavedFiltersByTabInExportDefinitions ||
+        hasSavedSomeAllTimeDateFiltersPerTab
+    );
+}
+
+/**
  * Hook to get data for AutomationFiltersSelect component.
  */
 export const useAutomationFiltersSelect = ({
@@ -119,40 +188,7 @@ export const useAutomationFiltersSelect = ({
     const filtersByTab =
         isDashboardAutomation && enableDashboardTabs && hasMultipleTabs ? allFiltersByTab : undefined;
 
-    const areFiltersStored = useMemo(() => {
-        // Check old flat filters structure
-        const hasSavedSomeAllTimeDateFilters = automationToEdit?.metadata?.visibleFilters?.some(
-            (f) => f.isAllTimeDateFilter,
-        );
-        const hasSavedFiltersInExportDefinitions = automationToEdit?.exportDefinitions?.some(
-            (exportDefinition) => {
-                return !!exportDefinition.requestPayload.content.filters;
-            },
-        );
-
-        // Check new per-tab filters structure
-        const hasSavedSomeAllTimeDateFiltersPerTab = automationToEdit?.metadata?.visibleFiltersByTab
-            ? Object.values(automationToEdit.metadata.visibleFiltersByTab).some((tabFilters) =>
-                  tabFilters.some((f) => f.isAllTimeDateFilter),
-              )
-            : false;
-        const hasSavedFiltersByTabInExportDefinitions = automationToEdit?.exportDefinitions?.some(
-            (exportDefinition) => {
-                return (
-                    isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload) &&
-                    !!exportDefinition.requestPayload.content.filtersByTab
-                );
-            },
-        );
-
-        // Filters are stored if either old OR new structure has filters
-        return (
-            hasSavedFiltersInExportDefinitions ||
-            hasSavedSomeAllTimeDateFilters ||
-            hasSavedFiltersByTabInExportDefinitions ||
-            hasSavedSomeAllTimeDateFiltersPerTab
-        );
-    }, [automationToEdit]);
+    const areFiltersStored = useMemo(() => checkAreFiltersStored(automationToEdit), [automationToEdit]);
 
     // Store filters or not? (checkbox to use latest saved dashboard filters vs "freeze" filters state as is)
     const [storeFilters, setStoreFilters] = useState(areFiltersStored);

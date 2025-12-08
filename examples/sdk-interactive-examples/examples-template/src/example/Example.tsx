@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
 /*
 import * as Catalog from "../catalog.js";
 */
 
-export default function Example() {
+export function Example() {
     return (
         <>
             this is a example template

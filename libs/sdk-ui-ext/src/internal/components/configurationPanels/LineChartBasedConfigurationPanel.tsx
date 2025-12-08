@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel.js";
+import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
 import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
@@ -15,18 +15,18 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import ContinuousLineControl from "../configurationControls/ContinuousLineControl.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
-import DataPointsControl from "../configurationControls/DataPointsControl.js";
-import DistinctPointShapesControl from "../configurationControls/DistintcPointShapesControl.js";
+import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { ContinuousLineControl } from "../configurationControls/ContinuousLineControl.js";
+import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
+import { DataPointsControl } from "../configurationControls/DataPointsControl.js";
+import { DistinctPointShapesControl } from "../configurationControls/DistintcPointShapesControl.js";
 
 export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelContentProps {
     dataLabelDefaultValue?: string | boolean;
 }
 
-export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel<ILineChartBasedConfigurationPanel> {
+export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel<ILineChartBasedConfigurationPanel> {
     protected override renderConfigurationPanel(): ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 

@@ -27,6 +27,7 @@ const configWithComparisonEnabled: IChartConfig = {
     comparison: comparisonEnabled,
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "02 Custom Test Stories/Headline",
 };

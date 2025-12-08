@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 /**
  * This package provides the Analytical Backend implementation for GoodData Cloud and GoodData.CN.
  *
@@ -21,7 +22,7 @@ import { TigerBackend } from "./backend/index.js";
  * @param implConfig - tiger client specific configuration, may be omitted at this point but it cannot be provided later
  * @public
  */
-function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
+export function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     /*
      * Execution normalization is applied by default for tiger. This is so that tiger does not have to support
      * questionable mechanics of measure name and format assignment and attribute name assignment; tiger does not
@@ -46,7 +47,6 @@ function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAna
     return withNormalization(new TigerBackend(config, implConfig), { executeByRefMode: "fallback" });
 }
 
-export default tigerFactory;
 export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
 export type {
     ApiEntitlementNameEnum,
@@ -130,3 +130,9 @@ export {
 export type { OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
 export { getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
 export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";
+
+/**
+ * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead
+ */
+// eslint-disable-next-line no-restricted-exports
+export default tigerFactory;

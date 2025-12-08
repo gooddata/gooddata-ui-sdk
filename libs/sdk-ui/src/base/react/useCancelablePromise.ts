@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { DependencyList, useEffect, useState } from "react";
 
 import { makeCancelable } from "./CancelablePromise.js";
@@ -104,6 +105,47 @@ export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseC
     enableAbortController?: boolean;
 };
 
+function setLoadingStateIfNeeded<TResult, TError>(
+    currentStatus: UseCancelablePromiseStatus,
+    setState: (state: UseCancelablePromiseState<TResult, TError>) => void,
+): void {
+    if (currentStatus !== "loading") {
+        setState({
+            result: undefined,
+            error: undefined,
+            status: "loading",
+        });
+    }
+}
+
+function setPendingStateIfNeeded<TResult, TError>(
+    currentStatus: UseCancelablePromiseStatus,
+    setState: (state: UseCancelablePromiseState<TResult, TError>) => void,
+): void {
+    if (currentStatus !== "pending") {
+        setState({
+            status: "pending",
+            result: undefined,
+            error: undefined,
+        });
+    }
+}
+
+function haveDepsChanged(prevDeps: DependencyList | undefined, deps: DependencyList | undefined): boolean {
+    return deps?.some((dep, i) => dep !== prevDeps?.[i]) ?? false;
+}
+
+function validateDepsLength(prevDeps: DependencyList | undefined, deps: DependencyList | undefined): void {
+    if (prevDeps?.length !== deps?.length) {
+        throw new UnexpectedSdkError(
+            `The final argument passed to useCancelablePromise changed size between renders. The order and size of this array must remain constant.
+
+Previous: ${safeSerialize(prevDeps)}
+Incoming: ${safeSerialize(deps)}`,
+        );
+    }
+}
+
 /**
  * This hook provides easy way to work with Promises in React components.
  *
@@ -142,26 +184,14 @@ export function useCancelablePromise<TResult, TError = any>(
     const [state, setState] = useState(getInitialState());
 
     useEffect(() => {
-        if (promise) {
-            if (state.status !== "loading") {
-                setState({
-                    result: undefined,
-                    error: undefined,
-                    status: "loading",
-                });
-            }
-            onLoading();
-        } else {
-            if (state.status !== "pending") {
-                setState({
-                    status: "pending",
-                    result: undefined,
-                    error: undefined,
-                });
-            }
+        if (!promise) {
+            setPendingStateIfNeeded(state.status, setState);
             onPending();
             return;
         }
+
+        setLoadingStateIfNeeded(state.status, setState);
+        onLoading();
 
         const cancelablePromise = makeCancelable((signal) => promise(signal), enableAbortController);
 
@@ -207,16 +237,9 @@ export function useCancelablePromise<TResult, TError = any>(
     // We want to avoid the return of the old state when some dependency has changed,
     // before another useEffect hook round starts.
     const [prevDeps, setDeps] = useState(deps);
-    if (prevDeps?.length !== deps?.length) {
-        throw new UnexpectedSdkError(
-            `The final argument passed to useCancelablePromise changed size between renders. The order and size of this array must remain constant.
+    validateDepsLength(prevDeps, deps);
 
-Previous: ${safeSerialize(prevDeps)}
-Incoming: ${safeSerialize(deps)}`,
-        );
-    }
-
-    if (deps?.some((dep, i) => dep !== prevDeps?.[i])) {
+    if (haveDepsChanged(prevDeps, deps)) {
         setDeps(deps);
         const currentState = getInitialState();
         setState(currentState);

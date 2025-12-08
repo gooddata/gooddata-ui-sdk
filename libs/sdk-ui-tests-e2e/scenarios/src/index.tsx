@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 
 import "core-js/stable";
 
-import App from "./App";
+import { App } from "./App";
 
 import "@gooddata/sdk-ui-filters/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";

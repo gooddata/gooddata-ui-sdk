@@ -10,7 +10,7 @@ import {
 } from "./base.js";
 import { scenariosFor } from "../../src/index.js";
 
-export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+export const sorting = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("sorting")
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },

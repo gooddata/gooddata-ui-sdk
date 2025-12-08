@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -15,10 +15,10 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 
-export default class PieChartConfigurationPanel extends ConfigurationPanelContent {
+export class PieChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { propertiesMeta, properties, pushData, featureFlags } = this.props;
         const controlsDisabled = this.isControlDisabled();

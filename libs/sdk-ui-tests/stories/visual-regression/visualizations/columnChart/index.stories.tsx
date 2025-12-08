@@ -46,6 +46,7 @@ function ColumnChartWithHierarchicalLabelsTest(config: Partial<IColumnChartProps
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "02 Custom Test Stories/ColumnChart",
 };

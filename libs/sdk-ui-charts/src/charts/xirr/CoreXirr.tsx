@@ -11,7 +11,7 @@ import {
     withEntireDataView,
 } from "@gooddata/sdk-ui";
 
-import XirrTransformation from "./internal/XirrTransformation.js";
+import { XirrTransformation } from "./internal/XirrTransformation.js";
 import { ICoreChartProps } from "../../interfaces/index.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 

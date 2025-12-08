@@ -215,6 +215,8 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
         return (dashboard) => {
             const { layout } = dashboard;
+            const firstTabLayout = dashboard.tabs?.[0]?.layout;
+            const layoutToTransform = firstTabLayout ?? layout;
 
             /*
              * Once the dashboard component supports multiple layout types, then the code here must only
@@ -225,7 +227,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
              * non-empty, non-corrupted dashboards
              */
 
-            if (!layout || layout.type !== "IDashboardLayout") {
+            if (!layoutToTransform || layoutToTransform.type !== "IDashboardLayout") {
                 return undefined;
             }
 
@@ -251,11 +253,18 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
                     return currentLayout;
                 }
-            }, layout as IDashboardLayout<ExtendedDashboardWidget>);
+            }, layoutToTransform as IDashboardLayout<ExtendedDashboardWidget>);
+
+            const firstTab = dashboard.tabs?.[0];
 
             return {
                 ...dashboard,
                 layout: newLayout,
+                ...(firstTab
+                    ? {
+                          tabs: [{ ...firstTab, layout: newLayout }, ...(dashboard.tabs?.slice(1) ?? [])],
+                      }
+                    : {}),
             };
         };
     };

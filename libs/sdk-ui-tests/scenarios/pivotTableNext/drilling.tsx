@@ -14,7 +14,7 @@ import {
     WonMeasurePredicate,
 } from "../_infra/predicates.js";
 
-export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
+export const drilling = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("drilling")
     .withVisualTestConfig({
         screenshotSize: { width: 1200, height: 800 },

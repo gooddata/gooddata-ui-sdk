@@ -12,6 +12,7 @@ const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const mobileViewport: IViewport[] = [{ label: "mobile-view", height: 800, width: 480 }];
 const german = "de-DE";
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "11 Configuration Controls/Axis/MinMaxControls",
 };

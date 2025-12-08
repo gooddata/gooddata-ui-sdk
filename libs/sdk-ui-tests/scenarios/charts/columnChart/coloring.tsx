@@ -97,4 +97,4 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

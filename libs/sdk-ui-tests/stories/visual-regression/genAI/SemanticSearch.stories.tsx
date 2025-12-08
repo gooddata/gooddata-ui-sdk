@@ -41,6 +41,7 @@ const config: INeobackstopScenarioConfig = {
     postInteractionWait: '[data-testid="semantic-search-results-item"]',
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "14 GenAI/SemanticSearch",
 };

@@ -57,4 +57,9 @@ const legendResponziveScenarios = responsiveScenarios(
     legendResponsiveVariants,
 );
 
-export default [legendScenarios, dataLabelScenarios, chartAlignmentScenarios, ...legendResponziveScenarios];
+export const customization = [
+    legendScenarios,
+    dataLabelScenarios,
+    chartAlignmentScenarios,
+    ...legendResponziveScenarios,
+];

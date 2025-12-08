@@ -8,7 +8,7 @@ import { ITranslationsComponentProps, IntlTranslationsProvider } from "@gooddata
 
 import { adaptLegendPropsToOldRenderer } from "./legendPropsAdapter.js";
 import { ILegendBodyProps } from "./types.js";
-import GeoChartLegendRenderer from "../../../core/geoChart/GeoChartLegendRenderer.js";
+import { GeoChartLegendRenderer } from "../../../core/geoChart/GeoChartLegendRenderer.js";
 
 /**
  * Responsible for rendering the legend using the proven GeoChartLegendRenderer

@@ -8,7 +8,7 @@ import cx from "classnames";
 import { SortDirection } from "@gooddata/sdk-model";
 import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
-import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
+import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, ICommonHeaderParams } from "./HeaderCell.js";
 import { IMenu } from "../../../publicTypes.js";
 import {
     isEmptyScopeCol,
@@ -27,7 +27,7 @@ export interface IColumnHeaderState {
     sorting?: SortDirection;
 }
 
-function ColumnHeader(props: IColumnHeaderProps) {
+export function ColumnHeader(props: IColumnHeaderProps) {
     const {
         className,
         column,
@@ -164,5 +164,3 @@ function ColumnHeader(props: IColumnHeaderProps) {
         />
     );
 }
-
-export default ColumnHeader;

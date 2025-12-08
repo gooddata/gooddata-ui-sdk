@@ -31,7 +31,7 @@ import { hasNoStacksWithDate } from "../../../utils/bucketRules.js";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper.js";
-import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel.js";
+import { TreeMapConfigurationPanel } from "../../configurationPanels/TreeMapConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import {
     addIntersectionFiltersToInsight,

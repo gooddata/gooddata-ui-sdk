@@ -63,6 +63,7 @@ function PivotTableTest(config: Partial<IPivotTableProps> = {}) {
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "02 Custom Test Stories/Pivot Table",
 };

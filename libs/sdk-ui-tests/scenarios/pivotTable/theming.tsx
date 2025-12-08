@@ -6,7 +6,7 @@ import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
 import { scenariosFor } from "../../src/index.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 
-export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+export const theming = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withVisualTestConfig({

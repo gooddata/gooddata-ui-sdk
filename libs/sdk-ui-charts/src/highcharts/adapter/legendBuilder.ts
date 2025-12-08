@@ -224,7 +224,7 @@ const shouldUseResponsiveLegend = (chartType: ChartType, legendPosition: string)
     return isChartWithAnyPopupPosition || isChartWithTopBottomPopupPosition;
 };
 
-export default function buildLegendOptions(
+export function buildLegendOptions(
     legendConfig: any = {},
     chartOptions: IChartOptions,
     theme: ITheme | undefined,

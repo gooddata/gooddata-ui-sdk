@@ -15,7 +15,7 @@ interface IAddActionMenuProps {
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
-function AddActionMenu({ rowIndex, alignTo, onClose }: IAddActionMenuProps) {
+export function AddActionMenu({ rowIndex, alignTo, onClose }: IAddActionMenuProps) {
     const { formatMessage } = useIntl();
     const { onAddEmptyAttribute } = useAttributeHierarchyDialog();
 
@@ -55,5 +55,3 @@ function AddActionMenu({ rowIndex, alignTo, onClose }: IAddActionMenuProps) {
         </Overlay>
     );
 }
-
-export default AddActionMenu;

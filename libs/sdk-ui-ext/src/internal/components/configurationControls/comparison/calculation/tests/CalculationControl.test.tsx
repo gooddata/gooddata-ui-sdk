@@ -11,8 +11,9 @@ import { IVisualizationProperties } from "../../../../../interfaces/Visualizatio
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as DropdownControl from "../../../DropdownControl.js";
-import CalculationControl from "../CalculationControl.js";
-import * as CalculationListItem from "../CalculationListItem.js";
+import { CalculationControl } from "../CalculationControl.js";
+import { CalculationListItem } from "../CalculationListItem.js";
+import * as CalculationListItemModule from "../CalculationListItem.js";
 
 const CALCULATION_CONTROL_LABEL_TEXT_QUERY = "Calculated as";
 const CHANGE_ITEM_TEXT_QUERY = "Change";
@@ -44,7 +45,7 @@ describe("CalculationControl", () => {
     };
 
     it("Should render calculation control based on dropdown-control", () => {
-        const MockDropdownControl = vi.spyOn(DropdownControl, "default");
+        const MockDropdownControl = vi.spyOn(DropdownControl, "DropdownControl");
         const disabled = true;
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
@@ -60,7 +61,7 @@ describe("CalculationControl", () => {
                 properties,
                 disabled,
                 pushData: mockPushData,
-                customListItem: CalculationListItem.default,
+                customListItem: CalculationListItem,
             }),
             undefined,
         );
@@ -95,7 +96,7 @@ describe("CalculationControl", () => {
     });
 
     it("Should render items correctly", () => {
-        const MockCalculationListItem = vi.spyOn(CalculationListItem, "default");
+        const MockCalculationListItem = vi.spyOn(CalculationListItemModule, "CalculationListItem");
         const { container } = renderCalculationControl();
         fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR));
 

@@ -63,7 +63,7 @@ import {
     getHeadlineSupportedProperties,
     getHeadlineUiConfig,
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
-import HeadlineConfigurationPanel from "../../configurationPanels/HeadlineConfigurationPanel.js";
+import { HeadlineConfigurationPanel } from "../../configurationPanels/HeadlineConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 
 /**

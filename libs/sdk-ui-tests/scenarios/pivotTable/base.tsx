@@ -120,7 +120,7 @@ export const PivotTableWithRepeatingRowAttributes = {
     columns: [],
 };
 
-export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+export const base = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },

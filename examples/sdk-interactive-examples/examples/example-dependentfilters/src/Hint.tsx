@@ -4,7 +4,7 @@ export interface IHintProps {
     hint?: string;
 }
 
-function Hint({ hint }: IHintProps) {
+export function Hint({ hint }: IHintProps) {
     return (
         <>
             <div>
@@ -30,5 +30,3 @@ function Hint({ hint }: IHintProps) {
         </>
     );
 }
-
-export default Hint;

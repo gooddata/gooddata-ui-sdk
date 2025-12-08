@@ -10,7 +10,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -18,15 +18,15 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
-import NameSubsection from "../configurationControls/axis/NameSubsection.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
-import MinMaxControl from "../configurationControls/MinMaxControl.js";
+import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.js";
+import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
+import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
+import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
-export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
+export class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
         const controls: IChartConfig = properties?.controls;

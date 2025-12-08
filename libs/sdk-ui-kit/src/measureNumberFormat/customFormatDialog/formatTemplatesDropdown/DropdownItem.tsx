@@ -10,7 +10,7 @@ import { stringUtils } from "@gooddata/util";
 import { Bubble } from "../../../Bubble/index.js";
 import { Typography } from "../../../Typography/index.js";
 import { IFormatTemplate } from "../../typings.js";
-import PreviewRows from "../shared/PreviewRows.js";
+import { PreviewRows } from "../shared/PreviewRows.js";
 
 interface ITemplateDropdownItemProps {
     template: IFormatTemplate;
@@ -22,7 +22,7 @@ function templateDropdownItemId(template: IFormatTemplate): string {
     return `gd-format-preset-template-${template.localIdentifier}`;
 }
 
-const DropdownItem = memo(function DropdownItem({
+export const DropdownItem = memo(function DropdownItem({
     template,
     separators,
     onClick: onClickProp,
@@ -87,5 +87,3 @@ const DropdownItem = memo(function DropdownItem({
         </>
     );
 });
-
-export default DropdownItem;

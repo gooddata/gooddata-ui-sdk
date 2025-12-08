@@ -4,13 +4,13 @@ import { ChangeEvent, ComponentProps, KeyboardEvent, useEffect, useRef, useState
 
 import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
-import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
+import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
 export interface IInputControlProps {
     valuePath: string;
@@ -77,8 +77,8 @@ export function InputControl({
     descriptionValues,
     validateFn,
     transformFn,
-    intl,
-}: IInputControlProps & WrappedComponentProps) {
+}: IInputControlProps) {
+    const intl = useIntl();
     const [value, setValue] = useState(propValue);
     const [lastSentValue, setLastSentValue] = useState(propValue);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -200,5 +200,3 @@ export function InputControl({
         </DisabledBubbleMessage>
     );
 }
-
-export default injectIntl(InputControl);

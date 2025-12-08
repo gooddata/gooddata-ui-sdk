@@ -17,7 +17,7 @@ import {
 import * as ColorCheckbox from "../ColorCheckbox.js";
 import * as ColorItem from "../ColorItem.js";
 import * as ColorResetButton from "../ColorResetButton.js";
-import ColorsControl from "../ColorsControl.js";
+import { ColorsControl } from "../ColorsControl.js";
 
 describe("ColorsControl", () => {
     const mockPushData = vi.fn();
@@ -73,7 +73,7 @@ describe("ColorsControl", () => {
     });
 
     it("Should render color checkbox is disabled when control is disabled", () => {
-        const MockColorCheckbox = vi.spyOn(ColorCheckbox, "default");
+        const MockColorCheckbox = vi.spyOn(ColorCheckbox, "ColorCheckbox");
         renderColorControls({
             disabled: true,
         });
@@ -89,7 +89,7 @@ describe("ColorsControl", () => {
     });
 
     it("Should render color reset button is disabled when control is disabled", () => {
-        const MockColorResetButton = vi.spyOn(ColorResetButton, "default");
+        const MockColorResetButton = vi.spyOn(ColorResetButton, "ColorResetButton");
         renderColorControls({
             disabled: true,
         });
@@ -105,7 +105,7 @@ describe("ColorsControl", () => {
     });
 
     it("Should render color checkbox is enabled when control is enabled", () => {
-        const MockColorCheckbox = vi.spyOn(ColorCheckbox, "default");
+        const MockColorCheckbox = vi.spyOn(ColorCheckbox, "ColorCheckbox");
         renderColorControls({
             disabled: false,
         });
@@ -125,7 +125,7 @@ describe("ColorsControl", () => {
         ["Should disabled color item when control disabled", true, false],
         ["Should disabled color item when color config disabled", false, true],
     ])("%s", (_test: string, isControlDisabled: boolean, isColorConfigDisabled: boolean) => {
-        const MockColorItem = vi.spyOn(ColorItem, "default");
+        const MockColorItem = vi.spyOn(ColorItem, "ColorItem");
 
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {

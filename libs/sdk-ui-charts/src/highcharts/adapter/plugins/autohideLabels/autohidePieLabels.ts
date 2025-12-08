@@ -11,7 +11,7 @@ import {
 // delete this plugin once we upgrade to newer highcharts,
 // set allowOverlap: false to get this behaviour
 
-const autohidePieLabels = (chart: Highcharts.Chart): void => {
+export const autohidePieLabels = (chart: Highcharts.Chart): void => {
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);
     if (!visiblePoints || visiblePoints.length === 0) {
@@ -46,5 +46,3 @@ const autohidePieLabels = (chart: Highcharts.Chart): void => {
         }
     }
 };
-
-export default autohidePieLabels;

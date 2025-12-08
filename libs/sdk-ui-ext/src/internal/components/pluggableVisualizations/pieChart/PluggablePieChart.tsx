@@ -38,7 +38,7 @@ import {
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper.js";
-import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel.js";
+import { PieChartConfigurationPanel } from "../../configurationPanels/PieChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**

@@ -721,6 +721,7 @@ export type {
     IMeasureMetadataObject,
     IMeasureMetadataObjectBase,
     IMeasureMetadataObjectDefinition,
+    MetricType,
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
@@ -876,6 +877,7 @@ export type {
     IEarlyAccessFeaturesConfig,
     IProductionFeatureConfig,
     IProductionFeaturesConfig,
+    IMetricFormatOverrideSetting,
 } from "./settings/index.js";
 
 export { isSeparators } from "./settings/index.js";

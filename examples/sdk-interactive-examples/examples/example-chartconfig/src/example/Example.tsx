@@ -3,9 +3,9 @@
 import { Treemap } from "@gooddata/sdk-ui-charts";
 
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
-export default function Example() {
+export function Example() {
     return (
         <>
             <h1>Revenue Treemap</h1>

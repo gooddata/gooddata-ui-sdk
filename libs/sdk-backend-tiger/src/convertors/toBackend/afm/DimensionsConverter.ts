@@ -10,8 +10,10 @@ import {
     SortKeyValue,
 } from "@gooddata/api-client-tiger";
 import {
+    IAttributeSortItem,
     IExecutionDefinition,
     ILocatorItem,
+    IMeasureSortItem,
     ISortItem,
     MeasureGroupIdentifier,
     SortDirection,
@@ -100,6 +102,68 @@ function convertMeasureLocators(locators: ILocatorItem[]): { [key: string]: stri
     return Object.assign({}, ...dataColumnLocators);
 }
 
+function handleAttributeSort(sortItem: IAttributeSortItem, dims: Dimension[], sorting: SortKey[][]): void {
+    const attributeIdentifier = sortItem.attributeSortItem.attributeIdentifier;
+    const direction = convertSortDirection(sortItem.attributeSortItem.direction);
+
+    const attributeSortKey: SortKeyAttribute = {
+        attribute: {
+            attributeIdentifier,
+            // ASC direction is default for Tiger backend. Dont send it to execution to prevent override of possible default sort label direction. It has the same meaning as TigerSortDirection.DEFAULT which does not exist.
+            ...(direction === "ASC" ? {} : { direction }),
+            sortType: convertAttributeSortType(sortItem),
+        },
+    };
+
+    const dimIdx = dims.findIndex((dim) => dim.itemIdentifiers.includes(attributeIdentifier));
+
+    if (dimIdx < 0) {
+        // eslint-disable-next-line no-console
+        console.log(
+            `attempting to sort by attribute with localId ${attributeIdentifier} but this attribute is not in any dimension.`,
+        );
+
+        return;
+    }
+
+    sorting[dimIdx].push(attributeSortKey);
+}
+
+function handleMeasureSort(
+    sortItem: IMeasureSortItem,
+    nonMeasureDimIdx: number,
+    measureDim: Dimension | undefined,
+    sorting: SortKey[][],
+): void {
+    if (nonMeasureDimIdx < 0) {
+        console.warn(
+            "Trying to use measure sort in an execution that only contains dimension with MeasureGroup. " +
+                "This is not valid sort. Measure sort is used to sort the non-measure dimension by values from measure dimension. Ignoring",
+        );
+
+        return;
+    }
+
+    if (!measureDim) {
+        console.warn(
+            "Trying to use measure sort in an execution that does not contain MeasureGroup. Ignoring.",
+        );
+
+        return;
+    }
+
+    const valueSortKey: SortKeyValue = {
+        value: {
+            direction: convertSortDirection(sortItem.measureSortItem.direction),
+            dataColumnLocators: {
+                [measureDim.localIdentifier!]: convertMeasureLocators(sortItem.measureSortItem.locators),
+            },
+        },
+    };
+
+    sorting[nonMeasureDimIdx].push(valueSortKey);
+}
+
 /**
  * Places sorting into dimensions. Returns new dimensions augmented by sorting. Does not mutate.
  *
@@ -131,60 +195,9 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
 
     sorts.forEach((sortItem) => {
         if (isAttributeSort(sortItem)) {
-            const attributeIdentifier = sortItem.attributeSortItem.attributeIdentifier;
-            const direction = convertSortDirection(sortItem.attributeSortItem.direction);
-
-            const attributeSortKey: SortKeyAttribute = {
-                attribute: {
-                    attributeIdentifier,
-                    // ASC direction is default for Tiger backend. Dont send it to execution to prevent override of possible default sort label direction. It has the same meaning as TigerSortDirection.DEFAULT which does not exist.
-                    ...(direction === "ASC" ? {} : { direction }),
-                    sortType: convertAttributeSortType(sortItem),
-                },
-            };
-
-            const dimIdx = dims.findIndex((dim) => dim.itemIdentifiers.includes(attributeIdentifier));
-
-            if (dimIdx < 0) {
-                // eslint-disable-next-line no-console
-                console.log(
-                    `attempting to sort by attribute with localId ${attributeIdentifier} but this attribute is not in any dimension.`,
-                );
-
-                return;
-            }
-
-            sorting[dimIdx].push(attributeSortKey);
+            handleAttributeSort(sortItem, dims, sorting);
         } else {
-            if (nonMeasureDimIdx < 0) {
-                console.warn(
-                    "Trying to use measure sort in an execution that only contains dimension with MeasureGroup. " +
-                        "This is not valid sort. Measure sort is used to sort the non-measure dimension by values from measure dimension. Ignoring",
-                );
-
-                return;
-            }
-
-            if (!measureDim) {
-                console.warn(
-                    "Trying to use measure sort in an execution that does not contain MeasureGroup. Ignoring.",
-                );
-
-                return;
-            }
-
-            const valueSortKey: SortKeyValue = {
-                value: {
-                    direction: convertSortDirection(sortItem.measureSortItem.direction),
-                    dataColumnLocators: {
-                        [measureDim.localIdentifier!]: convertMeasureLocators(
-                            sortItem.measureSortItem.locators,
-                        ),
-                    },
-                },
-            };
-
-            sorting[nonMeasureDimIdx].push(valueSortKey);
+            handleMeasureSort(sortItem, nonMeasureDimIdx, measureDim, sorting);
         }
     });
 

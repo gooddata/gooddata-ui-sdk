@@ -6,7 +6,7 @@ import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IRepeaterProps>("Repeater", Repeater)
+export const theming = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

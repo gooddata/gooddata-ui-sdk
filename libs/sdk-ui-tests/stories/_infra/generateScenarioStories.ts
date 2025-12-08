@@ -5,7 +5,7 @@ import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { groupBy, sortBy } from "lodash-es";
 
 import { generateExportName, generateImports, header } from "./generateStories.js";
-import allScenarios from "../../scenarios/index.js";
+import { allScenarios } from "../../scenarios/index.js";
 import { ScenarioGroup } from "../../src/index.js";
 
 // delete any pre-existing stories

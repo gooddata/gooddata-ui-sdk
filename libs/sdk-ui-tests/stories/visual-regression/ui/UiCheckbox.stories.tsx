@@ -5,6 +5,7 @@ import { ComponentTable, UiCheckbox, UiCheckboxProps, propCombinationsFor } from
 import { IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "15 Ui/UiCheckbox",
 };

@@ -17,5 +17,3 @@ export interface UiBadgeProps {
 export function UiBadge({ label }: UiBadgeProps) {
     return <span className={b()}>{label}</span>;
 }
-
-export default UiBadge;

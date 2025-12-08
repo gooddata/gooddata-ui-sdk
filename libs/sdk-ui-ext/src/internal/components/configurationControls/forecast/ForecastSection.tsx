@@ -6,12 +6,12 @@ import { FormattedMessage } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
-import ForecastConfidenceControl from "./ForecastConfidenceControl.js";
+import { ForecastConfidenceControl } from "./ForecastConfidenceControl.js";
 import { messages } from "../../../../locales.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import CheckboxControl from "../CheckboxControl.js";
-import ConfigSection from "../ConfigSection.js";
-import InputControl from "../InputControl.js";
+import { CheckboxControl } from "../CheckboxControl.js";
+import { ConfigSection } from "../ConfigSection.js";
+import { InputControl } from "../InputControl.js";
 
 export interface IForecastSection {
     controlsDisabled: boolean;
@@ -22,7 +22,7 @@ export interface IForecastSection {
     pushData: (data: any) => any;
 }
 
-const ForecastSection = memo(function ForecastSection({
+export const ForecastSection = memo(function ForecastSection({
     controlsDisabled = false,
     enabled = false,
     properties = {},
@@ -90,5 +90,3 @@ const ForecastSection = memo(function ForecastSection({
         </ConfigSection>
     );
 });
-
-export default ForecastSection;

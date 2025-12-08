@@ -53,4 +53,4 @@ const colorAssignment = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleCha
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

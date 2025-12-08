@@ -151,18 +151,25 @@ export function applyDefaultFilterView(
 
     // If tabs are enabled and dashboard has tabs, apply default views per tab
     if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
-        const updatedTabs = dashboard.tabs.map((tab) => {
-            // Find default view specific to this tab, or use global default
+        // Find legacy global default view (without tabLocalIdentifier) as fallback for first tab
+        const legacyDefaultView = filterViews.find((view) => view.isDefault && !view.tabLocalIdentifier);
+
+        const updatedTabs = dashboard.tabs.map((tab, index) => {
+            // Find default view specific to this tab
             const tabDefaultView = filterViews.find(
                 (view) => view.isDefault && view.tabLocalIdentifier === tab.localIdentifier,
             );
 
-            if (tabDefaultView && tab.filterContext && isFilterContext(tab.filterContext)) {
+            // Use tab-specific default, or fall back to legacy global default only for the first tab
+            const isFirstTab = index === 0;
+            const effectiveDefaultView = tabDefaultView ?? (isFirstTab ? legacyDefaultView : undefined);
+
+            if (effectiveDefaultView && tab.filterContext && isFilterContext(tab.filterContext)) {
                 return {
                     ...tab,
                     filterContext: changeFilterContextSelection(
                         tab.filterContext,
-                        tabDefaultView.filterContext.filters,
+                        effectiveDefaultView.filterContext.filters,
                     ),
                 };
             }

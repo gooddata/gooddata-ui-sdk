@@ -10,7 +10,7 @@ import { IVisualizationProperties } from "../../../../interfaces/Visualization.j
 import { TEST_DEFAULT_SEPARATOR, createTestProperties } from "../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import * as ConfigSection from "../../ConfigSection.js";
-import ComparisonSection from "../ComparisonSection.js";
+import { ComparisonSection } from "../ComparisonSection.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "../ComparisonValuePath.js";
 
 const COMPARISON_TOGGLE_SELECTOR = ".s-config-section-comparison_section input";
@@ -20,7 +20,7 @@ describe("ComparisonSection", () => {
     const DEFAULT_DISABLED_BY_VISUALIZATION: boolean = false;
     const pushData = vi.fn();
 
-    const mockConfigSection = () => vi.spyOn(ConfigSection, "default");
+    const mockConfigSection = () => vi.spyOn(ConfigSection, "ConfigSection");
 
     const renderComparisonSection = (params?: {
         controlDisabled?: boolean;

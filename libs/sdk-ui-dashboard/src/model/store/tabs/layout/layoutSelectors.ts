@@ -84,6 +84,31 @@ export const selectLayoutByTab: DashboardSelector<
 });
 
 /**
+ * Returns basic layout keyed by tab identifier that does not contain any client-side extensions.
+ *
+ * This selector exists because analytical backend impls are not yet ready to handle persistence of custom
+ * widgets (that may have arbitrary payloads). The selector is used in dirty checking to compare layouts
+ * without any custom widgets. Note that this intentionally removes empty sections.
+ *
+ * @internal
+ */
+export const selectBasicLayoutByTab: DashboardSelector<
+    Record<string, IDashboardLayout<IWidget> | undefined>
+> = createSelector(selectLayoutByTab, (layoutByTab) => {
+    return Object.entries(layoutByTab).reduce<Record<string, IDashboardLayout<IWidget> | undefined>>(
+        (acc, [tabId, layout]) => {
+            if (layout) {
+                acc[tabId] = filterOutCustomWidgets(layout);
+            } else {
+                acc[tabId] = undefined;
+            }
+            return acc;
+        },
+        {},
+    );
+});
+
+/**
  * This selector returns current layout's stash. This stash can contain items that were removed from the layout with the
  * intent of further using the item elsewhere on the layout. The stash is a mapping of stashIdentifier to an array
  * of stashed items. The stash identifiers and stash usage is fully under control of the user.
@@ -134,7 +159,22 @@ export const selectScreen: DashboardSelector<ScreenSize | undefined> = createSel
     },
 );
 
-const filterOutCustomWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget>) => {
+/**
+ * Filters out custom widgets from a dashboard layout.
+ *
+ * This function removes all custom widgets (client-side extensions) from a layout,
+ * keeping only analytical widgets (KPI, Insight, etc.). It also removes empty sections
+ * that may result from filtering.
+ *
+ * This is used during save operations because analytical backend implementations are not yet
+ * ready to handle persistence of custom widgets that may have arbitrary payloads.
+ *
+ * @param layout - The layout to filter
+ * @returns A layout containing only analytical widgets
+ *
+ * @internal
+ */
+export const filterOutCustomWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget>) => {
     const dashboardLayout: IDashboardLayout<IWidget> = {
         ...layout,
         sections: layout.sections
@@ -166,15 +206,6 @@ const filterOutCustomWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget
 /**
  * This selector returns the basic dashboard layout that does not contain any client-side extensions.
  *
- * This selector exists because analytical backend impls are not yet ready to handle persistence of custom
- * widgets (that may have arbitrary payloads). The selector is used only in save and saveAs command handlers,
- * where it obtains the layout without any custom widgets and persists that. Note that the save/saveAs
- * handlers will not wipe the custom widgets from the state during the save - so at this point the custom
- * widgets are treated as client-side extensions.
- *
- * Note: this selector also intentionally removes empty sections; dashboard cannot cope with them and
- * they may readily appear if user adds section full of custom widgets and then does saveAs; such sections
- * would end up empty.
  *
  * @internal
  */
@@ -315,6 +346,17 @@ export const selectIgnoredDrillDownHierarchiesByWidgetRef: (
 ) => DashboardSelector<IDrillDownReference[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.ignoredDrillDownHierarchies ?? []),
 );
+
+/**
+ * @alpha
+ */
+export const selectIgnoredDrillToUrlAttributesByWidgetRef: (ref: ObjRef) => DashboardSelector<ObjRef[]> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(
+            selectAnalyticalWidgetByRef(ref),
+            (widget) => widget?.ignoredDrillToUrlAttributes ?? [],
+        ),
+    );
 
 /**
  * Selects widget drills by the widget ref.

@@ -40,6 +40,7 @@ const screenshotProps: INeobackstopConfig = {
     "edited-label": editLabelClickProps,
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "12 UI Kit/EditableLabel",
 };

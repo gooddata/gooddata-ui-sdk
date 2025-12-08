@@ -177,6 +177,7 @@ function BarChartBackplatedDataLabelsTest(config: Partial<IBarChartProps> = {}) 
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "02 Custom Test Stories/BarChart",
 };

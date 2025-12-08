@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 import * as xlsx from "node-xlsx";
 
-export default (on: Cypress.PluginEvents) => {
+export const parseXlsx = (on: Cypress.PluginEvents) => {
     // `on` is used to hook into various events Cypress emits
     on("task", {
         parseXlsx({ filePath }) {

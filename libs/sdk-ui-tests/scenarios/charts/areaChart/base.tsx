@@ -54,7 +54,7 @@ export const AreaChartWithViewByDateAndStackByDate = {
     stackBy: ReferenceMd.DateDatasets.Created.CreatedYear.Default,
 };
 
-export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
+export const base = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

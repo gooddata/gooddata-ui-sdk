@@ -48,4 +48,4 @@ const legendResponziveScenarios = responsiveScenarios(
     legendResponsiveVariants,
 );
 
-export default [legendScenarios, ...legendResponziveScenarios, dataLabelScenarios];
+export const customization = [legendScenarios, ...legendResponziveScenarios, dataLabelScenarios];

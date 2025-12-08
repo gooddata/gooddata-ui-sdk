@@ -10,7 +10,7 @@ import { IVisualizationProperties } from "../../../../../interfaces/Visualizatio
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as DropdownControl from "../../../DropdownControl.js";
-import ComparisonPositionControl from "../ComparisonPositionControl.js";
+import { ComparisonPositionControl } from "../ComparisonPositionControl.js";
 
 const TITLE_TEXT_QUERY = "Position";
 const DROPDOWN_BUTTON_SELECTOR = "button";
@@ -56,7 +56,7 @@ describe("ComparisonPositionControl", () => {
     });
 
     it("Should render based on dropdown-control", () => {
-        const MockDropdownControl = vi.spyOn(DropdownControl, "default");
+        const MockDropdownControl = vi.spyOn(DropdownControl, "DropdownControl");
 
         renderComparisonPositionControl();
         expect(MockDropdownControl).toHaveBeenCalledWith(

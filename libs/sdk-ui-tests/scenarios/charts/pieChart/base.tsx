@@ -21,7 +21,7 @@ export const PieChartWithSingleMeasureAndViewBy = {
  *  revisit how to test these cases
  */
 
-export default scenariosFor<IPieChartProps>("PieChart", PieChart)
+export const base = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

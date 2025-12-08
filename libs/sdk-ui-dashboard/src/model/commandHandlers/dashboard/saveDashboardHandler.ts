@@ -44,7 +44,7 @@ import {
     selectFilterContextIdentity,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { TabState } from "../../store/tabs/tabsState.js";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -156,8 +156,8 @@ function processExistingTabs(tabs: TabState[]): IDashboardTab[] {
             // explicitly type the result to avoid type errors caused by spread operators
             localIdentifier: tab.localIdentifier,
             title: tab.title ?? "",
-            // Use each tab's own layout, not a shared one
-            layout: tabLayout ? processLayout(tabLayout) : undefined,
+            // Use each tab's own layout, filter out custom widgets, then process
+            layout: tabLayout ? processLayout(filterOutCustomWidgets(tabLayout)) : undefined,
             filterContext,
             ...dateFilterConfigProp,
             ...dateFilterConfigsProp,
@@ -169,6 +169,64 @@ function processExistingTabs(tabs: TabState[]): IDashboardTab[] {
 
 export function processLayout(layout: IDashboardLayout<ExtendedDashboardWidget>): IDashboardLayout {
     return dashboardLayoutRemoveIdentity(layout as IDashboardLayout, isTemporaryIdentity);
+}
+
+function buildOptionalFilterConfigsProps(
+    attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
+    dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
+): Partial<Pick<IDashboardDefinition, "attributeFilterConfigs" | "dateFilterConfigs">> {
+    return {
+        ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
+        ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
+    };
+}
+
+function createDefaultTab(
+    layout: IDashboardLayout<ExtendedDashboardWidget> | undefined,
+    rootFilterContext: IFilterContext | ITempFilterContext,
+    dateFilterConfig: IDashboardDefinition["dateFilterConfig"],
+    attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
+    dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
+): IDashboardTab[] {
+    return [
+        {
+            localIdentifier: uuid(),
+            title: "",
+            layout: layout ? processLayout(layout) : undefined,
+            filterContext: rootFilterContext,
+            dateFilterConfig,
+            ...buildOptionalFilterConfigsProps(attributeFilterConfigs, dateFilterConfigs),
+        },
+    ];
+}
+
+function resolveProcessedTabs(
+    enableDashboardTabs: boolean,
+    tabs: TabState[] | undefined,
+    rootFilterContext: IFilterContext | ITempFilterContext | undefined,
+    layout: IDashboardLayout<ExtendedDashboardWidget> | undefined,
+    dateFilterConfig: IDashboardDefinition["dateFilterConfig"],
+    attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
+    dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
+): IDashboardTab[] | undefined {
+    // If tabs feature is enabled but no tabs exist, create a default tab with root-level properties
+    const shouldCreateDefaultTab = enableDashboardTabs && (!tabs || tabs.length === 0);
+
+    if (shouldCreateDefaultTab && rootFilterContext) {
+        return createDefaultTab(
+            layout,
+            rootFilterContext,
+            dateFilterConfig,
+            attributeFilterConfigs,
+            dateFilterConfigs,
+        );
+    }
+
+    if (tabs) {
+        return processExistingTabs(tabs);
+    }
+
+    return undefined;
 }
 
 /*
@@ -221,7 +279,6 @@ function* createDashboardSaveContext(
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
 
-    // If tabs feature is enabled but no tabs exist, create a default tab with root-level properties
     const rootFilterContext = filterContextDefinition
         ? ({
               ...filterContextIdentity,
@@ -229,24 +286,15 @@ function* createDashboardSaveContext(
           } as IFilterContext | ITempFilterContext)
         : undefined;
 
-    const shouldHaveTabs = enableDashboardTabs && (!tabs || tabs.length === 0);
-
-    const processedTabs: IDashboardTab[] | undefined =
-        shouldHaveTabs && rootFilterContext
-            ? [
-                  {
-                      localIdentifier: uuid(),
-                      title: "",
-                      layout: layout ? processLayout(layout) : undefined,
-                      filterContext: rootFilterContext,
-                      dateFilterConfig,
-                      ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
-                      ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
-                  },
-              ]
-            : tabs
-              ? processExistingTabs(tabs)
-              : undefined;
+    const processedTabs = resolveProcessedTabs(
+        enableDashboardTabs,
+        tabs,
+        rootFilterContext,
+        layout,
+        dateFilterConfig,
+        attributeFilterConfigs,
+        dateFilterConfigs,
+    );
 
     // Note: activeTabLocalIdentifier is NOT saved to dashboard MD - it's app state only
     // Dashboard always opens on first tab by default
@@ -261,8 +309,7 @@ function* createDashboardSaveContext(
         },
         layout,
         dateFilterConfig,
-        ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
-        ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
+        ...buildOptionalFilterConfigsProps(attributeFilterConfigs, dateFilterConfigs),
         ...(enableDashboardTabs && processedTabs ? { tabs: processedTabs } : {}),
         ...pluginsProp,
     };
@@ -338,8 +385,10 @@ function* save(
 
             // Update widget identities for this tab if both layouts exist
             if (stateTab?.layout?.layout && savedTab.layout) {
+                // Filter out custom widgets from state layout to match the saved layout structure
+                const stateLayoutWithoutCustomWidgets = filterOutCustomWidgets(stateTab.layout.layout);
                 const mapping = dashboardLayoutWidgetIdentityMap(
-                    stateTab.layout.layout as IDashboardLayout,
+                    stateLayoutWithoutCustomWidgets,
                     savedTab.layout,
                 );
                 actions.push(

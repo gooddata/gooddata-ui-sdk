@@ -12,6 +12,7 @@ export enum TigerFeaturesNames {
     // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
+    EnableMetricFormatOverrides = "enableMetricFormatOverrides",
     EnableDescriptions = "enableDescriptions",
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
     EnableSqlDatasets = "enableSqlDatasets",
@@ -130,11 +131,13 @@ export enum TigerFeaturesNames {
     EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
     EnableFiscalCalendars = "enableFiscalCalendars",
     EnablePivotTablePagination = "enablePivotTablePagination",
+    EnableImplicitDrillToUrl = "enableImplicitDrillToUrl",
 }
 
 export type ITigerFeatureFlags = {
     dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
+    enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
     enableDescriptions: (typeof FeatureFlagsValues)["enableDescriptions"][number];
     enableKPIDashboardExportPDF: (typeof FeatureFlagsValues)["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
@@ -253,11 +256,13 @@ export type ITigerFeatureFlags = {
     enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
     enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
+    enableImplicitDrillToUrl: (typeof FeatureFlagsValues)["enableImplicitDrillToUrl"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
+    enableMetricFormatOverrides: false,
     enableDescriptions: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
@@ -376,11 +381,13 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnomalyDetectionAlert: false,
     enableFiscalCalendars: false,
     enablePivotTablePagination: false,
+    enableImplicitDrillToUrl: false,
 };
 
 export const FeatureFlagsValues = {
     dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
+    enableMetricFormatOverrides: [true, false] as const,
     enableDescriptions: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
@@ -500,4 +507,5 @@ export const FeatureFlagsValues = {
     enableAnomalyDetectionAlert: [true, false] as const,
     enableFiscalCalendars: [true, false] as const,
     enablePivotTablePagination: [true, false] as const,
+    enableImplicitDrillToUrl: [true, false] as const,
 };

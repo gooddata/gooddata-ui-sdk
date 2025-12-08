@@ -191,6 +191,60 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         return result.length > 0 ? { dependsOn: result } : {};
     }
 
+    private buildElementsRequest(
+        options: IElementsQueryOptions | undefined,
+        labelIdentifier: string,
+        cacheId: string | undefined,
+    ): ElementsRequest {
+        return {
+            label: labelIdentifier,
+            ...(options?.complement && { complementFilter: options.complement }),
+            ...(options?.filter && { patternFilter: options.filter }),
+            ...this.getExactFilterSpec(options ?? {}),
+            ...this.getDependsOnSpec(),
+            ...(options?.excludePrimaryLabel && {
+                excludePrimaryLabel: options.excludePrimaryLabel,
+            }),
+            ...(options?.order && {
+                sortOrder: options.order === "asc" ? "ASC" : "DESC",
+            }),
+            ...(this.validateBy && { validateBy: this.validateBy.map(this.mapValidationItems) }),
+            ...(cacheId && { cacheId: cacheId }),
+            ...(options?.filterByPrimaryLabel && {
+                filterBy: {
+                    labelType: "PRIMARY",
+                },
+            }),
+        };
+    }
+
+    private mapElementToAttributeElement(
+        element: { title: string | null; primaryTitle?: string | null },
+        shouldFormatTitle: boolean,
+        dateValueFormatter: ReturnType<typeof createDateValueFormatter>,
+        dateValueNormalizer: ReturnType<typeof createDateValueNormalizer>,
+        sdkGranularity: ReturnType<typeof toSdkGranularity>,
+        locale: FormattingLocale,
+        pattern: string,
+    ): IAttributeElement {
+        let objWithFormatted = {};
+
+        if (shouldFormatTitle) {
+            const formattedTitle = dateValueFormatter(element.title, sdkGranularity, locale, pattern);
+            const normalizedValue = dateValueNormalizer(element.title, sdkGranularity, locale);
+            objWithFormatted = {
+                formattedTitle,
+                normalizedValue,
+            };
+        }
+
+        return {
+            title: element.title,
+            uri: element.primaryTitle ?? element.title,
+            ...objWithFormatted,
+        };
+    }
+
     private async queryWorker(options: IElementsQueryOptions | undefined): Promise<IElementsQueryResult> {
         const { ref } = this;
         if (!isIdentifierRef(ref)) {
@@ -199,28 +253,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
 
         return ServerPaging.for(
             async ({ offset, limit, cacheId }) => {
-                const response = await this.authCall((client) => {
-                    const elementsRequest: ElementsRequest = {
-                        label: ref.identifier,
-                        ...(options?.complement && { complementFilter: options.complement }),
-                        ...(options?.filter && { patternFilter: options.filter }),
-                        ...this.getExactFilterSpec(options ?? {}),
-                        ...this.getDependsOnSpec(),
-                        ...(options?.excludePrimaryLabel && {
-                            excludePrimaryLabel: options.excludePrimaryLabel,
-                        }),
-                        ...(options?.order && {
-                            sortOrder: options.order === "asc" ? "ASC" : "DESC",
-                        }),
-                        ...(this.validateBy && { validateBy: this.validateBy.map(this.mapValidationItems) }),
-                        ...(cacheId && { cacheId: cacheId }),
-                        ...(options?.filterByPrimaryLabel && {
-                            filterBy: {
-                                labelType: "PRIMARY",
-                            },
-                        }),
-                    };
+                const elementsRequest = this.buildElementsRequest(options, ref.identifier, cacheId);
 
+                const response = await this.authCall((client) => {
                     return ActionsApi_ComputeLabelElementsPost(
                         client.axios,
                         "",
@@ -242,38 +277,22 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 const sdkGranularity = toSdkGranularity(elementsGranularity);
                 const locale = format?.locale as FormattingLocale;
                 const pattern = format?.pattern as string;
-                const shouldFormatTitle = sdkGranularity && format;
+                const shouldFormatTitle = !!(sdkGranularity && format);
                 const dateValueFormatter = createDateValueFormatter(this.dateFormatter);
                 const dateValueNormalizer = createDateValueNormalizer();
 
                 return {
-                    items: elements.map((element): IAttributeElement => {
-                        let objWithFormatted = {};
-
-                        if (shouldFormatTitle) {
-                            const formattedTitle = dateValueFormatter(
-                                element.title,
-                                sdkGranularity,
-                                locale,
-                                pattern,
-                            );
-                            const normalizedValue = dateValueNormalizer(
-                                element.title,
-                                sdkGranularity,
-                                locale,
-                            );
-                            objWithFormatted = {
-                                formattedTitle,
-                                normalizedValue,
-                            };
-                        }
-
-                        return {
-                            title: element.title,
-                            uri: element.primaryTitle ?? element.title,
-                            ...objWithFormatted,
-                        };
-                    }),
+                    items: elements.map((element) =>
+                        this.mapElementToAttributeElement(
+                            element,
+                            shouldFormatTitle,
+                            dateValueFormatter,
+                            dateValueNormalizer,
+                            sdkGranularity,
+                            locale,
+                            pattern,
+                        ),
+                    ),
                     totalCount: paging.total,
                     cacheId: responseCacheId,
                 };

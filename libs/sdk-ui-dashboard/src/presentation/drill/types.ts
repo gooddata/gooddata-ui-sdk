@@ -245,6 +245,7 @@ export function isDrillToCustomUrlConfig(item: unknown): item is IDrillToCustomU
 export interface IDrillToAttributeUrlConfig {
     insightAttributeDisplayForm: ObjRef;
     drillToAttributeDisplayForm: ObjRef;
+    implicit?: boolean; // true if the drill is defined implicitly for all attributes based on insight config
 }
 
 export function isDrillToAttributeUrlConfig(item: unknown): item is IDrillToAttributeUrlConfig {

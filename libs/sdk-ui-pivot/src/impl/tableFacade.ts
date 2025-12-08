@@ -14,7 +14,6 @@ import {
     emptyHeaderTitleFromIntl,
 } from "@gooddata/sdk-ui";
 
-import ApiWrapper from "./base/agApiWrapper.js";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper.js";
 import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils.js";
 import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants.js";
@@ -54,6 +53,7 @@ import { agColId } from "./structure/tableDescriptorTypes.js";
 import { sleep } from "./utils.js";
 import { IResizedColumns, UIClick } from "../columnWidths.js";
 import { ICorePivotTableProps, IPivotTableConfig } from "../publicTypes.js";
+import { getHeaderHeight } from "./base/agApiWrapper.js";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
@@ -857,7 +857,7 @@ export class TableFacade {
         }
         const rowAggregationCount = dv.rawData().rowTotals()?.length ?? 0;
 
-        const headerHeight = ApiWrapper.getHeaderHeight(gridApi);
+        const headerHeight = getHeaderHeight(gridApi);
 
         // add small room for error to avoid scrollbars that scroll one, two pixels
         // increased in order to resolve issue BB-1509
@@ -882,7 +882,6 @@ export class TableFacade {
             DEFAULT_ROW_HEIGHT,
             gridApi,
             this.getGroupingProvider(),
-            ApiWrapper,
         );
     };
 

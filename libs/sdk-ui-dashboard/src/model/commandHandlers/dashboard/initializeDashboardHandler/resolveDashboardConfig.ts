@@ -216,26 +216,51 @@ export function* resolveDashboardConfig(
     };
 }
 
+const CONFIG_DEFAULTS: Required<
+    Pick<
+        DashboardConfig,
+        | "objectAvailability"
+        | "isReadOnly"
+        | "isEmbedded"
+        | "isExport"
+        | "isWhiteLabeled"
+        | "disableDefaultDrills"
+        | "enableFilterValuesResolutionInDrillEvents"
+        | "menuButtonItemsVisibility"
+        | "allowUnfinishedFeatures"
+        | "allowCreateInsightRequest"
+        | "initialRenderMode"
+        | "hideSaveAsNewButton"
+        | "hideShareButton"
+        | "disableCrossFiltering"
+        | "disableUserFilterReset"
+        | "widgetsOverlay"
+    >
+> &
+    Pick<DashboardConfig, "externalRecipient"> = {
+    objectAvailability: {},
+    isReadOnly: false,
+    isEmbedded: false,
+    isExport: false,
+    isWhiteLabeled: false,
+    disableDefaultDrills: false,
+    enableFilterValuesResolutionInDrillEvents: false,
+    menuButtonItemsVisibility: {},
+    allowUnfinishedFeatures: false,
+    allowCreateInsightRequest: false,
+    initialRenderMode: "view",
+    hideSaveAsNewButton: false,
+    hideShareButton: false,
+    disableCrossFiltering: false,
+    disableUserFilterReset: false,
+    widgetsOverlay: {},
+    externalRecipient: undefined,
+};
+
 function applyConfigDefaults<T extends DashboardConfig>(config: T) {
     return {
+        ...CONFIG_DEFAULTS,
         ...config,
-        objectAvailability: config.objectAvailability ?? {},
-        isReadOnly: config.isReadOnly ?? false,
-        isEmbedded: config.isEmbedded ?? false,
-        isExport: config.isExport ?? false,
-        isWhiteLabeled: config.isWhiteLabeled ?? false,
-        disableDefaultDrills: config.disableDefaultDrills ?? false,
-        enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
-        menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
-        allowUnfinishedFeatures: config.allowUnfinishedFeatures ?? false,
-        allowCreateInsightRequest: config.allowCreateInsightRequest ?? false,
-        initialRenderMode: config.initialRenderMode ?? "view",
-        hideSaveAsNewButton: config.hideSaveAsNewButton ?? false,
-        hideShareButton: config.hideShareButton ?? false,
-        disableCrossFiltering: config.disableCrossFiltering ?? false,
-        disableUserFilterReset: config.disableUserFilterReset ?? false,
-        widgetsOverlay: config.widgetsOverlay ?? {},
-        externalRecipient: config.externalRecipient ?? undefined,
     };
 }
 

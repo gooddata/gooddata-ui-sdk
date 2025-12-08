@@ -13,11 +13,7 @@ export interface IHeaderCellProps {
     textAlign?: AlignPositions;
 }
 
-export default function TotalHeaderCell({
-    displayText,
-    className,
-    textAlign = ALIGN_LEFT,
-}: IHeaderCellProps) {
+export function TotalHeaderCell({ displayText, className, textAlign = ALIGN_LEFT }: IHeaderCellProps) {
     const classes = cx(HEADER_LABEL_CLASS, "gd-pivot-table-header-label", {
         "gd-pivot-table-header-label--right": textAlign === "right",
         "gd-pivot-table-header-label--center": textAlign === "center",

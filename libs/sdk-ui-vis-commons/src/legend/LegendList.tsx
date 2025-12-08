@@ -5,7 +5,7 @@ import { ReactElement, memo, useRef } from "react";
 import { LegendSeriesContextStore } from "./context.js";
 import { groupSeries } from "./helpers.js";
 import { LegendGroup } from "./LegendGroup.js";
-import LegendItem from "./LegendItem.js";
+import { LegendItem } from "./LegendItem.js";
 import {
     ISeriesItem,
     ItemBorderRadiusPredicate,

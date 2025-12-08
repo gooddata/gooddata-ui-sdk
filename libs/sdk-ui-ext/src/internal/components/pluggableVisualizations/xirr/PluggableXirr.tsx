@@ -40,7 +40,7 @@ import {
     getDefaultXirrUiConfig,
     getXirrUiConfig,
 } from "../../../utils/uiConfigHelpers/xirrUiConfigHelper.js";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import { UnsupportedConfigurationPanel } from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 
 /**

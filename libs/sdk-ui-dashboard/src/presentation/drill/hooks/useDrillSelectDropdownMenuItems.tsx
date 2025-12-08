@@ -6,6 +6,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { IUiMenuItem } from "@gooddata/sdk-ui-kit";
 
+import { selectEnableImplicitDrillToUrl, useDashboardSelector } from "../../../model/index.js";
 import { DashboardDrillDefinition } from "../../../types.js";
 import { DrillSelectItem, DrillType } from "../DrillSelect/types.js";
 
@@ -14,6 +15,7 @@ const groupMenuItemMessages = defineMessages({
     drillInto: { id: "drill_modal_picker.drill-into" },
     crossFilter: { id: "drill_modal_picker.cross-filter" },
     keyDriverAnalysis: { id: "drill_modal_picker.key-driver-analysis" },
+    drillToUrl: { id: "drill_modal_picker.drill-to-url" },
 });
 
 export interface IDrillSelectDropdownMenuItemData {
@@ -34,15 +36,18 @@ export const useDrillSelectDropdownMenuItems = ({
     drillItems,
     crossFilteringItems,
     keyDriverAnalysisItems,
+    drillToUrlItems,
     onSelect,
 }: {
     drillDownItems: DrillSelectItem[];
     drillItems: DrillSelectItem[];
     crossFilteringItems: DrillSelectItem[];
     keyDriverAnalysisItems: DrillSelectItem[];
+    drillToUrlItems: DrillSelectItem[];
     onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
 }): IMenuInteractiveItem[] => {
     const { formatMessage } = useIntl();
+    const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
 
     return useMemo<IMenuInteractiveItem[]>(() => {
         const createMenuGroup = (
@@ -81,6 +86,11 @@ export const useDrillSelectDropdownMenuItems = ({
                 ? [createMenuGroup(drillDownItems, "drill-down", groupMenuItemMessages.drillDown.id)]
                 : [];
 
+        const drillToUrlMenuItems =
+            enableImplicitDrillToUrl && drillToUrlItems.length > 0
+                ? [createMenuGroup(drillToUrlItems, "drill-to-url", groupMenuItemMessages.drillToUrl.id)]
+                : [];
+
         const drillMenuItems =
             drillItems.length > 0
                 ? [createMenuGroup(drillItems, "drill-into", groupMenuItemMessages.drillInto.id)]
@@ -107,6 +117,16 @@ export const useDrillSelectDropdownMenuItems = ({
             ...drillMenuItems,
             ...crossFilteringMenuItems,
             ...keyDriverAnalysisMenu,
+            ...drillToUrlMenuItems,
         ];
-    }, [drillDownItems, drillItems, crossFilteringItems, keyDriverAnalysisItems, formatMessage, onSelect]);
+    }, [
+        drillDownItems,
+        drillItems,
+        crossFilteringItems,
+        keyDriverAnalysisItems,
+        drillToUrlItems,
+        formatMessage,
+        onSelect,
+        enableImplicitDrillToUrl,
+    ]);
 };

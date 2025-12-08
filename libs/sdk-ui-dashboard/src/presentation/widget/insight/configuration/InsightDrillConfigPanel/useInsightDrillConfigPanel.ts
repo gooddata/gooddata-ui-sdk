@@ -21,17 +21,24 @@ import {
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
+import {
+    getDrillToUrlMappedConfigForWidget,
+    getGlobalDrillDownMappedConfigForWidget,
+    getMappedConfigForWidget,
+} from "./drillConfigMapper.js";
 import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 import {
     addDrillDownForInsightWidget,
     modifyDrillDownForInsightWidget,
     modifyDrillsForInsightWidget,
     removeDrillDownForInsightWidget,
+    removeDrillToUrlForInsightWidget,
     removeDrillsForInsightWidget,
     selectAllCatalogAttributeHierarchies,
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
     selectDrillTargetsByWidgetRef,
+    selectDrillsToUrlAttributeByWidgetRef,
+    selectEnableImplicitDrillToUrl,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
     selectInsightByRef,
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
@@ -47,6 +54,8 @@ import {
     IDrillDownAttributeHierarchyDefinition,
     isDrillDownToAttributeHierarchyConfig,
     isDrillDownToAttributeHierarchyDefinition,
+    isDrillToAttributeUrlConfig,
+    isDrillToUrlConfig,
 } from "../../../../drill/types.js";
 
 const messages = defineMessages({
@@ -57,7 +66,9 @@ const messages = defineMessages({
 const mergeDrillConfigItems = (
     drillConfigItems: IDrillConfigItem[],
     globalDrillDownItems: IDrillConfigItem[],
+    drillToUrlItems: IDrillConfigItem[],
     incompleteItems: IDrillConfigItem[],
+    enableImplicitDrillToUrl: boolean,
 ): IDrillConfigItem[] => {
     return incompleteItems.reduce(
         (acc: IDrillConfigItem[], incompleteItem: IDrillConfigItem) => {
@@ -71,7 +82,11 @@ const mergeDrillConfigItems = (
             }
             return acc;
         },
-        [...(globalDrillDownItems ?? []), ...(drillConfigItems ?? [])],
+        [
+            ...(globalDrillDownItems ?? []),
+            ...(enableImplicitDrillToUrl ? (drillToUrlItems ?? []) : []),
+            ...(drillConfigItems ?? []),
+        ],
     );
 };
 
@@ -127,6 +142,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     invariant(isInsightWidget(widget), "must be insight widget");
     const insight = useDashboardSelector(selectInsightByRef(widget.insight));
+    const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
     const { drills: widgetDrills } = widget;
     const { incompleteItems, deleteIncompleteItem, onChangeItem, onOriginSelect, completeItem, isItemNew } =
         useIncompleteItems({ widgetDrills });
@@ -141,6 +157,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const widgetGlobalDrillDowns = useDashboardSelector(
         selectGlobalDrillsDownAttributeHierarchyByWidgetRef(widgetRef),
     );
+    const widgetDrillToUrls = useDashboardSelector(selectDrillsToUrlAttributeByWidgetRef(widgetRef));
 
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const invalidCustomUrlDrillLocalIds = useDashboardSelector(
@@ -170,10 +187,21 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [widgetGlobalDrillDowns, availableDrillTargets]);
 
-    const mergedItems = useMemo(
-        () => mergeDrillConfigItems(drillItems, globalDrillDownItems, incompleteItems),
-        [drillItems, globalDrillDownItems, incompleteItems],
-    );
+    const drillToUrlItems = useMemo(() => {
+        return availableDrillTargets
+            ? getDrillToUrlMappedConfigForWidget(widgetDrillToUrls, availableDrillTargets, widget)
+            : [];
+    }, [widgetDrillToUrls, availableDrillTargets, widget]);
+
+    const mergedItems = useMemo(() => {
+        return mergeDrillConfigItems(
+            drillItems,
+            globalDrillDownItems,
+            drillToUrlItems,
+            incompleteItems,
+            enableImplicitDrillToUrl,
+        );
+    }, [drillItems, globalDrillDownItems, drillToUrlItems, incompleteItems, enableImplicitDrillToUrl]);
 
     const originSelectorItems = useMemo(
         () =>
@@ -267,6 +295,13 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                             buildBlacklistHierarchies(item, attributeHierarchies),
                         ),
                     );
+                } else if (
+                    isDrillToUrlConfig(item) &&
+                    isDrillToAttributeUrlConfig(item.urlDrillTarget) &&
+                    item.urlDrillTarget.implicit
+                ) {
+                    const displayForm = item.urlDrillTarget.insightAttributeDisplayForm;
+                    dispatch(removeDrillToUrlForInsightWidget(widgetRef, [displayForm]));
                 } else {
                     dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
                 }

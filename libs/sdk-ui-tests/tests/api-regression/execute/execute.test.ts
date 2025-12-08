@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { IExecuteProps } from "@gooddata/sdk-ui";
 
-import executeScenarios from "../../../scenarios/execute/base.js";
+import { executeScenarios } from "../../../scenarios/execute/base.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 

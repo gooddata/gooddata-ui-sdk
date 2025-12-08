@@ -83,6 +83,7 @@ const bucketItemNames: IBucketItemDescriptors = {
     },
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "12 UI Kit/ChartSorting",
 };

@@ -37,4 +37,4 @@ const axisNameScenarios = scenariosFor<IScatterPlotProps>("ScatterPlot", Scatter
     })
     .addScenarios("axis name configuration", ScatterPlotWithMeasuresAndAttribute, axisNameCustomization);
 
-export default [axisConfig, axisNameScenarios];
+export const axisCustomization = [axisConfig, axisNameScenarios];

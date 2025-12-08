@@ -97,4 +97,4 @@ const colorAssignment = scenariosFor<IBarChartProps>("BarChart", BarChart)
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

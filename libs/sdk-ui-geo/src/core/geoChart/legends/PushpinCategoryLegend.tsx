@@ -38,7 +38,7 @@ export interface IPushpinCategoryLegendProps {
     chartFill?: ChartFillType;
 }
 
-export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): ReactElement {
+export function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): ReactElement {
     const { contentRect, hasSizeLegend, isFluidLegend, renderPopUp, isSizeLegendVisible = true } = props;
 
     if (renderPopUp) {

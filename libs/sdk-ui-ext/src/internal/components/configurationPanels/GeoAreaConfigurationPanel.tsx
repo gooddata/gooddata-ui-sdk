@@ -5,8 +5,8 @@ import { ReactNode } from "react";
 import { IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
-import ColorsSection from "../configurationControls/colors/ColorsSection.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
+import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 
 /**
  * Configuration panel for GeoAreaChart
@@ -20,7 +20,7 @@ import ColorsSection from "../configurationControls/colors/ColorsSection.js";
  *
  * @internal
  */
-export default class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
+export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         return (
             <div>

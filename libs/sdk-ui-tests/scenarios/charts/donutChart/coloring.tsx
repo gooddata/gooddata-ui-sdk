@@ -73,4 +73,4 @@ const colorAssignment = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

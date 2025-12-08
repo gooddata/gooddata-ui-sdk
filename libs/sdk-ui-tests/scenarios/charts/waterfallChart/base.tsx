@@ -20,7 +20,7 @@ export const WaterfallChartWithMultiMeasures = {
     ],
 };
 
-export default scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
+export const base = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         screenshotSize: { width: 800, height: 600 },

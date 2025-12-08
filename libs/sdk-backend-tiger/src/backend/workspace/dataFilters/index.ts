@@ -2,10 +2,7 @@
 
 import { v4 as uuid } from "uuid";
 
-import type {
-    ITigerClientBase,
-    JsonApiWorkspaceDataFilterSettingOutWithLinks,
-} from "@gooddata/api-client-tiger";
+import { ITigerClientBase, JsonApiWorkspaceDataFilterSettingOutWithLinks } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityWorkspaceDataFilterSettings,
     EntitiesApi_CreateEntityWorkspaceDataFilters,

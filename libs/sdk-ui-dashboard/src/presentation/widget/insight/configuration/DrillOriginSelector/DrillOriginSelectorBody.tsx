@@ -6,8 +6,8 @@ import { FormattedMessage } from "react-intl";
 
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import DrillAttributeSelectorList from "./DrillAttributeSelectorList.js";
-import DrillMeasureSelectorList from "./DrillMeasureSelectorList.js";
+import { DrillAttributeSelectorList } from "./DrillAttributeSelectorList.js";
+import { DrillMeasureSelectorList } from "./DrillMeasureSelectorList.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
 export interface IDrillOriginSelectorBodyProps {
@@ -16,7 +16,7 @@ export interface IDrillOriginSelectorBodyProps {
     onCloseDropdown: () => void;
 }
 
-function DrillOriginSelectorBody({
+export function DrillOriginSelectorBody({
     onCloseDropdown,
     onSelect,
     supportedItems,
@@ -94,5 +94,3 @@ function DrillAttributeSelectorBody({
         </>
     ) : null;
 }
-
-export default DrillOriginSelectorBody;

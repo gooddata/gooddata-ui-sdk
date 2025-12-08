@@ -45,7 +45,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletChartUiConfigHelper.js";
-import BulletChartConfigurationPanel from "../../configurationPanels/BulletChartConfigurationPanel.js";
+import { BulletChartConfigurationPanel } from "../../configurationPanels/BulletChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 

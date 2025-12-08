@@ -15,6 +15,12 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
+import {
+    DELETE_CONFIRM_DIALOG_ID,
+    PAUSE_CONFIRM_DIALOG_ID,
+    RESUME_CONFIRM_DIALOG_ID,
+    UNSUBSCRIBE_CONFIRM_DIALOG_ID,
+} from "../constants.js";
 import { messages } from "../messages.js";
 import { AutomationAction, AutomationsType, IAutomationsPendingAction, IEditAutomation } from "../types.js";
 
@@ -27,6 +33,7 @@ interface IAutomationMenuItem {
     withSeparator?: boolean;
     disabled?: boolean;
     tooltip?: string;
+    ariaControls?: string;
 }
 
 export function AutomationMenu({
@@ -152,6 +159,7 @@ export function AutomationMenu({
                 id: "unsubscribe",
                 label: intl.formatMessage(messages.menuUnsubscribe),
                 onClick: onUnsubscribe,
+                ariaControls: UNSUBSCRIBE_CONFIRM_DIALOG_ID,
             });
         }
 
@@ -160,6 +168,7 @@ export function AutomationMenu({
                 id: "resume",
                 label: intl.formatMessage(messages.menuResume),
                 onClick: onResume,
+                ariaControls: RESUME_CONFIRM_DIALOG_ID,
             });
         }
 
@@ -168,6 +177,7 @@ export function AutomationMenu({
                 id: "pause",
                 label: intl.formatMessage(messages.menuPause),
                 onClick: onPause,
+                ariaControls: PAUSE_CONFIRM_DIALOG_ID,
             });
         }
 
@@ -183,6 +193,7 @@ export function AutomationMenu({
                 label: intl.formatMessage(messages.menuDelete),
                 onClick: onDelete,
                 withSeparator: true,
+                ariaControls: DELETE_CONFIRM_DIALOG_ID,
             });
         }
 
@@ -288,7 +299,8 @@ function AutomationMenuItem({ menuItem, setMenuItemRef }: AutomationMenuItemProp
                         accessibilityConfig={{
                             role: "menuitem",
                             ariaDisabled: menuItem.disabled,
-                            ariaHasPopup: "dialog",
+                            ariaHasPopup: menuItem.ariaControls ? "dialog" : undefined,
+                            ariaControls: menuItem.ariaControls,
                         }}
                     />
                 }

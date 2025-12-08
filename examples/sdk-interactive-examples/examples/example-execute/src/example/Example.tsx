@@ -4,9 +4,9 @@ import { Execute } from "@gooddata/sdk-ui";
 
 import { CustomVisualization } from "./CustomVisualization.js";
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
-export default function Example() {
+export function Example() {
     return (
         <>
             <h1>Custom Visualization</h1>

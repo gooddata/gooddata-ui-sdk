@@ -15,6 +15,7 @@ import {
 import { INeobackstopScenarioConfig, IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "15 Ui/UiAsyncTable",
 };

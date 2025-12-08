@@ -46,7 +46,7 @@ import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
-import GeoAreaConfigurationPanel from "../../configurationPanels/GeoAreaConfigurationPanel.js";
+import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { extractControls } from "../geoChartNext/geoAttributeHelper.js";
 import { tryCreateVirtualBucket } from "../geoChartNext/geoVirtualBucketFactory.js";

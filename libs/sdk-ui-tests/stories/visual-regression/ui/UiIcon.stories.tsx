@@ -134,6 +134,7 @@ function UiIconTest({ showCode, iconGallery = false }: { showCode?: boolean; ico
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "15 Ui/UiIcon",
 };

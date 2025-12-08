@@ -11,7 +11,7 @@ import {
     useState,
 } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 
@@ -41,9 +41,10 @@ export interface IMeasureNumberFormatOwnProps {
     disabled?: boolean;
 }
 
-export type MeasureNumberFormatProps = IMeasureNumberFormatOwnProps & WrappedComponentProps;
+export type MeasureNumberFormatProps = IMeasureNumberFormatOwnProps;
 
-const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(props: MeasureNumberFormatProps) {
+function MeasureNumberFormatCore(props: MeasureNumberFormatProps) {
+    const intl = useIntl();
     const {
         toggleButton: ToggleButton,
         disabled,
@@ -56,7 +57,6 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
         customFormatDialogPositioning,
         documentationLink,
         templates,
-        intl,
         setFormat,
     } = props;
 
@@ -188,9 +188,7 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
             ) : null}
         </>
     );
-});
-
-const MeasureNumberFormatWithIntl = injectIntl(WrappedMeasureNumberFormat);
+}
 
 /**
  * @internal
@@ -198,7 +196,7 @@ const MeasureNumberFormatWithIntl = injectIntl(WrappedMeasureNumberFormat);
 export const MeasureNumberFormat = memo(function MeasureNumberFormat(props: IMeasureNumberFormatOwnProps) {
     return (
         <IntlWrapper locale={props.locale}>
-            <MeasureNumberFormatWithIntl {...props} />
+            <MeasureNumberFormatCore {...props} />
         </IntlWrapper>
     );
 });

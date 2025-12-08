@@ -1851,6 +1851,8 @@ export interface IDrillableWidget {
     readonly drills: DrillDefinition[];
     // @alpha
     readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
+    // @alpha
+    readonly ignoredDrillToUrlAttributes?: ObjRef[];
 }
 
 // @alpha
@@ -2604,6 +2606,7 @@ export interface IMeasureMetadataObjectBase {
     expression: string;
     format: string;
     isLocked?: boolean;
+    metricType?: MetricType;
     tags?: string[];
     // (undocumented)
     type: "measure";
@@ -2705,6 +2708,11 @@ export interface IMetadataObjectIdentity {
     ref: ObjRef;
     // @deprecated
     uri: string;
+}
+
+// @alpha
+export interface IMetricFormatOverrideSetting {
+    formats?: Record<string, string> | null;
 }
 
 // @public
@@ -3678,6 +3686,8 @@ export interface ISettings {
     allowUnsafeFlexConnectEndpoints?: boolean;
     attachmentSizeLimit?: number | null;
     // @alpha
+    currencyFormatOverride?: string | null;
+    // @alpha
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
     // @alpha
     dateFilterConfig?: IDateFilterConfig;
@@ -3720,6 +3730,7 @@ export interface ISettings {
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
     enableDrilledTooltip?: boolean;
+    enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;
@@ -3737,6 +3748,7 @@ export interface ISettings {
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    enableImplicitDrillToUrl?: boolean;
     enableInPlatformNotifications?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
@@ -3746,6 +3758,7 @@ export interface ISettings {
     enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
+    enableMetricFormatOverrides?: boolean;
     // (undocumented)
     enableMongoDbDataSource?: boolean;
     // (undocumented)
@@ -3805,6 +3818,8 @@ export interface ISettings {
     llmEndpoint?: ILlmEndpoint;
     metadataLocale?: string;
     metadataTimeZone?: string;
+    // @alpha
+    metricFormatOverride?: IMetricFormatOverrideSetting;
     // @alpha
     openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
@@ -5058,6 +5073,9 @@ export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMet
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
+
+// @public
+export type MetricType = "UNSPECIFIED" | "CURRENCY";
 
 // @public
 export function modifyAttribute(attribute: IAttribute, modifications?: AttributeModifications): IAttribute;

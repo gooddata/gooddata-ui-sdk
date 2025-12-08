@@ -73,4 +73,4 @@ const colorAssignment = scenariosFor<IPieChartProps>("PieChart", PieChart)
             ),
     );
 
-export default [colorsAndPalette, colorAssignment];
+export const coloring = [colorsAndPalette, colorAssignment];

@@ -20,7 +20,7 @@ export const FunnelChartWithArithmeticMeasures = {
     measures: [ReferenceMd.Amount, ReferenceMdExt.CalculatedLost, ReferenceMd.Won],
 };
 
-export default scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
+export const base = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

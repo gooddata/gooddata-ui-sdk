@@ -7,7 +7,7 @@ import cx from "classnames";
 import { IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
-import ColorPaletteItem from "./ColorPaletteItem.js";
+import { ColorPaletteItem } from "./ColorPaletteItem.js";
 
 const MAX_SMALL_PALETTE_SIZE = 20;
 
@@ -66,5 +66,3 @@ export const ColorPalette = memo(function ColorPalette({
         </div>
     );
 });
-
-export default ColorPalette;

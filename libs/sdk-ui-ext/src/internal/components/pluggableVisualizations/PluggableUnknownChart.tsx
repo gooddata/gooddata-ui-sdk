@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { Component, ReactElement } from "react";
+import { ReactElement, useEffect, useMemo } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -19,25 +19,18 @@ import {
 } from "../../interfaces/Visualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
-export class LocalizedUnknownVisualizationClass extends Component<IIntlLocalizedUnknownVisualizationClass> {
-    private errorDetails: {
-        message: string;
-        description: string;
-    };
+function LocalizedUnknownVisualizationClass({
+    intl,
+    onAfterRender,
+}: IIntlLocalizedUnknownVisualizationClass): ReactElement {
+    const errorDetails = useMemo(() => newErrorMapping(intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN], [intl]);
 
-    public override componentDidMount(): void {
-        this.props.onAfterRender?.();
-    }
+    useEffect(() => {
+        onAfterRender?.();
+    }, [onAfterRender]);
 
-    constructor(props: IIntlLocalizedUnknownVisualizationClass) {
-        super(props);
-        this.errorDetails = newErrorMapping(props.intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
-    }
-
-    public override render(): ReactElement {
-        const { message, description } = this.errorDetails;
-        return <ErrorComponent message={message} description={description} />;
-    }
+    const { message, description } = errorDetails;
+    return <ErrorComponent message={message} description={description} />;
 }
 export const IntlLocalizedUnknownVisualizationClass = injectIntl<
     "intl",

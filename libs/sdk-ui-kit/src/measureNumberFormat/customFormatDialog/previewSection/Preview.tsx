@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useState } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -12,17 +12,16 @@ import { FormattedPreview } from "../shared/FormattedPreview.js";
 
 const DEFAULT_PREVIEW_VALUE = -1234.5678;
 
-interface ICustomFormatPreviewOwnProps {
+interface ICustomFormatPreviewProps {
     format: string;
     separators?: ISeparators;
 }
 
-type ICustomFormatPreviewProps = ICustomFormatPreviewOwnProps & WrappedComponentProps;
-
 export const Preview = memo(function Preview(props: ICustomFormatPreviewProps) {
     const [preview, setPreview] = useState<number>(DEFAULT_PREVIEW_VALUE);
+    const intl = useIntl();
 
-    const { format, separators, intl } = props;
+    const { format, separators } = props;
 
     const onPreviewChange = useCallback((value: string | number): void => {
         setPreview(typeof value === "number" ? value : parseFloat(value) || 0);
@@ -57,5 +56,3 @@ export const Preview = memo(function Preview(props: ICustomFormatPreviewProps) {
         </div>
     );
 });
-
-export default injectIntl(Preview);

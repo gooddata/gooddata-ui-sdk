@@ -42,11 +42,9 @@ const withRedirectGate =
 
 const authMethodsMap: { [key in AuthType]?: (hostname: string) => Promise<IAnalyticalBackend> } = {
     sso: async function configureTigerSso(hostname: string) {
-        const {
-            default: tigerBackend,
-            ContextDeferredAuthProvider,
-            redirectToTigerAuthentication,
-        } = await import("./tigerBackend.js");
+        const { tigerBackend, ContextDeferredAuthProvider, redirectToTigerAuthentication } = await import(
+            "./tigerBackend.js"
+        );
 
         return tigerBackend({ hostname }).withAuthentication(
             new ContextDeferredAuthProvider(withThrottle(withRedirectGate(redirectToTigerAuthentication))),
@@ -56,7 +54,7 @@ const authMethodsMap: { [key in AuthType]?: (hostname: string) => Promise<IAnaly
 
 const timeout = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-export default async (scriptSrc: string) => {
+export const initializeAutoAuth = async (scriptSrc: string) => {
     // Detect current host based on the script's URL
     const parsedUrl = parseUrl(scriptSrc);
 

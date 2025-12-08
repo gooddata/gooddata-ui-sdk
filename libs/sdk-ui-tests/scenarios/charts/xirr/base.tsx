@@ -6,7 +6,7 @@ import { IXirrProps, Xirr } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IXirrProps>("Xirr", Xirr)
+export const base = scenariosFor<IXirrProps>("Xirr", Xirr)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

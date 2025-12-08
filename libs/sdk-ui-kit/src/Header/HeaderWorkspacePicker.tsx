@@ -56,7 +56,7 @@ const renderProjectPickerFooter = (projectPickerFooter?: ReactNode) => {
     return comp;
 };
 
-export function CoreHeaderWorkspacePicker({
+function CoreHeaderWorkspacePicker({
     intl,
     isLoading,
     workspaces,

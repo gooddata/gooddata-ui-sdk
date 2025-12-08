@@ -6,7 +6,8 @@ import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import DistinctPointShapesControl, {
+import {
+    DistinctPointShapesControl,
     IDistinctPointShapesControlProps,
 } from "../DistintcPointShapesControl.js";
 

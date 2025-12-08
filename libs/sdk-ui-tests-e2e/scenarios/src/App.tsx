@@ -5,9 +5,9 @@ import { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { createBackend } from "./backend";
-import AppRouter from "./routes/AppRouter";
+import { AppRouter } from "./routes/AppRouter";
 
-function App() {
+export function App() {
     // only create the backend instance once
     const backend = useMemo(() => {
         return createBackend();
@@ -21,5 +21,3 @@ function App() {
         </BackendProvider>
     );
 }
-
-export default App;

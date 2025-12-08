@@ -8,7 +8,7 @@ export interface IDrillMeasureSelectorItemProps {
     onCloseDropdown: () => void;
 }
 
-function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
+export function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
     const onClick = () => {
         props.onClick(props.item);
         props.onCloseDropdown();
@@ -25,5 +25,3 @@ function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
         </a>
     );
 }
-
-export default DrillMeasureSelectorItem;

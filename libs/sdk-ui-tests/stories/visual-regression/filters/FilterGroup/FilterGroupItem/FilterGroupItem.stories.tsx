@@ -12,6 +12,7 @@ const wrapperStyle = {
     gap: 10,
 } as const;
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters/FilterGroup/FilterGroupItem",
 };

@@ -242,6 +242,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     grandTotalsPositionTop: { id: "properties.cells.grandTotals.position.top" },
     interactions: { id: "properties.interactions.title" },
     interactionsDrillDown: { id: "properties.interactions.drillDown" },
+    interactionsDrillIntoURL: { id: "properties.interactions.drillIntoURL" },
     interactionsAlerts: { id: "properties.interactions.alerts" },
     interactionsAlertsTooltip: { id: "properties.interactions.alerts.tooltip" },
     interactionsScheduledExports: { id: "properties.interactions.scheduledExports" },

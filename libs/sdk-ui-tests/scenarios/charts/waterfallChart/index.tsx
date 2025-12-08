@@ -1,7 +1,8 @@
-// (C) 2023 GoodData Corporation
-import base from "./base.js";
-import coloring from "./coloring.js";
-import customization from "./customization.js";
-import theming from "./theming.js";
+// (C) 2023-2025 GoodData Corporation
 
-export default [base, ...coloring, ...customization, theming];
+import { base } from "./base.js";
+import { coloring } from "./coloring.js";
+import { customization } from "./customization.js";
+import { theming } from "./theming.js";
+
+export const waterfallChart = [base, ...coloring, ...customization, theming];

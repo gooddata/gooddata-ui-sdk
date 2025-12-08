@@ -7,7 +7,7 @@ import * as path from "path";
 const require = createRequire(import.meta.url);
 const pdf = require("pdf-parse");
 
-export default (on: Cypress.PluginEvents) => {
+export const readPdf = (on: Cypress.PluginEvents) => {
     on("task", {
         readPdf({ filePath }) {
             return new Promise((resolve) => {

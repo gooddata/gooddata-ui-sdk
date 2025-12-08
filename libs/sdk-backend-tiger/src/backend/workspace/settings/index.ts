@@ -2,7 +2,7 @@
 
 import {
     FeatureContext,
-    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
     JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
@@ -93,7 +93,7 @@ export class TigerWorkspaceSettings
 
     private mapSettingsToKeysByOrigin = (
         data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+        origin: JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
     ): ISettings => {
         return data.reduce((result: ISettings, setting) => {
             const isValueApplicable = setting.meta?.origin?.originType === origin;
@@ -179,6 +179,10 @@ export class TigerWorkspaceSettings
         return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
     }
 
+    public async deleteMetricFormatOverride(): Promise<void> {
+        return this.deleteSettingByType("METRIC_FORMAT_OVERRIDE");
+    }
+
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return getSettingsForCurrentUser(this.authCall, this.workspace);
     }
@@ -244,6 +248,20 @@ export class TigerWorkspaceSettings
 }
 
 /**
+ * Extracts the currency format override from metricFormatOverride settings.
+ * Handles both uppercase "CURRENCY" and lowercase "currency" keys for compatibility.
+ */
+function resolveCurrencyFormatOverride(
+    metricFormatOverride: { formats?: Record<string, string> | null } | undefined,
+): string | null {
+    const formats = metricFormatOverride?.formats;
+    if (!formats) {
+        return null;
+    }
+    return formats["CURRENCY"] ?? formats["currency"] ?? null;
+}
+
+/**
  * @internal
  */
 async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace: string): Promise<ISettings> {
@@ -253,7 +271,7 @@ async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace:
         }),
     );
 
-    return data.reduce((result: ISettings, setting) => {
+    const settings = data.reduce((result: ISettings, setting) => {
         const key = mapTypeToKey(setting.type, setting.id);
         if (key === "dateFilterConfig") {
             return {
@@ -268,6 +286,14 @@ async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace:
             [key]: unwrapSettingContent(setting.content),
         };
     }, {});
+
+    // Normalize currency format override for convenience
+    const currencyFormatOverride = resolveCurrencyFormatOverride(settings.metricFormatOverride);
+
+    return {
+        ...settings,
+        currencyFormatOverride,
+    };
 }
 
 /**

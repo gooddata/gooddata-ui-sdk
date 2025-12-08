@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -51,6 +52,7 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
             drills: [],
             ignoreDashboardFilters: [],
             ignoredDrillDownHierarchies: [],
+            ignoredDrillToUrlAttributes: [],
             title: "",
             type: "insight",
             insight,

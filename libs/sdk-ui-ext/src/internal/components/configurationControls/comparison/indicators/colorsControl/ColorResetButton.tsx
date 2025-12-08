@@ -23,7 +23,7 @@ interface IColorResetButtonProps {
     pushData: PushDataCallback;
 }
 
-function ColorResetButton({ disabled, properties, pushData }: IColorResetButtonProps) {
+export function ColorResetButton({ disabled, properties, pushData }: IColorResetButtonProps) {
     const { formatMessage } = useIntl();
 
     const label = formatMessage(messages["resetColors"]);
@@ -49,5 +49,3 @@ function ColorResetButton({ disabled, properties, pushData }: IColorResetButtonP
         </div>
     );
 }
-
-export default ColorResetButton;

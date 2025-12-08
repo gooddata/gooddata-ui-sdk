@@ -712,6 +712,52 @@ export function removeDrillDownForInsightWidget(
     };
 }
 
+/**
+ * @alpha
+ */
+export interface RemoveDrillToUrlForInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL";
+    readonly payload: RemoveDrillToUrlForInsightWidgetPayload;
+}
+
+/**
+ * @alpha
+ */
+export interface RemoveDrillToUrlForInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget whose drill items should be removed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Specify attribute display forms which should be ignored.
+     */
+    readonly blacklistAttributes: ObjRef[];
+}
+
+/**
+ * Creates the RemoveDrillToUrlForInsightWidget command. Dispatching the created command will remove insight widget's
+ * drill definition for the provided attribute.
+ *
+ * @param ref - reference of insight widget whose drill should be removed
+ * @param blacklistAttributes - displayForm refs of drill to url attributes which should be removed.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function removeDrillToUrlForInsightWidget(
+    ref: ObjRef,
+    blacklistAttributes: ObjRef[],
+    correlationId?: string,
+): RemoveDrillToUrlForInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL",
+        correlationId,
+        payload: { ref, blacklistAttributes },
+    };
+}
+
 //
 //
 //

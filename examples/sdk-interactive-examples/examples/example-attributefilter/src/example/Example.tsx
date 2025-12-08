@@ -7,9 +7,9 @@ import { Treemap } from "@gooddata/sdk-ui-charts";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
-export default function Example() {
+export function Example() {
     const [filter, setFilter] = useState<IAttributeFilter>(
         newNegativeAttributeFilter(Catalog.ProductCategory, []),
     );

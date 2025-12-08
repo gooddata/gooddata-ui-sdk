@@ -55,6 +55,7 @@ function InsightContainer(props: InsightContainerProps) {
     return isLoaded ? <gd-insight style={{ height: 500 }} {...props} /> : <div>Loading...</div>;
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "13 Web Components/Insight",
 };

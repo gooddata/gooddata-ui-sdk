@@ -366,6 +366,23 @@ export interface IGlobalDrillDownAttributeHierarchyDefinition {
 /**
  * @internal
  */
+export interface IDrillToUrlAttributeDefinition {
+    type: "drillToUrl";
+
+    /**
+     * Local identifier of the attribute that triggered the drill to url.
+     */
+    origin: LocalIdRef;
+
+    /**
+     * Target attribute display form for drill to url.
+     */
+    target: ObjRef;
+}
+
+/**
+ * @internal
+ */
 export interface IScheduleEmailContext {
     /**
      * Widget to schedule email for.

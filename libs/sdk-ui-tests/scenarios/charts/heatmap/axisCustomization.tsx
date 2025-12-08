@@ -7,7 +7,7 @@ import { scenariosFor } from "../../../src/index.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
+export const axisCustomization = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({
         groupUnder: "axis name configuration",

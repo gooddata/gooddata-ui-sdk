@@ -19,7 +19,9 @@ interface IEmptyAttributeHierarchyInfoProps {
 //  the if condition should be removed then after the documentation is ready
 const EMPTY_HIERARCHY_INFO_DOCUMENTATION_LINK = "";
 
-function EmptyAttributeHierarchyInfo({ onOpenAttributeHierarchyDialog }: IEmptyAttributeHierarchyInfoProps) {
+export function EmptyAttributeHierarchyInfo({
+    onOpenAttributeHierarchyDialog,
+}: IEmptyAttributeHierarchyInfoProps) {
     const { formatMessage } = useIntl();
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
     const userInteraction = useDashboardUserInteraction();
@@ -58,5 +60,3 @@ function EmptyAttributeHierarchyInfo({ onOpenAttributeHierarchyDialog }: IEmptyA
         </>
     );
 }
-
-export default EmptyAttributeHierarchyInfo;

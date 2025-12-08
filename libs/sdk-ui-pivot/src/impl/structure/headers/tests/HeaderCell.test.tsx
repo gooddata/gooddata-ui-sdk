@@ -8,7 +8,7 @@ import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mock
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
-import HeaderCell from "../HeaderCell.js";
+import { HeaderCell } from "../HeaderCell.js";
 
 describe("HeaderCell renderer", () => {
     const fixture = recordedDataFacade(

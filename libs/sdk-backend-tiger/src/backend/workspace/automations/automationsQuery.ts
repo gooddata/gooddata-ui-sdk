@@ -12,9 +12,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
+import { buildFieldFilter, buildStatusFilter } from "./filterBuilders.js";
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { STATUS_NEVER_RUN, STATUS_NEVER_RUN_RSQL_QUERY } from "../../common/automations.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class AutomationsQuery implements IAutomationsQuery {
@@ -174,7 +174,7 @@ export class AutomationsQuery implements IAutomationsQuery {
     }
 
     private constructFilter = () => {
-        const allFilters = [];
+        const allFilters: string[] = [];
 
         if (this.filter.title) {
             allFilters.push(`title=containsic='${this.filter.title}'`); // contains + ignore case
@@ -189,24 +189,14 @@ export class AutomationsQuery implements IAutomationsQuery {
             }
         }
 
-        if (this.author) {
-            if (this.authorFilterType === "include") {
-                allFilters.push(`createdBy.id=in=(${this.author})`);
-            } else if (this.authorFilterType === "exclude") {
-                allFilters.push(`createdBy.id=out=(${this.author})`);
-            } else {
-                allFilters.push(`createdBy.id=='${this.author}'`);
-            }
+        const authorFilter = buildFieldFilter("createdBy.id", this.author, this.authorFilterType);
+        if (authorFilter) {
+            allFilters.push(authorFilter);
         }
 
-        if (this.recipient) {
-            if (this.recipientFilterType === "include") {
-                allFilters.push(`recipients.id=in=(${this.recipient})`);
-            } else if (this.recipientFilterType === "exclude") {
-                allFilters.push(`recipients.id=out=(${this.recipient})`);
-            } else {
-                allFilters.push(`recipients.id=='${this.recipient}'`);
-            }
+        const recipientFilter = buildFieldFilter("recipients.id", this.recipient, this.recipientFilterType);
+        if (recipientFilter) {
+            allFilters.push(recipientFilter);
         }
 
         if (this.externalRecipient) {
@@ -217,43 +207,19 @@ export class AutomationsQuery implements IAutomationsQuery {
             allFilters.push(`(createdBy.id=='${this.user}' or recipients.id=='${this.user}')`);
         }
 
-        if (this.dashboard) {
-            if (this.dashboardFilterType === "include") {
-                allFilters.push(`analyticalDashboard.id=in=(${this.dashboard})`);
-            } else if (this.dashboardFilterType === "exclude") {
-                allFilters.push(`analyticalDashboard.id=out=(${this.dashboard})`);
-            } else {
-                allFilters.push(`analyticalDashboard.id=='${this.dashboard}'`);
-            }
+        const dashboardFilter = buildFieldFilter(
+            "analyticalDashboard.id",
+            this.dashboard,
+            this.dashboardFilterType,
+        );
+        if (dashboardFilter) {
+            allFilters.push(dashboardFilter);
         }
 
         // NEVER_RUN is not a valid status and cannot be used in RSQL, we have to handle it separately
-        if (this.status) {
-            if (this.statusFilterType === "include") {
-                const statuses = this.status.split(",");
-                const hasNeverRun = statuses.includes(STATUS_NEVER_RUN);
-
-                if (hasNeverRun) {
-                    const otherStatuses = statuses.filter((s) => s !== STATUS_NEVER_RUN);
-
-                    if (otherStatuses.length > 0) {
-                        const otherStatusesQueryValue = otherStatuses.join(",");
-                        allFilters.push(
-                            `(automationResults.status=in=(${otherStatusesQueryValue}) or ${STATUS_NEVER_RUN_RSQL_QUERY})`,
-                        );
-                    } else {
-                        allFilters.push(STATUS_NEVER_RUN_RSQL_QUERY);
-                    }
-                } else {
-                    allFilters.push(`automationResults.status=in=(${this.status})`);
-                }
-            } else {
-                if (this.status === STATUS_NEVER_RUN) {
-                    allFilters.push(STATUS_NEVER_RUN_RSQL_QUERY);
-                } else {
-                    allFilters.push(`automationResults.status=='${this.status}'`);
-                }
-            }
+        const statusFilter = buildStatusFilter(this.status, this.statusFilterType);
+        if (statusFilter) {
+            allFilters.push(statusFilter);
         }
 
         return allFilters.length > 0 ? { filter: allFilters.join(";") } : {};

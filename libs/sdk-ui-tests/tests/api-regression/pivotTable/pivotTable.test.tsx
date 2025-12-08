@@ -10,7 +10,7 @@ let { extractProps } = vi.hoisted(() => ({
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
-import pivotTableScenarios from "../../../scenarios/pivotTable/index.js";
+import { pivotScenarios as pivotTableScenarios } from "../../../scenarios/pivotTable/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";

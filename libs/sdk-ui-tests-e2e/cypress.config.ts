@@ -7,10 +7,11 @@ import axios from "axios";
 import { defineConfig } from "cypress";
 import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
 
-import parseXlsx from "./cypress/plugins/parseXlsx";
-import readPdf from "./cypress/plugins/readPdf";
-import removePassingTestVideosPlugin from "./cypress/plugins/removePassingTestVideos";
+import { parseXlsx } from "./cypress/plugins/parseXlsx";
+import { readPdf } from "./cypress/plugins/readPdf";
+import { removePassingTestVideosPlugin } from "./cypress/plugins/removePassingTestVideos";
 
+// eslint-disable-next-line no-restricted-exports
 export default defineConfig({
     e2e: {
         excludeSpecPattern: "*.js",

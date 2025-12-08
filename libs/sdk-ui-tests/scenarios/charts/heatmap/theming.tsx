@@ -6,7 +6,7 @@ import { HeatmapWithMeasureRowsAndColumns, HeatmapWithNullDataPoints } from "./b
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
+export const theming = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

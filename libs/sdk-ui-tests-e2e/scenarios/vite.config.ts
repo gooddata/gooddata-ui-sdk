@@ -79,6 +79,7 @@ function getProductionAliases() {
 }
 
 // https://vitejs.dev/config/
+// eslint-disable-next-line no-restricted-exports
 export default defineConfig(({ mode }) => {
     // Load env from parent directory where .env file is located
     const env = loadEnv(mode, path.resolve(__dirname, ".."), "");

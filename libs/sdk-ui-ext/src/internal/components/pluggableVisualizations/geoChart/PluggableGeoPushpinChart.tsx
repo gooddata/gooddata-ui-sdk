@@ -61,7 +61,7 @@ import {
     setGeoPushpinUiConfig,
     updateConfigWithSettings,
 } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
-import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
+import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;

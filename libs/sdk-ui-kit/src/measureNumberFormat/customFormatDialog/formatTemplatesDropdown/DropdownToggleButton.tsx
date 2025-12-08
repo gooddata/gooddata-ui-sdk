@@ -10,7 +10,7 @@ interface IDropdownToggleButtonProps {
     toggleDropdown: () => void;
 }
 
-function DropdownToggleButton({ toggleDropdown, isOpened }: IDropdownToggleButtonProps): ReactElement {
+export function DropdownToggleButton({ toggleDropdown, isOpened }: IDropdownToggleButtonProps): ReactElement {
     return (
         <div
             className="gd-measure-format-button gd-measure-format-button-templates s-measure-format-templates-toggle-button"
@@ -28,5 +28,3 @@ function DropdownToggleButton({ toggleDropdown, isOpened }: IDropdownToggleButto
         </div>
     );
 }
-
-export default DropdownToggleButton;

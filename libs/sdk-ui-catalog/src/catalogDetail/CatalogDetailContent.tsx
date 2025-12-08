@@ -114,6 +114,8 @@ export function CatalogDetailContent({
         updateItemDescription,
         updateItemTags,
         updateItemIsHidden,
+        updateItemMetricType,
+        updateItemFormat,
     } = useCatalogItemUpdate({
         currentUser,
         objectId,
@@ -124,6 +126,9 @@ export function CatalogDetailContent({
     });
 
     const canEdit = canEditCatalogItem(permissions, item);
+    const separators = settings?.separators;
+    const enableMetricFormatOverrides = Boolean(settings?.["enableMetricFormatOverrides"]);
+    const currencyFormatOverride = settings?.currencyFormatOverride ?? null;
 
     // Quality
     const { status: qualityStatus } = useQualityReportState();
@@ -217,6 +222,17 @@ export function CatalogDetailContent({
                                 onIsHiddenChange={(isHidden) => {
                                     updateItemIsHidden(isHidden);
                                 }}
+                                onMetricTypeChange={(metricType) => {
+                                    updateItemMetricType(metricType);
+                                }}
+                                onFormatChange={(format) => {
+                                    updateItemFormat(format);
+                                }}
+                                separators={separators}
+                                currencyFormatOverride={
+                                    enableMetricFormatOverrides ? currencyFormatOverride : undefined
+                                }
+                                enableMetricFormatOverrides={enableMetricFormatOverrides}
                             />
                         )}
                         {selectedTabId === Tabs.QUALITY &&

@@ -3,11 +3,48 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { isAlertNotification } from "@gooddata/sdk-model";
+import { INotification, isAlertNotification } from "@gooddata/sdk-model";
 import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
 
 import { useFetchNotifications } from "./useFetchNotifications.js";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
+
+type OrganizationStatus = "pending" | "loading" | "success" | "error";
+type NotificationsStatus = "pending" | "loading" | "success" | "error";
+
+function assertOrganizationReady(status: OrganizationStatus, action: string): void {
+    if (status === "error") {
+        throw new UnexpectedSdkError(`Cannot call ${action} - organization load failed.`);
+    }
+    if (status === "pending" || status === "loading") {
+        throw new UnexpectedSdkError(`Cannot call ${action} - organization is not initialized.`);
+    }
+}
+
+function assertNotificationsReady(status: NotificationsStatus, action: string): void {
+    if (status === "error") {
+        throw new UnexpectedSdkError(`Cannot call ${action} - notifications load failed.`);
+    }
+    if (status === "pending" || status === "loading") {
+        throw new UnexpectedSdkError(`Cannot call ${action} - notifications are not initialized.`);
+    }
+}
+
+function filterNotificationsByType(
+    notifications: INotification[],
+    enableScheduleNotifications: boolean,
+): INotification[] {
+    return enableScheduleNotifications ? notifications : notifications.filter(isAlertNotification);
+}
+
+function applyReadStatus(notifications: INotification[], markedAsReadIds: string[]): INotification[] {
+    return notifications.map((notification) => {
+        if (markedAsReadIds.includes(notification.id)) {
+            return { ...notification, isRead: true };
+        }
+        return notification;
+    });
+}
 
 /**
  * Hook for fetching all and unread notifications.
@@ -88,13 +125,7 @@ export function useNotifications({
 
     const markNotificationAsRead = useCallback(
         async (notificationId: string) => {
-            if (organizationStatus === "error") {
-                throw new UnexpectedSdkError("Cannot call markAsRead - organization load failed.");
-            }
-
-            if (organizationStatus === "pending" || organizationStatus === "loading") {
-                throw new UnexpectedSdkError("Cannot call markAsRead - organization is not initialized.");
-            }
+            assertOrganizationReady(organizationStatus, "markAsRead");
 
             await organizationService.notifications().markNotificationAsRead(notificationId);
             setMarkedAsReadNotifications((prev) => [...prev, notificationId]);
@@ -103,21 +134,8 @@ export function useNotifications({
     );
 
     const markAllNotificationsAsRead = useCallback(async () => {
-        if (organizationStatus === "error") {
-            throw new UnexpectedSdkError("Cannot call markAllAsRead - organization load failed.");
-        }
-
-        if (organizationStatus === "pending" || organizationStatus === "loading") {
-            throw new UnexpectedSdkError("Cannot call markAllAsRead - organization is not initialized.");
-        }
-
-        if (notificationsStatus === "error") {
-            throw new UnexpectedSdkError("Cannot call markAllAsRead - notifications load failed.");
-        }
-
-        if (notificationsStatus === "pending" || notificationsStatus === "loading") {
-            throw new UnexpectedSdkError("Cannot call markAllAsRead - notifications are not initialized.");
-        }
+        assertOrganizationReady(organizationStatus, "markAllAsRead");
+        assertNotificationsReady(notificationsStatus, "markAllAsRead");
 
         await organizationService.notifications().markAllNotificationsAsRead();
 
@@ -136,16 +154,8 @@ export function useNotifications({
             return notifications;
         }
 
-        const filteredNotifications = enableScheduleNotifications
-            ? notifications
-            : notifications.filter(isAlertNotification);
-
-        return filteredNotifications.map((notification) => {
-            if (markedAsReadNotifications.includes(notification.id)) {
-                return { ...notification, isRead: true };
-            }
-            return notification;
-        });
+        const filteredNotifications = filterNotificationsByType(notifications, enableScheduleNotifications);
+        return applyReadStatus(filteredNotifications, markedAsReadNotifications);
     }, [notifications, markedAsReadNotifications, enableScheduleNotifications]);
 
     const effectiveUnreadNotifications = useMemo(() => {
@@ -153,18 +163,12 @@ export function useNotifications({
             return unreadNotifications;
         }
 
-        const filteredUnreadNotifications = enableScheduleNotifications
-            ? unreadNotifications
-            : unreadNotifications.filter(isAlertNotification);
-
-        return filteredUnreadNotifications
-            .map((notification) => {
-                if (markedAsReadNotifications.includes(notification.id)) {
-                    return { ...notification, isRead: true };
-                }
-                return notification;
-            })
-            .filter((x) => !x.isRead);
+        const filteredUnreadNotifications = filterNotificationsByType(
+            unreadNotifications,
+            enableScheduleNotifications,
+        );
+        const withReadStatus = applyReadStatus(filteredUnreadNotifications, markedAsReadNotifications);
+        return withReadStatus.filter((x) => !x.isRead);
     }, [unreadNotifications, markedAsReadNotifications, enableScheduleNotifications]);
 
     /**

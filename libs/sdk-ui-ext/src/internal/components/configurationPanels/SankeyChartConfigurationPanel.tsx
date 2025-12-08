@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -16,11 +16,11 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
-import LegendSection from "../configurationControls/legend/LegendSection.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
+import { LegendSection } from "../configurationControls/legend/LegendSection.js";
 
-export default class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
+export class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const bubbleClassNames = cx("bubble-primary", { invisible: !this.isControlDisabled() });
 

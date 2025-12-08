@@ -4,6 +4,24 @@ import { ISeparators, ISettings } from "@gooddata/sdk-model";
 
 import { IChartConfig } from "../../../interfaces/index.js";
 
+function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
+    return {
+        ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
+        ...(settings.enableKDCrossFiltering ? { useGenericInteractionTooltip: true } : {}),
+        ...(settings.enableCrossFilteringAliasTitles ? { enableAliasAttributeLabel: true } : {}),
+        ...(settings["separators"] ? { separators: settings["separators"] as ISeparators } : {}),
+        ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
+        ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
+        ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
+        ...(settings.enableLineChartTrendThreshold ? { enableLineChartTrendThreshold: true } : {}),
+        ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
+        ...(settings.enableAccessibleChartTooltip || settings.enableAccessibilityMode
+            ? { enableAccessibleTooltip: true }
+            : {}),
+        ...(settings.enableAccessibilityMode ? { enableSingleBubbleSeries: true } : {}),
+    };
+}
+
 /**
  * @internal
  */
@@ -18,7 +36,6 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
     return {
         ...(config || {}),
         enableCompactSize: true,
-        ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
         ...(config?.enableJoinedAttributeAxisName === undefined
             ? {
                   enableJoinedAttributeAxisName: true,
@@ -27,17 +44,6 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         enableChartSorting: true,
         enableReversedStacking: true,
         enableSeparateTotalLabels: true,
-        ...(settings.enableKDCrossFiltering ? { useGenericInteractionTooltip: true } : {}),
-        ...(settings.enableCrossFilteringAliasTitles ? { enableAliasAttributeLabel: true } : {}),
-        ...(settings["separators"] ? { separators: settings["separators"] as ISeparators } : {}),
-        ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
-        ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
-        ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
-        ...(settings.enableLineChartTrendThreshold ? { enableLineChartTrendThreshold: true } : {}),
-        ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
-        ...(settings.enableAccessibleChartTooltip || settings.enableAccessibilityMode
-            ? { enableAccessibleTooltip: true }
-            : {}),
-        ...(settings.enableAccessibilityMode ? { enableSingleBubbleSeries: true } : {}),
+        ...getSettingsBasedConfig(settings),
     };
 }

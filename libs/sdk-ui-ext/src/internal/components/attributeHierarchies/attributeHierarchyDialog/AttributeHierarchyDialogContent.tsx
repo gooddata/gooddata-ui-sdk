@@ -5,15 +5,15 @@ import { useIntl } from "react-intl";
 import { messages } from "@gooddata/sdk-ui";
 import { List, LoadingMask } from "@gooddata/sdk-ui-kit";
 
-import AddAttributeAction from "./AddAttributeAction.js";
+import { AddAttributeAction } from "./AddAttributeAction.js";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
-import AttributeItem from "./AttributeItem.js";
+import { AttributeItem } from "./AttributeItem.js";
 
 const DEFAULT_WIDTH = 845;
 const DEFAULT_HEIGHT = 388;
 const DEFAULT_ROW_HEIGHT = 43;
 
-function AttributeHierarchyDialogContent() {
+export function AttributeHierarchyDialogContent() {
     const { formatMessage } = useIntl();
     const { isLoading, attributes } = useAttributeHierarchyDialog();
 
@@ -43,5 +43,3 @@ function AttributeHierarchyDialogContent() {
         </div>
     );
 }
-
-export default AttributeHierarchyDialogContent;

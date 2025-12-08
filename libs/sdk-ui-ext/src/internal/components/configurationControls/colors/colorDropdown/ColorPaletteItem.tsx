@@ -44,7 +44,7 @@ export interface IColorPaletteItemProps {
     patternFillIndex?: number | PatternFillName;
 }
 
-const ColorPaletteItem = memo(function ColorPaletteItem({
+export const ColorPaletteItem = memo(function ColorPaletteItem({
     selected,
     paletteItem,
     onColorSelected,
@@ -113,5 +113,3 @@ const ColorPaletteItem = memo(function ColorPaletteItem({
         </div>
     );
 });
-
-export default ColorPaletteItem;

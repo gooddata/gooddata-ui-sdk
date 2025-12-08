@@ -7,7 +7,7 @@ import { ConfirmDialog, LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-function DeleteAttributeHierarchyConfirmation() {
+export function DeleteAttributeHierarchyConfirmation() {
     const { formatMessage } = useIntl();
     const { isLoading, setLoading, setDisplayDeleteConfirmation, onDeleteAttributeHierarchy } =
         useAttributeHierarchyDialog();
@@ -40,5 +40,3 @@ function DeleteAttributeHierarchyConfirmation() {
         </ConfirmDialog>
     );
 }
-
-export default DeleteAttributeHierarchyConfirmation;

@@ -68,7 +68,7 @@ function disableDrillDownIfMeasure(
     return drillTargetTypes;
 }
 
-function DrillConfigItem({
+export function DrillConfigItem({
     item,
     enabledDrillTargetTypeItems,
     onIncompleteChange,
@@ -259,5 +259,3 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
         item.originLocalIdentifier,
     ]);
 }
-
-export default DrillConfigItem;

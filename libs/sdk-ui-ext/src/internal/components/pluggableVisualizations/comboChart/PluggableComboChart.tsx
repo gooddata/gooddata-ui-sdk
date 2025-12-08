@@ -52,7 +52,7 @@ import {
 } from "../../../utils/propertiesHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper.js";
-import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
+import { LineChartBasedConfigurationPanel } from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**

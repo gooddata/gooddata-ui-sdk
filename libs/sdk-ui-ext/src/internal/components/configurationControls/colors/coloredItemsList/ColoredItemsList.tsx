@@ -2,13 +2,11 @@
 
 import { memo, useRef, useState } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
-
 import { IColor, IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { ChartFillConfig } from "@gooddata/sdk-ui-charts";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 
-import ColoredItem from "./ColoredItem.js";
+import { ColoredItem } from "./ColoredItem.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
 import { getSearchedItems } from "../../../../utils/colors.js";
 
@@ -16,7 +14,7 @@ const VISIBLE_ITEMS_COUNT = 5;
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
 const DROPDOWN_BODY_WIDTH = 218;
 
-export interface IColoredItemsListOwnProps {
+export interface IColoredItemsListProps {
     colorPalette: IColorPalette;
     inputItems: IColoredItem[];
     onSelect: (selectedColorItem: IColoredItem, color: IColor) => void;
@@ -25,8 +23,6 @@ export interface IColoredItemsListOwnProps {
     chartFill?: ChartFillConfig;
     chartFillIgnoredMeasures: string[];
 }
-
-export type IColoredItemsListProps = IColoredItemsListOwnProps & WrappedComponentProps;
 
 function isChartFillIgnoredMeasure(item: IColoredItem, chartFillIgnoredMeasures: string[]) {
     return (
@@ -120,5 +116,3 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         </div>
     );
 });
-
-export default injectIntl(ColoredItemsList);

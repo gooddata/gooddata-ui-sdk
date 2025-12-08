@@ -41,7 +41,7 @@ interface IAttributeListItemProps {
     onClose: () => void;
 }
 
-function DateAttributeListItem({
+export function DateAttributeListItem({
     item: { item, isDisabled, title },
     dependentDateFilters,
     onSelect,
@@ -89,8 +89,6 @@ function DateAttributeListItem({
         </WithDisabledParentFilterTooltip>
     );
 }
-
-export default DateAttributeListItem;
 
 export function DateFiltersPage({
     availableDatasets,

@@ -20,7 +20,7 @@ export const PyramidChartWithArithmeticMeasures = {
     measures: [ReferenceMd.Amount, ReferenceMdExt.CalculatedLost, ReferenceMd.Won],
 };
 
-export default scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
+export const base = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

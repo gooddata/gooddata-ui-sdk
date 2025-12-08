@@ -190,6 +190,91 @@ function buildAreaProperties(args: {
     return properties;
 }
 
+interface ITransformContext {
+    areaNameTitle: string;
+    colorTitle: string;
+    segmentTitle: string | undefined;
+    areaUris: string[];
+    tooltipTextData: (string | undefined)[];
+    segmentData: (string | undefined)[];
+    segmentUris: (string | undefined)[];
+    colorData: (number | null)[];
+    colorFormat: string;
+    areaColors: Array<{ fill: string }>;
+    featureIndex: Map<string, IGeoJsonFeature>;
+}
+
+function findMatchingFeature(
+    featureIndex: Map<string, IGeoJsonFeature>,
+    areaIdentifier: string,
+    areaUri: string,
+): IGeoJsonFeature | undefined {
+    return featureIndex.get(areaIdentifier) ?? featureIndex.get(areaUri);
+}
+
+function getAreaColor(areaColors: Array<{ fill: string }>, index: number): { fill: string } {
+    return areaColors[index] ?? areaColors[0] ?? { fill: "#20B2E2" };
+}
+
+function toOptionalNumber(value: number | null): number | undefined {
+    return typeof value === "number" ? value : undefined;
+}
+
+function createAreaFeature(
+    areaIdentifier: string,
+    index: number,
+    context: ITransformContext,
+): IAreaDataSourceFeature {
+    const areaUri = context.areaUris[index];
+    const matchingFeature = findMatchingFeature(context.featureIndex, areaIdentifier, areaUri);
+    const baseFeature = toMaplibreFeature(matchingFeature);
+    const geometry = baseFeature?.geometry ?? createPlaceholderGeometry();
+    const properties = buildAreaProperties({
+        index,
+        areaIdentifier,
+        areaUri,
+        areaNameTitle: context.areaNameTitle,
+        tooltipValue: context.tooltipTextData[index],
+        colorTitle: context.colorTitle,
+        colorValue: toOptionalNumber(context.colorData[index]),
+        colorFormat: context.colorFormat,
+        areaColorFill: getAreaColor(context.areaColors, index).fill,
+        segmentTitle: context.segmentTitle,
+        segmentValue: context.segmentData[index],
+        segmentUri: context.segmentUris[index],
+    });
+
+    return {
+        type: "Feature",
+        geometry,
+        properties: toMaplibreProperties(baseFeature?.properties, properties),
+    };
+}
+
+function buildTransformContext(
+    geoData: IAreaGeoData,
+    colorStrategy: IColorStrategy,
+    features: IGeoJsonFeature[] | undefined,
+): ITransformContext {
+    const { color, area, segment, tooltipText } = geoData;
+    const colorData = color?.data ?? [];
+    const segmentData = segment?.data ?? [];
+
+    return {
+        areaNameTitle: area?.name ?? "",
+        colorTitle: color?.name ?? "",
+        segmentTitle: segment?.name,
+        areaUris: area?.uris ?? [],
+        tooltipTextData: tooltipText?.data ?? [],
+        segmentData,
+        segmentUris: segment?.uris ?? [],
+        colorData,
+        colorFormat: color?.format ?? "",
+        areaColors: getAreaAreaColors(colorData, segmentData, colorStrategy),
+        featureIndex: buildFeatureIndex(features),
+    };
+}
+
 /**
  * Transforms area data to GeoJSON features
  *
@@ -213,70 +298,22 @@ function transformAreaDataSource({
     colorStrategy,
     features,
 }: IAreaDataSourceProps): IAreaDataSourceFeatures {
-    const { color, area, segment, tooltipText } = geoData;
+    const { area } = geoData;
 
     if (!area) {
         return [];
     }
 
-    const areaNameTitle = area.name || "";
-    const colorTitle = color ? color.name : "";
-    const segmentTitle = segment ? segment.name : undefined;
+    const context = buildTransformContext(geoData, colorStrategy, features);
+    const result: IAreaDataSourceFeatures = [];
 
-    const areaIdentifiers = area.data;
-    const areaUris = area.uris;
-    const tooltipTextData = tooltipText?.data ?? [];
-    const segmentData = segment?.data ?? [];
-    const segmentUris = segment?.uris ?? [];
-    const colorData = color?.data ?? [];
-    const colorFormat = color?.format ?? "";
+    for (const [index, areaIdentifier] of area.data.entries()) {
+        if (areaIdentifier) {
+            result.push(createAreaFeature(areaIdentifier, index, context));
+        }
+    }
 
-    const areaColors = getAreaAreaColors(colorData, segmentData, colorStrategy);
-    const featureIndex = buildFeatureIndex(features);
-
-    return areaIdentifiers.reduce(
-        (result: IAreaDataSourceFeatures, areaIdentifier: string, index: number): IAreaDataSourceFeatures => {
-            if (!areaIdentifier) {
-                return result;
-            }
-
-            const colorValue = colorData[index];
-            const segmentValue = segmentData[index];
-            const segmentUri = segmentUris[index];
-            const areaColor = areaColors[index] || areaColors[0] || { fill: "#20B2E2" };
-            const tooltipValue = tooltipTextData[index];
-            const areaUri = areaUris[index];
-
-            const matchingFeature =
-                featureIndex.get(areaIdentifier) || (areaUri ? featureIndex.get(areaUri) : undefined);
-
-            const baseFeature = toMaplibreFeature(matchingFeature);
-            const geometry = baseFeature?.geometry ?? createPlaceholderGeometry();
-            const properties = buildAreaProperties({
-                index,
-                areaIdentifier,
-                areaUri,
-                areaNameTitle,
-                tooltipValue,
-                colorTitle,
-                colorValue: typeof colorValue === "number" ? colorValue : undefined,
-                colorFormat,
-                areaColorFill: areaColor.fill,
-                segmentTitle,
-                segmentValue,
-                segmentUri,
-            });
-
-            result.push({
-                type: "Feature",
-                geometry,
-                properties: toMaplibreProperties(baseFeature?.properties, properties),
-            });
-
-            return result;
-        },
-        [],
-    );
+    return result;
 }
 
 /**

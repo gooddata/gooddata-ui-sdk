@@ -8,11 +8,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
 import { MeasureNumberFormat } from "@gooddata/sdk-ui-kit";
 
-import NumberFormatToggleButton from "./NumberFormatToggleButton.js";
+import { NumberFormatToggleButton } from "./NumberFormatToggleButton.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
-import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
+import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
 
 interface INumberFormatControlProps {
     disabled: boolean;
@@ -25,7 +25,7 @@ interface INumberFormatControlProps {
     pushData: PushDataCallback;
 }
 
-function NumberFormatControl({
+export function NumberFormatControl({
     disabled,
     valuePath,
     labelText,
@@ -70,5 +70,3 @@ function NumberFormatControl({
         </DisabledBubbleMessage>
     );
 }
-
-export default NumberFormatControl;

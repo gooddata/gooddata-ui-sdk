@@ -10,7 +10,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
-import OperatorDropdownBody from "./OperatorDropdownBody.js";
+import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 import { MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownProps {
@@ -83,5 +83,3 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
         </>
     );
 });
-
-export default OperatorDropdown;

@@ -2,12 +2,12 @@
 
 import { memo, useCallback } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IPushData } from "@gooddata/sdk-ui";
 import { ChartOrientationType } from "@gooddata/sdk-ui-charts";
 
-import DropdownControl from "./DropdownControl.js";
+import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { orientationDropdownItems } from "../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -66,8 +66,9 @@ export const OrientationDropdownControl = memo(function OrientationDropdownContr
     showDisabledMessage,
     properties,
     pushData,
-    intl,
-}: IOrientationDropdownControl & WrappedComponentProps) {
+}: IOrientationDropdownControl) {
+    const intl = useIntl();
+
     const handleOrientationChanged = useCallback(
         (data: IPushData) => {
             const { properties: dataProperties } = data;
@@ -110,5 +111,3 @@ export const OrientationDropdownControl = memo(function OrientationDropdownContr
         />
     );
 });
-
-export default injectIntl(OrientationDropdownControl);

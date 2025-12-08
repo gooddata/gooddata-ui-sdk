@@ -3,7 +3,7 @@
 import { MouseEvent, ReactElement, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 
@@ -11,7 +11,6 @@ import { stringUtils } from "@gooddata/util";
  * @internal
  */
 export interface ILegacyMultiSelectListItemProps {
-    intl: IntlShape;
     isLoading?: boolean;
     onMouseOut?: (source: any) => void;
     onMouseOver?: (source: any) => void;
@@ -87,5 +86,3 @@ export const LegacyMultiSelectListItem = memo(function LegacyMultiSelectListItem
         </div>
     );
 });
-
-export default injectIntl(LegacyMultiSelectListItem);

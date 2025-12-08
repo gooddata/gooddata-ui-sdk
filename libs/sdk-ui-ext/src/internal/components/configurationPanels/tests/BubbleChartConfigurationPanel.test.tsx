@@ -8,7 +8,7 @@ import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../tests/mocks/testMocks.js";
-import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel.js";
+import { BubbleChartConfigurationPanel } from "../BubbleChartConfigurationPanel.js";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 describe("BubbleChartConfigurationPanel", () => {

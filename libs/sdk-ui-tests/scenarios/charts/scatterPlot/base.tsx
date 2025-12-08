@@ -25,7 +25,7 @@ export const ScatterPlotWithMeasuresAttributeAndSegmentBy = {
  *  - long name of X and Y axes are truncated
  */
 
-export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
+export const base = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

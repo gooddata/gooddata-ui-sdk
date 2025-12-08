@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import {
     IMeasure,
     IMeasureDescriptor,
@@ -7,6 +8,7 @@ import {
     attributeLocalId,
     isArithmeticMeasure,
     isAttribute,
+    isAttributeDescriptor,
     isIdentifierRef,
     isMeasureDescriptor,
     isObjRef,
@@ -223,7 +225,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
 
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;
-        if (isResultAttributeHeader(header)) {
+        if (isResultAttributeHeader(header) && !isAttributeDescriptor(header)) {
             return false;
         }
 

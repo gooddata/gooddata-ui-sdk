@@ -24,7 +24,7 @@ import {
     WonMeasurePredicate,
 } from "../_infra/predicates.js";
 
-export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
+export const transposition = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },

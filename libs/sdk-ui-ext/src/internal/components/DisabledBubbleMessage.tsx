@@ -3,7 +3,7 @@
 import { ReactNode, memo } from "react";
 
 import cx from "classnames";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
@@ -18,16 +18,17 @@ export interface IBubbleMessageOwnProps {
     children?: ReactNode;
 }
 
-export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;
+export type IBubbleMessageProps = IBubbleMessageOwnProps;
 
 export const DisabledBubbleMessage = memo(function DisabledBubbleMessage({
     className,
     alignPoints = [{ align: "cr cl" }],
     children,
-    intl,
     messageId = messages["notApplicable"].id,
     showDisabledMessage,
 }: IBubbleMessageProps) {
+    const intl = useIntl();
+
     const getBubbleClassNames = (): string => {
         return cx("bubble-primary", {
             invisible: !showDisabledMessage,
@@ -43,5 +44,3 @@ export const DisabledBubbleMessage = memo(function DisabledBubbleMessage({
         </BubbleHoverTrigger>
     );
 });
-
-export default injectIntl<"intl", IBubbleMessageProps>(DisabledBubbleMessage);

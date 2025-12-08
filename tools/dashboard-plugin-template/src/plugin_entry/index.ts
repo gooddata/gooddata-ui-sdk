@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import type { DashboardPluginDescriptor } from "@gooddata/sdk-ui-dashboard";
 
 import packageJson from "../../package.json" with { type: "json" };
@@ -15,7 +16,7 @@ type PluginEntryPoint = DashboardPluginDescriptor & {
     pluginKey: string;
 };
 
-const entryPoint: PluginEntryPoint = {
+export const entryPoint: PluginEntryPoint = {
     author: packageJson.author,
     displayName: packageJson.name,
     version: packageJson.version,
@@ -26,5 +27,3 @@ const entryPoint: PluginEntryPoint = {
     engineKey: `./${metadataJson.MODULE_FEDERATION_NAME}_ENGINE`,
     pluginKey: `./${metadataJson.MODULE_FEDERATION_NAME}_PLUGIN`,
 };
-
-export default entryPoint;

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOutWithLinks,
@@ -25,6 +26,7 @@ import {
     ICatalogFact,
     ICatalogMeasure,
     IGroupableCatalogItemBase,
+    MetricType,
     ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
@@ -75,11 +77,15 @@ export const convertAttribute = (
     const displayForms = allLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef, defaultLabel.id));
     const defaultDisplayForm = displayForms.find((df) => df.id === defaultLabel.id)!;
     const convertedDataSet = dataSet ? convertDataSetItem(dataSet) : undefined;
-
+    const drillToAttributeLink = displayForms.find((df) => df.displayFormType === "GDC.link")?.ref;
+    //
     return newCatalogAttribute((catalogA) =>
         catalogA
             .attribute(attributeRef, (a) =>
-                a.modify(commonMetadataObjectModifications(attribute)).displayForms(displayForms),
+                a
+                    .modify(commonMetadataObjectModifications(attribute))
+                    .displayForms(displayForms)
+                    .drillToAttributeLink(drillToAttributeLink),
             )
             .defaultDisplayForm(defaultDisplayForm)
             .geoPinDisplayForms(geoPinDisplayForms)
@@ -93,7 +99,7 @@ export const convertMeasure = (
     measure: JsonApiMetricOutWithLinks,
     included: JsonApiMetricOutIncludes[] = [],
 ): ICatalogMeasure => {
-    const { maql = "", format = "" } = measure.attributes?.content || {};
+    const { maql = "", format = "", metricType } = measure.attributes?.content || {};
 
     return newCatalogMeasure((catalogM) =>
         catalogM
@@ -104,6 +110,7 @@ export const convertMeasure = (
                     .format(format)
                     .isLocked(isInheritedObject(measure))
                     .tags(measure.attributes?.tags ?? [])
+                    .metricType(metricType as MetricType | undefined)
                     .created(measure.attributes?.createdAt)
                     .createdBy(convertUserIdentifier(measure.relationships?.createdBy, included))
                     .updated(measure.attributes?.modifiedAt)

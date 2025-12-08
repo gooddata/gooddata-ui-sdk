@@ -20,15 +20,15 @@ import { createIntlMock } from "@gooddata/sdk-ui";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { AVAILABLE_TOTALS } from "../../../base/constants.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
-import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu.js";
-import AggregationsSubMenu from "../AggregationsSubMenu.js";
+import { AggregationsMenu, IAggregationsMenuProps } from "../AggregationsMenu.js";
+import { AggregationsSubMenu } from "../AggregationsSubMenu.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function
  */
 vi.mock("../AggregationsSubMenu", () => ({
     __esModule: true,
-    default: vi.fn(() => null),
+    AggregationsSubMenu: vi.fn(() => null),
 }));
 
 const intlMock = createIntlMock({

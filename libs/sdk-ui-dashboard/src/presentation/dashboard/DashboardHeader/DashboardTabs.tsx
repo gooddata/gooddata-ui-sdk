@@ -45,6 +45,95 @@ const EMPTY_TABS: TabState[] = [];
 
 type IDashboardUiTab = IUiTab<{ isRenaming?: boolean }>;
 
+interface TabActionsParams {
+    tab: TabState;
+    index: number;
+    totalTabs: number;
+    intl: ReturnType<typeof useIntl>;
+    dispatch: ReturnType<typeof useDashboardDispatch>;
+}
+
+function createRenameAction(params: TabActionsParams) {
+    const { tab, intl, dispatch } = params;
+    return {
+        id: "rename",
+        label: intl.formatMessage({ id: "dashboard.tabs.rename" }),
+        iconLeft: <UiIcon type={"pencil"} ariaHidden size={14} color={"complementary-5"} />,
+        isDisabled: tab.isRenaming,
+        onSelect: () => dispatch(startRenamingDashboardTab(tab.localIdentifier)),
+        closeOnSelect: "all" as const,
+    };
+}
+
+function createMoveLeftAction(params: TabActionsParams) {
+    const { index, intl, dispatch } = params;
+    if (index <= 0) {
+        return undefined;
+    }
+    return {
+        id: "moveLeft",
+        label: intl.formatMessage({ id: "dashboard.tabs.move.left" }),
+        iconLeft: <UiIcon type={"arrowLeft"} ariaHidden size={14} color={"complementary-5"} />,
+        onSelect: () => {
+            if (index <= 0) {
+                return;
+            }
+
+            dispatch(repositionDashboardTab(index, index - 1));
+        },
+        closeOnSelect: false as const,
+    };
+}
+
+function createMoveRightAction(params: TabActionsParams) {
+    const { index, totalTabs, intl, dispatch } = params;
+    if (index >= totalTabs - 1) {
+        return undefined;
+    }
+    return {
+        id: "moveRight",
+        label: intl.formatMessage({ id: "dashboard.tabs.move.right" }),
+        iconLeft: <UiIcon type={"arrowRight"} ariaHidden size={14} color={"complementary-5"} />,
+        onSelect: () => {
+            if (index >= totalTabs - 1) {
+                return;
+            }
+
+            dispatch(repositionDashboardTab(index, index + 1));
+        },
+        closeOnSelect: false as const,
+    };
+}
+
+function createDeleteAction(params: TabActionsParams, isOnlyOneTab: boolean) {
+    const { tab, intl, dispatch } = params;
+    return {
+        id: "delete",
+        label: intl.formatMessage({ id: "delete" }),
+        isDisabled: isOnlyOneTab,
+        iconLeft: <UiIcon type={"trash"} ariaHidden size={14} color={"complementary-5"} />,
+        isDestructive: true,
+        tooltip: isOnlyOneTab
+            ? intl.formatMessage({
+                  id: "dashboard.tabs.delete.disabled-tooltip",
+              })
+            : undefined,
+        tooltipWidth: 250,
+        onSelect: () => dispatch(deleteDashboardTab(tab.localIdentifier)),
+    };
+}
+
+function buildTabActions(params: TabActionsParams, isOnlyOneTab: boolean) {
+    const actions = [
+        createRenameAction(params),
+        createMoveLeftAction(params),
+        createMoveRightAction(params),
+        separatorStaticItem,
+        createDeleteAction(params, isOnlyOneTab),
+    ];
+    return actions.filter((x): x is NonNullable<typeof x> => !!x);
+}
+
 export function useDashboardTabsProps(): IDashboardTabsProps {
     const intl = useIntl();
 
@@ -68,101 +157,19 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
 
     const uiTabs = useMemo<IDashboardUiTab[]>(() => {
         const isOnlyOneTab = tabs.length < 2;
+        const totalTabs = tabs.length;
 
         return (
-            tabs.map(
-                (tab, index) =>
-                    ({
-                        id: tab.localIdentifier,
-                        label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
-                        isRenaming: tab.isRenaming,
-                        variant: isOnlyOneTab ? "placeholder" : "default",
-                        actions: isEditMode
-                            ? [
-                                  {
-                                      id: "rename",
-                                      label: intl.formatMessage({ id: "dashboard.tabs.rename" }),
-                                      iconLeft: (
-                                          <UiIcon
-                                              type={"pencil"}
-                                              ariaHidden
-                                              size={14}
-                                              color={"complementary-5"}
-                                          />
-                                      ),
-                                      isDisabled: tab.isRenaming,
-                                      onSelect: () =>
-                                          dispatch(startRenamingDashboardTab(tab.localIdentifier)),
-                                      closeOnSelect: "all" as const,
-                                  },
-                                  index > 0 && {
-                                      id: "moveLeft",
-                                      label: intl.formatMessage({ id: "dashboard.tabs.move.left" }),
-                                      iconLeft: (
-                                          <UiIcon
-                                              type={"arrowLeft"}
-                                              ariaHidden
-                                              size={14}
-                                              color={"complementary-5"}
-                                          />
-                                      ),
-                                      onSelect: () => {
-                                          if (index <= 0) {
-                                              return;
-                                          }
-
-                                          dispatch(repositionDashboardTab(index, index - 1));
-                                      },
-                                      closeOnSelect: false as const,
-                                  },
-                                  index < tabs.length - 1 && {
-                                      id: "moveRight",
-                                      label: intl.formatMessage({ id: "dashboard.tabs.move.right" }),
-                                      iconLeft: (
-                                          <UiIcon
-                                              type={"arrowRight"}
-                                              ariaHidden
-                                              size={14}
-                                              color={"complementary-5"}
-                                          />
-                                      ),
-                                      onSelect: () => {
-                                          if (index >= tabs.length - 1) {
-                                              return;
-                                          }
-
-                                          dispatch(repositionDashboardTab(index, index + 1));
-                                      },
-                                      closeOnSelect: false as const,
-                                  },
-
-                                  separatorStaticItem,
-
-                                  {
-                                      id: "delete",
-                                      label: intl.formatMessage({ id: "delete" }),
-                                      isDisabled: isOnlyOneTab,
-                                      iconLeft: (
-                                          <UiIcon
-                                              type={"trash"}
-                                              ariaHidden
-                                              size={14}
-                                              color={"complementary-5"}
-                                          />
-                                      ),
-                                      isDestructive: true,
-                                      tooltip: isOnlyOneTab
-                                          ? intl.formatMessage({
-                                                id: "dashboard.tabs.delete.disabled-tooltip",
-                                            })
-                                          : undefined,
-                                      tooltipWidth: 250,
-                                      onSelect: () => dispatch(deleteDashboardTab(tab.localIdentifier)),
-                                  },
-                              ].filter((x) => !!x)
-                            : [],
-                    }) satisfies IDashboardUiTab,
-            ) ?? []
+            tabs.map((tab, index) => {
+                const actionParams: TabActionsParams = { tab, index, totalTabs, intl, dispatch };
+                return {
+                    id: tab.localIdentifier,
+                    label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string
+                    isRenaming: tab.isRenaming,
+                    variant: isOnlyOneTab ? "placeholder" : "default",
+                    actions: isEditMode ? buildTabActions(actionParams, isOnlyOneTab) : [],
+                } satisfies IDashboardUiTab;
+            }) ?? []
         );
     }, [tabs, isEditMode, intl, dispatch]);
 

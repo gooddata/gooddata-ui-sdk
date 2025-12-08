@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-ui-dashboard";
 
 // this import will be renamed in plugin-toolkit
-import entryPoint from "../plugin_entry/index.js";
+import { entryPoint } from "../plugin_entry/index.js";
 
 /*
  * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,

@@ -13,6 +13,7 @@ declare global {
     }
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {};
 
 Cypress.Commands.add("readPdf", (inputFile) => {

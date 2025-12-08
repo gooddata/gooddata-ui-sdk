@@ -4,14 +4,14 @@ import { useRef, useState } from "react";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import AddActionMenu from "./AddActionMenu.js";
+import { AddActionMenu } from "./AddActionMenu.js";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
 interface IAttributeItemCellProps {
     rowIndex: number;
 }
 
-function AttributeItemActions({ rowIndex }: IAttributeItemCellProps) {
+export function AttributeItemActions({ rowIndex }: IAttributeItemCellProps) {
     const [shouldDisplayAddActions, setDisplayAddActions] = useState<boolean>(false);
     const { onDeleteAttribute } = useAttributeHierarchyDialog();
     const addAttributeRef = useRef(undefined);
@@ -50,5 +50,3 @@ function AttributeItemActions({ rowIndex }: IAttributeItemCellProps) {
         </div>
     );
 }
-
-export default AttributeItemActions;

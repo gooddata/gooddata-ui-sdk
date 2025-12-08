@@ -4,7 +4,7 @@ import { measureLocalId, modifyAttribute } from "@gooddata/sdk-model";
 import { Repeater } from "@gooddata/sdk-ui-charts";
 
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
 const productCategoryRow = modifyAttribute(Catalog.ProductCategory, (a) => a.localId("productCategoryRow"));
 const productCategoryColumn = modifyAttribute(Catalog.ProductCategory, (a) =>
@@ -13,7 +13,7 @@ const productCategoryColumn = modifyAttribute(Catalog.ProductCategory, (a) =>
 const numberOfOrdersColumn = Catalog.NrOfOrders;
 const orderDateMonthYear = Catalog.DateDatasets.OrderDate.OrderDateMonthYear.Default;
 
-export default function Example() {
+export function Example() {
     return (
         <>
             <h1># of Orders across Product Category</h1>

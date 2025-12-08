@@ -4,7 +4,7 @@ import { memo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IPushData } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -22,13 +22,13 @@ export interface IAdvancedSectionProps {
     pushData: (data: IPushData) => any;
 }
 
-function AdvancedSection({
+export const AdvancedSection = memo(function AdvancedSection({
     properties,
     propertiesMeta,
     pushData,
-    intl,
     controlsDisabled,
-}: IAdvancedSectionProps & WrappedComponentProps) {
+}: IAdvancedSectionProps) {
+    const intl = useIntl();
     const [showDialog, setShowDialog] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLPreElement>(null);
@@ -60,7 +60,6 @@ function AdvancedSection({
                 title={messages["advancedSection"].id}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
-                intl={intl}
             >
                 {configurationValue === undefined ? (
                     <div className="gd-chart-override-no-value">
@@ -89,6 +88,4 @@ function AdvancedSection({
             </ConfigSection>
         </>
     );
-}
-
-export default injectIntl(memo(AdvancedSection));
+});

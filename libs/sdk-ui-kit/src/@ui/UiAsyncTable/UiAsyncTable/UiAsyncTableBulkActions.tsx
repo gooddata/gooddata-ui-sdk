@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
+import { UiAsyncTableDropdownItem } from "./UiAsyncTableDropdownItem.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { DropdownList } from "../../../Dropdown/DropdownList.js";
 import { UiButton } from "../../UiButton/UiButton.js";
@@ -51,6 +51,7 @@ export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActions
                                         item.onClick();
                                         closeDropdown();
                                     }}
+                                    accessibilityConfig={item.accessibilityConfig}
                                 />
                             )}
                             width={200}

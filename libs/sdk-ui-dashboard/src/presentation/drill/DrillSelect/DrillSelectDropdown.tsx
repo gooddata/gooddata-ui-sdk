@@ -36,6 +36,7 @@ import {
     selectCatalogAttributeDisplayFormsById,
     selectDashboardTitle,
     selectEnableDashboardTabs,
+    selectEnableImplicitDrillToUrl,
     selectInsightsMap,
     selectWidgetByRef,
     useDashboardSelector,
@@ -76,6 +77,7 @@ export function DrillSelectDropdown({
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
     const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
+    const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -161,6 +163,9 @@ export function DrillSelectDropdown({
         if (isDrillDownDefinition(item.drillDefinition)) {
             return "drillDown";
         }
+        if (isDrillToUrl(item.drillDefinition) && enableImplicitDrillToUrl) {
+            return "drillToUrl";
+        }
         if (isCrossFiltering(item.drillDefinition)) {
             return "crossFiltering";
         }
@@ -175,6 +180,7 @@ export function DrillSelectDropdown({
         crossFilteringItems: grouped["crossFiltering"] ?? [],
         keyDriverAnalysisItems: grouped["keyDriverAnalysis"] ?? [],
         drillItems: grouped["drill"] ?? [],
+        drillToUrlItems: grouped["drillToUrl"] ?? [],
         onSelect,
     });
 

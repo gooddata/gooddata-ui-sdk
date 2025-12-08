@@ -17,6 +17,7 @@ declare global {
     }
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {};
 
 function dragByOffset(dragElement: JQuery, offset: IOffset, metaKey: boolean, altKey: boolean) {

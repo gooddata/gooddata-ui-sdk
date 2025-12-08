@@ -8,7 +8,7 @@ import { IAttribute, IInsightDefinition, IMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks.js";
-import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel.js";
+import { BaseChartConfigurationPanel } from "../BaseChartConfigurationPanel.js";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 describe("BaseChartConfigurationPanel", () => {

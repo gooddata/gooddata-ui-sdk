@@ -7,7 +7,7 @@ import { IComparisonControlProperties } from "../../../../../../interfaces/Contr
 import { IVisualizationProperties } from "../../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
-import ColorResetButton from "../ColorResetButton.js";
+import { ColorResetButton } from "../ColorResetButton.js";
 
 const LABEL_BUTTON_TEXT_QUERY = "Reset Colors";
 const BUTTON_WRAPPER_SELECTOR = ".s-gd-color-reset-colors-section";

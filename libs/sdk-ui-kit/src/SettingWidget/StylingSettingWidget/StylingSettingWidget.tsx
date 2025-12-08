@@ -40,7 +40,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     className?: string;
     shouldDisableCancelButton?: boolean;
     shouldDisableApplyButton?: boolean;
-    onApply?: (ref: ObjRef) => void;
+    onApply?: (ref: ObjRef | null) => void;
     onCancel?: () => void;
     onListActionClick?: () => void;
     onItemEdit?: (modifiedItem: IStylingPickerItem<T>) => void;
@@ -48,7 +48,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     locale?: string;
     onHelpClick?: () => void;
     onItemMenuToggle?: (ref: ObjRef) => void;
-    onItemSelect?: (ref: ObjRef) => void;
+    onItemSelect?: (ref: ObjRef | null) => void;
     isEditingSupported?: boolean;
     isSavingActionInProgress?: boolean;
 }
@@ -98,9 +98,7 @@ function StylingSettingWidgetCore<T extends StylingPickerItemContent>({
 
     const onItemClick = useCallback(
         (ref: ObjRef | null) => {
-            if (ref) {
-                onItemSelect(ref);
-            }
+            onItemSelect(ref);
             setCurrentItemRef(ref);
         },
         [onItemSelect],
@@ -117,9 +115,7 @@ function StylingSettingWidgetCore<T extends StylingPickerItemContent>({
     }, [onCancel, selectedItemRef]);
 
     const handleApply = useCallback(() => {
-        if (currentItemRef) {
-            onApply?.(currentItemRef);
-        }
+        onApply?.(currentItemRef);
     }, [onApply, currentItemRef]);
 
     return (

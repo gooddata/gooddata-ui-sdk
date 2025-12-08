@@ -13,7 +13,7 @@ import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "./backs
 import { ConfigurationPanelWrapper } from "./ConfigurationPanelWrapper.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
 import { ScreenshotReadyWrapper } from "./ScreenshotReadyWrapper.js";
-import AllTestScenarioGroups from "../../scenarios/index.js";
+import { allScenarios } from "../../scenarios/index.js";
 import { ScenarioGroup } from "../../src/index.js";
 
 // delete any pre-existing stories
@@ -72,7 +72,7 @@ const Insights = [...getAvailableInsights(ReferenceRecordings.Recordings)];
 const InsightById = keyBy(Insights, insightId);
 
 const ScenarioGroupsByVis = sortBy(
-    Object.values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
+    Object.values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
 

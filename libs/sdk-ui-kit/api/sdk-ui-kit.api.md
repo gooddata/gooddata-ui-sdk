@@ -47,7 +47,8 @@ import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
-import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
+import { ISeparators as ISeparators_2 } from '@gooddata/number-formatter';
+import { ISeparators as ISeparators_3 } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -60,6 +61,7 @@ import { KeyboardEventHandler } from 'react';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoExoticComponent } from 'react';
 import { MessageDescriptor } from 'react-intl';
+import type { MetricType } from '@gooddata/sdk-model';
 import { ModifierKey } from 'react';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import { MutableRefObject } from 'react';
@@ -124,7 +126,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: ComponentType<Omit<WithIntlProps<IAppHeaderProps & WrappedComponentProps>, "theme" | "themeIsLoading" | "themeStatus">>;
+export const AppHeader: ComponentType<Omit<IAppHeaderProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -276,9 +278,7 @@ export function CodeOptions({ option, onChange }: ICodeOptionsProps): JSX.Elemen
 export type Color = string;
 
 // @internal (undocumented)
-export const ColorPicker: FC<WithIntlProps<IColorPickerProps & WrappedComponentProps>> & {
-    WrappedComponent: ComponentType<IColorPickerProps & WrappedComponentProps>;
-};
+export function ColorPicker(props: IColorPickerProps): JSX.Element;
 
 // @internal (undocumented)
 export function ColorPickerPointer(): JSX.Element;
@@ -308,6 +308,17 @@ export function ContentDivider({ className }: {
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
+
+// @internal
+export function createCurrencyPresets(formatMessage: (descriptor: {
+    id: string;
+}) => string): IFormatPreset[];
+
+// @internal
+export const CURRENCY_PRESET_DEFINITIONS: readonly ICurrencyPresetDefinition[];
+
+// @alpha (undocumented)
+export type CurrencyFormatValidationErrorCode = "empty" | "invalidFormat" | "missingCurrencySymbol" | "missingDecimalPlaces";
 
 // @internal (undocumented)
 export type CurrentUserPermissions = {
@@ -516,9 +527,7 @@ export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialo
 export function FilterGroupItem({ title, subtitle, selectedItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, }: IFilterGroupItemProps): JSX.Element;
 
 // @internal (undocumented)
-export const FilterLabel: FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps>> & {
-    WrappedComponent: ComponentType<IFilterLabelProps & WrappedComponentProps>;
-};
+export const FilterLabel: NamedExoticComponent<IFilterLabelProps>;
 
 // @internal
 export const findFocusableElementInSibling: (sibling: Element, direction?: NavigationDirection) => HTMLElement | null;
@@ -1703,6 +1712,43 @@ export function IconWebsite({ color, className, width, height }: IIconProps): JS
 // @internal (undocumented)
 export function IconWidget({ color, className, width, height }: IIconProps): JSX.Element;
 
+// @alpha (undocumented)
+export interface ICurrencyFormatValidationError {
+    // (undocumented)
+    code: CurrencyFormatValidationErrorCode;
+    // (undocumented)
+    message: string;
+    sectionIndexes?: number[];
+}
+
+// @alpha (undocumented)
+export interface ICurrencyFormatValidationOptions {
+    requiredDecimalPlaces?: number;
+    sampleValue?: number;
+    // (undocumented)
+    separators?: ISeparators_2;
+}
+
+// @alpha (undocumented)
+export interface ICurrencyFormatValidationResult {
+    // (undocumented)
+    errors: ICurrencyFormatValidationError[];
+    // (undocumented)
+    isValid: boolean;
+}
+
+// @internal
+export interface ICurrencyPresetDefinition {
+    // (undocumented)
+    format: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    messageId: string;
+    // (undocumented)
+    previewNumber: number;
+}
+
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
     // (undocumented)
@@ -1824,7 +1870,7 @@ export interface IDescriptionPanelProps {
     // (undocumented)
     onBubbleOpen?: () => void;
     // (undocumented)
-    separators?: ISeparators_2;
+    separators?: ISeparators_3;
     // (undocumented)
     title?: string;
     // (undocumented)
@@ -2891,7 +2937,7 @@ export interface IInsightListItemProps {
     // (undocumented)
     richTextExecConfig?: IExecutionConfig;
     // (undocumented)
-    separators?: ISeparators_2;
+    separators?: ISeparators_3;
     // (undocumented)
     showDescriptionPanel?: boolean;
     // (undocumented)
@@ -3407,8 +3453,6 @@ export interface ILegacyListState {
 // @internal (undocumented)
 export interface ILegacyMultiSelectListItemProps {
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     onMouseOut?: (source: any) => void;
@@ -3818,8 +3862,6 @@ export interface IMultiSelectListProps<T> {
     // (undocumented)
     height?: number;
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     isInverted?: boolean;
     // (undocumented)
     isMobile?: boolean;
@@ -4058,54 +4100,12 @@ export interface InputState {
 }
 
 // @internal (undocumented)
-export class InputWithNumberFormat extends PureComponent<InputWithNumberFormatProps, InputWithNumberFormatState> {
-    constructor(props: InputWithNumberFormatProps);
-    // (undocumented)
-    static defaultProps: {
-        separators: {
-            thousand: string;
-            decimal: string;
-        };
-        autofocus: boolean;
-        className: string;
-        clearOnEsc: boolean;
-        disabled: boolean;
-        hasError: boolean;
-        hasWarning: boolean;
-        isSearch: boolean;
-        isSmall: boolean;
-        maxlength: number;
-        onChange: (..._: any[]) => void;
-        onEscKeyPress: (..._: any[]) => void;
-        onEnterKeyPress: (..._: any[]) => void;
-        onBlur: (..._: any[]) => void;
-        onFocus: (..._: any[]) => void;
-        placeholder: string;
-        prefix: string;
-        readonly: boolean;
-        suffix: string;
-        label: string;
-        labelPositionTop: boolean;
-        value: string;
-    };
-    // (undocumented)
-    handleCaretShift(e: ChangeEvent<HTMLInputElement>): void;
-    // (undocumented)
-    onBlur: (e: FocusEvent_2<HTMLInputElement>) => void;
-    // (undocumented)
-    onChange: (value: number, e: ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    onFocus: (e: FocusEvent_2<HTMLInputElement>) => void;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void;
-}
+export const InputWithNumberFormat: NamedExoticComponent<InputWithNumberFormatProps>;
 
 // @internal (undocumented)
 export interface InputWithNumberFormatOwnProps {
     // (undocumented)
-    separators: Separators;
+    separators?: Separators;
 }
 
 // @internal (undocumented)
@@ -4126,9 +4126,7 @@ export type InsightCodeType = "definition" | "reference";
 export function InsightIcon({ visualizationUrl, iconProps, }: IInsightIconProps): ReturnType<FC<IIconProps>> | null;
 
 // @internal (undocumented)
-export const InsightListItem: FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps>> & {
-    WrappedComponent: ComponentType<IInsightListItemProps & WrappedComponentProps>;
-};
+export function InsightListItem({ title, description, updated, type, isSelected, isLoading, filters, separators, LoadingComponent, onClick, onDescriptionPanelOpen, showDescriptionPanel, useRichText, useReferences, richTextExecConfig, width, isLocked, onDelete, metadataTimeZone, }: IInsightListItemProps): JSX.Element;
 
 // @internal (undocumented)
 export function InsightListItemDate({ config }: IInsightListItemDateProps): JSX.Element;
@@ -4490,7 +4488,7 @@ export interface IRichTextProps {
     referencesEnabled?: boolean;
     // (undocumented)
     renderMode?: "view" | "edit";
-    separators?: ISeparators_2;
+    separators?: ISeparators_3;
     // (undocumented)
     value: string;
 }
@@ -4566,6 +4564,9 @@ export interface IScrollGradientProps {
     // (undocumented)
     size?: number;
 }
+
+// @alpha
+export function isCurrencyFormat(format: string | undefined | null): boolean;
 
 // @internal (undocumented)
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
@@ -5054,7 +5055,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     // (undocumented)
     locale?: string;
     // (undocumented)
-    onApply?: (ref: ObjRef) => void;
+    onApply?: (ref: ObjRef | null) => void;
     // (undocumented)
     onCancel?: () => void;
     // (undocumented)
@@ -5066,7 +5067,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     // (undocumented)
     onItemMenuToggle?: (ref: ObjRef) => void;
     // (undocumented)
-    onItemSelect?: (ref: ObjRef) => void;
+    onItemSelect?: (ref: ObjRef | null) => void;
     // (undocumented)
     onListActionClick?: () => void;
     // (undocumented)
@@ -6046,9 +6047,7 @@ export function MetadataList({ title, list }: IMetadataListProps): JSX.Element;
 export const modifierNegator: "!";
 
 // @internal (undocumented)
-export const MultiSelectList: FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {
-    WrappedComponent: ComponentType<IMultiSelectListProps<unknown>>;
-};
+export function MultiSelectList<T>({ isMobile, width, height, items, itemHeight, itemsCount, onScrollEnd, renderItem, selectedItems, listClassNames, onSelectAll, onSelectNone, isInverted, isSearching, isSelected, filteredItemsCount, selectAllCheckbox, tagName, }: IMultiSelectListProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export const MultiSelectListItem: NamedExoticComponent<IMultiSelectListItemProps>;
@@ -6512,6 +6511,8 @@ export interface UiAsyncTableAccessibilityConfig<T> {
 
 // @internal (undocumented)
 export interface UiAsyncTableBulkAction {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     label: string;
     // (undocumented)
@@ -7196,6 +7197,31 @@ export interface UiPagedVirtualListSkeletonItemProps {
     itemHeight: number;
 }
 
+// @internal
+export const UiPaginationButton: ForwardRefExoticComponent<UiPaginationButtonProps & RefAttributes<HTMLButtonElement>>;
+
+// @internal
+export type UiPaginationButtonDirection = "previous" | "next";
+
+// @internal
+export interface UiPaginationButtonProps {
+    accessibilityConfig?: IAccessibilityConfigBase;
+    dataId?: string;
+    dataTestId?: string;
+    direction: UiPaginationButtonDirection;
+    id?: string;
+    isActive?: boolean;
+    isDisabled?: boolean;
+    label: string;
+    onClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
+    size?: UiPaginationButtonSize;
+    tabIndex?: number;
+}
+
+// @internal
+export type UiPaginationButtonSize = "small" | "large";
+
 // @internal (undocumented)
 export function UiPopover({ accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose, }: UiPopoverProps): JSX.Element;
 
@@ -7468,6 +7494,29 @@ export function useAsyncTableResponsiveColumns<T>(columns: Array<UiAsyncTableCol
     columns: UiAsyncTableColumnDefinitionResponsive<T>[];
 };
 
+// @internal
+export function useCurrencyFormatDefaults({ metricType, normalizedFormat, currencyFormatOverride, presetFormats, hasInheritPreset, onFormatChange, shouldBootstrap, fallbackFormat, }: UseCurrencyFormatDefaultsConfig): void;
+
+// @internal (undocumented)
+export interface UseCurrencyFormatDefaultsConfig {
+    // (undocumented)
+    currencyFormatOverride?: string | null;
+    // (undocumented)
+    fallbackFormat?: string;
+    // (undocumented)
+    hasInheritPreset: boolean;
+    // (undocumented)
+    metricType?: MetricType;
+    // (undocumented)
+    normalizedFormat: string | null;
+    // (undocumented)
+    onFormatChange: (format: string | null) => void;
+    // (undocumented)
+    presetFormats: string[];
+    // (undocumented)
+    shouldBootstrap: boolean;
+}
+
 // @internal (undocumented)
 export function useElementSize<T extends HTMLElement>(): {
     ref: RefObject<T | null>;
@@ -7607,6 +7656,9 @@ export function useUiTreeViewEventSubscriber<T extends UiTreeViewEventType>(even
 
 // @internal
 export const useZoom: () => IZoomContextState;
+
+// @alpha
+export function validateCurrencyFormat(format: string | undefined | null, options?: ICurrencyFormatValidationOptions): ICurrencyFormatValidationResult;
 
 // @internal
 export type VariantBare = "bare";

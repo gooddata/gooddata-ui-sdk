@@ -375,6 +375,10 @@
         "value": "Drill down",
         "comment": "Label for the drill down interaction in the drill configuration modal"
     },
+    "drill_modal_picker.drill-to-url": {
+        "value": "Drill to URL",
+        "comment": "Label for the drill to URL interaction in the drill configuration modal"
+    },
     "drill_modal_picker.drill-into": {
         "value": "Drill into",
         "comment": "Label for the drill into interaction in the drill configuration modal"

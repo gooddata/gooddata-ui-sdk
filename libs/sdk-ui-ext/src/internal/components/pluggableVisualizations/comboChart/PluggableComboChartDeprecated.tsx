@@ -27,7 +27,7 @@ import {
 } from "../../../utils/bucketHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelperDeprecated.js";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
+import { UnsupportedConfigurationPanel } from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {

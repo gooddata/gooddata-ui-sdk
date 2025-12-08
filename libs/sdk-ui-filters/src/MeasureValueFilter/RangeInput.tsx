@@ -16,7 +16,7 @@ interface IRangeInputProps {
     separators?: ISeparators;
 }
 
-function RangeInput({
+export function RangeInput({
     from,
     to,
     usePercentage,
@@ -50,5 +50,3 @@ function RangeInput({
         </div>
     );
 }
-
-export default RangeInput;

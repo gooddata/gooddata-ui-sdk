@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { customMessages } from "./customDictionary.js";
-import LegacyMultiSelectList, { ILegacyMultiSelectListProps } from "../LegacyMultiSelectList.js";
+import { ILegacyMultiSelectListProps, LegacyMultiSelectListWithIntl } from "../LegacyMultiSelectList.js";
 
 describe("LegacyMultiSelectList", () => {
     const firstItem: any = {
@@ -37,7 +37,7 @@ describe("LegacyMultiSelectList", () => {
         };
 
         const Wrapped = withIntl<ILegacyMultiSelectListProps<any>>(
-            LegacyMultiSelectList,
+            LegacyMultiSelectListWithIntl,
             undefined,
             customMessages,
         );

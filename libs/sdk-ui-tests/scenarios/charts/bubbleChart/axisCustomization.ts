@@ -76,4 +76,4 @@ const axisConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
         },
     });
 
-export default [axisConfig, singleAxisNameConfig];
+export const axisCustomization = [axisConfig, singleAxisNameConfig];

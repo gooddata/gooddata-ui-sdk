@@ -13,7 +13,7 @@ import { scenariosFor } from "../../../src/index.js";
 import { AttributeElements } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
-export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+export const drilling = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.Drilling)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")

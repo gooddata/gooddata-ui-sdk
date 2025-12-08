@@ -220,8 +220,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             const overlays: Record<string, IDashboardWidgetOverlay> = { ...this.widgetOverlays };
             const { insight, kpi, layouts } = this.mutations;
             const { layout } = dashboard;
+            const firstTabLayout = dashboard.tabs?.[0]?.layout;
+            const layoutToTransform = firstTabLayout ?? layout;
 
-            walkLayout(layout as IDashboardLayout, {
+            walkLayout(layoutToTransform as IDashboardLayout, {
                 itemCallback: (item) => {
                     if (
                         (isInsightWidget(item.widget) || isInsightWidgetDefinition(item.widget)) &&

@@ -4,7 +4,7 @@ import { Fragment, memo, useCallback, useRef, useState } from "react";
 
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 
-import MeasureValueFilterButton from "./MeasureValueFilterButton.js";
+import { DropdownButton } from "./MeasureValueFilterButton.js";
 import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown.js";
 import { IMeasureValueFilterCommonProps } from "./typings.js";
 
@@ -63,7 +63,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     return (
         <Fragment>
             <div ref={buttonRef}>
-                <MeasureValueFilterButton
+                <DropdownButton
                     onClick={toggleDropdown}
                     isActive={displayDropdown}
                     buttonTitle={buttonTitle}

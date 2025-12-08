@@ -10,6 +10,7 @@ import { IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "11 Configuration Controls/Axis/LabelFormatControl",
 };

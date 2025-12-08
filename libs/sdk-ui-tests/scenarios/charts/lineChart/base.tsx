@@ -57,7 +57,7 @@ export const LineChartViewByDate = {
     trendBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
-export default scenariosFor<ILineChartProps>("LineChart", LineChart)
+export const base = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

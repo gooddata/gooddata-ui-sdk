@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
@@ -13,7 +13,9 @@ export interface ICustomColorButtonProps {
     onClick: () => void;
 }
 
-function CustomColorButton({ onClick, intl }: ICustomColorButtonProps & WrappedComponentProps) {
+export const CustomColorButton = memo(function CustomColorButton({ onClick }: ICustomColorButtonProps) {
+    const intl = useIntl();
+
     const handleClick = () => {
         onClick();
     };
@@ -27,6 +29,4 @@ function CustomColorButton({ onClick, intl }: ICustomColorButtonProps & WrappedC
             />
         </div>
     );
-}
-
-export default injectIntl(memo(CustomColorButton));
+});

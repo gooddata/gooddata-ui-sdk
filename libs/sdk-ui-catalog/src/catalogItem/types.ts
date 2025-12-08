@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IDataSetMetadataObject, IdentifierRef, ObjectOrigin } from "@gooddata/sdk-model";
+import type { IDataSetMetadataObject, IdentifierRef, MetricType, ObjectOrigin } from "@gooddata/sdk-model";
 
 import type { ObjectType } from "../objectType/types.js";
 
@@ -57,6 +57,8 @@ export interface ICatalogItem extends ICatalogItemRef {
     isHidden?: boolean;
     visualizationType?: VisualizationType;
     dataSet?: IDataSetMetadataObject;
+    format?: string | null;
+    metricType?: MetricType;
 }
 
 export type ICatalogItemFeedOptions = Omit<ICatalogItemQueryOptions, "origin" | "tags">;

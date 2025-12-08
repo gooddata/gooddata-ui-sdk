@@ -9,8 +9,8 @@ import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mock
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
 import { SingleColumn } from "../../tests/table.fixture.js";
-import ColumnHeader from "../ColumnHeader.js";
-import HeaderCell from "../HeaderCell.js";
+import { ColumnHeader } from "../ColumnHeader.js";
+import { HeaderCell } from "../HeaderCell.js";
 
 const fixture = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable
@@ -66,7 +66,7 @@ const getColumnHeader = (
  */
 vi.mock("../HeaderCell", async () => ({
     ...((await vi.importActual("../HeaderCell")) as object),
-    default: vi.fn(() => null),
+    HeaderCell: vi.fn(() => null),
 }));
 
 describe("ColumnHeader renderer", () => {

@@ -3,11 +3,11 @@
 import { ChangeEvent, ReactNode } from "react";
 
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { AxisType } from "../../interfaces/AxisType.js";
 import { getTranslation } from "../../utils/translations.js";
-import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
+import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
 export interface IConfigSubsectionOwnProps {
     valuePath?: string;
@@ -26,11 +26,10 @@ export interface IConfigSubsectionState {
     disabled: boolean;
 }
 
-export type IConfigSubsectionProps = IConfigSubsectionOwnProps & WrappedComponentProps;
+export type IConfigSubsectionProps = IConfigSubsectionOwnProps;
 
-function ConfigSubsection({
+export function ConfigSubsection({
     title,
-    intl,
     canBeToggled = false,
     toggleDisabled = false,
     toggledOn = true,
@@ -41,6 +40,7 @@ function ConfigSubsection({
     axisType,
     children,
 }: IConfigSubsectionProps) {
+    const intl = useIntl();
     const toggleValue = (event: ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
             const clonedProperties = cloneDeep(properties);
@@ -93,5 +93,3 @@ function ConfigSubsection({
         </div>
     );
 }
-
-export default injectIntl<"intl", IConfigSubsectionProps>(ConfigSubsection);

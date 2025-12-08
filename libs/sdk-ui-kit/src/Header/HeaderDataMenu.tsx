@@ -26,12 +26,7 @@ export interface IHeaderDataMenuProps {
     dataMenuItems: IHeaderDataMenuItem[];
 }
 
-export function CoreHeaderDataMenu({
-    intl,
-    onMenuItemClick,
-    dataMenuItems,
-    className,
-}: IHeaderDataMenuProps) {
+function CoreHeaderDataMenu({ intl, onMenuItemClick, dataMenuItems, className }: IHeaderDataMenuProps) {
     const renderSection = (items: IHeaderDataMenuItem[]) => {
         return items.map((item: IHeaderDataMenuItem) => {
             const { isDisable, tooltipText, isActive, className, key, onClick } = item;

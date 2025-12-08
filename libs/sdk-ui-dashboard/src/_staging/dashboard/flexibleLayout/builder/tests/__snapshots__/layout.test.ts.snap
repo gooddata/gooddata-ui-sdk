@@ -1206,6 +1206,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > afte
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -1234,6 +1235,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > afte
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -1270,6 +1272,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > befo
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -1353,6 +1356,7 @@ exports[`DashboardLayoutBuilder > should remove all items with kpi widget > befo
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "insightRef",
             },
@@ -1389,6 +1393,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "tableInsight",
             },
@@ -1412,6 +1417,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "barInsight",
             },
@@ -1435,6 +1441,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "columnInsight",
             },
@@ -1463,6 +1470,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "tableInsight",
             },
@@ -1499,6 +1507,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "tableInsight",
             },
@@ -1522,6 +1531,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "barInsight",
             },
@@ -1545,6 +1555,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "columnInsight",
             },
@@ -1573,6 +1584,7 @@ exports[`DashboardLayoutBuilder > should resize items with particular insight > 
             "drills": [],
             "ignoreDashboardFilters": [],
             "ignoredDrillDownHierarchies": [],
+            "ignoredDrillToUrlAttributes": [],
             "insight": {
               "identifier": "tableInsight",
             },

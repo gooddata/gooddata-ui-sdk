@@ -24,6 +24,7 @@ import { IAvailableDrillTargets, IDrillEvent, getMappingHeaderLocalIdentifier } 
 import {
     DashboardDrillDefinition,
     IDrillDownDefinition,
+    type IDrillToUrlAttributeDefinition,
     IGlobalDrillDownAttributeHierarchyDefinition,
 } from "../../types.js";
 
@@ -87,7 +88,11 @@ export function filterDrillsByDrillEvent(
 
 export function getDrillOriginLocalIdentifier({
     origin,
-}: InsightDrillDefinition | IDrillDownDefinition | IGlobalDrillDownAttributeHierarchyDefinition): string {
+}:
+    | InsightDrillDefinition
+    | IDrillDownDefinition
+    | IGlobalDrillDownAttributeHierarchyDefinition
+    | IDrillToUrlAttributeDefinition): string {
     if (isLocalIdRef(origin)) {
         return origin.localIdentifier;
     }

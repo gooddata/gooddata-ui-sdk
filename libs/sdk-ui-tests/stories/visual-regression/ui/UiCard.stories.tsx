@@ -40,6 +40,7 @@ function UiCardExamples() {
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "15 Ui/UiCard",
 };

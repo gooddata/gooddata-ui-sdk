@@ -5,9 +5,9 @@ import { useState } from "react";
 import { ComboChart } from "@gooddata/sdk-ui-charts";
 import { DateFilterHelpers, DateFilterOption, RelativeDateFilterOption } from "@gooddata/sdk-ui-filters";
 
-import DateFilter from "./DateFilter.js";
+import { Filter } from "./DateFilter.js";
 import * as Catalog from "../catalog.js";
-import Hint from "../Hint.js";
+import { Hint } from "../Hint.js";
 
 export interface IDateFilterComponentExampleState {
     selectedFilterOption: DateFilterOption;
@@ -24,7 +24,7 @@ const selectedValue: RelativeDateFilterOption = {
     name: "",
 };
 
-export default function Example() {
+export function Example() {
     const [filter, setFilter] = useState<IDateFilterComponentExampleState>({
         selectedFilterOption: selectedValue,
         excludeCurrentPeriod: false,
@@ -41,7 +41,7 @@ export default function Example() {
             <h1>Date Filter Component</h1>
 
             <div style={{ margin: 10 }}>
-                <DateFilter filter={filter} setFilter={setFilter} />
+                <Filter filter={filter} setFilter={setFilter} />
             </div>
 
             <div style={{ height: 300 }}>

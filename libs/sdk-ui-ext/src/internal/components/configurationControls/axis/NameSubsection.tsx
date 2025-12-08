@@ -2,15 +2,13 @@
 
 import { memo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
-
-import NamePositionControl from "./NamePositionControl.js";
+import { NamePositionControl } from "./NamePositionControl.js";
 import { messages } from "../../../../locales.js";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
+import { ConfigSubsection } from "../../configurationControls/ConfigSubsection.js";
 
-function NameSubsection(props: IConfigItemSubsection & WrappedComponentProps) {
+export const NameSubsection = memo(function NameSubsection(props: IConfigItemSubsection) {
     const getControlProperties = (): IVisualizationProperties => {
         const axisProperties = props.properties?.controls?.[props.axis];
 
@@ -47,6 +45,4 @@ function NameSubsection(props: IConfigItemSubsection & WrappedComponentProps) {
             />
         </ConfigSubsection>
     );
-}
-
-export default injectIntl(memo(NameSubsection));
+});

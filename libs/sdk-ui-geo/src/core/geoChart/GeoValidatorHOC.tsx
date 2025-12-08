@@ -13,6 +13,7 @@ import {
     GeoTokenMissingSdkError,
     IErrorDescriptors,
     IntlWrapper,
+    OnError,
     isGeoTokenMissing,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
@@ -51,6 +52,18 @@ const isSameData = (execution?: IPreparedExecution, nextExecution?: IPreparedExe
     return execution.equals(nextExecution);
 };
 
+const notifyLocationError = (onError: OnError | undefined, isLocationMissing: boolean): void => {
+    if (isLocationMissing) {
+        onError?.(new GeoLocationMissingSdkError());
+    }
+};
+
+const notifyTokenError = (onError: OnError | undefined, hasTokenError: boolean): void => {
+    if (hasTokenError) {
+        onError?.(new GeoTokenMissingSdkError());
+    }
+};
+
 export function geoValidatorHOC<T>(InnerComponent: ComponentClass<T>): ComponentType<T & IGeoValidatorProps> {
     const ValidatorHOCWrapped = memo<T & IGeoValidatorProps>(
         function ValidatorHOCWrapped(props) {
@@ -62,16 +75,13 @@ export function geoValidatorHOC<T>(InnerComponent: ComponentClass<T>): Component
             const { execution } = props;
             const isLocationMissing = !isLocationSet(execution.definition.buckets);
             const isMapboxTokenMissing = !mapboxToken;
+            const hasTokenError = isMapboxTokenInvalid || isMapboxTokenMissing;
 
             const handleError = useCallback(() => {
                 const { onError } = props;
-                if (isLocationMissing) {
-                    onError?.(new GeoLocationMissingSdkError());
-                }
-                if (isMapboxTokenInvalid || isMapboxTokenMissing) {
-                    onError?.(new GeoTokenMissingSdkError());
-                }
-            }, [isLocationMissing, isMapboxTokenInvalid, isMapboxTokenMissing, props]);
+                notifyLocationError(onError, isLocationMissing);
+                notifyTokenError(onError, hasTokenError);
+            }, [isLocationMissing, hasTokenError, props]);
 
             const handleInvalidMapboxToken = useCallback(() => {
                 setIsMapboxTokenInvalid(true);
@@ -108,7 +118,7 @@ export function geoValidatorHOC<T>(InnerComponent: ComponentClass<T>): Component
                 handleError();
             }, [handleError, props.config?.mapboxToken]);
 
-            if (isMapboxTokenInvalid || isMapboxTokenMissing) {
+            if (hasTokenError) {
                 return renderErrorComponent(ErrorCodes.GEO_MAPBOX_TOKEN_MISSING);
             }
 

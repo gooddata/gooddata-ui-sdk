@@ -12,7 +12,7 @@ import {
     isPointVisibleInAxesRanges,
 } from "../../../chartTypes/_chartCreators/helpers.js";
 
-function autohideLabelsOverlappingItsShape(
+export function autohideLabelsOverlappingItsShape(
     chart: any,
     hideFunction: (point: any) => void = hideDataLabel,
     showFunction: (point: any) => void = showDataLabel,
@@ -39,5 +39,3 @@ function autohideLabelsOverlappingItsShape(
         }
     });
 }
-
-export default autohideLabelsOverlappingItsShape;

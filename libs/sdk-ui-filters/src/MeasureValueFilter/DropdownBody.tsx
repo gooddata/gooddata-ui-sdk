@@ -8,10 +8,10 @@ import { isComparisonConditionOperator, isRangeConditionOperator } from "@goodda
 import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import ComparisonInput from "./ComparisonInput.js";
-import OperatorDropdown from "./OperatorDropdown.js";
-import RangeInput from "./RangeInput.js";
-import TreatNullValuesAsZeroCheckbox from "./TreatNullValuesAsZeroCheckbox.js";
+import { ComparisonInput } from "./ComparisonInput.js";
+import { OperatorDropdown } from "./OperatorDropdown.js";
+import { RangeInput } from "./RangeInput.js";
+import { TreatNullValuesAsZeroCheckbox } from "./TreatNullValuesAsZeroCheckbox.js";
 import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
 import { WarningMessage } from "./typings.js";
 import { WarningMessageComponent } from "./WarningMessage.js";

@@ -2,7 +2,7 @@
 
 import { ComponentType, useMemo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
     ErrorComponent as DefaultError,
@@ -22,13 +22,16 @@ export interface IInsightErrorProps {
     clientHeight?: number;
 }
 
-function InsightErrorCore({
+/**
+ * @internal
+ */
+export function InsightError({
     error,
     ErrorComponent = DefaultError,
     height,
-    intl,
     clientHeight,
-}: IInsightErrorProps & WrappedComponentProps) {
+}: IInsightErrorProps) {
+    const intl = useIntl();
     const errorMapping = useMemo<IErrorDescriptors>(() => newErrorMapping(intl), [intl]);
     const errorProps = useMemo(
         () => errorMapping[error.getMessage()] ?? { message: error.message },
@@ -37,8 +40,3 @@ function InsightErrorCore({
 
     return <ErrorComponent {...errorProps} height={height} clientHeight={clientHeight} />;
 }
-
-/**
- * @internal
- */
-export const InsightError = injectIntl(InsightErrorCore);

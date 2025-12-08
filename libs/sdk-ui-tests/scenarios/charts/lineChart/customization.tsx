@@ -105,7 +105,7 @@ const stackedThresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart",
         },
     });
 
-export default [
+export const customization = [
     legendScenarios,
     dataLabelScenarios,
     dataPointScenarios,

@@ -47,6 +47,7 @@ function CustomElementsSelectItem({
     );
 }
 
+// eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters@next/Customization/ElementsSelectItemComponent",
 };

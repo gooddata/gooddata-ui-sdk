@@ -3,12 +3,12 @@
 import { ElementType, ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { guidFor } from "./guid.js";
 import { LegacyList } from "./LegacyList.js";
 import { LegacyListItem } from "./LegacyListItem.js";
-import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
+import { LegacyMultiSelectListItem } from "./LegacyMultiSelectListItem.js";
 import { ScrollCallback } from "./List.js";
 import { Button } from "../Button/index.js";
 import { FlexDimensions } from "../FlexDimensions/index.js";
@@ -46,10 +46,10 @@ export interface ILegacyMultiSelectListProps<T> {
 }
 
 /**
- * @deprecated  This component is deprecated use MultiSelectList
  * @internal
+ * @deprecated This component is deprecated use MultiSelectList instead
  */
-function LegacyMultiSelectList<T>({
+export const LegacyMultiSelectListWithIntl = function LegacyMultiSelectListWithIntl<T>({
     isInverted = false,
     isSearching = false,
     selection = [] as T[],
@@ -68,13 +68,13 @@ function LegacyMultiSelectList<T>({
     rowItem: rowItemProp = null as unknown as ReactElement,
     selectAllCheckbox = false,
     tagName = "",
-    intl,
     items,
     itemsCount,
     height,
     itemHeight,
     width,
-}: ILegacyMultiSelectListProps<T> & WrappedComponentProps): ReactElement {
+}: ILegacyMultiSelectListProps<T>): ReactElement {
+    const intl = useIntl();
     const isEmpty = useCallback((): boolean => {
         if (selection.length === 0) {
             return !isInverted;
@@ -313,14 +313,4 @@ function LegacyMultiSelectList<T>({
             {renderStatusBar()}
         </div>
     );
-}
-
-/**
- * @internal
- * @deprecated This component is deprecated use MultiSelectList instead
- */
-const LegacyMultiSelectListWithIntl = injectIntl(LegacyMultiSelectList) as <T>(
-    props: ILegacyMultiSelectListProps<T>,
-) => any;
-
-export default LegacyMultiSelectListWithIntl;
+} as <T>(props: ILegacyMultiSelectListProps<T>) => any;

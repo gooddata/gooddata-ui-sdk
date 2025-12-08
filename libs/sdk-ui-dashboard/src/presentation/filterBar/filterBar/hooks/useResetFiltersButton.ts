@@ -52,6 +52,98 @@ const normalizeFiltersForComparison = (filters: FilterContextItem[]): FilterCont
     });
 };
 
+const shouldIgnoreDateFilterLocalIdentifiers = (
+    enableDateFilterIdentifiers: boolean,
+    originalFilters: FilterContextItem[],
+): boolean => {
+    // When date filter identifiers are enabled and original filters do not have identifiers yet,
+    // we omit them in current filters to avoid false positive results when comparing the objects
+    return (
+        enableDateFilterIdentifiers &&
+        originalFilters.some(
+            (filter) => isDashboardDateFilter(filter) && dashboardFilterLocalIdentifier(filter) === undefined,
+        )
+    );
+};
+
+const removeDateFilterLocalIdentifier = (filter: FilterContextItem): FilterContextItem => {
+    if (isDashboardDateFilter(filter)) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { localIdentifier, ...rest } = filter.dateFilter;
+        return {
+            ...filter,
+            dateFilter: {
+                ...rest,
+            },
+        };
+    }
+    return filter;
+};
+
+const sanitizeFilters = (
+    currentFilters: FilterContextItem[],
+    originalFilters: FilterContextItem[],
+    enableDateFilterIdentifiers: boolean,
+): FilterContextItem[] => {
+    const shouldRemoveIdentifiers = shouldIgnoreDateFilterLocalIdentifiers(
+        enableDateFilterIdentifiers,
+        originalFilters,
+    );
+
+    return shouldRemoveIdentifiers ? currentFilters.map(removeDateFilterLocalIdentifier) : currentFilters;
+};
+
+const getNewlyAddedFilterLocalIds = (
+    currentFilters: FilterContextItem[],
+    originalFilters: FilterContextItem[],
+): string[] => {
+    const originalAttributeFiltersLocalIds = originalFilters
+        .filter(isDashboardAttributeFilter)
+        .map((filter) => filter.attributeFilter.localIdentifier!);
+    const currentFiltersLocalIds = currentFilters
+        .filter(isDashboardAttributeFilter)
+        .map((filter) => filter.attributeFilter.localIdentifier!);
+    return difference(currentFiltersLocalIds, originalAttributeFiltersLocalIds);
+};
+
+const computeCanReset = (
+    isEditMode: boolean,
+    normalizedCurrentFilters: FilterContextItem[],
+    normalizedOriginalFilters: FilterContextItem[],
+    disableUserFilterReset: boolean,
+    disableUserFilterResetByConfig: boolean,
+    newlyAddedFiltersCount: number,
+    isWorkingFilterContextChanged: boolean | undefined,
+    isApplyAllAtOnceEnabledAndSet: boolean,
+): boolean => {
+    if (isEditMode) {
+        return false;
+    }
+
+    const filtersChanged = !isEqual(normalizedCurrentFilters, normalizedOriginalFilters);
+    const userFilterResetAllowed = !disableUserFilterReset && !disableUserFilterResetByConfig;
+    const hasCrossFilterAddedFilters = newlyAddedFiltersCount > 0;
+    // If the cross filter add some filters, we should allow the reset
+    const canResetFromFilterChange = filtersChanged && (userFilterResetAllowed || hasCrossFilterAddedFilters);
+    const canResetFromWorkingContext = !!isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet;
+
+    return canResetFromFilterChange || canResetFromWorkingContext;
+};
+
+const isCrossFilteringEnabled = (
+    enableKDCrossFiltering: boolean,
+    supportsCrossFiltering: boolean,
+    disableCrossFiltering: boolean,
+    disableCrossFilteringByConfig: boolean,
+): boolean => {
+    return (
+        enableKDCrossFiltering &&
+        supportsCrossFiltering &&
+        !disableCrossFiltering &&
+        !disableCrossFilteringByConfig
+    );
+};
+
 /**
  * @returns tuple with two items:
  * - a boolean specifying if the reset option makes sense for a given state (i.e. if the button should be visible)
@@ -82,71 +174,57 @@ export const useResetFiltersButton = (): {
     const dispatchEvent = useDashboardEventDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
 
-    const newlyAddedFiltersLocalIds = useMemo(() => {
-        const originalAttributeFiltersLocalIds = originalFilters
-            .filter(isDashboardAttributeFilter)
-            .map((filter) => filter.attributeFilter.localIdentifier!);
-        const currentFiltersLocalIds = currentFilters
-            .filter(isDashboardAttributeFilter)
-            .map((filter) => filter.attributeFilter.localIdentifier!);
-        return difference(currentFiltersLocalIds, originalAttributeFiltersLocalIds);
-    }, [currentFilters, originalFilters]);
+    const newlyAddedFiltersLocalIds = useMemo(
+        () => getNewlyAddedFilterLocalIds(currentFilters, originalFilters),
+        [currentFilters, originalFilters],
+    );
 
-    const sanitizedCurrentFilters = useMemo(() => {
-        // When date filter identifiers are enabled and original filters do not have identifiers yet,
-        // we omit them in current filters to avoid false positive results when comparing the objects
-        const shouldIgnoreDateFilterLocalIdentifiers =
-            enableDateFilterIdentifiers &&
-            originalFilters.some(
-                (filter) =>
-                    isDashboardDateFilter(filter) && dashboardFilterLocalIdentifier(filter) === undefined,
-            );
-
-        return shouldIgnoreDateFilterLocalIdentifiers
-            ? currentFilters.map((filter) => {
-                  if (isDashboardDateFilter(filter)) {
-                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      const { localIdentifier, ...rest } = filter.dateFilter;
-                      return {
-                          ...filter,
-                          dateFilter: {
-                              ...rest,
-                          },
-                      };
-                  }
-                  return filter;
-              })
-            : currentFilters;
-    }, [enableDateFilterIdentifiers, originalFilters, currentFilters]);
+    const sanitizedCurrentFilters = useMemo(
+        () => sanitizeFilters(currentFilters, originalFilters, enableDateFilterIdentifiers),
+        [enableDateFilterIdentifiers, originalFilters, currentFilters],
+    );
 
     // Normalize filters for comparison to handle "all time" common date filters consistently
-    const normalizedCurrentFilters = useMemo(() => {
-        return normalizeFiltersForComparison(sanitizedCurrentFilters);
-    }, [sanitizedCurrentFilters]);
+    const normalizedCurrentFilters = useMemo(
+        () => normalizeFiltersForComparison(sanitizedCurrentFilters),
+        [sanitizedCurrentFilters],
+    );
 
-    const normalizedOriginalFilters = useMemo(() => {
-        return normalizeFiltersForComparison(originalFilters);
-    }, [originalFilters]);
+    const normalizedOriginalFilters = useMemo(
+        () => normalizeFiltersForComparison(originalFilters),
+        [originalFilters],
+    );
 
-    const canReset = useMemo((): boolean => {
-        return (
-            !isEditMode &&
-            ((!isEqual(normalizedCurrentFilters, normalizedOriginalFilters) &&
-                // If the cross filter add some filters, we should allow the reset
-                ((!disableUserFilterReset && !disableUserFilterResetByConfig) ||
-                    newlyAddedFiltersLocalIds.length > 0)) ||
-                (!!isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet))
-        );
-    }, [
-        isEditMode,
-        normalizedCurrentFilters,
-        normalizedOriginalFilters,
-        disableUserFilterReset,
-        disableUserFilterResetByConfig,
-        newlyAddedFiltersLocalIds.length,
-        isWorkingFilterContextChanged,
-        isApplyAllAtOnceEnabledAndSet,
-    ]);
+    const canReset = useMemo(
+        () =>
+            computeCanReset(
+                isEditMode,
+                normalizedCurrentFilters,
+                normalizedOriginalFilters,
+                disableUserFilterReset,
+                disableUserFilterResetByConfig,
+                newlyAddedFiltersLocalIds.length,
+                isWorkingFilterContextChanged,
+                isApplyAllAtOnceEnabledAndSet,
+            ),
+        [
+            isEditMode,
+            normalizedCurrentFilters,
+            normalizedOriginalFilters,
+            disableUserFilterReset,
+            disableUserFilterResetByConfig,
+            newlyAddedFiltersLocalIds.length,
+            isWorkingFilterContextChanged,
+            isApplyAllAtOnceEnabledAndSet,
+        ],
+    );
+
+    const crossFilteringEnabled = isCrossFilteringEnabled(
+        enableKDCrossFiltering,
+        supportsCrossFiltering,
+        disableCrossFiltering,
+        disableCrossFilteringByConfig,
+    );
 
     const resetFilters = useCallback(() => {
         if (!canReset) {
@@ -180,12 +258,7 @@ export const useResetFiltersButton = (): {
         }
 
         // If cross filtering is enabled, we need to remove all attribute filters that were added by cross filtering
-        if (
-            enableKDCrossFiltering &&
-            supportsCrossFiltering &&
-            !disableCrossFiltering &&
-            !disableCrossFilteringByConfig
-        ) {
+        if (crossFilteringEnabled) {
             dispatch(removeAttributeFilters(newlyAddedFiltersLocalIds));
             dispatch(drillActions.resetCrossFiltering(activeTabId));
         }
@@ -197,13 +270,10 @@ export const useResetFiltersButton = (): {
         canReset,
         originalFilters,
         dispatch,
-        enableKDCrossFiltering,
-        supportsCrossFiltering,
+        crossFilteringEnabled,
         filterContextStateReset,
         newlyAddedFiltersLocalIds,
-        disableCrossFiltering,
         disableUserFilterReset,
-        disableCrossFilteringByConfig,
         enableDateFilterIdentifiers,
         isApplyAllAtOnceEnabledAndSet,
     ]);
