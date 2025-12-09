@@ -508,6 +508,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableImprovedAdFilters,
+            "enableImprovedAdFilters",
+            "BOOLEAN",
+            FeatureFlagsValues.enableImprovedAdFilters,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableExternalRecipients,
             "enableExternalRecipients",
             "BOOLEAN",

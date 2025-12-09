@@ -84,6 +84,7 @@ export enum TigerFeaturesNames {
     EnableExternalRecipients = "enableExternalRecipients",
     EnableDrilledTooltip = "enableDrilledTooltip",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
+    EnableImprovedAdFilters = "enableImprovedAdFilters",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableSlideshowExports = "enableSlideshowExports",
@@ -205,6 +206,7 @@ export type ITigerFeatureFlags = {
     enableDestinationTesting: (typeof FeatureFlagsValues)["enableDestinationTesting"][number];
     enableInPlatformNotifications: (typeof FeatureFlagsValues)["enableInPlatformNotifications"][number];
     enableVisualizationFineTuning: (typeof FeatureFlagsValues)["enableVisualizationFineTuning"][number];
+    enableImprovedAdFilters: (typeof FeatureFlagsValues)["enableImprovedAdFilters"][number];
     enableExternalRecipients: (typeof FeatureFlagsValues)["enableExternalRecipients"][number];
     enableDashboardTabularExport: (typeof FeatureFlagsValues)["enableDashboardTabularExport"][number];
     enableOrchestratedTabularExports: (typeof FeatureFlagsValues)["enableOrchestratedTabularExports"][number];
@@ -330,6 +332,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDestinationTesting: true,
     enableInPlatformNotifications: true,
     enableVisualizationFineTuning: false,
+    enableImprovedAdFilters: false,
     enableExternalRecipients: true,
     enableDashboardTabularExport: false,
     enableOrchestratedTabularExports: false,
@@ -456,6 +459,7 @@ export const FeatureFlagsValues = {
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
+    enableImprovedAdFilters: [true, false] as const,
     enableExternalRecipients: [true, false] as const,
     enableDashboardTabularExport: [true, false] as const,
     enableOrchestratedTabularExports: [true, false] as const,

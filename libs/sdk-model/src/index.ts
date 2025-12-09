@@ -236,6 +236,7 @@ export {
     absoluteDateFilterValues,
     relativeDateFilterValues,
     measureValueFilterCondition,
+    measureValueFilterDimensionality,
     measureValueFilterMeasure,
     measureValueFilterOperator,
     isRelativeBoundedDateFilterBody,
@@ -248,6 +249,11 @@ export {
     isUpperBound,
 } from "./execution/filter/index.js";
 
+export type {
+    IMeasureValueFilterComparisonOptions,
+    IMeasureValueFilterRangeOptions,
+    IMeasureValueFilterOptions,
+} from "./execution/filter/factory.js";
 export {
     newAbsoluteDateFilter,
     newNegativeAttributeFilter,
@@ -255,6 +261,7 @@ export {
     newRelativeDateFilter,
     newAllTimeFilter,
     newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
     newRankingFilter,
 } from "./execution/filter/factory.js";
 

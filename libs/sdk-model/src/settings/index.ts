@@ -393,6 +393,11 @@ export interface ISettings {
     enableVisualizationFineTuning?: boolean;
 
     /**
+     * Enable improved attribute filters experience in Analytical Designer.
+     */
+    enableImprovedAdFilters?: boolean;
+
+    /**
      * Enable external recipients options
      */
     enableExternalRecipients?: boolean;

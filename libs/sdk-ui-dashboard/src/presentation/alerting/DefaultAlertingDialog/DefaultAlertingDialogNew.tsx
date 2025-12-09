@@ -48,6 +48,7 @@ import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards
 import { isMobileView } from "./utils/responsive.js";
 import {
     getWidgetTitle,
+    selectCanUseAiAssistant,
     selectEnableAnomalyDetectionAlert,
     selectEnableAutomationManagement,
     selectEntitlementMaxAutomationRecipients,
@@ -101,6 +102,7 @@ export function AlertingDialogRenderer({
     const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
+    const enableAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -409,7 +411,9 @@ export function AlertingDialogRenderer({
                                         <AlertComparisonOperatorSelect
                                             id="alert.condition"
                                             measure={selectedMeasure}
-                                            enableAnomalyDetectionAlert={enableAnomalyDetectionAlert}
+                                            enableAnomalyDetectionAlert={
+                                                enableAnomalyDetectionAlert ? enableAiAssistant : false
+                                            }
                                             selectedComparisonOperator={selectedComparisonOperator}
                                             selectedRelativeOperator={selectedRelativeOperator}
                                             selectedAiOperator={selectedAiOperator}

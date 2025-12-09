@@ -3090,6 +3090,8 @@ export interface IInvertableSelectProps<T> {
     // (undocumented)
     numberOfHiddenSelectedItems?: number;
     // (undocumented)
+    onEscKeyPress?: (e: KeyboardEvent_2) => void;
+    // (undocumented)
     onLoadNextPage?: () => void;
     // (undocumented)
     onSearch?: (search: string) => void;
@@ -3176,6 +3178,8 @@ export interface IInvertableSelectRenderNoDataProps {
 // @internal (undocumented)
 export interface IInvertableSelectRenderSearchBarProps {
     // (undocumented)
+    onEscKeyPress?: (e: KeyboardEvent_2) => void;
+    // (undocumented)
     onSearch: (searchString: string) => void;
     // (undocumented)
     searchPlaceholder?: string;
@@ -3201,6 +3205,8 @@ export interface IInvertableSelectSearchBarProps {
     className?: string;
     // (undocumented)
     isSmall?: boolean;
+    // (undocumented)
+    onEscKeyPress?: (e: KeyboardEvent_2) => void;
     // (undocumented)
     onSearch: (searchString: string) => void;
     // (undocumented)
@@ -4190,7 +4196,7 @@ export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, 
 export function InvertableSelectLimitWarning({ limit, selectedItemsCount, }: IInvertableSelectLimitWarningProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, searchPlaceholder, }: IInvertableSelectSearchBarProps): JSX.Element;
+export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, onEscKeyPress, searchPlaceholder, }: IInvertableSelectSearchBarProps): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectStatus<T>({ selectedItems, getItemTitle, isInverted, }: IInvertableSelectStatusProps<T>): JSX.Element;

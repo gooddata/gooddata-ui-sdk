@@ -1,8 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { newInsightDefinition } from "@gooddata/sdk-model";
+import { idRef, newInsightDefinition, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 
 import { getReactEmbeddingCodeGenerator } from "../index.js";
 
@@ -59,6 +60,51 @@ describe("getReactEmbeddingCodeGenerator", () => {
 
         it.each(scenarios)("should generate embedding code %s", (_, omitProps) => {
             expect(generator(mockInsight, { omitChartProps: omitProps })).toMatchSnapshot();
+        });
+    });
+
+    describe("import detection", () => {
+        it("should not import newMeasureValueFilter when only newMeasureValueFilterWithOptions is used", () => {
+            const generatorWithMvf = getReactEmbeddingCodeGenerator({
+                component: {
+                    importType: "named",
+                    name: "TestComponent",
+                    package: "@gooddata/test",
+                },
+                insightToProps() {
+                    return {
+                        filters: {
+                            value: [
+                                newMeasureValueFilterWithOptions(idRef("price", "measure"), {
+                                    operator: "GREATER_THAN",
+                                    value: 2000,
+                                }),
+                            ],
+                            meta: {
+                                typeImport: {
+                                    name: "IFilter",
+                                    package: "@gooddata/sdk-model",
+                                    importType: "named",
+                                },
+                                cardinality: "array",
+                            },
+                        },
+                    };
+                },
+            });
+
+            const code = generatorWithMvf(mockInsight);
+
+            // Should contain newMeasureValueFilterWithOptions
+            expect(code).toContain("newMeasureValueFilterWithOptions");
+            // Should NOT import both - count occurrences in import statement
+            const importMatch = code.match(/import.*from "@gooddata\/sdk-model";/);
+            expect(importMatch).toBeTruthy();
+            const importStatement = importMatch![0];
+            // Should have newMeasureValueFilterWithOptions in imports
+            expect(importStatement).toContain("newMeasureValueFilterWithOptions");
+            // Should NOT have "newMeasureValueFilter, newMeasureValueFilterWithOptions" pattern
+            expect(importStatement).not.toMatch(/newMeasureValueFilter,\s*newMeasureValueFilterWithOptions/);
         });
     });
 });

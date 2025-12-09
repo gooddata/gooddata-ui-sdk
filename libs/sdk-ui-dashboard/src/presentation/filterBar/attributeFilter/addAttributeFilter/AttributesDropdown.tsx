@@ -7,7 +7,7 @@ import { debounce } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { ICatalogAttribute, ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";
-import { Dropdown, DropdownList, ITab, isEscapeKey } from "@gooddata/sdk-ui-kit";
+import { Dropdown, DropdownList, ITab, isEscapeKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
@@ -87,7 +87,9 @@ export function AttributesDropdown({
     renderVirtualisedList,
     getCustomItemTitle,
     accessibilityConfig,
+    returnFocusTo,
 }: IDashboardAttributeFilterPlaceholderProps) {
+    const buttonId = useIdPrefixed(`add-attribute-filter-button-${id ?? ""}-`);
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -208,11 +210,13 @@ export function AttributesDropdown({
             closeOnParentScroll={closeOnParentScroll}
             closeOnMouseDrag
             closeOnOutsideClick
+            returnFocusTo={returnFocusTo ?? buttonId}
             alignPoints={dropdownAlignPoints}
             openOnInit={openOnInit}
             overlayPositionType={overlayPositionType}
             renderButton={({ isOpen, openDropdown, buttonRef }) => (
                 <DropdownButtonComponent
+                    id={buttonId}
                     className="attribute-filter-button mobile-dropdown-button"
                     isOpen={isOpen}
                     title={buttonTitle}

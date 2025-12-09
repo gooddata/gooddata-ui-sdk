@@ -144,6 +144,7 @@ export {
     selectCanManageAttributeHierarchy,
     selectCanCreateFilterView,
     selectCanCreateAutomation,
+    selectCanUseAiAssistant,
 } from "./permissions/permissionsSelectors.js";
 export type { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 export {

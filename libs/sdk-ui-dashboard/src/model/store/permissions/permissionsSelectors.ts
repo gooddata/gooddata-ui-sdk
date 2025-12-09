@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
@@ -265,6 +266,18 @@ export const selectCanCreateAutomation: DashboardSelector<boolean> = createSelec
     selectPermissions,
     (state) => {
         return state?.canCreateAutomation ?? false;
+    },
+);
+
+/**
+ * Returns whether the current user has permissions to use AI assistant.
+ *
+ * @internal
+ */
+export const selectCanUseAiAssistant: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canUseAiAssistant ?? false;
     },
 );
 

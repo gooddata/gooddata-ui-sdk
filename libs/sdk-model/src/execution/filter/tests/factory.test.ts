@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { Account, Department, Won } from "../../../../__mocks__/model.js";
@@ -8,6 +9,7 @@ import { attributeLocalId } from "../../attribute/index.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRankingFilter,
@@ -86,6 +88,101 @@ describe("filter factory", () => {
         });
         it("should generate range filter for measure object with treatNullValuesAs", () => {
             expect(newMeasureValueFilter(Won, "BETWEEN", 0, 100, 42)).toMatchSnapshot();
+        });
+    });
+
+    describe("newMeasureValueFilterWithOptions", () => {
+        it("should generate comparison filter with options object", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "GREATER_THAN",
+                    value: 10,
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should generate comparison filter with dimensionality from attribute objects", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "EQUAL_TO",
+                    value: 42,
+                    dimensionality: [Department, Account.Name],
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should generate comparison filter with dimensionality from identifier refs", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "LESS_THAN",
+                    value: 100,
+                    dimensionality: [idRef("attr1", "displayForm"), idRef("attr2", "displayForm")],
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should generate comparison filter with dimensionality from local id refs", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "NOT_EQUAL_TO",
+                    value: 0,
+                    dimensionality: [localIdRef("localAttr1"), localIdRef("localAttr2")],
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should generate comparison filter with treatNullValuesAs and dimensionality", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "GREATER_THAN_OR_EQUAL_TO",
+                    value: 5,
+                    treatNullValuesAs: 0,
+                    dimensionality: [Department],
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should generate range filter with options object", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "BETWEEN",
+                    from: 0,
+                    to: 100,
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should generate range filter with dimensionality", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "NOT_BETWEEN",
+                    from: 10,
+                    to: 50,
+                    dimensionality: [Department, Account.Name],
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should generate range filter with treatNullValuesAs and dimensionality", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "BETWEEN",
+                    from: 0,
+                    to: 100,
+                    treatNullValuesAs: -1,
+                    dimensionality: [Department],
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should not include dimensionality when array is empty", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    operator: "EQUAL_TO",
+                    value: 10,
+                    dimensionality: [],
+                }),
+            ).toMatchSnapshot();
         });
     });
 

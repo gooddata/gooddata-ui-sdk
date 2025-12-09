@@ -33,6 +33,7 @@ const defaultFactories: IImportInfo[] = [
     "newNegativeAttributeFilter",
     "newPositiveAttributeFilter",
     "newMeasureValueFilter",
+    "newMeasureValueFilterWithOptions",
     "newRankingFilter",
     // sort factories
     "newAttributeSort",
@@ -47,9 +48,12 @@ function detectFactoryImports(
     additionalFactories: IAdditionalFactoryDefinition[],
 ): IImportInfo[] {
     const serializedProps = propDeclarations.join("\n");
-    return [...defaultFactories, ...additionalFactories.map((f) => f.importInfo)].filter(({ name }) =>
-        serializedProps.includes(name),
-    );
+    return [...defaultFactories, ...additionalFactories.map((f) => f.importInfo)].filter(({ name }) => {
+        // Use word boundary regex to avoid matching substrings
+        // e.g., "newMeasureValueFilterWithOptions" should not match "newMeasureValueFilter"
+        const pattern = new RegExp(`\\b${name}\\b`);
+        return pattern.test(serializedProps);
+    });
 }
 
 function extendedFactoryNotationFor(value: any, additionalFactories: IAdditionalFactoryDefinition[]): string {

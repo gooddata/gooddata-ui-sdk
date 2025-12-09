@@ -50,6 +50,28 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 }
 `;
 
+exports[`tiger filter converter from model to AFM > convert filter > should return comparison measure value filter with dimensionality 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "dimensionality": [
+      {
+        "identifier": {
+          "id": "f_stage.isactive_id",
+          "type": "label",
+        },
+      },
+    ],
+    "localIdentifier": undefined,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 50,
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM > convert filter > should return comparison measure value filter with treatNullValueAs 1`] = `
 {
   "comparisonMeasureValueFilter": {
@@ -60,6 +82,25 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
     "operator": "GREATER_THAN",
     "treatNullValuesAs": 0,
     "value": 128,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return measure value filter with dimensionality using local id refs 1`] = `
+{
+  "comparisonMeasureValueFilter": {
+    "dimensionality": [
+      {
+        "localIdentifier": "localAttrId",
+      },
+    ],
+    "localIdentifier": undefined,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "LESS_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 200,
   },
 }
 `;
@@ -203,6 +244,34 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
     },
     "operator": "BETWEEN",
     "to": 128,
+    "treatNullValuesAs": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert filter > should return range measure value filter with dimensionality 1`] = `
+{
+  "rangeMeasureValueFilter": {
+    "dimensionality": [
+      {
+        "identifier": {
+          "id": "f_stage.isactive_id",
+          "type": "label",
+        },
+      },
+      {
+        "identifier": {
+          "id": "anotherAttr",
+          "type": "label",
+        },
+      },
+    ],
+    "from": 10,
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+    "operator": "BETWEEN",
+    "to": 100,
     "treatNullValuesAs": undefined,
   },
 }

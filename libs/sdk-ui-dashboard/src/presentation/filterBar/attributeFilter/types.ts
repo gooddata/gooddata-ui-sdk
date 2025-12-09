@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType, ReactNode } from "react";
+import { ComponentType, ReactNode, RefObject } from "react";
 
 import {
     ICatalogAttribute,
@@ -133,6 +133,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     onSelect: (displayForm: ObjRef) => void;
     onOpen?: () => void;
     onClose?: () => void;
+    returnFocusTo?: RefObject<HTMLElement> | string;
     attributes: ICatalogAttribute[];
     dateDatasets: ICatalogDateDataset[];
     openOnInit?: boolean;

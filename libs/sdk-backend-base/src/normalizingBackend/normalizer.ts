@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { cloneDeep, cloneDeepWith, keyBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -464,11 +465,11 @@ export class Normalizer {
     private normalizeFilters = () => {
         this.normalized.filters.forEach((filter) => {
             if (isMeasureValueFilter(filter)) {
-                const ref = filter.measureValueFilter.measure;
+                const { measure, dimensionality = [] } = filter.measureValueFilter;
 
-                if (isLocalIdRef(ref)) {
+                [...dimensionality, measure].filter(isLocalIdRef).forEach((ref) => {
                     ref.localIdentifier = this.normalizedLocalId(ref.localIdentifier);
-                }
+                });
             }
 
             if (isRankingFilter(filter)) {

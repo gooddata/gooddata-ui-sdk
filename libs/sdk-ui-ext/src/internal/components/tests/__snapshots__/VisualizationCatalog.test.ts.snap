@@ -2343,7 +2343,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for AreaChart - data points - dense chart - auto visibility 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -2353,7 +2353,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: "auto"},
@@ -2382,7 +2382,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for AreaChart - data points - dense chart - default 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -2392,7 +2392,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     separators: {decimal: ".", thousand: ","},
@@ -2421,7 +2421,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for AreaChart - data points - dense chart - forced hidden 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -2431,7 +2431,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: false},
@@ -2460,7 +2460,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for AreaChart - data points - dense chart - forced visible 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { AreaChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -2470,7 +2470,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: true},
@@ -19234,7 +19234,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for ColumnChart - dense chart with two view by 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -19245,7 +19245,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_f_opportunitysnapshot.f_amount_sum"), "GREATER_THAN", 5000000)
+    newMeasureValueFilterWithOptions(localIdRef("m_f_opportunitysnapshot.f_amount_sum"), { operator: "GREATER_THAN", value: 5000000 })
 ];
 const config: IChartConfig = {
     separators: {decimal: ".", thousand: ","},
@@ -23773,7 +23773,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for ComboChart - data points - dense chart - auto visibility 1`] = `
 "import React from "react";
-import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const primaryMeasures: IMeasure[] = [
@@ -23786,7 +23786,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: "auto"},
@@ -23818,7 +23818,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for ComboChart - data points - dense chart - default 1`] = `
 "import React from "react";
-import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const primaryMeasures: IMeasure[] = [
@@ -23831,7 +23831,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     primaryChartType: "line",
@@ -23863,7 +23863,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for ComboChart - data points - dense chart - forced hidden 1`] = `
 "import React from "react";
-import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const primaryMeasures: IMeasure[] = [
@@ -23876,7 +23876,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: false},
@@ -23908,7 +23908,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for ComboChart - data points - dense chart - forced visible 1`] = `
 "import React from "react";
-import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, idRef, IFilter, IMeasure, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { ComboChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const primaryMeasures: IMeasure[] = [
@@ -23921,7 +23921,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"))
 ];
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: true},
@@ -39925,7 +39925,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for LineChart - data points - dense chart - auto visibility 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -39933,7 +39933,7 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const trendBy: IAttribute = newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"));
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: "auto"},
@@ -39962,7 +39962,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for LineChart - data points - dense chart - default 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -39970,7 +39970,7 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const trendBy: IAttribute = newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"));
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     separators: {decimal: ".", thousand: ","},
@@ -39999,7 +39999,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for LineChart - data points - dense chart - forced hidden 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -40007,7 +40007,7 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const trendBy: IAttribute = newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"));
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: false},
@@ -40036,7 +40036,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality > should generate code for LineChart - data points - dense chart - forced visible 1`] = `
 "import React from "react";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, localIdRef, newAttribute, newMeasure, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
 
 const measures: IAttributeOrMeasure[] = [
@@ -40044,7 +40044,7 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const trendBy: IAttribute = newAttribute(idRef("label.f_opportunity.opportunity.name", "displayForm"), a => a.localId("a_label.f_opportunity.opportunity.name"));
 const filters: IFilter[] = [
-    newMeasureValueFilter(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), "GREATER_THAN", 100000)
+    newMeasureValueFilterWithOptions(localIdRef("m_87a053b0_3947_49f3_b0c5_de53fd01f050"), { operator: "GREATER_THAN", value: 100000 })
 ];
 const config: IChartConfig = {
     dataPoints: {visible: true},

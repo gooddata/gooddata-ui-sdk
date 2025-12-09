@@ -29,6 +29,7 @@ import {
     convertCurrentUserToWorkspaceUser,
 } from "../../../../../../_staging/automation/index.js";
 import {
+    selectCanUseAiAssistant,
     selectCurrentUser,
     selectEnableAnomalyDetectionAlert,
     selectEnableExternalRecipients,
@@ -93,6 +94,7 @@ export const useEditAlert = ({
     const users = useDashboardSelector(selectUsers);
     const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
+    const enableAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
     const intl = useIntl();
@@ -325,8 +327,8 @@ export const useEditAlert = ({
         allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
         warningMessage,
-        enableAnomalyDetectionAlert,
         allowHourlyRecurrence,
+        enableAnomalyDetectionAlert: enableAnomalyDetectionAlert && enableAiAssistant,
         //
         changeComparisonOperator,
         changeAnomalyDetection,

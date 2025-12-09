@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { idRef, localIdRef, uriRef } from "../../../objRef/factory.js";
@@ -15,6 +16,7 @@ import { ITotal, newTotal } from "../../base/totals.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRankingFilter,
@@ -51,6 +53,7 @@ const factories = {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
     newRankingFilter,
 
     newAttributeSort,
@@ -523,6 +526,108 @@ describe("factoryNotationFor", () => {
                                 treatNullValuesAs: 42,
                             },
                         },
+                    },
+                };
+
+                const actual = factoryNotationFor(input);
+
+                testModelNotation(actual, input);
+            });
+
+            it("should handle measure value filter with comparison and dimensionality", () => {
+                const input: IMeasureValueFilter = {
+                    measureValueFilter: {
+                        measure: {
+                            localIdentifier: "foo",
+                        },
+                        condition: {
+                            comparison: {
+                                operator: "GREATER_THAN",
+                                value: 100,
+                            },
+                        },
+                        dimensionality: [
+                            {
+                                identifier: "attr1",
+                            },
+                            {
+                                identifier: "attr2",
+                            },
+                        ],
+                    },
+                };
+
+                const actual = factoryNotationFor(input);
+
+                testModelNotation(actual, input);
+            });
+
+            it("should handle measure value filter with range and dimensionality", () => {
+                const input: IMeasureValueFilter = {
+                    measureValueFilter: {
+                        measure: {
+                            localIdentifier: "foo",
+                        },
+                        condition: {
+                            range: {
+                                operator: "BETWEEN",
+                                from: 0,
+                                to: 100,
+                            },
+                        },
+                        dimensionality: [
+                            {
+                                identifier: "attr1",
+                            },
+                        ],
+                    },
+                };
+
+                const actual = factoryNotationFor(input);
+
+                testModelNotation(actual, input);
+            });
+
+            it("should handle measure value filter with comparison, treat null values as, and dimensionality", () => {
+                const input: IMeasureValueFilter = {
+                    measureValueFilter: {
+                        measure: {
+                            localIdentifier: "foo",
+                        },
+                        condition: {
+                            comparison: {
+                                operator: "EQUAL_TO",
+                                value: 50,
+                                treatNullValuesAs: 0,
+                            },
+                        },
+                        dimensionality: [
+                            {
+                                identifier: "attr1",
+                            },
+                            {
+                                identifier: "attr2",
+                            },
+                        ],
+                    },
+                };
+
+                const actual = factoryNotationFor(input);
+
+                testModelNotation(actual, input);
+            });
+
+            it("should handle measure value filter with only dimensionality", () => {
+                const input: IMeasureValueFilter = {
+                    measureValueFilter: {
+                        measure: {
+                            localIdentifier: "foo",
+                        },
+                        dimensionality: [
+                            {
+                                identifier: "attr1",
+                            },
+                        ],
                     },
                 };
 

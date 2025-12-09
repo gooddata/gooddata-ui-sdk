@@ -1,12 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { Account, ClosedDate, Won } from "../../../../__mocks__/model.js";
-import { localIdRef } from "../../../index.js";
+import { idRef, localIdRef } from "../../../index.js";
 import { ObjRef, ObjRefInScope } from "../../../objRef/index.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRankingFilter,
@@ -21,6 +23,7 @@ import {
     filterMeasureRef,
     filterObjRef,
     measureValueFilterCondition,
+    measureValueFilterDimensionality,
     measureValueFilterMeasure,
     relativeDateFilterValues,
 } from "../index.js";
@@ -193,5 +196,37 @@ describe("measureValueFilterCondition", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => measureValueFilterCondition(input)).toThrow();
+    });
+});
+
+describe("measureValueFilterDimensionality", () => {
+    it("should return undefined for measure value filter without dimensionality", () => {
+        expect(measureValueFilterDimensionality(MeasureValueFilter)).toBeUndefined();
+    });
+
+    it("should return dimensionality array for measure value filter with dimensionality", () => {
+        const filterWithDimensionality = newMeasureValueFilterWithOptions(Won, {
+            operator: "GREATER_THAN",
+            value: 10,
+            dimensionality: [Account.Name],
+        });
+        expect(measureValueFilterDimensionality(filterWithDimensionality)).toEqual([
+            localIdRef(Account.Name.attribute.localIdentifier),
+        ]);
+    });
+
+    it("should return dimensionality array with idRef", () => {
+        const attrRef = idRef("myAttribute", "displayForm");
+        const filterWithDimensionality = newMeasureValueFilterWithOptions(Won, {
+            operator: "BETWEEN",
+            from: 0,
+            to: 100,
+            dimensionality: [attrRef],
+        });
+        expect(measureValueFilterDimensionality(filterWithDimensionality)).toEqual([attrRef]);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => measureValueFilterDimensionality(input)).toThrow();
     });
 });

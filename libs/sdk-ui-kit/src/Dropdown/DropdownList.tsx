@@ -184,13 +184,16 @@ export function DropdownList<T>({
         [onSearch],
     );
 
+    const searchFilled = (currentSearchString ?? "").length > 0;
     const onEscKeyPress = useCallback(
         (e: KeyboardEvent) => {
-            if ((currentSearchString ?? "").length > 0) {
+            if (searchFilled) {
                 e.stopPropagation();
+            } else {
+                closeDropdown?.();
             }
         },
-        [currentSearchString],
+        [searchFilled, closeDropdown],
     );
 
     useEffect(() => {
