@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
@@ -24,6 +25,7 @@ import {
     newDefForItems,
     newMeasure,
     newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
     newPopMeasure,
     newPreviousPeriodMeasure,
@@ -125,6 +127,30 @@ describe("Normalizer", () => {
                         [{ localIdentifier: "someAttr" }],
                         "TOP",
                         1,
+                    ),
+                ],
+            ),
+        ],
+        [
+            "measure value filters with dimensionality",
+            newDefForItems(
+                "test",
+                [
+                    modifyMeasure(ReferenceMd.Won, (m) => m.localId("someMeasure")),
+                    modifyAttribute(ReferenceMd.Region.Default, (a) => a.localId("someAttr")),
+                    modifyAttribute(ReferenceMd.Product.Name, (a) => a.localId("anotherAttr")),
+                ],
+                [
+                    newMeasureValueFilterWithOptions(
+                        { localIdentifier: "someMeasure" },
+                        {
+                            operator: "GREATER_THAN",
+                            value: 100,
+                            dimensionality: [
+                                { localIdentifier: "someAttr" },
+                                { localIdentifier: "anotherAttr" },
+                            ],
+                        },
                     ),
                 ],
             ),

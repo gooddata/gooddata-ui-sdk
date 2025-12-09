@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -301,6 +302,7 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
  */
 export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
+    dimensionality?: ObjRefInScope[];
     condition?: MeasureValueFilterCondition;
 }
 
@@ -951,6 +953,18 @@ export function measureValueFilterCondition(
     invariant(filter, "filter must be specified");
 
     return filter.measureValueFilter.condition;
+}
+
+/**
+ * Gets measure value filter dimensionality.
+ * @param filter - measure value filter to work with
+ * @returns filter dimensionality array or undefined if not specified, in this case visualization granularity is used for filtering
+ * @public
+ */
+export function measureValueFilterDimensionality(filter: IMeasureValueFilter): ObjRefInScope[] | undefined {
+    invariant(filter, "filter must be specified");
+
+    return filter.measureValueFilter.dimensionality;
 }
 
 /**

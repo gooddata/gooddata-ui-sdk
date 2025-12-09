@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
  * @internal
  */
 export interface IAddAttributeFilterButtonProps {
+    id?: string;
     className: string;
     isOpen: boolean;
     title?: string;
@@ -20,6 +21,7 @@ export interface IAddAttributeFilterButtonProps {
  * @internal
  */
 export function AddAttributeFilterButton({
+    id,
     className,
     isOpen,
     title,
@@ -34,7 +36,12 @@ export function AddAttributeFilterButton({
     });
 
     return (
-        <div ref={buttonRef as RefObject<HTMLDivElement>} className={rootClassNames} onClick={onClick}>
+        <div
+            id={id}
+            ref={buttonRef as RefObject<HTMLDivElement>}
+            className={rootClassNames}
+            onClick={onClick}
+        >
             <div className="button-content">
                 <div className="button-title">{title}</div>
             </div>

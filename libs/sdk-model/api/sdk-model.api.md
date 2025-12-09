@@ -2651,7 +2651,29 @@ export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     // (undocumented)
     condition?: MeasureValueFilterCondition;
     // (undocumented)
+    dimensionality?: ObjRefInScope[];
+    // (undocumented)
     measure: ObjRefInScope;
+}
+
+// @public
+export interface IMeasureValueFilterComparisonOptions {
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    operator: ComparisonConditionOperator;
+    treatNullValuesAs?: number;
+    value: number;
+}
+
+// @public
+export type IMeasureValueFilterOptions = IMeasureValueFilterComparisonOptions | IMeasureValueFilterRangeOptions;
+
+// @public
+export interface IMeasureValueFilterRangeOptions {
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    from: number;
+    operator: RangeConditionOperator;
+    to: number;
+    treatNullValuesAs?: number;
 }
 
 // @public
@@ -3747,6 +3769,7 @@ export interface ISettings {
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;
+    enableImprovedAdFilters?: boolean;
     enableInPlatformNotifications?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
@@ -5055,6 +5078,9 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
 export function measureValueFilterCondition(filter: IMeasureValueFilter): MeasureValueFilterCondition | undefined;
 
 // @public
+export function measureValueFilterDimensionality(filter: IMeasureValueFilter): ObjRefInScope[] | undefined;
+
+// @public
 export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefInScope;
 
 // @public
@@ -5158,6 +5184,9 @@ export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | s
 
 // @public
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | LocalIdRef | string, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
+
+// @public
+export function newMeasureValueFilterWithOptions(measureOrRef: IMeasure | ObjRefInScope | string, options: IMeasureValueFilterOptions): IMeasureValueFilter;
 
 // @public
 export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[], localIdentifier?: string): INegativeAttributeFilter;

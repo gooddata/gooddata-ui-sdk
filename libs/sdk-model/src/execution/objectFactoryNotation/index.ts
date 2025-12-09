@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { compact } from "lodash-es";
 import stringifyObject from "stringify-object";
 
@@ -248,35 +249,45 @@ const convertNegativeAttributeFilter: Converter<INegativeAttributeFilter> = ({
 };
 
 const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
-    measureValueFilter: { measure, condition },
+    measureValueFilter: { measure, condition, dimensionality },
 }) => {
     const ref = stringifyObjRef(measure);
+    const hasDimensionality = dimensionality && dimensionality.length > 0;
+    const dimensionalityArrayString = dimensionality?.map(stringifyObjRef).join(ARRAY_JOINER);
+    const dimensionalityString = hasDimensionality
+        ? `dimensionality: [${dimensionalityArrayString}]`
+        : undefined;
 
     if (isComparisonCondition(condition)) {
-        const args = compact([
-            ref,
-            `"${condition.comparison.operator}"`,
-            `${condition.comparison.value}`,
-            !(
-                condition.comparison.treatNullValuesAs === null ||
-                condition.comparison.treatNullValuesAs === undefined
-            ) && `${condition.comparison.treatNullValuesAs}`,
+        const hasTreatNullValueAs = condition.comparison.treatNullValuesAs !== undefined;
+        const treatNullAsValueString = hasTreatNullValueAs
+            ? `treatNullValuesAs: ${condition.comparison.treatNullValuesAs}`
+            : undefined;
+        const optionsParts = compact([
+            `operator: "${condition.comparison.operator}"`,
+            `value: ${condition.comparison.value}`,
+            treatNullAsValueString,
+            dimensionalityString,
         ]);
-        return `newMeasureValueFilter(${args.join(ARRAY_JOINER)})`;
+        return `newMeasureValueFilterWithOptions(${ref}, { ${optionsParts.join(", ")} })`;
     } else if (isRangeCondition(condition)) {
-        const args = compact([
-            ref,
-            `"${condition.range.operator}"`,
-            `${condition.range.from}`,
-            `${condition.range.to}`,
-            !(
-                condition.range.treatNullValuesAs === null || condition.range.treatNullValuesAs === undefined
-            ) && `${condition.range.treatNullValuesAs}`,
+        const hasTreatNullValueAs = condition.range.treatNullValuesAs !== undefined;
+        const treatNullAsValueString = hasTreatNullValueAs
+            ? `treatNullValuesAs: ${condition.range.treatNullValuesAs}`
+            : undefined;
+        const optionsParts = compact([
+            `operator: "${condition.range.operator}"`,
+            `from: ${condition.range.from}`,
+            `to: ${condition.range.to}`,
+            treatNullAsValueString,
+            dimensionalityString,
         ]);
-        return `newMeasureValueFilter(${args.join(ARRAY_JOINER)})`;
+        return `newMeasureValueFilterWithOptions(${ref}, { ${optionsParts.join(", ")} })`;
     }
 
-    return `{ measureValueFilter: { measure: ${ref} }`;
+    return hasDimensionality
+        ? `{ measureValueFilter: { measure: ${ref}, dimensionality: [${dimensionalityArrayString}] } }`
+        : `{ measureValueFilter: { measure: ${ref} }`;
 };
 
 const convertRankingFilter: Converter<IRankingFilter> = ({

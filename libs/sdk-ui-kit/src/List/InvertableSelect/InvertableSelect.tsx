@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useCallback } from "react";
+import { KeyboardEvent, ReactElement, useCallback } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -90,6 +90,7 @@ export interface IInvertableSelectRenderSearchBarProps {
     searchString?: string;
     searchPlaceholder?: string;
     onSearch: (searchString: string) => void;
+    onEscKeyPress?: (e: KeyboardEvent) => void;
 }
 
 /**
@@ -142,6 +143,8 @@ export interface IInvertableSelectProps<T> {
     searchPlaceholder?: string;
     onSearch?: (search: string) => void;
 
+    onEscKeyPress?: (e: KeyboardEvent) => void;
+
     error?: any;
 
     isLoading?: boolean;
@@ -180,6 +183,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         selectedItems,
         selectedItemsLimit = Infinity,
 
+        onEscKeyPress,
         onSearch,
         searchString,
         searchPlaceholder,
@@ -227,10 +231,27 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         [renderItem, getIsItemSelected, getItemTitle, selectItems, deselectItems, selectOnly],
     );
 
+    const searchFilled = (searchString ?? "").length > 0;
+    const onEscKeyPressHandler = useCallback(
+        (e: KeyboardEvent) => {
+            if (searchFilled) {
+                e.stopPropagation();
+            } else {
+                onEscKeyPress?.(e);
+            }
+        },
+        [searchFilled, onEscKeyPress],
+    );
+
     return (
         <div className="gd-invertable-select" style={adaptiveWidth ? undefined : { width }}>
             <div className="gd-invertable-select-search-bar">
-                {renderSearchBar({ onSearch: onSearch ?? (() => {}), searchPlaceholder, searchString })}
+                {renderSearchBar({
+                    onSearch: onSearch ?? (() => {}),
+                    onEscKeyPress: onEscKeyPressHandler,
+                    searchPlaceholder,
+                    searchString,
+                })}
             </div>
             {isLoading ? (
                 <div className="gd-invertable-select-loading">{renderLoading({ height })}</div>
@@ -296,6 +317,7 @@ function defaultLoading({ height }: IInvertableSelectRenderLoadingProps): ReactE
 
 function defaultSearchBar({
     onSearch,
+    onEscKeyPress,
     searchPlaceholder,
     searchString,
 }: IInvertableSelectRenderSearchBarProps): ReactElement {
@@ -303,6 +325,7 @@ function defaultSearchBar({
         <InvertableSelectSearchBar
             searchPlaceholder={searchPlaceholder}
             onSearch={onSearch}
+            onEscKeyPress={onEscKeyPress}
             searchString={searchString}
             isSmall
         />

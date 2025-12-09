@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
@@ -311,6 +312,131 @@ export function newMeasureValueFilter(
                     comparison: {
                         operator,
                         value: val1,
+                        ...nullValuesProp,
+                    },
+                },
+            },
+        };
+    }
+}
+
+/**
+ * Options for creating a measure value filter with comparison condition.
+ *
+ * @public
+ */
+export interface IMeasureValueFilterComparisonOptions {
+    /**
+     * Comparison operator to use in the filter
+     */
+    operator: ComparisonConditionOperator;
+    /**
+     * The value to compare to
+     */
+    value: number;
+    /**
+     * Optional value to use instead of null values
+     */
+    treatNullValuesAs?: number;
+    /**
+     * Optional array of attributes to define the dimensionality for the filter.
+     * If instance of attribute is provided, it will be referenced by its local identifier.
+     */
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+}
+
+/**
+ * Options for creating a measure value filter with range condition.
+ *
+ * @public
+ */
+export interface IMeasureValueFilterRangeOptions {
+    /**
+     * Range operator to use in the filter
+     */
+    operator: RangeConditionOperator;
+    /**
+     * The start of the range
+     */
+    from: number;
+    /**
+     * The end of the range
+     */
+    to: number;
+    /**
+     * Optional value to use instead of null values
+     */
+    treatNullValuesAs?: number;
+    /**
+     * Optional array of attributes to define the dimensionality for the filter.
+     * If instance of attribute is provided, it will be referenced by its local identifier.
+     */
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+}
+
+/**
+ * Options for creating a measure value filter.
+ *
+ * @public
+ */
+export type IMeasureValueFilterOptions =
+    | IMeasureValueFilterComparisonOptions
+    | IMeasureValueFilterRangeOptions;
+
+function isRangeOptions(options: IMeasureValueFilterOptions): options is IMeasureValueFilterRangeOptions {
+    return options.operator === "BETWEEN" || options.operator === "NOT_BETWEEN";
+}
+
+/**
+ * Creates a new measure value filter with options object.
+ *
+ * @remarks
+ * This factory function provides a cleaner API for creating measure value filters
+ * with optional dimensionality support.
+ *
+ * @param measureOrRef - instance of measure to filter, or reference of the measure object; if instance of measure is
+ *   provided, then it is assumed this measure is in scope of execution and will be referenced by the filter by
+ *   its local identifier
+ * @param options - options object containing operator, value(s), and optional dimensionality
+ * @public
+ */
+export function newMeasureValueFilterWithOptions(
+    measureOrRef: IMeasure | ObjRefInScope | string,
+    options: IMeasureValueFilterOptions,
+): IMeasureValueFilter {
+    const measureRef = convertMeasureOrRefToObjRefInScope(measureOrRef);
+    const dimensionalityRefs = options.dimensionality?.map(convertAttributeOrRefToObjRefInScope);
+    const dimensionalityProp =
+        dimensionalityRefs && dimensionalityRefs.length > 0 ? { dimensionality: dimensionalityRefs } : {};
+    const nullValuesProp =
+        options.treatNullValuesAs === null || options.treatNullValuesAs === undefined
+            ? {}
+            : { treatNullValuesAs: options.treatNullValuesAs };
+
+    if (isRangeOptions(options)) {
+        return {
+            measureValueFilter: {
+                measure: measureRef,
+                ...dimensionalityProp,
+                condition: {
+                    range: {
+                        operator: options.operator,
+                        from: options.from,
+                        to: options.to,
+                        ...nullValuesProp,
+                    },
+                },
+            },
+        };
+    } else {
+        return {
+            measureValueFilter: {
+                measure: measureRef,
+                ...dimensionalityProp,
+                condition: {
+                    comparison: {
+                        operator: options.operator,
+                        value: options.value,
                         ...nullValuesProp,
                     },
                 },

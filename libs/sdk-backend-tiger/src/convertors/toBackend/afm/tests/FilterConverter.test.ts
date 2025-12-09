@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -6,8 +7,10 @@ import {
     DateGranularity,
     IMeasureValueFilter,
     idRef,
+    localIdRef,
     newAbsoluteDateFilter,
     newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRankingFilter,
@@ -152,6 +155,34 @@ describe("tiger filter converter from model to AFM", () => {
             [
                 "ranking filter with attributes",
                 newRankingFilter(ReferenceMd.Won, [ReferenceMd.IsActive.attribute.displayForm], "TOP", 3),
+            ],
+            [
+                "comparison measure value filter with dimensionality",
+                newMeasureValueFilterWithOptions(ReferenceMd.Won, {
+                    operator: "GREATER_THAN",
+                    value: 50,
+                    dimensionality: [ReferenceMd.IsActive.attribute.displayForm],
+                }),
+            ],
+            [
+                "range measure value filter with dimensionality",
+                newMeasureValueFilterWithOptions(ReferenceMd.Won, {
+                    operator: "BETWEEN",
+                    from: 10,
+                    to: 100,
+                    dimensionality: [
+                        ReferenceMd.IsActive.attribute.displayForm,
+                        idRef("anotherAttr", "displayForm"),
+                    ],
+                }),
+            ],
+            [
+                "measure value filter with dimensionality using local id refs",
+                newMeasureValueFilterWithOptions(ReferenceMd.Won, {
+                    operator: "LESS_THAN",
+                    value: 200,
+                    dimensionality: [localIdRef("localAttrId")],
+                }),
             ],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {

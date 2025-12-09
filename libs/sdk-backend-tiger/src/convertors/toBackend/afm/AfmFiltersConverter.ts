@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { compact } from "lodash-es";
 
 import { FilterDefinition, MeasureItem } from "@gooddata/api-client-tiger";
@@ -84,8 +85,11 @@ export function convertAfmFilters(
                 computeRatioMeasureNumerators,
                 filter.measureValueFilter.measure,
             );
-            const { condition } = filter.measureValueFilter;
-            const transformedFilter = { measureValueFilter: { measure: filteredMeasure, condition } };
+            const { condition, dimensionality } = filter.measureValueFilter;
+            const dimensionalityProp = dimensionality?.length ? { dimensionality } : {};
+            const transformedFilter = {
+                measureValueFilter: { measure: filteredMeasure, condition, ...dimensionalityProp },
+            };
             return newFilterWithApplyOnResult(transformedFilter, applyOnResult);
         } else if (isRankingFilter(filter)) {
             const [filteredMeasure, applyOnResult] = getActualFilteredMeasureInfo(

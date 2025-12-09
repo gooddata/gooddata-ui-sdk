@@ -256,6 +256,7 @@ export function DateFilterCore({
                                 alignPoints={[
                                     { align: "bl tl" },
                                     { align: "tr tl" },
+                                    { align: "tl bl", offset: { x: 0, y: 0 } },
                                     { align: "br tr", offset: { x: -11 } },
                                     { align: "tr tl", offset: { x: 0, y: -100 } },
                                     { align: "tr tl", offset: { x: 0, y: -50 } },

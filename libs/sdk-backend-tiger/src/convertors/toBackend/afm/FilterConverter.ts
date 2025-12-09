@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import {
     AbsoluteDateFilter,
     AttributeFilter,
@@ -211,6 +212,10 @@ function convertMeasureValueFilter(
     const { measureValueFilter } = filter;
     const condition = measureValueFilter.condition;
     const localIdentifier = measureValueFilter.localIdentifier;
+    const dimensionalityProp =
+        (measureValueFilter.dimensionality?.length ?? 0) > 0
+            ? { dimensionality: measureValueFilter.dimensionality?.map(toAfmIdentifier) }
+            : {};
 
     if (isComparisonCondition(condition)) {
         const { operator, value, treatNullValuesAs } = condition.comparison;
@@ -222,6 +227,7 @@ function convertMeasureValueFilter(
                 value,
                 treatNullValuesAs,
                 localIdentifier,
+                ...dimensionalityProp,
                 ...applyOnResultProp,
             },
         };
@@ -239,6 +245,7 @@ function convertMeasureValueFilter(
                 from: Math.min(originalFrom, originalTo),
                 to: Math.max(originalFrom, originalTo),
                 treatNullValuesAs,
+                ...dimensionalityProp,
                 ...applyOnResultProp,
             },
         };

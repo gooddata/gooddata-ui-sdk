@@ -277,6 +277,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                             onSearch={onSearch}
                             selectedItems={selection}
                             onSelect={onSelect}
+                            onEscKeyPress={closeDropdown}
                             renderStatusBar={renderStatusBar}
                             renderSearchBar={renderSearchBar}
                             renderNoData={renderNoData}

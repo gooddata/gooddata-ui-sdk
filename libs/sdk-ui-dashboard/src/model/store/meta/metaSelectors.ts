@@ -998,15 +998,13 @@ const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
             if (!tabs || tabs.length === 0) {
                 return [];
             }
-            return tabs
-                .map((tab) => {
-                    return {
-                        localIdentifier: tab.localIdentifier,
-                        title: tab.title,
-                        // all other props are dirty checked separately
-                    };
-                })
-                .sort((a, b) => a.localIdentifier.localeCompare(b.localIdentifier));
+            return tabs.map((tab) => {
+                return {
+                    localIdentifier: tab.localIdentifier,
+                    title: tab.title,
+                    // all other props are dirty checked separately
+                };
+            });
         };
 
         const normalizedPersistedTabs = normalizeTabsForComparison(persistedTabs);

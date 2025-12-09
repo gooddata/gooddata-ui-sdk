@@ -147,6 +147,199 @@ exports[`filter factory > newMeasureValueFilter > should generate ranger filter 
 }
 `;
 
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate comparison filter with dimensionality from attribute objects 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
+        "operator": "EQUAL_TO",
+        "value": 42,
+      },
+    },
+    "dimensionality": [
+      {
+        "localIdentifier": "a_label.owner.department",
+      },
+      {
+        "localIdentifier": "a_label.account.id.name",
+      },
+    ],
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate comparison filter with dimensionality from identifier refs 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
+        "operator": "LESS_THAN",
+        "value": 100,
+      },
+    },
+    "dimensionality": [
+      {
+        "identifier": "attr1",
+        "type": "displayForm",
+      },
+      {
+        "identifier": "attr2",
+        "type": "displayForm",
+      },
+    ],
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate comparison filter with dimensionality from local id refs 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
+        "operator": "NOT_EQUAL_TO",
+        "value": 0,
+      },
+    },
+    "dimensionality": [
+      {
+        "localIdentifier": "localAttr1",
+      },
+      {
+        "localIdentifier": "localAttr2",
+      },
+    ],
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate comparison filter with options object 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
+        "operator": "GREATER_THAN",
+        "value": 10,
+      },
+    },
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate comparison filter with treatNullValuesAs and dimensionality 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
+        "operator": "GREATER_THAN_OR_EQUAL_TO",
+        "treatNullValuesAs": 0,
+        "value": 5,
+      },
+    },
+    "dimensionality": [
+      {
+        "localIdentifier": "a_label.owner.department",
+      },
+    ],
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate range filter with dimensionality 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "range": {
+        "from": 10,
+        "operator": "NOT_BETWEEN",
+        "to": 50,
+      },
+    },
+    "dimensionality": [
+      {
+        "localIdentifier": "a_label.owner.department",
+      },
+      {
+        "localIdentifier": "a_label.account.id.name",
+      },
+    ],
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate range filter with options object 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "range": {
+        "from": 0,
+        "operator": "BETWEEN",
+        "to": 100,
+      },
+    },
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should generate range filter with treatNullValuesAs and dimensionality 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "range": {
+        "from": 0,
+        "operator": "BETWEEN",
+        "to": 100,
+        "treatNullValuesAs": -1,
+      },
+    },
+    "dimensionality": [
+      {
+        "localIdentifier": "a_label.owner.department",
+      },
+    ],
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory > newMeasureValueFilterWithOptions > should not include dimensionality when array is empty 1`] = `
+{
+  "measureValueFilter": {
+    "condition": {
+      "comparison": {
+        "operator": "EQUAL_TO",
+        "value": 10,
+      },
+    },
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
 exports[`filter factory > newNegativeAttributeFilter > should generate correct filter 1`] = `
 {
   "negativeAttributeFilter": {

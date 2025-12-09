@@ -17,11 +17,9 @@
         height: 100%;
         width: 100%;
         justify-content: flex-start;
-    }
-
-    // Styles from internal.scss
-    button.gd-ui-kit-button--variant-tertiary.gd-ui-kit-button--hasIconBefore {
-        padding-left: 7px;
+        //NOTE: Can not do more specific selector, css modules build will destroy it
+        //stylelint-disable-next-line
+        padding-left: 7px !important;
     }
 
     button:focus-visible {

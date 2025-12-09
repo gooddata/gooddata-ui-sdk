@@ -188,6 +188,7 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
+import { RefObject } from 'react';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
@@ -225,7 +226,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): AddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ className, isOpen, title, buttonRef, onClick, }: IAddAttributeFilterButtonProps): JSX.Element;
+export function AddAttributeFilterButton({ id, className, isOpen, title, buttonRef, onClick, }: IAddAttributeFilterButtonProps): JSX.Element;
 
 // @beta
 export interface AddAttributeFilterPayload {
@@ -479,7 +480,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, accessibilityConfig, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, accessibilityConfig, returnFocusTo, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -4500,6 +4501,8 @@ export interface IAddAttributeFilterButtonProps {
     // (undocumented)
     className: string;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     isOpen: boolean;
     // (undocumented)
     onClick?: () => void;
@@ -4846,6 +4849,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
     // (undocumented)
     renderVirtualisedList?: boolean;
+    // (undocumented)
+    returnFocusTo?: RefObject<HTMLElement> | string;
 }
 
 // @public (undocumented)
@@ -9145,6 +9150,9 @@ export const selectCanShareLockedDashboardPermission: DashboardSelector<boolean>
 
 // @public
 export const selectCanUploadNonProductionCSV: DashboardSelector<boolean>;
+
+// @internal
+export const selectCanUseAiAssistant: DashboardSelector<boolean>;
 
 // @public
 export const selectCanViewDashboardPermission: DashboardSelector<boolean>;

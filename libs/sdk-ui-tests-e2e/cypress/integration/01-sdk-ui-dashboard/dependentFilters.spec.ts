@@ -65,7 +65,7 @@ describe("Dependent filter", () => {
                 .showAllElementValuesIsVisible(true)
                 .showAllElementValues()
                 .showAllElementValuesIsVisible(false)
-                .hasFilterListSize(300)
+                .hasFilterListSize(363)
                 .selectAttribute(["Hartford"])
                 .apply()
                 .isLoaded()
@@ -92,7 +92,7 @@ describe("Dependent filter", () => {
                 .showAllElementValues()
                 .showAllElementValuesIsVisible(false)
                 .containElementsListStatus("None")
-                .hasFilterListSize(300)
+                .hasFilterListSize(363)
                 .selectAttribute(["New York"])
                 .containElementsListStatus("New York")
                 .close()
@@ -151,7 +151,7 @@ describe("Dependent filter", () => {
                 .isLoaded()
                 .open()
                 .hasSubtitle("All")
-                .hasFilterListSize(48)
+                .hasFilterListSize(111)
                 .configureLimitingParentFilterDependency("Region")
                 .hasFilterListSize(7)
                 .hasSelectedValueList([
@@ -256,8 +256,8 @@ describe("Dependent filter", () => {
             cy.wait(2000);
 
             regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
-            stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
-            cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
+            stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(111);
+            cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(363);
         },
     );
 
@@ -306,7 +306,7 @@ describe("Dependent filter", () => {
                 .showAllElementValuesIsVisible(true)
                 .showAllElementValues()
                 .showAllElementValuesIsVisible(false)
-                .hasFilterListSize(300)
+                .hasFilterListSize(363)
                 .selectAttribute(["Hartford"])
                 .apply()
                 .isLoaded()
@@ -334,7 +334,7 @@ describe("Dependent filter", () => {
                 .showAllElementValues()
                 .showAllElementValuesIsVisible(false)
                 .containElementsListStatus("None")
-                .hasFilterListSize(300)
+                .hasFilterListSize(363)
                 .selectAttribute(["New York"])
                 .containElementsListStatus("New York")
                 .close()
@@ -396,7 +396,7 @@ describe("Dependent filter", () => {
                 .open()
                 .elementsAreLoaded()
                 .hasSubtitle("All")
-                .hasFilterListSize(48)
+                .hasFilterListSize(111)
                 .configureLimitingParentFilterDependency("Region")
                 .elementsAreLoaded()
                 .hasFilterListSize(7)
@@ -506,8 +506,8 @@ describe("Dependent filter", () => {
             table.waitLoaded();
 
             regionFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("East Coast").hasFilterListSize(4);
-            stateFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("All").hasFilterListSize(48);
-            cityFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("All").hasFilterListSize(300);
+            stateFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("All").hasFilterListSize(111);
+            cityFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("All").hasFilterListSize(363);
         },
     );
 
@@ -538,7 +538,7 @@ describe("Dependent filter", () => {
                 .hasFilterListSize(5)
                 .deleteFiltervaluesBy("State")
                 .elementsAreLoaded()
-                .hasFilterListSize(300);
+                .hasFilterListSize(363);
         },
     );
 
@@ -553,7 +553,7 @@ describe("Dependent filter", () => {
             cityFilter.open().elementsAreLoaded().hasFilterListSize(5).close();
             stateFilter.removeFilter();
             table.waitLoadStarted().waitLoaded();
-            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(300);
+            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(363);
         },
     );
 
@@ -611,7 +611,7 @@ describe("Dependent filter", () => {
                 .showAllElementValuesIsVisible(true)
                 .showAllElementValues();
             filterBar.resetAllFilters();
-            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(300);
+            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(363);
             table
                 .waitLoaded()
                 .getColumnValues(2)

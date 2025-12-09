@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Gating anomaly alerts on AI permission",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-semantic-search: Scope footer AI assistant button styles",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

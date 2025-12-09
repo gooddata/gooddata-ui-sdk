@@ -1,5 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { KeyboardEvent } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
@@ -14,6 +16,7 @@ export interface IInvertableSelectSearchBarProps {
     searchString?: string;
     searchPlaceholder?: string;
     onSearch: (searchString: string) => void;
+    onEscKeyPress?: (e: KeyboardEvent) => void;
 }
 
 /**
@@ -24,6 +27,7 @@ export function InvertableSelectSearchBar({
     isSmall,
     searchString,
     onSearch,
+    onEscKeyPress,
     searchPlaceholder,
 }: IInvertableSelectSearchBarProps) {
     const intl = useIntl();
@@ -33,6 +37,7 @@ export function InvertableSelectSearchBar({
             className={cx(["gd-invertable-select-search-input gd-flex-item-mobile", className])}
             value={searchString}
             onChange={onSearch as any}
+            onEscKeyPress={onEscKeyPress}
             placeholder={searchPlaceholder ?? intl.formatMessage({ id: "gs.list.search.placeholder" })}
             autofocus
             clearOnEsc
