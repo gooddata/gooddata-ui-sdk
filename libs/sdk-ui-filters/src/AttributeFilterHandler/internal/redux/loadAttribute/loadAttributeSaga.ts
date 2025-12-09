@@ -4,6 +4,7 @@ import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
 import { IAttributeMetadataObject, areObjRefsEqual } from "@gooddata/sdk-model";
+import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
 import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
 import { PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
@@ -86,7 +87,8 @@ export function* loadAttributeSaga(
 
         return attribute;
     } catch (error) {
-        yield put(actions.loadAttributeError({ error, correlation }));
+        const convertedError: GoodDataSdkError = convertError(error);
+        yield put(actions.loadAttributeError({ error: convertedError, correlation }));
     } finally {
         if (yield cancelled()) {
             yield put(actions.loadAttributeCancel({ correlation }));

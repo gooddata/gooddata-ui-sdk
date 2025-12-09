@@ -27,7 +27,7 @@ export const selectLoadNextElementsPageStatus: FilterSelector<AsyncOperationStat
 /**
  * @internal
  */
-export const selectLoadNextElementsPageError: FilterSelector<GoodDataSdkError> = createSelector(
+export const selectLoadNextElementsPageError: FilterSelector<GoodDataSdkError | undefined> = createSelector(
     selectState,
     (state) => state.elements.nextPageLoad.error,
 );
@@ -40,7 +40,7 @@ export const selectLoadNextElementsPageOptions: FilterSelector<ILoadElementsOpti
     (options): ILoadElementsOptions => {
         return {
             ...options,
-            offset: options.offset + options.limit,
+            offset: (options.offset ?? 0) + (options.limit ?? 0),
         };
     },
 );
@@ -52,7 +52,9 @@ export const selectHasNextPage: FilterSelector<boolean> = createSelector(
     selectLastLoadedElementsOptions,
     selectElementsTotalCountWithCurrentSettings,
     (lastLoadedOptions, totalCountWithCurrentSettings) => {
-        return lastLoadedOptions.offset + lastLoadedOptions.limit < totalCountWithCurrentSettings;
+        return (
+            (lastLoadedOptions.offset ?? 0) + (lastLoadedOptions.limit ?? 0) < totalCountWithCurrentSettings
+        );
     },
 );
 

@@ -27,12 +27,12 @@ const getElementValues = (elements: ElementsQueryOptionsElementsSpecification): 
         return [];
     }
     if (isElementsQueryOptionsElementsByValue(elements)) {
-        return elements.values;
+        return elements.values.filter((v): v is string => v !== null);
     }
     if (isElementsQueryOptionsElementsByPrimaryDisplayFormValue(elements)) {
-        return elements.primaryValues;
+        return elements.primaryValues.filter((v): v is string => v !== null);
     }
-    return elements.uris;
+    return elements.uris.filter((v): v is string => v !== null);
 };
 
 const loadCustomElementsSuccess: AttributeFilterReducer<
@@ -42,7 +42,7 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
         }
     >
 > = (state, action) => {
-    const keys = [];
+    const keys: string[] = [];
 
     const {
         options: { elements, filterByPrimaryLabel },
@@ -50,7 +50,7 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
     } = action.payload;
 
     const shouldOverrideKeys =
-        state.initialization.status === "loading" && correlation.startsWith(INIT_SELECTION_PREFIX);
+        state.initialization.status === "loading" && correlation?.startsWith(INIT_SELECTION_PREFIX);
     if (elements) {
         const originalElements = getElementValues(elements);
         // iterate over original elements to keep the order in selection,
@@ -60,10 +60,10 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
                 .filter((el) => (filterByPrimaryLabel ? el.uri === originalEl : el.title === originalEl))
                 .forEach((el) => {
                     const cacheKey = getElementCacheKey(el);
-                    if (!state.elements.cache[cacheKey]) {
+                    if (cacheKey !== null && !state.elements.cache[cacheKey]) {
                         state.elements.cache[cacheKey] = el;
                     }
-                    if (shouldOverrideKeys) {
+                    if (shouldOverrideKeys && cacheKey !== null) {
                         keys.push(cacheKey);
                     }
                 });
@@ -71,10 +71,10 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
     } else {
         action.payload.elements.forEach((el) => {
             const cacheKey = getElementCacheKey(el);
-            if (!state.elements.cache[cacheKey]) {
+            if (cacheKey !== null && !state.elements.cache[cacheKey]) {
                 state.elements.cache[cacheKey] = el;
             }
-            if (shouldOverrideKeys) {
+            if (shouldOverrideKeys && cacheKey !== null) {
                 keys.push(cacheKey);
             }
         });

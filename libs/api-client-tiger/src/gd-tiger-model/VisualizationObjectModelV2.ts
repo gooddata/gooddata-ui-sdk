@@ -1,10 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
     IAttributeFilterConfigs,
     IBucket,
     IFilter,
+    IInsightLayerDefinition,
     ISortItem,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
@@ -21,6 +23,7 @@ export interface IVisualizationObject {
     attributeFilterConfigs?: IAttributeFilterConfigs;
     sorts: ISortItem[];
     properties: VisualizationProperties;
+    layers?: IInsightLayerDefinition[];
 }
 
 /**

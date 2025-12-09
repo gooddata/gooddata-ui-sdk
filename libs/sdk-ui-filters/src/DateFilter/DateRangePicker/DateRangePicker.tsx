@@ -65,9 +65,9 @@ const useCalendarPopup = () => {
         if (
             isClickOutsideOfCalendar(
                 event,
-                calendarPopupRef.current,
-                startDateInputRef.current,
-                endDateInputRef.current,
+                calendarPopupRef.current!,
+                startDateInputRef.current!,
+                endDateInputRef.current!,
             )
         ) {
             setIsOpen(false);
@@ -110,14 +110,14 @@ const setStartAfterEndDateError = (
 ) => {
     const isValidStartDate = isValidDate(start);
     const isValidEndDate = isValidDate(end);
-    const isStartBeforeEnd = start <= end;
+    const isStartBeforeEnd = start! <= end!;
     if (!isValidStartDate || !isValidEndDate || isStartBeforeEnd) {
         fieldDateOrderErrorSetter(undefined);
         otherDateOrderFieldSetter(undefined);
         return isValidStartDate && isValidEndDate; // form is valid, both dates defined, in correct order
     }
 
-    const isCausedByTime = isSameDay(start, end);
+    const isCausedByTime = start && end ? isSameDay(start, end) : false;
     fieldDateOrderErrorSetter({
         isDateOrderError: !isCausedByTime,
         isTimeOrderError: isCausedByTime,
@@ -151,10 +151,10 @@ const useRangeState = (
     submitForm: () => void,
 ) => {
     const [startDate, setStartDate] = useState<Date | undefined>(range.from);
-    const [startTime, setStartTime] = useState<ITime>(getTimeFromDate(range.from));
+    const [startTime, setStartTime] = useState<ITime | undefined>(() => getTimeFromDate(range.from));
 
     const [endDate, setEndDate] = useState<Date | undefined>(range.to);
-    const [endTime, setEndTime] = useState<ITime>(getTimeFromDate(range.to));
+    const [endTime, setEndTime] = useState<ITime | undefined>(() => getTimeFromDate(range.to));
 
     const [startDateTimeErrors, setStartDateTimeErrors] = useState<IDateTimePickerErrors | undefined>();
     const [endDateTimeErrors, setEndDateTimeErrors] = useState<IDateTimePickerErrors | undefined>();
@@ -186,7 +186,7 @@ const useRangeState = (
                 getValueOrDefault(newState, "endTime", endTime),
             );
             onRangeChange({ from: adjustedStartDate, to: adjustedEndDate });
-            const isFormValid = dateValidator(adjustedStartDate, adjustedEndDate);
+            const isFormValid = dateValidator(adjustedStartDate!, adjustedEndDate!);
 
             // submit form when user pressed Enter and form is valid
             if (isFormValid && !!shouldSubmitForm) {
@@ -198,7 +198,7 @@ const useRangeState = (
     );
 
     const onStartDateChange = useCallback(
-        (date: Date, shouldSubmitForm?: boolean) => {
+        (date: Date | undefined, shouldSubmitForm?: boolean) => {
             setStartDate(date);
             updateRangeState({ startDate: date }, validateStartDate, shouldSubmitForm);
         },
@@ -206,7 +206,7 @@ const useRangeState = (
     );
 
     const onEndDateChange = useCallback(
-        (date: Date, shouldSubmitForm?: boolean) => {
+        (date: Date | undefined, shouldSubmitForm?: boolean) => {
             setEndDate(date);
             updateRangeState({ endDate: date }, validateEndDate, shouldSubmitForm);
         },
@@ -214,7 +214,7 @@ const useRangeState = (
     );
 
     const onStartTimeChange = useCallback(
-        (time: ITime, shouldSubmitForm?: boolean) => {
+        (time: ITime | undefined, shouldSubmitForm?: boolean) => {
             setStartTime(time);
             updateRangeState({ startTime: time }, validateStartDate, shouldSubmitForm);
         },
@@ -222,7 +222,7 @@ const useRangeState = (
     );
 
     const onEndTimeChange = useCallback(
-        (time: ITime, shouldSubmitForm?: boolean) => {
+        (time: ITime | undefined, shouldSubmitForm?: boolean) => {
             setEndTime(time);
             updateRangeState({ endTime: time }, validateEndDate, shouldSubmitForm);
         },
@@ -363,7 +363,7 @@ export function DateRangePicker({
 
     const HintPanel = isMobile ? null : (
         <DateRangeHint
-            dateFormat={dateFormat}
+            dateFormat={dateFormat!}
             isTimeEnabled={isTimeEnabled}
             dateHintId={DATE_INPUT_HINT_ID}
             timeHintId={TIME_INPUT_HINT_ID}

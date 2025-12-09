@@ -2,6 +2,8 @@
 import { SagaIterator } from "redux-saga";
 import { call, cancelled, put, takeLatest } from "redux-saga/effects";
 
+import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+
 import { initTotalCountSaga as initLoadTotalCountSaga } from "../init/initTotalCount.js";
 import { actions } from "../store/slice.js";
 
@@ -22,7 +24,8 @@ function* initTotalCountSaga({
 
         yield put(actions.initTotalCountSuccess({ correlation: correlation }));
     } catch (error) {
-        yield put(actions.initTotalCountError({ error, correlation: correlation }));
+        const convertedError: GoodDataSdkError = convertError(error);
+        yield put(actions.initTotalCountError({ error: convertedError, correlation: correlation }));
     } finally {
         if (yield cancelled()) {
             yield put(actions.initTotalCountCancel({ correlation: correlation }));

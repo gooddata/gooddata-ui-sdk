@@ -68,7 +68,7 @@ export function AbsoluteDateFilterFormSection({
                     onClick={() => {
                         changeRoute("absoluteForm");
                         if (!isAbsoluteDateFilterForm(selectedFilterOption)) {
-                            onSelectedFilterOptionChange(filterOptions.absoluteForm);
+                            onSelectedFilterOptionChange(filterOptions.absoluteForm!);
                         }
                     }}
                     className={cx(

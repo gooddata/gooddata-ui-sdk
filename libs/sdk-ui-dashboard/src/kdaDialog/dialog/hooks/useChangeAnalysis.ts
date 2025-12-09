@@ -22,9 +22,9 @@ import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
-import { DeepReadonly, KdaItem, KdaState } from "../../internalTypes.js";
+import { KdaItem, KdaState } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
-import { IKdaDefinition } from "../../types.js";
+import { DeepReadonly, IKdaDefinition } from "../../types.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../utils.js";
 
 export function useChangeAnalysis() {

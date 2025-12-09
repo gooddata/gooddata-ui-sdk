@@ -36,6 +36,7 @@
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
+        "build-ts": "tsc -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",

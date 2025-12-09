@@ -36,7 +36,7 @@ describe("ExcludeCurrentPeriodToggle", () => {
 
     it("should render a tooltip if disabled", async () => {
         renderWithDisabledValue(true);
-        fireEvent.mouseOver(document.querySelector(".gd-bubble-trigger"));
+        fireEvent.mouseOver(document.querySelector(".gd-bubble-trigger")!);
 
         await waitFor(() => {
             expect(screen.queryByText("Not available for the selected date range")).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe("ExcludeCurrentPeriodToggle", () => {
 
     it("should not render a tooltip if enabled", async () => {
         renderWithDisabledValue(false);
-        fireEvent.mouseOver(document.querySelector(".gd-bubble-trigger"));
+        fireEvent.mouseOver(document.querySelector(".gd-bubble-trigger")!);
 
         await waitFor(() => {
             expect(screen.queryByText("Not available for the selected date range")).not.toBeInTheDocument();

@@ -36,7 +36,7 @@ async function loadElementsAsExecution(
     elements: IElementsQueryOptionsElementsByValue,
     hiddenElementsInfo: IHiddenElementsInfo,
 ) {
-    const elementValues = elements.values;
+    const elementValues = elements.values.filter((v): v is string => v !== null);
     const filters: IAttributeFilter[] = [newPositiveAttributeFilter(displayFormRef, elementValues)];
     if (!attributeElementsIsEmpty(hiddenElementsInfo.hiddenElements)) {
         filters.push(newNegativeAttributeFilter(displayFormRef, hiddenElementsInfo.hiddenElements));
@@ -181,7 +181,11 @@ export async function loadElementsFromBackend(
         loader.withSignal(signal);
     }
 
-    if (backend.capabilities.supportsAttributeFilterElementsLimiting && limitingValidationItems?.length > 0) {
+    if (
+        backend.capabilities.supportsAttributeFilterElementsLimiting &&
+        limitingValidationItems &&
+        limitingValidationItems.length > 0
+    ) {
         loader = loader.withAvailableElementsOnly(limitingValidationItems);
     }
 

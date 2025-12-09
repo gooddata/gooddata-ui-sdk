@@ -34,7 +34,7 @@ export function AttributeFilterIrrelevantSelectionStatus({
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
-        onClear();
+        onClear?.();
     };
 
     return (

@@ -301,19 +301,19 @@ describe("DateFilter", () => {
     });
 
     describe("relative presets", () => {
-        it.each([
-            ["last-7-days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["last-30-days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["last-90-days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["this-month", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["last-month", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["last-12-months", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["this-quarter", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
-            ["last-quarter", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
-            ["last-4-quarters", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
-            ["this-year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
-            ["last-year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
-        ])("should switch to static date filter with %s", (item: string, relativePreset: any[]) => {
+        it.each<[string, any[]]>([
+            ["last-7-days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
+            ["last-30-days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
+            ["last-90-days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
+            ["this-month", defaultDateFilterOptions.relativePreset!["GDC.time.month"]!],
+            ["last-month", defaultDateFilterOptions.relativePreset!["GDC.time.month"]!],
+            ["last-12-months", defaultDateFilterOptions.relativePreset!["GDC.time.month"]!],
+            ["this-quarter", defaultDateFilterOptions.relativePreset!["GDC.time.quarter"]!],
+            ["last-quarter", defaultDateFilterOptions.relativePreset!["GDC.time.quarter"]!],
+            ["last-4-quarters", defaultDateFilterOptions.relativePreset!["GDC.time.quarter"]!],
+            ["this-year", defaultDateFilterOptions.relativePreset!["GDC.time.year"]!],
+            ["last-year", defaultDateFilterOptions.relativePreset!["GDC.time.year"]!],
+        ])("should switch to static date filter with %s", (item, relativePreset) => {
             const onApply = vi.fn();
             createDateFilter({ onApply });
 
@@ -327,23 +327,23 @@ describe("DateFilter", () => {
             expect(onApply).toBeCalledWith(expectedSelectedItem, false);
         });
 
-        it.each([
-            ["last-7-days", "Last 7 days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["last-30-days", "Last 30 days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["last-90-days", "Last 90 days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["this-month", "This month", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["last-month", "Last month", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["last-12-months", "Last 12 months", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["this-quarter", "This quarter", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
-            ["last-quarter", "Last quarter", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
+        it.each<[string, string, any[]]>([
+            ["last-7-days", "Last 7 days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
+            ["last-30-days", "Last 30 days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
+            ["last-90-days", "Last 90 days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
+            ["this-month", "This month", defaultDateFilterOptions.relativePreset!["GDC.time.month"]!],
+            ["last-month", "Last month", defaultDateFilterOptions.relativePreset!["GDC.time.month"]!],
+            ["last-12-months", "Last 12 months", defaultDateFilterOptions.relativePreset!["GDC.time.month"]!],
+            ["this-quarter", "This quarter", defaultDateFilterOptions.relativePreset!["GDC.time.quarter"]!],
+            ["last-quarter", "Last quarter", defaultDateFilterOptions.relativePreset!["GDC.time.quarter"]!],
             [
                 "last-4-quarters",
                 "Last 4 quarters",
-                defaultDateFilterOptions.relativePreset["GDC.time.quarter"],
+                defaultDateFilterOptions.relativePreset!["GDC.time.quarter"]!,
             ],
-            ["this-year", "This year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
-            ["last-year", "Last year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
-        ])("should set correct button label %s", (item: string, label: string, relativePreset: any[]) => {
+            ["this-year", "This year", defaultDateFilterOptions.relativePreset!["GDC.time.year"]!],
+            ["last-year", "Last year", defaultDateFilterOptions.relativePreset!["GDC.time.year"]!],
+        ])("should set correct button label %s", (item, label, relativePreset) => {
             const selectedFilterOption = getPresetByItem(item, relativePreset);
             createDateFilter({ selectedFilterOption });
             expect(getDateFilterButtonText()).toBe(label);
@@ -372,9 +372,9 @@ describe("DateFilter", () => {
     });
 
     describe("absolute presets", () => {
-        it.each([["christmas-2019"], ["year-2018"]])(
+        it.each<[string]>([["christmas-2019"], ["year-2018"]])(
             "should switch static date filter to %s",
-            (item: string) => {
+            (item) => {
                 const onApply = vi.fn();
                 createDateFilter({ onApply });
 
@@ -383,7 +383,7 @@ describe("DateFilter", () => {
                 clickAbsoluteFilter(item);
                 clickApplyButton();
 
-                const expectedSelectedItem = getPresetByItem(item, defaultDateFilterOptions.absolutePreset);
+                const expectedSelectedItem = getPresetByItem(item, defaultDateFilterOptions.absolutePreset!);
 
                 expect(onApply).toHaveBeenCalledTimes(1);
                 expect(onApply).toBeCalledWith(expectedSelectedItem, false);
@@ -464,13 +464,13 @@ describe("DateFilter", () => {
             expect(isApplyButtonDisabled()).toBe(false);
         });
 
-        it.each([
+        it.each<[string, string]>([
             ["invalid value", "xxx"],
             ["unknown format", "2019-10-10"],
             ["invalid day", "12/32/2019"],
             ["day as zero", "12/0/2019"],
             ["long year", "12/01/2019999"],
-        ])("should show error when %s is entered to fromInput", (_lablel: string, value: string) => {
+        ])("should show error when %s is entered to fromInput", (_label, value) => {
             createDateFilter();
             const absoluteForm = new AbsoluteForm();
             clickDateFilterButton();
@@ -479,13 +479,13 @@ describe("DateFilter", () => {
             expect(absoluteForm.isErrorVisible()).toBe(true);
         });
 
-        it.each([
+        it.each<[string, string]>([
             ["invalid value", "xxx"],
             ["unknown format", "2019-10-10"],
             ["invalid day", "12/32/2019"],
             ["day as zero", "12/0/2019"],
             ["long year", "12/01/2019999"],
-        ])("should show error when %s is entered to toInput", (_lablel: string, value: string) => {
+        ])("should show error when %s is entered to toInput", (_label, value) => {
             createDateFilter();
             const absoluteForm = new AbsoluteForm();
             clickDateFilterButton();

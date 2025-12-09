@@ -3,6 +3,45 @@
 import { IAttributeDescriptor } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
+import { isRecord } from "./guards.js";
+
+/**
+ * Geo area configuration from backend attribute header.
+ *
+ * @remarks
+ * The AFM API returns geoAreaConfig on attribute headers, but IAttributeDescriptorBody
+ * in sdk-model doesn't include this property. We define the expected shape here.
+ *
+ * @internal
+ */
+interface IGeoAreaConfig {
+    collection: { id: string };
+}
+
+/**
+ * Type guard for IGeoAreaConfig.
+ */
+function isGeoAreaConfig(value: unknown): value is IGeoAreaConfig {
+    if (!isRecord(value)) {
+        return false;
+    }
+    const collection = value["collection"];
+    if (!isRecord(collection)) {
+        return false;
+    }
+    return typeof collection["id"] === "string" && collection["id"].length > 0;
+}
+
+/**
+ * Extended attribute header that includes geoAreaConfig from AFM API.
+ *
+ * @remarks
+ * IAttributeDescriptorBody doesn't include geoAreaConfig, but the backend returns it.
+ */
+interface IAttributeHeaderWithGeoConfig {
+    geoAreaConfig?: IGeoAreaConfig;
+}
+
 /**
  * Metadata describing a geo collection binding for an attribute.
  *
@@ -13,77 +52,10 @@ export interface IGeoCollectionMetadata {
      * Identifier of the geo collection to query.
      */
     collectionId: string;
-    /**
-     * Optional bounding box describing the collection extent.
-     */
-    bbox?: number[];
-}
-
-function asRecord(value: unknown): Record<string, unknown> | undefined {
-    return value && typeof value === "object" ? (value as Record<string, unknown>) : undefined;
-}
-
-function resolveString(value: unknown): string | undefined {
-    return typeof value === "string" && value.length > 0 ? value : undefined;
-}
-
-function resolveNumber(value: unknown): number | undefined {
-    return typeof value === "number" && Number.isFinite(value) ? value : undefined;
-}
-
-function resolveBBoxFromCorners(value: Record<string, unknown> | undefined): number[] | undefined {
-    if (!value) {
-        return undefined;
-    }
-
-    const minLng =
-        resolveNumber(value["minLng"]) ?? resolveNumber(value["west"]) ?? resolveNumber(value["minX"]);
-    const minLat =
-        resolveNumber(value["minLat"]) ?? resolveNumber(value["south"]) ?? resolveNumber(value["minY"]);
-    const maxLng =
-        resolveNumber(value["maxLng"]) ?? resolveNumber(value["east"]) ?? resolveNumber(value["maxX"]);
-    const maxLat =
-        resolveNumber(value["maxLat"]) ?? resolveNumber(value["north"]) ?? resolveNumber(value["maxY"]);
-
-    if ([minLng, minLat, maxLng, maxLat].every((entry) => entry !== undefined)) {
-        return [minLng as number, minLat as number, maxLng as number, maxLat as number];
-    }
-
-    const southWest = asRecord(value["southWest"]);
-    const northEast = asRecord(value["northEast"]);
-    const swLng = resolveNumber(southWest?.["lng"]);
-    const swLat = resolveNumber(southWest?.["lat"]);
-    const neLng = resolveNumber(northEast?.["lng"]);
-    const neLat = resolveNumber(northEast?.["lat"]);
-
-    if ([swLng, swLat, neLng, neLat].every((entry) => entry !== undefined)) {
-        return [
-            Math.min(swLng as number, neLng as number),
-            Math.min(swLat as number, neLat as number),
-            Math.max(swLng as number, neLng as number),
-            Math.max(swLat as number, neLat as number),
-        ];
-    }
-
-    return undefined;
-}
-
-function resolveBoundingBox(value: unknown): number[] | undefined {
-    if (Array.isArray(value) && value.length >= 4) {
-        const coords = value.slice(0, 4);
-        if (coords.every((entry) => typeof entry === "number" && Number.isFinite(entry))) {
-            return coords as number[];
-        }
-    }
-
-    return resolveBBoxFromCorners(asRecord(value));
 }
 
 /**
  * Attempts to extract geo collection metadata from an attribute descriptor.
- *
- * The backend may expose the metadata under different shapes as the contract evolves. This helper probes
- * the known variants and gracefully falls back when the metadata is not available.
  *
  * @internal
  */
@@ -94,30 +66,15 @@ export function resolveGeoCollectionMetadata(
         return undefined;
     }
 
-    const header = descriptor.attributeHeader as unknown as Record<string, unknown>;
-    const geoAreaConfig = asRecord(header["geoAreaConfig"]);
-    const collectionFromGeoConfig = asRecord(geoAreaConfig?.["collection"]);
-    const legacyCollection = asRecord(header["collection"]);
-    const bboxCandidate =
-        collectionFromGeoConfig?.["bbox"] ??
-        geoAreaConfig?.["bbox"] ??
-        legacyCollection?.["bbox"] ??
-        header["collectionBBox"] ??
-        header["bbox"];
+    const headerWithGeo = descriptor.attributeHeader as IAttributeHeaderWithGeoConfig;
+    const geoAreaConfig = headerWithGeo.geoAreaConfig;
 
-    const collectionId =
-        resolveString(collectionFromGeoConfig?.["id"]) ??
-        resolveString(legacyCollection?.["id"]) ??
-        resolveString(header["collectionId"]);
-    const bbox = resolveBoundingBox(bboxCandidate);
-
-    if (!collectionId) {
+    if (!isGeoAreaConfig(geoAreaConfig)) {
         return undefined;
     }
 
     return {
-        collectionId,
-        bbox,
+        collectionId: geoAreaConfig.collection.id,
     };
 }
 

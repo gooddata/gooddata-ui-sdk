@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoAreaChartConfig, IGeoConfigViewportAreaNext } from "@gooddata/sdk-ui-geo/next";
+import { IGeoAreaChartConfig } from "@gooddata/sdk-ui-geo/next";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { IVisProps, IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -36,13 +36,13 @@ export function buildAreaVisualizationConfig({
         colorPalette,
         colorMapping,
         legend: {
-            enabled: legend.enabled as boolean | undefined,
-            position: legend.position as "top" | "right" | "bottom" | "left" | "auto" | undefined,
+            enabled: legend.enabled,
+            position: legend.position,
         },
         tooltipText,
         viewport: {
-            area: viewport.area as IGeoConfigViewportAreaNext | undefined,
+            area: viewport.area,
         },
-        mapStyle: mapStyle as string | object | undefined,
+        mapStyle,
     };
 }

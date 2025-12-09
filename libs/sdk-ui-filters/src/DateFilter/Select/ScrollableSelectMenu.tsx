@@ -52,8 +52,8 @@ const optionGetter = <V extends {}>({
                     key={`${item.type}-${item.value}`}
                     {...itemProps}
                     isFocused={
-                        selectableOptions[highlightedIndex] && item
-                            ? selectableOptions[highlightedIndex].value === item.value
+                        selectableOptions[highlightedIndex!] && item
+                            ? selectableOptions[highlightedIndex!].value === item.value
                             : false
                     }
                     style={style}
@@ -93,14 +93,14 @@ const getItemHeight =
 
 export const getMedianIndex = (array: any[]): number => Math.floor(array.length / 2);
 
-export class ScrollableSelectMenu<V> extends Component<ISelectMenuProps<V>> {
+export class ScrollableSelectMenu<V extends object> extends Component<ISelectMenuProps<V>> {
     // static cannot have <V>
     public static defaultProps: Partial<ISelectMenuProps<any>> = {
-        selectedItem: null,
-        visibleItemsRange: defaultVisibleItemsRange,
+        selectedItem: undefined,
+        visibleItemsRange: defaultVisibleItemsRange as number,
     };
 
-    private listRef = createRef<HTMLDivElement>();
+    private listRef = createRef<HTMLDivElement | null>();
 
     public override render() {
         const {
@@ -116,7 +116,7 @@ export class ScrollableSelectMenu<V> extends Component<ISelectMenuProps<V>> {
 
         const Option = optionGetter<V>({
             items,
-            selectedItem,
+            selectedItem: selectedItem as ISelectItemOption<V>,
             highlightedIndex,
             getItemProps,
             optionClassName,
@@ -124,8 +124,8 @@ export class ScrollableSelectMenu<V> extends Component<ISelectMenuProps<V>> {
 
         const middleItemIndex = getMedianIndex(getSelectableItems(items));
         const visibleIndexes = range(
-            Math.max(middleItemIndex - visibleItemsRange, 0),
-            Math.min(middleItemIndex + visibleItemsRange + 1, items.length),
+            Math.max(middleItemIndex - visibleItemsRange!, 0),
+            Math.min(middleItemIndex + visibleItemsRange! + 1, items.length),
         );
 
         const itemHeightFn = getItemHeight(items);
@@ -164,7 +164,7 @@ export class ScrollableSelectMenu<V> extends Component<ISelectMenuProps<V>> {
             const { items } = this.props;
             const selectableOptions = getSelectableItems(items);
             const optionIndex = index === null ? getMedianIndex(getSelectableItems(items)) : index;
-            const highlightedOption = selectableOptions[optionIndex];
+            const highlightedOption = selectableOptions[optionIndex!];
             const actualItemIndex = items.indexOf(highlightedOption);
             if (actualItemIndex >= 0) {
                 const container = this.listRef.current;

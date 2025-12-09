@@ -74,6 +74,7 @@ describe("mapRelativeFilterToAfm", () => {
         expect(actual).toEqual({
             relativeDateFilter: {
                 from: 1,
+                granularity: "GDC.time.date",
                 to: 2,
                 dataSet: {
                     uri: "foo",

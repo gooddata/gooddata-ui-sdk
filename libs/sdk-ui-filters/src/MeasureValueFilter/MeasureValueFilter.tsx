@@ -44,7 +44,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     const buttonRef = useRef<HTMLDivElement>(null);
 
     const handleApply = useCallback(
-        (filter: IMeasureValueFilter) => {
+        (filter: IMeasureValueFilter | null) => {
             setDisplayDropdown(false);
             onApply(filter);
         },
@@ -82,7 +82,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                     treatNullAsZeroDefaultValue={treatNullAsZeroDefaultValue}
                     enableOperatorSelection={enableOperatorSelection}
-                    anchorEl={buttonRef.current}
+                    anchorEl={buttonRef.current ?? undefined}
                 />
             ) : null}
         </Fragment>

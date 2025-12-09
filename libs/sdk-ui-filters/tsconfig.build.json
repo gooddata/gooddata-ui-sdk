@@ -7,9 +7,5 @@
         "rootDir": "./src",
         "outDir": "./esm",
         "composite": false,
-        "strictNullChecks": false,
-        "noImplicitAny": false,
-        "strictFunctionTypes": false,
-        "useUnknownInCatchVariables": false,
     }
 }

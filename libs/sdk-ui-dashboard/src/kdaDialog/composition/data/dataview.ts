@@ -18,8 +18,8 @@ import {
 } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { DeepReadonly, KdaItem, KdaItemGroup } from "../../internalTypes.js";
-import { IKdaDefinition } from "../../types.js";
+import { KdaItem, KdaItemGroup } from "../../internalTypes.js";
+import { DeepReadonly, IKdaDefinition } from "../../types.js";
 
 const YAXIS_ADDITION_PERCENTAGE = 1.1; //+10%
 const DEFAULT_MEASURE_FORMAT = "#,##0.00";

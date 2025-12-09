@@ -30,6 +30,7 @@ export type { IUserSettingsService } from "./user/settings/index.js";
 
 export type {
     IPreparedExecutionOptions,
+    IExecutionContext,
     IExecutionFactory,
     IPreparedExecution,
     IExecutionResult,

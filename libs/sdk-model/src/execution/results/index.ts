@@ -29,7 +29,7 @@ export type ForecastDataValue = { low: DataValue; high: DataValue; prediction: D
  * GeoJSON feature result.
  * @alpha
  */
-export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties & { key: string }>;
+export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties>;
 
 /**
  * Descriptor of the measure and its contents.
@@ -597,11 +597,11 @@ export function attributeDescriptorName(descriptor: IAttributeDescriptor): strin
 }
 
 /**
- * Returns key of the geo feature.
+ * Returns id of the geo feature.
  *
  * @param feature - geo feature, must be specified
  * @alpha
  */
-export function geoFeatureKey(feature: IGeoJsonFeature): string {
-    return feature.properties!["key"] as string;
+export function geoFeatureId(feature: IGeoJsonFeature): string | undefined {
+    return feature.id as string | undefined;
 }

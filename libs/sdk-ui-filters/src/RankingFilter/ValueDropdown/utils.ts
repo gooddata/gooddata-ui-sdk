@@ -25,8 +25,13 @@ const sanitizeNumericValue = (value: number, intl: IntlShape): DynamicSelectItem
     return DEFAULT_ITEMS.filter((item) => item.label.toLowerCase().includes(value.toString()));
 };
 
-export const sanitizeCustomInput = (input: string): boolean =>
-    input && matchNumericValues(input) && Number(input) > 0 && Number(input) <= MAX_VALUE;
+export const sanitizeCustomInput = (input: string): boolean => {
+    if (!input) return false;
+    const match = matchNumericValues(input);
+    if (!match) return false;
+    const numericValue = Number(match[1]);
+    return numericValue > 0 && numericValue <= MAX_VALUE;
+};
 
 export const sanitizeInput = (input: string, intl: IntlShape): DynamicSelectItem[] => {
     if (!input) {

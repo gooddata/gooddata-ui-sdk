@@ -15,7 +15,9 @@ import {
 import {
     selectCatalogDateDatasets,
     selectEffectiveDateFilterAvailableGranularities,
+    selectEffectiveDateFilterAvailableGranularitiesForTab,
     selectEffectiveDateFilterOptions,
+    selectEffectiveDateFilterOptionsForTab,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
@@ -109,6 +111,7 @@ export function AutomationDateFilter({
     isCommonDateFilter,
     overlayPositionType,
     readonly,
+    tabId,
 }: {
     filter: IDashboardDateFilter;
     onChange: (filter: FilterContextItem | undefined) => void;
@@ -117,14 +120,35 @@ export function AutomationDateFilter({
     isCommonDateFilter?: boolean;
     overlayPositionType?: OverlayPositionType;
     readonly?: boolean;
+    tabId?: string;
 }) {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
     const deleteTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.deleteTooltip" });
     const lockedTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
 
-    const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
-    const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
+    // Use tab-specific selectors when tabId is provided
+    const availableGranularitiesActive = useDashboardSelector(
+        selectEffectiveDateFilterAvailableGranularities,
+    );
+    const availableGranularitiesForTab = useDashboardSelector(
+        tabId
+            ? selectEffectiveDateFilterAvailableGranularitiesForTab(tabId)
+            : selectEffectiveDateFilterAvailableGranularities,
+    );
+    // Fallback to active tab granularities if tab-specific config is empty
+    const availableGranularities =
+        tabId && availableGranularitiesForTab.length > 0
+            ? availableGranularitiesForTab
+            : availableGranularitiesActive;
+
+    const dateFilterOptionsActive = useDashboardSelector(selectEffectiveDateFilterOptions);
+    const dateFilterOptionsForTab = useDashboardSelector(
+        tabId ? selectEffectiveDateFilterOptionsForTab(tabId) : selectEffectiveDateFilterOptions,
+    );
+    const dateFilterOptions =
+        tabId && dateFilterOptionsForTab ? dateFilterOptionsForTab : dateFilterOptionsActive;
+
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
     const handleFilterChanged = useCallback(
@@ -168,6 +192,7 @@ export function AutomationDateFilter({
                 config={filterConfig}
                 overlayPositionType={overlayPositionType}
                 ButtonComponent={AutomationDateFilterButton}
+                tabId={tabId}
             />
         </AutomationDateFilterProvider>
     );

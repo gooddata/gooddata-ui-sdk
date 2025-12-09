@@ -5,6 +5,7 @@ import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, select } from "redux-saga/effects";
 
 import { CancelableOptions } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 
 import { selectStaticElements } from "./elementsSelectors.js";
 import { loadElements } from "./loadElements.js";
@@ -52,7 +53,16 @@ export function* elementsSaga(
     };
 
     const elementsQueryResult: PromiseFnReturnType<typeof loadElements> = yield call(
-        loadElements,
+        loadElements as (
+            context: SagaReturnType<typeof getAttributeFilterContext>,
+            options: ILoadElementsOptions & CancelableOptions & { displayFormRef: ObjRef },
+            hiddenElementsInfo: {
+                hiddenElements: ReturnType<typeof selectHiddenElementsAsAttributeElements>;
+                attribute: ReturnType<typeof selectAttribute>;
+            },
+            staticElements: ReturnType<typeof selectStaticElements>,
+            cacheId?: string,
+        ) => ReturnType<typeof loadElements>,
         context,
         {
             displayFormRef: attributeFilterDisplayAsLabelRef || attributeFilterDisplayFormRef,

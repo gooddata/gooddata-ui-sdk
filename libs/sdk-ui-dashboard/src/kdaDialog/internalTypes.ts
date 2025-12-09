@@ -3,7 +3,7 @@
 import { ICatalogDateAttribute, IDashboardAttributeFilter, ISeparators, ObjRef } from "@gooddata/sdk-model";
 import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
-import { IKdaDataPoint, IKdaDefinition, KdaPeriodType } from "./types.js";
+import { DeepReadonly, IKdaDataPoint, IKdaDefinition, KdaPeriodType } from "./types.js";
 
 export interface KdaDateOptions {
     period: KdaPeriodType;
@@ -63,16 +63,3 @@ export interface KdaState {
     relevantAttributes: ObjRef[];
     selectedUpdated: number;
 }
-
-export type DeepReadonly<T> = T extends (infer R)[]
-    ? ReadonlyArray<DeepReadonly<R>>
-    : // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-      T extends Function
-      ? T
-      : T extends object
-        ? DeepReadonlyObject<T>
-        : T;
-
-type DeepReadonlyObject<T> = {
-    readonly [P in keyof T]: DeepReadonly<T[P]>;
-};

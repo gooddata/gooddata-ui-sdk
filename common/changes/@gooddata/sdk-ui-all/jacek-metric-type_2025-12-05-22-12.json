@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add useMetricTypePresets hook for CURRENCY metric format support",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.soubusta@gooddata.com"
+}

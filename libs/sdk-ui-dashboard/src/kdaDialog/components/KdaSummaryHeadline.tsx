@@ -9,7 +9,7 @@ import { DiffHeadline } from "./headlines/DiffHeadline.js";
 import { useDateAttribute } from "../hooks/useDateAttribute.js";
 import { KdaDateOptions } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
-import { formatTitle, formatValue } from "../utils.js";
+import { formatKeyDriverAnalysisDateRange, formatValue } from "../utils.js";
 
 export function KdaSummaryHeadline() {
     const { state } = useKdaState();
@@ -52,11 +52,11 @@ export function KdaSummaryHeadline() {
     return (
         <div className={cx("gd-kda-key-driver-headline")}>
             <DateHeadline
-                when={formatTitle(fromOpts, "-")}
+                when={formatKeyDriverAnalysisDateRange(fromOpts?.range, "-")}
                 amount={formatValue(definition, from.value, state.separators)}
             />
             <DateHeadline
-                when={formatTitle(toOpts, "-")}
+                when={formatKeyDriverAnalysisDateRange(toOpts?.range, "-")}
                 amount={formatValue(definition, to.value, state.separators)}
             />
             <DiffHeadline change={change} amount={formatValue(definition, diff, state.separators)} />

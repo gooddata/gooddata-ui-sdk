@@ -41,8 +41,9 @@ export const useDashboardAlertsManagementDialog = () => {
     const handleRefreshAutomations = useCallback(() => {
         if (enableAutomationManagement) {
             refreshAutomationManagementItems();
+        } else {
+            refreshAutomations();
         }
-        refreshAutomations();
     }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
 
     /*

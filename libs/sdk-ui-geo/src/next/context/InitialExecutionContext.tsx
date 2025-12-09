@@ -13,7 +13,7 @@ export interface IInitialExecutionContext {
     /**
      * Initial data view facade for easy data access
      */
-    initialDataView: DataViewFacade;
+    initialDataView: DataViewFacade | null;
 }
 
 /**

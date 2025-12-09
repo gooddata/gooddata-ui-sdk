@@ -12,9 +12,9 @@ import { IInputAccessibilityConfig, ITime } from "./types.js";
 import { TIME_FORMAT } from "../constants/Platform.js";
 
 export interface ITimeInputProps {
-    value: ITime;
+    value?: ITime;
     inputLabel: string;
-    onChange: (time: ITime, shouldSubmitForm?: boolean) => void;
+    onChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     accessibilityConfig: IInputAccessibilityConfig;
     errorText?: string;
     isMobile: boolean;
@@ -23,10 +23,10 @@ export interface ITimeInputProps {
 
 const padTo2Digits = (num: number) => String(num).padStart(2, "0");
 
-const stringifyTime = (time: ITime) =>
-    time === undefined ? undefined : `${padTo2Digits(time.hours)}:${padTo2Digits(time.minutes)}`;
+const stringifyTime = (time: ITime | undefined) =>
+    time === undefined ? undefined : `${padTo2Digits(time.hours!)}:${padTo2Digits(time.minutes!)}`;
 
-const asTime = (time: Moment | undefined): ITime =>
+const asTime = (time: Moment | undefined): ITime | undefined =>
     time?.isValid() ? { hours: time.hours(), minutes: time.minutes() } : undefined;
 
 export function TimeInput({
@@ -38,7 +38,7 @@ export function TimeInput({
     isMobile,
     withoutApply,
 }: ITimeInputProps) {
-    const [stringValue, setStringValue] = useState<string>(stringifyTime(value));
+    const [stringValue, setStringValue] = useState<string>(stringifyTime(value)!);
 
     const inputLabelId = useId();
     const inputErrorId = useId();

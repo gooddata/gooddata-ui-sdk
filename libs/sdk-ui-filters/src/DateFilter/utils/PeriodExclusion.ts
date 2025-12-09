@@ -16,7 +16,7 @@ import { DateFilterOption } from "../interfaces/index.js";
 export const applyExcludeCurrentPeriod = (
     dateFilterOption: DateFilterOption | undefined,
     excludeCurrentPeriod: boolean,
-): DateFilterOption => {
+): DateFilterOption | undefined => {
     if (!dateFilterOption || !excludeCurrentPeriod) {
         return dateFilterOption;
     }

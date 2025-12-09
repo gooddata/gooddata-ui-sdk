@@ -77,7 +77,7 @@ function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] 
 export const DayPicker = forwardRef<
     HTMLDivElement,
     {
-        mode: DateRangePosition;
+        mode: DateRangePosition | undefined;
         originalDateRange: IDateRange;
         selectedDateRange: IDateRange;
         alignTo: string;
@@ -105,7 +105,7 @@ export const DayPicker = forwardRef<
         ref,
     ) => {
         const [currentMonthDate, setCurrentMonthDate] = useState<Date | null>(
-            mode === "from" ? selectedDateRange.from : selectedDateRange.to,
+            (mode === "from" ? selectedDateRange.from : selectedDateRange.to) ?? null,
         );
 
         const defaultDayPickerProps: DayPickerProps = {
@@ -123,14 +123,14 @@ export const DayPicker = forwardRef<
                 <DayPickerComponent
                     {...dayPickerPropsWithDefaults}
                     mode="range"
-                    month={currentMonthDate}
+                    month={currentMonthDate ?? undefined}
                     onSelect={onDateRangeSelect}
                     selected={selectedDateRange}
                     classNames={{
                         root: calendarClassNames,
                     }}
                     onMonthChange={setCurrentMonthDate}
-                    weekStartsOn={convertWeekStart(weekStart)}
+                    weekStartsOn={convertWeekStart(weekStart ?? "Sunday")}
                 />
             </div>
         );

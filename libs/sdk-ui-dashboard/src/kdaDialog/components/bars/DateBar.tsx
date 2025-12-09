@@ -9,7 +9,7 @@ import { UiChip, UiListbox, UiPopover, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { KdaDateOptions } from "../../internalTypes.js";
 import { KdaPeriodType } from "../../types.js";
-import { formatTitle } from "../../utils.js";
+import { formatKeyDriverAnalysisDateRange } from "../../utils.js";
 
 interface IDateBarProps {
     options: KdaDateOptions;
@@ -26,7 +26,7 @@ export function DateBar(props: IDateBarProps) {
     const label = intl.formatMessage(
         { id: "kdaDialog.dialog.bars.date.title" },
         {
-            title: formatTitle(props.options, splitter),
+            title: formatKeyDriverAnalysisDateRange(props.options?.range, splitter),
         },
     );
 

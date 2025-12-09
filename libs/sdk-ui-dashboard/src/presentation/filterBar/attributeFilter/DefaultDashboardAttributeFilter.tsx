@@ -44,11 +44,13 @@ import {
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import {
     selectAttributeFilterConfigsModeMap,
+    selectAttributeFilterConfigsModeMapByTab,
     selectBackendCapabilities,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectEnablePreserveFilterSelectionDuringInit,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsAttributeFilterDependentByLocalIdentifier,
+    selectIsAttributeFilterDependentByLocalIdentifierForTab,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
     selectIsInEditMode,
     selectLocale,
@@ -100,13 +102,26 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         onClose,
         displayAsLabel,
         overlayPositionType,
+        tabId,
     } = props;
-    const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
-    const { dependentDateFilters } = useDependentDateFilters(filter);
+    const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter, tabId);
+    const { dependentDateFilters } = useDependentDateFilters(filter, tabId);
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
-    const attributeFilterConfigsModeMap = useDashboardSelector(selectAttributeFilterConfigsModeMap);
+
+    // Use tab-specific selectors when tabId is provided
+    // Always call all hooks unconditionally
+    const attributeFilterConfigsModeMapByTab = useDashboardSelector(selectAttributeFilterConfigsModeMapByTab);
+    const attributeFilterConfigsModeMapActive = useDashboardSelector(selectAttributeFilterConfigsModeMap);
+    const attributeFilterConfigsModeMap = useMemo(
+        () =>
+            tabId
+                ? (attributeFilterConfigsModeMapByTab[tabId] ?? new Map())
+                : attributeFilterConfigsModeMapActive,
+        [tabId, attributeFilterConfigsModeMapByTab, attributeFilterConfigsModeMapActive],
+    );
+
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const workingAttributeFilter = useMemo(
         () => dashboardAttributeFilterToAttributeFilter(workingFilter ?? filter),
@@ -114,9 +129,22 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     );
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const userInteraction = useDashboardUserInteraction();
-    const isAttributeFilterDependent = useDashboardSelector(
+
+    // Always call selectors unconditionally, select the right one based on tabId
+    const isAttributeFilterDependentActive = useDashboardSelector(
         selectIsAttributeFilterDependentByLocalIdentifier(filter.attributeFilter.localIdentifier!),
     );
+    const isAttributeFilterDependentForTab = useDashboardSelector(
+        tabId
+            ? selectIsAttributeFilterDependentByLocalIdentifierForTab(
+                  filter.attributeFilter.localIdentifier!,
+                  tabId,
+              )
+            : selectIsAttributeFilterDependentByLocalIdentifier(filter.attributeFilter.localIdentifier!),
+    );
+    const isAttributeFilterDependent = tabId
+        ? isAttributeFilterDependentForTab
+        : isAttributeFilterDependentActive;
     const isVirtualAttributeFilter = useDashboardSelector(
         selectIsFilterFromCrossFilteringByLocalIdentifier(filter.attributeFilter.localIdentifier!),
     );

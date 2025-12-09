@@ -5,6 +5,7 @@ import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
 import { CancelableOptions } from "@gooddata/sdk-backend-spi";
+import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
 import { ILoadElementsOptions } from "../../../types/index.js";
 import { selectElementsForm, selectWithoutApply } from "../common/selectors.js";
@@ -72,17 +73,23 @@ export function* loadIrrelevantElementsSaga(
             loadOptionsWithElements,
         );
 
-        const relevantElementTitles = relevantElementsResult.elements.map((elem) => elem.uri);
+        const relevantElementTitles = relevantElementsResult.elements
+            .map((elem) => elem.uri)
+            .filter((uri): uri is string => uri !== null);
         const irrelevantSelectionTitles = difference(allSelectedElementTitles, relevantElementTitles);
 
         yield put(
-            actions.loadIrrelevantElementsSuccess({ elementTitles: irrelevantSelectionTitles, correlation }),
+            actions.loadIrrelevantElementsSuccess({
+                elementTitles: irrelevantSelectionTitles,
+                correlation: correlation ?? "",
+            }),
         );
     } catch (error) {
+        const convertedError: GoodDataSdkError = convertError(error);
         yield put(
             actions.loadIrrelevantElementsError({
-                error,
-                correlation,
+                error: convertedError,
+                correlation: correlation ?? "",
             }),
         );
     } finally {

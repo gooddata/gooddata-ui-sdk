@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
@@ -8,10 +9,14 @@ import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 import {
     selectFilterContextDateFilter,
+    selectFilterContextDateFilterForTab,
     selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDateFiltersWithDimensionForTab,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectWorkingFilterContextDateFilter,
+    selectWorkingFilterContextDateFilterForTab,
     selectWorkingFilterContextDateFiltersWithDimension,
+    selectWorkingFilterContextDateFiltersWithDimensionForTab,
     useDashboardSelector,
 } from "../../../model/index.js";
 
@@ -26,18 +31,38 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "dependentD
  * Returns depdent date filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter} for particular dashboard attribute filter.
  *
  * @param filter - dashboard filter to get the depdendent date filter-related data
+ * @param tabId - optional tab identifier to read filter context from a specific tab instead of the active one
  *
  * @beta
  */
-export const useDependentDateFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
+export const useDependentDateFilters = (
+    filter: IDashboardAttributeFilter,
+    tabId?: string,
+): UseParentFiltersResult => {
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
-    const allAppliedDateFilters = useDashboardSelector(selectFilterContextDateFiltersWithDimension);
-    const allWorkingDateFilters = useDashboardSelector(selectWorkingFilterContextDateFiltersWithDimension);
+    // Use tab-specific selectors when tabId is provided
+    const allAppliedDateFilters = useDashboardSelector(
+        tabId
+            ? selectFilterContextDateFiltersWithDimensionForTab(tabId)
+            : selectFilterContextDateFiltersWithDimension,
+    );
+
+    const allWorkingDateFilters = useDashboardSelector(
+        tabId
+            ? selectWorkingFilterContextDateFiltersWithDimensionForTab(tabId)
+            : selectWorkingFilterContextDateFiltersWithDimension,
+    );
+
     const allDateFilters = isApplyAllAtOnceEnabledAndSet ? allWorkingDateFilters : allAppliedDateFilters;
 
-    const commonAppliedDateFilter = useDashboardSelector(selectFilterContextDateFilter);
-    const commonWorkingDateFilter = useDashboardSelector(selectWorkingFilterContextDateFilter);
+    // Use tab-specific selectors for common date filter when tabId is provided
+    const commonAppliedDateFilter = useDashboardSelector(
+        tabId ? selectFilterContextDateFilterForTab(tabId) : selectFilterContextDateFilter,
+    );
+    const commonWorkingDateFilter = useDashboardSelector(
+        tabId ? selectWorkingFilterContextDateFilterForTab(tabId) : selectWorkingFilterContextDateFilter,
+    );
     const commonDateFilter = isApplyAllAtOnceEnabledAndSet
         ? commonWorkingDateFilter
         : commonAppliedDateFilter;

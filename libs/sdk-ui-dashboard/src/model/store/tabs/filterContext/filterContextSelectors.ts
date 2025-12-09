@@ -535,6 +535,24 @@ export const selectFilterContextDateFiltersWithDimensionForTab: (
 );
 
 /**
+ * Returns the common date filter for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Common date filter for the specified tab, or undefined if not found
+ *
+ * @internal
+ */
+export const selectFilterContextDateFilterForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardDateFilter | undefined> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(selectFiltersByTab, (filtersByTab): IDashboardDateFilter | undefined => {
+            const filters = filtersByTab[tabLocalIdentifier] ?? [];
+            return filters.find(isDashboardCommonDateFilter);
+        }),
+);
+
+/**
  * Creates a selector for selecting date filter by its dataset from a specific tab.
  *
  * @param dataSet - Date dataset ref
@@ -636,7 +654,7 @@ export const selectFilterContextAttributeFilterByLocalId: (
  *
  * @internal
  */
-export const selectFilterContextAttributeFiltersByTab: (
+export const selectFilterContextAttributeFiltersForTab: (
     tabLocalIdentifier: string,
 ) => DashboardSelector<IDashboardAttributeFilter[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
     createSelector(selectFiltersByTab, (filtersByTab): IDashboardAttributeFilter[] => {
@@ -661,7 +679,7 @@ export const selectFilterContextAttributeFilterByDisplayFormForTab: (
     (displayForm: ObjRef, tabLocalIdentifier: string) =>
         createSelector(
             selectAttributeFilterDisplayFormsMap,
-            selectFilterContextAttributeFiltersByTab(tabLocalIdentifier),
+            selectFilterContextAttributeFiltersForTab(tabLocalIdentifier),
             (attributeDisplayFormsMap, attributeFilters) => {
                 const df = attributeDisplayFormsMap.get(displayForm);
                 if (!df) {
@@ -691,7 +709,7 @@ export const selectFilterContextAttributeFilterByLocalIdForTab: (
     tabLocalIdentifier: string,
 ) => DashboardSelector<IDashboardAttributeFilter | undefined> = createMemoizedSelector(
     (localId: string, tabLocalIdentifier: string) =>
-        createSelector(selectFilterContextAttributeFiltersByTab(tabLocalIdentifier), (attributeFilters) =>
+        createSelector(selectFilterContextAttributeFiltersForTab(tabLocalIdentifier), (attributeFilters) =>
             attributeFilters.find((filter) => filter.attributeFilter.localIdentifier === localId),
         ),
 );
@@ -864,6 +882,148 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (
             );
         },
     ),
+);
+
+/**
+ * Returns filters for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Filters for the specified tab
+ *
+ * @internal
+ */
+export const selectFiltersForTab: (tabLocalIdentifier: string) => DashboardSelector<FilterContextItem[]> =
+    createMemoizedSelector((tabLocalIdentifier: string) =>
+        createSelector(selectFiltersByTab, (filtersByTab): FilterContextItem[] => {
+            return filtersByTab[tabLocalIdentifier] ?? [];
+        }),
+    );
+
+/**
+ * Returns working filter context definition for a specific tab.
+ * This merges the applied filters with working filter definition for the tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Working filter context definition for the specified tab
+ *
+ * @internal
+ */
+export const selectWorkingFilterContextDefinitionForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IFilterContextDefinition | undefined> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(
+            selectFilterContextStatesByTab,
+            (statesByTab): IFilterContextDefinition | undefined => {
+                const state = statesByTab[tabLocalIdentifier];
+                if (!state?.filterContextDefinition) {
+                    return undefined;
+                }
+                return applyFilterContext(
+                    state.filterContextDefinition,
+                    state.workingFilterContextDefinition,
+                );
+            },
+        ),
+);
+
+/**
+ * Returns working filters for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Working filters for the specified tab
+ *
+ * @internal
+ */
+export const selectWorkingFiltersForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<FilterContextItem[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(
+        selectWorkingFilterContextDefinitionForTab(tabLocalIdentifier),
+        (workingDefinition): FilterContextItem[] => {
+            return workingDefinition?.filters ?? [];
+        },
+    ),
+);
+
+/**
+ * Returns working attribute filters for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Working attribute filters for the specified tab
+ *
+ * @internal
+ */
+export const selectWorkingFilterContextAttributeFiltersForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardAttributeFilter[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(selectWorkingFiltersForTab(tabLocalIdentifier), (filters): IDashboardAttributeFilter[] => {
+        return filters.filter(isDashboardAttributeFilter);
+    }),
+);
+
+/**
+ * Returns working date filters with dimension for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Working date filters with dimension for the specified tab
+ *
+ * @internal
+ */
+export const selectWorkingFilterContextDateFiltersWithDimensionForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardDateFilter[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(selectWorkingFiltersForTab(tabLocalIdentifier), (filters): IDashboardDateFilter[] => {
+        return filters.filter(isDashboardDateFilterWithDimension);
+    }),
+);
+
+/**
+ * Returns the working common date filter for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Working common date filter for the specified tab, or undefined if not found
+ *
+ * @internal
+ */
+export const selectWorkingFilterContextDateFilterForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDashboardDateFilter | undefined> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(
+            selectWorkingFiltersForTab(tabLocalIdentifier),
+            (filters): IDashboardDateFilter | undefined => {
+                return filters.find(isDashboardCommonDateFilter);
+            },
+        ),
+);
+
+/**
+ * Returns information whether attribute filter from a specific tab's filter context has some dependencies.
+ *
+ * @param attributeFilterLocalIdentifier - Filter local identifier
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns True if the filter has dependencies, false otherwise
+ *
+ * @internal
+ */
+export const selectIsAttributeFilterDependentByLocalIdentifierForTab: (
+    attributeFilterLocalIdentifier: string,
+    tabLocalIdentifier: string,
+) => DashboardSelector<boolean> = createMemoizedSelector(
+    (attributeFilterLocalIdentifier: string, tabLocalIdentifier: string) =>
+        createSelector(
+            selectFilterContextAttributeFilterByLocalIdForTab(
+                attributeFilterLocalIdentifier,
+                tabLocalIdentifier,
+            ),
+            (filterContextAttributeFilter) => {
+                return (
+                    !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy) ||
+                    !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsByDate)
+                );
+            },
+        ),
 );
 
 /**

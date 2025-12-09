@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
@@ -12,6 +13,13 @@ export function convertVisualizationObject(
     tags?: string[],
 ): IInsightDefinition {
     const { version: _, ...data } = visualizationObject;
+
+    const layersProp =
+        visualizationObject.layers && visualizationObject.layers.length > 0
+            ? {
+                  layers: cloneWithSanitizedIds(visualizationObject.layers),
+              }
+            : {};
 
     const convertedInsight: IInsightDefinition = {
         insight: {
@@ -29,6 +37,7 @@ export function convertVisualizationObject(
                 : {}),
             sorts: cloneWithSanitizedIds(visualizationObject.sorts) ?? [],
             tags,
+            ...layersProp,
         },
     };
 

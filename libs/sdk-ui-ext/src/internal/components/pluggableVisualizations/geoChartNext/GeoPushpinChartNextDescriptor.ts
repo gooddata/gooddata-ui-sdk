@@ -69,7 +69,6 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
             package: "@gooddata/sdk-ui-geo/next",
         },
         insightToProps: getInsightToPropsConverter<IGeoPushpinChartNextProps>({
-            location: geoInsightConversion("location", BucketNames.LOCATION),
             latitude: geoInsightConversion("latitude", BucketNames.LATITUDE),
             longitude: geoInsightConversion("longitude", BucketNames.LONGITUDE),
             size: singleAttributeOrMeasureBucketConversion("size", BucketNames.SIZE),

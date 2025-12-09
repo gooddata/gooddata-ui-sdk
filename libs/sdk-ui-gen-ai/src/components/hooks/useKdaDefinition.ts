@@ -15,9 +15,13 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { IDrillEvent } from "@gooddata/sdk-ui";
-import { DashboardKeyDriverCombinationItem, IKdaDefinition, KdaPeriodType } from "@gooddata/sdk-ui-dashboard";
+import {
+    DashboardKeyDriverCombinationItem,
+    IKdaDefinition,
+    KdaPeriodType,
+    formatKeyDriverAnalysisDateRange,
+} from "@gooddata/sdk-ui-dashboard";
 import { attributeFilterToDashboardAttributeFilter } from "@gooddata/sdk-ui-dashboard/internal";
-import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
 import { ChangeAnalysisContents } from "../../model.js";
 
@@ -56,17 +60,7 @@ export function useKdaDefinition(content: ChangeAnalysisContents, format?: strin
 
 export function useKdaInfo(def: IKdaDefinition, splitter: string) {
     const title = def.metric.measure.title ?? def.metric.measure.alias ?? def.metric.measure.localIdentifier;
-
-    const from = def.range[0];
-    const to = def.range[1];
-    const pattern = def.range[0].format?.pattern ?? "yyyy-MM-dd";
-
-    const range = DateFilterHelpers.formatAbsoluteDateRange(
-        new Date(from.date),
-        new Date(to.date),
-        pattern,
-        splitter,
-    );
+    const range = formatKeyDriverAnalysisDateRange(def?.range, splitter);
 
     return {
         title,

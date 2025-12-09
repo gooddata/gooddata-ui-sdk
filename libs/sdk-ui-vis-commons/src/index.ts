@@ -69,6 +69,7 @@ export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./le
 export type {
     PositionType,
     IColorLegendItem,
+    IGeoCategoryLegendItem,
     IGeoChartLegendData,
     IHeatmapLegendItem,
     ILegendOptions,

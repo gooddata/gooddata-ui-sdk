@@ -24,7 +24,7 @@ export type IAttributeFilterContext = AttributeFilterController &
         | "overlayPositionType"
     >;
 
-export const AttributeFilterContext = createContext<IAttributeFilterContext>(null);
+export const AttributeFilterContext = createContext<IAttributeFilterContext | null>(null);
 
 AttributeFilterContext.displayName = "AttributeFilterContext";
 
@@ -32,7 +32,13 @@ AttributeFilterContext.displayName = "AttributeFilterContext";
  * Context providing AttributeFilter state and callbacks wrapped as {@link AttributeFilterController}.
  * @beta
  */
-export const useAttributeFilterContext = (): IAttributeFilterContext => useContext(AttributeFilterContext);
+export const useAttributeFilterContext = (): IAttributeFilterContext => {
+    const context = useContext(AttributeFilterContext);
+    if (!context) {
+        throw new Error("useAttributeFilterContext must be used within an AttributeFilterContextProvider");
+    }
+    return context;
+};
 
 /**
  * @internal

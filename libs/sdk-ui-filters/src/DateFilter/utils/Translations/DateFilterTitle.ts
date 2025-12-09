@@ -74,11 +74,11 @@ export const formatAbsoluteDateRange = (
     const adjustedFrom = adjustDatetime(from, isTimeEnabled, DAY_START_TIME);
     const adjustedTo = adjustDatetime(to, isTimeEnabled, DAY_END_TIME);
 
-    const fromDate = convertPlatformDateStringToDate(adjustedFrom);
-    const toDate = convertPlatformDateStringToDate(adjustedTo);
-    const coversWholeDay = isTimeForWholeDay(fromDate, toDate);
+    const fromDate = convertPlatformDateStringToDate(adjustedFrom) ?? undefined;
+    const toDate = convertPlatformDateStringToDate(adjustedTo) ?? undefined;
+    const coversWholeDay = fromDate && toDate ? isTimeForWholeDay(fromDate, toDate) : false;
 
-    if (moment(fromDate).isSame(toDate, "day")) {
+    if (fromDate && toDate && moment(fromDate).isSame(toDate, "day")) {
         if (isTimeEnabled && !coversWholeDay) {
             return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate, splitter)}`;
         } else {
@@ -89,8 +89,8 @@ export const formatAbsoluteDateRange = (
     // do not show time in case of whole day coverage
     const displayDateFormat = coversWholeDay ? dateFormatWithoutTime : dateFormat;
 
-    const fromTitle = format(fromDate, displayDateFormat);
-    const toTitle = format(toDate, displayDateFormat);
+    const fromTitle = fromDate ? format(fromDate, displayDateFormat) : "";
+    const toTitle = toDate ? format(toDate, displayDateFormat) : "";
 
     return `${fromTitle} ${splitter} ${toTitle}`;
 };
@@ -102,7 +102,7 @@ const relativeDateRangeFormatters: Array<{
         to: number,
         intlGranularity: string,
         translator: IDateAndMessageTranslator,
-        boundedFilter: IUpperBoundedFilter | ILowerBoundedFilter,
+        boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
     ) => string;
 }> = [
     {
@@ -199,8 +199,11 @@ export const formatRelativeDateRange = (
     if (intlGranularity === undefined) {
         return granularity; // in the case when invalid granularity was found in metadata
     }
-    const { formatter } = relativeDateRangeFormatters.find((f) => f.predicate(from, to));
-    return formatter(from, to, intlGranularity, translator, boundedFilter);
+    const foundFormatter = relativeDateRangeFormatters.find((f) => f.predicate(from, to));
+    if (!foundFormatter) {
+        return "";
+    }
+    return foundFormatter.formatter(from, to, intlGranularity, translator, boundedFilter);
 };
 
 const getAllTimeFilterRepresentation = (translator: IMessageTranslator): string =>
@@ -220,7 +223,7 @@ const getRelativeFormFilterRepresentation = (
     filter: IUiRelativeDateFilterForm,
     translator: IDateAndMessageTranslator,
 ): string =>
-    typeof filter.from === "number" && typeof filter.to === "number"
+    typeof filter.from === "number" && typeof filter.to === "number" && filter.granularity
         ? formatRelativeDateRange(
               filter.from,
               filter.to,

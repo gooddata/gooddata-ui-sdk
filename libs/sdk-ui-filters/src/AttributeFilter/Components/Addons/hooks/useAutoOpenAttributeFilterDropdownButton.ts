@@ -20,7 +20,7 @@ export const useAutoOpenAttributeFilterDropdownButton = (
     //This effect is handling autoOpen filter by simulating button click to open dropdown
     useEffect(() => {
         if (isAutoOpen && !isOpenPrevious) {
-            onClick();
+            onClick?.();
         }
     }, [onClick, isAutoOpen, isOpenPrevious]);
 };

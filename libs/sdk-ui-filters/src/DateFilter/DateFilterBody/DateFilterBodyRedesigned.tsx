@@ -94,7 +94,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         }
     }, [props.isMobile, props.selectedFilterOption]);
 
-    const calculateHeight = (showExcludeCurrent: boolean): number => {
+    const calculateHeight = (showExcludeCurrent: boolean): number | undefined => {
         // Mobile in Horizontal Layout
         if (window.innerHeight <= MOBILE_WIDTH) {
             const excludeOpenPeriodHeight = showExcludeCurrent ? EXCLUDE_OPEN_PERIOD_HEIGHT : 0;
@@ -124,7 +124,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         showHeaderMessage = true,
         dateFormat,
         isTimeForAbsoluteRangeEnabled,
-        weekStart,
+        weekStart = "Sunday",
         availableGranularities,
         onApplyClick,
         onCancelClick,
@@ -137,7 +137,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
     } = props;
 
     const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
-    const bodyHeight: number = calculateHeight(showExcludeCurrent);
+    const bodyHeight = calculateHeight(showExcludeCurrent);
     const visibleScrollbarClassName = getVisibleScrollbarClassName();
     let wrapperStyle: CSSProperties = {};
     let scrollerStyle: CSSProperties = {};

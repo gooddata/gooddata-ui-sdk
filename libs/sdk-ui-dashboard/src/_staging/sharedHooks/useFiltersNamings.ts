@@ -153,7 +153,7 @@ function transformFiltersToNamings(
                 dateFilterOptionInfo.excludeCurrentPeriod,
             );
             const subtitle = DateFilterHelpers.getDateFilterTitleUsingTranslator(
-                dateFilterOption,
+                dateFilterOption!,
                 intl,
                 dateFormat,
             );

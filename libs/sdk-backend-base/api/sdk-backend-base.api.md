@@ -69,6 +69,7 @@ import { IDateFilter } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
+import { IExecutionContext } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
@@ -442,6 +443,8 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
 // @alpha
 export abstract class DecoratedExecutionResult implements IExecutionResult {
     protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper);
+    // (undocumented)
+    context: IExecutionContext;
     protected abstract createNew(decorated: IExecutionResult): IExecutionResult;
     // (undocumented)
     definition: IExecutionDefinition;
@@ -474,6 +477,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 // @alpha
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     protected constructor(decorated: IPreparedExecution);
+    // (undocumented)
+    readonly context: IExecutionContext;
     protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
     // (undocumented)
     protected readonly decorated: IPreparedExecution;
@@ -491,6 +496,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     readonly signal: AbortSignal | undefined;
     // (undocumented)
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
+    // (undocumented)
+    withContext(context: IExecutionContext): IPreparedExecution;
     // (undocumented)
     withDateFormat(dateFormat: string): IPreparedExecution;
     // (undocumented)

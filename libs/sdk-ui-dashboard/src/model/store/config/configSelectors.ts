@@ -532,7 +532,7 @@ export const selectEnableFilterViews: DashboardSelector<boolean> = createSelecto
  */
 export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSelector<boolean> =
     createSelector(selectConfig, (state) => {
-        return state.settings?.enableCustomizedDashboardsWithoutPluginOverlay ?? false;
+        return state.settings?.enableCustomizedDashboardsWithoutPluginOverlay ?? true;
     });
 
 /**

@@ -16,8 +16,8 @@ export interface IDateTimePickerAccessibilityConfig {
 }
 
 interface DateTimePickerProps {
-    date: Date;
-    time: ITime;
+    date?: Date;
+    time?: ITime;
     dateInputLabel: string;
     timeInputLabel: string;
     dateTimeLegendLabel: string;
@@ -25,7 +25,7 @@ interface DateTimePickerProps {
     onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onDayClick: () => void;
     onDateInputKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-    dateFormat: string;
+    dateFormat?: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
     className: string;
@@ -91,7 +91,7 @@ export const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
                         onChange={onDateChange}
                         onKeyDown={onDateInputKeyDown}
                         onClick={onDayClick}
-                        dateFormat={dateFormat}
+                        dateFormat={dateFormat!}
                         accessibilityConfig={dateInputAccessibilityConfig}
                         errorMessageTexts={inputErrorMessageTexts.dateInput}
                         isDateOrderError={errors?.isDateOrderError}

@@ -533,6 +533,59 @@ describe("alert transforms", () => {
         ],
     };
 
+    const previousPeriodMetric3: AlertMetric = {
+        measure: {
+            measure: {
+                localIdentifier: "localPPMetric1",
+                title: "metric2",
+                format: "#,##0.00",
+                definition: {
+                    measureDefinition: {
+                        filters: [],
+                        item: {
+                            type: "measure",
+                            identifier: "simple_metric_2",
+                        },
+                    },
+                },
+            },
+        },
+        isPrimary: true,
+        comparators: [
+            {
+                comparator: AlertMetricComparatorType.PreviousPeriod,
+                isPrimary: false,
+                measure: {
+                    measure: {
+                        localIdentifier: "localMetric_pp_1",
+                        title: "metric_pp_1",
+                        definition: {
+                            previousPeriodMeasure: {
+                                measureIdentifier: "localMetric2",
+                                dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
+                            },
+                        },
+                    },
+                },
+                dataset: {
+                    type: "dataSet",
+                    id: "date",
+                    title: "date",
+                    uri: "date",
+                    description: "",
+                    production: true,
+                    deprecated: false,
+                    unlisted: false,
+                    ref: {
+                        identifier: "date",
+                        type: "dataSet",
+                    },
+                },
+                granularity: "GDC.time.date",
+            },
+        ],
+    };
+
     const allMetrics = [
         simpleMetric1,
         previousPeriodMetric,
@@ -1145,6 +1198,33 @@ describe("alert transforms", () => {
                     cron: "6 * * */3 1",
                     cronDescription: "This is description",
                     timezone: "UTC",
+                },
+            });
+        });
+
+        it("transformAlertByAnomalyDetection, comparison value, different granularity", () => {
+            const res = transformAlertByAnomalyDetection(allMetrics, baseComparison, previousPeriodMetric3);
+            const cond = baseAnomalyDetection.alert?.condition as IAutomationAnomalyDetectionCondition;
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    condition: {
+                        ...cond,
+                        granularity: "DAY",
+                    },
+                    execution: {
+                        ...baseRelative.alert?.execution,
+                        measures: [previousPeriodMetric.measure],
+                    },
+                },
+                metadata: {
+                    filters: undefined,
+                    originalSchedule: undefined,
+                },
+                schedule: {
+                    cron: "0 0 0 * * *",
+                    timezone: undefined,
                 },
             });
         });

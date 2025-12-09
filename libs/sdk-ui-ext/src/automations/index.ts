@@ -15,7 +15,6 @@ export type {
     AutomationsFilterPreselectValue,
     AutomationsPreselectedFilters,
     AutomationsAvailableFilters,
-    AutomationsInvalidateItemsRef,
     AutomationsOnLoad,
 } from "./types.js";
 export { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";

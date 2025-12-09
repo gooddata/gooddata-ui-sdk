@@ -112,6 +112,10 @@ export interface IProcessedAutomationFiltersTab {
     dateDatasets: ICatalogDateDataset[];
     /** Non-selected filters (available but not yet selected) */
     nonSelectedFilters: FilterContextItem[];
+    /** Attribute filter configs for this tab */
+    attributeConfigs: IDashboardAttributeFilterConfig[];
+    /** Date filter configs for this tab */
+    dateConfigs: IDashboardDateFilterConfigItem[];
 }
 
 /**
@@ -443,6 +447,8 @@ export const useAutomationFiltersByTab = ({
                 attributes,
                 dateDatasets,
                 nonSelectedFilters,
+                attributeConfigs,
+                dateConfigs,
             };
         });
     }, [
@@ -518,7 +524,7 @@ export const useAutomationFiltersByTab = ({
         (
             tabId: string,
             displayForm: ObjRef,
-            _attributes: ICatalogAttribute[],
+            attributes: ICatalogAttribute[],
             dateDatasets: ICatalogDateDataset[],
         ) => {
             if (!editedFiltersByTab || !onFiltersByTabChange || !filtersByTab) {
@@ -531,14 +537,29 @@ export const useAutomationFiltersByTab = ({
                 return;
             }
 
+            // We need to go through all display forms of the attribute in case
+            // the filter is using different display form (same logic as flat version).
+            const selectedAttributeDisplayForms =
+                attributes
+                    .find((attribute) =>
+                        attribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayForm)),
+                    )
+                    ?.displayForms?.map((df) => df.ref) ?? [];
+
+            const selectedDateDataSets = dateDatasets.filter((ds) =>
+                areObjRefsEqual(ds.dataSet.ref, displayForm),
+            );
+
+            // Search through all display forms to find matching filter
             const availableFilter = tabData.availableFilters.find((f) => {
                 if (isDashboardAttributeFilter(f)) {
-                    return areObjRefsEqual(f.attributeFilter.displayForm, displayForm);
-                } else if (isDashboardDateFilter(f)) {
-                    const matchingDateDataset = dateDatasets.find((ds) =>
-                        areObjRefsEqual(ds.dataSet.ref, displayForm),
+                    return selectedAttributeDisplayForms.some((dfRef) =>
+                        areObjRefsEqual(f.attributeFilter.displayForm, dfRef),
                     );
-                    return matchingDateDataset && areObjRefsEqual(f.dateFilter.dataSet, displayForm);
+                } else if (isDashboardDateFilter(f)) {
+                    return selectedDateDataSets.some((ds) =>
+                        areObjRefsEqual(f.dateFilter.dataSet, ds.dataSet.ref),
+                    );
                 }
                 return false;
             });

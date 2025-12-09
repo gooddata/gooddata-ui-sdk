@@ -12,6 +12,7 @@ import {
     ICollectionItemsConfig,
     ICollectionItemsResult,
     IDataView,
+    IExecutionContext,
     IExecutionFactory,
     IExecutionResult,
     IExecutionResultMetadata,
@@ -145,6 +146,9 @@ function recordedPreparedExecution(
         },
         withSignal(_signal: AbortSignal): IPreparedExecution {
             return recordedPreparedExecution(definition, executionFactory, resultRefType, recordings);
+        },
+        withContext(_context: IExecutionContext): IPreparedExecution {
+            throw new NotSupported("Execution context is not supported by the recorded backend.");
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {

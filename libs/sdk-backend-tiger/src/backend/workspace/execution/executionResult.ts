@@ -28,6 +28,7 @@ import {
     ICollectionItemsConfig,
     ICollectionItemsResult,
     IDataView,
+    IExecutionContext,
     IExecutionFactory,
     IExecutionResult,
     IExecutionResultMetadata,
@@ -98,6 +99,7 @@ export class TigerExecutionResult implements IExecutionResult {
         private readonly executionFactory: IExecutionFactory,
         readonly execResponse: AfmExecutionResponse,
         private readonly dateFormatter: DateFormatter,
+        public readonly context?: IExecutionContext,
         public readonly signal?: AbortSignal,
         private readonly resultCancelToken?: string,
     ) {
@@ -117,6 +119,7 @@ export class TigerExecutionResult implements IExecutionResult {
             this.executionFactory,
             this.execResponse,
             this.dateFormatter,
+            this.context,
             signal,
             this.resultCancelToken,
         );
@@ -269,7 +272,10 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public transform(): IPreparedExecution {
-        return this.executionFactory.forDefinition(this.definition, { signal: this.signal });
+        return this.executionFactory.forDefinition(this.definition, {
+            signal: this.signal,
+            context: this.context,
+        });
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
@@ -383,6 +389,7 @@ class TigerDataView implements IDataView {
     public readonly clusteringResult?: IClusteringResult;
     public readonly totalTotals?: DataValue[][][];
     public readonly metadata: IExecutionResultMetadata;
+    public readonly context?: IExecutionContext;
     private readonly _fingerprint: string;
     private readonly _execResult: ExecutionResult;
     private readonly _dateFormatter: DateFormatter;
@@ -435,6 +442,7 @@ class TigerDataView implements IDataView {
         this.totalTotals = totalTotals ? [totalTotals] : undefined;
 
         this.metadata = convertExecutionResultMetadata(this._execResult.metadata);
+        this.context = result.context;
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}/f:${
             this.forecastConfig?.forecastPeriod

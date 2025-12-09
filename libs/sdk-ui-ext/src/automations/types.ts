@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Dispatch, MutableRefObject, ReactNode, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 import {
     AutomationFilterType,
@@ -48,8 +48,12 @@ export interface IAutomationsProps {
     tableVariant?: UiAsyncTableVariant;
     isMobileView?: boolean;
     enableBulkActions?: boolean;
-    invalidateItemsRef?: AutomationsInvalidateItemsRef;
-    onInvalidateCallbackChange?: (callback: (() => void) | undefined) => void;
+    /**
+     * External invalidation ID. When this value changes, the automations list will be reloaded.
+     * This allows parent components to trigger a refresh without callback/ref patterns.
+     * If not provided or set to 0, the automations list will not be reloaded.
+     */
+    externalInvalidationId?: number;
     renderToolbarCustomElement?: () => ReactNode;
     onLoad?: AutomationsOnLoad;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
@@ -164,12 +168,6 @@ export type AutomationColumnDefinition = {
  */
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
-/**
- * Ref to invalidate items from outside the component
- * @internal
- */
-export type AutomationsInvalidateItemsRef = MutableRefObject<(() => void) | undefined>;
-
 export interface IAutomationsCoreProps {
     type: AutomationsType;
     scope: AutomationsScope;
@@ -182,8 +180,7 @@ export interface IAutomationsCoreProps {
     tableVariant: UiAsyncTableVariant;
     isMobileView?: boolean;
     enableBulkActions: boolean;
-    invalidateItemsRef?: AutomationsInvalidateItemsRef;
-    onInvalidateCallbackChange?: (callback: (() => void) | undefined) => void;
+    externalInvalidationId?: number;
     locale: string;
     renderToolbarCustomElement?: () => ReactNode;
     dashboardUrlBuilder: IDashboardUrlBuilder;

@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-import type { Map as MapLibreMap } from "maplibre-gl";
 import { ContentRect } from "react-measure";
 
-import { applyViewport } from "../../features/map/viewportManagement.js";
-import { IMapViewport } from "../../types/mapProvider.js";
+import type { IMapFacade } from "../../layers/common/mapFacade.js";
+import { applyViewport } from "../../map/viewport/viewportCalculation.js";
+import { IMapViewport } from "../../types/map/provider.js";
 
 /**
  * Handle map resize when container dimensions change
@@ -28,12 +28,11 @@ import { IMapViewport } from "../../types/mapProvider.js";
  * @internal
  */
 export function useMapResize(
-    map: MapLibreMap | null,
+    map: IMapFacade | null,
     isMapReady: boolean,
     chartContainerRect: ContentRect | null,
     viewport: Partial<IMapViewport> | null,
 ): void {
-    // Track previous dimensions to detect actual changes
     const prevContainerRect = useRef<ContentRect | null>(null);
 
     useEffect(() => {
@@ -41,17 +40,14 @@ export function useMapResize(
             return;
         }
 
-        // Check if dimensions actually changed (not just the object reference)
         const prev = prevContainerRect.current?.client;
         const curr = chartContainerRect.client;
-        const hasResized = !prev || prev.width !== curr.width || prev.height !== curr.height;
+        const { width, height } = curr;
+        const hasResized = !prev || prev.width !== width || prev.height !== height;
 
         if (hasResized) {
             prevContainerRect.current = chartContainerRect;
-            // Tell map to recalculate its canvas size to fit the new container dimensions
             map.resize();
-            // Reapply viewport so fitBounds can recalculate based on new container size
-            // Use applyViewport directly (not applyViewportSafely) since map is already loaded
             applyViewport(map, viewport, false);
         }
     }, [map, isMapReady, chartContainerRect, viewport]);

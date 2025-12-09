@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
 
@@ -15,6 +15,32 @@ module.exports = {
             "@typescript-eslint/no-unsafe-argument": "off",
             "@typescript-eslint/no-unnecessary-type-assertion": "off",
             "@typescript-eslint/restrict-template-expressions": "off",
+            "no-restricted-imports": [
+                "error",
+                {
+                    paths: [
+                        {
+                            name: "maplibre-gl",
+                            message: "Import MapLibre types via layers/common/mapFacade.ts",
+                        },
+                    ],
+                    patterns: [
+                        {
+                            group: ["maplibre-gl/*"],
+                            message: "Import MapLibre types via layers/common/mapFacade.ts",
+                        },
+                    ],
+                },
+            ],
         }),
+        {
+            files: [
+                "src/next/layers/common/mapFacade.ts",
+                "src/next/layers/mapRendering/mapInitialization.ts",
+            ],
+            rules: {
+                "no-restricted-imports": "off",
+            },
+        },
     ],
 };

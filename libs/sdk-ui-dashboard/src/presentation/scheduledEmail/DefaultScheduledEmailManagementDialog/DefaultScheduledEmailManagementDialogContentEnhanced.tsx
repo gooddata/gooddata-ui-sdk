@@ -24,6 +24,7 @@ import {
 import { messages } from "../../../locales.js";
 import {
     DEFAULT_MAX_AUTOMATIONS,
+    selectAutomationsInvalidationId,
     selectCanCreateAutomation,
     selectDashboardId,
     selectDashboardTitle,
@@ -36,7 +37,6 @@ import {
     selectIsWhiteLabeled,
     selectLocale,
     selectTimezone,
-    useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
 import {
@@ -83,7 +83,7 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
 
-    const { onInvalidateCallbackChange } = useAutomationsInvalidateRef();
+    const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
@@ -148,7 +148,7 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                         enableBulkActions={enableBulkActions}
                         availableFilters={availableFilters}
                         locale={locale}
-                        onInvalidateCallbackChange={onInvalidateCallbackChange}
+                        externalInvalidationId={automationsInvalidationId}
                         renderToolbarCustomElement={() =>
                             canCreateAutomation ? (
                                 <CreateButton

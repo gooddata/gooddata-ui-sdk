@@ -11,20 +11,20 @@ import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
 import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
 
-const getItemTitle = (selectedItem: IAttributeDropdownItem, intl: IntlShape): string =>
+const getItemTitle = (selectedItem: IAttributeDropdownItem | undefined, intl: IntlShape): string =>
     selectedItem ? selectedItem.title : intl.formatMessage({ id: "rankingFilter.allRecords" });
 
-const getItemIcon = (selectedItem: IAttributeDropdownItem): string => {
+const getItemIcon = (selectedItem: IAttributeDropdownItem | undefined): string | undefined => {
     if (selectedItem) {
         return selectedItem.type === "DATE" ? "gd-icon-date" : "gd-icon-attribute";
     } else {
-        return null;
+        return undefined;
     }
 };
 
 interface AttributeDropdownProps {
     items: IAttributeDropdownItem[];
-    selectedItemRef: ObjRefInScope;
+    selectedItemRef?: ObjRefInScope;
     onSelect: (ref?: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
@@ -48,7 +48,7 @@ export function AttributeDropdown({
         setIsOpen(!isOpen);
     };
 
-    const onItemSelect = (ref: ObjRefInScope) => {
+    const onItemSelect = (ref?: ObjRefInScope) => {
         onSelect(ref);
         setIsOpen(false);
         onDropDownItemMouseOut?.();

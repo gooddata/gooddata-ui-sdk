@@ -222,6 +222,22 @@ export interface IFluidLegendProps {
     series: IPushpinCategoryLegendItem[];
 }
 
+// @internal
+export interface IGeoCategoryLegendItem {
+    // (undocumented)
+    color?: string;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    legendIndex: number;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    type: string;
+    // (undocumented)
+    uri: string;
+}
+
 // @internal (undocumented)
 export interface IGeoChartLegendData {
     // (undocumented)
@@ -437,21 +453,8 @@ export interface IPopUpLegendProps {
     series: ISeriesItem[];
 }
 
-// @internal (undocumented)
-export interface IPushpinCategoryLegendItem {
-    // (undocumented)
-    color?: string;
-    // (undocumented)
-    isVisible: boolean;
-    // (undocumented)
-    legendIndex: number;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    type: string;
-    // (undocumented)
-    uri: string;
-}
+// @internal @deprecated (undocumented)
+export type IPushpinCategoryLegendItem = IGeoCategoryLegendItem;
 
 // @internal (undocumented)
 export interface IRange {

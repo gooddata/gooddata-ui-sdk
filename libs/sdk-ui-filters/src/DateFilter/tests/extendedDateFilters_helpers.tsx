@@ -176,7 +176,7 @@ const availableGranularities: DateFilterGranularity[] = [
 
 const defaultProps: IDateFilterProps = {
     excludeCurrentPeriod: false,
-    selectedFilterOption: defaultDateFilterOptions.allTime,
+    selectedFilterOption: defaultDateFilterOptions.allTime!,
     filterOptions: defaultDateFilterOptions,
     availableGranularities,
     isEditMode: false,
@@ -254,29 +254,29 @@ export function DateFilterWithState(customProps: Partial<IDateFilterProps> = {})
 
 // common methods
 
-export const clickDateFilterButton = () => fireEvent.click(document.querySelector(dateFilterButton));
+export const clickDateFilterButton = () => fireEvent.click(document.querySelector(dateFilterButton)!);
 
 const getApplyButton = () => screen.getByText("Apply");
 
 export const clickApplyButton = () => fireEvent.click(getApplyButton());
 
-export const isApplyButtonDisabled = () => getApplyButton().parentElement.classList.contains("disabled");
+export const isApplyButtonDisabled = () => getApplyButton().parentElement!.classList.contains("disabled");
 
 export const clickCancelButton = () => fireEvent.click(screen.getByText("Cancel"));
 
-export const getDateFilterButtonText = () => document.querySelector(dateFilterButtonText).textContent;
+export const getDateFilterButtonText = () => document.querySelector(dateFilterButtonText)!.textContent;
 
-export const clickConfigurationButton = () => fireEvent.click(document.querySelector(configurationButton));
+export const clickConfigurationButton = () => fireEvent.click(document.querySelector(configurationButton)!);
 
 // config
 
-export const getFilterTitle = () => document.querySelector(dateButtonFilterTitle).textContent;
+export const getFilterTitle = () => document.querySelector(dateButtonFilterTitle)!.textContent;
 
 export const isDateFilterBodyVisible = () => !!document.querySelector(dateFilterBody);
 
 export const isDateFilterVisible = () => !!document.querySelector(dateFilterButton);
 
-export const getSelectedItemText = () => document.querySelector(dateFilterSelectedItem).textContent;
+export const getSelectedItemText = () => document.querySelector(dateFilterSelectedItem)!.textContent;
 
 export const isConfigurationButtonVisible = () => !!document.querySelector(configurationButton);
 
@@ -301,29 +301,29 @@ const getAbsoluteFilterSelectorClass = (filter: string) => {
     return `button.s-absolute-preset-${filter}`;
 };
 
-export const clickAllTime = () => fireEvent.click(document.querySelector(allTimeButton));
+export const clickAllTime = () => fireEvent.click(document.querySelector(allTimeButton)!);
 
 export const clickStaticFilter = (filter: string) => {
     const filterSelector = getStaticFilterSelectorClass(filter);
-    fireEvent.click(document.querySelector(filterSelector));
+    fireEvent.click(document.querySelector(filterSelector)!);
 };
 
 export const getAllStaticItemsLabels = (): string[] => {
     const labels: string[] = [];
     document
         .querySelectorAll("[class*='s-relative-preset-']")
-        .forEach((item) => labels.push(item.textContent));
+        .forEach((item) => labels.push(item.textContent!));
     return labels;
 };
 
 // absolute presets
 export const clickAbsoluteFilter = (filter: string) => {
     const filterSelector = getAbsoluteFilterSelectorClass(filter);
-    fireEvent.click(document.querySelector(filterSelector));
+    fireEvent.click(document.querySelector(filterSelector)!);
 };
 
 // Absolute filter form
-export const clickAbsoluteFormFilter = () => fireEvent.click(document.querySelector(absoluteFormButton));
+export const clickAbsoluteFormFilter = () => fireEvent.click(document.querySelector(absoluteFormButton)!);
 
 export const openAbsoluteFormFilter = () => {
     clickDateFilterButton();
@@ -349,7 +349,7 @@ export const getMonthAgo = (dateFormat: string = defaultDateFormat) => {
 
 // Relative filter form
 export const clickRelativeFormFilter = () => {
-    fireEvent.click(document.querySelector(relativeFormButton));
+    fireEvent.click(document.querySelector(relativeFormButton)!);
 };
 
 export const openRelativeFormFilter = () => {
@@ -371,28 +371,28 @@ export const setRelativeFormInputs = (from: string, to: string) => {
 };
 
 const writeToRelativeFormInputTo = (value: string) => {
-    const input = document.querySelector(relativeFormInputTo);
+    const input = document.querySelector(relativeFormInputTo)!;
     fireEvent.change(input, { target: { value } });
 
-    const menuItem = document.querySelector(".s-select-item-focused");
+    const menuItem = document.querySelector(".s-select-item-focused")!;
     fireEvent.click(menuItem);
 };
 
 const writeToRelativeFormInputFrom = (value: string) => {
-    const input = document.querySelector(relativeFormInputFrom);
+    const input = document.querySelector(relativeFormInputFrom)!;
     fireEvent.change(input, { target: { value } });
 
-    const menuItem = document.querySelector(".s-select-item-focused");
+    const menuItem = document.querySelector(".s-select-item-focused")!;
     fireEvent.click(menuItem);
 };
 
 export const clickRelativeFormGranularity = (granularity: string) => {
-    const tab = document.querySelector(relativeFormGranularityTab(granularity));
+    const tab = document.querySelector(relativeFormGranularityTab(granularity))!;
     fireEvent.click(tab);
 };
 
 export const isRelativeFormGranularitySelected = (granularity: string) => {
-    const tab = document.querySelector(relativeFormGranularityTab(granularity));
+    const tab = document.querySelector(relativeFormGranularityTab(granularity))!;
     return tab.classList.contains("is-active");
 };
 
@@ -403,7 +403,7 @@ export const isRelativeFormSelectMenuVisible = () => !!document.querySelector(re
 // exclude
 
 export const getExcludeCurrentPeriodCheckbox = (): HTMLInputElement =>
-    document.querySelector(excludeCurrentPeriodCheckbox);
+    document.querySelector(excludeCurrentPeriodCheckbox)!;
 
 export const clickExcludeCurrentPeriodCheckBox = () => {
     fireEvent.click(getExcludeCurrentPeriodCheckbox());

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
@@ -9,9 +10,11 @@ import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {
     selectFilterContextAttributeFilters,
+    selectFilterContextAttributeFiltersForTab,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectSupportsSettingConnectingAttributes,
     selectWorkingFilterContextAttributeFilters,
+    selectWorkingFilterContextAttributeFiltersForTab,
     useDashboardSelector,
 } from "../../../model/index.js";
 
@@ -29,13 +32,27 @@ export type UseParentFiltersResult = Pick<
  * Returns parent filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter} for particular dashboard attribute filter.
  *
  * @param filter - dashboard filter to get the parent filter-related data
+ * @param tabId - optional tab identifier to read filter context from a specific tab instead of the active one
  *
  * @public
  */
-export const useParentFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
+export const useParentFilters = (
+    filter: IDashboardAttributeFilter,
+    tabId?: string,
+): UseParentFiltersResult => {
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const allAppliedAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
-    const allWorkingAttributeFilters = useDashboardSelector(selectWorkingFilterContextAttributeFilters);
+
+    // Use tab-specific selectors when tabId is provided
+    const allAppliedAttributeFilters = useDashboardSelector(
+        tabId ? selectFilterContextAttributeFiltersForTab(tabId) : selectFilterContextAttributeFilters,
+    );
+
+    const allWorkingAttributeFilters = useDashboardSelector(
+        tabId
+            ? selectWorkingFilterContextAttributeFiltersForTab(tabId)
+            : selectWorkingFilterContextAttributeFilters,
+    );
+
     const allAttributeFilters = isApplyAllAtOnceEnabledAndSet
         ? allWorkingAttributeFilters
         : allAppliedAttributeFilters;

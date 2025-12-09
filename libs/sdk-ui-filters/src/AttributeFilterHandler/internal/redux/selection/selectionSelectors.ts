@@ -14,7 +14,7 @@ import { FilterSelector } from "../common/types.js";
  */
 export const selectWorkingSelection: FilterSelector<string[]> = createSelector(
     selectState,
-    (state) => state.selection.working.keys,
+    (state) => state.selection.working.keys ?? [],
 );
 
 /**
@@ -22,7 +22,7 @@ export const selectWorkingSelection: FilterSelector<string[]> = createSelector(
  */
 export const selectIsWorkingSelectionInverted: FilterSelector<boolean> = createSelector(
     selectState,
-    (state) => state.selection.working.isInverted,
+    (state) => state.selection.working.isInverted ?? false,
 );
 
 /**
@@ -30,7 +30,7 @@ export const selectIsWorkingSelectionInverted: FilterSelector<boolean> = createS
  */
 export const selectIrrelevantWorkingSelection: FilterSelector<string[]> = createSelector(
     selectState,
-    (state) => state.selection.working.irrelevantKeys,
+    (state) => state.selection.working.irrelevantKeys ?? [],
 );
 
 /**
@@ -38,7 +38,7 @@ export const selectIrrelevantWorkingSelection: FilterSelector<string[]> = create
  */
 export const selectCommittedSelection: FilterSelector<string[]> = createSelector(
     selectState,
-    (state) => state.selection.commited.keys,
+    (state) => state.selection.commited.keys ?? [],
 );
 
 /**
@@ -46,7 +46,7 @@ export const selectCommittedSelection: FilterSelector<string[]> = createSelector
  */
 export const selectIsCommittedSelectionInverted: FilterSelector<boolean> = createSelector(
     selectState,
-    (state) => state.selection.commited.isInverted,
+    (state) => state.selection.commited.isInverted ?? false,
 );
 
 /**
@@ -54,7 +54,7 @@ export const selectIsCommittedSelectionInverted: FilterSelector<boolean> = creat
  */
 export const selectIrrelevantCommittedSelection: FilterSelector<string[]> = createSelector(
     selectState,
-    (state) => state.selection.commited.irrelevantKeys,
+    (state) => state.selection.commited.irrelevantKeys ?? [],
 );
 
 /**
@@ -66,9 +66,9 @@ export const selectInvertableWorkingSelection: FilterSelector<InvertableAttribut
         selectIsWorkingSelectionInverted,
         selectIrrelevantWorkingSelection,
         (keys, isInverted, irrelevantKeys): InvertableAttributeElementSelection => ({
-            keys,
+            keys: keys as InvertableAttributeElementSelection["keys"],
             isInverted,
-            irrelevantKeys,
+            irrelevantKeys: irrelevantKeys as InvertableAttributeElementSelection["irrelevantKeys"],
         }),
     );
 
@@ -81,9 +81,9 @@ export const selectInvertableCommittedSelection: FilterSelector<InvertableAttrib
         selectIsCommittedSelectionInverted,
         selectIrrelevantCommittedSelection,
         (keys, isInverted, irrelevantKeys): InvertableAttributeElementSelection => ({
-            keys,
+            keys: keys as InvertableAttributeElementSelection["keys"],
             isInverted,
-            irrelevantKeys,
+            irrelevantKeys: irrelevantKeys as InvertableAttributeElementSelection["irrelevantKeys"],
         }),
     );
 

@@ -29,6 +29,7 @@ import { IDateFilter } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IDimensionItemDescriptor } from '@gooddata/sdk-model';
+import { IExecutionContext } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExecutionResultDataSourceMessage } from '@gooddata/sdk-backend-spi';
@@ -349,6 +350,8 @@ export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
 // @public
 export class DataViewFacade {
     protected constructor(dataView: IDataView);
+    // (undocumented)
+    context(): IExecutionContext | undefined;
     // (undocumented)
     data(config?: DataAccessConfig): IDataAccessMethods;
     // @alpha
@@ -823,6 +826,8 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
     // @internal
     enableExecutionCancelling?: boolean;
     execution: IPreparedExecution;
+    // @alpha
+    executions?: IPreparedExecution[];
     // @beta
     forecastConfig?: IForecastConfig;
 }

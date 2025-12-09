@@ -640,7 +640,7 @@ function transformToAnomalyDetectionCondition(
             type: "anomalyDetection",
             measure: condition.left,
             sensitivity: "MEDIUM",
-            granularity: "WEEK",
+            granularity: getGranularityFromComparator(comparator),
             dataset: comparator.dataset.ref,
         };
     }
@@ -650,7 +650,7 @@ function transformToAnomalyDetectionCondition(
             type: "anomalyDetection",
             measure: condition.measure.left,
             sensitivity: "MEDIUM",
-            granularity: "WEEK",
+            granularity: getGranularityFromComparator(comparator),
             dataset: comparator.dataset.ref,
         };
     }
@@ -826,4 +826,48 @@ function filterMeasures(auxMeasures: IMeasure[], measures: IMeasure[]): IMeasure
         }
         return arr.indexOf(m) === index;
     });
+}
+
+function getGranularityFromComparator(
+    comparator: AlertMetricComparator | undefined,
+): IAlertAnomalyDetectionGranularity {
+    if (!comparator?.granularity) {
+        return "WEEK";
+    }
+
+    switch (comparator.granularity) {
+        case "GDC.time.hour":
+        case "GDC.time.minute":
+        case "GDC.time.minute_in_hour":
+        case "GDC.time.hour_in_day":
+            //NOTE: We dont want to allow hour and minute granularity as default
+            // Some users are not allowed to use hour granularity but we dont know
+            // this setting here.
+            return "DAY";
+        case "GDC.time.date":
+        case "GDC.time.day_in_month":
+        case "GDC.time.day_in_week":
+        case "GDC.time.day_in_euweek":
+        case "GDC.time.day_in_quarter":
+        case "GDC.time.day_in_year":
+            return "DAY";
+        case "GDC.time.week_us":
+        case "GDC.time.week":
+        case "GDC.time.week_in_year":
+        case "GDC.time.week_in_quarter":
+        case "GDC.time.euweek_in_year":
+        case "GDC.time.euweek_in_quarter":
+            return "WEEK";
+        case "GDC.time.month":
+        case "GDC.time.month_in_quarter":
+        case "GDC.time.month_in_year":
+            return "MONTH";
+        case "GDC.time.quarter":
+        case "GDC.time.quarter_in_year":
+            return "QUARTER";
+        case "GDC.time.year":
+            return "YEAR";
+        default:
+            return "WEEK";
+    }
 }

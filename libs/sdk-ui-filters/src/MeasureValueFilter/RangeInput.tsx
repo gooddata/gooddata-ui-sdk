@@ -6,8 +6,8 @@ import { ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 
 interface IRangeInputProps {
-    from: number;
-    to: number;
+    from?: number | null;
+    to?: number | null;
     usePercentage: boolean;
     disableAutofocus?: boolean;
     onFromChange: (value: number) => void;
@@ -30,8 +30,8 @@ export function RangeInput({
         <div className={"gd-mvf-range-input"}>
             <InputWithNumberFormat
                 className="s-mvf-range-from-input"
-                value={from}
-                onChange={onFromChange}
+                value={from!}
+                onChange={(val) => onFromChange(val as number)}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall
                 autofocus={!disableAutofocus}
@@ -40,8 +40,8 @@ export function RangeInput({
             />
             <InputWithNumberFormat
                 className="s-mvf-range-to-input"
-                value={to}
-                onChange={onToChange}
+                value={to!}
+                onChange={(val) => onToChange(val as number)}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall
                 suffix={usePercentage ? "%" : ""}

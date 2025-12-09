@@ -69,7 +69,7 @@ export function Main({
                 <FilterObjectTypeMemo />
                 <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.title" />}>
                     <FilterCreatedByMemo backend={backend} workspace={workspace} />
-                    <FilterTagsMemo backend={backend} workspace={workspace} />
+                    <FilterTagsMemo />
                     <FilterOriginGuard backend={backend} workspace={workspace}>
                         <FilterOriginMemo />
                     </FilterOriginGuard>

@@ -21,13 +21,13 @@ export class RankingFilterDropdownFragment {
     };
 
     public clickApply = (): RankingFilterDropdownFragment => {
-        fireEvent.click(this.getApplyButton());
+        fireEvent.click(this.getApplyButton()!);
         return this;
     };
 
     public getApplyButton = () => screen.getByText("Apply").parentElement;
 
-    public isApplyButtonDisabled = () => this.getApplyButton().classList.contains("disabled");
+    public isApplyButtonDisabled = () => this.getApplyButton()!.classList.contains("disabled");
 
     public isOperatorDropdownOpen = (): boolean => !!document.querySelector(OPERATOR_DROPDOWN_BODY);
 
@@ -35,40 +35,40 @@ export class RankingFilterDropdownFragment {
 
     public openOperatorDropdown = (): RankingFilterDropdownFragment => {
         if (!this.isOperatorDropdownOpen()) {
-            fireEvent.click(this.getOperatorDropdownButton());
+            fireEvent.click(this.getOperatorDropdownButton()!);
         }
         return this;
     };
 
     public setOperator = (value: string): RankingFilterDropdownFragment => {
-        fireEvent.click(document.querySelector(`.s-rf-operator-${stringUtils.simplifyText(value)}`));
+        fireEvent.click(document.querySelector(`.s-rf-operator-${stringUtils.simplifyText(value)}`)!);
         return this;
     };
 
-    public getOperator = (): string => document.querySelector(OPERATOR_DROPDOWN_BUTTON).textContent;
+    public getOperator = (): string => document.querySelector(OPERATOR_DROPDOWN_BUTTON)!.textContent!;
 
     public getValueDropdown = () => document.querySelector(".gd-dynamic-select-menu");
 
     public getValueDropdownItems = () =>
-        this.getValueDropdown().querySelectorAll(".s-rf-value-dropdown-item");
+        this.getValueDropdown()!.querySelectorAll(".s-rf-value-dropdown-item");
 
     public isValueDropdownVisible = () => !!this.getValueDropdown();
 
     public changeInputValue = (value: string): RankingFilterDropdownFragment => {
-        const input = document.querySelector(VALUE_DROPDOWN_INPUT);
+        const input = document.querySelector(VALUE_DROPDOWN_INPUT)!;
         fireEvent.change(input, { target: { value } });
         return this;
     };
 
     public setValue = (value: string): RankingFilterDropdownFragment => {
         this.changeInputValue(value);
-        fireEvent.click(document.querySelector(VALUE_DROPDOWN_ITEM));
+        fireEvent.click(document.querySelector(VALUE_DROPDOWN_ITEM)!);
         return this;
     };
 
     public setValueByBlur = (value: string): RankingFilterDropdownFragment => {
         this.changeInputValue(value);
-        fireEvent.blur(document.querySelector(VALUE_DROPDOWN_INPUT));
+        fireEvent.blur(document.querySelector(VALUE_DROPDOWN_INPUT)!);
         return this;
     };
 
@@ -80,7 +80,7 @@ export class RankingFilterDropdownFragment {
 
     public openMeasureDropdown = (): RankingFilterDropdownFragment => {
         if (!this.isMeasureDropdownOpen()) {
-            fireEvent.click(document.querySelector(MEASURE_DROPDOWN_BUTTON));
+            fireEvent.click(document.querySelector(MEASURE_DROPDOWN_BUTTON)!);
         }
         return this;
     };
@@ -90,20 +90,20 @@ export class RankingFilterDropdownFragment {
     };
 
     public setMeasureItem = (value: string): RankingFilterDropdownFragment => {
-        fireEvent.click(this.getMeasureItem(value));
+        fireEvent.click(this.getMeasureItem(value)!);
         return this;
     };
 
-    public getMeasure = (): string => document.querySelector(MEASURE_DROPDOWN_BUTTON).textContent;
+    public getMeasure = (): string => document.querySelector(MEASURE_DROPDOWN_BUTTON)!.textContent!;
 
     public isAttributeButtonDisabled = (): boolean =>
-        this.getAttributeDropdownButton().classList.contains("disabled");
+        this.getAttributeDropdownButton()!.classList.contains("disabled");
 
     public isAttributeDropdownOpen = (): boolean => !!document.querySelector(ATTRIBUTE_DROPDOWN_BODY);
 
     public openAttributeDropdown = (): RankingFilterDropdownFragment => {
         if (!this.isAttributeDropdownOpen()) {
-            fireEvent.click(this.getAttributeDropdownButton());
+            fireEvent.click(this.getAttributeDropdownButton()!);
         }
         return this;
     };
@@ -117,18 +117,18 @@ export class RankingFilterDropdownFragment {
     };
 
     public setAttributeItem = (value: string): RankingFilterDropdownFragment => {
-        fireEvent.click(this.getAttributeItem(value));
+        fireEvent.click(this.getAttributeItem(value)!);
         return this;
     };
 
     public setAttributeToAllRecords = (): RankingFilterDropdownFragment => {
-        fireEvent.click(document.querySelector(ATTRIBUTE_ALL_RECORDS));
+        fireEvent.click(document.querySelector(ATTRIBUTE_ALL_RECORDS)!);
         return this;
     };
 
     public getAttributeDropdownButton = () => document.querySelector(ATTRIBUTE_DROPDOWN_BUTTON);
 
-    public getAttribute = (): string => this.getAttributeDropdownButton().textContent;
+    public getAttribute = (): string => this.getAttributeDropdownButton()!.textContent!;
 
-    public getPreview = (): string => document.querySelector(PREVIEW_TEXT).textContent;
+    public getPreview = (): string => document.querySelector(PREVIEW_TEXT)!.textContent!;
 }

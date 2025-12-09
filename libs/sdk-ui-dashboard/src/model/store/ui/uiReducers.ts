@@ -80,6 +80,7 @@ const openScheduleEmailManagementDialog: UiReducer<
     const { widgetRef, openedFrom } = action.payload;
 
     state.scheduleEmailManagementDialog.open = true;
+    state.automationsManagement.invalidationId = 0;
     if (widgetRef) {
         state.scheduleEmailManagementDialog.context = {
             widgetRef,
@@ -107,6 +108,7 @@ const openAlertingManagementDialog: UiReducer<
     const { widgetRef, openedFrom } = action.payload ?? {};
 
     state.alertsManagementDialog.open = true;
+    state.automationsManagement.invalidationId = 0;
     if (widgetRef) {
         state.alertsManagementDialog.context = {
             widgetRef,
@@ -437,15 +439,8 @@ const resetIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
     state.filterValidationMessages.incompatibleDefaultFiltersOverride = false;
 };
 
-const setAutomationsInvalidateCallback: UiReducer<PayloadAction<(() => void) | undefined>> = (
-    state,
-    action,
-) => {
-    state.automationsManagement.invalidateItemsCallback = action.payload;
-};
-
 const invalidateAutomationItems: UiReducer = (state) => {
-    state.automationsManagement.invalidateItemsCallback?.();
+    state.automationsManagement.invalidationId += 1;
 };
 
 export const uiReducers = {
@@ -508,6 +503,5 @@ export const uiReducers = {
     changeIgnoreExecutionTimestamp,
     setIncompatibleDefaultFiltersOverrideMessage,
     resetIncompatibleDefaultFiltersOverrideMessage,
-    setAutomationsInvalidateCallback,
     invalidateAutomationItems,
 };

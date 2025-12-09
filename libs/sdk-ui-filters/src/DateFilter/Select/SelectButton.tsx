@@ -9,13 +9,13 @@ import { itemToString } from "./utils.js";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export function SelectButton<V extends {}>({
-    selectedItem = null,
+    selectedItem,
     isOpen,
     getToggleButtonProps,
 }: {
     selectedItem: ISelectItemOption<V>;
     isOpen: boolean;
-    getToggleButtonProps: () => any;
+    getToggleButtonProps: () => Record<string, unknown>;
 }): ReactElement {
     return (
         <button

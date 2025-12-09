@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { ComponentType } from "react";
 
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
@@ -88,6 +89,19 @@ export interface IDashboardDateFilterProps {
      * Specifies the overlay position type for the date filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
+
+    /**
+     * Optional tab identifier to read filter context from.
+     * When provided, the filter will use configuration from this specific tab.
+     * When undefined, uses the active tab (default behavior).
+     *
+     * @remarks
+     * This is primarily used in automation/scheduling contexts where filters from
+     * multiple tabs need to be displayed simultaneously.
+     *
+     * @internal
+     */
+    tabId?: string;
 }
 
 /**

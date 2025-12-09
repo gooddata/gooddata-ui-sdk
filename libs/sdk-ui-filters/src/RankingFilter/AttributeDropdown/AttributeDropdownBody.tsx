@@ -9,7 +9,7 @@ import { AttributeItem } from "./DropdownItems/AttributeItem.js";
 
 interface IAttributeDropdownBodyProps {
     items: IAttributeDropdownItem[];
-    selectedItemRef: ObjRefInScope;
+    selectedItemRef?: ObjRefInScope;
     onSelect: (ref?: ObjRefInScope) => void;
     onClose: () => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;

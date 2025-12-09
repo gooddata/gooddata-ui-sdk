@@ -21,6 +21,7 @@ import {
     IDataView,
     IDateFilterConfigsQuery,
     IEntitlements,
+    IExecutionContext,
     IExecutionFactory,
     IExecutionResult,
     IExplainProvider,
@@ -469,6 +470,9 @@ function recordedPreparedExecution(
         },
         withSignal(_signal: AbortSignal): IPreparedExecution {
             return recordedPreparedExecution(definition, executionFactory, recordings);
+        },
+        withContext(_context: IExecutionContext): IPreparedExecution {
+            throw new NotSupported("Execution context is not supported by the legacy recorded backend.");
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {

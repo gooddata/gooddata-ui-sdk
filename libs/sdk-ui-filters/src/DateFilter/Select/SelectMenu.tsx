@@ -40,7 +40,7 @@ export function SelectMenu<V extends {}>({
                     if (item.type === "option") {
                         const isSelected = selectedItem && item ? selectedItem.value === item.value : false;
                         const isFocused =
-                            selectableOptions[highlightedIndex] && item
+                            highlightedIndex !== undefined && selectableOptions[highlightedIndex] && item
                                 ? selectableOptions[highlightedIndex].value === item.value
                                 : false;
                         const itemProps = getItemProps({

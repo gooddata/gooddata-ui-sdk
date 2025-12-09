@@ -19,10 +19,14 @@ export const useResolveParentFiltersInput = (
 
     return useMemo(() => {
         if (!supportsSettingConnectingAttributes) {
-            return getParentFiltersWithoutOverAttribute(resolvedParentFilters);
+            return getParentFiltersWithoutOverAttribute(resolvedParentFilters ?? []);
         }
 
-        return getParentFiltersWithOverAttribute(resolvedParentFilters, overAttribute);
+        if (!overAttribute) {
+            return getParentFiltersWithoutOverAttribute(resolvedParentFilters ?? []);
+        }
+
+        return getParentFiltersWithOverAttribute(resolvedParentFilters ?? [], overAttribute);
     }, [supportsSettingConnectingAttributes, resolvedParentFilters, overAttribute]);
 };
 
@@ -33,7 +37,11 @@ const getParentFiltersWithoutOverAttribute = (
         return [];
     }
 
-    return parentFilters.map((attributeFilter) => ({ attributeFilter, overAttribute: null }));
+    // overAttribute violate null check
+    return parentFilters.map((attributeFilter) => ({
+        attributeFilter,
+        overAttribute: null as unknown as ObjRef,
+    }));
 };
 
 const getParentFiltersWithOverAttribute = (

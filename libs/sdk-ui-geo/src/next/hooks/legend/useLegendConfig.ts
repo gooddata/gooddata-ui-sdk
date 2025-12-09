@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { PositionType } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoPushpinChartNextConfig } from "../../types/config.js";
+import { IGeoChartNextConfig } from "../../types/config/unified.js";
 
 /**
  * Legend configuration computed from geo config.
@@ -40,7 +40,7 @@ export interface ILegendConfig {
  *
  * @alpha
  */
-export function useLegendConfig(config?: IGeoPushpinChartNextConfig): ILegendConfig {
+export function useLegendConfig(config?: IGeoChartNextConfig): ILegendConfig {
     return useMemo(() => {
         const legendConfig = config?.legend;
 

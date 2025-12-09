@@ -5,9 +5,8 @@ import { useEffect } from "react";
 import { IMeasure } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { DeepReadonly } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
-import { IKdaDefinition } from "../../types.js";
+import { DeepReadonly, IKdaDefinition } from "../../types.js";
 
 export function useValidAttributes() {
     const { state, setState } = useKdaState();

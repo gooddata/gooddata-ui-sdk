@@ -10,7 +10,7 @@ import { IAttributeDropdownItem, IMeasureDropdownItem } from "./types.js";
 import { messages } from "../locales.js";
 
 interface IPreviewProps {
-    measure: IMeasureDropdownItem;
+    measure?: IMeasureDropdownItem;
     attribute?: IAttributeDropdownItem;
     operator: RankingFilterOperator;
     value: number;
@@ -34,7 +34,7 @@ export function Preview({ operator, value, measure, attribute }: IPreviewProps) 
                 id={getPreviewTemplate(operator, attribute)}
                 tagName="span"
                 values={{
-                    measure: measure.title,
+                    measure: measure?.title ?? "",
                     attribute: attribute?.title,
                     operator,
                     value,

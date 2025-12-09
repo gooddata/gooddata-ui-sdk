@@ -69,6 +69,8 @@ export function createAttributeFilterHandlerStore(
     const elementKeys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
     const isInverted = isNegativeAttributeFilter(context.attributeFilter);
 
+    // Note: We use type assertion here because Redux Toolkit has complex generic type inference
+    // that doesn't work well with strict TypeScript mode. The types are correct at runtime.
     const store = configureStore({
         preloadedState: {
             ...initialState,
@@ -96,8 +98,8 @@ export function createAttributeFilterHandlerStore(
             },
             originalFilter: context.attributeFilter,
         },
-        reducer: sliceReducer,
-        middleware: (getDefaultMiddleware) => {
+        reducer: sliceReducer as any,
+        middleware: (getDefaultMiddleware: any) => {
             return getDefaultMiddleware({
                 thunk: false,
                 serializableCheck: {

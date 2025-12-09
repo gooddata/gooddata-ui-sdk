@@ -131,7 +131,7 @@ export const useAttributeFilterController = (
         [supportsCircularDependencyInFilters, supportsKeepingDependentFiltersSelection],
     );
     const { shouldIncludeLimitingFilters, setShouldIncludeLimitingFilters } = useShouldIncludeLimitingFilters(
-        supportsShowingFilteredElements,
+        supportsShowingFilteredElements ?? false,
     );
 
     const { filter, setConnectedPlaceholderValue } = useResolveFilterInput(
@@ -149,79 +149,79 @@ export const useAttributeFilterController = (
 
     const handler = useAttributeFilterHandler({
         backend,
-        filter,
+        filter: filter!,
         workspace,
         hiddenElements,
         staticElements,
-        displayAsLabel,
+        displayAsLabel: displayAsLabel!,
         withoutApply,
         enablePreserveSelectionDuringInit,
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(
-        handler,
-        supportsShowingFilteredElements,
+        handler!,
+        supportsShowingFilteredElements!,
         shouldIncludeLimitingFilters,
     );
 
-    useOnError(handler, { onError });
+    useOnError(handler!, { onError });
     useInitOrReload(
-        handler,
+        handler!,
         {
-            filter,
+            filter: filter!,
             limitingAttributeFilters,
             limitingDateFilters,
             limitingValidationItems: validateElementsBy,
             shouldIncludeLimitingFilters,
             limit: elementsOptions?.limit,
-            onApply,
-            onSelect,
+            onApply: onApply!,
+            onSelect: onSelect!,
             setConnectedPlaceholderValue,
             resetOnParentFilterChange,
             selectionMode,
             shouldReloadElements,
             setShouldReloadElements,
-            displayAsLabel,
-            withoutApply,
-            isSelectionInvalid: withoutApply && attributeFilterControllerData.isSelectionInvalid,
+            displayAsLabel: displayAsLabel!,
+            withoutApply: withoutApply ?? false,
+            isSelectionInvalid: (withoutApply ?? false) && attributeFilterControllerData.isSelectionInvalid,
         },
-        supportsKeepingDependentFiltersSelection,
-        supportsCircularDependencyInFilters,
+        supportsKeepingDependentFiltersSelection ?? false,
+        supportsCircularDependencyInFilters ?? false,
     );
     const callbacks = useCallbacks(
-        handler,
+        handler!,
         {
-            onApply,
-            onSelect,
-            setConnectedPlaceholderValue,
+            onApply: onApply!,
+            onSelect: onSelect!,
+            setConnectedPlaceholderValue: setConnectedPlaceholderValue!,
             selectionMode,
             shouldReloadElements,
             setShouldReloadElements,
             shouldIncludeLimitingFilters,
             setShouldIncludeLimitingFilters,
-            limitingAttributeFilters,
-            limitingDateFilters,
-            withoutApply,
+            limitingAttributeFilters: limitingAttributeFilters ?? [],
+            limitingDateFilters: limitingDateFilters ?? [],
+            withoutApply: withoutApply ?? false,
             isSelectionInvalid: attributeFilterControllerData.isSelectionInvalid,
             filter,
         },
-        supportsShowingFilteredElements,
-        supportsKeepingDependentFiltersSelection,
+        supportsShowingFilteredElements ?? false,
+        supportsKeepingDependentFiltersSelection ?? false,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
     );
 
-    useSingleSelectModeHandler(handler, {
+    useSingleSelectModeHandler(handler!, {
         selectFirst,
-        onApply: callbacks.onApply,
-        onSelect: callbacks.onSelect,
+        onApply: callbacks.onApply!,
+        onSelect: callbacks.onSelect!,
         selectionMode,
-        withoutApply,
+        withoutApply: withoutApply ?? false,
     });
 
     const forcedInitErrorProp = isValidSingleSelectionFilter(
         selectionMode,
         filter,
         limitingAttributeFilters,
-        supportsSingleSelectDependentFilters,
+        supportsSingleSelectDependentFilters ?? false,
     )
         ? {}
         : { initError: new UnexpectedSdkError() };
@@ -334,11 +334,11 @@ function useInitOrReload(
     } = props;
 
     useEffect(() => {
-        if (shouldIncludeLimitingFilters && limitingAttributeFilters.length > 0) {
+        if (shouldIncludeLimitingFilters && limitingAttributeFilters && limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
         }
 
-        if (shouldIncludeLimitingFilters && limitingDateFilters.length > 0) {
+        if (shouldIncludeLimitingFilters && limitingDateFilters && limitingDateFilters.length > 0) {
             handler.setLimitingDateFilters(limitingDateFilters);
         }
 
@@ -437,7 +437,8 @@ function useInitOrReload(
     }, []);
 
     useEffect(() => {
-        const originalFilterRef = filterObjRef(handler.getOriginalFilter());
+        const originalFilter = handler.getOriginalFilter();
+        const originalFilterRef = originalFilter ? filterObjRef(originalFilter) : undefined;
         const currentDisplayAsLabel = handler.getDisplayAsLabel();
 
         const isNotResettingToOrigin =
@@ -452,7 +453,7 @@ function useInitOrReload(
         ) {
             const unsubscribe = handler.onLoadCustomElementsSuccess((params) => {
                 // check correlation to prevent events mismatch
-                if (params.correlation.includes(DISPLAY_FORM_CHANGED_CORRELATION)) {
+                if (params.correlation?.includes(DISPLAY_FORM_CHANGED_CORRELATION)) {
                     unsubscribe();
                     onApply?.(
                         handler.getFilter(),
@@ -533,12 +534,12 @@ function updateNonResettingFilter(
         const leftoverIrrelevantKeys = difference(irrelevantKeys, keys);
 
         const hasLimitingDateFiltersChanged =
-            handler.getLimitingDateFilters().length !== limitingDateFilters.length ||
+            handler.getLimitingDateFilters()?.length !== limitingDateFilters?.length ||
             differenceBy(handler.getLimitingDateFilters(), limitingDateFilters, (dateFilter) =>
                 objRefToString(filterObjRef(dateFilter)),
             ).length > 0;
         const hasNumberOfLimitingAttributesChanged =
-            handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
+            handler.getLimitingAttributeFilters()?.length !== limitingAttributeFilters?.length;
         const shouldReinitilizeAllElements =
             supportsKeepingDependentFiltersSelection &&
             (hasNumberOfLimitingAttributesChanged ||
@@ -557,9 +558,9 @@ function updateNonResettingFilter(
             handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
             handler.commitSelection();
         }
-        handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        handler.setLimitingAttributeFilters(limitingAttributeFilters ?? []);
         handler.setLimitingValidationItems(limitingValidationItems);
-        handler.setLimitingDateFilters(limitingDateFilters);
+        handler.setLimitingDateFilters(limitingDateFilters ?? []);
 
         const nextFilter = handler.getFilter();
         setConnectedPlaceholderValue(nextFilter);
@@ -606,7 +607,7 @@ function updateAutomaticResettingFilter(
     supportsCircularDependencyInFilters: boolean,
 ): UpdateFilterType {
     const canAutomaticallyReset =
-        limitingAttributeFilters.length === 0 || !supportsCircularDependencyInFilters;
+        limitingAttributeFilters?.length === 0 || !supportsCircularDependencyInFilters;
     invariant(
         canAutomaticallyReset,
         "It is not possible to automatically reset dependent filters with current backend. Please set attribute filter to not reset on parent filter change (resetOnParentFilterChange prop).",
@@ -614,7 +615,7 @@ function updateAutomaticResettingFilter(
 
     if (limitingAttributesChanged) {
         handler.changeSelection({ keys: [], isInverted: selectionMode !== "single" });
-        handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        handler.setLimitingAttributeFilters(limitingAttributeFilters ?? []);
         // the next lines are to apply selection to the state of the parent component to make the
         // new attribute filter state persistent
         handler.commitSelection();
@@ -745,7 +746,7 @@ function useCallbacks(
 
             const displayAsLabel = handler.getDisplayAsLabel();
             const { attribute } = handlerState;
-            if (isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms)) {
+            if (isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms ?? [])) {
                 onSelectionChangeInputCallback?.(
                     nextFilter,
                     isInverted,
@@ -821,11 +822,11 @@ function useCallbacks(
         if (!withoutApply) {
             handler.revertSelection();
         } else if (isSelectionInvalid && withoutApply) {
-            const workingElements = filterAttributeElements(filter);
+            const workingElements = filter ? filterAttributeElements(filter) : { values: [] };
             const workingKeys = isAttributeElementsByValue(workingElements)
-                ? workingElements.values
-                : workingElements.uris;
-            const isWorkingInverted = isNegativeAttributeFilter(filter);
+                ? (workingElements.values ?? [])
+                : (workingElements.uris ?? []);
+            const isWorkingInverted = filter ? isNegativeAttributeFilter(filter) : false;
 
             handler.changeSelection({ keys: workingKeys, isInverted: isWorkingInverted });
         }
@@ -902,7 +903,7 @@ function useCallbacks(
             const workingSelection = handler.getWorkingSelection();
             const sanitizedWorkingSelectionKeys = difference(
                 workingSelection.keys,
-                workingSelection.irrelevantKeys,
+                workingSelection.irrelevantKeys ?? [],
             );
 
             handler.changeSelection({
@@ -1044,21 +1045,23 @@ const useReportMigratedFilter = (
     const wasMigrationReported = useRef(false);
     const initStatus = handler.getInitStatus();
 
+    const originalFilter = handler.getOriginalFilter();
+    const originalFilterRef = originalFilter ? filterObjRef(originalFilter) : undefined;
     if (
         enableImmediateAttributeFilterDisplayAsLabelMigration &&
         !wasMigrationReported.current &&
         initStatus === "success" &&
         !areObjRefsEqual(initialLabel.current, handler.getDisplayAsLabel()) &&
-        !areObjRefsEqual(filterObjRef(handler.getOriginalFilter()), filterObjRef(handler.getFilter()))
+        !areObjRefsEqual(originalFilterRef, filterObjRef(handler.getFilter()))
     ) {
         wasMigrationReported.current = true;
         onFilterMigrated(true);
 
         console.warn(
             "AttributeFilter: Filter label migration reported to filter's parent app. Original filter label:",
-            filterObjRef(handler.getOriginalFilter()),
+            filterObjRef(handler.getOriginalFilter()!),
             "new filter label:",
-            filterObjRef(handler.getFilter()),
+            filterObjRef(handler.getFilter()!),
             "new filter displayAsLabel:",
             handler.getDisplayAsLabel(),
         );

@@ -13,6 +13,7 @@ import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 import { convertDateFilterConfigToDateFilterOptions } from "../../../../_staging/dateFilterConfig/dateFilterConfigConverters.js";
 import { DateFilterValidationResult } from "../../../../types.js";
+import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { DashboardSelector } from "../../types.js";
 import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../index.js";
@@ -185,3 +186,59 @@ export const selectDateFilterConfigValidationWarnings: DashboardSelector<DateFil
         const activeTab = tabs?.find((tab) => tab.localIdentifier === activeTabId);
         return activeTab?.dateFilterConfig?.dateFilterConfigValidationWarnings ?? [];
     });
+
+/**
+ * Returns effective date filter config for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Effective date filter config for the specified tab
+ *
+ * @internal
+ */
+export const selectEffectiveDateFilterConfigForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDateFilterConfig | undefined> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(selectTabs, (tabs) => {
+        const tab = tabs?.find((t) => t.localIdentifier === tabLocalIdentifier);
+        return tab?.dateFilterConfig?.effectiveDateFilterConfig;
+    }),
+);
+
+/**
+ * Returns effective date filter options for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Date filter options for the specified tab
+ *
+ * @internal
+ */
+export const selectEffectiveDateFilterOptionsForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<IDateFilterOptionsByType | undefined> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(
+            selectEffectiveDateFilterConfigForTab(tabLocalIdentifier),
+            (effectiveDateFilterConfig) =>
+                effectiveDateFilterConfig
+                    ? convertDateFilterConfigToDateFilterOptions(effectiveDateFilterConfig)
+                    : undefined,
+        ),
+);
+
+/**
+ * Returns effective date filter available granularities for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Available granularities for the specified tab
+ *
+ * @internal
+ */
+export const selectEffectiveDateFilterAvailableGranularitiesForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<DateFilterGranularity[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
+    createSelector(
+        selectEffectiveDateFilterConfigForTab(tabLocalIdentifier),
+        (effectiveDateFilterConfig): DateFilterGranularity[] =>
+            effectiveDateFilterConfig?.relativeForm?.availableGranularities ?? [],
+    ),
+);

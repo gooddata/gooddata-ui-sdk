@@ -10,6 +10,7 @@ import {
     bucketAttribute,
     idRef,
     insightBucket,
+    insightLayers,
     insightProperties,
     isUriRef,
     uriRef,
@@ -31,13 +32,17 @@ export function extractControls(insight: IInsightDefinition): IVisualizationProp
 }
 
 /**
- * Gets the location attribute from the insight's LOCATION bucket.
+ * Gets the latitude attribute from the insight's LOCATION bucket.
+ *
+ * @remarks
+ * The LOCATION bucket contains the primary geo attribute (latitude label).
+ * This is used for backward compatibility with the bucket structure.
  *
  * @param insight - The insight definition
- * @returns Location attribute or undefined if not present
+ * @returns Latitude attribute or undefined if not present
  * @internal
  */
-export function getLocationAttribute(insight: IInsightDefinition): IAttribute | undefined {
+export function getLatitudeAttribute(insight: IInsightDefinition): IAttribute | undefined {
     const locationBucket = insightBucket(insight, BucketNames.LOCATION);
     return locationBucket ? bucketAttribute(locationBucket) : undefined;
 }
@@ -77,10 +82,7 @@ export function createAttributeRef(locationAttribute: IAttribute, attributeId: s
  * @returns Object with tooltipText and optionally latitude/longitude identifiers
  * @internal
  */
-export function getLocationProperties(
-    locationItem: IBucketItem,
-    supportsSeparateLatLong: boolean,
-): {
+export function getLocationProperties(locationItem: IBucketItem): {
     tooltipText: string | undefined;
     latitude?: string | undefined;
     longitude?: string | undefined;
@@ -93,11 +95,6 @@ export function getLocationProperties(
     const tooltipDfRef = defaultOrFirstTextDf?.ref ?? dfRef;
     const tooltipText = getRefIdentifier(tooltipDfRef);
 
-    if (!supportsSeparateLatLong) {
-        return { tooltipText };
-    }
-
-    // Find latitude and longitude display forms by type
     const latitudeDfRef = locationItem.displayForms?.find(
         (displayForm) => displayForm.type === "GDC.geo.pin_latitude",
     )?.ref;
@@ -107,8 +104,8 @@ export function getLocationProperties(
 
     return {
         tooltipText,
-        latitude: getRefIdentifier(latitudeDfRef),
-        longitude: getRefIdentifier(longitudeDfRef),
+        ...(latitudeDfRef ? { latitude: getRefIdentifier(latitudeDfRef) } : {}),
+        ...(longitudeDfRef ? { longitude: getRefIdentifier(longitudeDfRef) } : {}),
     };
 }
 
@@ -127,5 +124,30 @@ export function getAttributeMetadata(
     return {
         alias: attributeAlias(locationAttribute),
         localId: customLocalId ?? attributeLocalId(locationAttribute),
+    };
+}
+
+/**
+ * Returns controls attached to the primary pushpin layer in the insight definition.
+ *
+ * @internal
+ */
+export function getPrimaryLayerControls(insight: IInsightDefinition): {
+    latitude?: string;
+    longitude?: string;
+    tooltipText?: string;
+} {
+    const layers = insightLayers(insight);
+    const pushpinLayer = layers.find((layer) => layer.type === "pushpin");
+    const controls =
+        (pushpinLayer?.properties?.["controls"] as Record<string, unknown> | undefined) ?? undefined;
+
+    const readControl = (key: string) =>
+        typeof controls?.[key] === "string" ? (controls[key] as string) : undefined;
+
+    return {
+        latitude: readControl("latitude"),
+        longitude: readControl("longitude"),
+        tooltipText: readControl("tooltipText"),
     };
 }

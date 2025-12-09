@@ -21,7 +21,7 @@ export const selectInitStatus: FilterSelector<AsyncOperationStatus> = createSele
 /**
  * @internal
  */
-export const selectInitError: FilterSelector<GoodDataSdkError> = createSelector(
+export const selectInitError: FilterSelector<GoodDataSdkError | undefined> = createSelector(
     selectState,
     (state) => state.initialization.error,
 );

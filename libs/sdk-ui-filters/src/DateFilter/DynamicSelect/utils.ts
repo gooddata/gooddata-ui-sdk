@@ -166,7 +166,7 @@ const getFullTextOptions = (
     intl: IMessageTranslator,
 ): DynamicSelectOption[] => {
     const coreOffsets = [-1, 0, 1];
-    const absOffset = Math.abs(offset);
+    const absOffset = offset === undefined ? 0 : Math.abs(offset);
     const offsets =
         offset !== undefined && absOffset > 1 ? [-absOffset, ...coreOffsets, absOffset] : coreOffsets;
 
@@ -192,7 +192,7 @@ export const findRelativeDateFilterOptionByLabel = (
     input: string,
 ): DynamicSelectOption | null => {
     const trimmedInput = getTrimmedInput(input);
-    return getSelectableItems(options).find((option) => option.label === trimmedInput);
+    return getSelectableItems(options).find((option) => option.label === trimmedInput) ?? null;
 };
 
 export const findRelativeDateFilterOptionIndexByLabel = (
@@ -207,7 +207,7 @@ export const findRelativeDateFilterOptionByValue = (
     options: DynamicSelectItem[],
     value: number,
 ): DynamicSelectOption | null => {
-    return getSelectableItems(options).find((option) => option.value === value);
+    return getSelectableItems(options).find((option) => option.value === value) ?? null;
 };
 
 export function getRelativeDateFilterItems(

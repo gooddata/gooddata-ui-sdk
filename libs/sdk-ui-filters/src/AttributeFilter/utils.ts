@@ -97,7 +97,7 @@ export function validateAttributeFilterProps({
  */
 export function isValidSingleSelectionFilter(
     selectionMode: DashboardAttributeFilterSelectionMode,
-    filter: IAttributeFilter,
+    filter: IAttributeFilter | undefined,
     limitingAttributeFilters: IElementsQueryAttributeFilter[],
     supportsSingleSelectDependentFilters: boolean,
 ) {

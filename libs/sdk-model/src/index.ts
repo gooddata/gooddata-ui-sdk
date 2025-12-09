@@ -971,7 +971,7 @@ export {
     resultHeaderName,
     attributeDescriptorLocalId,
     attributeDescriptorName,
-    geoFeatureKey,
+    geoFeatureId,
 } from "./execution/results/index.js";
 
 export type {

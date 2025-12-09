@@ -159,7 +159,7 @@ export interface IAttributeFilterDropdownButtonProps {
      *
      * @beta
      */
-    buttonRef?: MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement | null>;
 
     /**
      * Id of the Attribute filter dropdown body.
@@ -203,7 +203,7 @@ export function AttributeFilterDropdownButton({
     dropdownId,
 }: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
-    const subtitleSelectedItemsRef = useRef(null);
+    const subtitleSelectedItemsRef = useRef<HTMLSpanElement>(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
     const filterIcon = isError ? <i className="gd-icon gd-icon-circle-cross" /> : icon;
     useEffect(() => {
@@ -245,7 +245,7 @@ export function AttributeFilterDropdownButton({
             className={cx(
                 "gd-attribute-filter-dropdown-button__next",
                 "s-attribute-filter",
-                `s-${stringUtils.simplifyText(title)}`,
+                `s-${stringUtils.simplifyText(title ?? "")}`,
                 {
                     "gd-message error": isError,
                     "gd-is-filtering": isFiltering,

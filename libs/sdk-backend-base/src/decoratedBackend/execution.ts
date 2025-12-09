@@ -10,6 +10,7 @@ import {
     ICollectionItemsConfig,
     ICollectionItemsResult,
     IDataView,
+    IExecutionContext,
     IExecutionFactory,
     IExecutionResult,
     IExecutionResultMetadata,
@@ -117,10 +118,12 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
     public readonly signal: AbortSignal | undefined;
+    public readonly context: IExecutionContext;
 
     protected constructor(protected readonly decorated: IPreparedExecution) {
         this.definition = decorated.definition;
         this.signal = decorated.signal;
+        this.context = decorated.context;
     }
 
     public equals(other: IPreparedExecution): boolean {
@@ -165,6 +168,10 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
         return this.createNew(this.decorated.withExecConfig(config));
     }
 
+    public withContext(context: IExecutionContext): IPreparedExecution {
+        return this.createNew(this.decorated.withContext(context));
+    }
+
     /**
      * Methods that create new instances of prepared executions (withDimensions, withSorting, withDateFormat) will
      * call out to this method to create decorated execution. This is essential to maintain the decoration
@@ -188,6 +195,7 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     public definition: IExecutionDefinition;
     public dimensions: IDimensionDescriptor[];
     public signal: AbortSignal | undefined;
+    public context: IExecutionContext;
 
     protected constructor(
         private readonly decorated: IExecutionResult,
@@ -196,6 +204,7 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
         this.definition = decorated.definition;
         this.dimensions = decorated.dimensions;
         this.signal = decorated.signal;
+        this.context = decorated.context;
     }
 
     public export(options: IExportConfig): Promise<IExportResult> {
@@ -268,6 +277,7 @@ export abstract class DecoratedDataView implements IDataView {
     public warnings?: IResultWarning[];
     public forecastConfig?: IForecastConfig;
     public forecastResult?: IForecastResult;
+    public context?: IExecutionContext;
 
     protected constructor(
         private readonly decorated: IDataView,
@@ -287,6 +297,7 @@ export abstract class DecoratedDataView implements IDataView {
         this.totals = decorated.totals;
         this.totalTotals = decorated.totalTotals;
         this.warnings = decorated.warnings;
+        this.context = decorated.context;
     }
 
     public equals(other: IDataView): boolean {

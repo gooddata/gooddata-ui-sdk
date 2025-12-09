@@ -2,6 +2,7 @@
 
 exports[`AbstractProvider > createExecution > execution should be created 1`] = `
 {
+  "context": undefined,
   "definition": {
     "attributes": [],
     "buckets": [
@@ -101,6 +102,7 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
   "explain": [Function],
   "fingerprint": [Function],
   "withBuckets": [Function],
+  "withContext": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
@@ -111,6 +113,7 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
 
 exports[`AbstractProvider > createExecution > execution should be created without dateFormat and sortItems 1`] = `
 {
+  "context": undefined,
   "definition": {
     "attributes": [],
     "buckets": [
@@ -210,6 +213,7 @@ exports[`AbstractProvider > createExecution > execution should be created withou
   "explain": [Function],
   "fingerprint": [Function],
   "withBuckets": [Function],
+  "withContext": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],

@@ -4,7 +4,7 @@ import { ReactElement, useMemo } from "react";
 
 import { ContentRect } from "react-measure";
 
-import { IColorStrategy, IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
+import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { LegendBody } from "./LegendBody.js";
 import { type ILegendBodyProps } from "./types.js";
@@ -12,7 +12,8 @@ import { useGeoData } from "../../context/GeoDataContext.js";
 import { useLegendConfig } from "../../hooks/legend/useLegendConfig.js";
 import { useLegendDetails } from "../../hooks/legend/useLegendDetails.js";
 import { useLegendItemClick } from "../../hooks/legend/useLegendItemClick.js";
-import { IGeoPushpinChartNextConfig } from "../../types/config.js";
+import { IGeoLegendItem } from "../../types/common/legends.js";
+import { IGeoChartNextConfig } from "../../types/config/unified.js";
 
 /**
  * Props for Legend component.
@@ -21,8 +22,8 @@ import { IGeoPushpinChartNextConfig } from "../../types/config.js";
  */
 export interface ILegendProps {
     colorStrategy: IColorStrategy | null;
-    config: IGeoPushpinChartNextConfig | undefined;
-    categoryItems: IPushpinCategoryLegendItem[];
+    config: IGeoChartNextConfig | undefined;
+    categoryItems: IGeoLegendItem[];
     containerId: string;
     chartContainerRect?: ContentRect;
 }

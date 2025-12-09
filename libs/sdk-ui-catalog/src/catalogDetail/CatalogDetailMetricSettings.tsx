@@ -9,13 +9,11 @@ import {
     Button,
     Dropdown,
     DropdownList,
-    type IFormatPreset,
-    type IFormatTemplate,
     type IToggleButtonProps,
     MeasureNumberFormat,
     SingleSelectListItem,
-    createCurrencyPresets,
     useCurrencyFormatDefaults,
+    useMetricTypePresets,
 } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
@@ -25,14 +23,17 @@ const metricTypeMessages = defineMessages({
     currency: { id: "metricComponent.metricType.currency" },
 });
 
-// Currency preset message IDs are dynamically used via createCurrencyPresets
-// Keeping references here for localization validation
-const _currencyPresetMessages = defineMessages({
+/**
+ * Currency format preset messages used by useMetricTypePresets hook.
+ * These are declared here to make them traceable by i18n-toolkit.
+ * The actual usage is dynamic via the hook from sdk-ui-kit.
+ */
+void defineMessages({
     currency: { id: "metricComponent.numberFormat.preset.currency" },
     currency1: { id: "metricComponent.numberFormat.preset.currency1" },
     currencyRounded: { id: "metricComponent.numberFormat.preset.currencyRounded" },
+    inherit: { id: "metricComponent.numberFormat.preset.inherit" },
 });
-void _currencyPresetMessages; // Suppress unused variable warning
 
 const METRIC_TYPE_OPTIONS: Array<{ value: MetricType | undefined; message: MessageDescriptor }> = [
     { value: undefined, message: metricTypeMessages.unspecified },
@@ -43,8 +44,6 @@ const DEFAULT_SEPARATORS = {
     thousand: ",",
     decimal: ".",
 };
-
-const CURRENCY_TEMPLATE_IDS = ["currency", "currency-shortened"];
 
 export interface CatalogDetailMetricSettingsProps {
     metricType?: MetricType;
@@ -68,19 +67,15 @@ export const CatalogDetailMetricSettings = memo(function CatalogDetailMetricSett
     enableMetricFormatOverrides,
 }: CatalogDetailMetricSettingsProps) {
     const intl = useIntl();
-    const formatMessage = useCallback(
-        (descriptor: MessageDescriptor) => intl.formatMessage(descriptor),
-        [intl],
-    );
+    const formatMessage = useCallback((descriptor: { id: string }) => intl.formatMessage(descriptor), [intl]);
     const normalizedFormat = normalizeFormatValue(format);
     const metricOverridesEnabled = Boolean(enableMetricFormatOverrides);
     const effectiveMetricType = metricOverridesEnabled ? metricType : undefined;
-    const { presets, templates } = useMetricFormatResources(
-        effectiveMetricType,
+    const { presets, templates, inheritPreset } = useMetricTypePresets({
+        metricType: effectiveMetricType,
         currencyFormatOverride,
         formatMessage,
-    );
-    const inheritPreset = presets.find((preset) => preset.localIdentifier === "inherit");
+    });
     const directFormatChange = useCallback(
         (value: string | null) => {
             if (onFormatChange) {
@@ -108,7 +103,7 @@ export const CatalogDetailMetricSettings = memo(function CatalogDetailMetricSett
         normalizedFormat,
         currencyFormatOverride,
         presetFormats: currencyPresetFormats,
-        hasInheritPreset: metricOverridesEnabled && Boolean(inheritPreset),
+        hasInheritPreset: metricOverridesEnabled && inheritPreset !== null,
         onFormatChange: directFormatChange,
         shouldBootstrap: shouldBootstrapCurrencyFormat,
     });
@@ -234,236 +229,10 @@ function normalizeFormatValue(value?: string | null) {
     return value;
 }
 
-type FormatMessageFn = (descriptor: MessageDescriptor) => string;
-
-function useMetricFormatResources(
-    metricType: MetricType | undefined,
-    currencyFormatOverride: string | null | undefined,
-    formatMessage: FormatMessageFn,
+function useFormatChangeHandler(
+    presets: ReturnType<typeof useMetricTypePresets>["presets"],
+    onChange: (format: string | null) => void,
 ) {
-    const allPresets: IFormatPreset[] = useMemo(
-        () => [
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.preset.rounded" }),
-                localIdentifier: "rounded",
-                format: "#,##0",
-                previewNumber: 1000.12,
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.preset.decimal1" }),
-                localIdentifier: "decimal-1",
-                format: "#,##0.0",
-                previewNumber: 1000.12,
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.preset.decimal2" }),
-                localIdentifier: "decimal-2",
-                format: "#,##0.00",
-                previewNumber: 1000.12,
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.preset.percentRounded" }),
-                localIdentifier: "percent-rounded",
-                format: "#,##0%",
-                previewNumber: 0.1,
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.preset.percent1" }),
-                localIdentifier: "percent-1",
-                format: "#,##0.0%",
-                previewNumber: 0.101,
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.preset.percent2" }),
-                localIdentifier: "percent-2",
-                format: "#,##0.00%",
-                previewNumber: 0.1012,
-            },
-        ],
-        [formatMessage],
-    );
-
-    const baseCurrencyPresets: IFormatPreset[] = useMemo(
-        () => createCurrencyPresets(formatMessage),
-        [formatMessage],
-    );
-
-    const currencyPresets = useMemo(() => {
-        if (!currencyFormatOverride) {
-            return baseCurrencyPresets;
-        }
-        return baseCurrencyPresets.filter((preset) => preset.format !== currencyFormatOverride);
-    }, [baseCurrencyPresets, currencyFormatOverride]);
-
-    const inheritPreset: IFormatPreset | null = useMemo(() => {
-        if (metricType === "CURRENCY" && currencyFormatOverride) {
-            return {
-                name: formatMessage({ id: "metricComponent.numberFormat.preset.inherit" }),
-                localIdentifier: "inherit",
-                format: currencyFormatOverride,
-                previewNumber: 1000.12,
-            };
-        }
-        return null;
-    }, [currencyFormatOverride, formatMessage, metricType]);
-
-    const presets: IFormatPreset[] = useMemo(() => {
-        if (metricType === "CURRENCY") {
-            if (inheritPreset) {
-                return [inheritPreset, ...currencyPresets];
-            }
-            return currencyPresets;
-        }
-
-        return allPresets;
-    }, [allPresets, currencyPresets, inheritPreset, metricType]);
-
-    const templates: IFormatTemplate[] = useMemo(() => {
-        const allTemplates: IFormatTemplate[] = [
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.rounded" }),
-                localIdentifier: "rounded",
-                format: "#,##0",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.decimal1" }),
-                localIdentifier: "decimal-1",
-                format: "#,##0.0",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.decimal2" }),
-                localIdentifier: "decimal-2",
-                format: "#,##0.00",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.percentRounded" }),
-                localIdentifier: "percent-rounded",
-                format: "#,##0%",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.percent1" }),
-                localIdentifier: "percent-1",
-                format: "#,##0.0%",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.percent2" }),
-                localIdentifier: "percent-2",
-                format: "#,##0.00%",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.currency" }),
-                localIdentifier: "currency",
-                format: "$#,##0.00",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.currencyShortened" }),
-                localIdentifier: "currency-shortened",
-                format:
-                    "[>=1000000000000]$#,,,,.0 T;\n" +
-                    "[>=1000000000]$#,,,.0 B;\n" +
-                    "[>=1000000]$#,,.0 M;\n" +
-                    "[>=1000]$#,.0 K;\n" +
-                    "[>=0]$#,##0;\n" +
-                    "[<=-1000000000000]-$#,,,,.0 T;\n" +
-                    "[<=-1000000000]-$#,,,.0 B;\n" +
-                    "[<=-1000000]-$#,,.0 M;\n" +
-                    "[<=-1000]-$#,.0 K;\n" +
-                    "[<0]-$#,##0",
-            },
-            {
-                name: formatMessage({
-                    id: "metricComponent.numberFormat.template.largeNumbersShortened",
-                }),
-                localIdentifier: "large-numbers-shortened",
-                format:
-                    "[>=1000000000000]#,,,,.0 T;\n" +
-                    "[>=1000000000]#,,,.0 B;\n" +
-                    "[>=1000000]#,,.0 M;\n" +
-                    "[>=1000]#,.0 K;\n" +
-                    "[>=0]#,##0;\n" +
-                    "[<=-1000000000000]-#,,,,.0 T;\n" +
-                    "[<=-1000000000]-#,,,.0 B;\n" +
-                    "[<=-1000000]-#,,.0 M;\n" +
-                    "[<=-1000]-#,.0 K;\n" +
-                    "[<0]-#,##0",
-            },
-            {
-                name: formatMessage({
-                    id: "metricComponent.numberFormat.template.largeNumbersShortenedWithColors",
-                }),
-                localIdentifier: "large-numbers-shortened-with-colors",
-                format:
-                    "[>=1000000000000][green]#,,,,.0 T;\n" +
-                    "[>=1000000000][green]#,,,.0 B;\n" +
-                    "[>=1000000][green]#,,.0 M;\n" +
-                    "[>=1000][black]#,.0 K;\n" +
-                    "[>=0][black]#,##0;\n" +
-                    "[<=-1000000000000][red]-#,,,,.0 T;\n" +
-                    "[<=-1000000000][red]-#,,,.0 B;\n" +
-                    "[<=-1000000][red]-#,,.0 M;\n" +
-                    "[<=-1000][red]-#,.0 K;\n" +
-                    "[<0][black]-#,##0",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.negativeNumbersRed" }),
-                localIdentifier: "negative-numbers-red",
-                format: "[<0][red]-#,##0.0;\n" + "[black]#,##0.0",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.financial" }),
-                localIdentifier: "financial",
-                format: "[<0](#,##0.0);\n" + "#,##0.0",
-            },
-            {
-                name: formatMessage({
-                    id: "metricComponent.numberFormat.template.decimalWithoutThousandsSeparator",
-                }),
-                localIdentifier: "decimal-without-thousands-separator",
-                format: "0.00",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.conditionalColors" }),
-                localIdentifier: "conditional-colors",
-                format: "[<0][red]#,#.##;\n" + "[<1000][black]#,0.##;\n" + "[>=1000][green]#,#.##",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.trendSymbols" }),
-                localIdentifier: "trend-symbols",
-                format: "[<0][green]▲ #,##0.0%;\n" + "[=0][black]#,##0.0%;\n" + "[>0][red]▼ #,##0.0%",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.timeFromSeconds" }),
-                localIdentifier: "time-from-seconds",
-                format:
-                    "[>=86400]{{{86400||0d}}} {{{3600|24|00}}}h;\n" +
-                    "[>=3600]{{{3600|24|00}}}h {{{60|60|00}}}m;\n" +
-                    "[>=60]{{{60|60|00}}}m {{{|60.|00}}}s;\n" +
-                    "[>0]{{{|60.|00.0}}}s;\n" +
-                    "[=0]{{{|60.|0}}}",
-            },
-            {
-                name: formatMessage({ id: "metricComponent.numberFormat.template.zeroInsteadOfNull" }),
-                localIdentifier: "zero-instead-of-null",
-                format: "[=null]0.00;\n" + "[>=0]#,#0.00;\n" + "[<0]-#,#0.00",
-            },
-        ];
-
-        if (metricType === "CURRENCY") {
-            return allTemplates.filter((template) =>
-                CURRENCY_TEMPLATE_IDS.includes(template.localIdentifier),
-            );
-        }
-
-        return allTemplates;
-    }, [formatMessage, metricType]);
-
-    return {
-        presets,
-        templates,
-    };
-}
-
-function useFormatChangeHandler(presets: IFormatPreset[], onChange: (format: string | null) => void) {
     return useCallback(
         (format: string | null) => {
             const preset = presets.find(

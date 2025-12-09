@@ -8,9 +8,9 @@ import { ISeparators } from "@gooddata/sdk-ui";
  * @beta
  */
 export interface IMeasureValueFilterCommonProps {
-    filter: IMeasureValueFilter;
+    filter?: IMeasureValueFilter;
     measureIdentifier: string;
-    onApply: (filter: IMeasureValueFilter) => void;
+    onApply: (filter: IMeasureValueFilter | null) => void;
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;

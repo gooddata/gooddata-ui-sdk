@@ -14,7 +14,7 @@ import { FilterSelector } from "../common/types.js";
 /**
  * @internal
  */
-export const selectAttribute: FilterSelector<IAttributeMetadataObject> = createSelector(
+export const selectAttribute: FilterSelector<IAttributeMetadataObject | undefined> = createSelector(
     selectState,
     (state) => state.attribute.data,
 );
@@ -30,7 +30,7 @@ export const selectAttributeStatus: FilterSelector<AsyncOperationStatus> = creat
 /**
  * @internal
  */
-export const selectAttributeError: FilterSelector<GoodDataSdkError> = createSelector(
+export const selectAttributeError: FilterSelector<GoodDataSdkError | undefined> = createSelector(
     selectState,
     (state) => state.attribute.error,
 );

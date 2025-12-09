@@ -617,7 +617,7 @@ export type GenAIRelativeDateFilter = {
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
 
 // @alpha
-export function geoFeatureKey(feature: IGeoJsonFeature): string;
+export function geoFeatureId(feature: IGeoJsonFeature): string | undefined;
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
@@ -2223,9 +2223,7 @@ export interface IGenAIVisualizationMetric {
 }
 
 // @alpha
-export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties & {
-    key: string;
-}>;
+export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties>;
 
 // @public
 export interface IGranteeGranularity {

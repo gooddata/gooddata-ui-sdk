@@ -58,6 +58,7 @@ export function AlertDestinationSelect({
                         buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                         accessibilityConfig={{
                             ariaLabel: accessibilityAriaLabel,
+                            ariaExpanded: isOpen,
                         }}
                         dropdownId={dropdownId}
                         isOpen={isOpen}

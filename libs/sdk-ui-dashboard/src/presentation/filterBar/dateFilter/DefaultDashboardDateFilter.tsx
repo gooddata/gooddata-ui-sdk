@@ -49,6 +49,7 @@ export function DefaultDashboardDateFilter({
     autoOpen,
     ButtonComponent,
     overlayPositionType,
+    tabId,
 }: IDashboardDateFilterProps): ReactElement {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
@@ -71,7 +72,11 @@ export function DefaultDashboardDateFilter({
         defaultDateFilterName =
             config.customFilterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });
     }
-    const { title, mode } = useCurrentDateFilterConfig(filter?.dateFilter.dataSet, defaultDateFilterName);
+    const { title, mode } = useCurrentDateFilterConfig(
+        filter?.dateFilter.dataSet,
+        defaultDateFilterName,
+        tabId,
+    );
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
         () =>

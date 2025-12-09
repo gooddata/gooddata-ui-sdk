@@ -2,6 +2,7 @@
 
 exports[`ComparisonProvider > createExecution > Should build execution with change (difference) operator when provided calculation is change_difference 1`] = `
 {
+  "context": undefined,
   "definition": {
     "attributes": [],
     "buckets": [
@@ -166,6 +167,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
   "explain": [Function],
   "fingerprint": [Function],
   "withBuckets": [Function],
+  "withContext": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
@@ -176,6 +178,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
 
 exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is change 1`] = `
 {
+  "context": undefined,
   "definition": {
     "attributes": [],
     "buckets": [
@@ -310,6 +313,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
   "explain": [Function],
   "fingerprint": [Function],
   "withBuckets": [Function],
+  "withContext": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
@@ -320,6 +324,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
 
 exports[`ComparisonProvider > createExecution > Should build execution with change operator when provided calculation is undefined 1`] = `
 {
+  "context": undefined,
   "definition": {
     "attributes": [],
     "buckets": [
@@ -454,6 +459,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
   "explain": [Function],
   "fingerprint": [Function],
   "withBuckets": [Function],
+  "withContext": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
@@ -464,6 +470,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
 
 exports[`ComparisonProvider > createExecution > Should build execution with difference operator when provided calculation is difference 1`] = `
 {
+  "context": undefined,
   "definition": {
     "attributes": [],
     "buckets": [
@@ -598,6 +605,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with diff
   "explain": [Function],
   "fingerprint": [Function],
   "withBuckets": [Function],
+  "withContext": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
@@ -608,6 +616,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with diff
 
 exports[`ComparisonProvider > createExecution > Should build execution with ratio operator when provided calculation is ratio 1`] = `
 {
+  "context": undefined,
   "definition": {
     "attributes": [],
     "buckets": [
@@ -742,6 +751,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with rati
   "explain": [Function],
   "fingerprint": [Function],
   "withBuckets": [Function],
+  "withContext": [Function],
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],

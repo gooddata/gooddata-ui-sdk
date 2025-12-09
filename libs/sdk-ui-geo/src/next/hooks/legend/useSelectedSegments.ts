@@ -2,9 +2,8 @@
 
 import { useMemo } from "react";
 
-import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
-
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
+import { IGeoLegendItem } from "../../types/common/legends.js";
 
 /**
  * Hook to compute selected segment URIs from enabled legend items.
@@ -20,7 +19,7 @@ import { useGeoLegend } from "../../context/GeoLegendContext.js";
  *
  * @alpha
  */
-export function useSelectedSegments(categoryItems: IPushpinCategoryLegendItem[]): string[] {
+export function useSelectedSegments(categoryItems: IGeoLegendItem[]): string[] {
     const { enabledLegendItems } = useGeoLegend();
 
     return useMemo(() => {
@@ -28,17 +27,14 @@ export function useSelectedSegments(categoryItems: IPushpinCategoryLegendItem[])
             return [];
         }
 
-        // All items enabled (initial state)
         if (enabledLegendItems === null) {
             return [];
         }
 
-        // User explicitly disabled every item -> keep the map unfiltered
         if (enabledLegendItems.length === 0) {
             return [];
         }
 
-        // Filter to only enabled items
         return categoryItems.filter((item) => enabledLegendItems.includes(item.uri)).map((item) => item.uri);
     }, [categoryItems, enabledLegendItems]);
 }

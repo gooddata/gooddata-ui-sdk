@@ -709,6 +709,7 @@ export interface IDataView {
     readonly clusteringConfig?: IClusteringConfig;
     // @beta
     readonly clusteringResult?: IClusteringResult;
+    readonly context?: IExecutionContext;
     readonly count: number[];
     readonly data: DataValue[][] | DataValue[];
     readonly definition: IExecutionDefinition;
@@ -820,6 +821,9 @@ export interface IEntitlements {
 }
 
 // @public
+export type IExecutionContext = unknown;
+
+// @public
 export interface IExecutionFactory {
     forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
@@ -830,6 +834,7 @@ export interface IExecutionFactory {
 
 // @public
 export interface IExecutionResult extends ICancelable<IExecutionResult> {
+    readonly context?: IExecutionContext;
     readonly definition: IExecutionDefinition;
     readonly dimensions: IDimensionDescriptor[];
     equals(other: IExecutionResult): boolean;
@@ -1517,6 +1522,7 @@ export interface IPermissionsAssignment {
 
 // @public
 export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
+    readonly context?: IExecutionContext;
     readonly definition: IExecutionDefinition;
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
@@ -1526,14 +1532,16 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     readonly signal?: AbortSignal;
     // @internal
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
+    withContext(context: IExecutionContext): IPreparedExecution;
     withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 
-// @public
+// @public (undocumented)
 export interface IPreparedExecutionOptions {
+    context?: IExecutionContext;
     signal?: AbortSignal;
 }
 

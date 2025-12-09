@@ -40,8 +40,8 @@ describe("normalizeSelectedFilterOption", () => {
     it("should sort floating range from and to fields", () => {
         const normalizedOption: IUiRelativeDateFilterForm = normalizeSelectedFilterOption(
             sampleUnsortedFloatingRangeFormOption,
-        ) as any;
-        expect(normalizedOption.from < normalizedOption.to).toBe(true);
+        ) as IUiRelativeDateFilterForm;
+        expect(normalizedOption.from! < normalizedOption.to!).toBe(true);
     });
 
     it("should not update floating range from and to fields if already in correct order", () => {

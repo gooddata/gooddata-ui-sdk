@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
@@ -35,15 +35,23 @@ export function UiCheckbox({
     tabIndex,
     label,
 }: UiCheckboxProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.indeterminate = indeterminate;
+        }
+    }, [indeterminate]);
+
     return (
         <label className={b()}>
             <input
+                ref={inputRef}
                 type="checkbox"
                 className={e("input")}
                 checked={checked}
                 onChange={onChange}
                 disabled={disabled}
-                aria-checked={indeterminate ? "mixed" : checked}
                 onClick={(e) => preventDefault && e.stopPropagation()}
                 tabIndex={tabIndex}
                 {...accessibilityConfigToAttributes(accessibilityConfig)}

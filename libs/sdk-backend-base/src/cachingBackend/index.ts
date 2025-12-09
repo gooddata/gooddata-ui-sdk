@@ -62,7 +62,7 @@ import {
     ObjRef,
     ObjectType,
     areObjRefsEqual,
-    geoFeatureKey,
+    geoFeatureId,
     idRef,
     isIdentifierRef,
     isUriRef,
@@ -1561,7 +1561,7 @@ function buildFeatureIndexByIdentifiers(features: IGeoJsonFeature[]): {
     const unmatched: IGeoJsonFeature[] = [];
 
     for (const feature of features) {
-        const identifier = geoFeatureKey(feature);
+        const identifier = geoFeatureId(feature);
 
         if (!identifier) {
             unmatched.push(feature);

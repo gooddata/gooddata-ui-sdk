@@ -12,7 +12,7 @@ describe("AttributeFilterHandler", () => {
 
         await waitForAsync();
 
-        expect(attributeFilterHandler.getTotalElementsCount()).toBeUndefined();
+        expect(attributeFilterHandler.getTotalElementsCount()).toBe(0);
 
         attributeFilterHandler.initTotalCount("start");
 

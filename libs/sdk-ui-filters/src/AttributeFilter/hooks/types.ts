@@ -17,7 +17,7 @@ export type AttributeFilterControllerData = {
     /**
      * Loaded attribute.
      */
-    attribute: IAttributeMetadataObject;
+    attribute?: IAttributeMetadataObject;
 
     /**
      * Current offset used for the attribute element loading.
@@ -143,7 +143,7 @@ export type AttributeFilterControllerData = {
     /**
      * Current attribute filter display form used for displaying filter's elements {@link @gooddata/sdk-model#ObjRef}.
      */
-    currentDisplayAsDisplayFormRef: ObjRef;
+    currentDisplayAsDisplayFormRef?: ObjRef;
 
     /**
      * This enables "show filtered elements" option which manages showing filtered elements.

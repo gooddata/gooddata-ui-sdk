@@ -367,112 +367,20 @@
         "value": "Number format",
         "comment": "Analytics Catalog detail drawer: Heading for the number format editor that defines how metric values are rendered."
     },
-    "metricComponent.numberFormat.preset.rounded": {
-        "value": "Rounded",
-        "comment": "Analytics Catalog detail drawer: Preset that formats values as whole numbers without decimals."
-    },
-    "metricComponent.numberFormat.preset.decimal1": {
-        "value": "Decimal (1)",
-        "comment": "Analytics Catalog detail drawer: Preset that formats values with one decimal place."
-    },
-    "metricComponent.numberFormat.preset.decimal2": {
-        "value": "Decimal (2)",
-        "comment": "Analytics Catalog detail drawer: Preset that formats values with two decimal places."
-    },
-    "metricComponent.numberFormat.preset.percentRounded": {
-        "value": "Percent (rounded)",
-        "comment": "Analytics Catalog detail drawer: Preset that shows whole-number percentages with the % symbol."
-    },
-    "metricComponent.numberFormat.preset.percent1": {
-        "value": "Percent (1)",
-        "comment": "Analytics Catalog detail drawer: Preset that shows percentages with one decimal place."
-    },
-    "metricComponent.numberFormat.preset.percent2": {
-        "value": "Percent (2)",
-        "comment": "Analytics Catalog detail drawer: Preset that shows percentages with two decimal places."
-    },
     "metricComponent.numberFormat.preset.currency": {
         "value": "Currency (2 decimals)",
-        "comment": "Analytics Catalog detail drawer: Preset that formats currency values with two decimal places."
+        "comment": "Analytics Catalog detail drawer: Dropdown option for currency format with two decimal places."
     },
     "metricComponent.numberFormat.preset.currency1": {
         "value": "Currency (1 decimal)",
-        "comment": "Analytics Catalog detail drawer: Preset that formats currency values with one decimal place."
+        "comment": "Analytics Catalog detail drawer: Dropdown option for currency format with one decimal place."
     },
     "metricComponent.numberFormat.preset.currencyRounded": {
         "value": "Currency (rounded)",
-        "comment": "Analytics Catalog detail drawer: Preset that formats currency values as whole numbers."
+        "comment": "Analytics Catalog detail drawer: Dropdown option for currency format rounded to whole numbers."
     },
     "metricComponent.numberFormat.preset.inherit": {
         "value": "Inherit (use default)",
-        "comment": "Analytics Catalog detail drawer: Preset that removes custom formatting and inherits the organization/workspace default."
-    },
-    "metricComponent.numberFormat.template.rounded": {
-        "value": "Rounded",
-        "comment": "Analytics Catalog detail drawer: Number format template that outputs whole numbers without decimals."
-    },
-    "metricComponent.numberFormat.template.decimal1": {
-        "value": "Decimal (1)",
-        "comment": "Analytics Catalog detail drawer: Number format template that outputs values with one decimal place."
-    },
-    "metricComponent.numberFormat.template.decimal2": {
-        "value": "Decimal (2)",
-        "comment": "Analytics Catalog detail drawer: Number format template that outputs values with two decimal places."
-    },
-    "metricComponent.numberFormat.template.percentRounded": {
-        "value": "Percent (rounded)",
-        "comment": "Analytics Catalog detail drawer: Number format template that outputs whole-number percentages."
-    },
-    "metricComponent.numberFormat.template.percent1": {
-        "value": "Percent (1)",
-        "comment": "Analytics Catalog detail drawer: Number format template that outputs percentages with one decimal place."
-    },
-    "metricComponent.numberFormat.template.percent2": {
-        "value": "Percent (2)",
-        "comment": "Analytics Catalog detail drawer: Number format template that outputs percentages with two decimal places."
-    },
-    "metricComponent.numberFormat.template.currency": {
-        "value": "Currency",
-        "comment": "Analytics Catalog detail drawer: Number format template that adds a currency symbol to the value."
-    },
-    "metricComponent.numberFormat.template.currencyShortened": {
-        "value": "Currency shortened",
-        "comment": "Analytics Catalog detail drawer: Number format template that abbreviates large currency numbers using K/M/B/T suffixes."
-    },
-    "metricComponent.numberFormat.template.largeNumbersShortened": {
-        "value": "Large numbers shortened",
-        "comment": "Analytics Catalog detail drawer: Number format template that abbreviates large numbers using K/M/B/T suffixes."
-    },
-    "metricComponent.numberFormat.template.largeNumbersShortenedWithColors": {
-        "value": "Large numbers shortened with colors",
-        "comment": "Analytics Catalog detail drawer: Number format template that abbreviates large numbers using K/M/B/T suffixes and applies positive/negative colors."
-    },
-    "metricComponent.numberFormat.template.negativeNumbersRed": {
-        "value": "Negative numbers in red",
-        "comment": "Analytics Catalog detail drawer: Number format template that highlights negative values in red."
-    },
-    "metricComponent.numberFormat.template.financial": {
-        "value": "Financial",
-        "comment": "Analytics Catalog detail drawer: Number format template that wraps negative values in parentheses."
-    },
-    "metricComponent.numberFormat.template.decimalWithoutThousandsSeparator": {
-        "value": "Decimal (2) without thousands separator",
-        "comment": "Analytics Catalog detail drawer: Number format template that keeps two decimal places but omits the thousands separator."
-    },
-    "metricComponent.numberFormat.template.conditionalColors": {
-        "value": "Conditional colors",
-        "comment": "Analytics Catalog detail drawer: Number format template that switches value colors based on thresholds."
-    },
-    "metricComponent.numberFormat.template.trendSymbols": {
-        "value": "Trend symbols",
-        "comment": "Analytics Catalog detail drawer: Number format template that prefixes values with ▲/▼ arrows depending on direction."
-    },
-    "metricComponent.numberFormat.template.timeFromSeconds": {
-        "value": "Time (from seconds)",
-        "comment": "Analytics Catalog detail drawer: Number format template that converts a number of seconds into days/hours/minutes/seconds."
-    },
-    "metricComponent.numberFormat.template.zeroInsteadOfNull": {
-        "value": "Zero instead of blank value",
-        "comment": "Analytics Catalog detail drawer: Number format template that replaces null values with zero."
+        "comment": "Analytics Catalog detail drawer: Dropdown option that inherits number format from organization or workspace settings."
     }
 }

@@ -87,11 +87,11 @@ describe("NumericInput", () => {
         ["decrement", -5, -6, getDecrementButton],
         ["decrement", "", -1, getDecrementButton],
         ["decrement", 1, 0, getDecrementButton],
-    ])(
+    ] as const)(
         "should %s the value from %p to %i when the appropriate button is clicked",
-        (_, from: number, to: number, buttonGetter: any) => {
+        (_, from, to, buttonGetter) => {
             const onChange = vi.fn();
-            render(<NumericInput onChange={onChange} value={from} />);
+            render(<NumericInput onChange={onChange} value={from as number | ""} />);
 
             fireEvent.click(buttonGetter());
 
@@ -105,9 +105,9 @@ describe("NumericInput", () => {
 
         ["decrement", 7, 5, 0, 5, getDecrementButton],
         ["decrement", 7, 5, undefined, 5, getDecrementButton],
-    ])(
+    ] as const)(
         "should %s %i to %i on click with min %p and max %p",
-        (_, from: number, to: number, min: number, max: number, buttonGetter: any) => {
+        (_, from, to, min, max, buttonGetter) => {
             const onChange = vi.fn();
             render(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
 
@@ -127,11 +127,11 @@ describe("NumericInput", () => {
         ["decrement", -5, -6, DOWN_ARROW_CODE, "Down"],
         ["decrement", "", -1, DOWN_ARROW_CODE, "Down"],
         ["decrement", 1, 0, DOWN_ARROW_CODE, "Down"],
-    ])(
+    ] as const)(
         "should %s the value from %p to %i when the %s arrow is pressed",
-        (_, from: number, to: number, arrowCode: number, key: string) => {
+        (_, from, to, arrowCode, key) => {
             const onChange = vi.fn();
-            render(<NumericInput onChange={onChange} value={from} />);
+            render(<NumericInput onChange={onChange} value={from as number | ""} />);
 
             fireEvent.keyDown(getInput(), {
                 key,
@@ -149,9 +149,9 @@ describe("NumericInput", () => {
 
         ["decrement", 7, 5, 0, 5, DOWN_ARROW_CODE, "Down"],
         ["decrement", 7, 5, undefined, 5, DOWN_ARROW_CODE, "Down"],
-    ])(
+    ] as const)(
         "should %s %i to %i on arrow press with min %p and max %p",
-        (_, from: number, to: number, min: number, max: number, arrowCode: number, key: string) => {
+        (_, from, to, min, max, arrowCode, key) => {
             const onChange = vi.fn();
             render(<NumericInput onChange={onChange} min={min} max={max} value={from} />);
 

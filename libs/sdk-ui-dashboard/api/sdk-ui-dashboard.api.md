@@ -3487,6 +3487,14 @@ export interface DateFilterValidationFailedPayload {
 // @public (undocumented)
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
+// @internal (undocumented)
+export type DeepReadonly<T> = T extends (infer R)[] ? ReadonlyArray<DeepReadonly<R>> : T extends Function ? T : T extends object ? DeepReadonlyObject<T> : T;
+
+// @internal (undocumented)
+export type DeepReadonlyObject<T> = {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+};
+
 // @alpha
 export const DEFAULT_MAX_AUTOMATIONS = "10";
 
@@ -3524,7 +3532,7 @@ export function DefaultDashboardAttributeFilter(props: IDashboardAttributeFilter
 export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;
 
 // @alpha
-export function DefaultDashboardDateFilter({ filter, workingFilter, onFilterChanged, config, readonly, autoOpen, ButtonComponent, overlayPositionType, }: IDashboardDateFilterProps): ReactElement;
+export function DefaultDashboardDateFilter({ filter, workingFilter, onFilterChanged, config, readonly, autoOpen, ButtonComponent, overlayPositionType, tabId, }: IDashboardDateFilterProps): ReactElement;
 
 // @internal (undocumented)
 export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
@@ -4371,6 +4379,9 @@ export interface FilterViewsState {
 // @public (undocumented)
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
 
+// @beta (undocumented)
+export function formatKeyDriverAnalysisDateRange(range: DeepReadonly<[IKdaDataPoint, IKdaDataPoint]> | undefined, splitter: string): string;
+
 // @internal
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
@@ -4851,6 +4862,7 @@ export interface IDashboardAttributeFilterProps {
     overlayPositionType?: OverlayPositionType;
     // @alpha
     readonly?: boolean;
+    tabId?: string;
     workingFilter?: IDashboardAttributeFilter;
 }
 
@@ -5007,6 +5019,8 @@ export interface IDashboardDateFilterProps {
     onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string, isWorkingSelectionChange?: boolean) => void;
     overlayPositionType?: OverlayPositionType;
     readonly?: boolean;
+    // @internal
+    tabId?: string;
     workingFilter: IDashboardDateFilter | undefined;
 }
 
@@ -9031,6 +9045,9 @@ export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersT
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
 
 // @alpha
+export const selectAutomationsInvalidationId: DashboardSelector<number>;
+
+// @alpha
 export const selectAutomationsIsInitialized: DashboardSelector<boolean>;
 
 // @alpha
@@ -9378,14 +9395,23 @@ export const selectEffectiveAttributeFiltersModeMap: DashboardSelector<Map<strin
 // @alpha
 export const selectEffectiveDateFilterAvailableGranularities: DashboardSelector<DateFilterGranularity[]>;
 
+// @internal
+export const selectEffectiveDateFilterAvailableGranularitiesForTab: (tabLocalIdentifier: string) => DashboardSelector<DateFilterGranularity[]>;
+
 // @alpha
 export const selectEffectiveDateFilterConfig: DashboardSelector<IDateFilterConfig>;
+
+// @internal
+export const selectEffectiveDateFilterConfigForTab: (tabLocalIdentifier: string) => DashboardSelector<IDateFilterConfig | undefined>;
 
 // @alpha
 export const selectEffectiveDateFilterMode: DashboardSelector<DashboardDateFilterConfigMode>;
 
 // @alpha
 export const selectEffectiveDateFilterOptions: DashboardSelector<IDateFilterOptionsByType>;
+
+// @internal
+export const selectEffectiveDateFilterOptionsForTab: (tabLocalIdentifier: string) => DashboardSelector<IDateFilterOptionsByType | undefined>;
 
 // @alpha
 export const selectEffectiveDateFiltersModeMap: DashboardSelector<Map<string, DashboardDateFilterConfigMode>>;
@@ -9598,7 +9624,7 @@ export const selectFilterContextAttributeFilterByLocalIdForTab: (localId: string
 export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]>;
 
 // @internal
-export const selectFilterContextAttributeFiltersByTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardAttributeFilter[]>;
+export const selectFilterContextAttributeFiltersForTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardAttributeFilter[]>;
 
 // @public
 export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined>;
@@ -9608,6 +9634,9 @@ export const selectFilterContextDateFilterByDataSet: (dataSet: ObjRef) => (state
 
 // @internal
 export const selectFilterContextDateFilterByDataSetForTab: (dataSet: ObjRef, tabLocalIdentifier: string) => DashboardSelector<IDashboardDateFilter | undefined>;
+
+// @internal
+export const selectFilterContextDateFilterForTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardDateFilter | undefined>;
 
 // @public
 export const selectFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]>;
@@ -9706,6 +9735,9 @@ export const selectFiltersByTab: ((state: DashboardState) => Record<string, Filt
     argsMemoize: weakMapMemoize;
     memoize: weakMapMemoize;
 };
+
+// @internal
+export const selectFiltersForTab: (tabLocalIdentifier: string) => DashboardSelector<FilterContextItem[]>;
 
 // @public
 export const selectFiltersWithInvalidSelection: DashboardSelector<string[]>;
@@ -9829,6 +9861,9 @@ export const selectIsApplyFiltersAllAtOnceEnabledAndSet: DashboardSelector<boole
 
 // @internal
 export const selectIsAttributeFilterDependentByLocalIdentifier: (attributeFilterLocalIdentifier: string) => DashboardSelector<boolean>;
+
+// @internal
+export const selectIsAttributeFilterDependentByLocalIdentifierForTab: (attributeFilterLocalIdentifier: string, tabLocalIdentifier: string) => DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export function selectIsAutomationDialogSecondaryTitleVisible(state: DashboardState): boolean;
@@ -10330,11 +10365,20 @@ export const selectWidgetsOverlayState: (refs: (ObjRef | undefined)[]) => Dashbo
 // @public
 export const selectWorkingFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]>;
 
+// @internal
+export const selectWorkingFilterContextAttributeFiltersForTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardAttributeFilter[]>;
+
 // @public
 export const selectWorkingFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined>;
 
+// @internal
+export const selectWorkingFilterContextDateFilterForTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardDateFilter | undefined>;
+
 // @public
 export const selectWorkingFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]>;
+
+// @internal
+export const selectWorkingFilterContextDateFiltersWithDimensionForTab: (tabLocalIdentifier: string) => DashboardSelector<IDashboardDateFilter[]>;
 
 // @alpha
 export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterContextDefinition>;
@@ -11458,7 +11502,6 @@ export const uiActions: {
     changeIgnoreExecutionTimestamp: ActionCreatorWithPayload<boolean, "uiSlice/changeIgnoreExecutionTimestamp">;
     setIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/setIncompatibleDefaultFiltersOverrideMessage">;
     resetIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/resetIncompatibleDefaultFiltersOverrideMessage">;
-    setAutomationsInvalidateCallback: ActionCreatorWithOptionalPayload<(() => void) | undefined, "uiSlice/setAutomationsInvalidateCallback">;
     invalidateAutomationItems: ActionCreatorWithoutPayload<"uiSlice/invalidateAutomationItems">;
 };
 
@@ -11477,11 +11520,9 @@ export interface UiState {
         open: boolean;
         context?: IAlertDialogContext;
     };
-    // @alpha
-    automationsInvalidateRef?: () => void;
     // (undocumented)
     automationsManagement: {
-        invalidateItemsCallback?: () => void;
+        invalidationId: number;
     };
     // (undocumented)
     cancelEditModeDialog: {
@@ -11661,11 +11702,6 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 
 // @alpha @deprecated
 export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
-
-// @alpha
-export const useAutomationsInvalidateRef: () => {
-    onInvalidateCallbackChange: (callback: (() => void) | undefined) => void;
-};
 
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;
@@ -12021,7 +12057,7 @@ export function useMinimalSizeValidation(minimalWidth?: number, minimalHeight?: 
 };
 
 // @public
-export const useParentFilters: (filter: IDashboardAttributeFilter) => UseParentFiltersResult;
+export const useParentFilters: (filter: IDashboardAttributeFilter, tabId?: string) => UseParentFiltersResult;
 
 // @public
 export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilters" | "parentFilterOverAttribute">;

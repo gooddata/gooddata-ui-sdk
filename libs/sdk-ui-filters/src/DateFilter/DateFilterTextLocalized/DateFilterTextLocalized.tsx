@@ -7,7 +7,7 @@ import { getDateFilterTitleUsingTranslator } from "../utils/Translations/DateFil
 
 interface IDateFilterTextLocalizedProps {
     dateFormat: string;
-    filter: DateFilterOption;
+    filter?: DateFilterOption;
 }
 
 export function DateFilterTextLocalized({ dateFormat, filter }: IDateFilterTextLocalizedProps) {
@@ -19,9 +19,9 @@ export const useDateFilterText = ({
     filter,
     dateFormat,
 }: {
-    filter: DateFilterOption;
+    filter?: DateFilterOption;
     dateFormat: string;
 }) => {
     const intl = useIntl();
-    return getDateFilterTitleUsingTranslator(filter, intl, dateFormat);
+    return filter ? getDateFilterTitleUsingTranslator(filter, intl, dateFormat) : "";
 };
