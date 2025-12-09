@@ -163,7 +163,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
     public static getDerivedStateFromProps(
         nextProps: IDateFilterProps,
         prevState: IDateFilterState,
-    ): IDateFilterState {
+    ): IDateFilterState | null {
         if (
             nextProps.withoutApply &&
             nextProps.workingSelectedFilterOption &&
@@ -286,15 +286,15 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             <DateFilterCore
                 availableGranularities={availableGranularities}
                 customFilterName={customFilterName}
-                dateFormat={dateFormat}
+                dateFormat={dateFormat ?? DEFAULT_DATE_FORMAT}
                 openOnInit={openOnInit}
                 showDropDownHeaderMessage={showDropDownHeaderMessage}
                 disabled={dateFilterMode === "readonly"}
                 excludeCurrentPeriod={excludeCurrentPeriod}
                 originalExcludeCurrentPeriod={originalExcludeCurrentPeriod}
                 isExcludeCurrentPeriodEnabled={isExcludeCurrentPeriodEnabled}
-                isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
-                isEditMode={isEditMode}
+                isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled ?? false}
+                isEditMode={isEditMode ?? false}
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}
                 originalSelectedFilterOption={originalSelectedFilterOption}
@@ -333,15 +333,15 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
     };
 
     private onCancelClicked = () => {
-        this.props.onCancel();
+        this.props.onCancel?.();
         this.onChangesDiscarded();
     };
 
     private onDropdownOpenChanged = (isOpen: boolean) => {
         if (isOpen) {
-            this.props.onOpen();
+            this.props.onOpen?.();
         } else {
-            this.props.onClose();
+            this.props.onClose?.();
             this.onChangesDiscarded();
         }
     };

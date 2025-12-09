@@ -36,7 +36,7 @@ describe("convertPlatformDateStringToDate", () => {
         const dateNow = vi.spyOn(Date, "now").mockReturnValue(1575158400000);
         const getTimezoneOffset = vi.spyOn(Date.prototype, "getTimezoneOffset").mockReturnValue(270);
         const date = convertPlatformDateStringToDate("2019-12-01");
-        expect(date.toISOString()).toBe(new Date(1575174600000).toISOString());
+        expect(date!.toISOString()).toBe(new Date(1575174600000).toISOString());
 
         getTimezoneOffset.mockRestore();
         dateNow.mockRestore();

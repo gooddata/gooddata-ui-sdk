@@ -19,7 +19,7 @@ import {
     IBucket,
     IGeoJsonFeature,
     ObjRef,
-    geoFeatureKey,
+    geoFeatureId,
     newBucket,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
@@ -113,9 +113,8 @@ function createGeoCollectionBackend(provider: CollectionItemsProvider): IAnalyti
 function createGeoFeature(value: string): IGeoJsonFeature {
     return {
         type: "Feature",
-        properties: {
-            key: value,
-        },
+        id: value,
+        properties: {},
         geometry: {
             type: "Point",
             coordinates: [0, 0],
@@ -460,7 +459,7 @@ describe("withCaching", () => {
                 values: ["alpha", "beta"],
             });
 
-            expect(first.features.map(geoFeatureKey)).toEqual(["alpha", "beta"]);
+            expect(first.features.map(geoFeatureId)).toEqual(["alpha", "beta"]);
 
             const second = await dataView.readCollectionItems({
                 ...collectionBaseConfig,
@@ -470,7 +469,7 @@ describe("withCaching", () => {
             expect(provider).toHaveBeenCalledTimes(2);
             expect(provider.mock.calls[0][0].values).toEqual(["alpha", "beta"]);
             expect(provider.mock.calls[1][0].values).toEqual(["gamma"]);
-            expect(second.features.map(geoFeatureKey)).toEqual(["beta", "gamma"]);
+            expect(second.features.map(geoFeatureId)).toEqual(["beta", "gamma"]);
 
             await dataView.readCollectionItems({
                 ...collectionBaseConfig,

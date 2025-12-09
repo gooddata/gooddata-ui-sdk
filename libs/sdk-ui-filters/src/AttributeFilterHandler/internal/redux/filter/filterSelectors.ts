@@ -60,7 +60,7 @@ export const selectAttributeFilterDisplayForm: FilterSelector<ObjRef> = createSe
 /**
  * @internal
  */
-export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef> = createSelector(
+export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef | undefined> = createSelector(
     selectState,
     (state) => state.displayAsLabelRef,
 );
@@ -68,7 +68,7 @@ export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef> = creat
 /**
  * @internal
  */
-export const selectAttributeFilterLocalIdentifier: FilterSelector<string> = createSelector(
+export const selectAttributeFilterLocalIdentifier: FilterSelector<string | undefined> = createSelector(
     selectState,
     (state) => state.localIdentifier,
 );
@@ -76,7 +76,7 @@ export const selectAttributeFilterLocalIdentifier: FilterSelector<string> = crea
 /**
  * @internal
  */
-export const selectOriginalFilter: FilterSelector<IAttributeFilter> = createSelector(
+export const selectOriginalFilter: FilterSelector<IAttributeFilter | undefined> = createSelector(
     selectState,
     (state) => state.originalFilter,
 );

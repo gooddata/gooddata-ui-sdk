@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+import { type ReactElement } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -57,10 +58,10 @@ describe("RelativeDateFilterForm", () => {
     it("should render granularity tabs and relative range picker and pass them props", () => {
         const granularityTabsMock = vi
             .spyOn(granularityTabsModule, "GranularityTabs")
-            .mockImplementation((): null => null);
+            .mockImplementation(() => null as unknown as ReactElement);
         const rangePickerMock = vi
             .spyOn(rangePickerModule, "RelativeRangePicker")
-            .mockImplementation((): null => null);
+            .mockImplementation(() => null as unknown as ReactElement);
         createForm();
 
         expect(granularityTabsMock).toHaveBeenCalledWith(

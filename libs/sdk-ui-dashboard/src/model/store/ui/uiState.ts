@@ -53,7 +53,7 @@ export interface UiState {
         context?: IAlertDialogContext;
     };
     automationsManagement: {
-        invalidateItemsCallback?: () => void;
+        invalidationId: number;
     };
     saveAsDialog: {
         open: boolean;
@@ -117,11 +117,6 @@ export interface UiState {
     /** @internal */
     draggingWidgetTriggeringDropZoneType: DropZoneType | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
-    /**
-     * Ref to invalidate automations list - gets populated by Automations component when it mounts
-     * @alpha
-     */
-    automationsInvalidateRef?: () => void;
 }
 
 export const uiInitialState: UiState = {
@@ -141,7 +136,7 @@ export const uiInitialState: UiState = {
         returnFocusTo: undefined,
     },
     automationsManagement: {
-        invalidateItemsCallback: undefined,
+        invalidationId: 0,
     },
     saveAsDialog: {
         open: false,

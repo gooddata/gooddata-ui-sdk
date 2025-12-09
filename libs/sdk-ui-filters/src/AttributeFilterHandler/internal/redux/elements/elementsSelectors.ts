@@ -63,7 +63,7 @@ export const selectElements: FilterSelector<IAttributeElement[]> = createSelecto
  */
 export const selectElementsTotalCount: FilterSelector<number> = createSelector(
     selectState,
-    (state) => state.elements.totalCount,
+    (state) => state.elements.totalCount ?? 0,
 );
 
 /**
@@ -71,13 +71,13 @@ export const selectElementsTotalCount: FilterSelector<number> = createSelector(
  */
 export const selectInitTotalCountStatus: FilterSelector<AsyncOperationStatus> = createSelector(
     selectState,
-    (state) => state.elements.totalCountInitialization?.status,
+    (state) => state.elements.totalCountInitialization?.status ?? "pending",
 );
 
 /**
  * @internal
  */
-export const selectInitTotalCountError: FilterSelector<GoodDataSdkError> = createSelector(
+export const selectInitTotalCountError: FilterSelector<GoodDataSdkError | undefined> = createSelector(
     selectState,
     (state) => state.elements.totalCountInitialization?.error,
 );
@@ -87,7 +87,7 @@ export const selectInitTotalCountError: FilterSelector<GoodDataSdkError> = creat
  */
 export const selectElementsTotalCountWithCurrentSettings: FilterSelector<number> = createSelector(
     selectState,
-    (state) => state.elements.totalCountWithCurrentSettings,
+    (state) => state.elements.totalCountWithCurrentSettings ?? 0,
 );
 
 /**
@@ -103,13 +103,13 @@ export const selectStaticElements: FilterSelector<IAttributeElement[]> = createS
  */
 export const selectSearch: FilterSelector<string> = createSelector(
     selectState,
-    (state) => state.elements.currentOptions.search,
+    (state) => state.elements.currentOptions.search ?? "",
 );
 
 /**
  * @internal
  */
-export const selectOrder: FilterSelector<SortDirection> = createSelector(
+export const selectOrder: FilterSelector<SortDirection | undefined> = createSelector(
     selectState,
     (state) => state.elements.currentOptions.order,
 );
@@ -119,7 +119,7 @@ export const selectOrder: FilterSelector<SortDirection> = createSelector(
  */
 export const selectLimit: FilterSelector<number> = createSelector(
     selectState,
-    (state) => state.elements.currentOptions.limit,
+    (state) => state.elements.currentOptions.limit ?? 500,
 );
 
 /**
@@ -127,7 +127,7 @@ export const selectLimit: FilterSelector<number> = createSelector(
  */
 export const selectOffset: FilterSelector<number> = createSelector(
     selectState,
-    (state) => state.elements?.lastLoadedOptions?.offset ?? state.elements.currentOptions.offset,
+    (state) => state.elements?.lastLoadedOptions?.offset ?? state.elements.currentOptions.offset ?? 0,
 );
 
 /**
@@ -135,7 +135,7 @@ export const selectOffset: FilterSelector<number> = createSelector(
  */
 export const selectLimitingAttributeFilters: FilterSelector<IElementsQueryAttributeFilter[]> = createSelector(
     selectState,
-    (state) => state.elements.currentOptions.limitingAttributeFilters,
+    (state) => state.elements.currentOptions.limitingAttributeFilters ?? [],
 );
 
 /**
@@ -143,7 +143,7 @@ export const selectLimitingAttributeFilters: FilterSelector<IElementsQueryAttrib
  */
 export const selectLimitingMeasures: FilterSelector<IMeasure<IMeasureDefinitionType>[]> = createSelector(
     selectState,
-    (state) => state.elements.currentOptions.limitingMeasures,
+    (state) => state.elements.currentOptions.limitingMeasures ?? [],
 );
 
 /**
@@ -151,14 +151,14 @@ export const selectLimitingMeasures: FilterSelector<IMeasure<IMeasureDefinitionT
  */
 export const selectLimitingValidationItems: FilterSelector<ObjRef[]> = createSelector(
     selectState,
-    (state) => state.elements.currentOptions.limitingValidationItems,
+    (state) => state.elements.currentOptions.limitingValidationItems ?? [],
 );
 
 /**
  * @internal
  */
 export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[] | IAbsoluteDateFilter[]> =
-    createSelector(selectState, (state) => state.elements.currentOptions.limitingDateFilters);
+    createSelector(selectState, (state) => state.elements.currentOptions.limitingDateFilters ?? []);
 
 /**
  * @internal
@@ -209,7 +209,7 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
 export const selectLastLoadedElementsOptions: FilterSelector<ILoadElementsOptions> = createSelector(
     selectState,
     (state): ILoadElementsOptions => {
-        return state.elements.lastLoadedOptions;
+        return state.elements.lastLoadedOptions ?? {};
     },
 );
 

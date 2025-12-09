@@ -194,6 +194,17 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     ): IPreparedExecution;
 
     /**
+     * Get additional visualization executions for multi-layer visualizations.
+     *
+     * Default implementation returns undefined – subclasses can override to opt into the contract.
+     */
+    public getExecutions?(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ): IPreparedExecution[];
+
+    /**
      * This method will be called during the {@link update} processing. This is where internal properties of the
      * concrete plug vis class MAY be updated. If class overrides this method, it MUST call the method in
      * superclass.

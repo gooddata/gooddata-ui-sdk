@@ -115,6 +115,13 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
     execution: IPreparedExecution;
 
     /**
+     * Additional prepared executions, if visualization supports multiple executions.
+     *
+     * @alpha
+     */
+    executions?: IPreparedExecution[];
+
+    /**
      * Configuration for forecasting.
      * @beta
      */

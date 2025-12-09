@@ -1,71 +1,51 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
 
-import { IntlWrapper } from "@gooddata/sdk-ui";
-import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
+import { GeoChartNext } from "./GeoChartNext.js";
+import { PUSHPIN_LAYER_ID, createPushpinLayer } from "./layers/pushpin/layerFactory.js";
+import { IGeoLayer } from "./types/layers/index.js";
+import { IGeoPushpinChartNextProps } from "./types/props/pushpinChart/public.js";
 
-import { ErrorComponent } from "./components/ErrorComponent.js";
-import { LoadingComponent } from "./components/LoadingComponent.js";
-import { GeoLegendProvider } from "./context/GeoLegendContext.js";
-import { GeoPushpinDataProvider } from "./context/GeoPushpinDataContext.js";
-import { GeoPushpinPropsProvider } from "./context/GeoPushpinPropsContext.js";
-import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
-import { MapInstanceProvider } from "./context/MapInstanceContext.js";
-import { useInitExecution } from "./hooks/init/useInitExecution.js";
-import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
-import { useResolvedProps } from "./hooks/shared/useResolvedProps.js";
-import { RenderGeoPushpinChart } from "./RenderGeoPushpinChart.js";
-import { ICoreGeoPushpinChartNextProps } from "./types/internal.js";
-import { IGeoPushpinChartNextProps } from "./types/public.js";
+export { PUSHPIN_LAYER_ID };
 
 /**
+ * GeoPushpinChartNext wraps {@link GeoChartNext} for the single pushpin-layer scenario.
+ *
  * @alpha
  */
 export function GeoPushpinChartNext(props: IGeoPushpinChartNextProps): ReactElement {
-    const resolvedProps = useResolvedProps(props);
-    const execution = useInitExecution(resolvedProps);
-    return <GeoPushpinChartNextImplementation {...resolvedProps} execution={execution} />;
-}
+    const {
+        latitude,
+        longitude,
+        segmentBy,
+        size,
+        color,
+        filters,
+        sortBy,
+        config,
+        additionalLayers,
+        ...restProps
+    } = props;
 
-/**
- * @internal
- */
-export function GeoPushpinChartNextImplementation(props: ICoreGeoPushpinChartNextProps): ReactElement {
-    return (
-        <IntlWrapper locale={props.locale}>
-            <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-                <GeoPushpinPropsProvider {...props}>
-                    <MapInstanceProvider>
-                        <GeoPushpinChartNextWithInitialization />
-                    </MapInstanceProvider>
-                </GeoPushpinPropsProvider>
-            </ThemeContextProvider>
-        </IntlWrapper>
+    const primaryLayer = useMemo(
+        () =>
+            createPushpinLayer({
+                latitude,
+                longitude,
+                size,
+                color,
+                segmentBy,
+                filters,
+                sortBy,
+            }),
+        [latitude, longitude, size, color, segmentBy, filters, sortBy],
     );
-}
 
-/**
- * @internal
- */
-function GeoPushpinChartNextWithInitialization(): ReactElement {
-    const { result: dataView, status, error } = useInitExecutionResult();
-
-    if (status === "error") {
-        return <ErrorComponent error={error} />;
-    }
-
-    if (status === "pending" || status === "loading") {
-        return <LoadingComponent />;
-    }
-
-    return (
-        <InitialExecutionContextProvider initialDataView={dataView}>
-            <GeoPushpinDataProvider>
-                <GeoLegendProvider>
-                    <RenderGeoPushpinChart />
-                </GeoLegendProvider>
-            </GeoPushpinDataProvider>
-        </InitialExecutionContextProvider>
+    const allLayers = useMemo<IGeoLayer[]>(
+        () => [primaryLayer, ...(additionalLayers ?? [])],
+        [primaryLayer, additionalLayers],
     );
+
+    return <GeoChartNext {...restProps} layers={allLayers} config={config} />;
 }

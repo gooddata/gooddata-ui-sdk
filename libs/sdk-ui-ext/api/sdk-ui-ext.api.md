@@ -41,7 +41,6 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidgetUrlBuilder } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
 import { LocalIdRef } from '@gooddata/sdk-model';
-import { MutableRefObject } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { PivotTableNextConfig } from '@gooddata/sdk-ui-pivot/next';
@@ -113,7 +112,7 @@ export type AutomationColumnDefinition = {
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, onInvalidateCallbackChange, renderToolbarCustomElement, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, externalInvalidationId, renderToolbarCustomElement, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
@@ -132,9 +131,6 @@ export type AutomationsFilterPreselectValue = {
     value: string;
     label?: string;
 };
-
-// @internal
-export type AutomationsInvalidateItemsRef = MutableRefObject<(() => void) | undefined>;
 
 // @internal
 export type AutomationsOnLoad = (items: Array<IAutomationMetadataObject>, isInitial: boolean) => void;
@@ -388,16 +384,13 @@ export interface IAutomationsProps {
     editAutomation?: (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string) => void;
     // (undocumented)
     enableBulkActions?: boolean;
-    // (undocumented)
-    invalidateItemsRef?: AutomationsInvalidateItemsRef;
+    externalInvalidationId?: number;
     // (undocumented)
     isMobileView?: boolean;
     // (undocumented)
     locale?: string;
     // (undocumented)
     maxHeight?: number;
-    // (undocumented)
-    onInvalidateCallbackChange?: (callback: (() => void) | undefined) => void;
     // (undocumented)
     onLoad?: AutomationsOnLoad;
     // (undocumented)

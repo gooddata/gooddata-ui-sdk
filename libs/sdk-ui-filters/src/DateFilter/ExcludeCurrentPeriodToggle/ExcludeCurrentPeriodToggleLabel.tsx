@@ -16,7 +16,7 @@ export function ExcludeCurrentPeriodToggleLabel({
     disabled,
     granularity,
 }: IExcludeCurrentPeriodToggleLabelProps) {
-    const granularityIntlCode = granularityIntlCodes[granularity];
+    const granularityIntlCode = granularity ? granularityIntlCodes[granularity] : undefined;
     const id =
         !disabled && granularity !== undefined && granularityIntlCode !== undefined
             ? messages[`${granularityIntlCode}Excluded`].id

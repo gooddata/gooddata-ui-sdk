@@ -132,7 +132,7 @@ const RelativeRangePickerSelect = memo(function RelativeRangePickerSelect(
         <SelectWrapper
             label={label}
             labelId={labelId}
-            errorMessage={error?.message}
+            errorMessage={error?.message ?? ""}
             errorId={error?.id ?? ""}
             className={wrapperClassName}
         >
@@ -197,7 +197,7 @@ export function RelativeRangePicker({
     );
 
     const getItems = useMemo(
-        () => getItemsFactory(selectedFilterOption.granularity, isMobile, intl),
+        () => getItemsFactory(selectedFilterOption.granularity ?? "GDC.time.date", isMobile, intl),
         [selectedFilterOption.granularity, isMobile, intl],
     );
 

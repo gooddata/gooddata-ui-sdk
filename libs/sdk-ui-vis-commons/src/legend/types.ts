@@ -81,9 +81,15 @@ export const DEFAULT_LEGEND_CONFIG = {
 };
 
 /**
+ * Category legend item for geo charts.
+ *
+ * @remarks
+ * Represents a single item in the category legend, typically corresponding to
+ * a segment value with its associated color and visibility state.
+ *
  * @internal
  */
-export interface IPushpinCategoryLegendItem {
+export interface IGeoCategoryLegendItem {
     type: string;
     name: string;
     uri: string;
@@ -91,6 +97,12 @@ export interface IPushpinCategoryLegendItem {
     legendIndex: number;
     isVisible: boolean;
 }
+
+/**
+ * @deprecated Use IGeoCategoryLegendItem instead.
+ * @internal
+ */
+export type IPushpinCategoryLegendItem = IGeoCategoryLegendItem;
 
 /**
  * TODO: rename

@@ -127,21 +127,23 @@ export const useAttributeFilterHandlerState = (
         selection: {
             committed: {
                 elements: initStatus === "success" ? handler.getElementsByKey(committedSelection.keys) : [],
-                keys: committedSelection.keys,
+                keys: committedSelection.keys.filter((key): key is string => key !== null),
                 isInverted: committedSelection.isInverted,
                 irrelevantElements:
                     initStatus === "success"
-                        ? handler.getElementsByKey(committedSelection.irrelevantKeys)
+                        ? handler.getElementsByKey(committedSelection.irrelevantKeys ?? [])
                         : [],
             },
             working: {
                 elements: initStatus === "success" ? handler.getElementsByKey(workingSelection.keys) : [],
-                keys: workingSelection.keys,
+                keys: workingSelection.keys.filter((key): key is string => key !== null),
                 isInverted: workingSelection.isInverted,
                 isChanged: handler.isWorkingSelectionChanged(),
                 isEmpty: handler.isWorkingSelectionEmpty(),
                 irrelevantElements:
-                    initStatus === "success" ? handler.getElementsByKey(workingSelection.irrelevantKeys) : [],
+                    initStatus === "success"
+                        ? handler.getElementsByKey(workingSelection.irrelevantKeys ?? [])
+                        : [],
             },
         },
     };

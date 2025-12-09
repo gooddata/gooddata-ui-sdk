@@ -74,7 +74,7 @@ export function AttributeFilter(props: IAttributeFilterProps): JSX.Element;
 export function AttributeFilterAllValuesFilteredResult({ parentFilterTitles, searchString, enableShowingFilteredElements, }: IAttributeFilterAllValuesFilteredResultProps): JSX.Element;
 
 // @public
-export function AttributeFilterButton(props: IAttributeFilterButtonProps): JSX.Element;
+export function AttributeFilterButton(props: IAttributeFilterButtonProps): JSX.Element | null;
 
 // @beta
 export function AttributeFilterButtonTooltip({ children }: {
@@ -101,7 +101,7 @@ export type AttributeFilterControllerCallbacks = {
 
 // @public
 export type AttributeFilterControllerData = {
-    attribute: IAttributeMetadataObject;
+    attribute?: IAttributeMetadataObject;
     offset: number;
     limit: number;
     isFiltering: boolean;
@@ -126,7 +126,7 @@ export type AttributeFilterControllerData = {
     parentFilterAttributes: IAttributeMetadataObject[];
     displayForms: IAttributeDisplayFormMetadataObject[];
     currentDisplayFormRef: ObjRef;
-    currentDisplayAsDisplayFormRef: ObjRef;
+    currentDisplayAsDisplayFormRef?: ObjRef;
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
@@ -190,7 +190,7 @@ export function AttributeFilterLoading({ onClick }: IAttributeFilterLoadingProps
 export function AttributeFilterSelectionStatus({ isInverted, selectedItems, getItemTitle, selectedItemsLimit, showSelectionStatus, }: IAttributeFilterSelectionStatusProps): JSX.Element;
 
 // @beta
-export function AttributeFilterSimpleDropdownButton({ title, isLoading, isFiltering, ...rest }: IAttributeFilterDropdownButtonProps): JSX.Element;
+export function AttributeFilterSimpleDropdownButton({ title, isLoading, isFiltering, disabled, isOpen, onClick, }: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
 export function AttributeFilterSimpleDropdownButtonWithSelection({ isOpen, subtitle, title, selectedItemsCount, onClick, isLoading, isFiltering, showSelectionCount, }: IAttributeFilterDropdownButtonProps): JSX.Element;
@@ -220,9 +220,9 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
     // (undocumented)
     static defaultProps: Partial<IDateFilterProps>;
     // (undocumented)
-    static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;
+    static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState | null;
     // (undocumented)
-    render(): JSX.Element;
+    render(): JSX.Element | null;
 }
 
 // @beta (undocumented)
@@ -239,10 +239,10 @@ export const DateFilterHelpers: {
         "GDC.time.hour": GranularityIntlKey;
         "GDC.time.minute": GranularityIntlKey;
     };
-    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption | undefined, excludeCurrentPeriod: boolean) => DateFilterOption;
+    applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption | undefined, excludeCurrentPeriod: boolean) => DateFilterOption | undefined;
     defaultDateFilterOptions: IDateFilterOptionsByType;
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
-    mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
+    mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | null;
     formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string, splitter?: string) => string;
     formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
@@ -327,7 +327,7 @@ export interface IAttributeElementLoader {
     getNextElementsPageError(): GoodDataSdkError | undefined;
     getNextElementsPageStatus(): AsyncOperationStatus;
     getOffset(): number;
-    getOrder(): SortDirection;
+    getOrder(): SortDirection | undefined;
     getSearch(): string;
     getTotalElementsCount(): number;
     getTotalElementsCountWithCurrentSettings(): number;
@@ -495,7 +495,7 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
-    buttonRef?: MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement | null>;
     className?: string;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;
@@ -647,7 +647,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     getFilterToDisplay(): IAttributeFilter;
     getInitError(): GoodDataSdkError | undefined;
     getInitStatus(): AsyncOperationStatus;
-    getOriginalFilter(): IAttributeFilter;
+    getOriginalFilter(): IAttributeFilter | undefined;
     init(correlation?: Correlation): void;
     onInitCancel: CallbackRegistration<OnInitCancelCallbackPayload>;
     onInitError: CallbackRegistration<OnInitErrorCallbackPayload>;
@@ -955,13 +955,13 @@ export interface IMeasureValueFilterCommonProps {
     // (undocumented)
     enableOperatorSelection?: boolean;
     // (undocumented)
-    filter: IMeasureValueFilter;
+    filter?: IMeasureValueFilter;
     // (undocumented)
     locale?: string;
     // (undocumented)
     measureIdentifier: string;
     // (undocumented)
-    onApply: (filter: IMeasureValueFilter) => void;
+    onApply: (filter: IMeasureValueFilter | null) => void;
     // (undocumented)
     separators?: ISeparators;
     // (undocumented)
@@ -1341,7 +1341,7 @@ export const useAttributeFilterContext: () => IAttributeFilterContext;
 export const useAttributeFilterController: (props: IUseAttributeFilterControllerProps) => AttributeFilterController;
 
 // @beta
-export const useAttributeFilterHandler: (props: IUseAttributeFilterHandlerProps) => IMultiSelectAttributeFilterHandler;
+export const useAttributeFilterHandler: (props: IUseAttributeFilterHandlerProps) => IMultiSelectAttributeFilterHandler | null;
 
 // @beta
 export const useAttributeFilterSearch: (props: IUseAttributeFilterSearchProps) => {

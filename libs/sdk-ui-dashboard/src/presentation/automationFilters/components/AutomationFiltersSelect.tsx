@@ -348,7 +348,7 @@ export function AutomationFiltersSelect({
                                         tabTitle={tab.tabTitle}
                                         tabId={tab.tabId}
                                         filters={tab.visibleFilters}
-                                        attributeConfigs={attributeConfigs}
+                                        attributeConfigs={tab.attributeConfigs}
                                         commonDateFilterId={commonDateFilterId}
                                         lockedFilters={tab.lockedFilters}
                                         onChange={(filter) =>
@@ -382,7 +382,7 @@ export function AutomationFiltersSelect({
                                                     getCatalogItemCustomTitle(
                                                         item,
                                                         availableFilters,
-                                                        dateConfigs,
+                                                        tab.dateConfigs,
                                                     )
                                                 }
                                                 renderVirtualisedList
@@ -601,6 +601,7 @@ interface IAutomationFilterProps {
     overlayPositionType?: OverlayPositionType;
     lockedFilters: FilterContextItem[];
     isReadOnly: boolean;
+    tabId?: string;
 }
 
 function AutomationFilter({
@@ -612,6 +613,7 @@ function AutomationFilter({
     overlayPositionType,
     lockedFilters,
     isReadOnly,
+    tabId,
 }: IAutomationFilterProps) {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
@@ -632,6 +634,7 @@ function AutomationFilter({
                 displayAsLabel={displayAsLabel}
                 overlayPositionType={overlayPositionType}
                 readonly={isReadOnly}
+                tabId={tabId}
             />
         );
     } else {
@@ -649,6 +652,7 @@ function AutomationFilter({
                 isCommonDateFilter={isCommonDateFilter}
                 overlayPositionType={overlayPositionType}
                 readonly={isReadOnly}
+                tabId={tabId}
             />
         );
     }
@@ -751,6 +755,7 @@ function AutomationFiltersTabSection({
                                 overlayPositionType={overlayPositionType}
                                 lockedFilters={lockedFilters}
                                 isReadOnly={readonlyFilters}
+                                tabId={tabId}
                             />
                         );
                     })}

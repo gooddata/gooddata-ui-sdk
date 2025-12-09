@@ -28,7 +28,7 @@ export function ArrowButton(props: {
                 "gd-icon",
                 iconClassNames[props.arrowDirection],
             )}
-            onClick={() => unless(constant(props.disabled), props.onClick)}
+            onClick={() => unless(constant(props.disabled ?? false), props.onClick)}
             aria-hidden="true"
             disabled={props.disabled}
         />

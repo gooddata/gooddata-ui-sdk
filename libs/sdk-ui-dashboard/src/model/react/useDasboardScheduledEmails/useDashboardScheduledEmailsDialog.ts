@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import {
@@ -168,16 +169,14 @@ export const useDashboardScheduledEmailsDialog = () => {
                 openScheduleEmailingManagementDialog(widget);
             }
             addSuccess(messages.scheduleEmailSaveSuccess);
-            refreshAutomations();
-            refreshAutomationManagementItems();
+            handleRefreshAutomations();
         },
         [
             enableAutomationManagement,
             closeScheduleEmailingDialog,
             openScheduleEmailingManagementDialog,
             addSuccess,
-            refreshAutomations,
-            refreshAutomationManagementItems,
+            handleRefreshAutomations,
         ],
     );
 

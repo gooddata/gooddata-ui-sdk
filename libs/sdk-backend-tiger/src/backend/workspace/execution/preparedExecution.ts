@@ -8,6 +8,7 @@ import { ExplainApi_ExplainAFM } from "@gooddata/api-client-tiger/explain";
 import {
     ExplainConfig,
     ExplainType,
+    IExecutionContext,
     IExecutionFactory,
     IExecutionResult,
     IExplainProvider,
@@ -42,6 +43,7 @@ import { downloadFile } from "../../../utils/downloadFile.js";
 export class TigerPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;
     public readonly signal: AbortSignal | undefined = undefined;
+    public readonly context?: IExecutionContext = undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -51,6 +53,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         public readonly options?: IPreparedExecutionOptions,
     ) {
         this.signal = this.options?.signal;
+        this.context = this.options?.context;
     }
 
     public async execute(): Promise<IExecutionResult> {
@@ -79,6 +82,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 this.executionFactory,
                 response.data,
                 this.dateFormatter,
+                this.context,
                 this.signal,
                 resultCancelToken,
             );
@@ -167,6 +171,16 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
     public equals(other: IPreparedExecution): boolean {
         return isEqual(defFingerprint(this.definition), defFingerprint(other.definition));
+    }
+
+    public withContext(context: IExecutionContext): IPreparedExecution {
+        return new TigerPreparedExecution(
+            this.authCall,
+            this.definition,
+            this.executionFactory,
+            this.dateFormatter,
+            { ...this.options, context },
+        );
     }
 }
 

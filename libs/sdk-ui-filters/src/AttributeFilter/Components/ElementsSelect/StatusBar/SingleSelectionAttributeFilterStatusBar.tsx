@@ -29,16 +29,16 @@ export function SingleSelectionAttributeFilterStatusBar({
                 isFilteredByLimitingValidationItems ||
                 isFilteredByDependentDateFilters ? (
                     <AttributeFilterShowFilteredElements
-                        attributeTitle={attributeTitle}
-                        onClick={onShowFilteredElements}
+                        attributeTitle={attributeTitle ?? ""}
+                        onClick={onShowFilteredElements ?? (() => {})}
                         parentFilterTitles={parentFilterTitles}
                         className="no-divider"
-                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
+                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems ?? false}
                     />
                 ) : null}
                 <AttributeFilterIrrelevantSelectionStatus
                     parentFilterTitles={parentFilterTitles}
-                    irrelevantSelection={irrelevantSelection}
+                    irrelevantSelection={irrelevantSelection ?? []}
                     showClearButton={false}
                 />
             </div>

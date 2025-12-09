@@ -39,7 +39,7 @@ export interface AttributeFilterHandlerStoreContext {
     backend: IAnalyticalBackend;
     workspace: string;
     attributeFilter: IAttributeFilter;
-    displayAsLabel: ObjRef;
+    displayAsLabel?: ObjRef;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
     eventListener: AttributeFilterHandlerEventListener;

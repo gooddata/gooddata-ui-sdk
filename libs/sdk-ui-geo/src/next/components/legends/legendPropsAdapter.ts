@@ -2,8 +2,6 @@
 
 import { ContentRect } from "react-measure";
 
-import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
-
 import { ILegendBodyProps } from "./types.js";
 import type { IGeoChartLegendRendererProps } from "../../../core/geoChart/GeoChartLegendRenderer.js";
 
@@ -47,7 +45,7 @@ export function adaptLegendPropsToOldRenderer(
         maxRows,
         name,
         containerId: props.containerId,
-        onItemClick: onCategoryItemClick as ((item: IPushpinCategoryLegendItem) => void) | undefined,
+        onItemClick: onCategoryItemClick,
         contentRect,
         // numericSymbols will be provided by IntlTranslationsProvider wrapper
     };

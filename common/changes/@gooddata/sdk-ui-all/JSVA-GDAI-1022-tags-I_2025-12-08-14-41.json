@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-catalog: Introduce a shared `CatalogResourceProvider` + `useCatalogTags` context so Analytics Catalog fetch tags once and reuse them instead of querying the backend per component.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

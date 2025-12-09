@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-import type { Map as MapLibreMap } from "maplibre-gl";
+import type { IMapFacade } from "../../layers/common/mapFacade.js";
+import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 
 /**
  * Check if map is fully idle (loaded and tiles ready)
@@ -16,14 +17,8 @@ import type { Map as MapLibreMap } from "maplibre-gl";
  *
  * @internal
  */
-function isMapFullyIdle(map: MapLibreMap): boolean {
-    // Check if tiles are loaded (if method exists)
-    const tilesLoaded =
-        typeof (map as unknown as { areTilesLoaded?: () => boolean }).areTilesLoaded === "function"
-            ? (map as unknown as { areTilesLoaded: () => boolean }).areTilesLoaded()
-            : true;
-
-    return map.loaded() && tilesLoaded;
+function isMapFullyIdle(map: IMapFacade): boolean {
+    return map.loaded() && map.areTilesLoaded();
 }
 
 /**
@@ -57,19 +52,18 @@ function scheduleAsync(callback: () => void): void {
  *
  * @param map - MapLibre map instance
  * @param afterRender - Callback to call when rendering is complete
- * @param resetSignal - Value that indicates the map should re-signal completion (e.g., execution object)
+ * @param resetSignal - Layer executions that indicate the map should re-signal completion
  *
  * @internal
  */
 export function useAfterRender(
-    map: MapLibreMap | null,
+    map: IMapFacade | null,
     afterRender?: () => void,
-    resetSignal?: unknown,
+    resetSignal?: ILayerExecutionRecord[],
 ): void {
     const hasCalledRef = useRef(false);
-    const lastResetSignalRef = useRef(resetSignal);
+    const lastResetSignalRef = useRef<ILayerExecutionRecord[] | undefined>(resetSignal);
 
-    // Reset the "called" flag when resetSignal changes
     useEffect(() => {
         if (resetSignal !== lastResetSignalRef.current) {
             hasCalledRef.current = false;
@@ -77,25 +71,17 @@ export function useAfterRender(
         }
     }, [resetSignal]);
 
-    // Set up idle listener and invoke callbacks
     useEffect(() => {
-        // Guard: skip if no map, already called, or no callbacks
         if (!map || hasCalledRef.current || !afterRender) {
             return;
         }
 
         const invokeCallbacks = () => {
-            // Double-check we haven't called yet (race condition guard)
             if (hasCalledRef.current) {
                 return;
             }
-
             hasCalledRef.current = true;
-
-            // Invoke callbacks
-            if (afterRender) {
-                afterRender();
-            }
+            afterRender?.();
         };
 
         const handleIdle = () => {
@@ -103,10 +89,7 @@ export function useAfterRender(
             invokeCallbacks();
         };
 
-        // Register idle listener
         map.on("idle", handleIdle);
-
-        // If already idle, trigger immediately (async to avoid sync effects)
         if (isMapFullyIdle(map)) {
             scheduleAsync(handleIdle);
         }

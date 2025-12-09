@@ -21,6 +21,7 @@ import {
 
 import { messages } from "../../../locales.js";
 import {
+    selectAutomationsInvalidationId,
     selectCanCreateAutomation,
     selectDashboardId,
     selectDashboardTitle,
@@ -32,7 +33,6 @@ import {
     selectIsWhiteLabeled,
     selectTimezone,
     selectWidgetByRef,
-    useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
 import {
@@ -75,7 +75,7 @@ export function DefaultAlertingManagementDialogContentEnhanced({
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
     const { returnFocusTo } = useAlertingDialogAccessibility();
 
-    const { onInvalidateCallbackChange } = useAutomationsInvalidateRef();
+    const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
     const isMobile = isMobileView();
 
     // Check if widget has metrics for alert creation
@@ -141,7 +141,7 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                         enableBulkActions={enableBulkActions}
                         availableFilters={availableFilters}
                         locale={intl.locale}
-                        onInvalidateCallbackChange={onInvalidateCallbackChange}
+                        externalInvalidationId={automationsInvalidationId}
                         renderToolbarCustomElement={() =>
                             managementDialogContext.widgetRef && canCreateAutomation ? (
                                 <CreateButton

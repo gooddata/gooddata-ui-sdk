@@ -48,7 +48,7 @@ import {
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilterByLocalIdForTab,
     selectFilterContextAttributeFilters,
-    selectFilterContextAttributeFiltersByTab,
+    selectFilterContextAttributeFiltersForTab,
     selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFilterByDataSetForTab,
     selectFilterContextDateFiltersWithDimension,
@@ -352,7 +352,7 @@ function* getAttributeFiltersUpdateActions(
     if (resetOthers) {
         const currentAttributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> =
             tabLocalIdentifier
-                ? yield select(selectFilterContextAttributeFiltersByTab(tabLocalIdentifier))
+                ? yield select(selectFilterContextAttributeFiltersForTab(tabLocalIdentifier))
                 : yield select(selectFilterContextAttributeFilters);
 
         // for filters that have not been handled by the loop above, create a clear selection actions

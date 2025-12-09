@@ -395,7 +395,7 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         this.bridge.setOrder(order);
     };
 
-    getOrder = (): SortDirection => {
+    getOrder = (): SortDirection | undefined => {
         return this.bridge.getOrder();
     };
 
@@ -459,7 +459,7 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getFilterToDisplay();
     };
 
-    getOriginalFilter = (): IAttributeFilter => {
+    getOriginalFilter = (): IAttributeFilter | undefined => {
         return this.bridge.getOriginalFilter();
     };
 

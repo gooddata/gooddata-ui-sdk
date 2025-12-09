@@ -87,11 +87,12 @@ export function RelativePresetFilterItems({
 }: IRelativePresetFilterItemsProps) {
     const relativePresets = granularityOrder
         .filter((granularity) => {
-            return Boolean(filterOption?.[granularity]?.length > 0);
+            const presets = filterOption?.[granularity];
+            return Boolean(presets && presets.length > 0);
         })
         .map((granularity) => ({
             granularity,
-            items: filterOption[granularity] as IRelativeDateFilterPreset[],
+            items: filterOption?.[granularity] as IRelativeDateFilterPreset[],
         }));
 
     return (

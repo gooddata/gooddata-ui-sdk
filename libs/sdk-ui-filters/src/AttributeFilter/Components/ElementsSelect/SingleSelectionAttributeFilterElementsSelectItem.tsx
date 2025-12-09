@@ -46,7 +46,7 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
         "gd-list-item",
         "has-only-visible",
         "s-attribute-filter-list-item",
-        `s-attribute-filter-list-item-${camelCase(item.title)}`,
+        `s-attribute-filter-list-item-${camelCase(item.title ?? undefined)}`,
         { "is-selected": isSelected },
         {
             "s-attribute-filter-list-item-selected": isSelected,

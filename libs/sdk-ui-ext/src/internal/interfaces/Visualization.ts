@@ -431,6 +431,20 @@ export interface IVisualization {
         executionFactory: IExecutionFactory,
     ): IPreparedExecution;
 
+    /**
+     * Get additional visualization executions for multi-layer visualizations.
+     * Returns only additional layer executions; primary execution must be obtained via {@link getExecution}.
+     *
+     * @param props - visualization properties
+     * @param insight - insight to be executed
+     * @param executionFactory - execution factory to use when triggering calculation on backend
+     */
+    getExecutions?(
+        props: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ): IPreparedExecution[];
+
     unmount(): void;
 
     addNewDerivedBucketItems(

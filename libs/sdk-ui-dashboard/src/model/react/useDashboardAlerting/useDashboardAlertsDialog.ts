@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { IAutomationMetadataObject, IWidget, areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
@@ -37,8 +38,9 @@ export const useDashboardAlertsDialog = () => {
     const handleRefreshAutomations = useCallback(() => {
         if (enableAutomationManagement) {
             refreshAutomationManagementItems();
+        } else {
+            refreshAutomations();
         }
-        refreshAutomations();
     }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
 
     /*

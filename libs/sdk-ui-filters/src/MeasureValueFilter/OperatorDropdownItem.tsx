@@ -22,7 +22,7 @@ interface IOperatorDropdownItemOwnProps {
 export const OperatorDropdownItem = memo(function OperatorDropdownItem({
     operator,
     selectedOperator,
-    bubbleText = null,
+    bubbleText,
     onClick = () => {},
 }: IOperatorDropdownItemOwnProps) {
     const intl = useIntl();

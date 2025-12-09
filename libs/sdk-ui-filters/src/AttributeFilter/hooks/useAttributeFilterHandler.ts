@@ -91,23 +91,31 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
     const prevProps = usePrevious(props);
 
     useEffect(() => {
+        if (!handler) {
+            return;
+        }
+
         const unsubscribe = handler.onUpdate(() => {
             invalidate();
         });
 
         const filterChanged = (filter: IAttributeFilter, handler: IMultiSelectAttributeFilterHandler) => {
+            const currentFilter = handler.getFilter();
+            const originalFilter = handler.getOriginalFilter();
             return (
-                !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) &&
-                !isEqual(filterObjRef(filter), filterObjRef(handler.getOriginalFilter()))
+                currentFilter &&
+                originalFilter &&
+                !isEqual(filterObjRef(filter), filterObjRef(currentFilter)) &&
+                !isEqual(filterObjRef(filter), filterObjRef(originalFilter))
             );
         };
 
         if (
-            backend !== prevProps.backend ||
-            workspace !== prevProps.workspace ||
+            backend !== prevProps?.backend ||
+            workspace !== prevProps?.workspace ||
             filterChanged(filter, handler) ||
-            !isEqual(staticElements, prevProps.staticElements) ||
-            !isEqual(hiddenElements, prevProps.hiddenElements)
+            !isEqual(staticElements, prevProps?.staticElements) ||
+            !isEqual(hiddenElements, prevProps?.hiddenElements)
         ) {
             createNewHandler();
             invalidate();

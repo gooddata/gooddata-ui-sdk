@@ -18,14 +18,18 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 interface IDropdownProps {
-    onApply: (operator: string, value: IMeasureValueFilterValue, treatNullValuesAsZero: boolean) => void;
+    onApply: (
+        operator: MeasureValueFilterOperator | null,
+        value: IMeasureValueFilterValue,
+        treatNullValuesAsZero: boolean,
+    ) => void;
     onCancel: () => void;
-    operator?: MeasureValueFilterOperator;
-    value?: IMeasureValueFilterValue;
+    operator?: MeasureValueFilterOperator | null;
+    value?: IMeasureValueFilterValue | null;
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;
-    anchorEl: HTMLElement | string;
+    anchorEl?: HTMLElement | string;
     separators?: ISeparators;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
@@ -72,7 +76,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         >
             <DropdownBody
                 operator={selectedOperator}
-                value={value}
+                value={value ?? {}}
                 usePercentage={usePercentage}
                 warningMessage={warningMessage}
                 locale={locale}

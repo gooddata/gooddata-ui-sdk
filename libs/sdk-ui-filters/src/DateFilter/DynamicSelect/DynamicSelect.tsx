@@ -9,6 +9,7 @@ import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
 import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
 import { findRelativeDateFilterOptionByValue } from "./utils.js";
 import {
+    ISelectMenuProps,
     ScrollableSelectMenu,
     defaultVisibleItemsRange,
     getMedianIndex,
@@ -69,17 +70,18 @@ export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelect
     };
 
     public onChange = (option: DynamicSelectOption | null): void => {
-        if (option) {
-            this.props.onChange(option.value);
+        const { onChange } = this.props;
+        if (option && onChange) {
+            onChange(option.value);
         }
     };
 
     public override componentDidUpdate = (lastProps: IDynamicSelectProps): void => {
-        if (lastProps.value !== this.props.value) {
-            const defaultItems = this.props.getItems(this.props.value.toString());
+        const { value, getItems } = this.props;
+        if (lastProps.value !== value && value !== undefined) {
+            const defaultItems = getItems(value.toString());
             const inputValue =
-                findRelativeDateFilterOptionByValue(defaultItems, this.props.value)?.label ||
-                this.props.value.toString();
+                findRelativeDateFilterOptionByValue(defaultItems, value)?.label || value.toString();
             this.setState({
                 inputValue,
             });
@@ -146,24 +148,27 @@ export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelect
                     isOpen,
                     openMenu,
                     closeMenu,
-                    inputValue,
+                    inputValue: downshiftInputValue,
                     highlightedIndex,
                     setHighlightedIndex,
                     selectItem,
                 }: ControllerStateAndHelpers<DynamicSelectOption>) => {
                     // Without this, highlight is not properly reset during filtering
                     const effectiveHighlightedIndex =
-                        highlightedIndex > selectableItems.length - 1 ? 0 : highlightedIndex;
+                        highlightedIndex === null || highlightedIndex > selectableItems.length - 1
+                            ? 0
+                            : highlightedIndex;
+                    const effectiveInputValue = downshiftInputValue ?? "";
 
-                    const menuProps = {
+                    const menuProps: ISelectMenuProps<number> = {
                         items,
-                        selectedItem,
+                        selectedItem: selectedItem as ISelectItemOption<number>,
                         highlightedIndex: effectiveHighlightedIndex,
-                        getItemProps,
-                        getMenuProps,
+                        getItemProps: getItemProps as unknown as ISelectMenuProps<number>["getItemProps"],
+                        getMenuProps: getMenuProps as unknown as ISelectMenuProps<number>["getMenuProps"],
                         className: "gd-dynamic-select-menu",
                         optionClassName,
-                        inputValue,
+                        inputValue: effectiveInputValue,
                         setHighlightedIndex,
                         visibleItemsRange,
                     };
@@ -183,18 +188,24 @@ export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelect
                                         "aria-labelledby": undefined,
                                         ref: this.inputRef,
                                         placeholder: selectedItem ? selectedItem.label : placeholder,
-                                        value: inputValue,
+                                        value: effectiveInputValue,
                                         onFocus: () => {
                                             this.setState({ inputValue: "" });
                                             openMenu();
                                         },
                                         onChange: (event: ChangeEvent<HTMLInputElement>) =>
                                             this.onChangeHandler(event, selectItem),
-                                        onBlur: () => this.onBlurHandler(selectedItem, selectItem, closeMenu),
+                                        onBlur: () => {
+                                            this.onBlurHandler(selectedItem!, selectItem, closeMenu);
+                                        },
                                     })}
                                 />
                             </div>
-                            {isOpen && items.length > 0 ? <ScrollableSelectMenu {...menuProps} /> : null}
+                            {isOpen && items.length > 0 ? (
+                                <ScrollableSelectMenu
+                                    {...(menuProps as unknown as ISelectMenuProps<object>)}
+                                />
+                            ) : null}
                         </div>
                     );
                 }}
@@ -210,10 +221,10 @@ export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelect
         const { customValueValidator, value } = this.props;
         if (customValueValidator) {
             closeMenu();
-            this.onInputValueChanged(value?.toString());
+            this.onInputValueChanged(value?.toString() ?? "");
         } else {
             selectItem(selectedItem);
-            this.onInputValueChanged(selectedItem ? selectedItem.label : "");
+            this.onInputValueChanged(selectedItem.label);
         }
     };
 

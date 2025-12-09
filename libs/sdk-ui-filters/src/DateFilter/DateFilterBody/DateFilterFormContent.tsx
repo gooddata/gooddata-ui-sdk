@@ -43,7 +43,7 @@ export interface IDateFilterFormContentProps {
     onClose: () => void;
 
     submitForm: () => void;
-    errors: IExtendedDateFilterErrors;
+    errors?: IExtendedDateFilterErrors;
 }
 
 /**
@@ -93,7 +93,7 @@ export function DateFilterFormContent({
             {showStaticForm ? (
                 <DateFilterFormNavigationWrapper
                     title={
-                        filterOptions.absoluteForm.name
+                        filterOptions.absoluteForm?.name
                             ? filterOptions.absoluteForm.name
                             : intl.formatMessage({ id: "filters.staticPeriod" })
                     }
@@ -119,7 +119,7 @@ export function DateFilterFormContent({
             {showRelativeForm ? (
                 <DateFilterFormNavigationWrapper
                     title={
-                        filterOptions.relativeForm.name
+                        filterOptions.relativeForm?.name
                             ? filterOptions.relativeForm.name
                             : intl.formatMessage({ id: "filters.floatingRange" })
                     }
@@ -143,7 +143,7 @@ export function DateFilterFormContent({
                                     submitRelativeDateFilterForm(
                                         event,
                                         isEmpty(errors),
-                                        withoutApply,
+                                        withoutApply ?? false,
                                         onClose,
                                         submitForm,
                                     )

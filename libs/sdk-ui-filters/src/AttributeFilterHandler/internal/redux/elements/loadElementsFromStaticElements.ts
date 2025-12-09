@@ -50,7 +50,7 @@ const resolveStringFilter =
     (filter: string | undefined) =>
     (staticElements: IAttributeElement[]): IAttributeElement[] => {
         return filter
-            ? staticElements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()))
+            ? staticElements.filter((item) => item.title?.toLowerCase().includes(filter.toLowerCase()))
             : staticElements;
     };
 

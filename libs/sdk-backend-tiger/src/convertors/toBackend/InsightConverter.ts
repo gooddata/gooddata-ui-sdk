@@ -3,7 +3,7 @@
 import { omit } from "lodash-es";
 
 import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, insightLayers } from "@gooddata/sdk-model";
 
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 
@@ -33,6 +33,14 @@ export const convertInsight = (
         removeIdentifiers(insight as IInsight) as IInsight,
     );
 
+    const layers = insightLayers(insight);
+    const layersProp =
+        layers && layers.length > 0
+            ? {
+                  layers: cloneWithSanitizedIds(layers),
+              }
+            : {};
+
     return {
         buckets: cloneWithSanitizedIds(sanitizedInsight.insight.buckets),
         filters: cloneWithSanitizedIds(sanitizedInsight.insight.filters),
@@ -47,5 +55,6 @@ export const convertInsight = (
         properties: sanitizedInsight.insight.properties,
         visualizationUrl: sanitizedInsight.insight.visualizationUrl,
         version: "2",
+        ...layersProp,
     };
 };

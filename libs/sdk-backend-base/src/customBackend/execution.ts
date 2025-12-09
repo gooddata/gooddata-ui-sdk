@@ -134,6 +134,10 @@ class CustomPreparedExecution implements IPreparedExecution {
     private resultFactory = (dimensions: IDimensionDescriptor[], fingerprint: string) => {
         return new CustomExecutionResult(dimensions, fingerprint, this, this.config, this.state);
     };
+
+    public withContext = (): IPreparedExecution => {
+        throw new NotSupported("Execution context is not supported by the custom backend.");
+    };
 }
 
 /**

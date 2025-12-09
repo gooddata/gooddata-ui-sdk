@@ -105,6 +105,9 @@ export function AddGranteeBase({ appliedGrantees, addedGrantees, currentUser, is
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => IMessage;
 
+// @internal
+export const ADVANCED_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[];
+
 // @internal (undocumented)
 export type AlignConfig = {
     triggerAlignPoint: PositionPoint;
@@ -310,12 +313,33 @@ export function ContentDivider({ className }: {
 export type CopyCodeOriginType = "keyboard" | "button";
 
 // @internal
+export function createAllTemplates(formatMessage: (descriptor: {
+    id: string;
+}) => string, messageIdPrefix?: string): IFormatTemplate[];
+
+// @internal
 export function createCurrencyPresets(formatMessage: (descriptor: {
     id: string;
-}) => string): IFormatPreset[];
+}) => string, messageIdPrefix?: string): IFormatPreset[];
+
+// @internal
+export function createStandardPresets(formatMessage: (descriptor: {
+    id: string;
+}) => string, messageIdPrefix?: string): IFormatPreset[];
+
+// @internal
+export function createTemplates(formatMessage: (descriptor: {
+    id: string;
+}) => string, definitions: readonly ITemplateDefinition[], messageIdPrefix?: string): IFormatTemplate[];
 
 // @internal
 export const CURRENCY_PRESET_DEFINITIONS: readonly ICurrencyPresetDefinition[];
+
+// @internal
+export const CURRENCY_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[];
+
+// @internal
+export const CURRENCY_TEMPLATE_IDS: string[];
 
 // @alpha (undocumented)
 export type CurrencyFormatValidationErrorCode = "empty" | "invalidFormat" | "missingCurrencySymbol" | "missingDecimalPlaces";
@@ -337,11 +361,20 @@ export class Datepicker extends PureComponent<IDatePickerOwnProps> {
     render(): JSX.Element;
 }
 
+// @internal
+export const DEFAULT_CURRENCY_PRESET_PREFIX = "metricComponent.numberFormat.preset";
+
 // @internal (undocumented)
 export const DEFAULT_ITEM_HEIGHT = 28;
 
 // @internal (undocumented)
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
+
+// @internal
+export const DEFAULT_STANDARD_PRESET_PREFIX = "metricComponent.numberFormat.preset";
+
+// @internal
+export const DEFAULT_TEMPLATE_PREFIX = "metricComponent.numberFormat.template";
 
 // @internal
 export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
@@ -4986,6 +5019,18 @@ export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
 // @internal
 export const isTabKey: (event: KeyboardEvent_2) => boolean;
 
+// @internal
+export interface IStandardPresetDefinition {
+    // (undocumented)
+    format: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    messageId: string;
+    // (undocumented)
+    previewNumber: number;
+}
+
 // @internal (undocumented)
 export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends TStylingEditorDialogFooterProps, Pick<IDialogBaseProps, "onClose" | "className"> {
     // (undocumented)
@@ -5165,6 +5210,16 @@ export interface ITabsState {
 
 // @internal (undocumented)
 export function Item({ checked, subMenu, disabled, className, children, style, onClick, }: IItemProps): JSX.Element;
+
+// @internal
+export interface ITemplateDefinition {
+    // (undocumented)
+    format: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    messageId: string;
+}
 
 // @internal (undocumented)
 export function ItemsWrapper({ smallItemsSpacing, className, children, style, wrapperRef, }: IItemsWrapperProps): JSX.Element;
@@ -6406,6 +6461,12 @@ export const Spinner: NamedExoticComponent<ISpinnerProps>;
 export type SpinnerSize = "large" | "small";
 
 // @internal
+export const STANDARD_PRESET_DEFINITIONS: readonly IStandardPresetDefinition[];
+
+// @internal
+export const STANDARD_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[];
+
+// @internal
 export type StyleProps = Record<string, string | boolean>;
 
 // @internal (undocumented)
@@ -7530,6 +7591,11 @@ export function useFocusWithinContainer(idToFocus?: string | null): {
 };
 
 // @internal
+export function useFormatTemplates(formatMessage: (descriptor: {
+    id: string;
+}) => string, excludeCurrencyTemplates?: boolean): IFormatTemplate[];
+
+// @internal
 export const useHeaderSearch: () => HeaderSearchContext;
 
 // @internal
@@ -7577,6 +7643,27 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
+export function useMetricTypePresets({ metricType, currencyFormatOverride, formatMessage, presetMessageIdPrefix, templateMessageIdPrefix, }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
+
+// @internal
+export interface UseMetricTypePresetsConfig {
+    currencyFormatOverride?: string | null;
+    formatMessage: (descriptor: {
+        id: string;
+    }) => string;
+    metricType?: MetricType;
+    presetMessageIdPrefix?: string;
+    templateMessageIdPrefix?: string;
+}
+
+// @internal
+export interface UseMetricTypePresetsResult {
+    inheritPreset: IFormatPreset | null;
+    presets: IFormatPreset[];
+    templates: IFormatTemplate[];
+}
+
+// @internal
 export const useOverlayController: () => OverlayController | undefined;
 
 // @internal
@@ -7607,6 +7694,11 @@ export const useScopedIdStoreValue: <T>(getIdFromItem: (item: T) => string) => {
 export const useScrollContext: () => {
     scrollIntoView: (_element: HTMLElement, _bottomMargin?: number, _isElementInvisibleCheck?: isElementInvisibleType) => void;
 };
+
+// @internal
+export function useStandardPresets(formatMessage: (descriptor: {
+    id: string;
+}) => string): IFormatPreset[];
 
 // @internal (undocumented)
 export const useToastMessage: () => UseToastMessageType;

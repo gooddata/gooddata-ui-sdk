@@ -184,15 +184,21 @@ export {
     selectCanAddMoreAttributeFilters,
     selectCanAddMoreFilters,
     selectIsAttributeFilterDependentByLocalIdentifier,
+    selectIsAttributeFilterDependentByLocalIdentifierForTab,
     selectFilterContextDateFilterByDataSet,
     selectPreloadedAttributesWithReferences,
     selectDefaultFilterOverrides,
     selectNamesOfFiltersWithInvalidSelection,
-    selectFilterContextAttributeFiltersByTab,
+    selectFiltersForTab,
+    selectFilterContextAttributeFiltersForTab,
     selectFilterContextAttributeFilterByDisplayFormForTab,
     selectFilterContextAttributeFilterByLocalIdForTab,
     selectFilterContextDateFiltersWithDimensionForTab,
+    selectFilterContextDateFilterForTab,
     selectFilterContextDateFilterByDataSetForTab,
+    selectWorkingFilterContextAttributeFiltersForTab,
+    selectWorkingFilterContextDateFiltersWithDimensionForTab,
+    selectWorkingFilterContextDateFilterForTab,
 } from "./tabs/filterContext/filterContextSelectors.js";
 export { getFilterIdentifier } from "./tabs/filterContext/filterContextUtils.js";
 export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";
@@ -276,10 +282,13 @@ export {
     selectDateFilterConfigOverrides,
     selectDateFilterConfigOverridesByTab,
     selectEffectiveDateFilterConfig,
+    selectEffectiveDateFilterConfigForTab,
     selectEffectiveDateFilterTitle,
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
+    selectEffectiveDateFilterOptionsForTab,
     selectEffectiveDateFilterAvailableGranularities,
+    selectEffectiveDateFilterAvailableGranularitiesForTab,
     selectDateFilterConfigValidationWarnings,
 } from "./tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 export {
@@ -496,6 +505,7 @@ export {
     selectExecutionTimestamp,
     selectIsSettingsDialogOpen,
     selectFilterValidationIncompatibleDefaultFiltersOverride,
+    selectAutomationsInvalidationId,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export type { RenderModeState } from "./renderMode/renderModeState.js";

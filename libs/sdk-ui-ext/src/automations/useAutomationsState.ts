@@ -23,7 +23,7 @@ export const useAutomationsState = ({
     pageSize,
     availableFilters,
     preselectedFilters,
-    onInvalidateCallbackChange,
+    externalInvalidationId,
     tableVariant,
     isMobileView,
     enableBulkActions,
@@ -150,10 +150,12 @@ export const useAutomationsState = ({
         }));
     }, []);
 
-    // notify external systems about the change
+    // React to external invalidation ID changes (skip if 0 or undefined)
     useEffect(() => {
-        onInvalidateCallbackChange?.(resetState);
-    }, [resetState, onInvalidateCallbackChange]);
+        if (externalInvalidationId) {
+            resetState();
+        }
+    }, [externalInvalidationId, resetState]);
 
     useEffect(() => {
         if (filtersRefFirstRun.current) {

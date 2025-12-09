@@ -3,6 +3,8 @@
 import { SagaIterator } from "redux-saga";
 import { call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
+import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+
 import { selectHasNextPage, selectLoadNextElementsPageOptions } from "./loadNextElementsPageSelectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectCacheId } from "../elements/elementsSelectors.js";
@@ -72,9 +74,10 @@ export function* loadNextElementsPageSaga(
             }),
         );
     } catch (error) {
+        const convertedError: GoodDataSdkError = convertError(error);
         yield put(
             actions.loadNextElementsPageError({
-                error,
+                error: convertedError,
                 correlation,
             }),
         );

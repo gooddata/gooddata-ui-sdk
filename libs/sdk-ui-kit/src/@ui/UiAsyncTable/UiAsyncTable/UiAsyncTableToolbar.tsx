@@ -65,8 +65,8 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     }, [selectedItemIds]);
 
     const isCheckboxIndeterminate = useMemo(() => {
-        return !!bulkActions && selectedItemIds?.length !== items.length;
-    }, [bulkActions, selectedItemIds, items]);
+        return !!bulkActions && isCheckboxChecked && selectedItemIds?.length !== items.length;
+    }, [bulkActions, isCheckboxChecked, selectedItemIds, items]);
 
     const checkboxAriaLabel = accessibilityConfig?.checkboxAllAriaLabel;
 

@@ -67,6 +67,9 @@ export function AlertTriggerModeSelect({
                             buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
                             isOpen={isOpen}
+                            accessibilityConfig={{
+                                ariaExpanded: isOpen,
+                            }}
                         />
                     );
                 }}

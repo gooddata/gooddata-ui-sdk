@@ -43,20 +43,24 @@ export const limitingDateFilters: IRelativeDateFilter[] = [
     newRelativeDateFilter(ReferenceMd.DateDatasets.Snapshot.SnapshotDate.identifier, "GDC.time.date", 0, -1),
 ];
 
+const productNameAttrId = attributeIdentifier(ReferenceMd.Product.Name)!;
+const amountMeasureId = measureIdentifier(ReferenceMd.Amount)!;
+const snapshotDateId = ReferenceMd.DateDatasets.Snapshot.SnapshotDate.identifier;
+
 const backend = recordedBackend(ReferenceRecordings.Recordings, {
     attributeElementsFiltering: {
         attributeFilters: {
-            [attributeIdentifier(ReferenceMd.Product.Name)]: (_element, index) => {
+            [productNameAttrId]: (_element: IAttributeElement, index: number) => {
                 return (index + 1) % 2 === 0;
             },
         },
         measures: {
-            [measureIdentifier(ReferenceMd.Amount)]: (_element, index) => {
+            [amountMeasureId]: (_element: IAttributeElement, index: number) => {
                 return (index + 1) % 3 === 0;
             },
         },
         dateFilters: {
-            [ReferenceMd.DateDatasets.Snapshot.SnapshotDate.identifier]: (_element, index) => {
+            [snapshotDateId]: (_element: IAttributeElement, index: number) => {
                 return (index + 1) % 4 === 0;
             },
         },
@@ -110,7 +114,7 @@ export const hiddenElements = ["/hidden-element"];
 export const newTestAttributeFilterHandler = (
     useCase: "positive" | "negative" | "nonExisting" | "static" | "hidden",
 ) => {
-    let filter: IAttributeFilter;
+    let filter: IAttributeFilter = positiveAttributeFilter;
     const options: IAttributeFilterHandlerOptions = {
         selectionMode: "multi",
     };

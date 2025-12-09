@@ -262,7 +262,7 @@ export interface IAttributeElementLoader {
     /**
      * Returns the current order used for the attribute element loads.
      */
-    getOrder(): SortDirection;
+    getOrder(): SortDirection | undefined;
 
     /**
      * Returns the current search string used to filter the attribute element loads.

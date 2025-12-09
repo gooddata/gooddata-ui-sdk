@@ -318,7 +318,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAICatalogQualityChecker: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
-    enableCustomizedDashboardsWithoutPluginOverlay: false,
+    enableCustomizedDashboardsWithoutPluginOverlay: true,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: true,
     enableIgnoreCrossFiltering: true,

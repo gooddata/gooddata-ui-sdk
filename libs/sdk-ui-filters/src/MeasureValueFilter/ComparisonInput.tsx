@@ -6,7 +6,7 @@ import { ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 
 interface IComparisonInputProps {
-    value: number;
+    value?: number | null;
     usePercentage: boolean;
     disableAutofocus?: boolean;
     onValueChange: (value: number) => void;
@@ -25,9 +25,9 @@ export function ComparisonInput({
     return (
         <InputWithNumberFormat
             className="s-mvf-comparison-value-input"
-            value={value}
+            value={value ?? undefined}
             onEnterKeyPress={onEnterKeyPress}
-            onChange={onValueChange}
+            onChange={(val) => onValueChange(val as number)}
             isSmall
             autofocus={!disableAutofocus}
             suffix={usePercentage ? "%" : ""}

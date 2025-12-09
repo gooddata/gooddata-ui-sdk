@@ -13,13 +13,13 @@ export interface ITime {
 }
 
 export interface IDateRangeInputFieldProps {
-    date: Date;
-    time: ITime;
+    date: Date | undefined;
+    time: ITime | undefined;
     onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
     onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onInputClick: () => void;
     onDateInputKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-    dateFormat: string;
+    dateFormat: string | undefined;
     isMobile: boolean;
     isTimeEnabled: boolean;
     errors?: IDateTimePickerErrors;
@@ -28,8 +28,8 @@ export interface IDateRangeInputFieldProps {
 }
 
 export interface IDateRange {
-    from: Date;
-    to: Date;
+    from: Date | undefined;
+    to: Date | undefined;
 }
 
 export interface IInputAccessibilityConfig {

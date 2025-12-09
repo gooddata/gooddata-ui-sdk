@@ -18,8 +18,8 @@ import {
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
 import { DEFAULT_MEASURE_FORMAT } from "./const.js";
-import { DeepReadonly, KdaDateOptions, KdaState } from "./internalTypes.js";
-import { IKdaDefinition } from "./types.js";
+import { KdaState } from "./internalTypes.js";
+import { DeepReadonly, IKdaDataPoint, IKdaDefinition } from "./types.js";
 
 //Format value
 
@@ -39,15 +39,23 @@ export function formatValue(
 
 //Format title
 
-export function formatTitle(option: KdaDateOptions, splitter: string): string {
-    const [from, to] = option.range ?? [null, null];
+/**
+ * @beta
+ */
+export function formatKeyDriverAnalysisDateRange(
+    range: DeepReadonly<[IKdaDataPoint, IKdaDataPoint]> | undefined,
+    splitter: string,
+): string {
+    const [from, to] = range ?? [null, null];
 
     // Not defined
     if (!from || !to) {
         return " - ";
     }
 
-    const pattern = from.format?.pattern ?? "yyyy-MM-dd";
+    // NOTE: Normalize server-supplied pattern so date-fns uses ISO week tokens (I/R/etc.)
+    // instead of locale-based ones.
+    const pattern = toIsoPattern(from.format?.pattern ?? "yyyy-MM-dd");
 
     return DateFilterHelpers.formatAbsoluteDateRange(
         new Date(from.date),
@@ -136,4 +144,14 @@ export function dashboardAttributeFilterToAttributeFilter(
     } else {
         return newPositiveAttributeFilter(displayForm, attributeElements);
     }
+}
+
+const ISO_TOKEN_MAP: Array<[RegExp, (match: string) => string]> = [
+    [/(Y{1,4})/g, (match) => match.replace(/Y/g, "R")],
+    [/(w{1,2})/g, (match) => match.replace(/w/g, "I")],
+    [/(e{1,4})/g, (match) => match.replace(/e/g, "i")],
+];
+
+function toIsoPattern(pattern: string): string {
+    return ISO_TOKEN_MAP.reduce((acc, [regex, replacer]) => acc.replace(regex, replacer), pattern);
 }

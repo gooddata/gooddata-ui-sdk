@@ -18,7 +18,9 @@ const loadInitialElementsPageStart: AttributeFilterReducer<PayloadAction<{ corre
     state.elements.initialPageLoad.status = "loading";
     state.elements.initialPageLoad.error = undefined;
     state.elements.currentOptions.offset = 0;
-    state.elements.lastLoadedOptions.offset = 0;
+    if (state.elements.lastLoadedOptions) {
+        state.elements.lastLoadedOptions.offset = 0;
+    }
     state.elements.data = [];
 };
 
@@ -33,11 +35,13 @@ const loadInitialElementsPageSuccess: AttributeFilterReducer<
     state.elements.totalCountWithCurrentSettings = action.payload.totalCount;
     action.payload.elements.forEach((el) => {
         const cacheKey = getElementCacheKey(el);
-        if (!state.elements.cache[cacheKey]) {
+        if (cacheKey !== null && !state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }
     });
-    state.elements.data = action.payload.elements.map((el) => getElementCacheKey(el));
+    state.elements.data = action.payload.elements
+        .map((el) => getElementCacheKey(el))
+        .filter((key): key is string => key !== null);
     state.elements.lastLoadedOptions = action.payload.options;
 };
 

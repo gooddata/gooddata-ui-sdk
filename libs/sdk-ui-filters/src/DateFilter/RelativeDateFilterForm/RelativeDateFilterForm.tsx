@@ -41,7 +41,7 @@ export const RelativeDateFilterForm = forwardRef<HTMLDivElement, IRelativeDateFi
                 <div ref={ref}>
                     <GranularityTabs
                         availableGranularities={availableGranularities}
-                        selectedGranularity={selectedFilterOption.granularity}
+                        selectedGranularity={selectedFilterOption.granularity ?? "GDC.time.date"}
                         onSelectedGranularityChange={(granularity) =>
                             onSelectedFilterOptionChange({
                                 ...selectedFilterOption,

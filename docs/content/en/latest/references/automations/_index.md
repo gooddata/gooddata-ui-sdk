@@ -36,26 +36,26 @@ Wrap the component with `BackendProvider`, `WorkspaceProvider` or `OrganizationP
 
 ## Props
 
-| Name                      | Type                                           | Default               | Description                                                                 |
-| ------------------------- | ---------------------------------------------- | --------------------- | --------------------------------------------------------------------------- |
-| backend                   | IAnalyticalBackend                             | -                     | Analytical backend instance. Falls back to `BackendProvider` context.       |
-| workspace                 | string                                         | -                     | Workspace identifier. Falls back to `WorkspaceProvider` context.            |
-| organization              | string                                         | -                     | Organization identifier. Falls back to `OrganizationProvider` context.      |
-| scope                     | "workspace" \| "organization"                  | -                     | Chooses whether automations are limited to a workspace or span the org.     |
-| locale                    | string                                         | "en-US"               | Locale used for number/date formatting and translations.                    |
-| timezone                  | string                                         | "UTC"                 | Timezone used when rendering schedule timestamps.                           |
-| selectedColumnDefinitions | AutomationColumnDefinitions                    | -                     | Overrides the visible column set and widths.                                |
-| availableFilters          | AutomationsAvailableFilters                    | scope defaults        | Controls which filters are rendered in the header.                          |
-| preselectedFilters        | AutomationsPreselectedFilters                  | {}                    | Supplies initial filter selections (e.g., status, recipients).              |
-| maxHeight                 | number                                         | 500                   | Maximum table height in pixels.                                             |
-| pageSize                  | number                                         | 30                    | Number of automations fetched per page.                                     |
-| type                      | "schedule" \| "alert"                          | "schedule"            | Restricts the listing to a single automation type.                          |
-| isSmall                   | boolean                                        | false                 | Enables a compact layout optimized for tight spaces.                        |
-| invalidateItemsRef        | AutomationsInvalidateItemsRef                  | -                     | Imperative handle for refreshing the list after external changes.           |
-| dashboardUrlBuilder       | IDashboardUrlBuilder                           | buildDashboardUrl     | Maps dashboard references to navigable URLs.                                |
-| widgetUrlBuilder          | IWidgetUrlBuilder                              | buildWidgetUrl        | Maps widget references to navigable URLs.                                   |
-| editAutomation            | (automation, workspaceId, dashboardId) => void | defaultEditAutomation | Callback used when users choose to edit an automation.                      |
-| onLoad                    | AutomationsOnLoad                              | -                     | Fires after each data load with `(items, isInitial)` for telemetry or sync. |
+| Name                      | Type                                           | Default               | Description                                                                                                           |
+| ------------------------- | ---------------------------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| backend                   | IAnalyticalBackend                             | -                     | Analytical backend instance. Falls back to `BackendProvider` context.                                                 |
+| workspace                 | string                                         | -                     | Workspace identifier. Falls back to `WorkspaceProvider` context.                                                      |
+| organization              | string                                         | -                     | Organization identifier. Falls back to `OrganizationProvider` context.                                                |
+| scope                     | "workspace" \| "organization"                  | -                     | Chooses whether automations are limited to a workspace or span the org.                                               |
+| locale                    | string                                         | "en-US"               | Locale used for number/date formatting and translations.                                                              |
+| timezone                  | string                                         | "UTC"                 | Timezone used when rendering schedule timestamps.                                                                     |
+| selectedColumnDefinitions | AutomationColumnDefinitions                    | -                     | Overrides the visible column set and widths.                                                                          |
+| availableFilters          | AutomationsAvailableFilters                    | scope defaults        | Controls which filters are rendered in the header.                                                                    |
+| preselectedFilters        | AutomationsPreselectedFilters                  | {}                    | Supplies initial filter selections (e.g., status, recipients).                                                        |
+| maxHeight                 | number                                         | 500                   | Maximum table height in pixels.                                                                                       |
+| pageSize                  | number                                         | 30                    | Number of automations fetched per page.                                                                               |
+| type                      | "schedule" \| "alert"                          | "schedule"            | Restricts the listing to a single automation type.                                                                    |
+| isSmall                   | boolean                                        | false                 | Enables a compact layout optimized for tight spaces.                                                                  |
+| externalInvalidationId    | number                                         | -                     | When this value changes (and is not 0 or undefined), the list reloads. Use to trigger refresh after external changes. |
+| dashboardUrlBuilder       | IDashboardUrlBuilder                           | buildDashboardUrl     | Maps dashboard references to navigable URLs.                                                                          |
+| widgetUrlBuilder          | IWidgetUrlBuilder                              | buildWidgetUrl        | Maps widget references to navigable URLs.                                                                             |
+| editAutomation            | (automation, workspaceId, dashboardId) => void | defaultEditAutomation | Callback used when users choose to edit an automation.                                                                |
+| onLoad                    | AutomationsOnLoad                              | -                     | Fires after each data load with `(items, isInitial)` for telemetry or sync.                                           |
 
 ## Filter Availability and Defaults
 
@@ -158,7 +158,21 @@ Automations bundle built-in handlers for destructive and maintenance actions suc
 
 Override the `editAutomation` callback to trigger custom edit flows (e.g., open a side panel).
 
-After performing external updates, call `invalidateItemsRef.current?.()` to refresh the data.
+To refresh the list after external updates, increment the `externalInvalidationId` prop. The component ignores `0` or `undefined`, so start at `0` and increment when a reload is needed:
+
+```tsx
+const [invalidationId, setInvalidationId] = useState(0);
+
+// After external update (e.g., delete via API)
+setInvalidationId(invalidationId + 1);
+
+<Automations
+    backend={backend}
+    workspace={workspace}
+    scope="workspace"
+    externalInvalidationId={invalidationId}
+/>;
+```
 
 ## Best Practices
 

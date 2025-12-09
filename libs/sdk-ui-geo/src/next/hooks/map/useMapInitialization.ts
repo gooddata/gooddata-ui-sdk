@@ -2,12 +2,19 @@
 
 import { RefObject, useEffect, useMemo, useRef, useState } from "react";
 
-import type { Map as MapLibreMap, Popup, StyleSpecification } from "maplibre-gl";
-import { IntlShape } from "react-intl";
+import { useIntl } from "react-intl";
 
-import { initializeMapLibreMap } from "../../features/map/initializeMap.js";
-import { IGeoPushpinChartNextConfig } from "../../types/config.js";
-import { IMapViewport } from "../../types/mapProvider.js";
+import {
+    IMapFacade,
+    IPopupFacade,
+    Map,
+    Popup,
+    createMapFacade,
+    createPopupFacade,
+} from "../../layers/common/mapFacade.js";
+import { initializeMapLibreMap } from "../../map/runtime/mapInitialization.js";
+import { IGeoChartNextConfig } from "../../types/config/unified.js";
+import { IMapViewport } from "../../types/map/provider.js";
 import { generateMapLibreLocale } from "../../utils/mapLocale.js";
 
 /**
@@ -17,14 +24,14 @@ import { generateMapLibreLocale } from "../../utils/mapLocale.js";
  */
 export interface IUseMapInitializationResult {
     /**
-     * MapLibre map instance (null until initialized)
+     * Map facade instance (null until initialized)
      */
-    map: MapLibreMap | null;
+    map: IMapFacade | null;
 
     /**
      * Tooltip popup instance (null until initialized)
      */
-    tooltip: Popup | null;
+    tooltip: IPopupFacade | null;
 
     /**
      * Whether map is ready for use
@@ -49,7 +56,7 @@ export interface IUseMapInitializationResult {
  *
  * @internal
  */
-function cleanupMapResources(map: MapLibreMap | null, tooltip: Popup | null): void {
+function cleanupMapResources(map: Map | null, tooltip: Popup | null): void {
     tooltip?.remove();
     map?.remove();
 }
@@ -82,35 +89,34 @@ function cleanupMapResources(map: MapLibreMap | null, tooltip: Popup | null): vo
  */
 export function useMapInitialization(
     containerRef: RefObject<HTMLDivElement | null>,
-    intl: IntlShape,
-    config?: IGeoPushpinChartNextConfig,
+    config?: IGeoChartNextConfig,
     initialViewport?: Partial<IMapViewport> | null,
 ): IUseMapInitializationResult {
-    const [map, setMap] = useState<MapLibreMap | null>(null);
-    const [tooltip, setTooltip] = useState<Popup | null>(null);
+    const intl = useIntl();
+    const [map, setMap] = useState<IMapFacade | null>(null);
+    const [tooltip, setTooltip] = useState<IPopupFacade | null>(null);
     const [isMapReady, setIsMapReady] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
-    // Refs for instance tracking and cleanup
-    const mapInstanceRef = useRef<MapLibreMap | null>(null);
+    const mapInstanceRef = useRef<Map | null>(null);
     const tooltipInstanceRef = useRef<Popup | null>(null);
 
-    // Capture initial viewport config (prevents re-centering when config changes)
-    // Prioritize initialViewport from data, then fall back to config
-    const initialCenterRef = useRef(initialViewport?.center ?? config?.center);
-    const initialZoomRef = useRef(initialViewport?.zoom ?? config?.zoom);
-    const initialBoundsRef = useRef(initialViewport?.bounds);
+    const initialViewportRef = useRef<Partial<IMapViewport>>({
+        center: initialViewport?.center ?? config?.center,
+        zoom: initialViewport?.zoom ?? config?.zoom,
+        bounds: initialViewport?.bounds,
+    });
 
-    // Update initial refs if map hasn't been created yet
     useEffect(() => {
         if (!mapInstanceRef.current) {
-            initialCenterRef.current = initialViewport?.center ?? config?.center;
-            initialZoomRef.current = initialViewport?.zoom ?? config?.zoom;
-            initialBoundsRef.current = initialViewport?.bounds;
+            initialViewportRef.current = {
+                center: initialViewport?.center ?? config?.center,
+                zoom: initialViewport?.zoom ?? config?.zoom,
+                bounds: initialViewport?.bounds,
+            };
         }
     }, [config?.center, config?.zoom, initialViewport]);
 
-    // Generate locale for cooperative gestures
     const cooperativeGestures = config?.cooperativeGestures ?? true;
     const locale = useMemo(() => {
         return cooperativeGestures ? generateMapLibreLocale(intl) : undefined;
@@ -119,7 +125,6 @@ export function useMapInitialization(
     const isExportMode = config?.isExportMode ?? false;
     const isViewportFrozen = Boolean(config?.viewport?.frozen);
 
-    // Create and manage map instance
     useEffect(() => {
         const container = containerRef.current;
         if (!container) {
@@ -128,31 +133,27 @@ export function useMapInitialization(
 
         let isMounted = true;
 
-        // Initialize map with captured initial viewport
-        // Use bounds if available (calculated from data), otherwise use center/zoom
         initializeMapLibreMap(
             {
                 container,
-                bounds: initialBoundsRef.current,
-                center: initialCenterRef.current,
-                zoom: initialZoomRef.current,
+                bounds: initialViewportRef.current.bounds,
+                center: initialViewportRef.current.center,
+                zoom: initialViewportRef.current.zoom,
                 cooperativeGestures,
                 interactive: !isViewportFrozen,
                 preserveDrawingBuffer: isExportMode,
-                style: config?.mapStyle as string | StyleSpecification,
+                style: config?.mapStyle,
             },
             locale,
         )
             .then((result) => {
                 if (isMounted) {
-                    // Store in refs and state
                     mapInstanceRef.current = result.map;
                     tooltipInstanceRef.current = result.tooltip;
-                    setMap(result.map);
-                    setTooltip(result.tooltip);
+                    setMap(createMapFacade(result.map));
+                    setTooltip(createPopupFacade(result.tooltip));
                     setIsMapReady(true);
                 } else {
-                    // Component unmounted during initialization - clean up
                     cleanupMapResources(result.map, result.tooltip);
                 }
             })

@@ -54,7 +54,7 @@ export function DateFilterButton({
             className={cx(
                 "s-date-filter-button",
                 "gd-date-filter-button",
-                `s-date-filter-button-${stringUtils.simplifyText(customFilterName)}`,
+                `s-date-filter-button-${stringUtils.simplifyText(customFilterName ?? "")}`,
                 "dropdown-button",
                 isMobile && "gd-date-filter-button-mobile",
                 isOpen && "is-active",

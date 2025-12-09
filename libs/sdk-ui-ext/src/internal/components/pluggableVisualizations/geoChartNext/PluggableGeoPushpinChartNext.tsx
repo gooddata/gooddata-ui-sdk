@@ -2,12 +2,17 @@
 
 import { cloneDeep, set } from "lodash-es";
 
-import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
+    IAttribute,
     IInsightDefinition,
-    insightBuckets,
+    bucketAttribute,
+    bucketItems,
+    insightBucket,
     insightFilters,
     insightHasDataDefined,
+    insightLayers,
+    newAttribute,
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -16,14 +21,23 @@ import {
     IPushData,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
 import {
-    GeoPushpinChartNextImplementation,
-    ICoreGeoPushpinChartNextProps,
+    GeoChartNextInternal,
+    type IGeoLayer,
     IGeoPushpinChartNextConfig,
+    buildLayerExecution,
+    createPushpinLayer,
+    insightLayersToGeoLayers,
+    isGeoLayerPushpin,
 } from "@gooddata/sdk-ui-geo/next";
 
-import { extractControls, getLocationAttribute, getLocationProperties } from "./geoAttributeHelper.js";
+import {
+    createAttributeRef,
+    extractControls,
+    getLatitudeAttribute,
+    getLocationProperties,
+    getPrimaryLayerControls,
+} from "./geoAttributeHelper.js";
 import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
 import {
     createConfiguredBuckets,
@@ -31,9 +45,7 @@ import {
     distributeMeasures,
     getLocationItems,
     sanitizeMeasures,
-    shouldEnableClustering,
 } from "./geoPushpinBucketHelper.js";
-import { createVirtualBuckets } from "./geoVirtualBucketFactory.js";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
@@ -53,6 +65,8 @@ import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpin
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
+type GeoChartNextExecutionProps = Parameters<typeof GeoChartNextInternal>[0];
+
 /**
  * Geo pushpin charts support max 2 measures: one for size and one for color
  */
@@ -61,7 +75,9 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 /**
  * PluggableGeoPushpinChartNext
  *
- * Next-generation geo pushpin chart implementation
+ * Next-generation geo pushpin chart implementation.
+ * Supports multi-layer geo charts through the insight layers property.
+ * Additional layers configured externally are preserved but not editable in AD.
  *
  * @alpha
  */
@@ -177,17 +193,13 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         const referencePointConfigured = cloneDeep(referencePoint);
         const visualizationProperties = this.visualizationProperties || {};
         const { controls = {} } = visualizationProperties;
-        const groupNearbyPoints = shouldEnableClustering(buckets);
-        const locationProperties = getLocationProperties(
-            locationItem,
-            this.backendCapabilities.supportsSeparateLatitudeLongitudeLabels,
-        );
+        const locationProperties = getLocationProperties(locationItem);
 
+        // Don't add groupNearbyPoints if it wasn't already in the properties.
+        // This prevents marking the insight as "dirty" when just opening it.
+        // The rendering code handles the default value (true when clustering is allowed).
         set(referencePointConfigured, "properties", {
             controls: {
-                points: {
-                    groupNearbyPoints,
-                },
                 ...controls,
                 ...locationProperties,
             },
@@ -206,9 +218,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
      * @param insight - The insight definition to validate
      * @returns true if validation passes
      * @throws EmptyAfmSdkError if no data is defined
+     * @throws GeoLocationMissingSdkError if latitude attribute is not defined
      */
     protected override checkBeforeRender(insight: IInsightDefinition): boolean {
-        if (!getLocationAttribute(insight)) {
+        if (!getLatitudeAttribute(insight)) {
             throw new GeoLocationMissingSdkError();
         }
 
@@ -231,26 +244,29 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     public override getExecution(
         options: IVisProps,
         insight: IInsightDefinition,
-        executionFactory: IExecutionFactory,
+        _executionFactory: IExecutionFactory,
     ) {
-        const { executionConfig } = options;
-        const controls = extractControls(insight);
-        const baseBuckets = [...insightBuckets(insight)];
+        const { primaryLayer, config } = this.buildPrimaryLayerContext(options, insight);
 
-        const supportsSeparateLatLong = this.backendCapabilities.supportsSeparateLatitudeLongitudeLabels;
-        const virtualBuckets = createVirtualBuckets(insight, controls, supportsSeparateLatLong);
-        const allBuckets = [...baseBuckets, ...virtualBuckets];
+        return buildLayerExecution(primaryLayer, {
+            backend: this.backend,
+            workspace: this.workspace,
+            config,
+            execConfig: options.executionConfig,
+        });
+    }
 
-        // Exclude original LOCATION bucket to avoid duplicate latitude attributes
-        const buckets = supportsSeparateLatLong
-            ? allBuckets.filter((bucket) => bucket.localIdentifier !== BucketNames.LOCATION)
-            : allBuckets;
+    public override getExecutions(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        _executionFactory: IExecutionFactory,
+    ): IPreparedExecution[] {
+        const { config } = this.buildPrimaryLayerContext(options, insight);
+        const insightLayerDefs = insightLayers(insight);
+        const additionalLayers = insightLayersToGeoLayers(insightLayerDefs);
+        const resolvedAdditionalLayers = additionalLayers.filter((layer) => !this.shouldSkipLayer(layer));
 
-        return executionFactory
-            .forBuckets(buckets, insightFilters(insight))
-            .withDimensions(getGeoChartDimensions)
-            .withSorting(...createSortForSegment(insight))
-            .withExecConfig(executionConfig);
+        return this.buildAdditionalLayerExecutions(resolvedAdditionalLayers, options, config);
     }
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
@@ -306,16 +322,18 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     ): void {
         const { custom = {}, locale, theme } = options;
         const { drillableItems } = custom;
-        const supportedControls = this.visualizationProperties.controls || {};
-        const fullConfig = this.buildVisualizationConfig(options, supportedControls);
-        const execution = this.getExecution(options, insight, executionFactory);
-
-        const props: ICoreGeoPushpinChartNextProps = {
+        const { config: configWithResolvedTooltip } = this.buildPrimaryLayerContext(options, insight);
+        const primaryExecution = this.getExecution(options, insight, executionFactory);
+        const additionalLayerExecutions = this.getExecutions(options, insight, executionFactory) ?? [];
+        const geoChartProps: GeoChartNextExecutionProps = {
             backend: this.backend,
             workspace: this.workspace,
-            execution,
+            type: "pushpin",
+            execution: primaryExecution,
+            executions: additionalLayerExecutions,
+            execConfig: options.executionConfig,
             drillableItems,
-            config: fullConfig,
+            config: configWithResolvedTooltip,
             locale,
             theme,
             pushData: this.handlePushData,
@@ -326,6 +344,120 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             onDrill: this.onDrill,
         };
 
-        this.renderFun(<GeoPushpinChartNextImplementation {...props} />, this.getElement());
+        this.renderFun(<GeoChartNextInternal {...geoChartProps} />, this.getElement());
+    }
+
+    private buildPrimaryLayerContext(
+        options: IVisProps,
+        insight: IInsightDefinition,
+    ): { primaryLayer: IGeoLayer; config: IGeoPushpinChartNextConfig } {
+        const supportedControls = this.visualizationProperties.controls || {};
+        const fullConfig = this.buildVisualizationConfig(options, supportedControls);
+        const controlsWithFallback = {
+            ...this.getInsightControlsWithFallback(insight),
+            ...supportedControls,
+        };
+        const filters = insightFilters(insight);
+        const sortBy = createSortForSegment(insight);
+        const locationBucket = insightBucket(insight, BucketNames.LOCATION);
+        const sizeBucket = insightBucket(insight, BucketNames.SIZE);
+        const colorBucket = insightBucket(insight, BucketNames.COLOR);
+        const segmentBucket = insightBucket(insight, BucketNames.SEGMENT);
+
+        const latitudeFromBucket = locationBucket ? bucketAttribute(locationBucket) : undefined;
+        const size = sizeBucket ? bucketItems(sizeBucket)[0] : undefined;
+        const color = colorBucket ? bucketItems(colorBucket)[0] : undefined;
+        const segmentBy = segmentBucket ? bucketAttribute(segmentBucket) : undefined;
+
+        const tooltipTextId = controlsWithFallback?.["tooltipText"] as string | undefined;
+        const latitudeId = controlsWithFallback?.["latitude"] as string | undefined;
+        const longitudeId = controlsWithFallback?.["longitude"] as string | undefined;
+
+        const tooltipTextAttribute = this.createAttributeFromId(
+            latitudeFromBucket,
+            tooltipTextId,
+            "tooltipText_df",
+        );
+        const latitudeAttribute = this.createAttributeFromId(latitudeFromBucket, latitudeId, "latitude_df");
+        const longitudeAttribute = this.createAttributeFromId(
+            latitudeFromBucket,
+            longitudeId,
+            "longitude_df",
+        );
+
+        if (!latitudeAttribute || !longitudeAttribute) {
+            throw new Error("Pushpin layer requires latitude and longitude attributes");
+        }
+
+        const configWithResolvedTooltip = {
+            ...fullConfig,
+            tooltipText: tooltipTextAttribute ?? undefined,
+        };
+
+        const primaryLayer = createPushpinLayer({
+            latitude: latitudeAttribute,
+            longitude: longitudeAttribute,
+            filters,
+            sortBy,
+            ...(size ? { size } : {}),
+            ...(color ? { color } : {}),
+            ...(segmentBy ? { segmentBy } : {}),
+        });
+
+        return {
+            primaryLayer,
+            config: configWithResolvedTooltip,
+        };
+    }
+
+    private buildAdditionalLayerExecutions(
+        layers: IGeoLayer[],
+        options: IVisProps,
+        config: IGeoPushpinChartNextConfig,
+    ): IPreparedExecution[] {
+        if (!layers.length) {
+            return [];
+        }
+
+        return layers.map((layer) =>
+            buildLayerExecution(layer, {
+                backend: this.backend,
+                workspace: this.workspace,
+                config,
+                execConfig: options.executionConfig,
+            }),
+        );
+    }
+
+    private createAttributeFromId(
+        baseAttribute: IAttribute | undefined,
+        attributeId: string | undefined,
+        localId: string,
+    ): IAttribute | undefined {
+        if (!baseAttribute || !attributeId) {
+            return undefined;
+        }
+
+        const ref = createAttributeRef(baseAttribute, attributeId);
+        return newAttribute(ref, (attribute) => attribute.localId(localId));
+    }
+
+    private shouldSkipLayer(layer: IGeoLayer): boolean {
+        if (!isGeoLayerPushpin(layer)) {
+            return false;
+        }
+
+        // Skip layers when latitude or longitude is missing
+        return !layer.latitude || !layer.longitude;
+    }
+
+    private getInsightControlsWithFallback(insight: IInsightDefinition): IVisualizationProperties {
+        const insightControls = extractControls(insight) || {};
+        const layerControls = getPrimaryLayerControls(insight);
+
+        return {
+            ...layerControls,
+            ...insightControls,
+        };
     }
 }

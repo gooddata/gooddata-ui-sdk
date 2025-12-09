@@ -11,6 +11,7 @@ import {
     type CatalogDetailContentProps,
     type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
+import { CatalogResourceProvider } from "./catalogResource/index.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import type { ObjectType } from "./objectType/index.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
@@ -125,7 +126,9 @@ function Providers(props: ProvidersProps) {
                     <OverlayProvider>
                         <PermissionsProvider permissionsState={permissionsState}>
                             <QualityProvider backend={backend} workspace={workspace}>
-                                {props.children}
+                                <CatalogResourceProvider backend={backend} workspace={workspace}>
+                                    {props.children}
+                                </CatalogResourceProvider>
                             </QualityProvider>
                         </PermissionsProvider>
                     </OverlayProvider>

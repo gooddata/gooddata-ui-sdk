@@ -216,7 +216,7 @@ export function DateFilterCore({
                     {(isMobile) => {
                         const dateFilterButton = (
                             isOpen: boolean = false,
-                            buttonRef: MutableRefObject<HTMLElement | null> = null,
+                            buttonRef: MutableRefObject<HTMLElement | null> | null = null,
                             dropdownId: string = "",
                             toggleDropdown = () => {},
                         ) => (
@@ -229,7 +229,7 @@ export function DateFilterCore({
                                         ? lastValidSelectedFilterOption
                                         : originalSelectedFilterOption,
                                     withoutApply
-                                        ? lastValidExcludeCurrentPeriod
+                                        ? (lastValidExcludeCurrentPeriod ?? false)
                                         : originalExcludeCurrentPeriod,
                                 )}
                                 dateFormat={adjustDateFormatForDisplay(
@@ -240,7 +240,7 @@ export function DateFilterCore({
                                 customIcon={customIcon}
                                 onClick={toggleDropdown}
                                 ButtonComponent={ButtonComponent}
-                                buttonRef={buttonRef}
+                                buttonRef={buttonRef ?? undefined}
                                 dropdownId={dropdownId}
                             />
                         );
@@ -272,7 +272,7 @@ export function DateFilterCore({
                                     ".rdp-day", // absolute range picker calendar items
                                 ]}
                                 renderBody={({ closeDropdown, ariaAttributes }) => {
-                                    return isConfigurationOpen ? (
+                                    return isConfigurationOpen && FilterConfigurationComponent ? (
                                         <FilterConfigurationComponent
                                             onSaveButtonClick={closeConfiguration}
                                             onCancelButtonClick={cancelConfiguration}

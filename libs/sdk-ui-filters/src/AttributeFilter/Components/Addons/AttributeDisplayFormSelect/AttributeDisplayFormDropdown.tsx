@@ -25,7 +25,7 @@ const ALIGN_POINTS: IAlignPoint[] = [
  */
 export interface IAttributeDisplayFormDropdownProps {
     displayForms: IAttributeDisplayFormMetadataObject[];
-    selectedDisplayForm: ObjRef;
+    selectedDisplayForm?: ObjRef;
     onSelect: (displayForm: ObjRef) => void;
     alignPoints?: IAlignPoint[];
 }
@@ -53,7 +53,7 @@ export function AttributeDisplayFormDropdown({
             enableEventPropagation
             renderButton={({ isOpen, toggleDropdown }) => (
                 <AttributeDisplayFormDropdownButton
-                    text={buttonTitle}
+                    text={buttonTitle ?? ""}
                     isOpened={isOpen}
                     toggleDropdown={toggleDropdown}
                 />

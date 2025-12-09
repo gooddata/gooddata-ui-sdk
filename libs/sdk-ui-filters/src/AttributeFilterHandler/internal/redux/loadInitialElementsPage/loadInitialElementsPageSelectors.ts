@@ -21,7 +21,5 @@ export const selectLoadInitialElementsPageStatus: FilterSelector<AsyncOperationS
 /**
  * @internal
  */
-export const selectLoadInitialElementsPageError: FilterSelector<GoodDataSdkError> = createSelector(
-    selectState,
-    (state) => state.elements.initialPageLoad.error,
-);
+export const selectLoadInitialElementsPageError: FilterSelector<GoodDataSdkError | undefined> =
+    createSelector(selectState, (state) => state.elements.initialPageLoad.error);

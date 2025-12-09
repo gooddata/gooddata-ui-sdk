@@ -590,3 +590,14 @@ export const selectExecutionTimestamp: DashboardSelector<string | undefined> = c
  */
 export const selectFilterValidationIncompatibleDefaultFiltersOverride: DashboardSelector<boolean> =
     createSelector(selectSelf, (state) => state.filterValidationMessages.incompatibleDefaultFiltersOverride);
+
+/**
+ * Returns the invalidation ID for automations management.
+ * When this value changes (and is not 0 or undefined), the Automations component should reload its data.
+ *
+ * @alpha
+ */
+export const selectAutomationsInvalidationId: DashboardSelector<number> = createSelector(
+    selectSelf,
+    (state) => state.automationsManagement.invalidationId,
+);

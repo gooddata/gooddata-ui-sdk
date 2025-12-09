@@ -100,10 +100,10 @@ import {
  * @internal
  */
 export class AttributeFilterReduxBridge {
-    private redux: AttributeFilterHandlerStore;
+    private redux!: AttributeFilterHandlerStore;
     private config: AttributeFilterHandlerConfig;
 
-    private callbacks: ReturnType<typeof newAttributeFilterCallbacks>;
+    private callbacks!: ReturnType<typeof newAttributeFilterCallbacks>;
 
     constructor(config: AttributeFilterHandlerConfig) {
         this.config = config;
@@ -323,12 +323,12 @@ export class AttributeFilterReduxBridge {
     // Custom elements
     //
 
-    loadCustomElements = (options: ILoadElementsOptions, correlation: Correlation): void => {
-        this.redux.dispatch(actions.loadCustomElementsRequest({ options, correlation: correlation }));
+    loadCustomElements = (options: ILoadElementsOptions, correlation?: Correlation): void => {
+        this.redux.dispatch(actions.loadCustomElementsRequest({ options, correlation }));
     };
 
-    cancelCustomElementsLoad(correlation: Correlation): void {
-        this.redux.dispatch(actions.loadCustomElementsCancelRequest({ correlation: correlation }));
+    cancelCustomElementsLoad(correlation?: Correlation): void {
+        this.redux.dispatch(actions.loadCustomElementsCancelRequest({ correlation }));
     }
 
     onLoadCustomElementsStart: CallbackRegistration<OnLoadCustomElementsStartCallbackPayload> = (cb) => {
@@ -426,7 +426,7 @@ export class AttributeFilterReduxBridge {
         this.redux.dispatch(actions.setOrder({ order }));
     };
 
-    getOrder = (): SortDirection => {
+    getOrder = (): SortDirection | undefined => {
         return this.redux.select(selectOrder);
     };
 
@@ -498,9 +498,9 @@ export class AttributeFilterReduxBridge {
     }: InvertableAttributeElementSelection): void => {
         this.redux.dispatch(
             actions.changeSelection({
-                selection: keys,
+                selection: keys.filter((key): key is string => key !== null),
                 isInverted,
-                irrelevantSelection: irrelevantKeys,
+                irrelevantSelection: irrelevantKeys?.filter((key): key is string => key !== null),
             }),
         );
     };
@@ -582,7 +582,7 @@ export class AttributeFilterReduxBridge {
         cb,
     ) => {
         return this.callbacks.registerCallback(
-            ({ selection }) => cb({ selection: selection.keys[0] }),
+            ({ selection }) => cb({ selection: selection.keys[0] ?? undefined }),
             this.callbacks.registrations.selectionChanged,
         );
     };
@@ -591,7 +591,7 @@ export class AttributeFilterReduxBridge {
         OnSelectionCommittedCallbackPayload<string | undefined>
     > = (cb) => {
         return this.callbacks.registerCallback(
-            ({ selection }) => cb({ selection: selection.keys[0] }),
+            ({ selection }) => cb({ selection: selection.keys[0] ?? undefined }),
             this.callbacks.registrations.selectionCommitted,
         );
     };
@@ -620,7 +620,7 @@ export class AttributeFilterReduxBridge {
         return this.redux.select(selectAttributeFilterToDisplay);
     };
 
-    getOriginalFilter = (): IAttributeFilter => {
+    getOriginalFilter = (): IAttributeFilter | undefined => {
         return this.redux.select(selectOriginalFilter);
     };
 

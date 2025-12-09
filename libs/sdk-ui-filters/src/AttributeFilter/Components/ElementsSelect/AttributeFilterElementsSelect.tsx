@@ -103,7 +103,7 @@ export function AttributeFilterElementsSelect({
 
     const handleShowFilteredElements = useCallback(() => {
         setRefocusKey("show");
-        onShowFilteredElements();
+        onShowFilteredElements?.();
     }, [onShowFilteredElements, setRefocusKey]);
 
     return (
@@ -116,7 +116,7 @@ export function AttributeFilterElementsSelect({
                 items={items}
                 totalItemsCount={totalItemsCountWithCurrentSettings}
                 itemHeight={itemHeight}
-                getItemKey={getElementKey}
+                getItemKey={(item) => getElementKey(item) ?? ""}
                 getItemTitle={(item) => getElementTitle(item, intl)}
                 isItemQuestionMarkEnabled={(item) => !!getElementPrimaryTitle(item)}
                 isInverted={isInverted}
@@ -132,23 +132,24 @@ export function AttributeFilterElementsSelect({
                 isLoadingNextPage={isLoadingNextPage}
                 nextPageItemPlaceholdersCount={nextPageSize}
                 onLoadNextPage={onLoadNextPage}
-                numberOfHiddenSelectedItems={irrelevantSelection.length}
+                numberOfHiddenSelectedItems={irrelevantSelection?.length ?? 0}
                 renderItem={(props) => (
                     <ElementsSelectItemComponent
                         {...props}
-                        primaryLabelTitle={primaryLabelTitle}
+                        primaryLabelTitle={primaryLabelTitle ?? undefined}
                         fullscreenOnMobile={fullscreenOnMobile}
                     />
                 )}
                 renderError={() => {
-                    return <ElementsSelectErrorComponent error={error} />;
+                    // error is guaranteed to exist when renderError is called
+                    return <ElementsSelectErrorComponent error={error!} />;
                 }}
                 renderLoading={() => {
                     return <ElementsSelectLoadingComponent height={loadingHeight} />;
                 }}
                 renderNoData={({ height }) => (
                     <EmptyResultComponent
-                        height={height}
+                        height={height ?? 0}
                         isFilteredByParentFilters={isFilteredByParentFilters}
                         isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
                         searchString={searchString}
@@ -157,10 +158,10 @@ export function AttributeFilterElementsSelect({
                         enableShowingFilteredElements={enableShowingFilteredElements}
                     />
                 )}
-                renderSearchBar={({ onSearch, searchString }) => (
+                renderSearchBar={({ onSearch, searchString: searchStringFromProps }) => (
                     <ElementsSearchBarComponent
                         onSearch={onSearch}
-                        searchString={searchString}
+                        searchString={searchStringFromProps ?? ""}
                         isSmall={!(isMobile && fullscreenOnMobile)}
                     />
                 )}
@@ -174,7 +175,7 @@ export function AttributeFilterElementsSelect({
                         parentFilterTitles={parentFilterTitles}
                         selectedItems={selectedItems}
                         totalElementsCountWithCurrentSettings={totalItemsCountWithCurrentSettings}
-                        selectedItemsLimit={selectedItemsLimit}
+                        selectedItemsLimit={selectedItemsLimit ?? 0}
                         attributeTitle={attributeTitle}
                         enableShowingFilteredElements={enableShowingFilteredElements}
                         onShowFilteredElements={handleShowFilteredElements}

@@ -4,6 +4,8 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, cancelled, put, race, take, takeEvery } from "redux-saga/effects";
 
+import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+
 import { ILoadElementsResult } from "../../../types/index.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { actions } from "../store/slice.js";
@@ -58,9 +60,10 @@ export function* loadCustomElementsSaga({
             yield put(actions.loadCustomElementsCancel({ correlation }));
         }
     } catch (error) {
+        const convertedError: GoodDataSdkError = convertError(error);
         yield put(
             actions.loadCustomElementsError({
-                error,
+                error: convertedError,
                 correlation,
             }),
         );

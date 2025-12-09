@@ -62,8 +62,8 @@ export function AttributeFilterElementsSelectItem({
         "gd-list-item",
         "has-only-visible",
         "s-attribute-filter-list-item",
-        `s-attribute-filter-list-item-${camelCase(item.title)}`,
-        `s-attribute-filter-list-item-${camelCase(item.title)}-${camelCase(item.uri)}`,
+        `s-attribute-filter-list-item-${camelCase(item.title ?? undefined)}`,
+        `s-attribute-filter-list-item-${camelCase(item.title ?? undefined)}-${camelCase(item.uri ?? undefined)}`,
         { "is-selected": isSelected },
         {
             "s-attribute-filter-list-item-selected": isSelected,

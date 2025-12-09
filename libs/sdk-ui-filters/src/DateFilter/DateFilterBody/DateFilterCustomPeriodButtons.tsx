@@ -20,9 +20,9 @@ export interface IDateFilterCustomPeriodButtonsProps {
     onRelativeButtonClick: () => void;
 
     /** Ref for the absolute/static form button - used for focus management */
-    absoluteButtonRef?: RefObject<HTMLButtonElement>;
+    absoluteButtonRef?: RefObject<HTMLButtonElement | null>;
     /** Ref for the relative form button - used for focus management */
-    relativeButtonRef?: RefObject<HTMLButtonElement>;
+    relativeButtonRef?: RefObject<HTMLButtonElement | null>;
 
     absoluteFormId?: string;
     relativeFormId?: string;

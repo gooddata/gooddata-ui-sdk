@@ -5,6 +5,7 @@ import {
     DateFilterOption,
     IDateFilterAbsoluteDateTimeFormErrors,
     IDateFilterOptionsByType,
+    IDateFilterRelativeFormErrors,
     IExtendedDateFilterErrors,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
@@ -49,8 +50,8 @@ const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtende
 
     // both dates are correct, lets proceed to checks that requires both dates
     if (errors.absoluteForm === undefined) {
-        const start = convertPlatformDateStringToDate(filterOption.from);
-        const end = convertPlatformDateStringToDate(filterOption.to);
+        const start = convertPlatformDateStringToDate(filterOption.from) ?? 0;
+        const end = convertPlatformDateStringToDate(filterOption.to) ?? 0;
         if (start > end) {
             errors = setError(errors, "startDateAfterEndDate");
         }
@@ -61,7 +62,7 @@ const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtende
 
 const validateRelativeForm = (filterOption: IUiRelativeDateFilterForm): IExtendedDateFilterErrors => {
     const errors = validateVisibility(filterOption);
-    const relativeFormKeys: Array<keyof IExtendedDateFilterErrors["relativeForm"]> = ["from", "to"];
+    const relativeFormKeys: Array<keyof IDateFilterRelativeFormErrors> = ["from", "to"];
     relativeFormKeys.forEach((field) => {
         if (filterOption[field] === undefined) {
             errors.relativeForm = errors.relativeForm || {};

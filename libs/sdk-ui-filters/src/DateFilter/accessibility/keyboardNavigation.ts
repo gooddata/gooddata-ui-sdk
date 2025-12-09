@@ -18,9 +18,9 @@ enum ActiveElementRole {
  */
 interface IDateFilterKeyboardNavigationConfig {
     /** Reference to the date filter container element */
-    dateFilterContainerRef: MutableRefObject<HTMLDivElement>;
+    dateFilterContainerRef: MutableRefObject<HTMLDivElement | null>;
     /** Reference to the date filter body element */
-    dateFilterBodyRef: MutableRefObject<HTMLDivElement>;
+    dateFilterBodyRef: MutableRefObject<HTMLDivElement | null>;
     /** Optional callback to close the dropdown */
     closeDropdown?: () => void;
 }
@@ -31,9 +31,9 @@ interface IDateFilterKeyboardNavigationConfig {
  */
 interface IDateFilterRelativeFormKeyboardNavigationConfig {
     /** Reference to the relative filter body element */
-    relativeDateFilterRef: MutableRefObject<HTMLDivElement>;
+    relativeDateFilterRef: MutableRefObject<HTMLDivElement | null>;
     /** Reference to the relative filter granularity tabs element */
-    tabGranularityRef: MutableRefObject<HTMLDivElement>;
+    tabGranularityRef: MutableRefObject<HTMLDivElement | null>;
     /** Callback to close the dropdown */
     closeDropdown?: () => void;
 }
@@ -47,10 +47,10 @@ interface IDateFilterRelativeFormKeyboardNavigationConfig {
  * @internal
  */
 const shouldHandleKeyboardNavigation = (
-    ref: MutableRefObject<HTMLDivElement>,
+    ref: MutableRefObject<HTMLDivElement | null>,
     activeElement: HTMLElement,
     role: ActiveElementRole,
-): boolean => ref.current.contains(activeElement) && activeElement.role === role;
+): boolean => ref.current?.contains(activeElement) === true && activeElement.role === role;
 
 /**
  * Checks if an element is a tab list item
@@ -87,7 +87,7 @@ const findNextFocusableElement = (
 // Iterates through dropdown list, exclude period input, cancel and apply button.
 const handleTabNavigation = (
     event: KeyboardEvent,
-    dateFilterContainerRef: MutableRefObject<HTMLDivElement>,
+    dateFilterContainerRef: MutableRefObject<HTMLDivElement | null>,
 ): void => {
     if (event.key !== "Tab") {
         return;

@@ -21,7 +21,9 @@ export function AttributeFilterSimpleDropdownButton({
     title,
     isLoading,
     isFiltering,
-    ...rest
+    disabled,
+    isOpen,
+    onClick,
 }: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
 
@@ -35,9 +37,10 @@ export function AttributeFilterSimpleDropdownButton({
     return (
         <DropdownButton
             className="gd-attribute-filter-dropdown-simple-button__next"
-            disabled={isLoading}
+            disabled={isLoading || disabled}
             value={buttonTitle}
-            {...rest}
+            isOpen={isOpen}
+            onClick={onClick}
         />
     );
 }

@@ -51,19 +51,19 @@ export function useAttributeFilterControllerData(
     const isCommittedSelectionInverted = handlerState.selection.committed.isInverted;
     const committedSelectionElements = handlerState.selection.committed.elements;
 
-    const searchString = handlerState.elements.options.search;
-    const limit = handlerState.elements.options.limit;
-    const limitingAttributeFilters = handlerState.elements.options.limitingAttributeFilters;
-    const limitingDateFilters = handlerState.elements.options.limitingDateFilters;
-    const limitingValidationItems = handlerState.elements.options.limitingValidationItems;
+    const searchString = handlerState.elements.options?.search ?? "";
+    const limit = handlerState.elements.options?.limit ?? 0;
+    const limitingAttributeFilters = handlerState.elements.options?.limitingAttributeFilters ?? [];
+    const limitingDateFilters = handlerState.elements.options?.limitingDateFilters ?? [];
+    const limitingValidationItems = handlerState.elements.options?.limitingValidationItems ?? [];
 
-    const hasNextElementsPage = elements.length < totalElementsCountWithCurrentSettings;
+    const hasNextElementsPage = (elements?.length ?? 0) < (totalElementsCountWithCurrentSettings ?? 0);
     const nextElementsPageSize = hasNextElementsPage
-        ? Math.min(limit, totalElementsCountWithCurrentSettings - elements.length)
+        ? Math.min(limit, (totalElementsCountWithCurrentSettings ?? 0) - (elements?.length ?? 0))
         : 0;
 
     const isSelectionInvalid =
-        workingSelectionElements.length > MAX_SELECTION_SIZE ||
+        (workingSelectionElements?.length ?? 0) > MAX_SELECTION_SIZE ||
         (!isWorkingSelectionInverted && isWorkingSelectionEmpty);
 
     const isApplyDisabled = isSelectionInvalid || !isWorkingSelectionChanged;
@@ -88,9 +88,11 @@ export function useAttributeFilterControllerData(
     const parentFilterAttributes = handler.getLimitingAttributeFiltersAttributes();
     const displayForms = attribute?.displayForms ?? [];
     const currentDisplayFormRef = filterObjRef(handlerState.attributeFilter);
-    const currentDisplayAsDisplayFormRef = filterObjRef(handlerState.attributeFilterToDisplay);
+    const currentDisplayAsDisplayFormRef = handlerState.attributeFilterToDisplay
+        ? filterObjRef(handlerState.attributeFilterToDisplay)
+        : undefined;
 
-    const offset = handlerState.elements.options.offset;
+    const offset = handlerState.elements.options?.offset ?? 0;
 
     const irrelevantSelection = supportsShowingFilteredElements
         ? handlerState.selection.working.irrelevantElements
@@ -114,19 +116,19 @@ export function useAttributeFilterControllerData(
         nextElementsPageError,
         nextElementsPageSize,
 
-        elements,
-        totalElementsCount,
-        totalElementsCountWithCurrentSettings,
+        elements: elements ?? [],
+        totalElementsCount: totalElementsCount ?? 0,
+        totalElementsCountWithCurrentSettings: totalElementsCountWithCurrentSettings ?? 0,
 
-        isSelectionInvalid,
+        isSelectionInvalid: isSelectionInvalid ?? false,
         isApplyDisabled,
         isWorkingSelectionChanged,
 
-        isWorkingSelectionInverted,
-        workingSelectionElements,
+        isWorkingSelectionInverted: isWorkingSelectionInverted ?? false,
+        workingSelectionElements: workingSelectionElements ?? [],
 
-        isCommittedSelectionInverted,
-        committedSelectionElements,
+        isCommittedSelectionInverted: isCommittedSelectionInverted ?? false,
+        committedSelectionElements: committedSelectionElements ?? [],
 
         searchString,
 

@@ -16,8 +16,8 @@ export const dateRangeToDateFilterValue = (
     const parsingFormat = isTimeForAbsoluteRangeEnabled ? platformDateTimeFormat : platformDateFormat;
 
     return {
-        from: convertDateToPlatformDateString(range.from, parsingFormat),
-        to: convertDateToPlatformDateString(range.to, parsingFormat),
+        from: convertDateToPlatformDateString(range.from, parsingFormat) ?? undefined,
+        to: convertDateToPlatformDateString(range.to, parsingFormat) ?? undefined,
         localIdentifier,
         type: "absoluteForm",
         name: "",
@@ -32,8 +32,8 @@ export const dateFilterValueToDateRange = (
     const isFromTimeDefined = value.from && value.from.split(" ").length > 1;
     const isToTimeDefined = value.to && value.to.split(" ").length > 1;
 
-    const from = value && convertPlatformDateStringToDate(value.from);
-    const to = value && convertPlatformDateStringToDate(value.to);
+    const from = value ? (convertPlatformDateStringToDate(value.from) ?? undefined) : undefined;
+    const to = value ? (convertPlatformDateStringToDate(value.to) ?? undefined) : undefined;
 
     if (from && !isFromTimeDefined && isTimeForAbsoluteRangeEnabled) {
         from.setHours(0);

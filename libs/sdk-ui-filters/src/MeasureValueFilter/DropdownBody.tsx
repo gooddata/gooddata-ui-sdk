@@ -39,7 +39,7 @@ interface IDropdownBodyProps {
 interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;
     value: IMeasureValueFilterValue;
-    enabledTreatNullValuesAsZero: boolean;
+    enabledTreatNullValuesAsZero: boolean | undefined;
 }
 
 const DefaultValuePrecision = 6;
@@ -56,7 +56,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     } = props;
 
     const trimToPrecision = useCallback(
-        (n: number): number => {
+        (n: number | undefined): number | undefined => {
             if (!n) {
                 return n;
             }
@@ -65,9 +65,15 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         [valuePrecision],
     );
 
-    const fromPercentToDecimal = useCallback((n: number): number => (n ? n / 100 : n), []);
+    const fromPercentToDecimal = useCallback(
+        (n: number | undefined): number | undefined => (n ? n / 100 : n),
+        [],
+    );
 
-    const fromDecimalToPercent = useCallback((n: number): number => (n ? n * 100 : n), []);
+    const fromDecimalToPercent = useCallback(
+        (n: number | undefined): number | undefined => (n ? n * 100 : n),
+        [],
+    );
 
     const convertToPercentageValue = useCallback(
         (value: IMeasureValueFilterValue, operator: string): IMeasureValueFilterValue => {
@@ -116,7 +122,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     const isApplyButtonDisabledForComparison = useCallback(() => {
         const { value: stateValue = null } = state.value;
 
-        if (stateValue === null) {
+        if (stateValue === null || Number.isNaN(stateValue)) {
             return true;
         }
 
@@ -134,7 +140,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     const isApplyButtonDisabledForRange = useCallback(() => {
         const { from = null, to = null } = state.value;
 
-        if (from === null || to === null) {
+        if (from === null || to === null || Number.isNaN(from) || Number.isNaN(to)) {
             return true;
         }
 
@@ -207,7 +213,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         const finalOperator = stateOperator === "ALL" ? null : stateOperator;
         const finalValue = usePercentage ? convertToRawValue(stateValue, stateOperator) : stateValue;
 
-        props.onApply(finalOperator, finalValue, enabledTreatNullValuesAsZero);
+        props.onApply(finalOperator, finalValue, enabledTreatNullValuesAsZero ?? false);
     }, [isApplyButtonDisabled, state, props, convertToRawValue]);
 
     const renderInputSection = useCallback(() => {
@@ -221,7 +227,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
             return (
                 <ComparisonInput
                     value={value}
-                    usePercentage={usePercentage}
+                    usePercentage={usePercentage ?? false}
                     onValueChange={handleValueChange}
                     onEnterKeyPress={onApply}
                     disableAutofocus={disableAutofocus}
@@ -233,7 +239,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                 <RangeInput
                     from={from}
                     to={to}
-                    usePercentage={usePercentage}
+                    usePercentage={usePercentage ?? false}
                     onFromChange={handleFromChange}
                     onToChange={handleToChange}
                     onEnterKeyPress={onApply}

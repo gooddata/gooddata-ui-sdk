@@ -179,11 +179,31 @@ export interface IExecutionResultMetadata {
  *
  * @public
  */
+/**
+ * Arbitrary metadata attached to a prepared execution.
+ *
+ * @remarks
+ * Use this bag to correlate executions with higher-level constructs (for example,
+ * geo layer identifiers). The context travels with the execution through immutable
+ * operations and can be retrieved once the data is resolved.
+ *
+ * @public
+ */
+export type IExecutionContext = unknown;
+
+/**
+ * @public
+ */
 export interface IPreparedExecutionOptions {
     /**
      * Signal to abort the execution or its result.
      */
     signal?: AbortSignal;
+
+    /**
+     * Additional metadata to carry with the execution.
+     */
+    context?: IExecutionContext;
 }
 
 /**
@@ -375,6 +395,11 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     readonly signal?: AbortSignal;
 
     /**
+     * Arbitrary execution metadata provided by the caller.
+     */
+    readonly context?: IExecutionContext;
+
+    /**
      * Changes sorting of the resulting data. Any sorting settings accumulated so far WILL be wiped out.
      *
      * @param items - items to sort by
@@ -451,6 +476,14 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
      */
 
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
+
+    /**
+     * Attaches custom execution context metadata.
+     *
+     * @param context - metadata to associate with this execution
+     * @returns new execution containing the provided context
+     */
+    withContext(context: IExecutionContext): IPreparedExecution;
 }
 
 /**
@@ -466,6 +499,11 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
      * Full definition of execution that yielded this result.
      */
     readonly definition: IExecutionDefinition;
+
+    /**
+     * Arbitrary metadata carried over from the originating prepared execution.
+     */
+    readonly context?: IExecutionContext;
 
     /**
      * Description of shape of the data.
@@ -654,6 +692,11 @@ export interface IDataView {
      * Result of the execution that calculated data for this view.
      */
     readonly result: IExecutionResult;
+
+    /**
+     * Execution context metadata available on this data view.
+     */
+    readonly context?: IExecutionContext;
 
     /**
      * Additional metadata for the particular execution result.

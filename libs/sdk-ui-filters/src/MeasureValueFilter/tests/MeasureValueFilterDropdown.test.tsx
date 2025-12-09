@@ -131,7 +131,7 @@ describe("Measure value filter dropdown", () => {
             const messageElement = component.getWarningMessage();
 
             expect(messageElement).toBeInTheDocument();
-            expect(messageElement.textContent).toEqual(warningMessage);
+            expect(messageElement!.textContent).toEqual(warningMessage);
             expect(component.getWarningMessageBySeverity("low")).toBeInTheDocument();
         });
 
@@ -144,7 +144,7 @@ describe("Measure value filter dropdown", () => {
             const messageElement = component.getWarningMessage();
 
             expect(messageElement).toBeInTheDocument();
-            expect(messageElement.textContent).toEqual(warningMessage.text);
+            expect(messageElement!.textContent).toEqual(warningMessage.text);
             expect(component.getWarningMessageBySeverity("low")).toBeInTheDocument();
         });
 
@@ -157,7 +157,7 @@ describe("Measure value filter dropdown", () => {
             const messageElement = component.getWarningMessage();
 
             expect(messageElement).toBeInTheDocument();
-            expect(messageElement.textContent).toEqual(warningMessage.text);
+            expect(messageElement!.textContent).toEqual(warningMessage.text);
             expect(component.getWarningMessageBySeverity("medium")).toBeInTheDocument();
         });
 
@@ -170,7 +170,7 @@ describe("Measure value filter dropdown", () => {
             const messageElement = component.getWarningMessage();
 
             expect(messageElement).toBeInTheDocument();
-            expect(messageElement.textContent).toEqual(warningMessage.text);
+            expect(messageElement!.textContent).toEqual(warningMessage.text);
             expect(component.getWarningMessageBySeverity("high")).toBeInTheDocument();
         });
     });
@@ -629,7 +629,7 @@ describe("Measure value filter dropdown", () => {
 
                 component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
-                expect(component.getTreatNullAsCheckbox().checked).toEqual(true);
+                expect(component.getTreatNullAsCheckbox()!.checked).toEqual(true);
             });
 
             it("should not be checked when passed filter is empty and 'treatNullAsZeroDefaultValue' property is set to false", () => {
@@ -640,21 +640,21 @@ describe("Measure value filter dropdown", () => {
 
                 component.openOperatorDropdown().selectOperator("GREATER_THAN");
 
-                expect(component.getTreatNullAsCheckbox().checked).toEqual(false);
+                expect(component.getTreatNullAsCheckbox()!.checked).toEqual(false);
             });
 
             it("should be checked when passed filter has a condition with 'treatNullValuesAsZero' property set to true", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
                 renderComponentWithTreatNullAsZeroOption({ filter });
 
-                expect(component.getTreatNullAsCheckbox().checked).toEqual(true);
+                expect(component.getTreatNullAsCheckbox()!.checked).toEqual(true);
             });
 
             it("should not be checked when passed filter has a condition without 'treatNullValuesAsZero' property even if 'treatNullAsZeroDefaultValue' property is truthy", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
                 renderComponentWithTreatNullAsZeroOption({ filter });
 
-                expect(component.getTreatNullAsCheckbox().checked).toEqual(false);
+                expect(component.getTreatNullAsCheckbox()!.checked).toEqual(false);
             });
         });
     });

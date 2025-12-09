@@ -18,7 +18,7 @@ const operatorItems = [
 ] as IOperatorDropdownItem[];
 
 const getOperatorItemTranslation = (operator: RankingFilterOperator) => {
-    return operatorItems.find(({ value }) => value === operator).translationId;
+    return operatorItems.find(({ value }) => value === operator)?.translationId ?? "";
 };
 
 interface OperatorDropdownComponentProps {

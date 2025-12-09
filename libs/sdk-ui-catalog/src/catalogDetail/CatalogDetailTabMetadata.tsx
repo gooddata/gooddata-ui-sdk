@@ -4,10 +4,11 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import type { ISeparators, MetricType } from "@gooddata/sdk-model";
-import { UiDate, UiIcon, type UiTagDef, UiTags, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { UiDate, UiIcon, type UiTagDef, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
+import { CatalogDetailTags } from "./CatalogDetailTags.js";
 import type { ICatalogItem } from "../catalogItem/index.js";
 import type { ObjectType } from "../objectType/types.js";
 
@@ -122,45 +123,13 @@ export function CatalogDetailTabMetadata({
             <CatalogDetailContentRow
                 title={<FormattedMessage id="analyticsCatalog.column.title.tags" />}
                 content={
-                    <>
-                        <UiTags
-                            tags={item.tags.map((tag) => ({
-                                id: tag,
-                                label: tag,
-                                isDeletable: canEdit,
-                            }))}
-                            canCreateTag={canEdit}
-                            canDeleteTags={canEdit}
-                            mode="multi-line"
-                            onTagClick={onTagClick}
-                            onTagAdd={onTagAdd}
-                            onTagRemove={onTagRemove}
-                            addLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.addLabel",
-                            })}
-                            nameLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.nameLabel",
-                            })}
-                            cancelLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.cancelLabel",
-                            })}
-                            saveLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.saveLabel",
-                            })}
-                            removeLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.removeLabel",
-                            })}
-                            moreLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.more",
-                            })}
-                            noTagsLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.noTags",
-                            })}
-                            closeLabel={intl.formatMessage({
-                                id: "analyticsCatalog.tags.manager.label.close",
-                            })}
-                        />
-                    </>
+                    <CatalogDetailTags
+                        tags={item.tags}
+                        canEdit={canEdit}
+                        onTagClick={onTagClick}
+                        onTagAdd={onTagAdd}
+                        onTagRemove={onTagRemove}
+                    />
                 }
             />
         </div>

@@ -2,6 +2,8 @@
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
+import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+
 import { initAttributeSaga } from "./initAttributeSaga.js";
 import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
 import { initIrrelevantSelectionSaga } from "./initIrrelevantSelectionSaga.js";
@@ -73,7 +75,8 @@ function* initSaga({ payload: { correlation } }: ReturnType<typeof actions.init>
 
         yield put(actions.initSuccess({ correlation: correlation }));
     } catch (error) {
-        yield put(actions.initError({ error, correlation: correlation }));
+        const convertedError: GoodDataSdkError = convertError(error);
+        yield put(actions.initError({ error: convertedError, correlation: correlation }));
     } finally {
         if (yield cancelled()) {
             yield all([put(actions.initCancel({ correlation: correlation }))]);

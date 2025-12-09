@@ -4,36 +4,18 @@ import { memo, useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
 import { testIds } from "../automation/index.js";
+import { useCatalogTags } from "../catalogResource/index.js";
 
-type Props = {
-    backend: IAnalyticalBackend;
-    workspace: string;
-};
-
-export function FilterTags({ backend, workspace }: Props) {
+export function FilterTags() {
     const intl = useIntl();
     const { tags } = useFilterState();
     const { setTags } = useFilterActions();
-    const { result, status } = useCancelablePromise<{ tags: string[] }, Error>(
-        {
-            async promise() {
-                return backend.workspace(workspace).genAI().getAnalyticsCatalog().getTags();
-            },
-            onError(error) {
-                console.error(error);
-            },
-        },
-        [backend, workspace],
-    );
-
-    const options = useMemo(() => sortTags(result?.tags), [result?.tags]);
+    const { tags: options, status } = useCatalogTags();
 
     const selection = useMemo(
         () => options.filter((item) => tags.values.includes(item)),
@@ -62,10 +44,3 @@ export function FilterTags({ backend, workspace }: Props) {
 }
 
 export const FilterTagsMemo = memo(FilterTags);
-
-function sortTags(tags: string[] = []): string[] {
-    // Sort alphabetically
-    return [...tags].sort((a, b) => {
-        return a.toLowerCase().localeCompare(b.toLowerCase());
-    });
-}

@@ -33,6 +33,7 @@ import {
     IElementsQueryOptions,
     IElementsQueryResult,
     IEntitlements,
+    IExecutionContext,
     IExecutionFactory,
     IExecutionResult,
     IExplainProvider,
@@ -61,6 +62,7 @@ import {
     IOrganizations,
     IPagedResource,
     IPreparedExecution,
+    IPreparedExecutionOptions,
     IRawExportCustomOverrides,
     ISecuritySettingsService,
     ISemanticSearchQuery,
@@ -293,6 +295,7 @@ export function dummyDataView(
     return {
         definition,
         result: execResult,
+        context: execResult.context,
         headerItems: [],
         data: [],
         offset: [0, 0],
@@ -455,8 +458,8 @@ class DummyExecutionFactory extends AbstractExecutionFactory {
         super(workspace);
     }
 
-    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
-        return dummyPreparedExecution(def, this, this.config);
+    public forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution {
+        return dummyPreparedExecution(def, this, this.config, options?.context);
     }
 }
 
@@ -464,6 +467,7 @@ function dummyExecutionResult(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
     config: DummyBackendConfig,
+    context?: IExecutionContext,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/emptyResult";
 
@@ -485,6 +489,7 @@ function dummyExecutionResult(
     const result: IExecutionResult = {
         definition,
         dimensions: [],
+        context,
         readAll(): Promise<IDataView> {
             return dummyRead();
         },
@@ -510,7 +515,7 @@ function dummyExecutionResult(
             throw new NotSupported("...");
         },
         transform(): IPreparedExecution {
-            return executionFactory.forDefinition(definition);
+            return executionFactory.forDefinition(definition, { context });
         },
         withSignal(_signal: AbortSignal): IExecutionResult {
             throw new NotSupported("canceling is not supported in dummy backend");
@@ -524,28 +529,30 @@ function dummyPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
     config: DummyBackendConfig,
+    context?: IExecutionContext,
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
 
     return {
         definition,
+        context,
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-            return executionFactory.forDefinition(defWithDimensions(definition, ...dim));
+            return executionFactory.forDefinition(defWithDimensions(definition, ...dim), { context });
         },
         withSorting(...items: ISortItem[]): IPreparedExecution {
-            return executionFactory.forDefinition(defWithSorting(definition, items));
+            return executionFactory.forDefinition(defWithSorting(definition, items), { context });
         },
         withDateFormat(dateFormat: string): IPreparedExecution {
-            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
+            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat), { context });
         },
         withBuckets(...buckets: IBucket[]) {
-            return executionFactory.forDefinition(defWithBuckets(definition, ...buckets));
+            return executionFactory.forDefinition(defWithBuckets(definition, ...buckets), { context });
         },
         withSignal(_signal: AbortSignal): IPreparedExecution {
-            return dummyPreparedExecution(definition, executionFactory, config);
+            return dummyPreparedExecution(definition, executionFactory, config, context);
         },
         execute(): Promise<IExecutionResult> {
-            return Promise.resolve(dummyExecutionResult(definition, executionFactory, config));
+            return Promise.resolve(dummyExecutionResult(definition, executionFactory, config, context));
         },
         explain<T extends ExplainType | undefined>(): IExplainProvider<T> {
             console.warn("Backend does not support explain mode");
@@ -564,7 +571,10 @@ function dummyPreparedExecution(
             if (!isEmpty(config?.dataSamplingPercentage)) {
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
-            return executionFactory.forDefinition(definition);
+            return executionFactory.forDefinition(definition, { context });
+        },
+        withContext(newContext: IExecutionContext): IPreparedExecution {
+            return dummyPreparedExecution(definition, executionFactory, config, newContext);
         },
     };
 }

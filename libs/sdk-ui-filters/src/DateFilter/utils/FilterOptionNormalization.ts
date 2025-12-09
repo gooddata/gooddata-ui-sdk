@@ -4,6 +4,8 @@ import { DateFilterOption, isUiRelativeDateFilterForm } from "../interfaces/inde
 export function normalizeSelectedFilterOption(selectedFilterOption: DateFilterOption): DateFilterOption {
     if (
         isUiRelativeDateFilterForm(selectedFilterOption) &&
+        selectedFilterOption.from !== undefined &&
+        selectedFilterOption.to !== undefined &&
         selectedFilterOption.from > selectedFilterOption.to
     ) {
         return {

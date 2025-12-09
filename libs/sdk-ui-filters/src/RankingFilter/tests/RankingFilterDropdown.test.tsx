@@ -167,7 +167,7 @@ describe("RankingFilterDropdown", () => {
         it("should call onDropDownItemMouseOver on item mouseOver", () => {
             const onDropDownItemMouseOver = vi.fn();
             renderComponent({ onDropDownItemMouseOver });
-            fireEvent.mouseOver(component.openAttributeDropdown().getAttributeItem("Attribute 1"));
+            fireEvent.mouseOver(component.openAttributeDropdown().getAttributeItem("Attribute 1")!);
 
             expect(onDropDownItemMouseOver).toHaveBeenCalled();
             expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ uri: "attribute1" });
@@ -177,7 +177,7 @@ describe("RankingFilterDropdown", () => {
             const onDropDownItemMouseOut = vi.fn();
             renderComponent({ onDropDownItemMouseOut });
 
-            fireEvent.mouseOut(component.openAttributeDropdown().getAttributeItem("Attribute 1"));
+            fireEvent.mouseOut(component.openAttributeDropdown().getAttributeItem("Attribute 1")!);
 
             expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
@@ -220,7 +220,7 @@ describe("RankingFilterDropdown", () => {
             const onDropDownItemMouseOver = vi.fn();
             renderComponent({ onDropDownItemMouseOver });
 
-            fireEvent.mouseOver(component.openMeasureDropdown().getMeasureItem("Measure 1"));
+            fireEvent.mouseOver(component.openMeasureDropdown().getMeasureItem("Measure 1")!);
 
             expect(onDropDownItemMouseOver).toHaveBeenCalled();
             expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ localIdentifier: "measure1" });
@@ -230,7 +230,7 @@ describe("RankingFilterDropdown", () => {
             const onDropDownItemMouseOut = vi.fn();
             renderComponent({ onDropDownItemMouseOut });
 
-            fireEvent.mouseOut(component.openMeasureDropdown().getMeasureItem("Measure 1"));
+            fireEvent.mouseOut(component.openMeasureDropdown().getMeasureItem("Measure 1")!);
 
             expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
@@ -257,7 +257,7 @@ describe("RankingFilterDropdown", () => {
             renderComponent();
             component.changeInputValue("100");
 
-            expect(component.getValueDropdown().textContent).toEqual("100");
+            expect(component.getValueDropdown()!.textContent).toEqual("100");
         });
 
         it("should render list items with matching items", () => {
@@ -265,7 +265,7 @@ describe("RankingFilterDropdown", () => {
             component.changeInputValue("1");
 
             // items with label 10, 15, 100
-            expect(component.getValueDropdown().textContent).toEqual("1015100");
+            expect(component.getValueDropdown()!.textContent).toEqual("1015100");
         });
 
         it("should not render list items when none matches the entered value", () => {
@@ -279,7 +279,7 @@ describe("RankingFilterDropdown", () => {
             renderComponent();
             component.changeInputValue("-100");
 
-            expect(component.getValueDropdown().textContent).toEqual(
+            expect(component.getValueDropdown()!.textContent).toEqual(
                 "Input value should be a positive number.",
             );
         });
@@ -288,14 +288,14 @@ describe("RankingFilterDropdown", () => {
             renderComponent();
             component.changeInputValue("1000000");
 
-            expect(component.getValueDropdown().textContent).toEqual("Input value too large.");
+            expect(component.getValueDropdown()!.textContent).toEqual("Input value too large.");
         });
 
         it("should render error message when input value is string without numbers", () => {
             renderComponent();
             component.changeInputValue("test");
 
-            expect(component.getValueDropdown().textContent).toEqual(
+            expect(component.getValueDropdown()!.textContent).toEqual(
                 "Input value should be a positive number.",
             );
         });

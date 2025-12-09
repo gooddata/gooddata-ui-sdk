@@ -2,9 +2,8 @@
 
 import { useCallback } from "react";
 
-import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
-
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
+import { IGeoLegendItem } from "../../types/common/legends.js";
 
 /**
  * Hook to handle legend item click interactions.
@@ -19,11 +18,11 @@ import { useGeoLegend } from "../../context/GeoLegendContext.js";
  *
  * @alpha
  */
-export function useLegendItemClick(allUris: string[]): (item: IPushpinCategoryLegendItem) => void {
+export function useLegendItemClick(allUris: string[]): (item: IGeoLegendItem) => void {
     const { toggleLegendItem } = useGeoLegend();
 
     return useCallback(
-        (item: IPushpinCategoryLegendItem) => {
+        (item: IGeoLegendItem) => {
             toggleLegendItem(item.uri, allUris);
         },
         [toggleLegendItem, allUris],

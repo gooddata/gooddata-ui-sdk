@@ -15,6 +15,7 @@ import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext as IFilterContext_2 } from '@gooddata/sdk-model';
+import { IInsightLayerDefinition } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import type { RawAxiosRequestConfig } from 'axios';
@@ -13255,6 +13256,8 @@ interface IVisualizationObject_2 {
     buckets: IBucket[];
     // (undocumented)
     filters: IFilter[];
+    // (undocumented)
+    layers?: IInsightLayerDefinition[];
     // (undocumented)
     properties: VisualizationProperties;
     // (undocumented)

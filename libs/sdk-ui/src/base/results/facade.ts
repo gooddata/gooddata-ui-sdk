@@ -5,6 +5,7 @@ import {
     IClusteringResult,
     ICollectionItemsResult,
     IDataView,
+    IExecutionContext,
     IExecutionResult,
     IExecutionResultDataSourceMessage,
     IForecastConfig,
@@ -109,6 +110,14 @@ export class DataViewFacade {
      */
     public result(): IExecutionResult {
         return this.dataView.result;
+    }
+
+    /**
+     * @returns context metadata attached to the underlying execution
+     * @public
+     */
+    public context(): IExecutionContext | undefined {
+        return this.dataView.context;
     }
 
     /**
@@ -250,6 +259,7 @@ export function emptyDataViewForResult(
     return {
         definition,
         result,
+        context: result.context,
         forecastConfig,
         forecastResult,
         headerItems: [],

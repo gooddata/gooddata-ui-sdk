@@ -2,9 +2,8 @@
 
 import { useEffect } from "react";
 
-import type { Map as MapLibreMap } from "maplibre-gl";
-
-import { CenterPositionChangedCallback, ZoomChangedCallback } from "../../types/shared.js";
+import type { IMapFacade } from "../../layers/common/mapFacade.js";
+import { CenterPositionChangedCallback, ZoomChangedCallback } from "../../types/common/callbacks.js";
 
 /**
  * Set up map interaction callbacks
@@ -20,7 +19,7 @@ import { CenterPositionChangedCallback, ZoomChangedCallback } from "../../types/
  * @internal
  */
 export function useMapCallbacks(
-    map: MapLibreMap | null,
+    map: IMapFacade | null,
     callbacks: {
         onCenterPositionChanged?: CenterPositionChangedCallback;
         onZoomChanged?: ZoomChangedCallback;

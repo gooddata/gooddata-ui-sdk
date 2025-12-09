@@ -2,20 +2,28 @@
 
 import { cloneDeep, set } from "lodash-es";
 
-import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IBucket,
+    IAttribute,
     IInsightDefinition,
+    bucketAttribute,
+    bucketItems,
+    insightBucket,
     insightBuckets,
     insightFilters,
     insightHasDataDefined,
+    insightLayers,
+    newAttribute,
 } from "@gooddata/sdk-model";
 import { BucketNames, IAvailableDrillTargets, IPushData, VisualizationTypes } from "@gooddata/sdk-ui";
-import { getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
 import {
-    GeoAreaChartImplementation,
-    ICoreGeoAreaChartProps,
+    GeoChartNextInternal,
     IGeoAreaChartConfig,
+    type IGeoLayer,
+    buildLayerExecution,
+    createAreaLayer,
+    insightLayersToGeoLayers,
+    isGeoLayerPushpin,
 } from "@gooddata/sdk-ui-geo/next";
 
 import {
@@ -48,8 +56,9 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { extractControls } from "../geoChartNext/geoAttributeHelper.js";
-import { tryCreateVirtualBucket } from "../geoChartNext/geoVirtualBucketFactory.js";
+import { createAttributeRef } from "../geoChartNext/geoAttributeHelper.js";
+
+type GeoChartNextExecutionProps = Parameters<typeof GeoChartNextInternal>[0];
 
 /**
  * Geo area charts support max 1 measure for color
@@ -182,14 +191,38 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
     /**
      * Creates execution for geo area chart.
+     *
+     * @remarks
+     * This method is called by the base visualization infrastructure for exports
+     * and other external consumers. The internal rendering uses `buildLayerExecution()`
+     * which works with the layer-based architecture.
      */
     public override getExecution(
         options: IVisProps,
         insight: IInsightDefinition,
-        executionFactory: IExecutionFactory,
+        _executionFactory: IExecutionFactory,
     ) {
-        const buckets = this.prepareExecutionData(insight);
-        return this.buildExecution(buckets, options, insight, executionFactory);
+        const { primaryLayer, config } = this.buildPrimaryLayerContext(options, insight);
+
+        return buildLayerExecution(primaryLayer, {
+            backend: this.backend,
+            workspace: this.workspace,
+            config,
+            execConfig: options.executionConfig,
+        });
+    }
+
+    public override getExecutions(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        _executionFactory: IExecutionFactory,
+    ): IPreparedExecution[] {
+        const { config } = this.buildPrimaryLayerContext(options, insight);
+        const insightLayerDefs = insightLayers(insight);
+        const additionalLayers = insightLayersToGeoLayers(insightLayerDefs);
+        const resolvedAdditionalLayers = additionalLayers.filter((layer) => !this.shouldSkipLayer(layer));
+
+        return this.buildAdditionalLayerExecutions(resolvedAdditionalLayers, options, config);
     }
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
@@ -240,17 +273,19 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
     ): void {
         const { custom = {}, locale, theme } = options;
         const { drillableItems } = custom;
-        const supportedControls = this.visualizationProperties.controls || {};
-        const fullConfig = this.buildVisualizationConfig(options, supportedControls);
-        const buckets = this.prepareExecutionData(insight);
-        const execution = this.buildExecution(buckets, options, insight, executionFactory);
+        const { config: configWithTooltip } = this.buildPrimaryLayerContext(options, insight);
+        const primaryExecution = this.getExecution(options, insight, executionFactory);
+        const additionalLayerExecutions = this.getExecutions(options, insight, executionFactory) ?? [];
 
-        const props: ICoreGeoAreaChartProps = {
+        const geoChartProps: GeoChartNextExecutionProps = {
             backend: this.backend,
             workspace: this.workspace,
-            execution,
+            type: "area",
+            execution: primaryExecution,
+            executions: additionalLayerExecutions,
+            execConfig: options.executionConfig,
             drillableItems,
-            config: fullConfig,
+            config: configWithTooltip,
             locale,
             theme,
             pushData: this.handlePushData,
@@ -261,41 +296,83 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             onDrill: this.onDrill,
         };
 
-        this.renderFun(<GeoAreaChartImplementation {...props} />, this.getElement());
+        this.renderFun(<GeoChartNextInternal {...geoChartProps} />, this.getElement());
     }
 
-    private buildExecution(
-        buckets: IBucket[],
+    private buildPrimaryLayerContext(
         options: IVisProps,
         insight: IInsightDefinition,
-        executionFactory: IExecutionFactory,
-    ) {
-        const { executionConfig } = options;
+    ): { primaryLayer: IGeoLayer; config: IGeoAreaChartConfig } {
+        const supportedControls = this.visualizationProperties.controls || {};
+        const fullConfig = this.buildVisualizationConfig(options, supportedControls);
+        const filters = insightFilters(insight);
+        const sortBy = createAreaSortForSegment(insight);
 
-        return executionFactory
-            .forBuckets(buckets, insightFilters(insight))
-            .withDimensions(getGeoChartDimensions)
-            .withSorting(...createAreaSortForSegment(insight))
-            .withExecConfig(executionConfig);
+        const areaBucket = insightBucket(insight, BucketNames.AREA);
+        const area = areaBucket ? bucketAttribute(areaBucket) : undefined;
+        const colorBucket = insightBucket(insight, BucketNames.COLOR);
+        const color = colorBucket ? bucketItems(colorBucket)[0] : undefined;
+        const segmentBucket = insightBucket(insight, BucketNames.SEGMENT);
+        const segmentBy = segmentBucket ? bucketAttribute(segmentBucket) : undefined;
+
+        const tooltipTextId = supportedControls?.["tooltipText"] as string | undefined;
+        const tooltipTextAttribute = this.createTooltipTextAttribute(area, tooltipTextId);
+        const configWithTooltip = tooltipTextAttribute
+            ? { ...fullConfig, tooltipText: tooltipTextAttribute }
+            : fullConfig;
+
+        const primaryLayer = createAreaLayer({
+            area: area as IAttribute,
+            ...(color ? { color } : {}),
+            ...(segmentBy ? { segmentBy } : {}),
+            filters,
+            sortBy,
+        });
+
+        return {
+            primaryLayer,
+            config: configWithTooltip,
+        };
     }
 
-    private prepareExecutionData(insight: IInsightDefinition): IBucket[] {
-        const buckets = cloneDeep(insightBuckets(insight));
-        const tooltipBucket = this.createTooltipBucket(insight);
-        if (tooltipBucket) {
-            buckets.push(tooltipBucket);
+    private buildAdditionalLayerExecutions(
+        layers: IGeoLayer[],
+        options: IVisProps,
+        config: IGeoAreaChartConfig,
+    ): IPreparedExecution[] {
+        if (!layers.length) {
+            return [];
         }
-        return buckets;
+
+        return layers.map((layer) =>
+            buildLayerExecution(layer, {
+                backend: this.backend,
+                workspace: this.workspace,
+                config,
+                execConfig: options.executionConfig,
+            }),
+        );
     }
 
-    private createTooltipBucket(insight: IInsightDefinition): IBucket | undefined {
-        const controls = extractControls(insight);
-        return tryCreateVirtualBucket(
-            insight,
-            controls["tooltipText"],
-            BucketNames.TOOLTIP_TEXT,
-            "tooltipText_df",
-        );
+    private shouldSkipLayer(layer: IGeoLayer): boolean {
+        if (!isGeoLayerPushpin(layer)) {
+            return false;
+        }
+
+        // Skip layers when latitude or longitude is missing
+        return !layer.latitude || !layer.longitude;
+    }
+
+    private createTooltipTextAttribute(
+        area: IAttribute | undefined,
+        tooltipTextId?: string,
+    ): IAttribute | undefined {
+        if (!area || !tooltipTextId) {
+            return undefined;
+        }
+
+        const tooltipRef = createAttributeRef(area, tooltipTextId);
+        return newAttribute(tooltipRef, (attribute) => attribute.localId("tooltipText_df"));
     }
 
     private resolveTooltipText(areaItem?: IBucketItem): string | undefined {

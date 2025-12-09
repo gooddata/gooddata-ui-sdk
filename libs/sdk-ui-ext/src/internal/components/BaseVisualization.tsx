@@ -6,7 +6,7 @@ import { isEmpty, isEqual, omit } from "lodash-es";
 import { Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 
-import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionConfig,
     IInsight,
@@ -471,6 +471,18 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         }
 
         return this.visualization.getExecution(
+            this.getVisualizationProps(),
+            this.props.insight,
+            this.executionFactory,
+        );
+    }
+
+    public getExecutions(): IPreparedExecution[] | undefined {
+        if (!this.visualization) {
+            this.setupVisualization(this.props);
+        }
+
+        return this.visualization.getExecutions?.(
             this.getVisualizationProps(),
             this.props.insight,
             this.executionFactory,

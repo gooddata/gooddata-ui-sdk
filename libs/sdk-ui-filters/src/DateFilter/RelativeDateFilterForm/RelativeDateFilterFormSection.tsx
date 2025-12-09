@@ -30,9 +30,9 @@ interface IAllTimeFilterSectionProps {
     filterOptions: IDateFilterOptionsByType;
     selectedFilterOption: DateFilterOption;
     isMobile: boolean;
-    route: string;
+    route: string | null;
     availableGranularities: DateFilterGranularity[];
-    errors: IExtendedDateFilterErrors;
+    errors?: IExtendedDateFilterErrors;
     withoutApply?: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
@@ -83,7 +83,7 @@ export function RelativeDateFilterFormSection({
                     isSelected={isSelected}
                     onClick={() => {
                         changeRoute("relativeForm");
-                        if (!isRelativeDateFilterForm(selectedFilterOption)) {
+                        if (!isRelativeDateFilterForm(selectedFilterOption) && filterOptions.relativeForm) {
                             onSelectedFilterOptionChange(filterOptions.relativeForm);
                         }
                     }}
@@ -117,8 +117,8 @@ export function RelativeDateFilterFormSection({
                             onKeyDown={(event) =>
                                 submitRelativeDateFilterForm(
                                     event,
-                                    isEmpty(errors),
-                                    withoutApply,
+                                    isEmpty(errors) || !errors,
+                                    withoutApply ?? false,
                                     closeDropdown,
                                     onApplyClick,
                                 )

@@ -26,7 +26,7 @@ describe("FilterButtonCustomIcon", () => {
         const icon = document.querySelector(`.${customIcon.icon}`);
         expect(icon).toBeInTheDocument();
 
-        fireEvent.mouseOver(document.querySelector(`.${customIcon.icon}`));
+        fireEvent.mouseOver(document.querySelector(`.${customIcon.icon}`)!);
         await waitFor(async () => {
             expect(screen.queryByText(customIcon.tooltip)).toBeInTheDocument();
         });

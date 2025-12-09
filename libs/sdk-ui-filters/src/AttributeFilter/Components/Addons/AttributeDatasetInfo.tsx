@@ -31,7 +31,7 @@ export function AttributeDatasetInfo({
             <h4>
                 <FormattedMessage id="attributesDropdown.details.dataset" />
             </h4>
-            <p className="s-attribute-filter-tooltip-item-dataset">{attributeDataSet.title}</p>
+            <p className="s-attribute-filter-tooltip-item-dataset">{attributeDataSet?.title}</p>
         </div>
     );
 }

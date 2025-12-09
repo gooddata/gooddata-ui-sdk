@@ -32,7 +32,7 @@ export const getPlatformStringFromDate = (value: Date) => {
     return value === undefined ? undefined : moment(value).format(platformDateFormat);
 };
 
-export const formatDate = (date: Date, dateFormat: string): string => {
+export const formatDate = (date: Date, dateFormat: string): string | undefined => {
     if (date === undefined || isNaN(date.getTime())) {
         return undefined;
     }
@@ -76,14 +76,14 @@ export const setTimeToDate = (baseDate: Date | undefined, time: ITime | undefine
         return undefined;
     }
 
-    const result = new Date(baseDate);
-    result.setHours(time.hours, time.minutes);
+    const result = new Date(baseDate!);
+    result.setHours(time.hours!, time.minutes!);
 
     return result;
 };
 
 export const getTimeFromDate = (date: Date | undefined): ITime | undefined => {
-    if (!isValidDate(date)) {
+    if (!isValidDate(date) || date === undefined) {
         return undefined;
     }
     return {

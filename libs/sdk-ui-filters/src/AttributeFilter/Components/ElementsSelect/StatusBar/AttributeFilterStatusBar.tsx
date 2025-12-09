@@ -35,10 +35,10 @@ export function AttributeFilterStatusBar({
                 isFilteredByLimitingValidationItems ||
                 isFilteredByDependentDateFilters ? (
                     <AttributeFilterShowFilteredElements
-                        attributeTitle={attributeTitle}
+                        attributeTitle={attributeTitle ?? ""}
                         onClick={onShowFilteredElements}
                         parentFilterTitles={parentFilterTitles}
-                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems}
+                        isFilteredByLimitingValidationItems={isFilteredByLimitingValidationItems ?? false}
                     />
                 ) : null}
                 <AttributeFilterSelectionStatus

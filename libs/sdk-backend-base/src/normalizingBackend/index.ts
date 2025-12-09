@@ -9,6 +9,7 @@ import {
     ICollectionItemsConfig,
     ICollectionItemsResult,
     IDataView,
+    IExecutionContext,
     IExecutionFactory,
     IExecutionResult,
     IExecutionResultMetadata,
@@ -92,7 +93,7 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         const normalizationState = Normalizer.normalize(this.definition);
         const normalizedExecution = this.originalExecutionFactory.forDefinition(
             normalizationState.normalized,
-            { signal: this.signal },
+            { signal: this.signal, context: this.context },
         );
 
         this.config.normalizationStatus?.(normalizationState);
@@ -214,6 +215,7 @@ class DenormalizedDataView implements IDataView {
     public readonly forecastResult?: IForecastResult;
     public readonly clusteringConfig?: IClusteringConfig;
     public readonly clusteringResult?: IClusteringResult;
+    public readonly context?: IExecutionContext;
 
     public readonly data: DataValue[][] | DataValue[];
     public readonly headerItems: IResultHeader[][][];
@@ -243,6 +245,7 @@ class DenormalizedDataView implements IDataView {
         this.forecastResult = forecastResult;
         this.clusteringConfig = clusteringConfig;
         this.clusteringResult = clusteringResult;
+        this.context = cloneDeep(normalizedDataView.context);
 
         this.definition = this.result.definition;
         this.count = cloneDeep(this.normalizedDataView.count);

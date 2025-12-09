@@ -21,7 +21,7 @@ const ALIGN_POINT = [
 ];
 
 export interface IDateFilterButtonLocalizedProps {
-    dateFilterOption: DateFilterOption;
+    dateFilterOption?: DateFilterOption;
     dateFormat: string;
     isOpen?: boolean;
     isMobile: boolean;

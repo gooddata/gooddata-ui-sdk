@@ -45,7 +45,6 @@ export type { IUseScheduledExportFiltersProps } from "./filtering/useScheduledEx
 export { useWidgetScheduledExportFilters } from "./filtering/useWidgetScheduledExportFilters.js";
 export type { IUseWidgetScheduledExportFiltersProps } from "./filtering/useWidgetScheduledExportFilters.js";
 export { useAutomationAvailableDashboardFilters } from "./filtering/useAutomationAvailableDashboardFilters.js";
-export { useAutomationsInvalidateRef } from "./useAutomationsInvalidateRef.js";
 export {
     selectAutomationCommonDateFilterId,
     selectAutomationAvailableDashboardFilters,

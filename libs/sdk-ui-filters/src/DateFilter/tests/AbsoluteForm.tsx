@@ -10,46 +10,46 @@ const endTimeInput = ".s-date-range-picker-to .s-date-range-picker-input-time .i
 
 export class AbsoluteForm {
     public setStartDate = (value: string) => {
-        const input = document.querySelector(startDateInput);
+        const input = document.querySelector(startDateInput)!;
         fireEvent.change(input, { target: { value } });
         fireEvent.blur(input);
     };
 
     public setEndDate = (value: string) => {
-        const input = document.querySelector(endDateInput);
+        const input = document.querySelector(endDateInput)!;
         fireEvent.change(input, { target: { value } });
         fireEvent.blur(input);
     };
 
     public setStartTime = (value: string) => {
-        const input = document.querySelector(startTimeInput);
+        const input = document.querySelector(startTimeInput)!;
         fireEvent.change(input, { target: { value } });
         fireEvent.blur(input);
     };
 
     public setEndTime = (value: string) => {
-        const input = document.querySelector(endTimeInput);
+        const input = document.querySelector(endTimeInput)!;
         fireEvent.change(input, { target: { value } });
         fireEvent.blur(input);
     };
 
     public getStartDate = (): string => {
-        const input: HTMLInputElement = document.querySelector(startDateInput);
+        const input = document.querySelector<HTMLInputElement>(startDateInput)!;
         return input.value;
     };
 
     public getEndDate = (): string => {
-        const input: HTMLInputElement = document.querySelector(endDateInput);
+        const input = document.querySelector<HTMLInputElement>(endDateInput)!;
         return input.value;
     };
 
     public getStartTime = (): string => {
-        const input: HTMLInputElement = document.querySelector(startTimeInput);
+        const input = document.querySelector<HTMLInputElement>(startTimeInput)!;
         return input.value;
     };
 
     public getEndTime = (): string => {
-        const input: HTMLInputElement = document.querySelector(endTimeInput);
+        const input = document.querySelector<HTMLInputElement>(endTimeInput)!;
         return input.value;
     };
 

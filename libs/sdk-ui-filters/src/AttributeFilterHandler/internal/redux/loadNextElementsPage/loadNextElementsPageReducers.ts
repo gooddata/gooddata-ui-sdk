@@ -29,13 +29,14 @@ const loadNextElementsPageSuccess: AttributeFilterReducer<
     state.elements.nextPageLoad.status = "success";
     action.payload.elements.forEach((el) => {
         const cacheKey = getElementCacheKey(el);
-        if (!state.elements.cache[cacheKey]) {
+        if (cacheKey !== null && !state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }
     });
-    state.elements.data = state.elements.data.concat(
-        action.payload.elements.map((el) => getElementCacheKey(el)),
-    );
+    const newKeys = action.payload.elements
+        .map((el) => getElementCacheKey(el))
+        .filter((key): key is string => key !== null);
+    state.elements.data = (state.elements.data ?? []).concat(newKeys);
     state.elements.lastLoadedOptions = action.payload.options;
 };
 

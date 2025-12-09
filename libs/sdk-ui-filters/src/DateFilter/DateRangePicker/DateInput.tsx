@@ -28,9 +28,9 @@ import { formatDate, getPlatformStringFromDate, isValidDate, parseDate } from ".
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 
 export interface IDateInputProps {
-    value: Date;
+    value?: Date;
     inputLabel: string;
-    onChange: (date: Date, shouldSubmitForm?: boolean) => void;
+    onChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
     onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
     onClick: () => void;
     dateFormat: string;
@@ -79,7 +79,7 @@ const useDateInput = ({
     errorMessageTexts,
     withoutApply = false,
 }: DateInputHookProps) => {
-    const [inputValue, setInputValue] = useState<string>(formatDate(value, dateFormat));
+    const [inputValue, setInputValue] = useState<string>(formatDate(value!, dateFormat)!);
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "DateInput" }));
     const { isValid, setInvalidDatapoints } = validationContextValue;
@@ -88,18 +88,21 @@ const useDateInput = ({
         (error: ErrorCause | null) => {
             const message = getErrorMessage(error, isDateOrderError, errorMessageTexts);
 
-            setInvalidDatapoints(() => [
-                message &&
-                    createInvalidDatapoint({
-                        message,
-                    }),
-            ]);
+            setInvalidDatapoints(() =>
+                message
+                    ? [
+                          createInvalidDatapoint({
+                              message,
+                          }),
+                      ]
+                    : [],
+            );
         },
         [errorMessageTexts, isDateOrderError, setInvalidDatapoints],
     );
 
     useEffect(() => {
-        const newValue = formatDate(value, dateFormat);
+        const newValue = formatDate(value!, dateFormat);
         // Only update input value if we have a valid date from parent
         // This preserves invalid user input so they can correct it
         if (newValue !== undefined) {
@@ -148,7 +151,7 @@ const useDateInput = ({
     const onMobileDateChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
             const value = event.target.value;
-            const selectedDate = convertPlatformDateStringToDate(value);
+            const selectedDate = convertPlatformDateStringToDate(value) ?? undefined;
             const isValid = isValidDate(selectedDate);
             onChange(isValid ? selectedDate : undefined);
             setError(isValid ? null : "empty");
@@ -240,7 +243,7 @@ export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
                     },
                 )}
                 onChange={onMobileDateChange}
-                value={getPlatformStringFromDate(value)}
+                value={getPlatformStringFromDate(value!)}
                 {...ariaProps}
             />
         );

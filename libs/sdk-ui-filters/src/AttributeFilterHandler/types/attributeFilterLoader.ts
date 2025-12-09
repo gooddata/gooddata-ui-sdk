@@ -32,7 +32,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
      * Get original filter used for initialization
      * During initialization process of migration to primary label could happen
      */
-    getOriginalFilter(): IAttributeFilter;
+    getOriginalFilter(): IAttributeFilter | undefined;
 
     /**
      * Loads all the required data to initialize the attribute filter handler:

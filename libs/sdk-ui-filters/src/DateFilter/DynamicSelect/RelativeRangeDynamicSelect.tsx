@@ -9,10 +9,12 @@ import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
 import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
 import { findRelativeDateFilterOptionByValue, findRelativeDateFilterOptionIndexByLabel } from "./utils.js";
 import {
+    ISelectMenuProps,
     ScrollableSelectMenu,
     defaultVisibleItemsRange,
     getMedianIndex,
 } from "../Select/ScrollableSelectMenu.js";
+import { ISelectItemOption } from "../Select/types.js";
 import { getSelectableItems, itemToString } from "../Select/utils.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -80,9 +82,9 @@ export function RelativeRangeDynamicSelect({
         (selectedItem: DynamicSelectOption | null, selectItem: (item: DynamicSelectOption) => void): void => {
             if (onBlur) {
                 onBlur();
-            } else {
+            } else if (selectedItem) {
                 selectItem(selectedItem);
-                handleInputValueChange(selectedItem ? selectedItem.label : "");
+                handleInputValueChange(selectedItem.label);
             }
         },
         [onBlur, handleInputValueChange],
@@ -180,16 +182,18 @@ export function RelativeRangeDynamicSelect({
             }: ControllerStateAndHelpers<DynamicSelectOption>) => {
                 // Without this, highlight is not properly reset during filtering
                 const effectiveHighlightedIndex =
-                    searchValue.trim() !== "" && highlightedIndex > selectableItems.length - 1
+                    searchValue.trim() !== "" &&
+                    highlightedIndex !== null &&
+                    highlightedIndex > selectableItems.length - 1
                         ? 0
-                        : highlightedIndex;
+                        : (highlightedIndex ?? 0);
 
-                const menuProps = {
+                const menuProps: ISelectMenuProps<number> = {
                     items,
-                    selectedItem,
+                    selectedItem: selectedItem as ISelectItemOption<number>,
                     highlightedIndex: effectiveHighlightedIndex,
-                    getItemProps,
-                    getMenuProps,
+                    getItemProps: getItemProps as unknown as ISelectMenuProps<number>["getItemProps"],
+                    getMenuProps: getMenuProps as unknown as ISelectMenuProps<number>["getMenuProps"],
                     className: "gd-dynamic-select-menu",
                     optionClassName,
                     inputValue,
@@ -242,7 +246,9 @@ export function RelativeRangeDynamicSelect({
                                 })}
                             />
                         </div>
-                        {isOpen && items.length > 0 ? <ScrollableSelectMenu {...menuProps} /> : null}
+                        {isOpen && items.length > 0 ? (
+                            <ScrollableSelectMenu {...(menuProps as unknown as ISelectMenuProps<object>)} />
+                        ) : null}
                     </div>
                 );
             }}

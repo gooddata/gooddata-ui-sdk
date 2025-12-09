@@ -18,7 +18,7 @@ describe("Test AttributeFilterButtonErrorTooltip", () => {
     }
 
     it("should not render the tooltip if there is no error", () => {
-        const { container } = renderComponent(null);
+        const { container } = renderComponent("");
 
         expect(container.getElementsByClassName("gd-attribute-filter-button-wrapper")).toHaveLength(0);
         expect(document.querySelector("p")).toHaveTextContent("Child component!");
@@ -29,7 +29,7 @@ describe("Test AttributeFilterButtonErrorTooltip", () => {
 
         expect(container.getElementsByClassName("gd-attribute-filter-button-wrapper")).toHaveLength(1);
 
-        fireEvent.mouseEnter(document.querySelector(".gd-bubble-trigger"));
+        fireEvent.mouseEnter(document.querySelector(".gd-bubble-trigger")!);
 
         await waitFor(() => {
             expect(screen.queryByText("Error. Values cannot be loaded.")).toBeInTheDocument();

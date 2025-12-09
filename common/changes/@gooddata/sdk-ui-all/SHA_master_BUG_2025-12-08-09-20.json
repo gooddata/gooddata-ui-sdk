@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.",
+            "type": "patch"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-gen-ai",
+            "comment": "Reuse ISO-aware Key Driver Analysis date range formatter in GenAI change analysis responses.",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

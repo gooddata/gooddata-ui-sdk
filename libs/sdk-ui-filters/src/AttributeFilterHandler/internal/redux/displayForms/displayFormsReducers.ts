@@ -18,7 +18,7 @@ const transformFilterToPrimaryLabel: AttributeFilterReducer<
 };
 
 const setDisplayAsLabel: AttributeFilterReducer<
-    PayloadAction<{ displayAsLabel: ObjRef; correlation: Correlation }>
+    PayloadAction<{ displayAsLabel: ObjRef; correlation?: Correlation }>
 > = (state, action) => {
     if (!areObjRefsEqual(state.displayAsLabelRef, action.payload.displayAsLabel)) {
         state.elements.cache = {};
@@ -27,7 +27,7 @@ const setDisplayAsLabel: AttributeFilterReducer<
 };
 
 const setDisplayFormRef: AttributeFilterReducer<
-    PayloadAction<{ displayForm: ObjRef; correlation: Correlation }>
+    PayloadAction<{ displayForm: ObjRef; correlation?: Correlation }>
 > = (state, action) => {
     state.displayFormRef = action.payload.displayForm;
 };

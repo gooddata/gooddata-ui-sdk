@@ -27,17 +27,17 @@ export const useResolveDependentDateFiltersInput = (
                 const { dataSet, granularity, from, to, localIdentifier, boundedFilter } =
                     dependentDateFilter.dateFilter;
 
+                const parsedFrom = from ? Number.parseInt(from.toString(), 10) : 0;
+                const parsedTo = to ? Number.parseInt(to.toString(), 10) : 0;
+
                 if (isRelativeDashboardDateFilter(dependentDateFilter)) {
                     // Ignore only date filters set as "All time"
                     if (isAllTimeDashboardDateFilter(dependentDateFilter)) {
                         return undefined;
                     }
 
-                    const parsedFrom = Number.parseInt(from.toString(), 10) ?? 0;
-                    const parsedTo = Number.parseInt(to.toString(), 10) ?? 0;
-
                     return newRelativeDateFilter(
-                        dataSet,
+                        dataSet!,
                         granularity,
                         parsedFrom,
                         parsedTo,
@@ -45,9 +45,14 @@ export const useResolveDependentDateFiltersInput = (
                         boundedFilter,
                     );
                 } else {
-                    return newAbsoluteDateFilter(dataSet, from.toString(), to.toString(), localIdentifier);
+                    return newAbsoluteDateFilter(
+                        dataSet!,
+                        parsedFrom.toString(),
+                        parsedTo.toString(),
+                        localIdentifier,
+                    );
                 }
             })
-            .filter(Boolean);
+            .filter((f): f is IRelativeDateFilter | IAbsoluteDateFilter => f !== undefined);
     }, [dependentDateFilters]);
 };

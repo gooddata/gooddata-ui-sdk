@@ -22,8 +22,8 @@ export const mapAbsoluteFilterToAfm = (
 ): IAbsoluteDateFilter => ({
     absoluteDateFilter: {
         dataSet,
-        from: value.from,
-        to: value.to,
+        from: value.from ?? "",
+        to: value.to ?? "",
     },
 });
 
@@ -36,9 +36,9 @@ export const mapRelativeFilterToAfm = (
     return {
         relativeDateFilter: {
             dataSet,
-            from,
-            to,
-            granularity,
+            from: from ?? 0,
+            to: to ?? 0,
+            granularity: granularity ?? "GDC.time.date",
             ...(boundedFilter ? { boundedFilter } : {}),
         },
     };
@@ -48,7 +48,7 @@ export const mapOptionToAfm = (
     value: DateFilterOption,
     dateDataSet: ObjRef,
     excludeCurrentPeriod: boolean,
-): IDateFilter => {
+): IDateFilter | null => {
     const excludeApplied = applyExcludeCurrentPeriod(value, excludeCurrentPeriod);
 
     if (isAllTimeDateFilterOption(excludeApplied)) {

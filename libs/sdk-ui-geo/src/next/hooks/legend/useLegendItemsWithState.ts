@@ -2,9 +2,8 @@
 
 import { useMemo } from "react";
 
-import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
-
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
+import { IGeoLegendItem } from "../../types/common/legends.js";
 
 /**
  * Hook to merge legend items with their visibility state from context.
@@ -25,9 +24,7 @@ import { useGeoLegend } from "../../context/GeoLegendContext.js";
  *
  * @alpha
  */
-export function useLegendItemsWithState(
-    baseLegendItems: IPushpinCategoryLegendItem[],
-): IPushpinCategoryLegendItem[] {
+export function useLegendItemsWithState(baseLegendItems: IGeoLegendItem[]): IGeoLegendItem[] {
     const { enabledLegendItems } = useGeoLegend();
 
     return useMemo(() => {
@@ -35,7 +32,6 @@ export function useLegendItemsWithState(
             return [];
         }
 
-        // No explicit state recorded means everything stays visible (initial state).
         if (enabledLegendItems === null) {
             return baseLegendItems.map((item) => ({
                 ...item,
@@ -43,7 +39,6 @@ export function useLegendItemsWithState(
             }));
         }
 
-        // Explicitly tracking an empty list means all items are disabled (legacy behavior).
         if (enabledLegendItems.length === 0) {
             return baseLegendItems.map((item) => ({
                 ...item,
@@ -51,7 +46,6 @@ export function useLegendItemsWithState(
             }));
         }
 
-        // Otherwise, item is visible if it's in the enabled list
         return baseLegendItems.map((item) => ({
             ...item,
             isVisible: enabledLegendItems.includes(item.uri),

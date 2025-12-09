@@ -1,13 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { ILegendDetails, IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
+import { ILegendDetails } from "@gooddata/sdk-ui-vis-commons";
 
-import { IAvailableLegends, IGeoCommonData } from "../../types/shared.js";
+import { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
+import { IGeoCommonData } from "../../types/geoData/common.js";
 
 export interface ILegendBodyProps {
     containerId: string;
     legendDetails: ILegendDetails | null;
-    categoryItems: IPushpinCategoryLegendItem[];
+    categoryItems: IGeoLegendItem[];
     geoData: IGeoCommonData | null;
     availableLegends: IAvailableLegends;
     colorLegendValue: string | null;
@@ -15,5 +16,5 @@ export interface ILegendBodyProps {
     legendHeight: number;
     isFluidLayout: boolean;
     responsive: boolean | "autoPositionWithPopup";
-    onCategoryItemClick: (item: IPushpinCategoryLegendItem) => void;
+    onCategoryItemClick: (item: IGeoLegendItem) => void;
 }
