@@ -25,14 +25,14 @@ export interface IAttributeFilterElementsSelectProps {
      *
      * @beta
      */
-    totalItemsCount: number;
+    totalItemsCount: number | undefined;
 
     /**
      * Number of all elements that respect current search criteria.
      *
      * @beta
      */
-    totalItemsCountWithCurrentSettings: number;
+    totalItemsCountWithCurrentSettings: number | undefined;
 
     /**
      * Indicate if current filter is inverted or not see: {@link @gooddata/sdk-model#IPositiveAttributeFilter} or  {@link @gooddata/sdk-model#INegativeAttributeFilter}

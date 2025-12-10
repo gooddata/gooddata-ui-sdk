@@ -89,6 +89,10 @@ const CONTEXT_MENU_PROPS: AgGridProps = {
     suppressContextMenu: true,
 };
 
+const ACCESSIBILITY_PROPS: AgGridProps = {
+    ensureDomOrder: true,
+};
+
 /**
  * @internal
  */
@@ -106,4 +110,5 @@ export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
     HEADER_PROPS,
     CONTEXT_MENU_PROPS,
     PAGINATION_PROPS,
+    ACCESSIBILITY_PROPS,
 );

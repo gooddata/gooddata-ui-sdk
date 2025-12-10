@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -475,11 +476,11 @@ export class AttributeFilterReduxBridge {
         return getElementsByKeys(keys, elementsCache);
     };
 
-    getTotalCount = (): number => {
+    getTotalCount = (): number | undefined => {
         return this.redux.select(selectElementsTotalCount);
     };
 
-    getTotalCountWithCurrentSettings = (): number => {
+    getTotalCountWithCurrentSettings = (): number | undefined => {
         return this.redux.select(selectElementsTotalCountWithCurrentSettings);
     };
 

@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
@@ -439,11 +440,11 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getElementsByKey(keys);
     };
 
-    getTotalElementsCount = (): number => {
+    getTotalElementsCount = (): number | undefined => {
         return this.bridge.getTotalCount();
     };
 
-    getTotalElementsCountWithCurrentSettings = (): number => {
+    getTotalElementsCountWithCurrentSettings = (): number | undefined => {
         return this.bridge.getTotalCountWithCurrentSettings();
     };
 

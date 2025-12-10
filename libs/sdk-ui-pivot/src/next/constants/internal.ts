@@ -93,6 +93,14 @@ export const COLUMNS_PER_PAGE = 1000;
 export const PAGE_SIZE = 100;
 
 /**
+ * Auto page size value for accessibility mode.
+ * When set, AG Grid automatically determines the page size based on the container height.
+ *
+ * @internal
+ */
+export const ACCESSIBILITY_AUTO_PAGE_SIZE = -1;
+
+/**
  * Unique identifier of the column, used for rendering measure headers.
  * This is used only in case of transposition, when metrics are rendered in rows.
  *

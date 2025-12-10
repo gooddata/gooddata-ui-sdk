@@ -8,7 +8,7 @@ import { messages } from "../../locales.js";
 import { AgGridProps } from "../types/agGrid.js";
 
 /**
- * Returns ag-grid props with localized text for pagination.
+ * Returns ag-grid props with localized texts.
  *
  * @internal
  */
@@ -17,16 +17,16 @@ export function useLocaleTextProps(): (agGridReactProps: AgGridProps) => AgGridP
 
     return useMemo(
         () => (agGridReactProps: AgGridProps) => {
-            const values = {
+            const localeText: Record<string, string> = {
+                ...agGridReactProps.localeText,
                 of: intl.formatMessage(messages["paginationOf"]),
+                ariaPagePrevious: intl.formatMessage(messages["ariaPagePrevious"]),
+                ariaPageNext: intl.formatMessage(messages["ariaPageNext"]),
             };
 
             return {
                 ...agGridReactProps,
-                localeText: {
-                    ...agGridReactProps.localeText,
-                    ...values,
-                },
+                localeText,
             };
         },
         [intl],

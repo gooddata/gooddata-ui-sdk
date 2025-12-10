@@ -13,6 +13,7 @@ import {
     TotalsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 
+import { PivotTableNextAccessibilityConfig } from "./accessibility.js";
 import { PivotTableNextCellSelectionConfig } from "./cellSelection.js";
 import { PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
 import { PivotTableNextExperimentalConfig } from "./experimental.js";
@@ -42,6 +43,7 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextCellSelectionConfig &
     PivotTableNextAgGridLicenseConfig &
     PivotTableNextPaginationConfig &
+    PivotTableNextAccessibilityConfig &
     PivotTableNextExperimentalConfig;
 
 /**

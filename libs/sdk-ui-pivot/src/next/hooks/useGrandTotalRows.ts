@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { useAccessibilityConfigOverrides } from "./useAccessibilityProps.js";
 import { agGridSetGrandTotalRows } from "../features/aggregations/agGridAggregationsApi.js";
 import { AgGridApi } from "../types/agGrid.js";
 import { AgGridRowData } from "../types/internal.js";
@@ -10,11 +10,14 @@ import { AgGridRowData } from "../types/internal.js";
 /**
  * Hook to apply grand total rows to ag-grid.
  *
+ * @remarks
+ * When accessibility mode is enabled, grand totals position is automatically
+ * adjusted to non-pinned positions for proper screen reader reading order.
+ *
  * @internal
  */
 export function useGrandTotalRows() {
-    const { config } = usePivotTableProps();
-    const { grandTotalsPosition } = config;
+    const { grandTotalsPosition } = useAccessibilityConfigOverrides();
 
     const setGrandTotalRows = useCallback(
         (gridApi: AgGridApi, grandTotalRowData: AgGridRowData[]) => {
@@ -25,5 +28,6 @@ export function useGrandTotalRows() {
 
     return {
         setGrandTotalRows,
+        grandTotalsPosition,
     };
 }

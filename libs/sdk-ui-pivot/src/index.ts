@@ -15,6 +15,7 @@ export { PivotTableNext } from "./next/index.js";
 export type {
     IPivotTableNextProps,
     PivotTableNextConfig,
+    PivotTableNextAccessibilityConfig,
     PivotTableNextTranspositionConfig,
     PivotTableNextTextWrappingConfig,
     PivotTableNextColumnsSizingConfig,

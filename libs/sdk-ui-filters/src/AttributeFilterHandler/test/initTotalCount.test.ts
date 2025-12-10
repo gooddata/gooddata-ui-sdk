@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { newTestAttributeFilterHandler } from "./fixtures.js";
@@ -12,7 +13,7 @@ describe("AttributeFilterHandler", () => {
 
         await waitForAsync();
 
-        expect(attributeFilterHandler.getTotalElementsCount()).toBe(0);
+        expect(attributeFilterHandler.getTotalElementsCount()).toBeUndefined();
 
         attributeFilterHandler.initTotalCount("start");
 

@@ -77,12 +77,12 @@ export type AttributeFilterControllerData = {
     /**
      * Total count of the attribute elements.
      */
-    totalElementsCount: number;
+    totalElementsCount: number | undefined;
 
     /**
      * Total count of the attribute elements with currently set options.
      */
-    totalElementsCountWithCurrentSettings: number;
+    totalElementsCountWithCurrentSettings: number | undefined;
 
     /**
      * If true, current selection is considered not valid and should not be applied.

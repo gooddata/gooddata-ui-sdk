@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
 import { useVirtualColumnAutoResize } from "./resizing/useVirtualColumnAutoResize.js";
+import { useAccessibilityModeProps } from "./useAccessibilityProps.js";
 import { useAfterRenderCallback } from "./useAfterRenderCallback.js";
 import { useAgGridApiProps } from "./useAgGridApiProps.js";
 import { useAutoHeight } from "./useAutoHeight.js";
@@ -41,6 +42,7 @@ export function useAgGridReactProps() {
     const enhanceWithTextWrapping = useTextWrappingProps();
     const enhanceWithAutoHeight = useAutoHeight();
     const enhanceWithPagination = usePaginationProps();
+    const enhanceWithAccessibilityMode = useAccessibilityModeProps();
     const enhanceWithLocaleText = useLocaleTextProps();
     const enhanceWithTheme = useThemeProps();
     const enhanceWithHeaderComponents = useHeaderComponents();
@@ -62,6 +64,7 @@ export function useAgGridReactProps() {
             enhanceWithTextWrapping,
             enhanceWithAutoHeight,
             enhanceWithPagination,
+            enhanceWithAccessibilityMode,
             enhanceWithLocaleText,
             enhanceWithTheme,
             enhanceWithHeaderComponents,
@@ -82,6 +85,7 @@ export function useAgGridReactProps() {
         enhanceWithTextWrapping,
         enhanceWithAutoHeight,
         enhanceWithPagination,
+        enhanceWithAccessibilityMode,
         enhanceWithLocaleText,
         enhanceWithTheme,
         enhanceWithHeaderComponents,

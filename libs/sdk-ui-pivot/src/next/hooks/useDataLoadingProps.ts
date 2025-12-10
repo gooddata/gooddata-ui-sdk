@@ -27,13 +27,13 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
     const props = usePivotTableProps();
     const { initialExecutionResult, initialDataView } = useInitialExecution();
     const { columnDefinitionByColId } = useColumnDefs();
-    const { setGrandTotalRows } = useGrandTotalRows();
+    const { setGrandTotalRows, grandTotalsPosition } = useGrandTotalRows();
     const { initSizingForEmptyData } = useInitSizingForEmptyData();
     const { setPivotResultColumns } = useSetAgGridPivotResultColumns();
     const { setRuntimeError } = useRuntimeError();
 
     const { rows, measures, sortBy, config, pageSize, onDataView, onExportReady, exportTitle } = props;
-    const { columnHeadersPosition, separators, grandTotalsPosition = "pinnedBottom" } = config;
+    const { columnHeadersPosition, separators } = config;
 
     const { setCurrentDataView } = useCurrentDataView();
 

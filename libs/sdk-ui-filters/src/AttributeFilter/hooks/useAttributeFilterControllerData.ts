@@ -117,8 +117,8 @@ export function useAttributeFilterControllerData(
         nextElementsPageSize,
 
         elements: elements ?? [],
-        totalElementsCount: totalElementsCount ?? 0,
-        totalElementsCountWithCurrentSettings: totalElementsCountWithCurrentSettings ?? 0,
+        totalElementsCount: totalElementsCount,
+        totalElementsCountWithCurrentSettings: totalElementsCountWithCurrentSettings,
 
         isSelectionInvalid: isSelectionInvalid ?? false,
         isApplyDisabled,

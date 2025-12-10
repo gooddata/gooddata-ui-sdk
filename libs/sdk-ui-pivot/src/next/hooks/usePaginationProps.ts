@@ -10,7 +10,6 @@ import { AgGridProps } from "../types/agGrid.js";
  * Returns ag-grid props for pagination configuration.
  *
  * @remarks
- * When pagination is enabled, row and column virtualization are disabled, which could lead to performance issues.
  * Pagination is only enabled if both config.pagination.enabled AND config.enablePivotTablePagination are true.
  *
  * @internal
@@ -29,9 +28,6 @@ export function usePaginationProps() {
                     pagination: paginationEnabled,
                     paginationPageSize: paginationEnabled ? (autoPageSize ? undefined : pageSize) : undefined,
                     paginationAutoPageSize: paginationEnabled ? autoPageSize : undefined,
-                    // Disable virtualization when pagination is enabled to ensure proper rendering
-                    suppressColumnVirtualisation: paginationEnabled,
-                    suppressRowVirtualisation: paginationEnabled,
                 };
             },
         [config, pageSize],

@@ -19,7 +19,7 @@ export interface IAttributeFilterEmptyResultProps {
     /**
      * Number of items that respect current criteria
      */
-    totalItemsCount: number;
+    totalItemsCount: number | undefined;
 
     /**
      * Indicate that items are filtered or not

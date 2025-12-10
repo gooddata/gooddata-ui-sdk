@@ -47,7 +47,7 @@ export function SingleSelectionAttributeFilterStatusBar({
 
     return (
         <div className="gd-attribute-filter-status-bar__next">
-            {isFilteredByParentFilters && totalElementsCountWithCurrentSettings > 0 ? (
+            {isFilteredByParentFilters && (totalElementsCountWithCurrentSettings ?? 0) > 0 ? (
                 <AttributeFilterFilteredStatus parentFilterTitles={parentFilterTitles} />
             ) : null}
         </div>
