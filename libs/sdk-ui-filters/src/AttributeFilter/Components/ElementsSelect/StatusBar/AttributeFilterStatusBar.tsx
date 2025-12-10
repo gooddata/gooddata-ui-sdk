@@ -66,7 +66,7 @@ export function AttributeFilterStatusBar({
                 selectedItemsLimit={selectedItemsLimit}
                 showSelectionStatus={!withoutApply}
             />
-            {isFilteredByParentFilters && totalElementsCountWithCurrentSettings > 0 ? (
+            {isFilteredByParentFilters && (totalElementsCountWithCurrentSettings ?? 0) > 0 ? (
                 <AttributeFilterFilteredStatus parentFilterTitles={parentFilterTitles} />
             ) : null}
         </div>

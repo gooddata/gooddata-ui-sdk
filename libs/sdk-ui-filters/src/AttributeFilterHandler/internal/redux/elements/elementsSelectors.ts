@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { compact } from "lodash-es";
 
@@ -61,9 +62,9 @@ export const selectElements: FilterSelector<IAttributeElement[]> = createSelecto
 /**
  * @internal
  */
-export const selectElementsTotalCount: FilterSelector<number> = createSelector(
+export const selectElementsTotalCount: FilterSelector<number | undefined> = createSelector(
     selectState,
-    (state) => state.elements.totalCount ?? 0,
+    (state) => state.elements.totalCount,
 );
 
 /**
@@ -85,9 +86,9 @@ export const selectInitTotalCountError: FilterSelector<GoodDataSdkError | undefi
 /**
  * @internal
  */
-export const selectElementsTotalCountWithCurrentSettings: FilterSelector<number> = createSelector(
+export const selectElementsTotalCountWithCurrentSettings: FilterSelector<number | undefined> = createSelector(
     selectState,
-    (state) => state.elements.totalCountWithCurrentSettings ?? 0,
+    (state) => state.elements.totalCountWithCurrentSettings,
 );
 
 /**

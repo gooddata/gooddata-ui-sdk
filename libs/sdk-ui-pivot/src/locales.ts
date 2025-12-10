@@ -33,6 +33,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     openHeaderMenuAria: { id: "visualizations.menu.header.openAriaLabel" },
     // Pagination
     paginationOf: { id: "visualizations.table.pagination.of" },
+    ariaPagePrevious: { id: "visualizations.pagination.previous" },
+    ariaPageNext: { id: "visualizations.pagination.next" },
 });
 
 /**

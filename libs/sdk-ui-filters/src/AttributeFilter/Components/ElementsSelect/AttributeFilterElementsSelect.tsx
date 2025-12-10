@@ -83,7 +83,7 @@ export function AttributeFilterElementsSelect({
     const itemHeight = fullscreenOnMobile && isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
     const isAdaptiveHeight = isMobile && fullscreenOnMobile;
 
-    const previousItemsCount = usePrevious(totalItemsCountWithCurrentSettings);
+    const previousItemsCount = usePrevious(totalItemsCountWithCurrentSettings ?? 0);
     const loadingHeight = useMemo(() => {
         return (
             Math.max(

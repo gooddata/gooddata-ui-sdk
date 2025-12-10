@@ -113,8 +113,8 @@ export type AttributeFilterControllerData = {
     nextElementsPageError?: GoodDataSdkError;
     nextElementsPageSize: number;
     elements: IAttributeElement[];
-    totalElementsCount: number;
-    totalElementsCountWithCurrentSettings: number;
+    totalElementsCount: number | undefined;
+    totalElementsCountWithCurrentSettings: number | undefined;
     isSelectionInvalid: boolean;
     isApplyDisabled: boolean;
     isWorkingSelectionInverted: boolean;
@@ -329,8 +329,8 @@ export interface IAttributeElementLoader {
     getOffset(): number;
     getOrder(): SortDirection | undefined;
     getSearch(): string;
-    getTotalElementsCount(): number;
-    getTotalElementsCountWithCurrentSettings(): number;
+    getTotalElementsCount(): number | undefined;
+    getTotalElementsCountWithCurrentSettings(): number | undefined;
     initTotalCount(correlation?: Correlation): void;
     loadCustomElements(options: ILoadElementsOptions, correlation?: Correlation): void;
     loadInitialElementsPage(correlation?: Correlation): void;
@@ -595,8 +595,8 @@ export interface IAttributeFilterElementsSelectProps {
     parentFilterTitles: string[];
     searchString: string;
     selectedItems: IAttributeElement[];
-    totalItemsCount: number;
-    totalItemsCountWithCurrentSettings: number;
+    totalItemsCount: number | undefined;
+    totalItemsCountWithCurrentSettings: number | undefined;
     withoutApply?: boolean;
 }
 
@@ -608,7 +608,7 @@ export interface IAttributeFilterEmptyResultProps {
     isFilteredByParentFilters: boolean;
     parentFilterTitles?: string[];
     searchString: string;
-    totalItemsCount: number;
+    totalItemsCount: number | undefined;
 }
 
 // @beta
@@ -692,7 +692,7 @@ export interface IAttributeFilterStatusBarProps {
     parentFilterTitles: string[];
     selectedItems: IAttributeElement[];
     selectedItemsLimit: number;
-    totalElementsCountWithCurrentSettings: number;
+    totalElementsCountWithCurrentSettings: number | undefined;
     withoutApply?: boolean;
 }
 

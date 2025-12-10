@@ -6,6 +6,7 @@ import { IExecutionConfig } from "@gooddata/sdk-model";
 import { useDeepMemo } from "@gooddata/sdk-ui/internal";
 
 import {
+    ACCESSIBILITY_AUTO_PAGE_SIZE,
     DEFAULT_TOTAL_FUNCTIONS,
     EMPTY_ATTRIBUTES,
     EMPTY_COLUMN_WIDTHS,
@@ -81,6 +82,10 @@ type PivotTablePropsWithDefaults = RootPropsWithDefaults & {
  * @internal
  */
 export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): PivotTablePropsWithDefaults {
+    const accessibilityEnabled = props.config?.enableAccessibility ?? false;
+    // Use auto page size when accessibility is enabled and no specific page size is provided
+    const defaultPageSize = accessibilityEnabled ? ACCESSIBILITY_AUTO_PAGE_SIZE : PAGE_SIZE;
+
     return {
         ...props,
         rows: props.rows ?? EMPTY_ATTRIBUTES,
@@ -89,7 +94,7 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
         filters: props.filters ?? EMPTY_FILTERS,
         sortBy: props.sortBy ?? EMPTY_SORT_BY,
         totals: props.totals ?? EMPTY_TOTALS,
-        pageSize: props.pageSize ?? PAGE_SIZE,
+        pageSize: props.pageSize ?? defaultPageSize,
         drillableItems: props.drillableItems ?? EMPTY_DRILLS,
         config: {
             ...props.config,

@@ -21,7 +21,6 @@ import { InitialExecutionContextProvider } from "./context/InitialExecutionConte
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
 import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
 import { TableReadyProvider } from "./context/TableReadyContext.js";
-import { isPaginationEnabled } from "./features/pagination/utils.js";
 import { b } from "./features/styling/bem.js";
 import { useInitExecution } from "./hooks/init/useInitExecution.js";
 import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
@@ -162,13 +161,13 @@ function RenderPivotTableNextAgGrid() {
         [clearCellSelection],
     );
 
-    // Generate a key that changes when pagination is enabled/disabled
+    // Generate a key that changes when accessibility mode is enabled/disabled
     // This forces the grid to be recreated, which is necessary when changing
     // virtualization settings (suppressColumnVirtualisation, suppressRowVirtualisation)
     const gridKey = useMemo(() => {
-        const paginationEnabled = isPaginationEnabled(config);
-        return `ag-grid-${paginationEnabled ? "paginated" : "virtualized"}`;
-    }, [config]);
+        const accessibilityEnabled = config.enableAccessibility ?? false;
+        return `ag-grid-${accessibilityEnabled ? "accessible" : "virtualized"}`;
+    }, [config.enableAccessibility]);
 
     return (
         <AvoidResizeFlickering>

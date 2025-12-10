@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import {
     ElementsQueryOptionsElementsSpecification,
     IElementsQueryAttributeFilter,
@@ -311,7 +312,7 @@ export interface IAttributeElementLoader {
      * Returns the total count of the attribute elements.
      * Total elements count is loaded by default only for child filters.
      */
-    getTotalElementsCount(): number;
+    getTotalElementsCount(): number | undefined;
 
     /**
      * Starts load of total count
@@ -365,7 +366,7 @@ export interface IAttributeElementLoader {
     /**
      * Returns the total count of the attribute elements with currently set options.
      */
-    getTotalElementsCountWithCurrentSettings(): number;
+    getTotalElementsCountWithCurrentSettings(): number | undefined;
 
     /**
      * Returns the current status of the initial elements page load.

@@ -517,6 +517,11 @@ export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities
 export function PivotTableNext(props: IPivotTableNextProps): JSX.Element;
 
 // @public
+export interface PivotTableNextAccessibilityConfig {
+    enableAccessibility?: boolean;
+}
+
+// @public
 export interface PivotTableNextAgGridLicenseConfig {
     agGridToken?: string;
 }
@@ -532,7 +537,7 @@ export type PivotTableNextColumnsSizingConfig = {
 };
 
 // @public
-export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextPaginationConfig & PivotTableNextExperimentalConfig;
+export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextPaginationConfig & PivotTableNextAccessibilityConfig & PivotTableNextExperimentalConfig;
 
 // @public
 export interface PivotTableNextExecutionCancellingConfig {

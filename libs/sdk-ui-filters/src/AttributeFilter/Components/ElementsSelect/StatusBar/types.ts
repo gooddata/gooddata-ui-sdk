@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IAttributeElement } from "@gooddata/sdk-model";
 
 /**
@@ -9,7 +10,7 @@ export interface IAttributeFilterStatusBarProps {
     /**
      * Number of elements that respect current criteria.
      */
-    totalElementsCountWithCurrentSettings: number;
+    totalElementsCountWithCurrentSettings: number | undefined;
 
     /**
      * Indicate that elements are filtered by parents filters or not.

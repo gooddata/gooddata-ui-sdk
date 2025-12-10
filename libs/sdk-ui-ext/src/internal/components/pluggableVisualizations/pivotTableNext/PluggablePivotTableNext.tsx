@@ -97,6 +97,7 @@ export function createPivotTableNextConfig(
         agGridToken: config.agGridToken,
         enablePivotTableAutoSizeReset: settings.enablePivotTableAutoSizeReset ?? true,
         enablePivotTablePagination: settings.enablePivotTablePagination ?? false,
+        enableAccessibility: settings.enableAccessibilityMode ?? false,
     };
 
     if (environment !== DASHBOARDS_ENVIRONMENT) {

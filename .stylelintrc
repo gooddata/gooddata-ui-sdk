@@ -5,6 +5,10 @@
         "max-nesting-depth": 4,
         "value-keyword-case": ["lower", { "ignoreProperties": ["--gd-font-family"] }],
         "color-hex-length": null,
-        "declaration-empty-line-before": null
+        "declaration-empty-line-before": null,
+        "selector-pseudo-class-no-unknown": [
+          true,
+          { "ignorePseudoClasses": ["global"] }
+        ]
     }
 }
