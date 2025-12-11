@@ -176,16 +176,17 @@ function UiPagedVirtualListNotWrapped<T>(
                             representAs === "listbox"
                                 ? {
                                       role: "option",
-                                      "aria-selected": getIsItemSelected
-                                          ? getIsItemSelected(item!)
-                                          : undefined,
+                                      "aria-selected":
+                                          getIsItemSelected && item ? getIsItemSelected(item) : undefined,
                                       "aria-posinset": virtualRow.index + 1,
                                       "aria-setsize": items?.length ?? 0,
                                       tabIndex:
                                           focusedItem === item && focusedAction === SELECT_ITEM_ACTION
                                               ? 0
                                               : -1,
-                                      id: makeId?.({ item: item!, specifier: SELECT_ITEM_ACTION }),
+                                      id: item
+                                          ? makeId?.({ item, specifier: SELECT_ITEM_ACTION })
+                                          : undefined,
                                   }
                                 : {};
 

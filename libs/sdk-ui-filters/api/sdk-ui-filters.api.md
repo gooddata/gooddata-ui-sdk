@@ -935,7 +935,7 @@ export interface ILoadElementsResult {
 // @public
 export interface ILoadIrrelevantElementsResult {
     // (undocumented)
-    elementTitles: string[];
+    elementTitles: AttributeElementKey[];
 }
 
 // @beta (undocumented)

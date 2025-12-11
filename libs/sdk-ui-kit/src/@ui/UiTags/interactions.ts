@@ -63,11 +63,10 @@ export function useTagsInteractions(
     }, []);
 
     const onTagAddHandler = useCallback(() => {
-        const newTag: UiTagDef = {
-            id: tag,
-            label: tag,
-        };
-        onTagAdd?.(newTag);
+        if (!tag) {
+            return;
+        }
+        onTagAdd?.({ id: tag, label: tag });
         setTag("");
     }, [tag, onTagAdd]);
 

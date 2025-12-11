@@ -932,7 +932,7 @@
     },
     {
       "name": "maplibre-gl",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "mdast",

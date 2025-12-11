@@ -89,9 +89,5 @@
     "analyticsCatalog.quality.scoreCard.lastCheck": "Zadnje preverjanje: {date}",
     "metricComponent.metricType.label": "Tip metrike",
     "metricComponent.metricType.unspecified": "Nedoločeno",
-    "metricComponent.metricType.currency": "Valuta",
-    "metricComponent.numberFormat.preset.currency": "Valuta (2 decimalni mesti)",
-    "metricComponent.numberFormat.preset.currency1": "Valuta (1 decimalno mesto)",
-    "metricComponent.numberFormat.preset.currencyRounded": "Valuta (zaokroženo)",
-    "metricComponent.numberFormat.preset.inherit": "Prevzemi (uporabi privzeto)"
+    "metricComponent.metricType.currency": "Valuta"
 }

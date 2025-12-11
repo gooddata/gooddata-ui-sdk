@@ -56,7 +56,7 @@ export function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttri
  */
 export function newPositiveAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
-    inValues: IAttributeElements | string[],
+    inValues: IAttributeElements | (string | null)[],
     localIdentifier?: string,
 ): IPositiveAttributeFilter {
     const objRef = isObjRef(attributeOrRef)

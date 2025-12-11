@@ -3,7 +3,10 @@
 import type { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { isEmpty } from "lodash-es";
 
-import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayForm/index.js";
+import {
+    AttributeDisplayFormType,
+    IAttributeDisplayFormGeoAreaConfig,
+} from "../../ldm/metadata/attributeDisplayForm/index.js";
 import { ObjRef } from "../../objRef/index.js";
 
 /**
@@ -248,6 +251,13 @@ export interface IAttributeDescriptorBody {
      * Primary label of the attribute from formOf
      */
     primaryLabel: ObjRef;
+
+    /**
+     * Geo area configuration bound to this attribute display form.
+     *
+     * @alpha
+     */
+    geoAreaConfig?: IAttributeDisplayFormGeoAreaConfig;
 }
 
 /**

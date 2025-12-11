@@ -201,6 +201,15 @@ export interface IOrganizationSettingsService {
     setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void>;
 
     /**
+     * Sets the maximum zoom level allowed for geo visualizations in the organization.
+     *
+     * @param level - maximum zoom level, or null to clear the limit.
+     *
+     * @returns promise
+     */
+    setMaxZoomLevel(level: number | null): Promise<void>;
+
+    /**
      * Get all current organization settings.
      *
      * @remarks

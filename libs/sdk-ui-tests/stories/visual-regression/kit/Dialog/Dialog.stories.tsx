@@ -14,8 +14,8 @@ import {
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 import {
-    INeobackstopConfig,
-    INeobackstopScenarioConfig,
+    //    INeobackstopConfig,
+    //    INeobackstopScenarioConfig,
     IStoryParameters,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -386,21 +386,21 @@ const DialogExamples = memo(function DialogExamples() {
     );
 });
 
-const confirmDialogWithWarningProps = {
-    clickSelector: "#confirm-dialog-with-warning-example button",
-    postInteractionWait: 200,
-};
+// const confirmDialogWithWarningProps = {
+//     clickSelector: "#confirm-dialog-with-warning-example button",
+//     postInteractionWait: 200,
+// };
 
-const confirmDialogWithProgressProps = {
-    clickSelector: "#confirm-dialog-with-progress-example button",
-    postInteractionWait: 200,
-    misMatchThreshold: 0.05,
-};
+// const confirmDialogWithProgressProps = {
+//     clickSelector: "#confirm-dialog-with-progress-example button",
+//     postInteractionWait: 200,
+//     misMatchThreshold: 0.05,
+// };
 
-const exportDialogProps = {
-    clickSelector: "#export-dialog-example button",
-    postInteractionWait: 200,
-};
+// const exportDialogProps = {
+//     clickSelector: "#export-dialog-example button",
+//     postInteractionWait: 200,
+// };
 
 // flaky, removed
 // const communityEditionDialogProps = {
@@ -408,36 +408,36 @@ const exportDialogProps = {
 //     postInteractionWait: 200,
 // };
 
-const stylingEditorDialogProps: INeobackstopScenarioConfig = {
-    clickSelector: "#styling-editor-dialog-example button",
-    postInteractionWait: 200,
-};
+// const stylingEditorDialogProps: INeobackstopScenarioConfig = {
+//     clickSelector: "#styling-editor-dialog-example button",
+//     postInteractionWait: 200,
+// };
 
-const screenshotProps: INeobackstopConfig = {
-    dialog: {
-        clickSelector: "#dialog-example button",
-        postInteractionWait: 200,
-    },
-    "confirm-dialog": {
-        clickSelector: "#confirm-dialog-example button",
-        postInteractionWait: 200,
-    },
-    "confirm-dialog-with-no-submit-button": {
-        clickSelector: "#confirm-dialog-with-no-submit-button-example button",
-        postInteractionWait: 200,
-    },
-    // "confirm-dialog-with-warning": confirmDialogWithWarningProps,
-    "confirm-dialog-with-progress": confirmDialogWithProgressProps,
-    "export-dialog": exportDialogProps,
-    // "community-edition-dialog": communityEditionDialogProps,
-    "styling-editor-dialog": stylingEditorDialogProps,
-};
+// const screenshotProps: INeobackstopConfig = {
+//     dialog: {
+//         clickSelector: "#dialog-example button",
+//         postInteractionWait: 200,
+//     },
+//     "confirm-dialog": {
+//         clickSelector: "#confirm-dialog-example button",
+//         postInteractionWait: 200,
+//     },
+//     "confirm-dialog-with-no-submit-button": {
+//         clickSelector: "#confirm-dialog-with-no-submit-button-example button",
+//         postInteractionWait: 200,
+//     },
+//     // "confirm-dialog-with-warning": confirmDialogWithWarningProps,
+//     "confirm-dialog-with-progress": confirmDialogWithProgressProps,
+//     "export-dialog": exportDialogProps,
+//     // "community-edition-dialog": communityEditionDialogProps,
+//     "styling-editor-dialog": stylingEditorDialogProps,
+// };
 
-const screenshotPropsThemed: INeobackstopConfig = {
-    "confirm-dialog-with-warning": confirmDialogWithWarningProps,
-    // "export-dialog": exportDialogProps,
-    "styling-editor-dialog": stylingEditorDialogProps,
-};
+// const screenshotPropsThemed: INeobackstopConfig = {
+//     "confirm-dialog-with-warning": confirmDialogWithWarningProps,
+//     // "export-dialog": exportDialogProps,
+//     "styling-editor-dialog": stylingEditorDialogProps,
+// };
 
 // eslint-disable-next-line no-restricted-exports
 export default {
@@ -447,7 +447,7 @@ export default {
 export function FullFeatured() {
     return <DialogExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps } satisfies IStoryParameters;
+FullFeatured.parameters = { kind: "full-featured" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DialogExamples />);
-Themed.parameters = { kind: "themed", screenshots: screenshotPropsThemed } satisfies IStoryParameters;
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;

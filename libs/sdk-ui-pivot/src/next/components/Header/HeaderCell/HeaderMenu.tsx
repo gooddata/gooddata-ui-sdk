@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { MouseEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -8,6 +8,7 @@ import { Dropdown, IUiMenuItem, UiIcon, UiMenu, useOverlayZIndexWithRegister } f
 
 import { AggregationsMenuItemData, HeaderInteractiveItem, buildUiMenuItems } from "./HeaderMenuComponents.js";
 import { messages } from "../../../../locales.js";
+import { useHeaderMenuContext } from "../../../context/HeaderMenuContext.js";
 import { e } from "../../../features/styling/bem.js";
 import { getPivotHeaderMenuButtonTestIdProps } from "../../../testing/dataTestIdGenerators.js";
 import {
@@ -33,7 +34,7 @@ export interface IHeaderMenuProps {
     isKeyboardTriggered?: boolean;
 }
 
-function MenuToggler({ onClick }: { onClick: () => void }) {
+function MenuToggler({ onClick }: { onClick: MouseEventHandler<HTMLButtonElement> }) {
     const intl = useIntl();
 
     return (
@@ -64,6 +65,12 @@ export function HeaderMenu({
     const intl = useIntl();
     const toggleDropdownRef = useRef<((desired?: boolean) => void) | null>(null);
     const prevIsMenuOpenedRef = useRef(isMenuOpened);
+    const { activeMenuCloseRef, closeActiveMenu } = useHeaderMenuContext();
+
+    // Register close function when menu is open
+    if (isMenuOpened) {
+        activeMenuCloseRef.current = () => onMenuOpenedChange(false);
+    }
 
     const uiMenuItems = useMemo(
         () => buildUiMenuItems(aggregationsItems, textWrappingItems, sortingItems, intl),
@@ -106,6 +113,16 @@ export function HeaderMenu({
         [isMenuOpened, onMenuOpenedChange],
     );
 
+    // Handle menu button click - close other menus, then toggle this one
+    const handleButtonClick: MouseEventHandler<HTMLButtonElement> = useCallback(
+        (e) => {
+            e.stopPropagation();
+            closeActiveMenu();
+            onMenuOpenedChange(!isMenuOpened);
+        },
+        [isMenuOpened, closeActiveMenu, onMenuOpenedChange],
+    );
+
     const overlayZIndex = useOverlayZIndexWithRegister();
 
     return (
@@ -126,7 +143,7 @@ export function HeaderMenu({
                 autofocusOnOpen={isKeyboardTriggered}
                 renderButton={({ toggleDropdown }) => {
                     toggleDropdownRef.current = toggleDropdown;
-                    return <MenuToggler onClick={toggleDropdown} />;
+                    return <MenuToggler onClick={handleButtonClick} />;
                 }}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
                     <UiMenu<AggregationsMenuItemData>

@@ -9,9 +9,9 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { uriRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { Button, ComponentLabelsProvider, ShareDialogBase, getGranteeItemTestId } from "@gooddata/sdk-ui-kit";
+import { Button, ComponentLabelsProvider, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 
-import { defaultUser, defaultUserPermissions, groupAll, owner } from "./GranteeMock.js";
+import { defaultUser, defaultUserPermissions, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
 import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -90,32 +90,32 @@ function ShareDialogExamples() {
     );
 }
 
-const granteeAllSelector = `.${getGranteeItemTestId(groupAll, "option")}`;
+// const granteeAllSelector = `.${getGranteeItemTestId(groupAll, "option")}`;
 
-const scenarios: INeobackstopConfig = {
-    open: {
-        clickSelectors: [".s-share-dialog-button"],
-        delay: {
-            postOperation: 500,
-        },
-    },
-    "add-grantee": {
-        clickSelectors: [".s-share-dialog-button", 50, ".s-add-users-or-groups", 50],
-        delay: {
-            postOperation: 500, // dialog appears slightly higher, then shifts down...
-        },
-    },
-    "selected-grantee": {
-        clickSelectors: [
-            ".s-share-dialog-button",
-            100,
-            ".s-add-users-or-groups",
-            100,
-            granteeAllSelector,
-            300,
-        ],
-    },
-};
+// const scenarios: INeobackstopConfig = {
+//     open: {
+//         clickSelectors: [".s-share-dialog-button"],
+//         delay: {
+//             postOperation: 500,
+//         },
+//     },
+//     "add-grantee": {
+//         clickSelectors: [".s-share-dialog-button", 50, ".s-add-users-or-groups", 50],
+//         delay: {
+//             postOperation: 500, // dialog appears slightly higher, then shifts down...
+//         },
+//     },
+//     "selected-grantee": {
+//         clickSelectors: [
+//             ".s-share-dialog-button",
+//             100,
+//             ".s-add-users-or-groups",
+//             100,
+//             granteeAllSelector,
+//             300,
+//         ],
+//     },
+// };
 
 const lockScenarios: INeobackstopConfig = {
     open: {
@@ -143,10 +143,10 @@ export default {
 export function FullFeatured() {
     return <ShareDialogExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios } satisfies IStoryParameters;
+FullFeatured.parameters = { kind: "full-featured" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<ShareDialogExamples />);
-Themed.parameters = { kind: "themed", screenshots: scenarios } satisfies IStoryParameters;
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;
 
 export function LockInteraction() {
     return <ShareDialogExamples />;

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { defineMessages } from "react-intl";
+
 import { type IFormatTemplate } from "../typings.js";
 
 /**
@@ -13,6 +15,19 @@ export interface ITemplateDefinition {
 }
 
 /**
+ * Message IDs for standard template definitions.
+ * @internal
+ */
+const standardTemplateMessages = defineMessages({
+    rounded: { id: "measureNumberFormat.numberFormat.template.rounded" },
+    decimal1: { id: "measureNumberFormat.numberFormat.template.decimal1" },
+    decimal2: { id: "measureNumberFormat.numberFormat.template.decimal2" },
+    percentRounded: { id: "measureNumberFormat.numberFormat.template.percentRounded" },
+    percent1: { id: "measureNumberFormat.numberFormat.template.percent1" },
+    percent2: { id: "measureNumberFormat.numberFormat.template.percent2" },
+});
+
+/**
  * Standard format template definitions (basic numeric formats).
  * @internal
  */
@@ -20,34 +35,43 @@ export const STANDARD_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
     {
         localIdentifier: "rounded",
         format: "#,##0",
-        messageId: "metricComponent.numberFormat.template.rounded",
+        messageId: standardTemplateMessages.rounded.id,
     },
     {
         localIdentifier: "decimal-1",
         format: "#,##0.0",
-        messageId: "metricComponent.numberFormat.template.decimal1",
+        messageId: standardTemplateMessages.decimal1.id,
     },
     {
         localIdentifier: "decimal-2",
         format: "#,##0.00",
-        messageId: "metricComponent.numberFormat.template.decimal2",
+        messageId: standardTemplateMessages.decimal2.id,
     },
     {
         localIdentifier: "percent-rounded",
         format: "#,##0%",
-        messageId: "metricComponent.numberFormat.template.percentRounded",
+        messageId: standardTemplateMessages.percentRounded.id,
     },
     {
         localIdentifier: "percent-1",
         format: "#,##0.0%",
-        messageId: "metricComponent.numberFormat.template.percent1",
+        messageId: standardTemplateMessages.percent1.id,
     },
     {
         localIdentifier: "percent-2",
         format: "#,##0.00%",
-        messageId: "metricComponent.numberFormat.template.percent2",
+        messageId: standardTemplateMessages.percent2.id,
     },
 ] as const;
+
+/**
+ * Message IDs for currency template definitions.
+ * @internal
+ */
+const currencyTemplateMessages = defineMessages({
+    currency: { id: "measureNumberFormat.numberFormat.template.currency" },
+    currencyShortened: { id: "measureNumberFormat.numberFormat.template.currencyShortened" },
+});
 
 /**
  * Currency format template definitions.
@@ -57,7 +81,7 @@ export const CURRENCY_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
     {
         localIdentifier: "currency",
         format: "$#,##0.00",
-        messageId: "metricComponent.numberFormat.template.currency",
+        messageId: currencyTemplateMessages.currency.id,
     },
     {
         localIdentifier: "currency-shortened",
@@ -72,9 +96,29 @@ export const CURRENCY_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
             "[<=-1000000]-$#,,.0 M;\n" +
             "[<=-1000]-$#,.0 K;\n" +
             "[<0]-$#,##0",
-        messageId: "metricComponent.numberFormat.template.currencyShortened",
+        messageId: currencyTemplateMessages.currencyShortened.id,
     },
 ] as const;
+
+/**
+ * Message IDs for advanced template definitions.
+ * @internal
+ */
+const advancedTemplateMessages = defineMessages({
+    largeNumbersShortened: { id: "measureNumberFormat.numberFormat.template.largeNumbersShortened" },
+    largeNumbersShortenedWithColors: {
+        id: "measureNumberFormat.numberFormat.template.largeNumbersShortenedWithColors",
+    },
+    negativeNumbersRed: { id: "measureNumberFormat.numberFormat.template.negativeNumbersRed" },
+    financial: { id: "measureNumberFormat.numberFormat.template.financial" },
+    decimalWithoutThousandsSeparator: {
+        id: "measureNumberFormat.numberFormat.template.decimalWithoutThousandsSeparator",
+    },
+    conditionalColors: { id: "measureNumberFormat.numberFormat.template.conditionalColors" },
+    trendSymbols: { id: "measureNumberFormat.numberFormat.template.trendSymbols" },
+    timeFromSeconds: { id: "measureNumberFormat.numberFormat.template.timeFromSeconds" },
+    zeroInsteadOfNull: { id: "measureNumberFormat.numberFormat.template.zeroInsteadOfNull" },
+});
 
 /**
  * Advanced format template definitions (complex conditional formats).
@@ -94,7 +138,7 @@ export const ADVANCED_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
             "[<=-1000000]-#,,.0 M;\n" +
             "[<=-1000]-#,.0 K;\n" +
             "[<0]-#,##0",
-        messageId: "metricComponent.numberFormat.template.largeNumbersShortened",
+        messageId: advancedTemplateMessages.largeNumbersShortened.id,
     },
     {
         localIdentifier: "large-numbers-shortened-with-colors",
@@ -109,32 +153,32 @@ export const ADVANCED_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
             "[<=-1000000][red]-#,,.0 M;\n" +
             "[<=-1000][red]-#,.0 K;\n" +
             "[<0][black]-#,##0",
-        messageId: "metricComponent.numberFormat.template.largeNumbersShortenedWithColors",
+        messageId: advancedTemplateMessages.largeNumbersShortenedWithColors.id,
     },
     {
         localIdentifier: "negative-numbers-red",
         format: "[<0][red]-#,##0.0;\n[black]#,##0.0",
-        messageId: "metricComponent.numberFormat.template.negativeNumbersRed",
+        messageId: advancedTemplateMessages.negativeNumbersRed.id,
     },
     {
         localIdentifier: "financial",
         format: "[<0](#,##0.0);\n#,##0.0",
-        messageId: "metricComponent.numberFormat.template.financial",
+        messageId: advancedTemplateMessages.financial.id,
     },
     {
         localIdentifier: "decimal-without-thousands-separator",
         format: "0.00",
-        messageId: "metricComponent.numberFormat.template.decimalWithoutThousandsSeparator",
+        messageId: advancedTemplateMessages.decimalWithoutThousandsSeparator.id,
     },
     {
         localIdentifier: "conditional-colors",
         format: "[<0][red]#,#.##;\n[<1000][black]#,0.##;\n[>=1000][green]#,#.##",
-        messageId: "metricComponent.numberFormat.template.conditionalColors",
+        messageId: advancedTemplateMessages.conditionalColors.id,
     },
     {
         localIdentifier: "trend-symbols",
         format: "[<0][green]▲ #,##0.0%;\n[=0][black]#,##0.0%;\n[>0][red]▼ #,##0.0%",
-        messageId: "metricComponent.numberFormat.template.trendSymbols",
+        messageId: advancedTemplateMessages.trendSymbols.id,
     },
     {
         localIdentifier: "time-from-seconds",
@@ -144,12 +188,12 @@ export const ADVANCED_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
             "[>=60]{{{60|60|00}}}m {{{|60.|00}}}s;\n" +
             "[>0]{{{|60.|00.0}}}s;\n" +
             "[=0]{{{|60.|0}}}",
-        messageId: "metricComponent.numberFormat.template.timeFromSeconds",
+        messageId: advancedTemplateMessages.timeFromSeconds.id,
     },
     {
         localIdentifier: "zero-instead-of-null",
         format: "[=null]0.00;\n[>=0]#,#0.00;\n[<0]-#,#0.00",
-        messageId: "metricComponent.numberFormat.template.zeroInsteadOfNull",
+        messageId: advancedTemplateMessages.zeroInsteadOfNull.id,
     },
 ] as const;
 
@@ -164,14 +208,14 @@ export const CURRENCY_TEMPLATE_IDS = CURRENCY_TEMPLATE_DEFINITIONS.map((t) => t.
  * Default message ID prefix for template definitions.
  * @internal
  */
-export const DEFAULT_TEMPLATE_PREFIX = "metricComponent.numberFormat.template";
+export const DEFAULT_TEMPLATE_PREFIX = "measureNumberFormat.numberFormat.template";
 
 /**
  * Creates localized format templates.
  *
  * @param formatMessage - Function to format localized messages (e.g., from react-intl)
  * @param definitions - Template definitions to localize
- * @param messageIdPrefix - Optional prefix for message IDs (default: "metricComponent.numberFormat.template")
+ * @param messageIdPrefix - Optional prefix for message IDs (default: "measureNumberFormat.numberFormat.template")
  * @returns Array of format templates with localized names
  * @internal
  */
@@ -181,7 +225,7 @@ export function createTemplates(
     messageIdPrefix: string = DEFAULT_TEMPLATE_PREFIX,
 ): IFormatTemplate[] {
     return definitions.map((definition) => {
-        // Extract the key part from the default message ID (e.g., "rounded" from "metricComponent.numberFormat.template.rounded")
+        // Extract the key part from the default message ID (e.g., "rounded" from "measureNumberFormat.numberFormat.template.rounded")
         const keyPart = definition.messageId.replace(`${DEFAULT_TEMPLATE_PREFIX}.`, "");
         const messageId = `${messageIdPrefix}.${keyPart}`;
         return {
@@ -196,17 +240,14 @@ export function createTemplates(
  * Creates all localized format templates (standard + currency + advanced).
  *
  * @param formatMessage - Function to format localized messages (e.g., from react-intl)
- * @param messageIdPrefix - Optional prefix for message IDs (default: "metricComponent.numberFormat.template")
+ * @param messageIdPrefix - Optional prefix for message IDs (default: "measureNumberFormat.numberFormat.template")
  * @returns Array of all format templates with localized names
  * @internal
  */
-export function createAllTemplates(
-    formatMessage: (descriptor: { id: string }) => string,
-    messageIdPrefix: string = DEFAULT_TEMPLATE_PREFIX,
-): IFormatTemplate[] {
+export function createAllTemplates(formatMessage: (descriptor: { id: string }) => string): IFormatTemplate[] {
     return [
-        ...createTemplates(formatMessage, STANDARD_TEMPLATE_DEFINITIONS, messageIdPrefix),
-        ...createTemplates(formatMessage, CURRENCY_TEMPLATE_DEFINITIONS, messageIdPrefix),
-        ...createTemplates(formatMessage, ADVANCED_TEMPLATE_DEFINITIONS, messageIdPrefix),
+        ...createTemplates(formatMessage, STANDARD_TEMPLATE_DEFINITIONS),
+        ...createTemplates(formatMessage, CURRENCY_TEMPLATE_DEFINITIONS),
+        ...createTemplates(formatMessage, ADVANCED_TEMPLATE_DEFINITIONS),
     ];
 }

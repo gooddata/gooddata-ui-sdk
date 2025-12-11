@@ -16,13 +16,11 @@ export type { UseCurrencyFormatDefaultsConfig } from "./hooks/useCurrencyFormatD
 export {
     createCurrencyPresets,
     CURRENCY_PRESET_DEFINITIONS,
-    DEFAULT_CURRENCY_PRESET_PREFIX,
     type ICurrencyPresetDefinition,
 } from "./presets/currencyPresets.js";
 export {
     createStandardPresets,
     STANDARD_PRESET_DEFINITIONS,
-    DEFAULT_STANDARD_PRESET_PREFIX,
     type IStandardPresetDefinition,
 } from "./presets/standardPresets.js";
 export {

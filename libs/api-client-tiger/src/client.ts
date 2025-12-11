@@ -27,6 +27,11 @@ import {
 } from "./labelElements.js";
 import { tigerLayoutClientFactory } from "./layout.js";
 import {
+    LocationStyleApiInterface,
+    LocationStyleDocument,
+    tigerLocationStyleClientFactory,
+} from "./locationStyle.js";
+import {
     FeatureContext,
     ILiveFeatures,
     IStaticFeatures,
@@ -64,6 +69,8 @@ export type {
     ILiveFeatures,
     IStaticFeatures,
     FeatureContext,
+    LocationStyleApiInterface,
+    LocationStyleDocument,
     ScanModelConfigurationParameters,
     ScanModelRequestArgs,
     ScanModelActionsApiInterface,
@@ -79,6 +86,7 @@ export {
     tigerLayoutClientFactory,
     tigerAfmExplainClientFactory,
     tigerProfileClientFactory,
+    tigerLocationStyleClientFactory,
     tigerActionsClientFactory,
     tigerAuthActionsClientFactory,
     tigerScanModelClientFactory,
@@ -127,6 +135,7 @@ export interface ITigerClient extends ITigerClientBase {
     declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
     profile: ReturnType<typeof tigerProfileClientFactory>;
+    locationStyle: ReturnType<typeof tigerLocationStyleClientFactory>;
     actions: ReturnType<typeof tigerActionsClientFactory>;
     authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
@@ -170,6 +179,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const explain = tigerAfmExplainClientFactory(axios);
     const entities = tigerEntitiesObjectsClientFactory(axios);
     const profile = tigerProfileClientFactory(axios);
+    const locationStyle = tigerLocationStyleClientFactory(axios);
     const actions = tigerActionsClientFactory(axios);
     const authActions = tigerAuthActionsClientFactory(axios);
     const scanModel = tigerScanModelClientFactory(axios);
@@ -194,6 +204,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         explain,
         entities,
         profile,
+        locationStyle,
         actions,
         authActions,
         scanModel,

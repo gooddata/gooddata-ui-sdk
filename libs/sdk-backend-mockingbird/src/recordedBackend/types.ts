@@ -1,7 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     IAnalyticalBackendConfig,
     IDashboardWithReferences,
+    IGeoStyleSpecification,
     IWorkspaceDescriptor,
     ValidationContext,
 } from "@gooddata/sdk-backend-spi";
@@ -136,6 +138,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify how to get valid descendants for attribute elements
      */
     getValidDescendants?: (refs: ObjRef[]) => ObjRef[];
+
+    /**
+     * Provide a custom geo style specification returned by the mock geo service.
+     */
+    geoStyleSpecification?: IGeoStyleSpecification;
 };
 
 /**

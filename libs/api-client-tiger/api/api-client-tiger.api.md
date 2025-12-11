@@ -1188,6 +1188,12 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiMemoryCreatedByUsersRequest" needs to be exported by the entry point index.d.ts
     memoryCreatedByUsers(requestParameters: ActionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiOutlierDetectionRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "OutlierDetectionResponse" needs to be exported by the entry point index.d.ts
+    outlierDetection(requestParameters: ActionsApiOutlierDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResponse>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiOutlierDetectionResultRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "OutlierDetectionResult" needs to be exported by the entry point index.d.ts
+    outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
@@ -1236,6 +1242,8 @@ export interface AfmActionsApiInterface {
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     memoryCreatedByUsers(requestParameters: ActionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
+    outlierDetection(requestParameters: ActionsApiOutlierDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResponse>;
+    outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
@@ -1324,8 +1332,8 @@ export interface AfmChangeAnalysisRequest {
     auxMeasures?: Array<AfmMeasureItem>;
     // (undocumented)
     dateAttribute: AfmAttributeItem;
-    // Warning: (ae-forgotten-export) The symbol "ChangeAnalysisRequestFiltersInner" needs to be exported by the entry point index.d.ts
-    filters?: Array<ChangeAnalysisRequestFiltersInner>;
+    // Warning: (ae-forgotten-export) The symbol "OutlierDetectionRequestFiltersInner" needs to be exported by the entry point index.d.ts
+    filters?: Array<OutlierDetectionRequestFiltersInner>;
     // (undocumented)
     measure: AfmMeasureItem;
     referencePeriod: string;
@@ -4484,6 +4492,10 @@ export interface ChatHistoryInteraction {
     foundObjects?: FoundObjects;
     interactionFinished: boolean;
     question: string;
+    // Warning: (ae-forgotten-export) The symbol "Reasoning" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    reasoning?: Reasoning;
     // (undocumented)
     routing: RouteResult;
     // (undocumented)
@@ -4547,6 +4559,8 @@ export interface ChatResult {
     errorResponse?: string;
     // (undocumented)
     foundObjects?: FoundObjects;
+    // (undocumented)
+    reasoning?: Reasoning;
     // (undocumented)
     routing?: RouteResult;
     // (undocumented)
@@ -13169,6 +13183,8 @@ export interface ITigerClient extends ITigerClientBase {
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     // (undocumented)
+    locationStyle: ReturnType<typeof tigerLocationStyleClientFactory>;
+    // (undocumented)
     profile: ReturnType<typeof tigerProfileClientFactory>;
     // (undocumented)
     result: ReturnType<typeof tigerResultClientFactory>;
@@ -19837,6 +19853,14 @@ export interface LocalIdentifier {
 }
 
 // @public
+export interface LocationStyleApiInterface {
+    getDefaultStyle(): Promise<LocationStyleDocument>;
+}
+
+// @public
+export type LocationStyleDocument = Record<string, unknown>;
+
+// @public
 export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | PermissionsForAssigneeRule;
 
 // @public
@@ -23681,6 +23705,9 @@ export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<Afm
 
 // @public (undocumented)
 export const tigerLayoutClientFactory: (axios: AxiosInstance) => LayoutApiInterface;
+
+// @public
+export const tigerLocationStyleClientFactory: (axios: AxiosInstance) => LocationStyleApiInterface;
 
 // @public (undocumented)
 export const tigerProfileClientFactory: (axios: AxiosInstance) => ProfileApiInterface;

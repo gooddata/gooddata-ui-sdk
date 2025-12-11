@@ -5,7 +5,7 @@ import { AnyAction, CaseReducer } from "@reduxjs/toolkit";
 import { IAttributeElement, IAttributeFilter, IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types/index.js";
+import { AsyncOperationStatus, AttributeElementKey, ILoadElementsOptions } from "../../../types/index.js";
 
 /**
  * @internal
@@ -25,7 +25,7 @@ export interface AttributeFilterState {
         error?: GoodDataSdkError;
     };
     elements: {
-        data?: string[];
+        data?: AttributeElementKey[];
         totalCount?: number;
         totalCountInitialization: {
             status: AsyncOperationStatus;
@@ -48,14 +48,14 @@ export interface AttributeFilterState {
     };
     selection: {
         commited: {
-            keys?: string[];
+            keys?: AttributeElementKey[];
             isInverted?: boolean;
-            irrelevantKeys?: string[];
+            irrelevantKeys?: AttributeElementKey[];
         };
         working: {
-            keys?: string[];
+            keys?: AttributeElementKey[];
             isInverted?: boolean;
-            irrelevantKeys?: string[];
+            irrelevantKeys?: AttributeElementKey[];
         };
     };
     config: {

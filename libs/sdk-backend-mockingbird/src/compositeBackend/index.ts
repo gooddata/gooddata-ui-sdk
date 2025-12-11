@@ -9,6 +9,7 @@ import {
     IAuthenticationProvider,
     IDataSourcesService,
     IEntitlements,
+    IGeoService,
     IOrganization,
     IOrganizations,
     IUserService,
@@ -99,6 +100,9 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
         },
         dataSources(): IDataSourcesService {
             return primaryBackend.dataSources();
+        },
+        geo(): IGeoService {
+            return primaryBackend.geo();
         },
     };
 

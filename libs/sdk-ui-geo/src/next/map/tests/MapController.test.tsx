@@ -148,7 +148,7 @@ describe("MapController", () => {
             />,
         );
 
-        expect(initMock).toHaveBeenCalledWith(mapContainerRef, config, null);
+        expect(initMock).toHaveBeenCalledWith(mapContainerRef, config, null, undefined);
         expect(resizeMock).toHaveBeenCalledWith(mapFacadeStub, true, null, null);
         expect(callbacksMock).toHaveBeenCalledWith(mapFacadeStub, {
             onCenterPositionChanged,

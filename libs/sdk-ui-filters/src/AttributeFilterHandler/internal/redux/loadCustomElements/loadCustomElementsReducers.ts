@@ -9,8 +9,13 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { Correlation, ILoadElementsOptions, ILoadElementsResult } from "../../../types/index.js";
-import { getElementCacheKey } from "../common/selectors.js";
+import {
+    AttributeElementKey,
+    Correlation,
+    ILoadElementsOptions,
+    ILoadElementsResult,
+} from "../../../types/index.js";
+import { getElementCacheKey, getElementKey } from "../common/selectors.js";
 import { INIT_SELECTION_PREFIX } from "../constants.js";
 import { AttributeFilterReducer } from "../store/state.js";
 
@@ -22,17 +27,17 @@ const loadCustomElementsStart: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
 > = (v) => v;
 
-const getElementValues = (elements: ElementsQueryOptionsElementsSpecification): string[] => {
+const getElementValues = (elements: ElementsQueryOptionsElementsSpecification): AttributeElementKey[] => {
     if (!elements) {
         return [];
     }
     if (isElementsQueryOptionsElementsByValue(elements)) {
-        return elements.values.filter((v): v is string => v !== null);
+        return elements.values;
     }
     if (isElementsQueryOptionsElementsByPrimaryDisplayFormValue(elements)) {
-        return elements.primaryValues.filter((v): v is string => v !== null);
+        return elements.primaryValues;
     }
-    return elements.uris.filter((v): v is string => v !== null);
+    return elements.uris;
 };
 
 const loadCustomElementsSuccess: AttributeFilterReducer<
@@ -42,7 +47,7 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
         }
     >
 > = (state, action) => {
-    const keys: string[] = [];
+    const keys: AttributeElementKey[] = [];
 
     const {
         options: { elements, filterByPrimaryLabel },
@@ -60,22 +65,22 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
                 .filter((el) => (filterByPrimaryLabel ? el.uri === originalEl : el.title === originalEl))
                 .forEach((el) => {
                     const cacheKey = getElementCacheKey(el);
-                    if (cacheKey !== null && !state.elements.cache[cacheKey]) {
+                    if (!state.elements.cache[cacheKey]) {
                         state.elements.cache[cacheKey] = el;
                     }
-                    if (shouldOverrideKeys && cacheKey !== null) {
-                        keys.push(cacheKey);
+                    if (shouldOverrideKeys) {
+                        keys.push(getElementKey(el));
                     }
                 });
         });
     } else {
         action.payload.elements.forEach((el) => {
             const cacheKey = getElementCacheKey(el);
-            if (cacheKey !== null && !state.elements.cache[cacheKey]) {
+            if (!state.elements.cache[cacheKey]) {
                 state.elements.cache[cacheKey] = el;
             }
-            if (shouldOverrideKeys && cacheKey !== null) {
-                keys.push(cacheKey);
+            if (shouldOverrideKeys) {
+                keys.push(getElementKey(el));
             }
         });
     }

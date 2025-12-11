@@ -504,7 +504,7 @@ export interface ChangeAnalysisParams {
     /**
      * Optional filters to apply
      */
-    filters: Array<ChangeAnalysisRequestFiltersInner>;
+    filters: Array<OutlierDetectionRequestFiltersInner>;
     /**
      * Whether to use smart attribute selection
      */
@@ -532,7 +532,7 @@ export interface ChangeAnalysisRequest {
     /**
      * Optional filters to apply.
      */
-    filters?: Array<ChangeAnalysisRequestFiltersInner>;
+    filters?: Array<OutlierDetectionRequestFiltersInner>;
     /**
      * Auxiliary measures
      */
@@ -542,14 +542,6 @@ export interface ChangeAnalysisRequest {
      */
     useSmartAttributeSelection?: boolean;
 }
-
-/**
- * @type ChangeAnalysisRequestFiltersInner
- */
-export type ChangeAnalysisRequestFiltersInner =
-    | AbstractMeasureValueFilter
-    | FilterDefinitionForSimpleMeasure
-    | InlineFilterDefinition;
 
 /**
  * Response for change analysis computation
@@ -605,6 +597,7 @@ export interface ChatHistoryInteraction {
      * User feedback.
      */
     userFeedback?: ChatHistoryInteractionUserFeedbackEnum;
+    reasoning?: Reasoning;
 }
 
 export type ChatHistoryInteractionUserFeedbackEnum = "POSITIVE" | "NEGATIVE" | "NONE";
@@ -734,6 +727,7 @@ export interface ChatResult {
      * Chat History interaction ID. Unique ID for each interaction.
      */
     chatHistoryInteractionId?: string;
+    reasoning?: Reasoning;
 }
 
 export interface ChatUsageResponse {
@@ -867,7 +861,7 @@ export interface CreatedVisualizations {
      */
     objects: Array<CreatedVisualization>;
     /**
-     * Reasoning from LLM. Description of how and why the answer was generated.
+     * DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.
      */
     reasoning: string;
     /**
@@ -1310,7 +1304,7 @@ export interface FoundObjects {
      */
     objects: Array<SearchResultObject>;
     /**
-     * Reasoning from LLM. Description of how and why the answer was generated.
+     * DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.
      */
     reasoning: string;
 }
@@ -1634,6 +1628,43 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     label: AfmIdentifier;
 }
 
+export interface OutlierDetectionRequest {
+    measures: Array<MeasureItem>;
+    dateAttribute: AttributeItem;
+    /**
+     * Optional filters to apply
+     */
+    filters?: Array<OutlierDetectionRequestFiltersInner>;
+    /**
+     * Sensitivity level for outlier detection
+     */
+    sensitivity: OutlierDetectionRequestSensitivityEnum;
+    /**
+     * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
+     */
+    granularity: OutlierDetectionRequestGranularityEnum;
+}
+
+export type OutlierDetectionRequestSensitivityEnum = "LOW" | "MEDIUM" | "HIGH";
+export type OutlierDetectionRequestGranularityEnum = "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
+
+/**
+ * @type OutlierDetectionRequestFiltersInner
+ */
+export type OutlierDetectionRequestFiltersInner =
+    | AbstractMeasureValueFilter
+    | FilterDefinitionForSimpleMeasure
+    | InlineFilterDefinition;
+
+export interface OutlierDetectionResponse {
+    links: ExecutionLinks;
+}
+
+export interface OutlierDetectionResult {
+    attribute: Array<string>;
+    values: { [key: string]: Array<number | null> | null } | null;
+}
+
 /**
  * Current page description.
  */
@@ -1854,6 +1885,34 @@ export interface RankingFilterRankingFilter {
 }
 
 export type RankingFilterRankingFilterOperatorEnum = "TOP" | "BOTTOM";
+
+/**
+ * Reasoning wrapper containing steps taken during request handling.
+ */
+export interface Reasoning {
+    /**
+     * Steps taken during processing, showing the AI\'s reasoning process.
+     */
+    steps: Array<ReasoningStep>;
+    /**
+     * Final answer/reasoning from the use case result.
+     */
+    answer?: string;
+}
+
+/**
+ * Steps taken during processing, showing the AI\'s reasoning process.
+ */
+export interface ReasoningStep {
+    /**
+     * Title describing this reasoning step.
+     */
+    title: string;
+    /**
+     * Detailed thoughts/messages within this step.
+     */
+    thoughts: Array<Thought>;
+}
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -2078,7 +2137,7 @@ export interface SearchResult {
     results: Array<SearchResultObject>;
     relationships: Array<SearchRelationshipObject>;
     /**
-     * If something is not working properly this field will contain explanation.
+     * DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation.
      */
     reasoning: string;
 }
@@ -2256,6 +2315,16 @@ export interface Suggestion {
      * Suggestion button label
      */
     label: string;
+}
+
+/**
+ * Detailed thoughts/messages within this step.
+ */
+export interface Thought {
+    /**
+     * The text content of this thought.
+     */
+    text: string;
 }
 
 /**
@@ -3831,6 +3900,127 @@ export async function ActionsApiAxiosParamCreator_MemoryCreatedByUsers(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * (BETA) Computes outlier detection for the provided execution definition.
+ * @summary (BETA) Outlier Detection
+ * @param {string} workspaceId Workspace identifier
+ * @param {OutlierDetectionRequest} outlierDetectionRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_OutlierDetection(
+    workspaceId: string,
+    outlierDetectionRequest: OutlierDetectionRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("outlierDetection", "workspaceId", workspaceId);
+    // verify required parameter 'outlierDetectionRequest' is not null or undefined
+    assertParamExists("outlierDetection", "outlierDetectionRequest", outlierDetectionRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof outlierDetectionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(outlierDetectionRequest !== undefined ? outlierDetectionRequest : {})
+        : outlierDetectionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Gets outlier detection result.
+ * @summary (BETA) Outlier Detection Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_OutlierDetectionResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("outlierDetectionResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("outlierDetectionResult", "resultId", resultId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers/result/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Returns a list of available LLM Endpoints
  * @summary Get Active LLM Endpoints for this workspace
  * @param {string} workspaceId Workspace identifier
@@ -4879,6 +5069,63 @@ export async function ActionsApi_MemoryCreatedByUsers(
 
 // ActionsApi Api FP
 /**
+ * (BETA) Computes outlier detection for the provided execution definition.
+ * @summary (BETA) Outlier Detection
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiOutlierDetectionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_OutlierDetection(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiOutlierDetectionRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<OutlierDetectionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_OutlierDetection(
+        requestParameters.workspaceId,
+        requestParameters.outlierDetectionRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
+ * (BETA) Gets outlier detection result.
+ * @summary (BETA) Outlier Detection Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiOutlierDetectionResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_OutlierDetectionResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ActionsApiOutlierDetectionResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<OutlierDetectionResult> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_OutlierDetectionResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ActionsApi Api FP
+/**
  * Returns a list of available LLM Endpoints
  * @summary Get Active LLM Endpoints for this workspace
  * @param {AxiosInstance} axios Axios instance.
@@ -5396,6 +5643,32 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiMemoryCreatedByUsersRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<MemoryItemCreatedByUsers>;
+
+    /**
+     * (BETA) Computes outlier detection for the provided execution definition.
+     * @summary (BETA) Outlier Detection
+     * @param {ActionsApiOutlierDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    outlierDetection(
+        requestParameters: ActionsApiOutlierDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<OutlierDetectionResponse>;
+
+    /**
+     * (BETA) Gets outlier detection result.
+     * @summary (BETA) Outlier Detection Result
+     * @param {ActionsApiOutlierDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    outlierDetectionResult(
+        requestParameters: ActionsApiOutlierDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<OutlierDetectionResult>;
 
     /**
      * Returns a list of available LLM Endpoints
@@ -6145,6 +6418,69 @@ export interface ActionsApiMemoryCreatedByUsersRequest {
 }
 
 /**
+ * Request parameters for outlierDetection operation in ActionsApi.
+ * @export
+ * @interface ActionsApiOutlierDetectionRequest
+ */
+export interface ActionsApiOutlierDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiOutlierDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {OutlierDetectionRequest}
+     * @memberof ActionsApiOutlierDetection
+     */
+    readonly outlierDetectionRequest: OutlierDetectionRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiOutlierDetection
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for outlierDetectionResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiOutlierDetectionResultRequest
+ */
+export interface ActionsApiOutlierDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiOutlierDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiOutlierDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiOutlierDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiOutlierDetectionResult
+     */
+    readonly limit?: number;
+}
+
+/**
  * Request parameters for resolveLlmEndpoints operation in ActionsApi.
  * @export
  * @interface ActionsApiResolveLlmEndpointsRequest
@@ -6761,6 +7097,48 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return ActionsApi_MemoryCreatedByUsers(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
+    }
+
+    /**
+     * (BETA) Computes outlier detection for the provided execution definition.
+     * @summary (BETA) Outlier Detection
+     * @param {ActionsApiOutlierDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public outlierDetection(
+        requestParameters: ActionsApiOutlierDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApi_OutlierDetection(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
+    }
+
+    /**
+     * (BETA) Gets outlier detection result.
+     * @summary (BETA) Outlier Detection Result
+     * @param {ActionsApiOutlierDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public outlierDetectionResult(
+        requestParameters: ActionsApiOutlierDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApi_OutlierDetectionResult(
             this.axios,
             this.basePath,
             requestParameters,
@@ -7461,6 +7839,127 @@ export async function ComputationApiAxiosParamCreator_KeyDriverAnalysisResult(
 
 // ComputationApi FP - ComputationApiAxiosParamCreator
 /**
+ * (BETA) Computes outlier detection for the provided execution definition.
+ * @summary (BETA) Outlier Detection
+ * @param {string} workspaceId Workspace identifier
+ * @param {OutlierDetectionRequest} outlierDetectionRequest
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_OutlierDetection(
+    workspaceId: string,
+    outlierDetectionRequest: OutlierDetectionRequest,
+    skipCache?: boolean,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("outlierDetection", "workspaceId", workspaceId);
+    // verify required parameter 'outlierDetectionRequest' is not null or undefined
+    assertParamExists("outlierDetection", "outlierDetectionRequest", outlierDetectionRequest);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+    }
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof outlierDetectionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(outlierDetectionRequest !== undefined ? outlierDetectionRequest : {})
+        : outlierDetectionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * (BETA) Gets outlier detection result.
+ * @summary (BETA) Outlier Detection Result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {number} [offset]
+ * @param {number} [limit]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_OutlierDetectionResult(
+    workspaceId: string,
+    resultId: string,
+    offset?: number,
+    limit?: number,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("outlierDetectionResult", "workspaceId", workspaceId);
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists("outlierDetectionResult", "resultId", resultId);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers/result/{resultId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (offset !== undefined) {
+        localVarQueryParameter["offset"] = offset;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter["limit"] = limit;
+    }
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
  * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
  * @summary Get a single execution result\'s metadata.
  * @param {string} workspaceId Workspace identifier
@@ -7834,6 +8333,63 @@ export async function ComputationApi_KeyDriverAnalysisResult(
 
 // ComputationApi Api FP
 /**
+ * (BETA) Computes outlier detection for the provided execution definition.
+ * @summary (BETA) Outlier Detection
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiOutlierDetectionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_OutlierDetection(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiOutlierDetectionRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<OutlierDetectionResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_OutlierDetection(
+        requestParameters.workspaceId,
+        requestParameters.outlierDetectionRequest,
+        requestParameters.skipCache,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
+ * (BETA) Gets outlier detection result.
+ * @summary (BETA) Outlier Detection Result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiOutlierDetectionResultRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_OutlierDetectionResult(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiOutlierDetectionResultRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<OutlierDetectionResult> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_OutlierDetectionResult(
+        requestParameters.workspaceId,
+        requestParameters.resultId,
+        requestParameters.offset,
+        requestParameters.limit,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
  * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
  * @summary Get a single execution result\'s metadata.
  * @param {AxiosInstance} axios Axios instance.
@@ -8012,6 +8568,32 @@ export interface ComputationApiInterface {
         requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<KeyDriversResult>;
+
+    /**
+     * (BETA) Computes outlier detection for the provided execution definition.
+     * @summary (BETA) Outlier Detection
+     * @param {ComputationApiOutlierDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    outlierDetection(
+        requestParameters: ComputationApiOutlierDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<OutlierDetectionResponse>;
+
+    /**
+     * (BETA) Gets outlier detection result.
+     * @summary (BETA) Outlier Detection Result
+     * @param {ComputationApiOutlierDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    outlierDetectionResult(
+        requestParameters: ComputationApiOutlierDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<OutlierDetectionResult>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -8304,6 +8886,69 @@ export interface ComputationApiKeyDriverAnalysisResultRequest {
 }
 
 /**
+ * Request parameters for outlierDetection operation in ComputationApi.
+ * @export
+ * @interface ComputationApiOutlierDetectionRequest
+ */
+export interface ComputationApiOutlierDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiOutlierDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {OutlierDetectionRequest}
+     * @memberof ComputationApiOutlierDetection
+     */
+    readonly outlierDetectionRequest: OutlierDetectionRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ComputationApiOutlierDetection
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for outlierDetectionResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiOutlierDetectionResultRequest
+ */
+export interface ComputationApiOutlierDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiOutlierDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiOutlierDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiOutlierDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiOutlierDetectionResult
+     */
+    readonly limit?: number;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ComputationApi.
  * @export
  * @interface ComputationApiRetrieveExecutionMetadataRequest
@@ -8558,6 +9203,48 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return ComputationApi_KeyDriverAnalysisResult(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
+    }
+
+    /**
+     * (BETA) Computes outlier detection for the provided execution definition.
+     * @summary (BETA) Outlier Detection
+     * @param {ComputationApiOutlierDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public outlierDetection(
+        requestParameters: ComputationApiOutlierDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApi_OutlierDetection(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
+    }
+
+    /**
+     * (BETA) Gets outlier detection result.
+     * @summary (BETA) Outlier Detection Result
+     * @param {ComputationApiOutlierDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public outlierDetectionResult(
+        requestParameters: ComputationApiOutlierDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApi_OutlierDetectionResult(
             this.axios,
             this.basePath,
             requestParameters,

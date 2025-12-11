@@ -9,10 +9,15 @@ import {
     selectIsWorkingSelectionInverted,
     selectWorkingSelection,
 } from "./selectionSelectors.js";
+import { AttributeElementKey } from "../../../types/index.js";
 import { AttributeFilterReducer } from "../store/state.js";
 
 const changeSelection: AttributeFilterReducer<
-    PayloadAction<{ selection: string[]; isInverted?: boolean; irrelevantSelection?: string[] }>
+    PayloadAction<{
+        selection: AttributeElementKey[];
+        isInverted?: boolean;
+        irrelevantSelection?: AttributeElementKey[];
+    }>
 > = (state, action) => {
     state.selection.working.keys = action.payload.selection;
 

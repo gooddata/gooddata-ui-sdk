@@ -68,6 +68,10 @@ export class OrganizationSettingsService
         return this.setSetting("ATTACHMENT_SIZE_LIMIT", { value: size });
     }
 
+    public async setMaxZoomLevel(level: number | null): Promise<void> {
+        return this.setSetting("MAX_ZOOM_LEVEL", { value: level });
+    }
+
     public async setWeekStart(weekStart: string): Promise<void> {
         return this.setSetting("WEEK_START", { value: weekStart });
     }

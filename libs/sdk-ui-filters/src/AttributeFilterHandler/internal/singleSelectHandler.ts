@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import {
     filterAttributeElements,
     filterLocalIdentifier,
@@ -54,7 +55,7 @@ export class SingleSelectAttributeFilterHandler
     }
 
     // manipulators
-    changeSelection = (selection: string | undefined): void => {
+    changeSelection = (selection: AttributeElementKey | undefined): void => {
         this.bridge.changeSingleSelection(selection);
     };
 
@@ -67,7 +68,7 @@ export class SingleSelectAttributeFilterHandler
     };
 
     // selectors
-    getWorkingSelection = (): string | undefined => {
+    getWorkingSelection = (): AttributeElementKey | undefined => {
         return this.bridge.getWorkingSingleSelection();
     };
 
@@ -79,7 +80,7 @@ export class SingleSelectAttributeFilterHandler
         return this.bridge.getIsWorkingSelectionChanged();
     };
 
-    getCommittedSelection = (): string | undefined => {
+    getCommittedSelection = (): AttributeElementKey | undefined => {
         return this.bridge.getCommittedSingleSelection();
     };
 

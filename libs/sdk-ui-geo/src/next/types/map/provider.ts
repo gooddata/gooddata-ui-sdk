@@ -31,6 +31,11 @@ export interface IMapOptions {
     bounds?: IGeoLngLatBounds;
 
     /**
+     * Maximum zoom level allowed on the map (0-22).
+     */
+    maxZoom?: number;
+
+    /**
      * Whether the map should be interactive (pan, zoom, etc.)
      */
     interactive?: boolean;

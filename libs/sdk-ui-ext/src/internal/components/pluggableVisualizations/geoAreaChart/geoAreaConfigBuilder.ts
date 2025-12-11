@@ -27,9 +27,17 @@ export function buildAreaVisualizationConfig({
     environment: _environment,
 }: IBuildAreaVisualizationConfigParams): IGeoAreaChartConfig {
     const { config = {} } = options;
-    const { colorPalette, separators } = config;
+    const { colorPalette, separators, maxZoomLevel: configMaxZoomLevel } = config;
     const controls = supportedControls.controls ?? supportedControls ?? {};
-    const { legend = {}, viewport = {}, tooltipText, mapStyle } = controls;
+    const {
+        legend = {},
+        viewport = {},
+        tooltipText,
+        mapStyle,
+        maxZoomLevel: controlsMaxZoomLevel,
+    } = controls;
+    // Explicit undefined check - null is a meaningful value that clears the zoom limit
+    const maxZoomLevel = configMaxZoomLevel === undefined ? controlsMaxZoomLevel : configMaxZoomLevel;
 
     return {
         separators,
@@ -44,5 +52,6 @@ export function buildAreaVisualizationConfig({
             area: viewport.area,
         },
         mapStyle,
+        maxZoomLevel,
     };
 }

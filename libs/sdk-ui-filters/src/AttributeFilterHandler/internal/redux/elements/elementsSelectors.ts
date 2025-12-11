@@ -16,8 +16,8 @@ import {
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types/index.js";
-import { selectState } from "../common/selectors.js";
+import { AsyncOperationStatus, AttributeElementKey, ILoadElementsOptions } from "../../../types/index.js";
+import { selectState, toCacheKey } from "../common/selectors.js";
 import { FilterSelector } from "../common/types.js";
 
 /**
@@ -30,14 +30,17 @@ import { FilterSelector } from "../common/types.js";
  *
  * @internal
  */
-export const getElementsByKeys = (keys: string[], elementsMap: Record<string, IAttributeElement>) => {
-    return compact(keys.map((key) => elementsMap[key]));
+export const getElementsByKeys = (
+    keys: AttributeElementKey[],
+    elementsMap: Record<string, IAttributeElement>,
+) => {
+    return compact(keys.map((key) => elementsMap[toCacheKey(key)]));
 };
 
 /**
  * @internal
  */
-export const selectElementKeys: FilterSelector<string[]> = createSelector(
+export const selectElementKeys: FilterSelector<AttributeElementKey[]> = createSelector(
     selectState,
     (state) => state.elements.data ?? [],
 );

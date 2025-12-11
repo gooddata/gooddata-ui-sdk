@@ -27,6 +27,10 @@ export interface IGeoAreaChartConfig {
      * Custom MapLibre style URL or inline specification.
      */
     mapStyle?: string | StyleSpecification;
+    /**
+     * Maximum zoom level allowed on the map. Null/undefined keeps MapLibre defaults.
+     */
+    maxZoomLevel?: number | null;
     separators?: ISeparators;
     viewport?: IGeoConfigViewportNext;
     areas?: IGeoAreasConfig;

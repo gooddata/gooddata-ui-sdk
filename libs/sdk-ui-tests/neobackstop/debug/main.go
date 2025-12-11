@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/gooddata/gooddata-neobackstop/browser"
 	"github.com/gooddata/gooddata-neobackstop/config"
 	"github.com/gooddata/gooddata-neobackstop/converters"
 	"github.com/gooddata/gooddata-neobackstop/internals"
@@ -94,15 +95,15 @@ func main() {
 		log.Panicf("could not start playwright: %v", err)
 	}
 
-	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
+	b, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
 		Headless: playwright.Bool(false),
-		Args:     configuration.Args,
+		Args:     configuration.Args[browser.Chromium],
 	})
 	if err != nil {
 		log.Panicf("could not launch browser: %v", err)
 	}
 
-	context, err := browser.NewContext(playwright.BrowserNewContextOptions{
+	context, err := b.NewContext(playwright.BrowserNewContextOptions{
 		Viewport: &playwright.Size{
 			Width:  debugScenario.Viewport.Width,
 			Height: debugScenario.Viewport.Height,

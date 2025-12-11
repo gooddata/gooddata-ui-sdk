@@ -1,13 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import {
-    IAttribute,
-    IGeoJsonFeature,
-    attributeDisplayFormRef,
-    isIdentifierRef,
-    newBucket,
-} from "@gooddata/sdk-model";
+import { IAttribute, IGeoJsonFeature, newBucket } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 
 import { deriveCollectionBoundingBox } from "./boundingBox.js";
@@ -68,8 +62,6 @@ function createExecution(layer: IGeoLayerArea, context: IGeoAdapterContext): IPr
 
 async function resolveCollectionMetadata(
     dataView: DataViewFacade,
-    areaAttribute: IAttribute | undefined,
-    context: IGeoAdapterContext,
 ): Promise<IGeoCollectionMetadata | undefined> {
     // First try to get metadata from execution result
     const metadataFromExecution = getLocationCollectionMetadata(dataView);
@@ -79,33 +71,6 @@ async function resolveCollectionMetadata(
             collectionId: normalizeCollectionId(metadataFromExecution.collectionId),
         };
     }
-
-    // Fallback: fetch from display form
-    if (!areaAttribute) {
-        return undefined;
-    }
-
-    const displayFormRef = attributeDisplayFormRef(areaAttribute);
-    if (!isIdentifierRef(displayFormRef)) {
-        return undefined;
-    }
-
-    try {
-        const displayForm = await context.backend
-            .workspace(context.workspace)
-            .attributes()
-            .getAttributeDisplayForm(displayFormRef);
-
-        const geoAreaConfig = displayForm.geoAreaConfig;
-        if (geoAreaConfig?.collectionId) {
-            return {
-                collectionId: normalizeCollectionId(geoAreaConfig.collectionId),
-            };
-        }
-    } catch {
-        // Failed to fetch display form metadata
-    }
-
     return undefined;
 }
 
@@ -146,7 +111,7 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         const colorStrategy = getAreaColorStrategy(colorPalette, colorMapping, geoData, dataView);
 
         // Resolve collection metadata
-        const metadata = await resolveCollectionMetadata(dataView, layer.area, context);
+        const metadata = await resolveCollectionMetadata(dataView);
 
         // Fetch boundary features if we have metadata
         let boundaryFeatures: IGeoJsonFeature[] = [];

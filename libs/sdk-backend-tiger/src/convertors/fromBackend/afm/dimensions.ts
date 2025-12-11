@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { groupBy, keyBy, mapValues, uniqBy } from "lodash-es";
 
 import { ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
 import {
+    IAttributeDisplayFormGeoAreaConfig,
     IDimensionDescriptor,
     IDimensionItemDescriptor,
     IExecutionDefinition,
@@ -32,6 +34,10 @@ function transformDimension(
             const h = header;
 
             if (isAttributeHeader(h)) {
+                const geoAreaConfig: IAttributeDisplayFormGeoAreaConfig | undefined = h.attributeHeader
+                    .geoAreaConfig?.collection.id
+                    ? { collectionId: h.attributeHeader.geoAreaConfig.collection.id }
+                    : undefined;
                 return {
                     attributeHeader: {
                         // TODO: TIGER-HACK: Tiger provides no uri
@@ -52,6 +58,7 @@ function transformDimension(
                         format: h.attributeHeader.format,
                         labelType: convertLabelType(h.attributeHeader.valueType),
                         primaryLabel: idRef(h.attributeHeader.primaryLabel.id, "displayForm"),
+                        geoAreaConfig,
                     },
                 };
             } else {

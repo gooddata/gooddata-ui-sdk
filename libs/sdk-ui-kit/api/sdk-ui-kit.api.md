@@ -45,6 +45,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
+import { InputHTMLAttributes } from 'react';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISeparators as ISeparators_2 } from '@gooddata/number-formatter';
@@ -78,11 +79,13 @@ import { ReactNode } from 'react';
 import { Ref } from 'react';
 import { RefAttributes } from 'react';
 import { RefCallback } from 'react';
+import type { ReferenceType } from '@floating-ui/react';
 import { RefObject } from 'react';
 import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { SyntheticEvent } from 'react';
+import type { UseInteractionsReturn } from '@floating-ui/react';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -315,17 +318,17 @@ export type CopyCodeOriginType = "keyboard" | "button";
 // @internal
 export function createAllTemplates(formatMessage: (descriptor: {
     id: string;
-}) => string, messageIdPrefix?: string): IFormatTemplate[];
+}) => string): IFormatTemplate[];
 
 // @internal
 export function createCurrencyPresets(formatMessage: (descriptor: {
     id: string;
-}) => string, messageIdPrefix?: string): IFormatPreset[];
+}) => string): IFormatPreset[];
 
 // @internal
 export function createStandardPresets(formatMessage: (descriptor: {
     id: string;
-}) => string, messageIdPrefix?: string): IFormatPreset[];
+}) => string): IFormatPreset[];
 
 // @internal
 export function createTemplates(formatMessage: (descriptor: {
@@ -361,9 +364,6 @@ export class Datepicker extends PureComponent<IDatePickerOwnProps> {
     render(): JSX.Element;
 }
 
-// @internal
-export const DEFAULT_CURRENCY_PRESET_PREFIX = "metricComponent.numberFormat.preset";
-
 // @internal (undocumented)
 export const DEFAULT_ITEM_HEIGHT = 28;
 
@@ -371,10 +371,7 @@ export const DEFAULT_ITEM_HEIGHT = 28;
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
 // @internal
-export const DEFAULT_STANDARD_PRESET_PREFIX = "metricComponent.numberFormat.preset";
-
-// @internal
-export const DEFAULT_TEMPLATE_PREFIX = "metricComponent.numberFormat.template";
+export const DEFAULT_TEMPLATE_PREFIX = "measureNumberFormat.numberFormat.template";
 
 // @internal
 export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
@@ -5363,6 +5360,71 @@ export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, ID
 }
 
 // @internal (undocumented)
+export interface IUiComboboxOption {
+    // (undocumented)
+    creatable?: boolean;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
+export interface IUiComboboxParams {
+    creatable?: boolean;
+    defaultValue?: string;
+    onValueChange?: (value: string) => void;
+    options: IUiComboboxOption[];
+    value?: string;
+}
+
+// @internal (undocumented)
+export interface IUiComboboxState {
+    // (undocumented)
+    activeIndex: number | null;
+    // (undocumented)
+    activeOption: IUiComboboxOption | undefined;
+    // (undocumented)
+    availableOptions: IUiComboboxOption[];
+    // (undocumented)
+    creatable: boolean;
+    // (undocumented)
+    floatingStyles: CSSProperties;
+    // (undocumented)
+    getFloatingProps: UseInteractionsReturn["getFloatingProps"];
+    // (undocumented)
+    getItemProps: UseInteractionsReturn["getItemProps"];
+    // (undocumented)
+    getReferenceProps: UseInteractionsReturn["getReferenceProps"];
+    // (undocumented)
+    inputValue: string;
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    onInputBlur: () => void;
+    // (undocumented)
+    onInputChange: (value: string) => void;
+    // (undocumented)
+    onInputKeyDown: (event: KeyboardEvent_2<HTMLInputElement>) => void;
+    // (undocumented)
+    registerItemRef: (node: HTMLElement | null, index: number) => void;
+    // (undocumented)
+    selectedOption: IUiComboboxOption | undefined;
+    // (undocumented)
+    selectOption: (option: IUiComboboxOption, index?: number) => void;
+    // (undocumented)
+    setActiveIndex: (index: number | null) => void;
+    // (undocumented)
+    setFloatingRef: (node: HTMLDivElement | null) => void;
+    // (undocumented)
+    setIsOpen: (isOpen: boolean) => void;
+    // (undocumented)
+    setReferenceRef: (node: ReferenceType | null) => void;
+}
+
+// @internal (undocumented)
 export interface IUiFocusHelperConnectors<T extends HTMLElement = HTMLElement> {
     // (undocumented)
     onKeyDown?: (e: KeyboardEvent_2) => void;
@@ -6928,6 +6990,58 @@ export interface UiChipProps {
     tag?: string;
 }
 
+// @internal
+export function UiCombobox({ children, ...props }: UiComboboxProps): JSX.Element;
+
+// @internal (undocumented)
+export const UiComboboxInput: ForwardRefExoticComponent<UiComboboxInputProps & RefAttributes<HTMLInputElement>>;
+
+// @internal (undocumented)
+export type UiComboboxInputProps = InputHTMLAttributes<HTMLInputElement>;
+
+// @internal (undocumented)
+export function UiComboboxList({ children, className, ...htmlProps }: UiComboboxListProps): JSX.Element;
+
+// @internal (undocumented)
+export function UiComboboxListItem(props: UiComboboxListItemProps): JSX.Element;
+
+// @internal
+export function UiComboboxListItemCreatableLabel(props: UiComboboxListItemCreatableLabelProps): JSX.Element;
+
+// @internal (undocumented)
+export type UiComboboxListItemCreatableLabelProps = HTMLAttributes<HTMLSpanElement>;
+
+// @internal
+export function UiComboboxListItemLabel(props: UiComboboxListItemLabelProps): JSX.Element;
+
+// @internal (undocumented)
+export type UiComboboxListItemLabelProps = HTMLAttributes<HTMLSpanElement>;
+
+// @internal (undocumented)
+export interface UiComboboxListItemProps extends HTMLAttributes<HTMLLIElement> {
+    // (undocumented)
+    index: number;
+    // (undocumented)
+    option: IUiComboboxOption;
+}
+
+// @internal (undocumented)
+export interface UiComboboxListProps extends Omit<HTMLAttributes<HTMLUListElement>, "children"> {
+    children?: (option: IUiComboboxOption, index: number) => ReactNode;
+}
+
+// @internal (undocumented)
+export function UiComboboxPopup({ style, className, children, ...htmlProps }: UiComboboxPopupProps): JSX.Element | null;
+
+// @internal (undocumented)
+export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
+
+// @internal (undocumented)
+export interface UiComboboxProps extends IUiComboboxParams {
+    // (undocumented)
+    children?: ReactNode;
+}
+
 // @internal (undocumented)
 export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative, }: UiDateProps): JSX.Element;
 
@@ -7439,7 +7553,7 @@ export type UiTagProps = {
 };
 
 // @internal (undocumented)
-export function UiTags({ tags, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig, }: UiTagsProps): JSX.Element;
+export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, creatableLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig, }: UiTagsProps): JSX.Element;
 
 // @internal (undocumented)
 export interface UiTagsProps {
@@ -7455,6 +7569,8 @@ export interface UiTagsProps {
     canDeleteTags?: boolean;
     // (undocumented)
     closeLabel?: string;
+    // (undocumented)
+    creatableLabel?: string;
     // (undocumented)
     mode?: "single-line" | "multi-line";
     // (undocumented)
@@ -7475,6 +7591,8 @@ export interface UiTagsProps {
     removeLabel?: string;
     // (undocumented)
     saveLabel?: string;
+    // (undocumented)
+    tagOptions?: Array<UiTagDef>;
     // (undocumented)
     tags: Array<UiTagDef>;
 }
@@ -7564,6 +7682,9 @@ export function useAsyncTableResponsiveColumns<T>(columns: Array<UiAsyncTableCol
     columns: UiAsyncTableColumnDefinitionResponsive<T>[];
 };
 
+// @internal (undocumented)
+export function useComboboxState(): IUiComboboxState;
+
 // @internal
 export function useCurrencyFormatDefaults({ metricType, normalizedFormat, currencyFormatOverride, presetFormats, hasInheritPreset, onFormatChange, shouldBootstrap, fallbackFormat, }: UseCurrencyFormatDefaultsConfig): void;
 
@@ -7652,7 +7773,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
-export function useMetricTypePresets({ metricType, currencyFormatOverride, formatMessage, presetMessageIdPrefix, templateMessageIdPrefix, }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
+export function useMetricTypePresets({ metricType, currencyFormatOverride, formatMessage, }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
 
 // @internal
 export interface UseMetricTypePresetsConfig {
@@ -7661,8 +7782,6 @@ export interface UseMetricTypePresetsConfig {
         id: string;
     }) => string;
     metricType?: MetricType;
-    presetMessageIdPrefix?: string;
-    templateMessageIdPrefix?: string;
 }
 
 // @internal

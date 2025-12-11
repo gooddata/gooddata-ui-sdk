@@ -96,8 +96,6 @@ export const DEFAULT_CENTER: IGeoLngLat = {
  * @alpha
  */
 export const DEFAULT_MAPLIBRE_OPTIONS: Partial<MapOptions> = {
-    // hide maplibre's information on map
-    attributionControl: false,
     // If false, the "drag to rotate" interaction is disabled
     dragRotate: false,
     // set maxDuration: 1 will remove the animation when viewport is changed

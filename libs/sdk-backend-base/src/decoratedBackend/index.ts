@@ -11,6 +11,7 @@ import {
     IBackendCapabilities,
     IDataSourcesService,
     IEntitlements,
+    IGeoService,
     IOrganization,
     IOrganizations,
     IUserService,
@@ -30,6 +31,7 @@ export type {
     AttributesDecoratorFactory,
     AutomationsDecoratorFactory,
     DashboardsDecoratorFactory,
+    GeoDecoratorFactory,
     DecoratorFactories,
 } from "./types.js";
 
@@ -106,6 +108,14 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
 
     public workspaces(): IWorkspacesQueryFactory {
         return this.decorated.workspaces();
+    }
+
+    public geo(): IGeoService {
+        const { geo } = this.factories;
+        if (geo) {
+            return geo(this.decorated.geo());
+        }
+        return this.decorated.geo();
     }
 }
 

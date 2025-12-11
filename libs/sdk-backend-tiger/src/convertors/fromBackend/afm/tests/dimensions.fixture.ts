@@ -1,4 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
 import { ResultDimension } from "@gooddata/api-client-tiger";
 
 export const mockDimensions: ResultDimension[] = [
@@ -121,5 +122,27 @@ export const mockMultipleDimensions: ResultDimension[] = [
             },
         ],
         localIdentifier: "headers5",
+    },
+];
+
+export const mockGeoAreaDimensions: ResultDimension[] = [
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    label: { id: "geo_area.label", type: "label" },
+                    localIdentifier: "geoAreaAttr",
+                    labelName: "Geo Area",
+                    primaryLabel: { id: "geo_area.label", type: "label" },
+                    attribute: { id: "geo_area.attribute", type: "attribute" },
+                    attributeName: "Geo Area",
+                    valueType: "TEXT",
+                    geoAreaConfig: {
+                        collection: { id: "regions" },
+                    },
+                },
+            },
+        ],
+        localIdentifier: "geoAreaDimension",
     },
 ];

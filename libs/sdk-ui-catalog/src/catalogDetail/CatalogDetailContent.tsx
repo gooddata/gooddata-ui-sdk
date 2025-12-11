@@ -214,7 +214,8 @@ export function CatalogDetailContent({
                                     onTagClick?.(tag.label);
                                 }}
                                 onTagAdd={(tag) => {
-                                    updateItemTags([...item.tags, tag.label]);
+                                    // Adding unique tags only
+                                    updateItemTags([...new Set([...item.tags, tag.label])]);
                                 }}
                                 onTagRemove={(tag) => {
                                     updateItemTags(item.tags.filter((t) => t !== tag.label));

@@ -26,6 +26,8 @@ import {
     IExecutionResult,
     IForecastConfig,
     IForecastResult,
+    IGeoService,
+    IGeoStyleSpecification,
     IGetAutomationOptions,
     IGetAutomationsOptions,
     IGetAutomationsQueryOptions,
@@ -91,6 +93,7 @@ import {
     AutomationsDecoratorFactory,
     CatalogDecoratorFactory,
     ExecutionDecoratorFactory,
+    GeoDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
 } from "../decoratedBackend/types.js";
@@ -137,6 +140,10 @@ type WorkspaceSettingsCacheEntry = {
     workspaceSettings: LRUCache<string, Promise<IWorkspaceSettings>>;
 };
 
+type GeoCacheEntry = {
+    defaultStyle: Promise<IGeoStyleSpecification> | undefined;
+};
+
 type CachingContext = {
     caches: {
         execution?: LRUCache<string, ExecutionCacheEntry>;
@@ -145,6 +152,7 @@ type CachingContext = {
         workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
         workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
+        geo?: GeoCacheEntry;
     };
     config: CachingConfiguration;
     capabilities: IBackendCapabilities;
@@ -1623,6 +1631,36 @@ function cachedAutomations(ctx: CachingContext): AutomationsDecoratorFactory {
     return (original, workspace) => new WithAutomationsCaching(original, ctx, workspace);
 }
 
+//
+// Geo caching
+//
+
+class WithGeoCaching implements IGeoService {
+    constructor(
+        private readonly decorated: IGeoService,
+        private readonly ctx: CachingContext,
+    ) {}
+
+    public getDefaultStyle(): Promise<IGeoStyleSpecification> {
+        const cache = this.ctx.caches.geo!;
+        let result = cache.defaultStyle;
+
+        if (!result) {
+            result = this.decorated.getDefaultStyle().catch((e: unknown) => {
+                cache.defaultStyle = undefined;
+                throw e;
+            });
+            cache.defaultStyle = result;
+        }
+
+        return result;
+    }
+}
+
+function cachedGeo(ctx: CachingContext): GeoDecoratorFactory {
+    return (original: IGeoService) => new WithGeoCaching(original, ctx);
+}
+
 function cachingEnabled(desiredSize: number | undefined): boolean {
     return desiredSize !== undefined && desiredSize > 0;
 }
@@ -1649,12 +1687,19 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.workspaceSettings?.clear();
         },
 
+        resetGeoStyles: () => {
+            if (ctx.caches.geo) {
+                ctx.caches.geo.defaultStyle = undefined;
+            }
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
             control.resetSecuritySettings();
             control.resetAttributes();
             control.resetWorkspaceSettings();
+            control.resetGeoStyles();
         },
     };
 
@@ -1699,6 +1744,11 @@ export type CacheControl = {
      * Resets all workspace settings caches.
      */
     resetWorkspaceSettings: () => void;
+
+    /**
+     * Resets the cached geo style.
+     */
+    resetGeoStyles: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -1933,6 +1983,18 @@ export type CachingConfiguration = {
      * When non-positive number is specified, then no caching of result windows will be done.
      */
     maxWorkspaceSettings?: number;
+
+    /**
+     * When true, cache the geo style returned by `backend.geo().getDefaultStyle()`.
+     *
+     * The geo style is the same for all workspaces within a single backend instance, so a single
+     * cached entry is maintained. This is useful to avoid repeated network calls when multiple
+     * geo charts are rendered on the same page.
+     *
+     * @remarks
+     * Default is false. Set to true to enable caching.
+     */
+    cacheGeoStyles?: boolean;
 };
 
 function assertPositiveOrUndefined(value: number | undefined, valueName: string) {
@@ -1965,6 +2027,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
     maxAutomationsWorkspaces: 1,
+    cacheGeoStyles: true,
 };
 
 /**
@@ -1993,6 +2056,7 @@ export function withCaching(
     const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
     const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
+    const geoCaching = config.cacheGeoStyles === true;
 
     // Determine execution cache configuration: count-based (maxExecutions) takes precedence over time-based (maxExecutionsAge)
     const executionCacheOptions = cachingEnabled(config.maxExecutions)
@@ -2015,6 +2079,7 @@ export function withCaching(
             workspaceAutomations: automationsCaching
                 ? new LRUCache({ max: config.maxAutomationsWorkspaces! })
                 : undefined,
+            geo: geoCaching ? { defaultStyle: undefined } : undefined,
         },
         config,
         capabilities: realBackend.capabilities,
@@ -2026,6 +2091,7 @@ export function withCaching(
     const attributes = attributeCaching ? cachedAttributes(ctx) : (v: any) => v;
     const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
     const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : (v: any) => v;
+    const geo = geoCaching ? cachedGeo(ctx) : undefined;
 
     if (config.onCacheReady) {
         config.onCacheReady(cacheControl(ctx));
@@ -2038,6 +2104,7 @@ export function withCaching(
         attributes,
         workspaceSettings,
         automations,
+        geo,
     });
 }
 

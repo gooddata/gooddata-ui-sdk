@@ -36,7 +36,7 @@ async function loadElementsAsExecution(
     elements: IElementsQueryOptionsElementsByValue,
     hiddenElementsInfo: IHiddenElementsInfo,
 ) {
-    const elementValues = elements.values.filter((v): v is string => v !== null);
+    const elementValues = elements.values;
     const filters: IAttributeFilter[] = [newPositiveAttributeFilter(displayFormRef, elementValues)];
     if (!attributeElementsIsEmpty(hiddenElementsInfo.hiddenElements)) {
         filters.push(newNegativeAttributeFilter(displayFormRef, hiddenElementsInfo.hiddenElements));

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { defineMessages } from "react-intl";
+
 import { type IFormatPreset } from "../typings.js";
 
 /**
@@ -14,6 +16,19 @@ export interface IStandardPresetDefinition {
 }
 
 /**
+ * Message ids for standard numeric presets
+ * @internal
+ */
+const standardPresetMessages = defineMessages({
+    rounded: { id: "measureNumberFormat.numberFormat.preset.rounded" },
+    decimal1: { id: "measureNumberFormat.numberFormat.preset.decimal1" },
+    decimal2: { id: "measureNumberFormat.numberFormat.preset.decimal2" },
+    percentRounded: { id: "measureNumberFormat.numberFormat.preset.percentRounded" },
+    percent1: { id: "measureNumberFormat.numberFormat.preset.percent1" },
+    percent2: { id: "measureNumberFormat.numberFormat.preset.percent2" },
+});
+
+/**
  * Standard numeric preset definitions.
  * These are the raw preset data that can be used to create localized presets.
  * @internal
@@ -23,64 +38,53 @@ export const STANDARD_PRESET_DEFINITIONS: readonly IStandardPresetDefinition[] =
         localIdentifier: "rounded",
         format: "#,##0",
         previewNumber: 1000.12,
-        messageId: "metricComponent.numberFormat.preset.rounded",
+        messageId: standardPresetMessages.rounded.id,
     },
     {
         localIdentifier: "decimal-1",
         format: "#,##0.0",
         previewNumber: 1000.12,
-        messageId: "metricComponent.numberFormat.preset.decimal1",
+        messageId: standardPresetMessages.decimal1.id,
     },
     {
         localIdentifier: "decimal-2",
         format: "#,##0.00",
         previewNumber: 1000.12,
-        messageId: "metricComponent.numberFormat.preset.decimal2",
+        messageId: standardPresetMessages.decimal2.id,
     },
     {
         localIdentifier: "percent-rounded",
         format: "#,##0%",
         previewNumber: 0.1,
-        messageId: "metricComponent.numberFormat.preset.percentRounded",
+        messageId: standardPresetMessages.percentRounded.id,
     },
     {
         localIdentifier: "percent-1",
         format: "#,##0.0%",
         previewNumber: 0.101,
-        messageId: "metricComponent.numberFormat.preset.percent1",
+        messageId: standardPresetMessages.percent1.id,
     },
     {
         localIdentifier: "percent-2",
         format: "#,##0.00%",
         previewNumber: 0.1012,
-        messageId: "metricComponent.numberFormat.preset.percent2",
+        messageId: standardPresetMessages.percent2.id,
     },
 ] as const;
-
-/**
- * Default message ID prefix for standard preset definitions.
- * @internal
- */
-export const DEFAULT_STANDARD_PRESET_PREFIX = "metricComponent.numberFormat.preset";
 
 /**
  * Creates localized standard format presets.
  *
  * @param formatMessage - Function to format localized messages (e.g., from react-intl)
- * @param messageIdPrefix - Optional prefix for message IDs (default: "metricComponent.numberFormat.preset")
  * @returns Array of standard format presets with localized names
  * @internal
  */
 export function createStandardPresets(
     formatMessage: (descriptor: { id: string }) => string,
-    messageIdPrefix: string = DEFAULT_STANDARD_PRESET_PREFIX,
 ): IFormatPreset[] {
     return STANDARD_PRESET_DEFINITIONS.map((definition) => {
-        // Extract the key part from the default message ID (e.g., "rounded" from "metricComponent.numberFormat.preset.rounded")
-        const keyPart = definition.messageId.replace(`${DEFAULT_STANDARD_PRESET_PREFIX}.`, "");
-        const messageId = `${messageIdPrefix}.${keyPart}`;
         return {
-            name: formatMessage({ id: messageId }),
+            name: formatMessage({ id: definition.messageId }),
             localIdentifier: definition.localIdentifier,
             format: definition.format,
             previewNumber: definition.previewNumber,

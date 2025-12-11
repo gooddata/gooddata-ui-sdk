@@ -1,6 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -61,6 +60,7 @@ import {
 import { AttributeFilterHandlerConfig } from "./types.js";
 import {
     AsyncOperationStatus,
+    AttributeElementKey,
     CallbackRegistration,
     Correlation,
     ILoadElementsOptions,
@@ -499,9 +499,9 @@ export class AttributeFilterReduxBridge {
     }: InvertableAttributeElementSelection): void => {
         this.redux.dispatch(
             actions.changeSelection({
-                selection: keys.filter((key): key is string => key !== null),
+                selection: keys,
                 isInverted,
-                irrelevantSelection: irrelevantKeys?.filter((key): key is string => key !== null),
+                irrelevantSelection: irrelevantKeys,
             }),
         );
     };
@@ -532,11 +532,11 @@ export class AttributeFilterReduxBridge {
 
     // Single select
 
-    changeSingleSelection = (selection: string | undefined): void => {
+    changeSingleSelection = (selection: AttributeElementKey | undefined): void => {
         this.redux.dispatch(
             actions.changeSelection({
                 isInverted: false,
-                selection: compact([selection]),
+                selection: selection === undefined ? [] : [selection],
             }),
         );
     };
@@ -549,7 +549,7 @@ export class AttributeFilterReduxBridge {
         this.redux.dispatch(actions.commitSelection());
     };
 
-    getWorkingSingleSelection = (): string | undefined => {
+    getWorkingSingleSelection = (): AttributeElementKey | undefined => {
         const [element, ...maybeMoreElements] = this.redux.select(selectWorkingSelection);
         invariant(
             !maybeMoreElements.length,
@@ -558,7 +558,7 @@ export class AttributeFilterReduxBridge {
         return element;
     };
 
-    getCommittedSingleSelection = (): string | undefined => {
+    getCommittedSingleSelection = (): AttributeElementKey | undefined => {
         const [element, ...maybeMoreElements] = this.redux.select(selectCommittedSelection);
         invariant(
             !maybeMoreElements.length,
@@ -579,20 +579,20 @@ export class AttributeFilterReduxBridge {
         return this.callbacks.registerCallback(cb, this.callbacks.registrations.selectionCommitted);
     };
 
-    onSingleSelectionChanged: CallbackRegistration<OnSelectionChangedCallbackPayload<string | undefined>> = (
-        cb,
-    ) => {
+    onSingleSelectionChanged: CallbackRegistration<
+        OnSelectionChangedCallbackPayload<AttributeElementKey | undefined>
+    > = (cb) => {
         return this.callbacks.registerCallback(
-            ({ selection }) => cb({ selection: selection.keys[0] ?? undefined }),
+            ({ selection }) => cb({ selection: selection.keys.length > 0 ? selection.keys[0] : undefined }),
             this.callbacks.registrations.selectionChanged,
         );
     };
 
     onSingleSelectionCommitted: CallbackRegistration<
-        OnSelectionCommittedCallbackPayload<string | undefined>
+        OnSelectionCommittedCallbackPayload<AttributeElementKey | undefined>
     > = (cb) => {
         return this.callbacks.registerCallback(
-            ({ selection }) => cb({ selection: selection.keys[0] ?? undefined }),
+            ({ selection }) => cb({ selection: selection.keys.length > 0 ? selection.keys[0] : undefined }),
             this.callbacks.registrations.selectionCommitted,
         );
     };

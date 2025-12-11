@@ -15,6 +15,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     AsyncOperationStatus,
+    AttributeElementKey,
     IMultiSelectAttributeFilterHandler,
 } from "../../AttributeFilterHandler/index.js";
 
@@ -60,13 +61,13 @@ export interface IUseAttributeFilterHandlerStateResult {
     selection: {
         committed: {
             elements?: IAttributeElement[];
-            keys?: string[];
+            keys?: AttributeElementKey[];
             isInverted?: boolean;
             irrelevantElements?: IAttributeElement[];
         };
         working: {
             elements?: IAttributeElement[];
-            keys?: string[];
+            keys?: AttributeElementKey[];
             isInverted?: boolean;
             isChanged?: boolean;
             isEmpty?: boolean;
@@ -127,7 +128,7 @@ export const useAttributeFilterHandlerState = (
         selection: {
             committed: {
                 elements: initStatus === "success" ? handler.getElementsByKey(committedSelection.keys) : [],
-                keys: committedSelection.keys.filter((key): key is string => key !== null),
+                keys: committedSelection.keys,
                 isInverted: committedSelection.isInverted,
                 irrelevantElements:
                     initStatus === "success"
@@ -136,7 +137,7 @@ export const useAttributeFilterHandlerState = (
             },
             working: {
                 elements: initStatus === "success" ? handler.getElementsByKey(workingSelection.keys) : [],
-                keys: workingSelection.keys.filter((key): key is string => key !== null),
+                keys: workingSelection.keys,
                 isInverted: workingSelection.isInverted,
                 isChanged: handler.isWorkingSelectionChanged(),
                 isEmpty: handler.isWorkingSelectionEmpty(),

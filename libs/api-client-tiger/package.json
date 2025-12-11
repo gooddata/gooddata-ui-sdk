@@ -23,6 +23,7 @@
         "./layout": "./esm/api-endpoints/layout/index.js",
         "./actions": "./esm/api-endpoints/actions/index.js",
         "./profile": "./esm/api-endpoints/profile/index.js",
+        "./locationStyle": "./esm/api-endpoints/locationStyle/index.js",
         "./genAI": "./esm/api-endpoints/genAI/index.js",
         "./authActions": "./esm/api-endpoints/authActions/index.js",
         "./scanModel": "./esm/api-endpoints/scanModel/index.js",

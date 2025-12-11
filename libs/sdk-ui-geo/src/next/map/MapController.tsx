@@ -4,6 +4,7 @@ import { ReactElement, RefObject, useMemo } from "react";
 
 import { ContentRect } from "react-measure";
 
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { MapRuntimeProvider, useMapRuntime } from "../context/MapRuntimeContext.js";
@@ -29,6 +30,7 @@ export type MapControllerProps = {
     onZoomChanged?: ZoomChangedCallback;
     afterRender?: () => void;
     config: IGeoChartNextConfig | undefined;
+    backend?: IAnalyticalBackend;
 };
 
 /**
@@ -46,8 +48,14 @@ export function MapController({
     onZoomChanged,
     afterRender,
     config,
+    backend,
 }: MapControllerProps): ReactElement | null {
-    const { map, tooltip, isMapReady } = useMapInitialization(mapContainerRef, config, initialViewport);
+    const { map, tooltip, isMapReady } = useMapInitialization(
+        mapContainerRef,
+        config,
+        initialViewport,
+        backend,
+    );
     const adapterContext = useGeoAdapterContext({ selectedSegmentItems });
 
     const runtimeValue = useMemo(

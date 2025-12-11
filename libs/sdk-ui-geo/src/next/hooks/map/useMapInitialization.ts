@@ -4,6 +4,8 @@ import { RefObject, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import {
     IMapFacade,
     IPopupFacade,
@@ -91,6 +93,7 @@ export function useMapInitialization(
     containerRef: RefObject<HTMLDivElement | null>,
     config?: IGeoChartNextConfig,
     initialViewport?: Partial<IMapViewport> | null,
+    backend?: IAnalyticalBackend,
 ): IUseMapInitializationResult {
     const intl = useIntl();
     const [map, setMap] = useState<IMapFacade | null>(null);
@@ -124,6 +127,7 @@ export function useMapInitialization(
 
     const isExportMode = config?.isExportMode ?? false;
     const isViewportFrozen = Boolean(config?.viewport?.frozen);
+    const maxZoom = typeof config?.maxZoomLevel === "number" ? config.maxZoomLevel : undefined;
 
     useEffect(() => {
         const container = containerRef.current;
@@ -142,9 +146,11 @@ export function useMapInitialization(
                 cooperativeGestures,
                 interactive: !isViewportFrozen,
                 preserveDrawingBuffer: isExportMode,
+                maxZoom,
                 style: config?.mapStyle,
             },
             locale,
+            backend,
         )
             .then((result) => {
                 if (isMounted) {
@@ -173,7 +179,16 @@ export function useMapInitialization(
             mapInstanceRef.current = null;
             tooltipInstanceRef.current = null;
         };
-    }, [containerRef, config?.mapStyle, cooperativeGestures, isViewportFrozen, isExportMode, locale]);
+    }, [
+        containerRef,
+        config?.mapStyle,
+        cooperativeGestures,
+        isViewportFrozen,
+        isExportMode,
+        locale,
+        backend,
+        maxZoom,
+    ]);
 
     return { map, tooltip, isMapReady, error };
 }

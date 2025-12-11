@@ -5,7 +5,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { Correlation, ILoadElementsResult } from "../../../types/index.js";
-import { getElementCacheKey } from "../common/selectors.js";
+import { getElementCacheKey, getElementKey } from "../common/selectors.js";
 import { AttributeFilterReducer } from "../store/state.js";
 
 const loadNextElementsPageRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (
@@ -29,14 +29,14 @@ const loadNextElementsPageSuccess: AttributeFilterReducer<
     state.elements.nextPageLoad.status = "success";
     action.payload.elements.forEach((el) => {
         const cacheKey = getElementCacheKey(el);
-        if (cacheKey !== null && !state.elements.cache[cacheKey]) {
+        if (!state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }
     });
-    const newKeys = action.payload.elements
-        .map((el) => getElementCacheKey(el))
-        .filter((key): key is string => key !== null);
-    state.elements.data = (state.elements.data ?? []).concat(newKeys);
+
+    state.elements.data = (state.elements.data ?? []).concat(
+        action.payload.elements.map((el) => getElementKey(el)),
+    );
     state.elements.lastLoadedOptions = action.payload.options;
 };
 

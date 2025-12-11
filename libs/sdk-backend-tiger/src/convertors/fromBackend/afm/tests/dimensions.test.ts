@@ -13,7 +13,7 @@ import {
     newTotal,
 } from "@gooddata/sdk-model";
 
-import { mockDimensions, mockMultipleDimensions } from "./dimensions.fixture.js";
+import { mockDimensions, mockGeoAreaDimensions, mockMultipleDimensions } from "./dimensions.fixture.js";
 import { transformResultDimensions } from "../dimensions.js";
 
 describe("transformResultDimensions", () => {
@@ -56,5 +56,16 @@ describe("transformResultDimensions", () => {
             newDimension(["localAttr3"], [Total2, Total3]),
         );
         expect(transformResultDimensions(mockMultipleDimensions, TotalDef)).toMatchSnapshot();
+    });
+
+    it("should pass geo area configuration through attribute descriptors", () => {
+        const [geoDimension] = transformResultDimensions(mockGeoAreaDimensions, emptyDef("test"));
+        expect(geoDimension.headers[0]).toMatchObject({
+            attributeHeader: {
+                geoAreaConfig: {
+                    collectionId: "regions",
+                },
+            },
+        });
     });
 });

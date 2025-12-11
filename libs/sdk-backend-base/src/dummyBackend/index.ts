@@ -44,6 +44,7 @@ import {
     IForecastResult,
     IForecastView,
     IGenAIService,
+    IGeoService,
     IGetAutomationOptions,
     IGetAutomationsOptions,
     IMeasureExpressionToken,
@@ -236,6 +237,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
             throw new NotSupported("not supported");
         },
         dataSources(): IDataSourcesService {
+            throw new NotSupported("not supported");
+        },
+        geo(): IGeoService {
             throw new NotSupported("not supported");
         },
         workspaces(): IWorkspacesQueryFactory {
@@ -914,6 +918,7 @@ class DummyOrganization implements IOrganization {
             getSettings: () => Promise.resolve({}),
             setAlertDefault: () => Promise.resolve(),
             setAttachmentSizeLimit: () => Promise.resolve(),
+            setMaxZoomLevel: () => Promise.resolve(),
             setMetricFormatOverride: () => Promise.resolve(),
         };
     }

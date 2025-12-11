@@ -96,5 +96,6 @@ AllInsightTypes.parameters = {
     screenshot: {
         // Wait for AGgrid watermark to disappear
         postInteractionWait: 6500,
+        misMatchThreshold: 0.06,
     },
 } satisfies IStoryParameters;

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, FocusEvent, MouseEvent, useCallback, useEffect, useMemo } from "react";
+import { CSSProperties, FocusEvent, MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { AllEnterpriseModule, LicenseManager, ModuleRegistry } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
@@ -17,6 +17,7 @@ import { AgGridApiProvider, useAgGridApi } from "./context/AgGridApiContext.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
 import { DrillableItemsRefProvider } from "./context/DrillableItemsRefContext.js";
+import { HeaderMenuProvider } from "./context/HeaderMenuContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
 import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
@@ -116,7 +117,9 @@ function PivotTableNextWithInitialization() {
             <TableReadyProvider>
                 <DrillableItemsRefProvider>
                     <ColumnDefsProvider>
-                        <RenderPivotTableNextAgGrid />
+                        <HeaderMenuProvider>
+                            <RenderPivotTableNextAgGrid />
+                        </HeaderMenuProvider>
                     </ColumnDefsProvider>
                 </DrillableItemsRefProvider>
             </TableReadyProvider>
@@ -143,9 +146,21 @@ function RenderPivotTableNextAgGrid() {
         ]);
     }, []);
 
-    const stopEventWhenResizeHeader = (e: MouseEvent): void => {
-        // Prevents triggering drag and drop in dashboard edit mode
+    const isResizingRef = useRef(false);
+
+    // Prevent interactions during column resize
+    const stopEventOnResize = (e: MouseEvent): void => {
         if ((e.target as Element)?.className?.includes?.("ag-header-cell-resize")) {
+            isResizingRef.current = true;
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    };
+
+    // Prevent events that happen after a resize operation
+    const stopEventAfterResize = (e: MouseEvent): void => {
+        if (isResizingRef.current) {
+            isResizingRef.current = false;
             e.preventDefault();
             e.stopPropagation();
         }
@@ -186,9 +201,9 @@ function RenderPivotTableNextAgGrid() {
                         }}
                         className={b()}
                         style={containerStyle}
-                        onMouseDown={stopEventWhenResizeHeader}
-                        onDragStart={stopEventWhenResizeHeader}
-                        onClick={stopEventWhenResizeHeader}
+                        onMouseDown={stopEventOnResize}
+                        onDragStart={stopEventOnResize}
+                        onClick={stopEventAfterResize}
                         onBlur={handleBlur}
                         {...getPivotContainerTestIdProps(isReadyForInitialPaint)}
                     >

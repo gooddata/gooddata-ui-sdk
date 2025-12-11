@@ -820,6 +820,8 @@ export interface IAttributeDescriptorBody {
         timezone?: string;
     };
     formOf: IAttributeHeaderFormOf;
+    // @alpha
+    geoAreaConfig?: IAttributeDisplayFormGeoAreaConfig;
     granularity?: string;
     identifier: string;
     labelType?: AttributeDisplayFormType;
@@ -3837,6 +3839,7 @@ export interface ISettings {
     fiscalYear?: IFiscalYear;
     formatLocale?: string;
     llmEndpoint?: ILlmEndpoint;
+    maxZoomLevel?: number | null;
     metadataLocale?: string;
     metadataTimeZone?: string;
     // @alpha
@@ -5195,7 +5198,7 @@ export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef |
 export function newPopMeasure(measureOrLocalId: MeasureOrLocalId, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[], localIdentifier?: string): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | (string | null)[], localIdentifier?: string): IPositiveAttributeFilter;
 
 // @public
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;

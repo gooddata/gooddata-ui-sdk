@@ -130,6 +130,15 @@ export interface ISettings {
     enableAutomationEvaluationMode?: boolean;
 
     /**
+     * Maximum zoom level applied to geo visualizations.
+     *
+     * @remarks
+     * Null or undefined means that zoom is unrestricted
+     * and default chart settings will be applied.
+     */
+    maxZoomLevel?: number | null;
+
+    /**
      * Override the default timeout for polling for the export results.
      */
     exportResultPollingTimeoutSeconds?: number;

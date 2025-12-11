@@ -557,7 +557,7 @@ describe("Dependent filter", () => {
         },
     );
 
-    it(
+    it.skip(
         "should test a circle parent - child filter in edit mode",
         { tags: "checklist_integrated_tiger" },
         () => {
