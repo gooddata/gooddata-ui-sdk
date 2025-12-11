@@ -1,6 +1,69 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 04 Dec 2025 08:44:09 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Dec 2025 17:13:20 GMT and should not be manually modified.
+
+## 11.13.0
+
+Thu, 11 Dec 2025 17:13:20 GMT
+
+### Patches
+
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
+
+### Updates
+
+- chore: sdk-ui-filters: Props totalElementsCount and totalElementsCountWithCurrentSettings are now optional in AttributeFilter components.
+- sdk-ui-kit: Introduce typescript strict mode.
+- sdk-ui-filters: Introduce typescript strict mode.
+- sdk-ui-kit: Introduce a new composable combobox component that enables users to select from a filtered list of options.
+- sdk-ui-kit: Add support for tags autocomplete in Analytics Catalog detail view.
+- sdk-ui-catalog: Introduce a shared `CatalogResourceProvider` + `useCatalogTags` context so Analytics Catalog fetch tags once and reuse them instead of querying the backend per component.
+- sdk-ui-semantic-search: Sort semantic search results based on score.
+- sdk-ui-semantic-search,sdk-ui-gen-ai: Make semantic search tree view accessible in the AI assistant chat.
+- upgrade test fixture version
+- Upgrade GD text fixture version
+- sdk-ui-dashboard: preselect group by granularity in visualization
+- sdk-ui-dashboard: Fix KDA filter dropdown to restore focus to the add-filter trigger after closing.
+- sdk-ui-kit: Allow InvertableSelect search fields to bubble Escape presses so dropdowns can close when focus returns.
+- sdk-ui-dashboard: Gating anomaly alerts on AI permission
+- sdk-ui-semantic-search: Scope footer AI assistant button styles
+- sdk-ui-dashboard: Extend filter context command by tab identifier.
+- gdc-ui-dashboard: Use proper selectors in case of filters per tab.
+- Add useMetricTypePresets hook for CURRENCY metric format support
+- Add missing currency format preset translations for Analytics Catalog
+- sdk-ui-pivot: Add accessibility mode support to pivot table.
+- sdk-ui-pivot: Fix bubbling events from pivot table.
+- sdk-ui-ext: Enhance pivot table embedding support.
+- Add support for multiple executions in pluggable visualizations.
+- Add support for multiple layers in new geo charts implementation, currently in alpha stage.
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Rewrite HighChartsRenderer as functional component
+- chore: Rewrite LocalizedUnknownVisualizationClass as functional component
+- chore: Rewrite LocalizedUnknownVisualizationClass as functional component
+- chore: Rewrite InputWithNumberFormat as a functional component
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Replace injectIntl usages with useIntl hook
+- chore: Disallow default exports internally, deprecate external-facing default exports
+- gdc-ui-all: Enable Dashboard Tabs feature
+- sdk-ui-dashboard: Support dashboard plugins on dashboard with tabs.
+- Support automatic drill into URL for all attributes with hyperlink label in pivot tables
+- Add async loading of translations. en-US translations are linked statically, while other translations are loaded asynchronously.
+- Added: Enable enableHighchartsAccessibility feature flag by default
+- feat: Add support for measure value filters for metrics not in the insight buckets
+- Added: Enabled enableCustomizedDashboardsWithoutPluginOverlay feature flag by default
+- Added: Support for measure value filter dimensionality in SPI
+- sdk-ui-ext: Automations - swap invalidation ref for invalidation id
+- sdk-ui-all: Add metric format override features, currency settings management, and Analytics Catalog enhancements
 
 ## 11.12.0
 

@@ -7,7 +7,7 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { Browser, IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 function OverlayStackingExample() {
     const [state, setState] = useState(0);
@@ -83,4 +83,16 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
+    screenshots: {
+        "open-first": {
+            clickSelector: ".open-first",
+            delay: { postOperation: 500 },
+        },
+        "open-stacked": {
+            reloadAfterReady: true,
+            clickSelectors: [".open-first", 100, ".open-stacked"],
+            delay: { postOperation: 500 },
+            browsers: [Browser.Firefox],
+        },
+    },
 } satisfies IStoryParameters;
