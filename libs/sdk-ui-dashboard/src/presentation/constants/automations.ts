@@ -33,3 +33,5 @@ export const AUTOMATION_FILTERS_DIALOG_TITLE_ID = "automation-filters-dialog-tit
 export const AUTOMATION_FILTERS_DIALOG_ID = "automation-filters-dialog";
 
 export const AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID = "automation-attachments-dialog-title";
+
+export const AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID = "automation-attachments-group-label";

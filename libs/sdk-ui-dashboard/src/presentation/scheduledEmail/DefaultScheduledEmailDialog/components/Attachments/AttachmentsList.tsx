@@ -78,7 +78,7 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                                         id: "dialogs.schedule.management.attachments.xlsx.settings",
                                     })}
                                 >
-                                    <UiIcon type="settings" size={14} color="complementary-8" />
+                                    <UiIcon type="settings" size={14} color="complementary-8" ariaHidden />
                                 </button>
                             )}
                             renderBody={({ closeDropdown }) => (

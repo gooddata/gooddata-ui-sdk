@@ -96,7 +96,9 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         newReferencePoint = applyUiConfig(newReferencePoint);
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     }
 
     protected override renderConfigurationPanel(): ReactNode {

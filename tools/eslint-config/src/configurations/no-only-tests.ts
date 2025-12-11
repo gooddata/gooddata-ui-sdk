@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"no-only-tests"> = {
+export const noOnlyTests: IConfiguration<"no-only-tests"> = {
     packages: [
         {
             name: "eslint-plugin-no-only-tests",
@@ -14,5 +14,3 @@ const configuration: IConfiguration<"no-only-tests"> = {
         "no-only-tests/no-only-tests": ["error", { block: ["fixture"], focus: ["only"] }],
     },
 };
-
-export default configuration;

@@ -114,7 +114,9 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(DEFAULT_WATERFALL_UICONFIG);
+        const config = cloneDeep(DEFAULT_WATERFALL_UICONFIG);
+        this.addMetricToFiltersIfEnabled(config);
+        return config;
     }
 
     public override getExtendedReferencePoint(
@@ -174,7 +176,9 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         newReferencePoint = this.setPropertiesTotalMeasures(newReferencePoint);
         newReferencePoint = setWaterfallChartUiConfig(newReferencePoint, this.intl, this.type);
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     }
 
     protected getDefaultAndAvailableSort(

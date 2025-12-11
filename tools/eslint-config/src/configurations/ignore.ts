@@ -2,8 +2,6 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration = {
+export const ignore: IConfiguration = {
     ignorePatterns: ["**/dist/**/*.*", "**/esm/**/*.*"],
 };
-
-export default configuration;

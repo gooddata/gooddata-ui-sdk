@@ -8,7 +8,6 @@ import {
     IColorMappingItem,
     IDimension,
     IInsightDefinition,
-    ISettings,
     ITheme,
     areObjRefsEqual,
     insightBucket,
@@ -28,10 +27,10 @@ import {
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 
-import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
-
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
+import { defaultImprovedFilters } from "../../../constants/uiConfig.js";
+import { IColorConfiguration } from "../../../interfaces/Colors.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -90,7 +89,6 @@ import { AbstractPluggableVisualization } from "../AbstractPluggableVisualizatio
  */
 export class PluggableRepeater extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
-    private featureFlags?: ISettings;
     private renderFun: RenderFunction;
     private unmountFun: UnmountFunction;
     protected colors: IColorConfiguration;
@@ -99,7 +97,6 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         super(props);
 
         this.environment = props.environment;
-        this.featureFlags = props.featureFlags;
         this.renderFun = props.renderFun;
         this.unmountFun = props.unmountFun;
         this.supportedPropertiesList = REPEATER_SUPPORTER_PROPERTIES_LIST;
@@ -114,14 +111,19 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> => {
         const referencePointCloned = cloneDeep(referencePoint);
+        const uiConfig = getDefaultRepeaterUiConfig();
+        if (this.featureFlags?.enableImprovedAdFilters && uiConfig.buckets?.["filters"]) {
+            uiConfig.buckets["filters"] = defaultImprovedFilters.filters;
+        }
+
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
-            uiConfig: getDefaultRepeaterUiConfig(),
+            uiConfig,
         };
 
         newReferencePoint = configRepeaterBuckets(newReferencePoint);
         newReferencePoint = setRepeaterUiConfig(newReferencePoint, this.intl);
-        return sanitizeFilters(newReferencePoint);
+        return sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters);
     };
 
     public getExecution(

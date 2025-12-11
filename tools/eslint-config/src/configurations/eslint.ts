@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration = {
+export const eslint: IConfiguration = {
     extends: ["eslint:recommended"],
     rules: {
         "no-console": [2, { allow: ["warn", "error"] }],
@@ -328,5 +328,3 @@ const configuration: IConfiguration = {
         "no-unexpected-multiline": "off",
     },
 };
-
-export default configuration;

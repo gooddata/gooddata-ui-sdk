@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"tsdoc"> = {
+export const tsdoc: IConfiguration<"tsdoc"> = {
     packages: [
         {
             name: "eslint-plugin-tsdoc",
@@ -14,5 +14,3 @@ const configuration: IConfiguration<"tsdoc"> = {
         "tsdoc/syntax": "error",
     },
 };
-
-export default configuration;

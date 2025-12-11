@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"header"> = {
+export const header: IConfiguration<"header"> = {
     packages: [
         {
             name: "eslint-plugin-header",
@@ -21,5 +21,3 @@ const configuration: IConfiguration<"header"> = {
         ],
     },
 };
-
-export default configuration;

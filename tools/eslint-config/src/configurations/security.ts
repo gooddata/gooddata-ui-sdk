@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration = {
+export const security: IConfiguration = {
     rules: {
         "no-caller": 2,
         "no-eval": 2,
@@ -10,5 +10,3 @@ const configuration: IConfiguration = {
         "no-octal-escape": 2,
     },
 };
-
-export default configuration;

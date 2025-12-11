@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"react"> = {
+export const react: IConfiguration<"react"> = {
     packages: [
         {
             name: "eslint-plugin-react",
@@ -38,5 +38,3 @@ const configuration: IConfiguration<"react"> = {
         },
     },
 };
-
-export default configuration;

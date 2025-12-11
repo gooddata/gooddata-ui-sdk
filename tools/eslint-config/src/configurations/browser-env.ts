@@ -2,10 +2,8 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration = {
+export const browserEnv: IConfiguration = {
     env: {
         browser: true,
     },
 };
-
-export default configuration;

@@ -70,9 +70,12 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
+        const uiConfig = cloneDeep(DEFAULT_SCATTERPLOT_UICONFIG);
+        this.addMetricToFiltersIfEnabled(uiConfig);
+
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: cloneDeep(DEFAULT_SCATTERPLOT_UICONFIG),
+            uiConfig,
         };
 
         newReferencePoint = removeAllArithmeticMeasuresFromDerived(newReferencePoint);
@@ -88,7 +91,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = removeSort(newReferencePoint);
-        newReferencePoint = sanitizeFilters(newReferencePoint);
+        newReferencePoint = sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters);
         newReferencePoint = disableClusteringForMissingViewBy(newReferencePoint);
         newReferencePoint = disableClusteringIfFewerThanTwoMeasures(newReferencePoint);
 

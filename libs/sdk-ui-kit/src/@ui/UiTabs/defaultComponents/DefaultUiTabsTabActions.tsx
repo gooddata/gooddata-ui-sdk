@@ -17,7 +17,10 @@ type IMenuItemType<
     TTabProps extends Record<any, any> = EmptyObject,
     TTabActionProps extends Record<any, any> = EmptyObject,
 > = IUiMenuItem<{
-    interactive: { onSelect: IUiTabAction<TTabProps, TTabActionProps>["onSelect"] };
+    interactive: {
+        onSelect: IUiTabAction<TTabProps, TTabActionProps>["onSelect"];
+        dataTestId?: string;
+    };
 }>;
 
 /**
@@ -59,6 +62,7 @@ export function DefaultUiTabsTabActions<
                           tooltip: action.tooltip,
                           tooltipWidth: action.tooltipWidth,
                           data: {
+                              dataTestId: action.dataTestId,
                               onSelect: ((ctx: { tab: IUiTab<TTabProps, TTabActionProps> }) => {
                                   action.onSelect?.(ctx);
                                   onActionTriggered({ action, tab, location });
@@ -99,6 +103,12 @@ export function DefaultUiTabsTabActions<
         [tab],
     );
 
+    const itemDataTestId = useCallback(
+        (item: IMenuItemType<TTabProps, TTabActionProps>) =>
+            item.type === "interactive" ? item.data.dataTestId : undefined,
+        [],
+    );
+
     if (menuItems.length === 0) {
         return null;
     }
@@ -129,6 +139,7 @@ export function DefaultUiTabsTabActions<
                     size={"small"}
                     containerBottomPadding={"small"}
                     containerTopPadding={"small"}
+                    itemDataTestId={itemDataTestId}
                 />
             )}
             autofocusOnOpen

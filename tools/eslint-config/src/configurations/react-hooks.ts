@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"react-hooks"> = {
+export const reactHooks: IConfiguration<"react-hooks"> = {
     packages: [
         {
             name: "eslint-plugin-react-hooks",
@@ -16,5 +16,3 @@ const configuration: IConfiguration<"react-hooks"> = {
         "react-hooks/exhaustive-deps": "error",
     },
 };
-
-export default configuration;

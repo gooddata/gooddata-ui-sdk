@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"regexp"> = {
+export const regexp: IConfiguration<"regexp"> = {
     packages: [
         {
             name: "eslint-plugin-regexp",
@@ -16,5 +16,3 @@ const configuration: IConfiguration<"regexp"> = {
         "regexp/prefer-w": "off",
     },
 };
-
-export default configuration;

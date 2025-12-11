@@ -129,7 +129,9 @@ export class PluggableTreemap extends PluggableBaseChart {
         const nonStackAttributes = getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]);
         const measures = getMeasureItems(buckets);
 
-        return getTreemapUiConfig(nonStackAttributes.length > 0, measures.length > 1);
+        const uiConfig = getTreemapUiConfig(nonStackAttributes.length > 0, measures.length > 1);
+        this.addMetricToFiltersIfEnabled(uiConfig);
+        return uiConfig;
     }
 
     public override getExtendedReferencePoint(
@@ -161,7 +163,9 @@ export class PluggableTreemap extends PluggableBaseChart {
 
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     }
 
     private addFilters(

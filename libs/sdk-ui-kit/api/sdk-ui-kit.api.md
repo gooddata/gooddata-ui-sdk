@@ -5393,6 +5393,8 @@ export interface IUiLeveledTreeViewProps<Levels extends any[]> extends IUiTreeVi
 // @internal (undocumented)
 export interface IUiLinkProps extends Omit<HTMLProps<HTMLAnchorElement>, "className"> {
     // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
     flipUnderline?: boolean;
     // (undocumented)
     fullWidth?: boolean;
@@ -5704,6 +5706,7 @@ export type IUiTabAction<TTabProps extends Record<any, any> = EmptyObject, TTabA
     closeOnSelect?: "actions" | "all" | false;
     iconRight?: ReactNode;
     iconLeft?: ReactNode;
+    dataTestId?: string;
 } & TTabActionProps;
 
 // @internal (undocumented)
@@ -7078,7 +7081,7 @@ export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>
 export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTreeViewProps<Levels>): JSX.Element;
 
 // @internal (undocumented)
-export function UiLink({ variant, flipUnderline, fullWidth, ...anchorProps }: IUiLinkProps): JSX.Element;
+export function UiLink({ variant, flipUnderline, fullWidth, dataTestId, ...anchorProps }: IUiLinkProps): JSX.Element;
 
 // @internal
 export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, reference, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;

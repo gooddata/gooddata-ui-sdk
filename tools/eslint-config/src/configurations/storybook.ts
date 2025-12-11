@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"storybook"> = {
+export const storybook: IConfiguration<"storybook"> = {
     packages: [
         {
             name: "eslint-plugin-storybook",
@@ -38,5 +38,3 @@ const configuration: IConfiguration<"storybook"> = {
         },
     },
 };
-
-export default configuration;

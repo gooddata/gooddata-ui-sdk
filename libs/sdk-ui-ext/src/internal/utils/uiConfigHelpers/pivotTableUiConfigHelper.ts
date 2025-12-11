@@ -15,6 +15,7 @@ import {
     MAX_TABLE_CATEGORIES_COUNT,
     UICONFIG,
     defaultFilters,
+    defaultImprovedFilters,
     defaultRootUiConfigProperties,
     disabledOpenAsReportConfig,
     measuresBase,
@@ -140,7 +141,7 @@ export function setPivotTableUiConfig(
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], tableColumnsIcon);
 }
 
-export function getPivotTableDefaultUiConfig(): IUiConfig {
+export function getPivotTableDefaultUiConfig(settings: ISettings): IUiConfig {
     return {
         buckets: {
             measures: {
@@ -166,7 +167,7 @@ export function getPivotTableDefaultUiConfig(): IUiConfig {
                     date: MAX_TABLE_CATEGORIES_COUNT,
                 },
             },
-            ...defaultFilters,
+            ...(settings.enableImprovedAdFilters ? defaultImprovedFilters : defaultFilters),
         },
         ...defaultRootUiConfigProperties,
         ...disabledOpenAsReportConfig,

@@ -110,7 +110,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep({
+        const config = cloneDeep({
             ...COMBO_CHART_UICONFIG,
             optionalStacking: {
                 supported: true,
@@ -118,6 +118,8 @@ export class PluggableComboChart extends PluggableBaseChart {
                 stackMeasures: this.isStackMeasuresByDefault(),
             },
         });
+        this.addMetricToFiltersIfEnabled(config);
+        return config;
     }
 
     public override getExtendedReferencePoint(
@@ -162,7 +164,9 @@ export class PluggableComboChart extends PluggableBaseChart {
         );
         newReferencePoint = applyUiConfig(newReferencePoint);
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     }
 
     public isStackMeasuresByDefault(): boolean {

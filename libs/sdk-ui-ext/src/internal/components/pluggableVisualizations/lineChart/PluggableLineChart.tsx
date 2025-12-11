@@ -95,7 +95,9 @@ export class PluggableLineChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(LINE_UICONFIG_WITH_MULTIPLE_DATES);
+        const config = cloneDeep(LINE_UICONFIG_WITH_MULTIPLE_DATES);
+        this.addMetricToFiltersIfEnabled(config);
+        return config;
     }
 
     public override getExtendedReferencePoint(
@@ -126,7 +128,9 @@ export class PluggableLineChart extends PluggableBaseChart {
 
         this.referencePoint = newReferencePoint;
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     }
 
     public override getInsightWithDrillDownApplied(

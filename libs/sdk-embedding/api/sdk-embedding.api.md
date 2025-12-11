@@ -1241,7 +1241,7 @@ export interface IVisualizationObjectMeasureDefinition {
 export interface IVisualizationObjectMeasureValueFilter {
     // (undocumented)
     measureValueFilter: {
-        measure: IObjUriQualifier | ILocalIdentifierQualifier;
+        measure: ObjQualifier | ILocalIdentifierQualifier;
         condition?: MeasureValueFilterCondition;
     };
 }

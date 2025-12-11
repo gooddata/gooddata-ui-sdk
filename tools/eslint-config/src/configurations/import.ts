@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"import"> = {
+export const import_: IConfiguration<"import"> = {
     packages: [
         {
             name: "eslint-plugin-import",
@@ -48,5 +48,3 @@ const configuration: IConfiguration<"import"> = {
         extends: ["plugin:import/typescript"],
     },
 };
-
-export default configuration;

@@ -4,7 +4,13 @@ import { cloneDeep, isEqual } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    IInsightDefinition,
+    ISettings,
+    insightHasDataDefined,
+    insightProperties,
+} from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     DefaultLocale,
@@ -48,6 +54,7 @@ import { getSupportedProperties } from "../../utils/propertiesHelper.js";
 export abstract class AbstractPluggableVisualization implements IVisualization {
     protected intl: IntlShape;
     protected locale: ILocale;
+    protected featureFlags: ISettings;
 
     /**
      * Standard callback
@@ -96,6 +103,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         this.intl = createInternalIntl(this.locale, props.messages);
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
+        this.featureFlags = props.featureFlags ?? {};
         this.propertiesAffectingReferencePoint = [];
     }
 
