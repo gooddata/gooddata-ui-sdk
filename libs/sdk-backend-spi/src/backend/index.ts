@@ -6,6 +6,7 @@ import { IBackendCapabilities } from "./capabilities.js";
 import { IDataSourcesService } from "../dataSources/index.js";
 import { IEntitlements } from "../entitlements/index.js";
 import { NotAuthenticated } from "../errors/index.js";
+import { IGeoService } from "../geo/index.js";
 import { IOrganization, IOrganizations } from "../organization/index.js";
 import { IUserService } from "../user/index.js";
 import { IPreparedExecution, IPreparedExecutionOptions } from "../workspace/execution/index.js";
@@ -187,6 +188,11 @@ export interface IAnalyticalBackend {
      * Returns service that can be used to work with data sources.
      */
     dataSources(): IDataSourcesService;
+
+    /**
+     * Returns service that can be used to load geo location assets.
+     */
+    geo(): IGeoService;
 }
 
 /**

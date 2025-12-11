@@ -30,6 +30,7 @@ import {
     IForecastResult,
     IForecastView,
     IGenAIService,
+    IGeoService,
     IOrganization,
     IOrganizations,
     IPreparedExecution,
@@ -81,6 +82,7 @@ import {
     IResultDimension,
     isAttributeHeader,
 } from "./legacyBackendTypes.js";
+import { createMockGeoService } from "../geoService.js";
 
 const defaultConfig = { hostname: "test" };
 
@@ -132,6 +134,8 @@ export function legacyRecordedBackend(
     index: LegacyRecordingIndex,
     config: IAnalyticalBackendConfig = defaultConfig,
 ): IAnalyticalBackend {
+    const geoService = createMockGeoService();
+
     const noopBackend: IAnalyticalBackend = {
         capabilities: {},
         config,
@@ -176,6 +180,9 @@ export function legacyRecordedBackend(
         },
         dataSources(): IDataSourcesService {
             throw new NotSupported("not yet supported");
+        },
+        geo(): IGeoService {
+            return geoService;
         },
     };
 

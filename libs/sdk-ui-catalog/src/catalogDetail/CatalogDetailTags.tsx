@@ -6,6 +6,8 @@ import { useIntl } from "react-intl";
 
 import { type UiTagDef, UiTags } from "@gooddata/sdk-ui-kit";
 
+import { useCatalogTags } from "../catalogResource/index.js";
+
 type Props = {
     tags: string[];
     canEdit: boolean;
@@ -16,15 +18,19 @@ type Props = {
 
 export function CatalogDetailTags({ tags, canEdit, onTagClick, onTagAdd, onTagRemove }: Props) {
     const intl = useIntl();
+    const { tags: catalogTags } = useCatalogTags();
 
     const itemTags = useMemo(
         () => tags.map((tag) => ({ id: tag, label: tag, isDeletable: canEdit })),
         [tags, canEdit],
     );
 
+    const tagOptions = useMemo(() => catalogTags.map((tag) => ({ id: tag, label: tag })), [catalogTags]);
+
     return (
         <UiTags
             tags={itemTags}
+            tagOptions={tagOptions}
             canCreateTag={canEdit}
             canDeleteTags={canEdit}
             mode="multi-line"

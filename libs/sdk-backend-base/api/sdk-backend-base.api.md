@@ -83,6 +83,7 @@ import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IForecastResult } from '@gooddata/sdk-backend-spi';
+import { IGeoService } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
@@ -283,6 +284,7 @@ export type CacheControl = {
     resetSecuritySettings: () => void;
     resetAttributes: () => void;
     resetWorkspaceSettings: () => void;
+    resetGeoStyles: () => void;
     resetAll: () => void;
 };
 
@@ -304,6 +306,7 @@ export type CachingConfiguration = {
     maxAttributesPerWorkspace?: number;
     maxAttributeElementResultsPerWorkspace?: number;
     maxWorkspaceSettings?: number;
+    cacheGeoStyles?: boolean;
 };
 
 // @beta
@@ -721,6 +724,7 @@ export type DecoratorFactories = {
     attributes?: AttributesDecoratorFactory;
     automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
+    geo?: GeoDecoratorFactory;
 };
 
 // @internal (undocumented)
@@ -837,6 +841,9 @@ export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMeta
 
 // @internal
 export const generateDateFilterLocalIdentifier: (index: number, dateDatasetRef?: ObjRef) => string;
+
+// @alpha (undocumented)
+export type GeoDecoratorFactory = (geo: IGeoService) => IGeoService;
 
 // @beta
 export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase> extends Builder<T> implements IGroupableCatalogItemBuilder<T> {

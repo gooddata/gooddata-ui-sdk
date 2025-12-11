@@ -58,6 +58,11 @@ export interface IGeoChartNextConfig {
     mapStyle?: string | StyleSpecification;
 
     /**
+     * Maximum zoom level allowed on the map. Null/undefined keeps MapLibre defaults.
+     */
+    maxZoomLevel?: number | null;
+
+    /**
      * Custom number separators used for formatting.
      */
     separators?: ISeparators;

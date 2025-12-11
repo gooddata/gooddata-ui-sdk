@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 /**
@@ -6,6 +7,7 @@ import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
  */
 export interface UiTagsProps {
     tags: Array<UiTagDef>;
+    tagOptions?: Array<UiTagDef>;
     addLabel?: string;
     nameLabel?: string;
     cancelLabel?: string;
@@ -14,6 +16,7 @@ export interface UiTagsProps {
     moreLabel?: string;
     noTagsLabel?: string;
     removeLabel?: string;
+    creatableLabel?: string;
     readOnly?: boolean;
     canCreateTag?: boolean;
     canDeleteTags?: boolean;

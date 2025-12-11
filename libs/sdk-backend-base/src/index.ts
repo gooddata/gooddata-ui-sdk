@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 /**
  * This package provides foundational reusable code useful for building new or decorating existing Analytical Backend implementations.
  *
@@ -24,6 +25,7 @@ export type {
     AutomationsDecoratorFactory,
     AttributesDecoratorFactory,
     DashboardsDecoratorFactory,
+    GeoDecoratorFactory,
 } from "./decoratedBackend/index.js";
 export { decoratedBackend } from "./decoratedBackend/index.js";
 

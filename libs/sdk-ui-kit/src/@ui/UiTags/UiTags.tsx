@@ -1,15 +1,24 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useRef } from "react";
+import { RefObject, useMemo, useRef } from "react";
 
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
 import { UiTagDef, UiTagsProps } from "./types.js";
 import { UiTag } from "./UiTag.js";
-import { Input } from "../../Form/index.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
+import {
+    type IUiComboboxOption,
+    UiCombobox,
+    UiComboboxInput,
+    UiComboboxList,
+    UiComboboxListItem,
+    UiComboboxListItemCreatableLabel,
+    UiComboboxListItemLabel,
+    UiComboboxPopup,
+} from "../UiCombobox/index.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
 
 const { b, e } = bem("gd-ui-kit-tags");
@@ -21,6 +30,7 @@ const defaultAccessibilityConfig: IAccessibilityConfigBase = {};
  */
 export function UiTags({
     tags,
+    tagOptions,
     addLabel = "Add tag",
     nameLabel = "Name",
     cancelLabel = "Cancel",
@@ -29,6 +39,7 @@ export function UiTags({
     noTagsLabel = "No tags",
     moreLabel = "More tags",
     removeLabel = "Remove",
+    creatableLabel = "(Create new)",
     mode = "single-line",
     canDeleteTags = true,
     canCreateTag = true,
@@ -85,6 +96,16 @@ export function UiTags({
         onTagAdd,
         onTagRemove,
     );
+
+    const comboboxOptions: IUiComboboxOption[] = useMemo(() => {
+        if (!tagOptions) {
+            return [];
+        }
+        const tagIds = new Set(tags.map((tag) => tag.id));
+        return tagOptions
+            .filter((tagOption) => !tagIds.has(tagOption.id))
+            .map((tagOption) => ({ id: tagOption.id, label: tagOption.label }));
+    }, [tagOptions, tags]);
 
     return (
         <div
@@ -241,26 +262,51 @@ export function UiTags({
                             title={addLabel}
                             initialFocus={inputRef as RefObject<HTMLElement>}
                             content={({ onClose }) => (
-                                <Input
-                                    label={nameLabel}
-                                    ref={(ref) => {
-                                        inputRef.current = ref?.inputNodeRef?.inputNodeRef ?? null;
-                                        interactionState.current.input = inputRef.current;
-                                    }}
+                                <UiCombobox
+                                    options={comboboxOptions}
                                     value={tag}
-                                    autocomplete="on"
-                                    labelPositionTop
-                                    className={e("add-input")}
-                                    onChange={(value) => {
-                                        setTag(String(value));
-                                    }}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            onTagAddHandler();
-                                            onClose();
-                                        }
-                                    }}
-                                />
+                                    onValueChange={setTag}
+                                    creatable
+                                >
+                                    <UiComboboxInput
+                                        ref={(node) => {
+                                            inputRef.current = node;
+                                            interactionState.current.input = node;
+                                        }}
+                                        name="add-input"
+                                        className={e("add-input")}
+                                        aria-label={nameLabel}
+                                        onKeyDown={(event) => {
+                                            if (event.isDefaultPrevented()) {
+                                                return;
+                                            }
+                                            if (event.key === "Enter") {
+                                                onTagAddHandler();
+                                                onClose();
+                                            }
+                                        }}
+                                    />
+                                    <UiComboboxPopup>
+                                        <UiComboboxList>
+                                            {(option, index) => (
+                                                <UiComboboxListItem
+                                                    key={option.id}
+                                                    option={option}
+                                                    index={index}
+                                                >
+                                                    <UiComboboxListItemLabel>
+                                                        {option.label}
+                                                    </UiComboboxListItemLabel>
+                                                    {option.creatable ? (
+                                                        <UiComboboxListItemCreatableLabel>
+                                                            {creatableLabel}
+                                                        </UiComboboxListItemCreatableLabel>
+                                                    ) : null}
+                                                </UiComboboxListItem>
+                                            )}
+                                        </UiComboboxList>
+                                    </UiComboboxPopup>
+                                </UiCombobox>
                             )}
                             footer={({ onClose }) => (
                                 <>

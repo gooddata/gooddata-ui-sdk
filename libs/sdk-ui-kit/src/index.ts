@@ -361,3 +361,24 @@ export type { UiCardProps } from "./@ui/UiCard/UiCard.js";
 
 export { UiSubmenuHeader } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
 export type { UiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
+
+export {
+    UiCombobox,
+    type UiComboboxProps,
+    UiComboboxInput,
+    type UiComboboxInputProps,
+    UiComboboxPopup,
+    type UiComboboxPopupProps,
+    UiComboboxList,
+    type UiComboboxListProps,
+    UiComboboxListItem,
+    type UiComboboxListItemProps,
+    UiComboboxListItemLabel,
+    type UiComboboxListItemLabelProps,
+    UiComboboxListItemCreatableLabel,
+    type UiComboboxListItemCreatableLabelProps,
+    type IUiComboboxOption,
+    type IUiComboboxParams,
+    type IUiComboboxState,
+    useComboboxState,
+} from "./@ui/UiCombobox/index.js";

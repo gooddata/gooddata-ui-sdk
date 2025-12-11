@@ -203,6 +203,58 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers": {
+            "post": {
+                "tags": ["Computation", "actions"],
+                "summary": "(BETA) Outlier Detection",
+                "description": "(BETA) Computes outlier detection for the provided execution definition.",
+                "operationId": "outlierDetection",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "skip-cache",
+                        "in": "header",
+                        "description": "Ignore all caches during execution of current request.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OutlierDetectionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OutlierDetectionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers": {
             "post": {
                 "tags": ["Computation", "actions"],
@@ -1119,6 +1171,66 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers/result/{resultId}": {
+            "get": {
+                "tags": ["Computation", "actions"],
+                "summary": "(BETA) Outlier Detection Result",
+                "description": "(BETA) Gets outlier detection result.",
+                "operationId": "outlierDetectionResult",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OutlierDetectionResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}": {
             "get": {
                 "tags": ["Computation", "actions"],
@@ -1715,6 +1827,20 @@
                 },
                 "description": "A datetime filter specifying exact from and to values."
             },
+            "AbstractMeasureValueFilter": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RankingFilter"
+                    }
+                ]
+            },
             "AfmIdentifier": {
                 "type": "object",
                 "description": "Reference to the attribute label to which the filter should be applied.",
@@ -1914,6 +2040,26 @@
                 },
                 "description": "Filter on specific set of label values."
             },
+            "AttributeItem": {
+                "required": ["label", "localIdentifier"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "description": "Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.",
+                        "example": "attribute_1"
+                    },
+                    "label": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierLabel"
+                    },
+                    "showAllValues": {
+                        "type": "boolean",
+                        "description": "Indicates whether to show all values of given attribute even if the data bound to those values is not available.",
+                        "default": false
+                    }
+                }
+            },
             "BoundedFilter": {
                 "required": ["granularity"],
                 "type": "object",
@@ -1961,6 +2107,56 @@
                 },
                 "description": "Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range."
             },
+            "ComparisonMeasureValueFilter": {
+                "required": ["comparisonMeasureValueFilter"],
+                "type": "object",
+                "properties": {
+                    "comparisonMeasureValueFilter": {
+                        "required": ["operator", "value", "measure"],
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "References to the attributes to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "description": "A value that will be substituted for null values in the metric for the comparisons.",
+                                "example": 0
+                            },
+                            "operator": {
+                                "type": "string",
+                                "example": "GREATER_THAN",
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            },
+                            "value": {
+                                "type": "number",
+                                "example": 1327
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "measure": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter the result by comparing specified metric to given constant value, using given comparison operator."
+            },
             "DateFilter": {
                 "type": "object",
                 "description": "Abstract filter definition type for dates.",
@@ -1970,6 +2166,36 @@
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
+                    }
+                ]
+            },
+            "FilterDefinition": {
+                "type": "object",
+                "description": "Abstract filter definition type",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/InlineFilterDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RankingFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AbsoluteDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RelativeDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/NegativeAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PositiveAttributeFilter"
                     }
                 ]
             },
@@ -1984,6 +2210,29 @@
                         "$ref": "#/components/schemas/AttributeFilter"
                     }
                 ]
+            },
+            "InlineFilterDefinition": {
+                "required": ["inline"],
+                "type": "object",
+                "properties": {
+                    "inline": {
+                        "required": ["filter"],
+                        "type": "object",
+                        "properties": {
+                            "filter": {
+                                "type": "string",
+                                "description": "MAQL query representing the filter."
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter in form of direct MAQL query."
             },
             "InlineMeasureDefinition": {
                 "required": ["inline"],
@@ -2001,28 +2250,6 @@
                     }
                 },
                 "description": "Metric defined by the raw MAQL query."
-            },
-            "KeyDriversRequest": {
-                "required": ["metric"],
-                "type": "object",
-                "properties": {
-                    "metric": {
-                        "$ref": "#/components/schemas/MeasureItem"
-                    },
-                    "auxMetrics": {
-                        "type": "array",
-                        "description": "Additional metrics to be included in the computation, but excluded from the analysis.",
-                        "items": {
-                            "$ref": "#/components/schemas/MeasureItem"
-                        }
-                    },
-                    "sortDirection": {
-                        "type": "string",
-                        "description": "Sorting elements - ascending/descending order.",
-                        "default": "DESC",
-                        "enum": ["ASC", "DESC"]
-                    }
-                }
             },
             "MeasureDefinition": {
                 "type": "object",
@@ -2058,6 +2285,18 @@
                 },
                 "description": "Metric is a quantity that is calculated from the data."
             },
+            "MeasureValueFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type filtering by the value of the metric.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    }
+                ]
+            },
             "NegativeAttributeFilter": {
                 "required": ["negativeAttributeFilter"],
                 "type": "object",
@@ -2082,6 +2321,49 @@
                     }
                 },
                 "description": "Filter able to limit element values by label and related selected negated elements."
+            },
+            "OutlierDetectionRequest": {
+                "required": ["dateAttribute", "granularity", "measures", "sensitivity"],
+                "type": "object",
+                "properties": {
+                    "measures": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    },
+                    "dateAttribute": {
+                        "$ref": "#/components/schemas/AttributeItem"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "description": "Optional filters to apply",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "sensitivity": {
+                        "type": "string",
+                        "description": "Sensitivity level for outlier detection",
+                        "enum": ["LOW", "MEDIUM", "HIGH"]
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).",
+                        "enum": ["HOUR", "DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+                    }
+                }
             },
             "PopDataset": {
                 "required": ["dataset", "periodsAgo"],
@@ -2197,6 +2479,97 @@
                 },
                 "description": "Filter able to limit element values by label and related selected elements."
             },
+            "RangeMeasureValueFilter": {
+                "required": ["rangeMeasureValueFilter"],
+                "type": "object",
+                "properties": {
+                    "rangeMeasureValueFilter": {
+                        "required": ["from", "operator", "to", "measure"],
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "References to the attributes to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "description": "A value that will be substituted for null values in the metric for the comparisons.",
+                                "example": 0
+                            },
+                            "operator": {
+                                "type": "string",
+                                "example": "BETWEEN",
+                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                            },
+                            "from": {
+                                "type": "number",
+                                "example": 100
+                            },
+                            "to": {
+                                "type": "number",
+                                "example": 999
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "measure": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter the result by comparing specified metric to given range of values."
+            },
+            "RankingFilter": {
+                "required": ["rankingFilter"],
+                "type": "object",
+                "properties": {
+                    "rankingFilter": {
+                        "required": ["measures", "operator", "value"],
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "References to the attributes to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "measures": {
+                                "type": "array",
+                                "description": "References to the metrics to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "operator": {
+                                "type": "string",
+                                "description": "The type of ranking to use, TOP or BOTTOM.",
+                                "enum": ["TOP", "BOTTOM"]
+                            },
+                            "value": {
+                                "type": "integer",
+                                "description": "Number of top/bottom values to filter.",
+                                "format": "int32",
+                                "example": 5
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter the result on top/bottom N values according to given metric(s)."
+            },
             "RelativeDateFilter": {
                 "required": ["relativeDateFilter"],
                 "type": "object",
@@ -2303,6 +2676,37 @@
                     }
                 },
                 "description": "Metric defined by referencing a MAQL metric or an LDM fact object with aggregation."
+            },
+            "OutlierDetectionResponse": {
+                "required": ["links"],
+                "type": "object",
+                "properties": {
+                    "links": {
+                        "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                }
+            },
+            "KeyDriversRequest": {
+                "required": ["metric"],
+                "type": "object",
+                "properties": {
+                    "metric": {
+                        "$ref": "#/components/schemas/MeasureItem"
+                    },
+                    "auxMetrics": {
+                        "type": "array",
+                        "description": "Additional metrics to be included in the computation, but excluded from the analysis.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    },
+                    "sortDirection": {
+                        "type": "string",
+                        "description": "Sorting elements - ascending/descending order.",
+                        "default": "DESC",
+                        "enum": ["ASC", "DESC"]
+                    }
+                }
             },
             "AttributeFormat": {
                 "required": ["locale", "pattern"],
@@ -2411,40 +2815,6 @@
                 },
                 "description": "Object identifier."
             },
-            "AbstractMeasureValueFilter": {
-                "type": "object",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/RankingFilter"
-                    }
-                ]
-            },
-            "AttributeItem": {
-                "required": ["label", "localIdentifier"],
-                "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "pattern": "^[.a-zA-Z0-9_-]+$",
-                        "type": "string",
-                        "description": "Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.",
-                        "example": "attribute_1"
-                    },
-                    "label": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifierLabel"
-                    },
-                    "showAllValues": {
-                        "type": "boolean",
-                        "description": "Indicates whether to show all values of given attribute even if the data bound to those values is not available.",
-                        "default": false
-                    }
-                }
-            },
             "ChangeAnalysisRequest": {
                 "required": ["analyzedPeriod", "dateAttribute", "measure", "referencePeriod"],
                 "type": "object",
@@ -2501,212 +2871,6 @@
                     }
                 },
                 "description": "Request for change analysis computation"
-            },
-            "ComparisonMeasureValueFilter": {
-                "required": ["comparisonMeasureValueFilter"],
-                "type": "object",
-                "properties": {
-                    "comparisonMeasureValueFilter": {
-                        "required": ["operator", "value", "measure"],
-                        "type": "object",
-                        "properties": {
-                            "dimensionality": {
-                                "type": "array",
-                                "description": "References to the attributes to be used when filtering.",
-                                "items": {
-                                    "$ref": "#/components/schemas/AfmIdentifier"
-                                }
-                            },
-                            "treatNullValuesAs": {
-                                "type": "number",
-                                "description": "A value that will be substituted for null values in the metric for the comparisons.",
-                                "example": 0
-                            },
-                            "operator": {
-                                "type": "string",
-                                "example": "GREATER_THAN",
-                                "enum": [
-                                    "GREATER_THAN",
-                                    "GREATER_THAN_OR_EQUAL_TO",
-                                    "LESS_THAN",
-                                    "LESS_THAN_OR_EQUAL_TO",
-                                    "EQUAL_TO",
-                                    "NOT_EQUAL_TO"
-                                ]
-                            },
-                            "value": {
-                                "type": "number",
-                                "example": 1327
-                            },
-                            "localIdentifier": {
-                                "type": "string"
-                            },
-                            "applyOnResult": {
-                                "type": "boolean"
-                            },
-                            "measure": {
-                                "$ref": "#/components/schemas/AfmIdentifier"
-                            }
-                        }
-                    }
-                },
-                "description": "Filter the result by comparing specified metric to given constant value, using given comparison operator."
-            },
-            "FilterDefinition": {
-                "type": "object",
-                "description": "Abstract filter definition type",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/InlineFilterDefinition"
-                    },
-                    {
-                        "$ref": "#/components/schemas/RankingFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/AbsoluteDateFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/RelativeDateFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/NegativeAttributeFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/PositiveAttributeFilter"
-                    }
-                ]
-            },
-            "InlineFilterDefinition": {
-                "required": ["inline"],
-                "type": "object",
-                "properties": {
-                    "inline": {
-                        "required": ["filter"],
-                        "type": "object",
-                        "properties": {
-                            "filter": {
-                                "type": "string",
-                                "description": "MAQL query representing the filter."
-                            },
-                            "localIdentifier": {
-                                "type": "string"
-                            },
-                            "applyOnResult": {
-                                "type": "boolean"
-                            }
-                        }
-                    }
-                },
-                "description": "Filter in form of direct MAQL query."
-            },
-            "MeasureValueFilter": {
-                "type": "object",
-                "description": "Abstract filter definition type filtering by the value of the metric.",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
-                    },
-                    {
-                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
-                    }
-                ]
-            },
-            "RangeMeasureValueFilter": {
-                "required": ["rangeMeasureValueFilter"],
-                "type": "object",
-                "properties": {
-                    "rangeMeasureValueFilter": {
-                        "required": ["from", "operator", "to", "measure"],
-                        "type": "object",
-                        "properties": {
-                            "dimensionality": {
-                                "type": "array",
-                                "description": "References to the attributes to be used when filtering.",
-                                "items": {
-                                    "$ref": "#/components/schemas/AfmIdentifier"
-                                }
-                            },
-                            "treatNullValuesAs": {
-                                "type": "number",
-                                "description": "A value that will be substituted for null values in the metric for the comparisons.",
-                                "example": 0
-                            },
-                            "operator": {
-                                "type": "string",
-                                "example": "BETWEEN",
-                                "enum": ["BETWEEN", "NOT_BETWEEN"]
-                            },
-                            "from": {
-                                "type": "number",
-                                "example": 100
-                            },
-                            "to": {
-                                "type": "number",
-                                "example": 999
-                            },
-                            "localIdentifier": {
-                                "type": "string"
-                            },
-                            "applyOnResult": {
-                                "type": "boolean"
-                            },
-                            "measure": {
-                                "$ref": "#/components/schemas/AfmIdentifier"
-                            }
-                        }
-                    }
-                },
-                "description": "Filter the result by comparing specified metric to given range of values."
-            },
-            "RankingFilter": {
-                "required": ["rankingFilter"],
-                "type": "object",
-                "properties": {
-                    "rankingFilter": {
-                        "required": ["measures", "operator", "value"],
-                        "type": "object",
-                        "properties": {
-                            "dimensionality": {
-                                "type": "array",
-                                "description": "References to the attributes to be used when filtering.",
-                                "items": {
-                                    "$ref": "#/components/schemas/AfmIdentifier"
-                                }
-                            },
-                            "measures": {
-                                "type": "array",
-                                "description": "References to the metrics to be used when filtering.",
-                                "items": {
-                                    "$ref": "#/components/schemas/AfmIdentifier"
-                                }
-                            },
-                            "operator": {
-                                "type": "string",
-                                "description": "The type of ranking to use, TOP or BOTTOM.",
-                                "enum": ["TOP", "BOTTOM"]
-                            },
-                            "value": {
-                                "type": "integer",
-                                "description": "Number of top/bottom values to filter.",
-                                "format": "int32",
-                                "example": 5
-                            },
-                            "localIdentifier": {
-                                "type": "string"
-                            },
-                            "applyOnResult": {
-                                "type": "boolean"
-                            }
-                        }
-                    }
-                },
-                "description": "Filter the result on top/bottom N values according to given metric(s)."
             },
             "ChangeAnalysisResponse": {
                 "required": ["links"],
@@ -3667,7 +3831,7 @@
                     },
                     "reasoning": {
                         "type": "string",
-                        "description": "If something is not working properly this field will contain explanation."
+                        "description": "DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation."
                     }
                 }
             },
@@ -4080,6 +4244,9 @@
                         "type": "string",
                         "description": "User feedback.",
                         "enum": ["POSITIVE", "NEGATIVE", "NONE"]
+                    },
+                    "reasoning": {
+                        "$ref": "#/components/schemas/Reasoning"
                     }
                 },
                 "description": "List of chat history interactions."
@@ -4193,7 +4360,7 @@
                     },
                     "reasoning": {
                         "type": "string",
-                        "description": "Reasoning from LLM. Description of how and why the answer was generated."
+                        "description": "DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated."
                     },
                     "suggestions": {
                         "type": "array",
@@ -4316,7 +4483,7 @@
                     },
                     "reasoning": {
                         "type": "string",
-                        "description": "Reasoning from LLM. Description of how and why the answer was generated."
+                        "description": "DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated."
                     }
                 },
                 "description": "List of objects found by similarity search and post-processed by LLM."
@@ -4347,6 +4514,42 @@
                     }
                 },
                 "description": "List of metrics to be used in the new visualization"
+            },
+            "Reasoning": {
+                "required": ["steps"],
+                "type": "object",
+                "properties": {
+                    "steps": {
+                        "type": "array",
+                        "description": "Steps taken during processing, showing the AI's reasoning process.",
+                        "items": {
+                            "$ref": "#/components/schemas/ReasoningStep"
+                        }
+                    },
+                    "answer": {
+                        "type": "string",
+                        "description": "Final answer/reasoning from the use case result."
+                    }
+                },
+                "description": "Reasoning wrapper containing steps taken during request handling."
+            },
+            "ReasoningStep": {
+                "required": ["thoughts", "title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Title describing this reasoning step."
+                    },
+                    "thoughts": {
+                        "type": "array",
+                        "description": "Detailed thoughts/messages within this step.",
+                        "items": {
+                            "$ref": "#/components/schemas/Thought"
+                        }
+                    }
+                },
+                "description": "Steps taken during processing, showing the AI's reasoning process."
             },
             "RouteResult": {
                 "required": ["reasoning", "useCase"],
@@ -4388,6 +4591,17 @@
                 },
                 "description": "List of suggestions for next steps. Filled when no visualization was created, suggests alternatives."
             },
+            "Thought": {
+                "required": ["text"],
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "The text content of this thought."
+                    }
+                },
+                "description": "Detailed thoughts/messages within this step."
+            },
             "ChatResult": {
                 "type": "object",
                 "properties": {
@@ -4421,6 +4635,9 @@
                     "chatHistoryInteractionId": {
                         "type": "string",
                         "description": "Chat History interaction ID. Unique ID for each interaction."
+                    },
+                    "reasoning": {
+                        "$ref": "#/components/schemas/Reasoning"
                     }
                 }
             },
@@ -4600,6 +4817,30 @@
                             "type": "boolean",
                             "nullable": true
                         }
+                    }
+                }
+            },
+            "OutlierDetectionResult": {
+                "required": ["attribute", "values"],
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "values": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "type": "number",
+                                "nullable": true
+                            }
+                        },
+                        "nullable": true
                     }
                 }
             },

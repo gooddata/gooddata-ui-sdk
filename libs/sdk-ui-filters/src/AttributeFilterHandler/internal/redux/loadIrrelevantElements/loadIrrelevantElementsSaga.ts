@@ -73,9 +73,7 @@ export function* loadIrrelevantElementsSaga(
             loadOptionsWithElements,
         );
 
-        const relevantElementTitles = relevantElementsResult.elements
-            .map((elem) => elem.uri)
-            .filter((uri): uri is string => uri !== null);
+        const relevantElementTitles = relevantElementsResult.elements.map((elem) => elem.uri);
         const irrelevantSelectionTitles = difference(allSelectedElementTitles, relevantElementTitles);
 
         yield put(

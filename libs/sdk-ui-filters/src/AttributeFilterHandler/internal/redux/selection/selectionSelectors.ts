@@ -5,14 +5,14 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { isEmpty, isEqual } from "lodash-es";
 
-import { InvertableAttributeElementSelection } from "../../../types/index.js";
+import { AttributeElementKey, InvertableAttributeElementSelection } from "../../../types/index.js";
 import { selectState } from "../common/selectors.js";
 import { FilterSelector } from "../common/types.js";
 
 /**
  * @internal
  */
-export const selectWorkingSelection: FilterSelector<string[]> = createSelector(
+export const selectWorkingSelection: FilterSelector<AttributeElementKey[]> = createSelector(
     selectState,
     (state) => state.selection.working.keys ?? [],
 );
@@ -28,7 +28,7 @@ export const selectIsWorkingSelectionInverted: FilterSelector<boolean> = createS
 /**
  * @internal
  */
-export const selectIrrelevantWorkingSelection: FilterSelector<string[]> = createSelector(
+export const selectIrrelevantWorkingSelection: FilterSelector<AttributeElementKey[]> = createSelector(
     selectState,
     (state) => state.selection.working.irrelevantKeys ?? [],
 );
@@ -36,7 +36,7 @@ export const selectIrrelevantWorkingSelection: FilterSelector<string[]> = create
 /**
  * @internal
  */
-export const selectCommittedSelection: FilterSelector<string[]> = createSelector(
+export const selectCommittedSelection: FilterSelector<AttributeElementKey[]> = createSelector(
     selectState,
     (state) => state.selection.commited.keys ?? [],
 );
@@ -52,7 +52,7 @@ export const selectIsCommittedSelectionInverted: FilterSelector<boolean> = creat
 /**
  * @internal
  */
-export const selectIrrelevantCommittedSelection: FilterSelector<string[]> = createSelector(
+export const selectIrrelevantCommittedSelection: FilterSelector<AttributeElementKey[]> = createSelector(
     selectState,
     (state) => state.selection.commited.irrelevantKeys ?? [],
 );

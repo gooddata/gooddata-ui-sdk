@@ -1,4 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
@@ -15,6 +16,8 @@ const { MODULE_FEDERATION_NAME } = require("./src/metadata.json");
 
 const PORT = 3001;
 const DEFAULT_BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
+const GEO_STYLE_ENDPOINT = "/api/v1/location/style";
+const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
 function generateGooddataSharePackagesEntries() {
     // add all the gooddata packages that absolutely need to be shared and singletons because of contexts
@@ -31,13 +34,102 @@ function generateGooddataSharePackagesEntries() {
         }, {});
 }
 
+function applyProxyRequestHeaders(proxyReq) {
+    proxyReq.removeHeader("origin");
+    proxyReq.setHeader("accept-encoding", "identity");
+}
+
+function rewriteLocationStyleResponse(buffer, origin) {
+    const payload = JSON.parse(buffer.toString("utf8"));
+
+    if (typeof payload.glyphs === "string") {
+        payload.glyphs = replaceUrlOrigin(payload.glyphs, origin);
+    }
+
+    if (payload.sources && typeof payload.sources === "object") {
+        Object.values(payload.sources).forEach((source) => {
+            if (isVectorSourceWithTiles(source) && Array.isArray(source.tiles)) {
+                source.tiles = source.tiles.map((tileUrl) => replaceUrlOrigin(tileUrl, origin));
+            }
+        });
+    }
+
+    return JSON.stringify(payload);
+}
+
+function replaceUrlOrigin(value, origin) {
+    if (!ABSOLUTE_URL_PATTERN.test(value)) {
+        return value;
+    }
+
+    const originMatch = value.match(/^[a-z]+:\/\/[^/]+/i);
+    if (!originMatch) {
+        return `${origin}${value}`;
+    }
+
+    const suffix = value.slice(originMatch[0].length);
+    return `${origin}${suffix}`;
+}
+
+function isVectorSourceWithTiles(source) {
+    return Boolean(source && typeof source === "object" && source.type === "vector");
+}
+
+function createGeoStyleProxy({ backend, origin, cookieDomain, hostHeader }) {
+    return {
+        context: GEO_STYLE_ENDPOINT,
+        changeOrigin: true,
+        cookieDomainRewrite: cookieDomain,
+        secure: false,
+        target: backend,
+        headers: {
+            host: hostHeader,
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        selfHandleResponse: true,
+        onProxyReq: applyProxyRequestHeaders,
+        onProxyRes(proxyRes, req, res) {
+            const chunks = [];
+            proxyRes.on("data", (chunk) => chunks.push(chunk));
+            proxyRes.on("end", () => {
+                const buffer = Buffer.concat(chunks);
+
+                if (proxyRes.statusCode && proxyRes.statusCode >= 400) {
+                    res.writeHead(proxyRes.statusCode, proxyRes.headers);
+                    res.end(buffer);
+                    return;
+                }
+
+                try {
+                    const rewrittenBody = rewriteLocationStyleResponse(buffer, origin);
+                    res.setHeader("content-type", "application/json");
+                    res.end(rewrittenBody);
+                } catch (err) {
+                    // eslint-disable-next-line no-console
+                    console.error("[devServer] Failed to rewrite geo style response", err);
+                    res.writeHead(500, { "content-type": "application/json" });
+                    res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
+                }
+            });
+        },
+    };
+}
+
 module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
 
     const effectiveBackendUrl = process.env.BACKEND_URL || DEFAULT_BACKEND_URL;
     const protocol = new URL(effectiveBackendUrl).protocol;
+    const devServerOrigin = `${protocol === "https:" ? "https" : "http"}://127.0.0.1:${PORT}`;
+    const backendHostHeader = effectiveBackendUrl.replace(/^https?:\/\//, "");
 
     const proxy = [
+        createGeoStyleProxy({
+            backend: effectiveBackendUrl,
+            origin: devServerOrigin,
+            cookieDomain: "127.0.0.1",
+            hostHeader: backendHostHeader,
+        }),
         {
             context: ["/api"],
             changeOrigin: true,
@@ -45,14 +137,13 @@ module.exports = (_env, argv) => {
             secure: false,
             target: effectiveBackendUrl,
             headers: {
-                host: effectiveBackendUrl.replace(/^https?:\/\//, ""),
+                host: backendHostHeader,
                 // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
                 "X-Requested-With": "XMLHttpRequest",
             },
             onProxyReq(proxyReq) {
                 // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
-                proxyReq.removeHeader("origin");
-                proxyReq.setHeader("accept-encoding", "identity");
+                applyProxyRequestHeaders(proxyReq);
             },
         },
     ];
@@ -236,7 +327,7 @@ module.exports = (_env, argv) => {
                             singleton: true,
                             import: false,
                             strictVersion: false,
-                            requiredVersion: false
+                            requiredVersion: false,
                         },
                         // add all the packages that absolutely need to be shared and singletons because of contexts
                         ...generateGooddataSharePackagesEntries(),

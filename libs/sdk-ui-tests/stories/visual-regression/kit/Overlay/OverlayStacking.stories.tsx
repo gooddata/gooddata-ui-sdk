@@ -83,15 +83,4 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshots: {
-        "open-first": {
-            clickSelector: ".open-first",
-            delay: { postOperation: 500 },
-        },
-        "open-stacked": {
-            reloadAfterReady: true,
-            clickSelectors: [".open-first", 100, ".open-stacked"],
-            delay: { postOperation: 500 },
-        },
-    },
 } satisfies IStoryParameters;

@@ -1,4 +1,5 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -6,6 +7,10 @@ import { MessageDescriptor, defineMessages } from "react-intl";
  * @internal
  */
 export const messages: Record<string, MessageDescriptor> = defineMessages({
+    currency: { id: "measureNumberFormat.numberFormat.preset.currency" },
+    currency1: { id: "measureNumberFormat.numberFormat.preset.currency1" },
+    currencyRounded: { id: "measureNumberFormat.numberFormat.preset.currencyRounded" },
+    inherit: { id: "measureNumberFormat.numberFormat.preset.inherit" },
     sum: { id: "visualizations.measure.arithmetic.sum.title" },
     difference: { id: "visualizations.measure.arithmetic.difference.title" },
     multiplication: { id: "visualizations.measure.arithmetic.multiplication.title" },

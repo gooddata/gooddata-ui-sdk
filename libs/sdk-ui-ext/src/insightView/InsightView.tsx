@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 
+import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     ObjRef,
@@ -42,6 +43,21 @@ import { IInsightViewProps } from "../internal/index.js";
 interface IInsightViewCoreState {
     isVisualizationLoading: boolean;
     visualizationError: GoodDataSdkError | undefined;
+}
+
+/**
+ * @internal
+ */
+export function mergeInsightConfigWithSettings(
+    config: IInsightViewProps["config"],
+    settings?: IUserWorkspaceSettings,
+) {
+    return {
+        ...config,
+        mapboxToken: config?.mapboxToken ?? settings?.["mapboxToken"],
+        agGridToken: config?.agGridToken ?? settings?.["agGridToken"],
+        maxZoomLevel: config?.maxZoomLevel ?? settings?.["maxZoomLevel"],
+    };
 }
 
 export const IntlInsightView = withAgGridToken(
@@ -225,13 +241,10 @@ export const IntlInsightView = withAgGridToken(
             const error =
                 state.visualizationError || insightError || colorPaletteError || workspaceSettingsError;
 
-            const resolvedConfig = useMemo(() => {
-                return {
-                    ...config,
-                    mapboxToken: config?.mapboxToken ?? workspaceSettingsResult?.["mapboxToken"],
-                    agGridToken: config?.agGridToken ?? workspaceSettingsResult?.["agGridToken"],
-                };
-            }, [config, workspaceSettingsResult]);
+            const resolvedConfig = useMemo(
+                () => mergeInsightConfigWithSettings(config, workspaceSettingsResult),
+                [config, workspaceSettingsResult],
+            );
 
             return (
                 <div className="insight-view-container">

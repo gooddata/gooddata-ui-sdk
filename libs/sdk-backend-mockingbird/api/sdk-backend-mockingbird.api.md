@@ -29,6 +29,7 @@ import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
+import { IGeoStyleSpecification } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDefinition } from '@gooddata/sdk-model';
@@ -209,6 +210,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     userManagement?: IUserManagement;
     attributeElementsFiltering?: AttributeElementsFiltering;
     getValidDescendants?: (refs: ObjRef[]) => ObjRef[];
+    geoStyleSpecification?: IGeoStyleSpecification;
 };
 
 // @internal

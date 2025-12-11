@@ -267,6 +267,7 @@ export interface IAnalyticalBackend {
     dataSources(): IDataSourcesService;
     deauthenticate(returnTo?: string): Promise<void>;
     entitlements(): IEntitlements;
+    geo(): IGeoService;
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
     organization(organizationId: string): IOrganization;
@@ -1049,6 +1050,14 @@ export interface IGenAIService {
 }
 
 // @alpha
+export interface IGeoService {
+    getDefaultStyle(): Promise<IGeoStyleSpecification>;
+}
+
+// @alpha
+export type IGeoStyleSpecification = Record<string, unknown>;
+
+// @alpha
 export interface IGetAutomationOptions {
     loadUserData?: boolean;
 }
@@ -1411,6 +1420,7 @@ export interface IOrganizationSettingsService {
     setDateFormat(dateFormat: string): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setMaxZoomLevel(level: number | null): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
     setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void>;
     // @alpha

@@ -1,4 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
 const path = require("path");
 const { URL } = require("url");
 
@@ -14,12 +15,102 @@ require("dotenv").config();
 const BACKEND_URL = pack.gooddata.hostname;
 const WORKSPACE_ID = pack.gooddata.workspaceId;
 
+const GEO_STYLE_ENDPOINT = "/api/v1/location/style";
+const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
+
+function applyProxyRequestHeaders(proxyReq) {
+    proxyReq.removeHeader("origin");
+    proxyReq.setHeader("accept-encoding", "identity");
+}
+
+function rewriteLocationStyleResponse(buffer, origin) {
+    const payload = JSON.parse(buffer.toString("utf8"));
+
+    if (typeof payload.glyphs === "string") {
+        payload.glyphs = replaceUrlOrigin(payload.glyphs, origin);
+    }
+
+    if (payload.sources && typeof payload.sources === "object") {
+        Object.values(payload.sources).forEach((source) => {
+            if (isVectorSourceWithTiles(source) && Array.isArray(source.tiles)) {
+                source.tiles = source.tiles.map((tileUrl) => replaceUrlOrigin(tileUrl, origin));
+            }
+        });
+    }
+
+    return JSON.stringify(payload);
+}
+
+function replaceUrlOrigin(value, origin) {
+    if (!ABSOLUTE_URL_PATTERN.test(value)) {
+        return value;
+    }
+
+    const originMatch = value.match(/^[a-z]+:\/\/[^/]+/i);
+    if (!originMatch) {
+        return `${origin}${value}`;
+    }
+
+    const suffix = value.slice(originMatch[0].length);
+    return `${origin}${suffix}`;
+}
+
+function isVectorSourceWithTiles(source) {
+    return Boolean(source && typeof source === "object" && source.type === "vector");
+}
+
+function createGeoStyleProxy({ backend, origin, cookieDomain }) {
+    return {
+        context: GEO_STYLE_ENDPOINT,
+        changeOrigin: true,
+        cookieDomainRewrite: cookieDomain,
+        secure: false,
+        target: backend,
+        headers: {
+            host: backend,
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        selfHandleResponse: true,
+        onProxyReq: applyProxyRequestHeaders,
+        onProxyRes(proxyRes, req, res) {
+            const chunks = [];
+            proxyRes.on("data", (chunk) => chunks.push(chunk));
+            proxyRes.on("end", () => {
+                const buffer = Buffer.concat(chunks);
+
+                if (proxyRes.statusCode && proxyRes.statusCode >= 400) {
+                    res.writeHead(proxyRes.statusCode, proxyRes.headers);
+                    res.end(buffer);
+                    return;
+                }
+
+                try {
+                    const rewrittenBody = rewriteLocationStyleResponse(buffer, origin);
+                    res.setHeader("content-type", "application/json");
+                    res.end(rewrittenBody);
+                } catch (err) {
+                    console.error("[devServer] Failed to rewrite geo style response", err);
+                    res.writeHead(500, { "content-type": "application/json" });
+                    res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
+                }
+            });
+        },
+    };
+}
+
 module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
     const protocol = new URL(BACKEND_URL).protocol;
+    const devServerPort = Number(process.env.PORT) || 3000;
+    const devServerOrigin = `${protocol === "https:" ? "https" : "http"}://127.0.0.1:${devServerPort}`;
     const proxy = [
+        createGeoStyleProxy({
+            backend: BACKEND_URL,
+            origin: devServerOrigin,
+            cookieDomain: "127.0.0.1",
+        }),
         {
-            context: (pathname) => /^\/(api\/|gdc\/|account\.html|truste\.html|account\/)/.test(pathname),
+            context: (pathname) => /^\/(?:api\/|gdc\/|account\.html|truste\.html|account\/)/.test(pathname),
             changeOrigin: true,
             cookieDomainRewrite: "127.0.0.1",
             secure: false,
@@ -30,8 +121,7 @@ module.exports = (_env, argv) => {
             },
             onProxyReq(proxyReq) {
                 // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
-                proxyReq.removeHeader("origin");
-                proxyReq.setHeader("accept-encoding", "identity");
+                applyProxyRequestHeaders(proxyReq);
 
                 if (pack.gooddata.backend === "tiger" && process.env.TIGER_API_TOKEN) {
                     // Inject auth token using dev proxy to simplify development setup
@@ -140,6 +230,7 @@ module.exports = (_env, argv) => {
                     directory: path.join(__dirname, "esm"),
                 },
                 host: "127.0.0.1",
+                port: devServerPort,
                 proxy,
                 server: protocol === "https:" ? "https" : "http",
                 open: true,

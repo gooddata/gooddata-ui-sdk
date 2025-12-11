@@ -24,6 +24,7 @@ import {
     IBackendCapabilities,
     IDataSourcesService,
     IEntitlements,
+    IGeoService,
     IOrganization,
     IOrganizations,
     IUserService,
@@ -33,11 +34,12 @@ import {
     isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 
+import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { TigerDataSourcesService } from "./dataSources/index.js";
 import { TigerEntitlements } from "./entitlements/index.js";
+import { TigerGeoService } from "./geo/index.js";
 import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
 import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
-import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { TigerUserService } from "./user/index.js";
 import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
@@ -243,6 +245,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public dataSources(): IDataSourcesService {
         return new TigerDataSourcesService(this.authApiCall);
+    }
+
+    public geo(): IGeoService {
+        return new TigerGeoService(this.authApiCall);
     }
 
     public currentUser(): IUserService {

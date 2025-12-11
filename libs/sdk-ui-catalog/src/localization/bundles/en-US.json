@@ -366,21 +366,5 @@
     "metricComponent.numberFormat.label": {
         "value": "Number format",
         "comment": "Analytics Catalog detail drawer: Heading for the number format editor that defines how metric values are rendered."
-    },
-    "metricComponent.numberFormat.preset.currency": {
-        "value": "Currency (2 decimals)",
-        "comment": "Analytics Catalog detail drawer: Dropdown option for currency format with two decimal places."
-    },
-    "metricComponent.numberFormat.preset.currency1": {
-        "value": "Currency (1 decimal)",
-        "comment": "Analytics Catalog detail drawer: Dropdown option for currency format with one decimal place."
-    },
-    "metricComponent.numberFormat.preset.currencyRounded": {
-        "value": "Currency (rounded)",
-        "comment": "Analytics Catalog detail drawer: Dropdown option for currency format rounded to whole numbers."
-    },
-    "metricComponent.numberFormat.preset.inherit": {
-        "value": "Inherit (use default)",
-        "comment": "Analytics Catalog detail drawer: Dropdown option that inherits number format from organization or workspace settings."
     }
 }

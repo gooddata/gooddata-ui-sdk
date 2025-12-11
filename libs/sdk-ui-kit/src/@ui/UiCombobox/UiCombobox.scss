@@ -1,0 +1,128 @@
+// (C) 2025 GoodData Corporation
+
+@use "sass:color";
+@use "../../../styles/scss/Form/_mixins" as formMixins;
+@use "../../../styles/scss/mixins";
+@use "../../../styles/scss/variables";
+
+.gd-ui-kit-combobox {
+    $root: &;
+
+    &__input {
+        @include formMixins.gd-input-base;
+        @include mixins.border-radius(3px);
+        @include mixins.box-shadow(
+            inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+        );
+
+        width: 100%;
+        max-width: 100%;
+        padding: 5px 10px;
+        min-height: 32px;
+        font-weight: 400;
+        line-height: 20px;
+
+        @include mixins.placeholder {
+            color: var(
+                --gd-palette-complementary-6-from-theme,
+                color.adjust(variables.$default-gd-color-link, $alpha: -0.25)
+            );
+        }
+
+        &:hover {
+            border-color: variables.$gd-input-text-hover-border;
+
+            @include mixins.placeholder {
+                color: variables.$gd-color-link;
+            }
+        }
+
+        &:focus {
+            @include mixins.box-shadow(
+                inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.8)
+            );
+        }
+
+        &:focus-visible {
+            box-shadow: none;
+            outline-color: variables.$gd-input-text-border-outline;
+        }
+
+        &:disabled {
+            color: variables.$gd-color-disabled;
+            border-color: variables.$gd-input-text-border;
+            background-color: variables.$gd-color-light;
+            cursor: not-allowed;
+
+            @include mixins.box-shadow(none);
+        }
+    }
+
+    &__popup {
+        background-color: variables.$gd-color-white;
+        border: 1px solid variables.$gd-border-color;
+        @include mixins.border-radius(8px);
+        @include mixins.box-shadow(0 16px 32px rgb(12 23 31 / 16%));
+
+        overflow: hidden;
+        padding: 4px 0;
+        max-width: 480px;
+        z-index: 10;
+
+        @media #{variables.$small-only} {
+            max-width: 100vw;
+        }
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-height: 280px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    &__item {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        width: 100%;
+        padding: 5px 10px;
+        font-size: 12px;
+        line-height: 18px;
+        color: variables.$gd-color-text;
+        cursor: pointer;
+
+        &--isActive:not(&--isDisabled):not(&--isSelected) {
+            background-color: variables.$is-focused-background;
+            color: variables.$is-focused-color;
+        }
+
+        &--isSelected {
+            font-weight: 600;
+            color: variables.$is-selected-color;
+        }
+
+        &--isSelected#{&}--isActive {
+            background-color: variables.$is-selected-focused-background;
+            color: variables.$is-selected-focused-color;
+        }
+
+        &--isDisabled {
+            color: variables.$gd-color-disabled;
+            cursor: not-allowed;
+        }
+    }
+
+    &__item-label {
+        min-width: 0;
+        @include mixins.text-overflow();
+    }
+
+    &__item-creatable {
+        flex: none;
+        color: variables.$gd-color-state-blank;
+    }
+}

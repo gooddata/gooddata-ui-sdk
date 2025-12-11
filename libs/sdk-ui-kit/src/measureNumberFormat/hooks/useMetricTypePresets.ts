@@ -2,12 +2,22 @@
 
 import { useMemo } from "react";
 
+import { defineMessages } from "react-intl";
+
 import type { MetricType } from "@gooddata/sdk-model";
 
 import { createCurrencyPresets } from "../presets/currencyPresets.js";
-import { DEFAULT_STANDARD_PRESET_PREFIX, createStandardPresets } from "../presets/standardPresets.js";
-import { CURRENCY_TEMPLATE_IDS, DEFAULT_TEMPLATE_PREFIX, createAllTemplates } from "../presets/templates.js";
+import { createStandardPresets } from "../presets/standardPresets.js";
+import { CURRENCY_TEMPLATE_IDS, createAllTemplates } from "../presets/templates.js";
 import { type IFormatPreset, type IFormatTemplate } from "../typings.js";
+
+/**
+ * Message IDs for metric type presets.
+ * @internal
+ */
+const metricTypePresetMessages = defineMessages({
+    inherit: { id: "measureNumberFormat.numberFormat.preset.inherit" },
+});
 
 /**
  * Configuration for the useMetricTypePresets hook.
@@ -30,24 +40,6 @@ export interface UseMetricTypePresetsConfig {
      * Function to format localized messages (e.g., from react-intl).
      */
     formatMessage: (descriptor: { id: string }) => string;
-
-    /**
-     * Optional prefix for preset message IDs.
-     * Default: "metricComponent.numberFormat.preset"
-     *
-     * Use this to customize the translation keys for presets.
-     * For example, set to "measure_number_format.preset" for Analytical Designer compatibility.
-     */
-    presetMessageIdPrefix?: string;
-
-    /**
-     * Optional prefix for template message IDs.
-     * Default: "metricComponent.numberFormat.template"
-     *
-     * Use this to customize the translation keys for templates.
-     * For example, set to "measure_number_format.template" for Analytical Designer compatibility.
-     */
-    templateMessageIdPrefix?: string;
 }
 
 /**
@@ -90,37 +82,18 @@ export interface UseMetricTypePresetsResult {
  * });
  * ```
  *
- * @example
- * ```tsx
- * // With custom message ID prefixes (e.g., for Analytical Designer)
- * const { presets, templates } = useMetricTypePresets({
- *   metricType: undefined,
- *   formatMessage: (d) => intl.formatMessage(d),
- *   presetMessageIdPrefix: "measure_number_format.preset",
- *   templateMessageIdPrefix: "measure_number_format.template",
- * });
- * ```
- *
  * @internal
  */
 export function useMetricTypePresets({
     metricType,
     currencyFormatOverride,
     formatMessage,
-    presetMessageIdPrefix = DEFAULT_STANDARD_PRESET_PREFIX,
-    templateMessageIdPrefix = DEFAULT_TEMPLATE_PREFIX,
 }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult {
     // Standard numeric presets
-    const standardPresets = useMemo(
-        () => createStandardPresets(formatMessage, presetMessageIdPrefix),
-        [formatMessage, presetMessageIdPrefix],
-    );
+    const standardPresets = useMemo(() => createStandardPresets(formatMessage), [formatMessage]);
 
     // Base currency presets
-    const baseCurrencyPresets = useMemo(
-        () => createCurrencyPresets(formatMessage, presetMessageIdPrefix),
-        [formatMessage, presetMessageIdPrefix],
-    );
+    const baseCurrencyPresets = useMemo(() => createCurrencyPresets(formatMessage), [formatMessage]);
 
     // Currency presets, excluding the override format if it matches a preset
     const currencyPresets = useMemo(() => {
@@ -134,14 +107,14 @@ export function useMetricTypePresets({
     const inheritPreset: IFormatPreset | null = useMemo(() => {
         if (metricType === "CURRENCY" && currencyFormatOverride) {
             return {
-                name: formatMessage({ id: `${presetMessageIdPrefix}.inherit` }),
+                name: formatMessage({ id: metricTypePresetMessages.inherit.id }),
                 localIdentifier: "inherit",
                 format: currencyFormatOverride,
                 previewNumber: 1000.12,
             };
         }
         return null;
-    }, [metricType, currencyFormatOverride, formatMessage, presetMessageIdPrefix]);
+    }, [metricType, currencyFormatOverride, formatMessage]);
 
     // Final presets based on metric type
     const presets = useMemo(() => {
@@ -158,13 +131,13 @@ export function useMetricTypePresets({
     const templates = useMemo(() => {
         if (metricType === "CURRENCY") {
             // For CURRENCY metrics, show only currency-specific templates
-            return createAllTemplates(formatMessage, templateMessageIdPrefix).filter((t) =>
+            return createAllTemplates(formatMessage).filter((t) =>
                 CURRENCY_TEMPLATE_IDS.includes(t.localIdentifier),
             );
         }
         // For non-CURRENCY, show all templates
-        return createAllTemplates(formatMessage, templateMessageIdPrefix);
-    }, [metricType, formatMessage, templateMessageIdPrefix]);
+        return createAllTemplates(formatMessage);
+    }, [metricType, formatMessage]);
 
     return {
         presets,

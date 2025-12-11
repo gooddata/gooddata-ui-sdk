@@ -20,6 +20,7 @@ import {
     IEntitlements,
     IExecutionFactory,
     IGenAIService,
+    IGeoService,
     IOrganization,
     IOrganizationLlmEndpointsService,
     IOrganizationNotificationChannelService,
@@ -89,6 +90,7 @@ import {
     recordedAccessControlFactory,
     recordedUserGroupsQuery,
 } from "./userManagement.js";
+import { createMockGeoService } from "../geoService.js";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -141,6 +143,8 @@ export function recordedBackend(
     config: RecordedBackendConfig = defaultConfig,
     capabilities = defaultRecordedBackendCapabilities,
 ): IAnalyticalBackend {
+    const geoService = createMockGeoService(config.geoStyleSpecification);
+
     const backend: IAnalyticalBackend = {
         capabilities,
         config,
@@ -185,6 +189,9 @@ export function recordedBackend(
         },
         dataSources(): IDataSourcesService {
             throw new NotSupported("not supported");
+        },
+        geo(): IGeoService {
+            return geoService;
         },
     };
 
@@ -514,6 +521,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
                 setAttachmentSizeLimit: () => Promise.resolve(),
+                setMaxZoomLevel: () => Promise.resolve(),
                 setMetricFormatOverride: () => Promise.resolve(),
             };
         },

@@ -136,7 +136,7 @@ describe("UiTags", () => {
 
         expectAddTag(true, false);
         fireEvent.click(screen.getByText("Add tag"));
-        fireEvent.change(screen.getByRole("textbox"), { target: { value: "john_doe" } });
+        fireEvent.change(screen.getByRole("combobox"), { target: { value: "john_doe" } });
         fireEvent.click(screen.getByText("Save"));
         expect(onTagAdd).toHaveBeenCalled();
     });

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import { DEFAULT_MAPLIBRE_OPTIONS, DEFAULT_TOOLTIP_OPTIONS } from "./mapConfig.js";
 import type {
     LngLatBoundsLike,
@@ -10,6 +12,7 @@ import type {
 } from "../../layers/common/mapFacade.js";
 import { IMapOptions } from "../../types/map/provider.js";
 import { IMapLibreLocale } from "../../utils/mapLocale.js";
+import { fetchMapStyle } from "../style/styleEndpoint.js";
 
 /**
  * Result of map initialization
@@ -46,15 +49,17 @@ export async function initializeMapLibreMap(
         interactive = true,
         preserveDrawingBuffer = false,
         cooperativeGestures = true,
+        maxZoom,
         style,
     }: IMapOptions,
     locale?: IMapLibreLocale,
+    backend?: IAnalyticalBackend,
 ): Promise<IMapInitResult> {
     const maplibregl = await import("maplibre-gl");
-    let styleSpecification = style;
+    const styleSpecification = style ?? (backend ? await fetchMapStyle(backend) : undefined);
+
     if (!styleSpecification) {
-        const { createStyleSpecification } = await import("../style/styleConfig.js");
-        styleSpecification = createStyleSpecification(window.location.origin);
+        throw new Error("Map style is required. Provide either a style option or a backend instance.");
     }
 
     const mapOptions: MapOptions = {
@@ -66,6 +71,10 @@ export async function initializeMapLibreMap(
         preserveDrawingBuffer,
         ...(cooperativeGestures && locale ? { locale } : {}),
     };
+
+    if (typeof maxZoom === "number") {
+        mapOptions.maxZoom = maxZoom;
+    }
 
     if (bounds) {
         const lngLatBounds: LngLatBoundsLike = [

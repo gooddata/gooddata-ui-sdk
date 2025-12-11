@@ -9,6 +9,7 @@ import {
     IBackendCapabilities,
     IDataSourcesService,
     IEntitlements,
+    IGeoService,
     IOrganization,
     IOrganizations,
     IUserService,
@@ -133,6 +134,10 @@ export class CustomBackend implements IAnalyticalBackend {
 
     public dataSources = (): IDataSourcesService => {
         throw new NotSupported("data sources are not supported");
+    };
+
+    public geo = (): IGeoService => {
+        throw new NotSupported("geo service is not supported");
     };
 
     private getAuthenticationContext = (useClient?: any): IAuthenticationContext => {

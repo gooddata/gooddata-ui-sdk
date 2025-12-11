@@ -2,6 +2,7 @@
 
 import {
     IExecutionFactory,
+    IGeoService,
     ISecuritySettingsService,
     IWorkspaceAttributesService,
     IWorkspaceAutomationService,
@@ -60,6 +61,11 @@ export type DashboardsDecoratorFactory = (
 ) => IWorkspaceDashboardsService;
 
 /**
+ * @alpha
+ */
+export type GeoDecoratorFactory = (geo: IGeoService) => IGeoService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -74,4 +80,5 @@ export type DecoratorFactories = {
     attributes?: AttributesDecoratorFactory;
     automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
+    geo?: GeoDecoratorFactory;
 };

@@ -65,6 +65,8 @@ export function mapTypeToKey(
             return "enableDrillToUrlByDefault";
         case "METRIC_FORMAT_OVERRIDE":
             return "metricFormatOverride";
+        case "MAX_ZOOM_LEVEL":
+            return "maxZoomLevel";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "OPERATOR_OVERRIDES":
@@ -78,7 +80,6 @@ export function mapTypeToKey(
         case "DATA_LOCALE":
         case "LDM_DEFAULT_LOCALE":
         case "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS":
-        case "MAX_ZOOM_LEVEL":
         case "SORT_CASE_SENSITIVE":
         case "ENABLE_AI_ON_DATA":
         case undefined:

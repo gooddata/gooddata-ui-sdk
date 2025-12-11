@@ -529,6 +529,7 @@ export interface IGdcConfig {
     isInEditMode?: boolean;
     mapboxToken?: string;
     agGridToken?: string;
+    maxZoomLevel?: number | null;
     maxWidth?: number;
     maxHeight?: number;
     forceDisableDrillOnAxes?: boolean;

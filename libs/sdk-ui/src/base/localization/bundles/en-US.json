@@ -1271,6 +1271,114 @@
         "value": "Format: {selectedFormatPresetName}",
         "comment": "A label informing the user about the currently selected format. The values of selectedFormatPresetName can be for instance 'Whole number', 'Decimal number', or 'Custom'"
     },
+    "measureNumberFormat.numberFormat.preset.inherit": {
+        "value": "Inherit",
+        "comment": "Preset name for number format that inherits formatting from workspace settings or parent metric"
+    },
+    "measureNumberFormat.numberFormat.preset.rounded": {
+        "value": "Rounded",
+        "comment": "Preset name for number format that displays whole numbers without decimals (e.g., 1,000)"
+    },
+    "measureNumberFormat.numberFormat.preset.decimal1": {
+        "value": "Decimal (1)",
+        "comment": "Preset name for number format that displays numbers with one decimal place (e.g., 1,000.0)"
+    },
+    "measureNumberFormat.numberFormat.preset.decimal2": {
+        "value": "Decimal (2)",
+        "comment": "Preset name for number format that displays numbers with two decimal places (e.g., 1,000.00)"
+    },
+    "measureNumberFormat.numberFormat.preset.percentRounded": {
+        "value": "Percent (rounded)",
+        "comment": "Preset name for percentage format that displays whole percentages without decimals (e.g., 10%)"
+    },
+    "measureNumberFormat.numberFormat.preset.percent1": {
+        "value": "Percent (1)",
+        "comment": "Preset name for percentage format that displays percentages with one decimal place (e.g., 10.1%)"
+    },
+    "measureNumberFormat.numberFormat.preset.percent2": {
+        "value": "Percent (2)",
+        "comment": "Preset name for percentage format that displays percentages with two decimal places (e.g., 10.12%)"
+    },
+    "measureNumberFormat.numberFormat.preset.currency": {
+        "value": "Currency",
+        "comment": "Preset name for currency format that displays currency values with two decimal places (e.g., $1,000.00)"
+    },
+    "measureNumberFormat.numberFormat.preset.currency1": {
+        "value": "Currency (1)",
+        "comment": "Preset name for currency format that displays currency values with one decimal place (e.g., $1,000.0)"
+    },
+    "measureNumberFormat.numberFormat.preset.currencyRounded": {
+        "value": "Currency (rounded)",
+        "comment": "Preset name for currency format that displays currency values rounded to whole numbers (e.g., $1,000)"
+    },
+    "measureNumberFormat.numberFormat.template.rounded": {
+        "value": "Rounded",
+        "comment": "Template name for number format that displays whole numbers without decimals (e.g., 1,000)"
+    },
+    "measureNumberFormat.numberFormat.template.decimal1": {
+        "value": "Decimal (1)",
+        "comment": "Template name for number format that displays numbers with one decimal place (e.g., 1,000.0)"
+    },
+    "measureNumberFormat.numberFormat.template.decimal2": {
+        "value": "Decimal (2)",
+        "comment": "Template name for number format that displays numbers with two decimal places (e.g., 1,000.00)"
+    },
+    "measureNumberFormat.numberFormat.template.percentRounded": {
+        "value": "Percent (rounded)",
+        "comment": "Template name for percentage format that displays whole percentages without decimals (e.g., 10%)"
+    },
+    "measureNumberFormat.numberFormat.template.percent1": {
+        "value": "Percent (1)",
+        "comment": "Template name for percentage format that displays percentages with one decimal place (e.g., 10.1%)"
+    },
+    "measureNumberFormat.numberFormat.template.percent2": {
+        "value": "Percent (2)",
+        "comment": "Template name for percentage format that displays percentages with two decimal places (e.g., 10.12%)"
+    },
+    "measureNumberFormat.numberFormat.template.currency": {
+        "value": "Currency",
+        "comment": "Template name for currency format that displays values with currency symbol (e.g., $1,000.00)"
+    },
+    "measureNumberFormat.numberFormat.template.currencyShortened": {
+        "value": "Currency shortened",
+        "comment": "Template name for currency format that displays large values in shortened form with currency symbol (e.g., $1.0 K, $1.0 M)"
+    },
+    "measureNumberFormat.numberFormat.template.largeNumbersShortened": {
+        "value": "Large numbers shortened",
+        "comment": "Template name for format that displays large numbers in shortened form (e.g., 1.0 K, 1.0 M, 1.0 B)"
+    },
+    "measureNumberFormat.numberFormat.template.largeNumbersShortenedWithColors": {
+        "value": "Large numbers shortened with colors",
+        "comment": "Template name for format that displays large numbers in shortened form with color coding (green for positive large values, red for negative)"
+    },
+    "measureNumberFormat.numberFormat.template.negativeNumbersRed": {
+        "value": "Negative numbers in red",
+        "comment": "Template name for format that displays negative numbers in red color"
+    },
+    "measureNumberFormat.numberFormat.template.financial": {
+        "value": "Financial",
+        "comment": "Template name for financial format that displays negative numbers in parentheses (e.g., (1,000.0) for negative values)"
+    },
+    "measureNumberFormat.numberFormat.template.decimalWithoutThousandsSeparator": {
+        "value": "Decimal (2) without thousands separator",
+        "comment": "Template name for decimal format without thousands separator (e.g., 1000.00 instead of 1,000.00)"
+    },
+    "measureNumberFormat.numberFormat.template.conditionalColors": {
+        "value": "Conditional colors",
+        "comment": "Template name for format that applies different colors based on value ranges (e.g., red for negative, black for small values, green for large values)"
+    },
+    "measureNumberFormat.numberFormat.template.trendSymbols": {
+        "value": "Trend symbols",
+        "comment": "Template name for format that displays trend symbols with percentages (▲ for positive, ▼ for negative, no symbol for zero)"
+    },
+    "measureNumberFormat.numberFormat.template.timeFromSeconds": {
+        "value": "Time (from seconds)",
+        "comment": "Template name for format that converts seconds to time format (e.g., days, hours, minutes, seconds)"
+    },
+    "measureNumberFormat.numberFormat.template.zeroInsteadOfNull": {
+        "value": "Zero instead of blank value",
+        "comment": "Template name for format that displays zero instead of null/empty values"
+    },
     "measureNumberCustomFormatDialog.title": {
         "value": "Custom format",
         "comment": "Title of the dialog for setting a custom measure format."

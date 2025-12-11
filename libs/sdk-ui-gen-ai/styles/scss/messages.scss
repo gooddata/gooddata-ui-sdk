@@ -275,6 +275,11 @@
     &--headline {
         height: auto;
         min-height: 50px;
+        color: variables.$gd-dashboards-content-widget-title-color;
+
+        .headline .headline-primary-item {
+            color: variables.$gd-dashboards-content-widget-title-color;
+        }
 
         // Headline value is smaller in chart, looks much better with contrast with other text
         .headline-value {

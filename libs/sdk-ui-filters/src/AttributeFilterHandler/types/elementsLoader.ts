@@ -41,7 +41,7 @@ export interface ILoadElementsResult {
  * @public
  */
 export interface ILoadIrrelevantElementsResult {
-    elementTitles: string[];
+    elementTitles: AttributeElementKey[];
 }
 
 /**

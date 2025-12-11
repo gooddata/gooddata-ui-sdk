@@ -102,6 +102,7 @@ export function RenderGeoChartNext(): ReactElement {
                         onZoomChanged={props.onZoomChanged}
                         afterRender={props.afterRender}
                         config={props.config}
+                        backend={props.backend}
                     />
                     <PushDataSync
                         colorStrategy={colorStrategy}

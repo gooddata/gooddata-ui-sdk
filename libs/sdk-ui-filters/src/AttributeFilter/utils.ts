@@ -16,6 +16,7 @@ import {
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { IAttributeFilterBaseProps } from "./types.js";
+import { getElementCacheKey } from "../AttributeFilterHandler/internal/redux/common/selectors.js";
 
 /**
  * @internal
@@ -55,11 +56,12 @@ export function getElementTitles(elements: IAttributeElement[], intl: IntlShape)
 }
 
 /**
+ * Gets the key for an attribute element that can be used for UI comparisons.
+ * This uses getElementCacheKey which converts null URIs to a special constant
+ * to distinguish them from empty string URIs.
  * @internal
  */
-export function getElementKey(element: IAttributeElement) {
-    return element.uri;
-}
+export const getElementKey = getElementCacheKey;
 
 /**
  * @internal

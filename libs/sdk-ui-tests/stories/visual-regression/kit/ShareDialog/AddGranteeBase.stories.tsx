@@ -201,4 +201,4 @@ export function FullFeatured() {
 FullFeatured.parameters = { kind: "full-featured", screenshot: { delay: 300 } } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AddGranteeExamples />);
-Themed.parameters = { kind: "themed", screenshot: { delay: 300 } } satisfies IStoryParameters;
+Themed.parameters = { kind: "themed" } satisfies IStoryParameters;

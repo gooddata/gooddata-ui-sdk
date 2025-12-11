@@ -23,18 +23,6 @@ const metricTypeMessages = defineMessages({
     currency: { id: "metricComponent.metricType.currency" },
 });
 
-/**
- * Currency format preset messages used by useMetricTypePresets hook.
- * These are declared here to make them traceable by i18n-toolkit.
- * The actual usage is dynamic via the hook from sdk-ui-kit.
- */
-void defineMessages({
-    currency: { id: "metricComponent.numberFormat.preset.currency" },
-    currency1: { id: "metricComponent.numberFormat.preset.currency1" },
-    currencyRounded: { id: "metricComponent.numberFormat.preset.currencyRounded" },
-    inherit: { id: "metricComponent.numberFormat.preset.inherit" },
-});
-
 const METRIC_TYPE_OPTIONS: Array<{ value: MetricType | undefined; message: MessageDescriptor }> = [
     { value: undefined, message: metricTypeMessages.unspecified },
     { value: "CURRENCY", message: metricTypeMessages.currency },

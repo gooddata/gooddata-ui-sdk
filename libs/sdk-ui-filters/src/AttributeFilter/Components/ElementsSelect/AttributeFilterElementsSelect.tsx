@@ -116,7 +116,7 @@ export function AttributeFilterElementsSelect({
                 items={items}
                 totalItemsCount={totalItemsCountWithCurrentSettings}
                 itemHeight={itemHeight}
-                getItemKey={(item) => getElementKey(item) ?? ""}
+                getItemKey={getElementKey}
                 getItemTitle={(item) => getElementTitle(item, intl)}
                 isItemQuestionMarkEnabled={(item) => !!getElementPrimaryTitle(item)}
                 isInverted={isInverted}
