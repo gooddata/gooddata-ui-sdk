@@ -13,6 +13,7 @@ export interface IUiLinkProps extends Omit<HTMLProps<HTMLAnchorElement>, "classN
     variant: "primary" | "secondary" | "inverse";
     flipUnderline?: boolean;
     fullWidth?: boolean;
+    dataTestId?: string;
 }
 
 /**
@@ -22,7 +23,10 @@ export function UiLink({
     variant = "secondary",
     flipUnderline = false,
     fullWidth = false,
+    dataTestId,
     ...anchorProps
 }: IUiLinkProps) {
-    return <a className={b({ variant, flipUnderline, fullWidth })} {...anchorProps} />;
+    return (
+        <a className={b({ variant, flipUnderline, fullWidth })} data-testid={dataTestId} {...anchorProps} />
+    );
 }

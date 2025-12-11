@@ -40,6 +40,7 @@ export function DefaultUiTabsTabActionsButton<
             onClick={onClick}
             tabIndex={tabIndex}
             id={id}
+            dataTestId="s-tab-actions"
         >
             <UiIcon
                 type={"ellipsisVertical"}

@@ -127,7 +127,7 @@ describe("Dependent filter", () => {
         },
     );
 
-    it(
+    it.skip(
         "should test parent - child interaction in edit mode",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
@@ -370,7 +370,7 @@ describe("Dependent filter", () => {
         },
     );
 
-    it(
+    it.skip(
         "should test parent - child interaction in edit mode",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {

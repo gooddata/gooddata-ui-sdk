@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"sonarjs"> = {
+export const sonarjs: IConfiguration<"sonarjs"> = {
     packages: [
         {
             name: "eslint-plugin-sonarjs",
@@ -25,5 +25,3 @@ const configuration: IConfiguration<"sonarjs"> = {
         },
     },
 };
-
-export default configuration;

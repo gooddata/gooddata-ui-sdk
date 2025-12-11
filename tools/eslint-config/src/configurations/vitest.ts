@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"@vitest"> = {
+export const vitest: IConfiguration<"@vitest"> = {
     packages: [
         {
             name: "@vitest/eslint-plugin",
@@ -21,5 +21,3 @@ const configuration: IConfiguration<"@vitest"> = {
         "@vitest/valid-expect": "warn",
     },
 };
-
-export default configuration;

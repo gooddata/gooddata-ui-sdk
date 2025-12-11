@@ -194,7 +194,16 @@ export interface IDateFilter {
 }
 
 export interface IMeasureValueFilter {
-    measureLocalIdentifier: string;
+    /**
+     * Local identifier of the measure in the execution.
+     * Used when the measure is in the buckets.
+     */
+    measureLocalIdentifier?: string;
+    /**
+     * Object reference to a catalog measure.
+     * Used when the measure is NOT in the buckets (dragged from catalog to filter bar).
+     */
+    measureRef?: ObjRef;
     condition?: IMeasureValueFilterCondition;
 }
 

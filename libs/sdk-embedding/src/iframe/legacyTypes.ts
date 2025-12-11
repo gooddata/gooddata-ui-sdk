@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -304,7 +304,7 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
  */
 export interface IVisualizationObjectMeasureValueFilter {
     measureValueFilter: {
-        measure: IObjUriQualifier | ILocalIdentifierQualifier;
+        measure: ObjQualifier | ILocalIdentifierQualifier;
         condition?: MeasureValueFilterCondition;
     };
 }

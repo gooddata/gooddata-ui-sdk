@@ -2,11 +2,9 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration = {
+export const esm: IConfiguration = {
     parserOptions: {
         ecmaVersion: 2022,
         sourceType: "module",
     },
 };
-
-export default configuration;

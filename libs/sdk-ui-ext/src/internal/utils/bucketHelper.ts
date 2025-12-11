@@ -64,7 +64,11 @@ export function isAttributeFilter(filter: IBucketFilter): filter is IAttributeFi
 }
 
 export function isMeasureValueFilter(filter: IBucketFilter): filter is IMeasureValueFilter {
-    return !!filter && !!(filter as IMeasureValueFilter).measureLocalIdentifier;
+    if (filter === undefined || filter === null) {
+        return false;
+    }
+    const measureValueFilter = filter as IMeasureValueFilter;
+    return !!measureValueFilter.measureLocalIdentifier || !!measureValueFilter.measureRef;
 }
 
 export function isActiveMeasureValueFilter(filter: IBucketFilter): boolean {
@@ -84,7 +88,10 @@ export function isRankingFilter(filter: IBucketFilter): filter is IRankingFilter
     );
 }
 
-export function sanitizeFilters(newReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+export function sanitizeFilters(
+    newReferencePoint: IExtendedReferencePoint,
+    enableImprovedAdFilters = false,
+): IExtendedReferencePoint {
     const attributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);
     const measureBucketItems = getAllMeasureItems(newReferencePoint.buckets);
 
@@ -106,6 +113,10 @@ export function sanitizeFilters(newReferencePoint: IExtendedReferencePoint): IEx
         } else if (isMeasureValueFilter(filter)) {
             if (attributeBucketItems.length === 0) {
                 return false;
+            }
+            // When enableImprovedAdFilters is true, allow measure filters even if measure is not in buckets
+            if (enableImprovedAdFilters && filter.measureRef !== undefined) {
+                return true;
             }
             return measureBucketItems.some(
                 (measureBucketItem: IBucketItem) =>

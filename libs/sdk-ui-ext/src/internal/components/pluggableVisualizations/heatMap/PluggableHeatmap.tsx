@@ -87,9 +87,12 @@ export class PluggableHeatmap extends PluggableBaseChart {
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
+        const uiConfig = cloneDeep(DEFAULT_HEATMAP_UICONFIG);
+        this.addMetricToFiltersIfEnabled(uiConfig);
+
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: cloneDeep(DEFAULT_HEATMAP_UICONFIG),
+            uiConfig,
         };
 
         newReferencePoint = removeAllArithmeticMeasuresFromDerived(newReferencePoint);
@@ -138,7 +141,9 @@ export class PluggableHeatmap extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     }
 
     private addFilters(

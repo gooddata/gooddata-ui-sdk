@@ -110,7 +110,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
 
-        return sanitizeFilters(newReferencePoint);
+        return sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters);
     };
 
     public getExecution(

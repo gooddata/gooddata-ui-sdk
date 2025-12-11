@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"prettier"> = {
+export const prettier: IConfiguration<"prettier"> = {
     packages: [
         {
             name: "prettier",
@@ -19,5 +19,3 @@ const configuration: IConfiguration<"prettier"> = {
     ],
     extends: ["plugin:prettier/recommended"],
 };
-
-export default configuration;

@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration = {
+export const typescript: IConfiguration = {
     packages: [
         {
             name: "@typescript-eslint/parser",
@@ -102,5 +102,3 @@ const configuration: IConfiguration = {
         },
     },
 };
-
-export default configuration;

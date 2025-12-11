@@ -79,6 +79,19 @@ export const defaultFilters = {
     },
 };
 
+export const defaultImprovedFilters = {
+    filters: {
+        accepts: [ATTRIBUTE, METRIC, DATE],
+        itemsLimit: MAX_FILTERS_COUNT,
+        itemsLimitByType: {
+            date: 1,
+        },
+        allowsReordering: false,
+        enabled: true,
+        isShowInPercentEnabled: false,
+    },
+};
+
 const disabledExportConfig = {
     exportConfig: { supported: false },
 };

@@ -34,6 +34,7 @@ export type IUiTabAction<
     closeOnSelect?: "actions" | "all" | false;
     iconRight?: ReactNode;
     iconLeft?: ReactNode;
+    dataTestId?: string;
 } & TTabActionProps;
 
 /**

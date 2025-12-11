@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, RefObject, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -68,12 +68,14 @@ interface AttachmentsSelectProps<T extends WidgetAttachmentType | DashboardAttac
     attachments: AttachmentItem<T>[];
     onChange: (attachments: AttachmentItem<T>[]) => void;
     mode: "widget" | "dashboard";
+    onAddButtonRef: (ref: HTMLButtonElement | null) => void;
 }
 
 export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAttachmentType>({
     attachments: initialAttachments,
     onChange,
     mode,
+    onAddButtonRef,
 }: AttachmentsSelectProps<T>) {
     const [attachments, setAttachments] = useState<AttachmentItem<T>[]>(initialAttachments);
     const intl = useIntl();
@@ -104,7 +106,7 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                         setAttachments(initialAttachments);
                     }
                 }}
-                renderButton={({ toggleDropdown, buttonRef }) => (
+                renderButton={({ toggleDropdown }) => (
                     <UiTooltip
                         arrowPlacement="left"
                         triggerBy={["hover", "focus"]}
@@ -115,7 +117,7 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                                 label={dialogTitle}
                                 onClick={toggleDropdown}
                                 variant="popout"
-                                ref={buttonRef as RefObject<HTMLButtonElement>}
+                                ref={onAddButtonRef}
                             />
                         }
                     />

@@ -3,7 +3,7 @@
 import type { IConfiguration } from "../types.js";
 
 // empty generic because we have built-in eslint and typescript-eslint rules here too
-const configuration: IConfiguration = {
+export const chaiFriendly: IConfiguration = {
     packages: [
         {
             name: "eslint-plugin-chai-friendly",
@@ -23,5 +23,3 @@ const configuration: IConfiguration = {
         },
     },
 };
-
-export default configuration;

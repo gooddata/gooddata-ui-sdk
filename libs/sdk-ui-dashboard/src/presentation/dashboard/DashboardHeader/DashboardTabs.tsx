@@ -62,6 +62,7 @@ function createRenameAction(params: TabActionsParams) {
         isDisabled: tab.isRenaming,
         onSelect: () => dispatch(startRenamingDashboardTab(tab.localIdentifier)),
         closeOnSelect: "all" as const,
+        dataTestId: "s-tab-action-rename",
     };
 }
 
@@ -82,6 +83,7 @@ function createMoveLeftAction(params: TabActionsParams) {
             dispatch(repositionDashboardTab(index, index - 1));
         },
         closeOnSelect: false as const,
+        dataTestId: "s-tab-action-move-left",
     };
 }
 
@@ -102,6 +104,7 @@ function createMoveRightAction(params: TabActionsParams) {
             dispatch(repositionDashboardTab(index, index + 1));
         },
         closeOnSelect: false as const,
+        dataTestId: "s-tab-action-move-right",
     };
 }
 
@@ -120,6 +123,7 @@ function createDeleteAction(params: TabActionsParams, isOnlyOneTab: boolean) {
             : undefined,
         tooltipWidth: 250,
         onSelect: () => dispatch(deleteDashboardTab(tab.localIdentifier)),
+        dataTestId: "s-tab-action-delete",
     };
 }
 
@@ -263,6 +267,7 @@ export function DashboardTabs({
                                     size={"large"}
                                     variant={"tertiary"}
                                     onClick={handleCreateTab}
+                                    dataTestId="s-tab-add-new"
                                     accessibilityConfig={{
                                         ariaLabel: intl.formatMessage({
                                             id: "dashboard.tabs.accessibility.add-button-label",

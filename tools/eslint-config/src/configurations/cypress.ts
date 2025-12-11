@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"cypress"> = {
+export const cypress: IConfiguration<"cypress"> = {
     packages: [
         {
             name: "eslint-plugin-cypress",
@@ -21,5 +21,3 @@ const configuration: IConfiguration<"cypress"> = {
         "cypress/unsafe-to-chain-command": "warn",
     },
 };
-
-export default configuration;

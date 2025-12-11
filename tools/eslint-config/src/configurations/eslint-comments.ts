@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"eslint-comments"> = {
+export const eslintComments: IConfiguration<"eslint-comments"> = {
     packages: [
         {
             name: "eslint-plugin-eslint-comments",
@@ -15,5 +15,3 @@ const configuration: IConfiguration<"eslint-comments"> = {
         "eslint-comments/no-unused-disable": "error",
     },
 };
-
-export default configuration;

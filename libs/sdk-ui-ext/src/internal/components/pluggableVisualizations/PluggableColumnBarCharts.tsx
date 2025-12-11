@@ -67,7 +67,9 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES);
+        const config = cloneDeep(COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES);
+        this.addMetricToFiltersIfEnabled(config);
+        return config;
     }
 
     public override getExtendedReferencePoint(

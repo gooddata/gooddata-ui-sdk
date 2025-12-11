@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.13.0-alpha.5",
+    "version": "11.13.0-alpha.6",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
@@ -37,7 +37,7 @@
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "eslint": "eslint ./**/*.ts",
         "update-package": "vite-node scripts/updatePackage.ts",
-        "validate": "tsc"
+        "validate": "tsc && npm run eslint"
     },
     "devDependencies": {
         "@testing-library/dom": "10.4.0",

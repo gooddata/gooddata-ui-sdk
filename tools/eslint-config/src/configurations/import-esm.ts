@@ -2,7 +2,7 @@
 
 import type { IConfiguration } from "../types.js";
 
-const configuration: IConfiguration<"import-esm"> = {
+export const importEsm: IConfiguration<"import-esm"> = {
     packages: [
         {
             name: "eslint-plugin-import-esm",
@@ -12,5 +12,3 @@ const configuration: IConfiguration<"import-esm"> = {
     plugin: "import-esm",
     extends: ["plugin:import-esm/recommended"],
 };
-
-export default configuration;

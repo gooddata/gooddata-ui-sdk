@@ -89,7 +89,7 @@ export function DrillTargetDashboardItem({
         const tabs = dashboardWithTabs?.tabs || [];
 
         // If dashboard has tabs, default to first tab, otherwise no tab
-        const defaultTabId = tabs.length > 0 ? tabs[0].localIdentifier : undefined;
+        const defaultTabId = tabs.length > 1 ? tabs[0].localIdentifier : undefined;
         onSelect(dashboard, defaultTabId);
     };
 
@@ -100,7 +100,7 @@ export function DrillTargetDashboardItem({
     return (
         <>
             <DashboardList onSelect={handleDashboardSelect} dashboards={dashboardItems} selected={selected} />
-            {selected && dashboardTabs.length > 0 && enableDashboardTabs ? (
+            {selected && dashboardTabs.length > 1 && enableDashboardTabs ? (
                 <DrillTargetDashboardTabSelector
                     tabs={dashboardTabs}
                     selectedTabId={effectiveSelectedTab}
