@@ -2,10 +2,10 @@
 
 import { describe, expect, it } from "vitest";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 import {
-    ParserFunction,
+    type ParserFunction,
     clearCssProperties,
     generateShadowColor,
     handleUnits,

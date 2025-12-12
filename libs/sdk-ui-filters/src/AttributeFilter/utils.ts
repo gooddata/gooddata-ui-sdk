@@ -1,21 +1,21 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    DashboardAttributeFilterSelectionMode,
-    IAttributeElement,
-    IAttributeFilter,
+    type DashboardAttributeFilterSelectionMode,
+    type IAttributeElement,
+    type IAttributeFilter,
     attributeElementsCount,
     filterAttributeElements,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { IAttributeFilterBaseProps } from "./types.js";
+import { type IAttributeFilterBaseProps } from "./types.js";
 import { getElementCacheKey } from "../AttributeFilterHandler/internal/redux/common/selectors.js";
 
 /**

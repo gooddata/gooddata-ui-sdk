@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ChangeEvent, KeyboardEvent, useCallback, useMemo } from "react";
+import { type ChangeEvent, type KeyboardEvent, useCallback, useMemo } from "react";
 
 import { clamp } from "lodash-es";
 

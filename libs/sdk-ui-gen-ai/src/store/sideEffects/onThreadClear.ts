@@ -2,7 +2,7 @@
 
 import { call, getContext, put, race, take } from "redux-saga/effects";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { extractError } from "./utils.js";
 import {

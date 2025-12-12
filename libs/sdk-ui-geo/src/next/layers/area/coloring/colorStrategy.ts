@@ -2,20 +2,20 @@
 
 import { omit } from "lodash-es";
 
-import { IAttributeDescriptor, IColor, IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { type IAttributeDescriptor, type IColor, type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
     ColorStrategy,
-    IColorMapping,
-    IColorStrategy,
-    ICreateColorAssignmentReturnValue,
+    type IColorMapping,
+    type IColorStrategy,
+    type ICreateColorAssignmentReturnValue,
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IAreaGeoData } from "../../../types/geoData/area.js";
-import { IAreaAttributesInDimension, findAreaAttributesInDimension } from "../data/transformation.js";
+import { type IAreaGeoData } from "../../../types/geoData/area.js";
+import { type IAreaAttributesInDimension, findAreaAttributesInDimension } from "../data/transformation.js";
 
 /**
  * Color strategy for GeoAreaChart

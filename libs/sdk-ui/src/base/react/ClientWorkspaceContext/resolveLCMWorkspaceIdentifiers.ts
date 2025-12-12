@@ -2,7 +2,7 @@
 
 import { partial } from "lodash-es";
 
-import { IClientWorkspaceIdentifiers } from "./interfaces.js";
+import { type IClientWorkspaceIdentifiers } from "./interfaces.js";
 
 /**
  * Resolves LCM workspace identifiers. This function will use the data product and client information

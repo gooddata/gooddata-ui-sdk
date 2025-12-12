@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IRgbColorValue } from "@gooddata/sdk-model";
+import { type IRgbColorValue } from "@gooddata/sdk-model";
 
 import { normalizeColorToRGB, parseRGBString } from "../color.js";
 

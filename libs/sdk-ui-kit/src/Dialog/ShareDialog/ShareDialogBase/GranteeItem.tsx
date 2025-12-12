@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo } from "react";
+import { type ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
@@ -16,13 +16,13 @@ import {
 import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem.js";
 import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem.js";
 import {
-    DialogModeType,
-    GranteeItem,
-    IGranteeGroup,
-    IGranteeGroupAll,
-    IGranteeInactiveOwner,
-    IGranteeItemProps,
-    IGranteeUser,
+    type DialogModeType,
+    type GranteeItem,
+    type IGranteeGroup,
+    type IGranteeGroupAll,
+    type IGranteeInactiveOwner,
+    type IGranteeItemProps,
+    type IGranteeUser,
     isGranteeGroup,
     isGranteeGroupAll,
     isGranteeRules,

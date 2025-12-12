@@ -1,15 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { DashboardAttachmentType, WidgetAttachmentType } from "@gooddata/sdk-model";
+import { type DashboardAttachmentType, type WidgetAttachmentType } from "@gooddata/sdk-model";
 import {
     Button,
     ContentDivider,
     Dropdown,
-    IAlignPoint,
+    type IAlignPoint,
     Message,
     UiIconButton,
     UiTooltip,

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
+import { type IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 
 import { ScatterPlotWithMeasuresAndAttribute } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

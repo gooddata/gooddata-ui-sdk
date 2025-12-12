@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IDashboardCommand } from "./base.js";
-import { DashboardEventBody, ICustomDashboardEvent, IDashboardEvent } from "../events/base.js";
+import { type IDashboardCommand } from "./base.js";
+import { type DashboardEventBody, type ICustomDashboardEvent, type IDashboardEvent } from "../events/base.js";
 
 /**
  * Payload of the {@link TriggerEvent} command.

@@ -1,16 +1,16 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { clone, isEmpty } from "lodash-es";
 
-import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IBucket, MeasureGroupIdentifier, newDimension } from "@gooddata/sdk-model";
+import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IBucket, MeasureGroupIdentifier, newDimension } from "@gooddata/sdk-model";
 
 import {
-    ICreateExecutionParams,
-    IHeadlineProvider,
-    IHeadlineTransformationProps,
+    type ICreateExecutionParams,
+    type IHeadlineProvider,
+    type IHeadlineTransformationProps,
 } from "../../HeadlineProvider.js";
 
 export abstract class AbstractProvider implements IHeadlineProvider {

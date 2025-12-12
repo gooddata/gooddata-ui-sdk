@@ -2,10 +2,13 @@
 
 import { useCallback } from "react";
 
-import { MessageDescriptor, defineMessages } from "react-intl";
+import { type MessageDescriptor, defineMessages } from "react-intl";
 
 import { useEventToastMessage } from "../../../_staging/sharedHooks/useEventToastMessage.js";
-import { DashboardCrossFilteringResolved, isDashboardCrossFilteringResolved } from "../../../model/index.js";
+import {
+    type DashboardCrossFilteringResolved,
+    isDashboardCrossFilteringResolved,
+} from "../../../model/index.js";
 
 const crossFilterMessages: Record<string, MessageDescriptor> = defineMessages({
     crossFilterSuccess: {

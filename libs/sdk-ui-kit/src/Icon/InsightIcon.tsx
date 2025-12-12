@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { FC } from "react";
+import { type FC } from "react";
 
 import { Icon } from "./Icon.js";
-import { IIconProps } from "./typings.js";
+import { type IIconProps } from "./typings.js";
 
 const INSIGHT_ICON_MAP: Record<string, FC<IIconProps>> = {
     "local:scatter": Icon["ScatterPlot"],

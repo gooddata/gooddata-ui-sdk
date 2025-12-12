@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import { ColDef, Column } from "ag-grid-community";
+import { type ColDef, type Column } from "ag-grid-community";
 
-import { SortDirection } from "@gooddata/sdk-model";
+import { type SortDirection } from "@gooddata/sdk-model";
 
 import { isColumn } from "../base/agUtils.js";
 

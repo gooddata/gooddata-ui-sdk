@@ -3,7 +3,11 @@
 import { useState } from "react";
 
 import { ComboChart } from "@gooddata/sdk-ui-charts";
-import { DateFilterHelpers, DateFilterOption, RelativeDateFilterOption } from "@gooddata/sdk-ui-filters";
+import {
+    DateFilterHelpers,
+    type DateFilterOption,
+    type RelativeDateFilterOption,
+} from "@gooddata/sdk-ui-filters";
 
 import { Filter } from "./DateFilter.js";
 import * as Catalog from "../catalog.js";

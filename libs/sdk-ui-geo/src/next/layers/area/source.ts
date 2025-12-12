@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoJsonFeature, geoFeatureId } from "@gooddata/sdk-model";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IGeoJsonFeature, geoFeatureId } from "@gooddata/sdk-model";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
 import { getAreaAreaColors } from "./coloring/palette.js";
-import { IGeoAreaChartConfig } from "../../types/config/areaChart.js";
-import { IAreaGeoData } from "../../types/geoData/area.js";
+import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
+import { type IAreaGeoData } from "../../types/geoData/area.js";
 
 /**
  * Properties for creating a area data source

@@ -2,7 +2,7 @@
 
 import { UiPagedVirtualList } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const items = Array.from({ length: 100 }, (_, index) => ({

@@ -5,7 +5,7 @@ import * as path from "path";
 import { groupBy } from "lodash-es";
 
 import { createUniqueVariableName } from "../base/variableNaming.js";
-import { ExecutionRecording } from "../recordings/execution.js";
+import { type ExecutionRecording } from "../recordings/execution.js";
 
 const ScenariosConstName = "Scenarios";
 

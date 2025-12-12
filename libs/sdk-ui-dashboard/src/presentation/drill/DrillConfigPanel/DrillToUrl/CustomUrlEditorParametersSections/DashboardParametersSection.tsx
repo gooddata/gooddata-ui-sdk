@@ -5,8 +5,8 @@ import { Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 
 import {
-    IAttributeFilter,
-    IDashboardAttributeFilterConfig,
+    type IAttributeFilter,
+    type IDashboardAttributeFilterConfig,
     filterLocalIdentifier,
     filterObjRef,
 } from "@gooddata/sdk-model";
@@ -14,7 +14,7 @@ import {
 import { DisplayFormParam } from "./DisplayFormParam.js";
 import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
-import { IParametersPanelSectionsCommonProps } from "../types.js";
+import { type IParametersPanelSectionsCommonProps } from "../types.js";
 
 export interface IDashboardParametersSectionProps extends IParametersPanelSectionsCommonProps {
     dashboardFilters?: IAttributeFilter[];

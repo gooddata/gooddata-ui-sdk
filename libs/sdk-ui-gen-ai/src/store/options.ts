@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
 /**
  * A dispatcher for chat events.

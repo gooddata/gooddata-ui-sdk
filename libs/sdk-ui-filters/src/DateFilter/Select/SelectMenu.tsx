@@ -1,14 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import cx from "classnames";
-import { ControllerStateAndHelpers } from "downshift";
+import { type ControllerStateAndHelpers } from "downshift";
 
 import { SelectHeading } from "./SelectHeading.js";
 import { SelectOption } from "./SelectOption.js";
 import { SelectSeparator } from "./SelectSeparator.js";
-import { ISelectItem, ISelectItemOption } from "./types.js";
+import { type ISelectItem, type ISelectItemOption } from "./types.js";
 import { getSelectableItems } from "./utils.js";
 
 export interface ISelectMenuProps<V> {

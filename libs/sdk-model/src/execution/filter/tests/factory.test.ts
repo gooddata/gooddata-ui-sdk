@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { Account, Department, Won } from "../../../../__mocks__/model.js";
-import { IAttribute, IdentifierRef, LocalIdRef, attributeIdentifier } from "../../../index.js";
+import { type IAttribute, type IdentifierRef, type LocalIdRef, attributeIdentifier } from "../../../index.js";
 import { idRef, localIdRef } from "../../../objRef/factory.js";
 import { attributeLocalId } from "../../attribute/index.js";
 import {

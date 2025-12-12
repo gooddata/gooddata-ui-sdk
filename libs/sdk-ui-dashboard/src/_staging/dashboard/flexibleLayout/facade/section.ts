@@ -1,17 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 import { isEqual } from "lodash-es";
 
-import { IDashboardLayoutSection, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSection, type IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 
 import {
-    IDashboardLayoutFacade,
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutItemsFacade,
-    IDashboardLayoutSectionFacade,
+    type IDashboardLayoutFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutItemsFacade,
+    type IDashboardLayoutSectionFacade,
 } from "./interfaces.js";
 import { DashboardLayoutItemFacade } from "./item.js";
 import { DashboardLayoutItemsFacade } from "./items.js";
-import { ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutSectionPath } from "../../../../types.js";
 import {
     areSectionLayoutPathsEqual,
     asLayoutItemPath,

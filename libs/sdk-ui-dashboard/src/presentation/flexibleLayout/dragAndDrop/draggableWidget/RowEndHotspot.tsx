@@ -1,22 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, useMemo } from "react";
+import { type CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
 
-import { IDashboardWidget } from "@gooddata/sdk-model";
+import { type IDashboardWidget } from "@gooddata/sdk-model";
 
 import { Hotspot } from "./Hotspot.js";
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 import {
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    IDashboardLayoutItemFacade,
+    type IDashboardLayoutItemFacade,
 } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { updateItem } from "../../../../_staging/layout/coordinates.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     isCustomWidget,
     selectDraggingWidgetSource,
     selectSettings,

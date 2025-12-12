@@ -1,29 +1,29 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    INullableFilter,
-    ISortItem,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type INullableFilter,
+    type ISortItem,
     bucketAttribute,
     bucketsFind,
     newAttributeSort,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AttributeMeasureOrPlaceholder,
-    AttributeOrPlaceholder,
+    type AttributeMeasureOrPlaceholder,
+    type AttributeOrPlaceholder,
     BucketNames,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
 import { CoreHeatmap } from "./CoreHeatmap.js";
-import { IBucketChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { heatmapDimensions } from "../_commons/dimensions.js";
 
 //

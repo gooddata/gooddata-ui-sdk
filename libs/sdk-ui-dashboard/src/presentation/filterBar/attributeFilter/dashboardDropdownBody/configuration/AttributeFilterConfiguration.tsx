@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useMemo } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
-    IDashboardAttributeFilter,
-    ObjRef,
+    type IDashboardAttributeFilter,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";

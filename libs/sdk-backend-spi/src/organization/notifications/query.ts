@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { INotification } from "@gooddata/sdk-model";
+import { type INotification } from "@gooddata/sdk-model";
 
-import { IPagedResource } from "../../common/paging.js";
+import { type IPagedResource } from "../../common/paging.js";
 
 /**
  * Service to query notifications.

@@ -1,19 +1,28 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { KeyboardEvent, RefObject, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    type KeyboardEvent,
+    type RefObject,
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import moment from "moment";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
 
-import { SelectedTime } from "./typings.js";
+import { type SelectedTime } from "./typings.js";
 import { HOURS_IN_DAY, TIME_ANCHOR, formatTime, normalizeTime, updateTime } from "./utils/timeUtilities.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
 import { Dropdown, DropdownButton } from "../Dropdown/index.js";
 import { SingleSelectListItem } from "../List/index.js";
-import { OverlayPositionType } from "../typings/overlay.js";
+import { type OverlayPositionType } from "../typings/overlay.js";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;

@@ -1,9 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
-import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
+import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 
 import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { getComparisonColorPalette } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 
 export function headlineConfigFromInsight(

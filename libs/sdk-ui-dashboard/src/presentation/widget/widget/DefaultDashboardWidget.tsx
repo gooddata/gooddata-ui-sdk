@@ -1,11 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, memo, useMemo } from "react";
+import { type ReactElement, memo, useMemo } from "react";
 
 import cx from "classnames";
 
 import { withEventing } from "@gooddata/sdk-backend-base";
-import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { type IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isDashboardWidget,
     isInsightWidget,
@@ -19,7 +19,7 @@ import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-u
 import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
-import { IDashboardWidgetProps } from "./types.js";
+import { type IDashboardWidgetProps } from "./types.js";
 import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";

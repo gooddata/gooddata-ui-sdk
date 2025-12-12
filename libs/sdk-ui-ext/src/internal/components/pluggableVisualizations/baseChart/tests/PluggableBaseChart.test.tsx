@@ -4,14 +4,19 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    type IInsight,
+    type IInsightDefinition,
+    insightSetProperties,
+} from "@gooddata/sdk-model";
 import {
     BucketNames,
-    IDrillEventIntersectionElement,
-    ILocale,
-    VisualizationEnvironment,
+    type IDrillEventIntersectionElement,
+    type ILocale,
+    type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
-import { IBaseChartProps } from "@gooddata/sdk-ui-charts";
+import { type IBaseChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     expectedInsightDefRegion,
@@ -20,7 +25,11 @@ import {
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties.js";
-import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
+import {
+    type IBucketOfFun,
+    type IVisConstruct,
+    type IVisProps,
+} from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";

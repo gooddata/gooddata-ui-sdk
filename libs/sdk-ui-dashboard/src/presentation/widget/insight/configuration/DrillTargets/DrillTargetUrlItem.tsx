@@ -5,9 +5,9 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { IAttributeDescriptor, ObjRef } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type ObjRef } from "@gooddata/sdk-model";
 import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Button, Dropdown, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms.js";
 import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier.js";
@@ -22,7 +22,7 @@ import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToU
 import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlEditor.js";
 import { CustomUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlSection.js";
 import {
-    UrlDrillTarget,
+    type UrlDrillTarget,
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
 } from "../../../../drill/types.js";

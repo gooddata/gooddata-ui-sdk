@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
-    IColorPalette,
-    IExecutionConfig,
-    IInsight,
-    IInsightDefinition,
-    ISettings,
-    ITheme,
+    type IColorPalette,
+    type IExecutionConfig,
+    type IInsight,
+    type IInsightDefinition,
+    type ISettings,
+    type ITheme,
 } from "@gooddata/sdk-model";
 
-import { IFluidLayoutDescriptor } from "./LayoutDescriptor.js";
-import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization.js";
+import { type IFluidLayoutDescriptor } from "./LayoutDescriptor.js";
+import { type IDrillDownContext, type IVisConstruct, type IVisualization } from "./Visualization.js";
 
 /**
  * Factories that create a new instance of pluggable visualization.

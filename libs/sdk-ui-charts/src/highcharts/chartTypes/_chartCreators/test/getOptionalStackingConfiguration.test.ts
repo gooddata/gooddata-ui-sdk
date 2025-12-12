@@ -2,12 +2,12 @@
 import { describe, expect, it } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { StackingType } from "../../../constants/stacking.js";
-import { CSSObject, HighchartsOptions } from "../../../lib/index.js";
-import { IChartOptions, ISeriesItem, IStackMeasuresConfig } from "../../../typings/unsafe.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type StackingType } from "../../../constants/stacking.js";
+import { type CSSObject, type HighchartsOptions } from "../../../lib/index.js";
+import { type IChartOptions, type ISeriesItem, type IStackMeasuresConfig } from "../../../typings/unsafe.js";
 import {
     convertMinMaxFromPercentToNumber,
     getOptionalStackingConfiguration,

@@ -2,12 +2,12 @@
 
 import { memo, useCallback } from "react";
 
-import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
+import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { DropdownBody } from "./DropdownBody.js";
-import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
-import { WarningMessage } from "./typings.js";
+import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
+import { type WarningMessage } from "./typings.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 /*

@@ -1,9 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
-import { IBucket, IFilter, IInsightDefinition, ISeparators, ISortItem } from "@gooddata/sdk-model";
-import { IFormatPreset } from "@gooddata/sdk-ui-kit";
+import {
+    type IBucket,
+    type IFilter,
+    type IInsightDefinition,
+    type ISeparators,
+    type ISortItem,
+} from "@gooddata/sdk-model";
+import { type IFormatPreset } from "@gooddata/sdk-ui-kit";
 
-import { IDefaultControlProperties } from "../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../interfaces/Visualization.js";
+import { type IDefaultControlProperties } from "../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../interfaces/Visualization.js";
 
 export const TEST_DEFAULT_SEPARATOR: ISeparators = {
     decimal: ",",

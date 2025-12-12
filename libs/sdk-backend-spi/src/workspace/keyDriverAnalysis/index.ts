@@ -1,6 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { DateAttributeGranularity, IAttribute, IFilter, IMeasure, ObjRef } from "@gooddata/sdk-model";
+import {
+    type DateAttributeGranularity,
+    type IAttribute,
+    type IFilter,
+    type IMeasure,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Action, AnyAction, Middleware, configureStore } from "@reduxjs/toolkit";
+import { type Action, type AnyAction, type Middleware, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
 import defaultReduxSaga from "redux-saga";
 
@@ -15,8 +15,8 @@ import {
 
 import { rootSaga } from "./rootSaga.js";
 import { actions, sliceReducer } from "./slice.js";
-import { AttributeFilterState, initialState } from "./state.js";
-import { AttributeFilterHandlerStore, AttributeFilterHandlerStoreContext } from "./types.js";
+import { type AttributeFilterState, initialState } from "./state.js";
+import { type AttributeFilterHandlerStore, type AttributeFilterHandlerStoreContext } from "./types.js";
 
 const nonSerializableActions = [
     actions.loadAttributeError.type,

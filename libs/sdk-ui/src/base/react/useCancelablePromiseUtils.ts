@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "./useCancelablePromise.js";
+import { type UseCancelablePromiseState, type UseCancelablePromiseStatus } from "./useCancelablePromise.js";
 import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
 
 /**

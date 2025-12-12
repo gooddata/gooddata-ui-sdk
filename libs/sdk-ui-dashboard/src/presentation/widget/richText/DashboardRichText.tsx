@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
-import { IDashboardRichTextProps } from "./types.js";
+import { type IDashboardRichTextProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 /**

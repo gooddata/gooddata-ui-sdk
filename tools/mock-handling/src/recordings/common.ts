@@ -4,7 +4,7 @@ import fs from "fs";
 import stringify from "json-stable-stringify";
 import { isEmpty, pick } from "lodash-es";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
  * A mapping of recording file type to file name. The file type is opaque - it is not handled in any way and

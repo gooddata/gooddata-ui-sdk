@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Mock, describe, expect, it, vi } from "vitest";
+import { type Mock, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { createDummyPromise } from "../../base/react/tests/toolkit.js";
 import { DataViewFacade } from "../../base/results/facade.js";
-import { IRawExecuteProps, RawExecute } from "../RawExecute.js";
+import { type IRawExecuteProps, RawExecute } from "../RawExecute.js";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => vi.fn((_) => <div />);

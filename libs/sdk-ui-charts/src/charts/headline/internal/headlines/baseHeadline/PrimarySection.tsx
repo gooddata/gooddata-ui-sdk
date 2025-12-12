@@ -3,7 +3,7 @@
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
 import { PrimarySectionCompactContent } from "./PrimarySectionCompactContent.js";
 import { PrimarySectionContent } from "./PrimarySectionContent.js";
-import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface IPrimarySectionProps {
     primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;

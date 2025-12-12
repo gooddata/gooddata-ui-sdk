@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
 import cx from "classnames";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
-import { IUiListboxInteractiveItem, UiIcon, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxInteractiveItem, UiIcon, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { KdaKeyDriverChart } from "../components/KdaKeyDriverChart.js";
 import { KdaSummaryDrivers } from "../components/KdaSummaryDrivers.js";
 import { KdaSummaryHeadline } from "../components/KdaSummaryHeadline.js";
-import { KdaItem, KdaState } from "../internalTypes.js";
+import { type KdaItem, type KdaState } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { useDataViewWithConfig } from "./hooks/useDataViewWithConfig.js";
 import { useGroupAndItem } from "./hooks/useGroupAndItem.js";

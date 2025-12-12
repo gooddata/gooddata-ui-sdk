@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";

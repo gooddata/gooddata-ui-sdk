@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 import type { UiRefsTree, UiStateTreeItem, UiStaticTreeView } from "./types.js";
 

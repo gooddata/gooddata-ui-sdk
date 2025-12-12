@@ -16,7 +16,7 @@ import { SingleSelectionAttributeFilterElementsSelectActions } from "./Component
 import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem.js";
 import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 import { SingleSelectionAttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
-import { IAttributeFilterBaseProps, IAttributeFilterCustomComponentProps } from "./types.js";
+import { type IAttributeFilterBaseProps, type IAttributeFilterCustomComponentProps } from "./types.js";
 
 /**
  * @internal

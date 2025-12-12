@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import { IHeaderMenuItem, TUTMContent } from "./typings.js";
+import { type IHeaderMenuItem, type TUTMContent } from "./typings.js";
 
 /**
  * @internal

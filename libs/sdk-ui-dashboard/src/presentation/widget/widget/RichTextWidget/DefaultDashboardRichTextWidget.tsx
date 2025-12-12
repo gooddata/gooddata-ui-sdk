@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
+import { type IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";

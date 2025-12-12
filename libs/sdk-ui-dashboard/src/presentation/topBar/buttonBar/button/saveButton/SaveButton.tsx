@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { ISaveButtonProps } from "./types.js";
+import { type ISaveButtonProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 
 /**

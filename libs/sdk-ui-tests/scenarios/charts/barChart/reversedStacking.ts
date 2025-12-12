@@ -2,7 +2,7 @@
 
 import { ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
+import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
 import { BarChartWithArithmeticMeasuresAndViewBy, BarChartWithTwoMeasuresAndTwoViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

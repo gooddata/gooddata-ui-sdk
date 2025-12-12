@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 
-import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
+import { type IRankingFilter, type ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { RankingFilterDropdownBody } from "./RankingFilterDropdownBody.js";
-import { IAttributeDropdownItem, ICustomGranularitySelection, IMeasureDropdownItem } from "./types.js";
+import {
+    type IAttributeDropdownItem,
+    type ICustomGranularitySelection,
+    type IMeasureDropdownItem,
+} from "./types.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));

@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 
-import { IDashboardPermissions } from "@gooddata/sdk-model";
+import { type IDashboardPermissions } from "@gooddata/sdk-model";
 
 export type TigerDashboardPermissionType = "VIEW" | "SHARE" | "EDIT";
 

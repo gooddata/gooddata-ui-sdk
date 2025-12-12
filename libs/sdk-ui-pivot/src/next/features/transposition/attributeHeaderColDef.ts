@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { DataViewFacade, ITableValueColumnDefinition } from "@gooddata/sdk-ui";
+import { type DataViewFacade, type ITableValueColumnDefinition } from "@gooddata/sdk-ui";
 
 import { TransposedMetricCell } from "../../components/Cell/TransposedMetricCell.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { extractFormattedValue, getAttributeHeaderName } from "../columns/shared.js";
 import { getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";

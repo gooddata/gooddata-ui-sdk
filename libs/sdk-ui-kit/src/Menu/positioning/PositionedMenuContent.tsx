@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 import {
     calculateMenuPosition,
@@ -8,7 +8,7 @@ import {
     getElementDimensionsAndCoords,
     getViewportDimensionsAndCoords,
 } from "./positioningCalculations.js";
-import { IMenuPositionConfig } from "../MenuSharedTypes.js";
+import { type IMenuPositionConfig } from "../MenuSharedTypes.js";
 
 export interface IPositionedMenuContentProps extends IMenuPositionConfig {
     topLevelMenu: boolean;

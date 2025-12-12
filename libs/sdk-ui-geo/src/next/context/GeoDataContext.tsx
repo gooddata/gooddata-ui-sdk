@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { IColorPalette } from "@gooddata/sdk-model";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { useGeoLayers } from "./GeoLayersContext.js";
-import { IAvailableLegends, IGeoLegendItem } from "../types/common/legends.js";
+import { type IAvailableLegends, type IGeoLegendItem } from "../types/common/legends.js";
 import type { IGeoCommonData } from "../types/geoData/common.js";
 
 export interface IGeoDataContext<TGeoData extends IGeoCommonData = IGeoCommonData> {

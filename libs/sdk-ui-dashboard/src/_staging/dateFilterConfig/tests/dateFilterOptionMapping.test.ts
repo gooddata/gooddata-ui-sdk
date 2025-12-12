@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IDashboardDateFilter, IRelativeDateFilterPresetOfGranularity } from "@gooddata/sdk-model";
+import { type IDashboardDateFilter, type IRelativeDateFilterPresetOfGranularity } from "@gooddata/sdk-model";
 import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
     defaultDateFilterOptions,
 } from "@gooddata/sdk-ui-filters";
 

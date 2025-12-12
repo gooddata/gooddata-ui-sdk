@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttributeDescriptor } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor } from "@gooddata/sdk-model";
 import {
-    ITableColumnDefinition,
-    ITableDataHeaderScope,
-    ITableRowDefinition,
+    type ITableColumnDefinition,
+    type ITableDataHeaderScope,
+    type ITableRowDefinition,
     isMeasureGroupHeaderColumnDefinition,
     isValueColumnDefinition,
     isValueRowDefinition,

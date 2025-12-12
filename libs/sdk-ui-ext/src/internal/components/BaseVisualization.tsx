@@ -1,48 +1,52 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { PureComponent, RefObject, createRef } from "react";
+import { PureComponent, type RefObject, createRef } from "react";
 
 import { isEmpty, isEqual, omit } from "lodash-es";
-import { Root, createRoot } from "react-dom/client";
+import { type Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 
-import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IExecutionConfig,
-    IInsight,
-    IInsightDefinition,
-    ISettings,
-    ITheme,
-    IVisualizationClass,
+    type IAnalyticalBackend,
+    type IExecutionFactory,
+    type IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IExecutionConfig,
+    type IInsight,
+    type IInsightDefinition,
+    type ISettings,
+    type ITheme,
+    type IVisualizationClass,
     insightProperties,
     isInsight,
     visClassUrl,
 } from "@gooddata/sdk-model";
 import {
-    ExplicitDrill,
-    ILocale,
-    OnError,
-    OnExportReady,
-    OnLoadingChanged,
-    VisualizationEnvironment,
+    type ExplicitDrill,
+    type ILocale,
+    type OnError,
+    type OnExportReady,
+    type OnLoadingChanged,
+    type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
 
-import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog.js";
-import { ISortConfig } from "../interfaces/SortConfig.js";
+import { FullVisualizationCatalog, type IVisualizationCatalog } from "./VisualizationCatalog.js";
+import { type ISortConfig } from "../interfaces/SortConfig.js";
 import {
     ConfigPanelClassName,
-    IBucketItem,
-    IConfigurationPanelRenderers,
-    IDrillDownContext,
-    IExtendedReferencePoint,
-    IGdcConfig,
-    IReferencePoint,
-    IVisCallbacks,
-    IVisConstruct,
-    IVisProps,
-    IVisualization,
+    type IBucketItem,
+    type IConfigurationPanelRenderers,
+    type IDrillDownContext,
+    type IExtendedReferencePoint,
+    type IGdcConfig,
+    type IReferencePoint,
+    type IVisCallbacks,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualization,
 } from "../interfaces/Visualization.js";
-import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
+import { type PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;

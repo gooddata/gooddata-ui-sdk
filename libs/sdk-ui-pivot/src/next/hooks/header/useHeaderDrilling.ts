@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useMemo } from "react";
+import { type MouseEvent, useCallback, useMemo } from "react";
 
 import {
-    IDrillEvent,
-    IDrillEventContextTable,
+    type IDrillEvent,
+    type IDrillEventContextTable,
     VisualizationTypes,
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
@@ -15,9 +15,9 @@ import { createCustomDrillEvent } from "../../features/drilling/events.js";
 import { createHeaderDrillIntersection } from "../../features/drilling/intersection.js";
 import { isHeaderCellDrillable } from "../../features/drilling/isDrillable.js";
 import {
-    AgGridColumnDef,
-    AgGridHeaderGroupParams,
-    AgGridHeaderParams,
+    type AgGridColumnDef,
+    type AgGridHeaderGroupParams,
+    type AgGridHeaderParams,
     isAgGridHeaderParams,
 } from "../../types/agGrid.js";
 

@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties, FC, ReactNode, memo } from "react";
+import { type CSSProperties, type FC, type ReactNode, memo } from "react";
 
-import { CommonExportDataAttributes } from "../../export/index.js";
+import { type CommonExportDataAttributes } from "../../export/index.js";
 
 interface IDashboardItemHeadlineContainerProps {
     children: ReactNode;

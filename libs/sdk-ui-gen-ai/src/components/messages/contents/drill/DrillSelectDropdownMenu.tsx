@@ -4,12 +4,12 @@ import { useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IDrillEvent } from "@gooddata/sdk-ui";
+import { type IDrillEvent } from "@gooddata/sdk-ui";
 import {
-    DashboardKeyDriverCombinationItem,
+    type DashboardKeyDriverCombinationItem,
     getKeyDriverCombinationItemTitle,
 } from "@gooddata/sdk-ui-dashboard";
-import { IUiMenuInteractiveItem, UiIcon, UiMenu } from "@gooddata/sdk-ui-kit";
+import { type IUiMenuInteractiveItem, UiIcon, UiMenu } from "@gooddata/sdk-ui-kit";
 
 export type DrillSelectDropdownMenuProps = {
     drillState: {

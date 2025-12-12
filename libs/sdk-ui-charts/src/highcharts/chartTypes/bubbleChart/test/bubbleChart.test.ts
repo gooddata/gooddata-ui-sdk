@@ -3,11 +3,11 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceData, ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { IColorMapping } from "../../../../interfaces/index.js";
+import { type IColorMapping } from "../../../../interfaces/index.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
 import { getMVS } from "../../_util/test/helper.js";

@@ -2,7 +2,7 @@
 
 import { getLuminance } from "polished";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 /**
  * @internal

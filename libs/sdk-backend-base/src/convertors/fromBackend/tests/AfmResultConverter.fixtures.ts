@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { IResultHeader } from "@gooddata/sdk-model";
+import { type IResultHeader } from "@gooddata/sdk-model";
 
 export const resultHeaders: IResultHeader[][][] = [
     [

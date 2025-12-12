@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 

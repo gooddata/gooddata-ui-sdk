@@ -11,9 +11,9 @@ import {
     tempFilterContext,
 } from "./filterContext.fixtures.js";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
-import { ObjRef } from "../../objRef/index.js";
+import { type ObjRef } from "../../objRef/index.js";
 import {
-    IDashboardFilterReference,
+    type IDashboardFilterReference,
     dashboardFilterReferenceObjRef,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterReference,

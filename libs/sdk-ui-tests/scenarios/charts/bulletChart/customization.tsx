@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
+import { BulletChart, type IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
 import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

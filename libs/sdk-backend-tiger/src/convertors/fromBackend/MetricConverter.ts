@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    JsonApiMetricOutDocument,
-    JsonApiMetricOutIncludes,
-    JsonApiMetricOutWithLinks,
+    type JsonApiMetricOutDocument,
+    type JsonApiMetricOutIncludes,
+    type JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
-import { IMeasureMetadataObject, idRef } from "@gooddata/sdk-model";
+import { type IMeasureMetadataObject, idRef } from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";

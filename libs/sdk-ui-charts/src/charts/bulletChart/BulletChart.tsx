@@ -1,27 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    INullableFilter,
-    ISortItem,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type INullableFilter,
+    type ISortItem,
     disableComputeRatio,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AttributeMeasureOrPlaceholder,
-    AttributeOrPlaceholder,
-    AttributesOrPlaceholders,
+    type AttributeMeasureOrPlaceholder,
+    type AttributeOrPlaceholder,
+    type AttributesOrPlaceholders,
     BucketNames,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
 import { CoreBulletChart } from "./CoreBulletChart.js";
-import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces/index.js";
+import { type IBucketChartProps, ViewByAttributesLimit } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { stackedChartDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 import { truncate } from "../_commons/truncate.js";

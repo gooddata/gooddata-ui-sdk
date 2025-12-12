@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { HTMLProps } from "react";
+import { type HTMLProps } from "react";
 
 import { bem } from "../@utils/bem.js";
 

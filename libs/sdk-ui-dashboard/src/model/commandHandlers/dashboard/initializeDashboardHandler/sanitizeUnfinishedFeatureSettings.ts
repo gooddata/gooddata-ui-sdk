@@ -2,7 +2,7 @@
 
 import { invariant } from "ts-invariant";
 
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
 import { disabledUnfinishedFeatureSettings } from "../../../disabledUnfinishedFeatureSettings.js";
 

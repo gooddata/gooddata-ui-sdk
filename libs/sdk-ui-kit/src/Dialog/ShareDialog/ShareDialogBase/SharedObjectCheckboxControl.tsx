@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 import cx from "classnames";
 

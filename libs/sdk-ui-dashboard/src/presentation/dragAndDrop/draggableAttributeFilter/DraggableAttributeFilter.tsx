@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Ref, useCallback, useMemo } from "react";
+import { type Ref, useCallback, useMemo } from "react";
 
 import classNames from "classnames";
 
-import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import {
@@ -14,7 +14,7 @@ import {
     selectSupportsElementUris,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
+import { type CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
 

@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import { HoveredWidgetContext } from "../../../dragAndDrop/index.js";
 

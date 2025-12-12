@@ -3,11 +3,11 @@
 import { isEqual } from "lodash-es";
 import ora from "ora";
 
-import { IDashboard, IDashboardDefinition, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { type IDashboard, type IDashboardDefinition, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
-import { UpdatePluginParamsCmdConfig, getUpdatePluginParamsCmdConfig } from "./actionConfig.js";
+import { type UpdatePluginParamsCmdConfig, getUpdatePluginParamsCmdConfig } from "./actionConfig.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printUsedUpdatePluginParamsSummary({

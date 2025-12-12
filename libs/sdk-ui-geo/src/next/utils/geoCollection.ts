@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttributeDescriptor, IAttributeDisplayFormGeoAreaConfig } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type IAttributeDescriptor, type IAttributeDisplayFormGeoAreaConfig } from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 /**
  * Metadata describing a geo collection binding for an attribute.

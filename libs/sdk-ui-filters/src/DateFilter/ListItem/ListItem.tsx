@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { HTMLProps } from "react";
+import { type HTMLProps } from "react";
 
 import cx from "classnames";
 import { MediaQuery } from "react-responsive";

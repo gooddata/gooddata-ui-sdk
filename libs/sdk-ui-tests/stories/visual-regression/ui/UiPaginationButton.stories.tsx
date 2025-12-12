@@ -3,11 +3,11 @@
 import {
     ComponentTable,
     UiPaginationButton,
-    UiPaginationButtonProps,
+    type UiPaginationButtonProps,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // eslint-disable-next-line no-restricted-exports

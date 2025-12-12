@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { b, e } from "../treeviewBem.js";
-import * as types from "../types.js";
+import type * as types from "../types.js";
 import { UiLeveledTreeview, UiStaticTreeview } from "../UiTreeview.js";
 
 type StaticItem = { id: string; value: string };

@@ -2,22 +2,22 @@
 import { cloneDeep, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataValue, IMeasureDescriptor, Identifier } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type DataValue, type IMeasureDescriptor, type Identifier } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    HeadlineElementType,
-    IDrillEvent,
-    IDrillEventContextXirr,
-    IDrillEventIntersectionElement,
-    IHeaderPredicate,
+    type HeadlineElementType,
+    type IDrillEvent,
+    type IDrillEventContextXirr,
+    type IDrillEventIntersectionElement,
+    type IHeaderPredicate,
     VisualizationTypes,
     getMappingHeaderFormattedName,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
 import { calculateXirr } from "./calculateXirr.js";
-import { IHeadlineData } from "../../../headline/internal/interfaces/Headlines.js";
+import { type IHeadlineData } from "../../../headline/internal/interfaces/Headlines.js";
 
 export interface IXirrExecutionData {
     date: string;

@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IDrillEventIntersectionElement,
-    IMappingHeader,
+    type IDrillEventIntersectionElement,
+    type IMappingHeader,
     getDrillIntersection,
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
@@ -12,8 +12,12 @@ import {
     extractMappingHeadersUpToPosition,
     extractRowMappingHeadersUpToPosition,
 } from "./headerMapping.js";
-import { AgGridColumnDef, AgGridColumnGroupDef, isAgGridColumnGroupDef } from "../../types/agGrid.js";
-import { AgGridRowData } from "../../types/internal.js";
+import {
+    type AgGridColumnDef,
+    type AgGridColumnGroupDef,
+    isAgGridColumnGroupDef,
+} from "../../types/agGrid.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Creates mapping headers for drill intersection for a cell

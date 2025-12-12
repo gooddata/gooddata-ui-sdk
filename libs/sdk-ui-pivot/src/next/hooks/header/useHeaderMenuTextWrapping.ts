@@ -5,16 +5,16 @@ import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
-    IPushData,
-    ITableColumnDefinition,
-    ITableDataHeaderScope,
+    type IPushData,
+    type ITableColumnDefinition,
+    type ITableDataHeaderScope,
     isAttributeColumnDefinition,
     isAttributeScope,
     isAttributeTotalScope,
 } from "@gooddata/sdk-ui";
 
 import {
-    ITextWrappingMenuOptions,
+    type ITextWrappingMenuOptions,
     constructTextWrappingMenuItems,
 } from "../../components/Header/utils/constructTextWrappingMenuItems.js";
 import { useAgGridApi } from "../../context/AgGridApiContext.js";
@@ -24,15 +24,15 @@ import { getColumnTextWrappingItemForColumnDefinition } from "../../features/tex
 import { getPivotGroupTextWrappingItemForColumnDefinition } from "../../features/textWrapping/getPivotGroupTextWrappingItemForColumnDefinition.js";
 import { isColumnTextWrappingItemMatch } from "../../features/textWrapping/isColumnTextWrappingItemMatch.js";
 import {
-    AgGridApi,
-    AgGridColumnDef,
-    AgGridHeaderGroupParams,
-    AgGridHeaderParams,
+    type AgGridApi,
+    type AgGridColumnDef,
+    type AgGridHeaderGroupParams,
+    type AgGridHeaderParams,
     isAgGridHeaderGroupParams,
 } from "../../types/agGrid.js";
 import { isAttributeColumnLocator } from "../../types/locators.js";
-import { ITextWrappingMenuItem } from "../../types/menu.js";
-import { IColumnTextWrappingItem, ITextWrapping } from "../../types/textWrapping.js";
+import { type ITextWrappingMenuItem } from "../../types/menu.js";
+import { type IColumnTextWrappingItem, type ITextWrapping } from "../../types/textWrapping.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
 

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IErrorProps } from "../base/index.js";
+import { type IErrorProps } from "../base/index.js";
 
 /**
  * @internal

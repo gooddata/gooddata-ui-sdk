@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ import { describe, expect, it } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { LegendGroup } from "../LegendGroup.js";
-import { ILegendGroup, LEGEND_GROUP } from "../types.js";
+import { type ILegendGroup, LEGEND_GROUP } from "../types.js";
 
 describe("LegendGroup", () => {
     const defaultLegendGroup: ILegendGroup = {

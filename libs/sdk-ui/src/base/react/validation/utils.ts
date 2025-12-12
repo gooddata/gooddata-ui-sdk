@@ -2,11 +2,11 @@
 import { v4 as uuid } from "uuid";
 
 import {
-    IInvalidDatapoint,
-    IInvalidNode,
-    IInvalidNodeAtPath,
-    IInvalidNodePath,
-    IValidationSeverity,
+    type IInvalidDatapoint,
+    type IInvalidNode,
+    type IInvalidNodeAtPath,
+    type IInvalidNodePath,
+    type IValidationSeverity,
 } from "./types.js";
 
 /**

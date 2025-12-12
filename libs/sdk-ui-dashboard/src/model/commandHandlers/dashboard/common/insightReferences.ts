@@ -2,10 +2,10 @@
 
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboard,
-    IDashboardLayout,
-    IWidget,
-    ObjRef,
+    type IDashboard,
+    type IDashboardLayout,
+    type IWidget,
+    type ObjRef,
     isDrillToInsight,
     isInsightWidget,
     isVisualizationSwitcherWidget,

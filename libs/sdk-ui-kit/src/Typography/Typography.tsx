@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode } from "react";
+import { type MouseEvent, type ReactNode } from "react";
 
 import cx from "classnames";
 

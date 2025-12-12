@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo, useRef } from "react";
+import { type ReactElement, useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { isEqual } from "lodash-es";
@@ -8,16 +8,16 @@ import { isEqual } from "lodash-es";
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import {
-    IDashboardLayoutRenderProps,
-    IDashboardLayoutSectionKeyGetter,
-    IDashboardLayoutSectionRenderer,
-    IDashboardLayoutWidgetRenderer,
+    type IDashboardLayoutRenderProps,
+    type IDashboardLayoutSectionKeyGetter,
+    type IDashboardLayoutSectionRenderer,
+    type IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
 import { getResizedItemPositions, unifyDashboardLayoutItemHeights } from "./utils/sizing.js";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import { getItemIndex, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
 import { layoutTransformer } from "../../../_staging/slideshow/index.js";
-import { ILayoutSectionPath } from "../../../types.js";
+import { type ILayoutSectionPath } from "../../../types.js";
 import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { emptyDOMRect } from "../../constants.js";
 import { useDashboardItemPathAndSize } from "../../dashboard/components/DashboardItemPathAndSizeContext.js";

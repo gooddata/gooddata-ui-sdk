@@ -1,14 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    IExecutionConfig,
-    IFilter,
-    IMeasure,
-    ISortItem,
-    ITotal,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IExecutionConfig,
+    type IFilter,
+    type IMeasure,
+    type ISortItem,
+    type ITotal,
     bucketAttribute,
     bucketAttributes,
     bucketItems,
@@ -23,10 +23,10 @@ import {
 } from "@gooddata/sdk-model";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 
-import { IInsightToPropConversion, bucketConversion, insightConversion } from "./convertor.js";
+import { type IInsightToPropConversion, bucketConversion, insightConversion } from "./convertor.js";
 import { removeUseless } from "../../removeUseless.js";
 import { createSorts } from "../../sort.js";
-import { PropMeta } from "../types.js";
+import { type PropMeta } from "../types.js";
 
 function namedSdkModelPropMetaFor(name: string, propType: PropMeta["cardinality"]): PropMeta {
     return {

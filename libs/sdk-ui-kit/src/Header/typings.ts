@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
-import { HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
+import { type HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
 
 /**
  * @internal

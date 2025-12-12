@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IDashboard, IListedDashboard } from "@gooddata/sdk-model";
+import { type IDashboard, type IListedDashboard } from "@gooddata/sdk-model";
 
 /**
  * This function convert IDashboard into IListedDashboard

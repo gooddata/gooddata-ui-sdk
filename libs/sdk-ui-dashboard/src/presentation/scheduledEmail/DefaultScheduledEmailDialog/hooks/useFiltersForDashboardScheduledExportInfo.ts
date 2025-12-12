@@ -2,16 +2,16 @@
 import { compact } from "lodash-es";
 
 import {
-    DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
-    DashboardDateFilterConfigMode,
+    type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
-    FilterContextItem,
+    type FilterContextItem,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
-import { DateFilterOption } from "@gooddata/sdk-ui-filters";
+import { type DateFilterOption } from "@gooddata/sdk-ui-filters";
 
 import { useFiltersNamings } from "../../../../_staging/sharedHooks/useFiltersNamings.js";
 import {

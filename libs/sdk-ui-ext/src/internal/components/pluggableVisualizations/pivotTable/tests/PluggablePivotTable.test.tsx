@@ -4,10 +4,15 @@ import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { IInsight, ISettings, ISortItem } from "@gooddata/sdk-model";
-import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
-import { ColumnWidthItem, CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type ISettings, type ISortItem } from "@gooddata/sdk-model";
+import {
+    DefaultLocale,
+    type IDrillableItem,
+    type ILocale,
+    type VisualizationEnvironment,
+} from "@gooddata/sdk-ui";
+import { type ColumnWidthItem, CorePivotTable, type ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
 import { getMockReferencePoint } from "./mockReferencePoint.js";
@@ -31,14 +36,14 @@ import {
     validMeasureColumnWidthItem,
 } from "./widthItemsMock.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IFilters,
-    IGdcConfig,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IFilters,
+    type IGdcConfig,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";

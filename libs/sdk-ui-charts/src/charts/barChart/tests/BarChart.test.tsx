@@ -6,13 +6,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    IAttributeOrMeasure,
+    type IAttributeOrMeasure,
     MeasureGroupIdentifier,
     newAttributeSort,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import { BarChart } from "../BarChart.js";
 import { CoreBarChart } from "../CoreBarChart.js";
 

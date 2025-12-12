@@ -1,21 +1,21 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactElement, useEffect, useMemo } from "react";
+import { type ReactElement, useEffect, useMemo } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 
-import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { ErrorCodes, ErrorComponent, IntlWrapper, newErrorMapping } from "@gooddata/sdk-ui";
 
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
 import {
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-    RenderFunction,
-    UnmountFunction,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+    type RenderFunction,
+    type UnmountFunction,
 } from "../../interfaces/Visualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };

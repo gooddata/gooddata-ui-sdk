@@ -1,20 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IExecutionConfig, IFilter, IInsight, ObjRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    ExplicitDrill,
-    IErrorProps,
-    ILoadingProps,
-    ILocale,
-    IVisualizationCallbacks,
+    type IColorPalette,
+    type IExecutionConfig,
+    type IFilter,
+    type IInsight,
+    type ObjRef,
+} from "@gooddata/sdk-model";
+import {
+    type ExplicitDrill,
+    type IErrorProps,
+    type ILoadingProps,
+    type ILocale,
+    type IVisualizationCallbacks,
 } from "@gooddata/sdk-ui";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import { IGeoConfig } from "@gooddata/sdk-ui-geo";
-import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
-import { PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
+import { type IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { type IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
+import { type PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
 
 /**
  * @public

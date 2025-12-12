@@ -3,10 +3,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IDrillableItem } from "@gooddata/sdk-ui";
-import { CoreXirr, ICoreChartProps } from "@gooddata/sdk-ui-charts";
+import { type IDrillableItem } from "@gooddata/sdk-ui";
+import { CoreXirr, type ICoreChartProps } from "@gooddata/sdk-ui-charts";
 
-import { IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
+import { type IVisConstruct, type IVisProps } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";

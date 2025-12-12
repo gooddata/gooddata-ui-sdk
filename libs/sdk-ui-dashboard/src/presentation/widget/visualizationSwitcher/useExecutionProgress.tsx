@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 import {
-    DashboardCommandStarted,
-    DashboardEventHandler,
-    RequestAsyncRender,
-    ResolveAsyncRender,
+    type DashboardCommandStarted,
+    type DashboardEventHandler,
+    type RequestAsyncRender,
+    type ResolveAsyncRender,
     isDashboardCommandStarted,
     isDashboardFilterContextChanged,
     selectIsDashboardExecuted,

@@ -3,7 +3,7 @@
 import { ConfigSubsection } from "./ConfigSubsection.js";
 import { CellTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 import { messages } from "../../../locales.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 
 export interface ICellsControlProps {
     pushData: (data: any) => any;

@@ -4,17 +4,17 @@ import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { IntlWrapper, VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
 
 import * as fixtures from "../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../__mocks__/recordings.js";
-import { IChartConfig } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/index.js";
 import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
 import { ChartTransformation } from "../ChartTransformation.js";
 import { BOTTOM, MIDDLE, TOP } from "../constants/alignments.js";
-import { ISeriesItem } from "../typings/unsafe.js";
+import { type ISeriesItem } from "../typings/unsafe.js";
 
 const BarChartNoAttributes = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,

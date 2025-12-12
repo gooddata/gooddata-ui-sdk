@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IStaticFeatures } from "@gooddata/api-client-tiger";
+import { type IStaticFeatures } from "@gooddata/api-client-tiger";
 
 import { TigerFeaturesNames } from "../../uiFeatures.js";
 import { getStaticFeatures } from "../static.js";

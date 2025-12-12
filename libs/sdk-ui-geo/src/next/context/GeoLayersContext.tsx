@@ -1,19 +1,19 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useMemo } from "react";
+import { type ReactNode, createContext, useContext, useMemo } from "react";
 
-import { IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { ILayerPreparedData } from "../hooks/layers/useLayersPrepare.js";
 import type { GeoJSONSourceSpecification } from "../layers/common/mapFacade.js";
-import { IAvailableLegends, IGeoLegendItem } from "../types/common/legends.js";
-import { IAreaGeoData } from "../types/geoData/area.js";
-import { IPushpinGeoData } from "../types/geoData/pushpin.js";
-import { GeoLayerType } from "../types/layers/index.js";
+import { type IAvailableLegends, type IGeoLegendItem } from "../types/common/legends.js";
+import { type IAreaGeoData } from "../types/geoData/area.js";
+import { type IPushpinGeoData } from "../types/geoData/pushpin.js";
+import { type GeoLayerType } from "../types/layers/index.js";
 import type { IMapViewport } from "../types/map/provider.js";
-import { ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
 
 const EMPTY_AVAILABLE_LEGENDS: IAvailableLegends = {
     hasCategoryLegend: false,

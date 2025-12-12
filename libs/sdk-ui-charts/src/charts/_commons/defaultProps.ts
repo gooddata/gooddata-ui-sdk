@@ -2,7 +2,7 @@
 
 import { ErrorComponent, LoadingComponent, defaultErrorHandler } from "@gooddata/sdk-ui";
 
-import { ICoreChartProps } from "../../interfaces/index.js";
+import { type ICoreChartProps } from "../../interfaces/index.js";
 
 const defaultCoreChartProps: Pick<
     ICoreChartProps,

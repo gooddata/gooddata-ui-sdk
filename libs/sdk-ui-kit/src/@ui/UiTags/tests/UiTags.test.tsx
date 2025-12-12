@@ -3,8 +3,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { IAccessibilityConfigBase } from "../../../typings/accessibility.js";
-import { UiTagsProps } from "../types.js";
+import { type IAccessibilityConfigBase } from "../../../typings/accessibility.js";
+import { type UiTagsProps } from "../types.js";
 import { UiTags } from "../UiTags.js";
 
 const shortTags: UiTagsProps["tags"] = [

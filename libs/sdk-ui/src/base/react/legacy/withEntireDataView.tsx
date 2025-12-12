@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { Component, ComponentClass, ComponentType } from "react";
+import { Component, type ComponentClass, type ComponentType } from "react";
 
 import { isEqual, omit } from "lodash-es";
-import { IntlShape, injectIntl } from "react-intl";
+import { type IntlShape, injectIntl } from "react-intl";
 
 import {
-    IClusteringConfig,
-    IDataView,
-    IExecutionResult,
-    IForecastConfig,
-    IPreparedExecution,
+    type IClusteringConfig,
+    type IDataView,
+    type IExecutionResult,
+    type IForecastConfig,
+    type IPreparedExecution,
     isNoDataError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
@@ -22,16 +22,16 @@ import {
     ClusteringNotReceivedSdkError,
     DataTooLargeToDisplaySdkError,
     ForecastNotReceivedSdkError,
-    GoodDataSdkError,
+    type GoodDataSdkError,
     NegativeValuesSdkError,
     isClusteringNotReceived,
     isForecastNotReceived,
 } from "../../errors/GoodDataSdkError.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { DataViewFacade } from "../../results/facade.js";
-import { IExportFunction, ILoadingState } from "../../vis/Events.js";
+import { type IExportFunction, type ILoadingState } from "../../vis/Events.js";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
-import { IDataVisualizationProps } from "../../vis/VisualizationProps.js";
+import { type IDataVisualizationProps } from "../../vis/VisualizationProps.js";
 
 interface IDataViewLoadState {
     isLoading: boolean;

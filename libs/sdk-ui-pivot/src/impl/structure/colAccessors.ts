@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { AnyCol, isMixedValuesCol, isSeriesCol, isSliceMeasureCol } from "./tableDescriptorTypes.js";
+import { type AnyCol, isMixedValuesCol, isSeriesCol, isSliceMeasureCol } from "./tableDescriptorTypes.js";
 
 /**
  * Returns localId of measure whose values the provided column contains. For convenience, any type of column

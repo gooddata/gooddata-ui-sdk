@@ -4,27 +4,27 @@ import { cloneDeep, range, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording, dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { IColorPaletteItem, IMeasureDescriptor, emptyDef, idRef } from "@gooddata/sdk-model";
+import { type ScenarioRecording, dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { type IColorPaletteItem, type IMeasureDescriptor, emptyDef, idRef } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, HeaderPredicates, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
-    ChartFillType,
-    IColorStrategy,
+    type ChartFillType,
+    type IColorStrategy,
     getRgbString,
 } from "@gooddata/sdk-ui-vis-commons";
 
 import * as fixtures from "../../../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     PIE_CHART_LIMIT,
     SANKEY_CHART_NODE_LIMIT,
 } from "../../../constants/limits.js";
-import { StackingType } from "../../../constants/stacking.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
-import { IChartOptions, IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
+import { type StackingType } from "../../../constants/stacking.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
+import { type IChartOptions, type IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
 import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
 import { GRAY } from "../../_util/color.js";
 import { customEscape } from "../../_util/common.js";
@@ -35,7 +35,7 @@ import { getHeatmapSeries } from "../../heatmap/heatmapChartSeries.js";
 import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring.js";
 import { TreemapColorStrategy } from "../../treemap/treemapColoring.js";
 import { getDrillableSeries } from "../chartDrilling.js";
-import { IValidationResult, isNegativeValueIncluded, validateData } from "../chartLimits.js";
+import { type IValidationResult, isNegativeValueIncluded, validateData } from "../chartLimits.js";
 import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder.js";
 import { getSeries, getSeriesItemData } from "../chartSeries.js";
 import {

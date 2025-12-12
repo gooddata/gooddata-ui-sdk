@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ElementType, PureComponent, ReactNode, createRef } from "react";
+import { type ElementType, PureComponent, type ReactNode, createRef } from "react";
 
 import cx from "classnames";
 
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 // ShortenText adds ellipsis (…) in the middle of the string.
 // SIDE_SCALE_RATIO is a constant which tells the percentage of

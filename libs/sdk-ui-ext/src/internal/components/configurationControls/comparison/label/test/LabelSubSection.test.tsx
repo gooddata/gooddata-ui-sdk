@@ -5,14 +5,14 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
     CalculateAs,
-    CalculationType,
+    type CalculationType,
     ComparisonPositionValues,
-    IDefaultLabelKeys,
+    type IDefaultLabelKeys,
 } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages } from "../../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as CheckboxControl from "../../../CheckboxControl.js";

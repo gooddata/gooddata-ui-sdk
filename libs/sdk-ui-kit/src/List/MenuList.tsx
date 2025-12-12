@@ -1,10 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, HTMLAttributes, MouseEvent, ReactNode, RefObject } from "react";
+import {
+    type CSSProperties,
+    type HTMLAttributes,
+    type MouseEvent,
+    type ReactNode,
+    type RefObject,
+} from "react";
 
 import classnames from "classnames";
 
-import { IMenuContainerAccessibilityConfig } from "../typings/accessibility.js";
+import { type IMenuContainerAccessibilityConfig } from "../typings/accessibility.js";
 
 /**
  * @internal

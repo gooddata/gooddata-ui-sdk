@@ -3,7 +3,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { type ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 import { useSearchMetrics } from "../useSearchMetrics.js";
 

@@ -5,12 +5,12 @@ import { useMemo } from "react";
 import { cloneDeep, set } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
+import { type ISeparators, type PushDataCallback } from "@gooddata/sdk-ui";
 import { MeasureNumberFormat } from "@gooddata/sdk-ui-kit";
 
 import { NumberFormatToggleButton } from "./NumberFormatToggleButton.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
 import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
 

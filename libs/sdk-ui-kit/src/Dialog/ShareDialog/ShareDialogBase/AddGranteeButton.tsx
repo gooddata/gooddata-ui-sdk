@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { MouseEvent, useCallback } from "react";
+import { type MouseEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IAddUserOrGroupButton } from "./types.js";
+import { type IAddUserOrGroupButton } from "./types.js";
 import { ADD_GRANTEE_ID } from "./utils.js";
 import { UiTooltip } from "../../../@ui/UiTooltip/UiTooltip.js";
 import { useIdPrefixed } from "../../../utils/useId.js";

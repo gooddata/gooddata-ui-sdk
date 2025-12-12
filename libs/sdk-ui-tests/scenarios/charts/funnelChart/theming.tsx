@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
+import { FunnelChart, type IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 
 import { FunnelChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

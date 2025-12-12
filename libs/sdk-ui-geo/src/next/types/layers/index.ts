@@ -1,6 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type INullableFilter,
+    type ISortItem,
+} from "@gooddata/sdk-model";
 
 /**
  * Layer types supported by GeoChartNext.

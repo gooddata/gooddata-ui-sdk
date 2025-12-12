@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
 /**
  * With custom size layouting enable it needs to be aware of the widget size to update

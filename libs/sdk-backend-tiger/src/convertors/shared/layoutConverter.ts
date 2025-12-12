@@ -2,14 +2,14 @@
 
 import { isEmpty, update } from "lodash-es";
 
-import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
+import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardLayout,
-    IDrillToCustomUrl,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IVisualizationSwitcherWidget,
-    IVisualizationSwitcherWidgetDefinition,
+    type IDashboardLayout,
+    type IDrillToCustomUrl,
+    type IInsightWidget,
+    type IInsightWidgetDefinition,
+    type IVisualizationSwitcherWidget,
+    type IVisualizationSwitcherWidgetDefinition,
     idRef,
     isAttributeHierarchyReference,
     isDrillToCustomUrl,

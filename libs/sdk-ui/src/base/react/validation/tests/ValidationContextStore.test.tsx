@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { act, render, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { IInvalidNode, IValidationContextValue } from "../types.js";
+import { type IInvalidNode, type IValidationContextValue } from "../types.js";
 import { createInvalidDatapoint } from "../utils.js";
 import { ValidationContextStore, useValidationContextValue } from "../ValidationContextStore.js";
 

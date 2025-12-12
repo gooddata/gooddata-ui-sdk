@@ -1,64 +1,67 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType, Context, ReactElement } from "react";
+import { type ComponentType, type Context, type ReactElement } from "react";
 
-import { ReactReduxContextValue } from "react-redux";
+import { type ReactReduxContextValue } from "react-redux";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IDashboard, ITheme, IWorkspacePermissions, ObjRef } from "@gooddata/sdk-model";
-import { IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IDashboard, type ITheme, type IWorkspacePermissions, type ObjRef } from "@gooddata/sdk-model";
+import { type IErrorProps, type ILoadingProps } from "@gooddata/sdk-ui";
 
-import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
+import { type CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import {
-    DashboardConfig,
-    DashboardDispatch,
-    DashboardEventHandler,
-    DashboardModelCustomizationFns,
-    DashboardState,
-    WidgetsOverlayFn,
+    type DashboardConfig,
+    type DashboardDispatch,
+    type DashboardEventHandler,
+    type DashboardModelCustomizationFns,
+    type DashboardState,
+    type WidgetsOverlayFn,
 } from "../../model/index.js";
-import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
-import { InsightComponentSetProvider } from "../componentDefinition/types.js";
 import {
-    InsightMenuItemsProvider,
-    OptionalAttributeFilterComponentProvider,
-    OptionalDashboardContentComponentProvider,
-    OptionalDashboardLayoutComponentProvider,
-    OptionalDateFilterComponentProvider,
-    OptionalInsightBodyComponentProvider,
-    OptionalInsightComponentProvider,
-    OptionalInsightMenuButtonComponentProvider,
-    OptionalInsightMenuComponentProvider,
-    OptionalInsightMenuTitleComponentProvider,
-    OptionalRichTextComponentProvider,
-    OptionalRichTextMenuComponentProvider,
-    OptionalRichTextMenuTitleComponentProvider,
-    OptionalShowAsTableButtonComponentProvider,
-    OptionalVisualizationSwitcherComponentProvider,
-    OptionalVisualizationSwitcherToolbarComponentProvider,
-    OptionalWidgetComponentProvider,
-    RichTextMenuItemsProvider,
+    type CustomAlertingDialogComponent,
+    type CustomAlertingManagementDialogComponent,
+} from "../alerting/types.js";
+import { type InsightComponentSetProvider } from "../componentDefinition/types.js";
+import {
+    type InsightMenuItemsProvider,
+    type OptionalAttributeFilterComponentProvider,
+    type OptionalDashboardContentComponentProvider,
+    type OptionalDashboardLayoutComponentProvider,
+    type OptionalDateFilterComponentProvider,
+    type OptionalInsightBodyComponentProvider,
+    type OptionalInsightComponentProvider,
+    type OptionalInsightMenuButtonComponentProvider,
+    type OptionalInsightMenuComponentProvider,
+    type OptionalInsightMenuTitleComponentProvider,
+    type OptionalRichTextComponentProvider,
+    type OptionalRichTextMenuComponentProvider,
+    type OptionalRichTextMenuTitleComponentProvider,
+    type OptionalShowAsTableButtonComponentProvider,
+    type OptionalVisualizationSwitcherComponentProvider,
+    type OptionalVisualizationSwitcherToolbarComponentProvider,
+    type OptionalWidgetComponentProvider,
+    type RichTextMenuItemsProvider,
 } from "../dashboardContexts/index.js";
-import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/index.js";
-import { CustomFilterBarComponent } from "../filterBar/index.js";
-import { CustomEmptyLayoutDropZoneBodyComponent } from "../flexibleLayout/index.js";
-import { CustomSaveAsDialogComponent } from "../saveAs/index.js";
+import { type CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/index.js";
+import { type CustomFilterBarComponent } from "../filterBar/index.js";
+import { type CustomEmptyLayoutDropZoneBodyComponent } from "../flexibleLayout/index.js";
+import { type CustomSaveAsDialogComponent } from "../saveAs/index.js";
 import {
-    CustomScheduledEmailDialogComponent,
-    CustomScheduledEmailManagementDialogComponent,
+    type CustomScheduledEmailDialogComponent,
+    type CustomScheduledEmailManagementDialogComponent,
 } from "../scheduledEmail/index.js";
-import { CustomShareDialogComponent } from "../shareDialog/index.js";
-import { CustomToolbarComponent } from "../toolbar/index.js";
+import { type CustomShareDialogComponent } from "../shareDialog/index.js";
+import { type CustomToolbarComponent } from "../toolbar/index.js";
 import {
-    CustomButtonBarComponent,
-    CustomMenuButtonComponent,
-    CustomSaveButtonComponent,
-    CustomSettingButtonComponent,
-    CustomTitleComponent,
-    CustomTopBarComponent,
-    IMenuButtonConfiguration,
+    type CustomButtonBarComponent,
+    type CustomMenuButtonComponent,
+    type CustomSaveButtonComponent,
+    type CustomSettingButtonComponent,
+    type CustomTitleComponent,
+    type CustomTopBarComponent,
+    type IMenuButtonConfiguration,
 } from "../topBar/index.js";
-import { CustomDashboardNestedLayoutComponent as CustomDashboardLayoutComponent } from "../widget/index.js";
+import { type CustomDashboardNestedLayoutComponent as CustomDashboardLayoutComponent } from "../widget/index.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard

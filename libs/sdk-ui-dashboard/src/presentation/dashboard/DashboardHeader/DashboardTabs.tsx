@@ -1,6 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { ChangeEventHandler, KeyboardEventHandler, ReactElement, useCallback, useMemo, useRef } from "react";
+import {
+    type ChangeEventHandler,
+    type KeyboardEventHandler,
+    type ReactElement,
+    useCallback,
+    useMemo,
+    useRef,
+} from "react";
 
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
@@ -8,8 +15,8 @@ import { v4 as uuid } from "uuid";
 import { usePropState } from "@gooddata/sdk-ui";
 import {
     DefaultUiTabsTabValue,
-    IUiTab,
-    IUiTabComponentProps,
+    type IUiTab,
+    type IUiTabComponentProps,
     SELECT_ITEM_ACTION,
     UiFocusManager,
     UiIcon,
@@ -24,7 +31,7 @@ import {
 
 import {
     DEFAULT_TAB_ID,
-    TabState,
+    type TabState,
     cancelRenamingDashboardTab,
     convertDashboardTabFromDefault,
     createDashboardTab,

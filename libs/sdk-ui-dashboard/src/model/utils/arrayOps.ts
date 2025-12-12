@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { Draft } from "@reduxjs/toolkit";
+import { type Draft } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { RelativeIndex } from "../types/layoutTypes.js";
+import { type RelativeIndex } from "../types/layoutTypes.js";
 
 export function addArrayElements<T>(arr: Draft<T[]>, index: RelativeIndex, items: Draft<T[]>): void {
     if (index === 0) {

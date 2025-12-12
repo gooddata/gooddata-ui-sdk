@@ -1,15 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IDashboardLayoutContainerDirection,
-    IDashboardLayoutSectionHeader,
-    ObjRef,
-    ScreenSize,
+    type IDashboardLayoutContainerDirection,
+    type IDashboardLayoutSectionHeader,
+    type ObjRef,
+    type ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "./base.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
-import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes.js";
+import { type IDashboardCommand } from "./base.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
+import {
+    type DashboardItemDefinition,
+    type RelativeIndex,
+    type StashedDashboardItemsId,
+} from "../types/layoutTypes.js";
 
 /**
  * Payload of the {@link AddLayoutSection} command.

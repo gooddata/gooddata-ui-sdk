@@ -3,8 +3,8 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IAttributeDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper.js";

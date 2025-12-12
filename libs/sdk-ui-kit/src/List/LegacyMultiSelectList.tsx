@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ElementType, ReactElement, useCallback, useMemo } from "react";
+import { type ElementType, type ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -9,7 +9,7 @@ import { guidFor } from "./guid.js";
 import { LegacyList } from "./LegacyList.js";
 import { LegacyListItem } from "./LegacyListItem.js";
 import { LegacyMultiSelectListItem } from "./LegacyMultiSelectListItem.js";
-import { ScrollCallback } from "./List.js";
+import { type ScrollCallback } from "./List.js";
 import { Button } from "../Button/index.js";
 import { FlexDimensions } from "../FlexDimensions/index.js";
 

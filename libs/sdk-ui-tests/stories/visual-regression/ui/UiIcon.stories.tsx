@@ -1,8 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentTable, UiIcon, UiIconProps, iconPaths, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import {
+    ComponentTable,
+    UiIcon,
+    type UiIconProps,
+    iconPaths,
+    propCombinationsFor,
+} from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const iconCombinations = propCombinationsFor({ label: "icon", size: 20 } as UiIconProps);

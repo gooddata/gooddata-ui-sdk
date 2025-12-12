@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui-charts";
+import { DonutChart, type IDonutChartProps } from "@gooddata/sdk-ui-charts";
 
 import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

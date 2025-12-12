@@ -4,19 +4,19 @@ import { isEmpty, omit, omitBy } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    ArithmeticMeasureOperatorEnum,
-    ComparisonOperatorEnum,
-    JsonApiAutomationIn,
-    JsonApiAutomationInAttributes,
-    JsonApiAutomationInAttributesAlert,
-    RelativeOperatorEnum,
+    type ArithmeticMeasureOperatorEnum,
+    type ComparisonOperatorEnum,
+    type JsonApiAutomationIn,
+    type JsonApiAutomationInAttributes,
+    type JsonApiAutomationInAttributesAlert,
+    type RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
-import { IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
+import { type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import {
-    IAutomationAlert,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IExecutionDefinition,
+    type IAutomationAlert,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IExecutionDefinition,
     isAutomationExternalUserRecipient,
     isAutomationUserRecipient,
     isExportDefinitionDashboardRequestPayload,

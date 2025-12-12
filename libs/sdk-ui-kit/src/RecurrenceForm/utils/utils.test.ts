@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import {

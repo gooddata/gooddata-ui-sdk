@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { DependencyList, useEffect, useState } from "react";
+import { type DependencyList, useEffect, useState } from "react";
 
-import { IPagedResource } from "@gooddata/sdk-backend-spi";
+import { type IPagedResource } from "@gooddata/sdk-backend-spi";
 
 import { usePromiseCache } from "./usePromiseCache.js";
 

@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer.js";
 import { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer.js";
 import {
-    IDashboardLayoutItemRenderer,
-    IDashboardLayoutWidgetRenderProps,
-    IDashboardLayoutWidgetRenderer,
+    type IDashboardLayoutItemRenderer,
+    type IDashboardLayoutWidgetRenderProps,
+    type IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
-import { RenderMode } from "../../../types.js";
+import { type IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { type RenderMode } from "../../../types.js";
 
 /**
  * @alpha

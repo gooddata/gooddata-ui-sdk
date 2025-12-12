@@ -1,15 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import classnames from "classnames";
 import { useIntl } from "react-intl";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    GenAIObjectType,
+    type GenAIObjectType,
     type ISemanticSearchRelationship,
-    ISemanticSearchResultItem,
+    type ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
 import { useDebouncedState, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
@@ -25,8 +25,6 @@ import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
 import { buildSemanticSearchItems } from "./itemsBuilder.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { PermissionsProvider, usePermissions } from "./permissions/index.js";
-import * as searchItemStyles from "./SearchItem.module.scss.js";
-import * as styles from "./SemanticSearch.module.scss.js";
 import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 
 /**
@@ -173,12 +171,12 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
 
     return (
         <Dropdown
-            className={classnames(styles.semanticSearch, className)}
+            className={classnames("gd-semantic-search", className)}
             ignoreClicksOnByClass={[
                 ".gd-bubble",
                 ".gd-input-icon-clear",
-                `.${searchItemStyles.resultsItem}`,
-                `.${styles.input}`,
+                ".gd-semantic-search__results-item",
+                ".gd-semantic-search__input",
             ]}
             onOpenStateChanged={(isOpen) => {
                 if (!isOpen) {
@@ -191,7 +189,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
                     <div ref={ref}>
                         <Input
                             ref={inputRef}
-                            className={styles.input}
+                            className="gd-semantic-search__input"
                             id={inputId}
                             type="search"
                             placeholder={placeholder}
@@ -235,7 +233,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
 
                                 // API search message
                                 if (!items.length && searchMessage) {
-                                    return <div className={styles.message}>{searchMessage}</div>;
+                                    return <div className="gd-semantic-search__message">{searchMessage}</div>;
                                 }
                                 // No search results
                                 if (!items.length) {

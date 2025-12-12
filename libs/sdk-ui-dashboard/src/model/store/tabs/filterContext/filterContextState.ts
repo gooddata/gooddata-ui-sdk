@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
+    type FilterContextItem,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IDashboardObjectIdentity,
+    type IFilterContextDefinition,
 } from "@gooddata/sdk-model";
 
 /**

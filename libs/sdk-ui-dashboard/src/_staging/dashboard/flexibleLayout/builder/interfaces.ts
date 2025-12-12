@@ -1,23 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
-import { InsightWidgetBuilder, KpiWidgetBuilder, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSectionHeader,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardWidget,
-    ObjRef,
+    type InsightWidgetBuilder,
+    type KpiWidgetBuilder,
+    type ValueOrUpdateCallback,
+} from "@gooddata/sdk-backend-base";
+import {
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSectionHeader,
+    type IDashboardLayoutSize,
+    type IDashboardLayoutSizeByScreenSize,
+    type IDashboardWidget,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types.js";
 import {
-    IDashboardLayoutFacade,
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutItemsFacade,
-    IDashboardLayoutSectionFacade,
-    IDashboardLayoutSectionsFacade,
+    type IDashboardLayoutFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutItemsFacade,
+    type IDashboardLayoutSectionFacade,
+    type IDashboardLayoutSectionsFacade,
 } from "../facade/interfaces.js";
 
 /**

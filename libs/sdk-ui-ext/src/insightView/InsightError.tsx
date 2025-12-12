@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType, useMemo } from "react";
+import { type ComponentType, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
 import {
     ErrorComponent as DefaultError,
-    GoodDataSdkError,
-    IErrorDescriptors,
-    IErrorProps,
+    type GoodDataSdkError,
+    type IErrorDescriptors,
+    type IErrorProps,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 

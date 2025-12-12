@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { useContext } from "react";
 
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { PermissionsContext } from "./PermissionsContext.js";
 

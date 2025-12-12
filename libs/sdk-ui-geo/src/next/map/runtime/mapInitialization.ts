@@ -10,8 +10,8 @@ import type {
     MapOptions,
     Popup,
 } from "../../layers/common/mapFacade.js";
-import { IMapOptions } from "../../types/map/provider.js";
-import { IMapLibreLocale } from "../../utils/mapLocale.js";
+import { type IMapOptions } from "../../types/map/provider.js";
+import { type IMapLibreLocale } from "../../utils/mapLocale.js";
 import { fetchMapStyle } from "../style/styleEndpoint.js";
 
 /**
@@ -22,6 +22,7 @@ import { fetchMapStyle } from "../style/styleEndpoint.js";
 export interface IMapInitResult {
     map: MapLibreMap;
     tooltip: Popup;
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     maplibregl: typeof import("maplibre-gl");
 }
 

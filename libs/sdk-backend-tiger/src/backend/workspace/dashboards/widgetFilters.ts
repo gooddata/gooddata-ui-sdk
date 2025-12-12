@@ -3,12 +3,12 @@
 import { zip } from "lodash-es";
 
 import {
-    IAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDateFilter,
-    IFilter,
-    IWidget,
-    ObjRef,
+    type IAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDateFilter,
+    type IFilter,
+    type IWidget,
+    type ObjRef,
     dashboardFilterReferenceObjRef,
     filterLocalIdentifier,
     filterObjRef,

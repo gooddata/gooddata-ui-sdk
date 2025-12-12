@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { suppressConsole } from "@gooddata/util";
 
-import { DashboardEventHandler, singleEventTypeHandler } from "../../../model/index.js";
+import { type DashboardEventHandler, singleEventTypeHandler } from "../../../model/index.js";
 import { DefaultDashboardEventHandling } from "../dashboardEventHandling.js";
 
 function assertCorrectHandler(handler: DashboardEventHandler, expectedEvtType: string, handlerFn: any): void {

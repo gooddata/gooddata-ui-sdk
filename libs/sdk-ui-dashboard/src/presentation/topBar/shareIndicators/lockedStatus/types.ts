@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 /**
  * @alpha
  */

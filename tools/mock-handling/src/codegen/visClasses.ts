@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import * as path from "path";
 
-import { VisClassesRecording } from "../recordings/visClasses.js";
+import { type VisClassesRecording } from "../recordings/visClasses.js";
 
 /**
  * Generate constants for visClasses recording. This function will return non-exported constant per recording.

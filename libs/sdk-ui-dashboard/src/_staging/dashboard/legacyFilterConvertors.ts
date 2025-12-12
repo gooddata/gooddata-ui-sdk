@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import {
-    IDashboardAttributeFilter,
+    type IDashboardAttributeFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
 } from "@gooddata/sdk-model";

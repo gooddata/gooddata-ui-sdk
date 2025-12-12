@@ -1,11 +1,16 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
 
-import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-model";
-import { ILocale, resolveLocale } from "@gooddata/sdk-ui";
+import { type IDateFilterConfigsQueryResult, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    type IColorPalette,
+    type IDateFilterConfig,
+    type ISeparators,
+    type ISettings,
+} from "@gooddata/sdk-model";
+import { type ILocale, resolveLocale } from "@gooddata/sdk-ui";
 
 import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
 import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
@@ -16,15 +21,15 @@ import {
     validateDateFilterConfig,
 } from "../../../../_staging/dateFilterConfig/validation.js";
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion.js";
-import { InitializeDashboard } from "../../../commands/index.js";
+import { type InitializeDashboard } from "../../../commands/index.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import {
-    DashboardConfig,
-    DashboardContext,
-    ResolvedDashboardConfig,
+    type DashboardConfig,
+    type DashboardContext,
+    type ResolvedDashboardConfig,
     isResolvedConfig,
 } from "../../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../../types/sagas.js";
+import { type PromiseFnReturnType } from "../../../types/sagas.js";
 import { loadAutomationsData } from "../common/loadAutomationsData.js";
 
 function loadDateFilterConfig({

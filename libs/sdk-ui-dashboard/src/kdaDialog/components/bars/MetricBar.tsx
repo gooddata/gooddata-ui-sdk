@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { UiChip, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { DeepReadonly, IKdaDefinition } from "../../types.js";
+import { type DeepReadonly, type IKdaDefinition } from "../../types.js";
 
 interface IMetricBarProps {
     definition: DeepReadonly<IKdaDefinition>;

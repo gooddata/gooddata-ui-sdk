@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import globalAxios, { AxiosInstance, CreateAxiosDefaults } from "axios";
+import globalAxios, { type AxiosInstance, type CreateAxiosDefaults } from "axios";
 import { setupCache } from "axios-cache-interceptor";
 import { cloneDeep, merge } from "lodash-es";
 

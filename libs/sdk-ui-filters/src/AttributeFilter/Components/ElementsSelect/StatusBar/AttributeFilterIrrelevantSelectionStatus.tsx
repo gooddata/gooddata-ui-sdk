@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode, useMemo } from "react";
+import { type MouseEvent, type ReactNode, useMemo } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { type IAttributeElement } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS = [{ align: "bl tl" }];

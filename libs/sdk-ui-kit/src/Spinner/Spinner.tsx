@@ -4,7 +4,7 @@ import { memo, useMemo } from "react";
 
 import cx from "classnames";
 
-import { ISpinnerProps } from "./typings.js";
+import { type ISpinnerProps } from "./typings.js";
 
 /**
  * @internal

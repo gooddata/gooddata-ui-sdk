@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Children, ElementType, Fragment, PureComponent, ReactNode, cloneElement } from "react";
+import { Children, type ElementType, Fragment, PureComponent, type ReactNode, cloneElement } from "react";
 
 import cx from "classnames";
 import { pickBy } from "lodash-es";

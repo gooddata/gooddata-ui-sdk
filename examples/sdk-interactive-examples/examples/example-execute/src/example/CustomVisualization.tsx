@@ -6,8 +6,8 @@ import DefaultHighchartsWheel from "highcharts/modules/dependency-wheel.js";
 import DefaultHighchartSankey from "highcharts/modules/sankey.js";
 import DefaultHighchartsReact from "highcharts-react-official";
 
-import { IMeasure, IMeasureDefinition, isResultAttributeHeader } from "@gooddata/sdk-model";
-import { WithLoadingResult } from "@gooddata/sdk-ui";
+import { type IMeasure, type IMeasureDefinition, isResultAttributeHeader } from "@gooddata/sdk-model";
+import { type WithLoadingResult } from "@gooddata/sdk-ui";
 
 const HighchartSankey = defaultImport(DefaultHighchartSankey);
 const HighchartsWheel = defaultImport(DefaultHighchartsWheel);

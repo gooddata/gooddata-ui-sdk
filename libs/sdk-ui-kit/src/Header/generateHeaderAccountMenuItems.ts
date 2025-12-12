@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import { defineMessages } from "react-intl";
 
-import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type ISettings, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
-import { IHeaderMenuItem } from "./typings.js";
+import { type IHeaderMenuItem } from "./typings.js";
 
 const messages = defineMessages({
     workspaceSettingsMenuItem: { id: "gs.header.workspaceSettings" },

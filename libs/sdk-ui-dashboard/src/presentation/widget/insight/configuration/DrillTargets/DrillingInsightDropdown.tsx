@@ -2,10 +2,10 @@
 
 import { useMemo } from "react";
 
-import { IInsight, ObjRef, insightVisualizationType, isInsight } from "@gooddata/sdk-model";
+import { type IInsight, type ObjRef, insightVisualizationType, isInsight } from "@gooddata/sdk-model";
 
 import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
-import { IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types.js";
+import { type IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types.js";
 import { InsightDropdown } from "../../../../widget/common/InsightDropdown.js";
 
 export interface IDrillingInsightDropdownProps {

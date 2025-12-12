@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    INotificationChannelExternalRecipient,
-    INotificationChannelMetadataObject,
-    INotificationChannelMetadataObjectDefinition,
-    INotificationChannelTestResponse,
+    type INotificationChannelExternalRecipient,
+    type INotificationChannelMetadataObject,
+    type INotificationChannelMetadataObjectDefinition,
+    type INotificationChannelTestResponse,
 } from "@gooddata/sdk-model";
 
-import { INotificationChannelsQuery } from "./query.js";
+import { type INotificationChannelsQuery } from "./query.js";
 
 /**
  * This service provides access to organization notifications channels.

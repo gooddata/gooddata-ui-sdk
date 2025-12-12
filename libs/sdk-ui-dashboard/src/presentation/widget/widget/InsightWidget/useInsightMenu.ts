@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react";
+import { type Dispatch, type SetStateAction, useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import {
@@ -16,10 +16,10 @@ import {
 } from "../../../../model/index.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
 import {
-    AlertingDisabledReason,
-    DisabledReason,
-    IInsightMenuItem,
-    SchedulingDisabledReason,
+    type AlertingDisabledReason,
+    type DisabledReason,
+    type IInsightMenuItem,
+    type SchedulingDisabledReason,
     getDefaultInsightMenuItems,
 } from "../../insightMenu/index.js";
 

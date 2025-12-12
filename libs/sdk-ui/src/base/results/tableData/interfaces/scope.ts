@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    IResultAttributeHeader,
-    IResultMeasureHeader,
-    IResultTotalHeader,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
+    type IResultAttributeHeader,
+    type IResultMeasureHeader,
+    type IResultTotalHeader,
 } from "@gooddata/sdk-model";
 
 /**

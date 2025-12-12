@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 import { describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { ColorPicker } from "../ColorPicker.js";
-import { IColorPickerProps } from "../typings.js";
+import { type IColorPickerProps } from "../typings.js";
 
 const initialRgbColor: ColorFormats.RGB = {
     r: 255,

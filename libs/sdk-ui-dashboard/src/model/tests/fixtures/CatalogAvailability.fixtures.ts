@@ -2,7 +2,7 @@
 
 import { invariant } from "ts-invariant";
 
-import { ICatalogDateDataset, idRef } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset, idRef } from "@gooddata/sdk-model";
 
 /*
  * The catalog availability mocks for date dataset queries.

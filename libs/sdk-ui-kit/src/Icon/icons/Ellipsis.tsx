@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IIconProps } from "../typings.js";
+import { type IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
 
 /**

@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
 import { GeoChartNext } from "./GeoChartNext.js";
 import { AREA_LAYER_ID, createAreaLayer } from "./layers/area/layerFactory.js";
-import { IGeoLayer } from "./types/layers/index.js";
-import { IGeoAreaChartProps } from "./types/props/areaChart/public.js";
+import { type IGeoLayer } from "./types/layers/index.js";
+import { type IGeoAreaChartProps } from "./types/props/areaChart/public.js";
 
 export { AREA_LAYER_ID };
 

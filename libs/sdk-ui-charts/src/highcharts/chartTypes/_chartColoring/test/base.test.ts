@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IColor, IColorPalette } from "@gooddata/sdk-model";
+import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
 describe("isValidMappedColor", () => {

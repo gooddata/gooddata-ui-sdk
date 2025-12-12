@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
 import cx from "classnames";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { DashboardAccessibilityLimitation } from "./types.js";
+import { type DashboardAccessibilityLimitation } from "./types.js";
 
 const tooltipAlignPoints = [
     { align: "cl cr", offset: { x: 0, y: -2 } },

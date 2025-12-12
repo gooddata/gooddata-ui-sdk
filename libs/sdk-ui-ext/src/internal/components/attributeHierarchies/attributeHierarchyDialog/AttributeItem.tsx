@@ -2,7 +2,7 @@
 
 import { AttributeDropdown } from "./AttributeDropdown.js";
 import { AttributeItemActions } from "./AttributeItemActions.js";
-import { IAttributeData } from "./types.js";
+import { type IAttributeData } from "./types.js";
 
 interface IAttributeItemCellProps {
     rowIndex: number;

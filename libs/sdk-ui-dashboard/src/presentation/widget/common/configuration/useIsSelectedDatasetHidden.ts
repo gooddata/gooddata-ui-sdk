@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { useMemo } from "react";
 
-import { ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";

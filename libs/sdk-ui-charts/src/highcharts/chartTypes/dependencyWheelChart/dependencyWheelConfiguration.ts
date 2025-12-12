@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { cloneDeep } from "lodash-es";
 
-import { HighchartsOptions } from "../../lib/index.js";
+import { type HighchartsOptions } from "../../lib/index.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
 
 const DEPENDENCY_WHEEL_TEMPLATE = {

@@ -6,7 +6,7 @@ import { InternalIntlWrapper, MinMaxControl } from "@gooddata/sdk-ui-ext/interna
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { IStoryParameters, IViewport } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, type IViewport } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const mobileViewport: IViewport[] = [{ label: "mobile-view", height: 800, width: 480 }];

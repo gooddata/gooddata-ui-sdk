@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IDashboardLayout } from "@gooddata/sdk-model";
+import { type IDashboardLayout } from "@gooddata/sdk-model";
 
 import {
     findSection,
@@ -9,8 +9,11 @@ import {
     getItemIndex,
     getSectionIndex,
 } from "../../../../_staging/layout/coordinates.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
-import { ExtendedDashboardLayoutSection, ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types.js";
+import {
+    type ExtendedDashboardLayoutSection,
+    type ExtendedDashboardWidget,
+} from "../../../types/layoutTypes.js";
 
 export function validateSectionPlacement(
     layout: IDashboardLayout<ExtendedDashboardWidget>,

@@ -1,34 +1,34 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IAnalyticalBackend,
-    IAnalyticalWorkspace,
-    IAuthenticatedPrincipal,
-    IAuthenticationContext,
-    IAuthenticationProvider,
-    IBackendCapabilities,
-    IDataSourcesService,
-    IEntitlements,
-    IGeoService,
-    IOrganization,
-    IOrganizations,
-    IUserService,
-    IWorkspacesQueryFactory,
+    type IAnalyticalBackend,
+    type IAnalyticalWorkspace,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationContext,
+    type IAuthenticationProvider,
+    type IBackendCapabilities,
+    type IDataSourcesService,
+    type IEntitlements,
+    type IGeoService,
+    type IOrganization,
+    type IOrganizations,
+    type IUserService,
+    type IWorkspacesQueryFactory,
     NotAuthenticated,
     NotSupported,
     isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 
-import { CustomBackendConfig } from "./config.js";
+import { type CustomBackendConfig } from "./config.js";
 import { CustomWorkspace } from "./workspace.js";
 import {
     AnonymousAuthProvider,
     AuthProviderCallGuard,
-    AuthenticatedAsyncCall,
-    IAuthProviderCallGuard,
-    IAuthenticatedAsyncCallContext,
+    type AuthenticatedAsyncCall,
+    type IAuthProviderCallGuard,
+    type IAuthenticatedAsyncCallContext,
 } from "../toolkit/auth.js";
-import { TelemetryData } from "../toolkit/backend.js";
+import { type TelemetryData } from "../toolkit/backend.js";
 
 //
 //

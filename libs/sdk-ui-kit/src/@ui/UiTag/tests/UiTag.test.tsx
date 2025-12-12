@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IUiTagAccessibilityConfig, UiTag, UiTagProps } from "../UiTag.js";
+import { type IUiTagAccessibilityConfig, UiTag, type UiTagProps } from "../UiTag.js";
 
 describe("UiTag", () => {
     const renderTag = (props: Partial<UiTagProps> = {}) => {

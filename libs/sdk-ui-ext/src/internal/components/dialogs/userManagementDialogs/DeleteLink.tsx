@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { Button, IAlignPoint, withBubble } from "@gooddata/sdk-ui-kit";
+import { Button, type IAlignPoint, withBubble } from "@gooddata/sdk-ui-kit";
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tc" }];
 

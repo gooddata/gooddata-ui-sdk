@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
-import { IBaseHeadlineTitle, IWithTitleProps } from "../../../interfaces/BaseHeadlines.js";
+import { type IBaseHeadlineTitle, type IWithTitleProps } from "../../../interfaces/BaseHeadlines.js";
 
 export const withTitle = <T, H extends IBaseHeadlineTitle>(
     BaseHeadlineDataItem: ComponentType<T>,

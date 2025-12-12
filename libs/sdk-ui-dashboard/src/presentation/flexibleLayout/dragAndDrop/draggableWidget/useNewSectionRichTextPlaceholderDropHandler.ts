@@ -8,16 +8,16 @@ import { idRef } from "@gooddata/sdk-model";
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import {
-    ChangeInsightWidgetFilterSettings,
-    DashboardCommandFailed,
+    type ChangeInsightWidgetFilterSettings,
+    type DashboardCommandFailed,
     addNestedLayoutSection,
     enableRichTextWidgetDateFilter,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
 } from "../../../../model/index.js";
-import { ILayoutSectionPath } from "../../../../types.js";
-import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
+import { type ILayoutSectionPath } from "../../../../types.js";
+import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
 
 export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

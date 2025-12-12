@@ -2,16 +2,16 @@
 import { keyBy } from "lodash-es";
 
 import {
-    DatasetReferenceIdentifier,
-    JsonApiAttributeOutRelationships,
-    JsonApiAttributeOutWithLinks,
-    JsonApiDatasetLinkage,
-    JsonApiDatasetOut,
-    JsonApiLabelLinkage,
-    JsonApiLabelOut,
+    type DatasetReferenceIdentifier,
+    type JsonApiAttributeOutRelationships,
+    type JsonApiAttributeOutWithLinks,
+    type JsonApiDatasetLinkage,
+    type JsonApiDatasetOut,
+    type JsonApiLabelLinkage,
+    type JsonApiLabelOut,
 } from "@gooddata/api-client-tiger";
 
-import { Attribute, DisplayForm } from "../../base/types.js";
+import { type Attribute, type DisplayForm } from "../../base/types.js";
 
 export type LabelMap = { [id: string]: JsonApiLabelOut };
 export type DatasetMap = { [id: string]: JsonApiDatasetOut };

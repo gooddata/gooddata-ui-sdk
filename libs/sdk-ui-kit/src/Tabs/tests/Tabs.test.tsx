@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { ITabsProps, Tabs } from "../Tabs.js";
+import { type ITabsProps, Tabs } from "../Tabs.js";
 
 const tabDefinitions = [{ id: "tab1" }, { id: "tab2" }];
 

@@ -18,7 +18,7 @@ import {
 import { KeyDriverItem } from "../components/items/KeyDriverItem.js";
 import { SummaryItem } from "../components/items/SummaryItem.js";
 import { useSignificantDrives } from "../hooks/useDriversList.js";
-import { KdaState } from "../internalTypes.js";
+import { type KdaState } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 export interface KeyDriversPanelProps {

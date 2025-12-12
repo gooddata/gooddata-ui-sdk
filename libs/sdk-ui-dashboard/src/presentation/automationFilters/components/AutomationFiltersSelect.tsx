@@ -1,17 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, ReactElement, ReactNode, useState } from "react";
+import { type KeyboardEvent, type ReactElement, type ReactNode, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-    FilterContextItem,
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilterConfigItem,
-    ObjRef,
+    type FilterContextItem,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type ObjRef,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
     isCatalogAttribute,
@@ -23,7 +23,7 @@ import {
 import {
     Bubble,
     BubbleHoverTrigger,
-    OverlayPositionType,
+    type OverlayPositionType,
     Typography,
     UiButton,
     UiIconButton,
@@ -34,7 +34,7 @@ import {
 
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
-import { IAutomationFiltersTab } from "../../../model/index.js";
+import { type IAutomationFiltersTab } from "../../../model/index.js";
 import {
     AUTOMATION_FILTERS_DIALOG_ID,
     AUTOMATION_FILTERS_DIALOG_TITLE_ID,

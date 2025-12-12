@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { IThemeDefinition } from "@gooddata/sdk-model";
+import { type IThemeDefinition } from "@gooddata/sdk-model";
 
 /**
  * Indigo theme still does not match default scss (because of inconsistent variables),

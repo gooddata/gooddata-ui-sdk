@@ -2,15 +2,15 @@
 
 import { memo, useCallback, useMemo } from "react";
 
-import { WrappedComponentProps } from "react-intl";
+import { type WrappedComponentProps } from "react-intl";
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { PresetsDropdownItem } from "./PresetsDropdownItem.js";
 import { Overlay } from "../../Overlay/index.js";
-import { IPositioning, SnapPoint } from "../../typings/positioning.js";
+import { type IPositioning, SnapPoint } from "../../typings/positioning.js";
 import { positioningToAlignPoints } from "../../utils/positioning.js";
-import { IFormatPreset } from "../typings.js";
+import { type IFormatPreset } from "../typings.js";
 
 interface IMeasureNumberFormatDropdownOwnProps {
     presets: ReadonlyArray<IFormatPreset>;

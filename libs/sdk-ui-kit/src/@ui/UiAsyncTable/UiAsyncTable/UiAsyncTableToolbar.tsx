@@ -13,7 +13,7 @@ import { UiSearchResultsAnnouncement } from "../../UiSearchResultsAnnouncement/U
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { UiAsyncTableToolbarProps } from "../types.js";
+import { type UiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
 export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {

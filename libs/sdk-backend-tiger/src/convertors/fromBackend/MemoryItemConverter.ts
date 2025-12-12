@@ -8,10 +8,10 @@ import {
     type JsonApiMemoryItemOutWithLinks,
     type JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { IMemoryCreatedByUsers } from "@gooddata/sdk-backend-spi";
-import { IMemoryItemMetadataObject, IUser, idRef } from "@gooddata/sdk-model";
+import { type IMemoryCreatedByUsers } from "@gooddata/sdk-backend-spi";
+import { type IMemoryItemMetadataObject, type IUser, idRef } from "@gooddata/sdk-model";
 
-import { IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
+import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 
 /**
  * Converts memory item from API response to domain model

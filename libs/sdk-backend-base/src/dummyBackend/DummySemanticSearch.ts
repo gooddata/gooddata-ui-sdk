@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
-import { ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType, ISemanticSearchRelationship } from "@gooddata/sdk-model";
+import { type ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
+import { type GenAIObjectType, type ISemanticSearchRelationship } from "@gooddata/sdk-model";
 
 /**
  * Dummy query builder for semantic search testing

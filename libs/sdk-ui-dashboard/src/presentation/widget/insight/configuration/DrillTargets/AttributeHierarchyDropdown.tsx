@@ -3,11 +3,11 @@
 import { useIntl } from "react-intl";
 
 import {
-    IAttributeDescriptor,
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttributeHierarchy,
-    IDrillDownReference,
-    ObjRef,
+    type IAttributeDescriptor,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
+    type IDrillDownReference,
+    type ObjRef,
     areObjRefsEqual,
     getHierarchyAttributes,
     getHierarchyRef,
@@ -17,7 +17,7 @@ import {
 import { messages } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-import { AttributeHierarchyList, IAttributeHierarchyItem } from "./AttributeHierarchyList.js";
+import { AttributeHierarchyList, type IAttributeHierarchyItem } from "./AttributeHierarchyList.js";
 import {
     existBlacklistHierarchyPredicate,
     selectAllCatalogAttributeHierarchies,
@@ -25,7 +25,7 @@ import {
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../model/index.js";
-import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
+import { type IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
 
 interface IAttributeHierarchyDropdownProps {
     config: IDrillDownAttributeHierarchyConfig;

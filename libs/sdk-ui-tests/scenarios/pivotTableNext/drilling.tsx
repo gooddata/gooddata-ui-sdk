@@ -2,7 +2,7 @@
 
 import { action } from "storybook/actions";
 
-import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
+import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
 import { PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols } from "./base.js";
 import { scenariosFor } from "../../src/index.js";

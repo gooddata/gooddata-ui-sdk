@@ -1,18 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, useCallback } from "react";
+import { type MouseEvent, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../locales.js";
 import { getSortModel } from "../../features/sorting/agGridSortingApi.js";
 import {
-    AgGridColumnDef,
-    AgGridHeaderGroupParams,
-    AgGridHeaderParams,
+    type AgGridColumnDef,
+    type AgGridHeaderGroupParams,
+    type AgGridHeaderParams,
     isAgGridHeaderParams,
 } from "../../types/agGrid.js";
-import { ISortingMenuItem } from "../../types/menu.js";
+import { type ISortingMenuItem } from "../../types/menu.js";
 
 /**
  * Renderer for attribute header.

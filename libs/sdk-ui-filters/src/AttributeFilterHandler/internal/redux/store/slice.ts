@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { rootReducers } from "./rootReducers.js";
-import { AttributeFilterReducer, AttributeFilterState, initialState } from "./state.js";
+import { type AttributeFilterReducer, type AttributeFilterState, initialState } from "./state.js";
 
 const attributeFilterSlice = createSlice({
     name: "attributeFilterSlice",

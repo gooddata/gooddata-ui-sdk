@@ -1,14 +1,21 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, PureComponent, ReactNode } from "react";
+import {
+    type ChangeEvent,
+    type FocusEvent,
+    type KeyboardEvent,
+    type MouseEvent,
+    PureComponent,
+    type ReactNode,
+} from "react";
 
 import cx from "classnames";
 
 import { runAutofocus } from "./focus.js";
-import { IconType } from "../@ui/@types/icon.js";
+import { type IconType } from "../@ui/@types/icon.js";
 import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
-import { IAccessibilityConfigBase } from "../typings/accessibility.js";
-import { IDomNative, IDomNativeProps } from "../typings/domNative.js";
+import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { type IDomNative, type IDomNativeProps } from "../typings/domNative.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 
 /**

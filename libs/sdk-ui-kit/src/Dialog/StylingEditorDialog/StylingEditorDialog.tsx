@@ -5,17 +5,20 @@ import { useMemo, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
+import { type IColorPalette, type ITheme, type ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator.js";
-import { StylingEditorDialogFooter, TStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter.js";
+import {
+    StylingEditorDialogFooter,
+    type TStylingEditorDialogFooterProps,
+} from "./StylingEditorDialogFooter.js";
 import { StylingExample } from "./StylingExample.js";
 import { Button } from "../../Button/index.js";
 import { Typography } from "../../Typography/index.js";
 import { useId } from "../../utils/useId.js";
 import { Dialog } from "../Dialog.js";
-import { IDialogBaseProps } from "../typings.js";
+import { type IDialogBaseProps } from "../typings.js";
 
 /**
  * @internal

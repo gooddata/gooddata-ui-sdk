@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import { FormattedMessage, WrappedComponentProps, useIntl } from "react-intl";
+import { FormattedMessage, type WrappedComponentProps, useIntl } from "react-intl";
 
 import {
-    ICatalogDateDataset,
-    IDashboardDateFilter,
-    ObjRef,
+    type ICatalogDateDataset,
+    type IDashboardDateFilter,
+    type ObjRef,
     areObjRefsEqual,
     isObjRef,
     serializeObjRef,
@@ -20,9 +20,9 @@ import { useLimitingItems } from "./shared/limitingItemsHook.js";
 import { useCommonDateFilterTitle } from "../../../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
 import { messages } from "../../../../../../locales.js";
 import {
-    IDashboardAttributeFilterParentItem,
-    IDashboardDependentDateFilter,
-    IMetricsAndFacts,
+    type IDashboardAttributeFilterParentItem,
+    type IDashboardDependentDateFilter,
+    type IMetricsAndFacts,
     isDashboardDependentDateFilter,
     selectBackendCapabilities,
     selectEnableKDAttributeFilterDatesValidation,
@@ -30,7 +30,7 @@ import {
     useDashboardUserInteraction,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
-import { ValuesLimitingItem } from "../../../types.js";
+import { type ValuesLimitingItem } from "../../../types.js";
 
 const extractKey = (item: ValuesLimitingItem) =>
     isObjRef(item) ? serializeObjRef(item) : item.localIdentifier;

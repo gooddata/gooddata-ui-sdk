@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { FilterLabel } from "../FilterLabel.js";
-import { IFilterLabelProps } from "../typings.js";
+import { type IFilterLabelProps } from "../typings.js";
 
 const customMessages = {
     "gs.filterLabel.none": "None",

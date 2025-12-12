@@ -3,19 +3,19 @@
 import { findLastIndex } from "lodash-es";
 
 import {
-    IColorDescriptor,
-    IColorPalette,
-    IMeasureGroupDescriptor,
-    ITheme,
+    type IColorDescriptor,
+    type IColorPalette,
+    type IMeasureGroupDescriptor,
+    type ITheme,
     isColorDescriptor,
     isRgbColor,
 } from "@gooddata/sdk-model";
-import { IColorAssignment } from "@gooddata/sdk-ui";
-import { ChartFillConfig, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorAssignment } from "@gooddata/sdk-ui";
+import { type ChartFillConfig, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
 import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
-import { IChartConfig, ITotalConfig } from "../../../interfaces/index.js";
-import { IPointData, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { type IChartConfig, type ITotalConfig } from "../../../interfaces/index.js";
+import { type IPointData, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 import { getChartFillProperties } from "../_chartOptions/patternFillOptions.js";
 import { unwrap } from "../_util/common.js";
 

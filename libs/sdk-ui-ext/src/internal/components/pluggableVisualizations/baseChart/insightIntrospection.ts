@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IAttributeOrMeasure,
-    IInsightDefinition,
+    type IAttributeOrMeasure,
+    type IInsightDefinition,
     bucketItems,
     insightBucket,
     isMeasure,
@@ -10,7 +10,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { isBarChart, isBubbleChart, isBulletChart, isScatterPlot } from "@gooddata/sdk-ui-charts";
 
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
 function filterOutStylingMetric(bucketItems: IAttributeOrMeasure[], insight: IInsightDefinition) {
     const stylingMetricsIds: string[] = insight.insight.properties?.["controls"]?.["thresholdMeasures"] ?? [];

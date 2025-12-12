@@ -2,12 +2,17 @@
 
 import { compact, initial, isEmpty, max, maxBy, min, minBy, pick, tail, unzip, zip } from "lodash-es";
 
-import { VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { ChartAlignTypes, IChartConfig } from "../../../interfaces/index.js";
+import { type ChartAlignTypes, type IChartConfig } from "../../../interfaces/index.js";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments.js";
-import { ChartOptions, OptionsStackingValue, PlotOptions } from "../../lib/index.js";
-import { IChartOptions, ISeriesDataItem, ISeriesItem, UnsafeInternals } from "../../typings/unsafe.js";
+import { type ChartOptions, type OptionsStackingValue, type PlotOptions } from "../../lib/index.js";
+import {
+    type IChartOptions,
+    type ISeriesDataItem,
+    type ISeriesItem,
+    type UnsafeInternals,
+} from "../../typings/unsafe.js";
 import { isInvertedChartType } from "../_util/common.js";
 
 export interface IRectByPoints {

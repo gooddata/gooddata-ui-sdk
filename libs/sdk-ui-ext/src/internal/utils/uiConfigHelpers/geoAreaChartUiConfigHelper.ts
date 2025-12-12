@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import { set } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { BUCKETS } from "../../constants/bucket.js";
-import { IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
+import { type IExtendedReferencePoint, type IUiConfig } from "../../interfaces/Visualization.js";
 import { setBucketTitles } from "../bucketHelper.js";
 
 const geoAreaBucketAreaIcon = "local:geoPushpin/bucket-title-location-icon.svg";

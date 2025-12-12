@@ -8,7 +8,7 @@ import { DashboardEditLayoutItemRenderer } from "./DashboardEditLayoutItemRender
 import { DashboardEditLayoutRowRenderer } from "./DashboardEditLayoutRowRenderer.js";
 import { DashboardEditLayoutSectionHeaderRenderer } from "./DashboardEditLayoutSectionHeaderRenderer.js";
 import { DashboardEditLayoutSectionRenderer } from "./DashboardEditLayoutSectionRenderer.js";
-import { IDashboardEditLayout } from "./DashboardEditLayoutTypes.js";
+import { type IDashboardEditLayout } from "./DashboardEditLayoutTypes.js";
 import { DashboardEditLayoutWidgetRenderer } from "./DashboardEditLayoutWidgetRenderer.js";
 import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout.js";
 

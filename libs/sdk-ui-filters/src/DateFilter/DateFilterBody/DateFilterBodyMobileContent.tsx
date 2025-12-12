@@ -3,19 +3,19 @@
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
 
 import { DateFilterBodyContent } from "./DateFilterBodyContent.js";
 import { DateFilterBodyContentFiltered } from "./DateFilterBodyContentFiltered.js";
 import { DateFilterHeader } from "./DateFilterHeader.js";
-import { DateFilterRoute } from "./types.js";
+import { type DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
 import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
-    IExtendedDateFilterErrors,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
+    type IExtendedDateFilterErrors,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 

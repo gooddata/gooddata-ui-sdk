@@ -5,15 +5,15 @@ import { useMemo } from "react";
 import cx from "classnames";
 import { defineMessage, useIntl } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
-import { Automations, AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
+import { Automations, type AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
 import {
     Button,
     ContentDivider,
     Dialog,
     Hyperlink,
-    IButtonAccessibilityConfig,
+    type IButtonAccessibilityConfig,
     OverlayController,
     OverlayControllerProvider,
     Typography,

@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { useDashboardAlerts, useWorkspaceUsers } from "../../../model/index.js";
-import { AlertingDialog, AlertingManagementDialog, IAlertingDialogProps } from "../../alerting/index.js";
+import { AlertingDialog, AlertingManagementDialog, type IAlertingDialogProps } from "../../alerting/index.js";
 
 export function AlertingDialogProviderNew() {
     const {

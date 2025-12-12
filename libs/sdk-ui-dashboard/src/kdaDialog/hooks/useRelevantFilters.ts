@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { ICatalogAttribute } from "@gooddata/sdk-model";
+import { type ICatalogAttribute } from "@gooddata/sdk-model";
 
 import { useKdaState } from "../providers/KdaState.js";
 import { getOnlyRelevantFilters } from "../utils.js";

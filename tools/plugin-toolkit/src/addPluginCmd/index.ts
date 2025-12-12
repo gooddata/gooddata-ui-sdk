@@ -2,11 +2,11 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IDashboardPlugin } from "@gooddata/sdk-model";
+import { type IDashboardPlugin } from "@gooddata/sdk-model";
 
-import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig.js";
+import { type AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printAddConfigSummary({

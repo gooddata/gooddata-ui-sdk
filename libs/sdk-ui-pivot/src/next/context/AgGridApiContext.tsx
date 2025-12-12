@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import { type ReactNode, createContext, useContext, useState } from "react";
 
-import { AgGridApi } from "../types/agGrid.js";
+import { type AgGridApi } from "../types/agGrid.js";
 
 type IAgGridApiContext = {
     agGridApi: AgGridApi | null;

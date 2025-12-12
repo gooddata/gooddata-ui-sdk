@@ -4,28 +4,28 @@ import { cloneDeep, isEmpty } from "lodash-es";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
-    IInsightReferences,
-    IInsightReferencing,
-    IInsightsQuery,
-    IInsightsQueryOptions,
-    IInsightsQueryResult,
-    IWorkspaceInsightsService,
-    InsightOrdering,
+    type IInsightReferences,
+    type IInsightReferencing,
+    type IInsightsQuery,
+    type IInsightsQueryOptions,
+    type IInsightsQueryResult,
+    type IWorkspaceInsightsService,
+    type InsightOrdering,
     NotSupported,
-    SupportedInsightReferenceTypes,
+    type SupportedInsightReferenceTypes,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    ICatalogAttribute,
-    ICatalogFact,
-    ICatalogMeasure,
-    IFilter,
-    IInsight,
-    IInsightDefinition,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    IVisualizationClass,
-    ObjRef,
+    type ICatalogAttribute,
+    type ICatalogFact,
+    type ICatalogMeasure,
+    type IFilter,
+    type IInsight,
+    type IInsightDefinition,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type IVisualizationClass,
+    type ObjRef,
     idRef,
     insightFilters,
     insightId,
@@ -40,7 +40,7 @@ import {
     visClassUri,
 } from "@gooddata/sdk-model";
 
-import { InsightRecording, RecordedRefType, RecordingIndex } from "./types.js";
+import { type InsightRecording, type RecordedRefType, type RecordingIndex } from "./types.js";
 import { identifierToRecording } from "./utils.js";
 
 let adHocInsightCounter = 1;

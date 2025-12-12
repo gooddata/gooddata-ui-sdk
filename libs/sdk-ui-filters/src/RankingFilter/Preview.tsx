@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { RankingFilterOperator } from "@gooddata/sdk-model";
+import { type RankingFilterOperator } from "@gooddata/sdk-model";
 
-import { IAttributeDropdownItem, IMeasureDropdownItem } from "./types.js";
+import { type IAttributeDropdownItem, type IMeasureDropdownItem } from "./types.js";
 import { messages } from "../locales.js";
 
 interface IPreviewProps {

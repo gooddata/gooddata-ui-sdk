@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useMemo } from "react";
+import { type MouseEvent, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { camelCase } from "lodash-es";
@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
-import { IAttributeFilterElementsSelectItemProps } from "./types.js";
+import { type IAttributeFilterElementsSelectItemProps } from "./types.js";
 import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
 /**

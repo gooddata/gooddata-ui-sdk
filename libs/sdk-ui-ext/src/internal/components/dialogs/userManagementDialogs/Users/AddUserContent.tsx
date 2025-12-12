@@ -2,7 +2,7 @@
 
 import { AddUserSelect } from "./AddUserSelect.js";
 import { UsersList } from "./UsersList.js";
-import { IUserMember } from "../types.js";
+import { type IUserMember } from "../types.js";
 
 export interface IAddUserContentProps {
     addedUsers: IUserMember[];

@@ -10,6 +10,7 @@ import {
     getConfigFromPackage,
     mergeConfigs,
 } from "../config.js";
+import { type CatalogExportConfig } from "../types.js";
 
 vi.mock("fs/promises", () => ({
     readFile: vi.fn(),
@@ -51,7 +52,7 @@ describe("configuration", () => {
                 token: "secret",
                 unknown: "value",
                 // technically, we can't prevent user from putting random vars in JSON file...
-            } as unknown as import("../types.js").CatalogExportConfig);
+            } as unknown as CatalogExportConfig);
 
             expect(merged).toMatchSnapshot();
         });

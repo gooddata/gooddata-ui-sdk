@@ -2,11 +2,11 @@
 
 import cx from "classnames";
 
-import { ObjRefInScope } from "@gooddata/sdk-model";
+import { type ObjRefInScope } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { IAttributeDropdownItem, ICustomGranularitySelection } from "../../types.js";
+import { type IAttributeDropdownItem, type ICustomGranularitySelection } from "../../types.js";
 
 interface IAttributeItemProps {
     item: IAttributeDropdownItem;

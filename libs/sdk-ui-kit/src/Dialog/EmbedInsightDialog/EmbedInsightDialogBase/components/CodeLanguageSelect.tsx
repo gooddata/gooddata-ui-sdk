@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ChangeEvent, useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { CodeLanguageType } from "../types.js";
+import { type CodeLanguageType } from "../types.js";
 
 /**
  * @internal

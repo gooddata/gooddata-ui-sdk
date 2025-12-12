@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
+import { type SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
 
 export interface IDropdownItem {
     title?: string;

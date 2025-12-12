@@ -3,7 +3,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_ABSOLUTE_OPTIONS, UiDate, UiDateProps } from "../UiDate.js";
+import { DEFAULT_ABSOLUTE_OPTIONS, UiDate, type UiDateProps } from "../UiDate.js";
 
 describe("UiDate", () => {
     const renderDate = (

@@ -2,18 +2,18 @@
 import { cloneDeep, isEmpty } from "lodash-es";
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/index.js";
-import { ExtendedDashboardWidget, ICustomWidget } from "../../model/index.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
-import { IFluidLayoutCustomizer } from "../customizer.js";
+import { type ExtendedDashboardWidget, type ICustomWidget } from "../../model/index.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
+import { type IFluidLayoutCustomizer } from "../customizer.js";
 
 type AddItemOp = {
     itemPath: ILayoutItemPath;

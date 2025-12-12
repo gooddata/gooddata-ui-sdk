@@ -1,16 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { KeyboardEvent, MutableRefObject, useMemo } from "react";
+import { type KeyboardEvent, type MutableRefObject, useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import {
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+} from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
     Hyperlink,
-    IUiListboxInteractiveItem,
-    OverlayPositionType,
+    type IUiListboxInteractiveItem,
+    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";

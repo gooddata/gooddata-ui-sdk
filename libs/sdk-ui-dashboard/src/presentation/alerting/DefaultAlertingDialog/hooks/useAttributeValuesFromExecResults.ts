@@ -2,16 +2,16 @@
 import { useCallback, useEffect, useState } from "react";
 
 import {
-    IAttribute,
-    IAttributeDescriptor,
-    IAttributeMetadataObject,
-    IMeasure,
+    type IAttribute,
+    type IAttributeDescriptor,
+    type IAttributeMetadataObject,
+    type IMeasure,
     areObjRefsEqual,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import { DataViewFacade, IDataSeries } from "@gooddata/sdk-ui";
+import { DataViewFacade, type IDataSeries } from "@gooddata/sdk-ui";
 
-import { IExecutionResultEnvelope } from "../../../../model/index.js";
+import { type IExecutionResultEnvelope } from "../../../../model/index.js";
 
 export type AttributeValue = {
     title: string;

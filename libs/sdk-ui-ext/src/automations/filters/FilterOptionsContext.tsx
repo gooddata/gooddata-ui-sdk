@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import { type ReactNode, createContext, useContext, useState } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
-import { IListedDashboard, IOrganizationUser, IWorkspaceUser } from "@gooddata/sdk-model";
+import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { type IListedDashboard, type IOrganizationUser, type IWorkspaceUser } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { AutomationsScope, FilterOptionsContextValue } from "../types.js";
+import { type AutomationsScope, type FilterOptionsContextValue } from "../types.js";
 import { useAutomationService } from "../useAutomationService.js";
 
 const FilterOptionsContext = createContext<FilterOptionsContextValue | null>(null);

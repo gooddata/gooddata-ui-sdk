@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    ICatalogDateDataset,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    ObjRef,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { IDashboardEvent } from "./base.js";
+import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link DashboardRichTextWidgetContentChanged} event.

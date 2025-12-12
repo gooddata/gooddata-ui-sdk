@@ -1,23 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSectionHeader,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardWidget,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    IWidget,
-    IWidgetDefinition,
-    ObjRef,
-    ScreenSize,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSectionHeader,
+    type IDashboardLayoutSize,
+    type IDashboardLayoutSizeByScreenSize,
+    type IDashboardWidget,
+    type IInsightWidget,
+    type IInsightWidgetDefinition,
+    type IKpiWidget,
+    type IKpiWidgetDefinition,
+    type IWidget,
+    type IWidgetDefinition,
+    type ObjRef,
+    type ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types.js";
 
 /**
  * Set of convenience methods for a {@link @gooddata/sdk-backend-spi#IDashboardLayoutItem}.

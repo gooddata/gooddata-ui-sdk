@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import { type ReactNode, createContext, useContext, useState } from "react";
 
-import { IExportTabularPdfDialogProps } from "@gooddata/sdk-ui-kit";
+import { type IExportTabularPdfDialogProps } from "@gooddata/sdk-ui-kit";
 
 export type IExportTabularPdfDialogConfig = Omit<IExportTabularPdfDialogProps, "children">;
 

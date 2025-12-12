@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    Dispatch,
-    FocusEventHandler,
-    KeyboardEvent,
-    MutableRefObject,
-    SetStateAction,
+    type Dispatch,
+    type FocusEventHandler,
+    type KeyboardEvent,
+    type MutableRefObject,
+    type SetStateAction,
     useCallback,
     useEffect,
     useMemo,

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { ILocatorItem, newAttributeLocatorWithNullElement } from "@gooddata/sdk-model";
-import { ITableDataHeaderScope } from "@gooddata/sdk-ui";
+import { type ILocatorItem, newAttributeLocatorWithNullElement } from "@gooddata/sdk-model";
+import { type ITableDataHeaderScope } from "@gooddata/sdk-ui";
 
 /**
  * Creates locator items for the given column scope.

@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IColor, IColorPalette } from "@gooddata/sdk-model";
+import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
 
 export const BlackColor: IColor = {
     type: "rgb",

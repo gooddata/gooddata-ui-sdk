@@ -3,15 +3,15 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import { type IAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform.js";
 import {
     DateFilterButtonLocalized,
-    IDateFilterButtonLocalizedProps,
+    type IDateFilterButtonLocalizedProps,
 } from "../../DateFilterButtonLocalized/DateFilterButtonLocalized.js";
-import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody.js";
+import { DateFilterBody, type IDateFilterBodyProps } from "../DateFilterBody.js";
 
 describe("ExtendedDateFilterBody", () => {
     const allTime: IAllTimeDateFilterOption = {

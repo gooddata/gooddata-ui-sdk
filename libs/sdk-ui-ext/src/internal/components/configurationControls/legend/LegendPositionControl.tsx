@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
 import { legendPositionDropdownItems } from "../../../constants/dropdowns.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
 import { DropdownControl } from "../DropdownControl.js";
 

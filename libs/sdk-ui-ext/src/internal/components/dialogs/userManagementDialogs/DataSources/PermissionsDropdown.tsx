@@ -10,12 +10,12 @@ import { stringUtils } from "@gooddata/util";
 
 import { dataSourcePermissionMessages } from "./locales.js";
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
-import { TrackEventCallback, useTelemetry } from "../TelemetryContext.js";
+import { type TrackEventCallback, useTelemetry } from "../TelemetryContext.js";
 import {
-    DataSourcePermission,
-    DataSourcePermissionSubject,
-    IDataSourcePermissionsItem,
-    IGrantedDataSource,
+    type DataSourcePermission,
+    type DataSourcePermissionSubject,
+    type IDataSourcePermissionsItem,
+    type IGrantedDataSource,
 } from "../types.js";
 
 const items: IDataSourcePermissionsItem[] = [

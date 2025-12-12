@@ -1,15 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IGeoConfigViewport } from "@gooddata/sdk-ui-geo";
+import { type IGeoConfigViewport } from "@gooddata/sdk-ui-geo";
 
 import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IPushpinViewportControl {

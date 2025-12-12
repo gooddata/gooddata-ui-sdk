@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 
 const fullHeightWidthStyle: CSSProperties = {
     height: "100%",

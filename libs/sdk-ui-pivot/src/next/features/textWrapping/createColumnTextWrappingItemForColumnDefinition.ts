@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
 import { assertNever } from "@gooddata/sdk-model";
-import { ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { type ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import {
     newAttributeColumnLocator,
     newMeasureColumnLocator,
     newTotalColumnLocator,
 } from "../../types/locators.js";
-import { IColumnTextWrappingItem } from "../../types/textWrapping.js";
+import { type IColumnTextWrappingItem } from "../../types/textWrapping.js";
 
 /**
  * Creates {@link IColumnTextWrappingItem} with specified text wrapping settings for the provided {@link ITableColumnDefinition}.

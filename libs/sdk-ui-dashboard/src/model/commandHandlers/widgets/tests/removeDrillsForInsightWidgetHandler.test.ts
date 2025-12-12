@@ -5,15 +5,15 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
 
 import {
-    RemoveDrillsForInsightWidget,
+    type RemoveDrillsForInsightWidget,
     addDrillTargets,
     modifyDrillsForInsightWidget,
     removeDrillsForInsightWidget,
 } from "../../../commands/index.js";
-import { DashboardCommandFailed } from "../../../events/index.js";
-import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight.js";
+import { type DashboardCommandFailed } from "../../../events/index.js";
+import { type DashboardInsightWidgetDrillsRemoved } from "../../../events/insight.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { BeforeTestCorrelation, TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     DrillToDashboardFromProductAttributeDefinition,

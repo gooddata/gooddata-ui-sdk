@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import { scenariosFor } from "../../src/index.js";
 

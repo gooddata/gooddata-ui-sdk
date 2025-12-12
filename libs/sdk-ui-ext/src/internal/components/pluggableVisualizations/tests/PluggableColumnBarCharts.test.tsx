@@ -4,8 +4,13 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import {
+    type IAttribute,
+    type IInsight,
+    type IInsightDefinition,
+    insightSetProperties,
+} from "@gooddata/sdk-model";
+import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 import {
     expectedInsightDefinitionDrillToRegion,
@@ -23,11 +28,11 @@ import {
     OPTIONAL_STACKING_PROPERTIES,
 } from "../../../constants/supportedProperties.js";
 import {
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../tests/mocks/testMocks.js";

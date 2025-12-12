@@ -1,18 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType, ReactNode, RefObject } from "react";
+import { type ComponentType, type ReactNode, type RefObject } from "react";
 
 import {
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    IDashboardAttributeFilter,
-    ObjRef,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilter,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
-import { IDropdownListNoDataRenderProps, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import { type IDropdownListNoDataRenderProps, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
-import { IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
-import { IDashboardAttributeFilterParentItem, IDashboardDependentDateFilter } from "../../../model/index.js";
+import { type IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
+import {
+    type IDashboardAttributeFilterParentItem,
+    type IDashboardDependentDateFilter,
+} from "../../../model/index.js";
 
 /**
  * @public

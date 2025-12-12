@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { idRef } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
-import { ICustomWidget } from "../../../model/index.js";
+import { type ICustomWidget } from "../../../model/index.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultWidgetCustomizer } from "../widgetCustomizer.js";
 

@@ -2,11 +2,11 @@
 
 import { useMemo } from "react";
 
-import { IAttributeDescriptor, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
 import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../../../_staging/drills/drillingUtils.js";
 import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
-import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
+import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
 
 export function useInvalidAttributeDisplayFormIdentifiers(
     urlDrillTarget: UrlDrillTarget | undefined,

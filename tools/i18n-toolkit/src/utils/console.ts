@@ -1,11 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
+
 /* eslint-disable no-console */
 
 import * as path from "path";
 
 import chalk from "chalk";
 
-import { UsageResult } from "../data.js";
+import { type UsageResult } from "../data.js";
 
 export function skipped(msg: string, debug = false) {
     if (debug) {

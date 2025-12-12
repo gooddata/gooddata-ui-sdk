@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
-import { OnChangeValue, SelectInstance } from "react-select";
+import { type OnChangeValue, type SelectInstance } from "react-select";
 import AsyncSelect from "react-select/async";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
@@ -22,7 +22,7 @@ import {
 } from "./AsyncSelectComponents.js";
 import { loadGranteeOptionsPromise } from "./backend/loadGranteeOptionsPromise.js";
 import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
-import { IAddGranteeSelectProps, ISelectOption, isGranteeItem } from "./types.js";
+import { type IAddGranteeSelectProps, type ISelectOption, isGranteeItem } from "./types.js";
 import { ADD_GRANTEE_SELECT_ID } from "./utils.js";
 
 const SEARCH_INTERVAL = 400;

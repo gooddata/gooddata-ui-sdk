@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { parseDateValue, serializeDateValue } from "./dateValueParser.js";
-import { DateFormatter, DateParseFormatter, DateStringifier } from "./types.js";
+import { type DateFormatter, type DateParseFormatter, type DateStringifier } from "./types.js";
 
 /**
  * Creates a function that takes a string date attribute value, granularity, locale and formatting pattern

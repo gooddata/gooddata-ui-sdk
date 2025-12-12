@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IDashboardPermissions } from "@gooddata/sdk-model";
+import { type IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { buildDashboardPermissions } from "../dashboardPermissions.js";
 

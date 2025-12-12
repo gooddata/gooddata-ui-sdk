@@ -2,10 +2,10 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IInsightDefinition, IMeasure, idRef } from "@gooddata/sdk-model";
+import { type IInsightDefinition, type IMeasure, idRef } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { countBucketItems, countItemsOnAxes } from "../insightIntrospection.js";
 
 const createMeasure = (localIdentifier: string): IMeasure => ({

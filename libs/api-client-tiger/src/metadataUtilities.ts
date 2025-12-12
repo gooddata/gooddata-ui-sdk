@@ -1,28 +1,28 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosInstance, AxiosPromise, GenericAbortSignal } from "axios";
+import { type AxiosInstance, type AxiosPromise, type GenericAbortSignal } from "axios";
 import { merge, uniqBy } from "lodash-es";
 
-import { ITigerClientBase } from "./client.js";
+import { type ITigerClientBase } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";
 import {
-    JsonApiAnalyticalDashboardOutList,
-    JsonApiApiTokenOutList,
-    JsonApiAttributeOutList,
-    JsonApiAutomationOutList,
-    JsonApiColorPaletteOutList,
-    JsonApiDashboardPluginOutList,
-    JsonApiDatasetOutList,
-    JsonApiExportDefinitionOutList,
-    JsonApiFactOutList,
-    JsonApiFilterContextOutList,
-    JsonApiLabelOutList,
-    JsonApiMetricOutList,
-    JsonApiNotificationChannelIdentifierOutList,
-    JsonApiNotificationChannelOutList,
-    JsonApiThemeOutList,
-    JsonApiUserOutList,
-    JsonApiVisualizationObjectOutList,
+    type JsonApiAnalyticalDashboardOutList,
+    type JsonApiApiTokenOutList,
+    type JsonApiAttributeOutList,
+    type JsonApiAutomationOutList,
+    type JsonApiColorPaletteOutList,
+    type JsonApiDashboardPluginOutList,
+    type JsonApiDatasetOutList,
+    type JsonApiExportDefinitionOutList,
+    type JsonApiFactOutList,
+    type JsonApiFilterContextOutList,
+    type JsonApiLabelOutList,
+    type JsonApiMetricOutList,
+    type JsonApiNotificationChannelIdentifierOutList,
+    type JsonApiNotificationChannelOutList,
+    type JsonApiThemeOutList,
+    type JsonApiUserOutList,
+    type JsonApiVisualizationObjectOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;

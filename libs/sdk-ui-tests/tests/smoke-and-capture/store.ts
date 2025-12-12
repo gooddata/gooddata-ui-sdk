@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import process from "process";
 
-import { IScenario, WorkspaceType } from "../../src/index.js";
+import { type IScenario, type WorkspaceType } from "../../src/index.js";
 
 export type SupportedDefinitionTypes = "executions" | "insights";
 

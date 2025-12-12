@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IDashboardDateFilter, areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
+import { type IDashboardDateFilter, areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
 
 import {
     selectCatalogDateDatasets,

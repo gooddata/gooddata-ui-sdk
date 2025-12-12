@@ -1,5 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
-import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+import { type IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 /**
  * Service to work with data sources
  *

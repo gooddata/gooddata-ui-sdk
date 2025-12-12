@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { MutableRefObject, useCallback } from "react";
+import { type MutableRefObject, useCallback } from "react";
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
 export type CalculatedRows = {
     expandedHeight: number;

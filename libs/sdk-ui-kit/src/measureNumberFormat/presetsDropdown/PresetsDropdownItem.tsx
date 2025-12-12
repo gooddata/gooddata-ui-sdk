@@ -1,14 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { MouseEvent, memo, useCallback, useMemo } from "react";
+import { type MouseEvent, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
 
 import { FormattedPreview } from "../customFormatDialog/shared/FormattedPreview.js";
-import { IFormatPreset } from "../typings.js";
+import { type IFormatPreset } from "../typings.js";
 
 interface IMeasureNumberFormatDropdownItemProps {
     preset: IFormatPreset;

@@ -1,17 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useMemo, useState } from "react";
+import { type KeyboardEvent, useCallback, useMemo, useState } from "react";
 
 import { sortBy } from "lodash-es";
 
-import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
-    IAutomationRecipient,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
-    IWorkspaceUser,
+    type IAutomationRecipient,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
 import { convertUserToAutomationRecipient } from "../../../../../_staging/automation/index.js";

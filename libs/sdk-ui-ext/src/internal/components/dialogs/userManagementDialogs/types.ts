@@ -2,8 +2,8 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
-import { AssignedWorkspacePermission, IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { type AssignedWorkspacePermission, type IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 
 export interface IAddWorkspaceSelectProps {
     onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;

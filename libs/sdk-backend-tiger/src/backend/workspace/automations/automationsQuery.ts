@@ -1,20 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
+import {
+    type EntitiesApiGetAllEntitiesAutomationsRequest,
+    MetadataUtilities,
+} from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesAutomations } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    AutomationFilterType,
-    AutomationType,
-    IAutomationsQuery,
-    IAutomationsQueryResult,
-    IGetAutomationsQueryOptions,
+    type AutomationFilterType,
+    type AutomationType,
+    type IAutomationsQuery,
+    type IAutomationsQueryResult,
+    type IGetAutomationsQueryOptions,
 } from "@gooddata/sdk-backend-spi";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { buildFieldFilter, buildStatusFilter } from "./filterBuilders.js";
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class AutomationsQuery implements IAutomationsQuery {

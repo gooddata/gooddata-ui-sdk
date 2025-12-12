@@ -5,25 +5,25 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
-    DateAttributeGranularity,
-    IAttribute,
-    IDashboardAttributeFilter,
-    IFilter,
-    IMeasure,
+    type DateAttributeGranularity,
+    type IAttribute,
+    type IDashboardAttributeFilter,
+    type IFilter,
+    type IMeasure,
     isAttributeFilter,
     isNegativeAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { IDrillEvent } from "@gooddata/sdk-ui";
+import { type IDrillEvent } from "@gooddata/sdk-ui";
 import {
-    DashboardKeyDriverCombinationItem,
-    IKdaDefinition,
-    KdaPeriodType,
+    type DashboardKeyDriverCombinationItem,
+    type IKdaDefinition,
+    type KdaPeriodType,
     formatKeyDriverAnalysisDateRange,
 } from "@gooddata/sdk-ui-dashboard";
 import { attributeFilterToDashboardAttributeFilter } from "@gooddata/sdk-ui-dashboard/internal";
 
-import { ChangeAnalysisContents } from "../../model.js";
+import { type ChangeAnalysisContents } from "../../model.js";
 
 export function useKdaDefinition(content: ChangeAnalysisContents, format?: string, locale?: string) {
     const intl = useIntl();

@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useState } from "react";
+import { type ReactElement, useState } from "react";
 
 import classNames from "classnames";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { Bubble, Button } from "@gooddata/sdk-ui-kit";
 import { isDarkTheme, useTheme } from "@gooddata/sdk-ui-theme-provider";

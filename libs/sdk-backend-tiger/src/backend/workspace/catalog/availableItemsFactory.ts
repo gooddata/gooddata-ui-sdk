@@ -3,19 +3,19 @@
 import { compact, intersectionWith, uniq } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
+import { type AfmValidObjectsQuery, type AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/validObjects";
 import {
-    IWorkspaceCatalogAvailableItemsFactory,
-    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    type IWorkspaceCatalogAvailableItemsFactory,
+    type IWorkspaceCatalogWithAvailableItemsFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItem,
-    CatalogItemType,
-    IAttributeOrMeasure,
-    ICatalogGroup,
-    IInsightDefinition,
-    ObjRef,
+    type CatalogItem,
+    type CatalogItemType,
+    type IAttributeOrMeasure,
+    type ICatalogGroup,
+    type IInsightDefinition,
+    type ObjRef,
     areObjRefsEqual,
     insightAttributes,
     insightFilters,
@@ -34,7 +34,7 @@ import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConvert
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter.js";
 import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter.js";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 //ivec investigate
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {

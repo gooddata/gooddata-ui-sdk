@@ -1,21 +1,21 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, cancel, cancelled, getContext, put, select } from "redux-saga/effects";
 
 import {
-    IAnalyticalBackend,
-    IChatThreadQuery,
-    IGenAIChatEvaluation,
-    IUserWorkspaceSettings,
+    type IAnalyticalBackend,
+    type IChatThreadQuery,
+    type IGenAIChatEvaluation,
+    type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType } from "@gooddata/sdk-model";
+import { type GenAIObjectType } from "@gooddata/sdk-model";
 
 import { processContents } from "./converters/interactionsToMessages.js";
 import { extractError } from "./utils.js";
 import {
-    AssistantMessage,
-    Message,
+    type AssistantMessage,
+    type Message,
     isTextContents,
     isUserMessage,
     makeAssistantMessage,

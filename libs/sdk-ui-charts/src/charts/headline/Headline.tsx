@@ -1,25 +1,25 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IBucket, type IMeasure, type INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    MeasureOrPlaceholder,
-    NullableFiltersOrPlaceholders,
-    Subtract,
+    type MeasureOrPlaceholder,
+    type NullableFiltersOrPlaceholders,
+    type Subtract,
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
 
-import { CoreHeadline, ICoreHeadlineExtendedProps } from "./CoreHeadline.js";
-import { IHeadlineProvider } from "./HeadlineProvider.js";
+import { CoreHeadline, type ICoreHeadlineExtendedProps } from "./CoreHeadline.js";
+import { type IHeadlineProvider } from "./HeadlineProvider.js";
 import { createHeadlineProvider } from "./HeadlineProviderFactory.js";
-import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/index.js";
 
 //
 // Public interface

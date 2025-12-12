@@ -1,36 +1,36 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IdentifierRef, UriRef, idRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IdentifierRef, type UriRef, idRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 
 import {
-    AttributeFilterComponentSet,
-    DashboardLayoutWidgetComponentSet,
-    DateFilterComponentSet,
-    InsightWidgetComponentSet,
-    RichTextWidgetComponentSet,
-    VisualizationSwitcherWidgetComponentSet,
+    type AttributeFilterComponentSet,
+    type DashboardLayoutWidgetComponentSet,
+    type DateFilterComponentSet,
+    type InsightWidgetComponentSet,
+    type RichTextWidgetComponentSet,
+    type VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import {
-    AttributeFilterComponentProvider,
-    DashboardContentComponentProvider,
-    DashboardLayoutComponentProvider,
-    DateFilterComponentProvider,
-    InsightBodyComponentProvider,
-    InsightComponentProvider,
-    InsightMenuButtonComponentProvider,
-    InsightMenuComponentProvider,
-    InsightMenuTitleComponentProvider,
-    RichTextComponentProvider,
-    RichTextMenuComponentProvider,
-    RichTextMenuTitleComponentProvider,
-    ShowAsTableButtonComponentProvider,
-    VisualizationSwitcherComponentProvider,
-    VisualizationSwitcherToolbarComponentProvider,
-    WidgetComponentProvider,
+    type AttributeFilterComponentProvider,
+    type DashboardContentComponentProvider,
+    type DashboardLayoutComponentProvider,
+    type DateFilterComponentProvider,
+    type InsightBodyComponentProvider,
+    type InsightComponentProvider,
+    type InsightMenuButtonComponentProvider,
+    type InsightMenuComponentProvider,
+    type InsightMenuTitleComponentProvider,
+    type RichTextComponentProvider,
+    type RichTextMenuComponentProvider,
+    type RichTextMenuTitleComponentProvider,
+    type ShowAsTableButtonComponentProvider,
+    type VisualizationSwitcherComponentProvider,
+    type VisualizationSwitcherToolbarComponentProvider,
+    type WidgetComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     DefaultDashboardAttributeFilter,
@@ -58,7 +58,7 @@ import {
     DefaultVisualizationSwitcherToolbar,
 } from "../../widget/index.js";
 import { DefaultDashboardMainContent } from "../DefaultDashboardContent/DefaultDashboardMainContent.js";
-import { IDashboardProps } from "../types.js";
+import { type IDashboardProps } from "../types.js";
 
 interface IUseDashboardResult {
     backend: IAnalyticalBackend;

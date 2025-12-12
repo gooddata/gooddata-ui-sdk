@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { type ComponentClass, ComponentType } from "react";
+import { type ComponentClass, type ComponentType } from "react";
 
 /**
  * This HOC enables to extract effective props passed to the wrapped component

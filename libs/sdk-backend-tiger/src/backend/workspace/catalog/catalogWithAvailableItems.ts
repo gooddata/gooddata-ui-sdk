@@ -2,17 +2,17 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IWorkspaceCatalogWithAvailableItems,
-    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    type IWorkspaceCatalogWithAvailableItems,
+    type IWorkspaceCatalogWithAvailableItemsFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItem,
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
+    type CatalogItem,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateDataset,
+    type ICatalogFact,
+    type ICatalogGroup,
+    type ICatalogMeasure,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
     isCatalogDateDataset,

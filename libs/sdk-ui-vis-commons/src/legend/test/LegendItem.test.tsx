@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
 import { LegendItem } from "../LegendItem.js";
-import { ISeriesItem, ISeriesItemMetric, isSeriesItemMetric } from "../types.js";
+import { type ISeriesItem, type ISeriesItemMetric, isSeriesItemMetric } from "../types.js";
 
 describe("LegendItem", () => {
     const item: ISeriesItemMetric = {

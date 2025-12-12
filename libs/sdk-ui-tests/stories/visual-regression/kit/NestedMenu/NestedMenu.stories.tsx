@@ -5,7 +5,7 @@ import { useState } from "react";
 import {
     Button,
     Header,
-    IOnOpenedChangeParams,
+    type IOnOpenedChangeParams,
     Item,
     ItemsWrapper,
     Menu,
@@ -13,7 +13,7 @@ import {
     SubMenu,
 } from "@gooddata/sdk-ui-kit";
 
-import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./NestedMenu.scss";

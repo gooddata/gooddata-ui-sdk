@@ -4,11 +4,11 @@ import { useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { IUiMenuItem } from "@gooddata/sdk-ui-kit";
+import { type IUiMenuItem } from "@gooddata/sdk-ui-kit";
 
 import { selectEnableImplicitDrillToUrl, useDashboardSelector } from "../../../model/index.js";
-import { DashboardDrillDefinition } from "../../../types.js";
-import { DrillSelectItem, DrillType } from "../DrillSelect/types.js";
+import { type DashboardDrillDefinition } from "../../../types.js";
+import { type DrillSelectItem, DrillType } from "../DrillSelect/types.js";
 
 const groupMenuItemMessages = defineMessages({
     drillDown: { id: "drill_modal_picker.drill-down" },

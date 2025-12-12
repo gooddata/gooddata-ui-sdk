@@ -1,13 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
-import { IDashboard, IDashboardLayout, IDashboardLayoutItem, IInsight, IWidget } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IInsight,
+    type IWidget,
+} from "@gooddata/sdk-model";
 
 import {
-    DashboardContext,
-    DashboardItem,
+    type DashboardContext,
+    type DashboardItem,
     isDashboardItemVisualization,
     isDashboardItemVisualizationContent,
 } from "../../../types/commonTypes.js";
-import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { loadInsight } from "../../widgets/common/loadInsight.js";
 
 const size = { xl: { gridHeight: 22, gridWidth: 12 } };

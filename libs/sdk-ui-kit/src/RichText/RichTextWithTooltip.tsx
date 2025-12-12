@@ -1,15 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { IRichTextProps, RichText } from "./RichText.js";
+import { type IRichTextProps, RichText } from "./RichText.js";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tc" }, { align: "tc bc" }];
 const descriptionMarkdown = (

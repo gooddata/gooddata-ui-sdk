@@ -1,21 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    FilterWithResolvableElements,
-    IElementsQuery,
-    IElementsQueryAttributeFilter,
-    IElementsQueryFactory,
-    IElementsQueryOptions,
-    IElementsQueryResult,
-    IFilterElementsQuery,
-    IPagedResource,
+    type FilterWithResolvableElements,
+    type IElementsQuery,
+    type IElementsQueryAttributeFilter,
+    type IElementsQueryFactory,
+    type IElementsQueryOptions,
+    type IElementsQueryResult,
+    type IFilterElementsQuery,
+    type IPagedResource,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAbsoluteDateFilter,
-    IAttributeElement,
-    IMeasure,
-    IRelativeDateFilter,
-    ObjRef,
+    type IAbsoluteDateFilter,
+    type IAttributeElement,
+    type IMeasure,
+    type IRelativeDateFilter,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

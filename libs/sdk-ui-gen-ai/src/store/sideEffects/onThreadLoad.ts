@@ -2,7 +2,11 @@
 
 import { call, cancelled, getContext, put, race, take } from "redux-saga/effects";
 
-import { IAnalyticalBackend, IChatThread, IChatThreadHistory } from "@gooddata/sdk-backend-spi";
+import {
+    type IAnalyticalBackend,
+    type IChatThread,
+    type IChatThreadHistory,
+} from "@gooddata/sdk-backend-spi";
 
 import { interactionsToMessages } from "./converters/interactionsToMessages.js";
 import { extractError } from "./utils.js";

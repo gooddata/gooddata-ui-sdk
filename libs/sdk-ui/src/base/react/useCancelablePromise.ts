@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { DependencyList, useEffect, useState } from "react";
+import { type DependencyList, useEffect, useState } from "react";
 
 import { makeCancelable } from "./CancelablePromise.js";
 import { safeSerialize } from "./safeSerialize.js";

@@ -1,18 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { groupBy, sortBy } from "lodash-es";
 
 import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ISettings } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type ISettings } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { allScenarios } from "../../../scenarios/index.js";
-import { ScenarioGroup } from "../../../src/index.js";
+import { type ScenarioGroup } from "../../../src/index.js";
 import { StorybookBackend } from "../../_infra/backend.js";
 import { ScreenshotReadyWrapper, createElementCountResolver } from "../../_infra/ScreenshotReadyWrapper.js";
 import { wrapWithTheme } from "../themeWrapper.js";

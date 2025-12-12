@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { IExecutionConfig, IFilter } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IFilter } from "@gooddata/sdk-model";
 
 import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttributes.js";
 import { collectReferences } from "../helpers/references.js";

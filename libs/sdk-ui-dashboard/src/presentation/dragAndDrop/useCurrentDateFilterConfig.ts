@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import {
     selectDateFilterConfigOverrides,

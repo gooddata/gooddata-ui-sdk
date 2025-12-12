@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { Ref, useEffect } from "react";
+import { type Ref, useEffect } from "react";
 
 import cx from "classnames";
 
@@ -16,7 +16,7 @@ import { ExportThemeProvider } from "../../export/index.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 import { DashboardLayout } from "../../flexibleLayout/index.js";
 import { DateFilterConfigWarnings } from "../components/DateFilterConfigWarnings.js";
-import { IDashboardProps } from "../types.js";
+import { type IDashboardProps } from "../types.js";
 
 /**
  * @internal

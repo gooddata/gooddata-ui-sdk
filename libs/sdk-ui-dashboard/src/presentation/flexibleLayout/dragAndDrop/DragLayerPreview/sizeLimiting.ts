@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { clamp } from "lodash-es";
 
-import { ReachedResizingLimit } from "../../../dragAndDrop/DragLayerPreview/types.js";
+import { type ReachedResizingLimit } from "../../../dragAndDrop/DragLayerPreview/types.js";
 
 export function getLimitedSize(
     minimumSize: number,

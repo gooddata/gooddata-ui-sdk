@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     DateGranularity,
-    IMeasureValueFilter,
+    type IMeasureValueFilter,
     idRef,
     localIdRef,
     newAbsoluteDateFilter,

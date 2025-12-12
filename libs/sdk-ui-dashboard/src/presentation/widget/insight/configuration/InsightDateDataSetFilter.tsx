@@ -4,11 +4,11 @@ import { useEffect } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IInsightWidget, widgetRef } from "@gooddata/sdk-model";
+import { type IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 
 import {
-    MeasureDateDatasets,
-    QueryInsightDateDatasets,
+    type MeasureDateDatasets,
+    type QueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectInsightByRef,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,

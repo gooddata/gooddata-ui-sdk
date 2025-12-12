@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import { messages } from "../../../locales.js";
@@ -21,7 +21,11 @@ import {
     measuresBase,
     viewBase,
 } from "../../constants/uiConfig.js";
-import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
+import {
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IUiConfig,
+} from "../../interfaces/Visualization.js";
 import { setBucketTitles } from "../bucketHelper.js";
 import {
     canIncreasedTableAttributesAddMoreItems,

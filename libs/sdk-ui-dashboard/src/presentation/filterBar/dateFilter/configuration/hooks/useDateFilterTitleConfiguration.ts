@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import {
     setDateFilterConfigTitle,

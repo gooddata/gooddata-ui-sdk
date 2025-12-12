@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAttributeFilterLoader } from "./attributeFilterLoader.js";
-import { AttributeElementKey } from "./common.js";
+import { type IAttributeFilterLoader } from "./attributeFilterLoader.js";
+import { type AttributeElementKey } from "./common.js";
 import {
-    IStagedInvertableSelectionHandler,
-    IStagedSingleSelectionHandler,
-    InvertableSelection,
+    type IStagedInvertableSelectionHandler,
+    type IStagedSingleSelectionHandler,
+    type InvertableSelection,
 } from "./selectionHandler.js";
 
 /**

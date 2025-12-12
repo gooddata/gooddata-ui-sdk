@@ -2,16 +2,16 @@
 
 import { isEmpty } from "lodash-es";
 
-import { DataViewRequests } from "@gooddata/mock-handling";
+import { type DataViewRequests } from "@gooddata/mock-handling";
 import {
-    NormalizationState,
+    type NormalizationState,
     withCustomWorkspaceSettings,
     withEventing,
     withNormalization,
 } from "@gooddata/sdk-backend-base";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, ISettings } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IExecutionDefinition, type ISettings } from "@gooddata/sdk-model";
 
 /**
  * Recorded chart interactions

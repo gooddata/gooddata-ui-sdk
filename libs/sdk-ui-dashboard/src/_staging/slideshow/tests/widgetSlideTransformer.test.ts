@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IDashboardLayoutItem } from "@gooddata/sdk-model";
+import { type IDashboardLayoutItem } from "@gooddata/sdk-model";
 
 import { widgetSlideTransformer } from "../widgetSlideTransformer.js";
 

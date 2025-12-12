@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { CSSProperties, memo } from "react";
+import { type CSSProperties, memo } from "react";
 
 import cx from "classnames";
 
-import { IRgbColorValue } from "@gooddata/sdk-model";
+import { type IRgbColorValue } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ChartFillType, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type ChartFillType, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
-import { ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown.js";
+import { type ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown.js";
 import { getIconStyle } from "../colorDropdown/ColorPaletteItem.js";
 import { OptionalPatternFill } from "../colorDropdown/OptionalPatternFill.js";
 

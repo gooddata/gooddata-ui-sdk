@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import {
-    ColumnWidthItem,
+    type ColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
     isMixedValuesColumnWidthItem,

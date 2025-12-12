@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IInsightDefinition,
+    type IAttribute,
+    type IInsightDefinition,
     bucketAttribute,
     idRef,
     insightBucket,
@@ -11,12 +11,12 @@ import {
     newAttribute,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
 
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import {
-    IInsightToPropConversion,
-    PropWithMeta,
+    type IInsightToPropConversion,
+    type PropWithMeta,
     sdkModelPropMetas,
 } from "../../../utils/embeddingCodeGenerator/index.js";
 

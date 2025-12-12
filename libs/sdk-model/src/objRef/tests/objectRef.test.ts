@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ObjRef, ObjRefInScope, areObjRefsEqual, objRefToString } from "../index.js";
+import { type ObjRef, type ObjRefInScope, areObjRefsEqual, objRefToString } from "../index.js";
 
 describe("objRefToString", () => {
     const Scenarios: Array<[string, ObjRef, string | undefined]> = [

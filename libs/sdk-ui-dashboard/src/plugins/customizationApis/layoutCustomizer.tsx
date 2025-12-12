@@ -3,24 +3,27 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { IDashboardLayout } from "@gooddata/sdk-model";
+import { type IDashboardLayout } from "@gooddata/sdk-model";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
 import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
-import { CustomizerMutationsContext } from "./types.js";
-import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model/index.js";
-import { DashboardFocusObject, DashboardLayoutExportTransformFn } from "../../model/types/commonTypes.js";
+import { type CustomizerMutationsContext } from "./types.js";
+import { type DashboardTransformFn, type ExtendedDashboardWidget } from "../../model/index.js";
 import {
-    CustomDashboardLayoutComponent,
+    type DashboardFocusObject,
+    type DashboardLayoutExportTransformFn,
+} from "../../model/types/commonTypes.js";
+import {
+    type CustomDashboardLayoutComponent,
     DefaultDashboardLayout as DefaultDashboardLayoutComponent,
-    LayoutComponentProvider,
-    OptionalLayoutComponentProvider,
+    type LayoutComponentProvider,
+    type OptionalLayoutComponentProvider,
 } from "../../presentation/index.js";
 import {
-    ExportLayoutCustomizationFn,
-    FluidLayoutCustomizationFn,
-    IDashboardLayoutCustomizer,
+    type ExportLayoutCustomizationFn,
+    type FluidLayoutCustomizationFn,
+    type IDashboardLayoutCustomizer,
 } from "../customizer.js";
 
 interface ILayoutCustomizerState {

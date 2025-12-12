@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IRelativeDateFilterPreset } from "@gooddata/sdk-model";
+import { type IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
-import { IUiRelativeDateFilterForm } from "../../interfaces/index.js";
+import { type IUiRelativeDateFilterForm } from "../../interfaces/index.js";
 import { normalizeSelectedFilterOption } from "../FilterOptionNormalization.js";
 
 describe("normalizeSelectedFilterOption", () => {

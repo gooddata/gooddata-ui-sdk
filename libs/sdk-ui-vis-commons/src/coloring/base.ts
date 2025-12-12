@@ -2,17 +2,17 @@
 import { uniqBy } from "lodash-es";
 
 import {
-    IColor,
-    IColorPalette,
-    IColorPaletteItem,
-    IResultAttributeHeader,
-    ITheme,
+    type IColor,
+    type IColorPalette,
+    type IColorPaletteItem,
+    type IResultAttributeHeader,
+    type ITheme,
     isColorFromPalette,
 } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 
 import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "./color.js";
-import { IColorMapping } from "./types.js";
+import { type IColorMapping } from "./types.js";
 
 /**
  * @internal

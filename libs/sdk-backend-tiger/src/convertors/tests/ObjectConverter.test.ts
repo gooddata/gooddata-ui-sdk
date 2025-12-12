@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 import { describe, expect, test } from "vitest";
 
-import { TigerObjectType } from "../../types/index.js";
-import { TigerCompatibleObjectType } from "../../types/refTypeMapping.js";
+import { type TigerObjectType } from "../../types/index.js";
+import { type TigerCompatibleObjectType } from "../../types/refTypeMapping.js";
 import { toObjectType } from "../fromBackend/ObjRefConverter.js";
 import { toTigerType } from "../toBackend/ObjRefConverter.js";
 

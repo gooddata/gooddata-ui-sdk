@@ -4,7 +4,7 @@ import {
     ComponentTable,
     UiButton,
     UiTooltip,
-    UiTooltipProps,
+    type UiTooltipProps,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 import { ScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
@@ -12,7 +12,7 @@ import { indigoDarkTheme, redLightTheme } from "@gooddata/sdk-ui-theme-provider/
 
 import { wrapWithTheme } from "../themeWrapper.js";
 import tooltipImage from "./assets/tooltip-image.png";
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 
 const propCombination = propCombinationsFor({} as UiTooltipProps);
 

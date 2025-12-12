@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { ICorePivotTableState, InternalTableState } from "../../tableState.js";
-import { IScrollPosition } from "../stickyRowHandler.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
+import { type ICorePivotTableState, type InternalTableState } from "../../tableState.js";
+import { type IScrollPosition } from "../stickyRowHandler.js";
 
 export interface IStickyRowManagerContext {
     internal: InternalTableState;

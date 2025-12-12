@@ -1,10 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ICatalogFact, IFactMetadataObject, ObjRef, isFactMetadataObject } from "@gooddata/sdk-model";
+import {
+    type ICatalogFact,
+    type IFactMetadataObject,
+    type ObjRef,
+    isFactMetadataObject,
+} from "@gooddata/sdk-model";
 
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
-import { BuilderModifications, builderFactory } from "../builder.js";
-import { FactMetadataObjectBuilder, newFactMetadataObject } from "../metadata/factFactory.js";
+import { type BuilderModifications, builderFactory } from "../builder.js";
+import { type FactMetadataObjectBuilder, newFactMetadataObject } from "../metadata/factFactory.js";
 
 /**
  * Catalog fact builder

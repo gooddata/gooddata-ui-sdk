@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IInsightLayerDefinition,
+    type IInsightLayerDefinition,
     attributeDisplayFormRef,
     idRef,
     newAttribute,

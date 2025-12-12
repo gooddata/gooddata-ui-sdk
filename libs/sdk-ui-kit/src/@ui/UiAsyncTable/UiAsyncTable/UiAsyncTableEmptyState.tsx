@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { UiAsyncTableEmptyStateProps } from "../types.js";
+import { type UiAsyncTableEmptyStateProps } from "../types.js";
 
 /**
  * @internal

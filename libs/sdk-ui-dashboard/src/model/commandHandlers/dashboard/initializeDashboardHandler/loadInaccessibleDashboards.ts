@@ -3,13 +3,13 @@
 import { compact } from "lodash-es";
 import { call, put, select } from "redux-saga/effects";
 
-import { IWidget, ObjRef, isDrillToDashboard, isInsightWidget } from "@gooddata/sdk-model";
+import { type IWidget, type ObjRef, isDrillToDashboard, isInsightWidget } from "@gooddata/sdk-model";
 
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { inaccessibleDashboardsActions } from "../../../store/inaccessibleDashboards/index.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
-import { PromiseFnReturnType } from "../../../types/sagas.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
+import { type IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { type PromiseFnReturnType } from "../../../types/sagas.js";
 
 export function* loadInaccessibleDashboards(ctx: DashboardContext, widgets: IWidget[]) {
     const accessibleDashboardsMap: ReturnType<typeof selectAccessibleDashboardsMap> = yield select(

@@ -1,11 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
 import {
     ValidationContextStore,
     convertError,
@@ -69,7 +72,7 @@ import { IntlWrapper } from "../../localization/index.js";
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
-import { IAlertingDialogProps } from "../types.js";
+import { type IAlertingDialogProps } from "../types.js";
 import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
 

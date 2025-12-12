@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    KeyboardEvent as ReactKeyboardEvent,
-    MouseEvent as ReactMouseEvent,
-    ReactNode,
+    type KeyboardEvent as ReactKeyboardEvent,
+    type MouseEvent as ReactMouseEvent,
+    type ReactNode,
     useCallback,
     useEffect,
     useMemo,
@@ -15,13 +15,13 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { DefaultUiTreeViewItemComponent } from "./defaults/DefaultUiTreeViewItemComponent.js";
 import {
-    IUiLeveledTreeViewProps,
-    IUiStaticTreeViewProps,
-    IUiTreeviewContext,
-    LevelTypesUnion,
-    UiRefsTree,
-    UiStateTreeItem,
-    UiStaticTreeView,
+    type IUiLeveledTreeViewProps,
+    type IUiStaticTreeViewProps,
+    type IUiTreeviewContext,
+    type LevelTypesUnion,
+    type UiRefsTree,
+    type UiStateTreeItem,
+    type UiStaticTreeView,
 } from "./types.js";
 import { useUiTreeViewEventSubscriber } from "./UiTreeViewEvents.js";
 import { UITreeviewItem } from "./UITreeviewItem.js";

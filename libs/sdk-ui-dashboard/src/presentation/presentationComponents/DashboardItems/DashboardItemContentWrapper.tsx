@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { defaultImport } from "default-import";
 import DefaultMeasure from "react-measure";

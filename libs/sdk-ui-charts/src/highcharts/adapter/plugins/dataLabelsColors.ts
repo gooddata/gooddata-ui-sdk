@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { getContrastRatio, getRgbFromWebColor, parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
 

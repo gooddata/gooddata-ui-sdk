@@ -1,18 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
-import { ISortItem, ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
+import { type ISortItem, type ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
 import { OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { type ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import {
     DATE_DATASET_ATTRIBUTE,
-    IAttributeFilter,
-    IBucketItem,
-    IDateFilter,
-    IFilters,
-    IFiltersBucketItem,
-    IMeasureValueFilter,
-    IRankingFilter,
-    IReferencePoint,
+    type IAttributeFilter,
+    type IBucketItem,
+    type IDateFilter,
+    type IFilters,
+    type IFiltersBucketItem,
+    type IMeasureValueFilter,
+    type IRankingFilter,
+    type IReferencePoint,
 } from "../../interfaces/Visualization.js";
 
 export const dateDatasetRef: ObjRef = uriRef("data.dataset.1");

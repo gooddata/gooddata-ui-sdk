@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import {
-    DashboardContext,
+    type DashboardContext,
     DashboardPluginV1,
-    IDashboardCustomizer,
-    IDashboardEventHandling,
-    IDashboardWidgetProps,
+    type IDashboardCustomizer,
+    type IDashboardEventHandling,
+    type IDashboardWidgetProps,
     newCustomWidget,
     newDashboardItem,
     newDashboardSection,

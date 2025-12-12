@@ -2,7 +2,7 @@
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { AlertFilters } from "@gooddata/sdk-model";
+import { type AlertFilters } from "@gooddata/sdk-model";
 
 import { bem } from "../bem.js";
 import { DetailsDialog } from "../components/DetailsDialog.js";

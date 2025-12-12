@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 import { describe, expect, it } from "vitest";
 
-import { PositionType } from "../../types.js";
-import { ILegendDetailOptions, ILegendDetails, getLegendDetails } from "../helpers.js";
+import { type PositionType } from "../../types.js";
+import { type ILegendDetailOptions, type ILegendDetails, getLegendDetails } from "../helpers.js";
 
 describe("helpers", () => {
     const NULLABLE_VALUE: any = null;

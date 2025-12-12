@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ITableDataValue } from "./cells.js";
-import { ITableColumnDefinition } from "./columns.js";
-import { ITableRowDefinition } from "./rows.js";
+import { type ITableDataValue } from "./cells.js";
+import { type ITableColumnDefinition } from "./columns.js";
+import { type ITableRowDefinition } from "./rows.js";
 
 /**
  * **The complete table data structure**.

@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    JsonApiAnalyticalDashboardOutMeta,
-    JsonApiAnalyticalDashboardOutMetaOrigin,
-    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+    type JsonApiAnalyticalDashboardOutMeta,
+    type JsonApiAnalyticalDashboardOutMetaOrigin,
+    type JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
 } from "@gooddata/api-client-tiger";
 
 type JsonApiMetadataLikeObject<T> = T & {

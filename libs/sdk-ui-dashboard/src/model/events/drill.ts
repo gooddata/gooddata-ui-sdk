@@ -1,32 +1,32 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    FilterContextItem,
-    IAttributeDescriptor,
-    ICrossFiltering,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDrillToAttributeUrl,
-    IDrillToCustomUrl,
-    IDrillToDashboard,
-    IDrillToInsight,
-    IDrillToLegacyDashboard,
-    IInsight,
-    IKeyDriveAnalysis,
-    IMeasureDescriptor,
+    type FilterContextItem,
+    type IAttributeDescriptor,
+    type ICrossFiltering,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IDrillToLegacyDashboard,
+    type IInsight,
+    type IKeyDriveAnalysis,
+    type IMeasureDescriptor,
 } from "@gooddata/sdk-model";
-import { ExplicitDrill, ITableDataAttributeScope } from "@gooddata/sdk-ui";
+import { type ExplicitDrill, type ITableDataAttributeScope } from "@gooddata/sdk-ui";
 
-import { IDashboardEvent } from "./base.js";
+import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
-import { IKdaDefinition } from "../../kdaDialog/types.js";
+import { type IKdaDefinition } from "../../kdaDialog/types.js";
 import {
-    DashboardDrillContext,
-    IDashboardDrillEvent,
-    IDashboardFilter,
-    IDrillDownDefinition,
+    type DashboardDrillContext,
+    type IDashboardDrillEvent,
+    type IDashboardFilter,
+    type IDrillDownDefinition,
 } from "../../types.js";
-import { DashboardContext, FiltersInfo } from "../types/commonTypes.js";
+import { type DashboardContext, type FiltersInfo } from "../types/commonTypes.js";
 
 /**
  * @internal

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { RefObject, createRef } from "react";
+import { type RefObject, createRef } from "react";
 
 import { flushSync } from "react-dom";
 import { type Root, createRoot } from "react-dom/client";

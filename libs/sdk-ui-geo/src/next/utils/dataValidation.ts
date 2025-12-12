@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import { DEFAULT_DATA_POINTS_LIMIT } from "../layers/pushpin/constants.js";
-import { IGeoChartNextConfig } from "../types/config/unified.js";
-import { IAreaGeoData } from "../types/geoData/area.js";
-import { IPushpinGeoData } from "../types/geoData/pushpin.js";
+import { type IGeoChartNextConfig } from "../types/config/unified.js";
+import { type IAreaGeoData } from "../types/geoData/area.js";
+import { type IPushpinGeoData } from "../types/geoData/pushpin.js";
 import { isAreaGeoData, isPushpinGeoData } from "../types/geoData/typeGuards.js";
 
 /**

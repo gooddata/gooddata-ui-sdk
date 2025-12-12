@@ -1,23 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { compact, isEmpty } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, all, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, all, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeFilter,
-    IDateFilter,
-    IFilter,
-    IInsightDefinition,
-    IKpiWidget,
-    IMetadataObject,
-    IRichTextWidget,
-    IVisualizationSwitcherWidget,
-    ObjRef,
-    ObjectType,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeFilter,
+    type IDateFilter,
+    type IFilter,
+    type IInsightDefinition,
+    type IKpiWidget,
+    type IMetadataObject,
+    type IRichTextWidget,
+    type IVisualizationSwitcherWidget,
+    type ObjRef,
+    type ObjectType,
     areObjRefsEqual,
     filterLocalIdentifier,
     filterObjRef,
@@ -37,7 +37,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { QueryWidgetFilters } from "../queries/widgets.js";
+import { type QueryWidgetFilters } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
@@ -47,8 +47,8 @@ import {
     selectAllFiltersForWidgetByRef,
     selectFilterableWidgetByRef,
 } from "../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../types/commonTypes.js";
-import { FilterableDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
+import { type FilterableDashboardWidget, type ICustomWidget } from "../types/layoutTypes.js";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);

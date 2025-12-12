@@ -3,9 +3,9 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeLocatorItem,
-    IMeasureLocatorItem,
-    ISortItem,
+    type IAttributeLocatorItem,
+    type IMeasureLocatorItem,
+    type ISortItem,
     isAttributeLocator,
     isAttributeSort,
     isMeasureLocator,
@@ -13,7 +13,7 @@ import {
     sortMeasureLocators,
 } from "@gooddata/sdk-model";
 
-import { SeriesCol, SliceCol } from "./tableDescriptorTypes.js";
+import { type SeriesCol, type SliceCol } from "./tableDescriptorTypes.js";
 
 function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): boolean {
     const { attributeDescriptors, attributeHeaders } = col.seriesDescriptor;

@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsIsEmpty,
     filterAttributeElements,

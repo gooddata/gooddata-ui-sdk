@@ -1,33 +1,33 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ColDef, ColGroupDef, Column } from "ag-grid-community";
+import { type ColDef, type ColGroupDef, type Column } from "ag-grid-community";
 import { keyBy } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
-    ISortItem,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    type ISortItem,
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
 import { createSortItemForCol } from "./colSortItemFactory.js";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
-import { SortIndicator, createSortIndicators } from "./tableDescriptorSorting.js";
+import { type SortIndicator, createSortIndicators } from "./tableDescriptorSorting.js";
 import {
-    AnyCol,
-    AnySliceCol,
-    LeafDataCol,
-    MixedHeadersCol,
-    MixedValuesCol,
-    SliceCol,
-    SliceMeasureCol,
-    TableColDefs,
-    TableCols,
-    TransposedMeasureDataCol,
+    type AnyCol,
+    type AnySliceCol,
+    type LeafDataCol,
+    type MixedHeadersCol,
+    type MixedValuesCol,
+    type SliceCol,
+    type SliceMeasureCol,
+    type TableColDefs,
+    type TableCols,
+    type TransposedMeasureDataCol,
     agColId,
     isEmptyScopeCol,
     isMixedHeadersCol,
@@ -38,12 +38,12 @@ import {
     isSliceMeasureCol,
 } from "./tableDescriptorTypes.js";
 import {
-    IAttributeColumnWidthItem,
-    IMeasureColumnWidthItem,
-    IMixedValuesColumnWidthItem,
-    ISliceMeasureColumnWidthItem,
+    type IAttributeColumnWidthItem,
+    type IMeasureColumnWidthItem,
+    type IMixedValuesColumnWidthItem,
+    type ISliceMeasureColumnWidthItem,
 } from "../../columnWidths.js";
-import { IPivotTableConfig } from "../../publicTypes.js";
+import { type IPivotTableConfig } from "../../publicTypes.js";
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ITableColumnDefinition } from "@gooddata/sdk-ui";
+import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
 /**
  * Determines if cell text wrapping should be allowed for a given column.

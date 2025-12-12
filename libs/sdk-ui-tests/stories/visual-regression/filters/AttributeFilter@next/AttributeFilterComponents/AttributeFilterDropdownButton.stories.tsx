@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement, ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
@@ -9,7 +9,7 @@ import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 import { Button, IconAttribute } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const attributeTitle = "Product";

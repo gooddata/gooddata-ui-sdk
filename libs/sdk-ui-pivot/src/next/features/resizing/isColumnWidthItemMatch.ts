@@ -2,7 +2,7 @@
 import { isEqual } from "lodash-es";
 
 import {
-    ColumnWidthItem,
+    type ColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
     isMixedValuesColumnWidthItem,

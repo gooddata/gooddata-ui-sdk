@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IdentifierRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
+import { type IdentifierRef, type ObjRef, type ObjectType } from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX_MATCH } from "../plugins/types.js";
 

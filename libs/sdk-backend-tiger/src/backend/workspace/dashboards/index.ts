@@ -6,13 +6,13 @@ import { v4 as uuid } from "uuid";
 
 import {
     AnalyticalDashboardModelV2,
-    EntitiesApiGetEntityAnalyticalDashboardsRequest,
-    ExportAFM,
-    ExportRawExportRequest,
-    ITigerClientBase,
-    ImageExportRequest,
-    JsonApiAnalyticalDashboardOutDocument,
-    JsonApiFilterViewOutDocument,
+    type EntitiesApiGetEntityAnalyticalDashboardsRequest,
+    type ExportAFM,
+    type ExportRawExportRequest,
+    type ITigerClientBase,
+    type ImageExportRequest,
+    type JsonApiAnalyticalDashboardOutDocument,
+    type JsonApiFilterViewOutDocument,
     MetadataUtilities,
     ValidateRelationsHeader,
     isDashboardPluginsItem,
@@ -53,46 +53,46 @@ import {
 } from "@gooddata/api-client-tiger/export";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import {
-    IDashboardExportImageOptions,
-    IDashboardExportPdfOptions,
-    IDashboardExportPresentationOptions,
-    IDashboardExportRawOptions,
-    IDashboardExportTabularOptions,
-    IDashboardReferences,
-    IDashboardWithReferences,
-    IDashboardsQuery,
-    IExportResult,
-    IGetDashboardOptions,
-    IGetDashboardPluginOptions,
-    IRawExportCustomOverrides,
-    IWorkspaceDashboardsService,
+    type IDashboardExportImageOptions,
+    type IDashboardExportPdfOptions,
+    type IDashboardExportPresentationOptions,
+    type IDashboardExportRawOptions,
+    type IDashboardExportTabularOptions,
+    type IDashboardReferences,
+    type IDashboardWithReferences,
+    type IDashboardsQuery,
+    type IExportResult,
+    type IGetDashboardOptions,
+    type IGetDashboardPluginOptions,
+    type IRawExportCustomOverrides,
+    type IWorkspaceDashboardsService,
     NotSupported,
-    SupportedDashboardReferenceTypes,
+    type SupportedDashboardReferenceTypes,
     UnexpectedError,
     walkLayout,
 } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IDashboard,
-    IDashboardAttributeFilterConfig,
-    IDashboardBase,
-    IDashboardDefinition,
-    IDashboardFilterView,
-    IDashboardFilterViewSaveRequest,
-    IDashboardObjectIdentity,
-    IDashboardPermissions,
-    IDashboardPlugin,
-    IDashboardPluginDefinition,
-    IDashboardWidget,
-    IDateFilter,
-    IExecutionDefinition,
-    IFilter,
-    IFilterContext,
-    IFilterContextDefinition,
-    IListedDashboard,
-    ITempFilterContext,
-    IWidget,
-    ObjRef,
+    type FilterContextItem,
+    type IDashboard,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardBase,
+    type IDashboardDefinition,
+    type IDashboardFilterView,
+    type IDashboardFilterViewSaveRequest,
+    type IDashboardObjectIdentity,
+    type IDashboardPermissions,
+    type IDashboardPlugin,
+    type IDashboardPluginDefinition,
+    type IDashboardWidget,
+    type IDateFilter,
+    type IExecutionDefinition,
+    type IFilter,
+    type IFilterContext,
+    type IFilterContextDefinition,
+    type IListedDashboard,
+    type ITempFilterContext,
+    type IWidget,
+    type ObjRef,
     areObjRefsEqual,
     idRef,
     isAllTimeDashboardDateFilter,
@@ -103,7 +103,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { TigerDashboardPermissionType, buildDashboardPermissions } from "./dashboardPermissions.js";
+import { type TigerDashboardPermissionType, buildDashboardPermissions } from "./dashboardPermissions.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
 import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
 import {
@@ -126,7 +126,7 @@ import {
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
 import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
-import { FiltersByTab, TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type FiltersByTab, type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api.js";
 import { convertApiError } from "../../../utils/errorHandling.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";

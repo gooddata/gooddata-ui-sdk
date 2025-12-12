@@ -2,16 +2,16 @@
 
 import { isEmpty } from "lodash-es";
 
-import { ILowerBoundedFilter, IUpperBoundedFilter, ObjRef, idRef } from "@gooddata/sdk-model";
+import { type ILowerBoundedFilter, type IUpperBoundedFilter, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import {
-    AttributeFilterItem,
-    DateFilterItem,
-    FilterItem,
-    ILocalIdentifierQualifier,
-    IRankingFilter,
-    ObjQualifier,
-    RankingFilterOperator,
+    type AttributeFilterItem,
+    type DateFilterItem,
+    type FilterItem,
+    type ILocalIdentifierQualifier,
+    type IRankingFilter,
+    type ObjQualifier,
+    type RankingFilterOperator,
     isAbsoluteDateFilter,
     isAttributeFilter,
     isDateFilter,

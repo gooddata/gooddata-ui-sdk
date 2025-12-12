@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 
-import { BackendCapabilitiesState } from "./backendCapabilitiesState.js";
+import { type BackendCapabilitiesState } from "./backendCapabilitiesState.js";
 
 type BackendCapabilitiesReducer<A extends Action> = CaseReducer<BackendCapabilitiesState, A>;
 

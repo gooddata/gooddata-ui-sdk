@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { PAGE_SIZE } from "../../constants/internal.js";
-import { PivotTableNextConfig } from "../../types/public.js";
+import { type PivotTableNextConfig } from "../../types/public.js";
 
 /**
  * Returns a valid page size for data fetching.

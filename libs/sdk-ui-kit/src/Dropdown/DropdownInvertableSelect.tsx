@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, useMemo, useState } from "react";
+import { type ReactElement, type ReactNode, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
@@ -12,8 +12,8 @@ import {
     type IDropdownButtonRenderProps,
 } from "../Dropdown/Dropdown.js";
 import {
-    IInvertableSelectRenderActionsProps,
-    IInvertableSelectRenderItemProps,
+    type IInvertableSelectRenderActionsProps,
+    type IInvertableSelectRenderItemProps,
     type IInvertableSelectRenderNoDataProps,
     type IInvertableSelectRenderSearchBarProps,
     type IInvertableSelectRenderStatusBarProps,
@@ -21,7 +21,7 @@ import {
 } from "../List/InvertableSelect/InvertableSelect.js";
 import { useInvertableSelectionStatusText } from "../List/InvertableSelect/InvertableSelectSelectionStatus.js";
 import { SeparatorLine } from "../SeparatorLine/SeparatorLine.js";
-import { OverlayPositionType } from "../typings/overlay.js";
+import { type OverlayPositionType } from "../typings/overlay.js";
 import type { IAlignPoint } from "../typings/positioning.js";
 
 /**

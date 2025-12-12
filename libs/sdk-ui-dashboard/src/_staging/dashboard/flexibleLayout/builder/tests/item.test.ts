@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+import { type ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSizeByScreenSize,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSizeByScreenSize,
 } from "@gooddata/sdk-model";
 
 import {

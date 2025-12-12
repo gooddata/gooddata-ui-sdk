@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
-import { HeaderPredicates, IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
+import { HeaderPredicates, type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { convertPostMessageToDrillablePredicates } from "../drillablePredicates.js";
 

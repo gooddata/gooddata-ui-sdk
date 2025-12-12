@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useMemo } from "react";
+import { type ReactNode, createContext, useContext, useMemo } from "react";
 
-import { IAnalyticalBackend, IRequestCorrelationMetadata } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IRequestCorrelationMetadata } from "@gooddata/sdk-backend-spi";
 
 import { BackendProvider, useBackend } from "./BackendContext.js";
 

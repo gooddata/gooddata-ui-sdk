@@ -2,8 +2,8 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { Matcher, suppressConsole } from "@gooddata/util";
+import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type Matcher, suppressConsole } from "@gooddata/util";
 
 import {
     availableDrillTargets,

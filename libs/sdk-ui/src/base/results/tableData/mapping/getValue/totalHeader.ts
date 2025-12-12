@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { IResultTotalHeader } from "@gooddata/sdk-model";
+import { type IResultTotalHeader } from "@gooddata/sdk-model";
 
 /**
  * @internal

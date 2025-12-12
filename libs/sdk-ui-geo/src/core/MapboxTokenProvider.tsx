@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType, ReactNode, createContext, useContext } from "react";
+import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IGeoConfig } from "../GeoChart.js";
+import { type IGeoConfig } from "../GeoChart.js";
 
 /**
  * @alpha

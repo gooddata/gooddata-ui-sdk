@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    IAttributeDisplayFormMetadataObject,
-    InsightDrillDefinition,
+    type IAttributeDisplayFormMetadataObject,
+    type InsightDrillDefinition,
     areObjRefsEqual,
     isDrillFromAttribute,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import {
     getLocalIdentifierOrDie,

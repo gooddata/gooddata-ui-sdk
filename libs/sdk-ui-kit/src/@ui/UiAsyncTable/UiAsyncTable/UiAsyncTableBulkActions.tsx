@@ -11,7 +11,7 @@ import { UiButton } from "../../UiButton/UiButton.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { UiAsyncTableBulkActionsProps } from "../types.js";
+import { type UiAsyncTableBulkActionsProps } from "../types.js";
 import { ASYNC_TABLE_BULK_ACTIONS_BUTTON_ID, ASYNC_TABLE_BULK_ACTIONS_MENU_ID } from "./constants.js";
 
 export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActionsProps) {

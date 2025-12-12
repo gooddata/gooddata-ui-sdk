@@ -1,22 +1,22 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useEffect, useMemo, useRef, useState } from "react";
+import { type RefObject, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import {
-    IMapFacade,
-    IPopupFacade,
-    Map,
-    Popup,
+    type IMapFacade,
+    type IPopupFacade,
+    type Map,
+    type Popup,
     createMapFacade,
     createPopupFacade,
 } from "../../layers/common/mapFacade.js";
 import { initializeMapLibreMap } from "../../map/runtime/mapInitialization.js";
-import { IGeoChartNextConfig } from "../../types/config/unified.js";
-import { IMapViewport } from "../../types/map/provider.js";
+import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IMapViewport } from "../../types/map/provider.js";
 import { generateMapLibreLocale } from "../../utils/mapLocale.js";
 
 /**

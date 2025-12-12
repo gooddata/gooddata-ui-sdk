@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { ShowWidgetAsTableState } from "./showWidgetAsTableState.js";
+import { type ShowWidgetAsTableState } from "./showWidgetAsTableState.js";
 
 type ShowWidgetAsTableReducer<A extends Action> = CaseReducer<ShowWidgetAsTableState, A>;
 

@@ -3,7 +3,7 @@
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
+import { type IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import { IconSmallDragHandle } from "@gooddata/sdk-ui-kit";
 
 import { Toolbar } from "./Toolbar.js";
@@ -20,7 +20,7 @@ import { useScreenSize } from "../../../dashboard/components/DashboardScreenSize
 import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
-import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
+import { type IDashboardLayoutProps } from "../../dashboardLayout/types.js";
 
 /**
  * @internal

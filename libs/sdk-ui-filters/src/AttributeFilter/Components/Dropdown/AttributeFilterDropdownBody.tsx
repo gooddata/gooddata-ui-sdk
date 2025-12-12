@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useMemo } from "react";
+import { type KeyboardEvent, useCallback, useMemo } from "react";
 
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { type IAttributeElement } from "@gooddata/sdk-model";
 import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { IAttributeFilterDropdownBodyProps } from "./types.js";
+import { type IAttributeFilterDropdownBodyProps } from "./types.js";
 import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";

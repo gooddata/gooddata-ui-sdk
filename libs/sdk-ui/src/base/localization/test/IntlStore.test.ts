@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { getIntl, getTranslation } from "../IntlStore.js";
-import { DefaultLocale, ILocale } from "../Locale.js";
+import { DefaultLocale, type ILocale } from "../Locale.js";
 import { DEFAULT_MESSAGES } from "../messagesMap.js";
 
 describe("IntlStore", () => {

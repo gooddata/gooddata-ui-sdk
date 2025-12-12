@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { CurrentUserPermissions } from "../../../types.js";
-import { IGranteePermissionsPossibilities, IGranularGrantee } from "../../types.js";
+import { type CurrentUserPermissions } from "../../../types.js";
+import { type IGranteePermissionsPossibilities, type IGranularGrantee } from "../../types.js";
 import { getEffectivePermission, getGranteePossibilities } from "../permissionsLogic.js";
 
 describe("permissions logic", () => {

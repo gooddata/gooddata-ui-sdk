@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IDateFilterConfig } from "../dateFilterConfig/index.js";
+import { type IDateFilterConfig } from "../dateFilterConfig/index.js";
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with

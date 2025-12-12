@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
-import { IWorkspaceUser } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IWorkspaceUser } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @alpha

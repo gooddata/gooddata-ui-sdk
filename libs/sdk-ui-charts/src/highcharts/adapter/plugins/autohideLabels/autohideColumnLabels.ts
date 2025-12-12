@@ -18,8 +18,8 @@ import {
     showStackLabelInAxisRange,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import {
-    IAxisRangeForAxes,
-    IRectBySize,
+    type IAxisRangeForAxes,
+    type IRectBySize,
     getAxisRangeForAxes,
     getAxisWithCategories,
     getDataPointsOfVisibleSeries,
@@ -31,8 +31,8 @@ import {
     toNeighbors,
 } from "../../../chartTypes/_chartCreators/helpers.js";
 import { isWaterfall } from "../../../chartTypes/_util/common.js";
-import { Axis, Point } from "../../../lib/index.js";
-import { IStackItem, IUnsafeDataLabels, UnsafeInternals } from "../../../typings/unsafe.js";
+import { type Axis, type Point } from "../../../lib/index.js";
+import { type IStackItem, type IUnsafeDataLabels, type UnsafeInternals } from "../../../typings/unsafe.js";
 
 /*
  * Code in this file accesses Highchart properties that are not included in

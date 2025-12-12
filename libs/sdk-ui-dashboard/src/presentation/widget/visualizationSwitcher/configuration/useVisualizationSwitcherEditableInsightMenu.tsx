@@ -2,11 +2,11 @@
 
 import { useIntl } from "react-intl";
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import {
-    IInsightMenuItem,
-    IInsightMenuSubmenuComponentProps,
+    type IInsightMenuItem,
+    type IInsightMenuSubmenuComponentProps,
     isIInsightMenuSubmenu,
 } from "../../insightMenu/types.js";
 import { useEditableInsightMenu } from "../../widget/InsightWidget/useEditableInsightMenu.js";

@@ -2,7 +2,7 @@
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { bem } from "../bem.js";
 

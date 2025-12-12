@@ -2,19 +2,19 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IKpi,
-    IKpiComparisonDirection,
-    IKpiComparisonTypeComparison,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    KpiDrillDefinition,
-    ObjRef,
+    type IKpi,
+    type IKpiComparisonDirection,
+    type IKpiComparisonTypeComparison,
+    type IKpiWidget,
+    type IKpiWidgetDefinition,
+    type KpiDrillDefinition,
+    type ObjRef,
     isKpiWidget,
     isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
-import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "../builder.js";
+import { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
+import { type ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "../builder.js";
 
 /**
  * Kpi widget builder

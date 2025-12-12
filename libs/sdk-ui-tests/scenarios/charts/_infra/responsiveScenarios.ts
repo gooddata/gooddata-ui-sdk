@@ -1,8 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { ScenarioCustomizer, UnboundVisProps, VisProps, scenariosFor } from "../../../src/index.js";
+import {
+    type ScenarioCustomizer,
+    type UnboundVisProps,
+    type VisProps,
+    scenariosFor,
+} from "../../../src/index.js";
 
 export interface IResponsiveSize {
     label?: string;

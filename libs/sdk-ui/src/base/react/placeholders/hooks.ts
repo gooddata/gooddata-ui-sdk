@@ -4,18 +4,18 @@ import { useCallback, useMemo, useRef } from "react";
 import stableStringify from "json-stable-stringify";
 import { invariant } from "ts-invariant";
 
-import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+import { type ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 
 import {
-    IComposedPlaceholder,
-    IPlaceholder,
-    PlaceholderResolvedValue,
-    PlaceholderValue,
-    PlaceholdersResolvedValues,
-    PlaceholdersValues,
+    type IComposedPlaceholder,
+    type IPlaceholder,
+    type PlaceholderResolvedValue,
+    type PlaceholderValue,
+    type PlaceholdersResolvedValues,
+    type PlaceholdersValues,
     isPlaceholder,
 } from "./base.js";
-import { PlaceholdersState, usePlaceholdersContext } from "./context.js";
+import { type PlaceholdersState, usePlaceholdersContext } from "./context.js";
 import {
     resolveComposedPlaceholderValue,
     resolvePlaceholderValue,

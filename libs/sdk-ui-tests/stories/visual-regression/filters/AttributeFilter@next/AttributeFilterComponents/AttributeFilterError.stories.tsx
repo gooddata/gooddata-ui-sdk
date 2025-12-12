@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterError } from "@gooddata/sdk-ui-filters";
 
-import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";

@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IAnalyticalBackend,
-    IUserWorkspaceSettings,
-    IWorkspaceSettings,
-    IWorkspaceSettingsService,
+    type IAnalyticalBackend,
+    type IUserWorkspaceSettings,
+    type IWorkspaceSettings,
+    type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
-import { WorkspaceSettingsDecoratorFactory, decoratedBackend } from "../decoratedBackend/index.js";
+import { type WorkspaceSettingsDecoratorFactory, decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
 
 /**

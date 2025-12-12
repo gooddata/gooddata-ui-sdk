@@ -4,7 +4,7 @@ import { format, parse } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
+import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
 type ValueTransform = (value: string) => string;
 

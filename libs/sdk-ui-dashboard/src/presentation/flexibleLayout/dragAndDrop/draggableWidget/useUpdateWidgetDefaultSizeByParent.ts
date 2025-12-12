@@ -3,13 +3,13 @@
 import { useCallback } from "react";
 
 import { isDashboardLayout } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo, isVisualizationDefaultSizeInfo } from "@gooddata/sdk-ui-ext";
+import { type IVisualizationSizeInfo, isVisualizationDefaultSizeInfo } from "@gooddata/sdk-ui-ext";
 
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { findItem, getParentPath, hasParent } from "../../../../_staging/layout/coordinates.js";
 import { selectLayout, useDashboardSelector } from "../../../../model/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
-import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
+import { type ILayoutItemPath } from "../../../../types.js";
+import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
 
 /**
  * The hook will take an item path, finds its parent layout and uses this information to return a function

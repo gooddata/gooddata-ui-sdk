@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    IResultAttributeHeader,
+    type IResultAttributeHeader,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
@@ -9,18 +9,18 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    ExplicitDrill,
-    IDrillEvent,
-    IDrillEventCallback,
-    IDrillEventIntersectionElement,
+    type ExplicitDrill,
+    type IDrillEvent,
+    type IDrillEventCallback,
+    type IDrillEventIntersectionElement,
     isDrillIntersectionAttributeItem,
     isDrillableItemIdentifier,
     isDrillableItemUri,
 } from "./DrillEvents.js";
-import { IHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
+import { type IHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
 import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory.js";
-import { IMappingHeader } from "../headerMatching/MappingHeader.js";
-import { DataViewFacade } from "../results/facade.js";
+import { type IMappingHeader } from "../headerMatching/MappingHeader.js";
+import { type DataViewFacade } from "../results/facade.js";
 
 /**
  * @internal

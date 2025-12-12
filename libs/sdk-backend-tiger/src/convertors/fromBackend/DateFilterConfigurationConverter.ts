@@ -1,14 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    DateFilterGranularity,
-    DateString,
-    IAbsoluteDateFilterForm,
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IDateFilterConfig,
-    IRelativeDateFilterForm,
-    IRelativeDateFilterPreset,
+    type DateFilterGranularity,
+    type DateString,
+    type IAbsoluteDateFilterForm,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IDateFilterConfig,
+    type IRelativeDateFilterForm,
+    type IRelativeDateFilterPreset,
     idRef,
     isDateFilterGranularity,
 } from "@gooddata/sdk-model";

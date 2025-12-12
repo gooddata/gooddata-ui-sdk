@@ -3,12 +3,12 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { StackingType } from "../../../constants/stacking.js";
-import { ISeriesItem } from "../../../typings/unsafe.js";
+import { type StackingType } from "../../../constants/stacking.js";
+import { type ISeriesItem } from "../../../typings/unsafe.js";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions.js";
 
 const { COLUMN, LINE, AREA, BAR } = VisualizationTypes;

@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { PayloadAction, Reducer, createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 type ChatWindowSliceState = {

@@ -1,16 +1,24 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    type CSSProperties,
+    type ReactElement,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IExecutionConfig, insightSetFilters } from "@gooddata/sdk-model";
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type IExecutionConfig, insightSetFilters } from "@gooddata/sdk-model";
 import {
-    GoodDataSdkError,
-    IPushData,
-    OnError,
-    OnLoadingChanged,
+    type GoodDataSdkError,
+    type IPushData,
+    type OnError,
+    type OnLoadingChanged,
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
@@ -32,7 +40,7 @@ import {
 import { IntlWrapper } from "../../../../localization/index.js";
 import { InsightBody } from "../../InsightBody.js";
 import { convertInsightToTableDefinition } from "../../insightToTable.js";
-import { IDashboardInsightProps } from "../../types.js";
+import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";

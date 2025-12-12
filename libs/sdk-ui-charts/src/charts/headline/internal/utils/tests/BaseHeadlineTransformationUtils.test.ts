@@ -3,8 +3,8 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { DataViewFacade, ExplicitDrill, HeadlineElementType } from "@gooddata/sdk-ui";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFacade, type ExplicitDrill, type HeadlineElementType } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
 import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures.js";

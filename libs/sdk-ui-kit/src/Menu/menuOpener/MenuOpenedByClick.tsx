@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, useCallback, useRef } from "react";
+import { type ReactElement, type ReactNode, useCallback, useRef } from "react";
 
-import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
+import { type IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";
 import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
 

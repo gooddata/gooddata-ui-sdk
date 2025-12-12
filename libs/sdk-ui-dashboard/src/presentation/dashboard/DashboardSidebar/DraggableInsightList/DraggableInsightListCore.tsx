@@ -10,12 +10,12 @@ import {
     insightUpdated,
     insightVisualizationType,
 } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type VisType } from "@gooddata/sdk-ui";
 import { InsightListItem } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
 import {
-    DescriptionTooltipOpenedData,
+    type DescriptionTooltipOpenedData,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
     selectSettings,
@@ -23,7 +23,7 @@ import {
     useDashboardUserInteraction,
 } from "../../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { IInsightListProps, InsightList } from "../../../insightList/index.js";
+import { type IInsightListProps, InsightList } from "../../../insightList/index.js";
 
 export function DraggableInsightListCore({
     enableDescriptions,

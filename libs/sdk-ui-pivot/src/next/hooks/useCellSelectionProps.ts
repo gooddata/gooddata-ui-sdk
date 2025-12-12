@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with cell selection configuration applied.

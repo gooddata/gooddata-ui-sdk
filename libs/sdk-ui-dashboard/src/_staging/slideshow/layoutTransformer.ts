@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import { IDashboardLayout, IDashboardLayoutSection } from "@gooddata/sdk-model";
+import { type IDashboardLayout, type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 import { sectionLayoutSection } from "./sectionSlideTransformer.js";
 import { singleWidgetTransformer } from "./singleWidgetTransformer.js";
 import { findFocusedWidget } from "./utils/index.js";
-import { DashboardFocusObject } from "../../model/index.js";
+import { type DashboardFocusObject } from "../../model/index.js";
 
 /**
  * Transforms layout to export format

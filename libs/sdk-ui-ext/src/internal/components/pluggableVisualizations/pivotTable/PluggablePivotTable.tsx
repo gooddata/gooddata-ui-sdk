@@ -1,19 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
 import { defaultImport } from "default-import";
 import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 import Measure from "react-measure";
 
-import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IBackendCapabilities, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    IDimension,
-    IInsight,
-    IInsightDefinition,
-    ISettings,
-    ISortItem,
-    ITheme,
+    type IDimension,
+    type IInsight,
+    type IInsightDefinition,
+    type ISettings,
+    type ISortItem,
+    type ITheme,
     bucketAttribute,
     insightBucket,
     insightBuckets,
@@ -23,15 +23,15 @@ import {
     insightSorts,
     newAttributeSort,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, type VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
-    ColumnHeadersPosition,
-    ColumnWidthItem,
+    type ColumnHeadersPosition,
+    type ColumnWidthItem,
     CorePivotTable,
-    IColumnSizing,
-    ICorePivotTableProps,
-    IPivotTableConfig,
-    MeasureGroupDimension,
+    type IColumnSizing,
+    type ICorePivotTableProps,
+    type IPivotTableConfig,
+    type MeasureGroupDimension,
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 
@@ -50,18 +50,18 @@ import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
-    IBucketFilter,
-    IBucketItem,
-    IBucketOfFun,
-    IDrillDownContext,
-    IExtendedReferencePoint,
-    IGdcConfig,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
-    RenderFunction,
-    UnmountFunction,
+    type IBucketFilter,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IDrillDownContext,
+    type IExtendedReferencePoint,
+    type IGdcConfig,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
+    type RenderFunction,
+    type UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

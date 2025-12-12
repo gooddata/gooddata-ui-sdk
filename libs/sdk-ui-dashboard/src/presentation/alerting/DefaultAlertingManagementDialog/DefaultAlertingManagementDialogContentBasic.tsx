@@ -3,7 +3,7 @@
 import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     Button,
     Dialog,

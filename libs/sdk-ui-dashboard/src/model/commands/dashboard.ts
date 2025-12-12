@@ -1,18 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IDashboardExportPresentationOptions } from "@gooddata/sdk-backend-spi";
+import { type IDashboardExportPresentationOptions } from "@gooddata/sdk-backend-spi";
 import {
-    DashboardAttributeFilterConfigMode,
-    DashboardDateFilterConfigMode,
-    FilterContextItem,
-    IDashboard,
-    IWorkspacePermissions,
-    ObjRef,
+    type DashboardAttributeFilterConfigMode,
+    type DashboardDateFilterConfigMode,
+    type FilterContextItem,
+    type IDashboard,
+    type IWorkspacePermissions,
+    type ObjRef,
 } from "@gooddata/sdk-model";
-import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
+import { type ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
-import { IDashboardCommand } from "./base.js";
-import { DashboardConfig } from "../types/commonTypes.js";
+import { type IDashboardCommand } from "./base.js";
+import { type DashboardConfig } from "../types/commonTypes.js";
 
 /**
  * The initial load of the dashboard will use this correlation id.

@@ -1,9 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { ICatalogDateAttribute, IDashboardAttributeFilter, ISeparators, ObjRef } from "@gooddata/sdk-model";
-import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
+import {
+    type ICatalogDateAttribute,
+    type IDashboardAttributeFilter,
+    type ISeparators,
+    type ObjRef,
+} from "@gooddata/sdk-model";
+import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
-import { DeepReadonly, IKdaDataPoint, IKdaDefinition, KdaPeriodType } from "./types.js";
+import { type DeepReadonly, type IKdaDataPoint, type IKdaDefinition, type KdaPeriodType } from "./types.js";
 
 export interface KdaDateOptions {
     period: KdaPeriodType;

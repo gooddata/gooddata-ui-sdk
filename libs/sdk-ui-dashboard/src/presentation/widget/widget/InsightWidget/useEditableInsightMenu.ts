@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import {
     selectDashboardUserAutomationAlertsInContext,
@@ -17,7 +17,7 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
-import { IInsightMenuItem, getDefaultInsightEditMenuItems } from "../../insightMenu/index.js";
+import { type IInsightMenuItem, getDefaultInsightEditMenuItems } from "../../insightMenu/index.js";
 
 type UseEditableInsightMenuConfig = {
     insight?: IInsight;

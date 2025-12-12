@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IForecastConfig } from "@gooddata/sdk-backend-spi";
-import { ForecastDataValue, ISettings } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type IForecastConfig } from "@gooddata/sdk-backend-spi";
+import { type ForecastDataValue, type ISettings } from "@gooddata/sdk-model";
+import { type VisType } from "@gooddata/sdk-ui";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 
-import { IChartConfig, IForecast } from "../../../interfaces/index.js";
-import { IPatternObject, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { type IChartConfig, type IForecast } from "../../../interfaces/index.js";
+import { type IPatternObject, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 
 const FORECAST_COLOR_PERCENT = 0.8;
 const FORECAST_LINE_COLOR_PERCENT = 0.5;

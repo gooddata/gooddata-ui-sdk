@@ -1,5 +1,9 @@
 // (C) 2023 GoodData Corporation
-import { ICatalogAttributeHierarchy, IDateHierarchyTemplate, ObjRef } from "@gooddata/sdk-model";
+import {
+    type ICatalogAttributeHierarchy,
+    type IDateHierarchyTemplate,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * Service for handle workspace attribute hierarchies

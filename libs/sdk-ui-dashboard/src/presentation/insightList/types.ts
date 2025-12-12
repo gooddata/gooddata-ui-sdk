@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { IInsight, ObjRef } from "@gooddata/sdk-model";
-import { IRenderListItemProps } from "@gooddata/sdk-ui-kit";
+import { type IInsight, type ObjRef } from "@gooddata/sdk-model";
+import { type IRenderListItemProps } from "@gooddata/sdk-ui-kit";
 
-import { IWrapInsightListItemWithDragComponent } from "../dragAndDrop/types.js";
+import { type IWrapInsightListItemWithDragComponent } from "../dragAndDrop/types.js";
 
 /**
  * @internal

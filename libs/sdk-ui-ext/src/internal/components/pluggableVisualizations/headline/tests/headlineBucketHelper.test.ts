@@ -2,7 +2,11 @@
 import { describe, expect, it } from "vitest";
 
 import { DEFAULT_HEADLINE_UICONFIG } from "../../../../constants/uiConfig.js";
-import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../../../../interfaces/Visualization.js";
+import {
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+} from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import {
     findComplementaryOverTimeComparisonMeasure,

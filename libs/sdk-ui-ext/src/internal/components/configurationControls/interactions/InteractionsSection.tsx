@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode, memo } from "react";
+import { type ReactNode, memo } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, SeparatorLine } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { SectionName } from "../../configurationPanels/sectionName.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type SectionName } from "../../configurationPanels/sectionName.js";
 import { CheckboxControl } from "../CheckboxControl.js";
 import { ConfigSection } from "../ConfigSection.js";
 

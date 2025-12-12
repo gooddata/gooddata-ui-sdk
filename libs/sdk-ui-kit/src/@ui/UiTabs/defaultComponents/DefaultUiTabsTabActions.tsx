@@ -2,16 +2,16 @@
 
 import { useCallback, useMemo } from "react";
 
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
 import { Dropdown } from "../../../Dropdown/index.js";
 import { useScopedId } from "../../hooks/useScopedId.js";
 import { isSeparator } from "../../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
-import { IUiMenuItem } from "../../UiMenu/types.js";
+import { type IUiMenuItem } from "../../UiMenu/types.js";
 import { UiMenu } from "../../UiMenu/UiMenu.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
-import { IUiTab, IUiTabAction, IUiTabComponentProps } from "../types.js";
+import { type IUiTab, type IUiTabAction, type IUiTabComponentProps } from "../types.js";
 
 type IMenuItemType<
     TTabProps extends Record<any, any> = EmptyObject,

@@ -4,10 +4,10 @@ import { useRef } from "react";
 
 import cx from "classnames";
 
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
+import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import { DashboardEditLayoutWidget } from "./DashboardEditLayoutWidget.js";
 import {
-    IDashboardLayoutWidgetRenderProps,
+    type IDashboardLayoutWidgetRenderProps,
     getDashboardLayoutItemHeightForRatioAndScreen,
 } from "../../../DefaultDashboardLayoutRenderer/index.js";
 

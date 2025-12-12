@@ -4,11 +4,11 @@ import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { IMeasure } from "@gooddata/sdk-model";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IMeasure } from "@gooddata/sdk-model";
 
 import { PivotTable, pivotTableMenuForCapabilities } from "../PivotTable.js";
-import { IMenu } from "../publicTypes.js";
+import { type IMenu } from "../publicTypes.js";
 
 describe("PivotTable", () => {
     const measure: IMeasure = {

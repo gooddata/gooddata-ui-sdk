@@ -1,27 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IClusteringConfig,
-    IClusteringResult,
-    ICollectionItemsResult,
-    IDataView,
-    IExecutionContext,
-    IExecutionResult,
-    IExecutionResultDataSourceMessage,
-    IForecastConfig,
-    IForecastResult,
-    IForecastView,
+    type IClusteringConfig,
+    type IClusteringResult,
+    type ICollectionItemsResult,
+    type IDataView,
+    type IExecutionContext,
+    type IExecutionResult,
+    type IExecutionResultDataSourceMessage,
+    type IForecastConfig,
+    type IForecastResult,
+    type IForecastView,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IExecutionDefinition,
-    IResultWarning,
+    type IAttribute,
+    type IExecutionDefinition,
+    type IResultWarning,
     defFingerprint,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
 
-import { IDataAccessMethods } from "./dataAccess.js";
-import { DataAccessConfig } from "./dataAccessConfig.js";
+import { type IDataAccessMethods } from "./dataAccess.js";
+import { type DataAccessConfig } from "./dataAccessConfig.js";
 import {
     type CollectionItemsRequestOptions,
     describeAttribute,
@@ -29,9 +29,12 @@ import {
     findAttributeCoordinates,
 } from "./internal/collectionItemsHelpers.js";
 import { newDataAccessMethods } from "./internal/dataAccessMethods.js";
-import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods.js";
-import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods.js";
-import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods.js";
+import {
+    type IExecutionDefinitionMethods,
+    newExecutionDefinitonMethods,
+} from "./internal/definitionMethods.js";
+import { type IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods.js";
+import { type IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods.js";
 
 export type { CollectionItemsRequestOptions } from "./internal/collectionItemsHelpers.js";
 

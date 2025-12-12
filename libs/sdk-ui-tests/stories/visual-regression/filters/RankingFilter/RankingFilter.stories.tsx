@@ -5,14 +5,14 @@ import { action } from "storybook/actions";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { attributeLocalId, localIdRef, measureLocalId, newRankingFilter } from "@gooddata/sdk-model";
 import {
-    IAttributeDropdownItem,
-    IMeasureDropdownItem,
+    type IAttributeDropdownItem,
+    type IMeasureDropdownItem,
     RankingFilter,
     RankingFilterDropdown,
 } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/rankingFilter.css";
-import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 

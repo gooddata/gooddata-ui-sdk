@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CellTypes } from "../types/cellRendering.js";
+import { type CellTypes } from "../types/cellRendering.js";
 
 export function getPivotHeaderTestIdProps(options?: {
     drillable?: boolean;

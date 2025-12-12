@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
 
-import { ClientColors, ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ClientColors, ClientFormatterFacade } from "@gooddata/number-formatter";
+import { type ISeparators } from "@gooddata/sdk-model";
 import { getHeadlineResponsiveClassName } from "@gooddata/sdk-ui-vis-commons";
 
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { IBaseHeadlineValueItem } from "../interfaces/BaseHeadlines.js";
-import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../interfaces/Headlines.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IBaseHeadlineValueItem } from "../interfaces/BaseHeadlines.js";
+import { type IFormattedHeadlineDataItem, type IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";

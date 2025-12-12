@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type MouseEvent, type ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
@@ -25,7 +25,7 @@ import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderSearchButton } from "./HeaderSearchButton.js";
 import { HeaderSearchProvider } from "./headerSearchContext.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
-import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings.js";
+import { type IAppHeaderProps, type IAppHeaderState, type IHeaderMenuItem } from "./typings.js";
 import { Icon } from "../Icon/index.js";
 import { Overlay } from "../Overlay/index.js";
 import { Typography } from "../Typography/index.js";

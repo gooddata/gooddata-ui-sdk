@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 
-import { DataValue } from "@gooddata/sdk-model";
+import { type DataValue } from "@gooddata/sdk-model";
 import { getMappingHeaderName, getMappingHeaderUri, hasMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 
-import { IGridRow } from "../data/resultTypes.js";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { type IGridRow } from "../data/resultTypes.js";
+import { type TableDescriptor } from "../structure/tableDescriptor.js";
 
 /**
  * @deprecated this is linked to deprecated API

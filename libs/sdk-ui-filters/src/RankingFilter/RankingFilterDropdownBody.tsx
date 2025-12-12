@@ -5,14 +5,23 @@ import { useCallback, useState } from "react";
 import { isEmpty, isEqual, xorWith } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IRankingFilter, ObjRefInScope, areObjRefsEqual, newRankingFilter } from "@gooddata/sdk-model";
+import {
+    type IRankingFilter,
+    type ObjRefInScope,
+    areObjRefsEqual,
+    newRankingFilter,
+} from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";
 import { MeasureDropdown } from "./MeasureDropdown/MeasureDropdown.js";
 import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown.js";
 import { Preview } from "./Preview.js";
-import { IAttributeDropdownItem, ICustomGranularitySelection, IMeasureDropdownItem } from "./types.js";
+import {
+    type IAttributeDropdownItem,
+    type ICustomGranularitySelection,
+    type IMeasureDropdownItem,
+} from "./types.js";
 import { ValueDropdown } from "./ValueDropdown/ValueDropdown.js";
 
 const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilter) => {

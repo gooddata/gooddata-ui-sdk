@@ -11,13 +11,13 @@ import {
 } from "@gooddata/sdk-model";
 
 import { AttributeFilterLoader } from "./loader.js";
-import { AttributeFilterHandlerConfig } from "./types.js";
+import { type AttributeFilterHandlerConfig } from "./types.js";
 import {
-    AttributeElementKey,
-    CallbackRegistration,
-    ISingleSelectAttributeFilterHandler,
-    OnSelectionChangedCallbackPayload,
-    OnSelectionCommittedCallbackPayload,
+    type AttributeElementKey,
+    type CallbackRegistration,
+    type ISingleSelectAttributeFilterHandler,
+    type OnSelectionChangedCallbackPayload,
+    type OnSelectionCommittedCallbackPayload,
 } from "../types/index.js";
 
 /**

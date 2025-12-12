@@ -6,7 +6,7 @@ import { InternalIntlWrapper, NamePositionControl } from "@gooddata/sdk-ui-ext/i
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { INeobackstopConfig } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const german = "de-DE";

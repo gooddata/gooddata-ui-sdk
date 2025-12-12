@@ -2,7 +2,7 @@
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
+import { type ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 
 import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

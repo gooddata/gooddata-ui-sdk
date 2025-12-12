@@ -2,21 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Action } from "@reduxjs/toolkit";
+import { type Action } from "@reduxjs/toolkit";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IDashboard, IDashboardWidget, ObjRef, isDashboard } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IDashboard, type IDashboardWidget, type ObjRef, isDashboard } from "@gooddata/sdk-model";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
 import { enrichMapboxToken, useMapboxToken } from "@gooddata/sdk-ui-geo";
 import { enrichAgGridToken, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { objectUtils } from "@gooddata/util";
 
-import { IDashboardStoreProviderProps } from "./types.js";
+import { type IDashboardStoreProviderProps } from "./types.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import { InitialLoadCorrelationId, initializeDashboardWithPersistedDashboard } from "../commands/index.js";
-import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
-import { ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
+import { type ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { getWidgetsOfType } from "../store/tabs/layout/layoutUtils.js";
 import type { DashboardConfig } from "../types/commonTypes.js";
 

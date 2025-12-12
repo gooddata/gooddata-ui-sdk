@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IWithTitleProps } from "../../../../interfaces/BaseHeadlines.js";
+import { type IWithTitleProps } from "../../../../interfaces/BaseHeadlines.js";
 import { HEADLINE_TITLE_WRAPPER_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
 import { withTitle } from "../withTitle.js";
 

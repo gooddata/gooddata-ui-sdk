@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosError, AxiosResponse, isCancel } from "axios";
+import { type AxiosError, type AxiosResponse, isCancel } from "axios";
 
 import {
     AbortError,
-    AnalyticalBackendError,
+    type AnalyticalBackendError,
     ContractExpired,
     DataTooLargeError,
     LimitReached,

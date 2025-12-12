@@ -4,13 +4,13 @@ import { useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 
-import { IInsight, IInsightWidget, widgetRef } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { type IInsight, type IInsightWidget, widgetRef } from "@gooddata/sdk-model";
+import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
+import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import {
-    ChangeInsightWidgetFilterSettings,
-    DashboardCommandFailed,
+    type ChangeInsightWidgetFilterSettings,
+    type DashboardCommandFailed,
     addVisualizationToSwitcherWidgetContent,
     dispatchAndWaitFor,
     eagerRemoveSectionItemByWidgetRef,

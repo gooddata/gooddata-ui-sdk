@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import { resizeParentContainers } from "./containerHeightSanitization.js";
@@ -13,17 +13,17 @@ import {
     serializeLayoutSectionPath,
 } from "../../../_staging/layout/coordinates.js";
 import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing.js";
-import { ResizeHeight } from "../../commands/layout.js";
+import { type ResizeHeight } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    DashboardLayoutSectionItemsHeightResized,
+    type DashboardLayoutSectionItemsHeightResized,
     layoutSectionItemsHeightResized,
 } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,

@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 import {
-    IAttributeDescriptor,
-    ICatalogAttributeHierarchy,
-    IDrillDownReference,
-    ObjRef,
+    type IAttributeDescriptor,
+    type ICatalogAttributeHierarchy,
+    type IDrillDownReference,
+    type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
 
-import { IDrillTargets } from "../../drillTargets/drillTargetsTypes.js";
+import { type IDrillTargets } from "../../drillTargets/drillTargetsTypes.js";
 
 export const widgetRef: ObjRef = {
     identifier: "4361c310-891c-4af7-b2c5-877f4d5ec432_widget-0",

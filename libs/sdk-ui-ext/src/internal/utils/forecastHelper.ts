@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IInsightDefinition, bucketsFind, insightBuckets, isAttributeSort } from "@gooddata/sdk-model";
-import { BucketNames, ChartType } from "@gooddata/sdk-ui";
+import { type IInsightDefinition, bucketsFind, insightBuckets, isAttributeSort } from "@gooddata/sdk-model";
+import { BucketNames, type ChartType } from "@gooddata/sdk-ui";
 
-import { IReferencePoint } from "../interfaces/Visualization.js";
+import { type IReferencePoint } from "../interfaces/Visualization.js";
 
 export function isForecastEnabled(
     referencePoint: IReferencePoint | undefined,

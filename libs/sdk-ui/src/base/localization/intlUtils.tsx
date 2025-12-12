@@ -1,12 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentClass, ComponentType, FC, JSX, ReactNode, useEffect, useState } from "react";
+import {
+    type ComponentClass,
+    type ComponentType,
+    type FC,
+    type JSX,
+    type ReactNode,
+    useEffect,
+    useState,
+} from "react";
 
-import { IntlProvider, IntlShape, createIntl } from "react-intl";
+import { IntlProvider, type IntlShape, createIntl } from "react-intl";
 import type { IntlConfig } from "react-intl/src/types.js";
 
-import { DefaultLocale, ILocale, isLocale } from "./Locale.js";
-import { DEFAULT_MESSAGES, ITranslations, resolveMessages } from "./messagesMap.js";
+import { DefaultLocale, type ILocale, isLocale } from "./Locale.js";
+import { DEFAULT_MESSAGES, type ITranslations, resolveMessages } from "./messagesMap.js";
 import { wrapDisplayName } from "../react/wrapDisplayName.js";
 
 /**

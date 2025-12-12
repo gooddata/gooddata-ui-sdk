@@ -2,22 +2,22 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ObjRef, idRef } from "@gooddata/sdk-model";
+import { type ObjRef, idRef } from "@gooddata/sdk-model";
 
-import { RemoveSectionItemByWidgetRef } from "../../../../../esm/model/commands/layout.js";
+import { type RemoveSectionItemByWidgetRef } from "../../../../../esm/model/commands/layout.js";
 import {
     eagerRemoveSectionItemByWidgetRef,
     removeSectionItemByWidgetRef,
     undoLayoutChanges,
 } from "../../../commands/layout.js";
 import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionItemRemoved,
-    DashboardLayoutSectionRemoved,
+    type DashboardCommandFailed,
+    type DashboardLayoutChanged,
+    type DashboardLayoutSectionItemRemoved,
+    type DashboardLayoutSectionRemoved,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardLayout,

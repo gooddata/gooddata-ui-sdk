@@ -6,7 +6,7 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import { AXIS } from "../../../../constants/axis.js";
-import { IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization.js";
+import { type IReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";

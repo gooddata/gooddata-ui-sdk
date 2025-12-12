@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Reducer, createSlice } from "@reduxjs/toolkit";
+import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { insightsAdapter } from "./insightsEntityAdapter.js";
 

@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import { measureLocalId } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import { isComboChart } from "../_util/common.js";
 
 export function setMeasuresToSecondaryAxis(config: IChartConfig = {}, dv: DataViewFacade): IChartConfig {

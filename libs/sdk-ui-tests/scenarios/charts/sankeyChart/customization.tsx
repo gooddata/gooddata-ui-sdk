@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
+import { type ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
 import { SankeyChartWithMeasureAndAttributeFrom, SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

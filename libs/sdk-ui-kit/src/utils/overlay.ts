@@ -3,14 +3,14 @@
 import { mapValues, merge } from "lodash-es";
 
 import { elementRegion } from "./domUtilities.js";
-import { IRegion } from "../typings/domUtilities.js";
+import { type IRegion } from "../typings/domUtilities.js";
 import {
-    GetOptimalAlignment,
-    GetOptimalAlignmentForRegion,
-    GetPositionedSelfRegion,
-    IOptimalAlignment,
+    type GetOptimalAlignment,
+    type GetOptimalAlignmentForRegion,
+    type GetPositionedSelfRegion,
+    type IOptimalAlignment,
 } from "../typings/overlay.js";
-import { IAlignPoint, IOffset } from "../typings/positioning.js";
+import { type IAlignPoint, type IOffset } from "../typings/positioning.js";
 
 const ALIGN_RATIOS_X: Record<string, number> = {
     l: 0,

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties, ComponentType } from "react";
+import { type CSSProperties, type ComponentType } from "react";
 
 import { CodeSnippet } from "./CodeSnippet.js";
 /**

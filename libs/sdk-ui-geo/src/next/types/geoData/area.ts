@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoCommonData, IGeoDataItem } from "./common.js";
+import { type IGeoCommonData, type IGeoDataItem } from "./common.js";
 
 /**
  * Represents a geographic area item with polygon/boundary data

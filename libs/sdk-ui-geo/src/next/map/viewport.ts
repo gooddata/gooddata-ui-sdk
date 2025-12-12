@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoLayerData } from "../context/GeoLayersContext.js";
-import { IMapViewport } from "../types/map/provider.js";
+import { type IGeoLayerData } from "../context/GeoLayersContext.js";
+import { type IMapViewport } from "../types/map/provider.js";
 
 function mergeBounds(
     a: IMapViewport["bounds"] | undefined,

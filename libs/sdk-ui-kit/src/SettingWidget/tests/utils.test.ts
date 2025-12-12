@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 import { customItemsMock, fullyDefinedThemeMock } from "./mocks.js";
 import { getColorsPreviewFromTheme } from "../StylingSettingWidget/index.js";

@@ -6,11 +6,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { add, formatDate } from "date-fns";
 import moment from "moment";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 
 import { platformDateFormat } from "../constants/Platform.js";
-import { DateFilter, IDateFilterProps } from "../DateFilter.js";
-import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
+import { DateFilter, type IDateFilterProps } from "../DateFilter.js";
+import { type DateFilterOption, type IDateFilterOptionsByType } from "../interfaces/index.js";
 
 export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     allTime: {

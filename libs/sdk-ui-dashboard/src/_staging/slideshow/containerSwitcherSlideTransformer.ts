@@ -2,8 +2,8 @@
 import { cloneDeep } from "lodash-es";
 
 import {
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
     isDashboardLayout,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";

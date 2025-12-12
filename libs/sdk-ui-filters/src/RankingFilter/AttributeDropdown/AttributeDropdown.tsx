@@ -3,13 +3,13 @@
 import { useState } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
-import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
-import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
+import { type IAttributeDropdownItem, type ICustomGranularitySelection } from "../types.js";
 
 const getItemTitle = (selectedItem: IAttributeDropdownItem | undefined, intl: IntlShape): string =>
     selectedItem ? selectedItem.title : intl.formatMessage({ id: "rankingFilter.allRecords" });

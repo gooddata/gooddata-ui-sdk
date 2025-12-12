@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useMemo, useState } from "react";
 
-import { IOnOpenedChangeParams, OnOpenedChange } from "./MenuSharedTypes.js";
+import { type IOnOpenedChangeParams, type OnOpenedChange } from "./MenuSharedTypes.js";
 
 /**
  * @internal

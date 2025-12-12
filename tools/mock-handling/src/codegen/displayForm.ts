@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-import { DisplayFormRecording } from "../recordings/displayForms.js";
+import { type DisplayFormRecording } from "../recordings/displayForms.js";
 
 /**
  * Generate constants for the valid element recordings. This function will return non-exported constant per recording.

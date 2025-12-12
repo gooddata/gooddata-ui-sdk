@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useMemo } from "react";
+import { type MouseEvent, useCallback, useMemo } from "react";
 
-import { IDrillEvent, IDrillEventContextTable, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IDrillEvent, type IDrillEventContextTable, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { useCurrentDataView } from "../../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { createCustomDrillEvent } from "../../features/drilling/events.js";
 import { createHeaderDrillIntersection } from "../../features/drilling/intersection.js";
 import { isHeaderCellDrillable } from "../../features/drilling/isDrillable.js";
-import { AgGridColumnGroupDef, AgGridHeaderGroupParams } from "../../types/agGrid.js";
+import { type AgGridColumnGroupDef, type AgGridHeaderGroupParams } from "../../types/agGrid.js";
 
 /**
  * Custom hook that provides header drilling functionality for group headers.

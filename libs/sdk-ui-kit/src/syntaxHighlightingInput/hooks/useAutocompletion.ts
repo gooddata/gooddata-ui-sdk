@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo } from "react";
+import { type RefObject, useMemo } from "react";
 
 import {
-    CompletionSource,
+    type CompletionSource,
     autocompletion,
     completionStatus,
     selectedCompletionIndex,
     setSelectedCompletion,
 } from "@codemirror/autocomplete";
-import { EditorView, ViewPlugin } from "@codemirror/view";
+import { type EditorView, ViewPlugin } from "@codemirror/view";
 
 export function useAutocompletion({
     handleCompletion,

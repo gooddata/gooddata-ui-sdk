@@ -3,12 +3,12 @@
 import { groupBy, sortBy } from "lodash-es";
 import { action } from "storybook/actions";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IInsight,
-    IInsightDefinition,
-    ISettings,
-    IVisualizationClass,
+    type IInsight,
+    type IInsightDefinition,
+    type ISettings,
+    type IVisualizationClass,
     insightId,
     insightTitle,
     insightVisualizationUrl,
@@ -17,7 +17,7 @@ import {
     BaseVisualization,
     DEFAULT_MESSAGES,
     FullVisualizationCatalog,
-    IGdcConfig,
+    type IGdcConfig,
 } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
@@ -26,7 +26,7 @@ import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
 import { allScenarios } from "../../../scenarios/index.js";
-import { IScenario, MapboxToken, ScenarioGroup } from "../../../src/index.js";
+import { type IScenario, MapboxToken, type ScenarioGroup } from "../../../src/index.js";
 import { StorybookBackend } from "../../_infra/backend.js";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
 import {

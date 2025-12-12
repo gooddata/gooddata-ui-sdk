@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
 import { invariant } from "ts-invariant";
 

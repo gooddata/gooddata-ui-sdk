@@ -10,12 +10,12 @@ import { stringUtils } from "@gooddata/util";
 
 import { getPermissionTitle } from "./locales.js";
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
-import { TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
+import { type TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
 import {
-    IGrantedWorkspace,
-    IPermissionsItem,
-    WorkspacePermission,
-    WorkspacePermissionSubject,
+    type IGrantedWorkspace,
+    type IPermissionsItem,
+    type WorkspacePermission,
+    type WorkspacePermissionSubject,
 } from "../../types.js";
 
 const items: IPermissionsItem[] = [

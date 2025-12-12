@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IInsight, idMatchMeasure, insightMeasures } from "@gooddata/sdk-model";
+import { type IInsight, idMatchMeasure, insightMeasures } from "@gooddata/sdk-model";
 
 import { insightWithComplexArithmeticMeasureTree } from "../../../../__mocks__/fixtures.js";
 import { ignoreTitlesForSimpleMeasures } from "../ignoreTitlesForSimpleMeasures.js";

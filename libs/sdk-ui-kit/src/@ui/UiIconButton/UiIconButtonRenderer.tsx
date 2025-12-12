@@ -1,21 +1,28 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, forwardRef } from "react";
+import { type KeyboardEvent, type MouseEvent, forwardRef } from "react";
 
 import { stringUtils } from "@gooddata/util";
 
-import { IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
+import { type IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
-import { IconType } from "../@types/icon.js";
-import { SizeLarge, SizeMedium, SizeSmall, SizeXLarge, SizeXSmall, SizeXXLarge } from "../@types/size.js";
+import { type IconType } from "../@types/icon.js";
 import {
-    VariantBare,
-    VariantDanger,
-    VariantPopOut,
-    VariantPrimary,
-    VariantSecondary,
-    VariantTable,
-    VariantTertiary,
+    type SizeLarge,
+    type SizeMedium,
+    type SizeSmall,
+    type SizeXLarge,
+    type SizeXSmall,
+    type SizeXXLarge,
+} from "../@types/size.js";
+import {
+    type VariantBare,
+    type VariantDanger,
+    type VariantPopOut,
+    type VariantPrimary,
+    type VariantSecondary,
+    type VariantTable,
+    type VariantTertiary,
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
 import { getButtonIconSize } from "../@utils/size.js";

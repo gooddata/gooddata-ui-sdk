@@ -1,23 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    AttributeModifications,
-    IAttribute,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    ICatalogAttribute,
-    IDataSetMetadataObject,
-    ObjRef,
+    type AttributeModifications,
+    type IAttribute,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type ICatalogAttribute,
+    type IDataSetMetadataObject,
+    type ObjRef,
     isAttributeDisplayFormMetadataObject,
     isAttributeMetadataObject,
     newAttribute,
 } from "@gooddata/sdk-model";
 
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
-import { BuilderModifications, builderFactory } from "../builder.js";
-import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory.js";
+import { type BuilderModifications, builderFactory } from "../builder.js";
 import {
-    AttributeDisplayFormMetadataObjectBuilder,
+    type AttributeMetadataObjectBuilder,
+    newAttributeMetadataObject,
+} from "../metadata/attributeFactory.js";
+import {
+    type AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "../metadata/displayFormFactory.js";
 

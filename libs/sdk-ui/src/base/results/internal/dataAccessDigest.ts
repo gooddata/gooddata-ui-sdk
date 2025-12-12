@@ -1,17 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 import { keyBy } from "lodash-es";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeDescriptor,
-    IDimensionDescriptor,
-    IMeasure,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    IResultAttributeHeader,
-    IResultHeader,
-    IResultMeasureHeader,
+    type IAttribute,
+    type IAttributeDescriptor,
+    type IDimensionDescriptor,
+    type IMeasure,
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
+    type IResultAttributeHeader,
+    type IResultHeader,
+    type IResultMeasureHeader,
     attributeLocalId,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,

@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 
 import { chartConfigToVisProperties } from "../chartConfigToVisProps.js";
 

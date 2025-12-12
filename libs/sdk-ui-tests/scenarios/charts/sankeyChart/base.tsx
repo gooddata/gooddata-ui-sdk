@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
+import { type ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

@@ -1,10 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 
-import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import {
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+} from "@gooddata/sdk-model";
 
 // import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

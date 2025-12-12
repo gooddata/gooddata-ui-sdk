@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    AccessGranteeDetail,
-    IAccessGrantee,
-    IAvailableAccessGrantee,
-    IGranularAccessGrantee,
-    ObjRef,
+    type AccessGranteeDetail,
+    type IAccessGrantee,
+    type IAvailableAccessGrantee,
+    type IGranularAccessGrantee,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

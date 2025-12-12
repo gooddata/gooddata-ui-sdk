@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import { AgGridEvent } from "ag-grid-community";
+import { type AgGridEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
-import { InternalTableState } from "../../tableState.js";
+import { type InternalTableState } from "../../tableState.js";
 
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
 

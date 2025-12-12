@@ -6,19 +6,19 @@ import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
-    IAlertAnomalyDetectionGranularity,
-    IAlertAnomalyDetectionSensitivity,
-    IAlertComparisonOperator,
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IAutomationRecipient,
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
-    ISeparators,
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertComparisonOperator,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IAutomationRecipient,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type ISeparators,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
@@ -40,7 +40,7 @@ import {
     useDashboardSelector,
 } from "../../../../../../model/index.js";
 import {
-    IMeasureFormatMap,
+    type IMeasureFormatMap,
     getDescription,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import {
@@ -59,7 +59,11 @@ import {
     transformAlertByTitle,
     transformAlertByValue,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/transformation.js";
-import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../../../alerting/types.js";
+import {
+    type AlertAttribute,
+    type AlertMetric,
+    type AlertMetricComparatorType,
+} from "../../../../../alerting/types.js";
 import { isEmail } from "../../../../../scheduledEmail/utils/validate.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";

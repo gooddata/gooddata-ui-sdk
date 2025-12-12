@@ -1,27 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { MutableRefObject, ReactNode, useCallback, useMemo } from "react";
+import { type MutableRefObject, type ReactNode, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-    IAttributeMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateDataset,
+    type IAttributeMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
-    IUiMenuInteractiveItem,
-    IUiMenuItem,
-    IUiMenuStaticItemProps,
+    type IUiMenuInteractiveItem,
+    type IUiMenuItem,
+    type IUiMenuStaticItemProps,
     UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
-import { AlertAttribute } from "../../types.js";
-import { AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
+import { type AlertAttribute } from "../../types.js";
+import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
 import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../utils/getters.js";
 
 export interface IAlertAttributeSelectProps {

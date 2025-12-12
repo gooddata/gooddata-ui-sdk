@@ -2,27 +2,27 @@
 
 import {
     ComputeRatioRule,
-    IAttribute,
-    IMeasure,
-    INullableFilter,
-    ISortItem,
+    type IAttribute,
+    type IMeasure,
+    type INullableFilter,
+    type ISortItem,
     applyRatioRule,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AttributeOrPlaceholder,
-    AttributesOrPlaceholders,
+    type AttributeOrPlaceholder,
+    type AttributesOrPlaceholders,
     BucketNames,
-    MeasuresOrPlaceholders,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
+    type MeasuresOrPlaceholders,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
 import { CoreComboChart } from "./CoreComboChart.js";
-import { IBucketChartProps, IChartConfig } from "../../interfaces/index.js";
+import { type IBucketChartProps, type IChartConfig } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { defaultDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 

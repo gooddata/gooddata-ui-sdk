@@ -2,8 +2,8 @@
 
 import { isIdentifierRef } from "@gooddata/sdk-model";
 
-import { AttributeFilterInteractionType } from "../../../../../../../model/index.js";
-import { ValuesLimitingItem } from "../../../../types.js";
+import { type AttributeFilterInteractionType } from "../../../../../../../model/index.js";
+import { type ValuesLimitingItem } from "../../../../types.js";
 
 export const getTelemetryEventForLimitingItem = (
     item: ValuesLimitingItem,

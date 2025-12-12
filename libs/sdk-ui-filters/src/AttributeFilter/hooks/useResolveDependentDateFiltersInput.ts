@@ -3,9 +3,9 @@
 import { useMemo } from "react";
 
 import {
-    IAbsoluteDateFilter,
-    IDashboardDateFilter,
-    IRelativeDateFilter,
+    type IAbsoluteDateFilter,
+    type IDashboardDateFilter,
+    type IRelativeDateFilter,
     isAllTimeDashboardDateFilter,
     isRelativeDashboardDateFilter,
     newAbsoluteDateFilter,

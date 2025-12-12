@@ -5,11 +5,11 @@ import {
     AutomationApi_GetNotifications,
 } from "@gooddata/api-client-tiger/automation";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { INotificationsQuery, INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
-import { INotification } from "@gooddata/sdk-model";
+import { type INotificationsQuery, type INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
+import { type INotification } from "@gooddata/sdk-model";
 
 import { convertNotificationFromBackend } from "../../convertors/fromBackend/NotificationsConvertor.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class NotificationsQuery implements INotificationsQuery {
     private size = 100;

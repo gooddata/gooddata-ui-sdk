@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import cx from "classnames";
 
@@ -8,7 +8,7 @@ import { IconDataSource } from "@gooddata/sdk-ui-kit";
 
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
-import { DataSourcePermissionSubject, IGrantedDataSource } from "../types.js";
+import { type DataSourcePermissionSubject, type IGrantedDataSource } from "../types.js";
 
 function DataSourceIcon() {
     return (

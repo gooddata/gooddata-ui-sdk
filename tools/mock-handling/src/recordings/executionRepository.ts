@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import * as path from "path";
 
-import { IRecording, isNonNullRecording } from "./common.js";
+import { type IRecording, isNonNullRecording } from "./common.js";
 import { ExecutionRecording } from "./execution.js";
 import { findFiles } from "../base/utils.js";
 import { logWarn } from "../cli/loggers.js";

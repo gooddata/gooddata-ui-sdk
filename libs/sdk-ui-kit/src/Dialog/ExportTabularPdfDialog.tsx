@@ -2,13 +2,13 @@
 
 import { memo, useCallback, useMemo } from "react";
 
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import { usePropState } from "@gooddata/sdk-ui";
 
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
-import { IExportTabularPdfDialogProps, PageOrientation, PageSize } from "./typings.js";
-import { IUiMenuInteractiveItem } from "../@ui/UiMenu/types.js";
+import { type IExportTabularPdfDialogProps, type PageOrientation, type PageSize } from "./typings.js";
+import { type IUiMenuInteractiveItem } from "../@ui/UiMenu/types.js";
 import { UiMenu } from "../@ui/UiMenu/UiMenu.js";
 import { Dropdown, DropdownButton } from "../Dropdown/index.js";
 import { Checkbox } from "../Form/index.js";

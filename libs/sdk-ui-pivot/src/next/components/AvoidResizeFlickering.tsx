@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, ReactNode, useMemo } from "react";
+import { type CSSProperties, type ReactNode, useMemo } from "react";
 
 import { LoadingComponent } from "./LoadingComponent.js";
 import { useTableReady } from "../context/TableReadyContext.js";

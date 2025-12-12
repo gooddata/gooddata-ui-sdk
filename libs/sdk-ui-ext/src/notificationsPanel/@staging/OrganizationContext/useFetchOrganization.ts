@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import { IAnalyticalBackend, IOrganization } from "@gooddata/sdk-backend-spi";
-import { GoodDataSdkError, useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
+import { type IAnalyticalBackend, type IOrganization } from "@gooddata/sdk-backend-spi";
+import { type GoodDataSdkError, useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 
 /**
  * @beta

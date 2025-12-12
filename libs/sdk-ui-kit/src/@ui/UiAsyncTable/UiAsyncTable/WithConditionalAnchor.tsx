@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { stopPropagationCallback } from "./utils.js";
 import { UiLink } from "../../UiLink/UiLink.js";

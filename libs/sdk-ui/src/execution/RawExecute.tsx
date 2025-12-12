@@ -1,14 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { isEqual } from "lodash-es";
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
-import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces.js";
+import { type IExecuteErrorComponent, type IExecuteLoadingComponent } from "./interfaces.js";
 import { withExecution } from "./withExecution.js";
-import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
+import {
+    type DataViewWindow,
+    type IWithLoadingEvents,
+    type WithLoadingResult,
+} from "./withExecutionLoading.js";
 
 /**
  * Props of the {@link RawExecute} component.

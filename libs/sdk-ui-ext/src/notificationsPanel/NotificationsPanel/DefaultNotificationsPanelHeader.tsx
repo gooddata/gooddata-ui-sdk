@@ -4,10 +4,10 @@ import { useCallback, useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { ITab, Tabs, UiButton } from "@gooddata/sdk-ui-kit";
+import { type ITab, Tabs, UiButton } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../bem.js";
-import { INotificationsPanelView } from "../types.js";
+import { type INotificationsPanelView } from "../types.js";
 
 /**
  * Props for the NotificationsPanelHeader component.

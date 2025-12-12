@@ -1,19 +1,19 @@
 // (C) 2025 GoodData Corporation
 
 import { compact, isEqual } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    FilterContextItem,
-    IAutomationVisibleFilter,
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilterConfigItem,
-    IDateFilter,
-    IFilter,
-    IInsight,
-    ObjRef,
+    type FilterContextItem,
+    type IAutomationVisibleFilter,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type IDateFilter,
+    type IFilter,
+    type IInsight,
+    type ObjRef,
     absoluteDateFilterValues,
     areObjRefsEqual,
     filterAttributeElements,
@@ -36,7 +36,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/index.js";
-import { ExtendedDashboardWidget, removeIgnoredWidgetFilters } from "../../model/index.js";
+import { type ExtendedDashboardWidget, removeIgnoredWidgetFilters } from "../../model/index.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
     if (isDashboardAttributeFilter(filter)) {

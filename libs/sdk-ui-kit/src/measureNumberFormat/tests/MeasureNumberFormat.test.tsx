@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { FC } from "react";
+import { type FC } from "react";
 
 import { EditorView } from "@codemirror/view";
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -8,10 +8,10 @@ import { userEvent } from "@testing-library/user-event";
 import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
 
-import { ISeparators, withIntl } from "@gooddata/sdk-ui";
+import { type ISeparators, withIntl } from "@gooddata/sdk-ui";
 
-import { IMeasureNumberFormatOwnProps, MeasureNumberFormat } from "../MeasureNumberFormat.js";
-import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
+import { type IMeasureNumberFormatOwnProps, MeasureNumberFormat } from "../MeasureNumberFormat.js";
+import { type IFormatTemplate, type IToggleButtonProps } from "../typings.js";
 
 // eslint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";

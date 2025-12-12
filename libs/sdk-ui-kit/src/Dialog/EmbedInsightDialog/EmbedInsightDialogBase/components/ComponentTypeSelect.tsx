@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ChangeEvent, useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { ComponentTypeItem } from "./ComponentTypeItem.js";
 import { dialogChangeMessageLabels } from "../../../../locales.js";
-import { InsightCodeType } from "../types.js";
+import { type InsightCodeType } from "../types.js";
 
 /**
  * @internal

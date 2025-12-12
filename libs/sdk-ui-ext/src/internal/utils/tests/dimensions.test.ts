@@ -4,9 +4,9 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
-    IBucket,
-    IInsightDefinition,
-    ITotal,
+    type IBucket,
+    type IInsightDefinition,
+    type ITotal,
     bucketsFind,
     insightBucket,
     insightBuckets,

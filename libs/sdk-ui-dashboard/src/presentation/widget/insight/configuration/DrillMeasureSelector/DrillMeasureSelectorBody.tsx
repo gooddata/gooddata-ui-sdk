@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { UIEvent } from "react";
+import { type UIEvent } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
 import { DrillMeasureSelectorList } from "./DrillMeasureSelectorList.js";
 

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
+import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
 import type {
     ChatHistoryInteraction,
@@ -44,9 +44,9 @@ import {
 import { convertFilter } from "../../../convertors/fromBackend/afm/FilterConverter.js";
 import { convertMeasure } from "../../../convertors/fromBackend/afm/MeasureConverter.js";
 import { convertAttribute } from "../../../convertors/fromBackend/AttributeConvertor.js";
-import { FormattingLocale } from "../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
-import { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type FormattingLocale } from "../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
+import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
  * Chat thread service.

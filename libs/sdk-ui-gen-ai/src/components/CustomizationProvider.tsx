@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentType, PropsWithChildren, createContext, useContext, useMemo } from "react";
+import { type ComponentType, type PropsWithChildren, createContext, useContext, useMemo } from "react";
 
 import { DefaultLandingScreen } from "./customized/LandingScreen.js";
 

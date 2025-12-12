@@ -1,19 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    ICatalogMeasure,
-    IMeasure,
-    IMeasureMetadataObject,
-    MeasureBuilder,
-    MeasureModifications,
-    ObjRef,
+    type ICatalogMeasure,
+    type IMeasure,
+    type IMeasureMetadataObject,
+    type MeasureBuilder,
+    type MeasureModifications,
+    type ObjRef,
     isMeasureMetadataObject,
     newMeasure,
 } from "@gooddata/sdk-model";
 
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
-import { BuilderModifications, builderFactory } from "../builder.js";
-import { MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metadata/measureFactory.js";
+import { type BuilderModifications, builderFactory } from "../builder.js";
+import { type MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metadata/measureFactory.js";
 
 /**
  * Catalog measure builder

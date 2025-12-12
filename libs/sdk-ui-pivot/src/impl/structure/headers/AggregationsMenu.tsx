@@ -3,14 +3,14 @@
 import { useCallback } from "react";
 
 import cx from "classnames";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    IAttributeDescriptor,
-    IExecutionDefinition,
-    ITheme,
-    ITotal,
-    TotalType,
+    type IAttributeDescriptor,
+    type IExecutionDefinition,
+    type ITheme,
+    type ITotal,
+    type TotalType,
     isMeasureValueFilter,
     isRankingFilter,
     measureValueFilterCondition,
@@ -19,7 +19,7 @@ import {
     Bubble,
     BubbleHoverTrigger,
     Header,
-    IOnOpenedChangeParams,
+    type IOnOpenedChangeParams,
     IconBurgerMenu,
     Item,
     ItemsWrapper,
@@ -33,11 +33,11 @@ import {
     getTotalsForMeasureHeader,
     isTotalEnabledForAttribute,
 } from "./aggregationsMenuHelper.js";
-import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import { type IColumnTotal } from "./aggregationsMenuTypes.js";
 import { AggregationsSubMenu } from "./AggregationsSubMenu.js";
 import { messages } from "../../../locales.js";
-import { IMenuAggregationClickConfig } from "../../privateTypes.js";
-import { TableDescriptor } from "../tableDescriptor.js";
+import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
+import { type TableDescriptor } from "../tableDescriptor.js";
 import {
     isRootCol,
     isScopeCol,

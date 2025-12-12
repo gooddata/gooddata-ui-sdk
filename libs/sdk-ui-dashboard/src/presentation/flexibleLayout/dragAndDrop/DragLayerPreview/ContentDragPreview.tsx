@@ -2,12 +2,12 @@
 
 import { useMemo } from "react";
 
-import { XYCoord } from "@evil-internetmann/react-dnd";
+import { type XYCoord } from "@evil-internetmann/react-dnd";
 
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { DEBUG_SHOW_DROP_ZONES } from "../../../dragAndDrop/debug.js";
-import { DragPreviewProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
-import { DraggableContentItem, DraggableContentItemType } from "../../../dragAndDrop/types.js";
+import { type DragPreviewProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
+import { type DraggableContentItem, type DraggableContentItemType } from "../../../dragAndDrop/types.js";
 
 function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | null) {
     if (!initialOffset || !clientOffset) {

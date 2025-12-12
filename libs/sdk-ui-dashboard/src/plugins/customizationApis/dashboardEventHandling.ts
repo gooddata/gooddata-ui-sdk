@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    DashboardEventEvalFn,
-    DashboardEventHandler,
-    DashboardEventHandlerFn,
-    DashboardEventType,
-    DashboardEvents,
-    ICustomDashboardEvent,
+    type DashboardEventEvalFn,
+    type DashboardEventHandler,
+    type DashboardEventHandlerFn,
+    type DashboardEventType,
+    type DashboardEvents,
+    type ICustomDashboardEvent,
 } from "../../model/index.js";
-import { IDashboardEventing } from "../../presentation/index.js";
-import { DashboardStateChangeCallback, IDashboardEventHandling } from "../customizer.js";
+import { type IDashboardEventing } from "../../presentation/index.js";
+import { type DashboardStateChangeCallback, type IDashboardEventHandling } from "../customizer.js";
 
 /**
  * Factory for predicates that compare event handlers. The comparison is somewhat more aggressive to prevent

@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 
-import { TotalType } from "@gooddata/sdk-model";
+import { type TotalType } from "@gooddata/sdk-model";
 
 export const ROW_ATTRIBUTE_COLUMN = "ROW_ATTRIBUTE_COLUMN";
 export const COLUMN_ATTRIBUTE_COLUMN = "COLUMN_ATTRIBUTE_COLUMN";

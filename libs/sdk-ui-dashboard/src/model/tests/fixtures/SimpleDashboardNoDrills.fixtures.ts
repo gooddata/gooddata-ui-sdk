@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { IFilterContext, IKpiWidget, IListedDashboard } from "@gooddata/sdk-model";
+import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IFilterContext, type IKpiWidget, type IListedDashboard } from "@gooddata/sdk-model";
 
 export const SimpleDashboardNoDrillsIdentifier = "44a9d0ed-8a06-4ffd-b16c-6281707acfcf";
 export const SimpleDashboardNoDrillsWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards?.[

@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    AnchorHTMLAttributes,
-    ComponentType,
-    FocusEvent,
-    ImgHTMLAttributes,
-    ReactElement,
+    type AnchorHTMLAttributes,
+    type ComponentType,
+    type FocusEvent,
+    type ImgHTMLAttributes,
+    type ReactElement,
     useCallback,
     useEffect,
     useRef,
@@ -15,8 +15,8 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import Markdown from "react-markdown";
 
-import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
-import { IntlWrapper, LoadingComponent, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
+import { IntlWrapper, LoadingComponent, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { useEvaluatedReferences } from "./hooks/useEvaluatedReferences.js";
 import { rehypeReferences } from "./plugins/rehype-references.js";

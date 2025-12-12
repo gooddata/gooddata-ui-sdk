@@ -3,8 +3,8 @@
 import cx from "classnames";
 
 import {
-    ArrowOffsets,
-    IAlignPoint,
+    type ArrowOffsets,
+    type IAlignPoint,
     OverlayController,
     OverlayControllerProvider,
     ScrollablePanel,
@@ -14,7 +14,7 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { ConfigurationBubble } from "../../widget/common/index.js";
 import { EditAlert } from "../../widget/insight/configuration/InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "../../widget/insight/configuration/InsightAlertConfig/hooks/useInsightWidgetAlerting.js";
-import { IAlertingDialogOldProps } from "../types.js";
+import { type IAlertingDialogOldProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

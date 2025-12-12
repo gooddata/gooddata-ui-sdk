@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
 import { DialogList } from "@gooddata/sdk-ui-kit";
 
 import { itemsMock as items } from "./itemsMock.js";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {

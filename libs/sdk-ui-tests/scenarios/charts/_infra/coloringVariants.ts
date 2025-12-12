@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IBucketChartProps, type IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { CustomizedScenario, ScenarioTag, UnboundVisProps } from "../../../src/index.js";
+import { type CustomizedScenario, type ScenarioTag, type UnboundVisProps } from "../../../src/index.js";
 import { CustomColorPalette, CustomColors } from "../../_infra/colors.js";
 
 const ConfigVariants: Array<[string, IChartConfig, ScenarioTag[]?]> = [

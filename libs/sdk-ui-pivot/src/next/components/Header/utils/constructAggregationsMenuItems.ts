@@ -1,14 +1,24 @@
 // (C) 2025 GoodData Corporation
 
 import { compact, isEqual } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IAttribute, IAttributeDescriptor, ITotal, TotalType, newTotal } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    type IAttributeDescriptor,
+    type ITotal,
+    type TotalType,
+    newTotal,
+} from "@gooddata/sdk-model";
 
 import { getPreviousAttributeHeaderName } from "./common.js";
 import { messages } from "../../../../locales.js";
 import { DEFAULT_TOTAL_FUNCTIONS } from "../../../constants/internal.js";
-import { IAggregationsMenuItem, IAggregationsSubMenuItem, IMenu } from "../../../types/menu.js";
+import {
+    type IAggregationsMenuItem,
+    type IAggregationsSubMenuItem,
+    type IMenu,
+} from "../../../types/menu.js";
 
 /**
  * Creates total item for the main attribute.

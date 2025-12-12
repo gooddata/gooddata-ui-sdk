@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
+import { BubbleChart, type IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
 import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Button, UiTooltip, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { IEditButtonProps } from "./types.js";
+import { type IEditButtonProps } from "./types.js";
 import {
     selectCanEnterEditMode,
     selectCatalogIsLoaded,

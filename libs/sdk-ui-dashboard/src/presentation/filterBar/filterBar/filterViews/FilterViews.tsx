@@ -6,10 +6,10 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { IDashboardFilterView } from "@gooddata/sdk-model";
+import { type IDashboardFilterView } from "@gooddata/sdk-model";
 import {
     DropdownButton,
-    IAlignPoint,
+    type IAlignPoint,
     UiReturnFocusOnUnmount,
     useIdPrefixed,
     useMediaQuery,

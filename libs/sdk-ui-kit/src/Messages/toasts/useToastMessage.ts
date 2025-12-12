@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { MessageDescriptor, useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import { ToastsCenterContext } from "./context.js";
-import { IMessage, IMessageDefinition, MessageType } from "../typings.js";
+import { type IMessage, type IMessageDefinition, type MessageType } from "../typings.js";
 
 /**
  * @internal

@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { Completion } from "@codemirror/autocomplete";
-import { IntlShape } from "react-intl";
+import { type Completion } from "@codemirror/autocomplete";
+import { type IntlShape } from "react-intl";
 
 import {
-    CatalogItem,
-    ICatalogDateAttribute,
+    type CatalogItem,
+    type ICatalogDateAttribute,
     isCatalogAttribute,
     isCatalogDateAttribute,
     isCatalogDateDataset,

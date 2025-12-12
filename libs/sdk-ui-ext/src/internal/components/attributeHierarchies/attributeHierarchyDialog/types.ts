@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy, type ObjRef } from "@gooddata/sdk-model";
 
 export type EmptyParamCallback = () => void;
 export type SaveOrUpdateCallback = (attributeHierarchy: ICatalogAttributeHierarchy) => void;

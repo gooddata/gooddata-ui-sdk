@@ -3,8 +3,8 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IExecutionDefinition,
-    IPostProcessing,
+    type IExecutionDefinition,
+    type IPostProcessing,
     MeasureGroupIdentifier,
     defWithDimensions,
     defWithPostProcessing,
@@ -15,7 +15,7 @@ import {
     newDimension,
     newMeasureSort,
 } from "@gooddata/sdk-model";
-import { Matcher, suppressConsole } from "@gooddata/util";
+import { type Matcher, suppressConsole } from "@gooddata/util";
 
 import { convertDimensions } from "../DimensionsConverter.js";
 

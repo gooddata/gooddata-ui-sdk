@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ITigerClientBase, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/entitiesObjects";
 
-import { ObjectMeta } from "../../base/types.js";
+import { type ObjectMeta } from "../../base/types.js";
 
 /**
  * Load analytical dashboards that are stored in workspace metadata so that their links can be included

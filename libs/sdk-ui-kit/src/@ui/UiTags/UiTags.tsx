@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo, useRef } from "react";
+import { type RefObject, useMemo, useRef } from "react";
 
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
-import { UiTagDef, UiTagsProps } from "./types.js";
+import { type UiTagDef, type UiTagsProps } from "./types.js";
 import { UiTag } from "./UiTag.js";
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
 import {

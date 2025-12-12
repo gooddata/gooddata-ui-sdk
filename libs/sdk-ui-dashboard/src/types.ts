@@ -3,24 +3,24 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    DrillDefinition,
-    IAbsoluteDateFilter,
-    IAccessGrantee,
-    IAutomationMetadataObject,
-    IInsight,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-    IRelativeDateFilter,
-    IWidget,
-    LocalIdRef,
-    ObjRef,
-    ShareStatus,
+    type DrillDefinition,
+    type IAbsoluteDateFilter,
+    type IAccessGrantee,
+    type IAutomationMetadataObject,
+    type IInsight,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type IRelativeDateFilter,
+    type IWidget,
+    type LocalIdRef,
+    type ObjRef,
+    type ShareStatus,
     isAttributeFilter,
     isDateFilter,
 } from "@gooddata/sdk-model";
-import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { type IDrillEvent, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
-import { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
+import { type DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
 
 // TODO consider adding FilterContextItem to this union so that user can use either sdk-model or FilterContextItem variants of the filters
 /**

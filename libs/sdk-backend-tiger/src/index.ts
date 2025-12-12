@@ -11,7 +11,7 @@
  * @packageDocumentation
  */
 import { withNormalization } from "@gooddata/sdk-backend-base";
-import { IAnalyticalBackend, IAnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IAnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
 
 import { TigerBackend } from "./backend/index.js";
 

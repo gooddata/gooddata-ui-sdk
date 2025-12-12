@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, useMemo, useRef, useState } from "react";
+import { type ReactElement, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
+import ReactMeasure, { type ContentRect, type MeasuredComponentProps } from "react-measure";
 import { v4 } from "uuid";
 
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";

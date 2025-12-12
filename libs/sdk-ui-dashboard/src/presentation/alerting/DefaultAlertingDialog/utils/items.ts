@@ -1,19 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    DateAttributeGranularity,
+    type DateAttributeGranularity,
     DateGranularity,
-    IAttribute,
-    IBucket,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    IFilter,
-    IInsight,
-    IMeasure,
-    IPoPMeasureDefinition,
-    IPreviousPeriodMeasureDefinition,
-    IRelativeDateFilter,
-    ObjRef,
+    type IAttribute,
+    type IBucket,
+    type ICatalogDateAttribute,
+    type ICatalogDateDataset,
+    type IFilter,
+    type IInsight,
+    type IMeasure,
+    type IPoPMeasureDefinition,
+    type IPreviousPeriodMeasureDefinition,
+    type IRelativeDateFilter,
+    type ObjRef,
     areObjRefsEqual,
     bucketAttributes,
     bucketMeasures,
@@ -33,7 +33,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { getCatalogAttribute, getFiltersAttribute } from "./getters.js";
-import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from "../../types.js";
 
 type InsightType =
     | "headline"

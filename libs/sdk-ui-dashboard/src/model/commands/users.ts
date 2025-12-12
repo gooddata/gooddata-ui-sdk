@@ -1,5 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
-import { IDashboardCommand } from "./base.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Loads all workspace users.

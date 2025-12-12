@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { KeyboardEvent, ReactElement, useCallback } from "react";
+import { type KeyboardEvent, type ReactElement, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -10,7 +10,7 @@ import { UiTooltip, isActionKey } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { getDashboardInsightMenuButtonId } from "../../../../_staging/accessibility/elementId.js";
-import { IDashboardInsightMenuButtonProps } from "../types.js";
+import { type IDashboardInsightMenuButtonProps } from "../types.js";
 
 export function DashboardInsightMenuButton({
     isOpen,

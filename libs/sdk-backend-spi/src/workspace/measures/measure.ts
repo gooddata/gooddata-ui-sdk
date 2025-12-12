@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { ObjRef, ObjectType } from "@gooddata/sdk-model";
+import { type ObjRef, type ObjectType } from "@gooddata/sdk-model";
 
 /**
  * Token representing part of parsed MAQL measure expression.

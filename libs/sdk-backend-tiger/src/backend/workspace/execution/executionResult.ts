@@ -3,11 +3,11 @@
 import SparkMD5 from "spark-md5";
 
 import {
-    AfmExecutionResponse,
-    ExecutionResult,
-    Settings,
-    TabularExportRequest,
-    TabularExportRequestFormatEnum,
+    type AfmExecutionResponse,
+    type ExecutionResult,
+    type Settings,
+    type TabularExportRequest,
+    type TabularExportRequestFormatEnum,
 } from "@gooddata/api-client-tiger";
 import { ExecutionResultAPI_RetrieveResult } from "@gooddata/api-client-tiger/execution";
 import { ExportApi_CreateTabularExport } from "@gooddata/api-client-tiger/export";
@@ -21,32 +21,32 @@ import {
     SmartFunctionsApi_ForecastResult,
 } from "@gooddata/api-client-tiger/smartFunctions";
 import {
-    IAnomalyDetectionConfig,
-    IAnomalyDetectionResult,
-    IClusteringConfig,
-    IClusteringResult,
-    ICollectionItemsConfig,
-    ICollectionItemsResult,
-    IDataView,
-    IExecutionContext,
-    IExecutionFactory,
-    IExecutionResult,
-    IExecutionResultMetadata,
-    IExportConfig,
-    IExportResult,
-    IForecastConfig,
-    IForecastResult,
-    IForecastView,
-    IPreparedExecution,
+    type IAnomalyDetectionConfig,
+    type IAnomalyDetectionResult,
+    type IClusteringConfig,
+    type IClusteringResult,
+    type ICollectionItemsConfig,
+    type ICollectionItemsResult,
+    type IDataView,
+    type IExecutionContext,
+    type IExecutionFactory,
+    type IExecutionResult,
+    type IExecutionResultMetadata,
+    type IExportConfig,
+    type IExportResult,
+    type IForecastConfig,
+    type IForecastResult,
+    type IForecastView,
+    type IPreparedExecution,
     NoDataError,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    DataValue,
-    IDimensionDescriptor,
-    IExecutionDefinition,
-    IGeoJsonFeature,
-    IResultHeader,
+    type DataValue,
+    type IDimensionDescriptor,
+    type IExecutionDefinition,
+    type IGeoJsonFeature,
+    type IResultHeader,
 } from "@gooddata/sdk-model";
 
 import { resolveCustomOverride } from "./utils.js";
@@ -60,8 +60,8 @@ import { transformForecastResult } from "../../../convertors/fromBackend/afm/for
 import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter.js";
 import { convertExecutionResultMetadata } from "../../../convertors/fromBackend/afm/MetadataConverter.js";
 import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result.js";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;

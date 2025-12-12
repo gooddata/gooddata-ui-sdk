@@ -2,9 +2,12 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IEntitlementDescriptor } from "../entitlements/index.js";
-import { ObjRef } from "../objRef/index.js";
-import { IDataSourcePermissionAssignment, IWorkspacePermissionAssignment } from "../organization/index.js";
+import { type IEntitlementDescriptor } from "../entitlements/index.js";
+import { type ObjRef } from "../objRef/index.js";
+import {
+    type IDataSourcePermissionAssignment,
+    type IWorkspacePermissionAssignment,
+} from "../organization/index.js";
 
 /**
  * Represents platform user.

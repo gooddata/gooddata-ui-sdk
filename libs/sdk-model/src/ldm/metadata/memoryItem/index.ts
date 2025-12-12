@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IUser } from "../../../user/index.js";
-import { IMetadataObject, isMetadataObject } from "../types.js";
+import { type IUser } from "../../../user/index.js";
+import { type IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
  * Memory item strategy.

@@ -1,17 +1,20 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { IWorkspaceCatalog, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
-import { DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
+import { type IWorkspaceCatalog, type IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
+import { type DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
 
-import { AttributeHierarchyModified } from "../../commands/index.js";
-import { AttributeHierarchyModifiedEvent, attributeHierarchyModifiedEvent } from "../../events/insight.js";
+import { type AttributeHierarchyModified } from "../../commands/index.js";
+import {
+    type AttributeHierarchyModifiedEvent,
+    attributeHierarchyModifiedEvent,
+} from "../../events/insight.js";
 import { catalogActions } from "../../store/catalog/index.js";
 import { selectObjectAvailabilityConfig } from "../../store/config/configSelectors.js";
-import { DashboardContext, ObjectAvailabilityConfig } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext, type ObjectAvailabilityConfig } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { loadDateHierarchyTemplates } from "../dashboard/initializeDashboardHandler/loadDateHierarchyTemplates.js";
 
 const SupportedCatalogGranularity: DateAttributeGranularity[] = [

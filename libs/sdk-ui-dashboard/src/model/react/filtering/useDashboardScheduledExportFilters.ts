@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { useAutomationAvailableDashboardFilters } from "./useAutomationAvailableDashboardFilters.js";
 import { getAutomationDashboardFilters } from "../../../_staging/automation/index.js";

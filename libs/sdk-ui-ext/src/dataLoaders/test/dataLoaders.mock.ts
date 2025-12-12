@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IWorkspaceDashboardsService, IWorkspaceInsightsService } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceDashboardsService, type IWorkspaceInsightsService } from "@gooddata/sdk-backend-spi";
 
 export const noopWorkspaceInsightsService: IWorkspaceInsightsService = {
     createInsight: (() => {}) as any,

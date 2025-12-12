@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
 
 // TODO: get rid of this
 export type IUnwrappedAttributeHeadersWithItems = IAttributeDescriptor["attributeHeader"] & {

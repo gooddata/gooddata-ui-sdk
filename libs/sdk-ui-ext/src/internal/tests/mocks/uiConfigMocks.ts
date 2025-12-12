@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { IOpenAsReportUiConfig, OverTimeComparisonType } from "@gooddata/sdk-ui";
+import { type IOpenAsReportUiConfig, type OverTimeComparisonType } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, DATE, FACT, METRIC } from "../../constants/bucket.js";
 import {
@@ -8,7 +8,7 @@ import {
     MAX_METRICS_COUNT,
     MAX_STACKS_COUNT,
 } from "../../constants/uiConfig.js";
-import { IExportUiConfig, IUiConfig } from "../../interfaces/Visualization.js";
+import { type IExportUiConfig, type IUiConfig } from "../../interfaces/Visualization.js";
 
 const measuresBase = {
     accepts: [METRIC, FACT, ATTRIBUTE],

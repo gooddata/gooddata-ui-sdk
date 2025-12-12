@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
+import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
-import { UiTagDef, UiTagsProps } from "./types.js";
+import { type UiTagDef, type UiTagsProps } from "./types.js";
 import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 type InteractionState = {

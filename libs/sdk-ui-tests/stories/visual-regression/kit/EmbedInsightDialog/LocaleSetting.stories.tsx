@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 
-import { ILocale } from "@gooddata/sdk-ui";
+import { type ILocale } from "@gooddata/sdk-ui";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { LocaleSetting } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function LocaleSettingExample() {

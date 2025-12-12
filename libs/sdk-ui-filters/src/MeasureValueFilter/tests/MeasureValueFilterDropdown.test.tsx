@@ -3,14 +3,14 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { type IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import {
-    IMeasureValueFilterDropdownProps,
+    type IMeasureValueFilterDropdownProps,
     MeasureValueFilterDropdown,
 } from "../MeasureValueFilterDropdown.js";
-import { IWarningMessage } from "../typings.js";
+import { type IWarningMessage } from "../typings.js";
 import { MeasureValueFilterFragment as MVFDropdownFragment } from "./fragments/MeasureValueFilterDropdown.js";
 
 // we cannot use factory here, it does not allow creating empty filters

@@ -10,13 +10,13 @@ import {
     moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty,
     useDashboardDispatch,
 } from "../../../../model/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { type ILayoutItemPath } from "../../../../types.js";
 import {
-    DashboardLayoutDraggableItem,
-    InsightDraggableItem,
-    KpiDraggableItem,
-    RichTextDraggableItem,
-    VisualizationSwitcherDraggableItem,
+    type DashboardLayoutDraggableItem,
+    type InsightDraggableItem,
+    type KpiDraggableItem,
+    type RichTextDraggableItem,
+    type VisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/index.js";
 
 export function useMoveWidgetDropHandler(layoutPath: ILayoutItemPath) {

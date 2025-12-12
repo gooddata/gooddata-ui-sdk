@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { IntlWrapper } from "../../../../localization/index.js";
-import { ResizeOverlay, ResizeOverlayProps } from "../ResizeOverlay.js";
+import { ResizeOverlay, type ResizeOverlayProps } from "../ResizeOverlay.js";
 
 const defaultProps: ResizeOverlayProps = {
     isResizingColumnOrRow: false,

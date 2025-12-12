@@ -1,33 +1,38 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { cloneDeep } from "lodash-es";
 
 import {
-    IInsight,
-    IInsightDefinition,
+    type IInsight,
+    type IInsightDefinition,
     bucketIsEmpty,
     insightBucket,
     newAttributeSort,
 } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent, VisualizationTypes, getIntersectionPartAfter } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    type IDrillEvent,
+    VisualizationTypes,
+    getIntersectionPartAfter,
+} from "@gooddata/sdk-ui";
 
 import { transformBuckets } from "./bucketHelper.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { BULLET_CHART_CONFIG_MULTIPLE_DATES } from "../../../constants/uiConfig.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IDrillDownContext,
-    IDrillDownDefinition,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IDrillDownContext,
+    type IDrillDownDefinition,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
     InvalidBucketsSdkError,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";

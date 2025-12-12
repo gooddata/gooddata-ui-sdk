@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
-import { IGeoLayerData } from "../../context/GeoLayersContext.js";
+import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import type { IMapFacade, IPopupFacade, MapMouseEvent } from "../../layers/common/mapFacade.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoTooltipConfig } from "../../layers/registry/adapterTypes.js";
 import { buildOutputFromLayerData } from "../../layers/registry/output.js";
-import { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 
 interface IUseLayerTooltipsParams {
     /**

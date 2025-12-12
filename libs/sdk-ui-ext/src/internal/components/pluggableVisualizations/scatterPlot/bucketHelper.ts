@@ -2,9 +2,9 @@
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketOfFun } from "../../../interfaces/Visualization.js";
+import { type IBucketOfFun } from "../../../interfaces/Visualization.js";
 import {
-    IMeasureBucketItemsLimit,
+    type IMeasureBucketItemsLimit,
     getBucketItems,
     limitNumberOfMeasuresInBuckets,
     transformMeasureBuckets,

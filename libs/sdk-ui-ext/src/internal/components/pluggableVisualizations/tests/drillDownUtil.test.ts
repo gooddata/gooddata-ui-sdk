@@ -12,11 +12,11 @@ import {
     newInsightDefinition,
     newRankingFilter,
 } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock.js";
 import { insightDefinitionToInsight } from "./testHelpers.js";
-import { IDrillDownDefinition } from "../../../interfaces/Visualization.js";
+import { type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import { modifyBucketsAttributesForDrillDown, reverseAndTrimIntersection } from "../drillDownUtil.js";
 
 const { Account, Department, Region, Status, Won } = ReferenceMd;

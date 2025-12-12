@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ChangeEvent, ReactElement } from "react";
+import { type ChangeEvent, type ReactElement } from "react";
 
-import { WrappedComponentProps } from "react-intl";
+import { type WrappedComponentProps } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 

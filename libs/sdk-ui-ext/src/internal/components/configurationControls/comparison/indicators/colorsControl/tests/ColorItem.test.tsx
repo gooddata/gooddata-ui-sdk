@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { IColor } from "@gooddata/sdk-model";
-import { ComparisonColorType, DEFAULT_COMPARISON_PALETTE, IColorConfig } from "@gooddata/sdk-ui-charts";
+import { type IColor } from "@gooddata/sdk-model";
+import { ComparisonColorType, DEFAULT_COMPARISON_PALETTE, type IColorConfig } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages } from "../../../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
+import { type IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
 import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
 import { COMPARISON_COLOR_CONFIG_POSITIVE } from "../../../ComparisonValuePath.js";

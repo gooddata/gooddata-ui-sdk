@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { GridApi } from "ag-grid-community";
+import { type GridApi } from "ag-grid-community";
 
 export function getHeaderHeight(gridApi: GridApi): number {
     // DANGER: using ag-grid internals

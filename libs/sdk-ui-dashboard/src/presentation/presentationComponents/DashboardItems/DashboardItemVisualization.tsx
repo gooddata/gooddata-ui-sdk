@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { DashboardItemBase, IDashboardItemBaseProps } from "./DashboardItemBase.js";
+import { DashboardItemBase, type IDashboardItemBaseProps } from "./DashboardItemBase.js";
 
 export function DashboardItemVisualization({ visualizationClassName, ...props }: IDashboardItemBaseProps) {
     return (

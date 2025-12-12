@@ -1,16 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo, useState } from "react";
+import { type ReactElement, useCallback, useMemo, useState } from "react";
 
-import { HighlightStyle, StreamLanguage, StringStream, syntaxHighlighting } from "@codemirror/language";
+import { HighlightStyle, StreamLanguage, type StringStream, syntaxHighlighting } from "@codemirror/language";
 import { Tag } from "@lezer/highlight";
 import { compact, uniqBy } from "lodash-es";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
-    IAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    ObjRef,
+    type IAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type ObjRef,
     filterObjRef,
     idRef,
     isAttributeFilter,
@@ -30,7 +30,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { ParametersPanel } from "./CustomUrlEditorParameters.js";
-import { IAttributeWithDisplayForm } from "./types.js";
+import { type IAttributeWithDisplayForm } from "./types.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/index.js";
 import {
     selectAllCatalogDisplayFormsMap,
@@ -43,7 +43,7 @@ import {
 } from "../../../../model/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
-import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
+import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
 
 export interface IUrlInputProps {
     currentUrlValue: string;

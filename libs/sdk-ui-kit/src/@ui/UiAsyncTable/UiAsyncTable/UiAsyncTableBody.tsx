@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { Ref, useEffect, useMemo, useRef, useState } from "react";
+import { type Ref, useEffect, useMemo, useRef, useState } from "react";
 
 import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { isEnterKey } from "../../../utils/events.js";
 import { makeGridKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
-import { UiAsyncTableBodyProps } from "../types.js";
+import { type UiAsyncTableBodyProps } from "../types.js";
 
 export function UiAsyncTableBody<T extends { id: string }>({
     items,

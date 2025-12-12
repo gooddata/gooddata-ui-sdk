@@ -1,5 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAutomationRecipient, IWorkspaceUser, isAutomationUserGroupRecipient } from "@gooddata/sdk-model";
+import {
+    type IAutomationRecipient,
+    type IWorkspaceUser,
+    isAutomationUserGroupRecipient,
+} from "@gooddata/sdk-model";
 
 import { isEmail } from "./validate.js";
 

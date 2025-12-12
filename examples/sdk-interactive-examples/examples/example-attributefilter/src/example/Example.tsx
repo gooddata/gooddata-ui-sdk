@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
+import { type IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { Treemap } from "@gooddata/sdk-ui-charts";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 

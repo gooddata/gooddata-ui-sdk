@@ -2,19 +2,19 @@
 
 import { compact, omit } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { all, call, put, select } from "redux-saga/effects";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationVisibleFilter,
-    IExportDefinitionDashboardRequestPayload,
-    IExportDefinitionVisualizationObjectRequestPayload,
-    IFilter,
-    IInsight,
-    IInsightWidget,
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationVisibleFilter,
+    type IExportDefinitionDashboardRequestPayload,
+    type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
+    type IInsight,
+    type IInsightWidget,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
     filterObjRef,
@@ -35,9 +35,9 @@ import { convertError } from "@gooddata/sdk-ui";
 import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
 import { loadNotificationChannels } from "./loadNotificationChannels.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
-import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
+import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
-import { InitializeAutomations } from "../../commands/scheduledEmail.js";
+import { type InitializeAutomations } from "../../commands/scheduledEmail.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import {
@@ -49,7 +49,7 @@ import {
     selectEnableAutomations,
     selectEnableInPlatformNotifications,
     selectEnableNotificationChannelIdentifiers,
-    selectEnableScheduling,
+    type selectEnableScheduling,
     selectExternalRecipient,
     selectFocusObject,
     selectIsReadOnly,
@@ -64,8 +64,8 @@ import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
 

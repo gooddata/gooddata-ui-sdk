@@ -1,12 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    IChatThread,
-    IChatThreadHistory,
-    IChatThreadQuery,
-    IGenAIChatEvaluation,
+    type IChatThread,
+    type IChatThreadHistory,
+    type IChatThreadQuery,
+    type IGenAIChatEvaluation,
 } from "@gooddata/sdk-backend-spi";
-import { GenAIChatInteractionUserFeedback, GenAIChatInteractionUserVisualisation } from "@gooddata/sdk-model";
+import {
+    type GenAIChatInteractionUserFeedback,
+    type GenAIChatInteractionUserVisualisation,
+} from "@gooddata/sdk-model";
 
 /**
  * Dummy chat thread interface for testing.

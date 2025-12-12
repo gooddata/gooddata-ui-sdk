@@ -3,14 +3,14 @@
 import { isEmpty, range } from "lodash-es";
 
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
-import { IColorLegendItem, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorLegendItem, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import {
     DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
     DEFAULT_PUSHPIN_COLOR_OPACITY,
     DEFAULT_PUSHPIN_COLOR_SCALE,
 } from "./constants/geoChart.js";
-import { IPushpinColor } from "../../GeoChart.js";
+import { type IPushpinColor } from "../../GeoChart.js";
 import { getColorPalette, rgbToRgba } from "./helpers/geoChart/colors.js";
 import { getMinMax } from "./helpers/geoChart/common.js";
 

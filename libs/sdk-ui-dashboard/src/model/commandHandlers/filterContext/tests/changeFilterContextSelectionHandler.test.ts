@@ -1,7 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { DashboardAttributeFilterSelectionMode, IAttributeElementsByRef, ObjRef } from "@gooddata/sdk-model";
+import {
+    type DashboardAttributeFilterSelectionMode,
+    type IAttributeElementsByRef,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 import {
     addAttributeFilter,
@@ -9,7 +13,7 @@ import {
     removeAttributeFilter,
 } from "../../../commands/index.js";
 import { selectFilterContextAttributeFilters } from "../../../store/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures.js";
 
 describe("change filter context selection handler", () => {

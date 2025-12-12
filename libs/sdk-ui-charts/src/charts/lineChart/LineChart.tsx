@@ -1,27 +1,27 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IForecastConfig } from "@gooddata/sdk-backend-spi";
+import { type IForecastConfig } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IExecutionDefinition,
-    INullableFilter,
-    ISortItem,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IExecutionDefinition,
+    type INullableFilter,
+    type ISortItem,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    AttributeOrPlaceholder,
-    AttributesMeasuresOrPlaceholders,
+    type AttributeOrPlaceholder,
+    type AttributesMeasuresOrPlaceholders,
     BucketNames,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
 import { CoreLineChart } from "./CoreLineChart.js";
-import { IBucketChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { stackedChartDimensions } from "../_commons/dimensions.js";
 
 //

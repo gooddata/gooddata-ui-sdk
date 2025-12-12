@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AutomationsState } from "./automationsState.js";
+import { type AutomationsState } from "./automationsState.js";
 
 type AutomationsReducer<A extends Action> = CaseReducer<AutomationsState, A>;
 

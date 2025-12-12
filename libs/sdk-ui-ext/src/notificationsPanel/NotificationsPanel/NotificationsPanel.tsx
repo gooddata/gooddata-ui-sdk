@@ -1,41 +1,47 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ComponentType, useCallback, useMemo, useRef, useState } from "react";
+import { type ComponentType, useCallback, useMemo, useRef, useState } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { INotification, assertNever } from "@gooddata/sdk-model";
-import { ILocale } from "@gooddata/sdk-ui";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type INotification, assertNever } from "@gooddata/sdk-model";
+import { type ILocale } from "@gooddata/sdk-ui";
 import { Overlay, UiFocusManager, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { DefaultNotificationsPanel, INotificationsPanelComponentProps } from "./DefaultNotificationsPanel.js";
-import { INotificationsPanelButtonComponentProps } from "./DefaultNotificationsPanelButton.js";
+import {
+    DefaultNotificationsPanel,
+    type INotificationsPanelComponentProps,
+} from "./DefaultNotificationsPanel.js";
+import { type INotificationsPanelButtonComponentProps } from "./DefaultNotificationsPanelButton.js";
 import {
     DefaultNotificationsPanelHeader,
-    INotificationsPanelHeaderComponentProps,
+    type INotificationsPanelHeaderComponentProps,
 } from "./DefaultNotificationsPanelHeader.js";
 import { OrganizationProvider } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { NotificationsProvider, useNotificationsContext } from "../data/NotificationsContext.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
-import { DefaultNotification, INotificationComponentProps } from "../Notification/DefaultNotification.js";
+import {
+    DefaultNotification,
+    type INotificationComponentProps,
+} from "../Notification/DefaultNotification.js";
 import {
     DefaultNotificationsList,
-    INotificationsListComponentProps,
+    type INotificationsListComponentProps,
 } from "../NotificationsList/DefaultNotificationsList.js";
 import {
     DefaultNotificationsListEmptyState,
-    INotificationsListEmptyStateComponentProps,
+    type INotificationsListEmptyStateComponentProps,
 } from "../NotificationsList/DefaultNotificationsListEmptyState.js";
 import {
     DefaultNotificationsListErrorState,
-    INotificationsListErrorStateComponentProps,
+    type INotificationsListErrorStateComponentProps,
 } from "../NotificationsList/DefaultNotificationsListErrorState.js";
 import {
     DefaultNotificationSkeletonItem,
-    INotificationSkeletonItemComponentProps,
+    type INotificationSkeletonItemComponentProps,
 } from "../NotificationsList/DefaultSkeletonItem.js";
-import { INotificationsPanelView } from "../types.js";
+import { type INotificationsPanelView } from "../types.js";
 
 const ALIGN_POINTS = [
     alignConfigToAlignPoint({ triggerAlignPoint: "bottom-right", overlayAlignPoint: "top-right" }),

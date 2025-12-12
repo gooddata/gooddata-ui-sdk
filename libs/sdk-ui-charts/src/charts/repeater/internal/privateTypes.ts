@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Column, GridApi } from "ag-grid-community";
+import { type Column, type GridApi } from "ag-grid-community";
 
-import { IAttributeOrMeasure, ISeparators } from "@gooddata/sdk-model";
-import { DataViewFacade, IHeaderPredicate, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { type IAttributeOrMeasure, type ISeparators } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IHeaderPredicate, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
-import { RepeaterColumnWidthItem } from "../columnWidths.js";
-import { RepeaterColumnResizedCallback, RepeaterDefaultColumnWidth } from "../publicTypes.js";
+import { type RepeaterColumnWidthItem } from "../columnWidths.js";
+import { type RepeaterColumnResizedCallback, type RepeaterDefaultColumnWidth } from "../publicTypes.js";
 
 export type ColumnResizingConfig = {
     defaultWidth: number;

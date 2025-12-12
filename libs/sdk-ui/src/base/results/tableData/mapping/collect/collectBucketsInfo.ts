@@ -1,6 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IBucket, IMeasure, bucketsFind, isAttribute, isMeasure } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttribute,
+    type IBucket,
+    type IMeasure,
+    bucketsFind,
+    isAttribute,
+    isMeasure,
+} from "@gooddata/sdk-model";
 
 import { BucketNames } from "../../../../constants/bucketNames.js";
 

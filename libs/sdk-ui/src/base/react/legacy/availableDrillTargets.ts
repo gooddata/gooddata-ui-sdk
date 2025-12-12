@@ -2,13 +2,13 @@
 
 import { uniqBy } from "lodash-es";
 
-import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type IMeasureDescriptor } from "@gooddata/sdk-model";
 
-import { DataViewFacade } from "../../results/facade.js";
+import { type DataViewFacade } from "../../results/facade.js";
 import {
-    IAvailableDrillTargetAttribute,
-    IAvailableDrillTargetMeasure,
-    IAvailableDrillTargets,
+    type IAvailableDrillTargetAttribute,
+    type IAvailableDrillTargetMeasure,
+    type IAvailableDrillTargets,
 } from "../../vis/Events.js";
 
 /**

@@ -2,8 +2,8 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { MetadataGetEntitiesWorkspaceParams } from "@gooddata/api-client-tiger";
-import { ObjRef, isUriRef } from "@gooddata/sdk-model";
+import { type MetadataGetEntitiesWorkspaceParams } from "@gooddata/api-client-tiger";
+import { type ObjRef, isUriRef } from "@gooddata/sdk-model";
 
 // Since tags can have spaces, need to parse this specific values to work with RSQL filtering. See https://github.com/jirutka/rsql-parser#grammar-and-semantic.
 function parseTagsToRSQLFormat(tagsIdentifiers: string[]): string[] {

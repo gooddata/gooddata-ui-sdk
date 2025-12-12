@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -17,7 +17,7 @@ import {
     UNSUBSCRIBE_CONFIRM_DIALOG_ID,
 } from "./constants.js";
 import { messages } from "./messages.js";
-import { IAutomationsPendingAction } from "./types.js";
+import { type IAutomationsPendingAction } from "./types.js";
 
 interface IAutomationConfirmDialogProps {
     pendingAction: IAutomationsPendingAction | null;

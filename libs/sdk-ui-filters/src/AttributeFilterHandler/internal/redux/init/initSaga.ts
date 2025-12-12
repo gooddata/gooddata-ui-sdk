@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
-import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
 import { initAttributeSaga } from "./initAttributeSaga.js";
 import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";

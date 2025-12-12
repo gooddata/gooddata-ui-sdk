@@ -3,10 +3,10 @@
 import cx from "classnames";
 import { kebabCase } from "lodash-es";
 
-import { IAbsoluteDateFilterPreset } from "@gooddata/sdk-model";
+import { type IAbsoluteDateFilterPreset } from "@gooddata/sdk-model";
 
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
-import { DateFilterOption } from "../interfaces/index.js";
+import { type DateFilterOption } from "../interfaces/index.js";
 import { ListItem } from "../ListItem/ListItem.js";
 
 interface IAbsolutePresetFilterItemsProps {

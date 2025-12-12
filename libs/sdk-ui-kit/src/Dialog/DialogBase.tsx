@@ -1,11 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { KeyboardEvent, KeyboardEventHandler, memo, useCallback } from "react";
+import { type KeyboardEvent, type KeyboardEventHandler, memo, useCallback } from "react";
 
 import cx from "classnames";
 
 import { DialogCloseButton } from "./DialogCloseButton.js";
-import { IDialogBaseProps } from "./typings.js";
+import { type IDialogBaseProps } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
 import { ScreenReaderToast } from "../Messages/index.js";

@@ -16,9 +16,9 @@ import {
     headlineWithTwoMeasuresSecondZero,
     headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../../__mocks__/fixtures.js";
-import { IHeadlineData } from "../../interfaces/Headlines.js";
+import { type IHeadlineData } from "../../interfaces/Headlines.js";
 import {
-    IHeadlineDrillItemContext,
+    type IHeadlineDrillItemContext,
     applyDrillableItems,
     buildDrillEventData,
     getHeadlineData,

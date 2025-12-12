@@ -1,21 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import {
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IFilter,
-    IInsight,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
-    IWorkspaceUser,
-    ObjRef,
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IFilter,
+    type IInsight,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type IWorkspaceUser,
+    type ObjRef,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { ExtendedDashboardWidget } from "../../model/index.js";
+import { type ExtendedDashboardWidget } from "../../model/index.js";
 
 ///
 /// Component props

@@ -2,7 +2,7 @@
 
 import { defineMessages } from "react-intl";
 
-import { AutomationsType } from "./types.js";
+import { type AutomationsType } from "./types.js";
 
 export const messages = defineMessages({
     comparisonOperatorLessThan: {

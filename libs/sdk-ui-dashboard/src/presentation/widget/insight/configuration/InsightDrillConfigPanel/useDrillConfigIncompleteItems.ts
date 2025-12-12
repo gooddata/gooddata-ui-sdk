@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { isEqual } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
-import { InsightDrillDefinition, ObjRef } from "@gooddata/sdk-model";
+import { type InsightDrillDefinition, type ObjRef } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
-import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
-import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
+import { type IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
+import { type IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
 
 export const generateLocalIdentifier = () => uuidv4().replace(/-/g, "");
 

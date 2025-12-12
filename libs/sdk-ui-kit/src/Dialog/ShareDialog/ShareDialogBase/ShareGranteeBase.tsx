@@ -10,7 +10,7 @@ import { SharedObjectLockControl } from "./SharedObjectLockControl.js";
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl.js";
 import { ShareGranteeContent } from "./ShareGranteeContent.js";
 import { ShareLink } from "./ShareLink.js";
-import { IShareGranteeBaseProps } from "./types.js";
+import { type IShareGranteeBaseProps } from "./types.js";
 import { ADD_GRANTEE_ID } from "./utils.js";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 import { ContentDivider } from "../../ContentDivider.js";

@@ -4,8 +4,8 @@ import * as path from "path";
 
 import { groupBy } from "lodash-es";
 
-import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
-import { InsightRecording } from "../recordings/insights.js";
+import { type TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
+import { type InsightRecording } from "../recordings/insights.js";
 
 const InsightIndexConstName = "Insights";
 

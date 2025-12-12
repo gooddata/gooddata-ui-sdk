@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IDashboardAttributeFilter, IDashboardAttributeFilterParent } from "@gooddata/sdk-model";
+import { type IDashboardAttributeFilter, type IDashboardAttributeFilterParent } from "@gooddata/sdk-model";
 
 /**
  * @internal

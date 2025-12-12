@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
 import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";

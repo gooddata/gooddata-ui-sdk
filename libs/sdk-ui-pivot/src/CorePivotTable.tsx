@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, Component, MouseEvent as ReactMouseEvent } from "react";
+import { type CSSProperties, Component, type MouseEvent as ReactMouseEvent } from "react";
 
 import {
-    AgGridEvent,
+    type AgGridEvent,
     AllCommunityModule,
-    BodyScrollEvent,
-    ColumnResizedEvent,
-    GridReadyEvent,
+    type BodyScrollEvent,
+    type ColumnResizedEvent,
+    type GridReadyEvent,
     ModuleRegistry,
-    PinnedRowDataChangedEvent,
-    SortChangedEvent,
+    type PinnedRowDataChangedEvent,
+    type SortChangedEvent,
     provideGlobalGridOptions,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -20,13 +20,13 @@ import { injectIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { v4 as uuidv4 } from "uuid";
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    DataViewFacade,
-    GoodDataSdkError,
-    IErrorDescriptors,
-    ILoadingState,
-    IPushData,
+    type DataViewFacade,
+    type GoodDataSdkError,
+    type IErrorDescriptors,
+    type ILoadingState,
+    type IPushData,
     IntlWrapper,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
@@ -35,7 +35,7 @@ import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider
 import { PivotTableError } from "./components/PivotTableError.js";
 import { PivotTableLoading } from "./components/PivotTableLoading.js";
 import { createDebouncedCallback, createStateBoundCallback } from "./components/utils/callbackHelpers.js";
-import { ConfigDelegates, createConfigDelegates } from "./components/utils/configDelegation.js";
+import { type ConfigDelegates, createConfigDelegates } from "./components/utils/configDelegation.js";
 import {
     AGGRID_ON_RESIZE_TIMEOUT,
     PIVOT_TABLE_DEFAULT_PROPS,
@@ -54,18 +54,18 @@ import { ExecutionAbortManager } from "./impl/execution/executionAbortManager.js
 import { createGridOptions } from "./impl/gridOptions.js";
 import { HeightCalculationManager } from "./impl/height/heightCalculationManager.js";
 import {
-    ColumnResizingConfig,
-    IMenuAggregationClickConfig,
-    TableAgGridCallbacks,
-    TableMethods,
+    type ColumnResizingConfig,
+    type IMenuAggregationClickConfig,
+    type TableAgGridCallbacks,
+    type TableMethods,
 } from "./impl/privateTypes.js";
 import { StickyRowManager } from "./impl/stickyRow/stickyRowManager.js";
-import { IScrollPosition } from "./impl/stickyRowHandler.js";
+import { type IScrollPosition } from "./impl/stickyRowHandler.js";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
 import { ComponentUpdateAnalyzer } from "./impl/updates/componentUpdateAnalyzer.js";
 import { getTotalsForColumnsBucket, sanitizeDefTotals } from "./impl/utils.js";
-import { ICorePivotTableProps } from "./publicTypes.js";
-import { ICorePivotTableState, InternalTableState } from "./tableState.js";
+import { type ICorePivotTableProps } from "./publicTypes.js";
+import { type ICorePivotTableState, InternalTableState } from "./tableState.js";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);

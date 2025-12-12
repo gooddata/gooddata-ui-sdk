@@ -2,16 +2,16 @@
 import { differenceBy, zip } from "lodash-es";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterParent,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterParent,
+    type ObjRef,
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
-import { DashboardContext } from "../../../../types/commonTypes.js";
+import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
+import { type DashboardContext } from "../../../../types/commonTypes.js";
 
 export type AttributeFilterParentsValidationResult =
     | "VALID"

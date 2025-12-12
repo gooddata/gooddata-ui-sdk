@@ -2,13 +2,13 @@
 
 import { useIntl } from "react-intl";
 
-import { IUser } from "@gooddata/sdk-model";
+import { type IUser } from "@gooddata/sdk-model";
 
 import { DetailRow } from "./DetailRow.js";
 import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
 import { messages } from "../locales.js";
 import { useTelemetry } from "../TelemetryContext.js";
-import { ListMode } from "../types.js";
+import { type ListMode } from "../types.js";
 
 export interface IDetailsViewProps {
     isAdmin: boolean;

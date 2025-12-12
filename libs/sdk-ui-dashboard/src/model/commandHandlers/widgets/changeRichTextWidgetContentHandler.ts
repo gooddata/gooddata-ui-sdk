@@ -1,14 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingRichTextWidget } from "./validation/widgetValidations.js";
-import { ChangeRichTextWidgetContent } from "../../commands/index.js";
-import { DashboardRichTextWidgetContentChanged, richTextWidgetContentChanged } from "../../events/index.js";
+import { type ChangeRichTextWidgetContent } from "../../commands/index.js";
+import {
+    type DashboardRichTextWidgetContentChanged,
+    richTextWidgetContentChanged,
+} from "../../events/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeRichTextWidgetContentHandler(
     ctx: DashboardContext,

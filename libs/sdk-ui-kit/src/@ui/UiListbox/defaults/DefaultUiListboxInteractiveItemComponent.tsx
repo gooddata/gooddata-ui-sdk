@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { ShortenedText } from "../../../ShortenedText/index.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../listboxBem.js";
-import { UiListboxInteractiveItemProps } from "../types.js";
+import { type UiListboxInteractiveItemProps } from "../types.js";
 
 /**
  * @internal

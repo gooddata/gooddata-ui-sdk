@@ -6,18 +6,18 @@ import {
     EntitiesApi_GetAllEntitiesOrganizationSettings,
     EntitiesApi_UpdateEntityOrganizationSettings,
 } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
+import { type IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
-    IAlertDefault,
-    IOpenAiConfig,
-    ISeparators,
-    ISettings,
-    IWhiteLabeling,
+    type IAlertDefault,
+    type IOpenAiConfig,
+    type ISeparators,
+    type ISettings,
+    type IWhiteLabeling,
 } from "@gooddata/sdk-model";
 
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
 import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
 
 export class OrganizationSettingsService

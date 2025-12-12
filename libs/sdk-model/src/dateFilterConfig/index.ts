@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { ILowerBoundedFilter, IUpperBoundedFilter } from "../execution/filter/index.js";
-import { Identifier, ObjRef } from "../objRef/index.js";
+import { type ILowerBoundedFilter, type IUpperBoundedFilter } from "../execution/filter/index.js";
+import { type Identifier, type ObjRef } from "../objRef/index.js";
 
 /**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'

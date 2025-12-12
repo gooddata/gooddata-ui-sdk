@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    FocusEventHandler,
-    KeyboardEvent,
-    ReactElement,
-    RefObject,
+    type FocusEventHandler,
+    type KeyboardEvent,
+    type ReactElement,
+    type RefObject,
     useCallback,
     useEffect,
     useRef,
@@ -19,11 +19,11 @@ import DefaultMeasure from "react-measure";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
 import {
-    IInvertableSelectRenderErrorProps,
-    IInvertableSelectRenderLoadingProps,
-    IInvertableSelectRenderNoDataProps,
-    IInvertableSelectRenderSearchBarProps,
-    IInvertableSelectRenderStatusBarProps,
+    type IInvertableSelectRenderErrorProps,
+    type IInvertableSelectRenderLoadingProps,
+    type IInvertableSelectRenderNoDataProps,
+    type IInvertableSelectRenderSearchBarProps,
+    type IInvertableSelectRenderStatusBarProps,
 } from "./InvertableSelect.js";
 import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
 import { InvertableSelectItem } from "./InvertableSelectItem.js";

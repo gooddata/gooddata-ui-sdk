@@ -5,10 +5,10 @@ import { useCallback } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
+import { type IMeasure, type IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
 
-import { IPlaceholder } from "../base.js";
-import { IPlaceholdersProviderProps, PlaceholdersProvider } from "../context.js";
+import { type IPlaceholder } from "../base.js";
+import { type IPlaceholdersProviderProps, PlaceholdersProvider } from "../context.js";
 import { newPlaceholder } from "../factory.js";
 import { usePlaceholders } from "../hooks.js";
 

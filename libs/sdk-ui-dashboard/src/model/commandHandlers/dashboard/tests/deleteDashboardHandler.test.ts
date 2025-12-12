@@ -3,14 +3,14 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { deleteDashboard } from "../../../commands/index.js";
-import { DashboardCommandFailed, DashboardDeleted } from "../../../events/index.js";
+import { type DashboardCommandFailed, type DashboardDeleted } from "../../../events/index.js";
 import { selectDateFilterConfig } from "../../../store/config/configSelectors.js";
 import { selectInsights } from "../../../store/insights/insightsSelectors.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectEffectiveDateFilterConfig } from "../../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IFilter } from "@gooddata/sdk-model";
+import { type IFilter } from "@gooddata/sdk-model";
 
 /**
  * Configuration for exports of results into tabular formats.

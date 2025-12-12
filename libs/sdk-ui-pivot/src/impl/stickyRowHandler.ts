@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { GridApi } from "ag-grid-community";
+import { type GridApi } from "ag-grid-community";
 import { isEmpty } from "lodash-es";
 
 import {
@@ -13,8 +13,8 @@ import {
 } from "./base/agApiWrapper.js";
 import { getGridIndex } from "./base/agUtils.js";
 import { ROW_ATTRIBUTE_COLUMN } from "./base/constants.js";
-import { IGridRow } from "./data/resultTypes.js";
-import { IGroupingProvider } from "./data/rowGroupingProvider.js";
+import { type IGridRow } from "./data/resultTypes.js";
+import { type IGroupingProvider } from "./data/rowGroupingProvider.js";
 import { getScrollbarWidth } from "./utils.js";
 export interface IScrollPosition {
     readonly top: number;

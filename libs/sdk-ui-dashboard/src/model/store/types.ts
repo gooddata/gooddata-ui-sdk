@@ -1,33 +1,33 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { AnyAction, Dispatch, EntityId, EntityState } from "@reduxjs/toolkit";
+import { type AnyAction, type Dispatch, type EntityId, type EntityState } from "@reduxjs/toolkit";
 
-import { IInsight, IListedDashboard } from "@gooddata/sdk-model";
+import { type IInsight, type IListedDashboard } from "@gooddata/sdk-model";
 
-import { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
-import { AutomationsState } from "./automations/automationsState.js";
-import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
-import { CatalogState } from "./catalog/catalogState.js";
-import { ConfigState } from "./config/configState.js";
-import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
-import { DrillState } from "./drill/drillState.js";
-import { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
-import { EntitlementsState } from "./entitlements/entitlementsState.js";
-import { ExecutedState } from "./executed/executedState.js";
-import { IExecutionResultEnvelope } from "./executionResults/types.js";
-import { FilterViewsState } from "./filterViews/filterViewsState.js";
-import { LoadingState } from "./loading/loadingState.js";
-import { DashboardMetaState } from "./meta/metaState.js";
-import { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
-import { PermissionsState } from "./permissions/permissionsState.js";
-import { RenderModeState } from "./renderMode/renderModeState.js";
-import { SavingState } from "./saving/savingState.js";
-import { ShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
-import { TabsState } from "./tabs/tabsState.js";
-import { UiState } from "./ui/uiState.js";
-import { UserState } from "./user/userState.js";
-import { UsersState } from "./users/usersState.js";
-import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
+import { type AccessibleDashboardsState } from "./accessibleDashboards/index.js";
+import { type AutomationsState } from "./automations/automationsState.js";
+import { type BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
+import { type CatalogState } from "./catalog/catalogState.js";
+import { type ConfigState } from "./config/configState.js";
+import { type DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
+import { type DrillState } from "./drill/drillState.js";
+import { type IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
+import { type EntitlementsState } from "./entitlements/entitlementsState.js";
+import { type ExecutedState } from "./executed/executedState.js";
+import { type IExecutionResultEnvelope } from "./executionResults/types.js";
+import { type FilterViewsState } from "./filterViews/filterViewsState.js";
+import { type LoadingState } from "./loading/loadingState.js";
+import { type DashboardMetaState } from "./meta/metaState.js";
+import { type NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
+import { type PermissionsState } from "./permissions/permissionsState.js";
+import { type RenderModeState } from "./renderMode/renderModeState.js";
+import { type SavingState } from "./saving/savingState.js";
+import { type ShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
+import { type TabsState } from "./tabs/tabsState.js";
+import { type UiState } from "./ui/uiState.js";
+import { type UserState } from "./user/userState.js";
+import { type UsersState } from "./users/usersState.js";
+import { type IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,

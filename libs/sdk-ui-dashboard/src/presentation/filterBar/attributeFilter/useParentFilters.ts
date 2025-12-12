@@ -4,8 +4,8 @@ import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IAttributeFilter, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
-import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
+import { type IAttributeFilter, type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
+import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {

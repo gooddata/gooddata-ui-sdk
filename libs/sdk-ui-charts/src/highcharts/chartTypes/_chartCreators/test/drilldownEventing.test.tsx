@@ -5,11 +5,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems } from "@gooddata/sdk-model";
-import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { DrilldownEventObject } from "../../../lib/index.js";
+import { type DrilldownEventObject } from "../../../lib/index.js";
 import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing.js";
-import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
+import { type IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
 
 const SeriesChartTypes = {
     COLUMN: "column",

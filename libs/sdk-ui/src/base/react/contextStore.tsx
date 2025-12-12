@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { FC, ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
+import { type FC, type ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
 
 import { pick } from "lodash-es";
 import isEqual from "react-fast-compare";

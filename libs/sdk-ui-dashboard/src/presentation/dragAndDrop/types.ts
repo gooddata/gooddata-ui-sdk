@@ -1,17 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentType, ReactElement } from "react";
+import { type ComponentType, type ReactElement } from "react";
 
 import {
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IFilter,
-    IInsight,
-    IKpi,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IFilter,
+    type IInsight,
+    type IKpi,
 } from "@gooddata/sdk-model";
 
-import { ICustomWidget } from "../../model/types/layoutTypes.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
+import { type ICustomWidget } from "../../model/types/layoutTypes.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
 
 /**
  * @internal

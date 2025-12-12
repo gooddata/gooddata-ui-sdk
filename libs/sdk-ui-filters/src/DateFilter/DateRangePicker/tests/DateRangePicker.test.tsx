@@ -4,8 +4,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { IntlDecorator } from "./IntlDecorators.js";
-import { DateRangePicker, IDateRangePickerProps } from "../DateRangePicker.js";
-import { IDateRange } from "../types.js";
+import { DateRangePicker, type IDateRangePickerProps } from "../DateRangePicker.js";
+import { type IDateRange } from "../types.js";
 
 const defaultDateFormat = "MM/dd/yyyy";
 const getDefaultRange = (): IDateRange => ({

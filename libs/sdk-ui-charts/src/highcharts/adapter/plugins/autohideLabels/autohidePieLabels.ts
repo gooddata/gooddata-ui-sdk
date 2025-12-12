@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import Highcharts from "highcharts/esm/highcharts.js";
+import type Highcharts from "highcharts/esm/highcharts.js";
 
 import {
-    IRectBySize,
+    type IRectBySize,
     getDataPoints,
     getVisibleSeries,
     isIntersecting,

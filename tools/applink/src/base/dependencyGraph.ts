@@ -4,7 +4,12 @@ import path from "path";
 
 import { difference, groupBy, intersection } from "lodash-es";
 
-import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types.js";
+import {
+    AllDepdencyTypes,
+    type DependencyGraph,
+    type DependencyType,
+    type PackageDescriptor,
+} from "./types.js";
 import { readJsonSync } from "./utils.js";
 
 function addDependencies(

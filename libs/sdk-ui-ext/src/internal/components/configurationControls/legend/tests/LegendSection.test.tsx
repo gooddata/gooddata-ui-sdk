@@ -5,7 +5,7 @@ import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import { ILegendSection, LegendSection } from "../LegendSection.js";
+import { type ILegendSection, LegendSection } from "../LegendSection.js";
 
 const defaultProps: ILegendSection = {
     controlsDisabled: true,

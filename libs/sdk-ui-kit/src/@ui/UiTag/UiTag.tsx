@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, forwardRef, useLayoutEffect, useState } from "react";
+import { type KeyboardEvent, type MouseEvent, forwardRef, useLayoutEffect, useState } from "react";
 
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";

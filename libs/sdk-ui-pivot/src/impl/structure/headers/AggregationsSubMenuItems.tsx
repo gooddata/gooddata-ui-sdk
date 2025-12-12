@@ -1,21 +1,21 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import cx from "classnames";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    IAttributeDescriptor,
-    TotalType,
+    type IAttributeDescriptor,
+    type TotalType,
     attributeDescriptorLocalId,
     attributeDescriptorName,
 } from "@gooddata/sdk-model";
 import { Header, Item } from "@gooddata/sdk-ui-kit";
 
 import { isTotalEnabledForSubMenuAttribute } from "./aggregationsMenuHelper.js";
-import { IColumnTotal } from "./aggregationsMenuTypes.js";
-import { IMenuAggregationClickConfig } from "../../privateTypes.js";
+import { type IColumnTotal } from "./aggregationsMenuTypes.js";
+import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 
 interface IAggregationsSubMenuItemsProps {
     intl: IntlShape;

@@ -3,9 +3,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { ISelectProps, Select } from "../Select.js";
-import { ISelectMenuProps, SelectMenu } from "../SelectMenu.js";
-import { ISelectItem, ISelectItemHeading, ISelectItemOption, ISelectItemSeparator } from "../types.js";
+import { type ISelectProps, Select } from "../Select.js";
+import { type ISelectMenuProps, SelectMenu } from "../SelectMenu.js";
+import {
+    type ISelectItem,
+    type ISelectItemHeading,
+    type ISelectItemOption,
+    type ISelectItemSeparator,
+} from "../types.js";
 import { getSelectableItems } from "../utils.js";
 
 describe("Select", () => {

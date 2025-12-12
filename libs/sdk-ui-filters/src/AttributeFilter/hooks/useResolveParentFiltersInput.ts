@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
 
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter, ObjRef, filterIsEmpty } from "@gooddata/sdk-model";
-import { AttributeFiltersOrPlaceholders, useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IAttributeFilter, type ObjRef, filterIsEmpty } from "@gooddata/sdk-model";
+import { type AttributeFiltersOrPlaceholders, useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
 
-import { ParentFilterOverAttributeType } from "../types.js";
+import { type ParentFilterOverAttributeType } from "../types.js";
 
 /**
  * @internal

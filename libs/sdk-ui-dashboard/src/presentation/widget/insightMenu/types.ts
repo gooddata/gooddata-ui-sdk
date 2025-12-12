@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentType, MouseEvent, ReactElement, ReactNode } from "react";
+import { type ComponentType, type MouseEvent, type ReactElement, type ReactNode } from "react";
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
-import { RenderMode } from "../../../types.js";
+import { type RenderMode } from "../../../types.js";
 
 ///
 /// Component props

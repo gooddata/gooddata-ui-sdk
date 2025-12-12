@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useState } from "react";
+import { type ReactNode, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
@@ -10,8 +10,8 @@ import {
     BubbleHoverTrigger,
     Button,
     DialogBase,
-    IAlignPoint,
-    IDialogBaseProps,
+    type IAlignPoint,
+    type IDialogBaseProps,
     ShortenedText,
     UiAutofocus,
     UiButton,

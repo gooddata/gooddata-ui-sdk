@@ -1,9 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
-import { ICatalogAttribute } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { type ICatalogAttribute } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { AttributeListItemTooltipContent } from "./AttributeListItemTooltipContent.js";
 import { useAttributeDataSet } from "../../dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";

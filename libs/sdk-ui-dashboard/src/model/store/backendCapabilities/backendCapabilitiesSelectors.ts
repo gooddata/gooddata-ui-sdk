@@ -2,9 +2,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

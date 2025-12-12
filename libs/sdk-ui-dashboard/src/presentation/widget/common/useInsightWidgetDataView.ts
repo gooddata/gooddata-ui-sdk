@@ -3,12 +3,12 @@ import { useMemo } from "react";
 
 import stringify from "json-stable-stringify";
 
-import { IInsightWidget, insightSetFilters } from "@gooddata/sdk-model";
+import { type IInsightWidget, insightSetFilters } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
-    GoodDataSdkError,
-    UseCancelablePromiseCallbacks,
-    UseCancelablePromiseState,
+    type DataViewFacade,
+    type GoodDataSdkError,
+    type UseCancelablePromiseCallbacks,
+    type UseCancelablePromiseState,
     useBackendStrict,
     useExecutionDataView,
     useWorkspaceStrict,

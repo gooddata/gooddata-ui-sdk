@@ -3,7 +3,7 @@
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
-import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
+import { type DateFilterOption, type IDateFilterOptionsByType } from "../interfaces/index.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

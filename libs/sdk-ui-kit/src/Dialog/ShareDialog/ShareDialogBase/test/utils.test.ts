@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IUser, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IUser, idRef, uriRef } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { current, granularRule, groupAll, owner, user } from "./GranteeMock.js";
-import { CurrentUserPermissions } from "../../types.js";
+import { type CurrentUserPermissions } from "../../types.js";
 import {
     getGranteeItemTestId,
     getGranteeLabel,

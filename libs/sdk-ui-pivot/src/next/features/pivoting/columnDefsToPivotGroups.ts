@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    ITableColumnDefinition,
+    type ITableColumnDefinition,
     isGrandTotalColumnDefinition,
     isStandardValueColumnDefinition,
     isSubtotalColumnDefinition,
@@ -11,8 +11,8 @@ import {
 
 import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../../constants/agGridDefaultProps.js";
-import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColDefIdentifiers } from "../columns/colDefIdentifiers.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";

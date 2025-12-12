@@ -3,18 +3,18 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IAutomationAlertCondition,
-    IAutomationAlertRelativeCondition,
-    IAutomationAnomalyDetectionCondition,
-    IAutomationMetadataObject,
-    IDataSetMetadataObject,
+    type IAutomationAlertCondition,
+    type IAutomationAlertRelativeCondition,
+    type IAutomationAnomalyDetectionCondition,
+    type IAutomationMetadataObject,
+    type IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui-ext/internal";
 
 import {
-    AlertAttribute,
-    AlertMetric,
-    AlertMetricComparator,
+    type AlertAttribute,
+    type AlertMetric,
+    type AlertMetricComparator,
     AlertMetricComparatorType,
 } from "../../types.js";
 import {

@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { JsonApiLabelOutAttributesValueTypeEnum } from "@gooddata/api-client-tiger";
-import { AttributeDisplayFormType } from "@gooddata/sdk-model";
+import { type JsonApiLabelOutAttributesValueTypeEnum } from "@gooddata/api-client-tiger";
+import { type AttributeDisplayFormType } from "@gooddata/sdk-model";
 
 /**
  * convert tiger label type values to common text representation

@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { IUser, isUriRef } from "@gooddata/sdk-model";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IUser, isUriRef } from "@gooddata/sdk-model";
 
 /**
  * @internal

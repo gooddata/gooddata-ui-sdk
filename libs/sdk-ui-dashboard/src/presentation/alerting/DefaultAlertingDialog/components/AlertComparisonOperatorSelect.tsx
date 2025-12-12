@@ -1,26 +1,26 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { MutableRefObject, useRef } from "react";
+import { type MutableRefObject, useRef } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-    IAlertComparisonOperator,
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
+    type IAlertComparisonOperator,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
 } from "@gooddata/sdk-model";
 import { AI_OPERATOR, AI_OPERATORS } from "@gooddata/sdk-ui-ext";
 import {
     Dropdown,
     DropdownButton,
-    OverlayPositionType,
+    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { AlertMetric } from "../../types.js";
-import { OPERATORS, OperatorItemType } from "../constants.js";
+import { type AlertMetric } from "../../types.js";
+import { OPERATORS, type OperatorItemType } from "../constants.js";
 import { useOperators } from "../hooks/useOperators.js";
 
 type SeparatorItem = {

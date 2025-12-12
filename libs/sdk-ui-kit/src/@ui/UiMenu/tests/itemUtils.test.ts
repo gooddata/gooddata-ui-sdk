@@ -15,7 +15,7 @@ import {
     getSiblingItems,
     unwrapGroupItems,
 } from "../itemUtils.js";
-import { IUiMenuItem } from "../types.js";
+import { type IUiMenuItem } from "../types.js";
 
 describe("itemUtils", () => {
     // Mock data for testing

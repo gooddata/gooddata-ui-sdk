@@ -1,14 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
+import {
+    type IBucket,
+    type IFilter,
+    type ISortItem,
+    type VisualizationProperties,
+} from "@gooddata/sdk-model";
 
 import {
-    AfmLocalIdentifier,
-    AfmObjectIdentifier,
-    MeasureDefinition,
-    SortKeyAttribute,
-    SortKeyValue,
+    type AfmLocalIdentifier,
+    type AfmObjectIdentifier,
+    type MeasureDefinition,
+    type SortKeyAttribute,
+    type SortKeyValue,
 } from "../generated/afm-rest-api/index.js";
 
 /**

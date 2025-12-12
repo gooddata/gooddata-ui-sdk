@@ -2,9 +2,9 @@
 
 import { invert, isEmpty } from "lodash-es";
 
-import { ObjectType } from "@gooddata/sdk-model";
+import { type ObjectType } from "@gooddata/sdk-model";
 
-import { TigerObjectType } from "./index.js";
+import { type TigerObjectType } from "./index.js";
 
 /**
  * @alpha

@@ -9,7 +9,7 @@ import {
     dialogFullyLoadedSmallState,
     dialogFullyLoadedState,
 } from "./init.js";
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 
 // eslint-disable-next-line no-restricted-exports
 export default {

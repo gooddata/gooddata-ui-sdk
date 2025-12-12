@@ -4,7 +4,7 @@ import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 import { convertInsightToTableDefinition } from "../insightToTable.js";
-import { IInsightBodyProps } from "../types.js";
+import { type IInsightBodyProps } from "../types.js";
 
 /**
  * Default implementation of the InsightBody.

@@ -4,12 +4,12 @@ import { memo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IColor, IColorPalette } from "@gooddata/sdk-model";
-import { IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
+import { type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { type ChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { ColoredItemContent } from "./ColoredItemContent.js";
-import { IColoredItem } from "../../../../interfaces/Colors.js";
+import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getTranslation } from "../../../../utils/translations.js";
 import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
 import { ColorDropdown } from "../colorDropdown/ColorDropdown.js";

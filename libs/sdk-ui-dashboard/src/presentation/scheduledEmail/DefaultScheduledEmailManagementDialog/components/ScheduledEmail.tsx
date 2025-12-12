@@ -6,9 +6,9 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-    IAutomationMetadataObject,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
+    type IAutomationMetadataObject,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import {
     Bubble,

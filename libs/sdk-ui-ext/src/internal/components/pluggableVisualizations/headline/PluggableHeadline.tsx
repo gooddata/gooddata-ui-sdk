@@ -2,10 +2,10 @@
 
 import { cloneDeep } from "lodash-es";
 
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    IInsightDefinition,
-    ISettings,
+    type IInsightDefinition,
+    type ISettings,
     MeasureGroupIdentifier,
     bucketIsEmpty,
     insightBucket,
@@ -29,17 +29,17 @@ import {
     HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES,
     HEADLINE_SUPPORTED_PROPERTIES,
 } from "../../../constants/supportedProperties.js";
-import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
+import { type HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
     InvalidBucketsSdkError,
-    RenderFunction,
-    UnmountFunction,
+    type RenderFunction,
+    type UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

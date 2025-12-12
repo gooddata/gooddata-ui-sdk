@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ITotal } from "@gooddata/sdk-model";
+import { type ITotal } from "@gooddata/sdk-model";
 
-import { IMenuAggregationClickConfig } from "../../../privateTypes.js";
+import { type IMenuAggregationClickConfig } from "../../../privateTypes.js";
 import {
     getTotalsForAttributeHeader,
     getTotalsForMeasureHeader,
     getUpdatedColumnOrRowTotals,
     isTotalEnabledForAttribute,
 } from "../aggregationsMenuHelper.js";
-import { IColumnTotal, IRowTotal } from "../aggregationsMenuTypes.js";
+import { type IColumnTotal, type IRowTotal } from "../aggregationsMenuTypes.js";
 
 describe("aggregationsMenuHelper", () => {
     describe("getTotalsForMeasureHeader", () => {

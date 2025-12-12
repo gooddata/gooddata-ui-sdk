@@ -3,13 +3,13 @@
 import { isEqual, omit } from "lodash-es";
 
 import {
-    FilterContextItem,
-    IDashboard,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IDashboardFilterView,
-    IFilterContext,
-    ISettings,
+    type FilterContextItem,
+    type IDashboard,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IDashboardFilterView,
+    type IFilterContext,
+    type ISettings,
     areObjRefsEqual,
     isDashboardAttributeFilter,
     isDashboardDateFilter,

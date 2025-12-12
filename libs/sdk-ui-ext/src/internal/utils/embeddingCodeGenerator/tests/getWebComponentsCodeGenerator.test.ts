@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { IInsight, newInsightDefinition } from "@gooddata/sdk-model";
-import { IWebComponentsOptions, getHeightWithUnitsForEmbedCode } from "@gooddata/sdk-ui-kit";
+import { type IInsight, newInsightDefinition } from "@gooddata/sdk-model";
+import { type IWebComponentsOptions, getHeightWithUnitsForEmbedCode } from "@gooddata/sdk-ui-kit";
 
 import { getWebComponentsCodeGenerator } from "../getWebComponentsCodeGenerator.js";
 

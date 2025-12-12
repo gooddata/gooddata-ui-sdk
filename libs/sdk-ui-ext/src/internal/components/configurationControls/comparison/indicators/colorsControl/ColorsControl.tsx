@@ -1,15 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IColorPalette } from "@gooddata/sdk-model";
-import { PushDataCallback } from "@gooddata/sdk-ui";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
 import { ComparisonColorType } from "@gooddata/sdk-ui-charts";
 
 import { ColorCheckbox } from "./ColorCheckbox.js";
 import { ColorItem } from "./ColorItem.js";
 import { ColorResetButton } from "./ColorResetButton.js";
 import { comparisonMessages } from "../../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import {
     COMPARISON_COLOR_CONFIG_EQUALS,
     COMPARISON_COLOR_CONFIG_NEGATIVE,

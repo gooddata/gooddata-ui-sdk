@@ -2,13 +2,13 @@
 import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 
 import {
-    DateFilterOption,
-    IDateFilterAbsoluteDateTimeFormErrors,
-    IDateFilterOptionsByType,
-    IDateFilterRelativeFormErrors,
-    IExtendedDateFilterErrors,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    type DateFilterOption,
+    type IDateFilterAbsoluteDateTimeFormErrors,
+    type IDateFilterOptionsByType,
+    type IDateFilterRelativeFormErrors,
+    type IExtendedDateFilterErrors,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 

@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject, IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, type IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
 import { IconAlert, IconAlertPaused, IconWarning, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 

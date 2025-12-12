@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { FC, ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 
 import { connect } from "react-redux";
 

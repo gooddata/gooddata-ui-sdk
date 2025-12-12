@@ -2,10 +2,14 @@
 
 import { cloneDeep, set } from "lodash-es";
 
-import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IInsightDefinition,
+    type IAnalyticalBackend,
+    type IExecutionFactory,
+    type IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IAttribute,
+    type IInsightDefinition,
     bucketAttribute,
     bucketItems,
     insightBucket,
@@ -17,14 +21,14 @@ import {
 import {
     BucketNames,
     GeoLocationMissingSdkError,
-    IAvailableDrillTargets,
-    IPushData,
+    type IAvailableDrillTargets,
+    type IPushData,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import {
     GeoChartNextInternal,
     type IGeoLayer,
-    IGeoPushpinChartNextConfig,
+    type IGeoPushpinChartNextConfig,
     buildLayerExecution,
     createPushpinLayer,
     insightLayersToGeoLayers,
@@ -51,12 +55,12 @@ import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedPro
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
     EmptyAfmSdkError,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";

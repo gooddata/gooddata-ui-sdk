@@ -2,9 +2,9 @@
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ICatalogAttribute, IDataSetMetadataObject } from "@gooddata/sdk-model";
+import { type ICatalogAttribute, type IDataSetMetadataObject } from "@gooddata/sdk-model";
 
-import { IUseAttributeElements } from "../../../../../model/index.js";
+import { type IUseAttributeElements } from "../../../../../model/index.js";
 
 function AttrTooltipElements({ elements, totalCount }: IUseAttributeElements) {
     const intl = useIntl();

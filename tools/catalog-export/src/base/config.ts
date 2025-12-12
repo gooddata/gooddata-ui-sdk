@@ -3,11 +3,11 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 
-import { OptionValues } from "commander";
+import { type OptionValues } from "commander";
 import { pick, pickBy } from "lodash-es";
 
 import { API_TOKEN_VAR_NAME } from "./constants.js";
-import { CatalogExportConfig } from "./types.js";
+import { type CatalogExportConfig } from "./types.js";
 
 export function mergeConfigs(...configs: Partial<CatalogExportConfig>[]): CatalogExportConfig {
     return Object.assign(

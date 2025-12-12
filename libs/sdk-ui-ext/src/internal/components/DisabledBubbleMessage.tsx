@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, memo } from "react";
+import { type ReactNode, memo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../locales.js";
 import { getTranslation } from "../utils/translations.js";

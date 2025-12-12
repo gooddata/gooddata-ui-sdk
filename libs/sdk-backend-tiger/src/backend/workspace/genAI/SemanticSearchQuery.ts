@@ -1,10 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { GenAiApi_AiSearch } from "@gooddata/api-client-tiger/genAI";
-import { ISemanticSearchQuery, ISemanticSearchResult } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType } from "@gooddata/sdk-model";
+import { type ISemanticSearchQuery, type ISemanticSearchResult } from "@gooddata/sdk-backend-spi";
+import { type GenAIObjectType } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 type SemanticSearchQueryConfig = {
     deepSearch: boolean;

@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IAutomationDetails } from "../automations/index.js";
-import { IExportResult } from "../exports/index.js";
+import { type IAutomationDetails } from "../automations/index.js";
+import { type IExportResult } from "../exports/index.js";
 
 /**
  * Type of the notification.

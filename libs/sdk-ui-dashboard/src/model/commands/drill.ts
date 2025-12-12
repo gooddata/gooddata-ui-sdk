@@ -1,21 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    FilterContextItem,
-    ICrossFiltering,
-    IDrillToAttributeUrl,
-    IDrillToCustomUrl,
-    IDrillToDashboard,
-    IDrillToInsight,
-    IDrillToLegacyDashboard,
-    IInsight,
-    IKeyDriveAnalysis,
+    type FilterContextItem,
+    type ICrossFiltering,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IDrillToLegacyDashboard,
+    type IInsight,
+    type IKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
-import { ExplicitDrill } from "@gooddata/sdk-ui";
+import { type ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { IDashboardCommand } from "./base.js";
-import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
-import { DashboardKeyDriverCombinationItem } from "../events/drill.js";
+import { type IDashboardCommand } from "./base.js";
+import {
+    type DashboardDrillContext,
+    type IDashboardDrillEvent,
+    type IDrillDownDefinition,
+} from "../../types.js";
+import { type DashboardKeyDriverCombinationItem } from "../events/drill.js";
 
 /**
  * Payload of the {@link Drill} command.

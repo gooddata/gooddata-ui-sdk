@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { RefObject, createRef, forwardRef } from "react";
+import { type RefObject, createRef, forwardRef } from "react";
 
 import { act, render, screen } from "@testing-library/react";
 import { flushSync } from "react-dom";

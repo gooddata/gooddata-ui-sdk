@@ -1,6 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { FocusEventHandler, MouseEventHandler, ReactElement, ReactNode, useCallback, useRef } from "react";
+import {
+    type FocusEventHandler,
+    type MouseEventHandler,
+    type ReactElement,
+    type ReactNode,
+    useCallback,
+    useRef,
+} from "react";
 
 import cx from "classnames";
 

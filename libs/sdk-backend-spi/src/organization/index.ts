@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
-import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
+import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
-import { IOrganizationAutomationService } from "./automations/index.js";
-import { IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
-import { IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
-import { IOrganizationNotificationService } from "./notifications/index.js";
-import { IOrganizationPermissionService } from "./permissions/index.js";
-import { ISecuritySettingsService } from "./securitySettings/index.js";
-import { IOrganizationSettingsService } from "./settings/index.js";
-import { IOrganizationStylingService } from "./styling/index.js";
-import { IOrganizationUserService } from "./users/index.js";
+import { type IOrganizationAutomationService } from "./automations/index.js";
+import { type IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
+import { type IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
+import { type IOrganizationNotificationService } from "./notifications/index.js";
+import { type IOrganizationPermissionService } from "./permissions/index.js";
+import { type ISecuritySettingsService } from "./securitySettings/index.js";
+import { type IOrganizationSettingsService } from "./settings/index.js";
+import { type IOrganizationStylingService } from "./styling/index.js";
+import { type IOrganizationUserService } from "./users/index.js";
 
 /**
  * Represents an organization that services analytical workspaces.

@@ -2,8 +2,8 @@
 import { allowCellWrappingByColumnDefinition } from "./allowCellWrappingByColumnDefinition.js";
 import { getColumnTextWrappingItemForColumnDefinition } from "./getColumnTextWrappingItemForColumnDefinition.js";
 import { getPivotGroupTextWrappingItemForColumnDefinition } from "./getPivotGroupTextWrappingItemForColumnDefinition.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
-import { ITextWrapping } from "../../types/textWrapping.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { type ITextWrapping } from "../../types/textWrapping.js";
 
 /**
  * Applies text wrapping to col def.

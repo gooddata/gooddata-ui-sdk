@@ -1,22 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
-import { IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
+import { type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IExecutionDefinition,
-    IExportDefinitionVisualizationObjectRequestPayload,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IExecutionDefinition,
+    type IExportDefinitionVisualizationObjectRequestPayload,
     idRef,
     insightRef,
 } from "@gooddata/sdk-model";
 import { fillMissingTitles, resolveMessages } from "@gooddata/sdk-ui";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
-import { CreateScheduledEmail } from "../../commands/scheduledEmail.js";
-import { DashboardScheduledEmailCreated, scheduledEmailCreated } from "../../events/scheduledEmail.js";
+import { type CreateScheduledEmail } from "../../commands/scheduledEmail.js";
+import { type DashboardScheduledEmailCreated, scheduledEmailCreated } from "../../events/scheduledEmail.js";
 import { selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
@@ -26,8 +26,8 @@ import {
     selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 function createScheduledEmail(
     ctx: DashboardContext,

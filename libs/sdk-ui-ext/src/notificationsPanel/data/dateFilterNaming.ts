@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    DateFilterGranularity,
-    IAbsoluteDateFilterValues,
-    IDateFilter,
-    IRelativeDateFilterValues,
+    type DateFilterGranularity,
+    type IAbsoluteDateFilterValues,
+    type IDateFilter,
+    type IRelativeDateFilterValues,
     absoluteDateFilterValues,
     isRelativeDateFilter,
     relativeDateFilterValues,

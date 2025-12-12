@@ -6,9 +6,9 @@ import { difference, isEqual, partition } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
     dashboardFilterLocalIdentifier,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,

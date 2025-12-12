@@ -2,7 +2,7 @@
 
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
-import { ICorePivotTableProps } from "../../publicTypes.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
 
 /**
  * Default values for pivot table props

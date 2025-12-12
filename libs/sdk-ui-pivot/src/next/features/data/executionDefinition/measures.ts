@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { IMeasure, newBucket } from "@gooddata/sdk-model";
+import { type IMeasure, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { addMeasureGroupToDimension } from "./dimensions.js";
-import { IPivotTableExecutionDefinition } from "./types.js";
+import { type IPivotTableExecutionDefinition } from "./types.js";
 
 /**
  * Applies provided measures to the execution definition.

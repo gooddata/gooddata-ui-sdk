@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     DashboardDateFilterConfigModeValues,
-    IDashboardDateFilterConfigItem,
+    type IDashboardDateFilterConfigItem,
     idRef,
 } from "@gooddata/sdk-model";
 

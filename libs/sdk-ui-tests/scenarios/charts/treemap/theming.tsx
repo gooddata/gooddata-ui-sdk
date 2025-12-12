@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
+import { type ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
 
 import { TreemapWithMeasureViewByAndSegmentBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

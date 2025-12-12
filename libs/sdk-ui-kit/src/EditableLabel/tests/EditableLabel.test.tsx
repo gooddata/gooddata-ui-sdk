@@ -2,10 +2,10 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { Mock, describe, expect, it, vi } from "vitest";
+import { type Mock, describe, expect, it, vi } from "vitest";
 
 import { EditableLabel } from "../EditableLabel.js";
-import { IEditableLabelProps } from "../typings.js";
+import { type IEditableLabelProps } from "../typings.js";
 
 function renderEditableLabel(options: IEditableLabelProps) {
     return render(<EditableLabel {...options} />);

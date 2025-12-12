@@ -1,25 +1,30 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { KeyboardEvent, MutableRefObject, useCallback, useEffect, useRef } from "react";
+import { type KeyboardEvent, type MutableRefObject, useCallback, useEffect, useRef } from "react";
 
-import { CellClickedEvent, CellKeyDownEvent, ColDef, GridReadyEvent } from "ag-grid-community";
+import {
+    type CellClickedEvent,
+    type CellKeyDownEvent,
+    type ColDef,
+    type GridReadyEvent,
+} from "ag-grid-community";
 import cx from "classnames";
 
-import { IAttributeOrMeasure, isAttributeDescriptor } from "@gooddata/sdk-model";
+import { type IAttributeOrMeasure, isAttributeDescriptor } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
-    IDrillEvent,
-    IDrillEventContext,
-    IDrillEventIntersectionElement,
-    IHeaderPredicate,
+    type DataViewFacade,
+    type IDrillEvent,
+    type IDrillEventContext,
+    type IDrillEventIntersectionElement,
+    type IHeaderPredicate,
     VisualizationTypes,
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 import { isActionKey } from "@gooddata/sdk-ui-kit";
 
-import { DrillingState } from "../internal/privateTypes.js";
-import { IRepeaterChartProps } from "../publicTypes.js";
+import { type DrillingState } from "../internal/privateTypes.js";
+import { type IRepeaterChartProps } from "../publicTypes.js";
 
 export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], props: IRepeaterChartProps) {
     const drillingState = useRef<DrillingState>({

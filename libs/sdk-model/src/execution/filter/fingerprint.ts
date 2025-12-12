@@ -2,7 +2,7 @@
 import stringify from "json-stable-stringify";
 
 import {
-    IFilter,
+    type IFilter,
     attributeElementsIsEmpty,
     isMeasureValueFilter,
     isNegativeAttributeFilter,

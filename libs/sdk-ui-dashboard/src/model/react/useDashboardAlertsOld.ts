@@ -2,8 +2,8 @@
 
 import { useCallback, useState } from "react";
 
-import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IAutomationMetadataObject, type IInsightWidget } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";

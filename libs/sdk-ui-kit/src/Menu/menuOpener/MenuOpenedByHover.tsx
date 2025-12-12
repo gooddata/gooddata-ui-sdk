@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
+import { type IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";
 
 export function MenuOpenedByHover({

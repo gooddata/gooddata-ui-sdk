@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent } from "react";
+import { type KeyboardEvent } from "react";
 
 import { describe, expect, it, vi } from "vitest";
 

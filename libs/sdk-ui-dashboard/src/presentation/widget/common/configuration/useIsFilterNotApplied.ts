@@ -1,6 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IWidget, ObjRef, areObjRefsEqual, isObjRef, isRichTextWidget, widgetRef } from "@gooddata/sdk-model";
+import {
+    type IWidget,
+    type ObjRef,
+    areObjRefsEqual,
+    isObjRef,
+    isRichTextWidget,
+    widgetRef,
+} from "@gooddata/sdk-model";
 
 import {
     selectAttributeFilterDisplayFormsMap,

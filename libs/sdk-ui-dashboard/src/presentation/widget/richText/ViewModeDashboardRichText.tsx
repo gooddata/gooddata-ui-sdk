@@ -2,7 +2,7 @@
 
 import { RichText } from "@gooddata/sdk-ui-kit";
 
-import { IDashboardRichTextProps } from "./types.js";
+import { type IDashboardRichTextProps } from "./types.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     selectEnableRichTextDynamicReferences,

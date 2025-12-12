@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { ObjectType } from "../../objRef/index.js";
+import { type ObjectType } from "../../objRef/index.js";
 
 /**
  * @beta

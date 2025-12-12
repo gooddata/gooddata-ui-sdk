@@ -2,18 +2,18 @@
 
 import { memo, useCallback, useMemo, useState } from "react";
 
-import { WrappedComponentProps } from "react-intl";
+import { type WrappedComponentProps } from "react-intl";
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { DocumentationLink } from "./DocumentationLink.js";
 import { FormatInputWithIntl } from "./FormatInput.js";
 import { Preview } from "./previewSection/Preview.js";
 import { Button } from "../../Button/index.js";
 import { Overlay } from "../../Overlay/index.js";
-import { IPositioning, SnapPoint } from "../../typings/positioning.js";
+import { type IPositioning, SnapPoint } from "../../typings/positioning.js";
 import { positioningToAlignPoints } from "../../utils/positioning.js";
-import { IFormatTemplate } from "../typings.js";
+import { type IFormatTemplate } from "../typings.js";
 
 interface ICustomFormatDialogOwnProps {
     onApply: (formatString: string) => void;

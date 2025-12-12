@@ -15,7 +15,7 @@ import {
     setAxiosAuthorizationToken,
     setGlobalAuthorizationToken,
 } from "./axios.js";
-import { ITigerClient, tigerClientFactory } from "./client.js";
+import { type ITigerClient, tigerClientFactory } from "./client.js";
 
 export {
     VisualizationObjectModelV1,

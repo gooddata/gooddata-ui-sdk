@@ -4,8 +4,8 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
-import { Matcher, suppressConsole } from "@gooddata/util";
+import { type IInsight, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
+import { type Matcher, suppressConsole } from "@gooddata/util";
 
 import { BarChartDescriptor } from "../pluggableVisualizations/barChart/BarChartDescriptor.js";
 import { CatalogViaTypeToClassMap, FullVisualizationCatalog } from "../VisualizationCatalog.js";

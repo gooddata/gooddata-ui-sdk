@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, idRef, insightUri, newInsightDefinition } from "@gooddata/sdk-model";
+import { type IInsight, idRef, insightUri, newInsightDefinition } from "@gooddata/sdk-model";
 
 import { insightViewCodeGenerator, insightViewEmbeddedCodeGenerator } from "../insightViewCodeGenerator.js";
 

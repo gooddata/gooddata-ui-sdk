@@ -4,10 +4,10 @@ import { invariant } from "ts-invariant";
 
 import {
     AnalyticalDashboardModelV2,
-    JsonApiFilterViewOutIncludes,
-    JsonApiFilterViewOutWithLinks,
+    type JsonApiFilterViewOutIncludes,
+    type JsonApiFilterViewOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { IDashboardFilterView, idRef } from "@gooddata/sdk-model";
+import { type IDashboardFilterView, idRef } from "@gooddata/sdk-model";
 
 import { convertFilterViewContextFilters } from "./analyticalDashboards/v2/AnalyticalDashboardConverter.js";
 

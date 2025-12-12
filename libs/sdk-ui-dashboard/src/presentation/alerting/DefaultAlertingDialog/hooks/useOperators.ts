@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { type AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import {
     ANOMALY_DETECTION_HEADER,
     ANOMALY_DETECTION_OPERATOR_OPTIONS,

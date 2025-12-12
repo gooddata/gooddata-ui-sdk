@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Fragment, ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import { Fragment, type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
 import { PositionedMenuContent } from "./PositionedMenuContent.js";
-import { IMenuPositionConfig } from "../MenuSharedTypes.js";
+import { type IMenuPositionConfig } from "../MenuSharedTypes.js";
 import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal.js";
 
 export interface IMenuPositionProps extends IMenuPositionConfig {

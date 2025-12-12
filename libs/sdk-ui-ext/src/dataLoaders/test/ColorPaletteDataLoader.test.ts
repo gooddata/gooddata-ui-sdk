@@ -3,8 +3,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend, IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
+import { type IColorPalette } from "@gooddata/sdk-model";
 
 import { colorPaletteDataLoaderFactory } from "../ColorPaletteDataLoader.js";
 

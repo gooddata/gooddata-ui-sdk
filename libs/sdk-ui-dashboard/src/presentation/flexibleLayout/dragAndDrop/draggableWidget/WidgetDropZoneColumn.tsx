@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, useMemo } from "react";
+import { type CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
@@ -21,9 +21,9 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { type ILayoutItemPath } from "../../../../types.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
-import { BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
+import { type BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
 import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
 

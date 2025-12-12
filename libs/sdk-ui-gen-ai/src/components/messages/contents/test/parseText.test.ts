@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { type ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 import { replaceLinks } from "../replaceLinks.js";
 

@@ -5,8 +5,8 @@ import { describe, expect, it } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend.js";
-import { IPushpinCategoryLegendItem } from "../types.js";
+import { type IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend.js";
+import { type IPushpinCategoryLegendItem } from "../types.js";
 
 describe("PopUpLegend", () => {
     function renderComponent(customProps: Partial<IPopUpLegendProps> = {}) {

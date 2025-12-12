@@ -4,7 +4,7 @@
 import { program } from "commander";
 
 import { configure } from "./config.js";
-import { DefaultConfigName, ToolkitConfigFile, ToolkitOptions } from "./data.js";
+import { DefaultConfigName, type ToolkitConfigFile, type ToolkitOptions } from "./data.js";
 import { done, error, fail, hr } from "./utils/console.js";
 import { validate } from "./validate.js";
 

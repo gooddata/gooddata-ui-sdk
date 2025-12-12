@@ -3,7 +3,7 @@
 import cx from "classnames";
 
 import { MarkdownComponent } from "./Markdown.js";
-import { RoutingContents } from "../../../model.js";
+import { type RoutingContents } from "../../../model.js";
 
 export type RoutingContentsProps = {
     content: RoutingContents;

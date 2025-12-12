@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { assertNever } from "@gooddata/sdk-model";
-import { DataViewFacade, ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { type DataViewFacade, type ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { createAttributeColDef } from "./attributeColDef.js";
 import { columnDefinitionToColId } from "./colId.js";
 import { createMeasureColDef } from "./measureColDef.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { createAttributeHeaderColDef } from "../transposition/attributeHeaderColDef.js";
 import { createMeasureGroupHeaderColDef } from "../transposition/measureGroupHeaderColDef.js";
 import { createMeasureGroupValueColDef } from "../transposition/measureGroupValueColDef.js";

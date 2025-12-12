@@ -4,11 +4,11 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { UiAsyncTableAccessibilityConfig } from "@gooddata/sdk-ui-kit";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type UiAsyncTableAccessibilityConfig } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./messages.js";
-import { AutomationsType } from "./types.js";
+import { type AutomationsType } from "./types.js";
 
 export function useAutomationsAccessibility(type: AutomationsType) {
     const intl = useIntl();

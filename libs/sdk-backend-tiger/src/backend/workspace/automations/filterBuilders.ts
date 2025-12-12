@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { AutomationFilterType } from "@gooddata/sdk-backend-spi";
+import { type AutomationFilterType } from "@gooddata/sdk-backend-spi";
 
 import { STATUS_NEVER_RUN, STATUS_NEVER_RUN_RSQL_QUERY } from "../../common/automations.js";
 

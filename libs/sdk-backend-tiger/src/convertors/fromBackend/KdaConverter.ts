@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { AfmMetricValueChange } from "@gooddata/api-client-tiger";
+import { type AfmMetricValueChange } from "@gooddata/api-client-tiger";
 import { type IKeyDriver } from "@gooddata/sdk-backend-spi";
 
 export function convertChangeAnalyzeToKeyDriver(value: AfmMetricValueChange): IKeyDriver {

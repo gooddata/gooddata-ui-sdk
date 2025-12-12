@@ -3,10 +3,10 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording, dummyDataView, recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type ScenarioRecording, dummyDataView, recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 
-import { DataAccessDigest, createDataAccessDigest } from "../dataAccessDigest.js";
+import { type DataAccessDigest, createDataAccessDigest } from "../dataAccessDigest.js";
 
 function digestSnapshot(digest: DataAccessDigest) {
     return {

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketItem } from "../../../../interfaces/Visualization.js";
+import { type IBucketItem } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { transformBuckets } from "../bucketHelper.js";
 

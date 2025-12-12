@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    AfmValidObjectsQuery,
-    JsonApiAttributeOut,
-    JsonApiFactOut,
-    JsonApiLabelOut,
-    JsonApiMetricOut,
-    JsonApiMetricOutDocument,
-    KeyDriversDimension,
+    type AfmValidObjectsQuery,
+    type JsonApiAttributeOut,
+    type JsonApiFactOut,
+    type JsonApiLabelOut,
+    type JsonApiMetricOut,
+    type JsonApiMetricOutDocument,
+    type KeyDriversDimension,
     MetadataUtilities,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
@@ -33,25 +33,25 @@ import type {
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IMeasure,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    ObjRef,
-    ObjectType,
+    type IMeasure,
+    type IMeasureMetadataObject,
+    type IMeasureMetadataObjectDefinition,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
+    type ObjectType,
     idRef,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
-import { IExpressionToken, tokenizeExpression } from "./measureExpressionTokens.js";
+import { type IExpressionToken, tokenizeExpression } from "./measureExpressionTokens.js";
 import { MeasuresQuery } from "./measuresQuery.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 const findDimensionality = (

@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
-import { ISaveButtonProps } from "./types.js";
+import { type ISaveButtonProps } from "./types.js";
 import { messages } from "../../../../../locales.js";
 import {
     dispatchAndWaitFor,

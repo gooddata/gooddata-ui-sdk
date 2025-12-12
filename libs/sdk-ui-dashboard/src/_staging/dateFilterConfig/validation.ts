@@ -3,10 +3,10 @@
 import { groupBy, isEmpty } from "lodash-es";
 
 import {
-    IDateFilterConfig,
-    IDateFilterOption,
-    IRelativeDateFilterForm,
-    ISettings,
+    type IDateFilterConfig,
+    type IDateFilterOption,
+    type IRelativeDateFilterForm,
+    type ISettings,
 } from "@gooddata/sdk-model";
 
 import { defaultDateFilterConfig } from "./defaultConfig.js";

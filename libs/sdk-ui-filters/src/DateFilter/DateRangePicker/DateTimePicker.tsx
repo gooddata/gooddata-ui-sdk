@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { AriaAttributes, KeyboardEvent, forwardRef, useMemo } from "react";
+import { type AriaAttributes, type KeyboardEvent, forwardRef, useMemo } from "react";
 
 import cx from "classnames";
 
 import { DateInput } from "./DateInput.js";
 import { TimeInput } from "./TimeInput.js";
-import { IDateTimePickerErrors, ITime, InputErrorMessageTexts } from "./types.js";
+import { type IDateTimePickerErrors, type ITime, type InputErrorMessageTexts } from "./types.js";
 
 export interface IDateTimePickerAccessibilityConfig {
     dateAriaLabel?: AriaAttributes["aria-label"];

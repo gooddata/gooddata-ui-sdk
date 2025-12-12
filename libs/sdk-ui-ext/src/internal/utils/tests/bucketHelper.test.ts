@@ -2,24 +2,24 @@
 import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { IBucket } from "@gooddata/sdk-model";
+import { type IBucket } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../constants/bucket.js";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
 import {
     DATE_DATASET_ATTRIBUTE,
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IFilters,
-    IFiltersBucketItem,
-    IUiConfig,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IFilters,
+    type IFiltersBucketItem,
+    type IUiConfig,
 } from "../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
 import { oneMeasureOneStack, oneMeasureOneView } from "../../tests/mocks/visualizationObjectMocks.js";
 import {
-    IMeasureBucketItemsLimit,
+    type IMeasureBucketItemsLimit,
     applyUiConfig,
     filterOutArithmeticMeasuresFromDerived,
     filterOutDerivedMeasures,

@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { cloneDeep, compact, isEmpty, negate, set, uniqBy, without } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    IBucket,
-    IInsightDefinition,
-    IMeasure,
-    ITotal,
-    ObjRef,
+    type IBucket,
+    type IInsightDefinition,
+    type IMeasure,
+    type ITotal,
+    type ObjRef,
     areObjRefsEqual,
     bucketItems,
     bucketsFind,
@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    OverTimeComparisonType,
+    type OverTimeComparisonType,
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
@@ -30,20 +30,20 @@ import { subtitles, titles } from "../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
 import {
     DATE_DATASET_ATTRIBUTE,
-    IAttributeFilter,
-    IBucketFilter,
-    IBucketItem,
-    IBucketOfFun,
-    IBucketUiConfig,
-    IBucketsUiConfig,
-    IDateFilter,
-    IExtendedReferencePoint,
-    IFilters,
-    IFiltersBucketItem,
-    IMeasureValueFilter,
-    IRankingFilter,
-    IUiConfig,
-    IVisualizationProperties,
+    type IAttributeFilter,
+    type IBucketFilter,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IBucketUiConfig,
+    type IBucketsUiConfig,
+    type IDateFilter,
+    type IExtendedReferencePoint,
+    type IFilters,
+    type IFiltersBucketItem,
+    type IMeasureValueFilter,
+    type IRankingFilter,
+    type IUiConfig,
+    type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {

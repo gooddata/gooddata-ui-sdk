@@ -2,7 +2,7 @@
 
 import { AddUserGroupSelect } from "./AddUserGroupSelect.js";
 import { UserGroupsList } from "./UserGroupsList.js";
-import { IGrantedUserGroup } from "../types.js";
+import { type IGrantedUserGroup } from "../types.js";
 
 export interface IAddUserGroupContentProps {
     addedUserGroups: IGrantedUserGroup[];

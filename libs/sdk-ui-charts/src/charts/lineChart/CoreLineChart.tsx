@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 
-import { ICoreChartProps } from "../../interfaces/index.js";
+import { type ICoreChartProps } from "../../interfaces/index.js";
 import { BaseChart } from "../_base/BaseChart.js";
 
 export const CoreLineChart = memo(function CoreLineChart(props: ICoreChartProps) {

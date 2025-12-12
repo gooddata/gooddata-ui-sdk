@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 
 import cx from "classnames";
-import { IntlShape, injectIntl } from "react-intl";
+import { type IntlShape, injectIntl } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 

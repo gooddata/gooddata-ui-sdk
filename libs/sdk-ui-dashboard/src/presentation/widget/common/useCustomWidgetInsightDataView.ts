@@ -4,12 +4,18 @@ import { useEffect, useMemo } from "react";
 
 import stringify from "json-stable-stringify";
 
-import { IFilter, IInsightDefinition, ObjRef, insightSetFilters, isInsight } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
-    GoodDataSdkError,
-    UseCancelablePromiseCallbacks,
-    UseCancelablePromiseState,
+    type IFilter,
+    type IInsightDefinition,
+    type ObjRef,
+    insightSetFilters,
+    isInsight,
+} from "@gooddata/sdk-model";
+import {
+    type DataViewFacade,
+    type GoodDataSdkError,
+    type UseCancelablePromiseCallbacks,
+    type UseCancelablePromiseState,
     useBackendStrict,
     useCancelablePromise,
     useExecutionDataView,
@@ -17,8 +23,8 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
-    ICustomWidget,
-    QueryProcessingState,
+    type ICustomWidget,
+    type QueryProcessingState,
     selectEnableExecutionCancelling,
     useDashboardSelector,
     useWidgetFilters,

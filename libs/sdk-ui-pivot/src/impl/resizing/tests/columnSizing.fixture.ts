@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import { Column, GridApi } from "ag-grid-community";
+import { type Column, type GridApi } from "ag-grid-community";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { ColumnWidthItem } from "../../../columnWidths.js";
+import { type ColumnWidthItem } from "../../../columnWidths.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import { ResizedColumnsStore } from "../columnSizing.js";
 

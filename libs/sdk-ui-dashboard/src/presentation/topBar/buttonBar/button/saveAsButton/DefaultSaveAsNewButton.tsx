@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { ISaveAsNewButtonProps } from "./types.js";
+import { type ISaveAsNewButtonProps } from "./types.js";
 import {
     selectIsSaveAsNewButtonVisible,
     uiActions,

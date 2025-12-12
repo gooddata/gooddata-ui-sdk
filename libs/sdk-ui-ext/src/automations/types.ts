@@ -1,32 +1,32 @@
 // (C) 2025 GoodData Corporation
 
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { type Dispatch, type ReactNode, type SetStateAction } from "react";
 
 import {
-    AutomationFilterType,
-    AutomationType,
-    IAnalyticalBackend,
-    IAutomationsQueryResult,
-    IWorkspaceDescriptor,
+    type AutomationFilterType,
+    type AutomationType,
+    type IAnalyticalBackend,
+    type IAutomationsQueryResult,
+    type IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAutomationLastRunStatus,
-    IAutomationMetadataObject,
-    IAutomationState,
-    IListedDashboard,
-    IOrganizationUser,
-    IUser,
-    IWorkspacePermissions,
-    IWorkspaceUser,
-    SortDirection,
+    type IAutomationLastRunStatus,
+    type IAutomationMetadataObject,
+    type IAutomationState,
+    type IListedDashboard,
+    type IOrganizationUser,
+    type IUser,
+    type IWorkspacePermissions,
+    type IWorkspaceUser,
+    type SortDirection,
 } from "@gooddata/sdk-model";
-import { IDashboardUrlBuilder, IWidgetUrlBuilder } from "@gooddata/sdk-ui";
+import { type IDashboardUrlBuilder, type IWidgetUrlBuilder } from "@gooddata/sdk-ui";
 import {
-    IconType,
-    UiAsyncTableBulkAction,
-    UiAsyncTableColumn,
-    UiAsyncTableFilter,
-    UiAsyncTableVariant,
+    type IconType,
+    type UiAsyncTableBulkAction,
+    type UiAsyncTableColumn,
+    type UiAsyncTableFilter,
+    type UiAsyncTableVariant,
 } from "@gooddata/sdk-ui-kit";
 
 /**

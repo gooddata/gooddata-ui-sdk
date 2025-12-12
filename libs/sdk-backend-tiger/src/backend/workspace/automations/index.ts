@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
     ActionsApi_DeleteWorkspaceAutomations,
     ActionsApi_PauseWorkspaceAutomations,
@@ -16,23 +16,23 @@ import {
     EntitiesApi_UpdateEntityAutomations,
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import {
-    IAutomationsQuery,
-    IGetAutomationOptions,
-    IGetAutomationsOptions,
-    IGetAutomationsQueryOptions,
-    IRawExportCustomOverrides,
-    IWorkspaceAutomationService,
+    type IAutomationsQuery,
+    type IGetAutomationOptions,
+    type IGetAutomationsOptions,
+    type IGetAutomationsQueryOptions,
+    type IRawExportCustomOverrides,
+    type IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IExecutionDefinition,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IExecutionDefinition,
 } from "@gooddata/sdk-model";
 
 import { AutomationsQuery } from "./automationsQuery.js";
 import { convertAutomation as convertAutomationFromBackend } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { convertAutomation as convertAutomationToBackend } from "../../../convertors/toBackend/AutomationConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class TigerWorkspaceAutomationService implements IWorkspaceAutomationService {

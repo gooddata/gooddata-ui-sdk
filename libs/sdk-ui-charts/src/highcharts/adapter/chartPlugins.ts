@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 import { groupedCategories } from "./plugins/3rdParty/grouped-categories.js";
 import { initAccessibleTooltipPluginOnce } from "./plugins/accessibleTooltip.js";

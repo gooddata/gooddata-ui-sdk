@@ -3,13 +3,13 @@
 import { ActionsApi_ListWorkspaceUsers } from "@gooddata/api-client-tiger/actions";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    IWorkspaceUsersQuery,
-    IWorkspaceUsersQueryOptions,
-    IWorkspaceUsersQueryResult,
+    type IWorkspaceUsersQuery,
+    type IWorkspaceUsersQueryOptions,
+    type IWorkspaceUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { IWorkspaceUser } from "@gooddata/sdk-model";
+import { type IWorkspaceUser } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { convertWorkspaceUser } from "../../organization/fromBackend/userConvertor.js";
 
 export class TigerWorkspaceUsersQuery implements IWorkspaceUsersQuery {

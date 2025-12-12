@@ -8,7 +8,7 @@ import { workspaceGranularPermissionMessages } from "./locales.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { WorkspaceIcon } from "./WorkspaceIcon.js";
 import { RemoveIcon } from "../../RemoveIcon.js";
-import { IGrantedWorkspace } from "../../types.js";
+import { type IGrantedWorkspace } from "../../types.js";
 
 interface IGranularPermissionsWorkspaceItemProps {
     workspace: IGrantedWorkspace;

@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IAuditable } from "../../../base/metadata.js";
-import { IMetadataObject, IMetadataObjectDefinition, isMetadataObject } from "../types.js";
+import { type IAuditable } from "../../../base/metadata.js";
+import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
 /**
  * Metric type categorizes metric semantics (e.g., currency).

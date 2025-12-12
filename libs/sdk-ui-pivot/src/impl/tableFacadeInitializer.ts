@@ -2,9 +2,9 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IDataView,
-    IExecutionResult,
-    IPreparedExecution,
+    type IDataView,
+    type IExecutionResult,
+    type IPreparedExecution,
     isNoDataError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
@@ -12,9 +12,13 @@ import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 
 import { COLS_PER_PAGE } from "./base/constants.js";
 import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
-import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "./privateTypes.js";
+import {
+    type TableConfigAccessors,
+    type TableDataCallbacks,
+    type TableLegacyCallbacks,
+} from "./privateTypes.js";
 import { TableFacade } from "./tableFacade.js";
-import { ICorePivotTableProps } from "../publicTypes.js";
+import { type ICorePivotTableProps } from "../publicTypes.js";
 
 export type InitializerResult = {
     initializer: TableFacadeInitializer;

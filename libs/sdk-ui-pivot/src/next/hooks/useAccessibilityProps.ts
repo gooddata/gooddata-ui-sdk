@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from "react";
 
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Hook that applies accessibility mode overrides to the config.

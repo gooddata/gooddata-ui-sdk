@@ -27,11 +27,11 @@
  * @internal
  */
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IDataVisualizationProps } from "@gooddata/sdk-ui";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
-import { IGeoChartNextProps } from "./public.js";
-import { GeoLayerType, IGeoLayer } from "../../layers/index.js";
+import { type IGeoChartNextProps } from "./public.js";
+import { type GeoLayerType, type IGeoLayer } from "../../layers/index.js";
 
 /**
  * Internal props for GeoChartNext component.

@@ -1,9 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { KeyboardEventHandler, useCallback, useMemo } from "react";
+import { type KeyboardEventHandler, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
-import { GroupBase, OnChangeValue } from "react-select";
+import { type GroupBase, type OnChangeValue } from "react-select";
 import { AsyncPaginate } from "react-select-async-paginate";
 
 import { useBackendStrict } from "@gooddata/sdk-ui";
@@ -20,9 +20,9 @@ import {
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import {
-    ISelectErrorOption,
-    IUserMember,
-    IUserSelectOption,
+    type ISelectErrorOption,
+    type IUserMember,
+    type IUserSelectOption,
     isSelectErrorOption,
     isUserItem,
 } from "../types.js";

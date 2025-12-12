@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
 import { tigerActionsClientFactory } from "./actions.js";
 import { tigerAuthActionsClientFactory } from "./authActions.js";
@@ -9,8 +9,8 @@ import { setAxiosAuthorizationToken } from "./axios.js";
 import {
     MetadataBaseApi,
     MetadataConfiguration,
-    MetadataConfigurationParameters,
-    MetadataRequestArgs,
+    type MetadataConfigurationParameters,
+    type MetadataRequestArgs,
     tigerEntitiesObjectsClientFactory,
 } from "./entitiesObjects.js";
 import { tigerExecutionClientFactory } from "./execution.js";
@@ -21,37 +21,37 @@ import { tigerGenAIClientFactory } from "./genAI.js";
 import {
     LabelElementsBaseApi,
     LabelElementsConfiguration,
-    LabelElementsConfigurationParameters,
-    LabelElementsRequestArgs,
+    type LabelElementsConfigurationParameters,
+    type LabelElementsRequestArgs,
     tigerLabelElementsClientFactory,
 } from "./labelElements.js";
 import { tigerLayoutClientFactory } from "./layout.js";
 import {
-    LocationStyleApiInterface,
-    LocationStyleDocument,
+    type LocationStyleApiInterface,
+    type LocationStyleDocument,
     tigerLocationStyleClientFactory,
 } from "./locationStyle.js";
 import {
-    FeatureContext,
-    ILiveFeatures,
-    IStaticFeatures,
-    IUserProfile,
-    ProfileApiInterface,
+    type FeatureContext,
+    type ILiveFeatures,
+    type IStaticFeatures,
+    type IUserProfile,
+    type ProfileApiInterface,
     isLiveFeatures,
     isStaticFeatures,
     tigerProfileClientFactory,
 } from "./profile.js";
 import {
-    ResultActionsApiInterface,
+    type ResultActionsApiInterface,
     tigerGeoCollectionsClientFactory,
     tigerResultClientFactory,
 } from "./result.js";
 import {
-    ScanModelActionsApiInterface,
+    type ScanModelActionsApiInterface,
     ScanModelBaseApi,
     ScanModelConfiguration,
-    ScanModelConfigurationParameters,
-    ScanModelRequestArgs,
+    type ScanModelConfigurationParameters,
+    type ScanModelRequestArgs,
     tigerScanModelClientFactory,
 } from "./scanModel.js";
 import { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";

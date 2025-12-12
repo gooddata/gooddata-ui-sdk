@@ -2,10 +2,10 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSectionHeader,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSectionHeader,
 } from "@gooddata/sdk-model";
 
 import {

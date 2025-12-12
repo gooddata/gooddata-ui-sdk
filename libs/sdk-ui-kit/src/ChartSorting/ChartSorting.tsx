@@ -3,14 +3,14 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage, type WrappedComponentProps, injectIntl } from "react-intl";
 
-import { ISortItem } from "@gooddata/sdk-model";
+import { type ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { ChartSortingDropdown } from "./ChartSortingDropdown.js";
 import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody.js";
-import { IAvailableSortsGroup, IBucketItemDescriptors } from "./types.js";
+import { type IAvailableSortsGroup, type IBucketItemDescriptors } from "./types.js";
 import { Button } from "../Button/index.js";
 
 /**

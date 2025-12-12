@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
 import cx from "classnames";
 
-import { ClientFormatterFacade, IFormattedResult, ISeparators } from "@gooddata/number-formatter";
+import { ClientFormatterFacade, type IFormattedResult, type ISeparators } from "@gooddata/number-formatter";
 
 export function Label({
     value,

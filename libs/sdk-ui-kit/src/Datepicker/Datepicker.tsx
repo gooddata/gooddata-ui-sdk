@@ -1,18 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    ChangeEvent,
-    FocusEvent,
+    type ChangeEvent,
+    type FocusEvent,
     PureComponent,
-    KeyboardEvent as ReactKeyboardEvent,
-    MouseEvent as ReactMouseEvent,
-    ReactNode,
-    Ref,
+    type KeyboardEvent as ReactKeyboardEvent,
+    type MouseEvent as ReactMouseEvent,
+    type ReactNode,
+    type Ref,
     createRef,
 } from "react";
 
 import classNames from "classnames";
-import { Locale, format, isSameDay, isValid, parse } from "date-fns";
+import { type Locale, format, isSameDay, isValid, parse } from "date-fns";
 import {
     de,
     enAU,
@@ -35,16 +35,16 @@ import {
     zhCN,
 } from "date-fns/locale";
 import { debounce } from "lodash-es";
-import { ClassNames, DayEventHandler, DayPicker, DayPickerProps } from "react-day-picker";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { type ClassNames, type DayEventHandler, DayPicker, type DayPickerProps } from "react-day-picker";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { DEFAULT_DATE_FORMAT } from "../constants/platform.js";
-import { IAccessibilityConfigBase } from "../typings/accessibility.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 import { elementRegion } from "../utils/domUtilities.js";
 import { isEnterKey } from "../utils/events.js";
 import { getOptimalAlignment } from "../utils/overlay.js";

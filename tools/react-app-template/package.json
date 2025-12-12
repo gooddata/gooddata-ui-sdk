@@ -33,6 +33,7 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "prettier-check": "prettier --check \"{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}\"",
         "prettier-write": "prettier --write \"{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}\"",
         "refresh-md": "gdc-catalog-export",

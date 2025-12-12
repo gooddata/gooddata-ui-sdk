@@ -8,7 +8,7 @@ import { serializeObjRef } from "@gooddata/sdk-model";
 
 import { GranteeItemComponent } from "./GranteeItem.js";
 import { GranteeListEmpty } from "./GranteeListEmpty.js";
-import { GranteeItem, IGranteesListProps } from "./types.js";
+import { type GranteeItem, type IGranteesListProps } from "./types.js";
 import { ADD_GRANTEE_ID, ADD_GRANTEE_SELECT_ID, sortGranteeList } from "./utils.js";
 
 /**

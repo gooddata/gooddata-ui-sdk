@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IInsightWidget, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
+import { type IInsightWidget, type IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,

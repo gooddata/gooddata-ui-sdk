@@ -1,20 +1,23 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent, IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { IHeadlinePanelConfig } from "../../interfaces/ConfigurationPanel.js";
+import { type IHeadlinePanelConfig } from "../../interfaces/ConfigurationPanel.js";
 import {
     getComparisonDefaultCalculationType,
     isComparisonEnabled,

@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { ISortItem, sortDirection } from "@gooddata/sdk-model";
+import { type ISortItem, sortDirection } from "@gooddata/sdk-model";
 
 import { getSortForColumnDefinition } from "./getSortForColumnDefinition.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
 
 /**
  * Applies provided sorts to col def.

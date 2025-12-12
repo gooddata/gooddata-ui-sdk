@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { debounce, isEqual, range } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
+import { type IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
-    IInsight,
+    type IInsight,
     areObjRefsEqual,
     insightCreated,
     insightIsLocked,
@@ -17,10 +17,10 @@ import {
     insightVisualizationType,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, usePagedResource, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { DropdownList, ITab, InsightListItem } from "@gooddata/sdk-ui-kit";
+import { DropdownList, type ITab, InsightListItem } from "@gooddata/sdk-ui-kit";
 
 import { InsightListNoData } from "./InsightListNoData.js";
-import { IInsightListProps } from "./types.js";
+import { type IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
 import {
     createInsightRequested,

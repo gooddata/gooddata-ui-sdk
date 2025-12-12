@@ -1,7 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import { useMemo } from "react";
 
-import { FilterContextItem, isDashboardAttributeFilter, isDashboardDateFilter } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
+} from "@gooddata/sdk-model";
 
 import { selectEnableAutomationFilterContext } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";

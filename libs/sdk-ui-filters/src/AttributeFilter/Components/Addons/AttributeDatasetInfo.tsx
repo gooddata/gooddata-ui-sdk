@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { IDataSetMetadataObject } from "@gooddata/sdk-model";
+import { type IDataSetMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * @internal

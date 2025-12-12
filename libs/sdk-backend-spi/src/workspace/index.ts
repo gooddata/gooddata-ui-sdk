@@ -1,28 +1,28 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IWorkspaceAccessControlService } from "./accessControl/index.js";
-import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
-import { IWorkspaceAttributesService } from "./attributes/index.js";
-import { IWorkspaceAutomationService } from "./automations/index.js";
-import { IWorkspaceDashboardsService } from "./dashboards/index.js";
-import { IDataFiltersService } from "./dataFilter/index.js";
-import { IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
-import { IExecutionFactory } from "./execution/index.js";
-import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
-import { IWorkspaceFactsService } from "./facts/index.js";
-import { IGenAIService } from "./genAI/index.js";
-import { IWorkspaceInsightsService } from "./insights/index.js";
-import { IWorkspaceCatalogFactory } from "./ldm/catalog.js";
-import { IWorkspaceDatasetsService } from "./ldm/datasets.js";
-import { IWorkspaceLogicalModelService } from "./ldm/model.js";
-import { IWorkspaceMeasuresService } from "./measures/index.js";
-import { IWorkspacePermissionsService } from "./permissions/index.js";
-import { IWorkspaceSettingsService } from "./settings/index.js";
-import { IWorkspaceStylingService } from "./styling/index.js";
-import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
-import { IWorkspaceUsersQuery } from "./users/index.js";
-import { IPagedResource } from "../common/paging.js";
-import { IWorkspaceKeyDriverAnalysisService } from "./keyDriverAnalysis/index.js";
+import { type IWorkspaceAccessControlService } from "./accessControl/index.js";
+import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { type IWorkspaceAttributesService } from "./attributes/index.js";
+import { type IWorkspaceAutomationService } from "./automations/index.js";
+import { type IWorkspaceDashboardsService } from "./dashboards/index.js";
+import { type IDataFiltersService } from "./dataFilter/index.js";
+import { type IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
+import { type IExecutionFactory } from "./execution/index.js";
+import { type IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
+import { type IWorkspaceFactsService } from "./facts/index.js";
+import { type IGenAIService } from "./genAI/index.js";
+import { type IWorkspaceInsightsService } from "./insights/index.js";
+import { type IWorkspaceCatalogFactory } from "./ldm/catalog.js";
+import { type IWorkspaceDatasetsService } from "./ldm/datasets.js";
+import { type IWorkspaceLogicalModelService } from "./ldm/model.js";
+import { type IWorkspaceMeasuresService } from "./measures/index.js";
+import { type IWorkspacePermissionsService } from "./permissions/index.js";
+import { type IWorkspaceSettingsService } from "./settings/index.js";
+import { type IWorkspaceStylingService } from "./styling/index.js";
+import { type IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
+import { type IWorkspaceUsersQuery } from "./users/index.js";
+import { type IPagedResource } from "../common/paging.js";
+import { type IWorkspaceKeyDriverAnalysisService } from "./keyDriverAnalysis/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.

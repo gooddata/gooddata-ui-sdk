@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentTable, UiCheckbox, UiCheckboxProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, UiCheckbox, type UiCheckboxProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // eslint-disable-next-line no-restricted-exports

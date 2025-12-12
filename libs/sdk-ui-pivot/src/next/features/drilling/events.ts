@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IDrillEvent } from "@gooddata/sdk-ui";
+import { type IDrillEvent } from "@gooddata/sdk-ui";
 
 /**
  * Creates a custom drill event for embedded scenarios

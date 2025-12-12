@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { type ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 /**
  * Use custom URL schema for the link. In Markdown rendered our component knows

@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 import { cloneDeep, set } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
 import { OPEN_AS_REPORT, SUPPORTED, UICONFIG } from "../../constants/uiConfig.js";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import { type IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 import { setBucketTitles } from "../bucketHelper.js";
 import { hasMoreThanOneCategory, hasMoreThanOneMasterMeasure } from "../bucketRules.js";
 import { hasColorMapping } from "../propertiesHelper.js";

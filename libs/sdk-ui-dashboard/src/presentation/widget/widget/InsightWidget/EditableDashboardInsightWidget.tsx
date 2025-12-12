@@ -4,12 +4,12 @@ import { useMemo } from "react";
 
 import cx from "classnames";
 
-import { IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
+import { type VisType } from "@gooddata/sdk-ui";
 
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
-import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import {
     selectIsDashboardSaving,

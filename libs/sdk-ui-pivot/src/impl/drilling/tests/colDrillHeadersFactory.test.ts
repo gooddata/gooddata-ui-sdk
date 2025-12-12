@@ -5,8 +5,8 @@ import { describe, expect, it } from "vitest";
 import { ReferenceData } from "@gooddata/reference-workspace";
 
 import { TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, createTestRow } from "./drilling.fixture.js";
-import { IGridRow } from "../../data/resultTypes.js";
-import { AnyCol } from "../../structure/tableDescriptorTypes.js";
+import { type IGridRow } from "../../data/resultTypes.js";
+import { type AnyCol } from "../../structure/tableDescriptorTypes.js";
 import { createDrillHeaders } from "../colDrillHeadersFactory.js";
 
 describe("createDrillHeaders", () => {

@@ -1,17 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    FilterContextItem,
-    IAttributeFilter,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IDateFilter,
-    IFilterContext,
-    IFilterContextDefinition,
-    IFilterableWidget,
-    ITempFilterContext,
-    IWidgetDefinition,
-    ObjRef,
+    type FilterContextItem,
+    type IAttributeFilter,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IDateFilter,
+    type IFilterContext,
+    type IFilterContextDefinition,
+    type IFilterableWidget,
+    type ITempFilterContext,
+    type IWidgetDefinition,
+    type ObjRef,
     isDashboardAttributeFilter,
     newAbsoluteDateFilter,
     newNegativeAttributeFilter,
@@ -19,7 +19,7 @@ import {
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { IDashboardFilter } from "../types.js";
+import { type IDashboardFilter } from "../types.js";
 
 /**
  * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the given widget.

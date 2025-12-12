@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    AccessGranularPermission,
-    IAlertTriggerMode,
-    INotificationChannelMetadataObjectBase,
-    ShareStatus,
+    type AccessGranularPermission,
+    type IAlertTriggerMode,
+    type INotificationChannelMetadataObjectBase,
+    type ShareStatus,
 } from "@gooddata/sdk-model";
 
-import { DashboardEventBody, IDashboardEvent } from "./base.js";
+import { type DashboardEventBody, type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 
 /**

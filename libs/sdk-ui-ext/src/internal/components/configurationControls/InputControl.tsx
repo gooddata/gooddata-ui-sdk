@@ -1,14 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ChangeEvent, ComponentProps, KeyboardEvent, useEffect, useRef, useState } from "react";
+import {
+    type ChangeEvent,
+    type ComponentProps,
+    type KeyboardEvent,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
 import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 

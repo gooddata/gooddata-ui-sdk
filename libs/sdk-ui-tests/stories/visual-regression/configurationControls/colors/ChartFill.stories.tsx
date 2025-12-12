@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IInsightDefinition, insightMeasures, measureLocalId } from "@gooddata/sdk-model";
-import { ChartFillType, PatternFillName } from "@gooddata/sdk-ui-charts";
+import { type IInsightDefinition, insightMeasures, measureLocalId } from "@gooddata/sdk-model";
+import { type ChartFillType, type PatternFillName } from "@gooddata/sdk-ui-charts";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { ShortPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 import {
     ScreenshotReadyWrapper,

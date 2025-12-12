@@ -1,23 +1,23 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentType, ReactNode, createContext, useContext } from "react";
+import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
-import { IAttributeFilterErrorProps } from "../Components/AttributeFilterError.js";
-import { IAttributeFilterLoadingProps } from "../Components/AttributeFilterLoading.js";
-import { IAttributeFilterDropdownActionsProps } from "../Components/Dropdown/AttributeFilterDropdownActions.js";
-import { IAttributeFilterDropdownBodyProps } from "../Components/Dropdown/types.js";
-import { IAttributeFilterDropdownButtonProps } from "../Components/DropdownButton/AttributeFilterDropdownButton.js";
-import { IAttributeFilterElementsActionsProps } from "../Components/ElementsSelect/AttributeFilterElementsActions.js";
-import { IAttributeFilterElementsSearchBarProps } from "../Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
-import { IAttributeFilterElementsSelectErrorProps } from "../Components/ElementsSelect/AttributeFilterElementsSelectError.js";
-import { IAttributeFilterElementsSelectLoadingProps } from "../Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
-import { IAttributeFilterEmptyResultProps } from "../Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
-import { IAttributeFilterStatusBarProps } from "../Components/ElementsSelect/StatusBar/types.js";
+import { type IAttributeFilterErrorProps } from "../Components/AttributeFilterError.js";
+import { type IAttributeFilterLoadingProps } from "../Components/AttributeFilterLoading.js";
+import { type IAttributeFilterDropdownActionsProps } from "../Components/Dropdown/AttributeFilterDropdownActions.js";
+import { type IAttributeFilterDropdownBodyProps } from "../Components/Dropdown/types.js";
+import { type IAttributeFilterDropdownButtonProps } from "../Components/DropdownButton/AttributeFilterDropdownButton.js";
+import { type IAttributeFilterElementsActionsProps } from "../Components/ElementsSelect/AttributeFilterElementsActions.js";
+import { type IAttributeFilterElementsSearchBarProps } from "../Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
+import { type IAttributeFilterElementsSelectErrorProps } from "../Components/ElementsSelect/AttributeFilterElementsSelectError.js";
+import { type IAttributeFilterElementsSelectLoadingProps } from "../Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
+import { type IAttributeFilterEmptyResultProps } from "../Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
+import { type IAttributeFilterStatusBarProps } from "../Components/ElementsSelect/StatusBar/types.js";
 import {
-    IAttributeFilterElementsSelectItemProps,
-    IAttributeFilterElementsSelectProps,
+    type IAttributeFilterElementsSelectItemProps,
+    type IAttributeFilterElementsSelectProps,
 } from "../Components/ElementsSelect/types.js";
-import { IAttributeFilterCustomComponentProps } from "../types.js";
+import { type IAttributeFilterCustomComponentProps } from "../types.js";
 import { ThrowMissingComponentError } from "../utils.js";
 
 /**

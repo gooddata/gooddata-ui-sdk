@@ -3,10 +3,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { GranularityTabs, IGranularityTabsProps } from "../GranularityTabs.js";
+import { GranularityTabs, type IGranularityTabsProps } from "../GranularityTabs.js";
 
 const granularityTuple: Array<[DateFilterGranularity, string]> = [
     ["GDC.time.date", "Days"],

@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { type RefObject, useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
-    IWidget,
+    type IWidget,
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
     isVisualizationSwitcherWidget,

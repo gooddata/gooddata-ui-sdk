@@ -1,19 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, memo, useRef } from "react";
+import { type ReactElement, memo, useRef } from "react";
 
 import { LegendSeriesContextStore } from "./context.js";
 import { groupSeries } from "./helpers.js";
 import { LegendGroup } from "./LegendGroup.js";
 import { LegendItem } from "./LegendItem.js";
 import {
-    ISeriesItem,
-    ItemBorderRadiusPredicate,
+    type ISeriesItem,
+    type ItemBorderRadiusPredicate,
     isLegendGroup,
     isSeriesItemMetric,
     isSeriesItemSeparator,
 } from "./types.js";
-import { ChartFillType } from "../coloring/types.js";
+import { type ChartFillType } from "../coloring/types.js";
 
 export interface ILegendListProps {
     series: ISeriesItem[];

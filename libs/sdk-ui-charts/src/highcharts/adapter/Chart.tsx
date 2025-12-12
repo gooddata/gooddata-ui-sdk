@@ -8,10 +8,13 @@ import { createCustomEqual } from "fast-equals";
 import Highcharts from "highcharts/esm/highcharts.js";
 import { v4 as uuid } from "uuid";
 
-import { FOCUS_HIGHCHARTS_DATAPOINT_EVENT, IFocusHighchartsDatapointEventDetail } from "@gooddata/sdk-ui";
+import {
+    FOCUS_HIGHCHARTS_DATAPOINT_EVENT,
+    type IFocusHighchartsDatapointEventDetail,
+} from "@gooddata/sdk-ui";
 
 import { initChartPlugins } from "./chartPlugins.js";
-import { HChart, HighchartsOptions } from "../lib/index.js";
+import { type HChart, type HighchartsOptions } from "../lib/index.js";
 
 import "highcharts/esm/highcharts-more.js";
 import "highcharts/esm/modules/drilldown.js";

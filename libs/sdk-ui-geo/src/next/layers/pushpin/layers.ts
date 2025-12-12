@@ -14,9 +14,9 @@ import {
 import { getMinMax } from "./size/calculations.js";
 import { DEFAULT_CLUSTER_FILTER, DEFAULT_CLUSTER_LABELS_CONFIG } from "../../map/runtime/mapConfig.js";
 import { createSegmentFilter } from "../../map/style/sharedLayers.js";
-import { IGeoPointsConfigNext, PushpinSizeOptionNext } from "../../types/config/points.js";
-import { IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
-import { IPushpinGeoData } from "../../types/geoData/pushpin.js";
+import { type IGeoPointsConfigNext, type PushpinSizeOptionNext } from "../../types/config/points.js";
+import { type IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
+import { type IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import type {
     CircleLayerSpecification,
     ExpressionSpecification,

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IDashboardTab, ObjRef } from "@gooddata/sdk-model";
+import { type IDashboardTab, type ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal

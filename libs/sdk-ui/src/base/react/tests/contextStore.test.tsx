@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { render, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";

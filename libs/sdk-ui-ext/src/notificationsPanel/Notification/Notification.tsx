@@ -1,21 +1,21 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Fragment, KeyboardEvent, ReactNode, useCallback } from "react";
+import { Fragment, type KeyboardEvent, type ReactNode, useCallback } from "react";
 
 import { compact } from "lodash-es";
 import { FormattedDate, FormattedMessage, FormattedTime, defineMessages, useIntl } from "react-intl";
 
 import {
-    IAlertDescription,
-    IAlertNotification,
-    IExportResult,
-    INotification,
-    IScheduleNotification,
+    type IAlertDescription,
+    type IAlertNotification,
+    type IExportResult,
+    type INotification,
+    type IScheduleNotification,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
-    IDateConfig,
+    type IDateConfig,
     UiButton,
     UiIcon,
     UiIconButton,

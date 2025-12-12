@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IDataView, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IBucket, IExecutionConfig, IFilter, ISortItem } from "@gooddata/sdk-model";
-import { ExplicitDrill, IDrillEventCallback } from "@gooddata/sdk-ui";
+import { type IDataView, type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IBucket, type IExecutionConfig, type IFilter, type ISortItem } from "@gooddata/sdk-model";
+import { type ExplicitDrill, type IDrillEventCallback } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/index.js";
 
 /**
  * @internal

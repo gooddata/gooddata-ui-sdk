@@ -1,9 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
-import { AnyAction } from "@reduxjs/toolkit";
-import { SagaIterator } from "redux-saga";
+import { type AnyAction } from "@reduxjs/toolkit";
+import { type SagaIterator } from "redux-saga";
 import { fork, race, take } from "redux-saga/effects";
 
-import { Correlation } from "../../../types/index.js";
+import { type Correlation } from "../../../types/index.js";
 import { loadIrrelevantElementsSaga } from "../loadIrrelevantElements/loadIrrelevantElementsSaga.js";
 import { actions } from "../store/slice.js";
 

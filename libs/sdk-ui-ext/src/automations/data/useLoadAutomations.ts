@@ -2,7 +2,7 @@
 
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { IUseLoadAutomationsProps } from "../types.js";
+import { type IUseLoadAutomationsProps } from "../types.js";
 import { useAutomationService } from "../useAutomationService.js";
 import { isRequestHeaderTooLargeError } from "../utils.js";
 

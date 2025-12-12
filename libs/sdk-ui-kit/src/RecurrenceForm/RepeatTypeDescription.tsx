@@ -2,9 +2,9 @@
 
 import { useIntl } from "react-intl";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 
-import { RecurrenceType } from "./types.js";
+import { type RecurrenceType } from "./types.js";
 import { transformRecurrenceTypeToDescription } from "./utils/utils.js";
 
 interface IRepeatTypeDescriptionProps {

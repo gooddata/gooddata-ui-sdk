@@ -1,19 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IKpiComparisonDirection,
-    IKpiComparisonTypeComparison,
-    IKpiWidgetConfiguration,
-    ObjRef,
+    type IKpiComparisonDirection,
+    type IKpiComparisonTypeComparison,
+    type IKpiWidgetConfiguration,
+    type ObjRef,
     isObjRef,
 } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "./base.js";
+import { type IDashboardCommand } from "./base.js";
 import {
-    FilterOpReplaceAll,
-    WidgetDescription,
-    WidgetFilterOperation,
-    WidgetHeader,
+    type FilterOpReplaceAll,
+    type WidgetDescription,
+    type WidgetFilterOperation,
+    type WidgetHeader,
 } from "../types/widgetTypes.js";
 
 /**

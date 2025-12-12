@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ObjRef } from "../objRef/index.js";
+import { type ObjRef } from "../objRef/index.js";
 
 /**
  * Organization descriptor contains details about the organization that services analytical workspaces.

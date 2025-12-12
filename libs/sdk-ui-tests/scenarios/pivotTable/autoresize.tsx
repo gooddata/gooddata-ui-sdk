@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { requestPages } from "@gooddata/mock-handling";
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import {
     PivotTableWithSingleColumn,

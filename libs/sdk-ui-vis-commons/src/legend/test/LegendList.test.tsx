@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
-import { ILegendListProps, LegendList } from "../LegendList.js";
-import { ISeriesItem, LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR, isSeriesItemMetric } from "../types.js";
+import { type ILegendListProps, LegendList } from "../LegendList.js";
+import { type ISeriesItem, LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR, isSeriesItemMetric } from "../types.js";
 
 describe("LegendList", () => {
     let onItemClick: ReturnType<typeof vi.fn>;

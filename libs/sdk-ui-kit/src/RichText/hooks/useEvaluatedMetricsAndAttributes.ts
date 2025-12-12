@@ -1,24 +1,24 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    IExecutionConfig,
-    IFilter,
-    IMeasure,
-    IResultHeader,
-    ObjRef,
+    type IExecutionConfig,
+    type IFilter,
+    type IMeasure,
+    type IResultHeader,
+    type ObjRef,
     isMeasureDefinition,
     newAttribute,
     newMeasure,
 } from "@gooddata/sdk-model";
 import {
-    DataPoint,
+    type DataPoint,
     useBackend,
     useCancelablePromise,
     useExecutionDataView,
     useWorkspace,
 } from "@gooddata/sdk-ui";
 
-import { ReferenceMap } from "../helpers/references.js";
+import { type ReferenceMap } from "../helpers/references.js";
 
 export type EvaluatedMetric = {
     def: IMeasure;

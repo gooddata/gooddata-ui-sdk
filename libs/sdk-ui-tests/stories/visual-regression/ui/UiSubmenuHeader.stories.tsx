@@ -5,7 +5,7 @@ import { action } from "storybook/actions";
 import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 
 // eslint-disable-next-line no-restricted-exports
 export default {

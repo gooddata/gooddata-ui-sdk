@@ -2,8 +2,8 @@
 
 import { merge } from "lodash-es";
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { HighchartsOptions } from "../../lib/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type HighchartsOptions } from "../../lib/index.js";
 import { alignChart } from "../_chartCreators/helpers.js";
 import { highlightChartPoints } from "../_chartHighlighting/highlightPoints.js";
 import { getPieConfiguration } from "../pieChart/pieConfiguration.js";

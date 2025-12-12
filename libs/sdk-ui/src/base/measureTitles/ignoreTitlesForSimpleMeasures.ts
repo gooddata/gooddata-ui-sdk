@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import {
-    IAttributeOrMeasure,
-    IInsightDefinition,
-    IMeasure,
+    type IAttributeOrMeasure,
+    type IInsightDefinition,
+    type IMeasure,
     insightMeasures,
     insightModifyItems,
     isAdhocMeasure,

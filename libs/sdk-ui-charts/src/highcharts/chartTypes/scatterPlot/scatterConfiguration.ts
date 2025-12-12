@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
+import { type IExecutionDefinition, type ITheme } from "@gooddata/sdk-model";
 
-import { IChartOptions } from "../../typings/unsafe.js";
+import { type IChartOptions } from "../../typings/unsafe.js";
 import { styleVariables } from "../_chartCreators/styles/variables.js";
 
 export const LINE_WIDTH = 3;

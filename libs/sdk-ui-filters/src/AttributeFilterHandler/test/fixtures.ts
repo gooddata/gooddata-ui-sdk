@@ -2,14 +2,14 @@
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    ElementsQueryOptionsElementsSpecification,
-    IElementsQueryAttributeFilter,
+    type ElementsQueryOptionsElementsSpecification,
+    type IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeElement,
-    IAttributeFilter,
-    IMeasure,
-    IRelativeDateFilter,
+    type IAttributeElement,
+    type IAttributeFilter,
+    type IMeasure,
+    type IRelativeDateFilter,
     attributeIdentifier,
     idRef,
     measureIdentifier,
@@ -18,7 +18,7 @@ import {
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { IAttributeFilterHandlerOptions, newAttributeFilterHandler } from "../factory.js";
+import { type IAttributeFilterHandlerOptions, newAttributeFilterHandler } from "../factory.js";
 
 export const particularAttributeElements: ElementsQueryOptionsElementsSpecification = {
     values: ["TouchAll", "WonderKid"],

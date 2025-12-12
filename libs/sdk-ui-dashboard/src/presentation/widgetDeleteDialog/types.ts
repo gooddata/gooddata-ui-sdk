@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IWidget } from "@gooddata/sdk-model";
+import { type IWidget } from "@gooddata/sdk-model";
 
 /**
  * @internal

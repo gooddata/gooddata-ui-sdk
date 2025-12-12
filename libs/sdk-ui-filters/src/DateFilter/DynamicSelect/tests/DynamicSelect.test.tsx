@@ -4,11 +4,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 
-import { IMessageTranslator } from "../../utils/Translations/Translators.js";
-import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect.js";
-import { DynamicSelectItem } from "../types.js";
+import { type IMessageTranslator } from "../../utils/Translations/Translators.js";
+import { DynamicSelect, type IDynamicSelectProps } from "../DynamicSelect.js";
+import { type DynamicSelectItem } from "../types.js";
 import { DAY, MONTH, QUARTER, WEEK_US, YEAR, getRelativeDateFilterItems } from "../utils.js";
 
 const optionTranslator =

@@ -3,15 +3,15 @@ import { expectType } from "tsd";
 import { describe, it } from "vitest";
 
 import {
-    IArithmeticMeasureDefinition,
-    IAttribute,
-    IMeasure,
-    IPoPMeasureDefinition,
+    type IArithmeticMeasureDefinition,
+    type IAttribute,
+    type IMeasure,
+    type IPoPMeasureDefinition,
     newArithmeticMeasure,
     newPopMeasure,
 } from "@gooddata/sdk-model";
 
-import { PlaceholdersState } from "../context.js";
+import { type PlaceholdersState } from "../context.js";
 import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
 import { resolveValueWithPlaceholders } from "../resolve.js";
 

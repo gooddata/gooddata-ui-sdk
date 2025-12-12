@@ -2,10 +2,10 @@
 
 import columnify from "columnify";
 
-import { ListCmdActionConfig, getListCmdActionConfig } from "./actionConfig.js";
-import { ListObjectsFn } from "./types.js";
+import { type ListCmdActionConfig, getListCmdActionConfig } from "./actionConfig.js";
+import { type ListObjectsFn } from "./types.js";
 import { logInfo, logSuccess } from "../_base/terminal/loggers.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printListConfigSummary({ hostname, workspace }: ListCmdActionConfig) {

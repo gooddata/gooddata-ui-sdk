@@ -1,17 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    IDashboardExportRawOptions,
-    IExportResult,
-    IRawExportCustomOverrides,
+    type IDashboardExportRawOptions,
+    type IExportResult,
+    type IRawExportCustomOverrides,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IExecutionDefinition,
-    INullableFilter,
+    type IExecutionDefinition,
+    type INullableFilter,
     defWithDimensions,
     defaultDimensionsGenerator,
     insightRef,
@@ -20,8 +20,11 @@ import {
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
-import { ExportRawInsightWidget } from "../../commands/index.js";
-import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
+import { type ExportRawInsightWidget } from "../../commands/index.js";
+import {
+    type DashboardInsightWidgetExportResolved,
+    insightWidgetExportResolved,
+} from "../../events/insight.js";
 import { selectExportResultPollingTimeout, selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import {
@@ -29,8 +32,8 @@ import {
     selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 async function exportDashboardToCSVRaw(
     ctx: DashboardContext,

@@ -1,13 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { FC, MouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import {
+    type FC,
+    type MouseEvent,
+    type ReactNode,
+    type Ref,
+    forwardRef,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 
 import { stringUtils } from "@gooddata/util";
 
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
-import { IMenuAccessibilityConfig } from "../typings/accessibility.js";
+import { type IMenuAccessibilityConfig } from "../typings/accessibility.js";
 
 const BUBBLE_OFFSET_X = 16;
 

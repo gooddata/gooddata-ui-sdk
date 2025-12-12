@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import { ITotalSectionProps, TotalSection } from "../TotalSection.js";
+import { type ITotalSectionProps, TotalSection } from "../TotalSection.js";
 
 describe("TotalSection", () => {
     const defaultProps: ITotalSectionProps = {

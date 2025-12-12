@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { InputWithNumberFormat, MAX_NUMBER } from "../InputWithNumberFormat.js";
-import { Separators } from "../typings.js";
+import { type Separators } from "../typings.js";
 
 class InputWithNumberFormatFragment {
     public value: number | string | null = null;

@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { BucketNames, type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { ISeriesItemConfig } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { parseValue, unwrap } from "../_util/common.js";
 
 function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {

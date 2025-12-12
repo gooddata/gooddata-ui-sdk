@@ -1,18 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IMeasureExpressionToken,
-    IMeasureKeyDrivers,
-    IMeasureReferencing,
-    IMeasuresQuery,
-    IWorkspaceMeasuresService,
+    type IMeasureExpressionToken,
+    type IMeasureKeyDrivers,
+    type IMeasureReferencing,
+    type IMeasuresQuery,
+    type IWorkspaceMeasuresService,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IMeasure,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
-    ObjRef,
+    type IMeasure,
+    type IMeasureMetadataObject,
+    type IMeasureMetadataObjectDefinition,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

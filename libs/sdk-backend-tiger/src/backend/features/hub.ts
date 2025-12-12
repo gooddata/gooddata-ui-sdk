@@ -1,11 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
-import axios, { AxiosResponse } from "axios";
+import axios, { type AxiosResponse } from "axios";
 
-import { FeatureContext, ILiveFeatures } from "@gooddata/api-client-tiger";
+import { type FeatureContext, type ILiveFeatures } from "@gooddata/api-client-tiger";
 
-import { FeatureDef, FeaturesMap, mapFeatures } from "./feature.js";
-import { DefaultFeatureFlags, ITigerFeatureFlags } from "../uiFeatures.js";
+import { type FeatureDef, type FeaturesMap, mapFeatures } from "./feature.js";
+import { DefaultFeatureFlags, type ITigerFeatureFlags } from "../uiFeatures.js";
 
 type HubServiceState = Record<
     string,

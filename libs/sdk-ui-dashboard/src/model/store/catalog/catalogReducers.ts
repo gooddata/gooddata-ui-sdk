@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import {
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogMeasure,
-    IDateHierarchyTemplate,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateDataset,
+    type ICatalogFact,
+    type ICatalogMeasure,
+    type IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 
-import { CatalogState } from "./catalogState.js";
+import { type CatalogState } from "./catalogState.js";
 
 type CatalogReducer<A extends Action> = CaseReducer<CatalogState, A>;
 

@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
+import { type IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

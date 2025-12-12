@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IDashboardEvent } from "./base.js";
+import { type IDashboardEvent } from "./base.js";
 
 /**
  * Creates a type guard for a given {@link IDashboardEvent} subtype.

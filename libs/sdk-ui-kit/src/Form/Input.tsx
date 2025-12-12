@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ChangeEvent, PureComponent } from "react";
+import { type ChangeEvent, PureComponent } from "react";
 
-import { InputPure, InputPureProps } from "./InputPure.js";
+import { InputPure, type InputPureProps } from "./InputPure.js";
 
 const isValidNumber = (value: string | number) => typeof value === "number" && !Number.isNaN(value);
 const isNumberOrString = (value: string | number) =>

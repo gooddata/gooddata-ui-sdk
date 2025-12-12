@@ -3,13 +3,13 @@
 import { describe, expect, it } from "vitest";
 
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { type ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import { OPTIONAL_STACKING_PROPERTIES } from "../../constants/supportedProperties.js";
 import {
-    IBucketItem,
-    IExtendedReferencePoint,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IExtendedReferencePoint,
+    type IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
 import {
     emptyReferencePoint,

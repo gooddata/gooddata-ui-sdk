@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { LocalesItem, LocalesStructure } from "../schema/localization.js";
+import { type LocalesItem, type LocalesStructure } from "../schema/localization.js";
 import { done, error, fail, message, skipped } from "../utils/console.js";
 
 const FILENAME_CHECK_ONLY = "en-US.json";

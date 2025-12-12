@@ -6,22 +6,22 @@ import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    AutomationEvaluationMode,
-    DashboardAttachmentType,
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectBase,
-    IAutomationMetadataObjectDefinition,
-    IAutomationRecipient,
-    IAutomationVisibleFilter,
-    IExportDefinitionDashboardSettings,
-    IExportDefinitionMetadataObjectDefinition,
-    IExportDefinitionVisualizationObjectSettings,
-    IFilter,
-    IInsight,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
-    WidgetAttachmentType,
+    type AutomationEvaluationMode,
+    type DashboardAttachmentType,
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectBase,
+    type IAutomationMetadataObjectDefinition,
+    type IAutomationRecipient,
+    type IAutomationVisibleFilter,
+    type IExportDefinitionDashboardSettings,
+    type IExportDefinitionMetadataObjectDefinition,
+    type IExportDefinitionVisualizationObjectSettings,
+    type IFilter,
+    type IInsight,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type WidgetAttachmentType,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
@@ -45,8 +45,8 @@ import {
     isXlsxVisualizationExportDefinition,
 } from "../../../../_staging/automation/index.js";
 import {
-    ExtendedDashboardWidget,
-    IAutomationFiltersTab,
+    type ExtendedDashboardWidget,
+    type IAutomationFiltersTab,
     selectAutomationCommonDateFilterId,
     selectCurrentUser,
     selectDashboardHiddenFilters,
@@ -74,7 +74,7 @@ import {
 } from "../../utils/date.js";
 import { getUserTimezone } from "../../utils/timezone.js";
 import { isEmail } from "../../utils/validate.js";
-import { OldWidgetAttachmentType } from "../types.js";
+import { type OldWidgetAttachmentType } from "../types.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;

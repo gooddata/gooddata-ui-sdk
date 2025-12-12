@@ -9,7 +9,7 @@ import {
     context,
     measureDescriptors,
 } from "./HeaderPredicateFactory.fixtures.js";
-import { IHeaderPredicate } from "../HeaderPredicate.js";
+import { type IHeaderPredicate } from "../HeaderPredicate.js";
 import * as headerPredicateFactory from "../HeaderPredicateFactory.js";
 
 describe("uriMatch", () => {

@@ -4,11 +4,11 @@ import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { IVisualizationSwitcherWidget, idRef } from "@gooddata/sdk-model";
+import { type IVisualizationSwitcherWidget, idRef } from "@gooddata/sdk-model";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 import { DefaultVisualizationSwitcherCustomizer } from "../visualizationSwitcherCustomizer.js";
 
 //

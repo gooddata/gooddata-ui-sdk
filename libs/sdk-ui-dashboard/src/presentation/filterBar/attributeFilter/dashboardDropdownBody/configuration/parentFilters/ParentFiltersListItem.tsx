@@ -5,13 +5,13 @@ import { Fragment, useCallback, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 import {
-    IConnectingAttribute,
-    IDashboardAttributeFilterParentItem,
+    type IConnectingAttribute,
+    type IDashboardAttributeFilterParentItem,
     selectIsCircularDependency,
     useDashboardSelector,
 } from "../../../../../../model/index.js";

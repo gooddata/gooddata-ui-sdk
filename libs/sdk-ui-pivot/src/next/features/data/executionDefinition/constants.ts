@@ -2,7 +2,7 @@
 import { newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IPivotTableExecutionDefinition } from "./types.js";
+import { type IPivotTableExecutionDefinition } from "./types.js";
 
 /**
  * Default empty execution definition for the pivot table.

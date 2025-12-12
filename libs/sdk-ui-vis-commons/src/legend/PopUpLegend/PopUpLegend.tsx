@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -8,9 +8,9 @@ import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { LegendDialog } from "./LegendDialog.js";
 import { RowLegend } from "./RowLegend.js";
-import { ChartFillType } from "../../coloring/types.js";
+import { type ChartFillType } from "../../coloring/types.js";
 import { StaticLegend } from "../StaticLegend.js";
-import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
+import { type ISeriesItem, type ItemBorderRadiusPredicate } from "../types.js";
 
 const PAGINATION_HEIGHT = 34;
 

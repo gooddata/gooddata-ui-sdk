@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { ColDef, ColGroupDef, GridApi } from "ag-grid-enterprise";
+import { type ColDef, type ColGroupDef, type GridApi } from "ag-grid-enterprise";
 
-import { AgGridRowData } from "../../types/internal.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Sets pivot result columns to the ag-grid.

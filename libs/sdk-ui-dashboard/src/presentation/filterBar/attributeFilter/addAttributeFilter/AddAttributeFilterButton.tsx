@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MutableRefObject, RefObject } from "react";
+import { type MutableRefObject, type RefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

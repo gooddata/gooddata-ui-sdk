@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { IUiAsyncTableIconRendererProps } from "../types.js";
+import { type IUiAsyncTableIconRendererProps } from "../types.js";
 
 export function UiAsyncTableIconRenderer<T>({
     renderIcon,

@@ -2,11 +2,11 @@
 
 import { useIntl } from "react-intl";
 
-import { IUserGroup } from "@gooddata/sdk-model";
+import { type IUserGroup } from "@gooddata/sdk-model";
 
 import { DetailRow } from "./DetailRow.js";
 import { messages } from "../locales.js";
-import { ListMode } from "../types.js";
+import { type ListMode } from "../types.js";
 
 export interface IUserGroupDetailsViewProps {
     userGroup: IUserGroup;

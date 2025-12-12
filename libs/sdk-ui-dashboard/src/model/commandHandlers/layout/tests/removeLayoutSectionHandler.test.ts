@@ -2,14 +2,14 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
+import { type RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionRemoved,
+    type DashboardCommandFailed,
+    type DashboardLayoutChanged,
+    type DashboardLayoutSectionRemoved,
 } from "../../../events/index.js";
 import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     EmptyDashboardIdentifier,
     TestCorrelation,

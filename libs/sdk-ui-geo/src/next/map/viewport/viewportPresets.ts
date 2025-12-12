@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import type { LngLatBoundsLike } from "../../layers/common/mapFacade.js";
-import { IGeoLngLat, IGeoLngLatBounds } from "../../types/common/coordinates.js";
-import { IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
-import { IGeoConfigViewportNext } from "../../types/config/viewport.js";
+import { type IGeoLngLat, type IGeoLngLatBounds } from "../../types/common/coordinates.js";
+import { type IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
+import { type IGeoConfigViewportNext } from "../../types/config/viewport.js";
 import { DEFAULT_CENTER, DEFAULT_WORLD_BOUNDS, DEFAULT_ZOOM, VIEWPORTS } from "../runtime/mapConfig.js";
 
 /**

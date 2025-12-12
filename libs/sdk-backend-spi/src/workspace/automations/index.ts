@@ -1,18 +1,18 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IExecutionDefinition,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IExecutionDefinition,
 } from "@gooddata/sdk-model";
 
 import {
-    AutomationFilterType,
-    AutomationType,
-    IGetAutomationsQueryOptions,
+    type AutomationFilterType,
+    type AutomationType,
+    type IGetAutomationsQueryOptions,
 } from "../../common/automations.js";
-import { IPagedResource } from "../../common/paging.js";
-import { IRawExportCustomOverrides } from "../dashboards/index.js";
+import { type IPagedResource } from "../../common/paging.js";
+import { type IRawExportCustomOverrides } from "../dashboards/index.js";
 
 /**
  * Configuration options for loading automation metadata objects.

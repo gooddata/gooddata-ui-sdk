@@ -3,10 +3,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { IDataLabelsVisible } from "@gooddata/sdk-ui-charts";
+import { type IDataLabelsVisible } from "@gooddata/sdk-ui-charts";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { DataLabelsControl, IDataLabelsControlProps } from "../DataLabelsControl.js";
+import { DataLabelsControl, type IDataLabelsControlProps } from "../DataLabelsControl.js";
 
 describe("DataLabelsControl", () => {
     const HIDE_LABEL = "hide";

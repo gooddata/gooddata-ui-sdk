@@ -1,5 +1,5 @@
 // (C) 2007-2023 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { isResultAttributeHeader, isResultMeasureHeader, isResultTotalHeader } from "@gooddata/sdk-model";
 
 /**

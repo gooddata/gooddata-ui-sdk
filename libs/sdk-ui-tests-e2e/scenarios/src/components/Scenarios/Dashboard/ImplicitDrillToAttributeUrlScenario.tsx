@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { idRef } from "@gooddata/sdk-model";
 import {
     Dashboard,
-    DashboardEvents,
+    type DashboardEvents,
     isDashboardDrillToAttributeUrlResolved,
 } from "@gooddata/sdk-ui-dashboard";
 

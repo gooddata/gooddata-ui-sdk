@@ -1,20 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
 
 import {
-    CommandFailed,
-    CommandFailedData,
-    GdcProductName,
-    IDrillableItemsCommandBody,
-    IGdcMessageEnvelope,
-    IGdcMessageEvent,
-    IObjectMeta,
+    type CommandFailed,
+    type CommandFailedData,
+    type GdcProductName,
+    type IDrillableItemsCommandBody,
+    type IGdcMessageEnvelope,
+    type IGdcMessageEvent,
+    type IObjectMeta,
     getEventType,
     isCommandFailedData,
 } from "./common.js";
-import { IFilterContextContent, IRemoveFilterContextContent } from "./EmbeddedGdc.js";
-import { ILegacyBaseExportConfig, IVisualization } from "./legacyTypes.js";
+import { type IFilterContextContent, type IRemoveFilterContextContent } from "./EmbeddedGdc.js";
+import { type ILegacyBaseExportConfig, type IVisualization } from "./legacyTypes.js";
 
 /**
  * Insight Export configuration

@@ -7,9 +7,9 @@ import { newDefForBuckets } from "@gooddata/sdk-model";
 import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures.js";
 import { DataViewFacade } from "../../results/facade.js";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling.js";
-import { IHeaderPredicate } from "../HeaderPredicate.js";
+import { type IHeaderPredicate } from "../HeaderPredicate.js";
 import * as headerPredicateFactory from "../HeaderPredicateFactory.js";
-import { IMappingHeader } from "../MappingHeader.js";
+import { type IMappingHeader } from "../MappingHeader.js";
 
 const emptyFacade = DataViewFacade.for(dummyDataView(newDefForBuckets("testWorkspace", [])));
 

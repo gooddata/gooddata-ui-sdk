@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    ComponentType,
-    KeyboardEvent,
-    MutableRefObject,
+    type ComponentType,
+    type KeyboardEvent,
+    type MutableRefObject,
     useCallback,
     useMemo,
     useRef,
@@ -14,14 +14,14 @@ import { format } from "date-fns";
 import { isEmpty } from "lodash-es";
 import { MediaQuery } from "react-responsive";
 
-import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
 import {
     IntlWrapper,
     ValidationContextStore,
     createInvalidNode,
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
-import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import { Dropdown, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import {
     DATE_FILTER_CUSTOM_RELATIVE_ID,
@@ -32,14 +32,18 @@ import { createDateFilterKeyboardHandler } from "./accessibility/keyboardNavigat
 import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
 import { DateFilterBodyRedesigned } from "./DateFilterBody/DateFilterBodyRedesigned.js";
-import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
-import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
+import { type IFilterConfigurationProps } from "./DateFilterBody/types.js";
+import { type IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
-import { DateFilterOption, IDateFilterOptionsByType, IExtendedDateFilterErrors } from "./interfaces/index.js";
+import {
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
+    type IExtendedDateFilterErrors,
+} from "./interfaces/index.js";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 import { MediaQueries } from "../constants/index.js";
-import { IFilterButtonCustomIcon } from "../shared/index.js";
+import { type IFilterButtonCustomIcon } from "../shared/index.js";
 
 export interface IDateFilterCoreProps {
     dateFormat: string;

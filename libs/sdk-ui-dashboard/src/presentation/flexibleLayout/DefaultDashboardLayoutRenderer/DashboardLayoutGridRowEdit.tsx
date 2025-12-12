@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
-import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
+import { type DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
-import { IDashboardLayoutItemKeyGetter } from "./interfaces.js";
+import { type IDashboardLayoutItemKeyGetter } from "./interfaces.js";
 import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
-import { ExtendedDashboardWidget } from "../../../model/index.js";
+import { type ExtendedDashboardWidget } from "../../../model/index.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";

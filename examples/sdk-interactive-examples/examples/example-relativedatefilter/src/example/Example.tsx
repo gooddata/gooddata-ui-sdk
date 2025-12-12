@@ -2,9 +2,9 @@
 
 import {
     DateGranularity,
-    IAttribute,
-    IFilter,
-    IMeasure,
+    type IAttribute,
+    type IFilter,
+    type IMeasure,
     modifyAttribute,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";

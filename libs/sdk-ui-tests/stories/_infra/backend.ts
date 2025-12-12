@@ -3,12 +3,12 @@
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 import {
-    CompositeBackendPart,
-    RecordedBackendConfig,
+    type CompositeBackendPart,
+    type RecordedBackendConfig,
     compositeBackend,
     recordedBackend,
 } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export const ReferenceWorkspaceId = "reference-workspace";
 

@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 import {
     MultipleMeasuresAndNoColumnsWithMetricsInRows,
@@ -12,7 +12,11 @@ import {
     TwoMeasures,
     TwoMeasuresWithSingleRowAttrWithMetricsInRows,
 } from "./table.fixture.js";
-import { ColumnLocator, newAttributeColumnLocator, newMeasureColumnLocator } from "../../../columnWidths.js";
+import {
+    type ColumnLocator,
+    newAttributeColumnLocator,
+    newMeasureColumnLocator,
+} from "../../../columnWidths.js";
 import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "../colLocatorMatching.js";
 import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
 

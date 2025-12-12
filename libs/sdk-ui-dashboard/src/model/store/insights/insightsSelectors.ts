@@ -2,11 +2,11 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { IRawExportCustomOverride, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
+import { type IRawExportCustomOverride, type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import {
-    IInsight,
-    IInsightWidget,
-    ObjRef,
+    type IInsight,
+    type IInsightWidget,
+    type ObjRef,
     areObjRefsEqual,
     attributeAlias,
     attributeDisplayFormRef,
@@ -21,7 +21,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { insightsAdapter } from "./insightsEntityAdapter.js";
-import { ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
@@ -31,7 +31,7 @@ import {
 } from "../catalog/catalogSelectors.js";
 import { selectLocale } from "../config/configSelectors.js";
 import { selectWidgetByRef } from "../tabs/layout/layoutSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 

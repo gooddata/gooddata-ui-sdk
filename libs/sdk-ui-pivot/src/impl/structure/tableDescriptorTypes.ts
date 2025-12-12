@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import { ColDef, ColGroupDef, Column } from "ag-grid-community";
+import { type ColDef, type ColGroupDef, type Column } from "ag-grid-community";
 
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
-    IResultAttributeHeader,
-    ITotalDescriptor,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    type IResultAttributeHeader,
+    type ITotalDescriptor,
 } from "@gooddata/sdk-model";
-import { DataSeriesDescriptor, DataSeriesId } from "@gooddata/sdk-ui";
+import { type DataSeriesDescriptor, type DataSeriesId } from "@gooddata/sdk-ui";
 
 export const ColumnGroupingDescriptorId = "root";
 

@@ -5,8 +5,8 @@ import { memo } from "react";
 import { LabelFormatControl } from "./LabelFormatControl.js";
 import { LabelRotationControl } from "./LabelRotationControl.js";
 import { messages } from "../../../../locales.js";
-import { AxisType } from "../../../interfaces/AxisType.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type AxisType } from "../../../interfaces/AxisType.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSubsection } from "../../configurationControls/ConfigSubsection.js";
 
 export interface ILabelSubsection {

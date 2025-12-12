@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 
 import { TOOLTIP_MAX_WIDTH, getTooltipHtml, shouldShowTooltip } from "../geoChartTooltip.js";
 

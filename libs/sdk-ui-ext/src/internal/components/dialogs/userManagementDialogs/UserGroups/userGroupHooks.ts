@@ -8,7 +8,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
-import { IGrantedUserGroup } from "../types.js";
+import { type IGrantedUserGroup } from "../types.js";
 import { sortByName } from "../utils.js";
 
 export const useAddUserGroup = (

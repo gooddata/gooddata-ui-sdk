@@ -3,12 +3,12 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeElement,
-    IAttributeFilter,
-    IDateFilter,
-    IRelativeDateFilter,
+    type IAttributeElement,
+    type IAttributeFilter,
+    type IDateFilter,
+    type IRelativeDateFilter,
     attributeElementsCount,
     filterAttributeElements,
     filterObjRef,
@@ -20,10 +20,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    IResolvedAttributeFilterValues,
-    IResolvedDateFilterValue,
-    IResolvedFilterValues,
-    ResolvableFilter,
+    type IResolvedAttributeFilterValues,
+    type IResolvedDateFilterValue,
+    type IResolvedFilterValues,
+    type ResolvableFilter,
 } from "../../../types/commonTypes.js";
 
 const MAX_ELEMENTS_COUNT_PER_REQUEST = 500; // should cover all attribute filters created by UI where we have 500 elements limit

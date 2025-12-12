@@ -1,15 +1,16 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { difference, groupBy, intersection, uniq } from "lodash-es";
 
 import {
     CheckMeasureSuffix,
     CheckMetricSuffix,
-    ToolkitConfigFile,
-    ToolkitTranslationRule,
+    type ToolkitConfigFile,
+    type ToolkitTranslationRule,
     Uncontrolled,
-    UsageResult,
+    type UsageResult,
 } from "../../data.js";
-import { LocalesStructure } from "../../schema/localization.js";
+import { type LocalesStructure } from "../../schema/localization.js";
 
 type ToolkitTranslationRuleData = ToolkitTranslationRule & {
     messageFilter: (item: any) => boolean;

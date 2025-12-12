@@ -8,7 +8,7 @@ import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { MarkdownComponent } from "./Markdown.js";
 import { replaceLinks } from "./replaceLinks.js";
-import { SearchContents } from "../../../model.js";
+import { type SearchContents } from "../../../model.js";
 
 export type SearchContentsProps = {
     content: SearchContents;

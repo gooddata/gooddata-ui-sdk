@@ -3,15 +3,15 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 import {
-    CustomTitleComponent,
-    OptionalTitleComponentProvider,
+    type CustomTitleComponent,
+    type OptionalTitleComponentProvider,
     RenderModeAwareTitle,
-    TitleComponentProvider,
+    type TitleComponentProvider,
 } from "../../presentation/index.js";
-import { ITitleCustomizer } from "../customizer.js";
+import { type ITitleCustomizer } from "../customizer.js";
 
 const DefaultTitleRendererProvider: TitleComponentProvider = () => {
     return RenderModeAwareTitle;

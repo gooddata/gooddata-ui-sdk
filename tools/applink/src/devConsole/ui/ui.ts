@@ -1,19 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
+
 import blessed from "blessed";
 import { difference, isEmpty } from "lodash-es";
 
 import { AppLog } from "./appLog.js";
-import { AppMenu, AppMenuItem } from "./appMenu.js";
+import { AppMenu, type AppMenuItem } from "./appMenu.js";
 import { BuildOutput } from "./buildOutput.js";
 import { PackageList } from "./packageList.js";
 import { appLogInfo, appLogWarn, getTerminalSize } from "./utils.js";
-import { PackageJson, TargetDependency } from "../../base/types.js";
+import { type PackageJson, type TargetDependency } from "../../base/types.js";
 import {
-    DcEvent,
-    EventBus,
+    type DcEvent,
+    type EventBus,
     GlobalEventBus,
-    IEventListener,
-    PackageChange,
+    type IEventListener,
+    type PackageChange,
     autobuildToggled,
     packagesChanged,
 } from "../events.js";

@@ -2,10 +2,14 @@
 
 import { cloneDeep, set } from "lodash-es";
 
-import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IInsightDefinition,
+    type IAnalyticalBackend,
+    type IExecutionFactory,
+    type IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IAttribute,
+    type IInsightDefinition,
     bucketAttribute,
     bucketItems,
     insightBucket,
@@ -15,10 +19,15 @@ import {
     insightLayers,
     newAttribute,
 } from "@gooddata/sdk-model";
-import { BucketNames, IAvailableDrillTargets, IPushData, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    type IAvailableDrillTargets,
+    type IPushData,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
 import {
     GeoChartNextInternal,
-    IGeoAreaChartConfig,
+    type IGeoAreaChartConfig,
     type IGeoLayer,
     buildLayerExecution,
     createAreaLayer,
@@ -42,13 +51,13 @@ import { GEOAREA_SUPPORTED_PROPERTIES } from "../../../constants/supportedProper
 import { GEO_AREA_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
     EmptyAfmSdkError,
-    IBucketItem,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";

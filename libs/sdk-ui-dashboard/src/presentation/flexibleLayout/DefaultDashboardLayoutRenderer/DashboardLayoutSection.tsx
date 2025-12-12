@@ -1,28 +1,28 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
 import {
-    IDashboardLayoutGridRowRenderer,
-    IDashboardLayoutItemKeyGetter,
-    IDashboardLayoutItemRenderer,
-    IDashboardLayoutSectionHeaderRenderer,
-    IDashboardLayoutSectionKeyGetter,
-    IDashboardLayoutSectionRenderer,
-    IDashboardLayoutWidgetRenderer,
+    type IDashboardLayoutGridRowRenderer,
+    type IDashboardLayoutItemKeyGetter,
+    type IDashboardLayoutItemRenderer,
+    type IDashboardLayoutSectionHeaderRenderer,
+    type IDashboardLayoutSectionKeyGetter,
+    type IDashboardLayoutSectionRenderer,
+    type IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
 import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getItemIndex, serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
-import { ILayoutItemPath, RenderMode } from "../../../types.js";
+import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 import { useSectionExportData } from "../../export/index.js";

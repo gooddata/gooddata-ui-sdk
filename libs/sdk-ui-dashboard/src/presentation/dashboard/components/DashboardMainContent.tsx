@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Ref, RefObject, forwardRef, useEffect } from "react";
+import { type Ref, type RefObject, forwardRef, useEffect } from "react";
 
 import cx from "classnames";
 
@@ -13,7 +13,7 @@ import {
 import { useDashboardDrop } from "../../dragAndDrop/index.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 import { DashboardLayout } from "../../widget/index.js";
-import { IDashboardProps } from "../types.js";
+import { type IDashboardProps } from "../types.js";
 
 export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);

@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { isDashboard, isIdentifierRef, isUriRef } from "@gooddata/sdk-model";
 import {
     LoadingComponent as DefaultLoading,
@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { DashboardRenderer } from "./components/DashboardRenderer.js";
-import { IDashboardProps } from "./types.js";
+import { type IDashboardProps } from "./types.js";
 
 /**
  * @public

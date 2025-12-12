@@ -1,6 +1,12 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { DcEvent, EventBus, GlobalEventBus, IEventListener, publishFinished } from "../events.js";
+import {
+    type DcEvent,
+    type EventBus,
+    GlobalEventBus,
+    type IEventListener,
+    publishFinished,
+} from "../events.js";
 
 /**
  * This implementation of package build publisher will emit publishFinished for each package that was rebuilt.

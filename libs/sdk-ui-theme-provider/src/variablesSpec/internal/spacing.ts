@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { ThemeInternalCssVariable } from "../types.js";
+import { type ThemeInternalCssVariable } from "../types.js";
 
 export const internalSpacingThemeVariables: ThemeInternalCssVariable[] = [
     {

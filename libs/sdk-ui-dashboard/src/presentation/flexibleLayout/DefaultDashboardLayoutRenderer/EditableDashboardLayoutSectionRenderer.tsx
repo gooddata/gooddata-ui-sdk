@@ -1,14 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { GridLayoutElement } from "./GridLayoutElement.js";
-import { IDashboardLayoutSectionRenderProps } from "./interfaces.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { areSectionLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
 import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import {
     DashboardLayoutSectionBorder,
-    DashboardLayoutSectionBorderStatus,
+    type DashboardLayoutSectionBorderStatus,
 } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };

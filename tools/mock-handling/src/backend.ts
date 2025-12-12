@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IAnalyticalBackend, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { TigerTokenAuthProvider, tigerFactory } from "@gooddata/sdk-backend-tiger";
 
 let backend: IAnalyticalBackend | null = null;

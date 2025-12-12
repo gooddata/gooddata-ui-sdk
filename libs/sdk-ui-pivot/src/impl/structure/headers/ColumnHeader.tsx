@@ -1,15 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { KeyboardEvent as ReactKeyboardEvent, useCallback, useEffect, useState } from "react";
+import { type KeyboardEvent as ReactKeyboardEvent, useCallback, useEffect, useState } from "react";
 
-import { ColumnEvent, HeaderFocusedEvent, IHeaderParams } from "ag-grid-community";
+import { type ColumnEvent, type HeaderFocusedEvent, type IHeaderParams } from "ag-grid-community";
 import cx from "classnames";
 
-import { SortDirection } from "@gooddata/sdk-model";
+import { type SortDirection } from "@gooddata/sdk-model";
 import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
-import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, ICommonHeaderParams } from "./HeaderCell.js";
-import { IMenu } from "../../../publicTypes.js";
+import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
+import { type IMenu } from "../../../publicTypes.js";
 import {
     isEmptyScopeCol,
     isMixedHeadersCol,

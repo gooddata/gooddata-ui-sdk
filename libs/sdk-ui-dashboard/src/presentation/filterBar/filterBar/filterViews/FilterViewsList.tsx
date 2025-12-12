@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { FocusEventHandler, MutableRefObject, useCallback, useState } from "react";
+import { type FocusEventHandler, type MutableRefObject, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
+import { type IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import {
     Button,

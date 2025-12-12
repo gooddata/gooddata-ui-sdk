@@ -2,10 +2,10 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
-import { IExecutionResultEnvelope } from "./types.js";
+import { type IExecutionResultEnvelope } from "./types.js";
 import {
     isNonExportableError,
     isNonExportableErrorExceptTooLarge,
@@ -18,7 +18,7 @@ import {
 import { selectSettings } from "../config/configSelectors.js";
 import { selectCanExecuteRaw, selectCanExportTabular } from "../permissions/permissionsSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../tabs/layout/layoutSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

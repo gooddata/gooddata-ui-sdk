@@ -1,8 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, ReactNode, RefObject, cloneElement, useEffect, useMemo, useState } from "react";
+import {
+    type ReactElement,
+    type ReactNode,
+    type RefObject,
+    cloneElement,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 
-import { IUiFocusHelperConnectors } from "./types.js";
+import { type IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
 import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
 

@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    JsonApiAttributeOutWithLinks,
-    JsonApiDatasetOutWithLinks,
-    JsonApiFactOutWithLinks,
-    JsonApiLabelOutWithLinks,
-    JsonApiMetricOutIncludes,
-    JsonApiMetricOutWithLinks,
+    type JsonApiAttributeOutWithLinks,
+    type JsonApiDatasetOutWithLinks,
+    type JsonApiFactOutWithLinks,
+    type JsonApiLabelOutWithLinks,
+    type JsonApiMetricOutIncludes,
+    type JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import {
-    AttributeDisplayFormMetadataObjectBuilder,
-    IGroupableCatalogItemBuilder,
+    type AttributeDisplayFormMetadataObjectBuilder,
+    type IGroupableCatalogItemBuilder,
     newAttributeDisplayFormMetadataObject,
     newCatalogAttribute,
     newCatalogDateAttribute,
@@ -19,22 +19,22 @@ import {
     newCatalogMeasure,
 } from "@gooddata/sdk-backend-base";
 import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogMeasure,
-    IGroupableCatalogItemBase,
-    MetricType,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogDateAttribute,
+    type ICatalogDateDataset,
+    type ICatalogFact,
+    type ICatalogMeasure,
+    type IGroupableCatalogItemBase,
+    type MetricType,
+    type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
 
 import { convertDataSetItem } from "./DataSetConverter.js";
 import { toSdkGranularity } from "./dateGranularityConversions.js";
 import { convertLabelType } from "./LabelTypeConverter.js";
-import { MetadataObjectFromApi, commonMetadataObjectModifications } from "./MetadataConverter.js";
+import { type MetadataObjectFromApi, commonMetadataObjectModifications } from "./MetadataConverter.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 

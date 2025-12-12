@@ -6,15 +6,15 @@ import cx from "classnames";
 import { v4 as uuid } from "uuid";
 
 import {
-    IInsight,
-    IInsightWidget,
-    IVisualizationSwitcherWidget,
+    type IInsight,
+    type IInsightWidget,
+    type IVisualizationSwitcherWidget,
     idRef,
     insightRef,
     insightTitle,
 } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
-import { ArrowOffsets, Bubble } from "@gooddata/sdk-ui-kit";
+import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { type ArrowOffsets, Bubble } from "@gooddata/sdk-ui-kit";
 
 import { ToolbarBottom } from "./ToolbarBottom.js";
 import { ToolbarTop } from "./ToolbarTop.js";

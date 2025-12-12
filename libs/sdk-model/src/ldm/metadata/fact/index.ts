@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IDataSetMetadataObject } from "../dataSet/index.js";
-import { IMetadataObject, isMetadataObject } from "../types.js";
+import { type IDataSetMetadataObject } from "../dataSet/index.js";
+import { type IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
  * Fact metadata object

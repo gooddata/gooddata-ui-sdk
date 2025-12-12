@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAttributeDisplayFormMetadataObject, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { type IAttributeDisplayFormMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { DisplayFormButton } from "./DisplayFormButton.js";
 import { DisplayDropdownItem } from "./DisplayFormItem.js";

@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
 
 import { AutomationConfirmDialog } from "./AutomationConfirmDialog.js";
 import { AutomationsEmptyState } from "./AutomationsEmptyState.js";
-import { IAutomationsCoreProps } from "./types.js";
+import { type IAutomationsCoreProps } from "./types.js";
 import { useAutomationsAccessibility } from "./useAutomationsAccessibility.js";
 import { useAutomationsState } from "./useAutomationsState.js";
 

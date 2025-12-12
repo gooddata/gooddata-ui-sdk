@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, cloneElement, useCallback, useEffect, useMemo, useState } from "react";
+import { type ReactElement, cloneElement, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";
 
-import { ScrollCallback } from "./List.js";
+import { type ScrollCallback } from "./List.js";
 
 const BORDER_HEIGHT = 1;
 

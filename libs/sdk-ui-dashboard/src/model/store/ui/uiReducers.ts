@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type AnyAction, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import {
-    IDrillToCustomUrl,
-    IInsightWidget,
-    ObjRef,
+    type IDrillToCustomUrl,
+    type IInsightWidget,
+    type ObjRef,
     areObjRefsEqual,
     objRefToString,
     widgetId,
@@ -13,19 +13,23 @@ import {
     widgetUri,
 } from "@gooddata/sdk-model";
 
-import { FilterViewDialogMode, InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
+import {
+    type FilterViewDialogMode,
+    type InvalidCustomUrlDrillParameterInfo,
+    type UiState,
+} from "./uiState.js";
 import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility/elementId.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
-import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
+import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
-    DropZoneType,
-    IAlertDialogContext,
-    ILayoutItemPath,
-    ILayoutSectionPath,
-    IMenuButtonItemsVisibility,
-    IScheduleEmailContext,
+    type DropZoneType,
+    type IAlertDialogContext,
+    type ILayoutItemPath,
+    type ILayoutSectionPath,
+    type IMenuButtonItemsVisibility,
+    type IScheduleEmailContext,
 } from "../../../types.js";
-import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 

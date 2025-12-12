@@ -1,22 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
-import { ColDef, Column, GridApi } from "ag-grid-community";
+import { type ColDef, type Column, type GridApi } from "ag-grid-community";
 import { chunk, isEmpty, omit, omitBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 
 import {
-    ColumnWidth,
-    ColumnWidthItem,
-    IAbsoluteColumnWidth,
-    IAllMeasureColumnWidthItem,
-    IAttributeColumnWidthItem,
-    IManuallyResizedColumnsItem,
-    IMeasureColumnWidthItem,
-    IMixedValuesColumnWidthItem,
-    IResizedColumns,
-    ISliceMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
+    type ColumnWidth,
+    type ColumnWidthItem,
+    type IAbsoluteColumnWidth,
+    type IAllMeasureColumnWidthItem,
+    type IAttributeColumnWidthItem,
+    type IManuallyResizedColumnsItem,
+    type IMeasureColumnWidthItem,
+    type IMixedValuesColumnWidthItem,
+    type IResizedColumns,
+    type ISliceMeasureColumnWidthItem,
+    type IWeakMeasureColumnWidthItem,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
@@ -25,7 +25,7 @@ import {
     isSliceMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
 } from "../../columnWidths.js";
-import { DefaultColumnWidth } from "../../publicTypes.js";
+import { type DefaultColumnWidth } from "../../publicTypes.js";
 import { isMeasureColumn, isMeasureOrAnyColumnTotal } from "../base/agUtils.js";
 import {
     COLUMN_SUBTOTAL_CLASS,
@@ -40,22 +40,22 @@ import {
     VALUE_CLASS,
 } from "../base/constants.js";
 import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils.js";
-import { IGridRow } from "../data/resultTypes.js";
-import { IGroupingProvider } from "../data/rowGroupingProvider.js";
-import { ColumnResizingConfig } from "../privateTypes.js";
+import { type IGridRow } from "../data/resultTypes.js";
+import { type IGroupingProvider } from "../data/rowGroupingProvider.js";
+import { type ColumnResizingConfig } from "../privateTypes.js";
 import { colMeasureLocalId } from "../structure/colAccessors.js";
 import { createColumnLocator, createTransposedColumnLocator } from "../structure/colLocatorFactory.js";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { type TableDescriptor } from "../structure/tableDescriptor.js";
 import {
-    AnyCol,
-    LeafDataCol,
-    MixedHeadersCol,
-    MixedValuesCol,
-    ScopeCol,
-    SeriesCol,
-    SliceCol,
-    SliceMeasureCol,
-    TransposedMeasureDataCol,
+    type AnyCol,
+    type LeafDataCol,
+    type MixedHeadersCol,
+    type MixedValuesCol,
+    type ScopeCol,
+    type SeriesCol,
+    type SliceCol,
+    type SliceMeasureCol,
+    type TransposedMeasureDataCol,
     agColId,
     isMixedValuesCol,
     isScopeCol,

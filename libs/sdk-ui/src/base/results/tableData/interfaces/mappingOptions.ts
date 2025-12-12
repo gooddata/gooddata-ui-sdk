@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { DataValue } from "@gooddata/sdk-model";
+import { type DataValue } from "@gooddata/sdk-model";
 
-import { DataAccessConfig } from "../../dataAccessConfig.js";
+import { type DataAccessConfig } from "../../dataAccessConfig.js";
 
 /**
  * Configuration object passed to all mapping functions that transform data view results

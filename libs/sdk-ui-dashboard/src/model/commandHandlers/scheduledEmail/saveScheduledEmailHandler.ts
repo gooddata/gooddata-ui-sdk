@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
-import { IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
+import { type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import {
-    IAutomationMetadataObject,
-    IExecutionDefinition,
-    IExportDefinitionVisualizationObjectRequestPayload,
+    type IAutomationMetadataObject,
+    type IExecutionDefinition,
+    type IExportDefinitionVisualizationObjectRequestPayload,
     idRef,
     insightRef,
     isObjRef,
@@ -15,8 +15,8 @@ import {
 import { fillMissingTitles, resolveMessages } from "@gooddata/sdk-ui";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
-import { SaveScheduledEmail } from "../../commands/scheduledEmail.js";
-import { DashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
+import { type SaveScheduledEmail } from "../../commands/scheduledEmail.js";
+import { type DashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
 import { selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
@@ -26,7 +26,7 @@ import {
     selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 function saveScheduledEmail(
     ctx: DashboardContext,

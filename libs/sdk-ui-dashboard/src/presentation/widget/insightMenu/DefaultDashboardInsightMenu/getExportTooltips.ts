@@ -2,9 +2,9 @@
 
 import { defineMessages } from "react-intl";
 
-import { DisabledReason } from "./types.js";
+import { type DisabledReason } from "./types.js";
 import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
-import { IExecutionResultEnvelope } from "../../../../model/index.js";
+import { type IExecutionResultEnvelope } from "../../../../model/index.js";
 
 const tooltipMessages = defineMessages({
     tooLarge: { id: "options.menu.data.too.large" },

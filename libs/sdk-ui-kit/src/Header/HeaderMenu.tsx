@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode, memo, useCallback, useMemo } from "react";
+import { type MouseEvent, type ReactNode, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { IHeaderMenuItem, IHeaderMenuProps } from "./typings.js";
+import { type IHeaderMenuItem, type IHeaderMenuProps } from "./typings.js";
 
 export const HeaderMenu = memo(function HeaderMenu({
     className = "",

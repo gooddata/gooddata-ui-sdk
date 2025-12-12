@@ -1,20 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { merge } from "lodash-es";
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 
 import { sanitizeHeader } from "./utils.js";
 import { validateSectionExists } from "./validation/layoutValidation.js";
 import { findSection, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
-import { ChangeLayoutSectionHeader } from "../../commands/index.js";
+import { type ChangeLayoutSectionHeader } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout.js";
+import { type DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeLayoutSectionHeaderHandler(
     ctx: DashboardContext,

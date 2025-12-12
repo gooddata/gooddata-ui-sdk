@@ -2,8 +2,8 @@
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    IDashboardObjectIdentity,
-    ObjRef,
+    type IDashboardObjectIdentity,
+    type ObjRef,
     idRef,
     isDashboardLayoutItem,
     isInsightWidget,
@@ -13,10 +13,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    DashboardItemDefinition,
-    ExtendedDashboardItem,
-    ExtendedDashboardWidget,
-    InternalDashboardItemDefinition,
+    type DashboardItemDefinition,
+    type ExtendedDashboardItem,
+    type ExtendedDashboardWidget,
+    type InternalDashboardItemDefinition,
     isCustomWidgetDefinition,
 } from "../types/layoutTypes.js";
 

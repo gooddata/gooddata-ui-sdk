@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { IShortenedTextProps, ShortenedText, getShortenedTitle } from "../ShortenedText.js";
+import { type IShortenedTextProps, ShortenedText, getShortenedTitle } from "../ShortenedText.js";
 
 describe("ShortenedText", () => {
     const renderShortenedText = (props: IShortenedTextProps) => {

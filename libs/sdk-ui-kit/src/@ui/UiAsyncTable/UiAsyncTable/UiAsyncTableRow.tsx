@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, ReactNode, Ref, useCallback } from "react";
+import { type MouseEvent, type ReactNode, type Ref, useCallback } from "react";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
@@ -10,10 +10,10 @@ import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { e } from "../asyncTableBem.js";
 import {
-    UiAsyncTableColumn,
-    UiAsyncTableColumnAccessibilityConfig,
-    UiAsyncTableMenuRenderer,
-    UiAsyncTableRowProps,
+    type UiAsyncTableColumn,
+    type UiAsyncTableColumnAccessibilityConfig,
+    type UiAsyncTableMenuRenderer,
+    type UiAsyncTableRowProps,
 } from "../types.js";
 
 export function UiAsyncTableRow<T extends { id: string }>({

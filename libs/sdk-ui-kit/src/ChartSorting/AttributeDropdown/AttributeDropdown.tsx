@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    ISortItem,
+    type ISortItem,
     isAttributeAreaSort,
     isAttributeSort,
     isMeasureLocator,
@@ -18,7 +18,12 @@ import {
 import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown/index.js";
 import { SingleSelectListItem } from "../../List/index.js";
 import { MeasureDropdown } from "../MeasureDropdown/MeasureDropdown.js";
-import { IAvailableSortsGroup, IBucketItemDescriptors, ISortTypeItem, SORT_TARGET_TYPE } from "../types.js";
+import {
+    type IAvailableSortsGroup,
+    type IBucketItemDescriptors,
+    type ISortTypeItem,
+    SORT_TARGET_TYPE,
+} from "../types.js";
 
 interface AttributeDropdownProps {
     currentSortItem: ISortItem;

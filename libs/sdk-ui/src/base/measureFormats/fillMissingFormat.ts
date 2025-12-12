@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import {
-    IAttributeOrMeasure,
+    type IAttributeOrMeasure,
     isSimpleMeasure,
     measureDoesComputeRatio,
     measureFormat,

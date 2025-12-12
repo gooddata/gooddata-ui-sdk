@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
-    NotificationChannelDestinationType,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type NotificationChannelDestinationType,
 } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function loadNotificationChannels(
     ctx: DashboardContext,

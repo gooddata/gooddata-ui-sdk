@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import { type IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 

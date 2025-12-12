@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    CSSProperties,
-    FocusEvent,
-    KeyboardEvent,
-    MouseEvent,
+    type CSSProperties,
+    type FocusEvent,
+    type KeyboardEvent,
+    type MouseEvent,
     useCallback,
     useMemo,
     useRef,

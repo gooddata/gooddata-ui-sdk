@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { ICorePivotTableState, InternalTableState } from "../../tableState.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
+import { type ICorePivotTableState, type InternalTableState } from "../../tableState.js";
 import { scrollBarExists } from "../base/agUtils.js";
 import { getScrollbarWidth } from "../utils.js";
 

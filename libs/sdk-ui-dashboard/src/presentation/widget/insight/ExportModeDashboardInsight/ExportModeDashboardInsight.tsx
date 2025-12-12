@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { EXPORT_VIS_MINIMAL_HEIGHT, EXPORT_VIS_MINIMAL_WIDTH } from "../../../export/index.js";
-import { IDashboardInsightProps } from "../types.js";
+import { type IDashboardInsightProps } from "../types.js";
 import { DashboardInsight } from "../ViewModeDashboardInsight/Insight/DashboardInsight.js";
 
 export function ExportModeDashboardInsight(props: IDashboardInsightProps): ReactElement {

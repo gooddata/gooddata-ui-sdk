@@ -23,7 +23,7 @@ import { UiChip } from "../../UiChip/UiChip.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { UiAsyncTableFilterOption, UiAsyncTableFilterProps } from "../types.js";
+import { type UiAsyncTableFilterOption, type UiAsyncTableFilterProps } from "../types.js";
 
 /**
  * @internal

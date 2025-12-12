@@ -23,7 +23,7 @@ import {
     getPivotHeaderTestIdProps,
     getPivotHeaderTextTestIdProps,
 } from "../../testing/dataTestIdGenerators.js";
-import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
+import { type AgGridColumnDef, type AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Renderer for measure header.

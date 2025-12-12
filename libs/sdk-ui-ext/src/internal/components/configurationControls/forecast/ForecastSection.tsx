@@ -8,7 +8,7 @@ import { Message } from "@gooddata/sdk-ui-kit";
 
 import { ForecastConfidenceControl } from "./ForecastConfidenceControl.js";
 import { messages } from "../../../../locales.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { CheckboxControl } from "../CheckboxControl.js";
 import { ConfigSection } from "../ConfigSection.js";
 import { InputControl } from "../InputControl.js";

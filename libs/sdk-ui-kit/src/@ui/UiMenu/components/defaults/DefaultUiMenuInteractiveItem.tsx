@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, ReactNode, useCallback } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -9,9 +9,9 @@ import { UiTooltip } from "../../../UiTooltip/UiTooltip.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
 import {
-    IUiMenuInteractiveItemProps,
-    IUiMenuInteractiveItemWrapperProps,
-    IUiMenuItemData,
+    type IUiMenuInteractiveItemProps,
+    type IUiMenuInteractiveItemWrapperProps,
+    type IUiMenuItemData,
 } from "../../types.js";
 
 /**

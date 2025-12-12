@@ -3,7 +3,7 @@ import { useCallback } from "react";
 
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { agGridSetPivotResultColumns } from "../../features/pivoting/agGridPivotingApi.js";
-import { AgGridApi } from "../../types/agGrid.js";
+import { type AgGridApi } from "../../types/agGrid.js";
 
 /**
  * Hook to update ag-grid pivot result columns.

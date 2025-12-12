@@ -3,15 +3,15 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
-    DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
-    IDashboardAttributeFilterConfig,
-    ObjRef,
+    type IDashboardAttributeFilterConfig,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../../tabs/index.js";
-import { DashboardSelector } from "../../types.js";
+import { type DashboardSelector } from "../../types.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Component, InputHTMLAttributes, createRef } from "react";
+import { Component, type InputHTMLAttributes, createRef } from "react";
 
 import cx from "classnames";
 

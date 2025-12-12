@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { IColor } from "@gooddata/sdk-model";
+import { type IColor } from "@gooddata/sdk-model";
 
 /**
  * Defines the calculation types for an algorithm.

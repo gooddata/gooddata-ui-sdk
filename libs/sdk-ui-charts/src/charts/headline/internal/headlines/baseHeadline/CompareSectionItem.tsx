@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
-import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface ICompareSectionItemProps {
     dataItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;

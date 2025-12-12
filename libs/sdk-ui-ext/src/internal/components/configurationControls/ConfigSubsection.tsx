@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ChangeEvent, ReactNode } from "react";
+import { type ChangeEvent, type ReactNode } from "react";
 
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { AxisType } from "../../interfaces/AxisType.js";
+import { type AxisType } from "../../interfaces/AxisType.js";
 import { getTranslation } from "../../utils/translations.js";
 import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 

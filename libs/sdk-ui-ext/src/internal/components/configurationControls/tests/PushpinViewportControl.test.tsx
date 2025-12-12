@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { IPushpinViewportControl, PushpinViewportControl } from "../PushpinViewportControl.js";
+import { type IPushpinViewportControl, PushpinViewportControl } from "../PushpinViewportControl.js";
 
 describe("PushpinViewportControl", () => {
     const defaultProps = {

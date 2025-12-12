@@ -2,16 +2,16 @@
 
 import { isEqual } from "lodash-es";
 
-import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
+import { type Total, type TotalDimension, type TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import {
-    IAttribute,
-    IBucket,
-    IDimension,
-    IExecutionDefinition,
-    IMeasure,
-    ITotal,
+    type IAttribute,
+    type IBucket,
+    type IDimension,
+    type IExecutionDefinition,
+    type IMeasure,
+    type ITotal,
     MeasureGroupIdentifier,
-    TotalType,
+    type TotalType,
     bucketAttributes,
     bucketItemLocalId,
     bucketTotals,

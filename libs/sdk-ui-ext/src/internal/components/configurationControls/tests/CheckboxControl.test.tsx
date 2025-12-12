@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { CheckboxControl, ICheckboxControlProps } from "../CheckboxControl.js";
+import { CheckboxControl, type ICheckboxControlProps } from "../CheckboxControl.js";
 
 describe("CheckboxControl", () => {
     const defaultProps = {

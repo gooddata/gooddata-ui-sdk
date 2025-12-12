@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useMemo } from "react";
+import { type ReactNode, createContext, useContext, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -27,6 +27,7 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
         columnHeadersPosition,
         columnSizing: { columnWidths: initialColumnWidths },
         textWrapping,
+        separators,
     } = config;
     const { initialDataView } = initialExecutionData;
     const columnWidths = useInitialProp(initialColumnWidths);
@@ -40,8 +41,17 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
             drillableItemsRef,
             textWrapping,
             intl,
+            separators,
         });
-    }, [initialDataView, columnHeadersPosition, columnWidths, textWrapping, intl, drillableItemsRef]);
+    }, [
+        initialDataView,
+        columnHeadersPosition,
+        columnWidths,
+        textWrapping,
+        intl,
+        drillableItemsRef,
+        separators,
+    ]);
 
     return <ColumnDefsContext.Provider value={columnDefs}>{children}</ColumnDefsContext.Provider>;
 }

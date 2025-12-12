@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
 import { DataSourceItem } from "./DataSourceItem.js";
 import { DataSourceListEmpty } from "./DataSourceListEmpty.js";
-import { IGrantedDataSource, ListMode, WorkspacePermissionSubject } from "../types.js";
+import { type IGrantedDataSource, type ListMode, type WorkspacePermissionSubject } from "../types.js";
 import { sortByName } from "../utils.js";
 
 export interface IDataSourceListProps {

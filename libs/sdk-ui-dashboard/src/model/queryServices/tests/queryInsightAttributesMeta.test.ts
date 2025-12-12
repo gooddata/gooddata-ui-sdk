@@ -4,8 +4,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { insightRef } from "@gooddata/sdk-model";
 
 import { addLayoutSection } from "../../commands/index.js";
-import { InsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { type InsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
 import {
     PivotTableWithRowAndColumnAttributes,

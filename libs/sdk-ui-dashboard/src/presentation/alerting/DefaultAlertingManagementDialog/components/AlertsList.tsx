@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { LoadingSpinner, useIdPrefixed, useListWithActionsKeyboardNavigation } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 

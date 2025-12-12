@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    IInsightLayerDefinition,
-    ObjRef,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IInsightLayerDefinition,
+    type ObjRef,
     attributeDisplayFormRef,
     attributeLocalId,
     bucketAttribute,
@@ -19,7 +19,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { isRecord } from "./guards.js";
-import { IGeoLayer, IGeoLayerArea, IGeoLayerPushpin } from "../types/layers/index.js";
+import { type IGeoLayer, type IGeoLayerArea, type IGeoLayerPushpin } from "../types/layers/index.js";
 
 /**
  * Expected shape of geo layer controls in visualization properties.

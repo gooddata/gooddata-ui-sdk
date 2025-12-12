@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IntlShape, defineMessages } from "react-intl";
+import { type IntlShape, defineMessages } from "react-intl";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { ISelectErrorOption, ISelectOption } from "../../types.js";
+import { type ISelectErrorOption, type ISelectOption } from "../../types.js";
 import { sortByName } from "../../utils.js";
 
 const messages = defineMessages({

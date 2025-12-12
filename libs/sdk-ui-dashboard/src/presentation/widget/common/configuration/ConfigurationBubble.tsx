@@ -1,16 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 
 import {
-    ArrowDirections,
-    ArrowOffsets,
+    type ArrowDirections,
+    type ArrowOffsets,
     Bubble,
-    IAlignPoint,
-    IBubbleAccessibilityConfig,
-    OverlayPositionType,
+    type IAlignPoint,
+    type IBubbleAccessibilityConfig,
+    type OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";

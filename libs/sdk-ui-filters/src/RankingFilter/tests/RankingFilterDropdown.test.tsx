@@ -9,7 +9,7 @@ import { withIntl } from "@gooddata/sdk-ui";
 import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
 import * as Mock from "./mocks.js";
 import {
-    IRankingFilterDropdownProps,
+    type IRankingFilterDropdownProps,
     RankingFilterDropdown,
     prepareRankingFilterState,
 } from "../RankingFilterDropdown.js";

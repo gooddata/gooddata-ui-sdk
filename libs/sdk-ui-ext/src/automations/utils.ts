@@ -1,23 +1,23 @@
 // (C) 2025 GoodData Corporation
 
 import { CronExpressionParser } from "cron-parser";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    IAlertAnomalyDetectionGranularity,
-    IAlertAnomalyDetectionSensitivity,
-    IAlertComparisonOperator,
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
-    IAutomationMetadataObject,
-    IAutomationRecipient,
-    IExportDefinitionMetadataObject,
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertComparisonOperator,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAutomationMetadataObject,
+    type IAutomationRecipient,
+    type IExportDefinitionMetadataObject,
 } from "@gooddata/sdk-model";
 import { ErrorCodes, buildAutomationUrl, convertError, navigate } from "@gooddata/sdk-ui";
 
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
 import { messages } from "./messages.js";
-import { AutomationsType } from "./types.js";
+import { type AutomationsType } from "./types.js";
 
 export const getWorkspaceId = (automation: IAutomationMetadataObject, fallbackWorkspaceId: string) => {
     return automation.workspace?.id ?? fallbackWorkspaceId;

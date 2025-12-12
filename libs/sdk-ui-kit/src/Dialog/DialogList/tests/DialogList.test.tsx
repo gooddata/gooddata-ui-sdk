@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { DialogList } from "../DialogList.js";
-import { IDialogListProps } from "../typings.js";
+import { type IDialogListProps } from "../typings.js";
 
 describe("DialogList", () => {
     const createComponent = (props: IDialogListProps) => {

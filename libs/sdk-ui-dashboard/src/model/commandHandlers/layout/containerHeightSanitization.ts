@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { SagaReturnType, put, select } from "redux-saga/effects";
+import { type SagaReturnType, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSizeByScreenSize,
-    ScreenSize,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSizeByScreenSize,
+    type ScreenSize,
     isDashboardLayout,
 } from "@gooddata/sdk-model";
 
@@ -17,10 +17,10 @@ import {
     implicitLayoutItemSizeFromXlSize,
     splitDashboardLayoutItemsAsRenderedGridRows,
 } from "../../../_staging/layout/sizing.js";
-import { ILayoutItemPath } from "../../../types.js";
+import { type ILayoutItemPath } from "../../../types.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
-import { ExtendedDashboardWidget, IItemWithHeight } from "../../types/layoutTypes.js";
+import { type ExtendedDashboardWidget, type IItemWithHeight } from "../../types/layoutTypes.js";
 
 // ============================================================================
 // Types and Interfaces

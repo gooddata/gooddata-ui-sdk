@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import { AgGridEvent, GridReadyEvent } from "ag-grid-community";
+import { type AgGridEvent, type GridReadyEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { InternalTableState } from "../../tableState.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
+import { type InternalTableState } from "../../tableState.js";
 
 export interface IGridEventHandlerContext {
     internal: InternalTableState;

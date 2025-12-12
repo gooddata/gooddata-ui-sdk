@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IColorPalette } from "@gooddata/sdk-model";
-import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
-import { CalculationType, getCalculationValuesDefault } from "@gooddata/sdk-ui-charts";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type ISeparators, type PushDataCallback } from "@gooddata/sdk-ui";
+import { type CalculationType, getCalculationValuesDefault } from "@gooddata/sdk-ui-charts";
 
 import { CalculationControl } from "./calculation/CalculationControl.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "./ComparisonValuePath.js";
@@ -10,8 +10,8 @@ import { IndicatorSubSection } from "./indicators/IndicatorSubSection.js";
 import { LabelSubSection } from "./label/LabelSubSection.js";
 import { ValueSubSection } from "./values/ValueSubSection.js";
 import { comparisonMessages } from "../../../../locales.js";
-import { IComparisonControlProperties } from "../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
 
 interface IComparisonSectionProps {

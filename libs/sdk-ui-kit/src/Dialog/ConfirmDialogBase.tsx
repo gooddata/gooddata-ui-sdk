@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { DialogBase } from "./DialogBase.js";
 import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
-import { IConfirmDialogBaseProps } from "./typings.js";
+import { type IConfirmDialogBaseProps } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { Button } from "../Button/index.js";
 import { LoadingSpinner } from "../LoadingSpinner/index.js";

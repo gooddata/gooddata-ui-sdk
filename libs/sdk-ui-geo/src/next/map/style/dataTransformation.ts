@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { DataValue } from "@gooddata/sdk-model";
+import { type DataValue } from "@gooddata/sdk-model";
 
 /**
  * Converts a data value to a float.

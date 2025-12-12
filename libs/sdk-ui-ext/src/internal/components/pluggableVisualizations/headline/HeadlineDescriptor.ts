@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
+import { type IHeadlineProps } from "@gooddata/sdk-ui-charts";
 
 import {
     multipleSecondaryMeasuresBucketConversion,
@@ -10,12 +10,12 @@ import {
 } from "./headlineBucketConversion.js";
 import { headlineConfigFromInsight } from "./headlineConfigFromInsight.js";
 import { PluggableHeadline } from "./PluggableHeadline.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    IVisualizationSizeInfo,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type IVisualizationSizeInfo,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

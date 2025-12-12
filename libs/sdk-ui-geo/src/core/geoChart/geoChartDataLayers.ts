@@ -22,7 +22,7 @@ import {
     PUSHPIN_STYLE_CIRCLE_SIZE,
     PUSHPIN_STYLE_CIRCLE_STROKE_COLOR,
 } from "./constants/geoChart.js";
-import { IGeoConfig, IGeoData, IGeoPointsConfig } from "../../GeoChart.js";
+import { type IGeoConfig, type IGeoData, type IGeoPointsConfig } from "../../GeoChart.js";
 import { getMinMax } from "./helpers/geoChart/common.js";
 
 function createPushpinSizeOptions(

@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import * as path from "path";
 
-import { CatalogRecording } from "../recordings/catalog.js";
+import { type CatalogRecording } from "../recordings/catalog.js";
 
 // const CatalogIndexConstName = "Catalog";
 

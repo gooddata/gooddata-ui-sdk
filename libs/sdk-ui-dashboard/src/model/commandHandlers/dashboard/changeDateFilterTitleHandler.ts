@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { SetDateFilterConfigTitle } from "../../commands/dashboard.js";
+import { type SetDateFilterConfigTitle } from "../../commands/dashboard.js";
 import { dateFilterTitleChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -15,7 +15,7 @@ import {
     selectFilterContextDateFilterByDataSet,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
 export function* changeDateFilterTitleHandler(

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import { VisualizationConfig } from "./VisualizationConfig.js";
 import { VisualizationsPage } from "./VisualizationsPage.js";

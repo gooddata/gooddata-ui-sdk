@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
-import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { type DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
+import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { SelectionModeButton } from "./SelectionModeButton.js";
 import { SelectionModeItem } from "./SelectionModeItem.js";

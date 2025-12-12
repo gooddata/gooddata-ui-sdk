@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IDataSetMetadataObject,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    ObjRef,
-    ObjectOrigin,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type IDataSetMetadataObject,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
+    type ObjectOrigin,
 } from "@gooddata/sdk-model";
 
 import type { IElementsQueryFactory } from "./elements/index.js";

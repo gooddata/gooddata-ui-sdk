@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useState } from "react";
+import { type ReactNode, useCallback, useState } from "react";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { createContextStore } from "@gooddata/sdk-ui";
 
 // Define the shape of the context state

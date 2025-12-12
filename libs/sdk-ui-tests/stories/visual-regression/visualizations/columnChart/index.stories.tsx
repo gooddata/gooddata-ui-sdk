@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
+import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 
 import { ColumnChartWithSingleMeasureAndTwoViewByAndStack } from "../../../../scenarios/charts/columnChart/base.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,

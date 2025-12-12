@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { ChangeEvent, useCallback, useMemo } from "react";
+import { type ChangeEvent, useCallback, useMemo } from "react";
 
 import { cloneDeep } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { IPushData } from "@gooddata/sdk-ui";
+import { type IPushData } from "@gooddata/sdk-ui";
 import { UiCheckbox } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 
 /**
  * Minimal type for column text wrapping items in properties.

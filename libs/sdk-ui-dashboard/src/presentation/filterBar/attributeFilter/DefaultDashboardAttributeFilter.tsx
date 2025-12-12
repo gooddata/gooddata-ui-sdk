@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
+import { type ReactElement, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -13,10 +13,10 @@ import {
     AttributeFilterElementsSelect,
     AttributeFilterLoading,
     AttributeFilterStatusBar,
-    IAttributeFilterDropdownActionsProps,
-    IAttributeFilterDropdownButtonProps,
-    IAttributeFilterElementsSelectProps,
-    IAttributeFilterStatusBarProps,
+    type IAttributeFilterDropdownActionsProps,
+    type IAttributeFilterDropdownButtonProps,
+    type IAttributeFilterElementsSelectProps,
+    type IAttributeFilterStatusBarProps,
     SingleSelectionAttributeFilterStatusBar,
     useAttributeFilterContext,
     useAutoOpenAttributeFilterDropdownButton,
@@ -34,7 +34,7 @@ import {
 } from "./CustomDropdownActions.js";
 import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
 import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
-import { IDashboardAttributeFilterProps } from "./types.js";
+import { type IDashboardAttributeFilterProps } from "./types.js";
 import { useDependentDateFilters } from "./useDependentDateFilters.js";
 import { useParentFilters } from "./useParentFilters.js";
 import {

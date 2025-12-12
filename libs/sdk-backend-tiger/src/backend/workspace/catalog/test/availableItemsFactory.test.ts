@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { CatalogItem, uriRef } from "@gooddata/sdk-model";
+import { type CatalogItem, uriRef } from "@gooddata/sdk-model";
 
 import { filterAvailableItems } from "../availableItemsFactory.js";
 

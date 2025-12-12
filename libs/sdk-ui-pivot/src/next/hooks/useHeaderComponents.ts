@@ -10,7 +10,7 @@ import { EmptyMeasureGroupValueHeader } from "../components/Header/EmptyMeasureG
 import { MeasureGroupHeader } from "../components/Header/MeasureGroupHeader.js";
 import { MeasureHeader } from "../components/Header/MeasureHeader.js";
 import { PivotGroupHeader } from "../components/Header/PivotGroupHeader.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns an enhancer that registers custom header components for ag-grid.

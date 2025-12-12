@@ -5,16 +5,16 @@ import { isEmpty, partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    DrillDefinition,
-    IDashboardLayout,
-    IDrillDownReference,
-    IDrillToLegacyDashboard,
-    IInsightWidget,
-    IKpiWidget,
-    IWidget,
-    InsightDrillDefinition,
-    ObjRef,
-    ScreenSize,
+    type DrillDefinition,
+    type IDashboardLayout,
+    type IDrillDownReference,
+    type IDrillToLegacyDashboard,
+    type IInsightWidget,
+    type IKpiWidget,
+    type IWidget,
+    type InsightDrillDefinition,
+    type ObjRef,
+    type ScreenSize,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardLayout,
@@ -24,31 +24,31 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { LayoutStash, LayoutState, layoutInitialState } from "./layoutState.js";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
+import { type LayoutStash, type LayoutState, layoutInitialState } from "./layoutState.js";
+import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
-import { IDashboardFilter, ILayoutCoordinates, ILayoutItemPath } from "../../../../types.js";
+import { type IDashboardFilter, type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
 import {
     isInsightPlaceholderWidget,
     isKpiPlaceholderWidget,
     isPlaceholderWidget,
 } from "../../../../widgets/index.js";
-import { DashboardLayoutCommands } from "../../../commands/index.js";
+import { type DashboardLayoutCommands } from "../../../commands/index.js";
 import {
-    ExtendedDashboardWidget,
-    ICustomWidget,
+    type ExtendedDashboardWidget,
+    type ICustomWidget,
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
 } from "../../../types/layoutTypes.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
-import { UndoableCommand, createUndoableCommandsMapping } from "../../_infra/undoEnhancer.js";
+import { type UndoableCommand, createUndoableCommandsMapping } from "../../_infra/undoEnhancer.js";
 import { selectEnableIgnoreCrossFiltering } from "../../config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
 } from "../../drill/drillSelectors.js";
 import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/layoutUtils.js";
-import { DashboardSelector } from "../../types.js";
+import { type DashboardSelector } from "../../types.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
 import { DEFAULT_TAB_ID } from "../index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";

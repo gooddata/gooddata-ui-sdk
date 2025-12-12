@@ -2,7 +2,7 @@
 
 import { describe, expect, test } from "vitest";
 
-import { IDashboardLayout } from "@gooddata/sdk-model";
+import { type IDashboardLayout } from "@gooddata/sdk-model";
 
 import { getDrillToCustomUrlPaths } from "../toBackend/AnalyticalDashboardConverter.js";
 

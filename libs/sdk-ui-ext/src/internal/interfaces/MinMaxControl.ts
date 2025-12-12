@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IVisualizationProperties } from "./Visualization.js";
+import { type IVisualizationProperties } from "./Visualization.js";
 
 export interface IMinMaxControlProps {
     isDisabled: boolean;

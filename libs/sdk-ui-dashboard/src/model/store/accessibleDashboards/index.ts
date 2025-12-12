@@ -1,7 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
-import { EntityId, EntityState, PayloadAction, Reducer, createSlice } from "@reduxjs/toolkit";
+import {
+    type EntityId,
+    type EntityState,
+    type PayloadAction,
+    type Reducer,
+    createSlice,
+} from "@reduxjs/toolkit";
 
-import { IListedDashboard } from "@gooddata/sdk-model";
+import { type IListedDashboard } from "@gooddata/sdk-model";
 
 import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
 

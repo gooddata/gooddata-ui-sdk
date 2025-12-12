@@ -2,10 +2,10 @@
 
 import { requestPages } from "@gooddata/mock-handling";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { type IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import {
-    IPivotTableConfig,
-    IPivotTableProps,
+    type IPivotTableConfig,
+    type IPivotTableProps,
     PivotTable,
     newWidthForAllColumnsForMeasure,
     newWidthForAttributeColumn,

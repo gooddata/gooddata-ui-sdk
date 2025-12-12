@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, useMemo } from "react";
+import { type MouseEvent, useMemo } from "react";
 
-import { LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
+import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 
 export type CustomHyperlinkProps = {
     href: string;

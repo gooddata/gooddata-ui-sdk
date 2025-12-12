@@ -5,12 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
-    RecordedBackendConfig,
+    type RecordedBackendConfig,
     defaultRecordedBackendCapabilities,
     recordedBackend,
 } from "@gooddata/sdk-backend-mockingbird";
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { IAvailableAccessGrantee, uriRef } from "@gooddata/sdk-model";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IAvailableAccessGrantee, uriRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, withIntl } from "@gooddata/sdk-ui";
 
 import {
@@ -21,7 +21,7 @@ import {
 } from "./GranteeMock.js";
 import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import { AddGranteeSelect } from "../AddGranteeSelect.js";
-import { IAddGranteeSelectProps } from "../types.js";
+import { type IAddGranteeSelectProps } from "../types.js";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: () => {},

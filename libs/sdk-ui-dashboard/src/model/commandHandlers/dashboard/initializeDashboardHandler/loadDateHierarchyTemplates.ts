@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IDateHierarchyTemplate } from "@gooddata/sdk-model";
+import { type IDateHierarchyTemplate } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export function loadDateHierarchyTemplates({
     backend,

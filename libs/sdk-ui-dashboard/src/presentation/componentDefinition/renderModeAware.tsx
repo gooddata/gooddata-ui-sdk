@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentPropsWithRef, ComponentType } from "react";
+import { type ComponentPropsWithRef, type ComponentType } from "react";
 
 import { selectEnableSlideshowExports, selectRenderMode, useDashboardSelector } from "../../model/index.js";
-import { RenderMode } from "../../types.js";
+import { type RenderMode } from "../../types.js";
 
 /**
  * Returns a component that wraps components for different render modes and automatically chooses the correct one.

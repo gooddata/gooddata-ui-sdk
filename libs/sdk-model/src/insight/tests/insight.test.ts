@@ -3,19 +3,19 @@ import { describe, expect, it } from "vitest";
 
 import { newInsight } from "../../../__mocks__/insights.js";
 import { Account, Activity, ActivityType, Velocity, Won } from "../../../__mocks__/model.js";
-import { AttributePredicate, IAttribute, isAttribute } from "../../execution/attribute/index.js";
+import { type AttributePredicate, type IAttribute, isAttribute } from "../../execution/attribute/index.js";
 import {
-    BucketItemModifications,
-    BucketItemReducer,
-    IBucket,
+    type BucketItemModifications,
+    type BucketItemReducer,
+    type IBucket,
     newBucket,
 } from "../../execution/buckets/index.js";
-import { IMeasure, MeasurePredicate, isMeasure } from "../../execution/measure/index.js";
+import { type IMeasure, type MeasurePredicate, isMeasure } from "../../execution/measure/index.js";
 import {
-    IAttributeOrMeasure,
-    IFilter,
-    ISortItem,
-    ITotal,
+    type IAttributeOrMeasure,
+    type IFilter,
+    type ISortItem,
+    type ITotal,
     attributeDisplayFormRef,
     insightDisplayFormUsage,
     modifySimpleMeasure,
@@ -27,8 +27,8 @@ import {
     newTotal,
 } from "../../index.js";
 import {
-    IInsight,
-    VisualizationProperties,
+    type IInsight,
+    type VisualizationProperties,
     insightAttributes,
     insightBucket,
     insightBuckets,

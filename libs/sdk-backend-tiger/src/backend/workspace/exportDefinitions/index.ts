@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    EntitiesApiGetAllEntitiesExportDefinitionsRequest,
+    type EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
     ValidateRelationsHeader,
     jsonApiHeaders,
@@ -14,17 +14,17 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
-    IExportDefinitionsQuery,
-    IExportDefinitionsQueryOptions,
-    IExportDefinitionsQueryResult,
-    IGetExportDefinitionOptions,
-    IWorkspaceExportDefinitionsService,
+    type IExportDefinitionsQuery,
+    type IExportDefinitionsQueryOptions,
+    type IExportDefinitionsQueryResult,
+    type IGetExportDefinitionOptions,
+    type IWorkspaceExportDefinitionsService,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IExportDefinitionMetadataObject,
-    IExportDefinitionMetadataObjectDefinition,
-    ObjRef,
+    type IExportDefinitionMetadataObject,
+    type IExportDefinitionMetadataObjectDefinition,
+    type ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -35,7 +35,7 @@ import {
     convertExportDefinitionMdObjectDefinition as convertExportDefinitionMdObjectDefinitionToBackend,
     convertExportDefinitionMdObject as convertExportDefinitionMdObjectToBackend,
 } from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 

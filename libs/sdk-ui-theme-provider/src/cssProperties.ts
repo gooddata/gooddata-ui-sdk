@@ -3,14 +3,14 @@
 import { transparentize } from "polished";
 
 import {
-    ITheme,
-    IThemeComplementaryPalette,
-    IThemeFontsDef,
-    IThemePalette,
-    ThemeFontUri,
+    type ITheme,
+    type IThemeComplementaryPalette,
+    type IThemeFontsDef,
+    type IThemePalette,
+    type ThemeFontUri,
 } from "@gooddata/sdk-model";
 
-import { CssProperty, getCssProperty } from "./cssProperty.js";
+import { type CssProperty, getCssProperty } from "./cssProperty.js";
 import { generateDerivedColors } from "./derivedColors.js";
 import { themeDefinedCssVariables } from "./variablesSpec/allThemeCssVariables.js";
 import { inconsistentVariables } from "./variablesSpec/inconsistent/inconsistent.js";

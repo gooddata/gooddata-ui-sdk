@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type AnyAction, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { LoadingState } from "./loadingState.js";
+import { type LoadingState } from "./loadingState.js";
 
 type LoadingReducer<A extends Action = AnyAction> = CaseReducer<LoadingState, A>;
 

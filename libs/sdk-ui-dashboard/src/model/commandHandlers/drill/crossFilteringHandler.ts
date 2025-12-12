@@ -5,14 +5,14 @@ import { all, call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
 import {
-    IDashboardAttributeFilter,
-    ObjRef,
+    type IDashboardAttributeFilter,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
-import { CrossFiltering } from "../../commands/drill.js";
+import { type CrossFiltering } from "../../commands/drill.js";
 import {
     addAttributeFilter,
     changeAttributeFilterSelection,
@@ -34,7 +34,7 @@ import { drillActions } from "../../store/drill/index.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextDraggableFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";

@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 
 import { RECURRENCE_TYPES } from "../constants.js";
-import { RecurrenceType } from "../types.js";
+import { type RecurrenceType } from "../types.js";
 
 // Hourly patterns
 const HOURLY_PATTERNS = [

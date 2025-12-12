@@ -1,23 +1,23 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    DefaultSmtp,
-    JsonApiNotificationChannelIdentifierOut,
-    JsonApiNotificationChannelOut,
-    JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum,
-    JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
-    JsonApiNotificationChannelOutAttributesDestinationTypeEnum,
-    Smtp,
-    Webhook,
+    type DefaultSmtp,
+    type JsonApiNotificationChannelIdentifierOut,
+    type JsonApiNotificationChannelOut,
+    type JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum,
+    type JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
+    type JsonApiNotificationChannelOutAttributesDestinationTypeEnum,
+    type Smtp,
+    type Webhook,
 } from "@gooddata/api-client-tiger";
 import {
-    IInPlatformNotificationChannelMetadataObject,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
-    ISmtpNotificationChannelMetadataObject,
-    IWebhookNotificationChannelMetadataObject,
-    NotificationChannelAllowedRecipients,
-    NotificationChannelDestinationType,
+    type IInPlatformNotificationChannelMetadataObject,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type ISmtpNotificationChannelMetadataObject,
+    type IWebhookNotificationChannelMetadataObject,
+    type NotificationChannelAllowedRecipients,
+    type NotificationChannelDestinationType,
     assertNever,
 } from "@gooddata/sdk-model";
 

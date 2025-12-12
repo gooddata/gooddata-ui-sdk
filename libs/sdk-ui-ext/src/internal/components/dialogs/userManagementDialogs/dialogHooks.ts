@@ -5,25 +5,25 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 
 import {
-    IOrganizationDescriptor,
-    IUser,
-    IUserGroup,
+    type IOrganizationDescriptor,
+    type IUser,
+    type IUserGroup,
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
-import { ITab, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { type ITab, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages, userDialogTabsMessages, userGroupDialogTabsMessages } from "./locales.js";
 import { useTelemetry } from "./TelemetryContext.js";
 import {
-    IGrantedDataSource,
-    IGrantedUserGroup,
-    IGrantedWorkspace,
-    IUserMember,
-    UserEditDialogMode,
-    UserGroupEditDialogMode,
-    UserTabId,
+    type IGrantedDataSource,
+    type IGrantedUserGroup,
+    type IGrantedWorkspace,
+    type IUserMember,
+    type UserEditDialogMode,
+    type UserGroupEditDialogMode,
+    type UserTabId,
 } from "./types.js";
 import { extractUserGroupName, extractUserName, sortByName } from "./utils.js";
 

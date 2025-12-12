@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    IInsightDefinition,
+    type IInsightDefinition,
     newAttribute,
     newBucket,
     newInsightDefinition,
@@ -15,7 +15,7 @@ import {
 import { BucketNames, GeoLocationMissingSdkError } from "@gooddata/sdk-ui";
 import { GeoChartNextInternal, PUSHPIN_LAYER_ID } from "@gooddata/sdk-ui-geo/next";
 
-import { IVisConstruct } from "../../../../interfaces/Visualization.js";
+import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { PluggableGeoPushpinChartNext } from "../PluggableGeoPushpinChartNext.js";
 

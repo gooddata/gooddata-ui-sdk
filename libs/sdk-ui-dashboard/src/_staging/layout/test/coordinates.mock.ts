@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IDashboardLayout, IInsightWidget, idRef } from "@gooddata/sdk-model";
+import { type IDashboardLayout, type IInsightWidget, idRef } from "@gooddata/sdk-model";
 
-import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 
 const buildInsightWidget = (name: string): IInsightWidget => ({
     type: "insight",

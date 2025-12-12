@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { AriaAttributes, KeyboardEvent } from "react";
+import { type AriaAttributes, type KeyboardEvent } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 export const DATE_INPUT_HINT_ID = "date-range-picker-date-input-hint";
 export const TIME_INPUT_HINT_ID = "date-range-picker-time-input-hint";

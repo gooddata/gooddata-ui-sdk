@@ -3,7 +3,7 @@
 import { requestPages } from "@gooddata/mock-handling";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
-import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
+import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
 import {
     PivotTableWighSingleMeasureAndSingleRowColAttr,

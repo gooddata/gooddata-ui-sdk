@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ColDef, ColGroupDef, SortDirection } from "ag-grid-community";
-import { IntlShape } from "react-intl";
+import { type ColDef, type ColGroupDef, type SortDirection } from "ag-grid-community";
+import { type IntlShape } from "react-intl";
 
-import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
+import { type ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
@@ -11,18 +11,18 @@ import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.
 import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
 import {
     ColumnGroupingDescriptorId,
-    DataCol,
-    MixedHeadersCol,
-    MixedValuesCol,
-    ScopeCol,
-    SliceCol,
-    SliceMeasureCol,
-    TableColDefs,
-    TableCols,
+    type DataCol,
+    type MixedHeadersCol,
+    type MixedValuesCol,
+    type ScopeCol,
+    type SliceCol,
+    type SliceMeasureCol,
+    type TableColDefs,
+    type TableCols,
     agColId,
 } from "./tableDescriptorTypes.js";
 import { messages } from "../../locales.js";
-import { IPivotTableConfig } from "../../publicTypes.js";
+import { type IPivotTableConfig } from "../../publicTypes.js";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_GROUPING_DELIMITER,

@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    DashboardCommandFailed,
-    KeyDriverAnalysis,
+    type DashboardCommandFailed,
+    type KeyDriverAnalysis,
     keyDriverAnalysis,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";

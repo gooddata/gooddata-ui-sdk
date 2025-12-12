@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // (C) 2021-2025 GoodData Corporation
 
-import { Command, OptionValues, program } from "commander";
+import { type Command, type OptionValues, program } from "commander";
 
 import { LIB_VERSION } from "./__version.js";
 import { addPluginCmdAction } from "./addPluginCmd/index.js";

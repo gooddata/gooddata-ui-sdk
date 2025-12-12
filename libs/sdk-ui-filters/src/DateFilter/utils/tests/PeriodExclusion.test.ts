@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IRelativeDateFilterPreset } from "@gooddata/sdk-model";
+import { type IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
-import { DateFilterOption } from "../../interfaces/index.js";
+import { type DateFilterOption } from "../../interfaces/index.js";
 import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "../PeriodExclusion.js";
 
 describe("canExcludeCurrentPeriod", () => {

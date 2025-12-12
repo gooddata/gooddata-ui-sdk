@@ -5,9 +5,9 @@ import { memo, useState } from "react";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
 import {
-    INeobackstopConfig,
-    INeobackstopScenarioConfig,
-    IStoryParameters,
+    type INeobackstopConfig,
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
 } from "../../../_infra/backstopScenario.js";
 
 const EditableLabelExamples = memo(function EditableLabelExamples() {

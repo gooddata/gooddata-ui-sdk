@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import { ColDef, GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
+import { type ColDef, type GridApi, type IDatasource, type IGetRowsParams } from "ag-grid-community";
 import { isEqual } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IDataView, type IExecutionResult, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    ISortItem,
-    ITotal,
+    type ISortItem,
+    type ITotal,
     attributeLocalId,
     bucketAttribute,
     bucketSetTotals,
@@ -19,10 +19,10 @@ import { BucketNames, DataViewFacade, emptyHeaderTitleFromIntl } from "@gooddata
 
 import { areTotalsChanged, isInvalidGetRowsRequest } from "./dataSourceUtils.js";
 import { createAgGridPage } from "./rowFactory.js";
-import { GroupingProviderFactory, IGroupingProvider } from "./rowGroupingProvider.js";
-import { ColumnHeadersPosition } from "../../publicTypes.js";
+import { GroupingProviderFactory, type IGroupingProvider } from "./rowGroupingProvider.js";
+import { type ColumnHeadersPosition } from "../../publicTypes.js";
 import { COLS_PER_PAGE } from "../base/constants.js";
-import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes.js";
+import { type OnExecutionTransformed, type OnTransformedExecutionFailed } from "../privateTypes.js";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 
 export type DatasourceConfig = {

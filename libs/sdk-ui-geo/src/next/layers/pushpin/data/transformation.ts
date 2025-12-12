@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IAttributeDescriptor,
-    IAttributeOrMeasure,
-    IMeasureDescriptor,
-    IResultHeader,
-    Identifier,
-    ObjRef,
+    type IAttributeDescriptor,
+    type IAttributeOrMeasure,
+    type IMeasureDescriptor,
+    type IResultHeader,
+    type Identifier,
+    type ObjRef,
     attributeDisplayFormRef,
     attributeLocalId,
     isAttribute,
@@ -16,14 +16,18 @@ import {
     measureLocalId,
     resultHeaderName,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { dataValueAsFloat, parseCoordinate } from "../../../map/style/dataTransformation.js";
-import { IGeoLngLat } from "../../../types/common/coordinates.js";
-import { IAvailableLegends, IGeoLegendItem } from "../../../types/common/legends.js";
-import { IGeoAttributeItem, IGeoMeasureItem, IGeoSegmentItem } from "../../../types/geoData/common.js";
-import { IPushpinGeoData, IPushpinLocationItem } from "../../../types/geoData/pushpin.js";
-import { JsonValue } from "../../../utils/guards.js";
+import { type IGeoLngLat } from "../../../types/common/coordinates.js";
+import { type IAvailableLegends, type IGeoLegendItem } from "../../../types/common/legends.js";
+import {
+    type IGeoAttributeItem,
+    type IGeoMeasureItem,
+    type IGeoSegmentItem,
+} from "../../../types/geoData/common.js";
+import { type IPushpinGeoData, type IPushpinLocationItem } from "../../../types/geoData/pushpin.js";
+import { type JsonValue } from "../../../utils/guards.js";
 import { getMinMax } from "../size/calculations.js";
 
 /**

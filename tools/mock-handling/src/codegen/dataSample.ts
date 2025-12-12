@@ -3,8 +3,8 @@ import * as path from "path";
 
 import { groupBy, has } from "lodash-es";
 
-import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
-import { DisplayFormRecording } from "../recordings/displayForms.js";
+import { type TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
+import { type DisplayFormRecording } from "../recordings/displayForms.js";
 
 const DataSampleConstName = "DataSamples";
 

@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { IntlProvider } from "react-intl";
 
-import { IUiMenuItem, UiMenu, separatorStaticItem } from "@gooddata/sdk-ui-kit";
+import { type IUiMenuItem, UiMenu, separatorStaticItem } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // Mock items for the menu

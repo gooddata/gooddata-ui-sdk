@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    ISortItem,
-    LocalIdRef,
+    type ISortItem,
+    type LocalIdRef,
     isAttributeAreaSort,
     isMeasureLocator,
     isMeasureSort,
@@ -21,11 +21,11 @@ import { stringUtils } from "@gooddata/util";
 import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
 import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown/index.js";
 import {
-    IAvailableSortsGroup,
-    IBucketItemDescriptors,
-    IMeasureDropdownValue,
-    IMeasureSortItem,
-    MeasureSortSuggestion,
+    type IAvailableSortsGroup,
+    type IBucketItemDescriptors,
+    type IMeasureDropdownValue,
+    type IMeasureSortItem,
+    type MeasureSortSuggestion,
 } from "../types.js";
 
 interface MeasureDropdownProps {

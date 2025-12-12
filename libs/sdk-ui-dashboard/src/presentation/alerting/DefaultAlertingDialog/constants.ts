@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAlertComparisonOperator } from "@gooddata/sdk-model";
+import { type IAlertComparisonOperator } from "@gooddata/sdk-model";
 import {
     AI_OPERATOR,
     AI_OPERATORS,
@@ -8,7 +8,7 @@ import {
     COMPARISON_OPERATORS,
     RELATIVE_OPERATORS,
 } from "@gooddata/sdk-ui-ext";
-import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
+import { type SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./messages.js";
 

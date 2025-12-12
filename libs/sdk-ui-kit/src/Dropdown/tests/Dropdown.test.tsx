@@ -7,9 +7,9 @@ import { describe, expect, it, vi } from "vitest";
 import { componentMock } from "./testUtils.js";
 import {
     Dropdown,
-    IDropdownBodyRenderProps,
-    IDropdownButtonRenderProps,
-    IDropdownProps,
+    type IDropdownBodyRenderProps,
+    type IDropdownButtonRenderProps,
+    type IDropdownProps,
 } from "../Dropdown.js";
 
 const bodyMock = componentMock<IDropdownBodyRenderProps>();

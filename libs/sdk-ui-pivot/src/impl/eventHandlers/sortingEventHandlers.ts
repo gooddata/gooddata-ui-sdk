@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import { SortChangedEvent } from "ag-grid-community";
+import { type SortChangedEvent } from "ag-grid-community";
 
-import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { BucketNames, IPushData } from "@gooddata/sdk-ui";
+import { type IExecutionDefinition } from "@gooddata/sdk-model";
+import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 
-import { InternalTableState } from "../../tableState.js";
+import { type InternalTableState } from "../../tableState.js";
 import { sanitizeDefTotals } from "../utils.js";
 
 export interface ISortingEventHandlerContext {

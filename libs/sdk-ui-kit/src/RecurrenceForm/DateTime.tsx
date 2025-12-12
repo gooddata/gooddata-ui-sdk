@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback } from "react";
+import { type KeyboardEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 import {
     ValidationContextStore,
     createInvalidDatapoint,

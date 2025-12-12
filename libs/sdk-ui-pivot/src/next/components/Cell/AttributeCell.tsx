@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { ICellRendererParams } from "ag-grid-enterprise";
-import { IntlShape } from "react-intl";
+import { type ICellRendererParams } from "ag-grid-enterprise";
+import { type IntlShape } from "react-intl";
 
-import { ITableAttributeColumnDefinition, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
+import { type ITableAttributeColumnDefinition, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
 
 import {
     getAttributeColIds,
@@ -12,7 +12,7 @@ import {
     shouldGroupAttribute,
 } from "../../features/columns/shared.js";
 import { getPivotCellTestIdPropsFromCellTypes } from "../../testing/dataTestIdGenerators.js";
-import { CellTypes } from "../../types/cellRendering.js";
+import { type CellTypes } from "../../types/cellRendering.js";
 
 /**
  * Cell renderer for attributes.

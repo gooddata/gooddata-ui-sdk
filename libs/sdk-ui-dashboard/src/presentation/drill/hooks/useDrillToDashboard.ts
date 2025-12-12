@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    DashboardCommandFailed,
-    DashboardDrillToDashboardResolved,
-    DrillToDashboard,
+    type DashboardCommandFailed,
+    type DashboardDrillToDashboardResolved,
+    type DrillToDashboard,
     drillToDashboard,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";

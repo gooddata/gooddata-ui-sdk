@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-import { ToolkitConfigFile } from "./data.js";
+import { type ToolkitConfigFile } from "./data.js";
 import { getLocalizationFiles, getLocalizationValues, getParsedLocalizations } from "./localizations.js";
 import { getCommentValidationCheck } from "./validations/commentValidation.js";
 import { getDefaultLocalesCheck } from "./validations/defaultLocales.js";

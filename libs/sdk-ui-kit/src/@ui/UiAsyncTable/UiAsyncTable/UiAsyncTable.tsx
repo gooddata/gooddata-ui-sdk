@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Ref, useCallback, useContext, useMemo } from "react";
+import { type Ref, useCallback, useContext, useMemo } from "react";
 
 import { IntlContext } from "react-intl";
 
@@ -14,7 +14,7 @@ import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
 import { UiAsyncTableToolbar } from "./UiAsyncTableToolbar.js";
 import { getColumnWidth } from "./utils.js";
 import { b } from "../asyncTableBem.js";
-import { UiAsyncTableProps } from "../types.js";
+import { type UiAsyncTableProps } from "../types.js";
 
 function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
     const { width, itemHeight, isLargeRow, renderHeader, renderItem, renderEmptyState, shouldLoadNextPage } =

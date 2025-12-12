@@ -1,20 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    ObjRef,
+    type FilterContextItem,
+    type IAttributeDisplayFormMetadataObject,
+    type ObjRef,
     isDashboardAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 
 import { resolveDisplayFormMetadata } from "./displayFormResolver.js";
-import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
  * This generator function resolves display form metadata objects for all attribute filters in the provided `filters`

@@ -5,8 +5,8 @@ import { useCallback, useState } from "react";
 import cx from "classnames";
 
 import { DashboardEditLayoutSectionBorder } from "./DashboardEditLayoutSectionBorder.js";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
-import { IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
+import { type IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/index.js";
 
 export type IDashboardEditLayoutSectionRendererOwnProps =
     IDashboardLayoutSectionRenderProps<IDashboardEditLayoutContent>;

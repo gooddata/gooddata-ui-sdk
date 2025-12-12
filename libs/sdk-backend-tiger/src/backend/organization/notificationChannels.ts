@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
     AutomationApi_TestExistingNotificationChannel,
     AutomationApi_TestNotificationChannel,
@@ -13,25 +13,25 @@ import {
     EntitiesApi_UpdateEntityNotificationChannels,
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import {
-    INotificationChannelsQuery,
-    IOrganizationNotificationChannelService,
+    type INotificationChannelsQuery,
+    type IOrganizationNotificationChannelService,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    INotificationChannelExternalRecipient,
-    INotificationChannelMetadataObject,
-    INotificationChannelMetadataObjectDefinition,
-    INotificationChannelTestResponse,
-    ISmtpNotificationChannelMetadataObject,
-    IWebhookNotificationChannelMetadataObject,
-    ToNotificationChannelMetadataObject,
+    type INotificationChannelExternalRecipient,
+    type INotificationChannelMetadataObject,
+    type INotificationChannelMetadataObjectDefinition,
+    type INotificationChannelTestResponse,
+    type ISmtpNotificationChannelMetadataObject,
+    type IWebhookNotificationChannelMetadataObject,
+    type ToNotificationChannelMetadataObject,
     assertNever,
 } from "@gooddata/sdk-model";
 
 import { NotificationChannelsQuery } from "./notificationChannelsQuery.js";
 import { convertNotificationChannelFromBackend } from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
 import { convertNotificationChannelToBackend } from "../../convertors/toBackend/NotificationChannelsConvertor.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class OrganizationNotificationChannelService implements IOrganizationNotificationChannelService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

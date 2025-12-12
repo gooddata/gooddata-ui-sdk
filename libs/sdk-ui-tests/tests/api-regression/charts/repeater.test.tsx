@@ -8,10 +8,10 @@ let { extractProps } = vi.hoisted(() => ({
 }));
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IRepeaterProps } from "@gooddata/sdk-ui-charts";
+import { type IRepeaterProps } from "@gooddata/sdk-ui-charts";
 
 import { repeater as RepeaterScenarios } from "../../../scenarios/charts/repeater/index.js";
-import { ScenarioAndDescription } from "../../../src/index.js";
+import { type ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";

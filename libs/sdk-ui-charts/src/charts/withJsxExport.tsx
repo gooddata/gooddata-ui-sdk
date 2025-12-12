@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType, Component as ReactComponent } from "react";
+import { type ComponentType, Component as ReactComponent } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
 

@@ -1,16 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
-import { IMetadataObject, ObjRef, areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
+import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IMetadataObject, type ObjRef, areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { QueryAttributeDataSet } from "../queries/attributeDataSet.js";
+import { type QueryAttributeDataSet } from "../queries/attributeDataSet.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
 import { selectPreloadedAttributesWithReferences } from "../store/index.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryAttributeDataSetService = createCachedQueryService(
     "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE",

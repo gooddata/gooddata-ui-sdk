@@ -5,9 +5,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import { AreaChart } from "../AreaChart.js";
 import { CoreAreaChart } from "../CoreAreaChart.js";
 

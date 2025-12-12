@@ -1,31 +1,31 @@
 // (C) 2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IExecutionConfig } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IExecutionConfig } from "@gooddata/sdk-model";
 import {
-    AttributesMeasuresOrPlaceholders,
-    AttributesOrPlaceholders,
-    ExplicitDrill,
-    IVisualizationCallbacks,
-    IVisualizationProps,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
-    TotalsOrPlaceholders,
+    type AttributesMeasuresOrPlaceholders,
+    type AttributesOrPlaceholders,
+    type ExplicitDrill,
+    type IVisualizationCallbacks,
+    type IVisualizationProps,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
+    type TotalsOrPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { PivotTableNextAccessibilityConfig } from "./accessibility.js";
-import { PivotTableNextCellSelectionConfig } from "./cellSelection.js";
-import { PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
-import { PivotTableNextExperimentalConfig } from "./experimental.js";
-import { PivotTableNextFormattingConfig } from "./formatting.js";
-import { PivotTableNextGrandTotalsPositionConfig } from "./grandTotalsPosition.js";
-import { PivotTableNextLayoutConfig } from "./layout.js";
-import { PivotTableNextAgGridLicenseConfig } from "./license.js";
-import { PivotTableNextMenuConfig } from "./menu.js";
-import { PivotTableNextPaginationConfig } from "./pagination.js";
-import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
-import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
-import { PivotTableNextTranspositionConfig } from "./transposition.js";
+import { type PivotTableNextAccessibilityConfig } from "./accessibility.js";
+import { type PivotTableNextCellSelectionConfig } from "./cellSelection.js";
+import { type PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
+import { type PivotTableNextExperimentalConfig } from "./experimental.js";
+import { type PivotTableNextFormattingConfig } from "./formatting.js";
+import { type PivotTableNextGrandTotalsPositionConfig } from "./grandTotalsPosition.js";
+import { type PivotTableNextLayoutConfig } from "./layout.js";
+import { type PivotTableNextAgGridLicenseConfig } from "./license.js";
+import { type PivotTableNextMenuConfig } from "./menu.js";
+import { type PivotTableNextPaginationConfig } from "./pagination.js";
+import { type ColumnResizedCallback, type PivotTableNextColumnsSizingConfig } from "./resizing.js";
+import { type PivotTableNextTextWrappingConfig } from "./textWrapping.js";
+import { type PivotTableNextTranspositionConfig } from "./transposition.js";
 
 /**
  * Configuration for the pivot table next.

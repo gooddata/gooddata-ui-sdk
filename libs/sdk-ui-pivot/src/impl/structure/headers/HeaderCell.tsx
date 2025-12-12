@@ -3,16 +3,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
-import { IOnOpenedChangeParams } from "@gooddata/sdk-ui-kit";
+import { type IExecutionDefinition, type ITotal, type SortDirection } from "@gooddata/sdk-model";
+import { type IOnOpenedChangeParams } from "@gooddata/sdk-ui-kit";
 
 import { AggregationsMenu } from "./AggregationsMenu.js";
-import { IMenu } from "../../../publicTypes.js";
+import { type IMenu } from "../../../publicTypes.js";
 import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants.js";
-import { IMenuAggregationClickConfig } from "../../privateTypes.js";
-import { TableDescriptor } from "../tableDescriptor.js";
+import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
+import { type TableDescriptor } from "../tableDescriptor.js";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";

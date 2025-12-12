@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { CodeLanguageSelect, CodeLanguageType } from "@gooddata/sdk-ui-kit";
+import { CodeLanguageSelect, type CodeLanguageType } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function CodeLanguageSelectorExamples() {

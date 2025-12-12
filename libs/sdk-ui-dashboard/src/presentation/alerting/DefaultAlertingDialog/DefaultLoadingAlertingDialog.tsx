@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
-import { IAlertingDialogProps } from "../types.js";
+import { type IAlertingDialogProps } from "../types.js";
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 export function DefaultLoadingAlertingDialog({

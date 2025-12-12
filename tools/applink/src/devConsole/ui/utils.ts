@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import blessed from "blessed";
+
+import type blessed from "blessed";
 
 import { GlobalEventBus, somethingHappened } from "../events.js";
 

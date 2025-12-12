@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 import {
     isInsightAlertingConfigurationEnabled,
     isInsightScheduledExportsConfigurationEnabled,
@@ -16,7 +16,7 @@ import {
     selectSettings,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { AlertingDisabledReason, SchedulingDisabledReason } from "../../insightMenu/index.js";
+import { type AlertingDisabledReason, type SchedulingDisabledReason } from "../../insightMenu/index.js";
 
 type UseAlertingAndSchedulingConfig = {
     insight?: IInsight;

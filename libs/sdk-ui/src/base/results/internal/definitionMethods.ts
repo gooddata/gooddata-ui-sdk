@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IBucket,
-    IExecutionDefinition,
-    IMeasure,
+    type IAttribute,
+    type IBucket,
+    type IExecutionDefinition,
+    type IMeasure,
     bucketIsEmpty,
     bucketMeasures,
     idMatchMeasure,

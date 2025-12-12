@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IInsightDefinition,
-    ObjRef,
+    type IAttribute,
+    type IInsightDefinition,
+    type ObjRef,
     attributeAlias,
     attributeDisplayFormRef,
     attributeLocalId,
@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketItem, IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IBucketItem, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
 /**
  * Extracts visualization controls from insight properties.

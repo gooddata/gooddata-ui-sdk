@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
-import { PlaceholdersState } from "../context.js";
+import { type PlaceholdersState } from "../context.js";
 import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
 import {
     resolveComposedPlaceholderValue,

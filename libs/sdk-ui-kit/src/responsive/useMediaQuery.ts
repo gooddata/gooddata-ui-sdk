@@ -2,7 +2,7 @@
 import { useMediaQuery as useReactResponsiveMediaQuery } from "react-responsive";
 import { invariant } from "ts-invariant";
 
-import { IMediaQueries } from "./interfaces.js";
+import { type IMediaQueries } from "./interfaces.js";
 import { useResponsiveContext } from "./ResponsiveContext.js";
 
 const SCREEN = "only screen";

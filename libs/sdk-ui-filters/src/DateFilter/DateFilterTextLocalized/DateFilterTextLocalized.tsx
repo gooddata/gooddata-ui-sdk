@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { DateFilterOption } from "../interfaces/index.js";
+import { type DateFilterOption } from "../interfaces/index.js";
 import { getDateFilterTitleUsingTranslator } from "../utils/Translations/DateFilterTitle.js";
 
 interface IDateFilterTextLocalizedProps {

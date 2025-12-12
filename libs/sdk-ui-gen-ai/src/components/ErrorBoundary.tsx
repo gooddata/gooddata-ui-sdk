@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Component, ErrorInfo, FC, PropsWithChildren, ReactNode } from "react";
+import { Component, type ErrorInfo, type FC, type PropsWithChildren, type ReactNode } from "react";
 
 import { connect } from "react-redux";
 
 import { GlobalError } from "./GlobalError.js";
 import {
-    RootState,
+    type RootState,
     asyncProcessSelector,
     clearThreadAction,
     globalErrorSelector,

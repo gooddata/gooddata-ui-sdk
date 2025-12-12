@@ -6,7 +6,7 @@ import { Input } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const AutofocsExamples = memo(function AutofocsExamples() {
     const [autofocus1, setAutofocus1] = useState(false);

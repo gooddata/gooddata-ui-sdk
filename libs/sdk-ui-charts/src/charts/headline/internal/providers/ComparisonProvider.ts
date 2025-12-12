@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import {
-    ArithmeticMeasureOperator,
-    IArithmeticMeasureDefinition,
-    IBucket,
-    IMeasure,
+    type ArithmeticMeasureOperator,
+    type IArithmeticMeasureDefinition,
+    type IBucket,
+    type IMeasure,
     bucketMeasure,
     bucketsFind,
     isPoPMeasure,
@@ -17,8 +17,8 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { AbstractProvider } from "./AbstractProvider.js";
-import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
-import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
+import { CalculateAs, type IComparison } from "../../../../interfaces/index.js";
+import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 import { ComparisonTransformation } from "../transformations/ComparisonTransformation.js";
 

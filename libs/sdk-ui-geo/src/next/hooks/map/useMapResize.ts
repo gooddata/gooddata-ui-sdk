@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
 import { applyViewport } from "../../map/viewport/viewportCalculation.js";
-import { IMapViewport } from "../../types/map/provider.js";
+import { type IMapViewport } from "../../types/map/provider.js";
 
 /**
  * Handle map resize when container dimensions change

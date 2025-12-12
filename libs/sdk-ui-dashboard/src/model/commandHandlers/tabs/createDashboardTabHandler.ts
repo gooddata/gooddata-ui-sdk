@@ -1,30 +1,30 @@
 // (C) 2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
 import {
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilterConfigItem,
-    IDashboardLayout,
-    IDateFilterConfig,
-    IFilterContextDefinition,
-    ScreenSize,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type IDashboardLayout,
+    type IDateFilterConfig,
+    type IFilterContextDefinition,
+    type ScreenSize,
 } from "@gooddata/sdk-model";
 
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
-import { CreateDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
-import { DashboardTabSwitched, dashboardTabCreated } from "../../events/tabs.js";
+import { type CreateDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
+import { type DashboardTabSwitched, dashboardTabCreated } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { InitialUndoState } from "../../store/_infra/undoEnhancer.js";
 import { selectDateFilterConfig } from "../../store/config/configSelectors.js";
-import { TabState, tabsActions } from "../../store/tabs/index.js";
+import { type TabState, tabsActions } from "../../store/tabs/index.js";
 import { selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 
 const getTabState = ({

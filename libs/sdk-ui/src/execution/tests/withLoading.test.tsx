@@ -7,8 +7,12 @@ import { dummyDataView } from "@gooddata/sdk-backend-base";
 import { emptyDef } from "@gooddata/sdk-model";
 
 import { DataViewFacade } from "../../base/index.js";
-import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit.js";
-import { IWithExecutionLoading, WithLoadingResult, withExecutionLoading } from "../withExecutionLoading.js";
+import { type IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit.js";
+import {
+    type IWithExecutionLoading,
+    type WithLoadingResult,
+    withExecutionLoading,
+} from "../withExecutionLoading.js";
 
 const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
 

@@ -7,8 +7,8 @@ import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
-import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type IReferencePoint, type IVisConstruct } from "../../../interfaces/Visualization.js";
 import { getBucketItems } from "../../../utils/bucketHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { canSortStackTotalValue } from "../barChart/sortHelpers.js";

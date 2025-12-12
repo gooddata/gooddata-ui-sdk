@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    ITigerClient,
+    type ITigerClient,
     newAxios,
     setAxiosAuthorizationToken,
     tigerClientFactory,

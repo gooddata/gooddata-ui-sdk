@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IUserWorkspaceSettings,
-    IWorkspaceSettings,
-    IWorkspaceSettingsService,
+    type IUserWorkspaceSettings,
+    type IWorkspaceSettings,
+    type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
-    IAlertDefault,
-    IMetricFormatOverrideSetting,
-    ISeparators,
+    type IAlertDefault,
+    type IMetricFormatOverrideSetting,
+    type ISeparators,
 } from "@gooddata/sdk-model";
 
 /**

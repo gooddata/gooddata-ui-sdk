@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import { useCallback } from "react";
 
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { IResultWarning, ObjRef } from "@gooddata/sdk-model";
-import { IPushData, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IResultWarning, type ObjRef } from "@gooddata/sdk-model";
+import { type IPushData, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 import {

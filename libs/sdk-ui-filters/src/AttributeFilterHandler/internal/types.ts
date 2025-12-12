@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { AttributeFilterHandlerStoreContext } from "./redux/index.js";
+import { type AttributeFilterHandlerStoreContext } from "./redux/index.js";
 
 /**
  * Configuration for attribute filter handler initialization.

@@ -2,16 +2,19 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { IRichTextWidgetDefinition, idRef } from "@gooddata/sdk-model";
+import { type IRichTextWidgetDefinition, idRef } from "@gooddata/sdk-model";
 
 import {
-    ChangeRichTextWidgetContent,
+    type ChangeRichTextWidgetContent,
     addLayoutSection,
     changeRichTextWidgetContent,
 } from "../../../commands/index.js";
-import { DashboardCommandFailed, DashboardRichTextWidgetContentChanged } from "../../../events/index.js";
+import {
+    type DashboardCommandFailed,
+    type DashboardRichTextWidgetContentChanged,
+} from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { EmptyDashboardIdentifier, TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestRichTextItem } from "../../../tests/fixtures/Layout.fixtures.js";
 

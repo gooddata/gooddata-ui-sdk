@@ -2,7 +2,7 @@
 
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardLayout,
+    type IDashboardLayout,
     isInsightWidget,
     isInsightWidgetDefinition,
     isKpiWidget,
@@ -24,23 +24,23 @@ import { DefaultTopBarCustomizer } from "./topBarCustomizer.js";
 import { createCustomizerMutationsContext } from "./types.js";
 import { DefaultVisualizationSwitcherCustomizer } from "./visualizationSwitcherCustomizer.js";
 import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
-import { IDashboardWidgetOverlay, WidgetsOverlayFn } from "../../model/index.js";
-import { IDashboardExtensionProps } from "../../presentation/index.js";
+import { type IDashboardWidgetOverlay, type WidgetsOverlayFn } from "../../model/index.js";
+import { type IDashboardExtensionProps } from "../../presentation/index.js";
 import {
-    IDashboardContentCustomizer,
-    IDashboardCustomizer,
-    IDashboardInsightCustomizer,
-    IDashboardLayoutCustomizer,
-    IDashboardWidgetCustomizer,
-    IFilterBarCustomizer,
-    IFiltersCustomizer,
-    ILoadingCustomizer,
-    IRichTextCustomizer,
-    ITitleCustomizer,
-    ITopBarCustomizer,
-    IVisualizationSwitcherCustomizer,
+    type IDashboardContentCustomizer,
+    type IDashboardCustomizer,
+    type IDashboardInsightCustomizer,
+    type IDashboardLayoutCustomizer,
+    type IDashboardWidgetCustomizer,
+    type IFilterBarCustomizer,
+    type IFiltersCustomizer,
+    type ILoadingCustomizer,
+    type IRichTextCustomizer,
+    type ITitleCustomizer,
+    type ITopBarCustomizer,
+    type IVisualizationSwitcherCustomizer,
 } from "../customizer.js";
-import { IDashboardPluginContract_V1 } from "../plugin.js";
+import { type IDashboardPluginContract_V1 } from "../plugin.js";
 
 /**
  * @internal

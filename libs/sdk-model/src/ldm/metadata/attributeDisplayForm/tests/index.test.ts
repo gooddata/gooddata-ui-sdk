@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { idRef } from "../../../../objRef/factory.js";
 import {
-    IAttributeDisplayFormMetadataObject,
+    type IAttributeDisplayFormMetadataObject,
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { KeyboardEvent, useRef } from "react";
+import { type KeyboardEvent, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

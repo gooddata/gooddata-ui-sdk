@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Middleware, PayloadAction } from "@reduxjs/toolkit";
+import { type Middleware, type PayloadAction } from "@reduxjs/toolkit";
 
 import { loadThreadAction, newMessageAction } from "../messages/messagesSlice.js";
 

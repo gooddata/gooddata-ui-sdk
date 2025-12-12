@@ -2,12 +2,12 @@
 
 import { invariant } from "ts-invariant";
 
-import { IDashboardLayoutItem, ScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutItem, type ScreenSize } from "@gooddata/sdk-model";
 
 import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutItemsFacade,
-    IDashboardLayoutSectionFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutItemsFacade,
+    type IDashboardLayoutSectionFacade,
 } from "./interfaces.js";
 import { DashboardLayoutItemFacade } from "./item.js";
 import { asLayoutItemPath } from "../../../layout/coordinates.js";

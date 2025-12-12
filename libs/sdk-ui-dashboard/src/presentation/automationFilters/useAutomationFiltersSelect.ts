@@ -3,9 +3,9 @@
 import { useMemo, useState } from "react";
 
 import {
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationVisibleFilter,
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationVisibleFilter,
     isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
 
@@ -19,8 +19,8 @@ import {
 } from "./hooks/useDefaultSelectedFiltersForExistingAutomation.js";
 import { useDefaultSelectedFiltersForNewAutomation } from "./hooks/useDefaultSelectedFiltersForNewAutomation.js";
 import {
-    ExtendedDashboardWidget,
-    IAutomationFiltersTab,
+    type ExtendedDashboardWidget,
+    type IAutomationFiltersTab,
     removeIgnoredWidgetFilters,
     selectAutomationCommonDateFilterId,
     selectAutomationFiltersByTab,

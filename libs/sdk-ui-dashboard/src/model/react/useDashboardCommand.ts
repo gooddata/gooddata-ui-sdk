@@ -5,9 +5,9 @@ import { v4 as uuid } from "uuid";
 
 import { useDashboardEventsContext } from "./DashboardEventsContext.js";
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
-import { DashboardCommands } from "../commands/index.js";
-import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
-import { DashboardEventType, DashboardEvents } from "../events/index.js";
+import { type DashboardCommands } from "../commands/index.js";
+import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { type DashboardEventType, type DashboardEvents } from "../events/index.js";
 
 /**
  * Hook that takes command creator and event handlers and returns function

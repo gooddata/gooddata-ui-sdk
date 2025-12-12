@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
-import { DashboardCommands } from "../commands/index.js";
+import { type DashboardCommands } from "../commands/index.js";
 
 /**
  * Hook that takes command creator and returns function that will result into dispatching this command.

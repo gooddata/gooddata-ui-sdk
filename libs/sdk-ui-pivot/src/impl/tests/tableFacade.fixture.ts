@@ -2,11 +2,15 @@
 
 import { invariant } from "ts-invariant";
 
-import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES, DataViewFacade, getIntl } from "@gooddata/sdk-ui";
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES, type DataViewFacade, getIntl } from "@gooddata/sdk-ui";
 
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "../privateTypes.js";
-import { TableFacade } from "../tableFacade.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
+import {
+    type TableConfigAccessors,
+    type TableDataCallbacks,
+    type TableLegacyCallbacks,
+} from "../privateTypes.js";
+import { type TableFacade } from "../tableFacade.js";
 import { TableFacadeInitializer } from "../tableFacadeInitializer.js";
 
 const TestTableDataCallbacks: TableDataCallbacks = {

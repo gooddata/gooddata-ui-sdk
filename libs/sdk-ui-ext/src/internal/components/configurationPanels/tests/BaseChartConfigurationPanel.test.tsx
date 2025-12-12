@@ -4,12 +4,12 @@ import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { IAttribute, IInsightDefinition, IMeasure } from "@gooddata/sdk-model";
+import { type IAttribute, type IInsightDefinition, type IMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks.js";
 import { BaseChartConfigurationPanel } from "../BaseChartConfigurationPanel.js";
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
+import { type IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 describe("BaseChartConfigurationPanel", () => {
     describe("axis name configuration", () => {

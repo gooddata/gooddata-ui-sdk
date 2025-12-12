@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Input } from "../Input.js";
-import { InputPureProps } from "../InputPure.js";
+import { type InputPureProps } from "../InputPure.js";
 
 describe("Input", () => {
     function renderInput(options: Partial<InputPureProps> = {}) {

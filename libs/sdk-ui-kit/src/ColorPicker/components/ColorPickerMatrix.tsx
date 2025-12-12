@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, memo, useCallback, useMemo } from "react";
+import { type ReactNode, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 
 import { SATURATION_ARRAY, getColorStyle } from "../utils.js";
 

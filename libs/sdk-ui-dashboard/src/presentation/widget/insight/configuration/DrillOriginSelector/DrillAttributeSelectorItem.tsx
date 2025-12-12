@@ -3,7 +3,7 @@
 import cx from "classnames";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
-import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
 
 import { selectCatalogDateDatasets, useDashboardSelector } from "../../../../../model/index.js";
 

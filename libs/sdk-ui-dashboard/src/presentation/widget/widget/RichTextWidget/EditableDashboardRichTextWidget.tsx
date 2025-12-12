@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { widgetRef } from "@gooddata/sdk-model";
 
-import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
+import { type IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import {
     selectIsDashboardSaving,
     useDashboardSelector,

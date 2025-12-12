@@ -2,10 +2,10 @@
 
 import { describe, expect, it } from "vitest";
 
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
+import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
 import { createDateValueFormatter } from "../dateValueFormatter.js";
-import { FormattingLocale, defaultDateFormatter } from "../defaultDateFormatter.js";
+import { type FormattingLocale, defaultDateFormatter } from "../defaultDateFormatter.js";
 
 describe("createDateValueFormatter", () => {
     const defaultDateValueFormatter = createDateValueFormatter(defaultDateFormatter);

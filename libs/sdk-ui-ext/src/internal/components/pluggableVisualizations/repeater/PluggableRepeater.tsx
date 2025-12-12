@@ -2,26 +2,26 @@
 
 import { cloneDeep, compact, omit } from "lodash-es";
 
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IColorMappingItem,
-    IDimension,
-    IInsightDefinition,
-    ITheme,
+    type IAttribute,
+    type IColorMappingItem,
+    type IDimension,
+    type IInsightDefinition,
+    type ITheme,
     areObjRefsEqual,
     insightBucket,
     insightBuckets,
     insightProperties,
     insightSetBuckets,
 } from "@gooddata/sdk-model";
-import { BucketNames, IPushData, VisualizationEnvironment } from "@gooddata/sdk-ui";
+import { BucketNames, type IPushData, type VisualizationEnvironment } from "@gooddata/sdk-ui";
 import {
     ColorUtils,
     CoreRepeater,
-    IColorMapping,
-    IRepeaterColumnSizing,
-    RepeaterColumnWidthItem,
+    type IColorMapping,
+    type IRepeaterColumnSizing,
+    type RepeaterColumnWidthItem,
     constructRepeaterBuckets,
     constructRepeaterDimensions,
     updateConfigWithSettings,
@@ -30,19 +30,19 @@ import {
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
 import { defaultImprovedFilters } from "../../../constants/uiConfig.js";
-import { IColorConfiguration } from "../../../interfaces/Colors.js";
+import { type IColorConfiguration } from "../../../interfaces/Colors.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
     InvalidBucketsSdkError,
     InvalidColumnsSdkError,
-    RenderFunction,
-    UnmountFunction,
+    type RenderFunction,
+    type UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { cloneBucketItem, getMainRowAttribute, sanitizeFilters } from "../../../utils/bucketHelper.js";
 import { getValidProperties } from "../../../utils/colors.js";

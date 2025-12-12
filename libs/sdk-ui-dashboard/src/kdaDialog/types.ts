@@ -1,6 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttributeDescriptorBody, IDashboardAttributeFilter, IMeasure, ObjRef } from "@gooddata/sdk-model";
+import {
+    type IAttributeDescriptorBody,
+    type IDashboardAttributeFilter,
+    type IMeasure,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal

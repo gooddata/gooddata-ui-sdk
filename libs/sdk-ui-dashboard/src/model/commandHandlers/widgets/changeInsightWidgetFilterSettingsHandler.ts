@@ -1,30 +1,30 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import {
-    IAnalyticalWidget,
-    IDashboardAttributeFilterReference,
-    IDashboardDateFilterReference,
-    IInsightWidget,
+    type IAnalyticalWidget,
+    type IDashboardAttributeFilterReference,
+    type IDashboardDateFilterReference,
+    type IInsightWidget,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 
-import { FilterValidators, processFilterOp } from "./common/filterOperations.js";
+import { type FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
     validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
-import { DashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
+import { type ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
+import { type DashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
 import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
     dateDatasetValidator: validateDatasetForInsightWidgetDateFilter,

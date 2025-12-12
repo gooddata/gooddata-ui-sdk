@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IHeadlineVisualizationProps, LegacyHeadline } from "../LegacyHeadline.js";
+import { type IHeadlineVisualizationProps, LegacyHeadline } from "../LegacyHeadline.js";
 
 describe("LegacyHeadline", () => {
     function createComponent(props: IHeadlineVisualizationProps) {

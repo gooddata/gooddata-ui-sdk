@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { FC, ReactElement, memo, useCallback } from "react";
+import { type FC, type ReactElement, memo, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -8,7 +8,7 @@ import { UiSubmenuHeader } from "../../../UiSubmenuHeader/UiSubmenuHeader.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { getItemInteractiveParent } from "../../itemUtils.js";
 import { e } from "../../menuBem.js";
-import { IUiMenuItemData } from "../../types.js";
+import { type IUiMenuItemData } from "../../types.js";
 
 /**
  * Renders the submenu header when in a submenu.

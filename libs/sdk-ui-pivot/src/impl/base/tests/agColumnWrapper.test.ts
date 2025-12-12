@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Column, GridApi } from "ag-grid-community";
+import { type Column, type GridApi } from "ag-grid-community";
 import { describe, expect, it } from "vitest";
 
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "../agColumnWrapper.js";

@@ -4,10 +4,10 @@ import { produce } from "immer";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { DashboardDateFilterConfigModeValues, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
+import { DashboardDateFilterConfigModeValues, type IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
 import { tabsActions } from "../../index.js";
-import { TabsState, tabsInitialState } from "../../tabsState.js";
+import { type TabsState, tabsInitialState } from "../../tabsState.js";
 import { dateFilterConfigReducers } from "../dateFilterConfigReducers.js";
 
 describe("dateFilterConfigReducers", () => {

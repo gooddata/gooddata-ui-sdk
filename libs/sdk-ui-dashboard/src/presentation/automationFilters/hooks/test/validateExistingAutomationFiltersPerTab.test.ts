@@ -3,8 +3,8 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    FilterContextItem,
-    IAutomationVisibleFilter,
+    type FilterContextItem,
+    type IAutomationVisibleFilter,
     dashboardFilterLocalIdentifier,
     isAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    IAutomationFiltersPerTabData,
+    type IAutomationFiltersPerTabData,
     validateExistingAutomationFiltersPerTab,
 } from "../useValidateExistingAutomationFilters.js";
 

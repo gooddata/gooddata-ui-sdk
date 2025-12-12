@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IUser } from "@gooddata/sdk-model";
+import { type IUser } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
 import { useUserDetails } from "./detailsHooks.js";

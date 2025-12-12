@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IAnalyticalBackendConfig,
-    IDataView,
-    IExecutionResult,
-    IPreparedExecution,
+    type IAnalyticalBackendConfig,
+    type IDataView,
+    type IExecutionResult,
+    type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
-import { IDimensionDescriptor } from "@gooddata/sdk-model";
+import { type IDimensionDescriptor } from "@gooddata/sdk-model";
 
-import { AuthenticatedCallGuard } from "../toolkit/auth.js";
-import { TelemetryData } from "../toolkit/backend.js";
+import { type AuthenticatedCallGuard } from "../toolkit/auth.js";
+import { type TelemetryData } from "../toolkit/backend.js";
 
 /**
  * @beta

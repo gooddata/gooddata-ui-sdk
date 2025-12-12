@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
     getSelectedElementsCount,
     isAttributeElementsByRef,
     isDashboardAttributeFilter,

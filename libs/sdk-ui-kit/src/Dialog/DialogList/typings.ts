@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { FunctionComponent, ReactElement } from "react";
+import { type FunctionComponent, type ReactElement } from "react";
 
 /**
  * @internal

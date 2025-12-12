@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
-import { IElementsQueryOptions } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { type IElementsQueryOptions } from "@gooddata/sdk-backend-spi";
+import { type ObjRef } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export async function getElementTitle(
     projectId: string,

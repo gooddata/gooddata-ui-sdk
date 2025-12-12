@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { cloneDeep } from "lodash-es";
 
-import { IColorPalette } from "@gooddata/sdk-model";
+import { type IColorPalette } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
 export function getLargePalette(): IColorPalette {

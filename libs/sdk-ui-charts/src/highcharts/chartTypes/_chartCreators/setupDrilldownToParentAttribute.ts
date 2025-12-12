@@ -1,12 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 
-import Highcharts from "highcharts/esm/highcharts.js";
+import type Highcharts from "highcharts/esm/highcharts.js";
 import { partial } from "lodash-es";
 
-import { ChartType, IDrillConfig, IHighchartsCategoriesTree, IHighchartsParentTick } from "@gooddata/sdk-ui";
+import {
+    type ChartType,
+    type IDrillConfig,
+    type IHighchartsCategoriesTree,
+    type IHighchartsParentTick,
+} from "@gooddata/sdk-ui";
 
 import { tickLabelClick } from "./drilldownEventing.js";
-import { IHighchartsPointObject } from "./isGroupHighchartsDrillEvent.js";
+import { type IHighchartsPointObject } from "./isGroupHighchartsDrillEvent.js";
 import { styleVariables } from "./styles/variables.js";
 
 export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick): IHighchartsPointObject[] {

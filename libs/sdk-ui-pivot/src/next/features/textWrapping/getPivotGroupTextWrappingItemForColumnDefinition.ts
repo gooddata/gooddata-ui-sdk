@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { ITableColumnDefinition } from "@gooddata/sdk-ui";
+import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
 import { isAttributeColumnLocator } from "../../types/locators.js";
-import { IColumnTextWrappingItem } from "../../types/textWrapping.js";
+import { type IColumnTextWrappingItem } from "../../types/textWrapping.js";
 
 /**
  * Returns {@link IColumnTextWrappingItem} for pivot group headers that match the provided {@link ITableColumnDefinition}.

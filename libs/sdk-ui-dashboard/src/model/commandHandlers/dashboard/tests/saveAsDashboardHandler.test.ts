@@ -3,11 +3,11 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands/index.js";
-import { DashboardCopySaved, DashboardSaved } from "../../../events/index.js";
+import { type DashboardCopySaved, type DashboardSaved } from "../../../events/index.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";

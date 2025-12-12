@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useMemo } from "react";
+import { type ReactNode, useCallback, useMemo } from "react";
 
 import { compact } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { isWidget, widgetTitle } from "@gooddata/sdk-model";
-import { IMessage } from "@gooddata/sdk-ui-kit";
+import { type IMessage } from "@gooddata/sdk-ui-kit";
 
 import {
     selectInvalidDrillWidgetRefs,

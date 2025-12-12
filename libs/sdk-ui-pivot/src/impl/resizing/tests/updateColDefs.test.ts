@@ -10,7 +10,7 @@ import {
     testStore,
 } from "./columnSizing.fixture.js";
 import {
-    ColumnWidthItem,
+    type ColumnWidthItem,
     newAttributeColumnLocator,
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,

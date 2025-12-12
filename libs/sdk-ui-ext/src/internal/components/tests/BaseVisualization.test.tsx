@@ -4,30 +4,30 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { IDrillableItem } from "@gooddata/sdk-ui";
+import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type IInsightDefinition } from "@gooddata/sdk-model";
+import { type IDrillableItem } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
 import {
-    IBucketItem,
-    IDrillDownContext,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketItem,
+    type IDrillDownContext,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../interfaces/Visualization.js";
 import {
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../interfaces/VisualizationDescriptor.js";
 import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../utils/translations.js";
-import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization.js";
+import { BaseVisualization, type IBaseVisualizationProps } from "../BaseVisualization.js";
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
 import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor.js";
 import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture.js";
-import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog.js";
+import { CatalogViaTypeToClassMap, type IVisualizationCatalog } from "../VisualizationCatalog.js";
 
 const pluggableVisualizationGetExecutionMock = vi.fn(() => ({}) as IPreparedExecution);
 

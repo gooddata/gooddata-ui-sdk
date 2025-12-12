@@ -2,16 +2,16 @@
 // import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
 import { uniq } from "lodash-es";
 
-import { IColor, IColorDescriptor, IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { type IColor, type IColorDescriptor, type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
-    ICreateColorAssignmentReturnValue,
+    type ICreateColorAssignmentReturnValue,
     getAttributeColorAssignment,
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IColorMapping } from "../../../interfaces/index.js";
+import { type IColorMapping } from "../../../interfaces/index.js";
 import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 
 export class ScatterPlotColorStrategy extends MeasureColorStrategy {

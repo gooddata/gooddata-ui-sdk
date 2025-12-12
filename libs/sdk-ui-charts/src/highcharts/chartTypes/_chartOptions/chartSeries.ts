@@ -1,14 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
-import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { type DataValue, type IMeasureGroupDescriptor, type ITheme } from "@gooddata/sdk-model";
+import { type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import {
+    type ChartFillConfig,
+    type IColorStrategy,
+    valueWithEmptyHandling,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { getChartFillProperties, getColorOrPatternFillIndex, isSolidFill } from "./patternFillOptions.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
     isAreaChart,
     isBubbleChart,

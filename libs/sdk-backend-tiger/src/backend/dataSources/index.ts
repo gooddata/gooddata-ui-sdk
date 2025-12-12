@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ActionsUtilities, JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
+import { ActionsUtilities, type JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesDataSourceIdentifiers } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IDataSourcesService } from "@gooddata/sdk-backend-spi";
-import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+import { type IDataSourcesService } from "@gooddata/sdk-backend-spi";
+import { type IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 function convertdataSourceIdentifier(
     dataSource: JsonApiDataSourceIdentifierOutWithLinks,

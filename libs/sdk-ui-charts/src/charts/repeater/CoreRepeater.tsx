@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";
+import { type ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";
 import {
     BucketNames,
     DataViewFacade,
@@ -20,9 +20,9 @@ import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-them
 
 import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
-import { RepeaterColumnResizedCallback } from "./publicTypes.js";
+import { type RepeaterColumnResizedCallback } from "./publicTypes.js";
 import { ColorFactory, getValidColorPalette } from "../../highcharts/index.js";
-import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
+import { type IChartConfig, type ICoreChartProps } from "../../interfaces/index.js";
 
 export type * from "./publicTypes.js";
 export type * from "./columnWidths.js";

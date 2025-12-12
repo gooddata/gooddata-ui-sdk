@@ -2,8 +2,8 @@
 
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import { resizeParentContainers } from "./containerHeightSanitization.js";
 import {
@@ -21,16 +21,19 @@ import {
     updateItemIndex,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { AddSectionItems } from "../../commands/index.js";
+import { type AddSectionItems } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
+import { type DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import {
+    type ExtendedDashboardLayoutSection,
+    type InternalDashboardItemDefinition,
+} from "../../types/layoutTypes.js";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 

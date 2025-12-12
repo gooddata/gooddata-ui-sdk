@@ -2,9 +2,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import { inaccessibleDashboardsEntityAdapter } from "./inaccessibleDashboardsEntityAdapter.js";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
-import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
+import { type IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

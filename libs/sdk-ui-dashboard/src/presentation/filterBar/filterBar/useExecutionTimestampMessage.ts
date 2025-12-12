@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { ILocale } from "@gooddata/sdk-ui";
+import { type ILocale } from "@gooddata/sdk-ui";
 
 import {
     changeIgnoreExecutionTimestamp,

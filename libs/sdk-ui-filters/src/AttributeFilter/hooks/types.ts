@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeElement,
-    IAttributeMetadataObject,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeElement,
+    type IAttributeMetadataObject,
+    type ObjRef,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * AttributeFilter controller state.

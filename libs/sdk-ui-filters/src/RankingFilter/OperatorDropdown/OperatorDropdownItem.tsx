@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { RankingFilterOperator } from "@gooddata/sdk-model";
+import { type RankingFilterOperator } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 interface IOperatorDropdownItemProps {

@@ -1,14 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAttributeDescriptor, assertNever } from "@gooddata/sdk-model";
-import { ITableColumnDefinition, ITableDataHeaderScope, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { type IAttributeDescriptor, assertNever } from "@gooddata/sdk-model";
+import {
+    type ITableColumnDefinition,
+    type ITableDataHeaderScope,
+    UnexpectedSdkError,
+} from "@gooddata/sdk-ui";
 
 import {
     MEASURE_GROUP_HEADER_COL_DEF_ID,
     MEASURE_GROUP_VALUE_COL_DEF_ID,
     PIVOTING_GROUP_SEPARATOR,
 } from "../../constants/internal.js";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { type ColumnHeadersPosition } from "../../types/transposition.js";
 
 /**
  * Creates unique identifiers path for provided column def.

@@ -5,7 +5,7 @@ import { ColumnChart } from "@gooddata/sdk-ui-charts";
 
 import { ColumnChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { type IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without y axis title", width: 120, height: 354 },

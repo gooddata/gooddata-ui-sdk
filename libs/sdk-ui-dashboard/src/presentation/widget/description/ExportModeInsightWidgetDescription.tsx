@@ -2,7 +2,7 @@
 
 import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
-import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
+import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {

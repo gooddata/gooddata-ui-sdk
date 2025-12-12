@@ -6,14 +6,14 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import {
     DashboardParametersSection,
-    IDashboardParametersSectionProps,
+    type IDashboardParametersSectionProps,
 } from "./CustomUrlEditorParametersSections/DashboardParametersSection.js";
 import { IdentifierParametersSection } from "./CustomUrlEditorParametersSections/IdentifierParametersSection.js";
 import {
-    IInsightParametersSectionProps,
+    type IInsightParametersSectionProps,
     InsightParametersSection,
 } from "./CustomUrlEditorParametersSections/InsightParametersSection.js";
-import { IIdentifierParametersSectionProps } from "./types.js";
+import { type IIdentifierParametersSectionProps } from "./types.js";
 
 type IParametersPanelProps = IInsightParametersSectionProps &
     IIdentifierParametersSectionProps &

@@ -1,10 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IExecutionConfig, IFilter, IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
+import {
+    type IExecutionConfig,
+    type IFilter,
+    type IInsight,
+    type IInsightWidget,
+    type ScreenSize,
+} from "@gooddata/sdk-model";
 
-import { DescriptionExportData } from "../../export/index.js";
+import { type DescriptionExportData } from "../../export/index.js";
 
 export interface IInsightWidgetDescriptionTriggerProps {
     widget: IInsightWidget;

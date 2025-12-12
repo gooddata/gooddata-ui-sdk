@@ -4,20 +4,20 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { AutomationFilterType } from "@gooddata/sdk-backend-spi";
-import { UiAsyncTableFilter, UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
+import { type AutomationFilterType } from "@gooddata/sdk-backend-spi";
+import { type UiAsyncTableFilter, type UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
 import { useFilterOptions } from "./FilterOptionsContext.js";
 import { AUTOMATION_FILTER_EXCLUDE_THRESHOLD } from "../constants.js";
 import { formatWorkspaceUserFilterOptions } from "../format.js";
 import { messages } from "../messages.js";
 import {
-    AutomationsAvailableFilters,
-    AutomationsFilterName,
-    AutomationsFilterPreselectValue,
-    AutomationsPreselectedFilters,
-    IAutomationFilter,
-    IAutomationFilterQuery,
+    type AutomationsAvailableFilters,
+    type AutomationsFilterName,
+    type AutomationsFilterPreselectValue,
+    type AutomationsPreselectedFilters,
+    type IAutomationFilter,
+    type IAutomationFilterQuery,
 } from "../types.js";
 import { useUser } from "../UserContext.js";
 

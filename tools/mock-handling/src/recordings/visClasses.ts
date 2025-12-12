@@ -3,9 +3,9 @@
 import fs from "fs";
 import path from "path";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
+import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 
 //
 // internal constants & types

@@ -3,13 +3,13 @@ import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IColorPalette, IMeasure, ITheme } from "@gooddata/sdk-model";
-import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IColorPalette, type IMeasure, type ITheme } from "@gooddata/sdk-model";
+import { type DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { IColorMapping } from "../../../../interfaces/index.js";
+import { type IColorMapping } from "../../../../interfaces/index.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
 

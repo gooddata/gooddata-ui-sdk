@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { UiAsyncTableEmptyState } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./messages.js";
-import { AutomationsType } from "./types.js";
+import { type AutomationsType } from "./types.js";
 
 interface IAutomationsEmptyStateProps {
     type: AutomationsType;

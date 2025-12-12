@@ -4,15 +4,15 @@ import { describe, expect, it } from "vitest";
 
 import { idRef, localIdRef, uriRef } from "../../../objRef/factory.js";
 import { newAttribute } from "../../attribute/factory.js";
-import { IAttribute } from "../../attribute/index.js";
+import { type IAttribute } from "../../attribute/index.js";
 import {
-    IAttributeSortItem,
-    IMeasureSortItem,
+    type IAttributeSortItem,
+    type IMeasureSortItem,
     newAttributeAreaSort,
     newAttributeSort,
     newMeasureSort,
 } from "../../base/sort.js";
-import { ITotal, newTotal } from "../../base/totals.js";
+import { type ITotal, newTotal } from "../../base/totals.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
@@ -23,12 +23,12 @@ import {
     newRelativeDateFilter,
 } from "../../filter/factory.js";
 import {
-    IAbsoluteDateFilter,
-    IMeasureValueFilter,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-    IRankingFilter,
-    IRelativeDateFilter,
+    type IAbsoluteDateFilter,
+    type IMeasureValueFilter,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type IRankingFilter,
+    type IRelativeDateFilter,
 } from "../../filter/index.js";
 import {
     newArithmeticMeasure,
@@ -36,7 +36,7 @@ import {
     newPopMeasure,
     newPreviousPeriodMeasure,
 } from "../../measure/factory.js";
-import { IMeasure } from "../../measure/index.js";
+import { type IMeasure } from "../../measure/index.js";
 import { factoryNotationFor } from "../index.js";
 
 // object with all the factory functions to be DI'd into the testing function

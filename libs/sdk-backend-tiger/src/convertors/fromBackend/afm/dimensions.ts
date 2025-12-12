@@ -2,15 +2,15 @@
 
 import { groupBy, keyBy, mapValues, uniqBy } from "lodash-es";
 
-import { ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
+import { type ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
 import {
-    IAttributeDisplayFormGeoAreaConfig,
-    IDimensionDescriptor,
-    IDimensionItemDescriptor,
-    IExecutionDefinition,
-    ITotalDescriptor,
-    Identifier,
-    ObjRef,
+    type IAttributeDisplayFormGeoAreaConfig,
+    type IDimensionDescriptor,
+    type IDimensionItemDescriptor,
+    type IExecutionDefinition,
+    type ITotalDescriptor,
+    type Identifier,
+    type ObjRef,
     idRef,
     isIdentifierRef,
     isSimpleMeasure,

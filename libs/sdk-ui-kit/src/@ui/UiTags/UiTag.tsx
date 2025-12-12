@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 
-import { UiTagDef } from "./types.js";
+import { type UiTagDef } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { UiTag as UiTagComponent } from "../UiTag/UiTag.js";
 

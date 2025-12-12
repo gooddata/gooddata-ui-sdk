@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    ChangeEvent,
-    KeyboardEvent,
-    MouseEvent as ReactMouseEvent,
-    ReactNode,
+    type ChangeEvent,
+    type KeyboardEvent,
+    type MouseEvent as ReactMouseEvent,
+    type ReactNode,
     useCallback,
     useEffect,
     useMemo,
@@ -12,7 +12,7 @@ import {
     useState,
 } from "react";
 
-import { ITextAreaWithSubmitProps } from "./typings.js";
+import { type ITextAreaWithSubmitProps } from "./typings.js";
 
 /**
  * @internal

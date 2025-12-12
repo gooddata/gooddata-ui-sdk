@@ -5,11 +5,11 @@ import { invariant } from "ts-invariant";
 import {
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
-    JsonApiAnalyticalDashboardOutDocument,
-    JsonApiFilterContextOutWithLinks,
+    type JsonApiAnalyticalDashboardOutDocument,
+    type JsonApiFilterContextOutWithLinks,
     isFilterContextData,
 } from "@gooddata/api-client-tiger";
-import { FilterContextItem, IFilterContext, ObjectType, idRef } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IFilterContext, type ObjectType, idRef } from "@gooddata/sdk-model";
 
 import { convertFilterContextFilters as convertFilterContextFiltersV1 } from "../v1/AnalyticalDashboardConverter.js";
 import { convertFilterContextFilters as convertFilterContextFiltersV2 } from "../v2/FilterContextFiltersConverter.js";

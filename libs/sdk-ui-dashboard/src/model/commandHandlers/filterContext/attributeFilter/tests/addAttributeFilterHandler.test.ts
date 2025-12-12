@@ -6,13 +6,13 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
 
 import { addAttributeFilter } from "../../../../commands/index.js";
-import { DashboardCommandFailed } from "../../../../events/index.js";
+import { type DashboardCommandFailed } from "../../../../events/index.js";
 import { selectAttributeFilterConfigsModeMap } from "../../../../store/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
 } from "../../../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

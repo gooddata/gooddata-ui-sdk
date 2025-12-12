@@ -5,11 +5,15 @@ import { useCallback } from "react";
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
-import { IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
 import { dataSourcePermissionMessages } from "./locales.js";
 import { PermissionDropdownItem } from "./PermissionsDropdownItem.js";
-import { DataSourcePermission, DataSourcePermissionSubject, IDataSourcePermissionsItem } from "../types.js";
+import {
+    type DataSourcePermission,
+    type DataSourcePermissionSubject,
+    type IDataSourcePermissionsItem,
+} from "../types.js";
 
 const userGroupTooltipMessages = defineMessages({
     USE: { id: "userManagement.dataSources.permissionGroup.use.tooltip" },

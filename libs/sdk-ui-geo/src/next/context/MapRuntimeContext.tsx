@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, ReactNode, createContext, useContext } from "react";
+import { type ReactElement, type ReactNode, createContext, useContext } from "react";
 
 import type { IMapFacade, IPopupFacade } from "../layers/common/mapFacade.js";
 import type { IGeoAdapterContext } from "../layers/registry/adapterTypes.js";

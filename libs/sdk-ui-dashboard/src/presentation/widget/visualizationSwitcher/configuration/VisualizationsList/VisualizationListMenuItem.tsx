@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 
 import { Item } from "@gooddata/sdk-ui-kit";
 

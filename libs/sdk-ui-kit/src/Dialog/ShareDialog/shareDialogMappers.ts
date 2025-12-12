@@ -1,19 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    AccessGranteeDetail,
-    IAvailableUserAccessGrantee,
-    IAvailableUserGroupAccessGrantee,
-    IGranularAccessGrantee,
-    IGranularRulesAccess,
-    IGranularUserAccess,
-    IGranularUserGroupAccess,
-    IUser,
-    IUserAccess,
-    IUserGroupAccess,
-    IWorkspaceUser,
-    ObjRef,
-    ShareStatus,
+    type AccessGranteeDetail,
+    type IAvailableUserAccessGrantee,
+    type IAvailableUserGroupAccessGrantee,
+    type IGranularAccessGrantee,
+    type IGranularRulesAccess,
+    type IGranularUserAccess,
+    type IGranularUserGroupAccess,
+    type IUser,
+    type IUserAccess,
+    type IUserGroupAccess,
+    type IWorkspaceUser,
+    type ObjRef,
+    type ShareStatus,
     areObjRefsEqual,
     isGranularRulesAccessGrantee,
     isGranularUserAccess,
@@ -24,16 +24,16 @@ import {
 import { typesUtils } from "@gooddata/util";
 
 import {
-    GranteeItem,
-    GranteeStatus,
-    IAffectedSharedObject,
-    IGranteeGroup,
-    IGranteeGroupAll,
-    IGranteeInactiveOwner,
-    IGranteeRules,
-    IGranteeUser,
-    IGranularGranteeGroup,
-    IGranularGranteeUser,
+    type GranteeItem,
+    type GranteeStatus,
+    type IAffectedSharedObject,
+    type IGranteeGroup,
+    type IGranteeGroupAll,
+    type IGranteeInactiveOwner,
+    type IGranteeRules,
+    type IGranteeUser,
+    type IGranularGranteeGroup,
+    type IGranularGranteeUser,
     isGranteeGroupAll,
     isGranteeUser,
     isGranteeUserInactive,
@@ -47,7 +47,7 @@ import {
     hasGranteeRules,
     hasGroupAll,
 } from "./ShareDialogBase/utils.js";
-import { ISharedObject } from "./types.js";
+import { type ISharedObject } from "./types.js";
 
 const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeStatus => {
     if (status === "DISABLED") {

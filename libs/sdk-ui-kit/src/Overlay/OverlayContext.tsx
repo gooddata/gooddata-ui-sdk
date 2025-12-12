@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { type ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
-import { OverlayController } from "./OverlayController.js";
+import { type OverlayController } from "./OverlayController.js";
 
 /**
  * @internal

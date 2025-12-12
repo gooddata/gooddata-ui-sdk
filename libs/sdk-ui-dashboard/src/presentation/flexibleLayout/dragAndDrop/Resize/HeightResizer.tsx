@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { ResizerProps } from "./types.js";
+import { type ResizerProps } from "./types.js";
 
 export function HeightResizer({ status }: ResizerProps) {
     const boxClassName = cx("gd-fluidlayout-height-resizer", status, "s-gd-fluidlayout-height-resizer");

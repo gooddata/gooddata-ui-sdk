@@ -3,12 +3,12 @@
 import { describe, expectTypeOf, it } from "vitest";
 
 import {
-    IInvalidDatapoint,
-    IInvalidNode,
-    IInvalidNodeAtPath,
-    IInvalidNodePath,
-    IValidationContextValue,
-    IValidationSeverity,
+    type IInvalidDatapoint,
+    type IInvalidNode,
+    type IInvalidNodeAtPath,
+    type IInvalidNodePath,
+    type IValidationContextValue,
+    type IValidationSeverity,
 } from "../types.js";
 
 describe("Validation Types", () => {

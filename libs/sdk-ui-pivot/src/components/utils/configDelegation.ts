@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { TableConfigAccessors } from "../../impl/config/index.js";
-import { ICorePivotTableProps } from "../../publicTypes.js";
+import { type TableConfigAccessors } from "../../impl/config/index.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
 
 /**
  * Creates configuration accessor delegates that forward calls to the TableConfigAccessors instance.

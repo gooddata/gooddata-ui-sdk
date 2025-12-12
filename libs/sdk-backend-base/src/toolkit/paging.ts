@@ -3,7 +3,7 @@
 import { range } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IPagedResource } from "@gooddata/sdk-backend-spi";
+import { type IPagedResource } from "@gooddata/sdk-backend-spi";
 
 /**
  * This implementation of {@link @gooddata/sdk-backend-spi#IPagedResource} pages over a list of items

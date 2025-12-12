@@ -1,11 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Ref } from "react";
+import { type Ref } from "react";
 
 import cx from "classnames";
 
 import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
-import { IWrapCreatePanelItemWithDragInnerProps, IWrapCreatePanelItemWithDragProps } from "./types.js";
+import {
+    type IWrapCreatePanelItemWithDragInnerProps,
+    type IWrapCreatePanelItemWithDragProps,
+} from "./types.js";
 import { useDashboardDrag } from "./useDashboardDrag.js";
 import { selectIsInEditMode, useDashboardSelector } from "../../model/index.js";
 

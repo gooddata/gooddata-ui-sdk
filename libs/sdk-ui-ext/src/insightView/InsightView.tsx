@@ -2,10 +2,10 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
-    IInsight,
-    ObjRef,
+    type IInsight,
+    type ObjRef,
     areObjRefsEqual,
     idRef,
     insightRef,
@@ -17,10 +17,10 @@ import {
 import {
     ErrorComponent as DefaultError,
     LoadingComponent as DefaultLoading,
-    GoodDataSdkError,
+    type GoodDataSdkError,
     IntlWrapper,
-    OnError,
-    OnLoadingChanged,
+    type OnError,
+    type OnLoadingChanged,
     convertError,
     resolveLocale,
     useBackendWithCorrelation,
@@ -38,7 +38,7 @@ import {
     insightDataLoaderFactory,
     userWorkspaceSettingsDataLoaderFactory,
 } from "../dataLoaders/index.js";
-import { IInsightViewProps } from "../internal/index.js";
+import { type IInsightViewProps } from "../internal/index.js";
 
 interface IInsightViewCoreState {
     isVisualizationLoading: boolean;

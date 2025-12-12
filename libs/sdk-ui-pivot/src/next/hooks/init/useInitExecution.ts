@@ -7,8 +7,8 @@ import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
 import { applyPivotTableDefaultProps } from "../../context/PivotTablePropsContext.js";
 import { createExecutionDef } from "../../features/data/createExecutionDef.js";
-import { ICorePivotTableNextProps } from "../../types/internal.js";
-import { IPivotTableNextProps } from "../../types/public.js";
+import { type ICorePivotTableNextProps } from "../../types/internal.js";
+import { type IPivotTableNextProps } from "../../types/public.js";
 
 /**
  * Initializes execution for pivot table.

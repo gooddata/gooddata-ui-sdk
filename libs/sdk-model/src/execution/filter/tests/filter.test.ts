@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { Account, ClosedDate, Won } from "../../../../__mocks__/model.js";
 import { idRef, localIdRef } from "../../../index.js";
-import { ObjRef, ObjRefInScope } from "../../../objRef/index.js";
+import { type ObjRef, type ObjRefInScope } from "../../../objRef/index.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
@@ -15,8 +15,8 @@ import {
     newRelativeDateFilter,
 } from "../factory.js";
 import {
-    IAttributeElements,
-    IFilter,
+    type IAttributeElements,
+    type IFilter,
     absoluteDateFilterValues,
     filterAttributeElements,
     filterIsEmpty,

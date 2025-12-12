@@ -6,7 +6,7 @@ import {
     satisfies as semverSatisfies,
 } from "semver";
 
-import { IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
+import { type IDashboardEngine, type IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 
 /**
  * Determine dashboard engine to use with the plugins.

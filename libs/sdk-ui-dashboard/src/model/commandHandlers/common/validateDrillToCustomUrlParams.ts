@@ -1,14 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeFilter,
-    IDrillToCustomUrl,
-    IFilter,
-    IInsightWidget,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeFilter,
+    type IDrillToCustomUrl,
+    type IFilter,
+    type IInsightWidget,
     areObjRefsEqual,
     filterObjRef,
     idRef,
@@ -20,7 +20,7 @@ import {
 
 import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";

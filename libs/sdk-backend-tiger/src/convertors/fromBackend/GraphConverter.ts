@@ -1,6 +1,6 @@
 // (C) 2022-2023 GoodData Corporation
 
-import { IDashboardMetadataObject, idRef } from "@gooddata/sdk-model";
+import { type IDashboardMetadataObject, idRef } from "@gooddata/sdk-model";
 
 interface IGraphNode {
     id: string;

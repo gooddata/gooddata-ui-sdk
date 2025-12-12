@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import { BodyScrollEvent } from "ag-grid-community";
+import { type BodyScrollEvent } from "ag-grid-community";
 
-import { InternalTableState } from "../../tableState.js";
-import { IScrollPosition } from "../stickyRowHandler.js";
+import { type InternalTableState } from "../../tableState.js";
+import { type IScrollPosition } from "../stickyRowHandler.js";
 
 export interface IScrollEventHandlerContext {
     internal: InternalTableState;

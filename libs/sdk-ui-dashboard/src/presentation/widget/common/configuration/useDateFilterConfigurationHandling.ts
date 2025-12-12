@@ -3,9 +3,9 @@
 import { useCallback, useState } from "react";
 
 import {
-    ICatalogDateDataset,
-    IWidget,
-    ObjRef,
+    type ICatalogDateDataset,
+    type IWidget,
+    type ObjRef,
     idRef,
     isInsightWidget,
     isRichTextWidget,

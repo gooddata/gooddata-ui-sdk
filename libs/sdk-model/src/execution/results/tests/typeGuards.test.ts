@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import {
-    IDimensionItemDescriptor,
-    IResultHeader,
+    type IDimensionItemDescriptor,
+    type IResultHeader,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isMeasureGroupDescriptor,

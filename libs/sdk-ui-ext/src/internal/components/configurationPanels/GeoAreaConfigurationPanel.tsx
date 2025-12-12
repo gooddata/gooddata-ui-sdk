@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
+import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";

@@ -1,31 +1,31 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, memo, useEffect } from "react";
+import { type ReactElement, memo, useEffect } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
 import { isEqual, omitBy } from "lodash-es";
 import { useIntl } from "react-intl";
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 import { invariant } from "ts-invariant";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { ITheme } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type ITheme } from "@gooddata/sdk-model";
 import {
-    ExplicitDrill,
-    OnFiredDrillEvent,
+    type ExplicitDrill,
+    type OnFiredDrillEvent,
     clusterTitleFromIntl,
     convertDrillableItemsToPredicates,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
 } from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
+import { type ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 
 import { initChartPlugins } from "./adapter/chartPlugins.js";
 import { HighChartsMeasuredRenderer } from "./adapter/HighChartsMeasuredRenderer.js";
 import {
     HighChartsRenderer,
-    IHighChartsRendererProps,
+    type IHighChartsRendererProps,
     renderChart as chartRenderer,
     renderLegend as legendRenderer,
 } from "./adapter/HighChartsRenderer.js";
@@ -38,8 +38,8 @@ import {
 } from "./chartTypes/_chartOptions/chartLimits.js";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
-import { IChartOptions } from "./typings/unsafe.js";
-import { IChartConfig, OnLegendReady } from "../interfaces/index.js";
+import { type IChartOptions } from "./typings/unsafe.js";
+import { type IChartConfig, type OnLegendReady } from "../interfaces/index.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (

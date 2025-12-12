@@ -2,8 +2,8 @@
 
 import { cloneDeep } from "lodash-es";
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { HighchartsOptions } from "../../lib/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type HighchartsOptions } from "../../lib/index.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
 import { getAxesCounts } from "../_util/common.js";

@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type ISettings, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
-import { IHeaderMenuItem } from "./typings.js";
+import { type IHeaderMenuItem } from "./typings.js";
 import { isFreemiumEdition } from "../utils/featureFlags.js";
 
 /**

@@ -6,9 +6,9 @@ import {
 } from "@gooddata/sdk-ui-ext";
 
 import { useWidgetSelection } from "../../../model/index.js";
-import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
+import { type CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";
-import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types.js";
+import { type DraggableItem, type IWrapCreatePanelItemWithDragComponent } from "../types.js";
 
 /**
  * @internal

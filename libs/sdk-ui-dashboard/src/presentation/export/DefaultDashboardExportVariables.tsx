@@ -2,11 +2,11 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
+import { type IThemeComplementaryPalette } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { useDashboardRelatedFilters } from "./hooks/useDashboardRelatedFilters.js";
-import { MetaExportDataAttributes } from "./types.js";
+import { type MetaExportDataAttributes } from "./types.js";
 import { useMetaExportData, useMetaExportImageData, useMetaPaletteData } from "./useExportData.js";
 import {
     selectConfig,
@@ -15,7 +15,7 @@ import {
     selectDashboardId,
     useDashboardSelector,
 } from "../../model/index.js";
-import { RenderMode } from "../../types.js";
+import { type RenderMode } from "../../types.js";
 
 /**
  * @alpha

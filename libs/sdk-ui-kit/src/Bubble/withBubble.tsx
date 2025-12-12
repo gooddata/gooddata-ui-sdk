@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ComponentType, ReactNode, forwardRef } from "react";
+import { type ComponentType, type ReactNode, forwardRef } from "react";
 
 import { useIntl } from "react-intl";
 
 import { Bubble } from "./Bubble.js";
 import { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 /**
  * @internal

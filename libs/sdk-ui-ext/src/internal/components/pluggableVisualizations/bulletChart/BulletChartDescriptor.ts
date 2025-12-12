@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
-import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
+import { type IInsight } from "@gooddata/sdk-model";
+import { BucketNames, type IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
+import { type IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggableBulletChart } from "./PluggableBulletChart.js";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
+import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

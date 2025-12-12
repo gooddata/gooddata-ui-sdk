@@ -24,9 +24,9 @@
  * @internal
  */
 
-import { IDataVisualizationProps } from "@gooddata/sdk-ui";
+import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
-import { IGeoAreaChartBaseProps } from "./public.js";
+import { type IGeoAreaChartBaseProps } from "./public.js";
 
 /**
  * Internal props for GeoAreaChart component.

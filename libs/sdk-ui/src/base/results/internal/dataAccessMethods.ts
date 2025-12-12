@@ -1,26 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeDescriptor,
-    IMeasure,
-    IMeasureDescriptor,
-    ITotal,
+    type IAttribute,
+    type IAttributeDescriptor,
+    type IMeasure,
+    type IMeasureDescriptor,
+    type ITotal,
     measureLocalId,
 } from "@gooddata/sdk-model";
 
 import { DataAccessImpl } from "./dataAccessImpl.js";
 import {
-    IDataAccessMethods,
-    IDataSeries,
-    IDataSeriesCollection,
-    IDataSlice,
-    IDataSliceCollection,
+    type IDataAccessMethods,
+    type IDataSeries,
+    type IDataSeriesCollection,
+    type IDataSlice,
+    type IDataSliceCollection,
 } from "../dataAccess.js";
-import { DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig.js";
+import { type DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig.js";
 import { dataViewToTableData } from "../tableData/dataViewToTableData.js";
-import { ITableData } from "../tableData/interfaces/index.js";
+import { type ITableData } from "../tableData/interfaces/index.js";
 
 class FilteredIterator<T> implements Iterator<T> {
     private idx = 0;

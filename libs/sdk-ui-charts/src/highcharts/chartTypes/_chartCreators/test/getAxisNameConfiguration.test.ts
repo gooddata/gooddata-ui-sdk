@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { IAxisConfig } from "../../../../interfaces/index.js";
+import { type IAxisConfig } from "../../../../interfaces/index.js";
 import { ALIGN_LEFT, ALIGN_RIGHT, ROTATE_NEGATIVE_90_DEGREES } from "../../../constants/axisLabel.js";
-import { IChartOptions } from "../../../typings/unsafe.js";
+import { type IChartOptions } from "../../../typings/unsafe.js";
 import { getAxisNameConfiguration } from "../getAxisNameConfiguration.js";
 
 describe("getAxisNameConfiguration", () => {

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SyntheticEvent } from "react";
+import { type SyntheticEvent } from "react";
 
 import classNames from "classnames";
 import { useIntl } from "react-intl";

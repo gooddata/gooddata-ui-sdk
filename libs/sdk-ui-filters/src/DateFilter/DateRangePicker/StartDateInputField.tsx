@@ -4,11 +4,11 @@ import { forwardRef, useMemo } from "react";
 
 import cx from "classnames";
 
-import { DateTimePicker, IDateTimePickerAccessibilityConfig } from "./DateTimePicker.js";
+import { DateTimePicker, type IDateTimePickerAccessibilityConfig } from "./DateTimePicker.js";
 import {
     DATE_INPUT_HINT_ID,
-    IDateRangeInputFieldProps,
-    InputErrorMessageTexts,
+    type IDateRangeInputFieldProps,
+    type InputErrorMessageTexts,
     TIME_INPUT_HINT_ID,
 } from "./types.js";
 import { DAY_START_TIME } from "../constants/Platform.js";

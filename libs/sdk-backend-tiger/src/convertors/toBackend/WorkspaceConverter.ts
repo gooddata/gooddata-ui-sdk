@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { JsonApiWorkspacePatch } from "@gooddata/api-client-tiger";
-import { IWorkspaceDescriptorUpdate } from "@gooddata/sdk-backend-spi";
+import { type JsonApiWorkspacePatch } from "@gooddata/api-client-tiger";
+import { type IWorkspaceDescriptorUpdate } from "@gooddata/sdk-backend-spi";
 
 export const convertWorkspaceUpdate = (
     descriptor: IWorkspaceDescriptorUpdate,

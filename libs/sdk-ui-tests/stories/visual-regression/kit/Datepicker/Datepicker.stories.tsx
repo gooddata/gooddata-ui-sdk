@@ -5,9 +5,9 @@ import { useState } from "react";
 import { Datepicker } from "@gooddata/sdk-ui-kit";
 
 import {
-    INeobackstopConfig,
-    INeobackstopScenarioConfig,
-    IStoryParameters,
+    type INeobackstopConfig,
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 

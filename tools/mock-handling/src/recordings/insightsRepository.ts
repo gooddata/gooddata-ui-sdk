@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-import { IRecording, isNonNullRecording, readJsonSync } from "./common.js";
+import { type IRecording, isNonNullRecording, readJsonSync } from "./common.js";
 import { InsightRecording } from "./insights.js";
 import { findFiles } from "../base/utils.js";
 import { logWarn } from "../cli/loggers.js";

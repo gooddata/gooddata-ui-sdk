@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import mapboxgl from "mapbox-gl";
+import type mapboxgl from "mapbox-gl";
 import { describe, expect, it } from "vitest";
 
-import { IGeoConfig, IGeoData } from "../../../GeoChart.js";
+import { type IGeoConfig, type IGeoData } from "../../../GeoChart.js";
 import {
     createClusterLabels,
     createClusterPoints,

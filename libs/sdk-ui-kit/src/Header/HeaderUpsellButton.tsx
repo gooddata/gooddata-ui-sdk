@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { IHeaderUpsellButtonProps } from "./typings.js";
+import { type IHeaderUpsellButtonProps } from "./typings.js";
 
 export function HeaderUpsellButton({ onUpsellButtonClick }: IHeaderUpsellButtonProps) {
     const intl = useIntl();

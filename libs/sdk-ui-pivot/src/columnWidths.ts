@@ -1,7 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IAttribute, IMeasure, Identifier, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    type IMeasure,
+    type Identifier,
+    attributeLocalId,
+    measureLocalId,
+} from "@gooddata/sdk-model";
 
 //
 // types used in implementation internals

@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { RefObject, useEffect, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 
 import { useDragDropManager } from "@evil-internetmann/react-dnd";
 
-import { DraggableItemType } from "./types.js";
+import { type DraggableItemType } from "./types.js";
 import { useInterval } from "./useInterval.js";
 
 const SCROLLING_STEP = 3;

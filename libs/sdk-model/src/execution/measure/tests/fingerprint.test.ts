@@ -6,7 +6,7 @@ import { Account, Velocity, Won } from "../../../../__mocks__/model.js";
 import { newPositiveAttributeFilter } from "../../../index.js";
 import { modifySimpleMeasure } from "../factory.js";
 import { measureFingerprint } from "../fingerprint.js";
-import { IMeasure } from "../index.js";
+import { type IMeasure } from "../index.js";
 
 describe("measureFingerprint", () => {
     describe("for simple measure", () => {

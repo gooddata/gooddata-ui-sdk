@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { DefaultCancelEditDialog } from "./DefaultCancelEditDialog.js";
-import { ICancelEditDialogProps } from "./types.js";
+import { type ICancelEditDialogProps } from "./types.js";
 
 /**
  * @internal

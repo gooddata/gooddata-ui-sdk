@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { KeyboardEvent } from "react";
+import { type KeyboardEvent } from "react";
 
 import { CONFIRM_DIALOG_BASE_ID } from "../Dialog/elementId.js";
-import { IRegion } from "../typings/domUtilities.js";
-import { NavigationDirection } from "../typings/navigation.js";
+import { type IRegion } from "../typings/domUtilities.js";
+import { type NavigationDirection } from "../typings/navigation.js";
 
 /**
  * Removes the element specified from the DOM

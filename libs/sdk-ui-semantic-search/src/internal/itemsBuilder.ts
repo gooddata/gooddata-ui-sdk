@@ -4,7 +4,7 @@ import type { IntlShape } from "react-intl";
 
 import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
-import { SearchTreeViewItem } from "./LeveledSearchTreeView.js";
+import { type SearchTreeViewItem } from "./LeveledSearchTreeView.js";
 import { permissionsFilter, thresholdFilter } from "../filters/items.filters.js";
 import { getUIPath } from "../utils/getUIPath.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";

@@ -3,10 +3,10 @@
 import { fireEvent, render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { HeadlineElementType, withIntl } from "@gooddata/sdk-ui";
+import { type HeadlineElementType, withIntl } from "@gooddata/sdk-ui";
 
-import { IWithDrillableItemProps } from "../../../../interfaces/BaseHeadlines.js";
-import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
+import { type IWithDrillableItemProps } from "../../../../interfaces/BaseHeadlines.js";
+import { type IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import { HEADLINE_ITEM_LINK_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
 import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
 import { withDrillable } from "../withDrillable.js";

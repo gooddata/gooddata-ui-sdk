@@ -1,17 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useState } from "react";
+import { type ReactElement, useState } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
+import ReactMeasure, { type ContentRect, type MeasuredComponentProps } from "react-measure";
 
 import {
-    ChartFillType,
+    type ChartFillType,
     ColorLegend,
-    IPushpinCategoryLegendItem,
+    type IPushpinCategoryLegendItem,
     Paging,
-    PositionType,
+    type PositionType,
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { generateLegendColorData } from "./geoChartColor.js";
@@ -26,7 +26,7 @@ import {
 } from "./helpers/geoChart/responsive.js";
 import { HEIGHT_OF_SIZE_LEGEND, PushpinCategoryLegend } from "./legends/PushpinCategoryLegend.js";
 import { PushpinSizeLegend } from "./legends/PushpinSizeLegend.js";
-import { IAvailableLegends, IGeoData } from "../../GeoChart.js";
+import { type IAvailableLegends, type IGeoData } from "../../GeoChart.js";
 
 const HEIGHT_OF_COLOR_LEGEND = 210;
 

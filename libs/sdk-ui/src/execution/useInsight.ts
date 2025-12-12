@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { DependencyList } from "react";
+import { type DependencyList } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import {
-    GoodDataSdkError,
-    UseCancelablePromiseState,
+    type GoodDataSdkError,
+    type UseCancelablePromiseState,
     useBackendStrict,
     useCancelablePromise,
     useWorkspaceStrict,

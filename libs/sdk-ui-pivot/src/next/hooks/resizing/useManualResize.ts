@@ -5,8 +5,8 @@ import { useCallback } from "react";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { createColumnWidthItemForColumnDefinition } from "../../features/resizing/createColumnWidthItemForColumnDefinition.js";
 import { isColumnWidthItemMatch } from "../../features/resizing/isColumnWidthItemMatch.js";
-import { AgGridOnColumnResized } from "../../types/agGrid.js";
-import { ColumnWidthItem } from "../../types/resizing.js";
+import { type AgGridOnColumnResized } from "../../types/agGrid.js";
+import { type ColumnWidthItem } from "../../types/resizing.js";
 
 /**
  * Triggers `onColumnResized` callback on pivot table, when column is manually resized.

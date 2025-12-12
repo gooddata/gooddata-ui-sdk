@@ -3,32 +3,32 @@
 import { invariant } from "ts-invariant";
 
 import {
-    DependsOn,
-    DependsOnDateFilter,
-    ElementsRequest,
-    ElementsResponseGranularityEnum,
+    type DependsOn,
+    type DependsOnDateFilter,
+    type ElementsRequest,
+    type ElementsResponseGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import { ActionsApi_ComputeLabelElementsPost } from "@gooddata/api-client-tiger/labelElements";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    FilterWithResolvableElements,
-    IElementsQuery,
-    IElementsQueryAttributeFilter,
-    IElementsQueryFactory,
-    IElementsQueryOptions,
-    IElementsQueryResult,
-    IFilterElementsQuery,
+    type FilterWithResolvableElements,
+    type IElementsQuery,
+    type IElementsQueryAttributeFilter,
+    type IElementsQueryFactory,
+    type IElementsQueryOptions,
+    type IElementsQueryResult,
+    type IFilterElementsQuery,
     NotSupported,
     UnexpectedError,
     isElementsQueryOptionsElementsByValue,
     isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAbsoluteDateFilter,
-    IAttributeElement,
-    IAttributeFilter,
-    IRelativeDateFilter,
-    ObjRef,
+    type IAbsoluteDateFilter,
+    type IAttributeElement,
+    type IAttributeFilter,
+    type IRelativeDateFilter,
+    type ObjRef,
     filterAttributeElements,
     filterIsEmpty,
     filterObjRef,
@@ -44,11 +44,11 @@ import { mapDashboardDateFilterToDependentDateFilter } from "./dependentDateFilt
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { createDateValueNormalizer } from "../../../../convertors/fromBackend/dateFormatting/dateValueNormalizer.js";
-import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
-import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
+import { type FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
+import { type DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
 import { toObjQualifier } from "../../../../convertors/toBackend/ObjRefConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(

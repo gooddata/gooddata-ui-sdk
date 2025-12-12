@@ -4,7 +4,7 @@ import { DonutChart } from "@gooddata/sdk-ui-charts";
 
 import { DonutChartWithSingleMeasureAndViewBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { type IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const sizeVariants: Array<IResponsiveSize> = [
     { label: "auto data labels", width: 300, height: 250 },

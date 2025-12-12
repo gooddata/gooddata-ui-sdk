@@ -4,8 +4,8 @@ import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import {
-    IUseInvertableSelectProps,
-    SelectionStatusType,
+    type IUseInvertableSelectProps,
+    type SelectionStatusType,
     useInvertableSelect,
 } from "../useInvertableSelect.js";
 

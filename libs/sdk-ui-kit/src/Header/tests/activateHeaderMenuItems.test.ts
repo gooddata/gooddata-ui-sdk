@@ -5,7 +5,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 import { activateHeaderMenuItems } from "../activateHeaderMenuItems.js";
 import { HEADER_ITEM_ID_KPIS_NEW, generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
-import { IHeaderMenuItem } from "../typings.js";
+import { type IHeaderMenuItem } from "../typings.js";
 
 describe("activateHeaderMenuItems", () => {
     let items: IHeaderMenuItem[][];

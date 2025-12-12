@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    FilterContextItem,
-    IExecutionDefinition,
-    IExportDefinitionVisualizationObjectRequestPayload,
-    IFilter,
-    IInsight,
+    type FilterContextItem,
+    type IExecutionDefinition,
+    type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
+    type IInsight,
     isFilter,
     isFilterContextItem,
     isWidget,
@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 
 export function prepareCsvRawExecutionDefinition(
     executionDefinition: IExecutionDefinition | undefined,

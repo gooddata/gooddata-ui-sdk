@@ -2,7 +2,7 @@
 
 import { FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
 
-import { IDateConfig } from "../utils/dateTimeConfig.js";
+import { type IDateConfig } from "../utils/dateTimeConfig.js";
 
 /**
  * Keep the type for backward compatibility

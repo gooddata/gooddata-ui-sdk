@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint, IconQuestionMark } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { IChartConfigurationItemSnippet, IChartConfigurationSnippet } from "./snippets.js";
+import { type IChartConfigurationItemSnippet, type IChartConfigurationSnippet } from "./snippets.js";
 
 const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [{ align: "cr cl", offset: { x: 10, y: 0 } }];
 

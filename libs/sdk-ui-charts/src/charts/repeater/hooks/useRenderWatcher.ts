@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
 
-import { AgGridEvent, GridApi } from "ag-grid-community";
+import { type AgGridEvent, type GridApi } from "ag-grid-community";
 
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
 export function useRenderWatcher(afterRender: (() => void) | undefined) {

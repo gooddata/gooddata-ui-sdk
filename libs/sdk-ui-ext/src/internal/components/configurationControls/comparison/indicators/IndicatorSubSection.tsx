@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IColorPalette } from "@gooddata/sdk-model";
-import { PushDataCallback } from "@gooddata/sdk-ui";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
 
 import { ArrowControl } from "./ArrowControl.js";
 import { ColorsControl } from "./colorsControl/ColorsControl.js";
 import { comparisonMessages } from "../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { ConfigSubsection } from "../../ConfigSubsection.js";
 
 interface IIndicatorSubSectionProps {

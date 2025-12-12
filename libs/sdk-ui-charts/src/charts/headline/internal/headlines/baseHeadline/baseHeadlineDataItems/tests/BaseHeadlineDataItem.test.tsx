@@ -5,8 +5,8 @@ import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { EvaluationType, IBaseHeadlineDataItemProps } from "../../../../interfaces/BaseHeadlines.js";
-import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
+import { EvaluationType, type IBaseHeadlineDataItemProps } from "../../../../interfaces/BaseHeadlines.js";
+import { type IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import {
     HEADLINE_LINK_STYLE_UNDERLINE,
     HEADLINE_VALUE_WRAPPER_SELECTOR,

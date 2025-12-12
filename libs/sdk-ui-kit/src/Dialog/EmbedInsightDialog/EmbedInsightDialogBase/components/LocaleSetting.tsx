@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode, useCallback } from "react";
+import { type ReactNode, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import { ILocale, LOCALES } from "@gooddata/sdk-ui";
+import { type ILocale, LOCALES } from "@gooddata/sdk-ui";
 
 import { ToggleSwitch } from "./ToggleSwitch.js";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown/index.js";

@@ -1,16 +1,16 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    IAnalyticalWidget,
-    ICatalogDateDataset,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IDashboardFilterReference,
-    ObjRef,
+    type IAnalyticalWidget,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IDashboardFilterReference,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
@@ -20,10 +20,10 @@ import {
     isRichTextWidget,
 } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/index.js";
 import {
-    InsightDateDatasets,
-    MeasureDateDatasets,
+    type InsightDateDatasets,
+    type MeasureDateDatasets,
     insightSelectDateDataset,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
@@ -36,16 +36,16 @@ import {
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextDraggableFilters,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 import {
-    FilterOpEnableDateFilter,
-    FilterOpIgnoreAttributeFilter,
-    FilterOpIgnoreDateFilter,
-    FilterOpReplaceAll,
-    FilterOpReplaceAttributeIgnores,
-    FilterOpUnignoreAttributeFilter,
-    FilterOpUnignoreDateFilter,
-    WidgetFilterOperation,
+    type FilterOpEnableDateFilter,
+    type FilterOpIgnoreAttributeFilter,
+    type FilterOpIgnoreDateFilter,
+    type FilterOpReplaceAll,
+    type FilterOpReplaceAttributeIgnores,
+    type FilterOpUnignoreAttributeFilter,
+    type FilterOpUnignoreDateFilter,
+    type WidgetFilterOperation,
 } from "../../../types/widgetTypes.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {

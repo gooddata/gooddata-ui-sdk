@@ -3,13 +3,13 @@
 import { invariant } from "ts-invariant";
 
 import {
-    AttributeInBucket,
-    BucketItemModifications,
-    BucketItemReducer,
-    BucketPredicate,
-    IAttributeOrMeasure,
-    IBucket,
-    MeasureInBucket,
+    type AttributeInBucket,
+    type BucketItemModifications,
+    type BucketItemReducer,
+    type BucketPredicate,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type MeasureInBucket,
     anyBucket,
     bucketAttributes,
     bucketIsEmpty,
@@ -21,14 +21,20 @@ import {
     idMatchBucket,
 } from "./index.js";
 import {
-    AttributePredicate,
-    IAttribute,
+    type AttributePredicate,
+    type IAttribute,
     anyAttribute,
     idMatchAttribute,
     isAttribute,
 } from "../attribute/index.js";
-import { ITotal } from "../base/totals.js";
-import { IMeasure, MeasurePredicate, anyMeasure, idMatchMeasure, isMeasure } from "../measure/index.js";
+import { type ITotal } from "../base/totals.js";
+import {
+    type IMeasure,
+    type MeasurePredicate,
+    anyMeasure,
+    idMatchMeasure,
+    isMeasure,
+} from "../measure/index.js";
 
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.

@@ -3,14 +3,14 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IColorDescriptor } from "@gooddata/sdk-model";
-import { DefaultColorPalette, IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
-import { ChartFillType } from "@gooddata/sdk-ui-vis-commons";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IColorDescriptor } from "@gooddata/sdk-model";
+import { DefaultColorPalette, type IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
+import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { IChartConfig, ITotalConfig } from "../../../../interfaces/index.js";
-import { ISeriesItem } from "../../../typings/unsafe.js";
+import { type IChartConfig, type ITotalConfig } from "../../../../interfaces/index.js";
+import { type ISeriesItem } from "../../../typings/unsafe.js";
 import { getDrillableSeries } from "../../_chartOptions/chartDrilling.js";
 import { getMVS } from "../../_util/test/helper.js";
 import { WaterfallChartColorStrategy } from "../waterfallChartColoring.js";

@@ -6,7 +6,7 @@ import { render, screen } from "@testing-library/react";
 import ReactDOM from "react-dom";
 import { describe, expect, it } from "vitest";
 
-import { IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
+import { type IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
 
 function MockedRenderChildrenInPortal({ targetElement }: IRenderChildrenInPortalProps) {
     const portalNodeRef = useRef<HTMLElement>(null);

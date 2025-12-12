@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { ControlledMenu } from "./ControlledMenu.js";
-import { MenuAlignment } from "./MenuSharedTypes.js";
+import { type MenuAlignment } from "./MenuSharedTypes.js";
 import { MenuState } from "./MenuState.js";
-import { ISubMenuProps } from "./SubMenu.js";
+import { type ISubMenuProps } from "./SubMenu.js";
 
 /**
  * @internal

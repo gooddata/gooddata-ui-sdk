@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import {
-    IAttributeFilter,
+    type IAttributeFilter,
     attributeDisplayFormRef,
     idRef,
     newNegativeAttributeFilter,

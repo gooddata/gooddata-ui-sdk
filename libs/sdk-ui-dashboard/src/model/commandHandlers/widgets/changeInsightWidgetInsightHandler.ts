@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    ObjRef,
+    type ObjRef,
     areObjRefsEqual,
     insightTitle,
     isVisualizationSwitcherWidget,
@@ -17,9 +17,9 @@ import {
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
-import { ChangeInsightWidgetInsight } from "../../commands/index.js";
+import { type ChangeInsightWidgetInsight } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardInsightWidgetInsightSwitched } from "../../events/index.js";
+import { type DashboardInsightWidgetInsightSwitched } from "../../events/index.js";
 import { insightWidgetInsightChanged } from "../../events/insight.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
@@ -27,7 +27,7 @@ import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgets, selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetInsightHandler(
     ctx: DashboardContext,

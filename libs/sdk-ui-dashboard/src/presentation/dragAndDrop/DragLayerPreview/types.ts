@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { XYCoord } from "@evil-internetmann/react-dnd";
+import { type XYCoord } from "@evil-internetmann/react-dnd";
 
-import { DraggableInternalItem, DraggableItem } from "../types.js";
+import { type DraggableInternalItem, type DraggableItem } from "../types.js";
 
 export type ReachedResizingLimit = "min" | "max" | "none";
 

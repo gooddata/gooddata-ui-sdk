@@ -1,8 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
-import { Reducer, createSlice } from "@reduxjs/toolkit";
+import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { notificationChannelsReducers } from "./notificationChannelsReducers.js";
-import { NotificationChannelsState, notificationChannelsInitialState } from "./notificationChannelsState.js";
+import {
+    type NotificationChannelsState,
+    notificationChannelsInitialState,
+} from "./notificationChannelsState.js";
 
 const notificationChannelsSlice = createSlice({
     name: "notificationChannels",

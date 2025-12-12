@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { assertNever } from "@gooddata/sdk-model";
 
-import { IAlignPoint, IOffset } from "../typings/positioning.js";
+import { type IAlignPoint, type IOffset } from "../typings/positioning.js";
 
 /**
  * @internal

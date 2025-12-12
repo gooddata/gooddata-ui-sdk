@@ -3,9 +3,9 @@
 import {
     DEFAULT_HEIGHT,
     DEFAULT_LOCALE,
-    EmbedOptionsType,
-    EmbedType,
-    UnitsType,
+    type EmbedOptionsType,
+    type EmbedType,
+    type UnitsType,
 } from "./EmbedInsightDialogBase/types.js";
 
 /**

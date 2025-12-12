@@ -1,8 +1,12 @@
 // (C) 2023 GoodData Corporation
-import { IAttributeHierarchiesService, NotSupported } from "@gooddata/sdk-backend-spi";
-import { ICatalogAttributeHierarchy, IDateHierarchyTemplate, ObjRef } from "@gooddata/sdk-model";
+import { type IAttributeHierarchiesService, NotSupported } from "@gooddata/sdk-backend-spi";
+import {
+    type ICatalogAttributeHierarchy,
+    type IDateHierarchyTemplate,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
-import { RecordedBackendConfig } from "./types.js";
+import { type RecordedBackendConfig } from "./types.js";
 
 /**
  * @internal

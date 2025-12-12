@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosResponse } from "axios";
+import { type AxiosResponse } from "axios";
 
 import { mimeWordDecode } from "@gooddata/emailjs-mime-codec-new";
 

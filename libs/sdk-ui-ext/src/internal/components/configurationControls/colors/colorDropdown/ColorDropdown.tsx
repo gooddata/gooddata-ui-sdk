@@ -1,19 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { Fragment, ReactElement, ReactNode, cloneElement, memo, useCallback, useState } from "react";
+import {
+    Fragment,
+    type ReactElement,
+    type ReactNode,
+    cloneElement,
+    memo,
+    useCallback,
+    useState,
+} from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    IColor,
-    IColorPalette,
-    IColorPaletteItem,
-    IRgbColorValue,
+    type IColor,
+    type IColorPalette,
+    type IColorPaletteItem,
+    type IRgbColorValue,
     isColorFromPalette,
     isRgbColor,
 } from "@gooddata/sdk-model";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
-import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type ChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { ColorOverlay, DropdownVersionType } from "./ColorOverlay.js";
 import { ColorPalette } from "./ColorPalette.js";

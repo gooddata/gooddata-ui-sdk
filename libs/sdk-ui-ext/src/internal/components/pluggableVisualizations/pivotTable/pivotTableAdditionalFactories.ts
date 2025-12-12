@@ -2,15 +2,15 @@
 import { partition } from "lodash-es";
 
 import {
-    ColumnLocator,
-    IAbsoluteColumnWidth,
-    IAllMeasureColumnWidthItem,
-    IAttributeColumnLocator,
-    IAttributeColumnWidthItem,
-    IMeasureColumnLocator,
-    IMeasureColumnWidthItem,
-    ITotalColumnLocator,
-    IWeakMeasureColumnWidthItem,
+    type ColumnLocator,
+    type IAbsoluteColumnWidth,
+    type IAllMeasureColumnWidthItem,
+    type IAttributeColumnLocator,
+    type IAttributeColumnWidthItem,
+    type IMeasureColumnLocator,
+    type IMeasureColumnWidthItem,
+    type ITotalColumnLocator,
+    type IWeakMeasureColumnWidthItem,
     isAllMeasureColumnWidthItem,
     isAttributeColumnLocator,
     isAttributeColumnWidthItem,
@@ -20,7 +20,7 @@ import {
     isWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
-import { IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";
+import { type IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";
 
 export function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {
     const { attributeIdentifier, width } = obj.attributeColumnWidthItem;

@@ -1,20 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    IAbsoluteDateFilter,
-    IAttributeMetadataObject,
-    IMeasure,
-    IRelativeDateFilter,
-    ObjRef,
-    SortDirection,
+    type IAbsoluteDateFilter,
+    type IAttributeMetadataObject,
+    type IMeasure,
+    type IRelativeDateFilter,
+    type ObjRef,
+    type SortDirection,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { Correlation } from "../../../types/index.js";
-import { AttributeFilterReducer } from "../store/state.js";
+import { type Correlation } from "../../../types/index.js";
+import { type AttributeFilterReducer } from "../store/state.js";
 
 const setElementsTotalCount: AttributeFilterReducer<
     PayloadAction<{

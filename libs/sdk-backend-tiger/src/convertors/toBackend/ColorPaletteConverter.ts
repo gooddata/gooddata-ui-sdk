@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { JsonApiColorPaletteIn } from "@gooddata/api-client-tiger";
-import { IColorPalette, IColorPaletteDefinition } from "@gooddata/sdk-model";
+import { type JsonApiColorPaletteIn } from "@gooddata/api-client-tiger";
+import { type IColorPalette, type IColorPaletteDefinition } from "@gooddata/sdk-model";
 
 export const wrapColorPaletteContent = (colorPalette: IColorPalette): object => ({ colorPalette });
 

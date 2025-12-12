@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { render } from "@testing-library/react";
-import { ICellRendererParams } from "ag-grid-community";
+import { type ICellRendererParams } from "ag-grid-community";
 import { describe, expect, it } from "vitest";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { SingleMeasureWithRowAndColumnAttributes } from "../../structure/tests/table.fixture.js";

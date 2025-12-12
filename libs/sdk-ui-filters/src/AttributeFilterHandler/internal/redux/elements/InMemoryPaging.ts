@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 
-import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { type IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { type IAttributeElement } from "@gooddata/sdk-model";
 
 // inspired by the same thing in sdk-backend-base, copied here to avoid the dependency
 export class InMemoryPaging implements IElementsQueryResult {

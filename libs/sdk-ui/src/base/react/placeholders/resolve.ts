@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IComposedPlaceholder,
-    IPlaceholder,
-    PlaceholderResolvedValue,
-    PlaceholderValue,
-    PlaceholdersResolvedValues,
+    type IComposedPlaceholder,
+    type IPlaceholder,
+    type PlaceholderResolvedValue,
+    type PlaceholderValue,
+    type PlaceholdersResolvedValues,
     isAnyPlaceholder,
     isComposedPlaceholder,
     isPlaceholder,
 } from "./base.js";
-import { PlaceholdersState } from "./context.js";
+import { type PlaceholdersState } from "./context.js";
 
 /**
  * Set placeholder value to the context.

@@ -3,11 +3,11 @@
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { IColorPalette } from "@gooddata/sdk-model";
+import { type IColorPalette } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { IColorConfig } from "../../../../../../../../interfaces/index.js";
-import { EvaluationType, IComparisonDataWithSubItem } from "../../../../../interfaces/BaseHeadlines.js";
+import { type IColorConfig } from "../../../../../../../../interfaces/index.js";
+import { EvaluationType, type IComparisonDataWithSubItem } from "../../../../../interfaces/BaseHeadlines.js";
 import {
     COMPARISON_HEADLINE_VALUE_SELECTOR,
     TEST_COLOR_CONFIGS,

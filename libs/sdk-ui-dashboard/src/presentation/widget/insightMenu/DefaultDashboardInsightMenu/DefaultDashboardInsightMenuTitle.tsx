@@ -3,7 +3,7 @@
 import { insightTitle, widgetTitle } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { IDashboardInsightMenuTitleProps } from "../types.js";
+import { type IDashboardInsightMenuTitleProps } from "../types.js";
 
 function OriginalInsightTitle({ title }: { title: string }) {
     return (

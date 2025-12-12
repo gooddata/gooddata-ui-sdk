@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { DashboardContext } from "../types/commonTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
  * A union of all available built-in dashboard event type names.

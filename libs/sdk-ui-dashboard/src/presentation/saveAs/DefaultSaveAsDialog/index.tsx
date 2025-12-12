@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -13,7 +13,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { ISaveAsDialogProps } from "../types.js";
+import { type ISaveAsDialogProps } from "../types.js";
 
 /**
  * @internal

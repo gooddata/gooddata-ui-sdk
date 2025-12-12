@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, ReactNode, useCallback, useRef, useState } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IHeaderAccountProps, IHeaderMenuItem } from "./typings.js";
+import { type IHeaderAccountProps, type IHeaderMenuItem } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { Button } from "../Button/index.js";
 import { Overlay } from "../Overlay/index.js";

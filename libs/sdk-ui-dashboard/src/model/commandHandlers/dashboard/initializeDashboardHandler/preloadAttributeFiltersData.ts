@@ -2,10 +2,15 @@
 
 import { uniqBy } from "lodash-es";
 
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
-import { IDashboard, ObjRef, isDashboardAttributeFilter, objRefToString } from "@gooddata/sdk-model";
+import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import {
+    type IDashboard,
+    type ObjRef,
+    isDashboardAttributeFilter,
+    objRefToString,
+} from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export function preloadAttributeFiltersData(
     ctx: DashboardContext,

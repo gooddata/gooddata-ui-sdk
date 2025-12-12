@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilter,
-    IDashboardDateFilterConfig,
-    IDashboardDateFilterConfigItem,
-    ObjRef,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilter,
+    type IDashboardDateFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type ObjRef,
     areObjRefsEqual,
     attributeElementsCount,
     dashboardFilterObjRef,

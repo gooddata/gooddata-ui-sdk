@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { ColDef, Column, ColumnResizedEvent } from "ag-grid-community";
+import { type ColDef, type Column, type ColumnResizedEvent } from "ag-grid-community";
 
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL, MEASURE_COLUMN } from "./constants.js";
 import { ColumnEventSourceType } from "../../columnWidths.js";

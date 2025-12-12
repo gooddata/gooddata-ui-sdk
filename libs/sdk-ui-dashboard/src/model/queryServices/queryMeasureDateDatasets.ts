@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
     newBucket,
@@ -17,11 +17,11 @@ import {
     sortByRelevanceAndTitle,
 } from "../../_staging/catalog/dateDatasetOrdering.js";
 import { invalidQueryArguments } from "../events/general.js";
-import { MeasureDateDatasets, QueryMeasureDateDatasets } from "../queries/kpis.js";
-import { QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
+import { type MeasureDateDatasets, type QueryMeasureDateDatasets } from "../queries/kpis.js";
+import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors.js";
-import { DashboardState } from "../store/index.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type DashboardState } from "../store/index.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryDateDatasetsForMeasureService = createCachedQueryService(
     "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",

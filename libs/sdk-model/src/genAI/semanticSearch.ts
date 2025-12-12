@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { GenAIObjectType } from "./common.js";
+import { type GenAIObjectType } from "./common.js";
 
 /**
  * Semantic search result payload.

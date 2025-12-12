@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { type IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 
-import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor.js";
+import { type IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor.js";
 import { AreaChartDescriptor } from "./pluggableVisualizations/areaChart/AreaChartDescriptor.js";
 import { BarChartDescriptor } from "./pluggableVisualizations/barChart/BarChartDescriptor.js";
 import { BubbleChartDescriptor } from "./pluggableVisualizations/bubbleChart/BubbleChartDescriptor.js";

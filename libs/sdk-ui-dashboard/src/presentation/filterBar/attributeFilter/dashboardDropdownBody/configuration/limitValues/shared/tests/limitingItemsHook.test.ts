@@ -4,8 +4,8 @@ import { describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { IDashboardAttributeFilterParentItem } from "../../../../../../../../model/index.js";
-import { IValuesLimitingItemWithTitle, sortByTypeAndTitle } from "../limitingItemsHook.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../../../model/index.js";
+import { type IValuesLimitingItemWithTitle, sortByTypeAndTitle } from "../limitingItemsHook.js";
 
 const buildFilter = (localIdentifier: string, labelId: string): IDashboardAttributeFilterParentItem => ({
     localIdentifier,

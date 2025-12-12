@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { DateFilterGranularity, DateString, ObjRef } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type DateString, type ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal

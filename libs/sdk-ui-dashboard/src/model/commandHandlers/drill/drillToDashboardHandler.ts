@@ -1,21 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { compact, isEmpty, isEqual } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    FilterContextItem,
-    IAttributeFilter,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilter,
-    IDateFilter,
-    IFilter,
-    IInsight,
-    IInsightWidget,
-    ObjRef,
+    type FilterContextItem,
+    type IAttributeFilter,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilter,
+    type IDateFilter,
+    type IFilter,
+    type IInsight,
+    type IInsightWidget,
+    type ObjRef,
     areObjRefsEqual,
     insightMeasures,
     isDashboardAttributeFilter,
@@ -26,7 +26,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    IConversionResult,
+    type IConversionResult,
     convertIntersectionToAttributeFilters,
     removeIgnoredValuesFromDrillIntersection,
 } from "./common/intersectionUtils.js";
@@ -34,11 +34,11 @@ import {
     dashboardAttributeFilterToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
 } from "../../../converters/index.js";
-import { IDashboardFilter } from "../../../types.js";
-import { DrillToDashboard } from "../../commands/drill.js";
+import { type IDashboardFilter } from "../../../types.js";
+import { type DrillToDashboard } from "../../commands/drill.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import {
-    DashboardDrillToDashboardResolved,
+    type DashboardDrillToDashboardResolved,
     drillToDashboardRequested,
     drillToDashboardResolved,
 } from "../../events/drill.js";
@@ -57,8 +57,8 @@ import {
     selectFilterContextDraggableFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardState } from "../../store/types.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardState } from "../../store/types.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,

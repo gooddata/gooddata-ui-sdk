@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 
 import {
     AllCommunityModule,
-    ColDef,
-    ICellRendererParams,
+    type ColDef,
+    type ICellRendererParams,
     ModuleRegistry,
     provideGlobalGridOptions,
 } from "ag-grid-community";
@@ -15,11 +15,11 @@ import stringify from "json-stable-stringify";
 import { useIntl } from "react-intl";
 
 import {
-    IAttribute,
-    IAttributeDescriptor,
-    IAttributeOrMeasure,
-    IMeasure,
-    IResultAttributeHeaderItem,
+    type IAttribute,
+    type IAttributeDescriptor,
+    type IAttributeOrMeasure,
+    type IMeasure,
+    type IResultAttributeHeaderItem,
     attributeLocalId,
     bucketsFind,
     isMeasure,
@@ -27,9 +27,9 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    DataViewFacade,
+    type DataViewFacade,
     ErrorComponent,
-    GoodDataSdkError,
+    type GoodDataSdkError,
     LoadingComponent,
     emptyHeaderTitleFromIntl,
     newErrorMapping,
@@ -37,16 +37,16 @@ import {
 import { IconImage } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
+import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { InlineLineChart } from "./InlineLineChart.js";
 import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import { useDrilling } from "../hooks/useDrilling.js";
 import { useFocusMng } from "../hooks/useFocusMng.js";
 import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
 import { MANUALLY_SIZED_MIN_WIDTH, useResizing } from "../hooks/useResizing.js";
-import { IRepeaterChartProps } from "../publicTypes.js";
+import { type IRepeaterChartProps } from "../publicTypes.js";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);

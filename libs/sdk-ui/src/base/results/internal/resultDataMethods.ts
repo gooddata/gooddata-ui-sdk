@@ -2,8 +2,8 @@
 
 import { invariant } from "ts-invariant";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataValue, ForecastDataValue } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type DataValue, type ForecastDataValue } from "@gooddata/sdk-model";
 
 /**
  * Methods to access data and totals in a result.

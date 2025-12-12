@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentType, MouseEvent, ReactNode } from "react";
+import { type ComponentType, type MouseEvent, type ReactNode } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 /**
  * @internal

@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 /**
  * Initial execution context data

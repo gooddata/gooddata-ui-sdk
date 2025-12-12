@@ -7,7 +7,7 @@ import { SearchOverlay } from "@gooddata/sdk-ui-semantic-search/internal";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
-import { INeobackstopScenarioConfig, IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const backend = StorybookBackend();
@@ -38,7 +38,7 @@ const config: INeobackstopScenarioConfig = {
         keyPress: "test",
         selector: "input",
     },
-    postInteractionWait: '[data-testid="semantic-search-results-item"]',
+    postInteractionWait: ".gd-semantic-search__results-item",
 };
 
 // eslint-disable-next-line no-restricted-exports

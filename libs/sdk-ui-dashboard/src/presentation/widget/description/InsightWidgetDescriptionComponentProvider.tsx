@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { FC, ReactNode, createContext, useContext } from "react";
+import { type FC, type ReactNode, createContext, useContext } from "react";
 
 import { InsightWidgetDescriptionTrigger } from "./InsightWidgetDescriptionTrigger.js";
-import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
+import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 
 interface InsightWidgetDescriptionComponentContextType {
     InsightWidgetDescriptionComponent: FC<IInsightWidgetDescriptionTriggerProps>;

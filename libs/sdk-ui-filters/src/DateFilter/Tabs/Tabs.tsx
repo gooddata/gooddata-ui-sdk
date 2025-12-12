@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
+import { type IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
 import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
 

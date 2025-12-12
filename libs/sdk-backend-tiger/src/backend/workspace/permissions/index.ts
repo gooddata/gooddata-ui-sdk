@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
+import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
 // TODO:

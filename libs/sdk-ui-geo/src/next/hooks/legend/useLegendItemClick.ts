@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
-import { IGeoLegendItem } from "../../types/common/legends.js";
+import { type IGeoLegendItem } from "../../types/common/legends.js";
 
 /**
  * Hook to handle legend item click interactions.

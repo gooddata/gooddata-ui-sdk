@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { validatePluginUrlIsSane } from "@gooddata/sdk-backend-base";
-import { ISecuritySettingsService, ValidationContext } from "@gooddata/sdk-backend-spi";
+import { type ISecuritySettingsService, type ValidationContext } from "@gooddata/sdk-backend-spi";
 
 export class SecuritySettingsService implements ISecuritySettingsService {
     /**

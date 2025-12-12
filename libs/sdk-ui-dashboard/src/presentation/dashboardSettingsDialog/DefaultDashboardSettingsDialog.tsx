@@ -1,17 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
+import { type ReactElement, type ReactNode, useCallback, useEffect, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset, type ObjRef, objRefToString } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
     ConfirmDialog,
     DialogListHeader,
     Dropdown,
-    IAlignPoint,
+    type IAlignPoint,
     RecurrenceForm,
     SingleSelectListItem,
     UiButton,
@@ -19,11 +19,11 @@ import {
     simpleRecurrenceTypeMappingFn,
 } from "@gooddata/sdk-ui-kit";
 
-import { IDashboardSettingsDialogProps } from "./types.js";
+import { type IDashboardSettingsDialogProps } from "./types.js";
 import { useDialogData } from "./useDialogData.js";
 import {
-    InsightDateDatasets,
-    QueryInsightDateDatasets,
+    type InsightDateDatasets,
+    type QueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectCrossFilteringEnabledAndSupported,
     selectDateFormat,

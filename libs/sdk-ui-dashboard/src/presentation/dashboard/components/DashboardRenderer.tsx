@@ -50,7 +50,7 @@ import {
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
 import { useDashboard } from "../hooks/useDashboard.js";
-import { IDashboardProps } from "../types.js";
+import { type IDashboardProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 

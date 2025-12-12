@@ -1,17 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 
 import { Separator } from "@gooddata/sdk-ui-kit";
 
 import { DashboardRichTextMenuContainer } from "./DashboardRichTextMenuContainer.js";
 import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
-import { RenderMode } from "../../../../../types.js";
+import { type RenderMode } from "../../../../../types.js";
 import { DashboardInsightEditMenuBubble } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightEditMenuBubble.js";
 import { DashboardInsightMenuBubble } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightMenuBubble.js";
 import { DashboardInsightMenuItemButton } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightMenuItemButton.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
-import { IDashboardRichTextMenuProps, IRichTextMenuItem, IRichTextMenuSubmenu } from "../../types.js";
+import {
+    type IDashboardRichTextMenuProps,
+    type IRichTextMenuItem,
+    type IRichTextMenuSubmenu,
+} from "../../types.js";
 
 export function DashboardRichTextMenuBody({
     items,

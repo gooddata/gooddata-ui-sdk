@@ -32,11 +32,11 @@ import { derivedShadowThemeVariables } from "./theme-derived/shadow-derived.js";
 // Deprecated
 // Inconsistent
 import {
-    ThemeCssVariable,
-    ThemeDefinedCssVariable,
-    ThemeDeprecatedCssVariable,
-    ThemeDerivedCssVariable,
-    ThemeInternalCssVariable,
+    type ThemeCssVariable,
+    type ThemeDefinedCssVariable,
+    type ThemeDeprecatedCssVariable,
+    type ThemeDerivedCssVariable,
+    type ThemeInternalCssVariable,
 } from "./types.js";
 
 export const themeDefinedCssVariables: ThemeDefinedCssVariable[] = [

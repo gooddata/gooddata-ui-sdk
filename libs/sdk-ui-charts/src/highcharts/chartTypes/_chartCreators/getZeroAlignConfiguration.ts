@@ -12,8 +12,13 @@
 
 import { compact, partial, sum, zip } from "lodash-es";
 
-import { StackingType } from "../../constants/stacking.js";
-import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { type StackingType } from "../../constants/stacking.js";
+import {
+    type IChartOptions,
+    type IHighChartAxis,
+    type ISeriesDataItem,
+    type ISeriesItem,
+} from "../../typings/unsafe.js";
 import { isComboChart, isLineChart } from "../_util/common.js";
 
 export interface ICanon {

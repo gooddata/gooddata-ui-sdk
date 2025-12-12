@@ -7,14 +7,14 @@ import { v4 as uuid } from "uuid";
 import { withIntl } from "@gooddata/sdk-ui";
 import {
     Button,
-    IMessageDefinition,
+    type IMessageDefinition,
     Message,
     ToastsCenter,
     ToastsCenterContext,
     useToastsCenterValue,
 } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const info = {

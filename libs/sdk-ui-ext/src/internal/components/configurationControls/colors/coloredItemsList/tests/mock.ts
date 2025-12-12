@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IColoredItem } from "../../../../../interfaces/Colors.js";
+import { type IColoredItem } from "../../../../../interfaces/Colors.js";
 
 export const inputItemsMock: IColoredItem[] = [
     {

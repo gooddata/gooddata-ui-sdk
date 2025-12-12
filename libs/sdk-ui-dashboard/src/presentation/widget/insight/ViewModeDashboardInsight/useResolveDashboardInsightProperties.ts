@@ -4,7 +4,12 @@ import { useMemo } from "react";
 
 import { mergeWith } from "lodash-es";
 
-import { IInsight, IInsightWidget, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
+import {
+    type IInsight,
+    type IInsightWidget,
+    insightProperties,
+    insightSetProperties,
+} from "@gooddata/sdk-model";
 
 import { selectSettings, useDashboardSelector } from "../../../../model/index.js";
 

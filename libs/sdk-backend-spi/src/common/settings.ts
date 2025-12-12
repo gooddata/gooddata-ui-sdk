@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { ISeparators, ISettings } from "@gooddata/sdk-model";
+import { type ISeparators, type ISettings } from "@gooddata/sdk-model";
 
 /**
  * Settings for particular user.

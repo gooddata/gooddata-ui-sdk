@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ScreenSize } from "@gooddata/sdk-model";
+import { type ScreenSize } from "@gooddata/sdk-model";
 
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
-import { ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutSectionPath } from "../../../../types.js";
 
 export const buildEmptyItemFacadeWithSetSize = (
     gridWidth: number,

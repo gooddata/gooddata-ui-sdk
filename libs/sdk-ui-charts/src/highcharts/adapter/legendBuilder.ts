@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { pick, set, sortBy, uniqBy } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     DEFAULT_LEGEND_CONFIG,
-    ILegendOptions,
-    ISeriesItemMetric,
-    ItemBorderRadiusPredicate,
-    LegendOptionsItemType,
+    type ILegendOptions,
+    type ISeriesItemMetric,
+    type ItemBorderRadiusPredicate,
+    type LegendOptionsItemType,
 } from "@gooddata/sdk-ui-vis-commons";
 
 import {
@@ -32,8 +32,8 @@ import {
     isTreemap,
     isWaterfall,
 } from "../chartTypes/_util/common.js";
-import { ChartType } from "../typings/chartType.js";
-import { IChartOptions, ISeriesItem, ISeriesNodeItem } from "../typings/unsafe.js";
+import { type ChartType } from "../typings/chartType.js";
+import { type IChartOptions, type ISeriesItem, type ISeriesNodeItem } from "../typings/unsafe.js";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;

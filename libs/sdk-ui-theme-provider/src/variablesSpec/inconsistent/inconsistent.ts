@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { ThemeInconsistentCssVariable } from "../types.js";
+import { type ThemeInconsistentCssVariable } from "../types.js";
 
 export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
     {

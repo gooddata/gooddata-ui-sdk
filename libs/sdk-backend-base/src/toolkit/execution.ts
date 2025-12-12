@@ -1,13 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IExecutionFactory, IPreparedExecution, IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeOrMeasure,
-    IBucket,
-    IExecutionDefinition,
-    IInsight,
-    IInsightDefinition,
-    INullableFilter,
+    type IExecutionFactory,
+    type IPreparedExecution,
+    type IPreparedExecutionOptions,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IExecutionDefinition,
+    type IInsight,
+    type IInsightDefinition,
+    type INullableFilter,
     defWithDimensions,
     defaultDimensionsGenerator,
     isInsight,

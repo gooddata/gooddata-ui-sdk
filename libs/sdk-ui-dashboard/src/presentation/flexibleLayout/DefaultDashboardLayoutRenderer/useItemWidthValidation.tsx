@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/flexibleLayout/config.js";
 import { getContainerDirection } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";

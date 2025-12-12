@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { ISecuritySettingsService, ValidationContext } from "@gooddata/sdk-backend-spi";
+import { type ISecuritySettingsService, type ValidationContext } from "@gooddata/sdk-backend-spi";
 
 /**
  * @alpha

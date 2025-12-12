@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
+import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
 

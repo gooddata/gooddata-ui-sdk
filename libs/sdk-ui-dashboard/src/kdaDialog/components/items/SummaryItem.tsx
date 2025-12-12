@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { UiIcon, UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
+import { UiIcon, type UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
 
 export function SummaryItem({
     onSelect,

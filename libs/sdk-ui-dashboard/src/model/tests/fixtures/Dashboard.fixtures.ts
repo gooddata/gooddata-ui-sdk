@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 
 //
 // Basic constants and building blocks used in tests

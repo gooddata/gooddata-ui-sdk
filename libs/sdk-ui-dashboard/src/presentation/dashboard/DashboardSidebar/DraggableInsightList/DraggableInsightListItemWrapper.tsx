@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IInsight } from "@gooddata/sdk-model";
-import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
+import { type IInsight } from "@gooddata/sdk-model";
+import { type IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem.js";
 import {
-    CustomDashboardInsightListItemComponentProps,
-    IWrapInsightListItemWithDragComponent,
+    type CustomDashboardInsightListItemComponentProps,
+    type IWrapInsightListItemWithDragComponent,
 } from "../../../dragAndDrop/types.js";
 
 interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {

@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 /**
  * @internal

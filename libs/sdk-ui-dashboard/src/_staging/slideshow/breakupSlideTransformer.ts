@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { IDashboardLayoutSection } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 /**
  * This function is used to transform each section title and description in the layout to a breakup slide.

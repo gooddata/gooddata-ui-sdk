@@ -1,7 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
-import { IDashboard, ObjRef } from "@gooddata/sdk-model";
-import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import { DashboardItem, IDashboardBaseProps, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
+import { type IDashboard, type ObjRef } from "@gooddata/sdk-model";
+import { type IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
+import {
+    type DashboardItem,
+    type IDashboardBaseProps,
+    type IDashboardPluginContract_V1,
+} from "@gooddata/sdk-ui-dashboard";
 
 /**
  * Embedded plugin is implemented, built and linked into the application that loads the dashboard.

@@ -5,10 +5,16 @@ import path from "path";
 
 import { isEqual } from "lodash-es";
 
-import { IAnalyticalBackend, IElementsQuery } from "@gooddata/sdk-backend-spi";
-import { IAttributeDisplayFormMetadataObject, IAttributeElement, idRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IElementsQuery } from "@gooddata/sdk-backend-spi";
+import { type IAttributeDisplayFormMetadataObject, type IAttributeElement, idRef } from "@gooddata/sdk-model";
 
-import { IRecording, RecordingIndexEntry, RecordingType, readJsonSync, writeAsJsonSync } from "./common.js";
+import {
+    type IRecording,
+    type RecordingIndexEntry,
+    RecordingType,
+    readJsonSync,
+    writeAsJsonSync,
+} from "./common.js";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 
 //

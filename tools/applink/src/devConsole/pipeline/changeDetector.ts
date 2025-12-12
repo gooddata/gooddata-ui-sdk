@@ -1,17 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
+
 import path from "path";
 
 import { intersection } from "lodash-es";
 import Watchpack from "watchpack";
 
-import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
+import { type PackageDescriptor, type SourceDescriptor, type TargetDescriptor } from "../../base/types.js";
 import {
-    AutobuildToggled,
-    DcEvent,
-    EventBus,
+    type AutobuildToggled,
+    type DcEvent,
+    type EventBus,
     GlobalEventBus,
-    IEventListener,
-    PackageChange,
+    type IEventListener,
+    type PackageChange,
     packagesChanged,
 } from "../events.js";
 import { appLogImportant, appLogWarn } from "../ui/utils.js";

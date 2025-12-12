@@ -1,15 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType, useCallback, useEffect, useRef, useState } from "react";
+import { type ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
 
 import {
     CancelledSdkError,
-    DataViewFacade,
-    GoodDataSdkError,
-    ICancelablePromise,
-    IExportFunction,
+    type DataViewFacade,
+    type GoodDataSdkError,
+    type ICancelablePromise,
+    type IExportFunction,
     convertError,
     createExportErrorFunction,
     createExportFunction,

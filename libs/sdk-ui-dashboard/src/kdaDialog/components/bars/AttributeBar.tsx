@@ -1,17 +1,21 @@
 // (C) 2025 GoodData Corporation
 
-import { MutableRefObject, useCallback, useId } from "react";
+import { type MutableRefObject, useCallback, useId } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IDashboardAttributeFilter, IDashboardAttributeFilterConfig, ObjRef } from "@gooddata/sdk-model";
+import {
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 import {
     AttributeFilterButton,
-    IAttributeFilterButtonProps,
-    IAttributeFilterDropdownButtonProps,
+    type IAttributeFilterButtonProps,
+    type IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
-import { OverlayPositionType, UiChip, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { type OverlayPositionType, UiChip, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { StandaloneDashboardAttributeFilter } from "../../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 

@@ -3,7 +3,7 @@
 import { FormattedMessage } from "react-intl";
 
 import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
-import { DialogModeType } from "./types.js";
+import { type DialogModeType } from "./types.js";
 import { Bubble, BubbleHoverTrigger } from "../../../Bubble/index.js";
 
 const alignPoints = [{ align: "cr cl" }];

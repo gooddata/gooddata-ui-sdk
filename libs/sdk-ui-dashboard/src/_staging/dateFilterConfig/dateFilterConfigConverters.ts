@@ -4,20 +4,20 @@ import { endOfDay, format, startOfDay, subMonths } from "date-fns";
 import { groupBy, isEmpty, max, min } from "lodash-es";
 
 import {
-    IAbsoluteDateFilterForm,
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IDateFilterConfig,
-    IRelativeDateFilterForm,
-    IRelativeDateFilterPreset,
+    type IAbsoluteDateFilterForm,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IDateFilterConfig,
+    type IRelativeDateFilterForm,
+    type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 import {
-    AbsoluteDateFilterOption,
-    DateFilterRelativeOptionGroup,
-    IDateFilterOptionsByType,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
-    RelativeDateFilterOption,
+    type AbsoluteDateFilterOption,
+    type DateFilterRelativeOptionGroup,
+    type IDateFilterOptionsByType,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
+    type RelativeDateFilterOption,
 } from "@gooddata/sdk-ui-filters";
 
 // TODO: this import was coming from internal/esm and was wrecking tests

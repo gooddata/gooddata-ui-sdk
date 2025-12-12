@@ -1,13 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { CSSProperties, memo, useEffect, useRef } from "react";
+import { type CSSProperties, memo, useEffect, useRef } from "react";
 
 import cx from "classnames";
 
-import { IColor, IColorFromPalette, IColorPaletteItem, ITheme } from "@gooddata/sdk-model";
+import {
+    type IColor,
+    type IColorFromPalette,
+    type IColorPaletteItem,
+    type ITheme,
+} from "@gooddata/sdk-model";
 import { GD_COLOR_WHITE } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ChartFillType, PatternFillName, getLighterColor } from "@gooddata/sdk-ui-vis-commons";
+import { type ChartFillType, type PatternFillName, getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 
 import { OptionalPatternFill } from "./OptionalPatternFill.js";
 

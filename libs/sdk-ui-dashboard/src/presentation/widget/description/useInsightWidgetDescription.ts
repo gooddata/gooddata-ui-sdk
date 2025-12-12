@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
+import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { selectEnableRichTextDescriptions, useDashboardSelector } from "../../../model/index.js";
 
 export const useInsightWidgetDescription = (props: IInsightWidgetDescriptionTriggerProps) => {

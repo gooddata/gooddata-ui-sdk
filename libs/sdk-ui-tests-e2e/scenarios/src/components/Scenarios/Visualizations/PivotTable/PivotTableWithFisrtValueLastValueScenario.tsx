@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IMeasure,
-    IMeasureDefinition,
+    type IAttribute,
+    type IMeasure,
+    type IMeasureDefinition,
     newAbsoluteDateFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { type IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 

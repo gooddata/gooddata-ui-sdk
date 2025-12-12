@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { useEffect, useState } from "react";
 
-import { IGenAIVisualization } from "@gooddata/sdk-model";
+import { type IGenAIVisualization } from "@gooddata/sdk-model";
 
 export function useVisualisationSaving(visualization: IGenAIVisualization, onClose: () => void) {
     const [savingStarted, setSavingStarted] = useState<boolean>(false);

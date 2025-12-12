@@ -1,7 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
-import { IDateFilterConfig } from "@gooddata/sdk-model";
+import { type IDateFilterConfig } from "@gooddata/sdk-model";
 
-import { IPagedResource } from "../../common/paging.js";
+import { type IPagedResource } from "../../common/paging.js";
 
 /**
  * This service provides access to workspace date filter configs (also known as extended date filters).

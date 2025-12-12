@@ -9,7 +9,7 @@ import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 import { AddUserContent } from "./AddUserContent.js";
 import { useAddUsers } from "./usersHooks.js";
 import { messages } from "../locales.js";
-import { IUserMember } from "../types.js";
+import { type IUserMember } from "../types.js";
 
 export interface IAddUserProps {
     userGroupIds: string[];

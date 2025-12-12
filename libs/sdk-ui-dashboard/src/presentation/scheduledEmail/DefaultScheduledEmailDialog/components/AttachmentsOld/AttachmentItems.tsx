@@ -1,22 +1,22 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useState } from "react";
+import { type KeyboardEvent, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
+import { type IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
 import {
     Button,
     ContentDivider,
     Dropdown,
-    IAlignPoint,
-    OverlayPositionType,
+    type IAlignPoint,
+    type OverlayPositionType,
     isEscapeKey,
     isSpaceKey,
 } from "@gooddata/sdk-ui-kit";
 
-import { OldAttachmentType, OldWidgetAttachmentType } from "../../types.js";
+import { type OldAttachmentType, type OldWidgetAttachmentType } from "../../types.js";
 
 const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     {

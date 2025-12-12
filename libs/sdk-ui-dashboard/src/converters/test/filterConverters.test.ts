@@ -2,7 +2,13 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { FilterContextItem, IFilterContext, IWidgetDefinition, Identifier, idRef } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type IFilterContext,
+    type IWidgetDefinition,
+    type Identifier,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import {
     filterContextToDashboardFiltersByDateDataSet,

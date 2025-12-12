@@ -2,20 +2,25 @@
 
 import { cloneDeep, isEmpty, set, tail } from "lodash-es";
 
-import { IInsight, IInsightDefinition, bucketsAttributes, insightBuckets } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    type IInsight,
+    type IInsightDefinition,
+    bucketsAttributes,
+    insightBuckets,
+} from "@gooddata/sdk-model";
+import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { MAX_METRICS_COUNT, getTreemapUiConfig } from "../../../constants/uiConfig.js";
 import {
-    IBucketOfFun,
-    IDrillDownContext,
-    IDrillDownDefinition,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketOfFun,
+    type IDrillDownContext,
+    type IDrillDownDefinition,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

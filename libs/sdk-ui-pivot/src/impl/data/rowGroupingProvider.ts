@@ -3,7 +3,7 @@ import { max } from "lodash-es";
 
 import { isResultAttributeHeader } from "@gooddata/sdk-model";
 
-import { IGridRow } from "./resultTypes.js";
+import { type IGridRow } from "./resultTypes.js";
 
 interface IAttributesRowItemUris {
     [columnId: string]: string[];

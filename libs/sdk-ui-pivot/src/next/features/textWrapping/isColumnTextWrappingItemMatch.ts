@@ -2,7 +2,7 @@
 
 import { isEqual } from "lodash-es";
 
-import { IColumnTextWrappingItem } from "../../types/textWrapping.js";
+import { type IColumnTextWrappingItem } from "../../types/textWrapping.js";
 
 /**
  * Checks if two {@link IColumnTextWrappingItem}s match (have the same locators).

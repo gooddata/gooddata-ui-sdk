@@ -2,11 +2,11 @@
 
 import { useCallback } from "react";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
-    CommandProcessingStatus,
-    DashboardAlertSaved,
+    type CommandProcessingStatus,
+    type DashboardAlertSaved,
     saveAlert,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";

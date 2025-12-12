@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -9,7 +9,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { LegendSeries } from "../LegendSeries.js";
-import { ISeriesItem } from "../types.js";
+import { type ISeriesItem } from "../types.js";
 
 // Mock the visibility detection hook to bypass registration issues
 vi.mock("../visibilityDetection.js", () => ({

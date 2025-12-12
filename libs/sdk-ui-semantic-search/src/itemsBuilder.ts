@@ -3,7 +3,7 @@
 import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 import { permissionsFilter, thresholdFilter } from "./filters/items.filters.js";
-import { SearchTreeViewItem } from "./internal/LeveledSearchTreeView.js";
+import { type SearchTreeViewItem } from "./internal/LeveledSearchTreeView.js";
 import { getItemRelationships } from "./utils/searchItem.js";
 
 type BuildSemanticSearchItemsProps = {

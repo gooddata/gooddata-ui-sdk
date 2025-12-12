@@ -2,9 +2,9 @@
 
 import { darken, lighten, mix, setLightness, transparentize } from "polished";
 
-import { IThemePalette, ThemeColor } from "@gooddata/sdk-model";
+import { type IThemePalette, type ThemeColor } from "@gooddata/sdk-model";
 
-import { CssProperty, getCssProperty } from "./cssProperty.js";
+import { type CssProperty, getCssProperty } from "./cssProperty.js";
 
 // keep it in sync with SCSS:$gd-color-text-light
 const GD_COLOR_TEXT_LIGHT = "#fff";

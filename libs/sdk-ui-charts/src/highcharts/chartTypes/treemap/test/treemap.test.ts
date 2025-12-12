@@ -3,13 +3,13 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IColorPalette, type IColorPaletteItem } from "@gooddata/sdk-model";
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { IColorMapping } from "../../../../interfaces/index.js";
+import { type IColorMapping } from "../../../../interfaces/index.js";
 import { TwoColorPalette } from "../../_chartColoring/test/color.fixture.js";
 import { getColorsFromStrategy } from "../../_chartColoring/test/helper.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";

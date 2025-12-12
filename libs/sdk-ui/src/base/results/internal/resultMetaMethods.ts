@@ -1,18 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDescriptor,
-    IAttributeLocatorItem,
-    IDimensionDescriptor,
-    IDimensionItemDescriptor,
-    IMeasure,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    IMeasureSortItem,
-    IResultAttributeHeader,
-    IResultHeader,
-    ISortItem,
+    type IAttributeDescriptor,
+    type IAttributeLocatorItem,
+    type IDimensionDescriptor,
+    type IDimensionItemDescriptor,
+    type IMeasure,
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
+    type IMeasureSortItem,
+    type IResultAttributeHeader,
+    type IResultHeader,
+    type ISortItem,
     attributeLocatorElement,
     attributeLocatorIdentifier,
     idMatchMeasure,

@@ -2,15 +2,15 @@
 
 import stringify from "json-stable-stringify";
 import { groupBy } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { CallEffect, SagaReturnType, all, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type CallEffect, type SagaReturnType, all, call, select } from "redux-saga/effects";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IDrillToCustomUrl,
-    IFilter,
-    IInsightWidget,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IDrillToCustomUrl,
+    type IFilter,
+    type IInsightWidget,
+    type ObjRef,
     areObjRefsEqual,
     filterAttributeElements,
     filterObjRef,
@@ -21,19 +21,19 @@ import {
     isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
-    IDrillEvent,
-    IDrillEventIntersectionElement,
+    type IDrillEvent,
+    type IDrillEventIntersectionElement,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
 
 import { getElementTitle, getElementsSecondaryTitles } from "./getElementTitle.js";
 import {
-    IDrillToUrlPlaceholder,
+    type IDrillToUrlPlaceholder,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../_staging/drills/drillingUtils.js";
-import { DrillToCustomUrl } from "../../commands/drill.js";
+import { type DrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
@@ -46,9 +46,9 @@ import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 interface IDrillToUrlPlaceholderReplacement {
     toBeReplaced: string;

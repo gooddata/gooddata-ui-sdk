@@ -6,11 +6,11 @@ import { defineMessages } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttributeHierarchy,
-    IDrillDownReference,
-    InsightDrillDefinition,
-    ObjRef,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
+    type IDrillDownReference,
+    type InsightDrillDefinition,
+    type ObjRef,
     areObjRefsEqual,
     getHierarchyRef,
     idRef,
@@ -18,7 +18,7 @@ import {
     isInsightWidget,
     localIdRef,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -49,9 +49,9 @@ import {
 } from "../../../../../model/index.js";
 import {
     DRILL_TARGET_TYPE,
-    IDrillConfigItem,
-    IDrillDownAttributeHierarchyConfig,
-    IDrillDownAttributeHierarchyDefinition,
+    type IDrillConfigItem,
+    type IDrillDownAttributeHierarchyConfig,
+    type IDrillDownAttributeHierarchyDefinition,
     isDrillDownToAttributeHierarchyConfig,
     isDrillDownToAttributeHierarchyDefinition,
     isDrillToAttributeUrlConfig,

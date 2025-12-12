@@ -1,6 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
-import { IInsight } from "@gooddata/sdk-model";
-import { IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
+import { type IInsight } from "@gooddata/sdk-model";
+import { type IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
 
 const HOST_NAME = "<hostName>";
 const WORKSPACE_ID = "<workspaceId>";

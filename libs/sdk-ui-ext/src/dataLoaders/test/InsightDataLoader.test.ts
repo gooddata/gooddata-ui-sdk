@@ -2,8 +2,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IInsight, ObjRef, idRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import { noopWorkspaceInsightsService } from "./dataLoaders.mock.js";
 import { insightDataLoaderFactory } from "../InsightDataLoader.js";

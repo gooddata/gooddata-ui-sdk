@@ -7,7 +7,12 @@ import findUp from "find-up";
 import { keyBy } from "lodash-es";
 
 import { createDependencyGraph } from "./dependencyGraph.js";
-import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types.js";
+import {
+    type PackageDescriptor,
+    type PackageJson,
+    type RushPackageDescriptor,
+    type SourceDescriptor,
+} from "./types.js";
 import { readJsonSync } from "./utils.js";
 
 const identity = <T>(v: T): boolean => !!v;

@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IWidget, isAttributeMetadataObject, objRefToString } from "@gooddata/sdk-model";
+import { type IWidget, isAttributeMetadataObject, objRefToString } from "@gooddata/sdk-model";
 
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
 import { getAttributeByDisplayForm } from "./utils.js";

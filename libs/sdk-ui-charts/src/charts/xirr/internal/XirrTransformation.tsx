@@ -2,10 +2,10 @@
 
 import { useCallback } from "react";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    ExplicitDrill,
-    IDrillEventCallback,
+    type ExplicitDrill,
+    type IDrillEventCallback,
     convertDrillableItemsToPredicates,
     fireDrillEvent,
 } from "@gooddata/sdk-ui";
@@ -15,11 +15,11 @@ import {
     buildDrillEventData,
     getHeadlineData,
 } from "./utils/XirrTransformationUtils.js";
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import { LegacyHeadline } from "../../headline/internal/headlines/LegacyHeadline.js";
 import {
-    HeadlineFiredDrillEvent,
-    IHeadlineFiredDrillEventItemContext,
+    type HeadlineFiredDrillEvent,
+    type IHeadlineFiredDrillEventItemContext,
 } from "../../headline/internal/interfaces/DrillEvents.js";
 
 export interface IXirrTransformationProps {

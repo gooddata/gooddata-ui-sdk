@@ -3,10 +3,10 @@
 import fs from "fs";
 import path from "path";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
-import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
+import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 import { DataRecorderError } from "../base/types.js";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import { logError } from "../cli/loggers.js";

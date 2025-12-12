@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, memo, useState } from "react";
+import { type ReactElement, memo, useState } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
@@ -16,7 +16,7 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import {
     //    INeobackstopConfig,
     //    INeobackstopScenarioConfig,
-    IStoryParameters,
+    type IStoryParameters,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";

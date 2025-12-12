@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ComponentType, KeyboardEvent, MouseEvent, useCallback } from "react";
+import { type ComponentType, type KeyboardEvent, type MouseEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 import { isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { IWithDrillableItemProps } from "../../../interfaces/BaseHeadlines.js";
-import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
+import { type IWithDrillableItemProps } from "../../../interfaces/BaseHeadlines.js";
+import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
 export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataItem>>(

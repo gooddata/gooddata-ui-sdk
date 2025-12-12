@@ -2,27 +2,27 @@
 
 import { useMemo } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    IDashboardDateFilter,
-    IDashboardDateFilterConfig,
-    IDashboardDateFilterConfigItem,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type IDashboardDateFilter,
+    type IDashboardDateFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type ObjRef,
     areObjRefsEqual,
     isIdentifierRef,
     isUriRef,
 } from "@gooddata/sdk-model";
 
-import { ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
 import {
-    IDashboardAttributeFilterParentItem,
-    IDashboardDependentDateFilter,
-    IMetricsAndFacts,
+    type IDashboardAttributeFilterParentItem,
+    type IDashboardDependentDateFilter,
+    type IMetricsAndFacts,
     selectAllCatalogDateDatasetsMap,
     selectAllCatalogDisplayFormsMap,
     selectCatalogAttributes,
@@ -32,7 +32,7 @@ import {
     selectDateFilterConfigsOverrides,
     useDashboardSelector,
 } from "../../../../../../../model/index.js";
-import { ValuesLimitingItem } from "../../../../types.js";
+import { type ValuesLimitingItem } from "../../../../types.js";
 
 export interface IValuesLimitingItemWithTitle {
     title?: string;

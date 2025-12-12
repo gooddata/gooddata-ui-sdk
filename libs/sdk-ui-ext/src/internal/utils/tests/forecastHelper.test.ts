@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
 
-import { IReferencePoint } from "../../interfaces/Visualization.js";
+import { type IReferencePoint } from "../../interfaces/Visualization.js";
 import { isForecastEnabled } from "../forecastHelper.js";
 
 describe("isForecastEnabled", () => {

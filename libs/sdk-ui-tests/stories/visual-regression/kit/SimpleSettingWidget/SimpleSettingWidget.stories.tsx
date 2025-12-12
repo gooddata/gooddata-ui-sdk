@@ -2,7 +2,7 @@
 
 import { SimpleSettingWidget } from "@gooddata/sdk-ui-kit";
 
-import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function SimpleSettingWidgetTest() {

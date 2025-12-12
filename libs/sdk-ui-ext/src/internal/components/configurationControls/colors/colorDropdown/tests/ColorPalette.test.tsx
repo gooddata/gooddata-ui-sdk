@@ -10,7 +10,7 @@ import {
     colorPaletteWithOneColor,
     getLargePalette,
 } from "../../../../../tests/mocks/testColorHelper.js";
-import { ColorPalette, IColorPaletteProps } from "../ColorPalette.js";
+import { ColorPalette, type IColorPaletteProps } from "../ColorPalette.js";
 
 const defaultProps: IColorPaletteProps = {
     selectedColorGuid: undefined,

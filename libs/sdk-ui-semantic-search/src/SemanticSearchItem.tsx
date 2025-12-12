@@ -1,12 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { type ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import type { IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
 
 import { SearchItemDetails } from "./internal/SearchItemDetails.js";
 import { SearchItemIcon } from "./internal/SearchItemIcon.js";
 import { SearchItem } from "./SearchItem.js";
-import * as styles from "./SearchItemText.module.scss.js";
 import { getAriaLabel } from "./utils/getAriaLabel.js";
 
 type Props = IUiTreeviewItemProps<ISemanticSearchResultItem>;
@@ -29,8 +28,8 @@ export function SemanticSearchItem({ item, level, isFocused, onSelect, onHover, 
             icon={<SearchItemIcon item={item.data} />}
             details={<SearchItemDetails item={item.data} />}
         >
-            <span className={styles.textRow}>
-                <span className={styles.textEllipsis}>{item.stringTitle}</span>
+            <span className="gd-semantic-search__results-item__text__row">
+                <span className="gd-semantic-search__results-item__text__ellipsis">{item.stringTitle}</span>
             </span>
         </SearchItem>
     );

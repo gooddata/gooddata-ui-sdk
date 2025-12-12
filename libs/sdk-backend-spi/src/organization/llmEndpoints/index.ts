@@ -1,6 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch, LlmEndpointTestResults } from "@gooddata/sdk-model";
+import {
+    type ILlmEndpointOpenAI,
+    type LlmEndpointOpenAIPatch,
+    type LlmEndpointTestResults,
+} from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization llm endpoints configuration.

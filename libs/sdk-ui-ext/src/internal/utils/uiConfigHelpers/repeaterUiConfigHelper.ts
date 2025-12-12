@@ -1,14 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import { DEFAULT_REPEATER_UI_CONFIG, UICONFIG } from "../../constants/uiConfig.js";
-import { IExtendedReferencePoint, IReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
+import {
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+} from "../../interfaces/Visualization.js";
 import { getBucketItems, getMainRowAttribute, setBucketTitles } from "../bucketHelper.js";
 import { hasNoAttribute, hasNoColumns } from "../bucketRules.js";
 

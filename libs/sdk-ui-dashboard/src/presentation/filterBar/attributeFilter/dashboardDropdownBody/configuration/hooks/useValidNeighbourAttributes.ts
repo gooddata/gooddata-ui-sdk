@@ -2,11 +2,11 @@
 
 import { useEffect, useMemo } from "react";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
-    QueryConnectedAttributes,
+    type QueryConnectedAttributes,
     queryConnectedAttributes,
     selectAttributeFilterDisplayFormsMap,
     selectSupportsSettingConnectingAttributes,

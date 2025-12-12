@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IMetadataObject } from "../ldm/metadata/index.js";
+import { type IMetadataObject } from "../ldm/metadata/index.js";
 
 /**
  * Custom font URI which is used to override the default font

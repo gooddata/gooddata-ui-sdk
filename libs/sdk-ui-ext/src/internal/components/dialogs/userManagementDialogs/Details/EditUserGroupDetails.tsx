@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IUserGroup } from "@gooddata/sdk-model";
+import { type IUserGroup } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
 import { useUserGroupDetails } from "./detailsHooks.js";

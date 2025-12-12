@@ -2,24 +2,24 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    DataValue,
-    IResultAttributeHeader,
-    IResultMeasureHeader,
-    IResultTotalHeader,
+    type DataValue,
+    type IResultAttributeHeader,
+    type IResultMeasureHeader,
+    type IResultTotalHeader,
 } from "@gooddata/sdk-model";
 
 import {
-    ITableAttributeColumnDefinition,
-    ITableGrandTotalColumnDefinition,
-    ITableMeasureGroupHeaderColumnDefinition,
-    ITableMeasureGroupValueColumnDefinition,
-    ITableSubtotalColumnDefinition,
-    ITableValueColumnDefinition,
+    type ITableAttributeColumnDefinition,
+    type ITableGrandTotalColumnDefinition,
+    type ITableMeasureGroupHeaderColumnDefinition,
+    type ITableMeasureGroupValueColumnDefinition,
+    type ITableSubtotalColumnDefinition,
+    type ITableValueColumnDefinition,
 } from "./columns.js";
 import {
-    ITableGrandTotalRowDefinition,
-    ITableSubtotalRowDefinition,
-    ITableValueRowDefinition,
+    type ITableGrandTotalRowDefinition,
+    type ITableSubtotalRowDefinition,
+    type ITableValueRowDefinition,
 } from "./rows.js";
 
 /**

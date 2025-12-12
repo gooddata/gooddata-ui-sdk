@@ -1,5 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
-import { IDataSetMetadataObject, IDataset, IMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import {
+    type IDataSetMetadataObject,
+    type IDataset,
+    type IMetadataObject,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * Service for querying workspace datasets

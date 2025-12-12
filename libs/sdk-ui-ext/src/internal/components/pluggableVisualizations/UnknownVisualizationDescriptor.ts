@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight } from "@gooddata/sdk-model";
+import { type IInsight } from "@gooddata/sdk-model";
 
 import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
 import { PluggableUnknownChart } from "./PluggableUnknownChart.js";
-import { IDrillDownContext } from "../../interfaces/Visualization.js";
+import { type IDrillDownContext } from "../../interfaces/Visualization.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../interfaces/VisualizationDescriptor.js";
 
 export class UnknownVisualizationDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {

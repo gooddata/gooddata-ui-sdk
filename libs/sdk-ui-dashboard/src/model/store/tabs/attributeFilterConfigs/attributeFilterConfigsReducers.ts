@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import {
-    SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
-    SetDashboardAttributeFilterConfigModePayload,
+    type SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
+    type SetDashboardAttributeFilterConfigModePayload,
 } from "../../../../model/commands/dashboard.js";
-import { TabsReducer } from "../tabsReducers.js";
-import { TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { type TabsReducer } from "../tabsReducers.js";
+import { type TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 type AttributeFilterConfigReducer<A extends Action> = CaseReducer<TabsState, A>;
 

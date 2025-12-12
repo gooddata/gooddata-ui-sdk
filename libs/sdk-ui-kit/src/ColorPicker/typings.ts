@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 
 /**
  * @internal

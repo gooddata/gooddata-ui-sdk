@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 
 /**
  * @beta

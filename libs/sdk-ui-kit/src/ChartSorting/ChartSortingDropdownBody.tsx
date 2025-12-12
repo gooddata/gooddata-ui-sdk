@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 
 import { Overlay } from "../Overlay/index.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "br tr" }];
 

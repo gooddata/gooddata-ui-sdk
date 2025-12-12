@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IFactMetadataObject,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    ObjRef,
-    ObjectOrigin,
+    type IFactMetadataObject,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
+    type ObjectOrigin,
 } from "@gooddata/sdk-model";
 
 import type { IFilterBaseOptions } from "../../common/filtering.js";

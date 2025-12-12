@@ -2,7 +2,7 @@
 
 import { invariant } from "ts-invariant";
 
-import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
+import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
 
 /**
  * This class serves the selector and the dispatcher properties of the dashboard component state.

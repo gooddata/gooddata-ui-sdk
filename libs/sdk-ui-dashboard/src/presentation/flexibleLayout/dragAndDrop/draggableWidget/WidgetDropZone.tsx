@@ -2,7 +2,7 @@
 
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
 import { hasParent } from "../../../../_staging/layout/coordinates.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { type ILayoutItemPath } from "../../../../types.js";
 
 export type WidgetDropZoneProps = {
     isLastInSection: boolean;

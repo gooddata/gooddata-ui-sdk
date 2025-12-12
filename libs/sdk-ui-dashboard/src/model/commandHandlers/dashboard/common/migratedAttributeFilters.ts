@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IDashboardAttributeFilter,
-    IFilterContextDefinition,
+    type IDashboardAttributeFilter,
+    type IFilterContextDefinition,
     areObjRefsEqual,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";

@@ -2,19 +2,19 @@
 
 import { useMemo } from "react";
 
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
-import { IListedDashboard, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IListedDashboard, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { DrillTargetDashboardTabSelector } from "./DrillTargetDashboardTabSelector.js";
 import {
-    IInaccessibleDashboard,
+    type IInaccessibleDashboard,
     selectAccessibleDashboards,
     selectEnableDashboardTabs,
     selectInaccessibleDashboards,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { DashboardList, IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
+import { DashboardList, type IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
 
 interface IDrillTargetDashboardItemProps {
     selected?: ObjRef;

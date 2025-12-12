@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { AxiosResponse } from "axios";
+import { type AxiosResponse } from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    JsonApiColorPaletteOutDocument,
-    JsonApiThemeOutDocument,
+    type JsonApiColorPaletteOutDocument,
+    type JsonApiThemeOutDocument,
     MetadataUtilities,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
@@ -19,13 +19,13 @@ import {
     EntitiesApi_UpdateEntityColorPalettes,
     EntitiesApi_UpdateEntityThemes,
 } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
+import { type IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
 import {
-    IColorPaletteDefinition,
-    IColorPaletteMetadataObject,
-    IThemeDefinition,
-    IThemeMetadataObject,
-    ObjRef,
+    type IColorPaletteDefinition,
+    type IColorPaletteMetadataObject,
+    type IThemeDefinition,
+    type IThemeMetadataObject,
+    type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -36,14 +36,14 @@ import {
     getColorPaletteFromMDObject,
     isValidColorPalette,
 } from "../../convertors/fromBackend/ColorPaletteConverter.js";
-import { JsonApiId } from "../../convertors/fromBackend/ObjRefConverter.js";
+import { type JsonApiId } from "../../convertors/fromBackend/ObjRefConverter.js";
 import {
     convertTheme as convertThemeFromBackend,
     convertThemeWithLinks,
 } from "../../convertors/fromBackend/ThemeConverter.js";
 import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter.js";
 import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { objRefToIdentifier } from "../../utils/api.js";
 
 export class OrganizationStylingService implements IOrganizationStylingService {

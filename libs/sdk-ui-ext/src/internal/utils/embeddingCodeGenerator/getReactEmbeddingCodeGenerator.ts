@@ -2,17 +2,17 @@
 
 import { compact, groupBy, isEmpty, partition, sortBy, uniqBy } from "lodash-es";
 
-import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
+import { type IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
 import { normalizeInsight } from "./normalizeInsight.js";
 import {
-    IAdditionalFactoryDefinition,
-    IEmbeddingCodeGeneratorSpecification,
-    IImportInfo,
-    PropWithMeta,
-    PropsWithMeta,
+    type IAdditionalFactoryDefinition,
+    type IEmbeddingCodeGeneratorSpecification,
+    type IImportInfo,
+    type PropWithMeta,
+    type PropsWithMeta,
 } from "./types.js";
-import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
+import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
 // these are in line with what `factoryNotationFor` supports
 const defaultFactories: IImportInfo[] = [

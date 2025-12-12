@@ -8,7 +8,7 @@ import {
     AttributeFilterSimpleDropdownButtonWithSelection,
 } from "@gooddata/sdk-ui-filters";
 
-import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";

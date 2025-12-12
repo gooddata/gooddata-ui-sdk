@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
-import { CatalogItem, ICatalogDateAttribute } from "@gooddata/sdk-model";
+import { type CatalogItem, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 
 import { getCatalogItemId, getCatalogItemTitle, getCatalogItemType } from "./utils.js";
-import { TextContentObject } from "../../model.js";
+import { type TextContentObject } from "../../model.js";
 
 export function collectReferences(
     text: string,

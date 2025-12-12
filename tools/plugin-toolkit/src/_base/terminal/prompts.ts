@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import pkg, { DistinctQuestion } from "inquirer";
+import pkg, { type DistinctQuestion } from "inquirer";
 const { prompt } = pkg;
 
 import { sanitizeHostname } from "../inputHandling/sanitizers.js";
 import { createHostnameValidator, pluginNameValidator } from "../inputHandling/validators.js";
-import { TargetAppLanguage } from "../types.js";
+import { type TargetAppLanguage } from "../types.js";
 
 export async function promptApiToken(): Promise<string> {
     const tokenQuestion: DistinctQuestion = {

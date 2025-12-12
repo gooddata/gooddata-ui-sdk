@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 
-import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
+import { type IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
@@ -20,7 +20,7 @@ import {
     serializeLayoutItemPath,
     updateItem,
 } from "../../../../_staging/layout/coordinates.js";
-import { DropZoneType, ILayoutItemPath } from "../../../../types.js";
+import { type DropZoneType, type ILayoutItemPath } from "../../../../types.js";
 import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
 import { useDashboardDrop } from "../../../dragAndDrop/index.js";

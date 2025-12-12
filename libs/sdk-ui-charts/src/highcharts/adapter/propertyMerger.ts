@@ -2,7 +2,7 @@
 
 import { merge } from "lodash-es";
 
-import { HighchartsOptions } from "../lib/index.js";
+import { type HighchartsOptions } from "../lib/index.js";
 
 export const mergePropertiesWithOverride = (
     base: HighchartsOptions,

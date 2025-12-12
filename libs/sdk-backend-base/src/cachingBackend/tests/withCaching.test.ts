@@ -4,21 +4,21 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    IAnalyticalBackend,
-    ICollectionItemsConfig,
-    ICollectionItemsResult,
-    IDataView,
-    IElementsQueryResult,
-    IExecutionResult,
-    IPreparedExecution,
+    type IAnalyticalBackend,
+    type ICollectionItemsConfig,
+    type ICollectionItemsResult,
+    type IDataView,
+    type IElementsQueryResult,
+    type IExecutionResult,
+    type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IAttributeOrMeasure,
-    IBucket,
-    IGeoJsonFeature,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IGeoJsonFeature,
+    type ObjRef,
     geoFeatureId,
     newBucket,
     newInsightDefinition,
@@ -33,7 +33,7 @@ import {
 import { decoratedBackend } from "../../decoratedBackend/index.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withEventing } from "../../eventingBackend/index.js";
-import { CacheControl, withCaching } from "../index.js";
+import { type CacheControl, withCaching } from "../index.js";
 
 const defaultBackend = dummyBackendEmptyData();
 

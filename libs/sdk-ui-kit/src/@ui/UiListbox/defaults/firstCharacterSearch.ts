@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent } from "react";
+import { type KeyboardEvent } from "react";
 
-import { IUiListboxContext } from "../types.js";
+import { type IUiListboxContext } from "../types.js";
 
 /**
  * This is a basic implementation of moving focus to items on character key press.

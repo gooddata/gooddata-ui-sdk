@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import { resizeParentContainers } from "./containerHeightSanitization.js";
 import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
@@ -27,15 +27,15 @@ import {
     updateItem,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
-import { MoveSectionItem } from "../../commands/index.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
+import { type MoveSectionItem } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
+import { type DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps.js";
 
 type MoveSectionItemContext = {

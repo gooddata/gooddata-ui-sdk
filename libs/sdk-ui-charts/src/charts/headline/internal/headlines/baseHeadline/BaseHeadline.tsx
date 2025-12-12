@@ -3,17 +3,17 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import { defaultImport } from "default-import";
-import ReactMeasure, { MeasuredComponentProps } from "react-measure";
+import ReactMeasure, { type MeasuredComponentProps } from "react-measure";
 
-import { HeadlineElementType } from "@gooddata/sdk-ui";
+import { type HeadlineElementType } from "@gooddata/sdk-ui";
 
 import { BaseHeadlineContext } from "./BaseHeadlineContext.js";
 import { CompareSection } from "./CompareSection.js";
 import { PrimarySection } from "./PrimarySection.js";
-import { IChartConfig } from "../../../../../interfaces/index.js";
-import { IBaseHeadlineData } from "../../interfaces/BaseHeadlines.js";
-import { HeadlineFiredDrillEvent } from "../../interfaces/DrillEvents.js";
-import { IHeadlineDataItem } from "../../interfaces/Headlines.js";
+import { type IChartConfig } from "../../../../../interfaces/index.js";
+import { type IBaseHeadlineData } from "../../interfaces/BaseHeadlines.js";
+import { type HeadlineFiredDrillEvent } from "../../interfaces/DrillEvents.js";
+import { type IHeadlineDataItem } from "../../interfaces/Headlines.js";
 
 const RESIZE_GUARD_TIMEOUT = 3000;
 const Measure = defaultImport(ReactMeasure);

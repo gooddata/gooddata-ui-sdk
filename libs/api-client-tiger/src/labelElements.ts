@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
-import { BaseAPI, RequestArgs } from "./generated/afm-rest-api/base.js";
+import { BaseAPI, type RequestArgs } from "./generated/afm-rest-api/base.js";
 import {
     ActionsApi,
-    ActionsApiInterface,
+    type ActionsApiInterface,
     Configuration,
-    ConfigurationParameters,
+    type ConfigurationParameters,
 } from "./generated/afm-rest-api/index.js";
 
 export type {

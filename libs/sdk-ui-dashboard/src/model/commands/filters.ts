@@ -1,21 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    DashboardAttributeFilterConfigMode,
-    DashboardAttributeFilterSelectionMode,
-    DateFilterGranularity,
-    DateFilterType,
-    DateString,
-    FilterContextItem,
-    IAttributeElements,
-    IAttributeFilter,
-    IDashboardAttributeFilterByDate,
-    IDashboardAttributeFilterConfig,
-    IDashboardAttributeFilterParent,
-    IDateFilter,
-    ILowerBoundedFilter,
-    IUpperBoundedFilter,
-    ObjRef,
+    type DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterSelectionMode,
+    type DateFilterGranularity,
+    type DateFilterType,
+    type DateString,
+    type FilterContextItem,
+    type IAttributeElements,
+    type IAttributeFilter,
+    type IDashboardAttributeFilterByDate,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardAttributeFilterParent,
+    type IDateFilter,
+    type ILowerBoundedFilter,
+    type IUpperBoundedFilter,
+    type ObjRef,
     absoluteDateFilterValues,
     filterAttributeElements,
     isAllTimeDateFilter,
@@ -25,8 +25,8 @@ import {
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "./base.js";
-import { IDashboardFilter } from "../../types.js";
+import { type IDashboardCommand } from "./base.js";
+import { type IDashboardFilter } from "../../types.js";
 
 /**
  * Payload type for {@link ChangeDateFilterSelection} command.

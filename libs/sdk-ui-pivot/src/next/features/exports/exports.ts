@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { OnExportReady, createExportFunction } from "@gooddata/sdk-ui";
+import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type OnExportReady, createExportFunction } from "@gooddata/sdk-ui";
 
 /**
  * Handles export ready functionality by creating export function

@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import { memoize } from "lodash-es";
 
-import { ITranslations } from "@gooddata/sdk-ui";
+import { type ITranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
 
 import { en_US } from "./bundles/en-US.localization-bundle.js";

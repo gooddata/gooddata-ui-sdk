@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { IExecutionResult, IExportResult } from "@gooddata/sdk-backend-spi";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { IExtendedExportConfig, createExportFunction } from "@gooddata/sdk-ui";
+import { type IExecutionResult, type IExportResult } from "@gooddata/sdk-backend-spi";
+import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { type IExtendedExportConfig, createExportFunction } from "@gooddata/sdk-ui";
 
-import { ExportInsightWidget } from "../../commands/index.js";
+import { type ExportInsightWidget } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    DashboardInsightWidgetExportResolved,
+    type DashboardInsightWidgetExportResolved,
     insightWidgetExportRequested,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
@@ -23,8 +23,8 @@ import {
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
 } from "../../store/executionResults/executionResultsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 async function performExport(
     executionResult: IExecutionResult,

@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { stringUtils } from "@gooddata/util";
 
-import { IDialogListItemComponentProps } from "./typings.js";
+import { type IDialogListItemComponentProps } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
 import { ShortenedText } from "../../ShortenedText/index.js";
 

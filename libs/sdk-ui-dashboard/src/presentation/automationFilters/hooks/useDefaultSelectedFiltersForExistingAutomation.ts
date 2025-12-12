@@ -3,9 +3,9 @@
 import { useMemo } from "react";
 
 import {
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationVisibleFilter,
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationVisibleFilter,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
     isDashboardAttributeFilter,
@@ -21,13 +21,13 @@ import {
 } from "../../../_staging/automation/index.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     removeIgnoredWidgetFilters,
     selectAutomationAvailableDashboardFilters,
     selectAutomationCommonDateFilterId,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
+import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
 
 export function useDefaultSelectedFiltersForExistingAutomation(
     automationToEdit?: IAutomationMetadataObject,

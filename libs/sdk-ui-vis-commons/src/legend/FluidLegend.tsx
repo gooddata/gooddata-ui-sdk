@@ -1,14 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, memo, useState } from "react";
+import { type ReactNode, memo, useState } from "react";
 
 import cx from "classnames";
 
 import { calculateFluidLegend } from "./helpers.js";
 import { LegendList } from "./LegendList.js";
 import { LegendSeries } from "./LegendSeries.js";
-import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
-import { ChartFillType } from "../coloring/types.js";
+import { type IPushpinCategoryLegendItem, type ItemBorderRadiusPredicate } from "./types.js";
+import { type ChartFillType } from "../coloring/types.js";
 
 /**
  * @internal

@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, select } from "redux-saga/effects";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { GenAIChatInteractionUserVisualisation } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type GenAIChatInteractionUserVisualisation } from "@gooddata/sdk-model";
 
-import { Message } from "../../model.js";
+import { type Message } from "../../model.js";
 import { getVisualizationHref } from "../../utils.js";
 import { messagesSelector } from "../messages/messagesSelectors.js";
 

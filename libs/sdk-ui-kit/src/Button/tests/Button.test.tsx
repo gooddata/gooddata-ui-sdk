@@ -4,7 +4,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Button } from "../Button.js";
-import { IButtonProps } from "../typings.js";
+import { type IButtonProps } from "../typings.js";
 
 function renderButton(options: Partial<IButtonProps>) {
     return render(<Button {...options} />);

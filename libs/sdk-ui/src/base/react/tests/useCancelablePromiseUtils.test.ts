@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { GoodDataSdkError, UnexpectedSdkError } from "../../errors/GoodDataSdkError.js";
-import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "../useCancelablePromise.js";
+import { type GoodDataSdkError, UnexpectedSdkError } from "../../errors/GoodDataSdkError.js";
+import { type UseCancelablePromiseState, type UseCancelablePromiseStatus } from "../useCancelablePromise.js";
 import {
     resolveUseCancelablePromisesError,
     resolveUseCancelablePromisesStatus,

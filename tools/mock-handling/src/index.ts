@@ -9,19 +9,19 @@ import { program } from "commander";
 import ora from "ora";
 import pmap from "p-map";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { LIB_VERSION } from "./__version.js";
 import { getOrInitBackend } from "./backend.js";
 import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config.js";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants.js";
-import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
+import { type DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
 import { clearLine, clearTerminal } from "./cli/clear.js";
 import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
 import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
 import { generateAllFiles } from "./codegen/index.js";
 import { discoverCatalogRecordings } from "./recordings/catalogRepository.js";
-import { IRecording } from "./recordings/common.js";
+import { type IRecording } from "./recordings/common.js";
 import { discoverDashboardRecordings } from "./recordings/dashboardsRepository.js";
 import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository.js";
 import { discoverExecutionRecordings } from "./recordings/executionRepository.js";

@@ -2,17 +2,17 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { SortDirection } from "@gooddata/sdk-model";
+import { type SortDirection } from "@gooddata/sdk-model";
 import {
     UiAsyncTable,
-    UiAsyncTableColumn,
-    UiAsyncTableFilter,
-    UiAsyncTableFilterOption,
+    type UiAsyncTableColumn,
+    type UiAsyncTableFilter,
+    type UiAsyncTableFilterOption,
     UiBadge,
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
 
-import { INeobackstopScenarioConfig, IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // eslint-disable-next-line no-restricted-exports

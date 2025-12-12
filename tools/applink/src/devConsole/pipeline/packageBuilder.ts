@@ -1,18 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
+
 import fs from "fs";
 import path from "path";
 
 import spawn from "cross-spawn";
 import { intersection, isEmpty } from "lodash-es";
 
-import { PackageDescriptor, SourceDescriptor } from "../../base/types.js";
+import { type PackageDescriptor, type SourceDescriptor } from "../../base/types.js";
 import {
-    BuildRequested,
-    DcEvent,
-    EventBus,
+    type BuildRequested,
+    type DcEvent,
+    type EventBus,
     GlobalEventBus,
-    IEventListener,
-    SourceInitialized,
+    type IEventListener,
+    type SourceInitialized,
     buildFinished,
     buildStarted,
 } from "../events.js";

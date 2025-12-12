@@ -5,9 +5,9 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {
-    CSSProperties,
-    MouseEvent as ReactMouseEvent,
-    TouchEvent as ReactTouchEvent,
+    type CSSProperties,
+    type MouseEvent as ReactMouseEvent,
+    type TouchEvent as ReactTouchEvent,
     memo,
     useCallback,
     useEffect,
@@ -15,7 +15,7 @@ import {
     useRef,
 } from "react";
 
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 
 import { calculateHueChange } from "../utils.js";
 

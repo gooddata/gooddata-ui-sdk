@@ -1,17 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
 
-import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset, type ObjRef, objRefToString } from "@gooddata/sdk-model";
 import {
     Button,
     Dropdown,
     DropdownButton,
     DropdownList,
-    IAlignPoint,
+    type IAlignPoint,
     ScrollableItem,
     ShortenedText,
     isDateDatasetHeader,

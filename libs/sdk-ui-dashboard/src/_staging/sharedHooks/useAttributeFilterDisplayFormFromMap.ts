@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import {
     selectAllCatalogDisplayFormsMap,

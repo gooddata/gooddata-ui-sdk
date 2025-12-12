@@ -1,15 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { CssVariableUsage } from "./types.js";
+import { type CssVariableUsage } from "./types.js";
 import { groupByUnique } from "./utils.js";
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
 import {
-    ThemeCssVariable,
-    ThemeDefinedCssVariable,
-    ThemeDeprecatedCssVariable,
-    ThemeDerivedCssVariable,
-    ThemeInconsistentCssVariable,
-    ThemeInternalCssVariable,
+    type ThemeCssVariable,
+    type ThemeDefinedCssVariable,
+    type ThemeDeprecatedCssVariable,
+    type ThemeDerivedCssVariable,
+    type ThemeInconsistentCssVariable,
+    type ThemeInternalCssVariable,
 } from "../types.js";
 
 /**

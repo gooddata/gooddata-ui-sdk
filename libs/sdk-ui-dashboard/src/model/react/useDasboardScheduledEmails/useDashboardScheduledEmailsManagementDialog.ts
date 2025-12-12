@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
-import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, type IWidget } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";

@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    AriaAttributes,
-    ComponentType,
-    Dispatch,
-    KeyboardEvent,
-    MouseEvent,
-    MutableRefObject,
-    SetStateAction,
+    type AriaAttributes,
+    type ComponentType,
+    type Dispatch,
+    type KeyboardEvent,
+    type MouseEvent,
+    type MutableRefObject,
+    type SetStateAction,
 } from "react";
 
 import type { IconType } from "../@types/icon.js";

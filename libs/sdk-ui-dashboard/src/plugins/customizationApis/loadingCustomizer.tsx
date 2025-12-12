@@ -1,16 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { ILoadingProps, LoadingComponent } from "@gooddata/sdk-ui";
+import { type ILoadingProps, LoadingComponent } from "@gooddata/sdk-ui";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
-import { LoadingComponentProvider, OptionalLoadingComponentProvider } from "../../presentation/index.js";
-import { ILoadingCustomizer } from "../customizer.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
+import {
+    type LoadingComponentProvider,
+    type OptionalLoadingComponentProvider,
+} from "../../presentation/index.js";
+import { type ILoadingCustomizer } from "../customizer.js";
 
 const DefaultLoadingRendererProvider: LoadingComponentProvider = () => {
     return LoadingComponent;

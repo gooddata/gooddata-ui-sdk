@@ -4,7 +4,7 @@ import { UiCheckbox } from "../../../@ui/UiCheckbox/UiCheckbox.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
 import { accessibilityConfigToAttributes } from "../../../typings/utilities.js";
 import { e } from "../asyncTableBem.js";
-import { UiAsyncTableDropdownItemProps } from "../types.js";
+import { type UiAsyncTableDropdownItemProps } from "../types.js";
 
 export function UiAsyncTableDropdownItem({
     label,

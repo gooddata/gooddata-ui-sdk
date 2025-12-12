@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ITheme, idRef } from "@gooddata/sdk-model";
+import { type ITheme, idRef } from "@gooddata/sdk-model";
 
-import { IStylingPickerItem } from "../../Dialog/index.js";
+import { type IStylingPickerItem } from "../../Dialog/index.js";
 
 export const defaultItemMock: IStylingPickerItem<ITheme> = {
     ref: idRef("default-theme"),

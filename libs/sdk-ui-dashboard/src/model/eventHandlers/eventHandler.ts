@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
-import { AnyAction, Dispatch } from "@reduxjs/toolkit";
+import { type AnyAction, type Dispatch } from "@reduxjs/toolkit";
 
-import { IDashboardCommand } from "../commands/index.js";
+import { type IDashboardCommand } from "../commands/index.js";
 import {
-    DashboardCommandFailed,
-    DashboardCommandStarted,
-    DashboardEvents,
-    ICustomDashboardEvent,
+    type DashboardCommandFailed,
+    type DashboardCommandStarted,
+    type DashboardEvents,
+    type ICustomDashboardEvent,
     isDashboardCommandFailed,
     isDashboardCommandStarted,
     isDashboardEvent,
 } from "../events/index.js";
-import { DashboardSelectorEvaluator } from "../store/types.js";
+import { type DashboardSelectorEvaluator } from "../store/types.js";
 
 /**
  * @public

@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo } from "react";
+import { type RefObject, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { UiAsyncTableColumn, useAsyncTableResponsiveColumns } from "@gooddata/sdk-ui-kit";
+import { type UiAsyncTableColumn, useAsyncTableResponsiveColumns } from "@gooddata/sdk-ui-kit";
 
 import { AutomationIcon } from "./AutomationIcon.js";
 import { AutomationMenu } from "./AutomationMenu.js";
@@ -18,7 +18,7 @@ import {
     formatCellValue,
 } from "../format.js";
 import { messages } from "../messages.js";
-import { AutomationsColumnName, IUseAutomationColumnsProps } from "../types.js";
+import { type AutomationsColumnName, type IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
 import { getNextRunFromCron, getWidgetId, getWidgetName, getWorkspaceId } from "../utils.js";
 export const useAutomationColumns = ({

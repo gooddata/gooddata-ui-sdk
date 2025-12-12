@@ -6,7 +6,7 @@ import {
     enableDefaultTextWrappingForCells,
     enableDefaultTextWrappingForHeaders,
 } from "../features/textWrapping/agGridTextWrappingOptions.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with text wrapping applied.

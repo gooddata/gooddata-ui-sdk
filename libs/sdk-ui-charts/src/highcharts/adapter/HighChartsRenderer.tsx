@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    CSSProperties,
-    ReactElement,
-    ReactNode,
+    type CSSProperties,
+    type ReactElement,
+    type ReactNode,
     memo,
     useCallback,
     useEffect,
@@ -15,24 +15,24 @@ import {
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
 import { isEqual, partial, set, throttle } from "lodash-es";
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 import { v4 } from "uuid";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { LoadingComponent, VisualizationTypes } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, IconUndo } from "@gooddata/sdk-ui-kit";
 import {
-    ILegendDetailOptions,
-    ILegendOptions,
-    ILegendProps,
+    type ILegendDetailOptions,
+    type ILegendOptions,
+    type ILegendProps,
     Legend,
-    PositionType,
+    type PositionType,
     getLegendDetails,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { Chart, IChartProps } from "./Chart.js";
+import { Chart, type IChartProps } from "./Chart.js";
 import { mergePropertiesWithOverride } from "./propertyMerger.js";
-import { IChartConfig, OnLegendReady } from "../../interfaces/index.js";
+import { type IChartConfig, type OnLegendReady } from "../../interfaces/index.js";
 import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
 import {
     isFunnel,
@@ -42,9 +42,9 @@ import {
     isSankeyOrDependencyWheel,
     isWaterfall,
 } from "../chartTypes/_util/common.js";
-import { HChart, HighchartsOptions, XAxisOptions, YAxisOptions } from "../lib/index.js";
+import { type HChart, type HighchartsOptions, type XAxisOptions, type YAxisOptions } from "../lib/index.js";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
-import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../typings/unsafe.js";
+import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../typings/unsafe.js";
 
 /**
  * @internal

@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { AriaAttributes, MouseEvent, MutableRefObject, ReactNode } from "react";
+import { type AriaAttributes, type MouseEvent, type MutableRefObject, type ReactNode } from "react";
 
 import cx from "classnames";
 
 import { Button } from "../Button/Button.js";
-import { IButtonAccessibilityConfig } from "../Button/index.js";
-import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { type IButtonAccessibilityConfig } from "../Button/index.js";
+import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 /**
  * @internal

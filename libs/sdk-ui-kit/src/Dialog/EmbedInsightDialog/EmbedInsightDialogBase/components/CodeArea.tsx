@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, useCallback } from "react";
+import { type ReactNode, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { dialogEmptyInsightMessageLabels } from "../../../../locales.js";
-import { EmbedType, InsightCodeType } from "../types.js";
+import { type EmbedType, type InsightCodeType } from "../types.js";
 
 /**
  * @internal

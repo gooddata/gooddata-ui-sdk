@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ObjRef } from "@gooddata/sdk-model";
-import { IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { type ObjRef } from "@gooddata/sdk-model";
+import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { AttributeDisplayFormDropdown } from "./AttributeDisplayFormDropdown.js";
 import { useAttributeFilterContext } from "../../../Context/AttributeFilterContext.js";

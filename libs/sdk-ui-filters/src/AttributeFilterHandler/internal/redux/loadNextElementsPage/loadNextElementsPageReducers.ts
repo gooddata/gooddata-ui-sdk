@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { Correlation, ILoadElementsResult } from "../../../types/index.js";
+import { type Correlation, type ILoadElementsResult } from "../../../types/index.js";
 import { getElementCacheKey, getElementKey } from "../common/selectors.js";
-import { AttributeFilterReducer } from "../store/state.js";
+import { type AttributeFilterReducer } from "../store/state.js";
 
 const loadNextElementsPageRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (
     v,

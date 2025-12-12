@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
-import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
-import { IUserMember } from "./types.js";
+import { type IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { type IUserMember } from "./types.js";
 import { AddUser } from "./Users/AddUser.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];

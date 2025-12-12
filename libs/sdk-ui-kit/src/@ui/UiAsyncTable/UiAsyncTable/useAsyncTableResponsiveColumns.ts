@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { useElementSize } from "../../hooks/useElementSize.js";
-import { UiAsyncTableColumnDefinitionResponsive } from "../types.js";
+import { type UiAsyncTableColumnDefinitionResponsive } from "../types.js";
 import { CHECKBOX_COLUMN_WIDTH, SCROLLBAR_WIDTH } from "./constants.js";
 import { computeProportionalWidth, getColumnWidth } from "./utils.js";
 

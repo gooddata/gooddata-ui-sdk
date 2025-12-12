@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType, ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    type GenAIObjectType,
+    type ISemanticSearchRelationship,
+    type ISemanticSearchResultItem,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 /**

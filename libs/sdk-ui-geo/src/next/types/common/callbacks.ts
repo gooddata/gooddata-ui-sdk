@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoLngLat } from "./coordinates.js";
+import { type IGeoLngLat } from "./coordinates.js";
 
 /**
  * Called when the map center changes.

@@ -2,7 +2,7 @@
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { DashboardState } from "../../types.js";
+import { type DashboardState } from "../../types.js";
 import { SingleDashboardStoreAccessor } from "../SingleDashboardStoreAccessor.js";
 
 describe("SingleDashboardStoreAccessor tests", () => {

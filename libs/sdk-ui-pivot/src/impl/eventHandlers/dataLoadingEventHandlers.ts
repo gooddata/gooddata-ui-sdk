@@ -1,11 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 import { isEqual } from "lodash-es";
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { DataViewFacade, GoodDataSdkError, ILoadingState, createExportErrorFunction } from "@gooddata/sdk-ui";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    type DataViewFacade,
+    type GoodDataSdkError,
+    type ILoadingState,
+    createExportErrorFunction,
+} from "@gooddata/sdk-ui";
 
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { InternalTableState } from "../../tableState.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
+import { type InternalTableState } from "../../tableState.js";
 
 export interface IDataLoadingEventHandlerContext {
     internal: InternalTableState;

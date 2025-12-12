@@ -3,7 +3,11 @@ import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, ScenarioRecording, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import {
+    DataViewFirstPage,
+    type ScenarioRecording,
+    recordedDataView,
+} from "@gooddata/sdk-backend-mockingbird";
 
 import { fixEmptyHeaderItems } from "../fixEmptyHeaderItems.js";
 

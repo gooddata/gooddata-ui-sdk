@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset, type IWidget } from "@gooddata/sdk-model";
 
 import { DateDatasetDuplicityWarning } from "./DateDatasetDuplicityWarning.js";
 import { DateDatasetPicker } from "./DateDatasetPicker.js";

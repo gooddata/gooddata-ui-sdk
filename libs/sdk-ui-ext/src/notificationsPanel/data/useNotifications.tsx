@@ -2,8 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { INotification, isAlertNotification } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type INotification, isAlertNotification } from "@gooddata/sdk-model";
 import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
 
 import { useFetchNotifications } from "./useFetchNotifications.js";

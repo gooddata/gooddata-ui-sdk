@@ -11,7 +11,7 @@ import { SearchContentsComponent } from "./contents/SearchContents.js";
 import { SemanticSearchContentsComponent } from "./contents/SemanticSearchContents.js";
 import { TextContentsComponent } from "./contents/TextContents.js";
 import { VisualizationContentsComponent } from "./contents/VisualizationContents.js";
-import { Contents } from "../../model.js";
+import { type Contents } from "../../model.js";
 
 type MessageContentsProps = {
     content: Contents[];

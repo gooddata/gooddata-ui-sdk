@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
-import { ILegendBodyProps } from "./types.js";
+import { type ILegendBodyProps } from "./types.js";
 import type { IGeoChartLegendRendererProps } from "../../../core/geoChart/GeoChartLegendRenderer.js";
 
 /**

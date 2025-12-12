@@ -2,17 +2,17 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeDescriptor,
-    IAttributeDescriptorBody,
-    IDimensionDescriptor,
-    IDimensionItemDescriptor,
-    IMeasureDescriptorObject,
-    IMeasureGroupDescriptor,
-    IResultHeader,
+    type IAttributeDescriptor,
+    type IAttributeDescriptorBody,
+    type IDimensionDescriptor,
+    type IDimensionItemDescriptor,
+    type IMeasureDescriptorObject,
+    type IMeasureGroupDescriptor,
+    type IResultHeader,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
 
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 
 //
 // TODO: move all this code to data view facade.

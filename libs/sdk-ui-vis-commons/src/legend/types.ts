@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IPatternObject } from "../coloring/types.js";
+import { type IPatternObject } from "../coloring/types.js";
 
 /**
  * @internal

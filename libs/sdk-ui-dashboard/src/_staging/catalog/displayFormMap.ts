@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateDataset,
+    type IAttributeDisplayFormMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
 } from "@gooddata/sdk-model";
 
-import { ObjRefMap, newDisplayFormMap } from "../metadata/objRefMap.js";
+import { type ObjRefMap, newDisplayFormMap } from "../metadata/objRefMap.js";
 
 /**
  * Factory function that extracts all display forms from catalog entities and returns a map indexing display

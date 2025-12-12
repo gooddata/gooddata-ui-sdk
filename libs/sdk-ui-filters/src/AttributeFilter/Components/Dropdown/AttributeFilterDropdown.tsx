@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { KeyboardEventHandler, useCallback, useRef } from "react";
+import { type KeyboardEventHandler, useCallback, useRef } from "react";
 
 import cx from "classnames";
 

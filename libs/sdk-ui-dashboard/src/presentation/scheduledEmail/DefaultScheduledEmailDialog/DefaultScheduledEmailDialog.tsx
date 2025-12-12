@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { defineMessage, useIntl } from "react-intl";
 
 import {
-    DashboardAttachmentType,
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    WidgetAttachmentType,
+    type DashboardAttachmentType,
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
 import { ValidationContextStore, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import {
@@ -18,7 +18,7 @@ import {
     ConfirmDialogBase,
     ContentDivider,
     Hyperlink,
-    IUiTab,
+    type IUiTab,
     Message,
     Overlay,
     OverlayController,
@@ -77,7 +77,7 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
-import { IScheduledEmailDialogProps } from "../types.js";
+import { type IScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";

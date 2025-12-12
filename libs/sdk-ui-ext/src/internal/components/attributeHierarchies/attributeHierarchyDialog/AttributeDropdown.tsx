@@ -9,7 +9,7 @@ import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
-import { ICatalogAttributeData } from "./types.js";
+import { type ICatalogAttributeData } from "./types.js";
 
 interface IAttributeDropdownProps {
     rowIndex: number;

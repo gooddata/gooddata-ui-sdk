@@ -7,10 +7,10 @@ import { sync as spawnSync } from "cross-spawn";
 import fse from "fs-extra";
 import tar from "tar";
 
-import { InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
-import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
+import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
+import { type FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
-import { ActionOptions, TargetAppLanguage } from "../_base/types.js";
+import { type ActionOptions, type TargetAppLanguage } from "../_base/types.js";
 import {
     convertToPluginDirectory,
     genericErrorReporter,

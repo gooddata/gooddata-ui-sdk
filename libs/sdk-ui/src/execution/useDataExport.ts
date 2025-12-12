@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
-import { DependencyList } from "react";
+import { type DependencyList } from "react";
 
-import { IExportConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IExportConfig, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 import {
-    GoodDataSdkError,
-    UseCancelablePromiseCallbacks,
-    UseCancelablePromiseState,
+    type GoodDataSdkError,
+    type UseCancelablePromiseCallbacks,
+    type UseCancelablePromiseState,
     convertError,
     useCancelablePromise,
 } from "../base/index.js";

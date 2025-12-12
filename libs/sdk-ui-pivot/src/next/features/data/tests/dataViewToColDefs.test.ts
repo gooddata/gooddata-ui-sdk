@@ -5,11 +5,11 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 import { compositeBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAttribute, modifyAttribute } from "@gooddata/sdk-model";
+import { type IAttribute, modifyAttribute } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
-import { ColumnHeadersPosition } from "../../../types/transposition.js";
-import { IPivotTableExecutionDefinitionParams, createExecutionDef } from "../createExecutionDef.js";
+import { type ColumnHeadersPosition } from "../../../types/transposition.js";
+import { type IPivotTableExecutionDefinitionParams, createExecutionDef } from "../createExecutionDef.js";
 import { dataViewToColDefs } from "../dataViewToColDefs.js";
 import { loadDataView } from "../loadDataView.js";
 

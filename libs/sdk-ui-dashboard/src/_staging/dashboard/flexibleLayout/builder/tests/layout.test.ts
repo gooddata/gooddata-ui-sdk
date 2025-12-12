@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import { newInsightWidget, newKpiWidget } from "@gooddata/sdk-backend-base";
-import { IDashboardLayout, IDashboardLayoutSection, idRef } from "@gooddata/sdk-model";
+import { type IDashboardLayout, type IDashboardLayoutSection, idRef } from "@gooddata/sdk-model";
 
 import {
     createEmptyDashboardLayoutBuilder,
@@ -12,7 +12,7 @@ import {
     widgetWithNestedLayout,
 } from "./utils.js";
 import { serializeLayoutSectionPath } from "../../../../layout/coordinates.js";
-import { IDashboardLayoutItemBuilder, IDashboardLayoutSectionBuilder } from "../interfaces.js";
+import { type IDashboardLayoutItemBuilder, type IDashboardLayoutSectionBuilder } from "../interfaces.js";
 import { DashboardLayoutBuilder } from "../layout.js";
 
 describe("DashboardLayoutBuilder", () => {

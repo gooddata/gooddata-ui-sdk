@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { IInsight } from "@gooddata/sdk-model";
+import { type IInsight } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import {
@@ -12,7 +12,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { getSupportedInsightMeasuresByInsight } from "../DefaultAlertingDialog/utils/items.js";
-import { AlertMetric } from "../types.js";
+import { type AlertMetric } from "../types.js";
 
 /**
  * Hook that calculates supported alertable measures for an insight.

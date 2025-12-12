@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement, IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAttributeElement, type IAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
 import { MultiSelectAttributeFilterHandler, SingleSelectAttributeFilterHandler } from "./internal/index.js";
 import {
-    IAttributeFilterHandler,
-    IMultiSelectAttributeFilterHandler,
-    ISingleSelectAttributeFilterHandler,
+    type IAttributeFilterHandler,
+    type IMultiSelectAttributeFilterHandler,
+    type ISingleSelectAttributeFilterHandler,
 } from "./types/index.js";
 
 /**

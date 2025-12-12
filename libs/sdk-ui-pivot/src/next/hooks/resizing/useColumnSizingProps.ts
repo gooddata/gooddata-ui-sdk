@@ -12,7 +12,7 @@ import { useColumnSizingForFullHorizontalSpace } from "./useColumnSizingForFullH
 import { useColumnSizingForFullHorizontalSpaceAndAutoResize } from "./useColumnSizingForFullHorizontalSpaceAndAutoResize.js";
 import { useManualResize } from "./useManualResize.js";
 import { useSyncColumnWidths } from "./useSyncColumnWidths.js";
-import { AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
+import { type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
 
 /**
  * Returns ag-grid props with column sizing applied.

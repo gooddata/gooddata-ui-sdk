@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { RefCallback, useCallback, useMemo, useState } from "react";
+import { type RefCallback, useCallback, useMemo, useState } from "react";
 
 /**
  * List and DropdownList components require explicit width to render correctly.

@@ -2,12 +2,12 @@
 
 import { useCallback, useMemo } from "react";
 
-import { DateAttributeGranularity, ICatalogDateAttribute } from "@gooddata/sdk-model";
+import { type DateAttributeGranularity, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
-import { KdaDateOptions } from "../../internalTypes.js";
+import { type KdaDateOptions } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
-import { DeepReadonly, IKdaDefinition, KdaPeriodType } from "../../types.js";
+import { type DeepReadonly, type IKdaDefinition, type KdaPeriodType } from "../../types.js";
 import { clearSummaryValue } from "../../utils.js";
 
 export function usePeriodChangeHandler() {

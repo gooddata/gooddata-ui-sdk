@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "./types.js";
-import { CustomCreatePanelItemComponent } from "../componentDefinition/index.js";
+import { type DraggableItem, type IWrapCreatePanelItemWithDragComponent } from "./types.js";
+import { type CustomCreatePanelItemComponent } from "../componentDefinition/index.js";
 
 /**
  * @internal

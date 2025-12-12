@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { type IAttributeMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
-import { AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { type AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 /**
  * @internal

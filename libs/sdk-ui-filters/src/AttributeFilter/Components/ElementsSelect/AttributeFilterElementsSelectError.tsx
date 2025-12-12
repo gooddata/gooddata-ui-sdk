@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { Message } from "@gooddata/sdk-ui-kit";
 
 /**

@@ -1,23 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { cloneDeep, intersection } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
 import {
-    IScenario,
-    ScenarioAndDescription,
+    type IScenario,
+    type ScenarioAndDescription,
     ScenarioBuilder,
-    ScenarioModification,
-    ScenarioTag,
-    ScenarioTestInput,
-    TestTypes,
-    UnboundVisProps,
-    VisProps,
-    WorkspaceType,
+    type ScenarioModification,
+    type ScenarioTag,
+    type ScenarioTestInput,
+    type TestTypes,
+    type UnboundVisProps,
+    type VisProps,
+    type WorkspaceType,
 } from "./scenario.js";
 
 //

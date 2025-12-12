@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { isAutoPageSize, isPaginationEnabled } from "../features/pagination/utils.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props for pagination configuration.

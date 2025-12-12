@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { Account, Won } from "../../../../__mocks__/model.js";
 import {
-    ISortItem,
+    type ISortItem,
     newAttributeAreaSort,
     newAttributeLocator,
     newAttributeSort,

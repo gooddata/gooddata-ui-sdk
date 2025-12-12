@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ISortItem } from "@gooddata/sdk-model";
-import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { type ISortItem } from "@gooddata/sdk-model";
+import { type ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import {
-    IBucketItem,
-    IExtendedReferencePoint,
-    IFiltersBucketItem,
+    type IBucketItem,
+    type IExtendedReferencePoint,
+    type IFiltersBucketItem,
 } from "../../../../interfaces/Visualization.js";
 
 export const getMockReferencePoint = (

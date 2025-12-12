@@ -3,7 +3,7 @@
 import { startCase } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { type CalculationType } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages } from "../../../../../locales.js";
 

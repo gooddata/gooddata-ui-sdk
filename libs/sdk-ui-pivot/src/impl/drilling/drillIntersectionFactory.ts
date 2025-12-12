@@ -1,8 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
-import { AgEventType, CellEvent } from "ag-grid-community";
+import { type AgEventType, type CellEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
-import { IDrillEventIntersectionElement, IMappingHeader, getDrillIntersection } from "@gooddata/sdk-ui";
+import {
+    type IDrillEventIntersectionElement,
+    type IMappingHeader,
+    getDrillIntersection,
+} from "@gooddata/sdk-ui";
 
 import {
     createDataColLeafHeaders,
@@ -10,10 +14,10 @@ import {
     createScopeColWithMetricHeaders,
     createSliceColHeaders,
 } from "./colDrillHeadersFactory.js";
-import { IGridRow } from "../data/resultTypes.js";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { type IGridRow } from "../data/resultTypes.js";
+import { type TableDescriptor } from "../structure/tableDescriptor.js";
 import {
-    AnyCol,
+    type AnyCol,
     isMixedValuesCol,
     isScopeCol,
     isSeriesCol,

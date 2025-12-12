@@ -3,12 +3,12 @@
 import { useCallback } from "react";
 
 import {
-    IResultAttributeHeader,
+    type IResultAttributeHeader,
     areObjRefsEqual,
     isAttributeDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import { IDrillEvent } from "@gooddata/sdk-ui";
+import { type IDrillEvent } from "@gooddata/sdk-ui";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useAttribute } from "../../hooks/useAttribute.js";

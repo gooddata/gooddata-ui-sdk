@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IInsightWidget,
-    IKpiWidget,
-    IRichTextWidget,
-    IVisualizationSwitcherWidget,
-    ObjRef,
+    type IInsightWidget,
+    type IKpiWidget,
+    type IRichTextWidget,
+    type IVisualizationSwitcherWidget,
+    type ObjRef,
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
@@ -13,11 +13,11 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { IDashboardCommand } from "../../../commands/index.js";
+import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
+import { type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 
 type CommandWithRef = IDashboardCommand & {
     payload: {

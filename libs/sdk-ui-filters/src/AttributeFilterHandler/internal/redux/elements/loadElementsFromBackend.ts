@@ -2,21 +2,21 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    CancelableOptions,
-    IAnalyticalBackend,
-    IElementsQueryAttributeFilter,
-    IElementsQueryOptions,
-    IElementsQueryOptionsElementsByValue,
-    IElementsQueryResult,
+    type CancelableOptions,
+    type IAnalyticalBackend,
+    type IElementsQueryAttributeFilter,
+    type IElementsQueryOptions,
+    type IElementsQueryOptionsElementsByValue,
+    type IElementsQueryResult,
     isElementsQueryOptionsElementsByValue,
     isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeElement,
-    IAttributeElements,
-    IAttributeFilter,
-    IAttributeMetadataObject,
-    ObjRef,
+    type IAttributeElement,
+    type IAttributeElements,
+    type IAttributeFilter,
+    type IAttributeMetadataObject,
+    type ObjRef,
     attributeElementsIsEmpty,
     newAttribute,
     newNegativeAttributeFilter,
@@ -25,9 +25,9 @@ import {
 import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 
 import { InMemoryPaging } from "./InMemoryPaging.js";
-import { IHiddenElementsInfo } from "./types.js";
-import { ILoadElementsOptions } from "../../../types/index.js";
-import { AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { type IHiddenElementsInfo } from "./types.js";
+import { type ILoadElementsOptions } from "../../../types/index.js";
+import { type AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 async function loadElementsAsExecution(
     backend: IAnalyticalBackend,

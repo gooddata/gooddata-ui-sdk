@@ -6,11 +6,11 @@ import * as jsYaml from "js-yaml";
 import { merge } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { Button, Hyperlink, IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
+import { Button, Hyperlink, type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { CodeMirrorEditor } from "./CodeMirrorEditor.js";
 import { SnippetHeader, SnippetItem } from "./SnippetItem.js";
-import { IChartConfigurationItemSnippet, SNIPPETS } from "./snippets.js";
+import { type IChartConfigurationItemSnippet, SNIPPETS } from "./snippets.js";
 import { messages } from "../../../../locales.js";
 
 const EDITOR_ALIGN_POINTS: IAlignPoint[] = [

@@ -2,23 +2,23 @@
 import { isEmpty, isEqual } from "lodash-es";
 
 import {
-    IColor,
-    IColorPalette,
-    IColorPaletteItem,
-    IRgbColorValue,
+    type IColor,
+    type IColorPalette,
+    type IColorPaletteItem,
+    type IRgbColorValue,
     isAttributeDescriptor,
     isColorDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
+    type DataViewFacade,
     DefaultColorPalette,
-    IHeaderPredicate,
-    IMappingHeader,
+    type IHeaderPredicate,
+    type IMappingHeader,
     getMappingHeaderLocalIdentifier,
 } from "@gooddata/sdk-ui";
 
-import { IColorMapping, IPatternObject } from "./types.js";
+import { type IColorMapping, type IPatternObject } from "./types.js";
 
 function parseRgbLike(input: string): IRgbColorValue | null {
     const match = input.match(/^rgba?\(([^)]+)\)$/i);

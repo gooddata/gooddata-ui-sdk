@@ -1,6 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IBucket, IFilter, IInsight, ISortItem, VisualizationProperties, uriRef } from "@gooddata/sdk-model";
+import {
+    type IBucket,
+    type IFilter,
+    type IInsight,
+    type ISortItem,
+    type VisualizationProperties,
+    uriRef,
+} from "@gooddata/sdk-model";
 
 /**
  * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on

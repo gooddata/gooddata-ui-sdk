@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { GlobalEventBus, sourceInitialized, targetSelected } from "./events.js";
 import { BuildScheduler } from "./pipeline/buildScheduler.js";
 import { ChangeDetector } from "./pipeline/changeDetector.js";
@@ -8,7 +9,7 @@ import { PackagePublisher } from "./pipeline/publisher.js";
 import { TerminalUi } from "./ui/ui.js";
 import { getSourceDescriptor } from "../base/sourceDiscovery.js";
 import { getTargetDescriptor } from "../base/targetDiscovery.js";
-import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types.js";
+import { type SourceDescriptor, type TargetDependency, type TargetDescriptor } from "../base/types.js";
 
 export async function devConsole(targetDir: string): Promise<void> {
     const sourceDescriptor = await getSourceDescriptor(

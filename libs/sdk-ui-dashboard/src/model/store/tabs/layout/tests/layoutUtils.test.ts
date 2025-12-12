@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IDashboardLayoutSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSize } from "@gooddata/sdk-model";
 
 import { resizeInsightWidget } from "../layoutUtils.js";
 

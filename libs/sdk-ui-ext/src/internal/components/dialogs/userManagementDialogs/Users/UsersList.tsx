@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { UserItem } from "./UserItem.js";
 import { UsersListEmpty } from "./UsersListEmpty.js";
-import { IUserMember, ListMode } from "../types.js";
+import { type IUserMember, type ListMode } from "../types.js";
 import { sortByName } from "../utils.js";
 
 export interface IUsersListProps {

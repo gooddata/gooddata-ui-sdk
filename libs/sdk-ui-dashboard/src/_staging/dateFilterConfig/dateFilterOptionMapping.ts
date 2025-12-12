@@ -3,22 +3,22 @@
 import { compact } from "lodash-es";
 
 import {
-    DateFilterGranularity,
-    DateFilterOptionType,
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IDashboardDateFilter,
-    IRelativeDateFilterPreset,
-    IRelativeDateFilterPresetOfGranularity,
+    type DateFilterGranularity,
+    type DateFilterOptionType,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IDashboardDateFilter,
+    type IRelativeDateFilterPreset,
+    type IRelativeDateFilterPresetOfGranularity,
     isAllTimeDashboardDateFilter,
     isLowerBound,
     isUpperBound,
 } from "@gooddata/sdk-model";
 import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
 } from "@gooddata/sdk-ui-filters";

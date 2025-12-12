@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { FiltersByTab, IExportResult } from "@gooddata/sdk-backend-spi";
-import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
+import { type FiltersByTab, type IExportResult } from "@gooddata/sdk-backend-spi";
+import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
 
-import { ExportDashboardToExcel } from "../../commands/index.js";
+import { type ExportDashboardToExcel } from "../../commands/index.js";
 import {
-    DashboardExportToExcelResolved,
+    type DashboardExportToExcelResolved,
     dashboardExportToExcelRequested,
     dashboardExportToExcelResolved,
 } from "../../events/dashboard.js";
@@ -20,8 +20,8 @@ import {
     selectFilterContextFilters,
     selectFiltersByTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 function exportDashboardToTabular(
     ctx: DashboardContext,

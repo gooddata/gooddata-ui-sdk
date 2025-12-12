@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
-import { Identifier } from "@gooddata/sdk-model";
-import { HeadlineElementType } from "@gooddata/sdk-ui";
+import { type Identifier } from "@gooddata/sdk-model";
+import { type HeadlineElementType } from "@gooddata/sdk-ui";
 
-import { IHeadlineDataItem } from "./Headlines.js";
+import { type IHeadlineDataItem } from "./Headlines.js";
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: Identifier;

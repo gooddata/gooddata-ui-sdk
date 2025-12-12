@@ -3,7 +3,7 @@
 import * as path from "path";
 
 import { DefaultLocale } from "../data.js";
-import { LocalesStructure } from "../schema/localization.js";
+import { type LocalesStructure } from "../schema/localization.js";
 import { done, fail, message } from "../utils/console.js";
 
 export async function getDefaultLocalesCheck(

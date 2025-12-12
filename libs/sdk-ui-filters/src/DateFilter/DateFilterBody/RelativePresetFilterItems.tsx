@@ -5,11 +5,11 @@ import { Fragment } from "react";
 import cx from "classnames";
 import { kebabCase } from "lodash-es";
 
-import { DateFilterGranularity, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
-import { DateFilterOption, DateFilterRelativeOptionGroup } from "../interfaces/index.js";
+import { type DateFilterOption, type DateFilterRelativeOptionGroup } from "../interfaces/index.js";
 import { ListHeading } from "../ListHeading/ListHeading.js";
 import { ListItem } from "../ListItem/ListItem.js";
 import { RelativePresetTitleTranslated } from "../RelativePresetTitleTranslated/RelativePresetTitleTranslated.js";

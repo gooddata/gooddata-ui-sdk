@@ -18,10 +18,10 @@ import { mapValueRowMeasureGroupValueColumn } from "./valueRow/measureGroupValue
 import { mapValueRowSubtotalColumn } from "./valueRow/subtotal.js";
 import { mapValueRowValueColumn } from "./valueRow/value.js";
 import { UnexpectedSdkError } from "../../../errors/GoodDataSdkError.js";
-import { ITableDataValue } from "../interfaces/cells.js";
-import { ITableColumnDefinition } from "../interfaces/columns.js";
-import { IMappingOptions } from "../interfaces/mappingOptions.js";
-import { ITableRowDefinition } from "../interfaces/rows.js";
+import { type ITableDataValue } from "../interfaces/cells.js";
+import { type ITableColumnDefinition } from "../interfaces/columns.js";
+import { type IMappingOptions } from "../interfaces/mappingOptions.js";
+import { type ITableRowDefinition } from "../interfaces/rows.js";
 
 /**
  * @internal

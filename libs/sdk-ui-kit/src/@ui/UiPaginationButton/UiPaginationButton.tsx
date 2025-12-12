@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, forwardRef } from "react";
+import { type KeyboardEvent, type MouseEvent, forwardRef } from "react";
 
 import { stringUtils } from "@gooddata/util";
 
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
-import { IconType } from "../@types/icon.js";
+import { type IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 

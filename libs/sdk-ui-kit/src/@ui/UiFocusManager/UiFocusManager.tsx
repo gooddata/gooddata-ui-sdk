@@ -1,14 +1,21 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, KeyboardEventHandler, ReactNode, useCallback, useMemo, useRef } from "react";
+import {
+    type KeyboardEvent,
+    type KeyboardEventHandler,
+    type ReactNode,
+    useCallback,
+    useMemo,
+    useRef,
+} from "react";
 
 import { useAutoupdateRef, useCombineRefs } from "@gooddata/sdk-ui";
 
-import { IUiFocusHelperConnectors } from "./types.js";
-import { IUiAutofocusOptions, useUiAutofocusConnectors } from "./UiAutofocus.js";
+import { type IUiFocusHelperConnectors } from "./types.js";
+import { type IUiAutofocusOptions, useUiAutofocusConnectors } from "./UiAutofocus.js";
 import { useUiFocusTrapConnectors } from "./UiFocusTrap.js";
 import {
-    IUiReturnFocusOnUnmountOptions,
+    type IUiReturnFocusOnUnmountOptions,
     useUiReturnFocusOnUnmountConnectors,
 } from "./UiReturnFocusOnUnmount.js";
 import { useUiTabOutHandlerConnectors } from "./UiTabOutHandler.js";

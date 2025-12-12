@@ -1,17 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { uniq } from "lodash-es";
 
 import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph.js";
-import { DependencyGraph, SourceDescriptor } from "../../base/types.js";
+import { type DependencyGraph, type SourceDescriptor } from "../../base/types.js";
 import {
-    BuildFinished,
-    BuildStarted,
-    DcEvent,
-    EventBus,
+    type BuildFinished,
+    type BuildStarted,
+    type DcEvent,
+    type EventBus,
     GlobalEventBus,
-    IEventListener,
-    PackagesChanged,
-    TargetSelected,
+    type IEventListener,
+    type PackagesChanged,
+    type TargetSelected,
     buildRequested,
     buildScheduled,
     packagesRebuilt,

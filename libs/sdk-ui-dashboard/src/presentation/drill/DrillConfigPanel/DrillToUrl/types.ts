@@ -1,7 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import {
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 export interface IParametersPanelSectionsCommonProps {
     onAdd: (placeholder: string) => void;

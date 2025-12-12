@@ -1,28 +1,28 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType, FC } from "react";
+import { type ComponentType, type FC } from "react";
 
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { ObjRef, idRef, isDashboard } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type ObjRef, idRef, isDashboard } from "@gooddata/sdk-model";
 import {
-    IClientWorkspaceIdentifiers,
+    type IClientWorkspaceIdentifiers,
     ResolvedClientWorkspaceProvider,
     resolveLCMWorkspaceIdentifiers,
 } from "@gooddata/sdk-ui";
 import {
-    DashboardContext,
-    IDashboardEngine,
-    IDashboardExtensionProps,
-    IDashboardPluginContract_V1,
-    IDashboardProps,
+    type DashboardContext,
+    type IDashboardEngine,
+    type IDashboardExtensionProps,
+    type IDashboardPluginContract_V1,
+    type IDashboardProps,
     newDashboardEngine,
 } from "@gooddata/sdk-ui-dashboard";
 
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation.js";
-import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
+import { type DashboardLoadResult, type IDashboardLoader } from "./loader.js";
 import {
     adaptiveDashboardBeforeLoadFactory,
     adaptiveDashboardEngineLoaderFactory,
@@ -34,15 +34,15 @@ import {
     staticDashboardEngineLoader,
 } from "./loadingStrategies/staticComponentLoaders.js";
 import {
-    AdaptiveLoadOptions,
-    BeforePluginsLoadedCallback,
-    IBeforePluginsLoadedParams,
-    IDashboardBasePropsForLoader,
-    IDashboardLoadOptions,
-    IDashboardPluginsLoaderOptions,
-    IEmbeddedPlugin,
-    LoadedPlugin,
-    ModuleFederationIntegration,
+    type AdaptiveLoadOptions,
+    type BeforePluginsLoadedCallback,
+    type IBeforePluginsLoadedParams,
+    type IDashboardBasePropsForLoader,
+    type IDashboardLoadOptions,
+    type IDashboardPluginsLoaderOptions,
+    type IEmbeddedPlugin,
+    type LoadedPlugin,
+    type ModuleFederationIntegration,
 } from "./types.js";
 
 /**

@@ -1,6 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, FocusEvent, MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+    type CSSProperties,
+    type FocusEvent,
+    type MouseEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+} from "react";
 
 import { AllEnterpriseModule, LicenseManager, ModuleRegistry } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
@@ -29,8 +37,8 @@ import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
 import { useClearCellSelection } from "./hooks/useClearCellSelection.js";
 import { useResolvedProps } from "./hooks/useResolvedProps.js";
 import { getPivotContainerTestIdProps } from "./testing/dataTestIdGenerators.js";
-import { ICorePivotTableNextProps } from "./types/internal.js";
-import { IPivotTableNextProps } from "./types/public.js";
+import { type ICorePivotTableNextProps } from "./types/internal.js";
+import { type IPivotTableNextProps } from "./types/public.js";
 
 const pivotOverlayController = OverlayController.getInstance(OVERLAY_CONTROLLER_Z_INDEX);
 

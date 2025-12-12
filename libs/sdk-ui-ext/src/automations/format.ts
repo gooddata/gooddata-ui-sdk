@@ -1,21 +1,21 @@
 // (C) 2025 GoodData Corporation
 
 import moment from "moment-timezone";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
-    IAutomationAlert,
-    IAutomationMetadataObject,
-    IExportDefinitionMetadataObject,
-    IOrganizationUser,
-    IUser,
-    IWorkspaceUser,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAutomationAlert,
+    type IAutomationMetadataObject,
+    type IExportDefinitionMetadataObject,
+    type IOrganizationUser,
+    type IUser,
+    type IWorkspaceUser,
     isIOrganizationUser,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
-import { UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
+import { type UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
 import {
     ARITHMETIC_OPERATORS,
@@ -24,7 +24,7 @@ import {
     EMPTY_CELL_VALUES,
 } from "./constants.js";
 import { messages } from "./messages.js";
-import { CellValueType } from "./types.js";
+import { type CellValueType } from "./types.js";
 import {
     getAnomalyDetectionOperatorTitle,
     getComparisonOperatorTitle,

@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    IAttributeElement,
-    IAttributeFilter,
+    type IAttributeElement,
+    type IAttributeFilter,
     filterAttributeElements,
     getAttributeElementsItems,
     isNegativeAttributeFilter,

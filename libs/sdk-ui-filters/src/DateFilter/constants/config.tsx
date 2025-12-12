@@ -2,7 +2,7 @@
 import moment from "moment";
 
 import { platformDateFormat } from "./Platform.js";
-import { IDateFilterOptionsByType } from "../interfaces/index.js";
+import { type IDateFilterOptionsByType } from "../interfaces/index.js";
 
 /**
  * The default set of date filter options.

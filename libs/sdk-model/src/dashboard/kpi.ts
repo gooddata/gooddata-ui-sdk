@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { ObjRef } from "../objRef/index.js";
+import { type ObjRef } from "../objRef/index.js";
 
 /**
  * Kpi

@@ -1,14 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IMeasureDescriptor } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
-    IAvailableDrillTargetAttribute,
-    IAvailableDrillTargetMeasure,
-    IAvailableDrillTargets,
+    type DataViewFacade,
+    type IAvailableDrillTargetAttribute,
+    type IAvailableDrillTargetMeasure,
+    type IAvailableDrillTargets,
     getIntersectionAttributes,
 } from "@gooddata/sdk-ui";
 
-import { ColumnHeadersPosition, MeasureGroupDimension } from "../../publicTypes.js";
+import { type ColumnHeadersPosition, type MeasureGroupDimension } from "../../publicTypes.js";
 
 export function getAvailableDrillTargets(
     dv: DataViewFacade,

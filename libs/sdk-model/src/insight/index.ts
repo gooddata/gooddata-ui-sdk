@@ -3,17 +3,17 @@
 import { intersection, isEmpty, uniqBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IAuditable } from "../base/metadata.js";
-import { IColor } from "../colors/index.js";
+import { type IAuditable } from "../base/metadata.js";
+import { type IColor } from "../colors/index.js";
 import {
-    AttributePredicate,
-    IAttribute,
+    type AttributePredicate,
+    type IAttribute,
     anyAttribute,
     attributeDisplayFormRef,
     attributeLocalId,
 } from "../execution/attribute/index.js";
-import { ISortItem, SortEntityIds, sortEntityIds } from "../execution/base/sort.js";
-import { ITotal } from "../execution/base/totals.js";
+import { type ISortItem, type SortEntityIds, sortEntityIds } from "../execution/base/sort.js";
+import { type ITotal } from "../execution/base/totals.js";
 import {
     bucketsAttributes,
     bucketsById,
@@ -25,23 +25,23 @@ import {
     bucketsTotals,
 } from "../execution/buckets/bucketArray.js";
 import {
-    BucketItemModifications,
-    BucketItemReducer,
-    BucketPredicate,
-    IAttributeOrMeasure,
-    IBucket,
+    type BucketItemModifications,
+    type BucketItemReducer,
+    type BucketPredicate,
+    type IAttributeOrMeasure,
+    type IBucket,
     anyBucket,
 } from "../execution/buckets/index.js";
-import { IFilter, filterObjRef, isAttributeFilter } from "../execution/filter/index.js";
+import { type IFilter, filterObjRef, isAttributeFilter } from "../execution/filter/index.js";
 import {
-    IMeasure,
-    MeasurePredicate,
+    type IMeasure,
+    type MeasurePredicate,
     anyMeasure,
     measureFilters,
     measureLocalId,
 } from "../execution/measure/index.js";
-import { ObjRef, serializeObjRef } from "../objRef/index.js";
-import { IUser } from "../user/index.js";
+import { type ObjRef, serializeObjRef } from "../objRef/index.js";
+import { type IUser } from "../user/index.js";
 
 /**
  * Represents an Insight. Insight is typically created using Analytical Designer

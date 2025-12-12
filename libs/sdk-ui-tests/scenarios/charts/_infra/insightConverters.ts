@@ -3,9 +3,9 @@
 import { cloneDeep, isEmpty } from "lodash-es";
 
 import {
-    IColorMappingItem,
-    IInsight,
-    IMeasure,
+    type IColorMappingItem,
+    type IInsight,
+    type IMeasure,
     insightId,
     insightProperties,
     insightSetProperties,
@@ -13,9 +13,9 @@ import {
     isMeasure,
     measureLocalId,
 } from "@gooddata/sdk-model";
-import { IColorMapping } from "@gooddata/sdk-ui-charts";
+import { type IColorMapping } from "@gooddata/sdk-ui-charts";
 
-import { InsightConverter } from "../../../src/index.js";
+import { type InsightConverter } from "../../../src/index.js";
 
 function createColorMappingItems(
     defaultInsight: IInsight,

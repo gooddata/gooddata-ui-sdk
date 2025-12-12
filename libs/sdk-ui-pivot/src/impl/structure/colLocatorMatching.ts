@@ -5,17 +5,17 @@ import { isResultTotalHeader } from "@gooddata/sdk-model";
 
 import { colMeasureLocalId } from "./colAccessors.js";
 import {
-    DataCol,
-    LeafDataCol,
-    ScopeCol,
-    SeriesCol,
-    TransposedMeasureDataCol,
+    type DataCol,
+    type LeafDataCol,
+    type ScopeCol,
+    type SeriesCol,
+    type TransposedMeasureDataCol,
     isRootCol,
     isScopeCol,
     isSeriesCol,
 } from "./tableDescriptorTypes.js";
 import {
-    ColumnLocator,
+    type ColumnLocator,
     isAttributeColumnLocator,
     isMeasureColumnLocator,
     isTotalColumnLocator,

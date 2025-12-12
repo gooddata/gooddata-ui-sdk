@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { modifyMeasure } from "@gooddata/sdk-model";
-import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
+import { type IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

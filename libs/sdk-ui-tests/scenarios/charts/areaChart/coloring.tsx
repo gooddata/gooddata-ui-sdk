@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
+import { AreaChart, type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
 import { AreaChartWithTwoMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

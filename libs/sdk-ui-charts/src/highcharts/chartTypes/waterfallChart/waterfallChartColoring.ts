@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
-import { IColor, IColorDescriptor, IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { type IColor, type IColorDescriptor, type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
     ColorStrategy,
-    IColorMapping,
-    ICreateColorAssignmentReturnValue,
+    type IColorMapping,
+    type ICreateColorAssignmentReturnValue,
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";

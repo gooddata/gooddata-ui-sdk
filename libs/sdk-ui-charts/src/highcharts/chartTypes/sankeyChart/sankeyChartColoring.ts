@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 import { compact, uniqBy } from "lodash-es";
 
-import { IColor, IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 import {
     ColorStrategy,
-    IColorMapping,
-    ICreateColorAssignmentReturnValue,
+    type IColorMapping,
+    type ICreateColorAssignmentReturnValue,
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";

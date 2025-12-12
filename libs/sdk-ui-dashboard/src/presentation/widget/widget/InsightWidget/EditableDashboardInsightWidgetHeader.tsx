@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { IInsight, IInsightWidget, insightTitle } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget, insightTitle } from "@gooddata/sdk-model";
 
 import { changeInsightWidgetHeader, useDashboardDispatch } from "../../../../model/index.js";
 import { DashboardItemHeadlineContainer } from "../../../presentationComponents/index.js";

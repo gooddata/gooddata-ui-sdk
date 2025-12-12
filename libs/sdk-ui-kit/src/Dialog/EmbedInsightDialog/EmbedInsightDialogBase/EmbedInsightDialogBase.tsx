@@ -8,9 +8,14 @@ import { useIntl } from "react-intl";
 
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage.js";
 import { EmbedInsightContent } from "./components/EmbedInsightContent.js";
-import { CopyCodeOriginType, EmbedType, IReactOptions, IWebComponentsOptions } from "./types.js";
+import {
+    type CopyCodeOriginType,
+    type EmbedType,
+    type IReactOptions,
+    type IWebComponentsOptions,
+} from "./types.js";
 import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales.js";
-import { ITab, Tabs } from "../../../Tabs/index.js";
+import { type ITab, Tabs } from "../../../Tabs/index.js";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 
 /**

@@ -6,7 +6,7 @@ import {
     isSemanticSearchResultItem,
 } from "@gooddata/sdk-model";
 import {
-    IIconProps,
+    type IIconProps,
     IconAttribute,
     IconDashboard,
     IconDataset,

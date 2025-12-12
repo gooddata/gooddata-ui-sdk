@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { describe, expect, test } from "vitest";
 
-import { IDimensionDescriptor, IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
+import { type IDimensionDescriptor, type IExecutionDefinition, type ObjRef } from "@gooddata/sdk-model";
 
 import {
     prepareCustomOverride,

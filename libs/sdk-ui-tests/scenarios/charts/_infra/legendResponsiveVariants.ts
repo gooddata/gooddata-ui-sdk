@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IBucketChartProps, ILegendConfig } from "@gooddata/sdk-ui-charts";
+import { type IBucketChartProps, type ILegendConfig } from "@gooddata/sdk-ui-charts";
 
-import { IResponsiveSize } from "./responsiveScenarios.js";
-import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
+import { type IResponsiveSize } from "./responsiveScenarios.js";
+import { type CustomizedScenario, type UnboundVisProps } from "../../../src/index.js";
 
 export const legendResponsiveSizeVariants: Array<IResponsiveSize> = [
     { label: "Force position TOP, max 1 row, Gradient legend minimized", width: 180, height: 154 },

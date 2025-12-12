@@ -5,7 +5,7 @@ import {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
 } from "./Components/DropdownButton/AttributeFilterSimpleDropdownButton.js";
-import { IAttributeFilterBaseProps } from "./types.js";
+import { type IAttributeFilterBaseProps } from "./types.js";
 
 /**
  * @public

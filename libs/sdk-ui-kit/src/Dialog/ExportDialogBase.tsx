@@ -7,7 +7,7 @@ import cx from "classnames";
 import { usePropState } from "@gooddata/sdk-ui";
 
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
-import { IExportDialogBaseProps } from "./typings.js";
+import { type IExportDialogBaseProps } from "./typings.js";
 import { Checkbox } from "../Form/index.js";
 import { useIdPrefixed } from "../utils/useId.js";
 

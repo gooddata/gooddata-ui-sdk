@@ -3,16 +3,16 @@
 import { cloneDeep, isEmpty, without } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { IMeasureDescriptor, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type IMeasureDescriptor, type IMeasureGroupDescriptor, type ITheme } from "@gooddata/sdk-model";
 import {
     BucketNames,
     DataViewFacade,
-    IHeaderPredicate,
+    type IHeaderPredicate,
     VisualizationTypes,
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
-import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
 import {
@@ -41,17 +41,17 @@ import {
 import { ColorFactory } from "./colorFactory.js";
 import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
 import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
-import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
+import { type IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
     STACK_BY_DIMENSION_INDEX,
     VIEW_BY_DIMENSION_INDEX,
 } from "../../constants/dimensions.js";
-import { StackingType } from "../../constants/stacking.js";
-import { ColorAxisDataClassesOptions } from "../../lib/index.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { IChartOptions, ISeriesItem, ITooltipFactory } from "../../typings/unsafe.js";
+import { type StackingType } from "../../constants/stacking.js";
+import { type ColorAxisDataClassesOptions } from "../../lib/index.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IChartOptions, type ISeriesItem, type ITooltipFactory } from "../../typings/unsafe.js";
 import { getChartProperties } from "../_chartCreators/helpers.js";
 import {
     isAreaChart,

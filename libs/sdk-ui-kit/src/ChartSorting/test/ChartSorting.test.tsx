@@ -10,8 +10,8 @@ import {
     singleAreaAttributeSortConfig,
     singleNormalAttributeSortConfig,
 } from "./mock.js";
-import { ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting.js";
-import { IBucketItemDescriptors } from "../types.js";
+import { type ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting.js";
+import { type IBucketItemDescriptors } from "../types.js";
 
 const bucketItems: IBucketItemDescriptors = {
     m1: {

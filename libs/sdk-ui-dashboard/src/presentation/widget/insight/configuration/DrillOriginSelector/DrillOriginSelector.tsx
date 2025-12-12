@@ -2,13 +2,13 @@
 
 import { useIntl } from "react-intl";
 
-import { ObjRef } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type ObjRef } from "@gooddata/sdk-model";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { DrillOriginSelectorBody } from "./DrillOriginSelectorBody.js";
 import { useDashboardUserInteraction } from "../../../../../model/index.js";
-import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
+import { type IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
 export interface IDrillOriginSelectorProps {
     items: IAvailableDrillTargets;

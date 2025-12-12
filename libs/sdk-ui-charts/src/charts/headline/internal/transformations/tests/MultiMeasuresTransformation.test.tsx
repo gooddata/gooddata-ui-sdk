@@ -3,11 +3,11 @@
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
-import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
+import { type IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
 import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures.js";
 import { getBaseHeadlineData } from "../../utils/BaseHeadlineTransformationUtils.js";

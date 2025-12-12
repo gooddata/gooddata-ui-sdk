@@ -1,15 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { MutableRefObject } from "react";
+import { type MutableRefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import {
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+} from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
-    OverlayPositionType,
+    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";

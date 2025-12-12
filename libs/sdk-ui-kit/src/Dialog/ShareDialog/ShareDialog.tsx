@@ -14,7 +14,7 @@ import {
 import { ComponentInteractionProvider } from "./ShareDialogBase/ComponentInteractionContext.js";
 import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext.js";
 import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase.js";
-import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types.js";
+import { type GranteeItem, type IAffectedSharedObject } from "./ShareDialogBase/types.js";
 import {
     mapGranteesToGranularAccessGrantees,
     mapGranteesToShareStatus,
@@ -22,7 +22,7 @@ import {
     mapSharedObjectToAffectedSharedObject,
     mapUserToInactiveOwner,
 } from "./shareDialogMappers.js";
-import { IShareDialogProps } from "./types.js";
+import { type IShareDialogProps } from "./types.js";
 
 /**
  * @internal

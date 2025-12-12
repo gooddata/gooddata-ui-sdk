@@ -6,14 +6,14 @@ import * as path from "path";
 import { unionBy } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { DataViewRequests, RecordingFiles, ScenarioDescriptor } from "@gooddata/mock-handling";
-import { IInsight, IInsightDefinition, defFingerprint, insightTitle } from "@gooddata/sdk-model";
+import { type DataViewRequests, RecordingFiles, type ScenarioDescriptor } from "@gooddata/mock-handling";
+import { type IInsight, type IInsightDefinition, defFingerprint, insightTitle } from "@gooddata/sdk-model";
 
 import { storeDirectoryFor } from "./store.js";
 import { readJsonSync, writeAsJsonSync } from "./utils.js";
 import { allScenarios } from "../../scenarios/index.js";
-import { IScenario } from "../../src/index.js";
-import { ChartInteractions } from "../_infra/backendWithCapturing.js";
+import { type IScenario } from "../../src/index.js";
+import { type ChartInteractions } from "../_infra/backendWithCapturing.js";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory.js";
 import { mountChartAndCaptureNormalized } from "../_infra/render.js";
 import { mountInsight } from "../_infra/renderPlugVis.js";

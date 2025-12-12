@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode } from "react";
+import { type MouseEvent, type ReactNode } from "react";
 
 /**
  * @internal

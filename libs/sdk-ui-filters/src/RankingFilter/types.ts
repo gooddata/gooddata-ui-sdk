@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { ObjRefInScope, RankingFilterOperator } from "@gooddata/sdk-model";
+import { type ObjRefInScope, type RankingFilterOperator } from "@gooddata/sdk-model";
 
 export interface IOperatorDropdownItem {
     value: RankingFilterOperator;

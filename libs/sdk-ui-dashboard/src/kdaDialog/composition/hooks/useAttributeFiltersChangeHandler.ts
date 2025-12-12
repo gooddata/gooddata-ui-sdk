@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { type IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
 import { useKdaState } from "../../providers/KdaState.js";

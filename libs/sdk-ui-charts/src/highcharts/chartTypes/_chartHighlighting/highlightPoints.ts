@@ -3,7 +3,7 @@
 import cx from "classnames";
 import { isEqual } from "lodash-es";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 
 /**
  * Adds highlighting class to chart points based on provided drill intersections.

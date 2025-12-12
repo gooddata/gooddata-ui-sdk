@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
 import { ShortenedText } from "../../../ShortenedText/index.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
-import { IUiTabComponentProps } from "../types.js";
+import { type IUiTabComponentProps } from "../types.js";
 
 /**
  * @internal

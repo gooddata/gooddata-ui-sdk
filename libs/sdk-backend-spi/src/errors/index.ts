@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IDataView } from "../workspace/execution/index.js";
+import { type IDataView } from "../workspace/execution/index.js";
 
 /**
  * Types of errors that can be raised by Analytical Backends.

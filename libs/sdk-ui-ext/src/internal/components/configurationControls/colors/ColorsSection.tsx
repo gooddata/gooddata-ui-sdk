@@ -4,15 +4,15 @@ import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { IColor } from "@gooddata/sdk-model";
-import { ChartFillType } from "@gooddata/sdk-ui-charts";
+import { type IColor } from "@gooddata/sdk-model";
+import { type ChartFillType } from "@gooddata/sdk-ui-charts";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { ColoredItemsList } from "./coloredItemsList/ColoredItemsList.js";
 import { messages } from "../../../../locales.js";
 import { fillDropdownItems } from "../../../constants/dropdowns.js";
-import { IColorConfiguration, IColoredItem } from "../../../interfaces/Colors.js";
-import { IReferences, IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IColorConfiguration, type IColoredItem } from "../../../interfaces/Colors.js";
+import { type IReferences, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getColoredInputItems, getProperties } from "../../../utils/colors.js";
 import { getTranslatedDropdownItems, getTranslation } from "../../../utils/translations.js";
 import { ConfigSection } from "../../configurationControls/ConfigSection.js";

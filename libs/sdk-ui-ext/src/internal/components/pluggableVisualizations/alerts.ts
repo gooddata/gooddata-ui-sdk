@@ -1,12 +1,12 @@
 // (C) 2024 GoodData Corporation
 
 import {
-    IInsight,
-    IInsightDefinition,
+    type IInsight,
+    type IInsightDefinition,
     insightProperties,
     insightVisualizationType,
 } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type VisType } from "@gooddata/sdk-ui";
 
 /**
  * @internal

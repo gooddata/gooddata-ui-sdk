@@ -2,13 +2,13 @@
 
 import { useCallback } from "react";
 
-import { ProcessCellForExportParams } from "ag-grid-enterprise";
+import { type ProcessCellForExportParams } from "ag-grid-enterprise";
 import { useIntl } from "react-intl";
 
 import { emptyHeaderTitleFromIntl, isTableAttributeHeaderValue } from "@gooddata/sdk-ui";
 
-import { AgGridProps } from "../types/agGrid.js";
-import { AgGridRowData } from "../types/internal.js";
+import { type AgGridProps } from "../types/agGrid.js";
+import { type AgGridRowData } from "../types/internal.js";
 
 /**
  * Returns ag-grid props with clipboard processing applied.

@@ -6,7 +6,7 @@ import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { isTotalSectionEnabled } from "../../../utils/propertiesHelper.js";
 import { getTranslation } from "../../../utils/translations.js";
 import { ConfigSection } from "../ConfigSection.js";

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { CalculatedRows, CalculatedRowsDefault } from "./useRowsCalculator.js";
+import { type CalculatedRows, CalculatedRowsDefault } from "./useRowsCalculator.js";
 import {
     selectFilterBarExpanded,
     uiActions,

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { IAxisConfig } from "../../../interfaces/index.js";
+import { type IAxisConfig } from "../../../interfaces/index.js";
 import {
     ALIGN_LEFT,
     ALIGN_RIGHT,
@@ -9,8 +9,8 @@ import {
     ROTATE_NEGATIVE_60_DEGREES,
     ROTATE_NEGATIVE_90_DEGREES,
 } from "../../constants/axisLabel.js";
-import { XAxisOptions } from "../../lib/index.js";
-import { IChartOptions } from "../../typings/unsafe.js";
+import { type XAxisOptions } from "../../lib/index.js";
+import { type IChartOptions } from "../../typings/unsafe.js";
 import { isBarChart } from "../_util/common.js";
 
 function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.XAxisOptions {

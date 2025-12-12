@@ -1,23 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo, useState } from "react";
+import { type ReactElement, useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import {
     DashboardDateFilterConfigModeValues,
-    DateFilterGranularity,
+    type DateFilterGranularity,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import {
     DateFilter,
-    IDateFilterProps,
-    IFilterConfigurationProps,
+    type IDateFilterProps,
+    type IFilterConfigurationProps,
     getLocalizedIcuDateFormatPattern,
 } from "@gooddata/sdk-ui-filters";
 
 import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
-import { IDashboardDateFilterProps } from "./types.js";
+import { type IDashboardDateFilterProps } from "./types.js";
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import {

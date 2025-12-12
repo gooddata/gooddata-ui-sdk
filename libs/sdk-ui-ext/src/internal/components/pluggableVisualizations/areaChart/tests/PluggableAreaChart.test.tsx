@@ -6,14 +6,14 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    IAttribute,
-    IInsight,
-    IInsightDefinition,
+    type IAttribute,
+    type IInsight,
+    type IInsightDefinition,
     insightBucket,
     insightSetProperties,
 } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
+import { BucketNames, type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     expectedInsightDefDepartment,
@@ -23,11 +23,11 @@ import {
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock.js";
 import {
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";

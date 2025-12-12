@@ -54,5 +54,5 @@ export { CalculateAs, ComparisonPositionValues } from "./comparison.js";
 
 export { ViewByAttributesLimit } from "./limits.js";
 
-import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 export type { IColorMapping };

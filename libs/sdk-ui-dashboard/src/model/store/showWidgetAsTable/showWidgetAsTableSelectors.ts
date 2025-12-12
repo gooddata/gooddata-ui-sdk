@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { DashboardState } from "../types.js";
+import { type DashboardState } from "../types.js";
 
 /**
  *

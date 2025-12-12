@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { ICellRendererParams } from "ag-grid-enterprise";
+import { type ICellRendererParams } from "ag-grid-enterprise";
 
 import { METRIC_EMPTY_VALUE } from "../../constants/internal.js";
 import { isTableTotalCellData } from "../../features/columns/shared.js";
 import { getPivotCellTestIdPropsFromCellTypes } from "../../testing/dataTestIdGenerators.js";
-import { CellTypes } from "../../types/cellRendering.js";
+import { type CellTypes } from "../../types/cellRendering.js";
 
 /**
  * Cell renderer for metrics.

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { ISettings, NotificationChannelDestinationType } from "@gooddata/sdk-model";
+import { type ISettings, type NotificationChannelDestinationType } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export function loadNotificationChannelsCount(ctx: DashboardContext, settings: ISettings): Promise<number> {
     const { backend } = ctx;

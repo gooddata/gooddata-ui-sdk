@@ -1,10 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
-import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
+import { type GridApi, type IDatasource, type IGetRowsParams } from "ag-grid-community";
 
-import { DataViewFacade, GoodDataSdkError, convertDataWindowError } from "@gooddata/sdk-ui";
+import { DataViewFacade, type GoodDataSdkError, convertDataWindowError } from "@gooddata/sdk-ui";
 
 import { dataViewToRepeaterData } from "./dataViewToRepeaterData.js";
-import { IRepeaterChartConfig } from "../publicTypes.js";
+import { type IRepeaterChartConfig } from "../publicTypes.js";
 
 const MAX_COLUMNS = 1000;
 

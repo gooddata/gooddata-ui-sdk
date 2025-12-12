@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { MutableRefObject, useRef } from "react";
+import { type MutableRefObject, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,12 +8,12 @@ import { useIntl } from "react-intl";
 import {
     Dropdown,
     DropdownButton,
-    OverlayPositionType,
+    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { AlertMetric } from "../../types.js";
+import { type AlertMetric } from "../../types.js";
 import { getMeasureTitle } from "../utils/getters.js";
 
 export interface IAlertMetricSelectProps {

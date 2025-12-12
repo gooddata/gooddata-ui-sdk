@@ -2,16 +2,16 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    FilterItem,
-    IAbsoluteDateFilter,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-    IRankingFilter,
-    IRelativeDateFilter,
+    type FilterItem,
+    type IAbsoluteDateFilter,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type IRankingFilter,
+    type IRelativeDateFilter,
 } from "../../iframe/EmbeddedGdc.js";
 import {
     ALL_TIME_GRANULARITY,
-    IExternalFiltersObject,
+    type IExternalFiltersObject,
     isAllTimeDateFilterItem,
     isAllValueAttributeFilterItem,
     isValidFiltersFormat,

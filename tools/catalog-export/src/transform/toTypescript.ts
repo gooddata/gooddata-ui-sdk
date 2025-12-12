@@ -1,17 +1,24 @@
 // (C) 2007-2025 GoodData Corporation
 import {
-    ImportDeclarationStructure,
-    OptionalKind,
+    type ImportDeclarationStructure,
+    type OptionalKind,
     Project,
-    SourceFile,
+    type SourceFile,
     VariableDeclarationKind,
-    VariableStatementStructure,
+    type VariableStatementStructure,
 } from "ts-morph";
 
-import { MeasureAggregation } from "@gooddata/sdk-model";
+import { type MeasureAggregation } from "@gooddata/sdk-model";
 
-import { TakenNamesSet, createUniqueVariableName, stringToVariableName } from "./titles.js";
-import { Attribute, DateDataSet, DisplayForm, Fact, Metric, WorkspaceMetadata } from "../base/types.js";
+import { type TakenNamesSet, createUniqueVariableName, stringToVariableName } from "./titles.js";
+import {
+    type Attribute,
+    type DateDataSet,
+    type DisplayForm,
+    type Fact,
+    type Metric,
+    type WorkspaceMetadata,
+} from "../base/types.js";
 
 export type TypescriptOutput = {
     project: Project;

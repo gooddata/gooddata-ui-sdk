@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IDashboardLayout } from "@gooddata/sdk-model";
+import { type IDashboardLayout } from "@gooddata/sdk-model";
 
 import { widgetSlideTransformer } from "./widgetSlideTransformer.js";
 

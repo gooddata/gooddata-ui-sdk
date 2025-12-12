@@ -4,7 +4,7 @@ import { memo } from "react";
 
 import { LegendPositionControl } from "./LegendPositionControl.js";
 import { messages } from "../../../../locales.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
 
 export interface ILegendSection {

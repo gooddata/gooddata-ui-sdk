@@ -1,24 +1,24 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    AfmLocalIdentifier,
-    AfmObjectIdentifier,
-    AttributeExecutionResultHeader,
-    AttributeHeader,
-    ExecutionResultHeader,
-    MeasureExecutionResultHeader,
-    ResultDimensionHeader,
-    TotalExecutionResultHeader,
+    type AfmLocalIdentifier,
+    type AfmObjectIdentifier,
+    type AttributeExecutionResultHeader,
+    type AttributeHeader,
+    type ExecutionResultHeader,
+    type MeasureExecutionResultHeader,
+    type ResultDimensionHeader,
+    type TotalExecutionResultHeader,
 } from "../generated/afm-rest-api/index.js";
 import {
-    JsonApiAttributeOutWithLinks,
-    JsonApiDashboardPluginOutWithLinks,
-    JsonApiDatasetOutWithLinks,
-    JsonApiFactOutWithLinks,
-    JsonApiFilterContextIn,
-    JsonApiLabelOutWithLinks,
-    JsonApiMetricOutWithLinks,
-    JsonApiVisualizationObjectOutWithLinks,
+    type JsonApiAttributeOutWithLinks,
+    type JsonApiDashboardPluginOutWithLinks,
+    type JsonApiDatasetOutWithLinks,
+    type JsonApiFactOutWithLinks,
+    type JsonApiFilterContextIn,
+    type JsonApiLabelOutWithLinks,
+    type JsonApiMetricOutWithLinks,
+    type JsonApiVisualizationObjectOutWithLinks,
 } from "../generated/metadata-json-api/index.js";
 
 /**

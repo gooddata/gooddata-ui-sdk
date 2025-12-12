@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 
 import { omit } from "lodash-es";
 
@@ -19,7 +19,7 @@ import {
     LOAD_COMPONENT,
 } from "../common/index.js";
 import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js";
-import { CustomElementContext } from "../context.js";
+import { type CustomElementContext } from "../context.js";
 
 type IGenAIAssistant = typeof OriginalGenAIAssistant;
 type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;

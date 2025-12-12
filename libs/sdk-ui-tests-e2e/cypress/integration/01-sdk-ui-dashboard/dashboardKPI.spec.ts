@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { Dashboard } from "../../tools/dashboards";
-import { DateFilter, RelativePreset } from "../../tools/dateFilter";
+import { DateFilter, type RelativePreset } from "../../tools/dateFilter";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 import { EditMode } from "../../tools/editMode";
 import { KPIMeasureDropdown, KpiConfiguration } from "../../tools/kpiConfiguration";

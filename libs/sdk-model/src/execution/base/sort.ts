@@ -2,9 +2,9 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { Identifier } from "../../objRef/index.js";
-import { IAttribute, attributeLocalId } from "../attribute/index.js";
-import { IMeasure, measureLocalId } from "../measure/index.js";
+import { type Identifier } from "../../objRef/index.js";
+import { type IAttribute, attributeLocalId } from "../attribute/index.js";
+import { type IMeasure, measureLocalId } from "../measure/index.js";
 
 /**
  * Sort items can be used to specify how the result of an execution should be sorted.

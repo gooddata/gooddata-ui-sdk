@@ -3,10 +3,10 @@ import { describe, expect, it } from "vitest";
 
 import { Velocity, Won } from "../../../../__mocks__/model.js";
 import { idRef, uriRef } from "../../../objRef/factory.js";
-import { ObjRef } from "../../../objRef/index.js";
+import { type ObjRef } from "../../../objRef/index.js";
 import { ComputeRatioRule, applyRatioRule } from "../../buckets/index.js";
 import { newPositiveAttributeFilter } from "../../filter/factory.js";
-import { IFilter } from "../../filter/index.js";
+import { type IFilter } from "../../filter/index.js";
 import {
     modifyMeasure,
     modifySimpleMeasure,
@@ -15,7 +15,7 @@ import {
     newPreviousPeriodMeasure,
 } from "../factory.js";
 import {
-    IPreviousPeriodDateDataSet,
+    type IPreviousPeriodDateDataSet,
     isMeasureFormatInPercent,
     measureAggregation,
     measureAlias,

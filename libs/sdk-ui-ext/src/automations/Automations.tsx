@@ -17,7 +17,7 @@ import {
     defaultColumnDefinitions,
 } from "./constants.js";
 import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
-import { IAutomationsProps } from "./types.js";
+import { type IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
 import { defaultEditAutomation } from "./utils.js";
 import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";

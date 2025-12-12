@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
 const FREE = "free";
 const GROWTH = "growth";

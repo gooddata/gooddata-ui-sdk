@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ChangeEvent, Fragment, memo, useCallback, useMemo } from "react";
+import { type ChangeEvent, Fragment, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
-import { LabelSize } from "./typings.js";
+import { type LabelSize } from "./typings.js";
 
 /**
  * @internal

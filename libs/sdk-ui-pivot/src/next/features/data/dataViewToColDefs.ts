@@ -1,16 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-model";
+import { type DataViewFacade, type ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
-import { ITableColumnDefinitionByColId } from "../../types/internal.js";
-import { ColumnWidthItem } from "../../types/resizing.js";
-import { ITextWrapping } from "../../types/textWrapping.js";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { getTableData } from "./valueFormatter.js";
+import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { type ITableColumnDefinitionByColId } from "../../types/internal.js";
+import { type ColumnWidthItem } from "../../types/resizing.js";
+import { type ITextWrapping } from "../../types/textWrapping.js";
+import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { applyAllFeaturesToColDef } from "../columns/applyAllFeaturesToColDef.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 import { createColDef } from "../columns/createColDef.js";
@@ -29,6 +31,7 @@ export function dataViewToColDefs({
     drillableItemsRef,
     textWrapping,
     intl,
+    separators,
 }: {
     dataView: DataViewFacade;
     columnHeadersPosition: ColumnHeadersPosition;
@@ -36,6 +39,7 @@ export function dataViewToColDefs({
     drillableItemsRef: RefObject<ExplicitDrill[]>;
     textWrapping: ITextWrapping;
     intl: IntlShape;
+    separators?: ISeparators;
 }): {
     columnDefinitionByColId: ITableColumnDefinitionByColId;
     columnDefs: (AgGridColumnDef | AgGridColumnGroupDef)[];
@@ -43,7 +47,7 @@ export function dataViewToColDefs({
     isPivoted: boolean;
 } {
     const sortBy = dataView.definition.sortBy;
-    const tableData = dataView.data().asTable();
+    const tableData = getTableData(dataView, separators);
     const columnDefinitionByColId: ITableColumnDefinitionByColId = {};
 
     tableData.columnDefinitions.forEach((columnDefinition) => {

@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { ISettingButtonProps } from "./types.js";
+import { type ISettingButtonProps } from "./types.js";
 import { messages } from "../../../../../locales.js";
 import {
     selectIsDashboardSaving,

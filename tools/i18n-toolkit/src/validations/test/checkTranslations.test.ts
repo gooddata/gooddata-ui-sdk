@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { UsageResult } from "../../data.js";
-import { LocalesStructure } from "../../schema/localization.js";
+import { type UsageResult } from "../../data.js";
+import { type LocalesStructure } from "../../schema/localization.js";
 import { checkTranslations } from "../usage/checkTranslations.js";
 
 describe("check translations", () => {

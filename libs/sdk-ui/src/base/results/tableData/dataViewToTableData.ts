@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataValue } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type DataValue } from "@gooddata/sdk-model";
 
-import { DataAccessConfig } from "../dataAccessConfig.js";
-import { ITableData } from "./interfaces/index.js";
-import { IMappingOptions } from "./interfaces/mappingOptions.js";
+import { type DataAccessConfig } from "../dataAccessConfig.js";
+import { type ITableData } from "./interfaces/index.js";
+import { type IMappingOptions } from "./interfaces/mappingOptions.js";
 import { collectBucketsInfo } from "./mapping/collect/collectBucketsInfo.js";
 import { collectColumnDefinitions } from "./mapping/collect/collectColumnDefinitions.js";
 import { collectDescriptorsInfo } from "./mapping/collect/collectDescriptorsInfo.js";

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { RECURRENCE_TYPES } from "./constants.js";
+import { type RECURRENCE_TYPES } from "./constants.js";
 
 /**
  * Represents a recurrence type key.

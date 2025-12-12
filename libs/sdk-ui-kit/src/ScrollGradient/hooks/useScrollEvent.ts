@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useEffect } from "react";
+import { type MouseEvent, useCallback, useEffect } from "react";
 
 import { useContentHeight } from "./useContentHeight.js";
 import { useNumberState } from "./useNumberState.js";

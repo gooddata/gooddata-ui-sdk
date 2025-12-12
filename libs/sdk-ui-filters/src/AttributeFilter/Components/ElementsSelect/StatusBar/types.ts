@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { type IAttributeElement } from "@gooddata/sdk-model";
 
 /**
  * It represents component that display status of current selection.

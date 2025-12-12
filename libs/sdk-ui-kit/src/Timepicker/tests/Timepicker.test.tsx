@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { createIntlMock, withIntl } from "@gooddata/sdk-ui";
 
-import { TimePickerProps, WrappedTimepicker } from "../Timepicker.js";
+import { type TimePickerProps, WrappedTimepicker } from "../Timepicker.js";
 
 describe("TimePicker", () => {
     const TEST_TIME = new Date();

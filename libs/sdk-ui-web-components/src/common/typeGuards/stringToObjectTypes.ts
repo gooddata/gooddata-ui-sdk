@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { GenAIObjectType } from "@gooddata/sdk-model";
+import { type GenAIObjectType } from "@gooddata/sdk-model";
 
 export function stringToObjectTypes(input: string): GenAIObjectType[] {
     const parsed = JSON.parse(input);

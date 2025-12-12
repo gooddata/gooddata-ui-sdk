@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { buildAutomationUrl, navigate, useWorkspace } from "@gooddata/sdk-ui";
 
 import { DeleteScheduleConfirmDialog } from "./components/DeleteScheduleConfirmDialog.js";
@@ -13,7 +13,7 @@ import {
     selectEnableAutomationManagement,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { IScheduledEmailManagementDialogProps } from "../types.js";
+import { type IScheduledEmailManagementDialogProps } from "../types.js";
 
 /**
  * @alpha

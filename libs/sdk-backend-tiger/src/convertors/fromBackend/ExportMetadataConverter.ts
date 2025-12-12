@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
-import { FiltersByTab, IExportMetadata } from "../../types/index.js";
+import { type FiltersByTab, type IExportMetadata } from "../../types/index.js";
 
 export const convertExportMetadata = (
     exportMetadata: any,

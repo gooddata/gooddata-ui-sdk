@@ -3,18 +3,18 @@
 import { uniqBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
-import { AfmObjectIdentifierAttribute, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { type AfmObjectIdentifierAttribute, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityAttributeHierarchies,
     EntitiesApi_DeleteEntityAttributeHierarchies,
     EntitiesApi_UpdateEntityAttributeHierarchies,
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ValidDescendantsApi_ComputeValidDescendants } from "@gooddata/api-client-tiger/validDescendants";
-import { IAttributeHierarchiesService } from "@gooddata/sdk-backend-spi";
+import { type IAttributeHierarchiesService } from "@gooddata/sdk-backend-spi";
 import {
-    ICatalogAttributeHierarchy,
-    IDateHierarchyTemplate,
-    ObjRef,
+    type ICatalogAttributeHierarchy,
+    type IDateHierarchyTemplate,
+    type ObjRef,
     idRef,
     objRefToString,
     serializeObjRef,
@@ -23,7 +23,7 @@ import {
 import { convertAttributeHierarchyWithoutLinks } from "../../../convertors/fromBackend/HierarchyConverter.js";
 import { toObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toAttributeQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerAttributeHierarchiesService implements IAttributeHierarchiesService {
     private readonly authCall: TigerAuthenticatedCallGuard;

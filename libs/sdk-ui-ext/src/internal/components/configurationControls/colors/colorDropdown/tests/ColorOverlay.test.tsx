@@ -9,7 +9,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 // eslint-disable-next-line no-restricted-imports
 import * as uiKit from "@gooddata/sdk-ui-kit";
 
-import { ColorOverlay, DropdownVersionType, IColorOverlayProps } from "../ColorOverlay.js";
+import { ColorOverlay, DropdownVersionType, type IColorOverlayProps } from "../ColorOverlay.js";
 
 // Mock the Overlay component
 vi.mock("@gooddata/sdk-ui-kit", async () => {

@@ -1,10 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, KeyboardEventHandler, MutableRefObject, ReactNode, RefObject } from "react";
+import {
+    type CSSProperties,
+    type KeyboardEventHandler,
+    type MutableRefObject,
+    type ReactNode,
+    type RefObject,
+} from "react";
 
-import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
-import { IconType } from "../@types/icon.js";
+import { type IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IconType } from "../@types/icon.js";
 
 /**
  * @internal

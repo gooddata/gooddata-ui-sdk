@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useEffect } from "react";
+import { type ReactNode, useCallback, useEffect } from "react";
 
 import { MenuOpener } from "./menuOpener/MenuOpener.js";
-import { IMenuPositionConfig, OnOpenedChange, OpenAction } from "./MenuSharedTypes.js";
+import { type IMenuPositionConfig, type OnOpenedChange, type OpenAction } from "./MenuSharedTypes.js";
 
 export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     opened: boolean;

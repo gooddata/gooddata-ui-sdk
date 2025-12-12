@@ -2,11 +2,11 @@
 
 import { requestPages } from "@gooddata/mock-handling";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { type IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import {
-    IPivotTableNextProps,
+    type IPivotTableNextProps,
     PivotTableNext,
-    PivotTableNextConfig,
+    type PivotTableNextConfig,
     newWidthForAllColumnsForMeasure,
     newWidthForAttributeColumn,
 } from "@gooddata/sdk-ui-pivot/next";

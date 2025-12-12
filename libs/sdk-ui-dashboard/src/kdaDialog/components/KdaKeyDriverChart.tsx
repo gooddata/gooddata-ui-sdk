@@ -4,9 +4,9 @@ import cx from "classnames";
 import noop from "lodash-es/noop.js";
 import { useIntl } from "react-intl";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type ObjRef } from "@gooddata/sdk-model";
+import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 import { RawChart } from "@gooddata/sdk-ui-charts/internal";
 import { UiSkeleton, useElementSize } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";

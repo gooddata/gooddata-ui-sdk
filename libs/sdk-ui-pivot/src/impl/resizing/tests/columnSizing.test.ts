@@ -15,8 +15,8 @@ import {
     testStore,
 } from "./columnSizing.fixture.js";
 import {
-    ColumnWidthItem,
-    IMeasureColumnWidthItem,
+    type ColumnWidthItem,
+    type IMeasureColumnWidthItem,
     newAttributeColumnLocator,
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,
@@ -24,9 +24,9 @@ import {
     setNewWidthForSelectedColumns,
 } from "../../../columnWidths.js";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants.js";
-import { TableDescriptor } from "../../structure/tableDescriptor.js";
+import { type TableDescriptor } from "../../structure/tableDescriptor.js";
 import {
-    IWeakMeasureColumnWidthItemsMap,
+    type IWeakMeasureColumnWidthItemsMap,
     MANUALLY_SIZED_MAX_WIDTH,
     MIN_WIDTH,
     ResizedColumnsStore,

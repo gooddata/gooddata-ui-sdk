@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { FilterDefinition, ITigerClientBase } from "@gooddata/api-client-tiger";
+import { type FilterDefinition, type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
     ExecutionAPI_ChangeAnalysis,
     ExecutionResultAPI_ChangeAnalysisResult,
@@ -12,12 +12,12 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
 } from "@gooddata/sdk-backend-spi";
 
-import { DateStringifier } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { type DateStringifier } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { convertChangeAnalyzeToKeyDriver } from "../../../convertors/fromBackend/KdaConverter.js";
 import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter.js";
 import { convertFilter } from "../../../convertors/toBackend/afm/FilterConverter.js";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnalysisService {
     constructor(

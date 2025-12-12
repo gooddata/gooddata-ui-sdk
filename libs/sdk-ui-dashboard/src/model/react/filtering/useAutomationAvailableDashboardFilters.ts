@@ -3,14 +3,14 @@ import { isEqual } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    FilterContextItem,
+    type FilterContextItem,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import {
-    ICrossFilteringItem,
+    type ICrossFilteringItem,
     selectCrossFilteringItems,
     selectDefaultFilterOverrides,
     selectEnableAutomationFilterContext,

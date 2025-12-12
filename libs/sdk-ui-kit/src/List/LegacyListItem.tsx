@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ElementType, ReactElement } from "react";
+import { type ElementType, type ReactElement } from "react";
 
 /**
  * @internal

@@ -1,15 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { cloneDeep, isEmpty, set } from "lodash-es";
-import { WrappedComponentProps } from "react-intl";
+import { type WrappedComponentProps } from "react-intl";
 
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    AttributeDisplayFormType,
-    IInsightDefinition,
-    ISortItem,
-    ITheme,
-    ObjRef,
+    type AttributeDisplayFormType,
+    type IInsightDefinition,
+    type ISortItem,
+    type ITheme,
+    type ObjRef,
     attributeAlias,
     attributeDisplayFormRef,
     attributeLocalId,
@@ -26,7 +26,12 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { CoreGeoChart, ICoreGeoChartProps, IGeoConfig, getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
+import {
+    CoreGeoChart,
+    type ICoreGeoChartProps,
+    type IGeoConfig,
+    getGeoChartDimensions,
+} from "@gooddata/sdk-ui-geo";
 
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -34,14 +39,14 @@ import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedPro
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
     EmptyAfmSdkError,
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configurePercent } from "../../../utils/bucketConfig.js";
 import {

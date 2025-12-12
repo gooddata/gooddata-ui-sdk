@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 
-import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
-import { IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
+import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../types.js";
 import { grantedWorkspaceAsPermissionAssignment, sortByName } from "../utils.js";
 
 export const useAddWorkspace = (

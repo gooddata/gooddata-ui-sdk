@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { isEqual } from "lodash-es";
 
-import { IDashboardSettingsApplyPayload } from "./types.js";
+import { type IDashboardSettingsApplyPayload } from "./types.js";
 import {
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardUserFilterReset,

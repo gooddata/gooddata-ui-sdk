@@ -1,22 +1,22 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { MutableRefObject } from "react";
+import { type MutableRefObject } from "react";
 
-import { Column, ColumnResizedEvent } from "ag-grid-community";
+import { type Column, type ColumnResizedEvent } from "ag-grid-community";
 import { InvariantError, invariant } from "ts-invariant";
 
-import { IAttributeOrMeasure, IMeasure, isAttribute, isMeasure } from "@gooddata/sdk-model";
+import { type IAttributeOrMeasure, type IMeasure, isAttribute, isMeasure } from "@gooddata/sdk-model";
 
-import { ResizingState } from "./privateTypes.js";
+import { type ResizingState } from "./privateTypes.js";
 import {
     ColumnEventSourceType,
-    IRepeaterAttributeColumnLocator,
-    IRepeaterAttributeColumnWidthItem,
-    IRepeaterMeasureColumnLocator,
-    IRepeaterMeasureColumnWidthItem,
-    IRepeaterWeakMeasureColumnWidthItem,
-    RepeaterColumnWidth,
-    RepeaterColumnWidthItem,
+    type IRepeaterAttributeColumnLocator,
+    type IRepeaterAttributeColumnWidthItem,
+    type IRepeaterMeasureColumnLocator,
+    type IRepeaterMeasureColumnWidthItem,
+    type IRepeaterWeakMeasureColumnWidthItem,
+    type RepeaterColumnWidth,
+    type RepeaterColumnWidthItem,
 } from "../columnWidths.js";
 
 export function getColumnWidths(resizingState: ResizingState): RepeaterColumnWidthItem[] {

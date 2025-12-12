@@ -1,17 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
-import { UpdateVisualizationsFromVisualizationSwitcherWidgetContent } from "../../commands/index.js";
+import { type UpdateVisualizationsFromVisualizationSwitcherWidgetContent } from "../../commands/index.js";
 import {
-    DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    type DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
     visualizationSwitcherWidgetVisualizationsUpdated,
 } from "../../events/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* updateVisualizationsFromSwticherWidgetContentHandler(
     ctx: DashboardContext,

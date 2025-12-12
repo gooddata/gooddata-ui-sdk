@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { AgGridApi } from "../../types/agGrid.js";
-import { IColumnSizing } from "../../types/resizing.js";
+import { type AgGridApi } from "../../types/agGrid.js";
+import { type IColumnSizing } from "../../types/resizing.js";
 
 /**
  * Sizes columns to fit the grid width.

@@ -5,8 +5,8 @@ import { useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
-import { IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
+import { type IInsightWidget } from "@gooddata/sdk-model";
+import { type IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
 import { VisualizationListMenuItem } from "./VisualizationListMenuItem.js";
 

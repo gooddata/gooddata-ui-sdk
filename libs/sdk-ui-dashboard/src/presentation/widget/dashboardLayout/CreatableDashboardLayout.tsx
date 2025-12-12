@@ -2,7 +2,7 @@
 
 import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
+import { type ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
 import {
     AddDashboardLayoutWidgetButton,
     DraggableDashboardLayoutCreatePanelItem,

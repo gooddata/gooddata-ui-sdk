@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IMetadataObject } from "../ldm/metadata/index.js";
+import { type IMetadataObject } from "../ldm/metadata/index.js";
 
 /**
  * RGB Color value specification.

@@ -1,14 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
     AutomationApi_MarkAsReadNotification,
     AutomationApi_MarkAsReadNotificationAll,
 } from "@gooddata/api-client-tiger/automation";
-import { INotificationsQuery, IOrganizationNotificationService } from "@gooddata/sdk-backend-spi";
+import { type INotificationsQuery, type IOrganizationNotificationService } from "@gooddata/sdk-backend-spi";
 
 import { NotificationsQuery } from "./notificationsQuery.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class OrganizationNotificationService implements IOrganizationNotificationService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

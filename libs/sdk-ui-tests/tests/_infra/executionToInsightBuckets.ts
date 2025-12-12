@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 
-import { IBucket, IExecutionDefinition } from "@gooddata/sdk-model";
+import { type IBucket, type IExecutionDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 /*

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
@@ -13,9 +13,12 @@ import { PopupHeader } from "./PopupHeader.js";
 import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
 import { messages } from "../../../../../../../locales.js";
 import { useDashboardUserInteraction } from "../../../../../../../model/index.js";
-import { ValuesLimitingItem } from "../../../../types.js";
+import { type ValuesLimitingItem } from "../../../../types.js";
 import { LimitingItemTitle } from "../shared/LimitingItem.js";
-import { IValuesLimitingItemWithTitle, useSearchableLimitingItems } from "../shared/limitingItemsHook.js";
+import {
+    type IValuesLimitingItemWithTitle,
+    useSearchableLimitingItems,
+} from "../shared/limitingItemsHook.js";
 
 function NoLimitingItemsFound({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
     const intl = useIntl();

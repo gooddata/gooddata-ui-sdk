@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoService, IGeoStyleSpecification } from "@gooddata/sdk-backend-spi";
+import { type IGeoService, type IGeoStyleSpecification } from "@gooddata/sdk-backend-spi";
 
 const DEFAULT_GEO_STYLE: IGeoStyleSpecification = {
     version: 8,

@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { PropsWithChildren, createContext, useMemo } from "react";
+import { type PropsWithChildren, createContext, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
 import { AnalyticalBackendErrorTypes, isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";

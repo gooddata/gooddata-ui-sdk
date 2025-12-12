@@ -7,12 +7,17 @@ import { userEvent } from "@testing-library/user-event";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import { IColor } from "@gooddata/sdk-model";
+import { type IColor } from "@gooddata/sdk-model";
 
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import { IColoredItemContentProps } from "../../coloredItemsList/ColoredItemContent.js";
-import { ColorDropdown, IColorDropdownOwnProps, ISelectableChild, IconPosition } from "../ColorDropdown.js";
+import { type IColoredItemContentProps } from "../../coloredItemsList/ColoredItemContent.js";
+import {
+    ColorDropdown,
+    type IColorDropdownOwnProps,
+    type ISelectableChild,
+    IconPosition,
+} from "../ColorDropdown.js";
 
 export type IMockItemProps = IColoredItemContentProps & ISelectableChild;
 

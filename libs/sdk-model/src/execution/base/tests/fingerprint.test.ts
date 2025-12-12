@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import { Account, Won } from "../../../../__mocks__/model.js";
-import { IDimension, MeasureGroupIdentifier } from "../dimension.js";
+import { type IDimension, MeasureGroupIdentifier } from "../dimension.js";
 import { dimensionFingerprint } from "../fingerprint.js";
 import { newTotal } from "../totals.js";
 

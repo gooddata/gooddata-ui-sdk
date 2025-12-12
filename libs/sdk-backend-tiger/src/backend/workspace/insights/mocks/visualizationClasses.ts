@@ -2,7 +2,7 @@
 
 import { sortBy } from "lodash-es";
 
-import { IVisualizationClass } from "@gooddata/sdk-model";
+import { type IVisualizationClass } from "@gooddata/sdk-model";
 
 export const visualizationClasses: IVisualizationClass[] = sortBy(
     [

@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { PushDataCallback } from "@gooddata/sdk-ui";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
 
 import { comparisonMessages } from "../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { CheckboxControl } from "../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../ComparisonValuePath.js";
 

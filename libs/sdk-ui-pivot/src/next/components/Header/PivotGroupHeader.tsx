@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useState } from "react";
+import { type MouseEvent, useCallback, useState } from "react";
 
-import { ColGroupDef } from "ag-grid-enterprise";
+import { type ColGroupDef } from "ag-grid-enterprise";
 
 import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
 
@@ -19,7 +19,7 @@ import {
     getPivotHeaderTestIdProps,
     getPivotHeaderTextTestIdProps,
 } from "../../testing/dataTestIdGenerators.js";
-import { AgGridColumnGroupDef, AgGridHeaderGroupParams } from "../../types/agGrid.js";
+import { type AgGridColumnGroupDef, type AgGridHeaderGroupParams } from "../../types/agGrid.js";
 
 interface IHeaderGroupCellProps extends AgGridHeaderGroupParams {
     measureIdentifiers: string[];

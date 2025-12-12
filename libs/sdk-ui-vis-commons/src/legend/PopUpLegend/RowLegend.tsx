@@ -1,17 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEventHandler, useCallback, useState } from "react";
+import { type MouseEventHandler, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { Button, IconLegendMenu } from "@gooddata/sdk-ui-kit";
 
-import { ChartFillType } from "../../coloring/types.js";
+import { type ChartFillType } from "../../coloring/types.js";
 import { LegendLabelItem } from "../LegendLabelItem.js";
 import { LegendList } from "../LegendList.js";
 import { LegendSeries } from "../LegendSeries.js";
-import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
+import { type ISeriesItem, type ItemBorderRadiusPredicate } from "../types.js";
 
 const LEGEND_ROW_HEIGHT = 20;
 const LEGEND_TOP_BOTTOM_PADDING = 10;

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -9,7 +9,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ToastsCenterContext, useToastsCenterValue } from "../toasts/context.js";
 import { ToastsCenter } from "../toasts/ToastsCenter.js";
-import { IMessage, IMessageDefinition } from "../typings.js";
+import { type IMessage, type IMessageDefinition } from "../typings.js";
 
 const intlMessages = {
     "messages.accessibility.noMessages": "No messages",

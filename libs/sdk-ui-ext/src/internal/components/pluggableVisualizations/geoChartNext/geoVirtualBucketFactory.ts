@@ -1,10 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { IBucket, IInsightDefinition, insightBucket, newAttribute, newBucket } from "@gooddata/sdk-model";
+import {
+    type IBucket,
+    type IInsightDefinition,
+    insightBucket,
+    newAttribute,
+    newBucket,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { createAttributeRef, getAttributeMetadata, getLatitudeAttribute } from "./geoAttributeHelper.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
 /**
  * Creates all virtual buckets (tooltip, latitude, longitude) based on controls and backend capabilities.

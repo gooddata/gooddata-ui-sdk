@@ -4,14 +4,14 @@ import { useCallback, useMemo, useState } from "react";
 import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IDashboardAttributeFilter, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
+import { type IDashboardAttributeFilter, type IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
 
 import {
     useDependentCommonDateFilterConfigurationState,
     useDependentDateFilterConfigurationState,
 } from "./useDependentDateFilterConfigurationState.js";
 import {
-    IDashboardDependentDateFilter,
+    type IDashboardDependentDateFilter,
     setAttributeFilterDependentDateFilters,
     useDispatchDashboardCommand,
 } from "../../../../../../model/index.js";

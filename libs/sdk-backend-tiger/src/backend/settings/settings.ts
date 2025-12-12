@@ -3,9 +3,9 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { IAlertDefault, IMetricFormatOverrideSetting, ISeparators } from "@gooddata/sdk-model";
+import { type IAlertDefault, type IMetricFormatOverrideSetting, type ISeparators } from "@gooddata/sdk-model";
 
-import { TigerSettingsType } from "../../types/index.js";
+import { type TigerSettingsType } from "../../types/index.js";
 import { convertApiError } from "../../utils/errorHandling.js";
 
 export class TigerSettingsService<T> {

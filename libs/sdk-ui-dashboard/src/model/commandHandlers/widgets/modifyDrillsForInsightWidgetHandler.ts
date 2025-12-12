@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import {
     existsDrillDefinitionInArray,
@@ -10,12 +10,15 @@ import {
 } from "./validation/insightDrillDefinitionUtils.js";
 import { getValidationData, validateDrillDefinition } from "./validation/insightDrillDefinitionValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { ModifyDrillsForInsightWidget } from "../../commands/index.js";
-import { DashboardInsightWidgetDrillsModified, insightWidgetDrillsModified } from "../../events/insight.js";
+import { type ModifyDrillsForInsightWidget } from "../../commands/index.js";
+import {
+    type DashboardInsightWidgetDrillsModified,
+    insightWidgetDrillsModified,
+} from "../../events/insight.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetByRef, selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
 

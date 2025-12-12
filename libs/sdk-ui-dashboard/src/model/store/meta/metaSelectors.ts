@@ -6,26 +6,26 @@ import { invariant } from "ts-invariant";
 
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IAccessControlAware,
-    IDashboard,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilter,
-    IDashboardDateFilterConfig,
-    IDashboardDateFilterConfigItem,
-    IDashboardDefinition,
-    IDashboardLayout,
-    IDashboardObjectIdentity,
-    IDashboardTab,
-    IDashboardWidget,
-    IFilterContext,
-    IFilterContextDefinition,
-    ITempFilterContext,
-    IdentifierRef,
-    ObjRef,
-    ShareStatus,
-    UriRef,
+    type FilterContextItem,
+    type IAccessControlAware,
+    type IDashboard,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilter,
+    type IDashboardDateFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type IDashboardDefinition,
+    type IDashboardLayout,
+    type IDashboardObjectIdentity,
+    type IDashboardTab,
+    type IDashboardWidget,
+    type IFilterContext,
+    type IFilterContextDefinition,
+    type ITempFilterContext,
+    type IdentifierRef,
+    type ObjRef,
+    type ShareStatus,
+    type UriRef,
     idRef,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
@@ -34,7 +34,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { DashboardDescriptor } from "./metaState.js";
+import { type DashboardDescriptor } from "./metaState.js";
 import { selectEnableDashboardTabs } from "../config/configSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
@@ -47,9 +47,9 @@ import {
     selectFilterContextDefinitionsByTab,
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
-import { DEFAULT_TAB_ID, TabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
+import { DEFAULT_TAB_ID, type TabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
 import { selectBasicLayout, selectBasicLayoutByTab } from "../tabs/layout/layoutSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

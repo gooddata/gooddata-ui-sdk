@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ILocale } from "@gooddata/sdk-ui";
+import { type ILocale } from "@gooddata/sdk-ui";
 
 /**
  * @internal

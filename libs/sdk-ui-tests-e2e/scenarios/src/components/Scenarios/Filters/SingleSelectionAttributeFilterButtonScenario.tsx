@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
-import { IAttributeFilter, attributeDisplayFormRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import {
+    type IAttributeFilter,
+    attributeDisplayFormRef,
+    newPositiveAttributeFilter,
+} from "@gooddata/sdk-model";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 
 import * as Md from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";

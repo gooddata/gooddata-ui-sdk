@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEventHandler, ReactNode, forwardRef, useCallback, useMemo } from "react";
+import { type MouseEventHandler, type ReactNode, forwardRef, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
 import { ValidationContextStore } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
 
-import { IButtonProps } from "./typings.js";
+import { type IButtonProps } from "./typings.js";
 
 const getGeneratedTestId = (effectiveValue: ReactNode, title: string, ariaLabel: string) => {
     if (effectiveValue && typeof effectiveValue === "string") {

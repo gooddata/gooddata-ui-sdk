@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
-import { TigerOrgSettingsType, TigerSettingsType } from "../../types/index.js";
+import { type TigerOrgSettingsType, type TigerSettingsType } from "../../types/index.js";
 
 export function mapTypeToKey(
     type: TigerSettingsType | TigerOrgSettingsType | undefined,

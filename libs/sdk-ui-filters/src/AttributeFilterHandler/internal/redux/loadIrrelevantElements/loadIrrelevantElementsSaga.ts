@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { difference } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
-import { CancelableOptions } from "@gooddata/sdk-backend-spi";
-import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+import { type CancelableOptions } from "@gooddata/sdk-backend-spi";
+import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
-import { ILoadElementsOptions } from "../../../types/index.js";
+import { type ILoadElementsOptions } from "../../../types/index.js";
 import { selectElementsForm, selectWithoutApply } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors.js";

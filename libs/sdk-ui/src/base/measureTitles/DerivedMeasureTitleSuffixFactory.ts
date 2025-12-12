@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 
 import { messages } from "../../locales.js";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
+import { type OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
 import { getTranslation } from "../localization/IntlStore.js";
-import { ILocale } from "../localization/Locale.js";
+import { type ILocale } from "../localization/Locale.js";
 
 /**
  * Factory that builds formatted localized suffix string for derived measure based on the over time comparison type.

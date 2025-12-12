@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, useCallback } from "react";
+import { type MouseEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { camelCase } from "lodash-es";
@@ -9,14 +9,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import {
     Bubble,
     BubbleHoverTrigger,
-    IAlignPoint,
+    type IAlignPoint,
     SELECT_ITEM_ACTION,
     ScopedIdStore,
     UiLink,
 } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
-import { IAttributeFilterElementsSelectItemProps } from "./types.js";
+import { type IAttributeFilterElementsSelectItemProps } from "./types.js";
 import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }];

@@ -1,12 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { MutableRefObject, ReactNode } from "react";
+import { type MutableRefObject, type ReactNode } from "react";
 
 import { isEmpty } from "lodash-es";
 
-import { AccessGranularPermission, FilterContextItem, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
+import {
+    type AccessGranularPermission,
+    type FilterContextItem,
+    type IUser,
+    type ObjRef,
+    type ShareStatus,
+} from "@gooddata/sdk-model";
 
-import { CurrentUserPermissions, IShareDialogLabels } from "../types.js";
+import { type CurrentUserPermissions, type IShareDialogLabels } from "../types.js";
 
 // Grantee types
 

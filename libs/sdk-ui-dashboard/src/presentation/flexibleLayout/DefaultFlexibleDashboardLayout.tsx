@@ -1,16 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo } from "react";
+import { type ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { max } from "lodash-es";
 import { LRUCache } from "lru-cache";
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IInsight,
-    ObjRef,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IInsight,
+    type ObjRef,
     isWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -19,18 +19,18 @@ import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
 import {
     DashboardLayout,
     DashboardLayoutBuilder,
-    IDashboardLayoutItemKeyGetter,
-    IDashboardLayoutWidgetRenderer,
+    type IDashboardLayoutItemKeyGetter,
+    type IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
 import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
-import { IDashboardLayoutProps } from "./types.js";
+import { type IDashboardLayoutProps } from "./types.js";
 import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     selectFocusObject,
     selectInsightsMap,
     selectIsExport,

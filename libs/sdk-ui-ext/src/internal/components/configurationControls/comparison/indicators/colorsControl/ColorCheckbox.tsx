@@ -3,12 +3,12 @@
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { PushDataCallback } from "@gooddata/sdk-ui";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
 import { Checkbox } from "@gooddata/sdk-ui-kit";
 
 import { comparisonMessages } from "../../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
 import { COMPARISON_COLOR_CONFIG_DISABLED } from "../../ComparisonValuePath.js";
 

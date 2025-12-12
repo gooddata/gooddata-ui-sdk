@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IUiMenuContentItem,
-    IUiMenuFocusableItem,
-    IUiMenuInteractiveItem,
-    IUiMenuItem,
-    IUiMenuItemData,
+    type IUiMenuContentItem,
+    type IUiMenuFocusableItem,
+    type IUiMenuInteractiveItem,
+    type IUiMenuItem,
+    type IUiMenuItemData,
 } from "./types.js";
 
 /**

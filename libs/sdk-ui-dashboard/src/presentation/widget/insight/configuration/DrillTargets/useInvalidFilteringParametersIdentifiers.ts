@@ -5,8 +5,8 @@ import { useMemo } from "react";
 import { uniq } from "lodash-es";
 
 import {
-    IAttributeFilter,
-    IDashboardAttributeFilterConfig,
+    type IAttributeFilter,
+    type IDashboardAttributeFilterConfig,
     areObjRefsEqual,
     filterObjRef,
     idRef,
@@ -17,7 +17,7 @@ import {
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../../../_staging/drills/drillingUtils.js";
 import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
-import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
+import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
 
 export function useInvalidFilteringParametersIdentifiers(
     urlDrillTarget: UrlDrillTarget | undefined,

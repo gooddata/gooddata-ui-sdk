@@ -1,10 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    AriaAttributes,
-    KeyboardEvent,
-    MouseEvent,
-    ReactNode,
+    type AriaAttributes,
+    type KeyboardEvent,
+    type MouseEvent,
+    type ReactNode,
     useCallback,
     useMemo,
     useRef,
@@ -17,33 +17,36 @@ import { useIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
 
 import {
-    IAttribute,
-    IColorPalette,
-    IDashboardAttributeFilter,
-    IDrillOrigin,
-    IFilter,
-    IGenAIVisualization,
-    IKeyDriveAnalysis,
-    IMeasure,
-    ISortItem,
+    type IAttribute,
+    type IColorPalette,
+    type IDashboardAttributeFilter,
+    type IDrillOrigin,
+    type IFilter,
+    type IGenAIVisualization,
+    type IKeyDriveAnalysis,
+    type IMeasure,
+    type ISortItem,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
-    GoodDataSdkError,
-    IDrillEvent,
-    IHeaderPredicate,
-    OnError,
-    OnExportReady,
-    OnFiredDrillEvent,
-    OnLoadingChanged,
+    type GoodDataSdkError,
+    type IDrillEvent,
+    type IHeaderPredicate,
+    type OnError,
+    type OnExportReady,
+    type OnFiredDrillEvent,
+    type OnLoadingChanged,
     isNoDataSdkError,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
-import { DashboardKeyDriverCombinationItem, getKdaKeyDriverCombinations } from "@gooddata/sdk-ui-dashboard";
+import {
+    type DashboardKeyDriverCombinationItem,
+    getKdaKeyDriverCombinations,
+} from "@gooddata/sdk-ui-dashboard";
 import {
     Dropdown,
-    IAlignPoint,
+    type IAlignPoint,
     IconCopy,
     IconExternalLink,
     IconSave,
@@ -62,9 +65,9 @@ import { MarkdownComponent } from "./Markdown.js";
 import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
-import { VisualizationContents, makeTextContents, makeUserMessage } from "../../../model.js";
+import { type VisualizationContents, makeTextContents, makeUserMessage } from "../../../model.js";
 import {
-    RootState,
+    type RootState,
     colorPaletteSelector,
     copyToClipboardAction,
     newMessageAction,

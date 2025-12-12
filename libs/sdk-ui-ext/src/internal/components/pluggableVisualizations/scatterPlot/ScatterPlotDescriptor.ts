@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
+import { type IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
 import {
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

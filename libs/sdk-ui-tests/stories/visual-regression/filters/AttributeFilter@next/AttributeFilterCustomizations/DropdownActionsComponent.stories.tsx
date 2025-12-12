@@ -4,11 +4,11 @@ import { action } from "storybook/actions";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
-import { AttributeFilter, IAttributeFilterDropdownActionsProps } from "@gooddata/sdk-ui-filters";
+import { AttributeFilter, type IAttributeFilterDropdownActionsProps } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
-import { IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
 import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };

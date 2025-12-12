@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IWaterfallChartProps } from "@gooddata/sdk-ui-charts";
+import { type IWaterfallChartProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggableWaterfallChart } from "./PluggableWaterfallChart.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, useState } from "react";
+import { type MouseEvent, useState } from "react";
 
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
 
 import { Message } from "../Message.js";
-import { IMessage } from "../typings.js";
+import { type IMessage } from "../typings.js";
 
 export function ToastsCenterMessage({ message, onRemove }: { message: IMessage; onRemove: () => void }) {
     const [isExpanded, setIsExpanded] = useState(false);

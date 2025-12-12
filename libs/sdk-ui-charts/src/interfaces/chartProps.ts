@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IAnalyticalBackend,
-    IClusteringConfig,
-    IForecastConfig,
-    IPreparedExecution,
+    type IAnalyticalBackend,
+    type IClusteringConfig,
+    type IForecastConfig,
+    type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
-import { IExecutionConfig } from "@gooddata/sdk-model";
-import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+import { type IExecutionConfig } from "@gooddata/sdk-model";
+import { type IVisualizationCallbacks, type IVisualizationProps } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "./chartConfig.js";
+import { type IChartConfig } from "./chartConfig.js";
 
 /**
  * Props applicable for all charts

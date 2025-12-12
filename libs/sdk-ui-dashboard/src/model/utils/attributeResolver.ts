@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
-import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { type IAttributeMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
-import { ObjRefMap, newAttributeMap } from "../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap, newAttributeMap } from "../../_staging/metadata/objRefMap.js";
 import { selectAllCatalogAttributesMap } from "../store/catalog/catalogSelectors.js";
-import { DashboardContext } from "../types/commonTypes.js";
-import { PromiseFnReturnType } from "../types/sagas.js";
+import { type DashboardContext } from "../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../types/sagas.js";
 
 async function loadAttributesMetadata(
     ctx: DashboardContext,

@@ -3,10 +3,10 @@
 import axios from "axios";
 import { describe, expect, it, vi } from "vitest";
 
-import { ApiEntitlement, ILiveFeatures } from "@gooddata/api-client-tiger";
+import { type ApiEntitlement, type ILiveFeatures } from "@gooddata/api-client-tiger";
 
-import { FeatureDef } from "../feature.js";
-import { FeatureHubResponse, getFeatureHubFeatures } from "../hub.js";
+import { type FeatureDef } from "../feature.js";
+import { type FeatureHubResponse, getFeatureHubFeatures } from "../hub.js";
 import { pickContext } from "../index.js";
 
 const axiosGetSpy = vi.spyOn(axios, "get");

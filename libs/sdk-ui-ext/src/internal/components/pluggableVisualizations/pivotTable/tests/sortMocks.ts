@@ -2,8 +2,8 @@
 
 // sortItems based on referencePointMocks.simpleStackedReferencePoint
 import {
-    IAttributeSortItem,
-    IMeasureSortItem,
+    type IAttributeSortItem,
+    type IMeasureSortItem,
     newAttributeLocator,
     newAttributeSort,
     newMeasureSort,

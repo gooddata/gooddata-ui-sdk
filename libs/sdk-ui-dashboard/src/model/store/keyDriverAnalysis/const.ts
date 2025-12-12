@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
+import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
 /**
  * @internal

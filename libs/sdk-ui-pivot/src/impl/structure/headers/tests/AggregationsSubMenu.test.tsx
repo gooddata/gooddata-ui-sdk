@@ -3,11 +3,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IAttributeDescriptor, uriRef } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, uriRef } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
-import { IColumnTotal } from "../aggregationsMenuTypes.js";
-import { AggregationsSubMenu, IAggregationsSubMenuProps } from "../AggregationsSubMenu.js";
+import { type IColumnTotal } from "../aggregationsMenuTypes.js";
+import { AggregationsSubMenu, type IAggregationsSubMenuProps } from "../AggregationsSubMenu.js";
 
 const intlMock = createIntlMock();
 

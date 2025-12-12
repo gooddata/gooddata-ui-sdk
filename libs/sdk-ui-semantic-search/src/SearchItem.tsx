@@ -1,11 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { AriaAttributes, AriaRole, MouseEvent, ReactNode } from "react";
+import { type AriaAttributes, type AriaRole, type MouseEvent, type ReactNode } from "react";
 
 import classnames from "classnames";
 
 import { testIds } from "./automation/index.js";
-import * as styles from "./SearchItem.module.scss.js";
 
 export type SearchItemProps = {
     className?: string;
@@ -50,7 +49,10 @@ export function SearchItem({
 
     const Tag = href ? "a" : "div";
     const tabIndex = href ? -1 : undefined;
-    const wrapperClassName = classnames(className, styles.resultsItem, isFocused && styles.resultsItemActive);
+    const wrapperClassName = classnames(className, {
+        "gd-semantic-search__results-item": true,
+        "gd-semantic-search__results-item--active": isFocused,
+    });
 
     return (
         <div className={wrapperClassName} data-level={level} data-testid={testIds.semanticSearchItem}>
@@ -58,16 +60,19 @@ export function SearchItem({
                 {...ariaAttributes}
                 href={href}
                 tabIndex={tabIndex}
-                className={styles.content}
+                className="gd-semantic-search__results-item__content"
                 onClick={handleClick}
                 onAuxClick={handleClick}
                 onMouseEnter={onHover}
             >
-                <span className={styles.icon} data-testid={testIds.semanticSearchItemIcon}>
+                <span
+                    className="gd-semantic-search__results-item__icon"
+                    data-testid={testIds.semanticSearchItemIcon}
+                >
                     {icon}
                 </span>
-                <span className={styles.text}>{children}</span>
-                <div className={styles.detailsContainer}>
+                <span className="gd-semantic-search__results-item__text">{children}</span>
+                <div className="gd-semantic-search__results-item__details-container">
                     {!!isFocused && level === 1 && details}
                     {resultCounter}
                 </div>

@@ -6,9 +6,9 @@ import { invariant } from "ts-invariant";
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import { triggerEvent } from "../commands/index.js";
 import {
-    DashboardEventBody,
-    DashboardEvents,
-    ICustomDashboardEvent,
+    type DashboardEventBody,
+    type DashboardEvents,
+    type ICustomDashboardEvent,
     isDashboardEventOrCustomDashboardEvent,
 } from "../events/index.js";
 

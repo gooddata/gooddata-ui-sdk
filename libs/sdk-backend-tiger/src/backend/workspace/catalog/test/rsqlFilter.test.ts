@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import { tagsToRsqlFilter } from "../rsqlFilter.js";
 

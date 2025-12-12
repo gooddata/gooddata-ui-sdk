@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
-import { AgGridApi } from "../../types/agGrid.js";
+import { type AgGridApi } from "../../types/agGrid.js";
 
 /**
  * Returns current ag-grid columns.

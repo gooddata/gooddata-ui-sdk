@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { ToastsCenterContext, useToastsCenterValue } from "./context.js";
 import { ToastMessageList } from "./ToastsCenterMessage.js";
 import { Overlay } from "../../Overlay/index.js";
-import { IMessage } from "../typings.js";
+import { type IMessage } from "../typings.js";
 
 /**
  * Displays the toasts messages in the current context.

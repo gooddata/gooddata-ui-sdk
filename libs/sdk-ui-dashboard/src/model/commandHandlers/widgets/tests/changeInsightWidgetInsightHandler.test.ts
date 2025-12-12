@@ -2,12 +2,15 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
+import { type IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
 
-import { ChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands/index.js";
-import { DashboardCommandFailed, DashboardInsightWidgetInsightSwitched } from "../../../events/index.js";
+import { type ChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands/index.js";
+import {
+    type DashboardCommandFailed,
+    type DashboardInsightWidgetInsightSwitched,
+} from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { PivotTableWithRowAndColumnAttributes } from "../../../tests/fixtures/Insights.fixtures.js";
 import {

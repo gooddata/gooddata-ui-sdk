@@ -1,22 +1,32 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { isEqual } from "lodash-es";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type INullableFilter,
+    type ISortItem,
+    type ITotal,
+} from "@gooddata/sdk-model";
 
 import { createExecution } from "./createExecution.js";
-import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces.js";
+import { type IExecuteErrorComponent, type IExecuteLoadingComponent } from "./interfaces.js";
 import { withExecution } from "./withExecution.js";
-import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
 import {
-    AttributesMeasuresOrPlaceholders,
-    AttributesOrPlaceholders,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
-    TotalsOrPlaceholders,
+    type DataViewWindow,
+    type IWithLoadingEvents,
+    type WithLoadingResult,
+} from "./withExecutionLoading.js";
+import {
+    type AttributesMeasuresOrPlaceholders,
+    type AttributesOrPlaceholders,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
+    type TotalsOrPlaceholders,
     UnexpectedSdkError,
     useResolveValuesWithPlaceholders,
     withContexts,

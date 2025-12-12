@@ -4,13 +4,13 @@ import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { IBucket, IInsightDefinition } from "@gooddata/sdk-model";
+import { type IBucket, type IInsightDefinition } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { emptyInsight } from "../../../tests/mocks/testMocks.js";
 import { attributeItemA1, attributeItemA2 } from "../../../tests/mocks/visualizationObjectMocks.js";
 import { BulletChartConfigurationPanel } from "../BulletChartConfigurationPanel.js";
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
+import { type IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 
 function testInsight(buckets: IBucket[]): IInsightDefinition {
     return {

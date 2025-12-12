@@ -4,7 +4,7 @@ import type { IntlShape } from "react-intl";
 
 import {
     DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI,
-    ITranslations,
+    type ITranslations,
     resolveMessages as sdkUiresolveMessages,
 } from "@gooddata/sdk-ui";
 // eslint-disable-next-line import/order

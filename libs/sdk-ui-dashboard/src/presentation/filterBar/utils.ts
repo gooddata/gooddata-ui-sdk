@@ -1,18 +1,18 @@
 // (C) 2023-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
-    DashboardDateFilterConfigMode,
+    type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { IFilterButtonCustomIcon, VisibilityMode } from "@gooddata/sdk-ui-filters";
+import { type IFilterButtonCustomIcon, type VisibilityMode } from "@gooddata/sdk-ui-filters";
 
 import {
-    FilterBarDraggableItems,
-    FilterBarItem,
+    type FilterBarDraggableItems,
+    type FilterBarItem,
     isFilterBarAttributeFilter,
     isFilterBarDateFilterWithDimension,
     isFilterBarFilterPlaceholder,

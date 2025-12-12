@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { FUNNELCHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { setFunnelChartUiConfig } from "../../../utils/uiConfigHelpers/funnelChartUiConfigHelper.js";
 import { FunnelChartConfigurationPanel } from "../../configurationPanels/FunnelChartConfigurationPanel.js";

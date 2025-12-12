@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
-import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api/index.js";
+import { ActionsApi, type ActionsApiInterface } from "./generated/afm-rest-api/index.js";
 
 /**
  * Tiger smart functions client factory

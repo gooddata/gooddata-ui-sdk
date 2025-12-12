@@ -3,11 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    IAuthenticatedPrincipal,
-    IAuthenticationContext,
-    IAuthenticationProvider,
-    IDataView,
-    IExecutionResult,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationContext,
+    type IAuthenticationProvider,
+    type IDataView,
+    type IExecutionResult,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 import { newDefForItems } from "@gooddata/sdk-model";
@@ -15,12 +15,12 @@ import { newDefForItems } from "@gooddata/sdk-model";
 import { dummyDataView } from "../../dummyBackend/index.js";
 import { AnonymousAuthProvider } from "../../toolkit/auth.js";
 import {
-    ApiClientProvider,
-    CustomBackendConfig,
-    DataProvider,
-    DataProviderContext,
-    ResultProvider,
-    ResultProviderContext,
+    type ApiClientProvider,
+    type CustomBackendConfig,
+    type DataProvider,
+    type DataProviderContext,
+    type ResultProvider,
+    type ResultProviderContext,
 } from "../config.js";
 import { customBackend } from "../index.js";
 

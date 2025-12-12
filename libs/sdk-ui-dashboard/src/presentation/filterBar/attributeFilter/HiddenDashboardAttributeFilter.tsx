@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 /**
  * This implementation of dashboard attribute filter keeps the filter hidden out of sight. The attribute filter itself

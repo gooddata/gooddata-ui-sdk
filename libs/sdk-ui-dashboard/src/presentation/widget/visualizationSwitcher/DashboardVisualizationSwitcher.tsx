@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
-import { IDashboardVisualizationSwitcherProps } from "./types.js";
+import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 /**

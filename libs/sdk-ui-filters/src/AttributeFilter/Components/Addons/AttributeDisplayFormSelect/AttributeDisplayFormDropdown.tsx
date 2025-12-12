@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 
-import { IAttributeDisplayFormMetadataObject, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { type IAttributeDisplayFormMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";
 import { AttributeDisplayFormSelectItem } from "./AttributeDisplayFormSelectItem.js";

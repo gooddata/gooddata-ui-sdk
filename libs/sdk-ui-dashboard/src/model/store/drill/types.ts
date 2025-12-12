@@ -1,6 +1,6 @@
 // (C) 2021-2024 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { type ObjRef } from "@gooddata/sdk-model";
+import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 /**
  * @beta

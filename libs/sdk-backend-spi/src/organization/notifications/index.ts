@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { INotificationsQuery } from "./query.js";
+import { type INotificationsQuery } from "./query.js";
 
 /**
  * This service provides access to organization notifications.

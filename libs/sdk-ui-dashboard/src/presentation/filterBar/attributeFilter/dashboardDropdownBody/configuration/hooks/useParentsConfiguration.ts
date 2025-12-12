@@ -4,12 +4,16 @@ import { useCallback, useMemo, useState } from "react";
 import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IDashboardAttributeFilter, IDashboardAttributeFilterParent, ObjRef } from "@gooddata/sdk-model";
+import {
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterParent,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 import { useBackend } from "@gooddata/sdk-ui";
 
 import { useOriginalConfigurationState } from "./useOriginalConfigurationState.js";
 import {
-    IDashboardAttributeFilterParentItem,
+    type IDashboardAttributeFilterParentItem,
     setAttributeFilterParents,
     useDispatchDashboardCommand,
 } from "../../../../../../model/index.js";

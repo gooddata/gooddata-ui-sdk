@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
+import { type ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 
 import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

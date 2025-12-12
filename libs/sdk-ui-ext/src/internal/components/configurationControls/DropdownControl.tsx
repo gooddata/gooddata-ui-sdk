@@ -1,21 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType, memo } from "react";
+import { type ComponentType, memo } from "react";
 
 import { cloneDeep, set } from "lodash-es";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 
 import {
     Dropdown,
     DropdownButton,
     DropdownList,
-    IAlignPoint,
-    ISingleSelectListItemProps,
+    type IAlignPoint,
+    type ISingleSelectListItemProps,
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 
-import { IDropdownItem } from "../../interfaces/Dropdown.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IDropdownItem } from "../../interfaces/Dropdown.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
 import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 

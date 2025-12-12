@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { MenuOpener } from "./menuOpener/MenuOpener.js";
-import { IMenuPositionConfig, OpenAction } from "./MenuSharedTypes.js";
-import { IMenuStateConfig, MenuState } from "./MenuState.js";
+import { type IMenuPositionConfig, type OpenAction } from "./MenuSharedTypes.js";
+import { type IMenuStateConfig, MenuState } from "./MenuState.js";
 
 /**
  * @internal

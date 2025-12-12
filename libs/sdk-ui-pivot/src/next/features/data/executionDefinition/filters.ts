@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { IFilter } from "@gooddata/sdk-model";
+import { type IFilter } from "@gooddata/sdk-model";
 
-import { IPivotTableExecutionDefinition } from "./types.js";
+import { type IPivotTableExecutionDefinition } from "./types.js";
 
 /**
  * Applies provided filters to the execution definition.

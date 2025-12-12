@@ -2,15 +2,15 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IDashboardObjectIdentity } from "./common.js";
-import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";
+import { type IDashboardObjectIdentity } from "./common.js";
+import { type DateFilterGranularity, type DateString } from "../dateFilterConfig/index.js";
 import {
-    IAttributeElements,
-    ILowerBoundedFilter,
-    IUpperBoundedFilter,
+    type IAttributeElements,
+    type ILowerBoundedFilter,
+    type IUpperBoundedFilter,
     isAttributeElementsByRef,
 } from "../execution/filter/index.js";
-import { ObjRef, isObjRef } from "../objRef/index.js";
+import { type ObjRef, isObjRef } from "../objRef/index.js";
 
 /**
  * Date filter type - relative

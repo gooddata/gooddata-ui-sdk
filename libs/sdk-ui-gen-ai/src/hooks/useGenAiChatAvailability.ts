@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 
 /**

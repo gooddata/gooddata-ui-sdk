@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IAlertAnomalyDetectionGranularity, WeekStart, assertNever } from "@gooddata/sdk-model";
+import { type IAlertAnomalyDetectionGranularity, type WeekStart, assertNever } from "@gooddata/sdk-model";
 
 export function createCronFromGranularity(
     granularity?: IAlertAnomalyDetectionGranularity,

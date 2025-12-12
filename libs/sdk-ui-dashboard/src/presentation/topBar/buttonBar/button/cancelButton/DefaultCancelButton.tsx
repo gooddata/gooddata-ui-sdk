@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { ICancelButtonProps } from "./types.js";
+import { type ICancelButtonProps } from "./types.js";
 import {
     cancelEditRenderMode,
     selectIsDashboardDirty,

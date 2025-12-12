@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useState } from "react";
+import { type KeyboardEvent, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import {
@@ -18,7 +18,7 @@ import {
 import { DateTime } from "./DateTime.js";
 import { messages } from "./locales.js";
 import { Recurrence } from "./Recurrence.js";
-import { RecurrenceType } from "./types.js";
+import { type RecurrenceType } from "./types.js";
 import {
     constructCronExpression,
     isCronExpressionValid,

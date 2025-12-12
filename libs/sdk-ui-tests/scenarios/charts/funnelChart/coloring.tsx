@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
+import { FunnelChart, type IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 
 import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

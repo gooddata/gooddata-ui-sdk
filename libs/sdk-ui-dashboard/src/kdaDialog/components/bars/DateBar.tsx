@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo, useRef, useState } from "react";
+import { type RefObject, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { UiChip, UiListbox, UiPopover, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { KdaDateOptions } from "../../internalTypes.js";
-import { KdaPeriodType } from "../../types.js";
+import { type KdaDateOptions } from "../../internalTypes.js";
+import { type KdaPeriodType } from "../../types.js";
 import { formatKeyDriverAnalysisDateRange } from "../../utils.js";
 
 interface IDateBarProps {

@@ -3,8 +3,8 @@
 import { useEffect, useMemo } from "react";
 
 import {
-    IMetricsAndFacts,
-    QueryMetricsAndFacts,
+    type IMetricsAndFacts,
+    type QueryMetricsAndFacts,
     queryMetricsAndFacts,
     useDashboardQueryProcessing,
 } from "../../model/index.js";

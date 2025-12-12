@@ -5,17 +5,28 @@ import * as path from "path";
 
 import { isEmpty, pickBy } from "lodash-es";
 
-import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IDataView, type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
-    IDimensionDescriptor,
-    IExecutionDefinition,
+    type IDimensionDescriptor,
+    type IExecutionDefinition,
     defFingerprint,
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 
-import { IRecording, RecordingIndexEntry, RecordingType, readJsonSync, writeAsJsonSync } from "./common.js";
+import {
+    type IRecording,
+    type RecordingIndexEntry,
+    RecordingType,
+    readJsonSync,
+    writeAsJsonSync,
+} from "./common.js";
 import { logWarn } from "../cli/loggers.js";
-import { DataViewRequests, RecordingFiles, RequestedWindow, ScenarioDescriptor } from "../interface.js";
+import {
+    type DataViewRequests,
+    RecordingFiles,
+    type RequestedWindow,
+    type ScenarioDescriptor,
+} from "../interface.js";
 
 //
 // internal constants & types

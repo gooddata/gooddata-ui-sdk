@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MutableRefObject, ReactNode, useCallback, useMemo } from "react";
+import { type KeyboardEvent, type MutableRefObject, type ReactNode, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { FilterContextItem, IDashboardDateFilter, areObjRefsEqual } from "@gooddata/sdk-model";
-import { IDateFilterButtonProps } from "@gooddata/sdk-ui-filters";
-import { OverlayPositionType, UiChip, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { type FilterContextItem, type IDashboardDateFilter, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IDateFilterButtonProps } from "@gooddata/sdk-ui-filters";
+import { type OverlayPositionType, UiChip, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import {
     AutomationDateFilterProvider,
@@ -20,7 +20,7 @@ import {
     selectEffectiveDateFilterOptionsForTab,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
+import { DefaultDashboardDateFilter, type IDashboardDateFilterConfig } from "../../filterBar/index.js";
 
 function AutomationDateFilterButton(props: IDateFilterButtonProps) {
     const {

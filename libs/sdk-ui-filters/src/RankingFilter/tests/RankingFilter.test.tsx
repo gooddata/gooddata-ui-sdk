@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import * as Mock from "./mocks.js";
-import { IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
+import { type IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
 
 const DROPDOWN_BODY = ".s-rf-dropdown-body";
 

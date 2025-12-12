@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { MutableRefObject, useCallback } from "react";
+import { type MutableRefObject, useCallback } from "react";
 
 import { useAutoupdateRef } from "./useAutoupdateRef.js";
 

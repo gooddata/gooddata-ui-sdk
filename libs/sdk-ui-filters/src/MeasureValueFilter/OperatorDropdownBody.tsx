@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
 import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
-import { MeasureValueFilterOperator } from "./types.js";
+import { type MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownBodyProps {
     selectedOperator: MeasureValueFilterOperator;

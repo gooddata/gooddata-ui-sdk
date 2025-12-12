@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
-import { MeasureGroupDimension } from "../../types/transposition.js";
+import { type MeasureGroupDimension } from "../../types/transposition.js";
 import {
     addMeasureGroupToDimension,
     removeMeasureGroupFromDimension,
 } from "../data/executionDefinition/dimensions.js";
-import { IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
+import { type IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
 
 /**
  * Applies transposition (when measures are rendered in rows) to execution definition.

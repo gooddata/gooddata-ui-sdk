@@ -24,12 +24,12 @@ import {
     MAX_TABLE_CATEGORIES_COUNT,
 } from "../constants/uiConfig.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IDateFilter,
-    IFilters,
-    IFiltersBucketItem,
-    IReferencePoint,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IDateFilter,
+    type IFilters,
+    type IFiltersBucketItem,
+    type IReferencePoint,
 } from "../interfaces/Visualization.js";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {

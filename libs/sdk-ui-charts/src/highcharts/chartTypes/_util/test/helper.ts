@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import {
@@ -11,8 +11,8 @@ import {
     STACK_BY_DIMENSION_INDEX,
     VIEW_BY_DIMENSION_INDEX,
 } from "../../../constants/dimensions.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
-import { IChartOptions } from "../../../typings/unsafe.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
+import { type IChartOptions } from "../../../typings/unsafe.js";
 import { getChartOptions } from "../../_chartOptions/chartOptionsBuilder.js";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper.js";
 

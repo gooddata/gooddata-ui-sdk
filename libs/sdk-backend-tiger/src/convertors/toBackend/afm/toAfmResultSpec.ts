@@ -1,6 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import { AFM, AfmExecution, AttributeItem, MeasureItem, ResultSpec } from "@gooddata/api-client-tiger";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import {
+    type AFM,
+    type AfmExecution,
+    type AttributeItem,
+    type MeasureItem,
+    type ResultSpec,
+} from "@gooddata/api-client-tiger";
+import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
 import { convertAfmFilters } from "./AfmFiltersConverter.js";
 import { convertAttribute } from "./AttributeConverter.js";

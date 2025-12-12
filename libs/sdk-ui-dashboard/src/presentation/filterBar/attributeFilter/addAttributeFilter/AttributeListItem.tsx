@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
 
-import { ICatalogAttribute } from "@gooddata/sdk-model";
+import { type ICatalogAttribute } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 

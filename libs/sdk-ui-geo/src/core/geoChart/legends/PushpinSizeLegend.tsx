@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { Fragment, ReactElement } from "react";
+import { Fragment, type ReactElement } from "react";
 
 import cx from "classnames";
 

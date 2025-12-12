@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { FocusEvent, useCallback, useRef } from "react";
+import { type FocusEvent, useCallback, useRef } from "react";
 
 import { useIntl } from "react-intl";
 

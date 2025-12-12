@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { CellClassParams } from "ag-grid-community";
+import { type CellClassParams } from "ag-grid-community";
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -7,12 +7,12 @@ import { invariant } from "ts-invariant";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
 
 import { getCellClassNames, getColumnTotalOrSubTotalInfo } from "./cellUtils.js";
-import { ICorePivotTableProps } from "../../publicTypes.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
 import { MEASURE_COLUMN, ROW_MEASURE_COLUMN, ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
-import { IGridRow } from "../data/resultTypes.js";
+import { type IGridRow } from "../data/resultTypes.js";
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
 import { isRootCol, isSeriesCol } from "../structure/tableDescriptorTypes.js";
-import { TableFacade } from "../tableFacade.js";
+import { type TableFacade } from "../tableFacade.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 

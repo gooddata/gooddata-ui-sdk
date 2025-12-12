@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType, ReactElement } from "react";
+import { type ComponentType, type ReactElement } from "react";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 export interface IPivotTableLoadingProps {
     LoadingComponent?: ComponentType<{ color?: string }>;

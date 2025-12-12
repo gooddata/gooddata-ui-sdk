@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { ThemeColor } from "@gooddata/sdk-model";
+import { type ThemeColor } from "@gooddata/sdk-model";
 
 import { b } from "./iconBackgroundBem.js";
-import { BackgroundShape, BackgroundType } from "../@types/background.js";
+import { type BackgroundShape, type BackgroundType } from "../@types/background.js";
 
 export function UiIconBackground({
     children,

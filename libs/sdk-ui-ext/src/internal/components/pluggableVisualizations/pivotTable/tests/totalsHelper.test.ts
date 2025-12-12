@@ -2,9 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { ITotal } from "@gooddata/sdk-model";
+import { type ITotal } from "@gooddata/sdk-model";
 
-import { IBucketFilter } from "../../../../interfaces/Visualization.js";
+import { type IBucketFilter } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { removeInvalidTotals } from "../totalsHelpers.js";
 

@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { IColorPalette, modifyMeasure } from "@gooddata/sdk-model";
+import { type IColorPalette, modifyMeasure } from "@gooddata/sdk-model";
 import {
     CalculateAs,
     ComparisonPositionValues,
     Headline,
-    IColorConfig,
-    IComparison,
-    IHeadlineProps,
+    type IColorConfig,
+    type IComparison,
+    type IHeadlineProps,
 } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";

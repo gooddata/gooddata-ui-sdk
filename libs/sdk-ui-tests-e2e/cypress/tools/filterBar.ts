@@ -2,11 +2,14 @@
 
 import { camelCase } from "lodash-es";
 
-import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
+import {
+    type DashboardAttributeFilterConfigMode,
+    type DashboardDateFilterConfigMode,
+} from "@gooddata/sdk-model";
 
 import { AttributeFilterLimit } from "./attributeFilterLimit";
 import { DateFilter } from "./dateFilter";
-import { DropZone } from "./enum/DropZone";
+import { type DropZone } from "./enum/DropZone";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 
 export const NEW_ATTRIBUTE_FILTER_SELECTOR = ".s-add-attribute-filter";

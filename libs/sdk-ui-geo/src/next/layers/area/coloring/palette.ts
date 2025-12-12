@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPushpinColor } from "../../../types/geoData/pushpin.js";
+import { type IPushpinColor } from "../../../types/geoData/pushpin.js";
 import { getPushpinColors } from "../../pushpin/coloring/palette.js";
 import { DEFAULT_AREA_FILL_COLOR } from "../constants.js";
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, useMemo } from "react";
+import { type CSSProperties, useMemo } from "react";
 
 export const useInsightPositionStyle = () => {
     const insightPositionStyle: CSSProperties = useMemo(() => {

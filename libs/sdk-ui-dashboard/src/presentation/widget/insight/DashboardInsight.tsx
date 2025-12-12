@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IInsight } from "@gooddata/sdk-model";
+import { type IInsight } from "@gooddata/sdk-model";
 
-import { IDashboardInsightProps } from "./types.js";
+import { type IDashboardInsightProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 /**

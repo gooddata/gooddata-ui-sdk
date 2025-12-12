@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IInsightDefinition,
+    type IAttribute,
+    type IInsightDefinition,
     bucketAttribute,
     idRef,
     insightBucket,
@@ -11,12 +11,15 @@ import {
     newAttribute,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartNextConfig } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoPushpinChartNextConfig } from "@gooddata/sdk-ui-geo/next";
 
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
-import { IVisProps, IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import { IInsightToPropConversion, sdkModelPropMetas } from "../../../utils/embeddingCodeGenerator/index.js";
+import { type IVisProps, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import {
+    type IInsightToPropConversion,
+    sdkModelPropMetas,
+} from "../../../utils/embeddingCodeGenerator/index.js";
 export interface IBuildGeoConfigParams {
     options: IVisProps;
     supportedControls: IVisualizationProperties;

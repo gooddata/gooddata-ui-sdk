@@ -2,26 +2,26 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
-    IResultAttributeHeader,
-    ITotalDescriptor,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    type IResultAttributeHeader,
+    type ITotalDescriptor,
 } from "@gooddata/sdk-model";
 
 import {
-    ChartElementType,
-    ChartType,
-    HeadlineElementType,
-    HeadlineType,
-    TableElementType,
-    TableType,
-    VisElementType,
-    VisType,
-    XirrType,
+    type ChartElementType,
+    type ChartType,
+    type HeadlineElementType,
+    type HeadlineType,
+    type TableElementType,
+    type TableType,
+    type VisElementType,
+    type VisType,
+    type XirrType,
 } from "./visualizationTypes.js";
-import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
+import { type IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
 
 /**
  * Drillable item reference or predicate that enables insight / kpi drilling if it matches some attribute or measure of the insight / kpi.

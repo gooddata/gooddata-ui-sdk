@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType, ReactNode } from "react";
+import { type ComponentType, type ReactNode } from "react";
 
 import {
-    ICancelButtonProps,
-    IEditButtonProps,
-    ISaveAsNewButtonProps,
-    ISaveButtonProps,
-    ISettingButtonProps,
-    IShareButtonProps,
+    type ICancelButtonProps,
+    type IEditButtonProps,
+    type ISaveAsNewButtonProps,
+    type ISaveButtonProps,
+    type ISettingButtonProps,
+    type IShareButtonProps,
 } from "./button/types.js";
 
 /**

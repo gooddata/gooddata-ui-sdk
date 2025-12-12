@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { customMessages } from "./customDictionary.js";
-import { ILegacyMultiSelectListProps, LegacyMultiSelectListWithIntl } from "../LegacyMultiSelectList.js";
+import { type ILegacyMultiSelectListProps, LegacyMultiSelectListWithIntl } from "../LegacyMultiSelectList.js";
 
 describe("LegacyMultiSelectList", () => {
     const firstItem: any = {

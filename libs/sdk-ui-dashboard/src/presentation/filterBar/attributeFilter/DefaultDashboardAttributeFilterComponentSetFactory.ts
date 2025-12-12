@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import { AttributesDropdown } from "./addAttributeFilter/index.js";
 import { CreatableAttributeFilter } from "./CreatableAttributeFilter.js";
-import { AttributeFilterComponentSet } from "../../componentDefinition/index.js";
-import { AttributeFilterComponentProvider } from "../../dashboardContexts/index.js";
+import { type AttributeFilterComponentSet } from "../../componentDefinition/index.js";
+import { type AttributeFilterComponentProvider } from "../../dashboardContexts/index.js";
 import { DefaultAttributeFilterDraggingComponent } from "../../dragAndDrop/index.js";
 
 /**

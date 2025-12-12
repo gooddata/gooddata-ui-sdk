@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useMemo } from "react";
+import { type ReactNode, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { type IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
 import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
@@ -36,7 +36,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
-import { IMenuButtonItem } from "../types.js";
+import { type IMenuButtonItem } from "../types.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
 const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[] =>

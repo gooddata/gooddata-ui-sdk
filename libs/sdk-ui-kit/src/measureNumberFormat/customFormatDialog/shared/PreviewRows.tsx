@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { FormattedPreview } from "./FormattedPreview.js";
 

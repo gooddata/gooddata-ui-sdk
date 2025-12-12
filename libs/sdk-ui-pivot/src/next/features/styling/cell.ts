@@ -1,15 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CellClassParams, CellStyle, ICellRendererParams } from "ag-grid-enterprise";
+import { type CellClassParams, type CellStyle, type ICellRendererParams } from "ag-grid-enterprise";
 import cx from "classnames";
 
-import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
-import { DataValue } from "@gooddata/sdk-model";
+import { ClientFormatterFacade, type IFormattedResult } from "@gooddata/number-formatter";
+import { type DataValue } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
-    ExplicitDrill,
-    ITableColumnDefinition,
-    ITableDataValue,
+    type DataViewFacade,
+    type ExplicitDrill,
+    type ITableColumnDefinition,
+    type ITableDataValue,
     isGrandTotalColumnDefinition,
     isGrandTotalRowDefinition,
     isMeasureGroupValueColumnDefinition,
@@ -32,9 +32,9 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { CELL_CLASSNAME, e } from "./bem.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
-import { CellTypes } from "../../types/cellRendering.js";
-import { AgGridRowData } from "../../types/internal.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { type CellTypes } from "../../types/cellRendering.js";
+import { type AgGridRowData } from "../../types/internal.js";
 import { getAttributeColIds, parentsMatch } from "../columns/shared.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
 

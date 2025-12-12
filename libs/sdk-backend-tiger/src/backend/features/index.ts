@@ -3,18 +3,18 @@
 import { LRUCache } from "lru-cache";
 
 import {
-    ApiEntitlement,
-    DeclarativeWorkspace,
-    FeatureContext,
-    ILiveFeatures,
-    IStaticFeatures,
-    IUserProfile,
+    type ApiEntitlement,
+    type DeclarativeWorkspace,
+    type FeatureContext,
+    type ILiveFeatures,
+    type IStaticFeatures,
+    type IUserProfile,
 } from "@gooddata/api-client-tiger";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 
 import { LIB_VERSION } from "../../__version.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { DefaultFeatureFlags, ITigerFeatureFlags } from "../uiFeatures.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { DefaultFeatureFlags, type ITigerFeatureFlags } from "../uiFeatures.js";
 import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
 

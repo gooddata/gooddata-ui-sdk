@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import { DashboardDateFilterConfigMode, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type DashboardDateFilterConfigMode, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { useDateFilterTitleConfiguration } from "./configuration/hooks/useDateFilterTitleConfiguration.js";
 import {

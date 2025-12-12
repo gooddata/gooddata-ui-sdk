@@ -1,16 +1,16 @@
 // (C) 2021-2025 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    AccessGranularPermission,
-    FilterContextItem,
-    IAccessControlAware,
-    IAccessGrantee,
-    IAuditableUsers,
-    IUser,
-    ObjRef,
-    ShareStatus,
+    type AccessGranularPermission,
+    type FilterContextItem,
+    type IAccessControlAware,
+    type IAccessGrantee,
+    type IAuditableUsers,
+    type IUser,
+    type ObjRef,
+    type ShareStatus,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @internal

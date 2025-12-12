@@ -3,7 +3,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { IFilterButtonCustomIcon } from "../../../interfaces/index.js";
+import { type IFilterButtonCustomIcon } from "../../../interfaces/index.js";
 import { FilterButtonCustomIcon } from "../FilterButtonCustomIcon.js";
 
 const CUSTOM_ICON_WRAPPER_SELECTOR = ".s-gd-filter-button-custom-icon-wrapper";

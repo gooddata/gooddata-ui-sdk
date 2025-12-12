@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { HTMLProps, ReactNode } from "react";
+import { type HTMLProps, type ReactNode } from "react";
 
 import cx from "classnames";
 

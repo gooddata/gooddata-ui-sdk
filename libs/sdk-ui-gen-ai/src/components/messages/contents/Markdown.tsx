@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
-import Markdown, { Components } from "react-markdown";
+import Markdown, { type Components } from "react-markdown";
 import remarkEmoji from "remark-emoji";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { CustomHyperlink } from "./CustomHyperlink.js";
-import { TextContentObject } from "../../../model.js";
+import { type TextContentObject } from "../../../model.js";
 import { rehypeReferences, remarkReferences } from "../../completion/index.js";
 
 const componentMap: Components = {

@@ -1,13 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { KeyboardEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    type KeyboardEvent,
+    type ReactElement,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
     Button,
-    IAlignPoint,
+    type IAlignPoint,
     ItemsWrapper,
     Overlay,
     SingleSelectListItem,
@@ -21,7 +29,12 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DefaultSubmenuHeader } from "./DefaultSubmenuHeader.js";
-import { IMenuButtonItem, IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButtonProps } from "./types.js";
+import {
+    type IMenuButtonItem,
+    type IMenuButtonItemButton,
+    type IMenuButtonItemMenu,
+    type IMenuButtonProps,
+} from "./types.js";
 import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];

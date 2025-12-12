@@ -5,12 +5,12 @@ import { useCallback, useMemo } from "react";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { IPushData } from "@gooddata/sdk-ui";
+import { type IPushData } from "@gooddata/sdk-ui";
 
 import { ConfigSection } from "./ConfigSection.js";
 import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 
 export interface IPagingSectionProps {
     properties: IVisualizationProperties;

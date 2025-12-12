@@ -3,28 +3,28 @@
 import { isEqual } from "lodash-es";
 
 import {
-    ExplainType,
-    IAnomalyDetectionResult,
-    IClusteringResult,
-    IDataView,
-    IExecutionFactory,
-    IExecutionResult,
-    IExplainProvider,
-    IExportConfig,
-    IExportResult,
-    IForecastResult,
-    IPreparedExecution,
+    type ExplainType,
+    type IAnomalyDetectionResult,
+    type IClusteringResult,
+    type IDataView,
+    type IExecutionFactory,
+    type IExecutionResult,
+    type IExplainProvider,
+    type IExportConfig,
+    type IExportResult,
+    type IForecastResult,
+    type IPreparedExecution,
     NotImplemented,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
-    DimensionGenerator,
-    IBucket,
-    IDimension,
-    IDimensionDescriptor,
-    IExecutionConfig,
-    IExecutionDefinition,
-    ISortItem,
+    type DimensionGenerator,
+    type IBucket,
+    type IDimension,
+    type IDimensionDescriptor,
+    type IExecutionConfig,
+    type IExecutionDefinition,
+    type ISortItem,
     defFingerprint,
     defWithBuckets,
     defWithDateFormat,
@@ -34,10 +34,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    CustomBackendConfig,
-    CustomBackendState,
-    DataProviderContext,
-    ResultProviderContext,
+    type CustomBackendConfig,
+    type CustomBackendState,
+    type DataProviderContext,
+    type ResultProviderContext,
 } from "./config.js";
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 

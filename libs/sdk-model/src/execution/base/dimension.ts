@@ -3,9 +3,9 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { ITotal, isTotal } from "./totals.js";
-import { Identifier } from "../../objRef/index.js";
-import { IAttribute, attributeLocalId, isAttribute } from "../attribute/index.js";
+import { type ITotal, isTotal } from "./totals.js";
+import { type Identifier } from "../../objRef/index.js";
+import { type IAttribute, attributeLocalId, isAttribute } from "../attribute/index.js";
 
 /**
  * Dimensions specify how to organize the results of an execution in a data view.

@@ -3,27 +3,27 @@ import { compact } from "lodash-es";
 
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import {
-    IAttributeWithReferences,
-    IAttributesQuery,
-    IElementsQueryFactory,
-    IWorkspaceAttributesService,
+    type IAttributeWithReferences,
+    type IAttributesQuery,
+    type IElementsQueryFactory,
+    type IWorkspaceAttributesService,
     NotSupported,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
     isCatalogAttribute,
     isUriRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 
 import { RecordedElementQueryFactory } from "./elements.js";
-import { RecordedBackendConfig, RecordingIndex } from "./types.js";
+import { type RecordedBackendConfig, type RecordingIndex } from "./types.js";
 import { objRefsToStringKey } from "./utils.js";
 
 /**

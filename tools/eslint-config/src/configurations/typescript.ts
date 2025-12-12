@@ -91,14 +91,13 @@ export const typescript: IConfiguration = {
                     message: "Do not use `React.*` types. Use named imports instead.",
                 },
             ],
-            // todo: enable in the future
-            // "@typescript-eslint/consistent-type-imports": [
-            //     "error",
-            //     {
-            //         prefer: "type-imports",
-            //         fixStyle: "inline-type-imports",
-            //     },
-            // ],
+            "@typescript-eslint/consistent-type-imports": [
+                "error",
+                {
+                    prefer: "type-imports",
+                    fixStyle: "inline-type-imports",
+                },
+            ],
         },
     },
 };

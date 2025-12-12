@@ -4,13 +4,13 @@ import { compact, keyBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import {
-    AnalyticalWidgetType,
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardObjectIdentity,
-    IDashboardWidget,
-    IInsight,
-    ISettings,
+    type AnalyticalWidgetType,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardObjectIdentity,
+    type IDashboardWidget,
+    type IInsight,
+    type ISettings,
     insightRef,
     isDashboardLayout,
     isInsightWidget,
@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { validateDashboardLayoutWidgetSize } from "../../presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.js";
-import { MeasurableWidgetContent } from "../layout/sizing.js";
+import { type MeasurableWidgetContent } from "../layout/sizing.js";
 import { ObjRefMap } from "../metadata/objRefMap.js";
 
 function extractContentFromWidget(

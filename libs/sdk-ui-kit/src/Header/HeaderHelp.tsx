@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useRef, useState } from "react";
+import { type ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
-import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, injectIntl } from "react-intl";
 
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { Button } from "../Button/index.js";
 import { Overlay } from "../Overlay/index.js";
-import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning.js";
+import { type HelpMenuDropdownAlignPoints, type IAlignPoint } from "../typings/positioning.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
 interface IHelpItem {

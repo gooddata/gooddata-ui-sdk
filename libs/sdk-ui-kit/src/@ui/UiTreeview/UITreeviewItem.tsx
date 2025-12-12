@@ -1,6 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentType, KeyboardEvent, MouseEvent, MutableRefObject, useCallback, useMemo } from "react";
+import {
+    type ComponentType,
+    type KeyboardEvent,
+    type MouseEvent,
+    type MutableRefObject,
+    useCallback,
+    useMemo,
+} from "react";
 
 import { e } from "./treeviewBem.js";
 import type {
@@ -10,7 +17,7 @@ import type {
     UiStaticTreeView,
     UiTreeViewItemAriaAttributes,
 } from "./types.js";
-import { convertPathToKey, itemsState, makeItemId } from "./utils.js";
+import { convertPathToKey, type itemsState, makeItemId } from "./utils.js";
 
 /**
  * @internal

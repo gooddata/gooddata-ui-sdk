@@ -11,8 +11,8 @@
  *  - Fix bubbles is not rendered with min/max config
  */
 
-import { Series, SeriesBubbleOptions } from "../../lib/index.js";
-import { IHighchartsAxisExtend } from "../../typings/extend.js";
+import { type Series, type SeriesBubbleOptions } from "../../lib/index.js";
+import { type IHighchartsAxisExtend } from "../../typings/extend.js";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;
     dataMin?: number;

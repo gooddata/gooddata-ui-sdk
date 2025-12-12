@@ -1,15 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties, ReactNode, memo, useCallback, useMemo, useState } from "react";
+import { type CSSProperties, type ReactNode, memo, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { cloneDeep, result } from "lodash-es";
 import isReactEqual from "react-fast-compare";
 
-import { ArrowDirections, ArrowOffsets } from "./typings.js";
+import { type ArrowDirections, type ArrowOffsets } from "./typings.js";
 import { ZoomAwareOverlay } from "../Overlay/index.js";
-import { OverlayPositionType } from "../typings/overlay.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type OverlayPositionType } from "../typings/overlay.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
     ".. cc": "none",

@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, createContext, useContext, useMemo } from "react";
+import { type ReactElement, type ReactNode, createContext, useContext, useMemo } from "react";
 
-import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 
 /**
  * @alpha

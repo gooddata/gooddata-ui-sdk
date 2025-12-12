@@ -2,8 +2,11 @@
 
 import { useCallback, useState } from "react";
 
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError, buildAutomationUrl, navigate, useWorkspace } from "@gooddata/sdk-ui";
+import {
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
+import { type GoodDataSdkError, buildAutomationUrl, navigate, useWorkspace } from "@gooddata/sdk-ui";
 
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
@@ -14,7 +17,7 @@ import {
     selectEnableAutomationManagement,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { IAlertingManagementDialogProps } from "../types.js";
+import { type IAlertingManagementDialogProps } from "../types.js";
 
 /**
  * @alpha

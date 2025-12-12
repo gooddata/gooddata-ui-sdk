@@ -7,14 +7,14 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    INotificationChannelIdentifiersQueryResult,
-    INotificationChannelsQuery,
-    INotificationChannelsQueryResult,
+    type INotificationChannelIdentifiersQueryResult,
+    type INotificationChannelsQuery,
+    type INotificationChannelsQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import {
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
-    NotificationChannelDestinationType,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type NotificationChannelDestinationType,
 } from "@gooddata/sdk-model";
 
 import {
@@ -22,7 +22,7 @@ import {
     convertNotificationChannelIdentifierFromBackend,
 } from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
 import { convertNotificationChannelTypesToBackend } from "../../convertors/toBackend/NotificationChannelsConvertor.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class NotificationChannelsQuery implements INotificationChannelsQuery {
     private size = 100;

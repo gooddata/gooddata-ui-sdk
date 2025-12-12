@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { parseDateValue } from "./dateValueParser.js";
-import { DateNormalizer } from "./types.js";
+import { type DateNormalizer } from "./types.js";
 
 /**
  * Creates a function that takes a string date attribute value, granularity, locale and formatting pattern

@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
 import { COLUMNS_PER_PAGE } from "../../constants/internal.js";

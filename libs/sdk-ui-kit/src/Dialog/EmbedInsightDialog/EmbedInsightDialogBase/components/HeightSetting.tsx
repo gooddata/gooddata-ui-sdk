@@ -6,7 +6,7 @@ import { NumericInput } from "./NumericInput.js";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown/index.js";
 import { SingleSelectListItem } from "../../../../List/index.js";
 import { getDefaultHeightForEmbedCodeByUnit } from "../../utils.js";
-import { DEFAULT_UNIT, UNITS, UnitsType } from "../types.js";
+import { DEFAULT_UNIT, UNITS, type UnitsType } from "../types.js";
 
 /**
  * @internal

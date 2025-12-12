@@ -2,8 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IAttributeDescriptor, IAttributeDisplayFormGeoAreaConfig, idRef } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import {
+    type IAttributeDescriptor,
+    type IAttributeDisplayFormGeoAreaConfig,
+    idRef,
+} from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { getLocationCollectionMetadata, resolveGeoCollectionMetadata } from "./geoCollection.js";
 

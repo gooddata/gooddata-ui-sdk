@@ -3,16 +3,16 @@
 import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IBackendCapabilities, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IBackendCapabilities, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    IDimension,
-    IExecutionDefinition,
-    INullableFilter,
-    ISortItem,
-    ITotal,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IDimension,
+    type IExecutionDefinition,
+    type INullableFilter,
+    type ISortItem,
+    type ITotal,
     MeasureGroupIdentifier,
     bucketAttributes,
     bucketIsEmpty,
@@ -24,10 +24,10 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    ITranslationsComponentProps,
+    type ITranslationsComponentProps,
     IntlTranslationsProvider,
     IntlWrapper,
-    Subtract,
+    type Subtract,
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
@@ -35,11 +35,11 @@ import {
 import { CorePivotTableAgImpl } from "./CorePivotTable.js";
 import { AVAILABLE_TOTALS } from "./impl/base/constants.js";
 import {
-    ICorePivotTableProps,
-    IMenu,
-    IPivotTableBucketProps,
-    IPivotTableConfig,
-    IPivotTableProps,
+    type ICorePivotTableProps,
+    type IMenu,
+    type IPivotTableBucketProps,
+    type IPivotTableConfig,
+    type IPivotTableProps,
 } from "./publicTypes.js";
 
 /**

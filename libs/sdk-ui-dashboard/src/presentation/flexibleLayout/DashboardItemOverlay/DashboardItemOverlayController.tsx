@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { DashboardItemOverlay } from "./DashboardItemOverlay.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import {
     selectSectionModification,
     selectWidgetsOverlayState,

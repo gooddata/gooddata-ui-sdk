@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 import {
-    IAxisRange,
-    IAxisRangeForAxes,
-    IRectBySize,
+    type IAxisRange,
+    type IAxisRangeForAxes,
+    type IRectBySize,
     isIntersecting,
     isStacked,
     pointInRange,
 } from "./helpers.js";
-import { IChartConfig, IDataLabelsVisible } from "../../../interfaces/index.js";
+import { type IChartConfig, type IDataLabelsVisible } from "../../../interfaces/index.js";
 import {
     DATA_LABEL_C6,
     getBackplateLabelStyle,
@@ -19,8 +19,8 @@ import {
     getWhiteLabelStyle,
     whiteDataLabelTypes,
 } from "../../constants/label.js";
-import { StackingType } from "../../constants/stacking.js";
-import { DataLabelsOptions } from "../../lib/index.js";
+import { type StackingType } from "../../constants/stacking.js";
+import { type DataLabelsOptions } from "../../lib/index.js";
 import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
 
 export function isLabelOverlappingItsShape({ dataLabel, shapeArgs }: any): boolean {

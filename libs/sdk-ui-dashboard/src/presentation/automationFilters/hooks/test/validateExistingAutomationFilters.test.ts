@@ -2,12 +2,12 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    FilterContextItem,
-    IAttributeFilter,
-    IAutomationVisibleFilter,
-    IFilterableWidget,
-    IInsight,
-    IInsightWidget,
+    type FilterContextItem,
+    type IAttributeFilter,
+    type IAutomationVisibleFilter,
+    type IFilterableWidget,
+    type IInsight,
+    type IInsightWidget,
     dashboardFilterLocalIdentifier,
     idRef,
     isAllTimeDashboardDateFilter,

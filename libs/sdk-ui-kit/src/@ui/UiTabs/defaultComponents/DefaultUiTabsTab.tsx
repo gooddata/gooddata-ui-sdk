@@ -2,13 +2,13 @@
 
 import { useCallback, useState } from "react";
 
-import { EmptyObject, stringUtils } from "@gooddata/util";
+import { type EmptyObject, stringUtils } from "@gooddata/util";
 
 import { ScopedIdStore } from "../../hooks/useScopedId.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
-import { IUiTabComponentProps } from "../types.js";
+import { type IUiTabComponentProps } from "../types.js";
 
 /**
  * @internal

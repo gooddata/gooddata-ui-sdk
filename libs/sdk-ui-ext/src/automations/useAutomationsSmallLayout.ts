@@ -8,7 +8,7 @@ import {
     AUTOMATIONS_SMALL_LAYOUT_BULK_ACTIONS_THRESHOLD,
     AUTOMATIONS_SMALL_LAYOUT_SEARCH_THRESHOLD,
 } from "./constants.js";
-import { IUseAutomationsSmallLayoutProps } from "./types.js";
+import { type IUseAutomationsSmallLayoutProps } from "./types.js";
 
 export const useAutomationsSmallLayout = ({
     searchHandler,

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
 /**
  * @internal

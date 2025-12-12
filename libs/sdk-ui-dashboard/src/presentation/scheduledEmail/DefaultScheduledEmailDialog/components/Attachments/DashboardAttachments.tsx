@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useRef, useState } from "react";
+import { type ReactNode, useCallback, useRef, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-    DashboardAttachmentType,
-    FilterContextItem,
-    IExportDefinitionVisualizationObjectSettings,
+    type DashboardAttachmentType,
+    type FilterContextItem,
+    type IExportDefinitionVisualizationObjectSettings,
 } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
 

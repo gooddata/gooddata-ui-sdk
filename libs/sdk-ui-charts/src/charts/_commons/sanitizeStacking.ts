@@ -2,9 +2,9 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IAttributeOrMeasure,
-    IBucket,
-    IExecutionDefinition,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IExecutionDefinition,
     bucketItems,
     bucketsFind,
     isAttribute,
@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/index.js";
 
 function isItemsArray(obj: any): obj is IAttributeOrMeasure[] {
     return !isEmpty(obj) && (isMeasure(obj[0]) || isAttribute(obj));

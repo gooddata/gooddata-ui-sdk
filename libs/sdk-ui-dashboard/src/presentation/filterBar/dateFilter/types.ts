@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
-import { IDateFilterButtonProps, IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
-import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import { type DateFilterGranularity, type IDashboardDateFilter } from "@gooddata/sdk-model";
+import { type IDateFilterButtonProps, type IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
+import { type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 /**
  * Defines the configuration of the DateFilter component.

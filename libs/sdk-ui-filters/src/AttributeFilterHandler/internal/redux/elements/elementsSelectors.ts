@@ -3,22 +3,26 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { compact } from "lodash-es";
 
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    IAbsoluteDateFilter,
-    IAttributeElement,
-    IAttributeMetadataObject,
-    IMeasure,
-    IMeasureDefinitionType,
-    IRelativeDateFilter,
-    ObjRef,
-    SortDirection,
+    type IAbsoluteDateFilter,
+    type IAttributeElement,
+    type IAttributeMetadataObject,
+    type IMeasure,
+    type IMeasureDefinitionType,
+    type IRelativeDateFilter,
+    type ObjRef,
+    type SortDirection,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AsyncOperationStatus, AttributeElementKey, ILoadElementsOptions } from "../../../types/index.js";
+import {
+    type AsyncOperationStatus,
+    type AttributeElementKey,
+    type ILoadElementsOptions,
+} from "../../../types/index.js";
 import { selectState, toCacheKey } from "../common/selectors.js";
-import { FilterSelector } from "../common/types.js";
+import { type FilterSelector } from "../common/types.js";
 
 /**
  * Get the elements specified by the keys.

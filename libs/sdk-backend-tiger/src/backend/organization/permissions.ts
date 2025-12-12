@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ITigerClientBase, PermissionsAssignment } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase, type PermissionsAssignment } from "@gooddata/api-client-tiger";
 import { ActionsApi_ManageOrganizationPermissions } from "@gooddata/api-client-tiger/actions";
 import { LayoutApi_GetOrganizationPermissions } from "@gooddata/api-client-tiger/layout";
 import {
@@ -9,19 +9,19 @@ import {
     UserManagementApi_ListPermissionsForUserGroup,
     UserManagementApi_RevokePermissions,
 } from "@gooddata/api-client-tiger/userManagement";
-import { IOrganizationPermissionService, IPermissionsAssignment } from "@gooddata/sdk-backend-spi";
+import { type IOrganizationPermissionService, type IPermissionsAssignment } from "@gooddata/sdk-backend-spi";
 import {
-    IDataSourcePermissionAssignment,
-    IOrganizationPermissionAssignment,
-    IWorkspacePermissionAssignment,
-    OrganizationPermissionAssignment,
+    type IDataSourcePermissionAssignment,
+    type IOrganizationPermissionAssignment,
+    type IWorkspacePermissionAssignment,
+    type OrganizationPermissionAssignment,
 } from "@gooddata/sdk-model";
 
 import {
     convertDataSourcePermissionsAssignment,
     convertWorkspacePermissionsAssignment,
 } from "./fromBackend/userConvertor.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 const fetchOrganizationPermissions = async (client: ITigerClientBase, userId: string) => {
     return LayoutApi_GetOrganizationPermissions(client.axios, client.basePath)

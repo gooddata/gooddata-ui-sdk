@@ -1,25 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    AccessGranteeDetail,
-    IAvailableUserAccessGrantee,
-    IAvailableUserGroupAccessGrantee,
-    IGranularUserAccess,
-    IGranularUserGroupAccess,
-    IUserAccess,
-    IUserGroupAccess,
-    IWorkspaceUser,
-    IWorkspaceUserGroup,
+    type AccessGranteeDetail,
+    type IAvailableUserAccessGrantee,
+    type IAvailableUserGroupAccessGrantee,
+    type IGranularUserAccess,
+    type IGranularUserGroupAccess,
+    type IUserAccess,
+    type IUserGroupAccess,
+    type IWorkspaceUser,
+    type IWorkspaceUserGroup,
     uriRef,
 } from "@gooddata/sdk-model";
 
 import {
-    GranteeItem,
-    IGranteeGroup,
-    IGranteeGroupAll,
-    IGranteeRules,
-    IGranteeUser,
-    IGranularGranteeGroup,
-    IGranularGranteeUser,
+    type GranteeItem,
+    type IGranteeGroup,
+    type IGranteeGroupAll,
+    type IGranteeRules,
+    type IGranteeUser,
+    type IGranularGranteeGroup,
+    type IGranularGranteeUser,
 } from "../types.js";
 
 export const user: IGranteeUser = {

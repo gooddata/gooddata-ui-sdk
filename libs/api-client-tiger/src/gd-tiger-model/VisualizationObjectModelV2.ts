@@ -3,12 +3,12 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IAttributeFilterConfigs,
-    IBucket,
-    IFilter,
-    IInsightLayerDefinition,
-    ISortItem,
-    VisualizationProperties,
+    type IAttributeFilterConfigs,
+    type IBucket,
+    type IFilter,
+    type IInsightLayerDefinition,
+    type ISortItem,
+    type VisualizationProperties,
 } from "@gooddata/sdk-model";
 
 /**

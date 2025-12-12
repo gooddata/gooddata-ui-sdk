@@ -1,19 +1,19 @@
 // (C) 2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IExecutionConfig,
-    INullableFilter,
-    ISortItem,
-    ITheme,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IExecutionConfig,
+    type INullableFilter,
+    type ISortItem,
+    type ITheme,
 } from "@gooddata/sdk-model";
-import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+import { type IVisualizationCallbacks, type IVisualizationProps } from "@gooddata/sdk-ui";
 
-import { CenterPositionChangedCallback, ZoomChangedCallback } from "../../common/callbacks.js";
-import { IGeoAreaChartConfig } from "../../config/areaChart.js";
-import { IGeoLayer } from "../../layers/index.js";
+import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../../common/callbacks.js";
+import { type IGeoAreaChartConfig } from "../../config/areaChart.js";
+import { type IGeoLayer } from "../../layers/index.js";
 
 /**
  * Shared props for {@link GeoAreaChart} before the required area attribute is applied.

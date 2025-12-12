@@ -3,7 +3,7 @@
 import { InsightAlertsNew } from "./InsightAlertsNew.js";
 import { InsightAlertsOld } from "./InsightAlertsOld.js";
 import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
-import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
+import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 export function InsightAlerts({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {
     const enableAutomationFilters = useDashboardSelector(selectEnableAutomationFilterContext);

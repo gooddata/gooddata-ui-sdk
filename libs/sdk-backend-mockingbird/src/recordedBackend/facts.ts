@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IFactsQuery, IWorkspaceFactsService, NotSupported } from "@gooddata/sdk-backend-spi";
+import { type IFactsQuery, type IWorkspaceFactsService, NotSupported } from "@gooddata/sdk-backend-spi";
 import {
-    IFactMetadataObject,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    ObjRef,
+    type IFactMetadataObject,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

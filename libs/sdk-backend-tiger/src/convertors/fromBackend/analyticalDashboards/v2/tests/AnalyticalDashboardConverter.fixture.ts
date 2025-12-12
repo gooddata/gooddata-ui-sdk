@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { IDashboardLayout } from "@gooddata/sdk-model";
+import { type IDashboardLayout } from "@gooddata/sdk-model";
 
 export const dashboardLayout: IDashboardLayout = {
     type: "IDashboardLayout",

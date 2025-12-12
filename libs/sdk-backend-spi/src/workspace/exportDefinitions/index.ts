@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IExportDefinitionMetadataObject,
-    IExportDefinitionMetadataObjectDefinition,
-    ObjRef,
+    type IExportDefinitionMetadataObject,
+    type IExportDefinitionMetadataObjectDefinition,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { IPagedResource } from "../../common/paging.js";
+import { type IPagedResource } from "../../common/paging.js";
 
 /**
  * Service to query, update or delete exportDefinitions, and other methods related to exportDefinitions.

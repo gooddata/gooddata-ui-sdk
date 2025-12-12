@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 import {
     DataTooLargeToComputeSdkError,
     DataTooLargeToDisplaySdkError,
-    GoodDataSdkError,
+    type GoodDataSdkError,
     NoDataSdkError,
     ProtectedReportSdkError,
     UnexpectedSdkError,

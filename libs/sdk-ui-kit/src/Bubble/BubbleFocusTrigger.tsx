@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { BubbleTrigger, IBubbleTriggerProps } from "./BubbleTrigger.js";
+import { BubbleTrigger, type IBubbleTriggerProps } from "./BubbleTrigger.js";
 
 /**
  * @internal

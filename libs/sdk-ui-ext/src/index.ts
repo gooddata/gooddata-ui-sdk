@@ -12,15 +12,15 @@
  * @packageDocumentation
  */
 
-import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
-import { IDrillEvent } from "@gooddata/sdk-ui";
+import { type IInsight, type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
+import { type IDrillEvent } from "@gooddata/sdk-ui";
 
 export type { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 import {
     FullVisualizationCatalog,
-    IDrillDownDefinition,
-    IVisualizationMeta,
-    IVisualizationSizeInfo,
+    type IDrillDownDefinition,
+    type IVisualizationMeta,
+    type IVisualizationSizeInfo,
     fluidLayoutDescriptor,
 } from "./internal/index.js";
 

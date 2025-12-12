@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentType, useEffect, useMemo, useState } from "react";
+import { type ComponentType, useEffect, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
 
 import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
 import { getColumnWidths } from "./utils.js";
-import { UiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
+import { type UiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
-import { UiAsyncTableBulkAction, UiAsyncTableColumn } from "../types.js";
+import { type UiAsyncTableBulkAction, type UiAsyncTableColumn } from "../types.js";
 
 export function skeletonItemFactory(
     columnWidths: Array<number>,

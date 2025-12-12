@@ -1,19 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
 import { withIntl } from "@gooddata/sdk-ui";
 import {
     Dropdown,
     DropdownButton,
     DropdownList,
-    IDropdownButtonProps,
-    IDropdownListProps,
-    IDropdownProps,
+    type IDropdownButtonProps,
+    type IDropdownListProps,
+    type IDropdownProps,
     Typography,
 } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";

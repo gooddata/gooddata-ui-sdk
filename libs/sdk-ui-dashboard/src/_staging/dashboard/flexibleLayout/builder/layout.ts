@@ -3,26 +3,26 @@
 import { difference } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+import { type ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
-    IDashboardLayout,
-    IDashboardLayoutSection,
-    IDashboardLayoutSize,
+    type IDashboardLayout,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSize,
     isDashboardLayout,
 } from "@gooddata/sdk-model";
 
 import {
-    DashboardLayoutModifications,
-    DashboardLayoutSectionModifications,
-    DashboardLayoutSectionsSelector,
-    IDashboardLayoutBuilder,
-    IDashboardLayoutSectionBuilder,
+    type DashboardLayoutModifications,
+    type DashboardLayoutSectionModifications,
+    type DashboardLayoutSectionsSelector,
+    type IDashboardLayoutBuilder,
+    type IDashboardLayoutSectionBuilder,
 } from "./interfaces.js";
 import { DashboardLayoutItemBuilder } from "./item.js";
 import { DashboardLayoutSectionBuilder } from "./section.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types.js";
 import { getSectionIndex } from "../../../layout/coordinates.js";
-import { IDashboardLayoutFacade } from "../facade/interfaces.js";
+import { type IDashboardLayoutFacade } from "../facade/interfaces.js";
 import { DashboardLayoutFacade } from "../facade/layout.js";
 
 /**

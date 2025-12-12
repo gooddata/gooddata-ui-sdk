@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, memo, useCallback, useEffect } from "react";
+import { type ReactNode, memo, useCallback, useEffect } from "react";
 
 import { Overlay } from "@gooddata/sdk-ui-kit";
 

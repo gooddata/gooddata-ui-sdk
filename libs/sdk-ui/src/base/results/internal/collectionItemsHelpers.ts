@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ICollectionItemsResult, IDataView } from "@gooddata/sdk-backend-spi";
-import { IAttribute, attributeLocalId, isAttribute, isAttributeDescriptor } from "@gooddata/sdk-model";
+import { type ICollectionItemsResult, type IDataView } from "@gooddata/sdk-backend-spi";
+import { type IAttribute, attributeLocalId, isAttribute, isAttributeDescriptor } from "@gooddata/sdk-model";
 
 /**
  * @alpha

@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    ITableGrandTotalColumnDefinition,
-    ITableSubtotalColumnDefinition,
-    ITableValueColumnDefinition,
+    type ITableGrandTotalColumnDefinition,
+    type ITableSubtotalColumnDefinition,
+    type ITableValueColumnDefinition,
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
 import { extractFormattedValue } from "./shared.js";
 import { MetricCell } from "../../components/Cell/MetricCell.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 

@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 
-import { IRichTextWidget, widgetRef } from "@gooddata/sdk-model";
+import { type IRichTextWidget, widgetRef } from "@gooddata/sdk-model";
 
 import {
-    InsightDateDatasets,
-    QueryInsightDateDatasets,
+    type InsightDateDatasets,
+    type QueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     useDashboardQueryProcessing,
