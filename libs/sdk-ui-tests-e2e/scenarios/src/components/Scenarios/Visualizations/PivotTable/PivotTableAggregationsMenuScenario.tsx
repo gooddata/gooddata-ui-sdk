@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { newTotal } from "@gooddata/sdk-model";
-import { TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { type TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { type IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 

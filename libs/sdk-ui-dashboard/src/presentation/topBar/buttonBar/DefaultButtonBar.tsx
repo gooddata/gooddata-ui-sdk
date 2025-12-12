@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import {
     CancelButton,
@@ -10,7 +10,7 @@ import {
     SettingButton,
     ShareButton,
 } from "./button/index.js";
-import { IButtonBarProps } from "./types.js";
+import { type IButtonBarProps } from "./types.js";
 
 /**
  * @alpha

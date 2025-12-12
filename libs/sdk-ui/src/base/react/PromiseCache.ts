@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ICancelablePromise, makeCancelable } from "./CancelablePromise.js";
+import { type ICancelablePromise, makeCancelable } from "./CancelablePromise.js";
 
 /**
  * Simple promise cache, that allows promise canceling

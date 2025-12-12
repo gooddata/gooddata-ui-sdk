@@ -3,10 +3,10 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IAttribute, IMeasure } from "@gooddata/sdk-model";
+import { type IAttribute, type IMeasure } from "@gooddata/sdk-model";
 
 import {
-    IAttributeColumnLocator,
+    type IAttributeColumnLocator,
     newAttributeColumnLocator,
     newWidthForAllColumnsForMeasure,
     newWidthForAllMeasureColumns,

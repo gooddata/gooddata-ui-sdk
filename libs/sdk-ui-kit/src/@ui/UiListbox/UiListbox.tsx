@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
@@ -8,7 +8,12 @@ import { DefaultUiListboxInteractiveItemComponent } from "./defaults/DefaultUiLi
 import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListboxStaticItemComponent.js";
 import { firstCharacterSearch } from "./defaults/firstCharacterSearch.js";
 import { b, e } from "./listboxBem.js";
-import { IUiListboxContext, IUiListboxInteractiveItem, IUiListboxItem, UiListboxProps } from "./types.js";
+import {
+    type IUiListboxContext,
+    type IUiListboxInteractiveItem,
+    type IUiListboxItem,
+    type UiListboxProps,
+} from "./types.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**

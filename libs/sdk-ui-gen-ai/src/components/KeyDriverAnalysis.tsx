@@ -3,12 +3,12 @@
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 import { IntlWrapper, KdaDialog, KdaProvider, KdaStoreProvider } from "@gooddata/sdk-ui-dashboard/internal";
 
 import { keyDriverAnalysisSelector, settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
-import { RootState, setKeyDriverAnalysisAction } from "../store/index.js";
+import { type RootState, setKeyDriverAnalysisAction } from "../store/index.js";
 
 interface KeyDriverAnalysisProps {
     keyDriverAnalysis?: IKdaDefinition;

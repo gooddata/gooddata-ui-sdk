@@ -3,22 +3,22 @@ import { zip } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import {
-    IAttributeDescriptor,
-    IAttributeLocatorItem,
-    IAttributeSortItem,
-    ILocatorItem,
-    IMeasureDescriptor,
-    IMeasureLocatorItem,
-    IResultAttributeHeader,
-    ISortItem,
-    SortDirection,
+    type IAttributeDescriptor,
+    type IAttributeLocatorItem,
+    type IAttributeSortItem,
+    type ILocatorItem,
+    type IMeasureDescriptor,
+    type IMeasureLocatorItem,
+    type IResultAttributeHeader,
+    type ISortItem,
+    type SortDirection,
     isAttributeAreaSort,
     isAttributeSort,
     newAttributeAreaSort,
     newAttributeSort,
 } from "@gooddata/sdk-model";
 
-import { AnyCol, isSeriesCol, isSliceCol } from "./tableDescriptorTypes.js";
+import { type AnyCol, isSeriesCol, isSliceCol } from "./tableDescriptorTypes.js";
 
 function createAttributeLocator(
     attribute: IAttributeDescriptor | undefined,

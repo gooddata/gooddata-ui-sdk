@@ -2,13 +2,13 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IAttribute, IMeasure, Identifier, attributeLocalId } from "@gooddata/sdk-model";
+import { type IAttribute, type IMeasure, type Identifier, attributeLocalId } from "@gooddata/sdk-model";
 
 import {
-    ColumnLocator,
-    IAttributeColumnLocator,
-    IMeasureColumnLocator,
-    ITotalColumnLocator,
+    type ColumnLocator,
+    type IAttributeColumnLocator,
+    type IMeasureColumnLocator,
+    type ITotalColumnLocator,
     newMeasureColumnLocator,
 } from "./locators.js";
 

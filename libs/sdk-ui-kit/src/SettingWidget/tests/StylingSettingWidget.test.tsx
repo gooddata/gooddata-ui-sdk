@@ -4,12 +4,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { customItemsMock, defaultItemMock } from "./mocks.js";
 import * as useMediaQuery from "../../responsive/useMediaQuery.js";
-import { IStylingSettingWidgetProps, StylingSettingWidget } from "../StylingSettingWidget/index.js";
+import { type IStylingSettingWidgetProps, StylingSettingWidget } from "../StylingSettingWidget/index.js";
 
 const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
     return buttons.forEach((item) => {

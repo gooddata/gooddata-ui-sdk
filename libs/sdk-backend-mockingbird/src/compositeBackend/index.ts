@@ -3,17 +3,17 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IAnalyticalBackend,
-    IAnalyticalWorkspace,
-    IAuthenticatedPrincipal,
-    IAuthenticationProvider,
-    IDataSourcesService,
-    IEntitlements,
-    IGeoService,
-    IOrganization,
-    IOrganizations,
-    IUserService,
-    IWorkspacesQueryFactory,
+    type IAnalyticalBackend,
+    type IAnalyticalWorkspace,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationProvider,
+    type IDataSourcesService,
+    type IEntitlements,
+    type IGeoService,
+    type IOrganization,
+    type IOrganizations,
+    type IUserService,
+    type IWorkspacesQueryFactory,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 

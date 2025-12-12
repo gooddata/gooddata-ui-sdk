@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    IAttributeDescriptor,
-    IAttributeOrMeasure,
-    IMeasureDescriptor,
-    IResultHeader,
-    Identifier,
-    ObjRef,
+    type IAttributeDescriptor,
+    type IAttributeOrMeasure,
+    type IMeasureDescriptor,
+    type IResultHeader,
+    type Identifier,
+    type ObjRef,
     attributeDisplayFormRef,
     attributeLocalId,
     isAttribute,
@@ -16,8 +16,8 @@ import {
     measureLocalId,
     resultHeaderName,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
+import { type IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
 import {
     dataValueAsFloat,
@@ -26,13 +26,13 @@ import {
     getMinMax,
 } from "./common.js";
 import {
-    IAvailableLegends,
-    IGeoAttributeItem,
-    IGeoData,
-    IGeoLngLat,
-    IGeoLocationItem,
-    IGeoMeasureItem,
-    IGeoSegmentItem,
+    type IAvailableLegends,
+    type IGeoAttributeItem,
+    type IGeoData,
+    type IGeoLngLat,
+    type IGeoLocationItem,
+    type IGeoMeasureItem,
+    type IGeoSegmentItem,
 } from "../../../../GeoChart.js";
 
 interface IBucketItemInfo {

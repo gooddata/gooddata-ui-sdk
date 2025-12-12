@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { ISettings } from "@gooddata/sdk-model";
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type ISettings } from "@gooddata/sdk-model";
 
 /**
  * Given an object with settings that include user and workspace information, convert to a new object that

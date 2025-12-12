@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, ReactElement, ReactNode, useCallback } from "react";
+import { type MouseEvent, type ReactElement, type ReactNode, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,9 +8,9 @@ import { useIntl } from "react-intl";
 import {
     DefaultUiMenuContent,
     DefaultUiMenuHeader,
-    IUiMenuContentItemProps,
-    IUiMenuContentProps,
-    IUiMenuInteractiveItemProps,
+    type IUiMenuContentItemProps,
+    type IUiMenuContentProps,
+    type IUiMenuInteractiveItemProps,
     UiIconButton,
     getItemInteractiveParent,
     typedUiMenuContextStore,
@@ -19,7 +19,7 @@ import {
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
 import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
-import { IDashboardInsightMenuTitleProps } from "../../types.js";
+import { type IDashboardInsightMenuTitleProps } from "../../types.js";
 
 export type FocusableItemData = {
     icon?: ReactElement | string;

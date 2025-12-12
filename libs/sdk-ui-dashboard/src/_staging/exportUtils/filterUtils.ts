@@ -1,5 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
-import { FilterContextItem, isDashboardCommonDateFilter } from "@gooddata/sdk-model";
+import { type FilterContextItem, isDashboardCommonDateFilter } from "@gooddata/sdk-model";
 
 // the value is taken from gdc-dashboards
 const allTimeFilterContextItem: FilterContextItem = {

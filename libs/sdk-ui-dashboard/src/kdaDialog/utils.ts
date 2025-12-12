@@ -2,12 +2,12 @@
 
 import { invariant } from "ts-invariant";
 
-import { ClientFormatterFacade, ISeparators } from "@gooddata/number-formatter";
+import { ClientFormatterFacade, type ISeparators } from "@gooddata/number-formatter";
 import {
-    IAttributeFilter,
-    ICatalogAttribute,
-    IDashboardAttributeFilter,
-    ObjRef,
+    type IAttributeFilter,
+    type ICatalogAttribute,
+    type IDashboardAttributeFilter,
+    type ObjRef,
     areObjRefsEqual,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
@@ -18,8 +18,8 @@ import {
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
 import { DEFAULT_MEASURE_FORMAT } from "./const.js";
-import { KdaState } from "./internalTypes.js";
-import { DeepReadonly, IKdaDataPoint, IKdaDefinition } from "./types.js";
+import { type KdaState } from "./internalTypes.js";
+import { type DeepReadonly, type IKdaDataPoint, type IKdaDefinition } from "./types.js";
 
 //Format value
 

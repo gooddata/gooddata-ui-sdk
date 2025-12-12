@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
-    DateFilterGranularity,
-    FilterContextItem,
-    IDashboard,
-    IDashboardObjectIdentity,
-    IDateFilterConfig,
-    IFilterContextDefinition,
+    type DateFilterGranularity,
+    type FilterContextItem,
+    type IDashboard,
+    type IDashboardObjectIdentity,
+    type IDateFilterConfig,
+    type IFilterContextDefinition,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
@@ -24,7 +24,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "./defaultFilterContext.js";
-import { IDashboardFilter } from "../../types.js";
+import { type IDashboardFilter } from "../../types.js";
 
 /**
  * Given a dashboard, this function will inspect its filter context and always return a valid instance of IFilterContextDefinition to use.

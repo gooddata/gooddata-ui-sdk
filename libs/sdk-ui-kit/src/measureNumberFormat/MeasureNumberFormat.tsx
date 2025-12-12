@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    ComponentType,
-    SyntheticEvent,
+    type ComponentType,
+    type SyntheticEvent,
     memo,
     useCallback,
     useEffect,
@@ -13,12 +13,12 @@ import {
 
 import { useIntl } from "react-intl";
 
-import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
+import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 
 import { CustomFormatDialog } from "./customFormatDialog/CustomFormatDialog.js";
 import { PresetsDropdown } from "./presetsDropdown/PresetsDropdown.js";
-import { IFormatPreset, IFormatTemplate, IToggleButtonProps, PresetType } from "./typings.js";
-import { IPositioning } from "../typings/positioning.js";
+import { type IFormatPreset, type IFormatTemplate, type IToggleButtonProps, PresetType } from "./typings.js";
+import { type IPositioning } from "../typings/positioning.js";
 
 export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
 

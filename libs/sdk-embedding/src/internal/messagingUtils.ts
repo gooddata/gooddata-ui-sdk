@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import {
-    GdcMessageEventListener,
-    IGdcMessageEvent,
-    IGdcMessageEventListenerConfig,
+    type GdcMessageEventListener,
+    type IGdcMessageEvent,
+    type IGdcMessageEventListenerConfig,
 } from "../iframe/common.js";
 
 /**

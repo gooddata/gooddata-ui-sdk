@@ -13,8 +13,8 @@ import {
     useDashboardCommandProcessing,
     useDashboardDispatch,
 } from "../../../../model/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
-import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
+import { type ILayoutItemPath } from "../../../../types.js";
+import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
 
 export function useDashboardLayoutPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();

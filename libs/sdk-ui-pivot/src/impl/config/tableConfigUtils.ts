@@ -1,15 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import { IExecutionDefinition, ITotal } from "@gooddata/sdk-model";
+import { type IExecutionDefinition, type ITotal } from "@gooddata/sdk-model";
 
-import { ColumnWidthItem } from "../../columnWidths.js";
+import { type ColumnWidthItem } from "../../columnWidths.js";
 import {
-    ColumnHeadersPosition,
-    DefaultColumnWidth,
-    ICorePivotTableProps,
-    IMenu,
-    MeasureGroupDimension,
+    type ColumnHeadersPosition,
+    type DefaultColumnWidth,
+    type ICorePivotTableProps,
+    type IMenu,
+    type MeasureGroupDimension,
 } from "../../publicTypes.js";
-import { ICorePivotTableState } from "../../tableState.js";
+import { type ICorePivotTableState } from "../../tableState.js";
 import { isColumnAutoresizeEnabled } from "../resizing/columnSizing.js";
 
 const DEFAULT_COLUMN_WIDTH = 200;

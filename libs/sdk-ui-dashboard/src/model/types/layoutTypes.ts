@@ -3,22 +3,22 @@
 import { cloneDeep, isEmpty } from "lodash-es";
 
 import {
-    IBaseWidget,
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSectionHeader,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardObjectIdentity,
-    IFilterableWidget,
-    IWidget,
-    IWidgetDefinition,
+    type IBaseWidget,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSectionHeader,
+    type IDashboardLayoutSizeByScreenSize,
+    type IDashboardObjectIdentity,
+    type IFilterableWidget,
+    type IWidget,
+    type IWidgetDefinition,
     idRef,
     isDashboardLayout,
     isWidget,
 } from "@gooddata/sdk-model";
 
-import { ILayoutItemPath } from "../../types.js";
+import { type ILayoutItemPath } from "../../types.js";
 
 /**
  * Base type for custom widgets. Custom widgets may extend this and add extra properties to hold widget-specific

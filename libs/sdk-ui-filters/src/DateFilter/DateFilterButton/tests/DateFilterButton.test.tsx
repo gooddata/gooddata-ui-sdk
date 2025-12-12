@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IFilterButtonCustomIcon } from "../../../shared/index.js";
+import { type IFilterButtonCustomIcon } from "../../../shared/index.js";
 import * as shared from "../../../shared/index.js";
 import { DateFilterButton } from "../DateFilterButton.js";
 

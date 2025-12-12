@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { FocusEvent } from "react";
+import { type FocusEvent } from "react";
 
 import { Input } from "@gooddata/sdk-ui-kit";
 

@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType, ReactNode, createContext, useContext } from "react";
+import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
 import { isDarkTheme } from "./isDarkTheme.js";

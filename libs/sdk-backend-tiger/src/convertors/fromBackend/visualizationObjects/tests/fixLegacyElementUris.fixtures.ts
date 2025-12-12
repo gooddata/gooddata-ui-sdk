@@ -1,15 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import { newInsightWidget } from "@gooddata/sdk-backend-base";
 import {
-    IAttributeLocatorItem,
-    IInsight,
-    ISortItem,
-    IWidget,
-    VisualizationProperties,
+    type IAttributeLocatorItem,
+    type IInsight,
+    type ISortItem,
+    type IWidget,
+    type VisualizationProperties,
     idRef,
 } from "@gooddata/sdk-model";
 
-import { ColorMapping } from "../../fixLegacyElementUris.js";
+import { type ColorMapping } from "../../fixLegacyElementUris.js";
 
 const mockColorMapping = (elementIds: string[]): ColorMapping[] => {
     return elementIds.map((id, idx) => ({

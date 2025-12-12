@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ResultDimension } from "@gooddata/api-client-tiger";
+import { type ResultDimension } from "@gooddata/api-client-tiger";
 
 export const mockDimensions: ResultDimension[] = [
     {

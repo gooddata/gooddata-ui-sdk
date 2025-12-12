@@ -1,46 +1,46 @@
 // (C) 2022-2025 GoodData Corporation
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import {
-    IDashboardLayout,
-    IInsightWidget,
-    IRichTextWidget,
-    IVisualizationSwitcherWidget,
+    type IDashboardLayout,
+    type IInsightWidget,
+    type IRichTextWidget,
+    type IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 
-import { ICustomWidget } from "../../model/index.js";
+import { type ICustomWidget } from "../../model/index.js";
 import {
-    AttributeFilterComponentProvider,
-    DashboardLayoutComponentProvider,
-    DateFilterComponentProvider,
-    InsightComponentProvider,
-    RichTextComponentProvider,
-    VisualizationSwitcherComponentProvider,
-    WidgetComponentProvider,
+    type AttributeFilterComponentProvider,
+    type DashboardLayoutComponentProvider,
+    type DateFilterComponentProvider,
+    type InsightComponentProvider,
+    type RichTextComponentProvider,
+    type VisualizationSwitcherComponentProvider,
+    type WidgetComponentProvider,
 } from "../dashboardContexts/types.js";
 import {
-    AttributeFilterDraggableItem,
-    CustomDraggableItem,
-    DashboardLayoutDraggableItem,
-    DateFilterDraggableItem,
-    DraggableContentItemType,
-    IWrapCreatePanelItemWithDragComponent,
-    InsightDraggableItem,
-    KpiDraggableItem,
-    RichTextDraggableItem,
-    VisualizationSwitcherDraggableItem,
+    type AttributeFilterDraggableItem,
+    type CustomDraggableItem,
+    type DashboardLayoutDraggableItem,
+    type DateFilterDraggableItem,
+    type DraggableContentItemType,
+    type IWrapCreatePanelItemWithDragComponent,
+    type InsightDraggableItem,
+    type KpiDraggableItem,
+    type RichTextDraggableItem,
+    type VisualizationSwitcherDraggableItem,
 } from "../dragAndDrop/types.js";
 import {
-    IDashboardAttributeFilterPlaceholderProps,
-    IDashboardAttributeFilterProps,
-    IDashboardDateFilterProps,
+    type IDashboardAttributeFilterPlaceholderProps,
+    type IDashboardAttributeFilterProps,
+    type IDashboardDateFilterProps,
 } from "../filterBar/types.js";
 import {
-    IDashboardInsightProps,
-    IDashboardNestedLayoutProps,
-    IDashboardRichTextProps,
-    IDashboardVisualizationSwitcherProps,
-    IDashboardWidgetProps,
+    type IDashboardInsightProps,
+    type IDashboardNestedLayoutProps,
+    type IDashboardRichTextProps,
+    type IDashboardVisualizationSwitcherProps,
+    type IDashboardWidgetProps,
 } from "../widget/types.js";
 
 /**

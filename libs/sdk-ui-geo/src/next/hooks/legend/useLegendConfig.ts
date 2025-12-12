@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 
-import { PositionType } from "@gooddata/sdk-ui-vis-commons";
+import { type PositionType } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartNextConfig } from "../../types/config/unified.js";
 
 /**
  * Legend configuration computed from geo config.

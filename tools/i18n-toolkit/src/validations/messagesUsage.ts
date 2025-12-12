@@ -5,9 +5,9 @@ import * as path from "path";
 import { extract } from "@formatjs/cli-lib";
 import fastGlob from "fast-glob";
 
-import { DefaultLocale, ToolkitConfigFile, UsageResult } from "../data.js";
+import { DefaultLocale, type ToolkitConfigFile, type UsageResult } from "../data.js";
 import { checkTranslations } from "./usage/checkTranslations.js";
-import { LocalesStructure } from "../schema/localization.js";
+import { type LocalesStructure } from "../schema/localization.js";
 import { done, fail, message, resultsInfo, skipped } from "../utils/console.js";
 
 const { sync } = fastGlob;

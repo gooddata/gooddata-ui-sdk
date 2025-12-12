@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
 /**
  * Basic representation of a MapLibre style document returned by Tiger.

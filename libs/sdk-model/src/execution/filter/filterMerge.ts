@@ -3,12 +3,12 @@ import { compact, groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeFilter,
-    IDateFilter,
-    IFilter,
-    IMeasureValueFilter,
-    INullableFilter,
-    IRankingFilter,
+    type IAttributeFilter,
+    type IDateFilter,
+    type IFilter,
+    type IMeasureValueFilter,
+    type INullableFilter,
+    type IRankingFilter,
     filterLocalIdentifier,
     filterObjRef,
     isAllTimeDateFilter,

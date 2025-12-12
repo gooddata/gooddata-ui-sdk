@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 /**
  * Date filter local identifier generator.

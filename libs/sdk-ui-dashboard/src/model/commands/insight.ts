@@ -1,24 +1,24 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IDrillDownReference,
-    IInsight,
-    IInsightWidget,
-    IInsightWidgetConfiguration,
-    InsightDrillDefinition,
-    LocalIdRef,
-    ObjRef,
-    VisualizationProperties,
+    type IDrillDownReference,
+    type IInsight,
+    type IInsightWidget,
+    type IInsightWidgetConfiguration,
+    type InsightDrillDefinition,
+    type LocalIdRef,
+    type ObjRef,
+    type VisualizationProperties,
     isObjRef,
 } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "./base.js";
-import { IExportConfig } from "../types/exportTypes.js";
+import { type IDashboardCommand } from "./base.js";
+import { type IExportConfig } from "../types/exportTypes.js";
 import {
-    FilterOpReplaceAll,
-    WidgetDescription,
-    WidgetFilterOperation,
-    WidgetHeader,
+    type FilterOpReplaceAll,
+    type WidgetDescription,
+    type WidgetFilterOperation,
+    type WidgetHeader,
 } from "../types/widgetTypes.js";
 
 /**

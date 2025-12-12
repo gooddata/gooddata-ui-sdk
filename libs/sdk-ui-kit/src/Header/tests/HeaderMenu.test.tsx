@@ -4,10 +4,10 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
+import { type ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
 
 import { HeaderMenu } from "../HeaderMenu.js";
-import { IHeaderMenuItem } from "../typings.js";
+import { type IHeaderMenuItem } from "../typings.js";
 
 const sections: IHeaderMenuItem[][] = [
     [

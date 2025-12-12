@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType, ReactElement } from "react";
+import { type ComponentType, type ReactElement } from "react";
 
-import { ErrorCodes, IErrorDescriptors } from "@gooddata/sdk-ui";
+import { ErrorCodes, type IErrorDescriptors } from "@gooddata/sdk-ui";
 
 export interface IPivotTableErrorProps {
     error: string;

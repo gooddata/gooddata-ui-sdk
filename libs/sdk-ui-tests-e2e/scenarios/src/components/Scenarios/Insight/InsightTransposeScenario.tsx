@@ -5,7 +5,7 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { Insights } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import {
-    IPivotTableTransposeCoreProps,
+    type IPivotTableTransposeCoreProps,
     transposeConfigWithColumnLeft,
     transposeConfigWithColumnTop,
     transposeConfigWithLeft,

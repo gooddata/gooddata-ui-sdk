@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import {
     Bubble,
     BubbleHoverTrigger,
     DefaultUiMenuInteractiveItem,
-    IUiMenuInteractiveItemProps,
-    IUiMenuItem,
+    type IUiMenuInteractiveItemProps,
+    type IUiMenuItem,
     IconColumns,
     IconRows,
     separatorStaticItem,
@@ -19,10 +19,10 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { messages, totalTypeMessages } from "../../../../locales.js";
 import { e } from "../../../features/styling/bem.js";
 import {
-    IAggregationsMenuItem,
-    IAggregationsSubMenuItem,
-    ISortingMenuItem,
-    ITextWrappingMenuItem,
+    type IAggregationsMenuItem,
+    type IAggregationsSubMenuItem,
+    type ISortingMenuItem,
+    type ITextWrappingMenuItem,
 } from "../../../types/menu.js";
 
 function TopMenuHeader() {

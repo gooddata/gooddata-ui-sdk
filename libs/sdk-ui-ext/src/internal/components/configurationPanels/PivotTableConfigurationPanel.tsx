@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -9,7 +9,7 @@ import { insightHasAttributes, insightHasMeasures, insightMeasures } from "@good
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
-import { SectionName } from "./sectionName.js";
+import { type SectionName } from "./sectionName.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,

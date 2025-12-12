@@ -1,6 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, forwardRef, useCallback } from "react";
+import {
+    type ChangeEvent,
+    type FocusEvent,
+    type KeyboardEvent,
+    type ReactNode,
+    forwardRef,
+    useCallback,
+} from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

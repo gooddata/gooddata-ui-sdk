@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { Correlation } from "../../../types/index.js";
-import { AttributeFilterReducer } from "../store/state.js";
+import { type Correlation } from "../../../types/index.js";
+import { type AttributeFilterReducer } from "../store/state.js";
 
 const transformFilterToPrimaryLabel: AttributeFilterReducer<
     PayloadAction<{ primaryLabelRef: ObjRef; secondaryLabelRef: ObjRef; correlation: Correlation }>

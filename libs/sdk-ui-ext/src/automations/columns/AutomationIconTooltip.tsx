@@ -3,7 +3,7 @@
 import { Bubble, BubbleHoverTrigger, UiIconButton } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
-import { IAutomationIconTooltipProps } from "../types.js";
+import { type IAutomationIconTooltipProps } from "../types.js";
 
 const { b, e } = bem("gd-ui-ext-automation-icon-tooltip");
 

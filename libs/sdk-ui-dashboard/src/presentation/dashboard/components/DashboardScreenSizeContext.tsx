@@ -1,10 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
+import {
+    type Dispatch,
+    type ReactNode,
+    type SetStateAction,
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 
-import { AnyAction } from "@reduxjs/toolkit";
+import { type AnyAction } from "@reduxjs/toolkit";
 
-import { ScreenSize } from "@gooddata/sdk-model";
+import { type ScreenSize } from "@gooddata/sdk-model";
 
 import {
     selectScreen,

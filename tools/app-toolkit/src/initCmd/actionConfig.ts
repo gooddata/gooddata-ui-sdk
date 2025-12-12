@@ -7,7 +7,12 @@ import {
     validOrDie,
 } from "../_base/inputHandling/validators.js";
 import { promptLanguage, promptName, promptTemplate } from "../_base/terminal/prompts.js";
-import { ActionOptions, AppTemplate, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
+import {
+    type ActionOptions,
+    type AppTemplate,
+    type SupportedPackageManager,
+    type TargetAppLanguage,
+} from "../_base/types.js";
 
 function getLanguageFromOptions(options: ActionOptions): TargetAppLanguage | undefined {
     const { language } = options.commandOpts;

@@ -3,13 +3,13 @@
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import type { IGeoLayersContext } from "../../context/GeoLayersContext.js";
 import type { IMapFacade, IPopupFacade, StyleSpecification } from "../../layers/common/mapFacade.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
-import { IGeoLayer } from "../../types/layers/index.js";
-import { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type IGeoLayer } from "../../types/layers/index.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 import { MapController } from "../MapController.js";
 
 const initMock = vi.fn();

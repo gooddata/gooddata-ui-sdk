@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
 
-import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { type IAttributeMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
 import {
-    QueryAttributeByDisplayForm,
+    type QueryAttributeByDisplayForm,
     queryAttributeByDisplayForm,
     selectIsNewDashboard,
     selectPreloadedAttributesWithReferences,

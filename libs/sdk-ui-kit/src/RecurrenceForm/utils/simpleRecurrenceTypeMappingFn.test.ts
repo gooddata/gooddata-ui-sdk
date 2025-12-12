@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 
 import { simpleRecurrenceTypeMappingFn } from "./simpleRecurrenceTypeMappingFn.js";
 import { RECURRENCE_TYPES } from "../constants.js";

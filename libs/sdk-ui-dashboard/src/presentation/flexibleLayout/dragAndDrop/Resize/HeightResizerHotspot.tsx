@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Ref, useEffect, useMemo, useState } from "react";
+import { type Ref, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty, isEqual } from "lodash-es";
 
-import { IInsight, ISettings, IWidget, ScreenSize } from "@gooddata/sdk-model";
+import { type IInsight, type ISettings, type IWidget, type ScreenSize } from "@gooddata/sdk-model";
 import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT, fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
 import { HeightResizer } from "./HeightResizer.js";
 import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutSectionFacade,
 } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
 import {
@@ -20,7 +20,7 @@ import {
     getMaxHeight,
     getMinHeight,
 } from "../../../../_staging/layout/sizing.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
     isCustomWidgetBase,
     resizeNestedLayoutItemsHeight,
@@ -29,7 +29,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { HoveredWidgetContext, useResizeContext } from "../../../dragAndDrop/index.js";

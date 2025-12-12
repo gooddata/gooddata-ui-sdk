@@ -5,10 +5,10 @@ import { useCallback, useMemo, useState } from "react";
 import { partition } from "lodash-es";
 
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    ObjRef,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,

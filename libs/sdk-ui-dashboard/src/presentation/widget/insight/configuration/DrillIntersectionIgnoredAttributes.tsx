@@ -6,7 +6,7 @@ import { areObjRefsEqual, bucketsAttributes, insightBuckets } from "@gooddata/sd
 
 import {
     DrillIntersectionIgnoredAttributesSelect,
-    IDrillIntersectionIgnoredAttributesSelectOption,
+    type IDrillIntersectionIgnoredAttributesSelectOption,
 } from "./DrillIntersectionIgnoredAttributesSelect.js";
 import {
     selectCatalogAttributeDisplayForms,
@@ -14,7 +14,7 @@ import {
     selectInsightByWidgetRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
+import { type DRILL_TARGET_TYPE, type IDrillConfigItem } from "../../../drill/types.js";
 
 export interface IDrillIntersectionIgnoredAttributesProps {
     item: IDrillConfigItem;

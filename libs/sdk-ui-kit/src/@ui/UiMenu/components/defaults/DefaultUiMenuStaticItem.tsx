@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, ReactNode, memo } from "react";
+import { type ReactElement, type ReactNode, memo } from "react";
 
 import { typedUiMenuContextStore } from "../../context.js";
-import { IUiMenuItemData, IUiMenuStaticItemProps } from "../../types.js";
+import { type IUiMenuItemData, type IUiMenuStaticItemProps } from "../../types.js";
 
 /**
  * By default just renders the data.

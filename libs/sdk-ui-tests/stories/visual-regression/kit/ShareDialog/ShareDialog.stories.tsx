@@ -13,7 +13,7 @@ import { Button, ComponentLabelsProvider, ShareDialogBase } from "@gooddata/sdk-
 
 import { defaultUser, defaultUserPermissions, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";

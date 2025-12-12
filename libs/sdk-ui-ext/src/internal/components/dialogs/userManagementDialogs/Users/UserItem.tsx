@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
-import { IUserMember, ListMode } from "../types.js";
+import { type IUserMember, type ListMode } from "../types.js";
 
 function GranteeUserIcon() {
     return (

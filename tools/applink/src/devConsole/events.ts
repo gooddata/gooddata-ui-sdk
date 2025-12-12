@@ -1,6 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { SourceDescriptor, TargetDescriptor } from "../base/types.js";
+import { type SourceDescriptor, type TargetDescriptor } from "../base/types.js";
 
 export type DcEventType =
     | "sourceInitialized"

@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { ICatalogAttribute, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ICatalogAttribute, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useKdaState } from "../../providers/KdaState.js";

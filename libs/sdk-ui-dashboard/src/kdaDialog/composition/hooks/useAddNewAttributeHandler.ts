@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useAttribute } from "../../hooks/useAttribute.js";

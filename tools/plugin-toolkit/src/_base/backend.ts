@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { TigerTokenAuthProvider, tigerFactory } from "@gooddata/sdk-backend-tiger";
 
-import { BackendCredentials } from "./credentials.js";
+import { type BackendCredentials } from "./credentials.js";
 
 export type BackendConfig = {
     hostname: string;

@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
-import { DescriptionPanel, DescriptionPanelContent, IDescriptionPanelProps } from "@gooddata/sdk-ui-kit";
+import { DescriptionPanel, DescriptionPanelContent, type IDescriptionPanelProps } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const TITLE = "Revenue and Customer Distribution in the US";

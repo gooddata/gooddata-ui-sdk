@@ -6,7 +6,7 @@ import type {
     MapOptions,
     PopupOptions,
 } from "../../layers/common/mapFacade.js";
-import { IGeoLngLat } from "../../types/common/coordinates.js";
+import { type IGeoLngLat } from "../../types/common/coordinates.js";
 
 /**
  * Type for viewport definitions

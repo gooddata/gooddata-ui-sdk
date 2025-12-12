@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import cx from "classnames";
 
-import { Bubble, BubbleHoverTrigger, Button, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -5 } }];
 

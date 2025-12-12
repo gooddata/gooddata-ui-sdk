@@ -4,12 +4,12 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { insightVisualizationType } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type VisType } from "@gooddata/sdk-ui";
 import { IconVisualizationSwitcher, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
-import { IDashboardVisualizationSwitcherProps } from "./types.js";
+import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";
 import { selectInsightsMap, useDashboardSelector } from "../../../model/index.js";
 import {

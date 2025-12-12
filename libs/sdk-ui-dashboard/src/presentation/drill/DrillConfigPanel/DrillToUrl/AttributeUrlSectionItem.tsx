@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import cx from "classnames";
 
-import { IAttributeWithDisplayForm } from "./types.js";
+import { type IAttributeWithDisplayForm } from "./types.js";
 
 export interface IAttributeUrlSectionItemProps {
     item: IAttributeWithDisplayForm;

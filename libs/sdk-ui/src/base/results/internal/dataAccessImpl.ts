@@ -3,30 +3,30 @@
 import { partial } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    DataValue,
-    IResultAttributeHeader,
-    IResultTotalHeader,
-    MeasureAggregation,
-    ObjectType,
+    type DataValue,
+    type IResultAttributeHeader,
+    type IResultTotalHeader,
+    type MeasureAggregation,
+    type ObjectType,
     isIdentifierRef,
     isMeasureDefinition,
     isResultTotalHeader,
     resultHeaderName,
 } from "@gooddata/sdk-model";
 
-import { DataAccessDigest, createDataAccessDigest } from "./dataAccessDigest.js";
+import { type DataAccessDigest, createDataAccessDigest } from "./dataAccessDigest.js";
 import { LazyInitArray } from "./lazyInitArray.js";
 import { getTotalInfo, measureFormat, measureName } from "./utils.js";
 import {
-    DataPoint,
-    DataSeriesDescriptor,
-    DataSliceDescriptor,
-    IDataSeries,
-    IDataSlice,
+    type DataPoint,
+    type DataSeriesDescriptor,
+    type DataSliceDescriptor,
+    type IDataSeries,
+    type IDataSlice,
 } from "../dataAccess.js";
-import { DataAccessConfig } from "../dataAccessConfig.js";
+import { type DataAccessConfig } from "../dataAccessConfig.js";
 
 type DataWithCoordinates = { rawValue: DataValue; coordinates: number[] };
 

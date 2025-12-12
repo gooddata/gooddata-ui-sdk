@@ -3,7 +3,7 @@
 import { render, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Bubble, IBubbleProps } from "../Bubble.js";
+import { Bubble, type IBubbleProps } from "../Bubble.js";
 
 function renderBubble(options: Partial<IBubbleProps>) {
     return render(<Bubble {...options}>lorem ipsum</Bubble>);

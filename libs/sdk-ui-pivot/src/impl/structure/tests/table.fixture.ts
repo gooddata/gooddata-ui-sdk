@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 

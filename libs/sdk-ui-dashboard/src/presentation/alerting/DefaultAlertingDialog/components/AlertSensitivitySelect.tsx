@@ -1,16 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { MutableRefObject } from "react";
+import { type MutableRefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IAlertAnomalyDetectionSensitivity } from "@gooddata/sdk-model";
+import { type IAlertAnomalyDetectionSensitivity } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
-    IUiListboxItem,
-    OverlayPositionType,
+    type IUiListboxItem,
+    type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";

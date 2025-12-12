@@ -1255,10 +1255,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "typed-scss-modules",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "typescript",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

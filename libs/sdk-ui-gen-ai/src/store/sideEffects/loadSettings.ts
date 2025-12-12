@@ -2,10 +2,10 @@
 
 import { call, getContext, put } from "redux-saga/effects";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { setSettingsAction } from "../chatWindow/chatWindowSlice.js";
-import { OptionsDispatcher } from "../options.js";
+import { type OptionsDispatcher } from "../options.js";
 
 /**
  * Load settings from the backend.

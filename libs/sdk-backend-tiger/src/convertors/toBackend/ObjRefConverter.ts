@@ -1,19 +1,25 @@
 // (C) 2007-2025 GoodData Corporation
 import {
-    AfmIdentifier,
-    AfmLocalIdentifier,
-    AfmObjectIdentifier,
-    AfmObjectIdentifierAttribute,
-    AfmObjectIdentifierCore,
-    AfmObjectIdentifierDataset,
-    AfmObjectIdentifierLabel,
+    type AfmIdentifier,
+    type AfmLocalIdentifier,
+    type AfmObjectIdentifier,
+    type AfmObjectIdentifierAttribute,
+    type AfmObjectIdentifierCore,
+    type AfmObjectIdentifierDataset,
+    type AfmObjectIdentifierLabel,
 } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { ObjRef, ObjRefInScope, isIdentifierRef, isLocalIdRef, isUriRef } from "@gooddata/sdk-model";
-
-import { TigerAfmType, TigerObjectType } from "../../types/index.js";
 import {
-    TigerCompatibleObjectType,
+    type ObjRef,
+    type ObjRefInScope,
+    isIdentifierRef,
+    isLocalIdRef,
+    isUriRef,
+} from "@gooddata/sdk-model";
+
+import { type TigerAfmType, type TigerObjectType } from "../../types/index.js";
+import {
+    type TigerCompatibleObjectType,
     isTigerCompatibleType,
     objectTypeToTigerIdType,
 } from "../../types/refTypeMapping.js";

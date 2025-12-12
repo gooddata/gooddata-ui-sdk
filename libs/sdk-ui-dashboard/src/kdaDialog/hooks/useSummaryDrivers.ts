@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import { KdaItemGroup } from "../internalTypes.js";
+import { type KdaItemGroup } from "../internalTypes.js";
 import { useAttribute } from "./useAttribute.js";
 import { useKdaState } from "../providers/KdaState.js";
 

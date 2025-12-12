@@ -2,13 +2,13 @@
 
 import { useIntl } from "react-intl";
 
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiLink } from "../../UiLink/UiLink.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { messages } from "../messages.js";
-import { IUiTabComponentProps } from "../types.js";
+import { type IUiTabComponentProps } from "../types.js";
 
 /**
  * @internal

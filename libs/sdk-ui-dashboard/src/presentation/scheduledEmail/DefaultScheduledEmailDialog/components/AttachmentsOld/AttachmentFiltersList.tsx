@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
+import { type IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
 
 interface IAttachmentFiltersListProps {
     filters?: IAttachmentFilterInfo[];

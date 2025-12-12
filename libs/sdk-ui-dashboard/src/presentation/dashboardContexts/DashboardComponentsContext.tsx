@@ -1,62 +1,65 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType, ReactElement, ReactNode, createContext, useContext } from "react";
+import { type ComponentType, type ReactElement, type ReactNode, createContext, useContext } from "react";
 
 import {
     ErrorComponent,
-    IErrorProps,
-    ILoadingProps,
+    type IErrorProps,
+    type ILoadingProps,
     LoadingComponent,
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 
 import {
-    AttributeFilterComponentProvider,
-    DashboardContentComponentProvider,
-    DateFilterComponentProvider,
-    InsightBodyComponentProvider,
-    InsightComponentProvider,
-    InsightMenuButtonComponentProvider,
-    InsightMenuComponentProvider,
-    InsightMenuTitleComponentProvider,
-    RichTextComponentProvider,
-    RichTextMenuComponentProvider,
-    RichTextMenuTitleComponentProvider,
-    ShowAsTableButtonComponentProvider,
-    VisualizationSwitcherComponentProvider,
-    VisualizationSwitcherToolbarComponentProvider,
-    WidgetComponentProvider,
+    type AttributeFilterComponentProvider,
+    type DashboardContentComponentProvider,
+    type DateFilterComponentProvider,
+    type InsightBodyComponentProvider,
+    type InsightComponentProvider,
+    type InsightMenuButtonComponentProvider,
+    type InsightMenuComponentProvider,
+    type InsightMenuTitleComponentProvider,
+    type RichTextComponentProvider,
+    type RichTextMenuComponentProvider,
+    type RichTextMenuTitleComponentProvider,
+    type ShowAsTableButtonComponentProvider,
+    type VisualizationSwitcherComponentProvider,
+    type VisualizationSwitcherToolbarComponentProvider,
+    type WidgetComponentProvider,
 } from "./types.js";
-import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
 import {
-    AttributeFilterComponentSet,
-    DashboardLayoutWidgetComponentSet,
-    DateFilterComponentSet,
-    InsightWidgetComponentSet,
-    RichTextWidgetComponentSet,
-    VisualizationSwitcherWidgetComponentSet,
+    type CustomAlertingDialogComponent,
+    type CustomAlertingManagementDialogComponent,
+} from "../alerting/types.js";
+import {
+    type AttributeFilterComponentSet,
+    type DashboardLayoutWidgetComponentSet,
+    type DateFilterComponentSet,
+    type InsightWidgetComponentSet,
+    type RichTextWidgetComponentSet,
+    type VisualizationSwitcherWidgetComponentSet,
 } from "../componentDefinition/types.js";
-import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
-import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/types.js";
-import { CustomFilterBarComponent } from "../filterBar/types.js";
+import { type CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
+import { type CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/types.js";
+import { type CustomFilterBarComponent } from "../filterBar/types.js";
 import {
-    CustomDashboardLayoutComponent,
-    CustomEmptyLayoutDropZoneBodyComponent,
+    type CustomDashboardLayoutComponent,
+    type CustomEmptyLayoutDropZoneBodyComponent,
 } from "../flexibleLayout/types.js";
-import { CustomSaveAsDialogComponent } from "../saveAs/types.js";
+import { type CustomSaveAsDialogComponent } from "../saveAs/types.js";
 import {
-    CustomScheduledEmailDialogComponent,
-    CustomScheduledEmailManagementDialogComponent,
+    type CustomScheduledEmailDialogComponent,
+    type CustomScheduledEmailManagementDialogComponent,
 } from "../scheduledEmail/types.js";
-import { CustomShareDialogComponent } from "../shareDialog/types.js";
-import { CustomToolbarComponent } from "../toolbar/types.js";
+import { type CustomShareDialogComponent } from "../shareDialog/types.js";
+import { type CustomToolbarComponent } from "../toolbar/types.js";
 import {
-    CustomButtonBarComponent,
-    CustomMenuButtonComponent,
-    CustomSaveButtonComponent,
-    CustomSettingButtonComponent,
-    CustomTitleComponent,
-    CustomTopBarComponent,
+    type CustomButtonBarComponent,
+    type CustomMenuButtonComponent,
+    type CustomSaveButtonComponent,
+    type CustomSettingButtonComponent,
+    type CustomTitleComponent,
+    type CustomTopBarComponent,
 } from "../topBar/types.js";
 
 /**

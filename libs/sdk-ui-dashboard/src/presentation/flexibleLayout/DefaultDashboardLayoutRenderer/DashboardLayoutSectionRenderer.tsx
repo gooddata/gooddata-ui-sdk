@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { GridLayoutElement } from "./GridLayoutElement.js";
-import { IDashboardLayoutSectionRenderProps } from "./interfaces.js";
+import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};

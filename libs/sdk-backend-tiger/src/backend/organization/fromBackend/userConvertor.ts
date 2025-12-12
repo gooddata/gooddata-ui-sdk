@@ -1,25 +1,25 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    JsonApiUserGroupOutDocument,
-    JsonApiUserGroupOutWithLinks,
-    JsonApiUserOutDocument,
-    JsonApiUserOutWithLinks,
-    UserGroupIdentifier,
-    UserManagementDataSourcePermissionAssignment,
-    UserManagementUserGroupsItem,
-    UserManagementUsersItem,
-    UserManagementWorkspacePermissionAssignment,
-    WorkspaceUser,
+    type JsonApiUserGroupOutDocument,
+    type JsonApiUserGroupOutWithLinks,
+    type JsonApiUserOutDocument,
+    type JsonApiUserOutWithLinks,
+    type UserGroupIdentifier,
+    type UserManagementDataSourcePermissionAssignment,
+    type UserManagementUserGroupsItem,
+    type UserManagementUsersItem,
+    type UserManagementWorkspacePermissionAssignment,
+    type WorkspaceUser,
 } from "@gooddata/api-client-tiger";
 import {
-    IDataSourcePermissionAssignment,
-    IOrganizationUser,
-    IOrganizationUserGroup,
-    IUser,
-    IUserGroup,
-    IWorkspacePermissionAssignment,
-    IWorkspaceUser,
+    type IDataSourcePermissionAssignment,
+    type IOrganizationUser,
+    type IOrganizationUserGroup,
+    type IUser,
+    type IUserGroup,
+    type IWorkspacePermissionAssignment,
+    type IWorkspaceUser,
     idRef,
 } from "@gooddata/sdk-model";
 

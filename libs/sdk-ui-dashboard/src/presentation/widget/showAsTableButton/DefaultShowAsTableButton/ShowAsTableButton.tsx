@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, ReactElement, useCallback, useState } from "react";
+import { type KeyboardEvent, type ReactElement, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -9,7 +9,7 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { UiIcon, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { IShowAsTableButtonProps } from "../types.js";
+import { type IShowAsTableButtonProps } from "../types.js";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";
 

@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IDataSetMetadataObject,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type IDataSetMetadataObject,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 import { MetadataObjectBuilder } from "./factory.js";
-import { BuilderModifications, builderFactory } from "../builder.js";
+import { type BuilderModifications, builderFactory } from "../builder.js";
 
 /**
  * Attribute metadata object builder

@@ -1,17 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
-import { DataViewRequests } from "@gooddata/mock-handling";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IInsight, ISettings } from "@gooddata/sdk-model";
-import { IExecuteProps } from "@gooddata/sdk-ui";
-import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
-import { IGeoPushpinChartLatitudeLongitudeProps, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
-import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { type DataViewRequests } from "@gooddata/mock-handling";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type ISettings } from "@gooddata/sdk-model";
+import { type IExecuteProps } from "@gooddata/sdk-ui";
+import { type IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import {
+    type IGeoPushpinChartLatitudeLongitudeProps,
+    type IGeoPushpinChartProps,
+} from "@gooddata/sdk-ui-geo";
+import { type IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 export type VisProps =
     | IPivotTableProps

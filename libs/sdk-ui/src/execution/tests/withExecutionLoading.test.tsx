@@ -5,12 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 
 import { withEventing } from "@gooddata/sdk-backend-base";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAttribute, type IFilter, type IMeasure } from "@gooddata/sdk-model";
 
 import { createDummyPromise } from "../../base/react/tests/toolkit.js";
-import { IWithExecution, withExecution } from "../withExecution.js";
-import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading.js";
+import { type IWithExecution, withExecution } from "../withExecution.js";
+import { type DataViewWindow, type WithLoadingResult } from "../withExecutionLoading.js";
 
 interface IDummyComponentProps {
     attributes?: IAttribute[];

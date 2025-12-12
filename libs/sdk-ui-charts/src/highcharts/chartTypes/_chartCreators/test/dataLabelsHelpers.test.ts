@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { whiteDataLabelTypes } from "../../../constants/label.js";
-import { StackingType } from "../../../constants/stacking.js";
+import { type StackingType } from "../../../constants/stacking.js";
 import {
     getDataLabelAttributes,
     getLabelStyle,
@@ -15,7 +15,7 @@ import {
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
 } from "../dataLabelsHelpers.js";
-import { IAxisRange, IAxisRangeForAxes, IRectBySize } from "../helpers.js";
+import { type IAxisRange, type IAxisRangeForAxes, type IRectBySize } from "../helpers.js";
 
 describe("dataLabelsHelpers", () => {
     describe("getDataLabelAttributes", () => {

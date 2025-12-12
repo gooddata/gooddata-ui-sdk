@@ -6,10 +6,10 @@ import {
     type JsonApiVisualizationObjectOut,
     type JsonApiVisualizationObjectOutList,
     type JsonApiVisualizationObjectOutWithLinks,
-    VisualizationObjectModelV1,
-    VisualizationObjectModelV2,
+    type VisualizationObjectModelV1,
+    type VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
-import { IInsight, IInsightDefinition, IUser, idRef } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightDefinition, type IUser, idRef } from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";

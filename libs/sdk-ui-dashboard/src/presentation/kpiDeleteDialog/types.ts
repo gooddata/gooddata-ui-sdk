@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 /**
  * @internal

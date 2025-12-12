@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { ResolvedDashboardConfig } from "../../types/commonTypes.js";
+import { type ResolvedDashboardConfig } from "../../types/commonTypes.js";
 
 /**
  * @public

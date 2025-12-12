@@ -1,42 +1,42 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
-    IAttribute,
-    IDashboardTab,
-    IListedDashboard,
-    InsightDrillDefinition,
-    ObjRef,
+    type IAttribute,
+    type IDashboardTab,
+    type IListedDashboard,
+    type InsightDrillDefinition,
+    type ObjRef,
     bucketsAttributes,
     insightBuckets,
 } from "@gooddata/sdk-model";
 
 import {
-    InsightDrillDefinitionValidationData,
+    type InsightDrillDefinitionValidationData,
     extractDisplayFormIdentifiers,
     extractInsightRefs,
     validateDrillDefinitionOrigin,
     validateInsightDrillDefinition,
 } from "./insightDrillDefinitionUtils.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { IDashboardCommand } from "../../../commands/index.js";
+import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors.js";
-import { IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes.js";
+import { type IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes.js";
 import { selectInaccessibleDashboardsMap } from "../../../store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 import { selectInsightByWidgetRef } from "../../../store/insights/insightsSelectors.js";
 import { selectDashboardRef } from "../../../store/meta/metaSelectors.js";
 import { selectTabs } from "../../../store/tabs/tabsSelectors.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
+import { type IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
 import {
-    DisplayFormResolutionResult,
+    type DisplayFormResolutionResult,
     resolveDisplayFormMetadata,
 } from "../../../utils/displayFormResolver.js";
-import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
+import { type InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
 
 export function validateDrillDefinition(
     drillDefinition: InsightDrillDefinition,

@@ -3,10 +3,10 @@
 import { useMemo } from "react";
 
 import {
-    IAttribute,
-    ICatalogAttribute,
-    IInsightDefinition,
-    IMeasure,
+    type IAttribute,
+    type ICatalogAttribute,
+    type IInsightDefinition,
+    type IMeasure,
     areObjRefsEqual,
     attributeAlias,
     attributeDisplayFormRef,
@@ -18,23 +18,23 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    CommonExportDataAttributes,
-    MetaExportData,
-    MetaExportDataAttributes,
-    RichTextExportData,
-    SectionDescriptionExportDataAttributes,
-    SectionExportData,
-    WidgetExportData,
-    WidgetExportDataAttributes,
+    type CommonExportDataAttributes,
+    type MetaExportData,
+    type MetaExportDataAttributes,
+    type RichTextExportData,
+    type SectionDescriptionExportDataAttributes,
+    type SectionExportData,
+    type WidgetExportData,
+    type WidgetExportDataAttributes,
 } from "./types.js";
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     selectCatalogAttributes,
     selectInsightByWidgetRef,
     selectIsInExportMode,
     useDashboardSelector,
 } from "../../model/index.js";
-import { RenderMode } from "../../types.js";
+import { type RenderMode } from "../../types.js";
 
 const getAttributeDisplayName = (attribute: IAttribute, catalogAttributes: ICatalogAttribute[]) => {
     const alias = attributeAlias(attribute);

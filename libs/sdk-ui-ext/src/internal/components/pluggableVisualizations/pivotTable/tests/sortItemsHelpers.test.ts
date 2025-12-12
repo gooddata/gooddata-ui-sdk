@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IMeasureSortItem, ISortItem, SortDirection, uriRef } from "@gooddata/sdk-model";
+import { type IMeasureSortItem, type ISortItem, type SortDirection, uriRef } from "@gooddata/sdk-model";
 
 import { getMockReferencePoint } from "./mockReferencePoint.js";
 import {
@@ -15,10 +15,10 @@ import {
     validMeasureSort,
 } from "./sortMocks.js";
 import {
-    IBucketFilter,
-    IBucketFilterElement,
-    IBucketItem,
-    IExtendedReferencePoint,
+    type IBucketFilter,
+    type IBucketFilterElement,
+    type IBucketItem,
+    type IExtendedReferencePoint,
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import {

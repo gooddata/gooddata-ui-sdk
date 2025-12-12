@@ -2,14 +2,18 @@
 
 import { useCallback, useRef } from "react";
 
-import { GridApi, VirtualColumnsChangedEvent } from "ag-grid-enterprise";
+import { type GridApi, type VirtualColumnsChangedEvent } from "ag-grid-enterprise";
 import { debounce } from "lodash-es";
 
 import { usePrevious } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { AgGridColumn, AgGridOnVirtualColumnsChanged, AgGridProps } from "../../types/agGrid.js";
-import { AgGridRowData } from "../../types/internal.js";
+import {
+    type AgGridColumn,
+    type AgGridOnVirtualColumnsChanged,
+    type AgGridProps,
+} from "../../types/agGrid.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Returns ag-grid props with virtual column auto resize applied.

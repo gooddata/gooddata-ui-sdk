@@ -1,12 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { DummyVisConstruct } from "./visConstruct.fixture.js";
-import { IDrillDownContext, IVisConstruct, IVisProps } from "../../../interfaces/Visualization.js";
+import {
+    type IDrillDownContext,
+    type IVisConstruct,
+    type IVisProps,
+} from "../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 

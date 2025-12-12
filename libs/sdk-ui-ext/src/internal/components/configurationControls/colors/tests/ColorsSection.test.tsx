@@ -5,12 +5,12 @@ import { userEvent } from "@testing-library/user-event";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import { IColor } from "@gooddata/sdk-model";
+import { type IColor } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
-import { IColorConfiguration } from "../../../../interfaces/Colors.js";
+import { type IColorConfiguration } from "../../../../interfaces/Colors.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import { COLOR_MAPPING_CHANGED, ColorsSection, IColorsSectionProps } from "../ColorsSection.js";
+import { COLOR_MAPPING_CHANGED, ColorsSection, type IColorsSectionProps } from "../ColorsSection.js";
 
 const colors: IColorConfiguration = {
     colorPalette: DefaultColorPalette,

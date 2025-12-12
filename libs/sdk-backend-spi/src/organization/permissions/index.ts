@@ -1,11 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    IDataSourcePermissionAssignment,
-    IOrganizationAssignee,
-    IOrganizationPermissionAssignment,
-    IWorkspacePermissionAssignment,
-    OrganizationPermissionAssignment,
+    type IDataSourcePermissionAssignment,
+    type IOrganizationAssignee,
+    type IOrganizationPermissionAssignment,
+    type IWorkspacePermissionAssignment,
+    type OrganizationPermissionAssignment,
 } from "@gooddata/sdk-model";
 
 /**

@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IAbsoluteDateFilterForm,
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IRelativeDateFilterForm,
-    IRelativeDateFilterPreset,
+    type IAbsoluteDateFilterForm,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IRelativeDateFilterForm,
+    type IRelativeDateFilterPreset,
 } from "../index.js";
 
 export const allTimeDateFilter: IAllTimeDateFilterOption = {

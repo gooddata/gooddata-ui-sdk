@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { DashboardRelatedFilter } from "./hooks/useDashboardRelatedFilters.js";
+import { type DashboardRelatedFilter } from "./hooks/useDashboardRelatedFilters.js";
 
 /**
  * Export element type.

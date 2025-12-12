@@ -1,11 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { IInsightDefinition, bucketIsEmpty, insightBucket, insightHasMeasures } from "@gooddata/sdk-model";
+import {
+    type IInsightDefinition,
+    bucketIsEmpty,
+    insightBucket,
+    insightHasMeasures,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 

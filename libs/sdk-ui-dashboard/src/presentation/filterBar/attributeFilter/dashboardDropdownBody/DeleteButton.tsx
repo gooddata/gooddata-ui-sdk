@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, Button, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 interface IDeleteButton {
     deleteFilter: () => void;

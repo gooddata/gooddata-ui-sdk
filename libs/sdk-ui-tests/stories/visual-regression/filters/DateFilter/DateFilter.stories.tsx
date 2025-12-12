@@ -4,12 +4,12 @@ import { action } from "storybook/actions";
 
 import {
     DateFilter,
-    IDateFilterOptionsByType,
-    IUiAbsoluteDateFilterForm,
+    type IDateFilterOptionsByType,
+    type IUiAbsoluteDateFilterForm,
     defaultDateFilterOptions,
 } from "@gooddata/sdk-ui-filters";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 

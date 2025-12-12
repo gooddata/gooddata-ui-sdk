@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 /**
  * @internal

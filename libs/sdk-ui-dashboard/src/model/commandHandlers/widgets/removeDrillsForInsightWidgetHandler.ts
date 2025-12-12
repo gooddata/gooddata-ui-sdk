@@ -1,16 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils.js";
 import { validateRemoveDrillsByLocalIdentifier } from "./validation/removeDrillsSelectorValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { RemoveDrillsForInsightWidget } from "../../commands/index.js";
-import { DashboardInsightWidgetDrillsRemoved, insightWidgetDrillsRemoved } from "../../events/insight.js";
+import { type RemoveDrillsForInsightWidget } from "../../commands/index.js";
+import {
+    type DashboardInsightWidgetDrillsRemoved,
+    insightWidgetDrillsRemoved,
+} from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetByRef, selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
 

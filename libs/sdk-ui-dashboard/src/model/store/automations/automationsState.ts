@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @alpha

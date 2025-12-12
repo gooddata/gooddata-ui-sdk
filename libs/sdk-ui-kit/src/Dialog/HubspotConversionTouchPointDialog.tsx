@@ -5,7 +5,7 @@ import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 import { Dialog } from "./Dialog.js";
 import {
     HubspotConversionTouchPointDialogBase,
-    IHubspotConversionTouchPointDialogBaseProps,
+    type IHubspotConversionTouchPointDialogBaseProps,
 } from "./HubspotConversionTouchPointDialogBase.js";
 import { useId } from "../utils/useId.js";
 

@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { getGranularPermissionTitle, granularTooltipMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
-import { IPermissionsItem, WorkspacePermission } from "../../types.js";
+import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
 
 interface IWorkspaceAccessPermissionItemProps {
     item: WorkspacePermission;

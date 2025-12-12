@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { cloneDeep, set, without } from "lodash-es";
 
@@ -9,10 +9,10 @@ import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig.js";
 import {
-    IBucketItem,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
+    type IBucketItem,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

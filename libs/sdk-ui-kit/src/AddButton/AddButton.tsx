@@ -1,13 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { MouseEvent, ReactElement, useCallback } from "react";
+import { type MouseEvent, type ReactElement, useCallback } from "react";
 
 import cx from "classnames";
 
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Button } from "../Button/Button.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 const defaultTooltipAlignPoints = [{ align: "cl cr" }, { align: "cr cl" }];
 

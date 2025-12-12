@@ -5,10 +5,10 @@ import { useCallback, useEffect, useRef } from "react";
 import { AddGranteeBase } from "./AddGranteeBase.js";
 import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
 import { ShareGranteeBase } from "./ShareGranteeBase.js";
-import { IShareDialogBaseProps } from "./types.js";
+import { type IShareDialogBaseProps } from "./types.js";
 import { useShareDialogBase } from "./useShareDialogBase.js";
 import { Overlay } from "../../../Overlay/index.js";
-import { IAlignPoint } from "../../../typings/positioning.js";
+import { type IAlignPoint } from "../../../typings/positioning.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

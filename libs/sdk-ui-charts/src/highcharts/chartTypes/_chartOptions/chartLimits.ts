@@ -2,7 +2,7 @@
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
-import { IChartLimits } from "../../../interfaces/index.js";
+import { type IChartLimits } from "../../../interfaces/index.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,
@@ -20,8 +20,8 @@ import {
     SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
     WATERFALL_CHART_DATA_POINT_LIMIT,
 } from "../../constants/limits.js";
-import { ChartType } from "../../typings/chartType.js";
-import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { type ChartType } from "../../typings/chartType.js";
+import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
 import { isOneOfTypes, isTreemap } from "../_util/common.js";
 

@@ -2,11 +2,11 @@
 
 import { Fragment, memo, useCallback, useRef, useState } from "react";
 
-import { IMeasureValueFilter } from "@gooddata/sdk-model";
+import { type IMeasureValueFilter } from "@gooddata/sdk-model";
 
 import { DropdownButton } from "./MeasureValueFilterButton.js";
 import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown.js";
-import { IMeasureValueFilterCommonProps } from "./typings.js";
+import { type IMeasureValueFilterCommonProps } from "./typings.js";
 
 /**
  * @beta

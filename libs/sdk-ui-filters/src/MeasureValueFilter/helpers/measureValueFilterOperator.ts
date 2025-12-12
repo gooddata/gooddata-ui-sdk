@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { messages } from "../../locales.js";
-import { MeasureValueFilterOperator } from "../types.js";
+import { type MeasureValueFilterOperator } from "../types.js";
 
 export const getOperatorTranslationKey = (operator: MeasureValueFilterOperator): string | undefined => {
     switch (operator) {

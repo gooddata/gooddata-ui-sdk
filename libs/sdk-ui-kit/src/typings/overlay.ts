@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IRegion } from "./domUtilities.js";
-import { IAlignPoint } from "./positioning.js";
+import { type IRegion } from "./domUtilities.js";
+import { type IAlignPoint } from "./positioning.js";
 
 /**
  * @internal

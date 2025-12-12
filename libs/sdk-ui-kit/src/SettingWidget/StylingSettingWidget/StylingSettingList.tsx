@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
 import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty.js";
-import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
+import { type IStylingPickerItem, type StylingPickerItemContent } from "../../Dialog/index.js";
 
 interface IStylingSettingListProps<T extends StylingPickerItemContent> {
     items: IStylingPickerItem<T>[];

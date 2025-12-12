@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { RenameDashboardTab } from "../../commands/tabs.js";
+import { type RenameDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardTabRenamed, dashboardTabRenamed } from "../../events/tabs.js";
+import { type DashboardTabRenamed, dashboardTabRenamed } from "../../events/tabs.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 /**
  * @internal

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoJsonFeature } from "@gooddata/sdk-model";
+import { type IGeoJsonFeature } from "@gooddata/sdk-model";
 
 import { isGeoJsonPosition } from "../../utils/guards.js";
 

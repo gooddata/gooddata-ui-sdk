@@ -2,9 +2,9 @@
 
 import { useRef, useState } from "react";
 
-import { IntlShape, defineMessages, useIntl } from "react-intl";
+import { type IntlShape, defineMessages, useIntl } from "react-intl";
 
-import { IAlertDescription, IAlertNotification } from "@gooddata/sdk-model";
+import { type IAlertDescription, type IAlertNotification } from "@gooddata/sdk-model";
 import { Overlay, UiButton, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { NotificationTriggersDetailDialog } from "./NotificationTriggersDetailDialog.js";

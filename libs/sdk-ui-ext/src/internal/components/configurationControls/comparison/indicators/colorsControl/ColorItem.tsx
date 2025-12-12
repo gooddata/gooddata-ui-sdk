@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
-import { IColor, IColorPalette } from "@gooddata/sdk-model";
-import { PushDataCallback } from "@gooddata/sdk-ui";
-import { ComparisonColorType, getComparisonRgbColor } from "@gooddata/sdk-ui-charts";
+import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
+import { type ComparisonColorType, getComparisonRgbColor } from "@gooddata/sdk-ui-charts";
 
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
 import { ColorDropdown } from "../../../colors/colorDropdown/ColorDropdown.js";
 import { ColoredItemContent } from "../../../colors/coloredItemsList/ColoredItemContent.js";

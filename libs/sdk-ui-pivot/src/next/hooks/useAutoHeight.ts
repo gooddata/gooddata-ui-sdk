@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 const AUTO_HEIGHT_THRESHOLD = 10;
 

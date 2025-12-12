@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    IColorPaletteDefinition,
-    IColorPaletteMetadataObject,
-    IThemeDefinition,
-    IThemeMetadataObject,
-    ObjRef,
+    type IColorPaletteDefinition,
+    type IColorPaletteMetadataObject,
+    type IThemeDefinition,
+    type IThemeMetadataObject,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

@@ -3,7 +3,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { FormattedPreview, IFormattedPreviewProps } from "../FormattedPreview.js";
+import { FormattedPreview, type IFormattedPreviewProps } from "../FormattedPreview.js";
 
 describe("FormattedPreview", () => {
     function renderComponent(props: Partial<IFormattedPreviewProps> = {}) {

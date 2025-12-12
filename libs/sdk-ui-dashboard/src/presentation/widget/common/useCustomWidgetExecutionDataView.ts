@@ -3,17 +3,17 @@
 import { useEffect, useMemo } from "react";
 
 import {
-    DataViewFacade,
-    GoodDataSdkError,
-    IExecutionConfiguration,
+    type DataViewFacade,
+    type GoodDataSdkError,
+    type IExecutionConfiguration,
     UnexpectedSdkError,
-    UseCancelablePromiseCallbacks,
-    UseCancelablePromiseState,
+    type UseCancelablePromiseCallbacks,
+    type UseCancelablePromiseState,
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
 import {
-    ICustomWidget,
+    type ICustomWidget,
     selectEnableExecutionCancelling,
     useDashboardSelector,
     useWidgetFilters,

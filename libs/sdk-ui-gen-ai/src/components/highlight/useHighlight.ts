@@ -1,13 +1,20 @@
 // (C) 2025 GoodData Corporation
 
-import { MutableRefObject, useMemo, useRef } from "react";
+import { type MutableRefObject, useMemo, useRef } from "react";
 
-import { ChangeSpec, EditorSelection, Range, Transaction } from "@codemirror/state";
-import { Decoration, DecorationSet, EditorView, ViewPlugin, WidgetType, keymap } from "@codemirror/view";
+import { type ChangeSpec, EditorSelection, type Range, Transaction } from "@codemirror/state";
+import {
+    Decoration,
+    type DecorationSet,
+    type EditorView,
+    ViewPlugin,
+    WidgetType,
+    keymap,
+} from "@codemirror/view";
 
 import {
-    CatalogItem,
-    ICatalogDateAttribute,
+    type CatalogItem,
+    type ICatalogDateAttribute,
     isCatalogAttribute,
     isCatalogDateAttribute,
     isCatalogDateDataset,

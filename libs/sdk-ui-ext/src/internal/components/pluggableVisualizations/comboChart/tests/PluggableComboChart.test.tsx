@@ -10,11 +10,11 @@ import { AXIS } from "../../../../constants/axis.js";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties.js";
 import { COMBO_CHART_UICONFIG } from "../../../../constants/uiConfig.js";
 import {
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";

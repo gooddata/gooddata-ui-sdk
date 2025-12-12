@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import { AnalyticalWidgetType } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type AnalyticalWidgetType } from "@gooddata/sdk-model";
+import { type VisType } from "@gooddata/sdk-ui";
 
 const typeVisTypeCssClassMapping: {
     [visType in VisType]?: string;

@@ -2,7 +2,7 @@
 
 import { forwardRef, useState } from "react";
 
-import { Locale } from "date-fns";
+import { type Locale } from "date-fns";
 import {
     de,
     enAU,
@@ -24,15 +24,19 @@ import {
     tr,
     zhCN,
 } from "date-fns/locale";
-import { DayPicker as DayPickerComponent, DayPickerProps, SelectRangeEventHandler } from "react-day-picker";
-import { IntlShape } from "react-intl";
+import {
+    DayPicker as DayPickerComponent,
+    type DayPickerProps,
+    type SelectRangeEventHandler,
+} from "react-day-picker";
+import { type IntlShape } from "react-intl";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
-import { IDateRange } from "./types.js";
+import { type IDateRange } from "./types.js";
 import { mergeDayPickerProps } from "./utils.js";
-import { DateRangePosition } from "../interfaces/index.js";
+import { type DateRangePosition } from "../interfaces/index.js";
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,

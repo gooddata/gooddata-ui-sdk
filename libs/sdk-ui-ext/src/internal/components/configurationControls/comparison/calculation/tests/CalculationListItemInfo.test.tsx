@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
 
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { CalculationListItemInfo } from "../CalculationListItemInfo.js";

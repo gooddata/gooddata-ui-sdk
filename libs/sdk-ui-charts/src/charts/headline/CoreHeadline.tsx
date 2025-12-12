@@ -1,18 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType, ReactElement, useMemo } from "react";
+import { type ComponentType, type ReactElement, useMemo } from "react";
 
 import {
     ErrorCodes,
-    IErrorDescriptors,
-    ILoadingInjectedProps,
+    type IErrorDescriptors,
+    type ILoadingInjectedProps,
     IntlWrapper,
     newErrorMapping,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
 
-import { IHeadlineTransformationProps } from "./HeadlineProvider.js";
-import { ICoreChartProps } from "../../interfaces/index.js";
+import { type IHeadlineTransformationProps } from "./HeadlineProvider.js";
+import { type ICoreChartProps } from "../../interfaces/index.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 
 /**

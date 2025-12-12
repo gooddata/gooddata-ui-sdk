@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { MessageDescriptor, defineMessages } from "react-intl";
+import { type MessageDescriptor, defineMessages } from "react-intl";
 
 import { EvaluationType } from "../../../../interfaces/BaseHeadlines.js";
 

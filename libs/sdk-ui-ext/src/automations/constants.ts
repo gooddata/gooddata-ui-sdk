@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { UiIconProps } from "@gooddata/sdk-ui-kit";
+import { type UiIconProps } from "@gooddata/sdk-ui-kit";
 
 import {
-    AutomationColumnDefinitions,
-    AutomationsAvailableFilters,
-    AutomationsScope,
-    CellValueType,
-    IAutomationActionsState,
-    IAutomationsState,
+    type AutomationColumnDefinitions,
+    type AutomationsAvailableFilters,
+    type AutomationsScope,
+    type CellValueType,
+    type IAutomationActionsState,
+    type IAutomationsState,
 } from "./types.js";
 
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";

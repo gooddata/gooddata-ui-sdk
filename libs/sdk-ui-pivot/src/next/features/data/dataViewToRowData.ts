@@ -1,11 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { DataValue, ISeparators, assertNever } from "@gooddata/sdk-model";
-import { DataViewFacade, ITableDataValue, createNumberJsFormatter } from "@gooddata/sdk-ui";
+import { type DataValue, type ISeparators, assertNever } from "@gooddata/sdk-model";
+import { type DataViewFacade, type ITableDataValue } from "@gooddata/sdk-ui";
 
-import { GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
-import { AgGridRowData } from "../../types/internal.js";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { getTableData } from "./valueFormatter.js";
+import { type GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
+import { type AgGridRowData } from "../../types/internal.js";
+import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 
 /**
@@ -32,7 +33,7 @@ export function dataViewToRowData(
     grandTotalRowData: AgGridRowData[];
     grandTotalCount: number;
 } {
-    const tableData = dataView.data({ valueFormatter: createNumberJsFormatter(separators) }).asTable();
+    const tableData = getTableData(dataView, separators);
 
     const rowData: AgGridRowData[] = [];
     const grandTotalRowData: AgGridRowData[] = [];

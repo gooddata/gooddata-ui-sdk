@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { Account, Activity, Won } from "../../../../__mocks__/model.js";
 import {
     DateGranularity,
-    ITotal,
+    type ITotal,
     MeasureGroupIdentifier,
     defFingerprint,
     defSetDimensions,
@@ -24,8 +24,8 @@ import {
     newTotal,
     newTwoDimensional,
 } from "../../../index.js";
-import { IFilter } from "../../filter/index.js";
-import { IPostProcessing, defSetPostProcessing, defWithFilters } from "../index.js";
+import { type IFilter } from "../../filter/index.js";
+import { type IPostProcessing, defSetPostProcessing, defWithFilters } from "../index.js";
 
 const Workspace = "testWorkspace";
 

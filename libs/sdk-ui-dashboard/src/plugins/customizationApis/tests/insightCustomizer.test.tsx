@@ -1,25 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { FC } from "react";
+import { type FC } from "react";
 
 import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, IInsightWidget, insightTags, insightTitle } from "@gooddata/sdk-model";
+import { type InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mockingbird";
+import { type IInsight, type IInsightWidget, insightTags, insightTitle } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
 import { EMPTY_MUTATIONS } from "./utils.js";
 import {
-    IDashboardInsightProps,
-    InsightComponentProvider,
-    OptionalInsightComponentProvider,
+    type IDashboardInsightProps,
+    type InsightComponentProvider,
+    type OptionalInsightComponentProvider,
 } from "../../../presentation/index.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultInsightCustomizer } from "../insightCustomizer.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 //
 //

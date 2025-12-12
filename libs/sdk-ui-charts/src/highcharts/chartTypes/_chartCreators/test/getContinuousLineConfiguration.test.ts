@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IChartOptions } from "../../../typings/unsafe.js";
+import { type IChartOptions } from "../../../typings/unsafe.js";
 import { getContinuousLineConfiguration } from "../getContinuousLineConfiguration.js";
 
 describe("getContinuousLineConfiguration:", () => {

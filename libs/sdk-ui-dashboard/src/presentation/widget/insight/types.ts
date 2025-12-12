@@ -1,41 +1,41 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
-    IColorPalette,
-    IExecutionConfig,
-    IFilter,
-    IInsight,
-    IInsightWidget,
-    ISeparators,
+    type IColorPalette,
+    type IExecutionConfig,
+    type IFilter,
+    type IInsight,
+    type IInsightWidget,
+    type ISeparators,
 } from "@gooddata/sdk-model";
 import {
-    ExplicitDrill,
-    IDrillEventIntersectionElement,
-    IErrorProps,
-    ILoadingProps,
-    ILocale,
-    IPushData,
-    IVisualizationCallbacks,
-    OnError,
-    OnExportReady,
-    OnLoadingChanged,
+    type ExplicitDrill,
+    type IDrillEventIntersectionElement,
+    type IErrorProps,
+    type ILoadingProps,
+    type ILocale,
+    type IPushData,
+    type IVisualizationCallbacks,
+    type OnError,
+    type OnExportReady,
+    type OnLoadingChanged,
 } from "@gooddata/sdk-ui";
 
 import {
-    DrillStep,
-    OnDashboardDrill,
-    OnDrillDownSuccess,
-    OnDrillToAttributeUrlSuccess,
-    OnDrillToCustomUrlSuccess,
-    OnDrillToDashboardSuccess,
-    OnDrillToInsightSuccess,
-    OnKeyDriverAnalysisSuccess,
-    OnWidgetDrill,
+    type DrillStep,
+    type OnDashboardDrill,
+    type OnDrillDownSuccess,
+    type OnDrillToAttributeUrlSuccess,
+    type OnDrillToCustomUrlSuccess,
+    type OnDrillToDashboardSuccess,
+    type OnDrillToInsightSuccess,
+    type OnKeyDriverAnalysisSuccess,
+    type OnWidgetDrill,
 } from "../../drill/types.js";
-import { WidgetExportDataAttributes } from "../../export/index.js";
+import { type WidgetExportDataAttributes } from "../../export/index.js";
 
 ///
 /// Component props

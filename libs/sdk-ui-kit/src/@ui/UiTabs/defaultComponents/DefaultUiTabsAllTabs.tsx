@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useCallback, useEffect, useState } from "react";
+import { type RefObject, useCallback, useEffect, useState } from "react";
 
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
 import { Dropdown } from "../../../Dropdown/index.js";
 import { useMediaQuery } from "../../../responsive/index.js";
@@ -14,7 +14,7 @@ import {
 import { ScopedIdStore, useScopedIdStoreValue } from "../../hooks/useScopedId.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
-import { IUiTab, IUiTabComponentProps } from "../types.js";
+import { type IUiTab, type IUiTabComponentProps } from "../types.js";
 
 /**
  * @internal

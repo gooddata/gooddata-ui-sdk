@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo, useState } from "react";
+import { type ReactElement, useCallback, useMemo, useState } from "react";
 
 import { isIdentifierRef } from "@gooddata/sdk-model";
-import { IDrillEventContext, createFocusHighchartsDatapointEvent } from "@gooddata/sdk-ui";
+import { type IDrillEventContext, createFocusHighchartsDatapointEvent } from "@gooddata/sdk-ui";
 
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
@@ -15,17 +15,17 @@ import {
     selectSeparators,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
+import { type IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
 import {
-    DrillStep,
-    KeyDriveInfo,
-    OnDashboardDrill,
-    OnDrillDownSuccess,
-    OnDrillToInsightSuccess,
-    OnKeyDriverAnalysisSuccess,
+    type DrillStep,
+    type KeyDriveInfo,
+    type OnDashboardDrill,
+    type OnDrillDownSuccess,
+    type OnDrillToInsightSuccess,
+    type OnKeyDriverAnalysisSuccess,
     getDrillDownTitle,
 } from "../../../drill/index.js";
-import { IDashboardInsightProps } from "../types.js";
+import { type IDashboardInsightProps } from "../types.js";
 
 type IReturnFocusInfo =
     | { type: "chart"; chartId: string; seriesIndex: number; pointIndex: number }

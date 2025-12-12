@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
+import { type IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
@@ -16,7 +16,7 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { AxisType } from "../../interfaces/AxisType.js";
+import { type AxisType } from "../../interfaces/AxisType.js";
 import { noColumnsAndHasOneMeasure, noRowsAndHasOneMeasure } from "../../utils/bucketHelper.js";
 import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.js";
 import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";

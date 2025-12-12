@@ -4,11 +4,11 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
-import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
+import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
-    DescriptionTooltipOpenedData,
+    type DescriptionTooltipOpenedData,
     selectEnableRichTextDynamicReferences,
     selectExecutionTimestamp,
     useDashboardSelector,

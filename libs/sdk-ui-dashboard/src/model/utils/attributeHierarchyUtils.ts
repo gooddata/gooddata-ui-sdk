@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttributeHierarchy,
-    IDrillDownReference,
-    ObjRef,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
+    type IDrillDownReference,
+    type ObjRef,
     areObjRefsEqual,
     isAttributeHierarchyReference,
     isCatalogAttributeHierarchy,

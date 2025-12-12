@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IDimension,
-    IExecutionDefinition,
+    type IDimension,
+    type IExecutionDefinition,
     MeasureGroupIdentifier,
     bucketsAttributes,
     bucketsMeasures,

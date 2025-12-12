@@ -11,7 +11,7 @@ import { stringUtils } from "@gooddata/util";
 
 import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
 import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
-import { MeasureValueFilterOperator } from "./types.js";
+import { type MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;

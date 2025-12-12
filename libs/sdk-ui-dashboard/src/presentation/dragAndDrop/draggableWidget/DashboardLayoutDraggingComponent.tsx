@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { AddDashboardLayoutWidgetButton } from "./AddDashboardLayoutWidgetButton.js";
-import { IDashboardLayoutDraggingComponentProps } from "../../componentDefinition/types.js";
+import { type IDashboardLayoutDraggingComponentProps } from "../../componentDefinition/types.js";
 
 /*
  * @internal

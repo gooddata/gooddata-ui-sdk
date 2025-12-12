@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 
 /**
  * Configuration for formatting.

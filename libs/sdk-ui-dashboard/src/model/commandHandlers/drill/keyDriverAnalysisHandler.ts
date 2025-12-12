@@ -1,20 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import {
-    IDashboardAttributeFilter,
+    type IDashboardAttributeFilter,
     areObjRefsEqual,
     isAttributeDescriptor,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
-import { IDashboardDrillEvent } from "../../../types.js";
-import { KeyDriverAnalysis } from "../../commands/drill.js";
+import { type IDashboardDrillEvent } from "../../../types.js";
+import { type KeyDriverAnalysis } from "../../commands/drill.js";
 import {
-    DashboardKeyDriverAnalysisResolved,
+    type DashboardKeyDriverAnalysisResolved,
     keyDriverAnalysisRequested,
     keyDriverAnalysisResolved,
 } from "../../events/drill.js";
@@ -22,7 +22,7 @@ import { invalidArgumentsProvided } from "../../events/general.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { removeDateFilters, removeIgnoredWidgetFilters } from "../../utils/widgetFilters.js";
 
 export function* keyDriverAnalysisHandler(

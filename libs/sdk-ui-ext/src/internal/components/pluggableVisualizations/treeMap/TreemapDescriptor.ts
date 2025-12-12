@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
-import { ITreemapProps } from "@gooddata/sdk-ui-charts";
+import { type IInsight } from "@gooddata/sdk-model";
+import { BucketNames, type IDrillEvent } from "@gooddata/sdk-ui";
+import { type ITreemapProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggableTreemap } from "./PluggableTreemap.js";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
+import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

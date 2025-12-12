@@ -2,11 +2,11 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IColor } from "@gooddata/sdk-model";
-import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+import { type IColor } from "@gooddata/sdk-model";
+import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
 
-import { IComparisonControlProperties } from "../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { createTestProperties } from "../../tests/testDataProvider.js";
 import { createIntlMock } from "../../tests/testIntlProvider.js";
 import {

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
-import { DataValue, Identifier } from "@gooddata/sdk-model";
+import { type DataValue, type Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineDataItem {
     localIdentifier: Identifier;

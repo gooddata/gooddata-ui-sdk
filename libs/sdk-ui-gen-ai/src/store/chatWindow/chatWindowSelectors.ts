@@ -2,12 +2,12 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 import { chatWindowSliceName } from "./chatWindowSlice.js";
-import { RootState } from "../types.js";
+import { type RootState } from "../types.js";
 
 const chatWindowSliceSelector = (state: RootState) => state[chatWindowSliceName];
 

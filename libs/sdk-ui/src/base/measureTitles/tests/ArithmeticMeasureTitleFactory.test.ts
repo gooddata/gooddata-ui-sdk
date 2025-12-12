@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import { resolveMessages } from "../../localization/messagesMap.js";
 import { ArithmeticMeasureTitleFactory } from "../ArithmeticMeasureTitleFactory.js";
-import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "../MeasureTitle.js";
+import { type IArithmeticMeasureTitleProps, type IMeasureTitleProps } from "../MeasureTitle.js";
 
 describe("ArithmeticMeasureTitleFactory", () => {
     let messages: Record<string, string> = {};

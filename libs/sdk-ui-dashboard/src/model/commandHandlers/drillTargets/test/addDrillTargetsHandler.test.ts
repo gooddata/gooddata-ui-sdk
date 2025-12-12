@@ -3,15 +3,15 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import { AddDrillTargets, addDrillTargets } from "../../../commands/drillTargets.js";
+import { type AddDrillTargets, addDrillTargets } from "../../../commands/drillTargets.js";
 import { changeRenderMode } from "../../../commands/renderMode.js";
-import { DrillTargetsAdded } from "../../../events/drillTargets.js";
-import { DashboardCommandFailed } from "../../../events/index.js";
+import { type DrillTargetsAdded } from "../../../events/drillTargets.js";
+import { type DashboardCommandFailed } from "../../../events/index.js";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors.js";
 import { selectInvalidDrillWidgetRefs } from "../../../store/ui/uiSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import {
     SimpleDashboardIdentifier,

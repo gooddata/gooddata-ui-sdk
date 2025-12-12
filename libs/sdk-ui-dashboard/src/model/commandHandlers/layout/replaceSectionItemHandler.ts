@@ -2,8 +2,8 @@
 
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import { resizeParentContainers } from "./containerHeightSanitization.js";
 import {
@@ -21,15 +21,15 @@ import {
     serializeLayoutItemPath,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { ReplaceSectionItem } from "../../commands/index.js";
+import { type ReplaceSectionItem } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
+import { type DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen, selectStash } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 
 type ReplaceSectionItemContext = {

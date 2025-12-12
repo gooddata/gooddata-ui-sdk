@@ -4,7 +4,7 @@ import { IconDragHandle, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../model/index.js";
-import { IDateFilterDraggingComponentProps } from "../../componentDefinition/index.js";
+import { type IDateFilterDraggingComponentProps } from "../../componentDefinition/index.js";
 import { useCurrentDateFilterConfig } from "../useCurrentDateFilterConfig.js";
 
 export function DefaultDateFilterDraggingComponent({ item }: IDateFilterDraggingComponentProps) {

@@ -4,13 +4,13 @@ import { memo, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IPushData } from "@gooddata/sdk-ui";
-import { ChartOrientationType } from "@gooddata/sdk-ui-charts";
+import { type IPushData } from "@gooddata/sdk-ui";
+import { type ChartOrientationType } from "@gooddata/sdk-ui-charts";
 
 import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { orientationDropdownItems } from "../../constants/dropdowns.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IOrientationDropdownControl {

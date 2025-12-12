@@ -9,9 +9,9 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import {
     HubspotConversionTouchPointDialogBase,
-    IHubspotFormField,
+    type IHubspotFormField,
 } from "../HubspotConversionTouchPointDialogBase.js";
-import { IHubspotConversionTouchPointDialogBaseProps } from "../index.js";
+import { type IHubspotConversionTouchPointDialogBaseProps } from "../index.js";
 
 interface IFormReadyProps {
     onFormReady: ($form: IHubspotFormField[]) => void;

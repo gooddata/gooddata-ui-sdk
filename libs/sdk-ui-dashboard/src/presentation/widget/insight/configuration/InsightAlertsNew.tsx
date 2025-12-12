@@ -4,7 +4,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 
-import { IAutomationMetadataObject, IInsight, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type IInsight,
+    isInsightWidget,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
     OverlayController,
@@ -40,7 +45,7 @@ import { useSaveAlertToBackend } from "../../../alerting/DefaultAlertingDialog/h
 import { messages } from "../../../alerting/DefaultAlertingDialog/messages.js";
 import { getSupportedInsightMeasuresByInsight } from "../../../alerting/DefaultAlertingDialog/utils/items.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
-import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
+import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

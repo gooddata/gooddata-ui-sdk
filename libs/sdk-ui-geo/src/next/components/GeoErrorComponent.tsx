@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import {
     ErrorComponent as DefaultErrorComponent,
     ErrorCodes,
-    GoodDataSdkError,
+    type GoodDataSdkError,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 

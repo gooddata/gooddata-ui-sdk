@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { IInsight } from "@gooddata/sdk-model";
+import { type IInsight } from "@gooddata/sdk-model";
 import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import { InsightList } from "../../../insightList/index.js";

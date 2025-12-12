@@ -2,9 +2,9 @@
 import { compact } from "lodash-es";
 
 import {
-    IBucket,
-    IDimension,
-    IExecutionDefinition,
+    type IBucket,
+    type IDimension,
+    type IExecutionDefinition,
     MeasureGroupIdentifier,
     bucketAttribute,
     bucketAttributes,

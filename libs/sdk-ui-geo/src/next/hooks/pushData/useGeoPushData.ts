@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 
-import { IColorPalette } from "@gooddata/sdk-model";
-import { IPushData } from "@gooddata/sdk-ui";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type IPushData } from "@gooddata/sdk-ui";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { useInitialExecution } from "../../context/InitialExecutionContext.js";
-import { IAvailableLegends } from "../../types/common/legends.js";
+import { type IAvailableLegends } from "../../types/common/legends.js";
 
 interface ILegendContext {
     availableLegends: IAvailableLegends;

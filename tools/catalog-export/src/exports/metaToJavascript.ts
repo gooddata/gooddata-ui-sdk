@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { transform } from "@babel/core";
 import { format } from "prettier";
 
-import { WorkspaceMetadata } from "../base/types.js";
+import { type WorkspaceMetadata } from "../base/types.js";
 import { transformToTypescript } from "../transform/toTypescript.js";
 
 /**

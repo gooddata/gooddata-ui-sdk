@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { IDashboardObjectIdentity } from "@gooddata/sdk-model";
+import { type IDashboardObjectIdentity } from "@gooddata/sdk-model";
 
 /**
  * Represents different kinds of accessibility limitation for dashboard.

@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { DependencyList, useLayoutEffect, useState } from "react";
+import { type DependencyList, useLayoutEffect, useState } from "react";
 
 import { useTagsElements } from "./useTagsElements.js";
-import { UiTagDef } from "../types.js";
+import { type UiTagDef } from "../types.js";
 
 const PADDING = 5;
 const MIN_WIDTH = 10;

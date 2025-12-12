@@ -2,14 +2,14 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 import {
-    DashboardContentComponentProvider,
+    type DashboardContentComponentProvider,
     DefaultDashboardMainContent,
-    OptionalDashboardContentComponentProvider,
+    type OptionalDashboardContentComponentProvider,
 } from "../../presentation/index.js";
-import { IDashboardContentCustomizer } from "../customizer.js";
+import { type IDashboardContentCustomizer } from "../customizer.js";
 
 const DefaultDashboardContentComponentProvider: DashboardContentComponentProvider = () => {
     return DefaultDashboardMainContent;

@@ -3,8 +3,8 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { IHighchartsAxisExtend } from "../../../typings/extend.js";
-import { UnsafeInternals } from "../../../typings/unsafe.js";
+import { type IHighchartsAxisExtend } from "../../../typings/extend.js";
+import { type UnsafeInternals } from "../../../typings/unsafe.js";
 import {
     ALIGNED,
     MOVE_ZERO_LEFT,

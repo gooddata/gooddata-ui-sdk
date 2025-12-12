@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { useAutoSizeReset } from "./useAutoSizeReset.js";
 import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { AgGridColumnDef, AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
+import { type AgGridColumnDef, type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
 

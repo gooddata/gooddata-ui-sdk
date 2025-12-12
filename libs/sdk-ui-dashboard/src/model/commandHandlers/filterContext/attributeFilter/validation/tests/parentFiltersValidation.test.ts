@@ -4,17 +4,17 @@ import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { objRefsToStringKey, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterParent,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterParent,
     idRef,
 } from "@gooddata/sdk-model";
 
-import { ObjRefMap, newDisplayFormMap } from "../../../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap, newDisplayFormMap } from "../../../../../../_staging/metadata/objRefMap.js";
 import { SimpleDashboardIdentifier } from "../../../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { DashboardContext } from "../../../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../../../types/commonTypes.js";
 import {
-    AttributeFilterParentsValidationResult,
+    type AttributeFilterParentsValidationResult,
     validateAttributeFilterParents,
 } from "../parentFiltersValidation.js";
 

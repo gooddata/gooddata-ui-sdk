@@ -5,21 +5,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IDashboard, ObjRef, idRef } from "@gooddata/sdk-model";
+import { type IDashboard, type ObjRef, idRef } from "@gooddata/sdk-model";
 import {
-    DashboardConfig,
-    DashboardDispatch,
-    DashboardSelectorEvaluator,
-    DashboardState,
-    RenderMode,
+    type DashboardConfig,
+    type DashboardDispatch,
+    type DashboardSelectorEvaluator,
+    type DashboardState,
+    type RenderMode,
     selectDashboardWorkingDefinition,
     selectRenderMode,
     selectWidgetsOverlay,
     uiActions,
 } from "@gooddata/sdk-ui-dashboard";
 
-import { DashboardLoadingMode, IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
-import { DashboardLoadStatus, useDashboardLoader } from "./useDashboardLoader.js";
+import { type DashboardLoadingMode, type IDashboardLoadOptions, type IEmbeddedPlugin } from "./types.js";
+import { type DashboardLoadStatus, useDashboardLoader } from "./useDashboardLoader.js";
 
 function sanitizedDashboardRef(
     dashboard: IDashboardLoadOptions["dashboard"],

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, forwardRef } from "react";
+import { type ReactNode, forwardRef } from "react";
 
 import { bem } from "../@utils/bem.js";
 

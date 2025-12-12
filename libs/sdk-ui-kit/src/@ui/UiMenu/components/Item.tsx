@@ -3,7 +3,7 @@
 import { memo } from "react";
 
 import { typedUiMenuContextStore } from "../context.js";
-import { IUiMenuItemData, IUiMenuItemProps } from "../types.js";
+import { type IUiMenuItemData, type IUiMenuItemProps } from "../types.js";
 
 export const Item = memo(function Item<T extends IUiMenuItemData = object>({ item }: IUiMenuItemProps<T>) {
     const { InteractiveItemWrapper, StaticItem, GroupItem, ContentItemWrapper } =

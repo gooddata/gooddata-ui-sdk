@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback } from "react";
+import { type KeyboardEvent, useCallback } from "react";
 
 import { useUiTreeViewEventPublisher } from "@gooddata/sdk-ui-kit";
 

@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { IntlConfig, IntlProvider, IntlShape, createIntl } from "react-intl";
+import { type IntlConfig, IntlProvider, type IntlShape, createIntl } from "react-intl";
 
-import { DefaultLocale, ILocale, resolveLocale, useResolveMessages } from "@gooddata/sdk-ui";
+import { DefaultLocale, type ILocale, resolveLocale, useResolveMessages } from "@gooddata/sdk-ui";
 
 import { DEFAULT_MESSAGES, resolveMessages } from "./translations.js";
 

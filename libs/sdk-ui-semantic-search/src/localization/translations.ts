@@ -3,7 +3,7 @@ import { memoize, merge } from "lodash-es";
 
 import {
     DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI,
-    ITranslations,
+    type ITranslations,
     resolveMessages as resolveMessagesSdkUi,
 } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";

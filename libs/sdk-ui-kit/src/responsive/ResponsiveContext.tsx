@@ -10,7 +10,7 @@ import {
     SCREEN_BREAKPOINT_XS,
     SCREEN_BREAKPOINT_XXL,
 } from "./constants/breakpoints.js";
-import { IResponsiveConfig } from "./interfaces.js";
+import { type IResponsiveConfig } from "./interfaces.js";
 
 const defaultResponsiveContext: IResponsiveConfig = {
     breakpoints: {

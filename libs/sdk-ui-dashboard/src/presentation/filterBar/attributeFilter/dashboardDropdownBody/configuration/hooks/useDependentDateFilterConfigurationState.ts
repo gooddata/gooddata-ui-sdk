@@ -3,9 +3,13 @@ import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IDashboardAttributeFilterByDate, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
+import {
+    type IDashboardAttributeFilterByDate,
+    type IDashboardDateFilter,
+    isUriRef,
+} from "@gooddata/sdk-model";
 
-import { IDashboardDependentDateFilter } from "../../../../../../model/index.js";
+import { type IDashboardDependentDateFilter } from "../../../../../../model/index.js";
 
 /**
  * @internal

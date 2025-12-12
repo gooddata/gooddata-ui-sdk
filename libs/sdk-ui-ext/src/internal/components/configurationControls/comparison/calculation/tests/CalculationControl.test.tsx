@@ -3,11 +3,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
 
 import { calculationDropdownItems } from "../../../../../constants/dropdowns.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as DropdownControl from "../../../DropdownControl.js";

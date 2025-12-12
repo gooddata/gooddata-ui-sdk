@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
 
 import { DrillAttributeSelectorItem } from "./DrillAttributeSelectorItem.js";
 

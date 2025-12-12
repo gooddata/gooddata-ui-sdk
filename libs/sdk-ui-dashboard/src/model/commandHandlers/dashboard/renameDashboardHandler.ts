@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { RenameDashboard } from "../../commands/index.js";
+import { type RenameDashboard } from "../../commands/index.js";
 import { dashboardRenamed } from "../../events/dashboard.js";
-import { DashboardRenamed } from "../../events/index.js";
+import { type DashboardRenamed } from "../../events/index.js";
 import { metaActions } from "../../store/meta/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* renameDashboardHandler(
     ctx: DashboardContext,

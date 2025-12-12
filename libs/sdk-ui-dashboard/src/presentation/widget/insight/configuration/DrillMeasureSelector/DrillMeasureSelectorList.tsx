@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
 import { DrillMeasureSelectorItem } from "./DrillMeasureSelectorItem.js";
 

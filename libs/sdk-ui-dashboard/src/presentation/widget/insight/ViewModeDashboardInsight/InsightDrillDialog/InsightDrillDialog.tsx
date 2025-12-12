@@ -1,21 +1,21 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentType, ReactElement, useCallback, useState } from "react";
+import { type ComponentType, type ReactElement, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
-    IFilter,
-    IInsight,
-    IInsightWidget,
-    IInsightWidgetDescriptionConfiguration,
+    type IFilter,
+    type IInsight,
+    type IInsightWidget,
+    type IInsightWidgetDescriptionConfiguration,
     idRef,
     insightTitle,
     insightVisualizationType,
     isInsight,
 } from "@gooddata/sdk-model";
-import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { type ILocale, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import {
     Button,
     FullScreenOverlay,
@@ -43,7 +43,12 @@ import {
 } from "../../../../../model/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
-import { DrillStep, OnDashboardDrill, OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
+import {
+    type DrillStep,
+    type OnDashboardDrill,
+    type OnDrillDownSuccess,
+    WithDrillSelect,
+} from "../../../../drill/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
 import { useInsightExport } from "../../../common/index.js";

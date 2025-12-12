@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useMemo } from "react";
+import { type ReactNode, useCallback, useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,10 +20,10 @@ import {
 import { getWorkspaceAccessPermissionDescription, workspaceGranularPermissionMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 import {
-    IGrantedWorkspace,
-    IPermissionsItem,
-    WorkspacePermission,
-    WorkspacePermissions,
+    type IGrantedWorkspace,
+    type IPermissionsItem,
+    type WorkspacePermission,
+    type WorkspacePermissions,
 } from "../../types.js";
 
 const granularPermissions: IPermissionsItem[] = [

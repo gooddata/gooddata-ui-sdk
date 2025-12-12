@@ -2,13 +2,18 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { getAutomationActionsEmptyState } from "../constants.js";
 import { getActionMessages } from "../messages.js";
-import { AutomationsScope, AutomationsType, IAutomationActions, IAutomationActionsState } from "../types.js";
+import {
+    type AutomationsScope,
+    type AutomationsType,
+    type IAutomationActions,
+    type IAutomationActionsState,
+} from "../types.js";
 import { useAutomationService } from "../useAutomationService.js";
 
 /**

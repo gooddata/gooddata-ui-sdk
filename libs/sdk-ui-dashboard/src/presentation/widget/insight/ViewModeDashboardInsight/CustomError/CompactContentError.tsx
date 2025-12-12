@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 interface ICompactContentErrorProps {
     className: string;

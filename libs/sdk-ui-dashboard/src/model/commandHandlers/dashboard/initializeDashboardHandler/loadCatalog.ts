@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
-import { IWorkspaceCatalog, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
-import { CatalogItemType, DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
+import { type IWorkspaceCatalog, type IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
+import { type CatalogItemType, type DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
 
-import { InitializeDashboard } from "../../../commands/index.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type InitializeDashboard } from "../../../commands/index.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 const SupportedCatalogGranularity: DateAttributeGranularity[] = [
     "GDC.time.day_in_week",

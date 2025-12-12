@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import {
-    IDashboardLayout,
-    IWidget,
+    type IDashboardLayout,
+    type IWidget,
     isDashboardLayout,
     isInsightWidget,
     isKpiWidget,

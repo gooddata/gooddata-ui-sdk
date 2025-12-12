@@ -19,13 +19,18 @@ import {
 } from "@gooddata/api-client-tiger/userManagement";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    IOrganizationUserGroupsQuery,
-    IOrganizationUserGroupsQueryResult,
-    IOrganizationUserService,
-    IOrganizationUsersQuery,
-    IOrganizationUsersQueryResult,
+    type IOrganizationUserGroupsQuery,
+    type IOrganizationUserGroupsQueryResult,
+    type IOrganizationUserService,
+    type IOrganizationUsersQuery,
+    type IOrganizationUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationUser, IOrganizationUserGroup, IUser, IUserGroup } from "@gooddata/sdk-model";
+import {
+    type IOrganizationUser,
+    type IOrganizationUserGroup,
+    type IUser,
+    type IUserGroup,
+} from "@gooddata/sdk-model";
 
 import {
     convertEntityUserToOrganizationUser,
@@ -36,7 +41,7 @@ import {
     convertUser,
     convertUserGroup,
 } from "./fromBackend/userConvertor.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 /**
  * Quote a string value for use in RSQL filters using double quotes.

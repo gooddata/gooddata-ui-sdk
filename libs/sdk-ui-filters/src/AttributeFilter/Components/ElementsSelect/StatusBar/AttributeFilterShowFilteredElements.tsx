@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode, useMemo } from "react";
+import { type MouseEvent, type ReactNode, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";

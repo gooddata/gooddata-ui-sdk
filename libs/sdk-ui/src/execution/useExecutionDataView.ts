@@ -1,23 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { DependencyList } from "react";
+import { type DependencyList } from "react";
 
 import { isEmpty } from "lodash-es";
 
-import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 import { createExecution } from "./createExecution.js";
-import { DataViewWindow } from "./withExecutionLoading.js";
+import { type DataViewWindow } from "./withExecutionLoading.js";
 import {
-    AttributesMeasuresOrPlaceholders,
-    AttributesOrPlaceholders,
+    type AttributesMeasuresOrPlaceholders,
+    type AttributesOrPlaceholders,
     DataViewFacade,
-    GoodDataSdkError,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
-    TotalsOrPlaceholders,
-    UseCancelablePromiseCallbacks,
-    UseCancelablePromiseState,
+    type GoodDataSdkError,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
+    type TotalsOrPlaceholders,
+    type UseCancelablePromiseCallbacks,
+    type UseCancelablePromiseState,
     convertError,
     useBackendStrict,
     useCancelablePromise,

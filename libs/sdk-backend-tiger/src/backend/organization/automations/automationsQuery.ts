@@ -7,13 +7,13 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    AutomationFilterType,
-    AutomationType,
-    IGetAutomationsQueryOptions,
-    IOrganizationAutomationsQuery,
-    IOrganizationAutomationsQueryResult,
+    type AutomationFilterType,
+    type AutomationType,
+    type IGetAutomationsQueryOptions,
+    type IOrganizationAutomationsQuery,
+    type IOrganizationAutomationsQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
     ERROR_HEADERS_TOO_LARGE,
@@ -22,7 +22,7 @@ import {
     STATUS_NEVER_RUN_RSQL_QUERY,
 } from "../../../backend/common/automations.js";
 import { convertAutomation } from "../../../convertors/fromBackend/AutomationConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
  * Organization automations query implementation for centralized automation management.

@@ -3,17 +3,17 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
     isDashboardLayout,
 } from "@gooddata/sdk-model";
 
-import { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import {
-    ILayoutCoordinates,
-    ILayoutItemPath,
-    ILayoutSectionPath,
+    type ILayoutCoordinates,
+    type ILayoutItemPath,
+    type ILayoutSectionPath,
     isLayoutItemPath,
     isLayoutSectionPath,
 } from "../../types.js";

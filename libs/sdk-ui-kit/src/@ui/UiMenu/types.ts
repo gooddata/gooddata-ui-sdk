@@ -1,18 +1,18 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    AriaAttributes,
-    ComponentType,
-    Dispatch,
-    KeyboardEvent,
-    MouseEvent,
-    ReactNode,
-    RefObject,
-    SetStateAction,
+    type AriaAttributes,
+    type ComponentType,
+    type Dispatch,
+    type KeyboardEvent,
+    type MouseEvent,
+    type ReactNode,
+    type RefObject,
+    type SetStateAction,
 } from "react";
 
-import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
-import { SizeMedium, SizeSmall } from "../@types/size.js";
+import { type IDropdownBodyRenderProps } from "../../Dropdown/index.js";
+import { type SizeMedium, type SizeSmall } from "../@types/size.js";
 
 /**
  * @internal

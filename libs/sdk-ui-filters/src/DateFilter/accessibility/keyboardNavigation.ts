@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MutableRefObject } from "react";
+import { type KeyboardEvent, type MutableRefObject } from "react";
 
 import { getFocusableElements, makeLinearKeyboardNavigation } from "@gooddata/sdk-ui-kit";
 

@@ -2,11 +2,11 @@
 import { produce } from "immer";
 import { describe, expect, it } from "vitest";
 
-import { ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
 
 import { catalogAttributeHierarchies } from "./catalog.fixture.js";
 import { catalogReducers } from "../catalogReducers.js";
-import { CatalogState } from "../catalogState.js";
+import { type CatalogState } from "../catalogState.js";
 import { catalogActions } from "../index.js";
 
 describe("catalogReducers", () => {

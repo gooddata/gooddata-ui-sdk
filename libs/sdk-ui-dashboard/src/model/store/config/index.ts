@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { Reducer, createSlice } from "@reduxjs/toolkit";
+import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { configReducers } from "./configReducers.js";
-import { ConfigState, configInitialState } from "./configState.js";
+import { type ConfigState, configInitialState } from "./configState.js";
 
 const configSlice = createSlice({
     name: "config",

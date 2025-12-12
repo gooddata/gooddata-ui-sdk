@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Ref } from "react";
+import { type Ref } from "react";
 
 import cx from "classnames";
 

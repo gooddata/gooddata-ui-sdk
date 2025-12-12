@@ -2,7 +2,7 @@
 
 import { localIdRef } from "@gooddata/sdk-model";
 
-import { ChartSortingOwnProps } from "../ChartSorting.js";
+import { type ChartSortingOwnProps } from "../ChartSorting.js";
 
 type SortingPropsMock = {
     currentSort: ChartSortingOwnProps["currentSort"];

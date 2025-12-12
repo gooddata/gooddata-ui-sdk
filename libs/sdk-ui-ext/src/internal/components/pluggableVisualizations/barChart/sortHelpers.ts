@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IAxisConfig } from "@gooddata/sdk-ui-charts";
+import { type IAxisConfig } from "@gooddata/sdk-ui-charts";
 
-import { IReferencePoint } from "../../../interfaces/Visualization.js";
+import { type IReferencePoint } from "../../../interfaces/Visualization.js";
 import { getBucketItems } from "../../../utils/bucketHelper.js";
 
 function areAllMeasuresOnSingleAxis(

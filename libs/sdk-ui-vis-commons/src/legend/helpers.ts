@@ -2,16 +2,16 @@
 import { inRange, isEqual, range } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 import { LEFT, RIGHT } from "./PositionTypes.js";
 import {
-    IColorLegendItem,
-    IColorLegendSize,
-    IGroupedSeries,
-    ILegendGroup,
-    ISeriesItem,
-    ISeriesItemSeparator,
+    type IColorLegendItem,
+    type IColorLegendSize,
+    type IGroupedSeries,
+    type ILegendGroup,
+    type ISeriesItem,
+    type ISeriesItemSeparator,
     LEGEND_GROUP,
     LEGEND_SEPARATOR,
     isSeriesItemAxisIndicator,

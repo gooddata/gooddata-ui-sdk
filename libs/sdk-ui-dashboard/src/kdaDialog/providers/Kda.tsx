@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
-import { ISeparators, isAllValuesDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { type ISeparators, isAllValuesDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import { KdaStateProvider } from "./KdaState.js";
-import { KdaState } from "../internalTypes.js";
-import { IKdaDefinition } from "../types.js";
+import { type KdaState } from "../internalTypes.js";
+import { type IKdaDefinition } from "../types.js";
 
 export interface KdaProps {
     children: ReactNode;

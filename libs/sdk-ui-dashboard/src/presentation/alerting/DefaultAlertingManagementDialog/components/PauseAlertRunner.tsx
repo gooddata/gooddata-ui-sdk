@@ -2,8 +2,11 @@
 
 import { useCallback, useEffect } from "react";
 
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+import {
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
+import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
 import { useSaveAlertToBackend } from "../../DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
 

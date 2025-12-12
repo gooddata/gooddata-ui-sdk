@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    IExecutionDefinition,
+    type IExecutionDefinition,
     MeasureGroupIdentifier,
     bucketSetTotals,
     defSetDimensions,

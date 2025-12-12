@@ -5,7 +5,7 @@ import { useMemo, useRef } from "react";
 import { Portal } from "react-portal";
 
 import { useToggleDrawer } from "./hooks/useToggleDrawer.js";
-import { UiDrawerProps } from "./types.js";
+import { type UiDrawerProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { makeDialogKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { OverlayContent, OverlayProvider } from "../@utils/OverlayStack.js";

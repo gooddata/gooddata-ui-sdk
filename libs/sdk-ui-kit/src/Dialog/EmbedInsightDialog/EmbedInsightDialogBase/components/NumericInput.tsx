@@ -1,14 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 import { v4 } from "uuid";
 
-import { ArrowOffsets, Bubble } from "../../../../Bubble/index.js";
-import { IAlignPoint } from "../../../../typings/positioning.js";
+import { type ArrowOffsets, Bubble } from "../../../../Bubble/index.js";
+import { type IAlignPoint } from "../../../../typings/positioning.js";
 
 const VALID_INPUT = "^[0-9]+[.,]?[0-9]*$";
 

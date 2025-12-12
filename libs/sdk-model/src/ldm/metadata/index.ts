@@ -1,44 +1,44 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute/index.js";
+import { type IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute/index.js";
 import {
-    AttributeDisplayFormType,
-    IAttributeDisplayFormGeoAreaConfig,
-    IAttributeDisplayFormMetadataObject,
+    type AttributeDisplayFormType,
+    type IAttributeDisplayFormGeoAreaConfig,
+    type IAttributeDisplayFormMetadataObject,
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
     isAttributeDisplayFormMetadataObject,
 } from "./attributeDisplayForm/index.js";
 import {
-    IAttributeHierarchyMetadataObject,
-    IDateHierarchyTemplate,
+    type IAttributeHierarchyMetadataObject,
+    type IDateHierarchyTemplate,
     isAttributeHierarchyMetadataObject,
 } from "./attributeHierarchy/index.js";
-import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard/index.js";
-import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet/index.js";
-import { IFactMetadataObject, isFactMetadataObject } from "./fact/index.js";
+import { type IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard/index.js";
+import { type IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet/index.js";
+import { type IFactMetadataObject, isFactMetadataObject } from "./fact/index.js";
 import {
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectBase,
-    IMeasureMetadataObjectDefinition,
-    MetricType,
+    type IMeasureMetadataObject,
+    type IMeasureMetadataObjectBase,
+    type IMeasureMetadataObjectDefinition,
+    type MetricType,
     isMeasureMetadataObject,
     isMeasureMetadataObjectDefinition,
 } from "./measure/index.js";
 import {
-    IMemoryItemDefinition,
-    IMemoryItemMetadataObject,
+    type IMemoryItemDefinition,
+    type IMemoryItemMetadataObject,
     isMemoryItemMetadataObject,
 } from "./memoryItem/index.js";
 import {
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectDefinition,
-    IMetadataObjectIdentity,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectDefinition,
+    type IMetadataObjectIdentity,
     isMetadataObject,
 } from "./types.js";
-import { IVariableMetadataObject, isVariableMetadataObject } from "./variable/index.js";
+import { type IVariableMetadataObject, isVariableMetadataObject } from "./variable/index.js";
 
 export type {
     IMetadataObject,

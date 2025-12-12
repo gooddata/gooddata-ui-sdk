@@ -1,17 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { Ref } from "react";
+import { type Ref } from "react";
 
 import { useIntl } from "react-intl";
 
 import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
 import { useMediaQuery } from "../../../responsive/index.js";
 import { UiButton } from "../../UiButton/UiButton.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { messages } from "../messages.js";
-import { IUiTabComponentProps } from "../types.js";
+import { type IUiTabComponentProps } from "../types.js";
 
 function DefaultUiTabsAllTabsButtonNotWrapped<
     TTabProps extends Record<any, any> = EmptyObject,

@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardWidget,
-    IWidget,
-    IWidgetDefinition,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardWidget,
+    type IWidget,
+    type IWidgetDefinition,
     isDashboardLayout,
     isWidget,
     isWidgetDefinition,

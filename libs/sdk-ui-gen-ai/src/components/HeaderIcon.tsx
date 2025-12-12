@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IconType, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { type IconType, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type HeaderIconProps = {
     icon: IconType;

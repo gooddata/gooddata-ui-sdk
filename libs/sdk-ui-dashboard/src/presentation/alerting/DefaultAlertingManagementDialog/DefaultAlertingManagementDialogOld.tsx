@@ -5,11 +5,11 @@ import { useCallback, useState } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IInsightWidget,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IInsightWidget,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 
 import { AlertsOld } from "./components/AlertsListOld.js";
@@ -18,7 +18,7 @@ import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { messages } from "../../../locales.js";
 import { selectIsWhiteLabeled, useDashboardSelector } from "../../../model/index.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
-import { IAlertingManagementDialogOldProps } from "../types.js";
+import { type IAlertingManagementDialogOldProps } from "../types.js";
 
 /**
  * @alpha

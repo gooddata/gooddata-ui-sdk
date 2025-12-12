@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import { KpiDrillDefinition } from "@gooddata/sdk-model";
+import { type KpiDrillDefinition } from "@gooddata/sdk-model";
 
 import { validateKpiDrillTarget } from "./kpiDrillValidationUtils.js";
-import { IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export function validateKpiDrill(drill: KpiDrillDefinition, ctx: DashboardContext, cmd: IDashboardCommand) {
     try {

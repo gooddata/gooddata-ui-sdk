@@ -2,10 +2,10 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IInsight } from "@gooddata/sdk-model";
+import { type IInsight } from "@gooddata/sdk-model";
 
 import { newInsightMap } from "../../../../../_staging/metadata/objRefMap.js";
-import { ExtendedDashboardWidget } from "../../../../../model/index.js";
+import { type ExtendedDashboardWidget } from "../../../../../model/index.js";
 import { isLocationIconEnabled } from "../addAttributeFilterUtils.js";
 
 describe("add attribute filter utils", () => {

@@ -1,25 +1,30 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { omit } from "lodash-es";
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IAttributeOrMeasure, IBucket, INullableFilter } from "@gooddata/sdk-model";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    AttributeOrPlaceholder,
-    AttributesMeasuresOrPlaceholders,
-    ExplicitDrill,
-    NullableFiltersOrPlaceholders,
-    OnFiredDrillEvent,
-    Subtract,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type INullableFilter,
+} from "@gooddata/sdk-model";
+import {
+    type AttributeOrPlaceholder,
+    type AttributesMeasuresOrPlaceholders,
+    type ExplicitDrill,
+    type NullableFiltersOrPlaceholders,
+    type OnFiredDrillEvent,
+    type Subtract,
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
 
 import { CoreRepeater } from "./CoreRepeater.js";
 import { constructRepeaterBuckets, constructRepeaterDimensions } from "./internal/repeaterExecution.js";
-import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/index.js";
 
 //
 // Public interface

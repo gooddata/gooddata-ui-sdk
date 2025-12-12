@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useMemo } from "react";
 
 import { createContextStore } from "@gooddata/sdk-ui";
 
-import { ISeriesItem } from "./types.js";
+import { type ISeriesItem } from "./types.js";
 
 export const useLegendSeriesContextValue = ({
     series,

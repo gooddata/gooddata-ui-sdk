@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 import {
-    DimensionItem,
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    IDimension,
-    IMeasure,
-    IdentifierRef,
+    type DimensionItem,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IDimension,
+    type IMeasure,
+    type IdentifierRef,
     MeasureGroupIdentifier,
     attributeDisplayFormRef,
     bucketAttributes,
@@ -28,7 +28,10 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { ChartInlineVisualizationType, IInlineVisualizationsConfig } from "../../../interfaces/index.js";
+import {
+    type ChartInlineVisualizationType,
+    type IInlineVisualizationsConfig,
+} from "../../../interfaces/index.js";
 
 /**
  * Returns an inline measure definition created from a standalone measure.

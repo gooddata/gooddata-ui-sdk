@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import cx from "classnames";
 
-import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { useSectionDescriptionFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
@@ -15,7 +15,7 @@ import {
     selectSeparators,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { DescriptionExportData } from "../../export/index.js";
+import { type DescriptionExportData } from "../../export/index.js";
 
 /**
  * @alpha

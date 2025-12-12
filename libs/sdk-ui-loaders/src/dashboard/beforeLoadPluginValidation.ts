@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { DashboardContext } from "@gooddata/sdk-ui-dashboard";
+import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type DashboardContext } from "@gooddata/sdk-ui-dashboard";
 
 /**
  * Validates plugins before actually loading them from remote location.

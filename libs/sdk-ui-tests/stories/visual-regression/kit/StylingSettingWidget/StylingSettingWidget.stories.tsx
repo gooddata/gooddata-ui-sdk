@@ -2,17 +2,17 @@
 
 import { action } from "storybook/actions";
 
-import { ITheme, idRef } from "@gooddata/sdk-model";
+import { type ITheme, idRef } from "@gooddata/sdk-model";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import {
-    IStylingPickerItem,
+    type IStylingPickerItem,
     StylingSettingWidget,
     defaultThemeMetadataObject,
     getColorsPreviewFromTheme,
 } from "@gooddata/sdk-ui-kit";
 
 import { customThemeItems } from "./itemsMock.js";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const emptyMessage = () => (

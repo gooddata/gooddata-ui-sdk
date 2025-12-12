@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -10,7 +10,7 @@ import { useGradientColor } from "../hooks/useGradientColor.js";
 import { useRightInScrollable } from "../hooks/useRightInScrollable.js";
 import { useScrollEvent } from "../hooks/useScrollEvent.js";
 import { ScrollGradient } from "../ScrollGradient.js";
-import { IScrollGradientProps } from "../typings.js";
+import { type IScrollGradientProps } from "../typings.js";
 
 function renderScrollGradient(height: number, options: Partial<IScrollGradientProps>) {
     return render(

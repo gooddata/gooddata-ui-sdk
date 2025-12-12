@@ -2,12 +2,12 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { IAttributeFilter, filterObjRef } from "@gooddata/sdk-model";
+import { type IAttributeFilter, filterObjRef } from "@gooddata/sdk-model";
 
 import { DisplayFormParam } from "./DisplayFormParam.js";
 import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
-import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types.js";
+import { type IAttributeWithDisplayForm, type IParametersPanelSectionsCommonProps } from "../types.js";
 
 export interface IInsightParametersSectionProps extends IParametersPanelSectionsCommonProps {
     attributeDisplayForms?: IAttributeWithDisplayForm[];

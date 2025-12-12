@@ -7,13 +7,13 @@ import {
     ActionsApi_UnsubscribeOrganizationAutomations,
 } from "@gooddata/api-client-tiger/actions";
 import {
-    IGetAutomationsQueryOptions,
-    IOrganizationAutomationService,
-    IOrganizationAutomationsQuery,
+    type IGetAutomationsQueryOptions,
+    type IOrganizationAutomationService,
+    type IOrganizationAutomationsQuery,
 } from "@gooddata/sdk-backend-spi";
 
 import { OrganizationAutomationsQuery } from "./automationsQuery.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
  * Tiger implementation of organization automations service for centralized automation management.

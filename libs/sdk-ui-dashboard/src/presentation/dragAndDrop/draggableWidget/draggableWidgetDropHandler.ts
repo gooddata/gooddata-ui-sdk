@@ -1,14 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    BaseDraggableLayoutItemSize,
-    DashboardLayoutDraggableItem,
-    DraggableItemType,
-    DraggableItemTypeMapping,
-    InsightDraggableItem,
-    KpiDraggableItem,
-    RichTextDraggableItem,
-    VisualizationSwitcherDraggableItem,
+    type BaseDraggableLayoutItemSize,
+    type DashboardLayoutDraggableItem,
+    type DraggableItemType,
+    type DraggableItemTypeMapping,
+    type InsightDraggableItem,
+    type KpiDraggableItem,
+    type RichTextDraggableItem,
+    type VisualizationSwitcherDraggableItem,
     isDashboardLayoutDraggableItem,
     isDashboardLayoutDraggableListItem,
     isInsightDraggableItem,

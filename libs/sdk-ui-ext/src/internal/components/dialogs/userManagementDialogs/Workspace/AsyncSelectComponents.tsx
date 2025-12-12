@@ -1,20 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import {
-    GroupHeadingProps,
-    InputProps,
-    MenuListProps,
-    NoticeProps,
-    OptionProps,
+    type GroupHeadingProps,
+    type InputProps,
+    type MenuListProps,
+    type NoticeProps,
+    type OptionProps,
     components as ReactSelectComponents,
 } from "react-select";
 import { wrapMenuList } from "react-select-async-paginate";
 
 import { LoadingMask, Typography } from "@gooddata/sdk-ui-kit";
 
-import { ISelectErrorOption, ISelectOption, isSelectErrorOption, isWorkspaceItem } from "../types.js";
+import {
+    type ISelectErrorOption,
+    type ISelectOption,
+    isSelectErrorOption,
+    isWorkspaceItem,
+} from "../types.js";
 import { getWorkspaceItemTestId } from "../utils.js";
 
 export function EmptyRenderer(): ReactElement {

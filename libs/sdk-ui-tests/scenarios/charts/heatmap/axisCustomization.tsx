@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
+import { Heatmap, type IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
 import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

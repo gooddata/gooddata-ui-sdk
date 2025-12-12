@@ -5,14 +5,14 @@ import { useCallback, useState } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
     ComponentTable,
-    IUiTab,
-    IUiTabsProps,
+    type IUiTab,
+    type IUiTabsProps,
     UiTabs,
     propCombinationsFor,
     separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 
-import { INeobackstopScenarioConfig, IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const tabs = [

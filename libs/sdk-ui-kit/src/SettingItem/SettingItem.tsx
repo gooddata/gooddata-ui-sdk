@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import cx from "classnames";
 
-import { ActionType, ISettingItem } from "./typings.js";
+import { type ActionType, type ISettingItem } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { Button } from "../Button/index.js";
 

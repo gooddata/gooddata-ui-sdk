@@ -3,14 +3,14 @@ import { clamp, isEqual, round } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    AnalyticalWidgetType,
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    ISettings,
-    ScreenSize,
+    type AnalyticalWidgetType,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSize,
+    type IDashboardLayoutSizeByScreenSize,
+    type ISettings,
+    type ScreenSize,
     isDashboardLayout,
     isWidget,
     isWidgetDefinition,
@@ -18,12 +18,12 @@ import {
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
 import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/flexibleLayout/builder/layout.js";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { DashboardLayoutFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
 import {
-    MeasurableWidgetContent,
+    type MeasurableWidgetContent,
     determineSizeForScreen,
     getDashboardLayoutItemHeightForGrid,
     getDashboardLayoutWidgetMaxGridHeight,
@@ -33,7 +33,7 @@ import {
     implicitLayoutItemSizeFromXlSize,
     splitDashboardLayoutItemsAsRenderedGridRows,
 } from "../../../../_staging/layout/sizing.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { type ILayoutItemPath } from "../../../../types.js";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,

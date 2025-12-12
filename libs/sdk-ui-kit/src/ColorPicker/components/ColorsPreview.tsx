@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, memo } from "react";
+import { type ReactNode, memo } from "react";
 
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 
 import { getColorStyle } from "../utils.js";
 

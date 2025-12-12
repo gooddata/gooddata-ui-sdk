@@ -3,8 +3,8 @@
 import { cloneDeep } from "lodash-es";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IAttribute, IMeasure, isAttribute, modifyMeasure } from "@gooddata/sdk-model";
-import { ChartInlineVisualizationType, IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
+import { type IAttribute, type IMeasure, isAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { type ChartInlineVisualizationType, type IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

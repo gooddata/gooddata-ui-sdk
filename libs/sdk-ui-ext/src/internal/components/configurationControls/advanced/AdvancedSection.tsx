@@ -6,13 +6,13 @@ import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { IPushData } from "@gooddata/sdk-ui";
+import { type IPushData } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { ConfigEditor } from "./ConfigEditor.js";
 import { useOverflow } from "./useOverflow.js";
 import { messages } from "../../../../locales.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
 
 export interface IAdvancedSectionProps {

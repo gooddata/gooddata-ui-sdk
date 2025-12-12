@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
@@ -8,7 +8,7 @@ import {
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
 
-import { ITableDataHeaderScope } from "../../interfaces/scope.js";
+import { type ITableDataHeaderScope } from "../../interfaces/scope.js";
 
 /**
  * @internal

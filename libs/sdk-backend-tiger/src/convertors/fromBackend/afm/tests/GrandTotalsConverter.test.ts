@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ExecutionResult } from "@gooddata/api-client-tiger";
-import { IDimensionDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
+import { type ExecutionResult } from "@gooddata/api-client-tiger";
+import { type IDimensionDescriptor, type IExecutionDefinition } from "@gooddata/sdk-model";
 
 import {
     mockDefinition1,

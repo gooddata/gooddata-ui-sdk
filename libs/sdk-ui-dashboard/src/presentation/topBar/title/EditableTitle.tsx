@@ -5,7 +5,7 @@ import { defineMessage, useIntl } from "react-intl";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
 import { TitleWrapper } from "./TitleWrapper.js";
-import { ITitleProps } from "./types.js";
+import { type ITitleProps } from "./types.js";
 import { selectDashboardTitle, useDashboardSelector } from "../../../model/index.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 

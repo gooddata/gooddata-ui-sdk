@@ -7,7 +7,7 @@ import cx from "classnames";
 import { DateHeadline } from "./headlines/DateHeadline.js";
 import { DiffHeadline } from "./headlines/DiffHeadline.js";
 import { useDateAttribute } from "../hooks/useDateAttribute.js";
-import { KdaDateOptions } from "../internalTypes.js";
+import { type KdaDateOptions } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { formatKeyDriverAnalysisDateRange, formatValue } from "../utils.js";
 

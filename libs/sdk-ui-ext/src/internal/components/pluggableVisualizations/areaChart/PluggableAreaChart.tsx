@@ -3,14 +3,14 @@
 import { cloneDeep, isEmpty, set } from "lodash-es";
 
 import {
-    IInsight,
-    IInsightDefinition,
+    type IInsight,
+    type IInsightDefinition,
     bucketsItems,
     insightBucket,
     insightBuckets,
     newAttributeSort,
 } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import {
@@ -22,17 +22,17 @@ import {
     MAX_CATEGORIES_COUNT,
     MAX_METRICS_COUNT,
 } from "../../../constants/uiConfig.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IDrillDownContext,
-    IDrillDownDefinition,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IDrillDownContext,
+    type IDrillDownDefinition,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

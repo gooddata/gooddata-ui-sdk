@@ -3,16 +3,16 @@
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { IDashboard, idRef } from "@gooddata/sdk-model";
+import { type IDashboard, idRef } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
-import { ExtendedDashboardWidget } from "../../../model/index.js";
-import { IDashboardLayoutProps } from "../../../presentation/index.js";
+import { type ExtendedDashboardWidget } from "../../../model/index.js";
+import { type IDashboardLayoutProps } from "../../../presentation/index.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultLayoutCustomizer } from "../layoutCustomizer.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
     type: "IDashboard",

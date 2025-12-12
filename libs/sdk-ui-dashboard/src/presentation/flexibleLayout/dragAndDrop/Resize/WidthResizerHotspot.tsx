@@ -1,14 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { Ref, useEffect, useMemo, useState } from "react";
+import { type Ref, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 
-import { IDashboardLayoutContainerDirection, IWidget, isDashboardLayout } from "@gooddata/sdk-model";
+import {
+    type IDashboardLayoutContainerDirection,
+    type IWidget,
+    isDashboardLayout,
+} from "@gooddata/sdk-model";
 
 import { WidthResizer } from "./WidthResizer.js";
 import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../../../_staging/dashboard/flexibleLayout/config.js";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getMinWidth } from "../../../../_staging/layout/sizing.js";
 import {

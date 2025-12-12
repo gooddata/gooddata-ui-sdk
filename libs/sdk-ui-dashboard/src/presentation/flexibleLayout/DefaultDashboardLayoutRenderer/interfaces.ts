@@ -1,21 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { CSSProperties, MouseEvent, ReactElement, ReactNode, RefObject } from "react";
+import {
+    type CSSProperties,
+    type MouseEvent,
+    type ReactElement,
+    type ReactNode,
+    type RefObject,
+} from "react";
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardWidget,
-    ScreenSize,
+    type IDashboardLayout,
+    type IDashboardLayoutSizeByScreenSize,
+    type IDashboardWidget,
+    type ScreenSize,
 } from "@gooddata/sdk-model";
 
 import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
-import { DashboardFocusObject } from "../../../model/index.js";
-import { ILayoutItemPath, RenderMode } from "../../../types.js";
-import { CommonExportDataAttributes, HeaderExportData } from "../../export/index.js";
+import { type DashboardFocusObject } from "../../../model/index.js";
+import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
+import { type CommonExportDataAttributes, type HeaderExportData } from "../../export/index.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.

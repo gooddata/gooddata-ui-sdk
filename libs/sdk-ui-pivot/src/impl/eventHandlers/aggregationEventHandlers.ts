@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import { IExecutionDefinition, ITotal } from "@gooddata/sdk-model";
-import { BucketNames, IPushData } from "@gooddata/sdk-ui";
+import { type IExecutionDefinition, type ITotal } from "@gooddata/sdk-model";
+import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 
-import { InternalTableState } from "../../tableState.js";
-import { IMenuAggregationClickConfig } from "../privateTypes.js";
+import { type InternalTableState } from "../../tableState.js";
+import { type IMenuAggregationClickConfig } from "../privateTypes.js";
 import { getUpdatedColumnOrRowTotals } from "../structure/headers/aggregationsMenuHelper.js";
 import { sanitizeDefTotals } from "../utils.js";
 

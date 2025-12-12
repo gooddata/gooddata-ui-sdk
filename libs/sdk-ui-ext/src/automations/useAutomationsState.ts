@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
+import { type UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import { useAutomationActions } from "./actions/useAutomationActions.js";
 import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js";
@@ -12,7 +12,11 @@ import { useAutomationColumns } from "./columns/useAutomationColumns.js";
 import { AutomationsDefaultState } from "./constants.js";
 import { useLoadAutomations } from "./data/useLoadAutomations.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
-import { IAutomationsCoreProps, IAutomationsPendingAction, IAutomationsState } from "./types.js";
+import {
+    type IAutomationsCoreProps,
+    type IAutomationsPendingAction,
+    type IAutomationsState,
+} from "./types.js";
 import { useAutomationsSmallLayout } from "./useAutomationsSmallLayout.js";
 
 export const useAutomationsState = ({

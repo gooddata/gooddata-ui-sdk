@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IntlShape, createIntl } from "react-intl";
+import { type IntlShape, createIntl } from "react-intl";
 
 import { resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
 

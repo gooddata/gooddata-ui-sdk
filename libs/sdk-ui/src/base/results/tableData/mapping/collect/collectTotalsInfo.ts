@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import { ITotal, attributeLocalId, isAttribute } from "@gooddata/sdk-model";
+import { type ITotal, attributeLocalId, isAttribute } from "@gooddata/sdk-model";
 
-import { IBucketsInfo } from "./collectBucketsInfo.js";
+import { type IBucketsInfo } from "./collectBucketsInfo.js";
 
 /**
  * @internal

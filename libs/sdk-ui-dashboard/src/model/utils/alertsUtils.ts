@@ -4,13 +4,13 @@ import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IFilter,
-    IWidgetAlertDefinition,
-    IWidgetDefinition,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IFilter,
+    type IWidgetAlertDefinition,
+    type IWidgetDefinition,
+    type ObjRef,
     areObjRefsEqual,
     filterObjRef,
     isAttributeFilter,
@@ -19,8 +19,8 @@ import {
     isDashboardDateFilterReference,
 } from "@gooddata/sdk-model";
 
-import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
-import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
+import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { type IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
 
 /**
  * Gets the information about the so called broken alert filters. These are filters that are set up on the alert,

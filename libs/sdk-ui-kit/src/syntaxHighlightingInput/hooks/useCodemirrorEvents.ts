@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
 import { completionStatus } from "@codemirror/autocomplete";
 import { EditorView } from "@codemirror/view";

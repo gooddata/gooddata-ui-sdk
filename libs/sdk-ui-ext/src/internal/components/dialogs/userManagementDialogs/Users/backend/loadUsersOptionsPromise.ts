@@ -1,11 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { messages } from "../../locales.js";
-import { ISelectErrorOption, IUserMember, IUserSelectOption } from "../../types.js";
+import { type ISelectErrorOption, type IUserMember, type IUserSelectOption } from "../../types.js";
 import { extractUserName } from "../../utils.js";
 
 const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {

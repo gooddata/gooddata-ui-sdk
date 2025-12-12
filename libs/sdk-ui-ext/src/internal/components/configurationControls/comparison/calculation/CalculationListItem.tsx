@@ -2,8 +2,8 @@
 
 import cx from "classnames";
 
-import { CalculationType } from "@gooddata/sdk-ui-charts";
-import { Bubble, BubbleHoverTrigger, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
+import { type CalculationType } from "@gooddata/sdk-ui-charts";
+import { Bubble, BubbleHoverTrigger, type ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
 
 import { CalculationListItemInfo } from "./CalculationListItemInfo.js";
 import { HIDE_DELAY_DEFAULT, SHOW_DELAY_DEFAULT } from "../../../../constants/bubble.js";

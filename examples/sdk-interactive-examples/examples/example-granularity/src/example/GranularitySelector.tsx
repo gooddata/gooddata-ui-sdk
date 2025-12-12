@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAttribute } from "@gooddata/sdk-model";
+import { type IAttribute } from "@gooddata/sdk-model";
 
 import * as Catalog from "../catalog.js";
 

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { Column, GridApi } from "ag-grid-community";
+import { type Column, type GridApi } from "ag-grid-community";
 
 export function setColumnMaxWidth(
     columnApi: GridApi,

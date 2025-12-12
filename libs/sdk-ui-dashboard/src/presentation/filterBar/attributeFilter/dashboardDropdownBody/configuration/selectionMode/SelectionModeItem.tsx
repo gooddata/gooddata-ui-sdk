@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
+import { type DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const ARROW_OFFSETS = { "cr cl": [20, 0], "cl cr": [-10, 0] };

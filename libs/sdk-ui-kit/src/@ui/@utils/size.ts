@@ -1,6 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { SizeLarge, SizeMedium, SizeSmall, SizeXLarge, SizeXSmall, SizeXXLarge } from "../@types/size.js";
+import {
+    type SizeLarge,
+    type SizeMedium,
+    type SizeSmall,
+    type SizeXLarge,
+    type SizeXSmall,
+    type SizeXXLarge,
+} from "../@types/size.js";
 
 export const getButtonIconSize = (
     size: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge,

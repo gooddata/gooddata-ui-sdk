@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactElement, useMemo, useState } from "react";
+import { type ReactElement, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { LoadingComponent } from "@gooddata/sdk-ui";
-import { IAlignPoint, Message, Overlay, Tabs } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, Message, Overlay, Tabs } from "@gooddata/sdk-ui-kit";
 
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { AddDataSource } from "./DataSources/AddDataSource.js";
@@ -26,8 +26,13 @@ import { ErrorDialog } from "./ErrorDialog.js";
 import { usePermissions } from "./hooks/usePermissions.js";
 import { messages, userDialogTabsMessages } from "./locales.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
-import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
-import { IGrantedDataSource, IGrantedWorkspace, UserEditDialogMode, UserTabId } from "./types.js";
+import { type IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import {
+    type IGrantedDataSource,
+    type IGrantedWorkspace,
+    type UserEditDialogMode,
+    type UserTabId,
+} from "./types.js";
 import { AddUserGroup } from "./UserGroups/AddUserGroup.js";
 import { UserGroupsList } from "./UserGroups/UserGroupsList.js";
 import { extractUserName } from "./utils.js";

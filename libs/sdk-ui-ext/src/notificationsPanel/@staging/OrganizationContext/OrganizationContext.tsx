@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
-import { IAnalyticalBackend, IOrganization } from "@gooddata/sdk-backend-spi";
-import { GoodDataSdkError, UnexpectedSdkError, UseCancelablePromiseState } from "@gooddata/sdk-ui";
+import { type IAnalyticalBackend, type IOrganization } from "@gooddata/sdk-backend-spi";
+import { type GoodDataSdkError, UnexpectedSdkError, type UseCancelablePromiseState } from "@gooddata/sdk-ui";
 
 import { useFetchOrganization } from "./useFetchOrganization.js";
 

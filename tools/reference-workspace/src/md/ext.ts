@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IAttribute,
-    ObjRef,
+    type IAttribute,
+    type ObjRef,
     idRef,
     modifyAttribute,
     modifyMeasure,

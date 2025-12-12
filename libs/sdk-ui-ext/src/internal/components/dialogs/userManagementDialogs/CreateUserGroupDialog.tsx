@@ -6,10 +6,10 @@ import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { useBackendStrict } from "@gooddata/sdk-ui";
-import { ConfirmDialogBase, IAlignPoint, Input, Overlay, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { ConfirmDialogBase, type IAlignPoint, Input, Overlay, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
-import { IWithTelemetryProps, useTelemetry, withTelemetry } from "./TelemetryContext.js";
+import { type IWithTelemetryProps, useTelemetry, withTelemetry } from "./TelemetryContext.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

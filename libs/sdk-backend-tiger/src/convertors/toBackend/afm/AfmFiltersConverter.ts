@@ -2,13 +2,13 @@
 
 import { compact } from "lodash-es";
 
-import { FilterDefinition, MeasureItem } from "@gooddata/api-client-tiger";
+import { type FilterDefinition, type MeasureItem } from "@gooddata/api-client-tiger";
 import {
-    IFilter,
-    IMeasure,
-    IMeasureDefinition,
-    Identifier,
-    ObjRefInScope,
+    type IFilter,
+    type IMeasure,
+    type IMeasureDefinition,
+    type Identifier,
+    type ObjRefInScope,
     filterMeasureRef,
     isLocalIdRef,
     isMeasureValueFilter,

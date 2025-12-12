@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 import { merge } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
-import { IDrillConfig, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IExecutionDefinition, type ITheme } from "@gooddata/sdk-model";
+import { type IDrillConfig, type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { getCommonConfiguration } from "./commonConfiguration.js";
 import { getCustomizedConfiguration } from "./customConfiguration.js";
-import { IChartConfig, IChartLimits } from "../../../interfaces/index.js";
-import { HighchartsOptions } from "../../lib/index.js";
-import { IChartOptions, ISeriesItem } from "../../typings/unsafe.js";
+import { type IChartConfig, type IChartLimits } from "../../../interfaces/index.js";
+import { type HighchartsOptions } from "../../lib/index.js";
+import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
 import { stringifyChartTypes } from "../_util/common.js";
 import { getAreaConfiguration } from "../areaChart/areaConfiguration.js";
 import { getBarConfiguration } from "../barChart/barConfiguration.js";

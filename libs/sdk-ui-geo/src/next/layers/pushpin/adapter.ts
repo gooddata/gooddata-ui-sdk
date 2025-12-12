@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 

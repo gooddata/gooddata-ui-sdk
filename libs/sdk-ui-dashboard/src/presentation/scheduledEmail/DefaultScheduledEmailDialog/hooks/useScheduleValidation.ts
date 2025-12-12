@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    IAutomationMetadataObjectDefinition,
-    IExportDefinitionVisualizationObjectContent,
+    type IAutomationMetadataObjectDefinition,
+    type IExportDefinitionVisualizationObjectContent,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";

@@ -1,11 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    CSSProperties,
+    type CSSProperties,
     Component,
-    ContextType,
-    ReactElement,
-    MouseEvent as ReactMouseEvent,
+    type ContextType,
+    type ReactElement,
+    type MouseEvent as ReactMouseEvent,
     createRef,
 } from "react";
 
@@ -16,8 +16,8 @@ import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
 
 import { OverlayContext } from "./OverlayContext.js";
-import { IOverlayProps, IOverlayState } from "./typings.js";
-import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay.js";
+import { type IOverlayProps, type IOverlayState } from "./typings.js";
+import { type Alignment, type OverlayPositionType, type SameAsTargetPosition } from "../typings/overlay.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";

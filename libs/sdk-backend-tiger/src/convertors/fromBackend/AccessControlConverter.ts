@@ -1,20 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    GrantedPermission,
-    RulePermission,
-    UserAssignee,
-    UserGroupAssignee,
-    UserGroupPermission,
-    UserPermission,
+    type GrantedPermission,
+    type RulePermission,
+    type UserAssignee,
+    type UserGroupAssignee,
+    type UserGroupPermission,
+    type UserPermission,
 } from "@gooddata/api-client-tiger";
 import {
-    AccessGranularPermission,
-    IAvailableUserAccessGrantee,
-    IAvailableUserGroupAccessGrantee,
-    IGranularRulesAccess,
-    IGranularUserAccess,
-    IGranularUserGroupAccess,
+    type AccessGranularPermission,
+    type IAvailableUserAccessGrantee,
+    type IAvailableUserGroupAccessGrantee,
+    type IGranularRulesAccess,
+    type IGranularUserAccess,
+    type IGranularUserGroupAccess,
     idRef,
 } from "@gooddata/sdk-model";
 

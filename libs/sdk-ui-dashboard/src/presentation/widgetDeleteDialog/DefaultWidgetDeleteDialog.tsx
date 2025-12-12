@@ -1,13 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 import { compact } from "lodash-es";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
-import { IWidgetDeleteDialogProps } from "./types.js";
+import { type IWidgetDeleteDialogProps } from "./types.js";
 import {
     dispatchAndWaitFor,
     eagerRemoveSectionItemByWidgetRef,

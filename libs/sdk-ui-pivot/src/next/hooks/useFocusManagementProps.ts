@@ -2,13 +2,13 @@
 
 import { useCallback } from "react";
 
-import { SuppressKeyboardEventParams } from "ag-grid-enterprise";
+import { type SuppressKeyboardEventParams } from "ag-grid-enterprise";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { useClearCellSelection } from "./useClearCellSelection.js";
-import { AgGridProps } from "../types/agGrid.js";
-import { AgGridRowData } from "../types/internal.js";
+import { type AgGridProps } from "../types/agGrid.js";
+import { type AgGridRowData } from "../types/internal.js";
 
 /**
  * Hook that provides AG Grid props for keyboard navigation and focus management.

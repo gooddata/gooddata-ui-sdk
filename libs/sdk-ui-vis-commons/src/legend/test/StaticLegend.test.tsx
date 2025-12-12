@@ -5,8 +5,8 @@ import { describe, expect, it } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { IStaticLegendProps, StaticLegend, getPagingValues } from "../StaticLegend.js";
-import { IPushpinCategoryLegendItem } from "../types.js";
+import { type IStaticLegendProps, StaticLegend, getPagingValues } from "../StaticLegend.js";
+import { type IPushpinCategoryLegendItem } from "../types.js";
 
 describe("StaticLegend", () => {
     function renderComponent(customProps: Partial<IStaticLegendProps> = {}) {

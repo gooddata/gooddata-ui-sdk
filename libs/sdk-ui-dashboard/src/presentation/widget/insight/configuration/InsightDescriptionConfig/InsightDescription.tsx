@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentType, useCallback, useEffect, useState } from "react";
+import { type ComponentType, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IFilter, ISeparators } from "@gooddata/sdk-model";
-import { IAlignPoint, RichTextWithTooltip, TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
+import { type IFilter, type ISeparators } from "@gooddata/sdk-model";
+import { type IAlignPoint, RichTextWithTooltip, TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
 
 import {
     selectEnableRichTextDescriptions,

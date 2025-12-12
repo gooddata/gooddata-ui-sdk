@@ -2,20 +2,23 @@
 
 import { omit } from "lodash-es";
 
-import { IAttributeDescriptor, IColor, IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { type IAttributeDescriptor, type IColor, type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
     ColorStrategy,
-    IColorMapping,
-    IColorStrategy,
-    ICreateColorAssignmentReturnValue,
+    type IColorMapping,
+    type IColorStrategy,
+    type ICreateColorAssignmentReturnValue,
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPushpinGeoData } from "../../../types/geoData/pushpin.js";
-import { IPushpinAttributesInDimension, findPushpinAttributesInDimension } from "../data/transformation.js";
+import { type IPushpinGeoData } from "../../../types/geoData/pushpin.js";
+import {
+    type IPushpinAttributesInDimension,
+    findPushpinAttributesInDimension,
+} from "../data/transformation.js";
 
 /**
  * Color strategy for GeoPushpinChartNext

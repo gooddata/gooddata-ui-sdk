@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentTable, IUiLinkProps, UiLink, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, type IUiLinkProps, UiLink, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({ children: "I am a link" } as IUiLinkProps);

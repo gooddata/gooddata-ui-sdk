@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 
-import { ITigerClient, IUserProfile, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
+import { type ITigerClient, type IUserProfile, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import {
-    AuthenticationFlow,
-    IAnalyticalBackend,
-    IAuthenticatedPrincipal,
-    IAuthenticationContext,
-    IAuthenticationProvider,
-    NotAuthenticated,
-    NotAuthenticatedHandler,
+    type AuthenticationFlow,
+    type IAnalyticalBackend,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationContext,
+    type IAuthenticationProvider,
+    type NotAuthenticated,
+    type NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
 
 import { convertApiError } from "./utils/errorHandling.js";

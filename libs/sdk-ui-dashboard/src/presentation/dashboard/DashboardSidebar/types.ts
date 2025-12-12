@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import {
-    AttributeFilterComponentSet,
-    DashboardLayoutWidgetComponentSet,
-    InsightWidgetComponentSet,
-    RichTextWidgetComponentSet,
-    VisualizationSwitcherWidgetComponentSet,
+    type AttributeFilterComponentSet,
+    type DashboardLayoutWidgetComponentSet,
+    type InsightWidgetComponentSet,
+    type RichTextWidgetComponentSet,
+    type VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import {
-    IWrapCreatePanelItemWithDragComponent,
-    IWrapInsightListItemWithDragComponent,
+    type IWrapCreatePanelItemWithDragComponent,
+    type IWrapInsightListItemWithDragComponent,
 } from "../../dragAndDrop/types.js";
 
 /**

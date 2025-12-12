@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 
-import { IKpiDeleteDialogProps } from "./types.js";
+import { type IKpiDeleteDialogProps } from "./types.js";
 import {
     dispatchAndWaitFor,
     eagerRemoveNestedLayoutSectionItem,

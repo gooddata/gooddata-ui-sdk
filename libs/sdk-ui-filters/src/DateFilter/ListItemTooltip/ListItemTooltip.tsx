@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { HTMLProps } from "react";
+import { type HTMLProps } from "react";
 
 import cx from "classnames";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 interface IListItemTooltipProps extends HTMLProps<HTMLSpanElement> {
     bubbleAlignPoints: IAlignPoint[];

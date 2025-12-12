@@ -2,9 +2,9 @@
 
 import { omit } from "lodash-es";
 
-import { ICoreChartProps } from "@gooddata/sdk-ui-charts";
-import { IGeoChartInnerProps } from "@gooddata/sdk-ui-geo";
-import { ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { type ICoreChartProps } from "@gooddata/sdk-ui-charts";
+import { type IGeoChartInnerProps } from "@gooddata/sdk-ui-geo";
+import { type ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 const InsignificantCoreChartProps: Array<keyof ICoreChartProps> = ["execution", "onError"];
 const InsignificantCorePivotProps: Array<keyof ICorePivotTableProps> = ["execution", "intl", "onError"];

@@ -3,10 +3,10 @@ import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    DimensionGenerator,
-    IExecutionConfig,
-    IExecutionDefinition,
-    IPostProcessing,
+    type DimensionGenerator,
+    type IExecutionConfig,
+    type IExecutionDefinition,
+    type IPostProcessing,
     defSetBuckets,
     defSetDimensions,
     defSetExecConfig,
@@ -15,19 +15,29 @@ import {
     defWithFilters,
 } from "./index.js";
 import { defValidate } from "./validation.js";
-import { IInsightDefinition, insightBuckets, insightFilters, insightSorts } from "../../insight/index.js";
+import {
+    type IInsightDefinition,
+    insightBuckets,
+    insightFilters,
+    insightSorts,
+} from "../../insight/index.js";
 import { isAttribute } from "../attribute/index.js";
 import {
-    IDimension,
+    type IDimension,
     MeasureGroupIdentifier,
     isDimension,
     newDimension,
     newTwoDimensional,
 } from "../base/dimension.js";
-import { ISortItem } from "../base/sort.js";
+import { type ISortItem } from "../base/sort.js";
 import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray.js";
-import { IAttributeOrMeasure, IBucket, bucketAttributes, bucketMeasures } from "../buckets/index.js";
-import { INullableFilter } from "../filter/index.js";
+import {
+    type IAttributeOrMeasure,
+    type IBucket,
+    bucketAttributes,
+    bucketMeasures,
+} from "../buckets/index.js";
+import { type INullableFilter } from "../filter/index.js";
 import { isMeasure } from "../measure/index.js";
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { isInsightWidget } from "@gooddata/sdk-model";
@@ -8,11 +8,15 @@ import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
 
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_staging/drills/drillingUtils.js";
-import { DrillDown } from "../../commands/drill.js";
-import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
+import { type DrillDown } from "../../commands/drill.js";
+import {
+    type DashboardDrillDownResolved,
+    drillDownRequested,
+    drillDownResolved,
+} from "../../events/drill.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillDownHandler(
     ctx: DashboardContext,

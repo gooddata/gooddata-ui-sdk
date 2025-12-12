@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
+import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     ColumnChartWithSingleMeasureAndViewByAndStackMultipleItems,

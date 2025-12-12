@@ -4,7 +4,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { RecordedBackendConfig, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { type RecordedBackendConfig, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { idRef } from "@gooddata/sdk-model";
 
 import {
@@ -15,7 +15,7 @@ import {
     granularGranteeUser2,
     granularGranteesAccess,
 } from "./GranteeMock.js";
-import { IGranularGranteeUser, IShareDialogBaseProps } from "../types.js";
+import { type IGranularGranteeUser, type IShareDialogBaseProps } from "../types.js";
 import { useShareDialogBase } from "../useShareDialogBase.js";
 
 const recordedBackendConfig: RecordedBackendConfig = {

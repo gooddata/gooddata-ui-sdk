@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { CustomFormats, IntlProvider } from "react-intl";
+import { type CustomFormats, IntlProvider } from "react-intl";
 
 import { DefaultLocale, resolveLocale, useResolveMessages } from "@gooddata/sdk-ui";
 

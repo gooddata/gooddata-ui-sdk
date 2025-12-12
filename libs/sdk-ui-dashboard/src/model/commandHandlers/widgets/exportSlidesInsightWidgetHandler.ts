@@ -1,22 +1,25 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
-import { FiltersByTab, IExportResult } from "@gooddata/sdk-backend-spi";
+import { type FiltersByTab, type IExportResult } from "@gooddata/sdk-backend-spi";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
-import { ExportSlidesInsightWidget } from "../../commands/insight.js";
+import { type ExportSlidesInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
+import {
+    type DashboardInsightWidgetExportResolved,
+    insightWidgetExportResolved,
+} from "../../events/insight.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextFilters,
     selectFiltersByTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 export function* exportSlidesInsightWidgetHandler(
     ctx: DashboardContext,

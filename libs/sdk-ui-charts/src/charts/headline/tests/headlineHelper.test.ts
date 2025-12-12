@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IColorFromPalette, IRgbColor } from "@gooddata/sdk-model";
+import { type IColorFromPalette, type IRgbColor } from "@gooddata/sdk-model";
 
-import { CalculateAs, CalculationType } from "../../../interfaces/index.js";
+import { CalculateAs, type CalculationType } from "../../../interfaces/index.js";
 import {
     ComparisonColorType,
     DEFAULT_COMPARISON_PALETTE,
-    ICalculationDefaultValue,
+    type ICalculationDefaultValue,
     getCalculationValuesDefault,
     getComparisonFormat,
     getComparisonRgbColor,

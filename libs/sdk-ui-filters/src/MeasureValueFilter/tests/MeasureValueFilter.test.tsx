@@ -3,10 +3,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { type IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { IMeasureValueFilterProps, MeasureValueFilter } from "../MeasureValueFilter.js";
+import { type IMeasureValueFilterProps, MeasureValueFilter } from "../MeasureValueFilter.js";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {

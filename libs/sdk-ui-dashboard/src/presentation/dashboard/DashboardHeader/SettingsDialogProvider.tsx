@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -15,7 +15,7 @@ import {
 } from "../../../model/index.js";
 import {
     DashboardSettingsDialog,
-    IDashboardSettingsApplyPayload,
+    type IDashboardSettingsApplyPayload,
 } from "../../dashboardSettingsDialog/index.js";
 
 const useShareDialogDashboardHeader = () => {

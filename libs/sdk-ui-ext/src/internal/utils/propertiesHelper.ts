@@ -3,15 +3,15 @@
 // eslint-disable-next-line no-restricted-imports
 import { cloneDeep, get, has, isEmpty, set } from "lodash-es";
 
-import { IInsightDefinition, ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
+import { type IInsightDefinition, type ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
-    ColumnHeadersPosition,
-    ColumnWidthItem,
-    GrandTotalsPosition,
-    MeasureGroupDimension,
+    type ColumnHeadersPosition,
+    type ColumnWidthItem,
+    type GrandTotalsPosition,
+    type MeasureGroupDimension,
 } from "@gooddata/sdk-ui-pivot";
-import { IPagination, ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
+import { type IPagination, type ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
 
 import {
     getAllMeasuresShowOnSecondaryAxis,
@@ -24,12 +24,12 @@ import { AXIS } from "../constants/axis.js";
 import { PROPERTY_CONTROLS } from "../constants/properties.js";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
 import { UICONFIG_AXIS } from "../constants/uiConfig.js";
-import { AxisPositionType, AxisType, IAxisNameProperties } from "../interfaces/AxisType.js";
+import { type AxisPositionType, type AxisType, type IAxisNameProperties } from "../interfaces/AxisType.js";
 import {
-    IBucketItem,
-    IExtendedReferencePoint,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IExtendedReferencePoint,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
 
 export function getSupportedPropertiesControls(

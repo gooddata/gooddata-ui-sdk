@@ -1,18 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { INotification } from "@gooddata/sdk-model";
-import { GoodDataSdkError, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
+import { type INotification } from "@gooddata/sdk-model";
+import { type GoodDataSdkError, type UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 
-import { INotificationsPanelHeaderComponentProps } from "./DefaultNotificationsPanelHeader.js";
+import { type INotificationsPanelHeaderComponentProps } from "./DefaultNotificationsPanelHeader.js";
 import { bem } from "../bem.js";
-import { INotificationComponentProps } from "../Notification/DefaultNotification.js";
-import { INotificationsListComponentProps } from "../NotificationsList/DefaultNotificationsList.js";
-import { INotificationsListEmptyStateComponentProps } from "../NotificationsList/DefaultNotificationsListEmptyState.js";
-import { INotificationsListErrorStateComponentProps } from "../NotificationsList/DefaultNotificationsListErrorState.js";
-import { INotificationSkeletonItemComponentProps } from "../NotificationsList/DefaultSkeletonItem.js";
-import { INotificationsPanelView } from "../types.js";
+import { type INotificationComponentProps } from "../Notification/DefaultNotification.js";
+import { type INotificationsListComponentProps } from "../NotificationsList/DefaultNotificationsList.js";
+import { type INotificationsListEmptyStateComponentProps } from "../NotificationsList/DefaultNotificationsListEmptyState.js";
+import { type INotificationsListErrorStateComponentProps } from "../NotificationsList/DefaultNotificationsListErrorState.js";
+import { type INotificationSkeletonItemComponentProps } from "../NotificationsList/DefaultSkeletonItem.js";
+import { type INotificationsPanelView } from "../types.js";
 
 const { b } = bem("gd-ui-ext-notifications-panel");
 

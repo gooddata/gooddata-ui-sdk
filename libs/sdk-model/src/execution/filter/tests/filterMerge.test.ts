@@ -9,7 +9,7 @@ import {
     newRankingFilter,
 } from "../factory.js";
 import { mergeFilters } from "../filterMerge.js";
-import { IFilter } from "../index.js";
+import { type IFilter } from "../index.js";
 
 describe("mergeFilters", () => {
     it("should append attribute filters", () => {

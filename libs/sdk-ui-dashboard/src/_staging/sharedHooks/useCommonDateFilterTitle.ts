@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { selectDateFilterConfigOverrides, useDashboardSelector } from "../../model/index.js";
 

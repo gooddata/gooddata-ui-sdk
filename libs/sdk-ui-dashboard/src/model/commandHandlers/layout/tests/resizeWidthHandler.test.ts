@@ -2,10 +2,10 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ResizeWidth, resizeWidth } from "../../../commands/layout.js";
-import { DashboardCommandFailed } from "../../../events/index.js";
+import { type ResizeWidth, resizeWidth } from "../../../commands/layout.js";
+import { type DashboardCommandFailed } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

@@ -1,9 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-import { DeclarativeAttribute, DeclarativeFact, ITigerClientBase } from "@gooddata/api-client-tiger";
+import {
+    type DeclarativeAttribute,
+    type DeclarativeFact,
+    type ITigerClientBase,
+} from "@gooddata/api-client-tiger";
 import { LayoutApi_GetLogicalModel, LayoutApi_SetLogicalModel } from "@gooddata/api-client-tiger/layout";
 import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
-import { IMetadataObjectBase, IMetadataObjectIdentity, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 
 /**
  * DO NOT USE THIS FUNCTION IN OTHER CASES

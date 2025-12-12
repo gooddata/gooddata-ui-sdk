@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
 import { getPushpinColors } from "./coloring/palette.js";
 import { DEFAULT_CLUSTER_MAX_ZOOM, DEFAULT_CLUSTER_RADIUS, PUSHPIN_SIZE_OPTIONS_MAP } from "./constants.js";
 import { getMinMax } from "./size/calculations.js";
-import { IGeoLngLat } from "../../types/common/coordinates.js";
-import { IGeoPointsConfigNext } from "../../types/config/points.js";
-import { IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
-import { IPushpinColor, IPushpinGeoData } from "../../types/geoData/pushpin.js";
+import { type IGeoLngLat } from "../../types/common/coordinates.js";
+import { type IGeoPointsConfigNext } from "../../types/config/points.js";
+import { type IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
+import { type IPushpinColor, type IPushpinGeoData } from "../../types/geoData/pushpin.js";
 
 /**
  * Properties for creating a pushpin data source

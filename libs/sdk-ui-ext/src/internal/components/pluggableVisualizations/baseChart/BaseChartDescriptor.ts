@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
-import { IDrillDownContext } from "../../../interfaces/Visualization.js";
+import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { type IDrillDownContext } from "../../../interfaces/Visualization.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    IVisualizationSizeInfo,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type IVisualizationSizeInfo,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     MAX_NEW_VISUALIZATION_HEIGHT,

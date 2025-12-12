@@ -2,15 +2,15 @@
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import {
-    DataValue,
-    IResultAttributeHeader,
-    IResultAttributeHeaderItem,
-    ISeparators,
+    type DataValue,
+    type IResultAttributeHeader,
+    type IResultAttributeHeaderItem,
+    type ISeparators,
     attributeDescriptorLocalId,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
-import { DataPoint, DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataPoint, type DataViewFacade } from "@gooddata/sdk-ui";
 
 /**
  * Key is the localId of the attribute or measure.

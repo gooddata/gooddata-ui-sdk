@@ -2,17 +2,17 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 import {
     DefaultDashboardVisualizationSwitcher,
     DefaultVisualizationSwitcherToolbar,
-    OptionalVisualizationSwitcherComponentProvider,
-    OptionalVisualizationSwitcherToolbarComponentProvider,
-    VisualizationSwitcherComponentProvider,
-    VisualizationSwitcherToolbarComponentProvider,
+    type OptionalVisualizationSwitcherComponentProvider,
+    type OptionalVisualizationSwitcherToolbarComponentProvider,
+    type VisualizationSwitcherComponentProvider,
+    type VisualizationSwitcherToolbarComponentProvider,
 } from "../../presentation/index.js";
-import { IVisualizationSwitcherCustomizer } from "../customizer.js";
+import { type IVisualizationSwitcherCustomizer } from "../customizer.js";
 
 const DefaultVisualizationSwitcherRendererProvider: VisualizationSwitcherComponentProvider = () => {
     return DefaultDashboardVisualizationSwitcher;

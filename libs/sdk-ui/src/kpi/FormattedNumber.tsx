@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 
 /**
  * @internal

@@ -5,12 +5,12 @@ import { useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { RankingFilterOperator } from "@gooddata/sdk-model";
+import { type RankingFilterOperator } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 import { messages } from "../../locales.js";
-import { IOperatorDropdownItem } from "../types.js";
+import { type IOperatorDropdownItem } from "../types.js";
 
 const operatorItems = [
     { value: "TOP", translationId: messages["top"].id },

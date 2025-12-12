@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { all, fork } from "redux-saga/effects";
 
 import {

@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 
-import { IVisConstruct } from "../../../../interfaces/Visualization.js";
+import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_MESSAGES } from "../../../../utils/translations.js";

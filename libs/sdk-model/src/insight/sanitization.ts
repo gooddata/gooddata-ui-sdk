@@ -2,16 +2,21 @@
 import { InvariantError } from "ts-invariant";
 
 import {
-    IInsightDefinition,
+    type IInsightDefinition,
     insightAttributes,
     insightBuckets,
     insightSetBuckets,
     insightSorts,
 } from "./index.js";
 import { attributeLocalId } from "../execution/attribute/index.js";
-import { ISortItem, isAttributeSort, isMeasureSort, sortEntityIds } from "../execution/base/sort.js";
-import { ITotal } from "../execution/base/totals.js";
-import { IBucket, bucketAttributeIndex, bucketSetTotals, bucketTotals } from "../execution/buckets/index.js";
+import { type ISortItem, isAttributeSort, isMeasureSort, sortEntityIds } from "../execution/base/sort.js";
+import { type ITotal } from "../execution/base/totals.js";
+import {
+    type IBucket,
+    bucketAttributeIndex,
+    bucketSetTotals,
+    bucketTotals,
+} from "../execution/buckets/index.js";
 
 const COLUMNS_BUCKET_ID = "columns";
 /**

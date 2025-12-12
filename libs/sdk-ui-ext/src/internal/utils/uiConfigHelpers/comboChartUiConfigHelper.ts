@@ -1,14 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import { cloneDeep, set } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { isLineChart } from "@gooddata/sdk-ui-charts";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
-import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
+import {
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IUiConfig,
+} from "../../interfaces/Visualization.js";
 import { getBucketsByNames, setBucketTitles } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
 

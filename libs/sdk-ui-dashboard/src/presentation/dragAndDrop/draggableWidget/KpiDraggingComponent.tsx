@@ -2,7 +2,7 @@
 
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
-import { IKpiDraggingComponentProps } from "../../componentDefinition/types.js";
+import { type IKpiDraggingComponentProps } from "../../componentDefinition/types.js";
 
 /*
  * @internal

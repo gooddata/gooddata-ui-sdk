@@ -1,24 +1,24 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    EntitiesApiGetAllEntitiesAttributesRequest,
-    ITigerClientBase,
-    JsonApiAttributeHierarchyOutWithLinks,
-    JsonApiAttributeOutIncludes,
-    JsonApiAttributeOutList,
-    JsonApiAttributeOutWithLinks,
-    JsonApiDatasetLinkage,
-    JsonApiDatasetOutWithLinks,
-    JsonApiLabelLinkage,
-    JsonApiLabelOutWithLinks,
+    type EntitiesApiGetAllEntitiesAttributesRequest,
+    type ITigerClientBase,
+    type JsonApiAttributeHierarchyOutWithLinks,
+    type JsonApiAttributeOutIncludes,
+    type JsonApiAttributeOutList,
+    type JsonApiAttributeOutWithLinks,
+    type JsonApiDatasetLinkage,
+    type JsonApiDatasetOutWithLinks,
+    type JsonApiLabelLinkage,
+    type JsonApiLabelOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/entitiesObjects";
 import {
-    CatalogItem,
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateDataset,
+    type CatalogItem,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateDataset,
 } from "@gooddata/sdk-model";
 
 import { addRsqlFilterToParams } from "./rsqlFilter.js";

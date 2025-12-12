@@ -1,15 +1,22 @@
 // (C) 2025 GoodData Corporation
 
-import { Ref, useState } from "react";
+import { type Ref, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-    DashboardAttachmentType,
-    IExportDefinitionVisualizationObjectSettings,
-    WidgetAttachmentType,
+    type DashboardAttachmentType,
+    type IExportDefinitionVisualizationObjectSettings,
+    type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
-import { Button, ContentDivider, Dropdown, IAlignPoint, UiIcon, isEscapeKey } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    ContentDivider,
+    Dropdown,
+    type IAlignPoint,
+    UiIcon,
+    isEscapeKey,
+} from "@gooddata/sdk-ui-kit";
 
 import { attachmentIcons, dashboardAttachmentLabels, widgetAttachmentLabels } from "./AttachmentsSelect.js";
 

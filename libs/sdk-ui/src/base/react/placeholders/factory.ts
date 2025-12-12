@@ -3,12 +3,12 @@
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    ComposedPlaceholderResolutionContext,
-    Flatten,
-    IComposedPlaceholder,
-    IPlaceholder,
-    PlaceholdersResolvedValues,
-    UnionToIntersection,
+    type ComposedPlaceholderResolutionContext,
+    type Flatten,
+    type IComposedPlaceholder,
+    type IPlaceholder,
+    type PlaceholdersResolvedValues,
+    type UnionToIntersection,
 } from "./base.js";
 import { useComposedPlaceholder, usePlaceholder } from "./hooks.js";
 /**

@@ -4,24 +4,24 @@ import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    IAlertAnomalyDetectionGranularity,
-    IAlertAnomalyDetectionSensitivity,
-    IAlertComparisonOperator,
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
-    IAttribute,
-    IAutomationAlertComparisonCondition,
-    IAutomationAlertCondition,
-    IAutomationAlertExecutionDefinition,
-    IAutomationAlertRelativeCondition,
-    IAutomationAnomalyDetectionCondition,
-    IAutomationMetadataObject,
-    IAutomationRecipient,
-    IFilter,
-    IMeasure,
-    IRelativeDateFilter,
-    ObjRefInScope,
-    WeekStart,
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertComparisonOperator,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAttribute,
+    type IAutomationAlertComparisonCondition,
+    type IAutomationAlertCondition,
+    type IAutomationAlertExecutionDefinition,
+    type IAutomationAlertRelativeCondition,
+    type IAutomationAnomalyDetectionCondition,
+    type IAutomationMetadataObject,
+    type IAutomationRecipient,
+    type IFilter,
+    type IMeasure,
+    type IRelativeDateFilter,
+    type ObjRefInScope,
+    type WeekStart,
     isArithmeticMeasure,
     isLocalIdRef,
     isMeasureValueFilter,
@@ -33,15 +33,15 @@ import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "
 
 import { createCronFromGranularity } from "./cron.js";
 import {
-    IMeasureFormatMap,
+    type IMeasureFormatMap,
     getAttributeRelatedFilterInfo,
     getMeasureFormat,
     getMeasureTitle,
 } from "./getters.js";
 import {
-    AlertAttribute,
-    AlertMetric,
-    AlertMetricComparator,
+    type AlertAttribute,
+    type AlertMetric,
+    type AlertMetricComparator,
     AlertMetricComparatorType,
 } from "../../types.js";
 

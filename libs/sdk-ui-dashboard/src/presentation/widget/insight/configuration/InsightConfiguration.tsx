@@ -2,7 +2,11 @@
 
 import cx from "classnames";
 
-import { IInsightWidgetDescriptionConfiguration, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import {
+    type IInsightWidgetDescriptionConfiguration,
+    isInsightWidget,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
@@ -17,7 +21,7 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
-import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
+import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

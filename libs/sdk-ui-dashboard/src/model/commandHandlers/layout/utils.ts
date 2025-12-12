@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 
 /**
  * @internal

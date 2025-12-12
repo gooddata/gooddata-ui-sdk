@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper, createInternalIntl } from "../../../utils/internalIntlProvider.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
-import { IInputControlProps, InputControl } from "../InputControl.js";
+import { type IInputControlProps, InputControl } from "../InputControl.js";
 
 describe("InputControl", () => {
     const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];

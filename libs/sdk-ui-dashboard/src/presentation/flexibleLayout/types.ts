@@ -1,5 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 export type {
     IDashboardLayoutProps,

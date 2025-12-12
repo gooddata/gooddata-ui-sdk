@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IGeoJsonFeature, newBucket } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IAttribute, type IGeoJsonFeature, newBucket } from "@gooddata/sdk-model";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { deriveCollectionBoundingBox } from "./boundingBox.js";
 import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
@@ -11,13 +11,17 @@ import { getAreaLayerIds, removeAreaLayer, syncAreaLayerToMap } from "./operatio
 import { createAreaDataSource } from "./source.js";
 import { createAreaTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { bboxToViewport } from "../../map/viewport/viewportCalculation.js";
-import { IGeoAreaChartConfig } from "../../types/config/areaChart.js";
-import { IGeoLayerArea } from "../../types/layers/index.js";
-import { IGeoCollectionMetadata, getLocationCollectionMetadata } from "../../utils/geoCollection.js";
+import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
+import { type IGeoLayerArea } from "../../types/layers/index.js";
+import { type IGeoCollectionMetadata, getLocationCollectionMetadata } from "../../utils/geoCollection.js";
 import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
-import { IAreaLayerOutput, IGeoAdapterContext, IGeoLayerAdapter } from "../registry/adapterTypes.js";
+import {
+    type IAreaLayerOutput,
+    type IGeoAdapterContext,
+    type IGeoLayerAdapter,
+} from "../registry/adapterTypes.js";
 
 const COLLECTION_OVERRIDES: Record<string, { collectionId?: string }> = {
     region: { collectionId: "regions" },

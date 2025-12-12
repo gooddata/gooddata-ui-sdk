@@ -1,10 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IFilter, IMeasure, ISortItem, ITotal, TotalType } from "@gooddata/sdk-model";
-import { ExplicitDrill } from "@gooddata/sdk-ui";
+import {
+    type IAttribute,
+    type IFilter,
+    type IMeasure,
+    type ISortItem,
+    type ITotal,
+    type TotalType,
+} from "@gooddata/sdk-model";
+import { type ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { PivotTableNextConfig } from "../types/public.js";
-import { ColumnWidthItem } from "../types/resizing.js";
+import { type PivotTableNextConfig } from "../types/public.js";
+import { type ColumnWidthItem } from "../types/resizing.js";
 
 /**
  * Text to display in case of measure cell is empty.

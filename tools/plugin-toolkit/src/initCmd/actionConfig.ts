@@ -18,7 +18,7 @@ import {
     promptName,
     promptWorkspaceIdWithoutChoice,
 } from "../_base/terminal/prompts.js";
-import { ActionOptions, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
+import { type ActionOptions, type SupportedPackageManager, type TargetAppLanguage } from "../_base/types.js";
 import { convertToPluginIdentifier } from "../_base/utils.js";
 
 function getLanguageFromOptions(options: ActionOptions): TargetAppLanguage | undefined {

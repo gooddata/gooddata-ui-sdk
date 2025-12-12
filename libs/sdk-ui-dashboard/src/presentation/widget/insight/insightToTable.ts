@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    ArithmeticMeasureOperator,
-    IArithmeticMeasureDefinition,
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    IInsight,
-    IMeasure,
+    type ArithmeticMeasureOperator,
+    type IArithmeticMeasureDefinition,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IInsight,
+    type IMeasure,
     attributeAlias,
     attributeDisplayFormRef,
     attributeLocalId,

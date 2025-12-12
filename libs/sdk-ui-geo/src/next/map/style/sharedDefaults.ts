@@ -2,7 +2,7 @@
 
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
-import { IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartNextConfig } from "../../types/config/unified.js";
 
 type ConfigWithDefaults = IGeoChartNextConfig & {
     legend: NonNullable<IGeoChartNextConfig["legend"]>;

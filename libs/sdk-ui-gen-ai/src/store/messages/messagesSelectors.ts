@@ -2,8 +2,8 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import { messagesSliceName } from "./messagesSlice.js";
-import { Message } from "../../model.js";
-import { RootState } from "../types.js";
+import { type Message } from "../../model.js";
+import { type RootState } from "../types.js";
 
 const messagesSliceSelector = (state: RootState) => state[messagesSliceName];
 

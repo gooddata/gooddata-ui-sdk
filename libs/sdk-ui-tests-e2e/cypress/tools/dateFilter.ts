@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
+import { type DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 
 import { getTestClassByTitle } from "./utils";
 

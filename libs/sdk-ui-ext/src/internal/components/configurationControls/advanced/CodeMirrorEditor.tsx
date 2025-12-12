@@ -5,9 +5,9 @@ import { useEffect, useRef } from "react";
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
 import { yaml } from "@codemirror/lang-yaml";
 import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
-import { Diagnostic, lintGutter, linter } from "@codemirror/lint";
+import { type Diagnostic, lintGutter, linter } from "@codemirror/lint";
 import { EditorState } from "@codemirror/state";
-import { EditorView, ViewUpdate, keymap } from "@codemirror/view";
+import { EditorView, type ViewUpdate, keymap } from "@codemirror/view";
 import * as jsYaml from "js-yaml";
 
 export interface ICodeMirrorEditorProps {

@@ -2,7 +2,7 @@
 
 import { addDays, addMonths, addYears, format, getMonth, setDate, setMonth } from "date-fns";
 
-import { IRelativeDateFilter } from "@gooddata/sdk-model";
+import { type IRelativeDateFilter } from "@gooddata/sdk-model";
 
 enum DATE_GRANULARITY {
     DATE = "GDC.time.date",

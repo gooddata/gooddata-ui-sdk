@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
-import { ApiEntitlement, EntitiesApi_GetEntityUsers } from "./generated/metadata-json-api/index.js";
+import { type ApiEntitlement, EntitiesApi_GetEntityUsers } from "./generated/metadata-json-api/index.js";
 
 export type FeatureContext = {
     organizationId: string;

@@ -2,13 +2,13 @@
 
 import { difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { areObjRefsEqual, isUriRef, serializeObjRef } from "@gooddata/sdk-model";
 
-import { RemoveDateFilters } from "../../../commands/filters.js";
+import { type RemoveDateFilters } from "../../../commands/filters.js";
 import { dateFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -17,7 +17,7 @@ import {
     selectFilterContextDateFiltersWithDimension,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
 export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDateFilters): SagaIterator<void> {

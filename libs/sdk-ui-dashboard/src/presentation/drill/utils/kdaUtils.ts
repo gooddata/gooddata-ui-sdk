@@ -1,26 +1,26 @@
 // (C) 2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    DataValue,
-    IKeyDriveAnalysis,
-    IResultAttributeHeaderItem,
+    type DataValue,
+    type IKeyDriveAnalysis,
+    type IResultAttributeHeaderItem,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    IDrillEvent,
-    IDrillEventIntersectionElement,
-    ITableColumnDefinition,
-    ITableData,
-    ITableDataAttributeScope,
-    ITableDataValue,
-    ITableRowDefinition,
-    ITableValueColumnDefinition,
-    ITableValueRowDefinition,
+    type IDrillEvent,
+    type IDrillEventIntersectionElement,
+    type ITableColumnDefinition,
+    type ITableData,
+    type ITableDataAttributeScope,
+    type ITableDataValue,
+    type ITableRowDefinition,
+    type ITableValueColumnDefinition,
+    type ITableValueRowDefinition,
     isAttributeScope,
     isDrillIntersectionAttributeItem,
     isDrillIntersectionDateAttributeItem,
@@ -31,7 +31,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
-    DashboardKeyDriverCombinationItem,
+    type DashboardKeyDriverCombinationItem,
     keyDriverAnalysisSupportedStringGranularities,
     keyDriverYearGranularity,
 } from "../../../model/index.js";

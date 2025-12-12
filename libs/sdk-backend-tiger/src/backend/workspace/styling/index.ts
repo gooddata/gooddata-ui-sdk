@@ -4,21 +4,21 @@ import {
     EntitiesApi_GetAllEntitiesColorPalettes,
     EntitiesApi_GetAllEntitiesThemes,
 } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import {
-    IColorPaletteItem,
-    IColorPaletteMetadataObject,
-    ITheme,
-    IThemeMetadataObject,
-    ObjRef,
+    type IColorPaletteItem,
+    type IColorPaletteMetadataObject,
+    type ITheme,
+    type IThemeMetadataObject,
+    type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
 
 import { DefaultColorPalette } from "./mocks/colorPalette.js";
 import { DefaultTheme } from "./mocks/theme.js";
 import { unwrapColorPaletteContent } from "../../../convertors/fromBackend/ColorPaletteConverter.js";
-import { JsonApiId } from "../../../convertors/fromBackend/ObjRefConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type JsonApiId } from "../../../convertors/fromBackend/ObjRefConverter.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 import { TigerWorkspaceSettings, getSettingsForCurrentUser } from "../settings/index.js";
 

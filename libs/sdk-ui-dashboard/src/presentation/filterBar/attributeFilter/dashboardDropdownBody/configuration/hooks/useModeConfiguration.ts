@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 
-import { DashboardAttributeFilterConfigMode, IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { type DashboardAttributeFilterConfigMode, type IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import {
     selectAttributeFilterConfigsOverrides,

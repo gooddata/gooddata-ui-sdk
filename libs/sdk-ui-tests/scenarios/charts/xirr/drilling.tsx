@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IXirrProps, Xirr } from "@gooddata/sdk-ui-charts";
+import { type IXirrProps, Xirr } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { SampleXirrMeasurePredicate } from "../../_infra/predicates.js";

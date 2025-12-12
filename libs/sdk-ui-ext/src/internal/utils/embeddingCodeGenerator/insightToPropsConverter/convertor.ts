@@ -1,9 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
+import { type IBucket, type IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import { InsightToPropsConverter, PropMeta, PropWithMeta, PropsWithMeta } from "../types.js";
+import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import {
+    type InsightToPropsConverter,
+    type PropMeta,
+    type PropWithMeta,
+    type PropsWithMeta,
+} from "../types.js";
 
 /**
  * Describes a conversion from insight to a particular prop of a visualization.

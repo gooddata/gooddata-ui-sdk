@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { action } from "storybook/actions";
 
@@ -8,7 +8,7 @@ import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import {
     ComponentLabelsProvider,
     GranteeItemComponent,
-    IGranteeItemProps,
+    type IGranteeItemProps,
     getGranteeItemTestId,
 } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -27,7 +27,7 @@ import {
     userInactive,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "../styles/goodstrap.scss";
 

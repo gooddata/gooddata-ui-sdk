@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
-import { ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../../types/commonTypes.js";
 
 export type AttributeFilterDisplayFormValidationResult =
     | "VALID"

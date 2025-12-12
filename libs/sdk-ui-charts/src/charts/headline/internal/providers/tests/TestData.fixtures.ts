@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    IBucket,
-    IExecutionConfig,
-    IFilter,
-    ISortItem,
+    type IBucket,
+    type IExecutionConfig,
+    type IFilter,
+    type ISortItem,
     newBucket,
     newMeasureSort,
     newPositiveAttributeFilter,

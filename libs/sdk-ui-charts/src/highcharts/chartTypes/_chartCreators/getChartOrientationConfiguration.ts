@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { HighchartsOptions, XAxisOptions } from "../../lib/index.js";
-import { IChartOptions } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type HighchartsOptions, type XAxisOptions } from "../../lib/index.js";
+import { type IChartOptions } from "../../typings/unsafe.js";
 import { isWaterfall } from "../_util/common.js";
 
 function shortenXAxisLabel(xAxis: XAxisOptions[]) {

@@ -1,14 +1,20 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { FC, ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isIdentifierRef, isObjRef } from "@gooddata/sdk-model";
-import { IIconProps, IconAttribute, IconAttributeFilter, IconFact, IconMetric } from "@gooddata/sdk-ui-kit";
+import {
+    type IIconProps,
+    IconAttribute,
+    IconAttributeFilter,
+    IconFact,
+    IconMetric,
+} from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../../../../locales.js";
-import { ValuesLimitingItem } from "../../../../types.js";
+import { type ValuesLimitingItem } from "../../../../types.js";
 
 export function UnknownItemTitle() {
     return (

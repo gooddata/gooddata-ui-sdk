@@ -3,8 +3,8 @@
 import cx from "classnames";
 
 import { ALIGN_POINTS, ARROW_OFFSETS } from "./constants.js";
-import { ArrowOffset, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type ArrowOffset, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 /**
  * @internal

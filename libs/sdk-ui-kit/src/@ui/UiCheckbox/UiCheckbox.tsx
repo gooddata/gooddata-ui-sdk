@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ChangeEvent, useEffect, useRef } from "react";
+import { type ChangeEvent, useEffect, useRef } from "react";
 
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { bem } from "../@utils/bem.js";
 

@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    IMeasure,
-    IMeasureDescriptor,
-    ObjRef,
+    type IMeasure,
+    type IMeasureDescriptor,
+    type ObjRef,
     attributeDisplayFormRef,
     attributeLocalId,
     isArithmeticMeasure,
@@ -22,15 +22,15 @@ import {
     measureUri,
 } from "@gooddata/sdk-model";
 
-import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate.js";
+import { type IHeaderPredicate, type IHeaderPredicateContext } from "./HeaderPredicate.js";
 import {
-    IMappingHeader,
+    type IMappingHeader,
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderUri,
     hasMappingHeaderLocalIdentifier,
 } from "./MappingHeader.js";
-import { DataViewFacade } from "../results/facade.js";
+import { type DataViewFacade } from "../results/facade.js";
 
 /**
  * This predicate is returned when predicate factory encounters invalid input. Having it to keep backward

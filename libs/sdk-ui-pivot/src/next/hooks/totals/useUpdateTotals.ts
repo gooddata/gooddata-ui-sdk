@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { isEqual, uniqWith } from "lodash-es";
 
-import { ITotal } from "@gooddata/sdk-model";
+import { type ITotal } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";

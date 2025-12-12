@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo } from "react";
+import { type RefObject, useMemo } from "react";
 
-import { EditorView, ViewUpdate } from "@codemirror/view";
+import { EditorView, type ViewUpdate } from "@codemirror/view";
 
 export function useChangeHandler({
     handleChange,

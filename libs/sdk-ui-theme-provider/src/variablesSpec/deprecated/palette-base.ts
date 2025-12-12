@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import { ThemeDeprecatedCssVariable } from "../types.js";
+import { type ThemeDeprecatedCssVariable } from "../types.js";
 
 export const paletteBaseThemeDeprecatedVariables: ThemeDeprecatedCssVariable[] = [
     {

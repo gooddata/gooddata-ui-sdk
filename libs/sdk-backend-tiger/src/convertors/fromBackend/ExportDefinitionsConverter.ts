@@ -4,25 +4,25 @@ import { isEmpty } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
 import {
-    AutomationAutomationImageExport,
-    AutomationAutomationSlidesExport,
-    AutomationAutomationTabularExport,
-    AutomationAutomationVisualExport,
-    JsonApiAutomationInAttributesDashboardTabularExportsInner,
-    JsonApiAutomationInAttributesRawExportsInner,
-    JsonApiExportDefinitionOutIncludes,
-    JsonApiExportDefinitionOutWithLinks,
-    TabularExportRequest,
-    VisualExportRequest,
+    type AutomationAutomationImageExport,
+    type AutomationAutomationSlidesExport,
+    type AutomationAutomationTabularExport,
+    type AutomationAutomationVisualExport,
+    type JsonApiAutomationInAttributesDashboardTabularExportsInner,
+    type JsonApiAutomationInAttributesRawExportsInner,
+    type JsonApiExportDefinitionOutIncludes,
+    type JsonApiExportDefinitionOutWithLinks,
+    type TabularExportRequest,
+    type VisualExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
-    FilterContextItem,
-    IExportDefinitionDashboardRequestPayload,
-    IExportDefinitionMetadataObject,
-    IExportDefinitionRequestPayload,
-    IExportDefinitionVisualizationObjectRequestPayload,
-    IExportDefinitionVisualizationObjectSettings,
-    IFilter,
+    type FilterContextItem,
+    type IExportDefinitionDashboardRequestPayload,
+    type IExportDefinitionMetadataObject,
+    type IExportDefinitionRequestPayload,
+    type IExportDefinitionVisualizationObjectRequestPayload,
+    type IExportDefinitionVisualizationObjectSettings,
+    type IFilter,
     idRef,
 } from "@gooddata/sdk-model";
 

@@ -1,19 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
 import type mapboxgl from "mapbox-gl";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAttribute, type IColorPalette, type IExecutionConfig } from "@gooddata/sdk-model";
 import {
-    AttributeMeasureOrPlaceholder,
-    AttributeOrPlaceholder,
-    IDrillEventContext,
-    ISeparators,
-    IVisualizationCallbacks,
-    IVisualizationProps,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
+    type AttributeMeasureOrPlaceholder,
+    type AttributeOrPlaceholder,
+    type IDrillEventContext,
+    type ISeparators,
+    type IVisualizationCallbacks,
+    type IVisualizationProps,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IColorMapping, PositionType } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorMapping, type PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 export interface IGeoLngLatBounds {
     northEast: IGeoLngLat;

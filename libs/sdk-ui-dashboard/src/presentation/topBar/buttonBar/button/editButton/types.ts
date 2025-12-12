@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 /**
  * @beta

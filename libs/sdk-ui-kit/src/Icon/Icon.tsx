@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { FC } from "react";
+import { type FC } from "react";
 
 import { Aborted } from "./icons/Aborted.js";
 import { Alert } from "./icons/Alert.js";
@@ -18,7 +18,7 @@ import { BurgerMenu } from "./icons/BurgerMenu.js";
 import { ChatBubble } from "./icons/ChatBubble.js";
 import { Close } from "./icons/Close.js";
 import { ColumnContainer } from "./icons/ColumnContainer.js";
-import { Columns, IColumnsIconProps } from "./icons/Columns.js";
+import { Columns, type IColumnsIconProps } from "./icons/Columns.js";
 import { Contract } from "./icons/Contract.js";
 import { Copy } from "./icons/Copy.js";
 import { Dashboard } from "./icons/Dashboard.js";
@@ -89,7 +89,7 @@ import { QuestionMark } from "./icons/QuestionMark.js";
 import { Refresh } from "./icons/Refresh.js";
 import { Reset } from "./icons/Reset.js";
 import { RichText } from "./icons/RichText.js";
-import { IRowsIconProps, Rows } from "./icons/Rows.js";
+import { type IRowsIconProps, Rows } from "./icons/Rows.js";
 import { Run } from "./icons/Run.js";
 import { Save } from "./icons/Save.js";
 import { Schedule } from "./icons/Schedule.js";
@@ -110,7 +110,7 @@ import { Warning } from "./icons/Warning.js";
 import { Webhook } from "./icons/Webhook.js";
 import { Website } from "./icons/Website.js";
 import { Widget } from "./icons/Widget.js";
-import { IIconProps } from "./typings.js";
+import { type IIconProps } from "./typings.js";
 
 /**
  * @internal

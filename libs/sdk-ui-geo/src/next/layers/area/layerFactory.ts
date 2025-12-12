@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoLayerArea } from "../../types/layers/index.js";
+import { type IGeoLayerArea } from "../../types/layers/index.js";
 
 /**
  * Default id for the primary area layer produced by GeoAreaChart.

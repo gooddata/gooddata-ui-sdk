@@ -9,7 +9,7 @@ import { agGridSetColumnDefs } from "../../features/columns/agGridColDefsApi.js"
 import { agGridSetPivotResultColumns } from "../../features/pivoting/agGridPivotingApi.js";
 import { columnDefsToPivotGroups } from "../../features/pivoting/columnDefsToPivotGroups.js";
 import { applyTextWrappingToGroupDef } from "../../features/textWrapping/applyTextWrappingToGroupDef.js";
-import { AgGridApi, AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { type AgGridApi, type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
 
 /**
  * Updates column defs in ag-grid, by updated column defs (use this only if you are working with flat column defs).

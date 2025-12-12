@@ -2,21 +2,21 @@
 
 import { cloneDeep, compact, isEmpty, omitBy, set, tail } from "lodash-es";
 
-import { IBackendCapabilities, IDataView, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IBackendCapabilities, type IDataView, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    IColorMappingItem,
-    IDimension,
-    IInsight,
-    IInsightDefinition,
-    ISortItem,
+    type IColorMappingItem,
+    type IDimension,
+    type IInsight,
+    type IInsightDefinition,
+    type ISortItem,
     insightHasMeasures,
 } from "@gooddata/sdk-model";
-import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     BaseChart,
     ColorUtils,
-    IChartConfig,
-    IColorMapping,
+    type IChartConfig,
+    type IColorMapping,
     updateConfigWithSettings,
     updateForecastWithSettings,
 } from "@gooddata/sdk-ui-charts";
@@ -31,23 +31,23 @@ import {
     MAX_CATEGORIES_COUNT,
     defaultImprovedFilters,
 } from "../../../constants/uiConfig.js";
-import { AxisType } from "../../../interfaces/AxisType.js";
-import { IColorConfiguration } from "../../../interfaces/Colors.js";
-import { IAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type AxisType } from "../../../interfaces/AxisType.js";
+import { type IColorConfiguration } from "../../../interfaces/Colors.js";
+import { type IAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IDrillDownContext,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IReferences,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IDrillDownContext,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IReferences,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
     InvalidBucketsSdkError,
-    RenderFunction,
-    UnmountFunction,
+    type RenderFunction,
+    type UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

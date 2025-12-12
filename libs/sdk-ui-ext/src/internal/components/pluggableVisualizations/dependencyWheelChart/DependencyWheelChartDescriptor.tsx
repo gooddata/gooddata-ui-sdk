@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import { ISankeyChartProps } from "@gooddata/sdk-ui-charts";
+import { type ISankeyChartProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggableDependencyWheelChart } from "./PluggableDependencyWheelChart.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

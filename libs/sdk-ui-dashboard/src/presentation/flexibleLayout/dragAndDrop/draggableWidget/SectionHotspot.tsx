@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Ref, useEffect } from "react";
+import { type Ref, useEffect } from "react";
 
 import cx from "classnames";
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
@@ -16,7 +16,7 @@ import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useN
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { isItemInSection } from "../../../../_staging/layout/coordinates.js";
 import { useDashboardDispatch } from "../../../../model/index.js";
-import { ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutSectionPath } from "../../../../types.js";
 import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
 import { useDashboardDrop } from "../../../dragAndDrop/index.js";

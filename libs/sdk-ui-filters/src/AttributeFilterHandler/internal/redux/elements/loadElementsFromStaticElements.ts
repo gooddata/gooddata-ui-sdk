@@ -1,22 +1,22 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    ElementsQueryOptionsElementsSpecification,
-    IElementsQueryResult,
+    type ElementsQueryOptionsElementsSpecification,
+    type IElementsQueryResult,
     NotImplemented,
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeElement,
-    IAttributeElements,
+    type IAttributeElement,
+    type IAttributeElements,
     attributeElementsIsEmpty,
     isAttributeElementsByRef,
 } from "@gooddata/sdk-model";
 
 import { InMemoryPaging } from "./InMemoryPaging.js";
-import { IHiddenElementsInfo } from "./types.js";
-import { ILoadElementsOptions } from "../../../types/index.js";
+import { type IHiddenElementsInfo } from "./types.js";
+import { type ILoadElementsOptions } from "../../../types/index.js";
 
 const resolveHiddenElements =
     (hiddenElements: IAttributeElements) =>

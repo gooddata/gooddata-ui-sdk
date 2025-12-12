@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 /**
  * @beta

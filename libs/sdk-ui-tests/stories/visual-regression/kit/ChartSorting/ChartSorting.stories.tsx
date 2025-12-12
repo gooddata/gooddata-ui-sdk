@@ -5,7 +5,7 @@ import { action } from "storybook/actions";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { ChartSortingDialog, IBucketItemDescriptors } from "@gooddata/sdk-ui-kit";
+import { ChartSortingDialog, type IBucketItemDescriptors } from "@gooddata/sdk-ui-kit";
 
 import {
     multipleAttributesMultipleMetricsSortConfig,
@@ -15,7 +15,7 @@ import {
     singleChronologicalDateSortConfig,
     singleGenericDateAndMetricSortConfig,
 } from "./ChartSortingMock.js";
-import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";

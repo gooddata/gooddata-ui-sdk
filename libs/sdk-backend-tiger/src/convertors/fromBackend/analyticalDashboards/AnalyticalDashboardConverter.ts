@@ -14,7 +14,13 @@ import {
     type JsonApiDashboardPluginOutWithLinks,
     type JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
-import { IDashboard, IDashboardPlugin, IFilterContext, IListedDashboard, idRef } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    type IDashboardPlugin,
+    type IFilterContext,
+    type IListedDashboard,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "../ObjectInheritance.js";
 import { convertUserIdentifier } from "../UsersConverter.js";

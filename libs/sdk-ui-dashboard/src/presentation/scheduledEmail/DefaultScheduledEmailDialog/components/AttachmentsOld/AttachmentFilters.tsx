@@ -10,13 +10,13 @@ import {
     Button,
     ContentDivider,
     Dropdown,
-    IAlignPoint,
-    OverlayPositionType,
+    type IAlignPoint,
+    type OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
 import { AttachmentFiltersList } from "./AttachmentFiltersList.js";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
-import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
+import { type IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
 
 const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
     {

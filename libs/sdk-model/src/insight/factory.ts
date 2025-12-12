@@ -1,14 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    IAttributeFilterConfigs,
-    IInsightDefinition,
-    IInsightLayerDefinition,
-    VisualizationProperties,
+    type IAttributeFilterConfigs,
+    type IInsightDefinition,
+    type IInsightLayerDefinition,
+    type VisualizationProperties,
 } from "./index.js";
-import { ISortItem } from "../execution/base/sort.js";
-import { IBucket } from "../execution/buckets/index.js";
-import { IFilter } from "../execution/filter/index.js";
+import { type ISortItem } from "../execution/base/sort.js";
+import { type IBucket } from "../execution/buckets/index.js";
+import { type IFilter } from "../execution/filter/index.js";
 
 /*
  * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on

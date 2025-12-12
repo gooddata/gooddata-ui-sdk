@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { modifyMeasure } from "@gooddata/sdk-model";
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
 import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals.js";

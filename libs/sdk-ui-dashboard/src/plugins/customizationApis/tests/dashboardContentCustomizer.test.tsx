@@ -1,22 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { FC } from "react";
+import { type FC } from "react";
 
 import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { IDashboard, ObjRef } from "@gooddata/sdk-model";
+import { type IDashboard, type ObjRef } from "@gooddata/sdk-model";
 
 import { EMPTY_MUTATIONS } from "./utils.js";
 import {
-    DashboardContentComponentProvider,
-    IDashboardBaseProps,
-    OptionalDashboardContentComponentProvider,
+    type DashboardContentComponentProvider,
+    type IDashboardBaseProps,
+    type OptionalDashboardContentComponentProvider,
 } from "../../../presentation/index.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultDashboardContentCustomizer } from "../dashboardContentCustomizer.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 //
 //

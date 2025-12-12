@@ -6,17 +6,17 @@ import { createSelector } from "@reduxjs/toolkit";
 import { difference, union, uniq } from "lodash-es";
 
 import {
-    IAttributeElements,
-    IAttributeFilter,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-    ObjRef,
+    type IAttributeElements,
+    type IAttributeFilter,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type ObjRef,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { selectState } from "../common/selectors.js";
-import { FilterSelector } from "../common/types.js";
+import { type FilterSelector } from "../common/types.js";
 import { selectElements } from "../elements/elementsSelectors.js";
 import {
     selectCommittedSelection,

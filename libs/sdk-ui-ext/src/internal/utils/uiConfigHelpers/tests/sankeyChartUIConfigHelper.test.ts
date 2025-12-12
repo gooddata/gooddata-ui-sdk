@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
-import { IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
+import { type IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
 import { configBuckets } from "../sankeyChartUiConfigHelper.js";
 
 describe("SankeyChartUIHelper", () => {

@@ -2,7 +2,7 @@
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
+import { type ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 
 import cx from "classnames";
 

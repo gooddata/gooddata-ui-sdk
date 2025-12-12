@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { invariant } from "ts-invariant";
 
 import {
-    IWidget,
+    type IWidget,
     isAttributeMetadataObject,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,

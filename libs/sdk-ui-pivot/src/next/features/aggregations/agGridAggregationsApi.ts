@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { GridApi } from "ag-grid-enterprise";
+import { type GridApi } from "ag-grid-enterprise";
 
-import { GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
-import { AgGridRowData } from "../../types/internal.js";
+import { type GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Set grand total rows to the ag-grid.

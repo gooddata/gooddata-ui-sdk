@@ -3,27 +3,27 @@
 import { difference } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+import { type ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSectionHeader,
-    IDashboardLayoutSize,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSectionHeader,
+    type IDashboardLayoutSize,
     isDashboardLayoutSection,
 } from "@gooddata/sdk-model";
 
 import {
-    DashboardLayoutItemModifications,
-    DashboardLayoutItemsSelector,
-    DashboardLayoutSectionModifications,
-    IDashboardLayoutBuilder,
-    IDashboardLayoutItemBuilder,
-    IDashboardLayoutSectionBuilder,
+    type DashboardLayoutItemModifications,
+    type DashboardLayoutItemsSelector,
+    type DashboardLayoutSectionModifications,
+    type IDashboardLayoutBuilder,
+    type IDashboardLayoutItemBuilder,
+    type IDashboardLayoutSectionBuilder,
 } from "./interfaces.js";
 import { DashboardLayoutItemBuilder } from "./item.js";
 import { getItemIndex } from "../../../layout/coordinates.js";
-import { IDashboardLayoutSectionFacade } from "../facade/interfaces.js";
+import { type IDashboardLayoutSectionFacade } from "../facade/interfaces.js";
 
 /**
  * @alpha

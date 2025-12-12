@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 
-import { ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
 
 import {
     catalogActions,

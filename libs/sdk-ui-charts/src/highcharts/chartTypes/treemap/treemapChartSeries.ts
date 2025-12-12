@@ -2,17 +2,21 @@
 
 import { isEqual } from "lodash-es";
 
-import { IMeasureGroupDescriptor, IResultAttributeHeader, ITheme } from "@gooddata/sdk-model";
-import { DataViewFacade, getAttributeHeaderItemName, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { type IMeasureGroupDescriptor, type IResultAttributeHeader, type ITheme } from "@gooddata/sdk-model";
 import {
-    ChartFillConfig,
-    IColorStrategy,
+    type DataViewFacade,
+    getAttributeHeaderItemName,
+    getMappingHeaderFormattedName,
+} from "@gooddata/sdk-ui";
+import {
+    type ChartFillConfig,
+    type IColorStrategy,
     getLighterColor,
     valueWithEmptyHandling,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { IPointData } from "../../typings/unsafe.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IPointData } from "../../typings/unsafe.js";
 import { getChartFillProperties, getColorOrPatternFillIndex } from "../_chartOptions/patternFillOptions.js";
 import { parseValue, unwrap } from "../_util/common.js";
 

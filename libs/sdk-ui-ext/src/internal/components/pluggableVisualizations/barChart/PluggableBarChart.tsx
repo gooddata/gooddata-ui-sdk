@@ -2,14 +2,18 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IInsightDefinition, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
+import { type IInsightDefinition, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { canSortStackTotalValue } from "./sortHelpers.js";
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
-import { IReferencePoint, IVisConstruct, IVisProps } from "../../../interfaces/Visualization.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import {
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+} from "../../../interfaces/Visualization.js";
 import { getBucketItems } from "../../../utils/bucketHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { BarChartConfigurationPanel } from "../../configurationPanels/BarChartConfigurationPanel.js";

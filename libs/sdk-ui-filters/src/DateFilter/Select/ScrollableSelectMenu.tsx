@@ -1,15 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { CSSProperties, Component, createRef } from "react";
+import { type CSSProperties, Component, createRef } from "react";
 
 import cx from "classnames";
-import { ControllerStateAndHelpers } from "downshift";
+import { type ControllerStateAndHelpers } from "downshift";
 import { range } from "lodash-es";
 
 import { SelectHeading } from "./SelectHeading.js";
 import { SelectOption } from "./SelectOption.js";
 import { SelectSeparator } from "./SelectSeparator.js";
-import { ISelectItem, ISelectItemOption, SelectItemTypes } from "./types.js";
+import { type ISelectItem, type ISelectItemOption, type SelectItemTypes } from "./types.js";
 import { getSelectableItems } from "./utils.js";
 
 export interface IOptionGetterProps<V> {

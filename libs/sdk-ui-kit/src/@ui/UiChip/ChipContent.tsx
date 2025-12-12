@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ChipContentProps } from "./types.js";
+import { type ChipContentProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { useIsScopeThemed, useTheme } from "./Context.js";
 import { ScopedThemeProvider } from "./ScopedThemeProvider.js";

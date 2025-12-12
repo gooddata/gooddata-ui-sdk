@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjRef } from "../../../objRef/index.js";
-import { ICatalogItemBase } from "../types.js";
+import { type ObjRef } from "../../../objRef/index.js";
+import { type ICatalogItemBase } from "../types.js";
 
 /**
  * Catalog group can be used to group catalog items

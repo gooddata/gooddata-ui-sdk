@@ -2,12 +2,12 @@
 
 import { useCallback } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { ISortItem } from "@gooddata/sdk-model";
+import { type ISortItem } from "@gooddata/sdk-model";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";
-import { IAvailableSortsGroup, IBucketItemDescriptors } from "./types.js";
+import { type IAvailableSortsGroup, type IBucketItemDescriptors } from "./types.js";
 
 interface ChartSortingProps {
     currentSort: ISortItem[];

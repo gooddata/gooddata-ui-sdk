@@ -1,6 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { ChartFillType, PatternFill, PatternFillName, getPatternFill } from "@gooddata/sdk-ui-vis-commons";
+import {
+    type ChartFillType,
+    PatternFill,
+    type PatternFillName,
+    getPatternFill,
+} from "@gooddata/sdk-ui-vis-commons";
 
 export interface OptionalPatternFillProps {
     chartFill: ChartFillType;

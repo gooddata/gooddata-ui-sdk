@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { newBucket, newDefForBuckets } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration.js";
 
 describe("Combo Configuration", () => {

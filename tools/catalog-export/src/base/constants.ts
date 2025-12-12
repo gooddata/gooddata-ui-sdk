@@ -1,5 +1,5 @@
 // (C) 2007-2024 GoodData Corporation
-import { CatalogExportConfig } from "./types.js";
+import { type CatalogExportConfig } from "./types.js";
 
 export const DEFAULT_CONFIG_FILE_NAME = ".gdcatalogrc";
 export const DEFAULT_OUTPUT_FILE_NAME = "catalog.ts";

@@ -1,24 +1,24 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, all, call, put } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, all, call, put } from "redux-saga/effects";
 
 import {
-    DrillDefinition,
-    IInsightWidget,
-    IKpiWidget,
-    IRichTextWidget,
-    IVisualizationSwitcherWidget,
-    InsightDrillDefinition,
+    type DrillDefinition,
+    type IInsightWidget,
+    type IKpiWidget,
+    type IRichTextWidget,
+    type IVisualizationSwitcherWidget,
+    type InsightDrillDefinition,
     isInsightWidget,
     widgetRef,
 } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "../../commands/index.js";
+import { type IDashboardCommand } from "../../commands/index.js";
 import { insightWidgetDrillsRemoved } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { uiActions } from "../../store/ui/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { existsDrillDefinitionInArray } from "../widgets/validation/insightDrillDefinitionUtils.js";
 import {
     getValidationData,

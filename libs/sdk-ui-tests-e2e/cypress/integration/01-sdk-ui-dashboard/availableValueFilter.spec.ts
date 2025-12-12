@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { DateFilter } from "../../tools/dateFilter";

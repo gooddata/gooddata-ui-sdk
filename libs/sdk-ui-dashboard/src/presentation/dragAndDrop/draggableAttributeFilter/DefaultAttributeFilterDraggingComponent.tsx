@@ -3,9 +3,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
+    type ObjRef,
     areObjRefsEqual,
     idRef,
     uriRef,
@@ -14,7 +14,7 @@ import { IconDragHandle, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
-import { IAttributeFilterDraggingComponentProps } from "../../componentDefinition/index.js";
+import { type IAttributeFilterDraggingComponentProps } from "../../componentDefinition/index.js";
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
     return (

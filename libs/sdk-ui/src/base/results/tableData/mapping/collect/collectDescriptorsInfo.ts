@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";

@@ -2,7 +2,7 @@
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
-import { IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
+import { type IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

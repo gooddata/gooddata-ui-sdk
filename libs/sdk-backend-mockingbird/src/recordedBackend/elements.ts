@@ -4,21 +4,21 @@ import { invariant } from "ts-invariant";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
-    FilterWithResolvableElements,
-    IElementsQuery,
-    IElementsQueryAttributeFilter,
-    IElementsQueryFactory,
-    IElementsQueryOptions,
-    IElementsQueryResult,
-    IFilterElementsQuery,
+    type FilterWithResolvableElements,
+    type IElementsQuery,
+    type IElementsQueryAttributeFilter,
+    type IElementsQueryFactory,
+    type IElementsQueryOptions,
+    type IElementsQueryResult,
+    type IFilterElementsQuery,
     NotImplemented,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeElement,
-    IMeasure,
-    IRelativeDateFilter,
-    ObjRef,
+    type IAttributeElement,
+    type IMeasure,
+    type IRelativeDateFilter,
+    type ObjRef,
     filterAttributeElements,
     filterObjRef,
     isAttributeElementsByRef,
@@ -27,7 +27,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { resolveLimitingItems, resolveSelectedElements, resolveStringFilter } from "./elementsUtils.js";
-import { RecordedBackendConfig, RecordingIndex } from "./types.js";
+import { type RecordedBackendConfig, type RecordingIndex } from "./types.js";
 import { identifierToRecording } from "./utils.js";
 
 /**

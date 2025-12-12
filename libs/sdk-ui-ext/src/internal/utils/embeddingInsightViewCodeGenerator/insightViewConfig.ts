@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
-import { DefaultLocale, ILocale, resolveLocale } from "@gooddata/sdk-ui";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import { IGeoConfig } from "@gooddata/sdk-ui-geo";
-import { PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
+import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
+import { DefaultLocale, type ILocale, resolveLocale } from "@gooddata/sdk-ui";
+import { type IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { type PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
 
 import { chartConfigFromInsight } from "../../components/pluggableVisualizations/chartCodeGenUtils.js";
 import {
@@ -15,8 +15,8 @@ import {
     isPivotTableNext,
     pivotTableNextConfigForInsightViewComponent,
 } from "../../components/pluggableVisualizations/pivotTableNext/pivotTableNextConfigFromInsight.js";
-import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
-import { PropWithMeta } from "../embeddingCodeGenerator/index.js";
+import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
+import { type PropWithMeta } from "../embeddingCodeGenerator/index.js";
 
 /**
  * @internal

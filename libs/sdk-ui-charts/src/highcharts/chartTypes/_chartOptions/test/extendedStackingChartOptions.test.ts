@@ -3,13 +3,18 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IAttributeDescriptor, attributeIdentifier, measureIdentifier, uriRef } from "@gooddata/sdk-model";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import {
+    type IAttributeDescriptor,
+    attributeIdentifier,
+    measureIdentifier,
+    uriRef,
+} from "@gooddata/sdk-model";
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
-import { ChartFillType } from "@gooddata/sdk-ui-vis-commons";
+import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { getDrillableSeries } from "../chartDrilling.js";

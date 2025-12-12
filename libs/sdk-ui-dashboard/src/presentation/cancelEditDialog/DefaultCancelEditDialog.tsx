@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 
-import { ICancelEditDialogProps } from "./types.js";
+import { type ICancelEditDialogProps } from "./types.js";
 import {
     cancelEditRenderMode,
     selectIsCancelEditModeDialogOpen,

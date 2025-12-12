@@ -6,14 +6,14 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import {
-    IWidget,
-    ObjRef,
+    type IWidget,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardDateFilterReference,
     isInsightWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";

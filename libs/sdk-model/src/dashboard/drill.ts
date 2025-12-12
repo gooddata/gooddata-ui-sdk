@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { ObjRef, ObjRefInScope } from "../objRef/index.js";
+import { type ObjRef, type ObjRefInScope } from "../objRef/index.js";
 
 /**
  * Insight widget drill definition

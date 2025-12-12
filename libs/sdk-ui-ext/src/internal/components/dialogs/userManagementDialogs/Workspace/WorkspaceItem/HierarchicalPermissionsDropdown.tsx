@@ -10,8 +10,8 @@ import { stringUtils } from "@gooddata/util";
 
 import { PermissionsDropdownList } from "./HierarchicalPermissionsDropdownList.js";
 import { hierarchicalPermissionMessages } from "./locales.js";
-import { TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
-import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
+import { type TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
+import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../../types.js";
 
 const trackPermissionChange = (
     trackEvent: TrackEventCallback,

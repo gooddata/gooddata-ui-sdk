@@ -5,7 +5,7 @@ import { useState } from "react";
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
-import { AgGridHeaderParams } from "../../types/agGrid.js";
+import { type AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Renderer for empty measure group header.

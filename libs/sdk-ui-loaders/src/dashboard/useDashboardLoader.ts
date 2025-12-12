@@ -8,17 +8,21 @@ import { invariant } from "ts-invariant";
 
 import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";
 import {
-    IClientWorkspaceIdentifiers,
-    UseCancelablePromiseState,
+    type IClientWorkspaceIdentifiers,
+    type UseCancelablePromiseState,
     useBackendStrict,
     useCancelablePromise,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { DashboardConfig, IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
+import { type DashboardConfig, type IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
 
 import { DashboardLoader } from "./dashboardLoader.js";
-import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
-import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
+import { type DashboardLoadResult, type IDashboardLoader } from "./loader.js";
+import {
+    type IDashboardBasePropsForLoader,
+    type IDashboardLoadOptions,
+    type IEmbeddedPlugin,
+} from "./types.js";
 
 /**
  * Returned by the `useDashboardLoader` to communicate the status of dashboard loading.

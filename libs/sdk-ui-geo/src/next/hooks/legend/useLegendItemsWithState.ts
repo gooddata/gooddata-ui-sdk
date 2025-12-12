@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
-import { IGeoLegendItem } from "../../types/common/legends.js";
+import { type IGeoLegendItem } from "../../types/common/legends.js";
 
 /**
  * Hook to merge legend items with their visibility state from context.

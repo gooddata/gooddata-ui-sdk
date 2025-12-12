@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
+import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
 import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

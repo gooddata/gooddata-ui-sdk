@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IPieChartProps, PieChart } from "@gooddata/sdk-ui-charts";
+import { type IPieChartProps, PieChart } from "@gooddata/sdk-ui-charts";
 
 import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

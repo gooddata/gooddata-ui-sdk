@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { useLayerTooltips } from "./useLayerTooltips.js";
 import { type IGeoLayerData, useGeoLayers } from "../../context/GeoLayersContext.js";
@@ -11,7 +11,7 @@ import type { IMapFacade } from "../../layers/common/mapFacade.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import { buildOutputFromLayerData } from "../../layers/registry/output.js";
-import { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 
 interface IUseLayerSyncParams {
     /**

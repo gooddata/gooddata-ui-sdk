@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { newInsight } from "../../../__mocks__/insights.js";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
-import { IColorMappingItem, isColorMappingItem, isInsight } from "../index.js";
+import { type IColorMappingItem, isColorMappingItem, isInsight } from "../index.js";
 
 describe("insight type guards", () => {
     describe("isInsight", () => {

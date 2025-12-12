@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { DropdownButton, IToggleButtonProps } from "@gooddata/sdk-ui-kit";
+import { DropdownButton, type IToggleButtonProps } from "@gooddata/sdk-ui-kit";
 
 export function NumberFormatToggleButton({
     disabled,

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { SyntheticEvent } from "react";
+import { type SyntheticEvent } from "react";
 
 /**
  * @internal

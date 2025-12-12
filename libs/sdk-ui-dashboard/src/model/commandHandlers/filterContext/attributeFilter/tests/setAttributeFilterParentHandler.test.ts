@@ -6,7 +6,7 @@ import { uriRef } from "@gooddata/sdk-model";
 
 import { setAttributeFilterParents } from "../../../../commands/index.js";
 import { selectFilterContextAttributeFilters } from "../../../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("setAttributeFilterParentHandler", () => {

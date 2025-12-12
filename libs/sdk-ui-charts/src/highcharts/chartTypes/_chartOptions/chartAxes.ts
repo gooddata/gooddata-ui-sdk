@@ -2,13 +2,13 @@
 
 import { compact, isEmpty, range } from "lodash-es";
 
-import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { supportedDualAxesChartTypes } from "./chartCapabilities.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { IAxis, ISeriesItem } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IAxis, type ISeriesItem } from "../../typings/unsafe.js";
 import {
     isBarChart,
     isBubbleChart,

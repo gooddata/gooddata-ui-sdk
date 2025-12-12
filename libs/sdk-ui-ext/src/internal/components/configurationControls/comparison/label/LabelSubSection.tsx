@@ -1,18 +1,18 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
-import { PushDataCallback } from "@gooddata/sdk-ui";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
 import {
     CalculateAs,
-    CalculationType,
+    type CalculationType,
     ComparisonPositionValues,
-    IDefaultLabelKeys,
+    type IDefaultLabelKeys,
 } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages, messages } from "../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { CheckboxControl } from "../../CheckboxControl.js";
 import { ConfigSubsection } from "../../ConfigSubsection.js";
 import { InputControl } from "../../InputControl.js";

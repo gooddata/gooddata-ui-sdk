@@ -3,10 +3,10 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAttribute, IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { type IAttribute, type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IAreaChartProps, getBucketsProps, getConfigProps } from "../AreaChart.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IAreaChartProps, getBucketsProps, getConfigProps } from "../AreaChart.js";
 
 describe("getPropsForArea", () => {
     function getPropsForArea(props: IAreaChartProps): {

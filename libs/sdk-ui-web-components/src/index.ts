@@ -18,7 +18,7 @@ if (window && typeof w.__GD_ASSET_PATH__ === "string") {
 }
 
 import { initializeAutoAuth } from "./autoAuth.js";
-import { CustomElementContext, getContext, setContext } from "./context.js";
+import { type CustomElementContext, getContext, setContext } from "./context.js";
 import { GenAIAssistant } from "./gen-ai/GenAiAssistant.js";
 import { Dashboard } from "./visualizations/Dashboard.js";
 import { Insight } from "./visualizations/Insight.js";

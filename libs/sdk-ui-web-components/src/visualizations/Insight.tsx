@@ -1,22 +1,22 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IInsight } from "@gooddata/sdk-model";
+import { type IInsight } from "@gooddata/sdk-model";
 import {
-    GoodDataSdkError,
-    IDrillEvent,
-    IExportFunction,
-    ILoadingState,
+    type GoodDataSdkError,
+    type IDrillEvent,
+    type IExportFunction,
+    type ILoadingState,
     resolveLocale,
 } from "@gooddata/sdk-ui";
 import type { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { CustomElementAdapter, EVENT_HANDLER, GET_COMPONENT, LOAD_COMPONENT } from "../common/index.js";
 import { stringToFilters } from "../common/typeGuards/stringToFilters.js";
-import { CustomElementContext } from "../context.js";
+import { type CustomElementContext } from "../context.js";
 
 type IInsightView = typeof InsightView;
 

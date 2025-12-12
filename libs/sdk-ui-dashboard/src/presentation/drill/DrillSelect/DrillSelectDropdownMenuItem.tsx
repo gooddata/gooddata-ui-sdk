@@ -3,10 +3,10 @@
 import cx from "classnames";
 import { compact } from "lodash-es";
 
-import { IUiMenuInteractiveItemProps, IconType, UiIcon } from "@gooddata/sdk-ui-kit";
+import { type IUiMenuInteractiveItemProps, type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { DrillType } from "./types.js";
-import { IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDropdownMenuItems.js";
+import { type IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDropdownMenuItems.js";
 
 const DRILL_ICON_NAME: Record<DrillType, IconType> = {
     [DrillType.DRILL_TO_DASHBOARD]: "drillTo",

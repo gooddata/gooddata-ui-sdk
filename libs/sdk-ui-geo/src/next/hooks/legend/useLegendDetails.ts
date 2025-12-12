@@ -2,17 +2,17 @@
 
 import { useMemo } from "react";
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
 import {
-    ILegendDetails,
-    PositionType,
+    type ILegendDetails,
+    type PositionType,
     SupportedLegendPositions,
     getLegendDetails,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoChartNextConfig } from "../../types/config/unified.js";
-import { IGeoCommonData } from "../../types/geoData/common.js";
+import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoCommonData } from "../../types/geoData/common.js";
 
 /**
  * Hook to extract legend details from configuration.

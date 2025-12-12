@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement, useState } from "react";
+import { type ReactElement, useState } from "react";
 
 import { HeadlinePaginationRenderer } from "./HeadlinePaginationRenderer.js";
 

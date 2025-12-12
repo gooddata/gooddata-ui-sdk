@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { ILegendProps, Legend } from "../Legend.js";
+import { type ILegendProps, Legend } from "../Legend.js";
 
 describe("Legend", () => {
     const series = [

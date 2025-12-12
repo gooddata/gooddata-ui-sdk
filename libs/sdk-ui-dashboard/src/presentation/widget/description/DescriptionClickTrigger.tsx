@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -15,7 +15,7 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
-import { IDescriptionClickTriggerProps } from "./types.js";
+import { type IDescriptionClickTriggerProps } from "./types.js";
 
 const DESCRIPTION_PANEL_ALIGN_POINTS = [
     { align: "tr tl" },

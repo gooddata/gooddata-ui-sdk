@@ -2,11 +2,11 @@
 import { isEmpty } from "lodash-es";
 import { defineMessages } from "react-intl";
 
-import { IColorPalette, IRgbColorValue } from "@gooddata/sdk-model";
+import { type IColorPalette, type IRgbColorValue } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getColorPaletteFromColors } from "@gooddata/sdk-ui-vis-commons";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 
 export const WHITE = "rgb(255, 255, 255)";
 export const BLACK = "rgb(0, 0, 0)";

@@ -3,17 +3,17 @@
 import { action } from "storybook/actions";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 import {
     IntlWrapper,
     KdaDialog,
-    KdaItem,
-    KdaState,
+    type KdaItem,
+    type KdaState,
     KdaStateProvider,
     KdaStoreProvider,
 } from "@gooddata/sdk-ui-dashboard/internal";
 import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
-import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
 

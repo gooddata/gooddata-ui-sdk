@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiIcon, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { AutomationIconTooltip } from "./AutomationIconTooltip.js";
@@ -12,7 +12,7 @@ import { bem } from "../../notificationsPanel/bem.js";
 import { AUTOMATION_ICON_CONFIGS } from "../constants.js";
 import { formatAutomationSubtitle, formatCellValue } from "../format.js";
 import { messages } from "../messages.js";
-import { IAutomationIconProps } from "../types.js";
+import { type IAutomationIconProps } from "../types.js";
 
 const { e } = bem("gd-ui-ext-automation-icon-tooltip");
 

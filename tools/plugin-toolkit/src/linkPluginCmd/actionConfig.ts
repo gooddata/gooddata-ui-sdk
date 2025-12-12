@@ -3,13 +3,13 @@
 import { isEmpty } from "lodash-es";
 import ora from "ora";
 
-import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { IDashboardPlugin } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IDashboardPlugin } from "@gooddata/sdk-model";
 
 import { createBackend } from "../_base/backend.js";
 import { getDashboardFromOptions } from "../_base/inputHandling/extractors.js";
 import {
-    InputValidator,
+    type InputValidator,
     asyncValidOrDie,
     createDashboardPluginValidator,
     createDashboardValidator,
@@ -17,9 +17,9 @@ import {
 } from "../_base/inputHandling/validators.js";
 import { logError } from "../_base/terminal/loggers.js";
 import { promptDashboardIdWithoutChoice, promptPluginParameters } from "../_base/terminal/prompts.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils.js";
-import { WorkspaceTargetConfig, createWorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
+import { type WorkspaceTargetConfig, createWorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 
 export type LinkCmdActionConfig = WorkspaceTargetConfig & {
     /**

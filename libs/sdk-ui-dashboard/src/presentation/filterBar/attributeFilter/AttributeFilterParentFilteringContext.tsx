@@ -1,17 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, createContext, useCallback, useContext, useMemo } from "react";
+import { type ReactNode, createContext, useCallback, useContext, useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
 import {
     DashboardAttributeFilterConfigModeValues,
-    IAttributeElement,
-    IAttributeMetadataObject,
-    IAttributeOrMeasure,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    ObjRef,
+    type IAttributeElement,
+    type IAttributeMetadataObject,
+    type IAttributeOrMeasure,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type ObjRef,
     areObjRefsEqual,
     filterObjRef,
 } from "@gooddata/sdk-model";

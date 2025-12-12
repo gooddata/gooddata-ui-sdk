@@ -6,10 +6,10 @@ import { describe, expect, it } from "vitest";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import {
-    IDashboardEditLayoutProps,
+    type IDashboardEditLayoutProps,
     RenderDashboardEditLayout,
 } from "./DashboardEditLayout/DashboardEditLayout.js";
-import { IDashboardEditLayout } from "./DashboardEditLayout/DashboardEditLayoutTypes.js";
+import { type IDashboardEditLayout } from "./DashboardEditLayout/DashboardEditLayoutTypes.js";
 
 const lay: IDashboardEditLayout = {
     type: "IDashboardLayout",

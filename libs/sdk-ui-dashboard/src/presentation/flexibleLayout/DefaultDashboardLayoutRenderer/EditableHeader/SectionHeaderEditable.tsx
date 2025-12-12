@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { type ReactElement, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
 import {
@@ -16,7 +16,7 @@ import {
     getDescription,
     getTitle,
 } from "./sectionHeaderHelper.js";
-import { IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
 import { useSectionDescriptionFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
 import {

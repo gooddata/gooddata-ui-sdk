@@ -2,18 +2,18 @@
 import { once } from "lodash-es";
 
 import {
-    IAttributeDescriptor,
-    IExecutionDefinition,
-    ISortItem,
-    ITotal,
+    type IAttributeDescriptor,
+    type IExecutionDefinition,
+    type ISortItem,
+    type ITotal,
     bucketTotals,
     bucketsFind,
     sanitizeBucketTotals,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
 import {
-    ColumnWidthItem,
+    type ColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
     isMixedValuesColumnWidthItem,

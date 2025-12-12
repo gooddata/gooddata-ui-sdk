@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    KeyboardEvent,
-    PropsWithChildren,
+    type KeyboardEvent,
+    type PropsWithChildren,
     createContext,
     useCallback,
     useContext,

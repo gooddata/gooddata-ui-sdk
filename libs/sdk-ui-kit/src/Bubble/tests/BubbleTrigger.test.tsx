@@ -4,8 +4,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { Bubble } from "../Bubble.js";
-import { BubbleFocusTrigger, BubbleFocusTriggerProps } from "../BubbleFocusTrigger.js";
-import { BubbleHoverTrigger, IBubbleHoverTriggerProps } from "../BubbleHoverTrigger.js";
+import { BubbleFocusTrigger, type BubbleFocusTriggerProps } from "../BubbleFocusTrigger.js";
+import { BubbleHoverTrigger, type IBubbleHoverTriggerProps } from "../BubbleHoverTrigger.js";
 
 function renderBubble() {
     return <Bubble>Bubble with some content</Bubble>;

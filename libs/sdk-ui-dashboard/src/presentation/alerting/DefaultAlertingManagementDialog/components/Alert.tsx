@@ -5,11 +5,11 @@ import { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
-import { IAutomationMetadataObject, isInsightWidget } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, isInsightWidget } from "@gooddata/sdk-model";
 import {
     Button,
     Dropdown,
-    IUiListboxItem,
+    type IUiListboxItem,
     IconAlert,
     IconAlertPaused,
     IconEllipsis,

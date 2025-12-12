@@ -1,37 +1,41 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataValue } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type DataValue } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    ExplicitDrill,
+    type ExplicitDrill,
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
 import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
-import { IHeadlineExecutionData, getExecutionData } from "./HeadlineTransformationUtils.js";
+import { type IHeadlineExecutionData, getExecutionData } from "./HeadlineTransformationUtils.js";
 import {
     CalculateAs,
-    CalculationType,
+    type CalculationType,
     ComparisonPositionValues,
-    IComparison,
-    ILabelConfig,
+    type IComparison,
+    type ILabelConfig,
 } from "../../../../interfaces/index.js";
-import { IDefaultLabelKeys, getCalculationValuesDefault, getComparisonFormat } from "../../headlineHelper.js";
+import {
+    type IDefaultLabelKeys,
+    getCalculationValuesDefault,
+    getComparisonFormat,
+} from "../../headlineHelper.js";
 import { ComparisonDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
 import { ComparisonDataWithSubItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
 import {
-    BaseHeadlineDataItemComponentType,
-    BaseHeadlineItemAccepted,
+    type BaseHeadlineDataItemComponentType,
+    type BaseHeadlineItemAccepted,
     EvaluationType,
-    IBaseHeadlineData,
-    IBaseHeadlineItem,
-    IComparisonDataItem,
-    ComparisonDataItem as IComparisonDataItemType,
-    IComparisonDataWithSubItem,
+    type IBaseHeadlineData,
+    type IBaseHeadlineItem,
+    type IComparisonDataItem,
+    type ComparisonDataItem as IComparisonDataItemType,
+    type IComparisonDataWithSubItem,
 } from "../interfaces/BaseHeadlines.js";
 
 export function getComparisonBaseHeadlineData(

@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 import { useCallback } from "react";
 
-import { IAttributeFilter } from "@gooddata/sdk-model";
-import { IPlaceholder, usePlaceholder } from "@gooddata/sdk-ui";
+import { type IAttributeFilter } from "@gooddata/sdk-model";
+import { type IPlaceholder, usePlaceholder } from "@gooddata/sdk-ui";
 
 /**
  * @internal

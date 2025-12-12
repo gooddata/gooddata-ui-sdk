@@ -4,12 +4,12 @@ import { useCallback, useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
+import { type IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import {
-    IAlignPoint,
-    IDropdownBodyRenderProps,
-    IUiListboxInteractiveItem,
-    IUiListboxItem,
+    type IAlignPoint,
+    type IDropdownBodyRenderProps,
+    type IUiListboxInteractiveItem,
+    type IUiListboxItem,
     Typography,
     UiIconButton,
     UiListbox,

@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { actionChannel, select, take } from "redux-saga/effects";
 
-import { DashboardEventHandler } from "../../eventHandlers/eventHandler.js";
-import { DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events/index.js";
-import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
+import { type DashboardEventHandler } from "../../eventHandlers/eventHandler.js";
+import { type DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events/index.js";
+import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
 
 export interface EventEmitter {
     registerHandler: (handler: DashboardEventHandler) => void;

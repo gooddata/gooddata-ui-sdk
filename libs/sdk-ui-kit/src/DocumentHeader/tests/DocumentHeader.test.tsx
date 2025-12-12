@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { DocumentHeader, IDocumentHeaderProps } from "../DocumentHeader.js";
+import { DocumentHeader, type IDocumentHeaderProps } from "../DocumentHeader.js";
 
 describe("DocumentHeader", () => {
     const createComponent = (props: IDocumentHeaderProps = {}) => {

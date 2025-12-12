@@ -2,8 +2,8 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { NoDataError } from "@gooddata/sdk-backend-spi";
-import { IAutomationAlertExecutionDefinition } from "@gooddata/sdk-model";
+import { type NoDataError } from "@gooddata/sdk-backend-spi";
+import { type IAutomationAlertExecutionDefinition } from "@gooddata/sdk-model";
 
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withNormalization } from "../index.js";

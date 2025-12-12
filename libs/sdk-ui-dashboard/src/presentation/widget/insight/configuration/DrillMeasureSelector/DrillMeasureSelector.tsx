@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { DrillMeasureSelectorBody } from "./DrillMeasureSelectorBody.js";

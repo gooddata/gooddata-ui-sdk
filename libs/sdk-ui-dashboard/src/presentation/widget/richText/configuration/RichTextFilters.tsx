@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { IRichTextWidget } from "@gooddata/sdk-model";
+import { type IRichTextWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { RichTextDateDataSetFilter } from "./RichTextDateDataSetFilter.js";

@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 
 import cx from "classnames";
 
-import { UiIcon, UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
+import { UiIcon, type UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
 
-import { KdaItem } from "../../internalTypes.js";
+import { type KdaItem } from "../../internalTypes.js";
 
 export function KeyDriverItem({
     maximum,

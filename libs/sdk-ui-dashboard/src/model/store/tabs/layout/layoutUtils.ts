@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSize,
-    IDashboardWidget,
-    IWidget,
-    ObjRef,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSize,
+    type IDashboardWidget,
+    type IWidget,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardLayout,
     isInsightWidget,
@@ -14,10 +14,10 @@ import {
     isRichTextWidget,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { ILayoutCoordinates, ILayoutItemPath } from "../../../../types.js";
-import { ExtendedDashboardWidget, isExtendedDashboardLayoutWidget } from "../../../types/layoutTypes.js";
+import { type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
+import { type ExtendedDashboardWidget, isExtendedDashboardLayoutWidget } from "../../../types/layoutTypes.js";
 
 export function getWidgetCoordinates(
     layout: IDashboardLayout<ExtendedDashboardWidget>,

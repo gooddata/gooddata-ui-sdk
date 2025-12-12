@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { FormattedMessage, MessageDescriptor, defineMessage } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, defineMessage } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
@@ -11,7 +11,7 @@ import {
     selectIsNewDashboard,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { DateFilterValidationResult } from "../../../types.js";
+import { type DateFilterValidationResult } from "../../../types.js";
 
 const workspaceValidationMessagesMapping: { [K in DateFilterValidationResult]?: MessageDescriptor } = {
     ConflictingIdentifiers: defineMessage({ id: "filters.config.warning.conflictingIdentifiers" }),

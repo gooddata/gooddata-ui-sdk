@@ -3,12 +3,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { memoize } from "lodash-es";
 
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { drillTargetsAdapter } from "./drillTargetsEntityAdapter.js";
-import { IDrillTargets } from "./drillTargetsTypes.js";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type IDrillTargets } from "./drillTargetsTypes.js";
+import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const entitySelectors = drillTargetsAdapter.getSelectors((state: DashboardState) => state.drillTargets);
 

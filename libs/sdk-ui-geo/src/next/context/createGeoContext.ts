@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Context, createContext, useContext } from "react";
+import { type Context, createContext, useContext } from "react";
 
 /**
  * Creates a typed context with a custom hook that throws if used outside provider.

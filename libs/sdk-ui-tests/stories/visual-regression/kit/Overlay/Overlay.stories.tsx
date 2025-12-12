@@ -8,7 +8,7 @@ import { MediaQuery } from "react-responsive";
 import { Button, FullScreenOverlay, Overlay } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 interface IOverlayExampleProps {
     index: number;

@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
-import { IBackendCapabilities } from "./capabilities.js";
-import { IDataSourcesService } from "../dataSources/index.js";
-import { IEntitlements } from "../entitlements/index.js";
-import { NotAuthenticated } from "../errors/index.js";
-import { IGeoService } from "../geo/index.js";
-import { IOrganization, IOrganizations } from "../organization/index.js";
-import { IUserService } from "../user/index.js";
-import { IPreparedExecution, IPreparedExecutionOptions } from "../workspace/execution/index.js";
-import { IAnalyticalWorkspace, IWorkspacesQueryFactory } from "../workspace/index.js";
+import { type IBackendCapabilities } from "./capabilities.js";
+import { type IDataSourcesService } from "../dataSources/index.js";
+import { type IEntitlements } from "../entitlements/index.js";
+import { type NotAuthenticated } from "../errors/index.js";
+import { type IGeoService } from "../geo/index.js";
+import { type IOrganization, type IOrganizations } from "../organization/index.js";
+import { type IUserService } from "../user/index.js";
+import { type IPreparedExecution, type IPreparedExecutionOptions } from "../workspace/execution/index.js";
+import { type IAnalyticalWorkspace, type IWorkspacesQueryFactory } from "../workspace/index.js";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend.

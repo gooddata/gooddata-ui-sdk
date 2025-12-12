@@ -3,7 +3,7 @@
 import { withIntl } from "@gooddata/sdk-ui";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 function FilterLabelExamples() {
     return (

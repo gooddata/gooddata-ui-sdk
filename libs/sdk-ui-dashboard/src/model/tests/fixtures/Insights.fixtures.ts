@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mockingbird";
+import { type InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 
 export const PivotTableWithRowAndColumnAttributes = recordedInsight(
     ReferenceRecordings.Insights.PivotTable

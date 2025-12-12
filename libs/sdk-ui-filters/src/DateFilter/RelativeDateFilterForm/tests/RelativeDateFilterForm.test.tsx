@@ -4,12 +4,12 @@ import { type ReactElement } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import * as rangePickerModule from "../../RelativeRangePicker/RelativeRangePicker.js";
 import * as granularityTabsModule from "../GranularityTabs.js";
-import { IRelativeDateFilterFormProps, RelativeDateFilterForm } from "../RelativeDateFilterForm.js";
+import { type IRelativeDateFilterFormProps, RelativeDateFilterForm } from "../RelativeDateFilterForm.js";
 
 const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",

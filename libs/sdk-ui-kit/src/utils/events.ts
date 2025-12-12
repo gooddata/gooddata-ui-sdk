@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent } from "react";
+import { type KeyboardEvent } from "react";
 
 /**
  * Checks if the given keyboard event is an action key = Enter or Space.

@@ -2,9 +2,9 @@
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import {
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
 } from "../../../interfaces/Visualization.js";
 import { configDependencyWheelUiConfig } from "../../../utils/uiConfigHelpers/dependencyWheelChartUiConfigHelper.js";
 import { PluggableSankeyChart } from "../sankeyChart/PluggableSankeyChart.js";

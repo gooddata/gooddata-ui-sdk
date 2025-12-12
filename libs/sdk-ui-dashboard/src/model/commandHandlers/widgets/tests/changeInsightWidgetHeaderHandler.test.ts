@@ -4,10 +4,13 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { idRef, uriRef } from "@gooddata/sdk-model";
 
-import { ChangeInsightWidgetHeader, changeInsightWidgetHeader } from "../../../commands/index.js";
-import { DashboardCommandFailed, DashboardInsightWidgetHeaderChanged } from "../../../events/index.js";
+import { type ChangeInsightWidgetHeader, changeInsightWidgetHeader } from "../../../commands/index.js";
+import {
+    type DashboardCommandFailed,
+    type DashboardInsightWidgetHeaderChanged,
+} from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,

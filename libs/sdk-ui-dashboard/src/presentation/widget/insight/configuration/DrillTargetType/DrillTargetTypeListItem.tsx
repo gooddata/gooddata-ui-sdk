@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,11 +8,11 @@ import { useIntl } from "react-intl";
 import {
     Bubble,
     BubbleHoverTrigger,
-    ISingleSelectListItemProps,
+    type ISingleSelectListItemProps,
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 
-import { IDrillTargetType } from "../useDrillTargetTypeItems.js";
+import { type IDrillTargetType } from "../useDrillTargetTypeItems.js";
 
 const DEFAULT_ALIGN_POINTS = [{ align: "cr cl" }];
 const DEFAULT_ALIGN_OFFSETS = { "cr cl": [15, 0] };

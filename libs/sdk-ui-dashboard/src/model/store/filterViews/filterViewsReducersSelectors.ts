@@ -3,12 +3,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { IDashboardFilterView, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IDashboardFilterView, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { selectEnableDashboardTabs } from "../config/configSelectors.js";
 import { selectDashboardRef } from "../meta/metaSelectors.js";
 import { selectActiveTabLocalIdentifier, selectFirstTabLocalIdentifier } from "../tabs/tabsSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { cloneDeep, isEmpty, set, tail } from "lodash-es";
 
-import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    IDrillEvent,
+    type IDrillEvent,
     VisualizationTypes,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
@@ -15,15 +15,15 @@ import {
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
-    IBucketItem,
-    IDrillDownContext,
-    IDrillDownDefinition,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketItem,
+    type IDrillDownContext,
+    type IDrillDownDefinition,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

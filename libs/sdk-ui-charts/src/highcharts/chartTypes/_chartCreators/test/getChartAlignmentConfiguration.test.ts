@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
 import { TOP } from "../../../constants/alignments.js";
 import { getChartAlignmentConfiguration } from "../getChartAlignmentConfiguration.js";
 

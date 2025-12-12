@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { ISortItem } from "@gooddata/sdk-model";
+import { type ISortItem } from "@gooddata/sdk-model";
 
-import { IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
+import { type IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
 
 /**
  * Applies provided sort items to execution definition.

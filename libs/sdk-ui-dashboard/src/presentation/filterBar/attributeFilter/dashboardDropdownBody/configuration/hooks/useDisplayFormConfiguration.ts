@@ -3,9 +3,9 @@
 import { useCallback, useMemo, useState } from "react";
 
 import {
-    IAttributeMetadataObject,
-    IDashboardAttributeFilter,
-    ObjRef,
+    type IAttributeMetadataObject,
+    type IDashboardAttributeFilter,
+    type ObjRef,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 

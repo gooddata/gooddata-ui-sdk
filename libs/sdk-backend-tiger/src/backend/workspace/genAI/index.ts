@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import { ActionsApi_MetadataSync, ActionsApi_ResolveLlmEndpoints } from "@gooddata/api-client-tiger/actions";
 import type {
     IAnalyticsCatalogService,
@@ -10,16 +10,16 @@ import type {
     ISemanticQualityService,
     ISemanticSearchQuery,
 } from "@gooddata/sdk-backend-spi";
-import { ILlmEndpointBase } from "@gooddata/sdk-model";
+import { type ILlmEndpointBase } from "@gooddata/sdk-model";
 
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
 import { ChatThreadService } from "./ChatThread.js";
 import { MemoryItemsService } from "./MemoryItemsService.js";
 import { SemanticQualityService } from "./SemanticQualityService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
-import { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { convertResolvedLlmEndpoint } from "../../../convertors/fromBackend/llmEndpointConvertor.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class GenAIService implements IGenAIService {
     constructor(

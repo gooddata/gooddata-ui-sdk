@@ -2,11 +2,11 @@
 
 import { useMemo } from "react";
 
-import { IDataVisualizationProps } from "@gooddata/sdk-ui";
+import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
 import { hasGeoLayerContext } from "../../layers/execution/layerContext.js";
-import { IGeoLayer } from "../../types/layers/index.js";
-import { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type IGeoLayer } from "../../types/layers/index.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 
 type WithoutExecutions<T> = Omit<T, "execution" | "executions">;
 

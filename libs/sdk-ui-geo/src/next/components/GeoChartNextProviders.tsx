@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, ReactNode, useMemo } from "react";
+import { type ReactElement, type ReactNode, useMemo } from "react";
 
-import { IColorPalette } from "@gooddata/sdk-model";
+import { type IColorPalette } from "@gooddata/sdk-model";
 
 import { GeoLayersProvider, useGeoLayers } from "../context/GeoLayersContext.js";
 import { GeoLegendProvider } from "../context/GeoLegendContext.js";

@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
-import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
+import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     ComboChartViewByDate,
@@ -10,7 +10,7 @@ import {
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
     ComboChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { CustomizedScenario, UnboundVisProps, scenariosFor } from "../../../src/index.js";
+import { type CustomizedScenario, type UnboundVisProps, scenariosFor } from "../../../src/index.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

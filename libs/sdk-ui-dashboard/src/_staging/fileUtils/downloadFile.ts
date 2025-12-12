@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { type IExportResult } from "@gooddata/sdk-backend-spi";
 
 export const DOWNLOADER_ID = "downloader";
 

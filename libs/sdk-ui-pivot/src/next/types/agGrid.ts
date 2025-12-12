@@ -1,20 +1,20 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    ColDef,
-    ColGroupDef,
-    Column,
-    GridApi,
-    ICellRendererParams,
-    IHeaderGroupParams,
-    IHeaderParams,
+    type ColDef,
+    type ColGroupDef,
+    type Column,
+    type GridApi,
+    type ICellRendererParams,
+    type IHeaderGroupParams,
+    type IHeaderParams,
 } from "ag-grid-enterprise";
-import { AgGridReactProps } from "ag-grid-react";
+import { type AgGridReactProps } from "ag-grid-react";
 
-import { ITableColumnDefinition } from "@gooddata/sdk-ui";
+import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
-import { CellRendererFactory } from "./cellRendering.js";
-import { AgGridRowData } from "./internal.js";
+import { type CellRendererFactory } from "./cellRendering.js";
+import { type AgGridRowData } from "./internal.js";
 
 export type AgGridColumnDefContext = {
     columnDefinition: ITableColumnDefinition;

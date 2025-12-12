@@ -3,7 +3,7 @@
 import { memo } from "react";
 
 import { ColorLegend } from "./ColorLegend.js";
-import { IColorLegendItem, IColorLegendSize, IHeatmapLegendItem } from "./types.js";
+import { type IColorLegendItem, type IColorLegendSize, type IHeatmapLegendItem } from "./types.js";
 
 /**
  * @internal

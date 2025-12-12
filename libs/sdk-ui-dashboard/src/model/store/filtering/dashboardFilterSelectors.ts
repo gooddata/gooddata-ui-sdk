@@ -4,10 +4,10 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    FilterContextItem,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilterConfig,
-    IDashboardDateFilterConfigItem,
+    type FilterContextItem,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfig,
+    type IDashboardDateFilterConfigItem,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
     isAllValuesDashboardAttributeFilter,
@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { selectCrossFilteringItems, selectCrossFilteringItemsByTab } from "../drill/drillSelectors.js";
-import { ICrossFilteringItem } from "../drill/types.js";
+import { type ICrossFilteringItem } from "../drill/types.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -36,7 +36,7 @@ import {
     selectFiltersByTab,
 } from "../tabs/filterContext/filterContextSelectors.js";
 import { selectTabs } from "../tabs/tabsSelectors.js";
-import { DashboardSelector } from "../types.js";
+import { type DashboardSelector } from "../types.js";
 
 const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
     undefined,

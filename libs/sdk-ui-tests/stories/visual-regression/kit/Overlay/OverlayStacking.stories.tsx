@@ -7,7 +7,7 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
-import { Browser, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { Browser, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 function OverlayStackingExample() {
     const [state, setState] = useState(0);

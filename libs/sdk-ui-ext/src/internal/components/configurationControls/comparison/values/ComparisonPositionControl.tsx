@@ -4,13 +4,13 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { PushDataCallback } from "@gooddata/sdk-ui";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
 import { ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages } from "../../../../../locales.js";
 import { comparisonPositionDropdownItems } from "../../../../constants/dropdowns.js";
-import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../../utils/translations.js";
 import { DropdownControl } from "../../DropdownControl.js";
 import { COMPARISON_POSITION_VALUE_PATH } from "../ComparisonValuePath.js";

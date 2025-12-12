@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { InsightCrossFiltering } from "./InsightCrossFiltering.js";

@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 export const productName = [
     { title: "CompuSci", uri: "CompuSci" },

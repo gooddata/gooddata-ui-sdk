@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    JsonApiAttributeOutAttributesGranularityEnum,
-    RelativeDateFilterRelativeDateFilterGranularityEnum,
+    type JsonApiAttributeOutAttributesGranularityEnum,
+    type RelativeDateFilterRelativeDateFilterGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
+import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
 type TigerToSdk = {
     [key in JsonApiAttributeOutAttributesGranularityEnum]: DateAttributeGranularity;

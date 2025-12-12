@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IColorPaletteItem } from "@gooddata/sdk-model";
+import { type IColorPaletteItem } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 

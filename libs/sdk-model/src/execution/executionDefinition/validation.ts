@@ -2,7 +2,7 @@
 import { groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IExecutionDefinition } from "./index.js";
+import { type IExecutionDefinition } from "./index.js";
 import { attributeLocalId, isAttribute } from "../attribute/index.js";
 import { measureLocalId } from "../measure/index.js";
 

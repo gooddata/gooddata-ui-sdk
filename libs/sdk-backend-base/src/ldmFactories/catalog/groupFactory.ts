@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ICatalogGroup, IGroupableCatalogItemBase, ObjRef } from "@gooddata/sdk-model";
+import { type ICatalogGroup, type IGroupableCatalogItemBase, type ObjRef } from "@gooddata/sdk-model";
 
-import { Builder, BuilderModifications, IBuilder, builderFactory } from "../builder.js";
+import { Builder, type BuilderModifications, type IBuilder, builderFactory } from "../builder.js";
 
 /**
  * Groupable catalog item builder interface

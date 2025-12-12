@@ -1,19 +1,19 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
 import {
-    IUiTreeviewItemProps,
+    type IUiTreeviewItemProps,
     UiIcon,
-    UiLeveledTreeView,
+    type UiLeveledTreeView,
     UiLeveledTreeview,
-    UiStaticTreeView,
+    type UiStaticTreeView,
     UiStaticTreeview,
 } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 type StaticItem = { id: string; value: string };

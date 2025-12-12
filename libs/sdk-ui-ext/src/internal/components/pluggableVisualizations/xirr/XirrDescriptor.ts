@@ -1,16 +1,16 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IXirrProps } from "@gooddata/sdk-ui-charts";
+import { type IXirrProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggableXirr } from "./PluggableXirr.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    IVisualizationSizeInfo,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type IVisualizationSizeInfo,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

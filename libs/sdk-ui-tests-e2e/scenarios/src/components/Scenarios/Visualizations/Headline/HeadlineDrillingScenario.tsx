@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 import { measureIdentifier, measureLocalId } from "@gooddata/sdk-model";
 import {
-    ExplicitDrill,
+    type ExplicitDrill,
     HeaderPredicates,
-    IDrillEvent,
+    type IDrillEvent,
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";

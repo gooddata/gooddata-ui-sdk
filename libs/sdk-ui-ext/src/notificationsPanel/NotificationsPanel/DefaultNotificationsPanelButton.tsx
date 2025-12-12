@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

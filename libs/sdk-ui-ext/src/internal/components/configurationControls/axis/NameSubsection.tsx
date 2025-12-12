@@ -4,8 +4,8 @@ import { memo } from "react";
 
 import { NamePositionControl } from "./NamePositionControl.js";
 import { messages } from "../../../../locales.js";
-import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSubsection } from "../../configurationControls/ConfigSubsection.js";
 
 export const NameSubsection = memo(function NameSubsection(props: IConfigItemSubsection) {

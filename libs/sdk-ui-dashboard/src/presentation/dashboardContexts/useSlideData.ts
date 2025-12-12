@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { useDashboardCustomizationsContext } from "./DashboardCustomizationsContext.js";
-import { ILayoutItemPath, RenderMode } from "../../types.js";
+import { type ILayoutItemPath, type RenderMode } from "../../types.js";
 
 type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 

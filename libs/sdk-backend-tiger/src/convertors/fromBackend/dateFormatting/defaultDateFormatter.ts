@@ -26,7 +26,7 @@ import {
 import { formatInTimeZone } from "date-fns-tz";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
+import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
 const defaultLocaleCode = "en-US";
 

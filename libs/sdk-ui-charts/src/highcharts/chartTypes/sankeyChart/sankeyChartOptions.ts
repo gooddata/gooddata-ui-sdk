@@ -1,11 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 import { compact } from "lodash-es";
 
-import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { ISeriesItem } from "../../typings/unsafe.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type ISeriesItem } from "../../typings/unsafe.js";
 
 const KEYS = ["from", "to", "weight", "name"];
 const DEFAULT_ATTRIBUTE_HEADER = "";

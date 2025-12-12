@@ -2,10 +2,10 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IExecuteProps } from "@gooddata/sdk-ui";
+import { type IExecuteProps } from "@gooddata/sdk-ui";
 
 import { executeScenarios } from "../../../scenarios/execute/base.js";
-import { ScenarioAndDescription } from "../../../src/index.js";
+import { type ScenarioAndDescription } from "../../../src/index.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 
 const Component = "Execute";

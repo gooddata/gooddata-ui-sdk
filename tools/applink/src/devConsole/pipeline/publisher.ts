@@ -5,13 +5,13 @@ import path from "path";
 import spawn from "cross-spawn";
 import { max, min, uniq } from "lodash-es";
 
-import { TargetDependency } from "../../base/types.js";
+import { type TargetDependency } from "../../base/types.js";
 import {
-    DcEvent,
-    EventBus,
+    type DcEvent,
+    type EventBus,
     GlobalEventBus,
-    IEventListener,
-    PackagesRebuilt,
+    type IEventListener,
+    type PackagesRebuilt,
     publishFinished,
 } from "../events.js";
 import { appLogError, appLogInfo, appLogWarn } from "../ui/utils.js";

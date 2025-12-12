@@ -6,7 +6,7 @@ import { action } from "storybook/actions";
 import { withIntl } from "@gooddata/sdk-ui";
 import { ErrorOverlay } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const bodyContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ".repeat(80);

@@ -4,14 +4,14 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { PushDataCallback } from "@gooddata/sdk-ui";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
+import { type CalculationType } from "@gooddata/sdk-ui-charts";
 
 import { CalculationListItem } from "./CalculationListItem.js";
 import { comparisonMessages } from "../../../../../locales.js";
 import { calculationDropdownItems } from "../../../../constants/dropdowns.js";
-import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { DropdownControl } from "../../DropdownControl.js";
 import { COMPARISON_CALCULATION_TYPE_VALUE_PATH } from "../ComparisonValuePath.js";
 

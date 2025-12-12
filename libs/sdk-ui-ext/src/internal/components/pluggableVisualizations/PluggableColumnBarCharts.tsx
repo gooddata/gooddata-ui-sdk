@@ -3,8 +3,8 @@
 import { cloneDeep, set } from "lodash-es";
 
 import {
-    IInsight,
-    IInsightDefinition,
+    type IInsight,
+    type IInsightDefinition,
     bucketIsEmpty,
     bucketsItems,
     insightBucket,
@@ -12,8 +12,8 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    IDrillEvent,
-    IDrillEventIntersectionElement,
+    type IDrillEvent,
+    type IDrillEventIntersectionElement,
     getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
 import { arrayUtils } from "@gooddata/util";
@@ -29,14 +29,14 @@ import {
     MAX_STACKS_COUNT,
 } from "../../constants/uiConfig.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IDrillDownContext,
-    IDrillDownDefinition,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IDrillDownContext,
+    type IDrillDownDefinition,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
 } from "../../interfaces/Visualization.js";
 import {
     getAllCategoriesAttributeItems,

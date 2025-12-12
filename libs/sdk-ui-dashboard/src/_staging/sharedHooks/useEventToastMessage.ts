@@ -3,15 +3,15 @@
 import { useEffect } from "react";
 
 import { isEmpty } from "lodash-es";
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 
-import { MessageParameters, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { type MessageParameters, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
-    DashboardEventEvalFn,
-    DashboardEventHandler,
-    DashboardEvents,
-    ICustomDashboardEvent,
+    type DashboardEventEvalFn,
+    type DashboardEventHandler,
+    type DashboardEvents,
+    type ICustomDashboardEvent,
     useDashboardEventsContext,
 } from "../../model/index.js";
 

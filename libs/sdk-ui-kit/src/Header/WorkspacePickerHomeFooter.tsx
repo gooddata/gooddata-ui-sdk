@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode } from "react";
+import { type MouseEvent, type ReactNode } from "react";
 
 import cx from "classnames";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { Icon } from "../Icon/index.js";

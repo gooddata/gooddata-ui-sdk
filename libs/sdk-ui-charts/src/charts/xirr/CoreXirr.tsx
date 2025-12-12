@@ -1,18 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
 import {
     ErrorCodes,
-    IErrorDescriptors,
-    ILoadingInjectedProps,
+    type IErrorDescriptors,
+    type ILoadingInjectedProps,
     IntlWrapper,
     newErrorMapping,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
 
 import { XirrTransformation } from "./internal/XirrTransformation.js";
-import { ICoreChartProps } from "../../interfaces/index.js";
+import { type ICoreChartProps } from "../../interfaces/index.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;

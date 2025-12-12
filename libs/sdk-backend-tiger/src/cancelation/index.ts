@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { AxiosRequestConfig } from "axios";
+import { type AxiosRequestConfig } from "axios";
 
 export class TigerCancellationConverter {
     constructor(private readonly signal: AbortSignal | null) {}

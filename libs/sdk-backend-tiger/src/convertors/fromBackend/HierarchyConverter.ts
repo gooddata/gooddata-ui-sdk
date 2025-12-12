@@ -3,12 +3,12 @@
 import { compact } from "lodash-es";
 
 import {
-    JsonApiAttributeHierarchyOut,
-    JsonApiAttributeHierarchyOutAttributes,
-    JsonApiAttributeHierarchyOutWithLinks,
-    ObjectLinks,
+    type JsonApiAttributeHierarchyOut,
+    type JsonApiAttributeHierarchyOutAttributes,
+    type JsonApiAttributeHierarchyOutWithLinks,
+    type ObjectLinks,
 } from "@gooddata/api-client-tiger";
-import { ICatalogAttributeHierarchy, ObjectType, idRef } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy, type ObjectType, idRef } from "@gooddata/sdk-model";
 
 export function convertAttributeHierarchy({
     id,

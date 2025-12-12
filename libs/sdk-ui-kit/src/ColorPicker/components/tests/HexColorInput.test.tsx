@@ -2,10 +2,10 @@
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 import { describe, expect, it, vi } from "vitest";
 
-import { HexColorInput, IHexColorInputProps } from "../HexColorInput.js";
+import { HexColorInput, type IHexColorInputProps } from "../HexColorInput.js";
 
 const initColor: ColorFormats.HSL = {
     h: 3,

@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, createContext, useContext } from "react";
+import { type ReactElement, type ReactNode, createContext, useContext } from "react";
 
-import { InsightMenuItemsProvider, RichTextMenuItemsProvider } from "./types.js";
-import { DashboardExportSlideConfig, DashboardLayoutExportTransformFn } from "../../model/index.js";
+import { type InsightMenuItemsProvider, type RichTextMenuItemsProvider } from "./types.js";
+import { type DashboardExportSlideConfig, type DashboardLayoutExportTransformFn } from "../../model/index.js";
 
 /**
  * @internal

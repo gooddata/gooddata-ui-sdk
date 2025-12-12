@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { ITableMeasureGroupHeaderColumnDefinition } from "@gooddata/sdk-ui";
+import { type ITableMeasureGroupHeaderColumnDefinition } from "@gooddata/sdk-ui";
 
 import { MEASURE_GROUP_HEADER_COL_DEF_ID } from "../../constants/internal.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { extractFormattedValue } from "../columns/shared.js";
 import { getTransposedCellClassName } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";

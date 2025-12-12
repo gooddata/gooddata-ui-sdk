@@ -6,7 +6,7 @@ import { useAutoupdateRef, usePrevious } from "@gooddata/sdk-ui";
 
 import { ToastsCenterContext } from "./context.js";
 import { ToastsCenterContextProvider } from "./ToastsCenter.js";
-import { IMessage } from "../typings.js";
+import { type IMessage } from "../typings.js";
 
 /**
  * Allows displaying messages coming from outside the toasts context system.

@@ -3,7 +3,7 @@
 import fs from "fs";
 import path from "path";
 
-import pkg, { DistinctQuestion } from "inquirer";
+import pkg, { type DistinctQuestion } from "inquirer";
 const { prompt } = pkg;
 
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants.js";

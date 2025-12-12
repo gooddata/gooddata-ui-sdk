@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, KeyboardEvent, ReactNode } from "react";
+import { type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 
 import { b } from "./treeviewBem.js";
 import type { UiTreeViewAriaAttributes } from "./types.js";

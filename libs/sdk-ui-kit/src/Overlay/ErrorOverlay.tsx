@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, memo, useMemo } from "react";
+import { type ReactNode, memo, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 

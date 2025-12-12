@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Component, ReactNode } from "react";
+import { Component, type ReactNode } from "react";
 
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
 

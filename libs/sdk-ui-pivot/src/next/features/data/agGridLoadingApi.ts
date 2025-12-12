@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { GridApi } from "ag-grid-enterprise";
+import { type GridApi } from "ag-grid-enterprise";
 
-import { AgGridRowData } from "../../types/internal.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Sets global loading state for ag-grid.

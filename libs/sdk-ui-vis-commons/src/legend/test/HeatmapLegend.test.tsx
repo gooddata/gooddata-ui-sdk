@@ -3,8 +3,8 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { HeatmapLegend, IHeatmapLegendProps } from "../HeatmapLegend.js";
-import { IColorLegendSize, IHeatmapLegendItem } from "../types.js";
+import { HeatmapLegend, type IHeatmapLegendProps } from "../HeatmapLegend.js";
+import { type IColorLegendSize, type IHeatmapLegendItem } from "../types.js";
 
 describe("HeatmapLegend", () => {
     function renderLegend(props: IHeatmapLegendProps) {

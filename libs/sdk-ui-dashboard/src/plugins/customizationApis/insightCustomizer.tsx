@@ -5,18 +5,18 @@ import { InvariantError } from "ts-invariant";
 
 import { insightTags } from "@gooddata/sdk-model";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 import {
-    CustomDashboardInsightComponent,
+    type CustomDashboardInsightComponent,
     DefaultDashboardInsight,
     DefaultInsightBody,
-    InsightBodyComponentProvider,
-    InsightComponentProvider,
-    OptionalInsightBodyComponentProvider,
-    OptionalInsightComponentProvider,
+    type InsightBodyComponentProvider,
+    type InsightComponentProvider,
+    type OptionalInsightBodyComponentProvider,
+    type OptionalInsightComponentProvider,
 } from "../../presentation/index.js";
-import { IDashboardInsightCustomizer } from "../customizer.js";
+import { type IDashboardInsightCustomizer } from "../customizer.js";
 
 const DefaultDashboardInsightComponentProvider: InsightComponentProvider = () => {
     return DefaultDashboardInsight;

@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import cx from "classnames";
 
-import { ICatalogDateDataset } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 

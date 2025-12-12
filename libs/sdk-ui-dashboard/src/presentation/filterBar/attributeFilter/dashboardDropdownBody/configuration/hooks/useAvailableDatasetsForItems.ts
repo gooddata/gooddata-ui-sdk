@@ -1,10 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
 
-import { IAttributeOrMeasure, ICatalogDateDataset } from "@gooddata/sdk-model";
+import { type IAttributeOrMeasure, type ICatalogDateDataset } from "@gooddata/sdk-model";
 
 import {
-    QueryAvailableDatasetsForItems,
+    type QueryAvailableDatasetsForItems,
     queryAvailableDatasetsForItems,
     selectBackendCapabilities,
     selectEnableKDAttributeFilterDatesValidation,

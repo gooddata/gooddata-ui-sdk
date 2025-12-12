@@ -2,11 +2,11 @@
 
 import { debounce } from "lodash-es";
 
-import { IColorDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
+import { BucketNames, type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
+import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { parseValue } from "../_util/common.js";
 
 // Type for the actual data points in the series at runtime

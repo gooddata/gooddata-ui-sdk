@@ -5,7 +5,7 @@
 import { action } from "storybook/actions";
 
 import {
-    IPivotTableProps,
+    type IPivotTableProps,
     PivotTable,
     newWidthForAllColumnsForMeasure,
     newWidthForAttributeColumn,
@@ -19,7 +19,7 @@ import {
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
 } from "../../../../scenarios/pivotTable/base.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,

@@ -1,5 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import { IDashboardLayoutItem, IDashboardLayoutSection, isDashboardLayout } from "@gooddata/sdk-model";
+import {
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    isDashboardLayout,
+} from "@gooddata/sdk-model";
 
 import { containsVisualizationSwitcher } from "./utils/index.js";
 

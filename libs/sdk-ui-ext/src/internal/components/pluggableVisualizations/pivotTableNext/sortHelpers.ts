@@ -3,11 +3,11 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IAttributeSortItem,
-    IBucket,
-    IInsightDefinition,
-    IMeasureSortItem,
-    ISortItem,
+    type IAttributeSortItem,
+    type IBucket,
+    type IInsightDefinition,
+    type IMeasureSortItem,
+    type ISortItem,
     areObjRefsEqual,
     attributeLocalId,
     bucketAttribute,
@@ -26,9 +26,13 @@ import {
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import { type MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 
-import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
+import {
+    type IAttributeFilter,
+    type IBucketFilter,
+    type IBucketItem,
+} from "../../../interfaces/Visualization.js";
 import { isAttributeFilter } from "../../../utils/bucketHelper.js";
 import { getMeasureGroupDimensionFromProperties } from "../../../utils/propertiesHelper.js";
 

@@ -10,11 +10,11 @@ import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 import { typedUiMenuContextStore } from "../context.js";
 import { b } from "../menuBem.js";
 import {
-    IUiMenuGroupItemProps,
-    IUiMenuInteractiveItemProps,
-    IUiMenuItem,
-    IUiMenuStaticItemProps,
-    UiMenuProps,
+    type IUiMenuGroupItemProps,
+    type IUiMenuInteractiveItemProps,
+    type IUiMenuItem,
+    type IUiMenuStaticItemProps,
+    type UiMenuProps,
 } from "../types.js";
 import { UiMenu } from "../UiMenu.js";
 

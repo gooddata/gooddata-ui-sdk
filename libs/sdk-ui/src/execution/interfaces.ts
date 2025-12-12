@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { GoodDataSdkError } from "../base/index.js";
+import { type GoodDataSdkError } from "../base/index.js";
 
 /**
  * Properties of the error component provided to Execute or RawExecute components

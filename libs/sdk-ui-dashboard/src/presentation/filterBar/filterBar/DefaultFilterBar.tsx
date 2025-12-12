@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 import classNames from "classnames";
 import { invariant } from "ts-invariant";
@@ -9,10 +9,10 @@ import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigModeValues,
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    ObjRef,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type ObjRef,
     areObjRefsEqual,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
@@ -71,7 +71,7 @@ import {
     DraggableFilterDropZoneHint,
 } from "../../dragAndDrop/index.js";
 import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
-import { IDashboardDateFilterConfig, IFilterBarProps } from "../types.js";
+import { type IDashboardDateFilterConfig, type IFilterBarProps } from "../types.js";
 import { areAllFiltersHidden } from "../utils.js";
 
 /**

@@ -8,19 +8,19 @@ import {
     EntitiesApi_GetAllEntitiesMetrics,
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import {
-    IWorkspaceCatalog,
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceCatalog,
+    type IWorkspaceCatalogFactory,
+    type IWorkspaceCatalogFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItem,
-    CatalogItemType,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
-    IGroupableCatalogItemBase,
-    IdentifierRef,
-    ObjRef,
+    type CatalogItem,
+    type CatalogItemType,
+    type ICatalogFact,
+    type ICatalogGroup,
+    type ICatalogMeasure,
+    type IGroupableCatalogItemBase,
+    type IdentifierRef,
+    type ObjRef,
     isCatalogAttribute,
     isCatalogFact,
     isCatalogMeasure,
@@ -30,7 +30,7 @@ import { TigerWorkspaceCatalog } from "./catalog.js";
 import { loadAttributesAndDateDatasetsAndHierarchies } from "./datasetLoader.js";
 import { addRsqlFilterToParams, rsqlAnd, searchToRsqlFilter, tagsToRsqlFilter } from "./rsqlFilter.js";
 import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(

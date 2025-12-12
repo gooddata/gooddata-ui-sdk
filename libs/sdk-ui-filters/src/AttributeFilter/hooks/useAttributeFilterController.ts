@@ -1,20 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
+import { type MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 
 import { debounce, difference, differenceBy, isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    DashboardAttributeFilterSelectionMode,
-    IAbsoluteDateFilter,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeElement,
-    IAttributeElements,
-    IAttributeFilter,
-    IRelativeDateFilter,
-    ObjRef,
+    type DashboardAttributeFilterSelectionMode,
+    type IAbsoluteDateFilter,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeElement,
+    type IAttributeElements,
+    type IAttributeFilter,
+    type IRelativeDateFilter,
+    type ObjRef,
     areObjRefsEqual,
     filterAttributeElements,
     filterObjRef,
@@ -24,7 +24,12 @@ import {
     isPositiveAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError, UnexpectedSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    type GoodDataSdkError,
+    UnexpectedSdkError,
+    useBackendStrict,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 
 import {
     DISPLAY_FORM_CHANGED_CORRELATION,
@@ -35,15 +40,19 @@ import {
     SEARCH_CORRELATION,
     SHOW_FILTERED_ELEMENTS_CORRELATION,
 } from "./constants.js";
-import { AttributeFilterController, AttributeFilterControllerCallbacks } from "./types.js";
+import { type AttributeFilterController, type AttributeFilterControllerCallbacks } from "./types.js";
 import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
 import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
 import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
 import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
 import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
-import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
-import { IAttributeFilterCoreProps, OnApplyCallbackType, OnSelectCallbackType } from "../types.js";
+import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
+import {
+    type IAttributeFilterCoreProps,
+    type OnApplyCallbackType,
+    type OnSelectCallbackType,
+} from "../types.js";
 import { isValidSingleSelectionFilter } from "../utils.js";
 
 /**

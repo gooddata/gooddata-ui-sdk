@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { RefCallback } from "react";
+import { type RefCallback } from "react";
 
 import cx from "classnames";
 
 import { useGradientColor } from "./hooks/useGradientColor.js";
 import { useRightInScrollable } from "./hooks/useRightInScrollable.js";
 import { useScrollEvent } from "./hooks/useScrollEvent.js";
-import { IScrollGradientProps } from "./typings.js";
+import { type IScrollGradientProps } from "./typings.js";
 
 /**
  * @internal

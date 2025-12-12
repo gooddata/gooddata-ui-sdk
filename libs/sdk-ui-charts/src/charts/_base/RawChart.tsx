@@ -3,8 +3,8 @@
 import { useCallback } from "react";
 
 import {
-    ChartType,
-    ITranslationsComponentProps,
+    type ChartType,
+    type ITranslationsComponentProps,
     IntlTranslationsProvider,
     IntlWrapper,
 } from "@gooddata/sdk-ui";
@@ -12,8 +12,8 @@ import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import {
     ChartTransformation,
-    IChartTransformationProps,
-    IHighChartsRendererProps,
+    type IChartTransformationProps,
+    type IHighChartsRendererProps,
     getValidColorPalette,
 } from "../../highcharts/index.js";
 import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking.js";

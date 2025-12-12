@@ -1,8 +1,8 @@
 // (C) 2024 GoodData Corporation
 
-import { IDashboardFilterView } from "@gooddata/sdk-model";
+import { type IDashboardFilterView } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export function loadFilterViews(ctx: DashboardContext): Promise<IDashboardFilterView[]> {
     const { backend, workspace } = ctx;

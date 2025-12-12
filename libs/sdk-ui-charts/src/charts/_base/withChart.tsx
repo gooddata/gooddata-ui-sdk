@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { withContexts, wrapDisplayName } from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
-import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition.js";
+import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/index.js";
+import { type IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition.js";
 
 /**
  * Hoc that transforms incoming props to BaseChart props according to chart definition

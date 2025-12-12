@@ -16,7 +16,7 @@ import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { useRuntimeError } from "../context/RuntimeErrorContext.js";
 import { createServerSideDataSource } from "../features/data/createServerSideDataSource.js";
 import { getEffectivePageSize, isPaginationEnabled } from "../features/pagination/utils.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with data loading applied.

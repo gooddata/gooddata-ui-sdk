@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { FocusGridInnerElementParams } from "ag-grid-community";
+import { type FocusGridInnerElementParams } from "ag-grid-community";
 
 import {
     COLUMN_ATTRIBUTE_COLUMN,
@@ -18,10 +18,10 @@ import { cellClassFactory } from "./cell/cellClass.js";
 import { onCellClickedFactory } from "./cell/onCellClick.js";
 import { onCellKeyDownFactory } from "./cell/onCellKeyDown.js";
 import {
-    ICustomGridOptions,
-    TableAgGridCallbacks,
-    TableConfigAccessors,
-    TableMenuCallbacks,
+    type ICustomGridOptions,
+    type TableAgGridCallbacks,
+    type TableConfigAccessors,
+    type TableMenuCallbacks,
 } from "./privateTypes.js";
 import { MIN_WIDTH } from "./resizing/columnSizing.js";
 import { headerClassFactory } from "./structure/colDefHeaderClass.js";
@@ -36,9 +36,9 @@ import {
 } from "./structure/colDefTemplates.js";
 import { ColumnGroupHeader } from "./structure/headers/ColumnGroupHeader.js";
 import { ColumnHeader } from "./structure/headers/ColumnHeader.js";
-import { ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
-import { TableFacade } from "./tableFacade.js";
-import { ICorePivotTableProps } from "../publicTypes.js";
+import { type ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
+import { type TableFacade } from "./tableFacade.js";
+import { type ICorePivotTableProps } from "../publicTypes.js";
 
 class NoTooltip {
     init() {}

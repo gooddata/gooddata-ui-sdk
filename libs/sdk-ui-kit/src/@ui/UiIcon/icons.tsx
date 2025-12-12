@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { IconType } from "../@types/icon.js";
+import { type IconType } from "../@types/icon.js";
 
 /**
  * @internal

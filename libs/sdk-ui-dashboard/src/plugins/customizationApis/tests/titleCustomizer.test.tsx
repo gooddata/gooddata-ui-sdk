@@ -5,9 +5,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
-import { ITitleProps } from "../../../presentation/index.js";
+import { type ITitleProps } from "../../../presentation/index.js";
 import { DefaultTitleCustomizer } from "../titleCustomizer.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 //
 //

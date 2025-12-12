@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 
 import { DataViewFacade } from "../../../results/facade.js";
 import { getAvailableDrillTargets } from "../availableDrillTargets.js";

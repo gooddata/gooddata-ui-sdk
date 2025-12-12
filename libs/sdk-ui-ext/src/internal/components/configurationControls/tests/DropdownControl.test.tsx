@@ -4,9 +4,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { IDropdownItem } from "../../../interfaces/Dropdown.js";
+import { type IDropdownItem } from "../../../interfaces/Dropdown.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { DropdownControl, IDropdownControlProps } from "../DropdownControl.js";
+import { DropdownControl, type IDropdownControlProps } from "../DropdownControl.js";
 
 describe("DropdownControl", () => {
     const defaultProps = {

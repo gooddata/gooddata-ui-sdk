@@ -1,14 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, useMemo } from "react";
+import { type CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
 
-import { ScreenSize } from "@gooddata/sdk-model";
+import { type ScreenSize } from "@gooddata/sdk-model";
 
 import { GridLayoutElement } from "./GridLayoutElement.js";
-import { IDashboardLayoutItemRenderProps } from "./interfaces.js";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { type IDashboardLayoutItemRenderProps } from "./interfaces.js";
+import { type IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };

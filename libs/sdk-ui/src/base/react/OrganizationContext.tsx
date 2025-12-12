@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
 export const OrganizationContext = createContext<string | undefined>(undefined);
 OrganizationContext.displayName = "OrganizationContext";

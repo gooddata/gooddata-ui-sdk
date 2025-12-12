@@ -8,7 +8,7 @@ import {
     newPositiveAttributeFilter,
     newTotal,
 } from "@gooddata/sdk-model";
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import {
     PivotTableWighSingleMeasureAndSingleRowColAttr,

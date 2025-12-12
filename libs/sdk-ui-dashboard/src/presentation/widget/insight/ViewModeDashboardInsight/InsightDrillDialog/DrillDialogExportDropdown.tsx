@@ -9,9 +9,9 @@ import {
     Bubble,
     BubbleHoverTrigger,
     Dropdown,
-    IAlignPoint,
-    IDropdownButtonRenderProps,
-    IUiMenuInteractiveItemProps,
+    type IAlignPoint,
+    type IDropdownButtonRenderProps,
+    type IUiMenuInteractiveItemProps,
     ShortenedText,
     UiButton,
     UiIcon,
@@ -20,9 +20,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import {
-    IMenuInteractiveItem,
-    IMenuItem,
-    IMenuItemData,
+    type IMenuInteractiveItem,
+    type IMenuItem,
+    type IMenuItemData,
     useDrillDialogExportItems,
 } from "./useDrillDialogExportItems.js";
 

@@ -3,9 +3,9 @@
 import { useCallback, useState } from "react";
 
 import {
-    IAutomationMetadataObject,
-    IExportDefinitionVisualizationObjectRequestPayload,
-    IWidget,
+    type IAutomationMetadataObject,
+    type IExportDefinitionVisualizationObjectRequestPayload,
+    type IWidget,
     areObjRefsEqual,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,

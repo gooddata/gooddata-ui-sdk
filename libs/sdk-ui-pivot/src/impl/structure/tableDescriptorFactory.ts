@@ -1,34 +1,34 @@
 // (C) 2007-2025 GoodData Corporation
 import { range } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeDescriptor,
-    IResultAttributeHeader,
+    type IAttributeDescriptor,
+    type IResultAttributeHeader,
     MeasureGroupIdentifier,
     isAttributeDescriptor,
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
-import { DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
+import { type DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
 
 import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 import {
-    AnyCol,
-    DataCol,
-    LeafDataCol,
-    MixedHeadersCol,
-    MixedValuesCol,
-    RootCol,
-    ScopeCol,
-    SeriesCol,
-    SliceCol,
-    SliceMeasureCol,
-    TableColDefs,
-    TableCols,
+    type AnyCol,
+    type DataCol,
+    type LeafDataCol,
+    type MixedHeadersCol,
+    type MixedValuesCol,
+    type RootCol,
+    type ScopeCol,
+    type SeriesCol,
+    type SliceCol,
+    type SliceMeasureCol,
+    type TableColDefs,
+    type TableCols,
     isSeriesCol,
 } from "./tableDescriptorTypes.js";
-import { IPivotTableConfig } from "../../publicTypes.js";
+import { type IPivotTableConfig } from "../../publicTypes.js";
 import { getDataViewSeriesDescriptors } from "../utils.js";
 
 type ColumnGroupLevel = {

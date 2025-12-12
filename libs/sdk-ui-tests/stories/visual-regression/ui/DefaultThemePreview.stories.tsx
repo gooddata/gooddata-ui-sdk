@@ -2,7 +2,7 @@
 
 import { DefaultThemePreview } from "@gooddata/sdk-ui-theme-provider/internal";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 
 function DefaultThemeStory() {
     return (

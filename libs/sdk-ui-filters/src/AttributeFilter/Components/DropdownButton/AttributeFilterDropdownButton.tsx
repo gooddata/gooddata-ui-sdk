@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    ComponentType,
-    KeyboardEvent,
-    MutableRefObject,
-    ReactNode,
-    RefObject,
+    type ComponentType,
+    type KeyboardEvent,
+    type MutableRefObject,
+    type ReactNode,
+    type RefObject,
     useCallback,
     useEffect,
     useRef,
@@ -19,7 +19,7 @@ import { ShortenedText, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/
 import { stringUtils } from "@gooddata/util";
 
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
-import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../../shared/index.js";
+import { FilterButtonCustomIcon, type IFilterButtonCustomIcon } from "../../../shared/index.js";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },

@@ -2,19 +2,19 @@
 
 import { compact, difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import { areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
 
-import { RemoveAttributeFilters } from "../../../commands/filters.js";
+import { type RemoveAttributeFilters } from "../../../commands/filters.js";
 import { attributeFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { selectAllAnalyticalWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
 

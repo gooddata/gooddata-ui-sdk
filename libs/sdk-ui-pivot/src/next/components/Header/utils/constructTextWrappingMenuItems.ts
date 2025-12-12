@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { messages } from "../../../../locales.js";
-import { ITextWrappingMenuItem } from "../../../types/menu.js";
-import { PivotTableNextTextWrappingConfig } from "../../../types/textWrapping.js";
+import { type ITextWrappingMenuItem } from "../../../types/menu.js";
+import { type PivotTableNextTextWrappingConfig } from "../../../types/textWrapping.js";
 
 export interface ITextWrappingMenuOptions {
     includeHeaderWrapping?: boolean;

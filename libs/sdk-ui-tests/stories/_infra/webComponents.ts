@@ -5,7 +5,7 @@
  * as a side effect. Backend only has to be defined once per runtime.
  */
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "./backend.js";
 

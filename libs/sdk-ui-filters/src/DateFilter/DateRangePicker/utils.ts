@@ -2,9 +2,9 @@
 
 import { format, isValid, parse } from "date-fns";
 import moment from "moment";
-import { DayPickerProps, Matcher } from "react-day-picker";
+import { type DayPickerProps, type Matcher } from "react-day-picker";
 
-import { ITime } from "./types.js";
+import { type ITime } from "./types.js";
 import { platformDateFormat } from "../constants/Platform.js";
 
 const mergeModifiers = (

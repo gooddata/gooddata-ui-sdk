@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { IChartOptions } from "../../../typings/unsafe.js";
+import { type IChartOptions } from "../../../typings/unsafe.js";
 import { getAxisLabelConfigurationForDualBarChart } from "../getAxisLabelConfigurationForDualBarChart.js";
 
 describe("getAxisLabelConfigurationForDualBarChart", () => {

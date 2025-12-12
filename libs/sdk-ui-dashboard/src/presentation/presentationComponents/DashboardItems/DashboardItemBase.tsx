@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode, Ref } from "react";
+import { type MouseEvent, type ReactNode, type Ref } from "react";
 
 import { DashboardItemContent } from "./DashboardItemContent.js";
 import { DashboardItemContentWrapper } from "./DashboardItemContentWrapper.js";

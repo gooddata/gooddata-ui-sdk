@@ -5,8 +5,8 @@ import { useMemo } from "react";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     DataViewFacade,
-    GoodDataSdkError,
-    UseCancelablePromiseStatus,
+    type GoodDataSdkError,
+    type UseCancelablePromiseStatus,
     convertError,
     useBackendStrict,
     useCancelablePromise,

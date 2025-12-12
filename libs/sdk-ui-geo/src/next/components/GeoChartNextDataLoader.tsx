@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -13,7 +13,7 @@ import { RenderGeoChartNext } from "./RenderGeoChartNext.js";
 import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
 import { useGeoChartData } from "../hooks/dataLoading/useGeoChartDataPipeline.js";
 import { useCallbackOnChange } from "../hooks/utils/useCallbackOnChange.js";
-import { ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
 
 /**
  * Component that loads all layer data before rendering.

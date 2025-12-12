@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { Root } from "mdast";
+import { type Root } from "mdast";
 import { describe, expect, it } from "vitest";
 
-import { DataPoint, createIntlMock } from "@gooddata/sdk-ui";
+import { type DataPoint, createIntlMock } from "@gooddata/sdk-ui";
 
-import { EvaluatedMetric } from "../../hooks/useEvaluatedMetricsAndAttributes.js";
+import { type EvaluatedMetric } from "../../hooks/useEvaluatedMetricsAndAttributes.js";
 import { rehypeReferences } from "../rehype-references.js";
 
 describe("testing rehype plugin to extract references", () => {

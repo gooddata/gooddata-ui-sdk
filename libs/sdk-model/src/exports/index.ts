@@ -3,11 +3,11 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IAuditable } from "../base/metadata.js";
-import { FilterContextItem } from "../dashboard/filterContext.js";
-import { IFilter } from "../execution/filter/index.js";
-import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/index.js";
-import { Identifier } from "../objRef/index.js";
+import { type IAuditable } from "../base/metadata.js";
+import { type FilterContextItem } from "../dashboard/filterContext.js";
+import { type IFilter } from "../execution/filter/index.js";
+import { type IMetadataObject, type IMetadataObjectDefinition } from "../ldm/metadata/index.js";
+import { type Identifier } from "../objRef/index.js";
 
 /**
  * Export definition dashboard settings

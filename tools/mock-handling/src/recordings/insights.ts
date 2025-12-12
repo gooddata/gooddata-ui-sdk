@@ -5,12 +5,12 @@ import path from "path";
 
 import { isEmpty } from "lodash-es";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
-import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
+import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
-import { InsightRecordingSpec, RecordingFiles } from "../interface.js";
+import { type InsightRecordingSpec, RecordingFiles } from "../interface.js";
 
 //
 // internal constants & types

@@ -1,22 +1,22 @@
 // (C) 2024-2025 GoodData Corporation
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    IGenAIVisualization,
-    IInsight,
-    IInsightDefinition,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IGenAIVisualization,
+    type IInsight,
+    type IInsightDefinition,
     applyRatioRule,
     newBucket,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { prepareExecution } from "../../components/messages/contents/useExecution.js";
-import { Message, isVisualizationContents } from "../../model.js";
+import { type Message, isVisualizationContents } from "../../model.js";
 import { getHeadlineComparison } from "../../utils.js";
 import { messagesSelector } from "../messages/messagesSelectors.js";
 import { saveVisualizationErrorAction, saveVisualizationSuccessAction } from "../messages/messagesSlice.js";

@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { DimensionHeader, ExecutionResult } from "@gooddata/api-client-tiger";
-import { DataValue, IResultHeader } from "@gooddata/sdk-model";
+import { type DimensionHeader, type ExecutionResult } from "@gooddata/api-client-tiger";
+import { type DataValue, type IResultHeader } from "@gooddata/sdk-model";
 
 export type Data = DataValue[] | DataValue[][];
 

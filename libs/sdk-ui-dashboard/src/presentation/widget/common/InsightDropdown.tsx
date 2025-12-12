@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
-import { IInsight, ObjRef } from "@gooddata/sdk-model";
+import { type IInsight, type ObjRef } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { InsightList } from "../../insightList/index.js";

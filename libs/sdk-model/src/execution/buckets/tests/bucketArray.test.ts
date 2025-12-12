@@ -2,9 +2,9 @@
 import { describe, expect, it } from "vitest";
 
 import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model.js";
-import { IAttribute, attributeLocalId, idMatchAttribute } from "../../attribute/index.js";
-import { ITotal, newTotal } from "../../base/totals.js";
-import { IMeasure, idMatchMeasure, isMeasure, measureLocalId } from "../../measure/index.js";
+import { type IAttribute, attributeLocalId, idMatchAttribute } from "../../attribute/index.js";
+import { type ITotal, newTotal } from "../../base/totals.js";
+import { type IMeasure, idMatchMeasure, isMeasure, measureLocalId } from "../../measure/index.js";
 import {
     bucketsAttributes,
     bucketsById,
@@ -17,11 +17,11 @@ import {
     bucketsTotals,
 } from "../bucketArray.js";
 import {
-    AttributeInBucket,
-    BucketItemModifications,
-    IAttributeOrMeasure,
-    IBucket,
-    MeasureInBucket,
+    type AttributeInBucket,
+    type BucketItemModifications,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type MeasureInBucket,
     newBucket,
 } from "../index.js";
 

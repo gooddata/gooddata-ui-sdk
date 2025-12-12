@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    CSSProperties,
-    ComponentType,
-    KeyboardEvent,
-    ReactNode,
-    Ref,
+    type CSSProperties,
+    type ComponentType,
+    type KeyboardEvent,
+    type ReactNode,
+    type Ref,
     useCallback,
     useEffect,
     useImperativeHandle,

@@ -1,23 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    ITigerClientBase,
-    JsonApiAttributeOutList,
-    JsonApiAttributeOutWithLinks,
-    JsonApiDatasetOut,
+    type ITigerClientBase,
+    type JsonApiAttributeOutList,
+    type JsonApiAttributeOutWithLinks,
+    type JsonApiDatasetOut,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/entitiesObjects";
 
 import {
-    DatasetMap,
-    LabelMap,
+    type DatasetMap,
+    type LabelMap,
     convertAttribute,
     createDatasetMap,
     createLabelMap,
     getReferencedDataset,
 } from "./tigerCommon.js";
-import { Attribute, DateDataSet } from "../../base/types.js";
+import { type Attribute, type DateDataSet } from "../../base/types.js";
 
 type DatasetWithAttributes = {
     dataset: JsonApiDatasetOut;

@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     removeIgnoredWidgetFilters,
     selectAutomationDefaultSelectedFilters,
     useDashboardSelector,

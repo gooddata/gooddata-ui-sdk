@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { IVisibilityContext } from "./context.js";
+import { type IVisibilityContext } from "./context.js";
 
 /**
  * Options for configuring the visibility detection behavior

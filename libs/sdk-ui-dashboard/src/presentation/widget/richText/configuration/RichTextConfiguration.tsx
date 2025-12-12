@@ -8,7 +8,7 @@ import { stringUtils } from "@gooddata/util";
 
 import { RichTextFilters } from "./RichTextFilters.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
-import { IRichTextMenuSubmenuComponentProps } from "../../richTextMenu/types.js";
+import { type IRichTextMenuSubmenuComponentProps } from "../../richTextMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

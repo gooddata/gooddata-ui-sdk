@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 

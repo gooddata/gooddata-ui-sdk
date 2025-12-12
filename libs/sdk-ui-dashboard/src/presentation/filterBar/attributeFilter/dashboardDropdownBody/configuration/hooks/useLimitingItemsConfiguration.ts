@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
 
-import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
 import {
     selectAttributeFilterConfigsOverrides,

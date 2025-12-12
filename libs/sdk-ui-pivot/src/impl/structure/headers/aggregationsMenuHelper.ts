@@ -2,11 +2,16 @@
 
 import { intersection, isEqual, sortBy, uniq } from "lodash-es";
 
-import { IAttributeDescriptor, ITotal, TotalType, attributeDescriptorLocalId } from "@gooddata/sdk-model";
+import {
+    type IAttributeDescriptor,
+    type ITotal,
+    type TotalType,
+    attributeDescriptorLocalId,
+} from "@gooddata/sdk-model";
 
-import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import { type IColumnTotal } from "./aggregationsMenuTypes.js";
 import { AVAILABLE_TOTALS } from "../../base/constants.js";
-import { IMenuAggregationClickConfig } from "../../privateTypes.js";
+import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {
     return totals.filter(

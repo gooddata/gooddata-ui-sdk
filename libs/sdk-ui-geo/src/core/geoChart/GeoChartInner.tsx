@@ -1,41 +1,41 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { PureComponent, ReactElement, Suspense, lazy } from "react";
+import { PureComponent, type ReactElement, Suspense, lazy } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
 import { throttle } from "lodash-es";
-import { WrappedComponentProps } from "react-intl";
-import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
+import { type WrappedComponentProps } from "react-intl";
+import ReactMeasure, { type ContentRect, type MeasuredComponentProps } from "react-measure";
 import { invariant } from "ts-invariant";
 import { v4 } from "uuid";
 
-import { IColorPalette, ITheme } from "@gooddata/sdk-model";
+import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import {
-    IColorAssignment,
-    IDataVisualizationProps,
-    IDrillConfig,
-    ILoadingInjectedProps,
-    ITranslationsComponentProps,
+    type IColorAssignment,
+    type IDataVisualizationProps,
+    type IDrillConfig,
+    type ILoadingInjectedProps,
+    type ITranslationsComponentProps,
     IntlTranslationsProvider,
     IntlWrapper,
     convertDrillableItemsToPredicates,
 } from "@gooddata/sdk-ui";
 import {
-    IColorStrategy,
-    ILegendDetailOptions,
-    ILegendDetails,
-    IPushpinCategoryLegendItem,
+    type IColorStrategy,
+    type ILegendDetailOptions,
+    type ILegendDetails,
+    type IPushpinCategoryLegendItem,
     LegendPosition,
-    PositionType,
+    type PositionType,
     SupportedLegendPositions,
     getLegendDetails as getCommonVisLegendDetails,
     shouldShowFluid,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { GeoChartLegendRenderer, IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
-import { IGeoChartRendererProps } from "./GeoChartRenderer.js";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
+import { GeoChartLegendRenderer, type IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
+import { type IGeoChartRendererProps } from "./GeoChartRenderer.js";
+import { type IGeoConfig, type IGeoData, type IGeoLngLat } from "../../GeoChart.js";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive.js";

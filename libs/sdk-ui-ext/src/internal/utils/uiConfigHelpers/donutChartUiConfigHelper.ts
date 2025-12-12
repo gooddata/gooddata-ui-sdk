@@ -5,7 +5,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG, disabledOpenAsReportConfig } from "../../constants/uiConfig.js";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import { type IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

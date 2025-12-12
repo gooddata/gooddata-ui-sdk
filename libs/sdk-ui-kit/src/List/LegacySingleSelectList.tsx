@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ElementType, ReactElement, useCallback, useMemo } from "react";
+import { type ElementType, type ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { pick } from "lodash-es";

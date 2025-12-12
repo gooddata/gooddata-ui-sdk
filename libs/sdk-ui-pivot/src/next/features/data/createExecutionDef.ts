@@ -1,15 +1,22 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IExecutionConfig, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    type IExecutionConfig,
+    type IFilter,
+    type IMeasure,
+    type ISortItem,
+    type ITotal,
+} from "@gooddata/sdk-model";
 
 import { applyAttributesToExecutionDef } from "./executionDefinition/attributes.js";
 import { DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION } from "./executionDefinition/constants.js";
 import { applyExecConfigToExecutionDef } from "./executionDefinition/execConfig.js";
 import { applyFiltersToExecutionDef } from "./executionDefinition/filters.js";
 import { applyMeasuresToExecutionDef } from "./executionDefinition/measures.js";
-import { IPivotTableExecutionDefinition } from "./executionDefinition/types.js";
+import { type IPivotTableExecutionDefinition } from "./executionDefinition/types.js";
 import { applyWorkspaceToExecutionDef } from "./executionDefinition/workspace.js";
-import { MeasureGroupDimension } from "../../types/transposition.js";
+import { type MeasureGroupDimension } from "../../types/transposition.js";
 import { applyTotalsToExecutionDef } from "../aggregations/applyTotalsToExecutionDef.js";
 import { applySortByToExecutionDef } from "../sorting/applySortByToExecutionDef.js";
 import { applyTranspositionToExecutionDef } from "../transposition/applyTranspositionToExecutionDef.js";

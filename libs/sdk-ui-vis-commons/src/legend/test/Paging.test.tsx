@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { IPagingProps, Paging } from "../Paging.js";
+import { type IPagingProps, Paging } from "../Paging.js";
 
 describe("Paging", () => {
     function renderComponent(customProps: Partial<IPagingProps> = {}) {

@@ -1,21 +1,31 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+import { type MouseEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import { Dropdown, IUiMenuItem, UiIcon, UiMenu, useOverlayZIndexWithRegister } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    type IUiMenuItem,
+    UiIcon,
+    UiMenu,
+    useOverlayZIndexWithRegister,
+} from "@gooddata/sdk-ui-kit";
 
-import { AggregationsMenuItemData, HeaderInteractiveItem, buildUiMenuItems } from "./HeaderMenuComponents.js";
+import {
+    type AggregationsMenuItemData,
+    HeaderInteractiveItem,
+    buildUiMenuItems,
+} from "./HeaderMenuComponents.js";
 import { messages } from "../../../../locales.js";
 import { useHeaderMenuContext } from "../../../context/HeaderMenuContext.js";
 import { e } from "../../../features/styling/bem.js";
 import { getPivotHeaderMenuButtonTestIdProps } from "../../../testing/dataTestIdGenerators.js";
 import {
-    IAggregationsMenuItem,
-    IAggregationsSubMenuItem,
-    ISortingMenuItem,
-    ITextWrappingMenuItem,
+    type IAggregationsMenuItem,
+    type IAggregationsSubMenuItem,
+    type ISortingMenuItem,
+    type ITextWrappingMenuItem,
 } from "../../../types/menu.js";
 
 export interface IHeaderMenuProps {

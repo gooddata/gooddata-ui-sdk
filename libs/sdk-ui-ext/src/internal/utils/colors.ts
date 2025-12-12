@@ -2,9 +2,9 @@
 import { cloneDeep, compact, isEmpty, isEqual, set, uniqBy } from "lodash-es";
 
 import {
-    IColor,
-    IColorMappingItem,
-    IMeasureDescriptor,
+    type IColor,
+    type IColorMappingItem,
+    type IMeasureDescriptor,
     isAttributeDescriptor,
     isColorDescriptor,
     isColorFromPalette,
@@ -13,11 +13,11 @@ import {
     isRgbColor,
     isUriRef,
 } from "@gooddata/sdk-model";
-import { IColorAssignment, IMappingHeader, getMappingHeaderName } from "@gooddata/sdk-ui";
+import { type IColorAssignment, type IMappingHeader, getMappingHeaderName } from "@gooddata/sdk-ui";
 import { ColorUtils } from "@gooddata/sdk-ui-charts";
 
-import { IColorConfiguration, IColoredItem } from "../interfaces/Colors.js";
-import { IVisualizationProperties } from "../interfaces/Visualization.js";
+import { type IColorConfiguration, type IColoredItem } from "../interfaces/Colors.js";
+import { type IVisualizationProperties } from "../interfaces/Visualization.js";
 
 function getItemName(item: IColoredItem): string {
     return getMappingHeaderName(item.mappingHeader) || "";

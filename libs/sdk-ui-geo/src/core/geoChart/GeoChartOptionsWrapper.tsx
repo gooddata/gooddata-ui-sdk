@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentType, useCallback, useMemo } from "react";
+import { type ComponentType, useCallback, useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -10,20 +10,20 @@ import {
     ErrorComponent as DefaultErrorComponent,
     LoadingComponent as DefaultLoadingComponent,
     ErrorCodes,
-    IErrorProps,
+    type IErrorProps,
     VisualizationTypes,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import {
-    IColorStrategy,
-    IPushpinCategoryLegendItem,
+    type IColorStrategy,
+    type IPushpinCategoryLegendItem,
     getValidColorPalette,
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { getColorStrategy } from "./colorStrategy/geoChart.js";
 import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
-import { GeoChartInner, IGeoChartInnerOptions, IGeoChartInnerProps } from "./GeoChartInner.js";
-import { IGeoData, IValidationResult } from "../../GeoChart.js";
+import { GeoChartInner, type IGeoChartInnerOptions, type IGeoChartInnerProps } from "./GeoChartInner.js";
+import { type IGeoData, type IValidationResult } from "../../GeoChart.js";
 import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
 import { getGeoData } from "./helpers/geoChart/data.js";
 

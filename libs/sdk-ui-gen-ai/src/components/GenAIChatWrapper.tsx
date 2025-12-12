@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { FC, MouseEvent, useCallback } from "react";
+import { type FC, type MouseEvent, useCallback } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ import { useThreadLoading } from "./hooks/useThreadLoading.js";
 import { Input } from "./Input.js";
 import { Messages } from "./Messages.js";
 import {
-    RootState,
+    type RootState,
     asyncProcessSelector,
     cancelAsyncAction,
     clearThreadAction,

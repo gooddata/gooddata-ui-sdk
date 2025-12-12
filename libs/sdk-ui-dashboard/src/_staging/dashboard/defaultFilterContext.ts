@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    FilterContextItem,
-    IDashboardDateFilter,
-    IDateFilterConfig,
-    IFilterContextDefinition,
+    type FilterContextItem,
+    type IDashboardDateFilter,
+    type IDateFilterConfig,
+    type IFilterContextDefinition,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
-import { DateFilterOption } from "@gooddata/sdk-ui-filters";
+import { type DateFilterOption } from "@gooddata/sdk-ui-filters";
 
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 import { convertOptionToDateFilter } from "../dateFilterConfig/dateFilterOptionConverters.js";

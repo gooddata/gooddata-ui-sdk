@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
+import { type IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
 import { getDDPointsInParentTick, setupDrilldown } from "../setupDrilldownToParentAttribute.js";
 import { styleVariables } from "../styles/variables.js";
 

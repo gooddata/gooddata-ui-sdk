@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { PayloadAction } from "@reduxjs/toolkit";
+
+import { type PayloadAction } from "@reduxjs/toolkit";
 
 import {
     selectCommittedSelection,
@@ -9,8 +10,8 @@ import {
     selectIsWorkingSelectionInverted,
     selectWorkingSelection,
 } from "./selectionSelectors.js";
-import { AttributeElementKey } from "../../../types/index.js";
-import { AttributeFilterReducer } from "../store/state.js";
+import { type AttributeElementKey } from "../../../types/index.js";
+import { type AttributeFilterReducer } from "../store/state.js";
 
 const changeSelection: AttributeFilterReducer<
     PayloadAction<{

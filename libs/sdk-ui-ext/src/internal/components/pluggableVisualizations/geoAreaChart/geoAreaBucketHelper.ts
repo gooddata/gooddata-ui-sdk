@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IInsightDefinition,
-    ISortItem,
+    type IInsightDefinition,
+    type ISortItem,
     bucketAttribute,
     insightBucket,
     isIdentifierRef,
@@ -13,10 +13,10 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, METRIC } from "../../../constants/bucket.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IUiConfig,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IUiConfig,
 } from "../../../interfaces/Visualization.js";
 import {
     filterOutDerivedMeasures,

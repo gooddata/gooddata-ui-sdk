@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
-import { IMappingHeader } from "@gooddata/sdk-ui";
+import { type IAttributeDescriptor, type IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IMappingHeader } from "@gooddata/sdk-ui";
 
 import { ROW_TOTAL } from "../base/constants.js";
 

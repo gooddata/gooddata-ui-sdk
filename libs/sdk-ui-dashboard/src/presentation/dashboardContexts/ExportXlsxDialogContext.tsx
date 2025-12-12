@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
+import { type ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
-import { IExportDialogBaseProps } from "@gooddata/sdk-ui-kit";
+import { type IExportDialogBaseProps } from "@gooddata/sdk-ui-kit";
 
 export type ExportXlsxDialogConfig = Omit<IExportDialogBaseProps, "children">;
 

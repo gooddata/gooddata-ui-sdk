@@ -6,7 +6,11 @@ import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
-import { IGrantedDataSource, IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
+import {
+    type IGrantedDataSource,
+    type IGrantedWorkspace,
+    type WorkspacePermissionSubject,
+} from "../types.js";
 import {
     dataSourcePermissionsAssignmentToGrantedDataSource,
     grantedDataSourceAsPermissionAssignment,

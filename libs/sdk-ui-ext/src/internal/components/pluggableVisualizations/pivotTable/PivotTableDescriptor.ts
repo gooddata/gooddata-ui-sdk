@@ -1,19 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight, IInsightDefinition, ISettings, insightSanitize } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightDefinition, type ISettings, insightSanitize } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { type IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
 import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
 import { PluggablePivotTable } from "./PluggablePivotTable.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
-import { IDrillDownContext } from "../../../interfaces/Visualization.js";
+import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { type IDrillDownContext } from "../../../interfaces/Visualization.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    IVisualizationSizeInfo,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type IVisualizationSizeInfo,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

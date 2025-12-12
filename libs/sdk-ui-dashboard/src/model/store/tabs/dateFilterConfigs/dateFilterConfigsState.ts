@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IDashboardDateFilterConfigItem } from "@gooddata/sdk-model";
+import { type IDashboardDateFilterConfigItem } from "@gooddata/sdk-model";
 
 /**
  * @alpha

@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Parent, Point } from "unist";
+import { type Parent, type Point } from "unist";
 
-import { REFERENCE_REGEX_SPLIT, TextNode } from "./types.js";
+import { REFERENCE_REGEX_SPLIT, type TextNode } from "./types.js";
 
 export function remarkReferences() {
     return function () {

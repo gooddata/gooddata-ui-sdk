@@ -12,7 +12,7 @@ import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { createColumnWidthItemForColumnDefinition } from "../../features/resizing/createColumnWidthItemForColumnDefinition.js";
 import { getColumnWidthItemValue } from "../../features/resizing/getColumnWidthItemValue.js";
 import { isColumnWidthItemMatch } from "../../features/resizing/isColumnWidthItemMatch.js";
-import { AgGridColumnDef, AgGridOnColumnResized } from "../../types/agGrid.js";
+import { type AgGridColumnDef, type AgGridOnColumnResized } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
 

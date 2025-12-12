@@ -9278,16 +9278,16 @@ import dash_emptyDashboard_obj from "./metadata/dashboards/emptyDashboard/obj.js
 const dash_emptyDashboard = { obj: dash_emptyDashboard_obj };
 
 import {
-    CatalogItem,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeElement,
-    ICatalogGroup,
-    IDashboard,
-    IDashboardPlugin,
-    IDataSetMetadataObject,
-    IExecutionDefinition,
-    IInsight,
-    IVisualizationClass,
+    type CatalogItem,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeElement,
+    type ICatalogGroup,
+    type IDashboard,
+    type IDashboardPlugin,
+    type IDataSetMetadataObject,
+    type IExecutionDefinition,
+    type IInsight,
+    type IVisualizationClass,
 } from "@gooddata/sdk-model";
 
 type ExecutionRecording = {

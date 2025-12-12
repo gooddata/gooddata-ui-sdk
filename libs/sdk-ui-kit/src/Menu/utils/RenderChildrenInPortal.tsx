@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useEffect, useMemo, useRef } from "react";
+import { type ReactNode, useEffect, useMemo, useRef } from "react";
 
 import ReactDOM from "react-dom";
 

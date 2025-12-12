@@ -1,16 +1,22 @@
 // (C) 2025 GoodData Corporation
 
 import { escape, isEmpty } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { ISeparators } from "@gooddata/sdk-model";
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-model";
+import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { formatValueForTooltip, getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
-import { IGeoTooltipItem } from "../../../types/common/legends.js";
-import { IGeoPushpinChartNextConfig } from "../../../types/config/pushpinChart.js";
-import { JsonValue, LngLatTuple, isGeoJsonPoint, isLngLatTuple, isRecord } from "../../../utils/guards.js";
-import { IPopupFacade } from "../../common/mapFacade.js";
+import { type IGeoTooltipItem } from "../../../types/common/legends.js";
+import { type IGeoPushpinChartNextConfig } from "../../../types/config/pushpinChart.js";
+import {
+    type JsonValue,
+    type LngLatTuple,
+    isGeoJsonPoint,
+    isLngLatTuple,
+    isRecord,
+} from "../../../utils/guards.js";
+import { type IPopupFacade } from "../../common/mapFacade.js";
 import type { IGeoTooltipConfig } from "../../registry/adapterTypes.js";
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "../constants.js";
 import { parsePushpinGeoProperties } from "../data/transformation.js";

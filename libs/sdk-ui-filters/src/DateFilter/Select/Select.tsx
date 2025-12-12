@@ -1,13 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, ComponentClass, ReactElement } from "react";
+import { type CSSProperties, type ComponentClass, type ReactElement } from "react";
 
 import cx from "classnames";
-import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
+import Downshift, {
+    type ControllerStateAndHelpers,
+    type DownshiftProps,
+    type DownshiftState,
+} from "downshift";
 
 import { SelectButton } from "./SelectButton.js";
-import { ISelectMenuProps, SelectMenu } from "./SelectMenu.js";
-import { ISelectItem, ISelectItemOption } from "./types.js";
+import { type ISelectMenuProps, SelectMenu } from "./SelectMenu.js";
+import { type ISelectItem, type ISelectItemOption } from "./types.js";
 import { getSelectableItems, itemToString } from "./utils.js";
 
 const TypedDownshift = Downshift as unknown as ComponentClass<DownshiftProps<any>, DownshiftState<any>>;

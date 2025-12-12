@@ -2,8 +2,8 @@
 import { useState } from "react";
 
 import { useDashboardCommand } from "./useDashboardCommand.js";
-import { DashboardCommands } from "../commands/index.js";
-import { DashboardEventType, DashboardEvents } from "../events/index.js";
+import { type DashboardCommands } from "../commands/index.js";
+import { type DashboardEventType, type DashboardEvents } from "../events/index.js";
 
 /**
  * @internal

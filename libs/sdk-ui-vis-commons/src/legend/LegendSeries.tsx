@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    CSSProperties,
-    KeyboardEventHandler,
-    MutableRefObject,
-    ReactNode,
+    type CSSProperties,
+    type KeyboardEventHandler,
+    type MutableRefObject,
+    type ReactNode,
     forwardRef,
     useMemo,
     useState,
@@ -17,7 +17,7 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { makeLinearKeyboardNavigation, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { LegendSeriesContextStore, VisibilityContext, useLegendSeriesContextValue } from "./context.js";
-import { ISeriesItem, isSeriesItemMetric } from "./types.js";
+import { type ISeriesItem, isSeriesItemMetric } from "./types.js";
 import { useVisibilityDetection } from "./visibilityDetection.js";
 
 interface ILegendSeriesProps {

@@ -1,19 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
-import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type ObjRef } from "@gooddata/sdk-model";
+import { type IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import {
-    DashboardContext,
-    IDashboardBaseProps,
-    IDashboardEngine,
-    IDashboardPluginContract_V1,
-    IDashboardProps,
+    type DashboardContext,
+    type IDashboardBaseProps,
+    type IDashboardEngine,
+    type IDashboardPluginContract_V1,
+    type IDashboardProps,
 } from "@gooddata/sdk-ui-dashboard";
 
-import { IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
+import { type IDashboardLoadOptions, type IEmbeddedPlugin } from "./types.js";
 
 /**
  * A result of successful load of a dashboard consists of a React component and constructed props that

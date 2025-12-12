@@ -1,14 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import {
-    IDashboardAttributeFilterConfig,
-    IDashboardFilterView,
-    IDashboardFilterViewSaveRequest,
-    IFilterContextDefinition,
-    ObjRef,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardFilterView,
+    type IDashboardFilterViewSaveRequest,
+    type IFilterContextDefinition,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
@@ -16,10 +16,10 @@ import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
 import { resetCrossFiltering } from "./common.js";
 import {
-    ApplyFilterView,
-    DeleteFilterView,
-    SaveFilterView,
-    SetFilterViewAsDefault,
+    type ApplyFilterView,
+    type DeleteFilterView,
+    type SaveFilterView,
+    type SetFilterViewAsDefault,
     changeFilterContextSelectionByParams,
     reloadFilterViews,
 } from "../../commands/index.js";
@@ -45,8 +45,8 @@ import {
     selectWorkingFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier, tabsActions } from "../../store/tabs/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
 
 function createFilterView(

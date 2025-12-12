@@ -1,5 +1,5 @@
 // (C) 2021-2023 GoodData Corporation
-import { RenderMode } from "../../../types.js";
+import { type RenderMode } from "../../../types.js";
 
 /**
  * @beta

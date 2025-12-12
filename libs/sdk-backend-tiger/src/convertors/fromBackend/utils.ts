@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { ShareStatus } from "@gooddata/sdk-model";
+import { type ShareStatus } from "@gooddata/sdk-model";
 
 /**
  * Unlike on Bear that supports share status as "private", "public", or "shared", Tiger maps the shared boolean

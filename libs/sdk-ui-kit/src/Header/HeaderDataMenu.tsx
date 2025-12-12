@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
 import cx from "classnames";
-import { IntlShape, injectIntl } from "react-intl";
+import { type IntlShape, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { IHeaderMenuItem } from "./typings.js";
+import { type IHeaderMenuItem } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { Button } from "../Button/index.js";
 

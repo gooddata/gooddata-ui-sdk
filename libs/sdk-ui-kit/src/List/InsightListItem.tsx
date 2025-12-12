@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType, MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import { type ComponentType, type MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
+import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 import { InsightListItemDate } from "./InsightListItemDate.js";

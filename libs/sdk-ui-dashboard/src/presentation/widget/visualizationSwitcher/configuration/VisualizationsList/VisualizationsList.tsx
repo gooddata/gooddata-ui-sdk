@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import { VisualizationListItem } from "./VisualizationListItem.js";
-import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
 import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
 
 interface IVisulizationsListProps {

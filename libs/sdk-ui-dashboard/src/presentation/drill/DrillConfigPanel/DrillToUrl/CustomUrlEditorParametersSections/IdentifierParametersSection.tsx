@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { FormattedMessage, defineMessages } from "react-intl";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import { Parameter } from "./Parameter.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model/index.js";
@@ -15,7 +15,7 @@ import { DataProductIdParameterDetail } from "../ParameterDetails/DataProductIdP
 import { InsightIdParameterDetail } from "../ParameterDetails/InsightIdParameterDetail.js";
 import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail.js";
 import { WidgetIdParameterDetail } from "../ParameterDetails/WidgetIdParameterDetail.js";
-import { IIdentifierParametersSectionProps } from "../types.js";
+import { type IIdentifierParametersSectionProps } from "../types.js";
 
 interface IIdentifierParameter {
     titleIntlKey: string;

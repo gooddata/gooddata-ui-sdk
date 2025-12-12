@@ -5,10 +5,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IInsight,
-    IInsightWidget,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IInsight,
+    type IInsightWidget,
 } from "@gooddata/sdk-model";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";

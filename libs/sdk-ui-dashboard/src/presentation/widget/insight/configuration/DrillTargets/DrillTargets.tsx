@@ -1,15 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    DrillOrigin,
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttributeHierarchy,
-    IDrillToAttributeUrl,
-    IDrillToCustomUrl,
-    IDrillToDashboard,
-    IDrillToInsight,
-    IInsight,
-    InsightDrillDefinition,
+    type DrillOrigin,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IInsight,
+    type InsightDrillDefinition,
     getHierarchyRef,
     idRef,
 } from "@gooddata/sdk-model";
@@ -18,13 +18,13 @@ import { DrillTargetAttributeHierarchyItem } from "./DrillTargetAttributeHierarc
 import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
 import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
 import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
-import { IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
+import { type IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
 import {
     DRILL_TARGET_TYPE,
-    IDrillConfigItem,
-    IDrillDownAttributeHierarchyConfig,
-    IDrillDownAttributeHierarchyDefinition,
-    UrlDrillTarget,
+    type IDrillConfigItem,
+    type IDrillDownAttributeHierarchyConfig,
+    type IDrillDownAttributeHierarchyDefinition,
+    type UrlDrillTarget,
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
     isDrillToDashboardConfig,

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import {
     selectShowWidgetAsTable,

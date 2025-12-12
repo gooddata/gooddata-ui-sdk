@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoChartNextConfig } from "../../../types/config/unified.js";
+import { type IGeoChartNextConfig } from "../../../types/config/unified.js";
 
 /**
  * Applies area-specific defaults (fill/outline styling).

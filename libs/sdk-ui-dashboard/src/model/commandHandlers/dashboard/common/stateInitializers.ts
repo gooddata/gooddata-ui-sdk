@@ -1,30 +1,30 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 import { cloneDeep, compact, isEmpty, update } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    IDashboard,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDashboardLayout,
-    IDashboardObjectIdentity,
-    IDashboardTab,
-    IDashboardWidget,
-    IDataSetMetadataObject,
-    IDateFilterConfig,
-    IFilterContext,
-    IFilterContextDefinition,
-    IInsight,
-    ISettings,
-    ITempFilterContext,
-    IWidget,
-    ObjRef,
+    type FilterContextItem,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboard,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardLayout,
+    type IDashboardObjectIdentity,
+    type IDashboardTab,
+    type IDashboardWidget,
+    type IDataSetMetadataObject,
+    type IDateFilterConfig,
+    type IFilterContext,
+    type IFilterContextDefinition,
+    type IInsight,
+    type ISettings,
+    type ITempFilterContext,
+    type IWidget,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,
@@ -41,28 +41,33 @@ import {
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext.js";
 import {
-    ValidationResult,
+    type ValidationResult,
     mergeFilterContextFilters,
 } from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { drillActions } from "../../../store/drill/index.js";
 import { insightsActions } from "../../../store/insights/index.js";
 import { metaActions } from "../../../store/meta/index.js";
 import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
 import { filterContextInitialState } from "../../../store/tabs/filterContext/filterContextState.js";
-import { DEFAULT_TAB_ID, FilterContextState, TabState, tabsActions } from "../../../store/tabs/index.js";
+import {
+    DEFAULT_TAB_ID,
+    type FilterContextState,
+    type TabState,
+    tabsActions,
+} from "../../../store/tabs/index.js";
 import { selectScreen } from "../../../store/tabs/layout/layoutSelectors.js";
 import { layoutInitialState } from "../../../store/tabs/layout/layoutState.js";
 import { uiActions } from "../../../store/ui/index.js";
 import {
-    DashboardContext,
-    IDashboardWidgetOverlay,
-    PrivateDashboardContext,
+    type DashboardContext,
+    type IDashboardWidgetOverlay,
+    type PrivateDashboardContext,
 } from "../../../types/commonTypes.js";
-import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 
 /**

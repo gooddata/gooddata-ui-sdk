@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    IExecutionFactory,
-    IGeoService,
-    ISecuritySettingsService,
-    IWorkspaceAttributesService,
-    IWorkspaceAutomationService,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDashboardsService,
-    IWorkspaceSettingsService,
+    type IExecutionFactory,
+    type IGeoService,
+    type ISecuritySettingsService,
+    type IWorkspaceAttributesService,
+    type IWorkspaceAutomationService,
+    type IWorkspaceCatalogFactory,
+    type IWorkspaceDashboardsService,
+    type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
 
 /**

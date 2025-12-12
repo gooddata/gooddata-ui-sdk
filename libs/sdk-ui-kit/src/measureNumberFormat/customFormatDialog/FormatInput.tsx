@@ -5,11 +5,11 @@ import { memo, useCallback } from "react";
 import { StreamLanguage } from "@codemirror/language";
 import { useIntl } from "react-intl";
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
 import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
-import { IFormatTemplate } from "../typings.js";
+import { type IFormatTemplate } from "../typings.js";
 
 type LanguageState = {
     isInColor: boolean;

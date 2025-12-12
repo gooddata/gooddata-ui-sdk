@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { FC, RefObject } from "react";
+import { type FC, type RefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -11,7 +11,7 @@ import { Dialog } from "@gooddata/sdk-ui-kit";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { HeaderIcon } from "./HeaderIcon.js";
 import {
-    RootState,
+    type RootState,
     clearThreadAction,
     hasMessagesSelector,
     isFullscreenSelector,

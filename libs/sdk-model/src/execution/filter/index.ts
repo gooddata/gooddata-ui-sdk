@@ -3,8 +3,8 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { AllTimeGranularity, DateAttributeGranularity } from "../../base/dateGranularities.js";
-import { Identifier, ObjRef, ObjRefInScope, isObjRef } from "../../objRef/index.js";
+import { type AllTimeGranularity, type DateAttributeGranularity } from "../../base/dateGranularities.js";
+import { type Identifier, type ObjRef, type ObjRefInScope, isObjRef } from "../../objRef/index.js";
 
 /**
  * Attribute elements specified by their URI.

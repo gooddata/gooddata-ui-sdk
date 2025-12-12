@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    ElementType,
-    HTMLAttributes,
+    type ElementType,
+    type HTMLAttributes,
     forwardRef,
     useCallback,
     useImperativeHandle,
@@ -10,7 +10,7 @@ import {
     useRef,
 } from "react";
 
-import { ScrollContext, isElementInvisibleType } from "./ScrollContext.js";
+import { ScrollContext, type isElementInvisibleType } from "./ScrollContext.js";
 import { handleOnScrollEvent } from "../utils/scroll.js";
 
 /**

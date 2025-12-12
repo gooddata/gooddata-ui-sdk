@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
     DashboardAttributeFilterConfigModeValues,
-    DashboardDateFilterConfigMode,
+    type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
 } from "@gooddata/sdk-model";
 

@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { SettingItem } from "../SettingItem.js";
-import { ISettingItem } from "../typings.js";
+import { type ISettingItem } from "../typings.js";
 
 const Wrapped = withIntl(SettingItem);
 

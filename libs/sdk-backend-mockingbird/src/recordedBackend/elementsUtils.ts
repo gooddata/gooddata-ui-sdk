@@ -3,28 +3,28 @@
 import { compact, intersectionBy } from "lodash-es";
 
 import {
-    ElementsQueryOptionsElementsSpecification,
-    IElementsQueryAttributeFilter,
+    type ElementsQueryOptionsElementsSpecification,
+    type IElementsQueryAttributeFilter,
     NotImplemented,
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeElement,
-    IAttributeFilter,
-    IDateFilter,
-    IMeasure,
-    IMeasureDefinition,
-    IRelativeDateFilter,
-    Identifier,
-    ObjRef,
+    type IAttributeElement,
+    type IAttributeFilter,
+    type IDateFilter,
+    type IMeasure,
+    type IMeasureDefinition,
+    type IRelativeDateFilter,
+    type Identifier,
+    type ObjRef,
     filterObjRef,
     isUriRef,
     measureItem,
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { AttributeElementsFiltering, AttributeElementsFilteringPredicate } from "./types.js";
+import { type AttributeElementsFiltering, type AttributeElementsFilteringPredicate } from "./types.js";
 
 const limiterFilteringPredicateAbstractFactory =
     <TLimitingItem>(refGetter: (item: TLimitingItem) => ObjRef | undefined, name: string) =>

@@ -4,7 +4,10 @@ import { useCallback, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IExportDefinitionVisualizationObjectSettings, WidgetAttachmentType } from "@gooddata/sdk-model";
+import {
+    type IExportDefinitionVisualizationObjectSettings,
+    type WidgetAttachmentType,
+} from "@gooddata/sdk-model";
 
 import { AttachmentsList } from "./AttachmentsList.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";

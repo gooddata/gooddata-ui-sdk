@@ -2,12 +2,12 @@
 
 import { useCallback } from "react";
 
-import { GridReadyEvent } from "ag-grid-enterprise";
+import { type GridReadyEvent } from "ag-grid-enterprise";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { useAgGridApi } from "../context/AgGridApiContext.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid instance api if available.

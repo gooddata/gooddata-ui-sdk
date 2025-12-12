@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
+import { type IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
 
 import { PyramidChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

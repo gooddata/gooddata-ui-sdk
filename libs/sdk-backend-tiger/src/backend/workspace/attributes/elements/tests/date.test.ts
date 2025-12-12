@@ -2,7 +2,11 @@
 
 import { describe, expect, it } from "vitest";
 
-import { DateAttributeGranularity, IRelativeDateFilter, newRelativeDateFilter } from "@gooddata/sdk-model";
+import {
+    type DateAttributeGranularity,
+    type IRelativeDateFilter,
+    newRelativeDateFilter,
+} from "@gooddata/sdk-model";
 
 import { getRelativeDateFilterShiftedValues } from "../date.js";
 

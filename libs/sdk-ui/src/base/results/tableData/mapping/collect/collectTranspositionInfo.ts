@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
+import { type IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
 
 /**
  * @internal

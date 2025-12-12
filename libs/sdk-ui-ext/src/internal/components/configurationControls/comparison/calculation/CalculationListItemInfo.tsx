@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
 
 import { CalculationListItemInfoSection } from "./CalculationListItemInfoSection.js";
 

@@ -4,19 +4,19 @@ import { zip } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
-    IResultAttributeHeader,
-    IResultTotalHeader,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    type IResultAttributeHeader,
+    type IResultTotalHeader,
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
 
-import { LeafDataCol, TransposedMeasureDataCol, isScopeCol } from "./tableDescriptorTypes.js";
+import { type LeafDataCol, type TransposedMeasureDataCol, isScopeCol } from "./tableDescriptorTypes.js";
 import {
-    ColumnLocator,
-    IAttributeColumnLocator,
-    IMeasureColumnLocator,
-    ITotalColumnLocator,
+    type ColumnLocator,
+    type IAttributeColumnLocator,
+    type IMeasureColumnLocator,
+    type ITotalColumnLocator,
 } from "../../columnWidths.js";
 
 function createAttributeLocator(

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { useDeleteUser } from "./dialogHooks.js";
 import { messages } from "./locales.js";
-import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { type IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 /**
  * @internal

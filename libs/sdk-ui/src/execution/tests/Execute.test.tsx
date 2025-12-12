@@ -1,20 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Mock, describe, expect, it, vi } from "vitest";
+import { type Mock, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
 
-import { AttributeMeasureOrPlaceholder } from "src/base/index.js";
+import { type AttributeMeasureOrPlaceholder } from "src/base/index.js";
 
 import { LoadingComponent } from "../../base/react/LoadingComponent.js";
 import { DataViewFacade } from "../../base/results/facade.js";
-import { CreateExecutionOptions, createExecution } from "../createExecution.js";
-import { Execute, IExecuteProps } from "../Execute.js";
-import { IExecuteErrorComponentProps } from "../interfaces.js";
+import { type CreateExecutionOptions, createExecution } from "../createExecution.js";
+import { Execute, type IExecuteProps } from "../Execute.js";
+import { type IExecuteErrorComponentProps } from "../interfaces.js";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => vi.fn((_) => <div />);

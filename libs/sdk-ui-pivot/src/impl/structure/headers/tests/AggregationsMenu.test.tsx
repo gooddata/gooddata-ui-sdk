@@ -4,9 +4,9 @@ import { act, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import {
-    ITotal,
+    type ITotal,
     defWithFilters,
     emptyDef,
     idRef,
@@ -20,7 +20,7 @@ import { createIntlMock } from "@gooddata/sdk-ui";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { AVAILABLE_TOTALS } from "../../../base/constants.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
-import { AggregationsMenu, IAggregationsMenuProps } from "../AggregationsMenu.js";
+import { AggregationsMenu, type IAggregationsMenuProps } from "../AggregationsMenu.js";
 import { AggregationsSubMenu } from "../AggregationsSubMenu.js";
 
 /**

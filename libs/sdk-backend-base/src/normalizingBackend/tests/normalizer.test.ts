@@ -4,11 +4,11 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
-    IExecutionDefinition,
-    IMeasure,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    IMeasureValueFilter,
+    type IExecutionDefinition,
+    type IMeasure,
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
+    type IMeasureValueFilter,
     defWithDimensions,
     defaultDimensionsGenerator,
     idRef,

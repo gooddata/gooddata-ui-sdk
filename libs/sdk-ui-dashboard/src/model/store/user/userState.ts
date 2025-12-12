@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { IUser } from "@gooddata/sdk-model";
+import { type IUser } from "@gooddata/sdk-model";
 
 /**
  * @public

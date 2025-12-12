@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { HTMLProps, KeyboardEventHandler, RefObject, forwardRef, useCallback } from "react";
+import { type HTMLProps, type KeyboardEventHandler, type RefObject, forwardRef, useCallback } from "react";
 
 import { isElementTextInput } from "../utils/domUtilities.js";
 

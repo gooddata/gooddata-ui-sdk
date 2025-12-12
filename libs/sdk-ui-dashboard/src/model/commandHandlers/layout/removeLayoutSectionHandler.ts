@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import { resizeParentContainers } from "./containerHeightSanitization.js";
@@ -12,12 +12,12 @@ import {
     serializeLayoutSectionPath,
     updateSectionIndex,
 } from "../../../_staging/layout/coordinates.js";
-import { RemoveLayoutSection } from "../../commands/index.js";
+import { type RemoveLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
+import { type DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveRelativeIndex } from "../../utils/arrayOps.js";
 
 export function* removeLayoutSectionHandler(

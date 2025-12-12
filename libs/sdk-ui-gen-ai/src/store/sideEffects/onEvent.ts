@@ -3,15 +3,15 @@
 import { getContext, select, takeEvery } from "redux-saga/effects";
 
 import {
-    Message,
-    RoutingContents,
-    TextContents,
+    type Message,
+    type RoutingContents,
+    type TextContents,
     isRoutingContents,
     isTextContents,
     isUserMessage,
 } from "../../model.js";
 import { copyToClipboardAction, setOpenAction } from "../chatWindow/chatWindowSlice.js";
-import { EventDispatcher } from "../events.js";
+import { type EventDispatcher } from "../events.js";
 import { messagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,

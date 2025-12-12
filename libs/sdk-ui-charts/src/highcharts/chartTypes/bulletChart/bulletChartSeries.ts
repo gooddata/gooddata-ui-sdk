@@ -3,17 +3,17 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    DataValue,
-    IBucket,
-    IMeasureGroupDescriptor,
-    ITheme,
-    Identifier,
+    type DataValue,
+    type IBucket,
+    type IMeasureGroupDescriptor,
+    type ITheme,
+    type Identifier,
     bucketIsEmpty,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { ChartFillConfig, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
+import { type ChartFillConfig, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
+import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import {
     getChartFillProperties,

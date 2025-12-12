@@ -4,7 +4,7 @@ import { useCallback, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     ItemsWrapper,
     SingleSelectListItem,
@@ -22,7 +22,12 @@ import {
     UNSUBSCRIBE_CONFIRM_DIALOG_ID,
 } from "../constants.js";
 import { messages } from "../messages.js";
-import { AutomationAction, AutomationsType, IAutomationsPendingAction, IEditAutomation } from "../types.js";
+import {
+    type AutomationAction,
+    type AutomationsType,
+    type IAutomationsPendingAction,
+    type IEditAutomation,
+} from "../types.js";
 
 const { b } = bem("gd-ui-ext-automation-menu-item");
 

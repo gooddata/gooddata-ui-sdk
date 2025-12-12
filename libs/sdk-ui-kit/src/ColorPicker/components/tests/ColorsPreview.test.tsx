@@ -3,7 +3,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { ColorsPreview, IColorsPreviewProps } from "../ColorsPreview.js";
+import { ColorsPreview, type IColorsPreviewProps } from "../ColorsPreview.js";
 
 describe("ColorsPreview", () => {
     it("should render colors preview with proper colors", () => {

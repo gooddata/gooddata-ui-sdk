@@ -2,12 +2,12 @@
 
 import { isEmpty } from "lodash-es";
 
-import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
+import { type DimensionHeader, type ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
 import {
-    DataValue,
-    IExecutionDefinition,
-    IResultHeader,
-    TotalType,
+    type DataValue,
+    type IExecutionDefinition,
+    type IResultHeader,
+    type TotalType,
     isMeasureGroupIdentifier,
     isResultTotalHeader,
 } from "@gooddata/sdk-model";

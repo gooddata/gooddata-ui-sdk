@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IShareDialogLabels } from "@gooddata/sdk-ui-kit";
+import { type IShareDialogLabels } from "@gooddata/sdk-ui-kit";
 
 export const LabelsMock: IShareDialogLabels = {
     accessRegimeLabel: "Other users can access this dashboard if they drill to it",

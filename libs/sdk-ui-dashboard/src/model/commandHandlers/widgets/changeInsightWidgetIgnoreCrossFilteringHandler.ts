@@ -1,17 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { ChangeInsightWidgetIgnoreCrossFiltering } from "../../commands/insight.js";
+import { type ChangeInsightWidgetIgnoreCrossFiltering } from "../../commands/insight.js";
 import {
-    DashboardInsightWidgetIgnoreCrossFilteringChanged,
+    type DashboardInsightWidgetIgnoreCrossFilteringChanged,
     insightWidgetIgnoreCrossFilteringChanged,
 } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetIgnoreCrossFilteringHandler(
     ctx: DashboardContext,

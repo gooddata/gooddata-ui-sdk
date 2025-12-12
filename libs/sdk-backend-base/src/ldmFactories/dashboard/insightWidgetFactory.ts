@@ -3,17 +3,17 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    InsightDrillDefinition,
-    ObjRef,
-    VisualizationProperties,
+    type IInsightWidget,
+    type IInsightWidgetDefinition,
+    type InsightDrillDefinition,
+    type ObjRef,
+    type VisualizationProperties,
     isInsightWidget,
     isInsightWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
-import { ValueOrUpdateCallback } from "../builder.js";
+import { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
+import { type ValueOrUpdateCallback } from "../builder.js";
 
 /**
  * Insight widget builder

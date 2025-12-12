@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { CodeLanguageSelect } from "./CodeLanguageSelect.js";
 import { CodeOptions } from "./CodeOptions.js";
 import { ComponentTypeSelect } from "./ComponentTypeSelect.js";
-import { CodeLanguageType, IReactOptions, InsightCodeType } from "../types.js";
+import { type CodeLanguageType, type IReactOptions, type InsightCodeType } from "../types.js";
 
 interface IReactOptionsProps {
     option: IReactOptions;

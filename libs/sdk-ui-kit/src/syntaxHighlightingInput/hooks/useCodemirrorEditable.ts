@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useEffect, useRef } from "react";
+import { type RefObject, useEffect, useRef } from "react";
 
 import { Compartment } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";

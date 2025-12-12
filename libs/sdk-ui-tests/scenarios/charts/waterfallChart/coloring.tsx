@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { isColorDescriptor } from "@gooddata/sdk-model";
-import { IMappingHeader } from "@gooddata/sdk-ui";
-import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
+import { type IMappingHeader } from "@gooddata/sdk-ui";
+import { type IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
 import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

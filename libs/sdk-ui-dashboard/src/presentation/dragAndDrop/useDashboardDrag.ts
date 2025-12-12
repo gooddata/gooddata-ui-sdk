@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { ConnectDragSource, DragSourceMonitor, useDrag } from "@evil-internetmann/react-dnd";
+import { type ConnectDragSource, type DragSourceMonitor, useDrag } from "@evil-internetmann/react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
-import { DraggableItem } from "./types.js";
+import { type DraggableItem } from "./types.js";
 import { useBeforeDrag } from "./useBeforeDrag.js";
 
 type CollectedProps<TItem> = {

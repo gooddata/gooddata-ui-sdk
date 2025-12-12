@@ -1,15 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttribute,
-    ICatalogDateAttributeHierarchy,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttribute,
+    type ICatalogDateAttributeHierarchy,
     getHierarchyAttributes,
     getHierarchyTitle,
     isCatalogAttribute,
@@ -19,12 +19,12 @@ import { messages } from "@gooddata/sdk-ui";
 import {
     AttributeHierarchyDetailBubble,
     AttributeHierarchyDetailPanel,
-    IAttributeHierarchyDetailItem,
+    type IAttributeHierarchyDetailItem,
 } from "@gooddata/sdk-ui-ext";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
 import {
     selectAllCatalogAttributesMap,
     selectCanManageAttributeHierarchy,

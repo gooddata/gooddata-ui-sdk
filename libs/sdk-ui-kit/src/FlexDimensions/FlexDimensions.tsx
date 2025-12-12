@@ -1,11 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Children, Component, ReactElement, ReactNode, RefObject, cloneElement, createRef } from "react";
+import {
+    Children,
+    Component,
+    type ReactElement,
+    type ReactNode,
+    type RefObject,
+    cloneElement,
+    createRef,
+} from "react";
 
 import cx from "classnames";
 import { pickBy, throttle } from "lodash-es";
 
-import { IFlexDimensionsProps, IFlexDimensionsState } from "./typings.js";
+import { type IFlexDimensionsProps, type IFlexDimensionsState } from "./typings.js";
 import { elementRegion } from "../utils/domUtilities.js";
 
 /**

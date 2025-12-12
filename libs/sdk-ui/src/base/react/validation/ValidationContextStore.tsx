@@ -5,11 +5,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 import {
-    IInvalidDatapoint,
-    IInvalidNode,
-    IInvalidNodeAtPath,
-    IInvalidNodePath,
-    IValidationContextValue,
+    type IInvalidDatapoint,
+    type IInvalidNode,
+    type IInvalidNodeAtPath,
+    type IInvalidNodePath,
+    type IValidationContextValue,
 } from "./types.js";
 import {
     getInvalidDatapointsInTree,

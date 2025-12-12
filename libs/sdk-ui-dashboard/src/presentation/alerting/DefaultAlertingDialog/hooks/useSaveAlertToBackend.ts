@@ -4,9 +4,9 @@ import { useCallback } from "react";
 import { omit } from "lodash-es";
 
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IFilter,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IFilter,
     isAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 

@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    ChangeEvent,
-    KeyboardEvent,
-    MouseEvent as ReactMouseEvent,
-    ReactNode,
+    type ChangeEvent,
+    type KeyboardEvent,
+    type MouseEvent as ReactMouseEvent,
+    type ReactNode,
     forwardRef,
     useCallback,
     useEffect,
@@ -18,7 +18,7 @@ import { defaultImport } from "default-import";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { v4 as uuid } from "uuid";
 
-import { IEditableLabelProps } from "./typings.js";
+import { type IEditableLabelProps } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 

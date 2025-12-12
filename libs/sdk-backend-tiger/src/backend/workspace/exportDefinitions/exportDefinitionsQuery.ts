@@ -3,21 +3,21 @@
 import { invariant } from "ts-invariant";
 
 import {
-    EntitiesApiGetAllEntitiesExportDefinitionsRequest,
+    type EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesExportDefinitions } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    ExportDefinitionQuerySort,
-    ExportDefinitionQuerySortDirection,
-    ExportDefinitionQuerySortProperty,
-    IExportDefinitionsQuery,
-    IExportDefinitionsQueryResult,
+    type ExportDefinitionQuerySort,
+    type ExportDefinitionQuerySortDirection,
+    type ExportDefinitionQuerySortProperty,
+    type IExportDefinitionsQuery,
+    type IExportDefinitionsQueryResult,
 } from "@gooddata/sdk-backend-spi";
 
 import { convertExportDefinitionMdObject } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class ExportDefinitionsQuery implements IExportDefinitionsQuery {

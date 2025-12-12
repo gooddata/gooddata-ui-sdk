@@ -1,22 +1,23 @@
 // (C) 2022-2025 GoodData Corporation
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    IAbsoluteDateFilter,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeElement,
-    IAttributeFilter,
-    IAttributeMetadataObject,
-    IMeasure,
-    IRelativeDateFilter,
-    ObjRef,
-    SortDirection,
+    type IAbsoluteDateFilter,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeElement,
+    type IAttributeFilter,
+    type IAttributeMetadataObject,
+    type IMeasure,
+    type IRelativeDateFilter,
+    type ObjRef,
+    type SortDirection,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
-    AsyncOperationStatus,
-    AttributeElementKey,
-    IMultiSelectAttributeFilterHandler,
+    type AsyncOperationStatus,
+    type AttributeElementKey,
+    type IMultiSelectAttributeFilterHandler,
 } from "../../AttributeFilterHandler/index.js";
 
 /**

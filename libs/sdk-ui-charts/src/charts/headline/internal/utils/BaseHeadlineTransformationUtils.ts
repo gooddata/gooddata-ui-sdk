@@ -1,27 +1,27 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type IMeasureDescriptor } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    ExplicitDrill,
-    HeadlineElementType,
+    type ExplicitDrill,
+    type HeadlineElementType,
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
 import {
-    IHeadlineExecutionData,
+    type IHeadlineExecutionData,
     createHeadlineDataItem,
     getExecutionData,
 } from "./HeadlineTransformationUtils.js";
 import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import {
-    BaseHeadlineItemAccepted,
-    IBaseHeadlineData,
-    IBaseHeadlineItem,
+    type BaseHeadlineItemAccepted,
+    type IBaseHeadlineData,
+    type IBaseHeadlineItem,
 } from "../interfaces/BaseHeadlines.js";
-import { IHeadlineDataItem } from "../interfaces/Headlines.js";
+import { type IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems ?? []);

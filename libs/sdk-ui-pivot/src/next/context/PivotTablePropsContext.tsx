@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
-import { IExecutionConfig } from "@gooddata/sdk-model";
+import { type IExecutionConfig } from "@gooddata/sdk-model";
 import { useDeepMemo } from "@gooddata/sdk-ui/internal";
 
 import {
@@ -18,10 +18,10 @@ import {
     EMPTY_TOTALS,
     PAGE_SIZE,
 } from "../constants/internal.js";
-import { ICorePivotTableNextProps } from "../types/internal.js";
-import { IMenu } from "../types/menu.js";
-import { PivotTableNextConfig } from "../types/public.js";
-import { IColumnSizing } from "../types/resizing.js";
+import { type ICorePivotTableNextProps } from "../types/internal.js";
+import { type IMenu } from "../types/menu.js";
+import { type PivotTableNextConfig } from "../types/public.js";
+import { type IColumnSizing } from "../types/resizing.js";
 
 const PivotTablePropsContext = createContext<ICorePivotTableNextProps | undefined>(undefined);
 

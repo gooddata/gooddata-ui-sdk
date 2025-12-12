@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { IPivotTableExecutionDefinition } from "./types.js";
+import { type IPivotTableExecutionDefinition } from "./types.js";
 
 /**
  * Applies provided workspace to the execution definition.

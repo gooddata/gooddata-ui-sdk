@@ -4,12 +4,12 @@ import { memo, useCallback, useMemo, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
 
 import { Bubble } from "../../../Bubble/index.js";
 import { Typography } from "../../../Typography/index.js";
-import { IFormatTemplate } from "../../typings.js";
+import { type IFormatTemplate } from "../../typings.js";
 import { PreviewRows } from "../shared/PreviewRows.js";
 
 interface ITemplateDropdownItemProps {

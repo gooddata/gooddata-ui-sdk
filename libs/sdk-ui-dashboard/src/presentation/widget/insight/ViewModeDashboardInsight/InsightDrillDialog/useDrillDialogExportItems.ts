@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { idRef } from "@gooddata/sdk-model";
-import { IUiMenuInteractiveItem, IUiMenuItem, IconType } from "@gooddata/sdk-ui-kit";
+import { type IUiMenuInteractiveItem, type IUiMenuItem, type IconType } from "@gooddata/sdk-ui-kit";
 
 import {
     selectExecutionResultByRef,

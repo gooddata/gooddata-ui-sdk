@@ -8,7 +8,7 @@ import {
     switchToEditRenderMode,
 } from "../../../commands/index.js";
 import { selectRenderMode } from "../../../store/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
 

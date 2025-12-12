@@ -1,25 +1,25 @@
 // (C) 2025 GoodData Corporation
 
-import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IDataView, type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeDescriptor,
-    IColorPalette,
-    IExecutionDefinition,
-    IMeasure,
-    IMeasureDescriptor,
-    IResultMeasureHeader,
-    ISettings,
-    ObjRef,
+    type IAttribute,
+    type IAttributeDescriptor,
+    type IColorPalette,
+    type IExecutionDefinition,
+    type IMeasure,
+    type IMeasureDescriptor,
+    type IResultMeasureHeader,
+    type ISettings,
+    type ObjRef,
     modifyInlineMeasure,
     newAttribute,
     newInlineMeasure,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { KdaItem, KdaItemGroup } from "../../internalTypes.js";
-import { DeepReadonly, IKdaDefinition } from "../../types.js";
+import { type KdaItem, type KdaItemGroup } from "../../internalTypes.js";
+import { type DeepReadonly, type IKdaDefinition } from "../../types.js";
 
 const YAXIS_ADDITION_PERCENTAGE = 1.1; //+10%
 const DEFAULT_MEASURE_FORMAT = "#,##0.00";

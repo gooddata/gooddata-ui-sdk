@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { IContextStore, createContextStore } from "@gooddata/sdk-ui";
-import { EmptyObject } from "@gooddata/util";
+import { type IContextStore, createContextStore } from "@gooddata/sdk-ui";
+import { type EmptyObject } from "@gooddata/util";
 
-import { IUiTabContext } from "./types.js";
+import { type IUiTabContext } from "./types.js";
 
 const UiTabsContextStore = createContextStore<IUiTabContext<Record<any, any>, Record<any, any>>>("UiTabs");
 

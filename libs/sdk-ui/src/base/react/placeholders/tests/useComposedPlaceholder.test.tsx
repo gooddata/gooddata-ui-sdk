@@ -4,15 +4,15 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import {
-    IMeasure,
-    IMeasureDefinition,
+    type IMeasure,
+    type IMeasureDefinition,
     modifySimpleMeasure,
     newMeasure,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { IComposedPlaceholder } from "../base.js";
-import { IPlaceholdersProviderProps, PlaceholdersProvider } from "../context.js";
+import { type IComposedPlaceholder } from "../base.js";
+import { type IPlaceholdersProviderProps, PlaceholdersProvider } from "../context.js";
 import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
 import { useComposedPlaceholder } from "../hooks.js";
 

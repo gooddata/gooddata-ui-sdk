@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
-import { JsonApiWorkspaceOut, JsonApiWorkspaceOutWithLinks } from "@gooddata/api-client-tiger";
-import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { type JsonApiWorkspaceOut, type JsonApiWorkspaceOutWithLinks } from "@gooddata/api-client-tiger";
+import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 
 export const workspaceConverter = (
     { relationships, attributes, id, meta }: JsonApiWorkspaceOut | JsonApiWorkspaceOutWithLinks,

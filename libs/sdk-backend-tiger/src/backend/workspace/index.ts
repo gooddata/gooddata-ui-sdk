@@ -6,31 +6,31 @@ import {
     EntitiesApi_PatchEntityWorkspaces,
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import {
-    IAnalyticalWorkspace,
-    IAttributeHierarchiesService,
-    IDataFiltersService,
-    IDateFilterConfigsQuery,
-    IExecutionFactory,
-    IGenAIService,
-    IWorkspaceAccessControlService,
-    IWorkspaceAttributesService,
-    IWorkspaceAutomationService,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDashboardsService,
-    IWorkspaceDatasetsService,
-    IWorkspaceDescriptor,
-    IWorkspaceDescriptorUpdate,
-    IWorkspaceExportDefinitionsService,
-    IWorkspaceFactsService,
-    IWorkspaceInsightsService,
-    IWorkspaceKeyDriverAnalysisService,
-    IWorkspaceLogicalModelService,
-    IWorkspaceMeasuresService,
-    IWorkspacePermissionsService,
-    IWorkspaceSettingsService,
-    IWorkspaceStylingService,
-    IWorkspaceUserGroupsQuery,
-    IWorkspaceUsersQuery,
+    type IAnalyticalWorkspace,
+    type IAttributeHierarchiesService,
+    type IDataFiltersService,
+    type IDateFilterConfigsQuery,
+    type IExecutionFactory,
+    type IGenAIService,
+    type IWorkspaceAccessControlService,
+    type IWorkspaceAttributesService,
+    type IWorkspaceAutomationService,
+    type IWorkspaceCatalogFactory,
+    type IWorkspaceDashboardsService,
+    type IWorkspaceDatasetsService,
+    type IWorkspaceDescriptor,
+    type IWorkspaceDescriptorUpdate,
+    type IWorkspaceExportDefinitionsService,
+    type IWorkspaceFactsService,
+    type IWorkspaceInsightsService,
+    type IWorkspaceKeyDriverAnalysisService,
+    type IWorkspaceLogicalModelService,
+    type IWorkspaceMeasuresService,
+    type IWorkspacePermissionsService,
+    type IWorkspaceSettingsService,
+    type IWorkspaceStylingService,
+    type IWorkspaceUserGroupsQuery,
+    type IWorkspaceUsersQuery,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 
@@ -57,13 +57,13 @@ import { TigerWorkspaceSettings } from "./settings/index.js";
 import { TigerWorkspaceStyling } from "./styling/index.js";
 import { TigerWorkspaceUsersQuery } from "./users/index.js";
 import {
-    DateFormatter,
-    DateNormalizer,
-    DateStringifier,
+    type DateFormatter,
+    type DateNormalizer,
+    type DateStringifier,
 } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(

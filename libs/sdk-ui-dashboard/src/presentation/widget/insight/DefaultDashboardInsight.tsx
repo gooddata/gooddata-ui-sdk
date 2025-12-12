@@ -2,7 +2,7 @@
 
 import { EditModeDashboardInsight } from "./EditModeDashboardInsight/index.js";
 import { ExportModeDashboardInsight } from "./ExportModeDashboardInsight/index.js";
-import { IDashboardInsightProps } from "./types.js";
+import { type IDashboardInsightProps } from "./types.js";
 import { useBackendWithInsightWidgetCorrelation } from "./useBackendWithInsightWidgetCorrelation.js";
 import { ViewModeDashboardInsight } from "./ViewModeDashboardInsight/index.js";
 import { renderModeAware } from "../../componentDefinition/index.js";

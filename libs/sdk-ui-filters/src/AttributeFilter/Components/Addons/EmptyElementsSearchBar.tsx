@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAttributeFilterElementsSearchBarProps } from "../ElementsSelect/AttributeFilterElementsSearchBar.js";
+import { type IAttributeFilterElementsSearchBarProps } from "../ElementsSelect/AttributeFilterElementsSearchBar.js";
 
 /**
  * This component render empty ElementsSearchBar

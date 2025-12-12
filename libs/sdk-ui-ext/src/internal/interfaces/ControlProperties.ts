@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { IComparison } from "@gooddata/sdk-ui-charts";
+import { type IComparison } from "@gooddata/sdk-ui-charts";
 
 export interface IDefaultControlProperties {
     // This can be anything depending on a visualization type

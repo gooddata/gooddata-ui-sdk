@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { SortModelItem } from "ag-grid-enterprise";
+import { type SortModelItem } from "ag-grid-enterprise";
 
-import { ISortItem, sortDirection } from "@gooddata/sdk-model";
+import { type ISortItem, sortDirection } from "@gooddata/sdk-model";
 
 import { getSortForColumnDefinition } from "./getSortForColumnDefinition.js";
-import { ColumnHeadersPosition } from "../../../publicTypes.js";
-import { ITableColumnDefinitionByColId } from "../../types/internal.js";
+import { type ColumnHeadersPosition } from "../../../publicTypes.js";
+import { type ITableColumnDefinitionByColId } from "../../types/internal.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 
 /**

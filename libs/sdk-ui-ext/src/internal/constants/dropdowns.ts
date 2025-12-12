@@ -3,7 +3,7 @@
 import { CalculateAs, ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages, messages } from "../../locales.js";
-import { IDropdownItem } from "../interfaces/Dropdown.js";
+import { type IDropdownItem } from "../interfaces/Dropdown.js";
 
 export const pushpinSizeDropdownItems: IDropdownItem[] = [
     { title: messages["autoDefault"].id, value: "default" },

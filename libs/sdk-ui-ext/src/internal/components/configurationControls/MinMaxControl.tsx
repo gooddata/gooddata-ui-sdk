@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { Message } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { IMinMaxControlProps, IMinMaxControlState } from "../../interfaces/MinMaxControl.js";
+import { type IMinMaxControlProps, type IMinMaxControlState } from "../../interfaces/MinMaxControl.js";
 import { maxInputValidateAndPushData, minInputValidateAndPushData } from "../../utils/controlsHelper.js";
 import { ConfigSubsection } from "../configurationControls/ConfigSubsection.js";
 import { InputControl } from "../configurationControls/InputControl.js";

@@ -3,18 +3,18 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
-    MoveLayoutSection,
+    type MoveLayoutSection,
     moveSectionItemToNewSection,
     undoLayoutChanges,
 } from "../../../commands/index.js";
 import { moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout.js";
 import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionItemMoved,
+    type DashboardCommandFailed,
+    type DashboardLayoutChanged,
+    type DashboardLayoutSectionItemMoved,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,

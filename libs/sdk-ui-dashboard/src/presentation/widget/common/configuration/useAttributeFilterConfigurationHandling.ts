@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { IWidget, ObjRef, isInsightWidget, isRichTextWidget, widgetRef } from "@gooddata/sdk-model";
+import { type IWidget, type ObjRef, isInsightWidget, isRichTextWidget, widgetRef } from "@gooddata/sdk-model";
 
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 import {

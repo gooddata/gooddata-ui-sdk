@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useCallback, useContext, useState } from "react";
+import { type ReactNode, createContext, useCallback, useContext, useState } from "react";
 
 /**
  * Context for managing legend item visibility state.

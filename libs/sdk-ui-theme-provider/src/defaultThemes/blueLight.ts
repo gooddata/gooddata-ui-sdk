@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import { IThemeDefinition } from "@gooddata/sdk-model";
+import { type IThemeDefinition } from "@gooddata/sdk-model";
 
 /**
  * @internal

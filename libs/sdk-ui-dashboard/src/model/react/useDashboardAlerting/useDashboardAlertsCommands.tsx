@@ -2,7 +2,12 @@
 
 import { useCallback } from "react";
 
-import { IAutomationMetadataObject, IWidget, areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type IWidget,
+    areObjRefsEqual,
+    isInsightWidget,
+} from "@gooddata/sdk-model";
 
 import { switchDashboardTab } from "../../commands/index.js";
 import {

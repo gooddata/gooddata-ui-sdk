@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { uriRef } from "../../objRef/factory.js";
-import { IKpiWithComparison, IKpiWithoutComparison } from "../kpi.js";
+import { type IKpiWithComparison, type IKpiWithoutComparison } from "../kpi.js";
 
 export const kpiWithoutComparison: IKpiWithoutComparison = {
     comparisonType: "none",

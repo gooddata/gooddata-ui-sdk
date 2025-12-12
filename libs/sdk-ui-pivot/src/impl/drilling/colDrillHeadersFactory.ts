@@ -1,17 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import { InvariantError, invariant } from "ts-invariant";
 
-import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
-import { IMappingHeader } from "@gooddata/sdk-ui";
+import { type IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IMappingHeader } from "@gooddata/sdk-ui";
 
-import { ColumnHeadersPosition } from "../../publicTypes.js";
-import { IGridRow } from "../data/resultTypes.js";
+import { type ColumnHeadersPosition } from "../../publicTypes.js";
+import { type IGridRow } from "../data/resultTypes.js";
 import {
-    AnyCol,
-    MixedValuesCol,
-    ScopeCol,
-    SeriesCol,
-    SliceCol,
+    type AnyCol,
+    type MixedValuesCol,
+    type ScopeCol,
+    type SeriesCol,
+    type SliceCol,
     isMixedValuesCol,
     isScopeCol,
     isSeriesCol,

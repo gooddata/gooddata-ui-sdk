@@ -2,11 +2,11 @@
 
 import ora from "ora";
 
-import { IDashboard, IDashboardDefinition, idRef } from "@gooddata/sdk-model";
+import { type IDashboard, type IDashboardDefinition, idRef } from "@gooddata/sdk-model";
 
-import { LinkCmdActionConfig, getLinkCmdActionConfig } from "./actionConfig.js";
+import { type LinkCmdActionConfig, getLinkCmdActionConfig } from "./actionConfig.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printUseConfigSummary({

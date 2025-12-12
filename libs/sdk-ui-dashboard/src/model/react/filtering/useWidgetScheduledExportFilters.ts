@@ -1,13 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IAutomationMetadataObjectDefinition, IFilter, IInsightDefinition } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObjectDefinition,
+    type IFilter,
+    type IInsightDefinition,
+} from "@gooddata/sdk-model";
 
 import { sanitizeWidgetFilters } from "./shared.js";
 import { getAutomationVisualizationFilters } from "../../../_staging/automation/index.js";
 import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
-import { FilterableDashboardWidget } from "../../types/layoutTypes.js";
+import { type FilterableDashboardWidget } from "../../types/layoutTypes.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
-import { QueryProcessingState } from "../useDashboardQueryProcessing.js";
+import { type QueryProcessingState } from "../useDashboardQueryProcessing.js";
 import { useWidgetFilters } from "../useWidgetFilters.js";
 
 /**

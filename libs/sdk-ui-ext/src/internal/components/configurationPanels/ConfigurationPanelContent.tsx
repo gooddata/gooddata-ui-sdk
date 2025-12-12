@@ -1,17 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { PureComponent, ReactNode } from "react";
+import { PureComponent, type ReactNode } from "react";
 
-import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
-import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
+import { type IInsightDefinition, type ISettings, insightHasMeasures } from "@gooddata/sdk-model";
+import { type ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
-import { SectionName } from "./sectionName.js";
-import { IColorConfiguration } from "../../interfaces/Colors.js";
+import { type SectionName } from "./sectionName.js";
+import { type IColorConfiguration } from "../../interfaces/Colors.js";
 import {
-    IConfigurationPanelRenderers,
-    IReferencePoint,
-    IReferences,
-    IVisualizationProperties,
+    type IConfigurationPanelRenderers,
+    type IReferencePoint,
+    type IReferences,
+    type IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
 import {
     getChartFillIgnoredMeasureIdsFromMdObject,

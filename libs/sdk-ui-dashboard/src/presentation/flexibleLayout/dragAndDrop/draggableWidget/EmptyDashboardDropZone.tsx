@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, Ref } from "react";
+import { type ReactNode, type Ref } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -9,7 +9,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { BaseDraggableLayoutItem, DraggableItemType } from "../../../dragAndDrop/types.js";
+import { type BaseDraggableLayoutItem, type DraggableItemType } from "../../../dragAndDrop/types.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/index.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {

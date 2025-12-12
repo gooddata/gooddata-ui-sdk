@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CompletionSource } from "@codemirror/autocomplete";
-import { Extension } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
+import { type CompletionSource } from "@codemirror/autocomplete";
+import { type Extension } from "@codemirror/state";
+import { type EditorView } from "@codemirror/view";
 import cx from "classnames";
 
 import { useCodemirror } from "./hooks/useCodemirror.js";

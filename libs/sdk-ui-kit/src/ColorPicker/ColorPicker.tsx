@@ -4,13 +4,13 @@ import { useCallback, useState } from "react";
 
 import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 
 import { ColorPickerMatrix } from "./components/ColorPickerMatrix.js";
 import { ColorsPreview } from "./components/ColorsPreview.js";
 import { HexColorInput } from "./components/HexColorInput.js";
 import { HueColorPicker } from "./components/HueColorPicker.js";
-import { IColorPickerProps } from "./typings.js";
+import { type IColorPickerProps } from "./typings.js";
 import { getHslFromRgbColor, getRgbFromHslColor, isHslColorBlackOrWhite } from "./utils.js";
 import { Button } from "../Button/index.js";
 

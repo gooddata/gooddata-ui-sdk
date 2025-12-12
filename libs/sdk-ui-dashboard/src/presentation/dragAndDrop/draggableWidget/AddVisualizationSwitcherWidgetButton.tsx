@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import {
     Bubble,
     BubbleHoverTrigger,
-    IAlignPoint,
+    type IAlignPoint,
     IconVisualizationSwitcher,
     OverlayController,
     OverlayControllerProvider,

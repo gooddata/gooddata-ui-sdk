@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "../../../../Bubble/index.js";
-import { InsightCodeType } from "../types.js";
+import { type InsightCodeType } from "../types.js";
 
 const HEADER_TOOLTIP_ALIGN_POINTS = [{ align: "cr tl" }];
 

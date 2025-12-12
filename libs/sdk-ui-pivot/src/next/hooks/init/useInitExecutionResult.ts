@@ -3,11 +3,11 @@
 import { isNoDataError, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import {
     DataViewFacade,
-    GoodDataSdkError,
-    ILoadingState,
-    IPushData,
-    OnDataView,
-    OnExportReady,
+    type GoodDataSdkError,
+    type ILoadingState,
+    type IPushData,
+    type OnDataView,
+    type OnExportReady,
     convertError,
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
@@ -18,8 +18,8 @@ import { getAvailableDrillTargets } from "../../features/drilling/getAvailableDr
 import { handleExportReady } from "../../features/exports/exports.js";
 import { getEffectivePageSize } from "../../features/pagination/utils.js";
 import { sanitizeSortInExecution } from "../../features/sorting/sanitizeSortInExecution.js";
-import { IInitialExecutionData } from "../../types/internal.js";
-import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transposition.js";
+import { type IInitialExecutionData } from "../../types/internal.js";
+import { type ColumnHeadersPosition, type MeasureGroupDimension } from "../../types/transposition.js";
 
 /**
  * Initializes first execution result.

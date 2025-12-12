@@ -1,23 +1,23 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import {
-    GdcProductName,
-    IDrillableItemsCommandBody,
-    IGdcMessageEnvelope,
-    IGdcMessageEvent,
-    IObjectMeta,
+    type GdcProductName,
+    type IDrillableItemsCommandBody,
+    type IGdcMessageEnvelope,
+    type IGdcMessageEvent,
+    type IObjectMeta,
     getEventType,
 } from "./common.js";
 import {
-    DashboardDateFilter,
-    IDashboardAttributeFilter,
-    IFilterContextContent,
-    IRemoveFilterContextContent,
-    IResolvedFilterValues,
+    type DashboardDateFilter,
+    type IDashboardAttributeFilter,
+    type IFilterContextContent,
+    type IRemoveFilterContextContent,
+    type IResolvedFilterValues,
 } from "./EmbeddedGdc.js";
-import { IVisualization } from "./legacyTypes.js";
+import { type IVisualization } from "./legacyTypes.js";
 
 /**
  * Base type for KD events.

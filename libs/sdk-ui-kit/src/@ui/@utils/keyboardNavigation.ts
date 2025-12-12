@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, ModifierKey } from "react";
+import { type KeyboardEvent, type ModifierKey } from "react";
 
 /**
  * @internal

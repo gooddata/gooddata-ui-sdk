@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import { LocationStyleApi_GetDefaultStyle } from "@gooddata/api-client-tiger/locationStyle";
-import { IGeoService, IGeoStyleSpecification } from "@gooddata/sdk-backend-spi";
+import { type IGeoService, type IGeoStyleSpecification } from "@gooddata/sdk-backend-spi";
 
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerGeoService implements IGeoService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}

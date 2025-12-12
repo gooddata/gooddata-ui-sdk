@@ -2,8 +2,8 @@
 
 import { AttributeFilterBase } from "./AttributeFilterBase.js";
 import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
-import { IAttributeFilterBaseProps } from "./types.js";
-import { VisibilityMode } from "../shared/index.js";
+import { type IAttributeFilterBaseProps } from "./types.js";
+import { type VisibilityMode } from "../shared/index.js";
 
 /**
  * @public

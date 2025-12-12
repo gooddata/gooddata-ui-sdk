@@ -2,10 +2,10 @@
 
 import cx from "classnames";
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { DashboardLayoutSectionBorderMarker } from "./DashboardLayoutSectionBorderMarker.js";
-import { DashboardLayoutSectionBorderStatus } from "./types.js";
+import { type DashboardLayoutSectionBorderStatus } from "./types.js";
 import { GridLayoutElement } from "../../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
 
 interface IDashboardLayoutSectionBorderLineProps {

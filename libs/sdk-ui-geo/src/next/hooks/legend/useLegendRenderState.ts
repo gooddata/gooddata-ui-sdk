@@ -1,17 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
-import { IColorStrategy, PositionType } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorStrategy, type PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 import { useLegendConfig } from "./useLegendConfig.js";
 import { useLegendDetails } from "./useLegendDetails.js";
 import { useLegendItemsWithState } from "./useLegendItemsWithState.js";
 import { useSelectedSegments } from "./useSelectedSegments.js";
 import { type IGeoLayerData, useGeoLayers } from "../../context/GeoLayersContext.js";
-import { IGeoLegendItem } from "../../types/common/legends.js";
-import { IGeoChartNextConfig } from "../../types/config/unified.js";
-import { IGeoCommonData } from "../../types/geoData/common.js";
+import { type IGeoLegendItem } from "../../types/common/legends.js";
+import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoCommonData } from "../../types/geoData/common.js";
 
 /**
  * Result of useLegendRenderState hook

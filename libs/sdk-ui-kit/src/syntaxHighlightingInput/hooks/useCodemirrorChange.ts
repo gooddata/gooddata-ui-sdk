@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useEffect } from "react";
+import { type RefObject, useEffect } from "react";
 
 import { EditorSelection, Transaction } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
+import { type EditorView } from "@codemirror/view";
 
 export function useCodemirrorChange(viewRef: RefObject<EditorView | null>, value: string) {
     // Handle external value changes

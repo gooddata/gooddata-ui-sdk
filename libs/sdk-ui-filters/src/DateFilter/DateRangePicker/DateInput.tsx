@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    ChangeEvent,
-    InputHTMLAttributes,
-    KeyboardEvent,
+    type ChangeEvent,
+    type InputHTMLAttributes,
+    type KeyboardEvent,
     forwardRef,
     useCallback,
     useEffect,
@@ -23,7 +23,7 @@ import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
 
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody.js";
 import { InputErrorMessage } from "./InputErrorMessage.js";
-import { IDateInputErrorMessageTexts, IInputAccessibilityConfig } from "./types.js";
+import { type IDateInputErrorMessageTexts, type IInputAccessibilityConfig } from "./types.js";
 import { formatDate, getPlatformStringFromDate, isValidDate, parseDate } from "./utils.js";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 

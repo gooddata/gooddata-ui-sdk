@@ -2,9 +2,14 @@
 
 import { compact } from "lodash-es";
 
-import { ICatalogAttribute, ICatalogDateDataset, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type ObjRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 
-import { CatalogAttributeDataType, IAttributeData, ICatalogAttributeData } from "./types.js";
+import { CatalogAttributeDataType, type IAttributeData, type ICatalogAttributeData } from "./types.js";
 
 export const findCatalogAttributeByRef = (
     catalogAttributesMap: Map<string, ICatalogAttributeData>,

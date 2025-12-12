@@ -2,7 +2,7 @@
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { AgGridProps } from "../../types/agGrid.js";
+import { type AgGridProps } from "../../types/agGrid.js";
 
 /**
  * @internal

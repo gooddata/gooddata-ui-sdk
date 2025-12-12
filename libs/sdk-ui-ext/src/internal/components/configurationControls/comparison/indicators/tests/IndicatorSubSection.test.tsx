@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as ArrowControl from "../ArrowControl.js";

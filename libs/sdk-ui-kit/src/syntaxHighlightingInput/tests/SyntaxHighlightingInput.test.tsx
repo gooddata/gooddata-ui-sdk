@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";

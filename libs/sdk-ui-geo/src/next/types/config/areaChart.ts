@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IColorPalette } from "@gooddata/sdk-model";
-import { ISeparators } from "@gooddata/sdk-ui";
-import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IAttribute, type IColorPalette } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-ui";
+import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoAreasConfig } from "./areas.js";
-import { IGeoLegendConfigNext } from "./legend.js";
-import { IGeoConfigViewportNext } from "./viewport.js";
+import { type IGeoAreasConfig } from "./areas.js";
+import { type IGeoLegendConfigNext } from "./legend.js";
+import { type IGeoConfigViewportNext } from "./viewport.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import { IGeoLngLat } from "../common/coordinates.js";
+import { type IGeoLngLat } from "../common/coordinates.js";
 
 /**
  * Configuration for GeoAreaChart component

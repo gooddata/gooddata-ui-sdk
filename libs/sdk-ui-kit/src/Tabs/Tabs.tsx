@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { KeyboardEvent, ReactElement, useCallback, useMemo, useState } from "react";
+import { type KeyboardEvent, type ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";

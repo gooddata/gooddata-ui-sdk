@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { JsonApiLlmEndpointOutWithLinks, ResolvedLlmEndpoint } from "@gooddata/api-client-tiger";
-import { ILlmEndpointBase, ILlmEndpointOpenAI } from "@gooddata/sdk-model";
+import { type JsonApiLlmEndpointOutWithLinks, type ResolvedLlmEndpoint } from "@gooddata/api-client-tiger";
+import { type ILlmEndpointBase, type ILlmEndpointOpenAI } from "@gooddata/sdk-model";
 
 export function convertLlmEndpoint(endpoint: JsonApiLlmEndpointOutWithLinks): ILlmEndpointOpenAI {
     if (endpoint.attributes?.provider === "OPENAI") {

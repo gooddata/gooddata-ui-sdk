@@ -3,9 +3,9 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IAttributeSortItem,
-    IMeasureSortItem,
-    ISortItem,
+    type IAttributeSortItem,
+    type IMeasureSortItem,
+    type ISortItem,
     newAttribute,
     newAttributeAreaSort,
     newAttributeSort,
@@ -18,7 +18,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { SORT_DIR_DESC } from "../../constants/sort.js";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
 import { newAvailableSortsGroup } from "../../interfaces/SortConfig.js";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import { type IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
 import {
     insightWithSingleMeasureAndStack,

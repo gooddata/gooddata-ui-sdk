@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 
 import { useFireDrillEvent } from "./useFiredDrillEvent.js";
-import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
+import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
 import { getBaseHeadlineData } from "../utils/BaseHeadlineTransformationUtils.js";
 

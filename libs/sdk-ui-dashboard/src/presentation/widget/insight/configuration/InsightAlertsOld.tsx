@@ -13,7 +13,7 @@ import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightW
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
 import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
-import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
+import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

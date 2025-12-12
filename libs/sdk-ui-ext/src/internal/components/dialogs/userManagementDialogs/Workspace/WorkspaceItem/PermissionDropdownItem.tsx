@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { getPermissionTitle } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
-import { IPermissionsItem, WorkspacePermission } from "../../types.js";
+import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
 
 interface IPermissionItemProps {
     permission: IPermissionsItem;

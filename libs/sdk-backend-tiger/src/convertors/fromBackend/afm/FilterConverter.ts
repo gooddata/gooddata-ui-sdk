@@ -1,20 +1,25 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    AbsoluteDateFilter,
-    BoundedFilter,
-    ComparisonMeasureValueFilter,
-    FilterDefinition,
-    NegativeAttributeFilter,
-    PositiveAttributeFilter,
-    RangeMeasureValueFilter,
-    RankingFilter,
-    RelativeDateFilter,
+    type AbsoluteDateFilter,
+    type BoundedFilter,
+    type ComparisonMeasureValueFilter,
+    type FilterDefinition,
+    type NegativeAttributeFilter,
+    type PositiveAttributeFilter,
+    type RangeMeasureValueFilter,
+    type RankingFilter,
+    type RelativeDateFilter,
     isAfmObjectIdentifier,
     isAfmObjectLocalIdentifier,
 } from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
-import { IFilter, ILowerBoundedFilter, IUpperBoundedFilter, ObjRefInScope } from "@gooddata/sdk-model";
+import {
+    type IFilter,
+    type ILowerBoundedFilter,
+    type IUpperBoundedFilter,
+    type ObjRefInScope,
+} from "@gooddata/sdk-model";
 
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 import { toLocalRef, toObjRef } from "../ObjRefConverter.js";

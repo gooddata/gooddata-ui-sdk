@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const AXIS = {
     PRIMARY: "primary",

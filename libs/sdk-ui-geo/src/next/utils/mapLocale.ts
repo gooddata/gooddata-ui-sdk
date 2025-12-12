@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 /**
  * MapLibre locale configuration for cooperative gestures

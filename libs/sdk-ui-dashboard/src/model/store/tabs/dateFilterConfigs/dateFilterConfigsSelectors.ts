@@ -3,14 +3,14 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
-    DashboardDateFilterConfigMode,
+    type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
-    IDashboardDateFilterConfigItem,
+    type IDashboardDateFilterConfigItem,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
-import { DashboardSelector } from "../../types.js";
+import { type DashboardSelector } from "../../types.js";
 import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../index.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);

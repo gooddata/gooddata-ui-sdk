@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
+import { type IColorPalette, type ITheme, type ObjRef } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to workspace styling settings such as color palette.

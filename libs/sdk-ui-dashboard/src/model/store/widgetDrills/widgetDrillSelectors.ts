@@ -5,16 +5,16 @@ import { compact } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    DrillDefinition,
-    DrillOrigin,
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttribute,
-    ICatalogDateAttributeHierarchy,
-    IDrillDownReference,
-    IDrillToAttributeUrl,
-    ObjRef,
-    ObjRefInScope,
+    type DrillDefinition,
+    type DrillOrigin,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttribute,
+    type ICatalogDateAttributeHierarchy,
+    type IDrillDownReference,
+    type IDrillToAttributeUrl,
+    type ObjRef,
+    type ObjRefInScope,
     areObjRefsEqual,
     getHierarchyAttributes,
     getHierarchyRef,
@@ -27,18 +27,18 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import {
-    ExplicitDrill,
+    type ExplicitDrill,
     HeaderPredicates,
-    IAvailableDrillTargetAttribute,
-    IAvailableDrillTargets,
-    IHeaderPredicate,
+    type IAvailableDrillTargetAttribute,
+    type IAvailableDrillTargets,
+    type IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
-    DashboardDrillDefinition,
-    IDrillToUrlAttributeDefinition,
-    IGlobalDrillDownAttributeHierarchyDefinition,
+    type DashboardDrillDefinition,
+    type IDrillToUrlAttributeDefinition,
+    type IGlobalDrillDownAttributeHierarchyDefinition,
 } from "../../../types.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -52,8 +52,8 @@ import {
     selectSupportsCrossFiltering,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    HierarchyDescendant,
-    HierarchyDescendantsByAttributeId,
+    type HierarchyDescendant,
+    type HierarchyDescendantsByAttributeId,
     selectAllCatalogAttributeHierarchies,
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
@@ -82,7 +82,7 @@ import {
     selectIgnoredDrillToUrlAttributesByWidgetRef,
     selectWidgetDrills,
 } from "../tabs/layout/layoutSelectors.js";
-import { DashboardSelector } from "../types.js";
+import { type DashboardSelector } from "../types.js";
 
 /**
  * @internal

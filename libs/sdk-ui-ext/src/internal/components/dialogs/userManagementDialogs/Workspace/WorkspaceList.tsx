@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { GranularPermissionsWorkspaceItem } from "./WorkspaceItem/GranularPermissionsWorkspaceItem.js";
 import { WorkspaceListEmpty } from "./WorkspaceListEmpty.js";
-import { IGrantedWorkspace, ListMode, WorkspacePermissionSubject } from "../types.js";
+import { type IGrantedWorkspace, type ListMode, type WorkspacePermissionSubject } from "../types.js";
 import { sortByName } from "../utils.js";
 
 export interface IWorkspaceListProps {

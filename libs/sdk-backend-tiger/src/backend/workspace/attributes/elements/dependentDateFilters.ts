@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 
-import { DependsOnDateFilter } from "@gooddata/api-client-tiger";
+import { type DependsOnDateFilter } from "@gooddata/api-client-tiger";
 import {
-    DateAttributeGranularity,
-    IAbsoluteDateFilter,
-    IRelativeDateFilter,
+    type DateAttributeGranularity,
+    type IAbsoluteDateFilter,
+    type IRelativeDateFilter,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
     isUriRef,

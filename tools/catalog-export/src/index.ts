@@ -16,7 +16,7 @@ import {
     mergeConfigs,
 } from "./base/config.js";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants.js";
-import { CatalogExportConfig, WorkspaceMetadata, isCatalogExportError } from "./base/types.js";
+import { type CatalogExportConfig, type WorkspaceMetadata, isCatalogExportError } from "./base/types.js";
 import { clearTerminal } from "./cli/clear.js";
 import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
 import { promptHostname, requestFilePath } from "./cli/prompts.js";

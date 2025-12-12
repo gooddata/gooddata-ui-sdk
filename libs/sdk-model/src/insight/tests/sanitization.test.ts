@@ -2,8 +2,8 @@
 import { describe, expect, it } from "vitest";
 
 import { Account, ActivityType, Department, Velocity, Won } from "../../../__mocks__/model.js";
-import { ISortItem, newAttributeSort, newMeasureSort } from "../../execution/base/sort.js";
-import { ITotal, newTotal } from "../../execution/base/totals.js";
+import { type ISortItem, newAttributeSort, newMeasureSort } from "../../execution/base/sort.js";
+import { type ITotal, newTotal } from "../../execution/base/totals.js";
 import { bucketTotals, newBucket } from "../../execution/buckets/index.js";
 import { newInsightDefinition } from "../factory.js";
 import { insightBucket } from "../index.js";

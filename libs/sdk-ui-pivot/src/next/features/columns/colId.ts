@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
-import { ITableColumnDefinition } from "@gooddata/sdk-ui";
+import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
 import { columnDefinitionToColDefIdentifiers } from "./colDefIdentifiers.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../../constants/agGridDefaultProps.js";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { type ColumnHeadersPosition } from "../../types/transposition.js";
 
 /**
  * Creates unique identifier for specified column definition.

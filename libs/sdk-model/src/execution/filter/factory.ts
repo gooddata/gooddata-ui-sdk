@@ -4,32 +4,37 @@ import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
 import {
-    ComparisonConditionOperator,
-    IAbsoluteDateFilter,
-    IAttributeElements,
-    ILowerBoundedFilter,
-    IMeasureValueFilter,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-    IRankingFilter,
-    IRelativeDateFilter,
-    IUpperBoundedFilter,
-    RangeConditionOperator,
-    RankingFilterOperator,
+    type ComparisonConditionOperator,
+    type IAbsoluteDateFilter,
+    type IAttributeElements,
+    type ILowerBoundedFilter,
+    type IMeasureValueFilter,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type IRankingFilter,
+    type IRelativeDateFilter,
+    type IUpperBoundedFilter,
+    type RangeConditionOperator,
+    type RankingFilterOperator,
 } from "./index.js";
-import { DateAttributeGranularity } from "../../base/dateGranularities.js";
+import { type DateAttributeGranularity } from "../../base/dateGranularities.js";
 import { idRef, localIdRef } from "../../objRef/factory.js";
 import {
-    Identifier,
-    LocalIdRef,
-    ObjRef,
-    ObjRefInScope,
+    type Identifier,
+    type LocalIdRef,
+    type ObjRef,
+    type ObjRefInScope,
     isObjRef,
     objRefToString,
 } from "../../objRef/index.js";
 import { sanitizeLocalId } from "../../sanitizeLocalId.js";
-import { IAttribute, attributeDisplayFormRef, attributeLocalId, isAttribute } from "../attribute/index.js";
-import { IMeasure, isMeasure, measureLocalId } from "../measure/index.js";
+import {
+    type IAttribute,
+    attributeDisplayFormRef,
+    attributeLocalId,
+    isAttribute,
+} from "../attribute/index.js";
+import { type IMeasure, isMeasure, measureLocalId } from "../measure/index.js";
 
 export function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttributeElements): string {
     const hasher = new SparkMD5();

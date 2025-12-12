@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import { IInsight, insightCreated, insightTitle, insightUpdated } from "@gooddata/sdk-model";
+import { type IInsight, insightCreated, insightTitle, insightUpdated } from "@gooddata/sdk-model";
 
 const insightDate = (insight: IInsight) => insightUpdated(insight) ?? insightCreated(insight) ?? "";
 

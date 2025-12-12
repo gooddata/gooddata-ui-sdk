@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IRelativeDateFilterPreset,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
-import { IUiAbsoluteDateFilterForm } from "../../../interfaces/index.js";
+import { type IUiAbsoluteDateFilterForm } from "../../../interfaces/index.js";
 
 export const allTimeFilter: IAllTimeDateFilterOption = {
     localIdentifier: "ALL_TIME",

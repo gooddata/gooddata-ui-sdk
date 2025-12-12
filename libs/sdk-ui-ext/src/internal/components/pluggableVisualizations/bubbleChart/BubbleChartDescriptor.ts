@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
+import { type IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggableBubbleChart } from "./PluggableBubbleChart.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

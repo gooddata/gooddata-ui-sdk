@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { StackingType } from "../../../constants/stacking.js";
-import { IChartOptions, ISeriesItem } from "../../../typings/unsafe.js";
+import { type StackingType } from "../../../constants/stacking.js";
+import { type IChartOptions, type ISeriesItem } from "../../../typings/unsafe.js";
 import {
     convertNumberToPercent,
     getMinMaxInfo,

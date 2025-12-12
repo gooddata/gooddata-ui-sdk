@@ -2,22 +2,26 @@
 
 import { invariant } from "ts-invariant";
 
-import { ITigerClientBase, JsonApiDatasetOutWithLinks, jsonApiHeaders } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetEntityFacts } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IFactsQuery, IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import {
-    IDataSetMetadataObject,
-    IFactMetadataObject,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    ObjRef,
+    type ITigerClientBase,
+    type JsonApiDatasetOutWithLinks,
+    jsonApiHeaders,
+} from "@gooddata/api-client-tiger";
+import { EntitiesApi_GetEntityFacts } from "@gooddata/api-client-tiger/entitiesObjects";
+import { type IFactsQuery, type IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
+import {
+    type IDataSetMetadataObject,
+    type IFactMetadataObject,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import { FactsQuery } from "./factsQuery.js";
 import { convertDatasetWithLinks, convertFact } from "../../../convertors/fromBackend/MetadataConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 import { ldmItemUpdate } from "../../../utils/ldmItemUpdate.js";
 

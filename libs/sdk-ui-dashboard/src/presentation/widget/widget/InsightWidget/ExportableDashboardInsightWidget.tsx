@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget.js";
-import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { ExportModeInsightWidgetDescription } from "../../description/ExportModeInsightWidgetDescription.js";
 import { InsightWidgetDescriptionComponentProvider } from "../../description/InsightWidgetDescriptionComponentProvider.js";
 

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
     selectAllAutomationsCount,

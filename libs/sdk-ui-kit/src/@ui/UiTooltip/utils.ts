@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { MutableRefObject } from "react";
+import { type MutableRefObject } from "react";
 
-import { Placement, ReferenceType } from "@floating-ui/react";
+import { type Placement, type ReferenceType } from "@floating-ui/react";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 import {
     ADDITIONAL_ARROW_EDGE_OFFSET,
@@ -12,7 +12,7 @@ import {
     DEFAULT_BORDER_RADIUS,
     oppositeSides,
 } from "./constants.js";
-import { Dimensions, PlacementShift, TooltipArrowPlacement } from "./types.js";
+import { type Dimensions, type PlacementShift, type TooltipArrowPlacement } from "./types.js";
 
 const parsePlacement = (placement: TooltipArrowPlacement) => {
     const [basicPlacement, axisPlacement] = placement.split("-");

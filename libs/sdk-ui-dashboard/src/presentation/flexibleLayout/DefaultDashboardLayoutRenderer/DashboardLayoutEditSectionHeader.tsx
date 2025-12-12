@@ -2,10 +2,10 @@
 
 import cx from "classnames";
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { selectIsSectionInsertedByPlugin, useDashboardSelector } from "../../../model/index.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";

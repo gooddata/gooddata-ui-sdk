@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { StatusCodes as HttpStatusCodes } from "http-status-codes";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
     AnalyticalBackendErrorTypes,
-    NotAuthenticated,
+    type NotAuthenticated,
     isAnalyticalBackendError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
@@ -15,7 +15,7 @@ import {
     CancelledSdkError,
     DataTooLargeToComputeSdkError,
     ErrorCodes,
-    GoodDataSdkError,
+    type GoodDataSdkError,
     NoDataSdkError,
     NotFoundSdkError,
     ProtectedReportSdkError,

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { AriaAttributes, HTMLAttributes } from "react";
+import { type AriaAttributes, type HTMLAttributes } from "react";
 
 /**
  * @internal

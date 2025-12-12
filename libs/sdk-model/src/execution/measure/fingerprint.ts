@@ -3,9 +3,9 @@
 import stringify from "json-stable-stringify";
 import { merge } from "lodash-es";
 
-import { IMeasure, IMeasureDefinition, isSimpleMeasure } from "./index.js";
+import { type IMeasure, type IMeasureDefinition, isSimpleMeasure } from "./index.js";
 import { isFilterRelevantForFingerprinting } from "../filter/fingerprint.js";
-import { IMeasureFilter } from "../filter/index.js";
+import { type IMeasureFilter } from "../filter/index.js";
 
 type MeasureDefinitionPropsToDefault = Pick<
     IMeasureDefinition["measureDefinition"],

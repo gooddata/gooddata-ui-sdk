@@ -15,7 +15,7 @@ import {
     selectCanExportPdf,
     selectCanExportTabular,
 } from "../permissions/permissionsSelectors.js";
-import { DashboardSelector } from "../types.js";
+import { type DashboardSelector } from "../types.js";
 
 /**
  * @internal

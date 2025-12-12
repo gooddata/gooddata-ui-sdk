@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor.js";
+import { type IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor.js";
 
 /**
  * @internal

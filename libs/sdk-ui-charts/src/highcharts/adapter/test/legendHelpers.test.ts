@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "@gooddata/sdk-ui-vis-commons";
 
-import { ISeriesItem } from "../../typings/unsafe.js";
+import { type ISeriesItem } from "../../typings/unsafe.js";
 import {
     ITEM_HEIGHT,
     LEGEND_PADDING,

@@ -2,12 +2,12 @@
 
 import { memo, useCallback, useState } from "react";
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { DropdownItem } from "./DropdownItem.js";
 import { DropdownToggleButton } from "./DropdownToggleButton.js";
 import { Overlay } from "../../../Overlay/index.js";
-import { IFormatTemplate } from "../../typings.js";
+import { type IFormatTemplate } from "../../typings.js";
 
 export type OnChange = (formatString: string) => void;
 

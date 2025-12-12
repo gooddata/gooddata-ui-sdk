@@ -1,18 +1,24 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
-    AttributeOrPlaceholder,
-    AttributesMeasuresOrPlaceholders,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type INullableFilter,
+    type ISortItem,
+    newBucket,
+} from "@gooddata/sdk-model";
+import {
+    type AttributeOrPlaceholder,
+    type AttributesMeasuresOrPlaceholders,
     BucketNames,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { IBucketChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { roundChartDimensions } from "../_commons/dimensions.js";
 import { CoreWaterfallChart } from "../waterfallChart/CoreWaterfallChart.js";
 

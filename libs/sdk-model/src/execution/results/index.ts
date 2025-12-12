@@ -4,10 +4,10 @@ import type { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { isEmpty } from "lodash-es";
 
 import {
-    AttributeDisplayFormType,
-    IAttributeDisplayFormGeoAreaConfig,
+    type AttributeDisplayFormType,
+    type IAttributeDisplayFormGeoAreaConfig,
 } from "../../ldm/metadata/attributeDisplayForm/index.js";
-import { ObjRef } from "../../objRef/index.js";
+import { type ObjRef } from "../../objRef/index.js";
 
 /**
  * Single calculated data value.

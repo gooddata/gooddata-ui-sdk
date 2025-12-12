@@ -5,7 +5,7 @@ import cx from "classnames";
 import Kefir, { constant, merge } from "kefir";
 import { describe, expect, it } from "vitest";
 
-import { ILegacyListProps, LegacyList } from "../LegacyList.js";
+import { type ILegacyListProps, LegacyList } from "../LegacyList.js";
 
 const MAX_RESPONSE_TIME = 5000;
 

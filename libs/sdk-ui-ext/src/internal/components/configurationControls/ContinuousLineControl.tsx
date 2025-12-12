@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
 
 export interface IContinuousLineControlProps {

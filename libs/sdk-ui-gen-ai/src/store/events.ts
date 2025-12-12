@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { SdkErrorType } from "@gooddata/sdk-ui";
+import { type SdkErrorType } from "@gooddata/sdk-ui";
 
-import { TextContentObject } from "../model.js";
+import { type TextContentObject } from "../model.js";
 
 /**
  * A common event definition for the Chat component.

@@ -1,19 +1,28 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { FC, LegacyRef, ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import {
+    type FC,
+    type LegacyRef,
+    type ReactNode,
+    useEffect,
+    useMemo,
+    useReducer,
+    useRef,
+    useState,
+} from "react";
 
-import { EditorView } from "@codemirror/view";
+import { type EditorView } from "@codemirror/view";
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { CatalogItem } from "@gooddata/sdk-model";
+import { type CatalogItem } from "@gooddata/sdk-model";
 import { SyntaxHighlightingInput, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { makeTextContents, makeUserMessage } from "../model.js";
 import { collectReferences, useCompletion } from "./completion/index.js";
 import { useHighlight } from "./highlight/index.js";
-import { RootState, asyncProcessSelector, newMessageAction } from "../store/index.js";
+import { type RootState, asyncProcessSelector, newMessageAction } from "../store/index.js";
 import { escapeMarkdown } from "./utils/markdownUtils.js";
 
 export type InputOwnProps = {

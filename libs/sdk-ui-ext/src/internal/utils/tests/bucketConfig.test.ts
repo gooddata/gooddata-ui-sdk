@@ -9,8 +9,8 @@ import { DATE, GRANULARITY } from "../../constants/bucket.js";
 import { DEFAULT_BASE_CHART_UICONFIG, DEFAULT_TABLE_UICONFIG } from "../../constants/uiConfig.js";
 import {
     DATE_DATASET_ATTRIBUTE,
-    IExtendedReferencePoint,
-    IFiltersBucketItem,
+    type IExtendedReferencePoint,
+    type IFiltersBucketItem,
 } from "../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
 import { configureOverTimeComparison, configurePercent } from "../bucketConfig.js";

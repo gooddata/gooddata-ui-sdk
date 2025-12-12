@@ -1,20 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { uniqBy } from "lodash-es";
-import { BatchAction, batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, all, call, put, spawn } from "redux-saga/effects";
+import { type BatchAction, batchActions } from "redux-batched-actions";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, all, call, put, spawn } from "redux-saga/effects";
 
-import { IDashboardWithReferences, IWorkspaceCatalog, walkLayout } from "@gooddata/sdk-backend-spi";
+import { type IDashboardWithReferences, type IWorkspaceCatalog, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboard,
-    IDashboardAttributeFilterConfig,
-    IDashboardLayout,
-    IDateFilterConfig,
-    IDateHierarchyTemplate,
-    IInsight,
-    IWidget,
-    ObjRef,
+    type IDashboard,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardLayout,
+    type IDateFilterConfig,
+    type IDateHierarchyTemplate,
+    type IInsight,
+    type IWidget,
+    type ObjRef,
     areObjRefsEqual,
     isDrillToInsight,
     isInsightWidget,
@@ -28,7 +28,7 @@ import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 import { loadFilterViews } from "./loadFilterViews.js";
 import { loadUser } from "./loadUser.js";
-import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
+import { type DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
 import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
 import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
 import { resolveEntitlements } from "./resolveEntitlements.js";
@@ -37,8 +37,8 @@ import {
     createDisplayFormMap,
     createDisplayFormMapFromCatalog,
 } from "../../../../_staging/catalog/displayFormMap.js";
-import { InitializeDashboard } from "../../../commands/dashboard.js";
-import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
+import { type InitializeDashboard } from "../../../commands/dashboard.js";
+import { type DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
 import { automationsActions } from "../../../store/automations/index.js";
@@ -58,11 +58,11 @@ import { DEFAULT_TAB_ID, tabsActions } from "../../../store/tabs/index.js";
 import { uiActions } from "../../../store/ui/index.js";
 import { userActions } from "../../../store/user/index.js";
 import {
-    DashboardContext,
-    PrivateDashboardContext,
-    ResolvedDashboardConfig,
+    type DashboardContext,
+    type PrivateDashboardContext,
+    type ResolvedDashboardConfig,
 } from "../../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../../types/sagas.js";
+import { type PromiseFnReturnType } from "../../../types/sagas.js";
 import { applyDefaultFilterView } from "../common/filterViews.js";
 import {
     actionsToInitializeExistingDashboard,

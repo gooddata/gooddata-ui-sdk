@@ -6,7 +6,7 @@ import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightL
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
-import { ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutSectionPath } from "../../../../types.js";
 import {
     isDashboardLayoutDraggableItem,
     isDashboardLayoutDraggableListItem,

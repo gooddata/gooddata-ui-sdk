@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import { SVGAttributes } from "react";
+import { type SVGAttributes } from "react";
 
-import { IColor } from "@gooddata/sdk-model";
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type IColor } from "@gooddata/sdk-model";
+import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 /**
  * @public

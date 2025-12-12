@@ -7,13 +7,13 @@ import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
 import {
-    IInsight,
-    IInsightWidget,
-    ObjRef,
+    type IInsight,
+    type IInsightWidget,
+    type ObjRef,
     areObjRefsEqual,
     insightVisualizationType,
 } from "@gooddata/sdk-model";
-import { IExtendedExportConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IExtendedExportConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
 import { useExportHandler } from "./useExportHandler.js";
@@ -21,11 +21,11 @@ import { useImageExportHandler } from "./useImageExportHandler.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
 import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 import {
-    DashboardInsightWidgetExportResolved,
-    ExportImageInsightWidget,
-    ExportInsightWidget,
-    ExportRawInsightWidget,
-    ExportSlidesInsightWidget,
+    type DashboardInsightWidgetExportResolved,
+    type ExportImageInsightWidget,
+    type ExportInsightWidget,
+    type ExportRawInsightWidget,
+    type ExportSlidesInsightWidget,
     dispatchAndWaitFor,
     exportImageInsightWidget,
     exportInsightWidget,

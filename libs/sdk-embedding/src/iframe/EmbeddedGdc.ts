@@ -2,13 +2,17 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    DashboardAttributeFilterConfigMode,
-    DashboardDateFilterConfigMode,
-    ILowerBoundedFilter,
-    IUpperBoundedFilter,
+    type DashboardAttributeFilterConfigMode,
+    type DashboardDateFilterConfigMode,
+    type ILowerBoundedFilter,
+    type IUpperBoundedFilter,
 } from "@gooddata/sdk-model";
 
-import { ILocalIdentifierQualifier, ObjQualifier, RankingFilterOperator } from "./legacyTypes.js";
+import {
+    type ILocalIdentifierQualifier,
+    type ObjQualifier,
+    type RankingFilterOperator,
+} from "./legacyTypes.js";
 
 /**
  * Attribute filter config with props non relevant for execution, but important for UI.

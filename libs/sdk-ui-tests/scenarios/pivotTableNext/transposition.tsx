@@ -4,7 +4,7 @@ import { action } from "storybook/actions";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
-import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
+import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
 import {
     PivotTableWithMeasuresAndColumnOnly,

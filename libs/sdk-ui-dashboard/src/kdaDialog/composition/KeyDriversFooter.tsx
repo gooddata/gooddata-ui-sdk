@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useId, useMemo } from "react";
+import { type RefObject, useId, useMemo } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { ICatalogAttribute, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ICatalogAttribute, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
     DropdownInvertableSelect,
     InvertableSelectAllCheckbox,
@@ -15,7 +15,7 @@ import {
 
 import { selectCatalogAttributes, selectCatalogIsLoaded, useDashboardSelector } from "../../model/index.js";
 import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
-import { KdaItemGroup } from "../internalTypes.js";
+import { type KdaItemGroup } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 export function KeyDriversFooter() {

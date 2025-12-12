@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 import { uniqWith } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import {
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDashboardTab,
-    IDateFilterConfig,
-    IFilterContextDefinition,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardTab,
+    type IDateFilterConfig,
+    type IFilterContextDefinition,
     areObjRefsEqual,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
@@ -23,9 +23,9 @@ import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "./common/stateInitializers.js";
-import { ResetDashboard } from "../../commands/index.js";
+import { type ResetDashboard } from "../../commands/index.js";
 import { dashboardWasReset } from "../../events/dashboard.js";
-import { DashboardWasReset } from "../../events/index.js";
+import { type DashboardWasReset } from "../../events/index.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import {
     selectDateFilterConfig,
@@ -37,11 +37,11 @@ import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSe
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import {
     DEFAULT_TAB_ID,
-    TabState,
+    type TabState,
     selectActiveTabLocalIdentifier,
     selectTabs,
 } from "../../store/tabs/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 
 export function* resetDashboardHandler(

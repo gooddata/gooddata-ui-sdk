@@ -4,17 +4,17 @@ import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
 import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints.js";
-import { IAttribute } from "../attribute/index.js";
-import { IDimension, dimensionTotals } from "../base/dimension.js";
+import { type IAttribute } from "../attribute/index.js";
+import { type IDimension, dimensionTotals } from "../base/dimension.js";
 import { dimensionFingerprint } from "../base/fingerprint.js";
-import { ISortItem } from "../base/sort.js";
-import { ITotal } from "../base/totals.js";
-import { IBucket } from "../buckets/index.js";
+import { type ISortItem } from "../base/sort.js";
+import { type ITotal } from "../base/totals.js";
+import { type IBucket } from "../buckets/index.js";
 import { mergeFilters } from "../filter/filterMerge.js";
 import { filterFingerprint } from "../filter/fingerprint.js";
-import { IFilter, INullableFilter } from "../filter/index.js";
+import { type IFilter, type INullableFilter } from "../filter/index.js";
 import { measureFingerprint } from "../measure/fingerprint.js";
-import { IMeasure } from "../measure/index.js";
+import { type IMeasure } from "../measure/index.js";
 
 /**
  * Contains any configuration that should be done with the data after they are obtained from the server

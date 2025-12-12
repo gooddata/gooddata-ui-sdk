@@ -3,18 +3,23 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IAttributeMetadataObject,
-    ICatalogDateDataset,
-    IInsightDefinition,
-    IMeasure,
-    ObjRef,
+    type IAttributeMetadataObject,
+    type ICatalogDateDataset,
+    type IInsightDefinition,
+    type IMeasure,
+    type ObjRef,
     areObjRefsEqual,
     insightMeasures,
     isDateFilter,
     isSimpleMeasure,
     measureFilters,
 } from "@gooddata/sdk-model";
-import { IDateDataset, IDateDatasetHeader, sortDateDatasets, unrelatedHeader } from "@gooddata/sdk-ui-kit";
+import {
+    type IDateDataset,
+    type IDateDatasetHeader,
+    sortDateDatasets,
+    unrelatedHeader,
+} from "@gooddata/sdk-ui-kit";
 
 const DATE_DROPDOWN_BODY_MARGIN = 6;
 const UNRELATED_HEIGHT = 37;

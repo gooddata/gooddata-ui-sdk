@@ -6,11 +6,11 @@ import { describe, expect, it } from "vitest";
 
 import {
     DashboardDateFilterConfigModeValues,
-    IDashboardDateFilterConfigItem,
+    type IDashboardDateFilterConfigItem,
     idRef,
 } from "@gooddata/sdk-model";
 
-import { TabsState, tabsActions } from "../../index.js";
+import { type TabsState, tabsActions } from "../../index.js";
 import { dateFilterConfigsReducers } from "../dateFilterConfigsReducers.js";
 
 describe("dateFilterConfigsReducers", () => {

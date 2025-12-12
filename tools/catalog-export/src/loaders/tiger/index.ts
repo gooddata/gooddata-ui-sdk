@@ -3,7 +3,7 @@
 import open from "open";
 import ora from "ora";
 
-import { ITigerClient, JsonApiWorkspaceOutList, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { type ITigerClient, type JsonApiWorkspaceOutList, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 
@@ -11,13 +11,13 @@ import { createTigerClient } from "./tigerClient.js";
 import { tigerLoad } from "./tigerLoad.js";
 import { API_TOKEN_VAR_NAME } from "../../base/constants.js";
 import {
-    CatalogExportConfig,
+    type CatalogExportConfig,
     CatalogExportError,
-    WorkspaceMetadata,
+    type WorkspaceMetadata,
     getConfiguredWorkspaceId,
 } from "../../base/types.js";
 import { logError, logInfo } from "../../cli/loggers.js";
-import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts.js";
+import { type WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts.js";
 
 /**
  * Tests if the provided tiger client can access the backend.

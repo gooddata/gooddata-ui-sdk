@@ -8,9 +8,9 @@ import { EMPTY_DRILLS, EMPTY_OBJECT } from "../../constants/emptyDefaults.js";
 import { applyAreaConfigDefaults } from "../../layers/area/config/defaults.js";
 import { applyPushpinConfigDefaults } from "../../layers/pushpin/config/defaults.js";
 import { applySharedGeoConfigDefaults } from "../../map/style/sharedDefaults.js";
-import { IGeoChartNextConfig } from "../../types/config/unified.js";
-import { IGeoChartNextResolvedProps } from "../../types/props/geoChartNext/internal.js";
-import { IGeoChartNextProps } from "../../types/props/geoChartNext/public.js";
+import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartNextResolvedProps } from "../../types/props/geoChartNext/internal.js";
+import { type IGeoChartNextProps } from "../../types/props/geoChartNext/public.js";
 
 /**
  * Resolves placeholders, applies defaults, and derives chart type for GeoChartNext.

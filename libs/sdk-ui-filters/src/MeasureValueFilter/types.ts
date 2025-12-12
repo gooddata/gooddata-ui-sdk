@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ComparisonConditionOperator, RangeConditionOperator } from "@gooddata/sdk-model";
+import { type ComparisonConditionOperator, type RangeConditionOperator } from "@gooddata/sdk-model";
 
 export type MeasureValueFilterOperator = ComparisonConditionOperator | RangeConditionOperator | "ALL";
 

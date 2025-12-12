@@ -4,15 +4,15 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 
-import { ReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands/index.js";
+import { type ReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands/index.js";
 import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionItemReplaced,
+    type DashboardCommandFailed,
+    type DashboardLayoutChanged,
+    type DashboardLayoutSectionItemReplaced,
 } from "../../../events/index.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
 import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,

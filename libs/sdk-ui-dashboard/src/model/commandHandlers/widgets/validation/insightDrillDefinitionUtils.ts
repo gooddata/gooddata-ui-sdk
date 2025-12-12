@@ -1,18 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IAttributeDisplayFormMetadataObject,
-    IDashboardTab,
-    IDrillToAttributeUrl,
-    IDrillToCustomUrl,
-    IDrillToDashboard,
-    IDrillToInsight,
-    IInsight,
-    IListedDashboard,
-    InsightDrillDefinition,
-    LocalIdRef,
-    ObjRef,
+    type IAttribute,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardTab,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IInsight,
+    type IListedDashboard,
+    type InsightDrillDefinition,
+    type LocalIdRef,
+    type ObjRef,
     areObjRefsEqual,
     idRef,
     isDrillFromAttribute,
@@ -24,7 +24,7 @@ import {
     isListedDashboard,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { typesUtils } from "@gooddata/util";
 
 import {
@@ -33,8 +33,8 @@ import {
     getDrillOriginLocalIdentifier,
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../../_staging/drills/drillingUtils.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
 import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill.js";
 
 export function validateDrillDefinitionOrigin(

@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     AddButton,
     SeparatorLine,

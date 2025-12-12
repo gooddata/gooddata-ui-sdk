@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import { ExecutionResult } from "@gooddata/api-client-tiger";
+import { type ExecutionResult } from "@gooddata/api-client-tiger";
 import {
-    IDimensionDescriptor,
+    type IDimensionDescriptor,
     MeasureGroupIdentifier,
-    ObjRef,
+    type ObjRef,
     defWithDimensions,
     idRef,
     newDefForItems,

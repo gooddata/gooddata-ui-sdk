@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { PropsWithChildren, createContext, useContext } from "react";
+import { type PropsWithChildren, createContext, useContext } from "react";
 
 /**
  * Internal context type used to provide header search drop-down state to the components.

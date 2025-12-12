@@ -5,9 +5,9 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";
-import { DropdownList, ITab, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import { DropdownList, type ITab, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
-import { CatalogAttributeDataType, EmptyParamCallback, ICatalogAttributeData } from "./types.js";
+import { CatalogAttributeDataType, type EmptyParamCallback, type ICatalogAttributeData } from "./types.js";
 import { searchAttributes } from "./utils.js";
 
 const DEFAULT_DROPDOWN_WIDTH = 253;

@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 
-import { QueryWidgetBrokenAlerts } from "../queries/widgets.js";
+import { type QueryWidgetBrokenAlerts } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
-import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryWidgetBrokenAlertService = createQueryService(
     "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS",

@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { DefaultWidgetDeleteDialog } from "./DefaultWidgetDeleteDialog.js";
-import { IWidgetDeleteDialogProps } from "./types.js";
+import { type IWidgetDeleteDialogProps } from "./types.js";
 
 /**
  * @internal

@@ -2,7 +2,7 @@
 
 import { DEFAULT_AREA_LAYER_NAME, DEFAULT_AREA_OUTLINE_LAYER_NAME } from "./constants.js";
 import { createSegmentFilter } from "../../map/style/sharedLayers.js";
-import { IGeoAreaChartConfig } from "../../types/config/areaChart.js";
+import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import type {
     FillLayerSpecification,
     FilterSpecification,

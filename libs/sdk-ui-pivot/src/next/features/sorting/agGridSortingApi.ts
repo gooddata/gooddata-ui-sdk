@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { SortModelItem } from "ag-grid-enterprise";
+import { type SortModelItem } from "ag-grid-enterprise";
 
-import { AgGridApi } from "../../types/agGrid.js";
+import { type AgGridApi } from "../../types/agGrid.js";
 
 /**
  * Get the current sort model from the grid API

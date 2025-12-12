@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
 
-import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
+import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 
 /**
  * Metadata of an import.

@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    IColorPalette,
-    IColorPaletteItem,
-    IInsightDefinition,
-    IMeasure,
-    ISettings,
-    ITheme,
-    ThemeColor,
+    type IColorPalette,
+    type IColorPaletteItem,
+    type IInsightDefinition,
+    type IMeasure,
+    type ISettings,
+    type ITheme,
+    type ThemeColor,
     bucketMeasure,
     bucketMeasures,
     insightBucket,
@@ -21,8 +21,8 @@ import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     CalculateAs,
     ComparisonColorType,
-    IChartConfig,
-    IComparison,
+    type IChartConfig,
+    type IComparison,
     getComparisonRgbColor,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
@@ -32,12 +32,12 @@ import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
 import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../constants/supportedProperties.js";
 import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig.js";
-import { HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
+import { type HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
 import {
-    IReferencePoint,
-    IUiConfig,
-    IVisProps,
-    IVisualizationProperties,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
 import { getItemsCount, setBucketTitles } from "../bucketHelper.js";
 import { hasNoMeasures, hasNoSecondaryMeasures, noDerivedMeasurePresent } from "../bucketRules.js";

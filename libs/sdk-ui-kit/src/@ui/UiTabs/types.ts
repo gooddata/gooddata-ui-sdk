@@ -1,13 +1,20 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentProps, ComponentType, HTMLAttributes, ReactNode, RefCallback, RefObject } from "react";
+import {
+    type ComponentProps,
+    type ComponentType,
+    type HTMLAttributes,
+    type ReactNode,
+    type RefCallback,
+    type RefObject,
+} from "react";
 
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
-import { IDropdownButtonRenderProps } from "../../Dropdown/index.js";
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
-import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
-import { separatorStaticItem } from "../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
+import { type IDropdownButtonRenderProps } from "../../Dropdown/index.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type SizeLarge, type SizeMedium, type SizeSmall } from "../@types/size.js";
+import { type separatorStaticItem } from "../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 
 /**
  * @internal

@@ -1,27 +1,27 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { Draft } from "immer";
+import { type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
+import { type Draft } from "immer";
 import { invariant } from "ts-invariant";
 
 import {
-    IDashboardFilterReference,
-    IDashboardLayout,
-    IDashboardLayoutContainerDirection,
-    IDashboardLayoutSection,
-    IDashboardLayoutSectionHeader,
-    IDrillDownIntersectionIgnoredAttributes,
-    IDrillDownReference,
-    IDrillToLegacyDashboard,
-    IInsightWidget,
-    IInsightWidgetConfiguration,
-    IKpiComparisonDirection,
-    IKpiComparisonTypeComparison,
-    IKpiWidgetConfiguration,
-    InsightDrillDefinition,
-    ObjRef,
-    ScreenSize,
-    VisualizationProperties,
+    type IDashboardFilterReference,
+    type IDashboardLayout,
+    type IDashboardLayoutContainerDirection,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSectionHeader,
+    type IDrillDownIntersectionIgnoredAttributes,
+    type IDrillDownReference,
+    type IDrillToLegacyDashboard,
+    type IInsightWidget,
+    type IInsightWidgetConfiguration,
+    type IKpiComparisonDirection,
+    type IKpiComparisonTypeComparison,
+    type IKpiWidgetConfiguration,
+    type InsightDrillDefinition,
+    type ObjRef,
+    type ScreenSize,
+    type VisualizationProperties,
     areObjRefsEqual,
     isDashboardAttributeFilterReference,
     isDashboardDateFilterReference,
@@ -32,33 +32,33 @@ import {
     isRichTextWidget,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { LayoutState, layoutInitialState } from "./layoutState.js";
+import { type LayoutState, layoutInitialState } from "./layoutState.js";
 import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
-import { IdentityMapping } from "../../../../_staging/dashboard/dashboardLayout.js";
+import { type IdentityMapping } from "../../../../_staging/dashboard/dashboardLayout.js";
 import {
     findItem,
     findSection,
     findSections,
     getItemIndex,
 } from "../../../../_staging/layout/coordinates.js";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
 import { setOrDelete } from "../../../../_staging/objectUtils/setOrDelete.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types.js";
 import {
-    ExtendedDashboardItem,
-    ExtendedDashboardLayoutSection,
-    ExtendedDashboardWidget,
-    IItemWithHeight,
-    IItemWithWidth,
-    StashedDashboardItemsId,
+    type ExtendedDashboardItem,
+    type ExtendedDashboardLayoutSection,
+    type ExtendedDashboardWidget,
+    type IItemWithHeight,
+    type IItemWithWidth,
+    type StashedDashboardItemsId,
     isCustomWidget,
 } from "../../../types/layoutTypes.js";
-import { WidgetDescription, WidgetHeader } from "../../../types/widgetTypes.js";
+import { type WidgetDescription, type WidgetHeader } from "../../../types/widgetTypes.js";
 import { addArrayElements, removeArrayElement } from "../../../utils/arrayOps.js";
 import { resetUndoReducer, undoReducer, withUndo } from "../../_infra/undoEnhancer.js";
-import { TabsState } from "../tabsState.js";
+import { type TabsState } from "../tabsState.js";
 
 // Core layout reducer type (operates directly on LayoutState, which extends UndoEnhancedState)
 // Use this type for reducers that will be wrapped with withUndo

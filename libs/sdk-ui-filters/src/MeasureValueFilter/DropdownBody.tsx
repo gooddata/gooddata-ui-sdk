@@ -5,15 +5,15 @@ import { memo, useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
-import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
+import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { ComparisonInput } from "./ComparisonInput.js";
 import { OperatorDropdown } from "./OperatorDropdown.js";
 import { RangeInput } from "./RangeInput.js";
 import { TreatNullValuesAsZeroCheckbox } from "./TreatNullValuesAsZeroCheckbox.js";
-import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
-import { WarningMessage } from "./typings.js";
+import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
+import { type WarningMessage } from "./typings.js";
 import { WarningMessageComponent } from "./WarningMessage.js";
 
 interface IDropdownBodyProps {

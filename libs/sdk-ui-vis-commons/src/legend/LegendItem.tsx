@@ -1,19 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, useCallback } from "react";
+import { type CSSProperties, useCallback } from "react";
 
 import cx from "classnames";
 import { unescape } from "lodash-es";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
-import { ISeriesItemMetric } from "./types.js";
+import { type ISeriesItemMetric } from "./types.js";
 import { getDarkerColor, isPatternObject } from "../coloring/color.js";
 import { PatternFill } from "../coloring/PatternFill.js";
-import { ChartFillType, IPatternObject } from "../coloring/types.js";
+import { type ChartFillType, type IPatternObject } from "../coloring/types.js";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 

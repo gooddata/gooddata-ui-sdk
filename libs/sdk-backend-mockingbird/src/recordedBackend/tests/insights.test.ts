@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
-    IInsight,
+    type IInsight,
     idRef,
     insightId,
     insightRef,

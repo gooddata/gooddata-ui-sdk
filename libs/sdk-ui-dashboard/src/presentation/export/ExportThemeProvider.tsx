@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ComponentType, FC } from "react";
+import { type ComponentType, type FC } from "react";
 
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";

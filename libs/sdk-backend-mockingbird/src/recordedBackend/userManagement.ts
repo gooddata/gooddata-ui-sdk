@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
-    IWorkspaceAccessControlService,
-    IWorkspaceUserGroupsQuery,
-    IWorkspaceUserGroupsQueryOptions,
-    IWorkspaceUsersQuery,
-    IWorkspaceUsersQueryOptions,
-    IWorkspaceUsersQueryResult,
+    type IWorkspaceAccessControlService,
+    type IWorkspaceUserGroupsQuery,
+    type IWorkspaceUserGroupsQueryOptions,
+    type IWorkspaceUsersQuery,
+    type IWorkspaceUsersQueryOptions,
+    type IWorkspaceUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { AccessGranteeDetail, IWorkspaceUser, ObjRef } from "@gooddata/sdk-model";
+import { type AccessGranteeDetail, type IWorkspaceUser, type ObjRef } from "@gooddata/sdk-model";
 
-import { RecordedBackendConfig } from "./types.js";
+import { type RecordedBackendConfig } from "./types.js";
 
 /**
  * @internal

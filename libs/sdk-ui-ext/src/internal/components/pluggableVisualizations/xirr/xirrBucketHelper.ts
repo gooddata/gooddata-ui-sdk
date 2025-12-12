@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketOfFun, IReferencePoint } from "../../../interfaces/Visualization.js";
+import { type IBucketOfFun, type IReferencePoint } from "../../../interfaces/Visualization.js";
 import {
     findBucket,
     getAllMeasures,

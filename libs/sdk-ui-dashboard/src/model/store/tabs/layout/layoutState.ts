@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayout, type ScreenSize } from "@gooddata/sdk-model";
 
-import { DashboardLayoutCommands } from "../../../commands/index.js";
-import { ExtendedDashboardItem, ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
-import { InitialUndoState, UndoEnhancedState } from "../../_infra/undoEnhancer.js";
+import { type DashboardLayoutCommands } from "../../../commands/index.js";
+import { type ExtendedDashboardItem, type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { InitialUndoState, type UndoEnhancedState } from "../../_infra/undoEnhancer.js";
 
 /**
  * @beta

@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { DialogListItemBasic } from "../DialogListItemBasic.js";
-import { IDialogListItemComponentProps } from "../typings.js";
+import { type IDialogListItemComponentProps } from "../typings.js";
 
 describe("DialogListItemBasic", () => {
     const createComponent = (props?: Partial<IDialogListItemComponentProps>) => {

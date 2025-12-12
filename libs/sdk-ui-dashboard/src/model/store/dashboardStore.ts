@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { EnhancedStore, Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
+import { type EnhancedStore, type Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
 import { keyBy, merge } from "lodash-es";
 import { enableBatching } from "redux-batched-actions";
-import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
+import defaultReduxSaga, { type Saga, type SagaIterator, type Task } from "redux-saga";
 import { call, fork } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
 
@@ -12,7 +12,7 @@ import { objRefToString } from "@gooddata/sdk-model";
 
 import { getDashboardContext } from "./_infra/contexts.js";
 import { createQueryProcessingModule } from "./_infra/queryProcessing.js";
-import { IDashboardQueryService } from "./_infra/queryService.js";
+import { type IDashboardQueryService } from "./_infra/queryService.js";
 import { rootCommandHandler } from "./_infra/rootCommandHandler.js";
 import { createRootEventEmitter } from "./_infra/rootEventEmitter.js";
 import { accessibleDashboardsSliceReducer } from "./accessibleDashboards/index.js";
@@ -38,16 +38,16 @@ import { renderModeSliceReducer } from "./renderMode/index.js";
 import { savingSliceReducer } from "./saving/index.js";
 import { showWidgetAsTableSliceReducer } from "./showWidgetAsTable/index.js";
 import { tabsSliceReducer } from "./tabs/index.js";
-import { DashboardDispatch, DashboardState } from "./types.js";
+import { type DashboardDispatch, type DashboardState } from "./types.js";
 import { uiSliceReducer } from "./ui/index.js";
 import { userSliceReducer } from "./user/index.js";
 import { usersSliceReducer } from "./users/index.js";
-import { RenderMode } from "../../types.js";
-import { DashboardCommandType } from "../commands/index.js";
-import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
-import { DashboardEventType } from "../events/index.js";
+import { type RenderMode } from "../../types.js";
+import { type DashboardCommandType } from "../commands/index.js";
+import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { type DashboardEventType } from "../events/index.js";
 import { AllQueryServices } from "../queryServices/index.js";
-import { DashboardContext, PrivateDashboardContext } from "../types/commonTypes.js";
+import { type DashboardContext, type PrivateDashboardContext } from "../types/commonTypes.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

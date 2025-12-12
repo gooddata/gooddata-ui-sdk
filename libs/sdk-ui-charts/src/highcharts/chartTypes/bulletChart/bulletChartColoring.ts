@@ -1,18 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
 import {
-    IColor,
-    IColorPalette,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    Identifier,
+    type IColor,
+    type IColorPalette,
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
+    type Identifier,
     isColorFromPalette,
     isRgbColor,
 } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import {
     ColorStrategy,
-    ICreateColorAssignmentReturnValue,
+    type ICreateColorAssignmentReturnValue,
     getColorByGuid,
     getColorFromMapping,
     getLighterColorFromRGB,
@@ -28,7 +28,7 @@ import {
     isPrimarySeries,
     isTargetSeries,
 } from "./bulletChartSeries.js";
-import { IColorMapping } from "../../../interfaces/index.js";
+import { type IColorMapping } from "../../../interfaces/index.js";
 import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 

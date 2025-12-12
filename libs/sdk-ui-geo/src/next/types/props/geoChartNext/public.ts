@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IExecutionConfig, ITheme } from "@gooddata/sdk-model";
-import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IExecutionConfig, type ITheme } from "@gooddata/sdk-model";
+import { type IVisualizationCallbacks, type IVisualizationProps } from "@gooddata/sdk-ui";
 
-import { CenterPositionChangedCallback, ZoomChangedCallback } from "../../common/callbacks.js";
-import { IGeoChartNextConfig } from "../../config/unified.js";
-import { GeoLayerType, IGeoLayer } from "../../layers/index.js";
+import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../../common/callbacks.js";
+import { type IGeoChartNextConfig } from "../../config/unified.js";
+import { type GeoLayerType, type IGeoLayer } from "../../layers/index.js";
 
 /**
  * Props for {@link GeoChartNext}.

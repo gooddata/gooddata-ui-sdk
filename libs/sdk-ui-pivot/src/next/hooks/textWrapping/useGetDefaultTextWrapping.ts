@@ -2,8 +2,8 @@
 
 import { useCallback } from "react";
 
-import { AgGridApi } from "../../types/agGrid.js";
-import { ITextWrapping } from "../../types/textWrapping.js";
+import { type AgGridApi } from "../../types/agGrid.js";
+import { type ITextWrapping } from "../../types/textWrapping.js";
 
 /**
  * Hook to get default text wrapping state from ag-grid's defaultColDef.

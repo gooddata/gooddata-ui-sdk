@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, MutableRefObject } from "react";
+import { type MouseEvent, type MutableRefObject } from "react";
 
 import cx from "classnames";
 

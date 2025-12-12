@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-base";
 
-import { DashboardContext } from "../../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../../types/commonTypes.js";
 import { dashboardInitialize } from "../dashboardInitialize.js";
 
 vi.mock("../../../widgets/common/loadInsight.js", () => ({

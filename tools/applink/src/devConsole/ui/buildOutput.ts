@@ -1,16 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { readFileSync } from "fs";
 
 import blessed from "blessed";
 
-import { AppPanel, AppPanelOptions } from "./appPanel.js";
+import { AppPanel, type AppPanelOptions } from "./appPanel.js";
 import {
-    BuildFinished,
-    BuildOutputRequested,
-    DcEvent,
-    EventBus,
+    type BuildFinished,
+    type BuildOutputRequested,
+    type DcEvent,
+    type EventBus,
     GlobalEventBus,
-    IEventListener,
+    type IEventListener,
     buildOutputExited,
 } from "../events.js";
 

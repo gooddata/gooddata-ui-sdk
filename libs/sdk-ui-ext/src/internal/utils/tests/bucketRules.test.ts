@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization.js";
+import { type IBucketItem, type IBucketOfFun, type IFilters } from "../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
 import * as bucketRules from "../bucketRules.js";
 

@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ICatalogFact, ICatalogMeasure } from "@gooddata/sdk-model";
+import { type ICatalogFact, type ICatalogMeasure } from "@gooddata/sdk-model";
 
-import { IDashboardQuery } from "./base.js";
+import { type IDashboardQuery } from "./base.js";
 
 /**
  * @alpha

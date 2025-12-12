@@ -3,10 +3,10 @@
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { RemoveDrillToUrlForInsightWidget } from "../../commands/index.js";
+import { type RemoveDrillToUrlForInsightWidget } from "../../commands/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* removeDrillToUrlForInsightWidgetHandler(
     ctx: DashboardContext,

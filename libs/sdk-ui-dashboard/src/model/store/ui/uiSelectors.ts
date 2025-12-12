@@ -3,25 +3,25 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { union } from "lodash-es";
 
-import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
-import { FilterViewDialogMode, InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
+import { type FilterViewDialogMode, type InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
+import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
-    DropZoneType,
-    IAlertDialogContext,
-    ILayoutCoordinates,
-    ILayoutItemPath,
-    ILayoutSectionPath,
-    IMenuButtonItemsVisibility,
-    IScheduleEmailContext,
+    type DropZoneType,
+    type IAlertDialogContext,
+    type ILayoutCoordinates,
+    type ILayoutItemPath,
+    type ILayoutSectionPath,
+    type IMenuButtonItemsVisibility,
+    type IScheduleEmailContext,
 } from "../../../types.js";
-import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectConfig } from "../config/configSelectors.js";
 import { selectWidgetsMap } from "../tabs/layout/layoutSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

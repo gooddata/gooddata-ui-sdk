@@ -1,25 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    CaseReducer,
-    CaseReducerActions,
-    EntityId,
-    EntityState,
-    IdSelector,
-    PayloadAction,
-    Reducer,
-    Selector,
+    type CaseReducer,
+    type CaseReducerActions,
+    type EntityId,
+    type EntityState,
+    type IdSelector,
+    type PayloadAction,
+    type Reducer,
+    type Selector,
     createEntityAdapter,
     createSelector,
     createSlice,
 } from "@reduxjs/toolkit";
 import { capitalize, memoize } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { DashboardQueryType, IDashboardQuery } from "../../queries/base.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { DashboardState } from "../types.js";
+import { type DashboardQueryType, type IDashboardQuery } from "../../queries/base.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardState } from "../types.js";
 
 /*
  * Below are typings for query cache slices. They may look daunting so here some background.

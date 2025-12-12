@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 type ConfigDummySectionProps = {
     id: string;

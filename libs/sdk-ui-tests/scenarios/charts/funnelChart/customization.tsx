@@ -1,9 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { FunnelChart, IBucketChartProps, IChartConfig, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
+import {
+    FunnelChart,
+    type IBucketChartProps,
+    type IChartConfig,
+    type IFunnelChartProps,
+} from "@gooddata/sdk-ui-charts";
 
 import { FunnelChartWithMeasureAndViewBy, FunnelChartWithTwoMeasures } from "./base.js";
-import { CustomizedScenario, UnboundVisProps, scenariosFor } from "../../../src/index.js";
+import { type CustomizedScenario, type UnboundVisProps, scenariosFor } from "../../../src/index.js";
 import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants.js";
 import { ConfigVariants } from "../_infra/dataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

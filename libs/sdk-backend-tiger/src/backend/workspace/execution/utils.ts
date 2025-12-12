@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { CustomLabel, CustomMetric, CustomOverride } from "@gooddata/api-client-tiger";
+import { type CustomLabel, type CustomMetric, type CustomOverride } from "@gooddata/api-client-tiger";
 import {
-    IDimensionDescriptor,
-    IExecutionDefinition,
+    type IDimensionDescriptor,
+    type IExecutionDefinition,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
     measureMasterIdentifier,

@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { DefaultShareButton } from "./DefaultShareButton.js";
-import { IShareButtonProps } from "./types.js";
+import { type IShareButtonProps } from "./types.js";
 
 /**
  * @internal

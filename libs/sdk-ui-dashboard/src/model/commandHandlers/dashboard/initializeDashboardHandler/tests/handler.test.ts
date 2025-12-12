@@ -3,7 +3,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { initializeDashboard } from "../../../../commands/index.js";
-import { DashboardInitialized } from "../../../../events/index.js";
+import { type DashboardInitialized } from "../../../../events/index.js";
 import { selectConfig } from "../../../../store/config/configSelectors.js";
 import { selectPersistedDashboard } from "../../../../store/meta/metaSelectors.js";
 import { selectPermissions } from "../../../../store/permissions/permissionsSelectors.js";

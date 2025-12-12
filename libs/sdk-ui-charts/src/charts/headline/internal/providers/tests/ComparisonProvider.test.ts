@@ -10,7 +10,7 @@ import {
     TEST_FILTERS,
     TEST_SORT_ITEMS,
 } from "./TestData.fixtures.js";
-import { CalculateAs, CalculationType, IComparison } from "../../../../../interfaces/index.js";
+import { CalculateAs, type CalculationType, type IComparison } from "../../../../../interfaces/index.js";
 import { ComparisonProvider } from "../ComparisonProvider.js";
 
 describe("ComparisonProvider", () => {

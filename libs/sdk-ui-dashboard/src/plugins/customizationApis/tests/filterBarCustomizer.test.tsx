@@ -6,9 +6,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
-import { HiddenFilterBar, IFilterBarProps } from "../../../presentation/index.js";
+import { HiddenFilterBar, type IFilterBarProps } from "../../../presentation/index.js";
 import { DefaultFilterBarCustomizer } from "../filterBarCustomizer.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 //
 //

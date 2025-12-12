@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
-import { Node, Parent, Point } from "unist";
+import { type Node, type Parent, type Point } from "unist";
 
-import { TextNode } from "./types.js";
+import { type TextNode } from "./types.js";
 import { getReferenceRegex } from "../utils.js";
 
 export function remarkReferences() {

@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
  * A context for the custom element is parsed out of script URL and includes

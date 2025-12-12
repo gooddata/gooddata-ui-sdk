@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";

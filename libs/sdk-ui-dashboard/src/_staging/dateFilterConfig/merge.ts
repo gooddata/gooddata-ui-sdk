@@ -4,10 +4,10 @@ import stringify from "json-stable-stringify";
 import { uniqBy } from "lodash-es";
 
 import {
-    IAbsoluteDateFilterPreset,
-    IDashboardDateFilterConfig,
-    IDateFilterConfig,
-    IRelativeDateFilterPreset,
+    type IAbsoluteDateFilterPreset,
+    type IDashboardDateFilterConfig,
+    type IDateFilterConfig,
+    type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
 import { sanitizeDateFilterOption } from "./sanitization.js";

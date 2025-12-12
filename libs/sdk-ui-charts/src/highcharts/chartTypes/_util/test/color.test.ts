@@ -2,7 +2,12 @@
 import { describe, expect, it } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { IAttributeDescriptor, IResultAttributeHeader, emptyDef, uriRef } from "@gooddata/sdk-model";
+import {
+    type IAttributeDescriptor,
+    type IResultAttributeHeader,
+    emptyDef,
+    uriRef,
+} from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette } from "@gooddata/sdk-ui";
 import {
     getColorMappingPredicate,

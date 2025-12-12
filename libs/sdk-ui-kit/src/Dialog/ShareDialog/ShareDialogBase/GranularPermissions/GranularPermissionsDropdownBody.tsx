@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useEffect, useRef } from "react";
+import { type KeyboardEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { AccessGranularPermission } from "@gooddata/sdk-model";
+import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
 import { makeMenuKeyboardNavigation } from "../../../../@ui/@utils/keyboardNavigation.js";
@@ -13,9 +13,14 @@ import { withBubble } from "../../../../Bubble/index.js";
 import { ItemsWrapper, Separator } from "../../../../List/index.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { Overlay } from "../../../../Overlay/index.js";
-import { IAlignPoint } from "../../../../typings/positioning.js";
+import { type IAlignPoint } from "../../../../typings/positioning.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
-import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
+import {
+    type DialogModeType,
+    type GranteeItem,
+    type IGranteePermissionsPossibilities,
+    type IGranularGrantee,
+} from "../types.js";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;

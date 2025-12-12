@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IPyramidChartProps } from "@gooddata/sdk-ui-charts";
+import { type IPyramidChartProps } from "@gooddata/sdk-ui-charts";
 
 import { PluggablePyramidChart } from "./PluggablePyramidChart.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

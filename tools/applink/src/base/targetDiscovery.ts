@@ -3,7 +3,12 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { PackageJson, SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types.js";
+import {
+    type PackageJson,
+    type SourceDescriptor,
+    type TargetDependency,
+    type TargetDescriptor,
+} from "../base/types.js";
 import { readJsonSync } from "../base/utils.js";
 
 /**

@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import { EntitiesApi_GetAllEntitiesDatasets } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
 import {
-    IDataSetMetadataObject,
-    IDataset,
-    IMetadataObject,
-    ObjRef,
+    type IDataSetMetadataObject,
+    type IDataset,
+    type IMetadataObject,
+    type ObjRef,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
     constructor(

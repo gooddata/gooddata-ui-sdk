@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import { ColumnResizedEvent, PinnedRowDataChangedEvent } from "ag-grid-community";
+import { type ColumnResizedEvent, type PinnedRowDataChangedEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
-import { InternalTableState } from "../../tableState.js";
+import { type InternalTableState } from "../../tableState.js";
 import { isManualResizing } from "../base/agUtils.js";
-import { ColumnResizingConfig } from "../privateTypes.js";
+import { type ColumnResizingConfig } from "../privateTypes.js";
 
 const AGGRID_ON_RESIZE_TIMEOUT = 300;
 

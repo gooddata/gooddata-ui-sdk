@@ -6,7 +6,7 @@ import {
     useWorkspaceUsers,
 } from "../../../model/index.js";
 import {
-    IScheduledEmailDialogProps,
+    type IScheduledEmailDialogProps,
     ScheduledEmailDialog,
     ScheduledEmailManagementDialog,
 } from "../../scheduledEmail/index.js";

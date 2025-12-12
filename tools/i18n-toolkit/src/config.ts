@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
+
 import path from "path";
 
-import { DefaultConfigName, ToolkitConfigFile, ToolkitOptions } from "./data.js";
+import { DefaultConfigName, type ToolkitConfigFile, type ToolkitOptions } from "./data.js";
 import { fail, message } from "./utils/console.js";
 import { readFile } from "./utils/index.js";
 

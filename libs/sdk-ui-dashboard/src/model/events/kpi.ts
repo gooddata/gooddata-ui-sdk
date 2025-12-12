@@ -1,21 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    ICatalogDateDataset,
-    IDashboardAttributeFilter,
-    IDrillToLegacyDashboard,
-    IKpi,
-    IKpiWidget,
-    IKpiWidgetConfiguration,
-    IKpiWidgetDefinition,
-    IMeasureMetadataObject,
-    ObjRef,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilter,
+    type IDrillToLegacyDashboard,
+    type IKpi,
+    type IKpiWidget,
+    type IKpiWidgetConfiguration,
+    type IKpiWidgetDefinition,
+    type IMeasureMetadataObject,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { IDashboardEvent } from "./base.js";
+import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
-import { DashboardContext } from "../types/commonTypes.js";
-import { WidgetDescription, WidgetHeader } from "../types/widgetTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
+import { type WidgetDescription, type WidgetHeader } from "../types/widgetTypes.js";
 
 /**
  * Payload of the {@link DashboardKpiWidgetHeaderChanged} event.

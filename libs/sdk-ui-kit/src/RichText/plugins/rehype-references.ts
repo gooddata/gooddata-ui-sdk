@@ -1,16 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
 import cx from "classnames";
-import { Root } from "mdast";
-import { IntlShape } from "react-intl";
-import { Parent } from "unist";
+import { type Root } from "mdast";
+import { type IntlShape } from "react-intl";
+import { type Parent } from "unist";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ISeparators, IdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ISeparators, type IdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, TextNode } from "./types.js";
+import { type HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, type TextNode } from "./types.js";
 import { createReference } from "../helpers/references.js";
-import { EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
+import { type EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 
 export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], separators?: ISeparators) {
     return function () {

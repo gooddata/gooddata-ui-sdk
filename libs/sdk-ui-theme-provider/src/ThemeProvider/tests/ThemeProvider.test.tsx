@@ -1,20 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, act } from "react";
+import { type ReactElement, act } from "react";
 
-import { RenderResult, render } from "@testing-library/react";
+import { type RenderResult, render } from "@testing-library/react";
 import { cloneDeep } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
 import { withTheme } from "../Context.js";
 import { isDarkTheme } from "../isDarkTheme.js";
-import { ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
+import { type ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
 
 const renderComponent = async (component: ReactElement): Promise<RenderResult> => {
     let wrappedComponent: RenderResult | undefined;

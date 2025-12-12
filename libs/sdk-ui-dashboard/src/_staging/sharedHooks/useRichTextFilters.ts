@@ -3,10 +3,10 @@
 import { useEffect, useMemo } from "react";
 
 import {
-    ICatalogDateDataset,
-    IFilter,
-    IInsightWidget,
-    IRichTextWidget,
+    type ICatalogDateDataset,
+    type IFilter,
+    type IInsightWidget,
+    type IRichTextWidget,
     areObjRefsEqual,
     idRef,
     isAbsoluteDateFilter,
@@ -16,8 +16,8 @@ import {
 
 import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/index.js";
 import {
-    InsightDateDatasets,
-    QueryInsightDateDatasets,
+    type InsightDateDatasets,
+    type QueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectFilterContextFilters,
     selectSectionHeadersDateDataSet,

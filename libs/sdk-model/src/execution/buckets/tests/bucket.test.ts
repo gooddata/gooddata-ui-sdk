@@ -4,14 +4,14 @@ import { describe, expect, it } from "vitest";
 
 import { Account, Activity, Duration, Velocity, Won } from "../../../../__mocks__/model.js";
 import { modifySimpleMeasure } from "../../../index.js";
-import { IAttribute, attributeLocalId, idMatchAttribute } from "../../attribute/index.js";
-import { ITotal, newTotal } from "../../base/totals.js";
-import { IMeasure, idMatchMeasure, isMeasure, measureLocalId } from "../../measure/index.js";
+import { type IAttribute, attributeLocalId, idMatchAttribute } from "../../attribute/index.js";
+import { type ITotal, newTotal } from "../../base/totals.js";
+import { type IMeasure, idMatchMeasure, isMeasure, measureLocalId } from "../../measure/index.js";
 import {
-    BucketItemModifications,
+    type BucketItemModifications,
     ComputeRatioRule,
-    IAttributeOrMeasure,
-    IBucket,
+    type IAttributeOrMeasure,
+    type IBucket,
     applyRatioRule,
     bucketAttribute,
     bucketAttributeIndex,

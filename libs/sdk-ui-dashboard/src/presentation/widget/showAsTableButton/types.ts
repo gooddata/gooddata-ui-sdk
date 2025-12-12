@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget } from "@gooddata/sdk-model";
 
 /**
  * @alpha

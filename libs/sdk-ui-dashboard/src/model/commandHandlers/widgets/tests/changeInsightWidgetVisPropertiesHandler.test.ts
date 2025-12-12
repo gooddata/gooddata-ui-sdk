@@ -2,15 +2,18 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { IInsightWidget, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IInsightWidget, idRef, uriRef } from "@gooddata/sdk-model";
 
 import {
-    ChangeInsightWidgetVisProperties,
+    type ChangeInsightWidgetVisProperties,
     changeInsightWidgetVisProperties,
 } from "../../../commands/index.js";
-import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events/index.js";
+import {
+    type DashboardCommandFailed,
+    type DashboardInsightWidgetVisPropertiesChanged,
+} from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,

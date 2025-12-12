@@ -2,9 +2,9 @@
 import { isEmpty } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 
-import { IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
+import { type IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
 import { customEscape, percentFormatter } from "../_util/common.js";
 
 export function formatValueForTooltip(

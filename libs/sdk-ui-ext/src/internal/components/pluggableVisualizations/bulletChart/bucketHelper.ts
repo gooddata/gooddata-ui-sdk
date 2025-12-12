@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketOfFun } from "../../../interfaces/Visualization.js";
+import { type IBucketOfFun } from "../../../interfaces/Visualization.js";
 import {
-    IMeasureBucketItemsLimit,
+    type IMeasureBucketItemsLimit,
     getAllAttributeItems,
     getDateItems,
     getMainDateItem,

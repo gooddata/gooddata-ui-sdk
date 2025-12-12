@@ -2,7 +2,10 @@
 
 import { v4 as uuid } from "uuid";
 
-import { ITigerClientBase, JsonApiWorkspaceDataFilterSettingOutWithLinks } from "@gooddata/api-client-tiger";
+import {
+    type ITigerClientBase,
+    type JsonApiWorkspaceDataFilterSettingOutWithLinks,
+} from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityWorkspaceDataFilterSettings,
     EntitiesApi_CreateEntityWorkspaceDataFilters,
@@ -12,16 +15,16 @@ import {
     EntitiesApi_GetAllEntitiesWorkspaceDataFilters,
     EntitiesApi_PatchEntityWorkspaceDataFilters,
 } from "@gooddata/api-client-tiger/entitiesObjects";
-import { IDataFiltersService } from "@gooddata/sdk-backend-spi";
+import { type IDataFiltersService } from "@gooddata/sdk-backend-spi";
 import {
-    IWorkspaceDataFilter,
-    IWorkspaceDataFilterDefinition,
-    IWorkspaceDataFilterSetting,
-    ObjRef,
+    type IWorkspaceDataFilter,
+    type IWorkspaceDataFilterDefinition,
+    type IWorkspaceDataFilterSetting,
+    type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerDataFiltersService implements IDataFiltersService {

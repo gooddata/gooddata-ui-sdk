@@ -4,12 +4,12 @@ import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { PushDataCallback } from "@gooddata/sdk-ui";
+import { type PushDataCallback } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { isComparisonDefaultColors } from "../../../../../utils/comparisonHelper.js";
 import {
     COMPARISON_COLOR_CONFIG_EQUALS,

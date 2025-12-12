@@ -5,11 +5,11 @@ import { forwardRef, useCallback, useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { AccessGranularPermission } from "@gooddata/sdk-model";
+import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { withBubble } from "../../../../Bubble/index.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
-import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types.js";
+import { type GranteeItem, type IGranularGrantee, type IGranularPermissionTypeItem } from "../types.js";
 
 interface IGranularPermissionItemProps {
     grantee: IGranularGrantee;

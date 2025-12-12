@@ -4,11 +4,11 @@ import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
-import { IDashboardAttributeFilterParentItem } from "../../../../../../model/index.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/index.js";
 
 interface IConfigurationParentItemProps {
     currentFilterLocalId: string;

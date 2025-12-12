@@ -3,11 +3,11 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilterConfig,
-    IDashboardLayout,
-    IFilterContext as IFilterContextModel,
-    ObjRef,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfig,
+    type IDashboardLayout,
+    type IFilterContext as IFilterContextModel,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

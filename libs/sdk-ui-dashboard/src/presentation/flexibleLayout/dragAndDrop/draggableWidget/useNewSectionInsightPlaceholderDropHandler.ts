@@ -14,7 +14,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { ILayoutSectionPath } from "../../../../types.js";
+import { type ILayoutSectionPath } from "../../../../types.js";
 import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../../widgets/index.js";
 
 export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {

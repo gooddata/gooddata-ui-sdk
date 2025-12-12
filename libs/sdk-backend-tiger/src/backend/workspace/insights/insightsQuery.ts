@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    type EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import {
@@ -10,15 +10,15 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    IFilterBaseOptions,
-    IInsightsQuery,
-    IInsightsQueryResult,
-    QueryMethod,
+    type IFilterBaseOptions,
+    type IInsightsQuery,
+    type IInsightsQueryResult,
+    type QueryMethod,
 } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertVisualizationObjectsToInsights } from "../../../convertors/fromBackend/InsightConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery } from "../../common/filtering.js";
 import { buildSortQuery } from "../../common/sorting.js";
 

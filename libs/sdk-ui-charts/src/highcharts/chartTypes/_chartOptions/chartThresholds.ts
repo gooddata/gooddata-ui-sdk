@@ -1,10 +1,15 @@
 // (C) 2025 GoodData Corporation
 
 // for some reason categories array is not typed in some cases
-import { DataViewFacade, VisType } from "@gooddata/sdk-ui";
+import { type DataViewFacade, type VisType } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IPatternObject, ISeriesDataItem, ISeriesItem, IZone } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import {
+    type IPatternObject,
+    type ISeriesDataItem,
+    type ISeriesItem,
+    type IZone,
+} from "../../typings/unsafe.js";
 import { isComboChart, isLineChart } from "../_util/common.js";
 
 type DataPoint = number | null | undefined;

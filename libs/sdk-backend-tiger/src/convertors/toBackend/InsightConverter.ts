@@ -2,8 +2,8 @@
 
 import { omit } from "lodash-es";
 
-import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
-import { IInsight, IInsightDefinition, insightLayers } from "@gooddata/sdk-model";
+import { type VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
+import { type IInsight, type IInsightDefinition, insightLayers } from "@gooddata/sdk-model";
 
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 

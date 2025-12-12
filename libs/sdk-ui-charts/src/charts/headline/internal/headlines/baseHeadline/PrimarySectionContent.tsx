@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
-import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface IPrimarySectionProps {
     primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;

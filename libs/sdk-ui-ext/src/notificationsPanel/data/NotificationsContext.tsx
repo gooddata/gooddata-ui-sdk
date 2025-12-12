@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { useNotifications } from "./useNotifications.js";

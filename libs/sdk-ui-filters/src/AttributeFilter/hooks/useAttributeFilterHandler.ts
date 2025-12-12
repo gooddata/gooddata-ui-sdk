@@ -4,12 +4,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { isEqual } from "lodash-es";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement, IAttributeFilter, ObjRef, filterObjRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttributeElement,
+    type IAttributeFilter,
+    type ObjRef,
+    filterObjRef,
+} from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
 import {
-    IMultiSelectAttributeFilterHandler,
+    type IMultiSelectAttributeFilterHandler,
     newAttributeFilterHandler,
 } from "../../AttributeFilterHandler/index.js";
 

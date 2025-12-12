@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IInsightWidget, idRef } from "@gooddata/sdk-model";
+import { type IInsightWidget, idRef } from "@gooddata/sdk-model";
 
 import { availableDrillTargets, globalDrillDowns } from "./drillConfigMapper.fixture.js";
 import { getGlobalDrillDownMappedConfigForWidget } from "../drillConfigMapper.js";

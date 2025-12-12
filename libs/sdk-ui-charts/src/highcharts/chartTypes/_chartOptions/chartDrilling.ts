@@ -1,19 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import { omit, without } from "lodash-es";
 
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
-    IHeaderPredicate,
-    IMappingHeader,
-    VisType,
+    type DataViewFacade,
+    type IHeaderPredicate,
+    type IMappingHeader,
+    type VisType,
     getDrillIntersection,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { IPointData, ISeriesDataItem } from "../../typings/unsafe.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IPointData, type ISeriesDataItem } from "../../typings/unsafe.js";
 import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 

@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { MouseEvent, RefObject, useCallback } from "react";
+import { type MouseEvent, type RefObject, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { DATE_FILTER_CUSTOM_RELATIVE_ID, DATE_FILTER_CUSTOM_STATIC_ID } from "../accessibility/elementId.js";
-import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
+import { type DateFilterOption, type IDateFilterOptionsByType } from "../interfaces/index.js";
 
 export interface IDateFilterCustomPeriodButtonsProps {
     filterOptions: IDateFilterOptionsByType;

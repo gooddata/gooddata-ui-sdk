@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { CHART_TYPE, COLOR_MAPPINGS, EMPTY_HEADER_TITLE_VALUE, RECORDS } from "./sankeyChart.fixture.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";

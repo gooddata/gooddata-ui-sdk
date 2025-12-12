@@ -1,16 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
 import {
-    ChartFillType,
+    type ChartFillType,
     FluidLegend,
-    IPushpinCategoryLegendItem,
+    type IPushpinCategoryLegendItem,
     LegendPosition,
     PopUpLegend,
-    PositionType,
+    type PositionType,
     StaticLegend,
 } from "@gooddata/sdk-ui-vis-commons";
 

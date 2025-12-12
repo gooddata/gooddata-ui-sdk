@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { ObjRef, isInsightWidget } from "@gooddata/sdk-model";
+import { type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 
 import { ParameterDetail } from "./ParameterDetail.js";
 import { isTemporaryIdentity, selectWidgetByRef, useDashboardSelector } from "../../../../../model/index.js";

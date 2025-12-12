@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IRichTextWidget } from "@gooddata/sdk-model";
+import { type IRichTextWidget } from "@gooddata/sdk-model";
 
 import {
     selectEnableRichTextWidgetFilterConfiguration,
@@ -13,7 +13,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { useDashboardCustomizationsContext } from "../../dashboardContexts/index.js";
-import { IRichTextMenuItem, getDefaultRichTextEditMode } from "../richTextMenu/index.js";
+import { type IRichTextMenuItem, getDefaultRichTextEditMode } from "../richTextMenu/index.js";
 
 type UseEditableRichTextMenuConfig = {
     widget: IRichTextWidget;

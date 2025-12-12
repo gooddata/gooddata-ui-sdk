@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, KeyboardEvent, forwardRef, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type KeyboardEvent, forwardRef, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { IDateFilterBodyProps } from "./DateFilterBody.js";
+import { type IDateFilterBodyProps } from "./DateFilterBody.js";
 import { DateFilterBodyButton } from "./DateFilterBodyButton.js";
 import { DateFilterBodyContentFiltered } from "./DateFilterBodyContentFiltered.js";
 import { DateFilterBodyMobileContent } from "./DateFilterBodyMobileContent.js";
@@ -17,7 +17,7 @@ import { DateFilterConfigurationButton } from "./DateFilterConfigurationButton.j
 import { DateFilterCustomPeriodButtons } from "./DateFilterCustomPeriodButtons.js";
 import { DateFilterFormContent } from "./DateFilterFormContent.js";
 import { EditModeMessage } from "./EditModeMessage.js";
-import { DateFilterRoute } from "./types.js";
+import { type DateFilterRoute } from "./types.js";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
 import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";

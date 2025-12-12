@@ -8,11 +8,11 @@ import {
     EntitiesApi_UpdateEntityUserSettings,
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
-import { IUserSettings, IUserSettingsService } from "@gooddata/sdk-backend-spi";
-import { ISettings } from "@gooddata/sdk-model";
+import { type IUserSettings, type IUserSettingsService } from "@gooddata/sdk-backend-spi";
+import { type ISettings } from "@gooddata/sdk-model";
 
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
 import { TigerFeaturesService, pickContext } from "../features/index.js";
 import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
 import { DefaultUserSettings } from "../uiSettings.js";

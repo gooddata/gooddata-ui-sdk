@@ -6,11 +6,11 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { isEqual, omit } from "lodash-es";
 
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types/index.js";
+import { type AsyncOperationStatus, type ILoadElementsOptions } from "../../../types/index.js";
 import { selectState } from "../common/selectors.js";
-import { FilterSelector } from "../common/types.js";
+import { type FilterSelector } from "../common/types.js";
 import {
     selectElementsTotalCountWithCurrentSettings,
     selectLastLoadedElementsOptions,

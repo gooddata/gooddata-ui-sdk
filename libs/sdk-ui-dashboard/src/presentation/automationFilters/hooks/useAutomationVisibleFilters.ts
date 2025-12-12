@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { compact } from "lodash-es";
 
-import { FilterContextItem, IAutomationVisibleFilter } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IAutomationVisibleFilter } from "@gooddata/sdk-model";
 
 import {
     useFiltersByTabNamings,

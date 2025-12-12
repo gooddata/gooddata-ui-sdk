@@ -6,7 +6,7 @@ import { HierarchicalPermissionsDropdown } from "./HierarchicalPermissionsDropdo
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { WorkspaceIcon } from "./WorkspaceIcon.js";
-import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
+import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../../types.js";
 
 interface IGranularGranteeUserGroupItemProps {
     workspace: IGrantedWorkspace;

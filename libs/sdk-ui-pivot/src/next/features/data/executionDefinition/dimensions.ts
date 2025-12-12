@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 import {
-    IAttribute,
-    IDimension,
-    ITotal,
+    type IAttribute,
+    type IDimension,
+    type ITotal,
     MeasureGroupIdentifier,
     attributeLocalId,
 } from "@gooddata/sdk-model";

@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { FilterContextItem, IFilterContext } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IFilterContext } from "@gooddata/sdk-model";
 
 import { changeFilterContextSelection } from "../filterViews.js";
 

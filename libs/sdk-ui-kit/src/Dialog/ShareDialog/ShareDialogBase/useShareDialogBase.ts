@@ -9,11 +9,11 @@ import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { useGetAccessList } from "./backend/useGetAccessList.js";
 import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
 import {
-    DialogModeType,
-    GranteeItem,
-    IGranteeGroupAll,
-    IGranularGrantee,
-    IShareDialogBaseProps,
+    type DialogModeType,
+    type GranteeItem,
+    type IGranteeGroupAll,
+    type IGranularGrantee,
+    type IShareDialogBaseProps,
     isGranteeRules,
     isGranteeUserInactive,
     isGranularGrantee,

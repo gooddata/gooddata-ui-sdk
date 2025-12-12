@@ -1,16 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Context, ReactNode } from "react";
+import { type Context, type ReactNode } from "react";
 
-import { ReactReduxContextValue } from "react-redux";
+import { type ReactReduxContextValue } from "react-redux";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IDashboard, IWorkspacePermissions, ObjRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IDashboard, type IWorkspacePermissions, type ObjRef } from "@gooddata/sdk-model";
 
-import { RenderMode } from "../../types.js";
-import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
-import { DashboardDispatch, DashboardState } from "../store/index.js";
-import { DashboardConfig, DashboardModelCustomizationFns, WidgetsOverlayFn } from "../types/commonTypes.js";
+import { type RenderMode } from "../../types.js";
+import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { type DashboardDispatch, type DashboardState } from "../store/index.js";
+import {
+    type DashboardConfig,
+    type DashboardModelCustomizationFns,
+    type WidgetsOverlayFn,
+} from "../types/commonTypes.js";
 
 /**
  * Subset of IDashboardProps required during initialization of the dashboard component's store.

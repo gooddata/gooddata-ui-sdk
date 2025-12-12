@@ -3,11 +3,11 @@
 import { isEqual } from "lodash-es";
 
 import {
-    IAttributeDescriptor,
-    IDrillDownIntersectionIgnoredAttributes,
-    InsightDrillDefinition,
-    ObjRef,
-    ObjRefInScope,
+    type IAttributeDescriptor,
+    type IDrillDownIntersectionIgnoredAttributes,
+    type InsightDrillDefinition,
+    type ObjRef,
+    type ObjRefInScope,
     areObjRefsEqual,
     drillDownReferenceHierarchyRef,
     isCrossFiltering,
@@ -19,13 +19,17 @@ import {
     isLocalIdRef,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets, IDrillEvent, getMappingHeaderLocalIdentifier } from "@gooddata/sdk-ui";
+import {
+    type IAvailableDrillTargets,
+    type IDrillEvent,
+    getMappingHeaderLocalIdentifier,
+} from "@gooddata/sdk-ui";
 
 import {
-    DashboardDrillDefinition,
-    IDrillDownDefinition,
+    type DashboardDrillDefinition,
+    type IDrillDownDefinition,
     type IDrillToUrlAttributeDefinition,
-    IGlobalDrillDownAttributeHierarchyDefinition,
+    type IGlobalDrillDownAttributeHierarchyDefinition,
 } from "../../types.js";
 
 export type { IDrillToUrlPlaceholder } from "@gooddata/sdk-model/internal";

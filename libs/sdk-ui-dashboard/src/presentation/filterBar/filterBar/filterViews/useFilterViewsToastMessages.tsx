@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { MessageDescriptor, defineMessages } from "react-intl";
+import { type MessageDescriptor, defineMessages } from "react-intl";
 
 import { useEventToastMessage } from "../../../../_staging/sharedHooks/useEventToastMessage.js";
 import {
-    DashboardFilterViewDefaultStatusChangeFailed,
-    DashboardFilterViewDefaultStatusChangeSucceeded,
+    type DashboardFilterViewDefaultStatusChangeFailed,
+    type DashboardFilterViewDefaultStatusChangeSucceeded,
     isDashboardFilterViewApplicationFailed,
     isDashboardFilterViewApplicationSucceeded,
     isDashboardFilterViewCreationFailed,

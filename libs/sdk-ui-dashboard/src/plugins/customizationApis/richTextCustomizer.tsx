@@ -2,14 +2,14 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 import {
     DefaultDashboardRichText,
-    OptionalRichTextComponentProvider,
-    RichTextComponentProvider,
+    type OptionalRichTextComponentProvider,
+    type RichTextComponentProvider,
 } from "../../presentation/index.js";
-import { IRichTextCustomizer } from "../customizer.js";
+import { type IRichTextCustomizer } from "../customizer.js";
 
 const DefaultRichTextRendererProvider: RichTextComponentProvider = () => {
     return DefaultDashboardRichText;

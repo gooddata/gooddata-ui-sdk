@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
+import { type IGeoCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * Generic legend item type for geo charts.

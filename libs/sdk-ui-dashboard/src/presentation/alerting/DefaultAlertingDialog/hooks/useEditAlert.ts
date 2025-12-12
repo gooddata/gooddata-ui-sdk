@@ -6,21 +6,21 @@ import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
-    FilterContextItem,
-    IAlertAnomalyDetectionGranularity,
-    IAlertAnomalyDetectionSensitivity,
-    IAlertComparisonOperator,
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
-    IAlertTriggerMode,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IAutomationRecipient,
-    IAutomationVisibleFilter,
-    IInsight,
-    IInsightWidget,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
+    type FilterContextItem,
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertComparisonOperator,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAlertTriggerMode,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IAutomationRecipient,
+    type IAutomationVisibleFilter,
+    type IInsight,
+    type IInsightWidget,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
@@ -36,7 +36,7 @@ import {
     convertExternalRecipientToAutomationRecipient,
 } from "../../../../_staging/automation/index.js";
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     selectAutomationCommonDateFilterId,
     selectCatalogAttributes,
     selectCatalogDateDatasets,
@@ -61,7 +61,7 @@ import {
 } from "../../../../model/index.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
 import { isEmail } from "../../../scheduledEmail/utils/validate.js";
-import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";
 import { createDefaultAlert } from "../utils/convertors.js";
 import {
     getAlertAiOperator,

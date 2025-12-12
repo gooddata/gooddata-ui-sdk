@@ -5,18 +5,18 @@ import { useCallback, useEffect, useRef } from "react";
 import cx from "classnames";
 import { isEqual } from "lodash-es";
 import mapboxgl from "mapbox-gl";
-import { WrappedComponentProps } from "react-intl";
+import { type WrappedComponentProps } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
     DataViewFacade,
     GeoTokenMissingSdkError,
-    IDrillConfig,
-    IHeaderPredicate,
-    OnError,
+    type IDrillConfig,
+    type IHeaderPredicate,
+    type OnError,
 } from "@gooddata/sdk-ui";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import {
     DEFAULT_CLUSTER_LABELS_CONFIG,
@@ -36,9 +36,9 @@ import {
     createPushpinFilter,
     createUnclusterPoints,
 } from "./geoChartDataLayers.js";
-import { IGeoDataSourceProps, createPushpinDataSource } from "./geoChartDataSource.js";
+import { type IGeoDataSourceProps, createPushpinDataSource } from "./geoChartDataSource.js";
 import { handlePushpinMouseEnter, handlePushpinMouseLeave } from "./geoChartTooltip.js";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
+import { type IGeoConfig, type IGeoData, type IGeoLngLat } from "../../GeoChart.js";
 import {
     isClusteringAllowed,
     isColorAssignmentItemChanged,

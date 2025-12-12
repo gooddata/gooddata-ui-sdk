@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { DataViewFacade, ExplicitDrill, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { type DataViewFacade, type ExplicitDrill, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
-import { RepeaterColumnWidthItem } from "./columnWidths.js";
-import { IChartConfig } from "../../interfaces/index.js";
+import { type RepeaterColumnWidthItem } from "./columnWidths.js";
+import { type IChartConfig } from "../../interfaces/index.js";
 
 /**
  * @public

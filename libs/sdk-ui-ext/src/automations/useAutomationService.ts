@@ -4,11 +4,11 @@ import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalWorkspace, IOrganization } from "@gooddata/sdk-backend-spi";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAnalyticalWorkspace, type IOrganization } from "@gooddata/sdk-backend-spi";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useBackend, useOrganization, useWorkspace } from "@gooddata/sdk-ui";
 
-import { AutomationsScope, IAutomationService, IAutomationsQueryParams } from "./types.js";
+import { type AutomationsScope, type IAutomationService, type IAutomationsQueryParams } from "./types.js";
 
 export const useAutomationService = (scope: AutomationsScope): IAutomationService => {
     const backend = useBackend();

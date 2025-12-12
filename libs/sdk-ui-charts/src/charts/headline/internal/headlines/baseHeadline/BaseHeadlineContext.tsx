@@ -2,8 +2,8 @@
 
 import { createContext, useContext } from "react";
 
-import { IChartConfig } from "../../../../../interfaces/index.js";
-import { FiredDrillEventCallback } from "../../interfaces/DrillEvents.js";
+import { type IChartConfig } from "../../../../../interfaces/index.js";
+import { type FiredDrillEventCallback } from "../../interfaces/DrillEvents.js";
 
 interface IBaseHeadlineContextData {
     clientWidth: number;

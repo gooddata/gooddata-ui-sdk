@@ -2,11 +2,11 @@
 
 import { put } from "redux-saga/effects";
 
-import { DateFilterValidationResult } from "../../../../types.js";
+import { type DateFilterValidationResult } from "../../../../types.js";
 import { dateFilterValidationFailed } from "../../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { tabsActions } from "../../../store/tabs/index.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export function* onDateFilterConfigValidationError(
     ctx: DashboardContext,

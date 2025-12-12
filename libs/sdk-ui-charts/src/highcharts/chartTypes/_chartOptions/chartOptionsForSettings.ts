@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ISeparators, ISettings } from "@gooddata/sdk-model";
+import { type ISeparators, type ISettings } from "@gooddata/sdk-model";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 
 function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
     return {

@@ -2,7 +2,11 @@
 
 import cx from "classnames";
 
-import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import {
+    type AttributeDisplayFormType,
+    type IAttributeDisplayFormMetadataObject,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 

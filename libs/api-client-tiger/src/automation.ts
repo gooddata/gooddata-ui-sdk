@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
-import { ActionsAutomation, ActionsAutomationInterface } from "./generated/automation-json-api/index.js";
+import { ActionsAutomation, type ActionsAutomationInterface } from "./generated/automation-json-api/index.js";
 
 /**
  * Tiger execution client factory

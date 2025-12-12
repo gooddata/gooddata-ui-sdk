@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IMeasureMetadataObject } from "../../metadata/measure/index.js";
-import { IGroupableCatalogItemBase } from "../group/index.js";
+import { type IMeasureMetadataObject } from "../../metadata/measure/index.js";
+import { type IGroupableCatalogItemBase } from "../group/index.js";
 
 /**
  * Type representing catalog measure

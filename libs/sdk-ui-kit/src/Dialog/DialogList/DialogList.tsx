@@ -5,7 +5,7 @@ import cx from "classnames";
 import { DialogListEmpty } from "./DialogListEmpty.js";
 import { DialogListItemBasic } from "./DialogListItemBasic.js";
 import { DialogListLoading } from "./DialogListLoading.js";
-import { IDialogListProps } from "./typings.js";
+import { type IDialogListProps } from "./typings.js";
 
 /**
  * @internal

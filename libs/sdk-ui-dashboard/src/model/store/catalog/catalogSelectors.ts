@@ -4,16 +4,16 @@ import { createSelector } from "@reduxjs/toolkit";
 import { isEmpty, negate } from "lodash-es";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttribute,
-    ICatalogDateAttributeHierarchy,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogMeasure,
-    IDateHierarchyTemplate,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttribute,
+    type ICatalogDateAttributeHierarchy,
+    type ICatalogDateDataset,
+    type ICatalogFact,
+    type ICatalogMeasure,
+    type IDateHierarchyTemplate,
+    type ObjRef,
     areObjRefsEqual,
     getHierarchyAttributes,
     getHierarchyRef,
@@ -22,12 +22,12 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    CatalogDateAttributeWithDataset,
+    type CatalogDateAttributeWithDataset,
     newCatalogDateAttributeWithDatasetMap,
 } from "../../../_staging/catalog/dateAttributeWithDatasetMap.js";
 import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap.js";
 import {
-    ObjRefMap,
+    type ObjRefMap,
     newCatalogAttributeMap,
     newCatalogDateDatasetMap,
     newCatalogMeasureMap,
@@ -36,7 +36,7 @@ import {
     selectBackendCapabilities,
     selectSupportsAttributeHierarchies,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

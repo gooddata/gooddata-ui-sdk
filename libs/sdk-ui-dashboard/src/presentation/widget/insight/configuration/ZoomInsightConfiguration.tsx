@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget } from "@gooddata/sdk-model";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 import { Bubble, BubbleHoverTrigger, Checkbox, Message } from "@gooddata/sdk-ui-kit";
 

@@ -3,13 +3,13 @@
 import Highcharts from "highcharts/esm/highcharts.js";
 import { invoke, isEmpty, set } from "lodash-es";
 
-import { ITheme } from "@gooddata/sdk-model";
-import { ChartType, IDrillConfig } from "@gooddata/sdk-ui";
+import { type ITheme } from "@gooddata/sdk-model";
+import { type ChartType, type IDrillConfig } from "@gooddata/sdk-ui";
 
 import { chartClick } from "./drilldownEventing.js";
 import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
 import { styleVariables } from "./styles/variables.js";
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import {
     getBackplateLabelColor,
     getBackplateStackedLabelStyling,
@@ -17,9 +17,9 @@ import {
     getBlackStackedLabelStyle,
 } from "../../constants/label.js";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
-import { DrilldownEventObject, HTMLDOMElement } from "../../lib/index.js";
-import { IHighchartsAxisExtend } from "../../typings/extend.js";
-import { IChartOptions } from "../../typings/unsafe.js";
+import { type DrilldownEventObject, type HTMLDOMElement } from "../../lib/index.js";
+import { type IHighchartsAxisExtend } from "../../typings/extend.js";
+import { type IChartOptions } from "../../typings/unsafe.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
 import { isOneOfTypes } from "../_util/common.js";

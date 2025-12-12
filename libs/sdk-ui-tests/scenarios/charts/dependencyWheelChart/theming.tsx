@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { DependencyWheelChart, IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
+import { DependencyWheelChart, type IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
 
 import { DependencyWheelChartWithMeasureAttributeFromAndTo } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

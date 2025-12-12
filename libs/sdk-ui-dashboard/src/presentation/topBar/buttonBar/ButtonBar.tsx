@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { IButtonBarProps } from "./types.js";
+import { type IButtonBarProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 /**

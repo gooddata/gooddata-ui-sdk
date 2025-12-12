@@ -3,25 +3,25 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IAnalyticalBackend,
-    IAnalyticalBackendConfig,
-    IAnalyticalWorkspace,
-    IAuthenticatedPrincipal,
-    IAuthenticationProvider,
-    IBackendCapabilities,
-    IDataSourcesService,
-    IEntitlements,
-    IGeoService,
-    IOrganization,
-    IOrganizations,
-    IUserService,
-    IWorkspacesQueryFactory,
+    type IAnalyticalBackend,
+    type IAnalyticalBackendConfig,
+    type IAnalyticalWorkspace,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationProvider,
+    type IBackendCapabilities,
+    type IDataSourcesService,
+    type IEntitlements,
+    type IGeoService,
+    type IOrganization,
+    type IOrganizations,
+    type IUserService,
+    type IWorkspacesQueryFactory,
 } from "@gooddata/sdk-backend-spi";
 
 import { AnalyticalWorkspaceDecorator } from "./analyticalWorkspace.js";
 import { OrganizationDecorator } from "./organization.js";
 import { OrganizationsDecorator } from "./organizations.js";
-import { DecoratorFactories } from "./types.js";
+import { type DecoratorFactories } from "./types.js";
 
 export type {
     ExecutionDecoratorFactory,

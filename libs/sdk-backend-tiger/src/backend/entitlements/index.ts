@@ -2,10 +2,10 @@
 
 import { ActionsApi_ResolveAllEntitlements } from "@gooddata/api-client-tiger/actions";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
-import { IEntitlements } from "@gooddata/sdk-backend-spi";
-import { IEntitlementDescriptor } from "@gooddata/sdk-model";
+import { type IEntitlements } from "@gooddata/sdk-backend-spi";
+import { type IEntitlementDescriptor } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerEntitlements implements IEntitlements {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}

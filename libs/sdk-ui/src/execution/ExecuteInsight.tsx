@@ -1,16 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IDimension, IExecutionDefinition, INullableFilter, ISortItem, ObjRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    type IDimension,
+    type IExecutionDefinition,
+    type INullableFilter,
+    type ISortItem,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
-import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces.js";
+import { type IExecuteErrorComponent, type IExecuteLoadingComponent } from "./interfaces.js";
 import { withExecution } from "./withExecution.js";
-import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
+import {
+    type DataViewWindow,
+    type IWithLoadingEvents,
+    type WithLoadingResult,
+} from "./withExecutionLoading.js";
 import { withContexts } from "../base/index.js";
 
 /**

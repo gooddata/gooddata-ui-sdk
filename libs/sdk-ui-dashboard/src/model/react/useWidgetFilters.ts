@@ -5,10 +5,10 @@ import stringify from "json-stable-stringify";
 import { isEqual } from "lodash-es";
 
 import {
-    FilterContextItem,
-    IFilter,
-    IInsightDefinition,
-    ObjRef,
+    type FilterContextItem,
+    type IFilter,
+    type IInsightDefinition,
+    type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
     filterObjRef,
@@ -20,8 +20,8 @@ import { usePrevious } from "@gooddata/sdk-ui";
 
 import { useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
-    QueryProcessingState,
-    QueryProcessingStatus,
+    type QueryProcessingState,
+    type QueryProcessingStatus,
     useDashboardQueryProcessing,
 } from "./useDashboardQueryProcessing.js";
 import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
@@ -30,8 +30,8 @@ import {
     selectFilterContextFilters,
     selectIsInEditMode,
 } from "../../model/store/index.js";
-import { QueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
-import { FilterableDashboardWidget } from "../types/layoutTypes.js";
+import { type QueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
+import { type FilterableDashboardWidget } from "../types/layoutTypes.js";
 
 /**
  * Hook for obtaining the effective filters for a widget.

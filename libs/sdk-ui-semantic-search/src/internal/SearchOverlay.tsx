@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    KeyboardEvent as ReactKeyboardEvent,
-    ReactNode,
+    type KeyboardEvent as ReactKeyboardEvent,
+    type ReactNode,
     useCallback,
     useEffect,
     useMemo,
@@ -13,11 +13,11 @@ import {
 import classnames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    GenAIObjectType,
+    type GenAIObjectType,
     type ISemanticSearchRelationship,
-    ISemanticSearchResultItem,
+    type ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
 import { useDebouncedState, useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
@@ -38,7 +38,6 @@ import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearc
 import { getItemTitle } from "./LeveledSearchTreeViewItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { SearchNoResults } from "./SearchNoResults.js";
-import * as styles from "./SearchOverlay.module.scss.js";
 import { testIds } from "../automation/index.js";
 import { useSearchIds, useSemanticSearch } from "../hooks/index.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
@@ -296,10 +295,10 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     }, [searchStatus, searchError]);
 
     return (
-        <div className={classnames(styles.overlay, "gd-semantic-search__overlay", className)}>
+        <div className={classnames("gd-semantic-search__overlay", className)}>
             <Input
                 ref={inputRef}
-                className={classnames(styles.overlayInput, "gd-semantic-search__overlay-input")}
+                className="gd-semantic-search__overlay-input"
                 id={inputId}
                 type="search"
                 autofocus
@@ -320,7 +319,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
 
                 if (searchStatus === "error") {
                     return (
-                        <div className={styles.overlayError}>
+                        <div className="gd-semantic-search__overlay-error">
                             <Message type="error">
                                 <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
                                 <FormattedMessage id="semantic-search.error.text" />

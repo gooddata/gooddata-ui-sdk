@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IUserSettings } from "@gooddata/sdk-backend-spi";
-import { ISettings } from "@gooddata/sdk-model";
+import { type IUserSettings } from "@gooddata/sdk-backend-spi";
+import { type ISettings } from "@gooddata/sdk-model";
 
 import { DefaultFeatureFlags } from "./uiFeatures.js";
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IPushpinGeoData } from "../../../types/geoData/pushpin.js";
+import { type IPushpinGeoData } from "../../../types/geoData/pushpin.js";
 
 /**
  * Determines if clustering should be enabled for the given geo data.

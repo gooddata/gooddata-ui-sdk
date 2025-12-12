@@ -2,10 +2,10 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { Mock, describe, expect, it, vi } from "vitest";
+import { type Mock, describe, expect, it, vi } from "vitest";
 
 import { TextAreaWithSubmit } from "../TextAreaWithSubmit.js";
-import { ITextAreaWithSubmitProps } from "../typings.js";
+import { type ITextAreaWithSubmitProps } from "../typings.js";
 
 function renderTextAreaWithSubmit(options: ITextAreaWithSubmitProps) {
     return render(<TextAreaWithSubmit {...options} />);

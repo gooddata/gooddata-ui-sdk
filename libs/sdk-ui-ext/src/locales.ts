@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { MessageDescriptor, defineMessages } from "react-intl";
+import { type MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
 export const titles: Record<string, MessageDescriptor> = defineMessages({

@@ -2,8 +2,8 @@
 
 import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
 import { getColumnWidthItemValue } from "./getColumnWidthItemValue.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
-import { ColumnWidthItem } from "../../types/resizing.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { type ColumnWidthItem } from "../../types/resizing.js";
 
 /**
  * Applies provided column widths to col def.

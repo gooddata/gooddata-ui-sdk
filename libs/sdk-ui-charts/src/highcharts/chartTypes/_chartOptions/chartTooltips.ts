@@ -2,15 +2,19 @@
 import cx from "classnames";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IMeasureDescriptor } from "@gooddata/sdk-model";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { ICategory, ITooltipFactory, IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import {
+    type ICategory,
+    type ITooltipFactory,
+    type IUnsafeHighchartsTooltipPoint,
+} from "../../typings/unsafe.js";
 import {
     customEscape,
     isCssMultiLineTruncationSupported,

@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { selectCatalogAttributes, useDashboardSelector } from "../../model/index.js";
 

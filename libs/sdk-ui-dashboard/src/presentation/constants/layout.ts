@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ScreenSize } from "@gooddata/sdk-model";
+import { type ScreenSize } from "@gooddata/sdk-model";
 
 export const ALL_SCREENS: ScreenSize[] = ["xl", "lg", "md", "sm", "xs"];
 

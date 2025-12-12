@@ -2,15 +2,15 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IAuditable } from "../base/metadata.js";
-import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
-import { IMeasure } from "../execution/measure/index.js";
+import { type IAuditable } from "../base/metadata.js";
+import { type IExecutionDefinition } from "../execution/executionDefinition/index.js";
+import { type IMeasure } from "../execution/measure/index.js";
 import {
-    IExportDefinitionMetadataObject,
-    IExportDefinitionMetadataObjectDefinition,
+    type IExportDefinitionMetadataObject,
+    type IExportDefinitionMetadataObjectDefinition,
 } from "../exports/index.js";
-import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/types.js";
-import { Identifier, ObjRef } from "../objRef/index.js";
+import { type IMetadataObject, type IMetadataObjectDefinition } from "../ldm/metadata/types.js";
+import { type Identifier, type ObjRef } from "../objRef/index.js";
 
 /**
  * @public

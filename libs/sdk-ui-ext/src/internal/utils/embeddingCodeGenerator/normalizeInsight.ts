@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
+import { type LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
 import {
-    IInsightDefinition,
-    VisualizationProperties,
+    type IInsightDefinition,
+    type VisualizationProperties,
     attributeLocalId,
     bucketItems,
     bucketTotals,

@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useMemo } from "react";
+import { type RefObject, useMemo } from "react";
 
 import { startCompletion } from "@codemirror/autocomplete";
 import { defaultKeymap, historyKeymap } from "@codemirror/commands";
-import { EditorView, keymap } from "@codemirror/view";
+import { type EditorView, keymap } from "@codemirror/view";
 
 export function useCodemirrorKeymap({
     handleKeyDown,

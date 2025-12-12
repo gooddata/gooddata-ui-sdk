@@ -5,11 +5,11 @@ import { capitalize } from "lodash-es";
 import moment from "moment";
 
 import {
-    DateFilterGranularity,
-    IAbsoluteDateFilterPreset,
-    ILowerBoundedFilter,
-    IRelativeDateFilterPreset,
-    IUpperBoundedFilter,
+    type DateFilterGranularity,
+    type IAbsoluteDateFilterPreset,
+    type ILowerBoundedFilter,
+    type IRelativeDateFilterPreset,
+    type IUpperBoundedFilter,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
@@ -17,9 +17,9 @@ import {
     isRelativeDateFilterPreset,
     isUpperBound,
 } from "@gooddata/sdk-model";
-import { ILocale, ITranslations, getIntl } from "@gooddata/sdk-ui";
+import { type ILocale, type ITranslations, getIntl } from "@gooddata/sdk-ui";
 
-import { IDateAndMessageTranslator, IMessageTranslator } from "./Translators.js";
+import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
 import { messages } from "../../../locales.js";
 import { granularityIntlCodes } from "../../constants/i18n.js";
 import {
@@ -30,9 +30,9 @@ import {
     TIME_FORMAT_WITH_SEPARATOR,
 } from "../../constants/Platform.js";
 import {
-    DateFilterOption,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    type DateFilterOption,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
 } from "../../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../DateConversions.js";
 

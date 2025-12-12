@@ -2,7 +2,7 @@
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
+import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     ColumnChartViewByDateAndPop,

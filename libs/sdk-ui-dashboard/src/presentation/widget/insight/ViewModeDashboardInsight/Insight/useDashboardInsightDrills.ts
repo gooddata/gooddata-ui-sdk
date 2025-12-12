@@ -4,8 +4,13 @@ import { useCallback, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
-import { DataViewFacade, IDrillEvent, IPushData, isSomeHeaderPredicateMatched } from "@gooddata/sdk-ui";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
+import {
+    DataViewFacade,
+    type IDrillEvent,
+    type IPushData,
+    isSomeHeaderPredicateMatched,
+} from "@gooddata/sdk-ui";
 
 import {
     addDrillTargets,
@@ -18,8 +23,8 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { IDashboardDrillEvent } from "../../../../../types.js";
-import { OnWidgetDrill } from "../../../../drill/types.js";
+import { type IDashboardDrillEvent } from "../../../../../types.js";
+import { type OnWidgetDrill } from "../../../../drill/types.js";
 /**
  * @internal
  */

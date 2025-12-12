@@ -9,8 +9,8 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     DateGranularity,
-    IExecutionDefinition,
-    IMeasure,
+    type IExecutionDefinition,
+    type IMeasure,
     newAbsoluteDateFilter,
     newAttribute,
     newPreviousPeriodMeasure,

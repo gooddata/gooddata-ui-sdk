@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { ComboChartTypes } from "./base.js";
-import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src/index.js";
+import { type ComboChartTypes } from "./base.js";
+import { type CustomizedScenario, type UnboundVisProps, type VisProps } from "../../../src/index.js";
 
 const AllExplicitCombinations: ComboChartTypes[][] = [
     ["column", "column"],

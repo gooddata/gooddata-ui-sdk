@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import { isEqual } from "lodash-es";
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { ICorePivotTableState, InternalTableState } from "../../tableState.js";
-import { ExecutionAbortManager } from "../execution/executionAbortManager.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
+import { type ICorePivotTableState, type InternalTableState } from "../../tableState.js";
+import { type ExecutionAbortManager } from "../execution/executionAbortManager.js";
 
 /**
  * Configuration for ComponentUpdateAnalyzer

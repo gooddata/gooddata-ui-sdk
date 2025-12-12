@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { dataSourcePermissionMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
-import { DataSourcePermission, IDataSourcePermissionsItem } from "../types.js";
+import { type DataSourcePermission, type IDataSourcePermissionsItem } from "../types.js";
 
 interface IPermissionItemProps {
     permission: IDataSourcePermissionsItem;

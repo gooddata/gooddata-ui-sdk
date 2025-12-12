@@ -7,8 +7,8 @@ import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import { ComparisonValue } from "./ComparisonValue.js";
 import { useComparisonDataItem } from "./useComparisonDataItem.js";
 import {
-    IBaseHeadlineDataItemProps,
-    IComparisonDataWithSubItem,
+    type IBaseHeadlineDataItemProps,
+    type IComparisonDataWithSubItem,
 } from "../../../../interfaces/BaseHeadlines.js";
 import { useOutOfBoundsDetection } from "../useOutOfBoundsDetection.js";
 import { withTitle } from "../withTitle.js";

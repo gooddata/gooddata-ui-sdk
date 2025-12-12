@@ -2,10 +2,10 @@
 
 import { describe, expect, it } from "vitest";
 
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { IChartOptions } from "../../../typings/unsafe.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartOptions } from "../../../typings/unsafe.js";
 import { setupDistinctPointShapesToSeries } from "../chartDistinctPointShapes.js";
 
 describe("setupDistinctPointShapesToSeries", () => {

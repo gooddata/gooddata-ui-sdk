@@ -2,7 +2,7 @@
 
 import { v4 as uuid } from "uuid";
 
-import { JsonApiUserIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
+import { type JsonApiUserIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityMemoryItems,
     EntitiesApi_DeleteEntityMemoryItems,
@@ -10,15 +10,19 @@ import {
     EntitiesApi_UpdateEntityMemoryItems,
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { GenAiApi_MemoryCreatedByUsers } from "@gooddata/api-client-tiger/genAI";
-import { IMemoryCreatedByUsers, IMemoryItemsQuery, IMemoryItemsService } from "@gooddata/sdk-backend-spi";
-import { IMemoryItemDefinition, IMemoryItemMetadataObject } from "@gooddata/sdk-model";
+import {
+    type IMemoryCreatedByUsers,
+    type IMemoryItemsQuery,
+    type IMemoryItemsService,
+} from "@gooddata/sdk-backend-spi";
+import { type IMemoryItemDefinition, type IMemoryItemMetadataObject } from "@gooddata/sdk-model";
 
 import { MemoryItemsQuery } from "./MemoryItemsQuery.js";
 import {
     convertMemoryItem,
     convertMemoryItemCreatedByUsers,
 } from "../../../convertors/fromBackend/MemoryItemConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class MemoryItemsService implements IMemoryItemsService {
     constructor(

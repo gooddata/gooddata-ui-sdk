@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { getAttributeFilterDefaultComponents } from "./AttributeFilterDefaultComponents.js";
 import { AttributeFilterComponentsProvider } from "./Context/AttributeFilterComponentsContext.js";
 import { AttributeFilterContextProvider } from "./Context/AttributeFilterContext.js";
-import { IAttributeFilterBaseProps } from "./types.js";
+import { type IAttributeFilterBaseProps } from "./types.js";
 
 /**
  * @internal

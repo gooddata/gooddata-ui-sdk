@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import { ICatalogDateDataset } from "@gooddata/sdk-model";
-import { IDateDataset, getRecommendedDateDataset } from "@gooddata/sdk-ui-kit";
+import { type ICatalogDateDataset } from "@gooddata/sdk-model";
+import { type IDateDataset, getRecommendedDateDataset } from "@gooddata/sdk-ui-kit";
 
 export function getRecommendedCatalogDateDataset(
     dateDatasets: readonly ICatalogDateDataset[],

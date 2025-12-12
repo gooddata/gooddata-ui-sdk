@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
-import { InsightWidgetComponentSet } from "../../componentDefinition/index.js";
-import { InsightComponentProvider } from "../../dashboardContexts/index.js";
+import { type InsightWidgetComponentSet } from "../../componentDefinition/index.js";
+import { type InsightComponentProvider } from "../../dashboardContexts/index.js";
 import { InsightDraggingComponent } from "../../dragAndDrop/index.js";
 
 /**

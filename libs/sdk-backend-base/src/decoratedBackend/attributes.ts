@@ -1,18 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IAttributeWithReferences,
-    IAttributesQuery,
-    IElementsQueryFactory,
-    IWorkspaceAttributesService,
+    type IAttributeWithReferences,
+    type IAttributesQuery,
+    type IElementsQueryFactory,
+    type IWorkspaceAttributesService,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

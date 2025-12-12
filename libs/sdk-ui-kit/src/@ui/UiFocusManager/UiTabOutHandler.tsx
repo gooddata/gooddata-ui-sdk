@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, ReactNode, useCallback, useMemo, useState } from "react";
+import { type KeyboardEvent, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
-import { IUiFocusHelperConnectors } from "./types.js";
-import { NavigationDirection } from "../../typings/navigation.js";
+import { type IUiFocusHelperConnectors } from "./types.js";
+import { type NavigationDirection } from "../../typings/navigation.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 

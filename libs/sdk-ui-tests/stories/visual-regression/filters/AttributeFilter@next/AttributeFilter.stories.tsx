@@ -7,7 +7,7 @@ import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddat
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 

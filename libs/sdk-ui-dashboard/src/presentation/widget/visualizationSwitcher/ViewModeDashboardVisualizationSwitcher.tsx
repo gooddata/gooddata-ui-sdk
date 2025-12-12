@@ -5,11 +5,16 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IInsight, IInsightWidget, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import {
+    type IInsight,
+    type IInsightWidget,
+    insightVisualizationType,
+    widgetTitle,
+} from "@gooddata/sdk-model";
+import { type VisType } from "@gooddata/sdk-ui";
 
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
-import { IDashboardVisualizationSwitcherProps } from "./types.js";
+import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";
 import {
     selectInsightsMap,

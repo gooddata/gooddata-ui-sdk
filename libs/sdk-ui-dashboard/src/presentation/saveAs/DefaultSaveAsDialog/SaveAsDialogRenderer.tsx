@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { FocusEvent, memo, useCallback, useState } from "react";
+import { type FocusEvent, memo, useCallback, useState } from "react";
 
 import { compact } from "lodash-es";
 import { useIntl } from "react-intl";

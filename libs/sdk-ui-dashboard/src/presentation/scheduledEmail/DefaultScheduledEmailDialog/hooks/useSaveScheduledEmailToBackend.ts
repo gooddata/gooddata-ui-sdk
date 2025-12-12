@@ -2,24 +2,24 @@
 import { useCallback, useState } from "react";
 
 import { omit } from "lodash-es";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IExportDefinitionMetadataObject,
-    IExportDefinitionMetadataObjectDefinition,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IExportDefinitionMetadataObject,
+    type IExportDefinitionMetadataObjectDefinition,
     isAllTimeDashboardDateFilter,
     isAllTimeDateFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
-import { IScheduledEmailDialogProps } from "../../types.js";
+import { type IScheduledEmailDialogProps } from "../../types.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it, vi } from "vitest";
 
-import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { newMeasure } from "@gooddata/sdk-model";
 
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";

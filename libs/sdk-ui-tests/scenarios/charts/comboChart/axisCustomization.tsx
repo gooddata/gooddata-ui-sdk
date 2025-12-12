@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
+import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
 import { comboVariants } from "./_variants.js";
 import {

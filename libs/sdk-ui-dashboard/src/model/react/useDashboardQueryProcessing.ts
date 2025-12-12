@@ -3,16 +3,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
-import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import {
-    DashboardQueryFailed,
-    DashboardQueryRejected,
+    type DashboardQueryFailed,
+    type DashboardQueryRejected,
     isDashboardQueryFailed,
     isDashboardQueryRejected,
 } from "../events/index.js";
-import { DashboardQueries } from "../queries/index.js";
+import { type DashboardQueries } from "../queries/index.js";
 import { queryAndWaitFor } from "../store/index.js";
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IEarlyAccessFeaturesConfig, IProductionFeaturesConfig } from "@gooddata/sdk-model";
+import { type IEarlyAccessFeaturesConfig, type IProductionFeaturesConfig } from "@gooddata/sdk-model";
 
 /**
  * This is list of feature flags managed on Panther by FeatureHub

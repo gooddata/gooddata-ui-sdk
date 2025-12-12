@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { IntlProvider } from "react-intl";
 
-import { IAccessibilityConfigBase, UiButton, UiPopover } from "@gooddata/sdk-ui-kit";
+import { type IAccessibilityConfigBase, UiButton, UiPopover } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 function Example({ title, children }: { title: string; children: ReactNode }) {

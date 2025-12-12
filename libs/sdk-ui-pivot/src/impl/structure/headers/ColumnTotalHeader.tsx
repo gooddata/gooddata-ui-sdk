@@ -2,10 +2,10 @@
 
 import { useCallback } from "react";
 
-import { IHeaderParams } from "ag-grid-community";
+import { type IHeaderParams } from "ag-grid-community";
 
-import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, ICommonHeaderParams } from "./HeaderCell.js";
-import { IMenu } from "../../../publicTypes.js";
+import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
+import { type IMenu } from "../../../publicTypes.js";
 import { isEmptyScopeCol, isSliceCol } from "../tableDescriptorTypes.js";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {

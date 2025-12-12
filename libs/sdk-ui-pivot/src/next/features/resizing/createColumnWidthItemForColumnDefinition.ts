@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { assertNever } from "@gooddata/sdk-model";
-import { ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { type ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import {
     newAttributeColumnLocator,
@@ -9,10 +9,10 @@ import {
     newTotalColumnLocator,
 } from "../../types/locators.js";
 import {
-    ColumnWidthItem,
-    IMixedValuesColumnWidthItem,
-    ISliceMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
+    type ColumnWidthItem,
+    type IMixedValuesColumnWidthItem,
+    type ISliceMeasureColumnWidthItem,
+    type IWeakMeasureColumnWidthItem,
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "../../types/resizing.js";

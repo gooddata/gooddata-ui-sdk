@@ -2,13 +2,13 @@
 
 import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 
-import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IBackendCapabilities, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    IDimension,
-    IInsight,
-    IInsightDefinition,
-    ISettings,
-    ISortItem,
+    type IDimension,
+    type IInsight,
+    type IInsightDefinition,
+    type ISettings,
+    type ISortItem,
     bucketAttributes,
     bucketMeasures,
     insightBucket,
@@ -19,12 +19,16 @@ import {
     insightSanitize,
     insightSorts,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ColumnHeadersPosition, ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import { BucketNames, type VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    type ColumnHeadersPosition,
+    type ColumnWidthItem,
+    type MeasureGroupDimension,
+} from "@gooddata/sdk-ui-pivot";
 import {
     CorePivotTableNext,
-    ICorePivotTableNextProps,
-    PivotTableNextConfig,
+    type ICorePivotTableNextProps,
+    type PivotTableNextConfig,
 } from "@gooddata/sdk-ui-pivot/next";
 
 import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
@@ -38,16 +42,16 @@ import { METRIC } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
-    IBucketFilter,
-    IDrillDownContext,
-    IExtendedReferencePoint,
-    IGdcConfig,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
-    RenderFunction,
-    UnmountFunction,
+    type IBucketFilter,
+    type IDrillDownContext,
+    type IExtendedReferencePoint,
+    type IGdcConfig,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
+    type RenderFunction,
+    type UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
@@ -351,6 +355,15 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         this.adaptPropertiesToInsight(this.visualizationProperties, this.currentInsight);
     }
 
+    protected override checkBeforeRender(insight: IInsightDefinition): boolean {
+        if (!insightHasDataDefined(insight)) {
+            // Unmount the visualization to clear stale data when buckets become empty.
+            // Without this, the old data would remain rendered even after removing all metrics/attributes.
+            this.unmountFun([this.getElement()]);
+        }
+        return super.checkBeforeRender(insight);
+    }
+
     protected renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
@@ -377,12 +390,18 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const filters = insightFilters(insight) || [];
         const sortBy = insightSorts(insight);
 
+        // Prefer customVisualizationConfig values (from InsightView config prop) over insight properties
         const measureGroupDimension =
-            getMeasureGroupDimensionFromProperties(insightProperties(insight)) || "columns";
+            customVisualizationConfig?.measureGroupDimension ??
+            getMeasureGroupDimensionFromProperties(insightProperties(insight)) ??
+            "columns";
 
-        const columnHeadersPosition: ColumnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
-            ? getColumnHeadersPositionFromProperties(insightProperties(insight))
-            : "top";
+        const columnHeadersPositionFromInsight: ColumnHeadersPosition =
+            isSetColumnHeadersPositionToLeftAllowed(insight)
+                ? getColumnHeadersPositionFromProperties(insightProperties(insight))
+                : "top";
+        const columnHeadersPosition: ColumnHeadersPosition =
+            customVisualizationConfig?.columnHeadersPosition ?? columnHeadersPositionFromInsight;
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const { isInEditMode } = config;
         const pagination = getPaginationFromProperties(insightProperties(insight));

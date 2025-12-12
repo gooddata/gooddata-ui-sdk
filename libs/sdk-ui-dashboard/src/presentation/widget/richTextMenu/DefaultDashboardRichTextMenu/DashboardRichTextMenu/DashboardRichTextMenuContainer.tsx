@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { CSSProperties, ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 
-import { IRichTextWidget } from "@gooddata/sdk-model";
+import { type IRichTextWidget } from "@gooddata/sdk-model";
 import { Button, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 
-import { RenderMode } from "../../../../../types.js";
+import { type RenderMode } from "../../../../../types.js";
 import { DashboardRichTextMenuTitle } from "../../DashboardRichTextMenuTitle.js";
 
 interface IDashboardRichTextMenuContainerProps {

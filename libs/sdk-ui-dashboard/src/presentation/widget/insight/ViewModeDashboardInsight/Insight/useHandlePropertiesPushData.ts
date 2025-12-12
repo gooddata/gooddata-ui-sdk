@@ -2,8 +2,8 @@
 
 import { useCallback } from "react";
 
-import { IInsight, IInsightWidget, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
-import { IPushData } from "@gooddata/sdk-ui";
+import { type IInsight, type IInsightWidget, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
+import { type IPushData } from "@gooddata/sdk-ui";
 
 import {
     changeInsightWidgetVisProperties,

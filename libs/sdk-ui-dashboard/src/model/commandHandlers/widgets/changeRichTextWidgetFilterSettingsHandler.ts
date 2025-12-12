@@ -1,32 +1,32 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import {
-    IAnalyticalWidget,
-    IDashboardAttributeFilterReference,
-    IDashboardDateFilterReference,
-    IRichTextWidget,
+    type IAnalyticalWidget,
+    type IDashboardAttributeFilterReference,
+    type IDashboardDateFilterReference,
+    type IRichTextWidget,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 
-import { FilterValidators, processFilterOp } from "./common/filterOperations.js";
+import { type FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForRichTextWidgetDateFilter,
     validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 import { validateExistingRichTextWidget } from "./validation/widgetValidations.js";
-import { ChangeRichTextWidgetFilterSettings } from "../../commands/index.js";
+import { type ChangeRichTextWidgetFilterSettings } from "../../commands/index.js";
 import {
-    DashboardRichTextWidgetFilterSettingsChanged,
+    type DashboardRichTextWidgetFilterSettingsChanged,
     richTextWidgetFilterSettingsChanged,
 } from "../../events/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 const RichTextWidgetFilterValidations: FilterValidators<IRichTextWidget> = {
     dateDatasetValidator: validateDatasetForRichTextWidgetDateFilter,

@@ -2,12 +2,17 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, ObjRef, isAttributeDescriptor, isIdentifierRef } from "@gooddata/sdk-model";
+import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    type IExecutionDefinition,
+    type ObjRef,
+    isAttributeDescriptor,
+    isIdentifierRef,
+} from "@gooddata/sdk-model";
 
 import { DataViewAll, dataViewWindow, recordedDataView } from "../execution.js";
 import { recordedBackend } from "../index.js";
-import { ScenarioRecording } from "../types.js";
+import { type ScenarioRecording } from "../types.js";
 
 describe("recordedDataView", () => {
     it("should load data view with all data", () => {

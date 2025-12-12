@@ -2,7 +2,7 @@
 
 import { defineMessages } from "react-intl";
 
-import { WorkspacePermission, WorkspacePermissions } from "../../types.js";
+import { type WorkspacePermission, type WorkspacePermissions } from "../../types.js";
 
 export const hierarchicalPermissionMessages = defineMessages({
     enabled: { id: "userManagement.workspace.hierarchicalPermission.yes" },

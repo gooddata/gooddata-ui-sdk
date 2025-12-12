@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IRegion } from "../../typings/domUtilities.js";
+import { type IRegion } from "../../typings/domUtilities.js";
 import { region, removeFromDom } from "../domUtilities.js";
 
 interface IConfig {

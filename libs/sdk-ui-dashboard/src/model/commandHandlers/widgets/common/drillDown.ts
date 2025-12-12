@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import {
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttributeHierarchy,
-    IDrillDownReference,
-    ObjRef,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
+    type IDrillDownReference,
+    type ObjRef,
     idRef,
     isCatalogDateAttributeHierarchy,
 } from "@gooddata/sdk-model";

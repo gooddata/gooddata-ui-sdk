@@ -5,15 +5,15 @@ import { useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
+import { type WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 
 import { AbsoluteDateFilterForm } from "./AbsoluteDateFilterForm.js";
-import { DateFilterRoute } from "../DateFilterBody/types.js";
+import { type DateFilterRoute } from "../DateFilterBody/types.js";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
 import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
-    IUiAbsoluteDateFilterForm,
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
+    type IUiAbsoluteDateFilterForm,
 } from "../interfaces/index.js";
 import { ListItem } from "../ListItem/ListItem.js";
 

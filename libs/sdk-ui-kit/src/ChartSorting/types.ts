@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IMeasureSortTarget, LocalIdRef, SortDirection } from "@gooddata/sdk-model";
+import { type IMeasureSortTarget, type LocalIdRef, type SortDirection } from "@gooddata/sdk-model";
 
 /**
  * @internal

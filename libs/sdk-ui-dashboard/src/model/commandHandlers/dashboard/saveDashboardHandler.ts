@@ -1,21 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { AnyAction } from "@reduxjs/toolkit";
-import { BatchAction, batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type AnyAction } from "@reduxjs/toolkit";
+import { type BatchAction, batchActions } from "redux-batched-actions";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
 import {
-    IAccessControlAware,
-    IDashboard,
-    IDashboardDefinition,
-    IDashboardLayout,
-    IDashboardObjectIdentity,
-    IDashboardTab,
-    IFilterContext,
-    ITempFilterContext,
+    type IAccessControlAware,
+    type IDashboard,
+    type IDashboardDefinition,
+    type IDashboardLayout,
+    type IDashboardObjectIdentity,
+    type IDashboardTab,
+    type IFilterContext,
+    type ITempFilterContext,
     isTempFilterContext,
 } from "@gooddata/sdk-model";
 
@@ -25,8 +25,8 @@ import {
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
-import { SaveDashboard, changeRenderMode, switchDashboardTab } from "../../commands/index.js";
-import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
+import { type SaveDashboard, changeRenderMode, switchDashboardTab } from "../../commands/index.js";
+import { type DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -46,10 +46,10 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
-import { TabState } from "../../store/tabs/tabsState.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type TabState } from "../../store/tabs/tabsState.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";

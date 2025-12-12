@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorderLine.js";
-import { DashboardLayoutSectionBorderStatus } from "./types.js";
+import { type DashboardLayoutSectionBorderStatus } from "./types.js";
 
 interface IDashboardLayoutSectionBorderProps {
     status: DashboardLayoutSectionBorderStatus;

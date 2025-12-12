@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from "react";
 import {
     FloatingArrow,
     FloatingPortal,
-    Middleware,
+    type Middleware,
     arrow,
     autoUpdate,
     flip,
@@ -22,7 +22,7 @@ import {
 import { ConditionalScopedThemeProvider, useIsScopeThemed, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
-import { UiTooltipProps } from "./types.js";
+import { type UiTooltipProps } from "./types.js";
 import {
     computeArrowOffset,
     computeTooltipShift,

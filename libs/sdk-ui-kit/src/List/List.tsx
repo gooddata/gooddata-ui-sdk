@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useEffect, useMemo } from "react";
+import { type ReactElement, useCallback, useEffect, useMemo } from "react";
 
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";
 
-import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 // it configures max number of records due to
 // inefficiency with virtual memory allocation

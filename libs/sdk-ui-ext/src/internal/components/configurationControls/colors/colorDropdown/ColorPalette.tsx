@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, memo } from "react";
+import { type ReactNode, memo } from "react";
 
 import cx from "classnames";
 
-import { IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
-import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type IColor, type IColorPalette, type IColorPaletteItem } from "@gooddata/sdk-model";
+import { type ChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { ColorPaletteItem } from "./ColorPaletteItem.js";
 

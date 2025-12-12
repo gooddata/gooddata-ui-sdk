@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IInvalidNode, IValidationSeverity } from "../types.js";
+import { type IInvalidNode, type IValidationSeverity } from "../types.js";
 import {
     createInvalidDatapoint,
     getInvalidDatapointsInTree,

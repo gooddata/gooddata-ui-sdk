@@ -2,15 +2,15 @@
 
 import { invariant } from "ts-invariant";
 
-import { AccessGranularPermission } from "@gooddata/sdk-model";
+import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { granularPermissionMessageTooltips } from "../../../../locales.js";
-import { CurrentUserPermissions } from "../../types.js";
+import { type CurrentUserPermissions } from "../../types.js";
 import {
-    IGranteePermissionsPossibilities,
-    IGranteePermissionsPossibility,
-    IGranularGrantee,
-    IGranularPermissionTypeItem,
+    type IGranteePermissionsPossibilities,
+    type IGranteePermissionsPossibility,
+    type IGranularGrantee,
+    type IGranularPermissionTypeItem,
     isGranularGranteeUser,
 } from "../types.js";
 

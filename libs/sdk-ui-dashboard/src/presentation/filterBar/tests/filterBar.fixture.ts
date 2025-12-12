@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { FilterBarAttributeFilterIndexed } from "../filterBar/useFiltersWithAddedPlaceholder.js";
+import { type FilterBarAttributeFilterIndexed } from "../filterBar/useFiltersWithAddedPlaceholder.js";
 
 export const filterBarAttributeFilterIndexes: FilterBarAttributeFilterIndexed[] = [
     {

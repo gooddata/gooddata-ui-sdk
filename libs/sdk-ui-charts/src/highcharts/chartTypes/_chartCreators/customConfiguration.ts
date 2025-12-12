@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
 import cx from "classnames";
-import { OptionsLandmarkVerbosityValue, Point } from "highcharts";
+import { type OptionsLandmarkVerbosityValue, type Point } from "highcharts";
 import { compact, isEmpty, merge, partial, pickBy } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
-import { ChartType, IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
+import { type ChartType, type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
 
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
@@ -34,20 +34,20 @@ import {
     shouldYAxisStartOnTickOnBubbleScatter,
 } from "./helpers.js";
 import { styleVariables } from "./styles/variables.js";
-import { IAxisConfig, IChartConfig } from "../../../interfaces/index.js";
+import { type IAxisConfig, type IChartConfig } from "../../../interfaces/index.js";
 import {
-    AxisLabelsFormatterCallbackFunction,
-    HighchartsOptions,
-    XAxisOptions,
-    YAxisOptions,
+    type AxisLabelsFormatterCallbackFunction,
+    type HighchartsOptions,
+    type XAxisOptions,
+    type YAxisOptions,
 } from "../../lib/index.js";
 import {
-    IAxis,
-    IChartOptions,
-    IChartOptionsData,
-    ISeriesItem,
-    ITooltipFactory,
-    IUnsafeTooltipPositionerPointObject,
+    type IAxis,
+    type IChartOptions,
+    type IChartOptionsData,
+    type ISeriesItem,
+    type ITooltipFactory,
+    type IUnsafeTooltipPositionerPointObject,
 } from "../../typings/unsafe.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 import {

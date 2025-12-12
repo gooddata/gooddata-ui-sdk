@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { DayPickerProps } from "react-day-picker";
+import { type DayPickerProps } from "react-day-picker";
 
-import { IAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
+import { type IAbsoluteDateFilterForm, type WeekStart } from "@gooddata/sdk-model";
 
 import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions.js";
 import { DateRangePicker } from "../DateRangePicker/DateRangePicker.js";
-import { IDateRange } from "../DateRangePicker/types.js";
-import { DateFilterOption } from "../interfaces/index.js";
+import { type IDateRange } from "../DateRangePicker/types.js";
+import { type DateFilterOption } from "../interfaces/index.js";
 
 /**
  * @internal

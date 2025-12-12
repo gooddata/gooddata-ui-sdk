@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { IntlWrapper, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
@@ -11,8 +11,8 @@ import { useNormalizedLayerExecutions } from "./hooks/dataLoading/useNormalizedL
 import { useLayersExecutions } from "./hooks/layers/useLayersExecutions.js";
 import { useResolvedGeoChartNextProps } from "./hooks/props/useResolvedGeoChartNextProps.js";
 import type { GeoLayerType } from "./types/layers/index.js";
-import { ICoreGeoChartNextProps } from "./types/props/geoChartNext/internal.js";
-import { IGeoChartNextProps } from "./types/props/geoChartNext/public.js";
+import { type ICoreGeoChartNextProps } from "./types/props/geoChartNext/internal.js";
+import { type IGeoChartNextProps } from "./types/props/geoChartNext/public.js";
 
 /**
  * GeoChartNext renders a MapLibre-based geo visualization composed of one or more data layers.

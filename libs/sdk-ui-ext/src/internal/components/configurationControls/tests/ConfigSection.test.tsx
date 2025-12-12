@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { ConfigSection, IConfigSectionProps } from "../ConfigSection.js";
+import { ConfigSection, type IConfigSectionProps } from "../ConfigSection.js";
 
 describe("ConfigSection", () => {
     const defaultProps = {

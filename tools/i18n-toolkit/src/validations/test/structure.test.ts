@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { suppressConsole } from "@gooddata/util";
 
-import { LocalesStructure } from "../../schema/localization.js";
+import { type LocalesStructure } from "../../schema/localization.js";
 import { getStructureCheck } from "../structure.js";
 
 type Scenario = [string, LocalesStructure, string | null];

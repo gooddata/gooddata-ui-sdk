@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ShareStatus } from "@gooddata/sdk-model";
+import { type ShareStatus } from "@gooddata/sdk-model";
 
 /**
  * @alpha

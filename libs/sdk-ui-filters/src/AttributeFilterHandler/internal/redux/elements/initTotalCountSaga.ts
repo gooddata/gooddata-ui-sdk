@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, cancelled, put, takeLatest } from "redux-saga/effects";
 
-import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
 import { initTotalCountSaga as initLoadTotalCountSaga } from "../init/initTotalCount.js";
 import { actions } from "../store/slice.js";

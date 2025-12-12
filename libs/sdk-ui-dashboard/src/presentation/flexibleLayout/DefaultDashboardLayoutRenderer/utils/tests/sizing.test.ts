@@ -4,8 +4,8 @@ import { chunk } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
-import { IDashboardLayoutSize, ScreenSize, idRef, newInsightDefinition } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type IDashboardLayoutSize, type ScreenSize, idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import { type VisType } from "@gooddata/sdk-ui";
 
 import {
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,

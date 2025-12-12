@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IFilterContext,
-    IInsightWidget,
-    IKpiWidget,
-    IListedDashboard,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IFilterContext,
+    type IInsightWidget,
+    type IKpiWidget,
+    type IListedDashboard,
     idRef,
 } from "@gooddata/sdk-model";
 

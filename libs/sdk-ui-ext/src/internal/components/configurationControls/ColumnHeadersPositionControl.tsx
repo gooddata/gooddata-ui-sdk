@@ -2,14 +2,14 @@
 
 import { useIntl } from "react-intl";
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
 
 import { ConfigSubsection } from "./ConfigSubsection.js";
 import { DropdownControl } from "./DropdownControl.js";
 import { ColumnHeaderTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 import { messages } from "../../../locales.js";
 import { columnHeadersPositionDropdownItems } from "../../constants/dropdowns.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 

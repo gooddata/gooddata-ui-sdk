@@ -2,21 +2,21 @@
 
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardAttributeFilter,
-    ObjRef,
+    type IDashboardAttributeFilter,
+    type ObjRef,
     areObjRefsEqual,
     isInsightWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
 
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
-import { AddAttributeFilter } from "../../../commands/filters.js";
+import { type AddAttributeFilter } from "../../../commands/filters.js";
 import { attributeFilterAdded } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -31,8 +31,8 @@ import {
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { selectAllAnalyticalWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
+import { type PromiseFnReturnType, type PromiseReturnType } from "../../../types/sagas.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";

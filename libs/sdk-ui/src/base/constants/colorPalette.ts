@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { IColorPalette } from "@gooddata/sdk-model";
+import { type IColorPalette } from "@gooddata/sdk-model";
 
 /**
  * Default value for {@link @gooddata/sdk-model#IColorPalette}.

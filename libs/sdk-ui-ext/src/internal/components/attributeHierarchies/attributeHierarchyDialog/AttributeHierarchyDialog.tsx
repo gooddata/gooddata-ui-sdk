@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy, type ObjRef } from "@gooddata/sdk-model";
 
 import { AttributeHierarchyDialogCore } from "./AttributeHierarchyDialogCore.js";
 import { AttributeHierarchyDialogProvider } from "./AttributeHierarchyDialogProvider.js";

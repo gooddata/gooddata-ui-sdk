@@ -1,15 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { Ref, useRef } from "react";
+import { type Ref, useRef } from "react";
 
 import cx from "classnames";
 
 import {
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    IInsight,
-    ISettings,
-    ScreenSize,
+    type IDashboardLayoutSize,
+    type IDashboardLayoutSizeByScreenSize,
+    type IInsight,
+    type ISettings,
+    type ScreenSize,
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
@@ -17,15 +17,15 @@ import {
 } from "@gooddata/sdk-model";
 import {
     DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
-    IVisualizationSizeInfo,
+    type IVisualizationSizeInfo,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
 
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutWidgetRenderProps,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutWidgetRenderProps,
     getDashboardLayoutItemHeightForRatioAndScreen,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
@@ -39,9 +39,9 @@ import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../_staging/dashboard/fl
 import { getLayoutConfiguration } from "../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getItemIndex } from "../../_staging/layout/coordinates.js";
 import { calculateWidgetMinHeight, getSizeInfo } from "../../_staging/layout/sizing.js";
-import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
     selectEnableSnapshotExportAccessibility,
@@ -64,13 +64,13 @@ import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContex
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
 import {
-    BaseDraggableLayoutItemSize,
-    DraggableLayoutItem,
+    type BaseDraggableLayoutItemSize,
+    type DraggableLayoutItem,
     useDashboardDrag,
     useResizeItemStatus,
 } from "../dragAndDrop/index.js";
 import { useWidgetExportData } from "../export/index.js";
-import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
+import { DashboardWidget, type IDashboardWidgetProps } from "../widget/index.js";
 
 function logInvalidWidth(
     isValid: boolean,

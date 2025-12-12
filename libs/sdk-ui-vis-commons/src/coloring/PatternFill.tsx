@@ -2,7 +2,7 @@
 
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { IPatternOptionsObject } from "./types.js";
+import { type IPatternOptionsObject } from "./types.js";
 
 /**
  * @internal

@@ -18,8 +18,8 @@
 import Highcharts from "highcharts/esm/highcharts.js";
 
 import { isLineChart } from "../../chartTypes/_util/common.js";
-import { Axis, Series, WrapProceedFunction } from "../../lib/index.js";
-import { UnsafeInternals } from "../../typings/unsafe.js";
+import { type Axis, type Series, type WrapProceedFunction } from "../../lib/index.js";
+import { type UnsafeInternals } from "../../typings/unsafe.js";
 
 interface IBaseAndAlignedAxes {
     baseYAxis: Axis;

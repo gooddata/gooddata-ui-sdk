@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
-import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -15,7 +15,7 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { IAxisProperties } from "../../interfaces/AxisType.js";
+import { type IAxisProperties } from "../../interfaces/AxisType.js";
 import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.js";
 import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { pluginDebugStr } from "./pluginUtils.js";
-import { IDashboardPluginContract_V1 } from "../plugin.js";
+import { type IDashboardPluginContract_V1 } from "../plugin.js";
 
 function addPluginInfoToMessage(plugin: IDashboardPluginContract_V1 | undefined, message: string) {
     return plugin ? `${pluginDebugStr(plugin)}: ${message}` : message;

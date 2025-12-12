@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { MouseEvent, ReactNode } from "react";
+import { type MouseEvent, type ReactNode } from "react";
 
-import { Alignment, OverlayPositionType } from "../typings/overlay.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type Alignment, type OverlayPositionType } from "../typings/overlay.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 /**
  * @internal

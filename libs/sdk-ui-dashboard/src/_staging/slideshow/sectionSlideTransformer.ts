@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { IDashboardLayoutSection } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 import { breakupSlideTransformer } from "./breakupSlideTransformer.js";
 import { containerSlideTransformer } from "./containerSlideTransformer.js";

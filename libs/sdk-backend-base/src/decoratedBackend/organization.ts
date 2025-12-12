@@ -1,19 +1,19 @@
 // (C) 2023-2025 GoodData Corporation
 import {
-    IOrganization,
-    IOrganizationAutomationService,
-    IOrganizationLlmEndpointsService,
-    IOrganizationNotificationChannelService,
-    IOrganizationNotificationService,
-    IOrganizationPermissionService,
-    IOrganizationSettingsService,
-    IOrganizationStylingService,
-    IOrganizationUserService,
-    ISecuritySettingsService,
+    type IOrganization,
+    type IOrganizationAutomationService,
+    type IOrganizationLlmEndpointsService,
+    type IOrganizationNotificationChannelService,
+    type IOrganizationNotificationService,
+    type IOrganizationPermissionService,
+    type IOrganizationSettingsService,
+    type IOrganizationStylingService,
+    type IOrganizationUserService,
+    type ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
+import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
-import { DecoratorFactories } from "./types.js";
+import { type DecoratorFactories } from "./types.js";
 
 export class OrganizationDecorator implements IOrganization {
     readonly organizationId: string;

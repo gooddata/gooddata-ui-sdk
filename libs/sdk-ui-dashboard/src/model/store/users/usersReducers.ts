@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { IWorkspaceUser } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IWorkspaceUser } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { UsersState } from "./usersState.js";
+import { type UsersState } from "./usersState.js";
 
 type UsersReducer<A extends Action> = CaseReducer<UsersState, A>;
 

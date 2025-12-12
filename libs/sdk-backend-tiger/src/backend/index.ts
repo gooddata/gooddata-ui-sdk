@@ -1,34 +1,34 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosInstance, AxiosResponse } from "axios";
+import { type AxiosInstance, type AxiosResponse } from "axios";
 import { inRange, isEmpty, isError, omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { ITigerClientBase, newAxios, tigerClientBaseFactory } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase, newAxios, tigerClientBaseFactory } from "@gooddata/api-client-tiger";
 import {
     AnonymousAuthProvider,
     AuthProviderCallGuard,
-    AuthenticatedAsyncCall,
-    IAuthProviderCallGuard,
-    IAuthenticatedAsyncCallContext,
-    TelemetryData,
+    type AuthenticatedAsyncCall,
+    type IAuthProviderCallGuard,
+    type IAuthenticatedAsyncCallContext,
+    type TelemetryData,
 } from "@gooddata/sdk-backend-base";
 import {
-    ErrorConverter,
-    IAnalyticalBackend,
-    IAnalyticalBackendConfig,
-    IAnalyticalWorkspace,
-    IAuthenticatedPrincipal,
-    IAuthenticationContext,
-    IAuthenticationProvider,
-    IBackendCapabilities,
-    IDataSourcesService,
-    IEntitlements,
-    IGeoService,
-    IOrganization,
-    IOrganizations,
-    IUserService,
-    IWorkspacesQueryFactory,
+    type ErrorConverter,
+    type IAnalyticalBackend,
+    type IAnalyticalBackendConfig,
+    type IAnalyticalWorkspace,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationContext,
+    type IAuthenticationProvider,
+    type IBackendCapabilities,
+    type IDataSourcesService,
+    type IEntitlements,
+    type IGeoService,
+    type IOrganization,
+    type IOrganizations,
+    type IUserService,
+    type IWorkspacesQueryFactory,
     NotAuthenticated,
     isContractExpired,
     isNotAuthenticated,
@@ -39,7 +39,7 @@ import { TigerDataSourcesService } from "./dataSources/index.js";
 import { TigerEntitlements } from "./entitlements/index.js";
 import { TigerGeoService } from "./geo/index.js";
 import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
-import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
+import { type TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
 import { TigerUserService } from "./user/index.js";
 import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
@@ -47,9 +47,9 @@ import { createDateValueStringifier } from "../convertors/fromBackend/dateFormat
 import { createDateValueNormalizer } from "../convertors/fromBackend/dateFormatting/dateValueNormalizer.js";
 import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import {
-    DateFormatter,
-    DateNormalizer,
-    DateStringifier,
+    type DateFormatter,
+    type DateNormalizer,
+    type DateStringifier,
 } from "../convertors/fromBackend/dateFormatting/types.js";
 import { convertApiError } from "../utils/errorHandling.js";
 

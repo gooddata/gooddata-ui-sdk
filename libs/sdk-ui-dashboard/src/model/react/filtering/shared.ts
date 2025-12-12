@@ -1,14 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    IFilter,
+    type IFilter,
     filterIsEmpty,
     filterLocalIdentifier,
     isAllTimeDateFilter,
     isAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { ICrossFilteringItem } from "../../store/index.js";
+import { type ICrossFilteringItem } from "../../store/index.js";
 
 /**
  * @internal

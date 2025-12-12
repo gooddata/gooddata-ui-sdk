@@ -1,9 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import { IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
-import { ICreateColorAssignmentReturnValue, getAttributeColorAssignment } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
+import {
+    type ICreateColorAssignmentReturnValue,
+    getAttributeColorAssignment,
+} from "@gooddata/sdk-ui-vis-commons";
 
-import { IColorMapping } from "../../../interfaces/index.js";
+import { type IColorMapping } from "../../../interfaces/index.js";
 import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 
 export class TreemapColorStrategy extends MeasureColorStrategy {

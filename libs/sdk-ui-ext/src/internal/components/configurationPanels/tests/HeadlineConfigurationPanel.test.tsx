@@ -3,15 +3,15 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
+import { type IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
 
-import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import * as ComparisonSection from "../../configurationControls/comparison/ComparisonSection.js";
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
+import { type IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 import { HeadlineConfigurationPanel } from "../HeadlineConfigurationPanel.js";
 
 describe("HeadlineComparisonPanel", () => {

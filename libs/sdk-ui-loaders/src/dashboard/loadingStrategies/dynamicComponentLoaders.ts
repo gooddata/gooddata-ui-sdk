@@ -2,13 +2,17 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { DynamicScriptLoadSdkError } from "@gooddata/sdk-ui";
-import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
+import {
+    type DashboardContext,
+    type IDashboardEngine,
+    type IDashboardPluginContract_V1,
+} from "@gooddata/sdk-ui-dashboard";
 
 import { determineDashboardEngine } from "./determineDashboardEngine.js";
-import { LoadedPlugin, ModuleFederationIntegration } from "../types.js";
+import { type LoadedPlugin, type ModuleFederationIntegration } from "../types.js";
 
 interface EntryPoint {
     pluginKey: string;

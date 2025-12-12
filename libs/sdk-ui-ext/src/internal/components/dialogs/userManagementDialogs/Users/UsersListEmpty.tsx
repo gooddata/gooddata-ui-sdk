@@ -3,7 +3,7 @@
 import { useIntl } from "react-intl";
 
 import { messages } from "../locales.js";
-import { ListMode } from "../types.js";
+import { type ListMode } from "../types.js";
 
 export interface IUsersListEmptyProps {
     mode: ListMode;

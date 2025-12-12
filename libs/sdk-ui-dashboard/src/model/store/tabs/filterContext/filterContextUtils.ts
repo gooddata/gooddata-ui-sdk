@@ -3,12 +3,12 @@
 import { partition } from "lodash-es";
 
 import {
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
+    type FilterContextItem,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IDashboardObjectIdentity,
+    type IFilterContextDefinition,
     areObjRefsEqual,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,

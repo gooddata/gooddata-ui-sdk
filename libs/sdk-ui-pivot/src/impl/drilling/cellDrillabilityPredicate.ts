@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    DataViewFacade,
-    IHeaderPredicate,
-    IMappingHeader,
+    type DataViewFacade,
+    type IHeaderPredicate,
+    type IMappingHeader,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
 import { createDrillHeaders } from "./colDrillHeadersFactory.js";
-import { ColumnHeadersPosition } from "../../publicTypes.js";
-import { IGridRow } from "../data/resultTypes.js";
-import { AnyCol } from "../structure/tableDescriptorTypes.js";
+import { type ColumnHeadersPosition } from "../../publicTypes.js";
+import { type IGridRow } from "../data/resultTypes.js";
+import { type AnyCol } from "../structure/tableDescriptorTypes.js";
 
 export function isCellDrillable(
     colDescriptor: AnyCol,

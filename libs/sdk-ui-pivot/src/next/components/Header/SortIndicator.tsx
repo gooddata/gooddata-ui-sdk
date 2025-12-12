@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { SortDirection } from "ag-grid-community";
+import { type SortDirection } from "ag-grid-community";
 
 /**
  * @internal

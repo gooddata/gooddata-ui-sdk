@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Dialog } from "../Dialog.js";
-import { IDialogBaseProps } from "../typings.js";
+import { type IDialogBaseProps } from "../typings.js";
 
 function renderDialog(options: Partial<IDialogBaseProps>) {
     return render(

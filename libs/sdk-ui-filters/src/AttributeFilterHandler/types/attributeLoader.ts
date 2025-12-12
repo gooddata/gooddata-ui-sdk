@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAttributeMetadataObject } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
-    AsyncOperationStatus,
-    CallbackPayloadWithCorrelation,
-    CallbackRegistration,
-    Correlation,
+    type AsyncOperationStatus,
+    type CallbackPayloadWithCorrelation,
+    type CallbackRegistration,
+    type Correlation,
 } from "./common.js";
 
 /**

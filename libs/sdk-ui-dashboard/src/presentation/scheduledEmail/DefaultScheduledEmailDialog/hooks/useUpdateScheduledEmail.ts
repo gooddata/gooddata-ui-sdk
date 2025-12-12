@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import { useCallback } from "react";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
-    CommandProcessingStatus,
+    type CommandProcessingStatus,
     saveScheduledEmail,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";

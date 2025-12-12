@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import { IGeoLngLat, IGeoLngLatBounds } from "../common/coordinates.js";
-import { IGeoPushpinChartNextConfig } from "../config/pushpinChart.js";
+import { type IGeoLngLat, type IGeoLngLatBounds } from "../common/coordinates.js";
+import { type IGeoPushpinChartNextConfig } from "../config/pushpinChart.js";
 
 /**
  * Configuration options for map initialization

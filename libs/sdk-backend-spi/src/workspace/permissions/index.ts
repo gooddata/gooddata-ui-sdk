@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 /**
  * Service to query workspace permissions

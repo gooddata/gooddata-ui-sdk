@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IDateFilterConfig, idRef } from "@gooddata/sdk-model";
+import { type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
 import { absoluteForm, allTime, lastMonth, relativeForm, year2019 } from "./fixtures.js";

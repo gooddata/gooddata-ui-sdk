@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
+import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 
 import {
@@ -9,7 +9,7 @@ import {
     BarChartWithTwoMeasuresAndTwoViewBy,
 } from "../../../../scenarios/charts/barChart/base.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,

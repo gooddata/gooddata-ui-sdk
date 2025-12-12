@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
-import { ITranslationsComponentProps, IntlTranslationsProvider } from "@gooddata/sdk-ui";
+import { type ITranslationsComponentProps, IntlTranslationsProvider } from "@gooddata/sdk-ui";
 
 import { adaptLegendPropsToOldRenderer } from "./legendPropsAdapter.js";
-import { ILegendBodyProps } from "./types.js";
+import { type ILegendBodyProps } from "./types.js";
 import { GeoChartLegendRenderer } from "../../../core/geoChart/GeoChartLegendRenderer.js";
 
 /**

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "../locales.js";
 import { RemoveIcon } from "../RemoveIcon.js";
-import { IGrantedUserGroup, ListMode } from "../types.js";
+import { type IGrantedUserGroup, type ListMode } from "../types.js";
 
 function GranteeGroupIcon() {
     return (

@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { ChangeDrillableItems } from "../../commands/drill.js";
-import { DashboardDrillableItemsChanged, drillableItemsChanged } from "../../events/drill.js";
+import { type ChangeDrillableItems } from "../../commands/drill.js";
+import { type DashboardDrillableItemsChanged, drillableItemsChanged } from "../../events/drill.js";
 import { drillActions } from "../../store/drill/index.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeDrillableItemsHandler(
     ctx: DashboardContext,

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
 import { saveAlertHandler } from "./alerts/saveAlertHandler.js";
@@ -115,10 +115,10 @@ import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidge
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
 import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler.js";
 import { updateVisualizationsFromSwticherWidgetContentHandler } from "./widgets/updateVisualizationsFromSwitcherWidgetHandler.js";
-import { DashboardCommands, IDashboardCommand } from "../commands/index.js";
+import { type DashboardCommands, type IDashboardCommand } from "../commands/index.js";
 import { commandRejected } from "../events/general.js";
 import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 import { keyDriverAnalysisHandler } from "./drill/keyDriverAnalysisHandler.js";
 import { deleteDashboardTabHandler } from "./tabs/deleteDashboardTabHandler.js";
 import { repositionDashboardTabHandler } from "./tabs/repositionDashboardTabHandler.js";

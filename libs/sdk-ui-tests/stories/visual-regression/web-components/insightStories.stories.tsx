@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { setWebComponentsContext } from "../../_infra/webComponents.js";
 
 /**

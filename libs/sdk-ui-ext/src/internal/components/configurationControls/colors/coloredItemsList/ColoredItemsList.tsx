@@ -2,12 +2,12 @@
 
 import { memo, useRef, useState } from "react";
 
-import { IColor, IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
-import { ChartFillConfig } from "@gooddata/sdk-ui-charts";
+import { type IColor, type IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
+import { type ChartFillConfig } from "@gooddata/sdk-ui-charts";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { ColoredItem } from "./ColoredItem.js";
-import { IColoredItem } from "../../../../interfaces/Colors.js";
+import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getSearchedItems } from "../../../../utils/colors.js";
 
 const VISIBLE_ITEMS_COUNT = 5;

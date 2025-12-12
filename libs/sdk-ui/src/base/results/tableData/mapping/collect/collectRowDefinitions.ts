@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type IMeasureDescriptor } from "@gooddata/sdk-model";
 
-import { IDescriptorsInfo } from "./collectDescriptorsInfo.js";
-import { IHeadersInfo } from "./collectHeadersInfo.js";
-import { IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
-import { ITotalsInfo } from "./collectTotalsInfo.js";
-import { ITranspositionInfo } from "./collectTranspositionInfo.js";
-import { ITableGrandTotalRowDefinition, ITableRowDefinition } from "../../interfaces/rows.js";
+import { type IDescriptorsInfo } from "./collectDescriptorsInfo.js";
+import { type IHeadersInfo } from "./collectHeadersInfo.js";
+import { type IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
+import { type ITotalsInfo } from "./collectTotalsInfo.js";
+import { type ITranspositionInfo } from "./collectTranspositionInfo.js";
+import { type ITableGrandTotalRowDefinition, type ITableRowDefinition } from "../../interfaces/rows.js";
 
 export function collectRowDefinitions(
     headersInfo: IHeadersInfo,

@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { AuthenticationFlow } from "@gooddata/sdk-backend-spi";
+import { type AuthenticationFlow } from "@gooddata/sdk-backend-spi";
 
 /**
  * Error codes recognized by the SDK.

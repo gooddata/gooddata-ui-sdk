@@ -4,10 +4,10 @@
 // removes measure sortItems with invalid identifiers and invalid number of locators
 
 import {
-    IAttributeSortItem,
-    IBucket,
-    IMeasureSortItem,
-    ISortItem,
+    type IAttributeSortItem,
+    type IBucket,
+    type IMeasureSortItem,
+    type ISortItem,
     areObjRefsEqual,
     attributeLocalId,
     bucketAttributes,
@@ -21,9 +21,13 @@ import {
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import { type MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 
-import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
+import {
+    type IAttributeFilter,
+    type IBucketFilter,
+    type IBucketItem,
+} from "../../../interfaces/Visualization.js";
 import { isAttributeFilter } from "../../../utils/bucketHelper.js";
 
 function filterInvalidSortItems(

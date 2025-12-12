@@ -3,7 +3,7 @@
 import cx from "classnames";
 
 import { MarkdownComponent } from "./Markdown.js";
-import { ErrorContents } from "../../../model.js";
+import { type ErrorContents } from "../../../model.js";
 
 export type ErrorContentsProps = {
     content: ErrorContents;

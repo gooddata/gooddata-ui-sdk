@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, useCallback, useEffect, useRef } from "react";
+import { type MouseEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import ReactMeasure, { MeasuredComponentProps } from "react-measure";
+import ReactMeasure, { type MeasuredComponentProps } from "react-measure";
 
-import { HeadlineElementType } from "@gooddata/sdk-ui";
+import { type HeadlineElementType } from "@gooddata/sdk-ui";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import {
     HeadlinePagination,
@@ -14,9 +14,13 @@ import {
     shouldRenderPagination,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { HeadlineFiredDrillEvent } from "../interfaces/DrillEvents.js";
-import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../interfaces/Headlines.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type HeadlineFiredDrillEvent } from "../interfaces/DrillEvents.js";
+import {
+    type IFormattedHeadlineDataItem,
+    type IHeadlineData,
+    type IHeadlineDataItem,
+} from "../interfaces/Headlines.js";
 import {
     formatItemValue,
     formatPercentageValue,

@@ -1,18 +1,21 @@
 // (C) 2023-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-    CalculationType,
-    ICalculationDefaultValue,
-    IColorConfig,
+    type CalculationType,
+    type ICalculationDefaultValue,
+    type IColorConfig,
     getCalculationValuesDefault,
     getComparisonFormat,
 } from "@gooddata/sdk-ui-charts";
-import { IFormatPreset, IFormatTemplate } from "@gooddata/sdk-ui-kit";
+import { type IFormatPreset, type IFormatTemplate } from "@gooddata/sdk-ui-kit";
 
 import { comparisonMessages } from "../../locales.js";
-import { HeadlineControlProperties, IComparisonControlProperties } from "../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../interfaces/Visualization.js";
+import {
+    type HeadlineControlProperties,
+    type IComparisonControlProperties,
+} from "../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../interfaces/Visualization.js";
 
 const NUMBER_FORMAT_PRESET_INHERIT = "inherit";
 

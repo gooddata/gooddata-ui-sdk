@@ -4,7 +4,7 @@ import { memo, useCallback, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { ISeparators } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { ExtendedPreview } from "./ExtendedPreview.js";
 import { InputWithNumberFormat } from "../../../Form/index.js";

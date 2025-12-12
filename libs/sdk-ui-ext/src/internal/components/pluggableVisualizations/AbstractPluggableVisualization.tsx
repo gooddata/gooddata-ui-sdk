@@ -1,46 +1,46 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { cloneDeep, isEqual } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IInsight,
-    IInsightDefinition,
-    ISettings,
+    type IInsight,
+    type IInsightDefinition,
+    type ISettings,
     insightHasDataDefined,
     insightProperties,
 } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
+    type DataViewFacade,
     DefaultLocale,
-    GoodDataSdkError,
-    IDrillEvent,
-    IExportFunction,
-    ILoadingState,
-    ILocale,
-    IPushData,
+    type GoodDataSdkError,
+    type IDrillEvent,
+    type IExportFunction,
+    type ILoadingState,
+    type ILocale,
+    type IPushData,
     UnexpectedSdkError,
     isClusteringNotReceived,
     isForecastNotReceived,
     isGoodDataSdkError,
 } from "@gooddata/sdk-ui";
 
-import { ISortConfig } from "../../interfaces/SortConfig.js";
+import { type ISortConfig } from "../../interfaces/SortConfig.js";
 import {
-    ElementSelectorFunction,
+    type ElementSelectorFunction,
     EmptyAfmSdkError,
-    IBucketItem,
-    IBucketOfFun,
-    IDrillDownContext,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisCallbacks,
-    IVisConstruct,
-    IVisProps,
-    IVisualization,
-    IVisualizationOptions,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IDrillDownContext,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisCallbacks,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualization,
+    type IVisualizationOptions,
+    type IVisualizationProperties,
     isEmptyAfm,
 } from "../../interfaces/Visualization.js";
 import {

@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
-import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
-import { IDashboardLayoutSize } from "@gooddata/sdk-model";
+import { type ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+import { type IDashboardLayoutSize } from "@gooddata/sdk-model";
 
 import {
-    IDashboardLayoutBuilder,
-    IDashboardLayoutItemBuilder,
-    IDashboardLayoutSectionBuilder,
+    type IDashboardLayoutBuilder,
+    type IDashboardLayoutItemBuilder,
+    type IDashboardLayoutSectionBuilder,
 } from "../interfaces.js";
 import { DashboardLayoutItemBuilder } from "../item.js";
 import { DashboardLayoutBuilder } from "../layout.js";

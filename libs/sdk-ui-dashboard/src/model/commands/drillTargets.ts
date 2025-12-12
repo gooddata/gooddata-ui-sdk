@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ObjRef } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type ObjRef } from "@gooddata/sdk-model";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import { IDashboardCommand } from "./base.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link AddDrillTargets} command.

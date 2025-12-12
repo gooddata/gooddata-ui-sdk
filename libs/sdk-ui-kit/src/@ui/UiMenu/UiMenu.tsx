@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, ReactNode, RefObject, useEffect, useMemo, useRef } from "react";
+import { type KeyboardEvent, type ReactNode, type RefObject, useEffect, useMemo, useRef } from "react";
 
 import cx from "classnames";
 
@@ -8,7 +8,7 @@ import { typedUiMenuContextStore } from "./context.js";
 import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
 import { getContentItem, getSiblingItems } from "./itemUtils.js";
 import { b, e } from "./menuBem.js";
-import { IUiMenuItemData, UiMenuProps } from "./types.js";
+import { type IUiMenuItemData, type UiMenuProps } from "./types.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 
 function ContentWrapper(props: {

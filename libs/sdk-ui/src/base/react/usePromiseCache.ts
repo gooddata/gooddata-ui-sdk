@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { DependencyList, useEffect, useRef, useState } from "react";
+import { type DependencyList, useEffect, useRef, useState } from "react";
 
 import { PromiseCache } from "./PromiseCache.js";
 

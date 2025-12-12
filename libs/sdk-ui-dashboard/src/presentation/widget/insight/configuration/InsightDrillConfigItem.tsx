@@ -1,18 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import cx from "classnames";
 import { cloneDeep, compact, isEqual } from "lodash-es";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    IDrillToDashboard,
-    IDrillToInsight,
-    IdentifierRef,
-    InsightDrillDefinition,
-    UriRef,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IdentifierRef,
+    type InsightDrillDefinition,
+    type UriRef,
     areObjRefsEqual,
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
@@ -23,7 +23,7 @@ import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAt
 import { DrillOriginItem } from "./DrillOriginItem.js";
 import { DrillTargets } from "./DrillTargets/DrillTargets.js";
 import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
-import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
+import { type IDrillTargetType } from "./useDrillTargetTypeItems.js";
 import {
     selectCatalogDateDatasets,
     selectDrillTargetsByWidgetRef,
@@ -32,9 +32,9 @@ import {
 } from "../../../../model/index.js";
 import {
     DRILL_TARGET_TYPE,
-    IDrillConfigItem,
-    IDrillDownAttributeHierarchyConfig,
-    IDrillDownAttributeHierarchyDefinition,
+    type IDrillConfigItem,
+    type IDrillDownAttributeHierarchyConfig,
+    type IDrillDownAttributeHierarchyDefinition,
 } from "../../../drill/types.js";
 
 export interface IDrillConfigItemProps {

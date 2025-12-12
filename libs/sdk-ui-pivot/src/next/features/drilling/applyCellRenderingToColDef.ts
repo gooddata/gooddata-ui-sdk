@@ -1,10 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
-import { DataViewFacade, ExplicitDrill, isMeasureGroupHeaderColumnDefinition } from "@gooddata/sdk-ui";
+import {
+    type DataViewFacade,
+    type ExplicitDrill,
+    isMeasureGroupHeaderColumnDefinition,
+} from "@gooddata/sdk-ui";
 
-import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
+import { type AgGridCellRendererParams, type AgGridColumnDef } from "../../types/agGrid.js";
 import { getCellClassName, getCellTypes, getTransposedCellClassName } from "../styling/cell.js";
 
 /**

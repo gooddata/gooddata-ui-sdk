@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { ILegendDetails } from "@gooddata/sdk-ui-vis-commons";
+import { type ILegendDetails } from "@gooddata/sdk-ui-vis-commons";
 
-import { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
-import { IGeoCommonData } from "../../types/geoData/common.js";
+import { type IAvailableLegends, type IGeoLegendItem } from "../../types/common/legends.js";
+import { type IGeoCommonData } from "../../types/geoData/common.js";
 
 export interface ILegendBodyProps {
     containerId: string;

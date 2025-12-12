@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import { ObjRef } from "../objRef/index.js";
+import { type ObjRef } from "../objRef/index.js";
 
 /**
  * Entity that represents Workspace Data Filter

@@ -2,18 +2,18 @@
 import { cloneDeep, set } from "lodash-es";
 
 import {
-    IAttributeOrMeasure,
-    IBucket,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
     isMeasure,
     measureLocalId,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { StackingType } from "../../constants/stacking.js";
-import { ISeriesItem } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type StackingType } from "../../constants/stacking.js";
+import { type ISeriesItem } from "../../typings/unsafe.js";
 import { isSolidFill } from "../_chartOptions/patternFillOptions.js";
 import { isAreaChart, isLineChart } from "../_util/common.js";
 

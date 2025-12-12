@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IInsight,
+    type IInsight,
     bucketMeasures,
     idMatchMeasure,
     insightBucket,

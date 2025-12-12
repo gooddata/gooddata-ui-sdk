@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
-import { IFilterBarProps } from "./types.js";
+import { type IFilterBarProps } from "./types.js";
 
 /**
  * This implementation of Filter Bar will ensure that all the filter controls are out of sight. All the dashboard

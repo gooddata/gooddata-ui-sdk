@@ -4,8 +4,12 @@ import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IDashboardAttributeFilter, IDashboardDateFilter, objRefToString } from "@gooddata/sdk-model";
-import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
+import {
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    objRefToString,
+} from "@gooddata/sdk-model";
+import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 import {
     selectFilterContextDateFilter,

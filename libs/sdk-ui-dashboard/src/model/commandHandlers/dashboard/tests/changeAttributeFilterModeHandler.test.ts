@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { setDashboardAttributeFilterConfigMode } from "../../../commands/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("changeAttributeFilterModeHandler", () => {

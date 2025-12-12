@@ -2,12 +2,12 @@
 
 import {
     type DashboardFiltersApplyMode,
-    IAlertDefault,
-    IMetricFormatOverrideSetting,
-    ISeparators,
+    type IAlertDefault,
+    type IMetricFormatOverrideSetting,
+    type ISeparators,
 } from "@gooddata/sdk-model";
 
-import { IUserWorkspaceSettings, IWorkspaceSettings } from "../../common/settings.js";
+import { type IUserWorkspaceSettings, type IWorkspaceSettings } from "../../common/settings.js";
 
 /**
  * This query service provides access to feature flags that are in effect for particular workspace.

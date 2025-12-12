@@ -1,27 +1,27 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    AttributeExecutionResultHeader,
-    DimensionHeader,
-    ExecutionResultGrandTotal,
-    ExecutionResultHeader,
-    JsonApiAttributeOutAttributesGranularityEnum,
-    MeasureExecutionResultHeader,
-    TotalExecutionResultHeader,
+    type AttributeExecutionResultHeader,
+    type DimensionHeader,
+    type ExecutionResultGrandTotal,
+    type ExecutionResultHeader,
+    type JsonApiAttributeOutAttributesGranularityEnum,
+    type MeasureExecutionResultHeader,
+    type TotalExecutionResultHeader,
     isResultAttributeHeader,
     isResultMeasureHeader,
     isResultTotalHeader,
 } from "@gooddata/api-client-tiger";
-import { IForecastConfig, IForecastResult } from "@gooddata/sdk-backend-spi";
+import { type IForecastConfig, type IForecastResult } from "@gooddata/sdk-backend-spi";
 import {
-    DateAttributeGranularity,
-    IDimensionDescriptor,
-    IDimensionItemDescriptor,
-    IMeasureDescriptor,
-    IResultAttributeHeader,
-    IResultHeader,
-    IResultMeasureHeader,
-    IResultTotalHeader,
+    type DateAttributeGranularity,
+    type IDimensionDescriptor,
+    type IDimensionItemDescriptor,
+    type IMeasureDescriptor,
+    type IResultAttributeHeader,
+    type IResultHeader,
+    type IResultMeasureHeader,
+    type IResultTotalHeader,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
     isResultTotalHeader as isResultTotalHeaderModel,
@@ -32,8 +32,8 @@ import {
     createForecastDateValueFormatter,
 } from "../dateFormatting/dateValueFormatter.js";
 import { createDateValueNormalizer } from "../dateFormatting/dateValueNormalizer.js";
-import { FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
-import { DateFormatter, DateNormalizer, DateParseFormatter } from "../dateFormatting/types.js";
+import { type FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
+import { type DateFormatter, type DateNormalizer, type DateParseFormatter } from "../dateFormatting/types.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 
 type DateAttributeFormatProps = {

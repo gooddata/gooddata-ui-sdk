@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { ThemeDefinedCssVariable } from "../types.js";
+import { type ThemeDefinedCssVariable } from "../types.js";
 
 export const paletteBaseThemeVariables: ThemeDefinedCssVariable[] = [
     {

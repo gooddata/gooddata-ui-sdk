@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ComponentPropsWithRef, forwardRef } from "react";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 
 import { bem } from "../@utils/bem.js";
 

@@ -2,9 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
-import { IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
 import { updateConfigWithSettings } from "../chartOptionsForSettings.js";
 
 describe("updateConfigWithSettings", () => {

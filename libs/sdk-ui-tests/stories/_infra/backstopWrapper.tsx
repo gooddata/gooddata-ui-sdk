@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { ReactElement, createElement } from "react";
+import { type ReactElement, createElement } from "react";
 
 const SCREENSHOT_WRAPPER_CLASS = "screenshot-wrapper";
 

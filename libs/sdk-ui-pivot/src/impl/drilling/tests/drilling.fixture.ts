@@ -3,11 +3,11 @@
 import { invariant } from "ts-invariant";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IResultAttributeHeader } from "@gooddata/sdk-model";
+import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IResultAttributeHeader } from "@gooddata/sdk-model";
 
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { IGridRow } from "../../data/resultTypes.js";
+import { type IGridRow } from "../../data/resultTypes.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(

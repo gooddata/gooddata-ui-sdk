@@ -2,9 +2,9 @@
 import { describe, expect, it } from "vitest";
 
 import { Account, Activity, ActivityType } from "../../../../__mocks__/model.js";
-import { ObjRef } from "../../../objRef/index.js";
+import { type ObjRef } from "../../../objRef/index.js";
 import {
-    IAttribute,
+    type IAttribute,
     attributeAlias,
     attributeDisplayFormRef,
     attributeIdentifier,

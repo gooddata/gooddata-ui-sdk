@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { ITab, Tabs } from "../Tabs/index.js";
+import { type ITab, Tabs } from "../Tabs/index.js";
 
 /**
  * @internal

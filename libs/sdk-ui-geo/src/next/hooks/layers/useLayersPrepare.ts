@@ -7,11 +7,11 @@ import type { IntlShape } from "react-intl";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
+    type DataViewFacade,
     DefaultColorPalette,
-    GoodDataSdkError,
+    type GoodDataSdkError,
     UnexpectedSdkError,
-    UseCancelablePromiseStatus,
+    type UseCancelablePromiseStatus,
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 import type { IColorMapping } from "@gooddata/sdk-ui-vis-commons";

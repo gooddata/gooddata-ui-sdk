@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentType, ReactNode, useState } from "react";
+import { type ComponentType, type ReactNode, useState } from "react";
 
 import cx from "classnames";
 import { differenceBy } from "lodash-es";
@@ -11,7 +11,7 @@ import {
     BubbleHoverTrigger,
     Button,
     Dropdown,
-    IIconProps,
+    type IIconProps,
     IconAttribute,
     IconDate,
     IconQuestionMark,

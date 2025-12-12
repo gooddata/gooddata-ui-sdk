@@ -1,9 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
-import { IChartConfig, IDistinctPointShapes, PointShapeSymbolType } from "../../../interfaces/index.js";
-import { ISeriesItem } from "../../typings/unsafe.js";
+import {
+    type IChartConfig,
+    type IDistinctPointShapes,
+    type PointShapeSymbolType,
+} from "../../../interfaces/index.js";
+import { type ISeriesItem } from "../../typings/unsafe.js";
 import { isAreaChart, isComboChart, isLineChart } from "../_util/common.js";
 
 /**

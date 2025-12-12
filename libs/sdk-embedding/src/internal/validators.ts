@@ -4,11 +4,11 @@ import { isEmpty } from "lodash-es";
 import { isObjRef } from "@gooddata/sdk-model";
 
 import {
-    IKdSetFilterParentsAttributeFilter,
-    IKdSetFilterParentsDataBody,
-    IKdSetFilterParentsItem,
-    IKdSetFilterParentsItemParent,
-    KdSetFilterParentsItemFilter,
+    type IKdSetFilterParentsAttributeFilter,
+    type IKdSetFilterParentsDataBody,
+    type IKdSetFilterParentsItem,
+    type IKdSetFilterParentsItemParent,
+    type KdSetFilterParentsItemFilter,
 } from "../iframe/EmbeddedKpiDashboard.js";
 
 function isValidSetFilterParentsAttributeFilter(obj: unknown): obj is IKdSetFilterParentsAttributeFilter {

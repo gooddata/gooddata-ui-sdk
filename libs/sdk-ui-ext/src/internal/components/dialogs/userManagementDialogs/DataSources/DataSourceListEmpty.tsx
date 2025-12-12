@@ -3,7 +3,7 @@
 import { useIntl } from "react-intl";
 
 import { messages } from "../locales.js";
-import { ListMode, WorkspacePermissionSubject } from "../types.js";
+import { type ListMode, type WorkspacePermissionSubject } from "../types.js";
 
 export interface IDataSourceListEmptyProps {
     mode: ListMode;

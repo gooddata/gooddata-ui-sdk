@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import cx from "classnames";
 
 import { Item, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { IInsightMenuItemButton } from "../../types.js";
+import { type IInsightMenuItemButton } from "../../types.js";
 
 export const DashboardInsightMenuItemButton = (
     props: Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean },

@@ -1,13 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { LRUCache } from "lru-cache";
+import { type LRUCache } from "lru-cache";
 
 import {
-    IDashboardLayoutItem,
-    IDashboardWidget,
-    IInsight,
-    ObjRef,
+    type IDashboardLayoutItem,
+    type IDashboardWidget,
+    type IInsight,
+    type ObjRef,
     insightId,
     insightUri,
     isInsightWidget,
@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    DashboardLayoutItemModifications,
+    type DashboardLayoutItemModifications,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 

@@ -8,10 +8,10 @@ let { extractProps } = vi.hoisted(() => ({
 }));
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IPieChartProps } from "@gooddata/sdk-ui-charts";
+import { type IPieChartProps } from "@gooddata/sdk-ui-charts";
 
 import { pieChart as pieChartScenarios } from "../../../scenarios/charts/pieChart/index.js";
-import { ScenarioAndDescription } from "../../../src/index.js";
+import { type ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";

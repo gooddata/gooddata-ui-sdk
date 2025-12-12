@@ -1,31 +1,40 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { KeyboardEvent, ReactElement, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    type KeyboardEvent,
+    type ReactElement,
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { debounce, isEmpty, isEqual } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactSelect, {
-    ActionMeta,
-    GroupBase,
-    InputProps,
-    MenuListProps,
-    MenuProps,
-    MultiValueGenericProps,
-    MultiValueRemoveProps,
+    type ActionMeta,
+    type GroupBase,
+    type InputProps,
+    type MenuListProps,
+    type MenuProps,
+    type MultiValueGenericProps,
+    type MultiValueRemoveProps,
     components as ReactSelectComponents,
-    SelectComponentsConfig,
+    type SelectComponentsConfig,
 } from "react-select";
 
-import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
-    IAutomationRecipient,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
+    type IAutomationRecipient,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import {
-    GoodDataSdkError,
+    type GoodDataSdkError,
     ValidationContextStore,
     createInvalidDatapoint,
     createInvalidNode,

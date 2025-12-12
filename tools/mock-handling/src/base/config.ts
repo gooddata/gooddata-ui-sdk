@@ -3,11 +3,11 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { OptionValues } from "commander";
+import { type OptionValues } from "commander";
 import { pick, pickBy } from "lodash-es";
 
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants.js";
-import { DataRecorderConfig } from "./types.js";
+import { type DataRecorderConfig } from "./types.js";
 
 function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
     return {

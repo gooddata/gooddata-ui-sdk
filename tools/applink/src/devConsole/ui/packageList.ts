@@ -1,28 +1,29 @@
 // (C) 2020-2025 GoodData Corporation
+
 import blessed from "blessed";
 import { intersection, max } from "lodash-es";
 
-import { AppPanel, AppPanelOptions } from "./appPanel.js";
+import { AppPanel, type AppPanelOptions } from "./appPanel.js";
 import { ColorCodes } from "./colors.js";
 import {
     determinePackageBuildOrder,
     findDependingPackages,
     naiveFilterDependencyGraph,
 } from "../../base/dependencyGraph.js";
-import { DependencyGraph, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
+import { type DependencyGraph, type SourceDescriptor, type TargetDescriptor } from "../../base/types.js";
 import {
-    BuildFinished,
-    BuildRequested,
-    BuildScheduled,
-    BuildStarted,
-    DcEvent,
-    EventBus,
+    type BuildFinished,
+    type BuildRequested,
+    type BuildScheduled,
+    type BuildStarted,
+    type DcEvent,
+    type EventBus,
     GlobalEventBus,
-    IEventListener,
-    PackagesChanged,
-    PublishFinished,
-    SourceInitialized,
-    TargetSelected,
+    type IEventListener,
+    type PackagesChanged,
+    type PublishFinished,
+    type SourceInitialized,
+    type TargetSelected,
     buildOutputRequested,
     packagesSelected,
 } from "../events.js";

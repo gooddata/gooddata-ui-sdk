@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { PropsWithChildren, createContext, useContext, useMemo } from "react";
+import { type PropsWithChildren, createContext, useContext, useMemo } from "react";
 
-import { CatalogItem, type GenAIObjectType } from "@gooddata/sdk-model";
+import { type CatalogItem, type GenAIObjectType } from "@gooddata/sdk-model";
 
 export type ConfigContext = {
     allowNativeLinks: boolean;

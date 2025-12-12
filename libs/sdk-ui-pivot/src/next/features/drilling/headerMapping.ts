@@ -2,10 +2,10 @@
 
 import { isMeasureDescriptor } from "@gooddata/sdk-model";
 import {
-    IMappingHeader,
-    ITableColumnDefinition,
-    ITableDataHeaderScope,
-    ITableRowDefinition,
+    type IMappingHeader,
+    type ITableColumnDefinition,
+    type ITableDataHeaderScope,
+    type ITableRowDefinition,
 } from "@gooddata/sdk-ui";
 
 export function extractMappingHeadersUpToPosition(

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { type IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);

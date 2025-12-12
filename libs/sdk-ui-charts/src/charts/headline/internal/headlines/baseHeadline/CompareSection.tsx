@@ -6,7 +6,7 @@ import { HeadlinePagination } from "@gooddata/sdk-ui-vis-commons";
 
 import { usePagination } from "./baseHeadlineDataItems/useOutOfBoundsDetection.js";
 import { CompareSectionItem } from "./CompareSectionItem.js";
-import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface ICompareSectionProps {
     secondaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;

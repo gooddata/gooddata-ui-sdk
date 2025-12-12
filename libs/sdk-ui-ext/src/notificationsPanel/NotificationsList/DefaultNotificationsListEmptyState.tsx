@@ -3,7 +3,7 @@
 import { defineMessages, useIntl } from "react-intl";
 
 import { bem } from "../bem.js";
-import { INotificationsPanelView } from "../types.js";
+import { type INotificationsPanelView } from "../types.js";
 
 const { b } = bem("gd-ui-ext-notifications-list-empty-state");
 

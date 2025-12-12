@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { AllTimeFilterItem } from "./AllTimeFilterItem.js";
-import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
+import { type DateFilterOption, type IDateFilterOptionsByType } from "../interfaces/index.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

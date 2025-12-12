@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { colorPaletteDataLoaderFactory } from "./ColorPaletteDataLoader.js";
 import { insightDataLoaderFactory } from "./InsightDataLoader.js";
-import { IDataLoaderFactory } from "./types.js";
+import { type IDataLoaderFactory } from "./types.js";
 import { userWorkspaceSettingsDataLoaderFactory } from "./UserWorkspaceSettingsDataLoader.js";
 
 /**

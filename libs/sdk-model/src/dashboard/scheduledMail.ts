@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IDashboardObjectIdentity } from "./common.js";
-import { IAuditableUsers } from "../base/metadata.js";
-import { ObjRef } from "../objRef/index.js";
+import { type IDashboardObjectIdentity } from "./common.js";
+import { type IAuditableUsers } from "../base/metadata.js";
+import { type ObjRef } from "../objRef/index.js";
 
 /**
  * A scheduled email common properties

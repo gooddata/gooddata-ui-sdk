@@ -5,9 +5,9 @@ import { useMemo } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import {
-    IAutomationMetadataObject,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
+    type IAutomationMetadataObject,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import {
     AddButton,

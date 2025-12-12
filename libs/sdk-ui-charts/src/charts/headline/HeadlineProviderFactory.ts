@@ -1,13 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { IBucket, IMeasure, bucketMeasure, bucketMeasures, bucketsFind } from "@gooddata/sdk-model";
+import { type IBucket, type IMeasure, bucketMeasure, bucketMeasures, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IHeadlineProvider } from "./HeadlineProvider.js";
+import { type IHeadlineProvider } from "./HeadlineProvider.js";
 import { ComparisonProvider } from "./internal/providers/ComparisonProvider.js";
 import { MultiMeasuresProvider } from "./internal/providers/MultiMeasuresProvider.js";
-import { IChartConfig, IComparison } from "../../interfaces/index.js";
+import { type IChartConfig, type IComparison } from "../../interfaces/index.js";
 
 enum HeadlineType {
     MULTI_MEASURES,

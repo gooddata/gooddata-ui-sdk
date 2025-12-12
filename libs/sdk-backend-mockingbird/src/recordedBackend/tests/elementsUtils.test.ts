@@ -2,9 +2,9 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeElement,
+    type IAttributeElement,
     newMeasure,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
@@ -20,7 +20,7 @@ import {
     resolveSelectedElements,
     resolveStringFilter,
 } from "../elementsUtils.js";
-import { AttributeElementsFiltering } from "../types.js";
+import { type AttributeElementsFiltering } from "../types.js";
 
 describe("elementsUtils", () => {
     const elements: IAttributeElement[] =

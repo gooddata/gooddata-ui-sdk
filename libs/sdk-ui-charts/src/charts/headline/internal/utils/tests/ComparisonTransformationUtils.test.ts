@@ -2,11 +2,11 @@
 
 import { describe, expect, it } from "vitest";
 
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { ExplicitDrill, createIntlMock } from "@gooddata/sdk-ui";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ExplicitDrill, createIntlMock } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
-import { IComparison } from "../../../../../interfaces/index.js";
+import { type IComparison } from "../../../../../interfaces/index.js";
 import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../../tests/TestData.fixtures.js";
 import { getComparisonBaseHeadlineData } from "../ComparisonTransformationUtils.js";
 

@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { MeasureDropdownItem } from "./MeasureDropdownItem.js";
-import { IMeasureDropdownItem } from "../types.js";
+import { type IMeasureDropdownItem } from "../types.js";
 
 interface IMeasureDropdownBodyProps {
     items: IMeasureDropdownItem[];

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import {
-    IInsight,
+    type IInsight,
     insightCreated,
     insightCreatedBy,
     insightTitle,

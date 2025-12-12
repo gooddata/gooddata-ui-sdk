@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    GoodDataSdkError,
+    type GoodDataSdkError,
     isDataTooLargeToCompute,
     isDataTooLargeToDisplay,
     isNoDataSdkError,

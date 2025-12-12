@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
-import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
+import { type ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 
 import {
     LineChartTwoMeasuresWithTrendyBy,

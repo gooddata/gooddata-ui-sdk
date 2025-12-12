@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Column } from "ag-grid-enterprise";
+import { type Column } from "ag-grid-enterprise";
 
 /**
  * Gets the next sort state for a column

@@ -14,37 +14,34 @@ _generate_translations_bundles() {
     node "$ROOT_DIR/common/scripts/convertBundleToTypeScript.mjs" "$bundles_dir"
 }
 
-_generate_tsm() {
-    npm run tsm
+
+_build_styles() {
+    sass --load-path=node_modules styles/scss:styles/css
+}
+
+_assets() {
+    mkdir -p esm
+    # first copy everything in the assets (in case there are non-SVG files)
+    # cp -rf src/assets esm/
+    # then use svgo to optimize all the SVGs there
+    # svgo -rqf src/assets esm/assets
 }
 
 _common-build() {
-    mkdir -p esm
+    _assets
 
-    sass --load-path=node_modules styles/scss:styles/css
-    sass --load-path=node_modules src:esm
+    _build_styles
 }
 
 build() {
-    _generate_translations_bundles "src/localization/bundles"
 
-    _generate_tsm
+    _generate_translations_bundles "src/localization/bundles"
 
     if [[ $1 != "--genFilesOnly" ]]; then
         _common-build
 
         tsc -p tsconfig.build.json
         npm run api-extractor
-
-        # Replace .scss imports with .css imports in all generated JS files
-        # Handle different sed syntax between macOS (BSD) and Linux (GNU)
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            # macOS
-            find esm -name "*.js" -type f -exec sed -i '' 's/\.scss\.js"/\.css"/g' {} +
-        else
-            # Linux/CI
-            find esm -name "*.js" -type f -exec sed -i 's/\.scss\.js"/\.css"/g' {} +
-        fi
     fi
 }
 

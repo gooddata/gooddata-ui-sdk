@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ElementType, ReactNode, useEffect, useRef } from "react";
+import { type ElementType, type ReactNode, useEffect, useRef } from "react";
 
-import { isElementInvisibleType, useScrollContext } from "./ScrollContext.js";
+import { type isElementInvisibleType, useScrollContext } from "./ScrollContext.js";
 
 /**
  * @internal

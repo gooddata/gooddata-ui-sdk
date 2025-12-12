@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { mix } from "polished";
 
-import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
+import { type IThemeComplementaryPalette } from "@gooddata/sdk-model";
 
 const COMPLEMENTARY_PALETTE_PREFIX = "c";
 

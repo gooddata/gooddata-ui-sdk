@@ -5,15 +5,15 @@ import { invariant } from "ts-invariant";
 import {
     InsightWidgetBuilder,
     KpiWidgetBuilder,
-    ValueOrUpdateCallback,
+    type ValueOrUpdateCallback,
     resolveValueOrUpdateCallback,
 } from "@gooddata/sdk-backend-base";
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSizeByScreenSize,
-    ObjRef,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSection,
+    type IDashboardLayoutSizeByScreenSize,
+    type ObjRef,
     isDashboardLayout,
     isDashboardLayoutItem,
     isInsightWidget,
@@ -23,13 +23,13 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    DashboardLayoutItemModifications,
-    IDashboardLayoutBuilder,
-    IDashboardLayoutItemBuilder,
-    IDashboardLayoutSectionBuilder,
+    type DashboardLayoutItemModifications,
+    type IDashboardLayoutBuilder,
+    type IDashboardLayoutItemBuilder,
+    type IDashboardLayoutSectionBuilder,
 } from "./interfaces.js";
-import { ILayoutItemPath } from "../../../../types.js";
-import { IDashboardLayoutItemFacade } from "../facade/interfaces.js";
+import { type ILayoutItemPath } from "../../../../types.js";
+import { type IDashboardLayoutItemFacade } from "../facade/interfaces.js";
 
 /**
  * @alpha

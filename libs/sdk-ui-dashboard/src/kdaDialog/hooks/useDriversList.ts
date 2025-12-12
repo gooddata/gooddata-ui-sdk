@@ -2,10 +2,10 @@
 
 import { useMemo } from "react";
 
-import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 import { useTrendDrivers } from "./useTrendDrivers.js";
-import { KdaItem } from "../internalTypes.js";
+import { type KdaItem } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 export function useSignificantDrives() {

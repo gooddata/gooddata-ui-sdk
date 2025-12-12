@@ -3,18 +3,18 @@ import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
-    AnalyticalWidgetType,
-    IAnalyticalWidget,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    IRichTextWidget,
-    IRichTextWidgetDefinition,
-    IVisualizationSwitcherWidget,
-    IVisualizationSwitcherWidgetDefinition,
+    type AnalyticalWidgetType,
+    type IAnalyticalWidget,
+    type IInsightWidget,
+    type IInsightWidgetDefinition,
+    type IKpiWidget,
+    type IKpiWidgetDefinition,
+    type IRichTextWidget,
+    type IRichTextWidgetDefinition,
+    type IVisualizationSwitcherWidget,
+    type IVisualizationSwitcherWidgetDefinition,
 } from "./analyticalWidgets.js";
-import { ObjRef, isObjRef } from "../objRef/index.js";
+import { type ObjRef, isObjRef } from "../objRef/index.js";
 
 /**
  * See {@link IWidget}]

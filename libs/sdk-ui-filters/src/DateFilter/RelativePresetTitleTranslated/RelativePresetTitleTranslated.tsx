@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 
 import { messages } from "../../locales.js";
 

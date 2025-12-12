@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { MutableRefObject } from "react";
+import { type MutableRefObject } from "react";
 
 import { getManualResizedColumn } from "./columnSizing.js";
-import { ColumnResizingConfig, ResizingState } from "./privateTypes.js";
+import { type ColumnResizingConfig, type ResizingState } from "./privateTypes.js";
 
 export function growToFit(
     resizingState: MutableRefObject<ResizingState>,

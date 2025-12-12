@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import {
     ErrorComponent as DefaultErrorComponent,
     LoadingComponent as DefaultLoadingComponent,
-    IErrorProps,
-    ILoadingProps,
+    type IErrorProps,
+    type ILoadingProps,
 } from "@gooddata/sdk-ui";
 
-import { IDashboardLoadOptions } from "./types.js";
+import { type IDashboardLoadOptions } from "./types.js";
 import { useDashboardLoader } from "./useDashboardLoader.js";
 
 /**

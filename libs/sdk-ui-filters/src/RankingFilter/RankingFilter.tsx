@@ -2,11 +2,15 @@
 
 import { useState } from "react";
 
-import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
+import { type IRankingFilter, type ObjRefInScope } from "@gooddata/sdk-model";
 
 import { RankingFilterButton } from "./RankingFilterButton.js";
 import { RankingFilterDropdown } from "./RankingFilterDropdown.js";
-import { IAttributeDropdownItem, ICustomGranularitySelection, IMeasureDropdownItem } from "./types.js";
+import {
+    type IAttributeDropdownItem,
+    type ICustomGranularitySelection,
+    type IMeasureDropdownItem,
+} from "./types.js";
 
 /**
  * @beta

@@ -2,7 +2,7 @@
 
 import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
 import { SharedObjectCheckboxControl } from "./SharedObjectCheckboxControl.js";
-import { ISharedObjectUnderLenientControlProps } from "./types.js";
+import { type ISharedObjectUnderLenientControlProps } from "./types.js";
 
 /**
  * @internal

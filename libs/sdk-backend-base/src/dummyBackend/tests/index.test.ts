@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
 import { dummyBackend } from "../index.js";

@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { IDashboardDateFilter } from "@gooddata/sdk-model";
+import { type IDashboardDateFilter } from "@gooddata/sdk-model";
 
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
-import { IDashboardCommand } from "../../commands/base.js";
+import { type IDashboardCommand } from "../../commands/base.js";
 import { removeAttributeFilters } from "../../commands/filters.js";
 import { filterContextChanged } from "../../events/filters.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -28,7 +28,7 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,

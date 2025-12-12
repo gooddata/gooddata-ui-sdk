@@ -2,7 +2,7 @@
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    IInsightDefinition,
+    type IInsightDefinition,
     newAttribute,
     newBucket,
     newInsightDefinition,
@@ -10,7 +10,7 @@ import {
     newPositiveAttributeFilter,
     uriRef,
 } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 const { Department, Region, Won } = ReferenceMd;
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";

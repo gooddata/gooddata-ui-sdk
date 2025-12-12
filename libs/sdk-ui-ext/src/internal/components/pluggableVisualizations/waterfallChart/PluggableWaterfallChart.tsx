@@ -2,7 +2,7 @@
 
 import { cloneDeep, isEmpty, isEqual, set } from "lodash-es";
 
-import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
+import { type IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -14,15 +14,15 @@ import {
     WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS,
     WATERFALL_UICONFIG_WITH_ONE_METRIC,
 } from "../../../constants/uiConfig.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
-    IBucketItem,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

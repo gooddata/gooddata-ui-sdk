@@ -1,26 +1,26 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    DashboardAttributeFilterSelectionMode,
-    DateFilterGranularity,
-    DateFilterType,
-    DateString,
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeElements,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterByDate,
-    IDashboardAttributeFilterParent,
-    IDashboardDateFilter,
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
-    ILowerBoundedFilter,
-    IUpperBoundedFilter,
-    ObjRef,
+    type DashboardAttributeFilterSelectionMode,
+    type DateFilterGranularity,
+    type DateFilterType,
+    type DateString,
+    type FilterContextItem,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeElements,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterByDate,
+    type IDashboardAttributeFilterParent,
+    type IDashboardDateFilter,
+    type IDashboardObjectIdentity,
+    type IFilterContextDefinition,
+    type ILowerBoundedFilter,
+    type IUpperBoundedFilter,
+    type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
     isAttributeElementsByRef,
@@ -32,9 +32,9 @@ import {
 
 import { filterContextInitialState } from "./filterContextState.js";
 import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
-import { AddDateFilterPayload } from "../../../commands/index.js";
+import { type AddDateFilterPayload } from "../../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
-import { TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { type TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<TabsState, A>;
 

@@ -24,9 +24,9 @@
  * @internal
  */
 
-import { IDataVisualizationProps } from "@gooddata/sdk-ui";
+import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
-import { IGeoPushpinChartNextBaseProps } from "./public.js";
+import { type IGeoPushpinChartNextBaseProps } from "./public.js";
 
 /**
  * Internal props for GeoPushpinChartNext component.

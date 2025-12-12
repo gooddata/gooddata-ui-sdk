@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { WarningMessage, isWarningMessage } from "./typings.js";
+import { type WarningMessage, isWarningMessage } from "./typings.js";
 
 interface IWarningMessageProps {
     warningMessage: WarningMessage;

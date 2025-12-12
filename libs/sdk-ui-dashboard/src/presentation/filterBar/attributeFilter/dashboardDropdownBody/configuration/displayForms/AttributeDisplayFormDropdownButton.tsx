@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { SyntheticEvent } from "react";
+import { type SyntheticEvent } from "react";
 
 import cx from "classnames";
 

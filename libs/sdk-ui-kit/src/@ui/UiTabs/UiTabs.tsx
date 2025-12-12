@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
 import { getTypedUiTabsContextStore } from "./context.js";
-import { IUiTabsProps } from "./types.js";
+import { type IUiTabsProps } from "./types.js";
 import { useUiTabsContextStoreValue } from "./useUiTabsContextStoreValue.js";
 
 /**

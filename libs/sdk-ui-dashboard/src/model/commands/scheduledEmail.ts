@@ -1,8 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "./base.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link CreateScheduledEmail} command.

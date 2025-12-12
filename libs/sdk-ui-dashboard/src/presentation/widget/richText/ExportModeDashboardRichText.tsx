@@ -2,9 +2,9 @@
 
 import { useCallback, useState } from "react";
 
-import { GoodDataSdkError, ILoadingState } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError, type ILoadingState } from "@gooddata/sdk-ui";
 
-import { IDashboardRichTextProps } from "./types.js";
+import { type IDashboardRichTextProps } from "./types.js";
 import { ViewModeDashboardRichText } from "./ViewModeDashboardRichText.js";
 import { useRichTextExportData, useVisualizationExportData } from "../../export/index.js";
 

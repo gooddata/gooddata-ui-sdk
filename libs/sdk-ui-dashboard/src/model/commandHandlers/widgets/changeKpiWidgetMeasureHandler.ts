@@ -1,26 +1,31 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { ICatalogDateDataset, ICatalogMeasure, IKpiWidget, objRefToString } from "@gooddata/sdk-model";
+import {
+    type ICatalogDateDataset,
+    type ICatalogMeasure,
+    type IKpiWidget,
+    objRefToString,
+} from "@gooddata/sdk-model";
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
-import { ChangeKpiWidgetMeasure } from "../../commands/index.js";
+import { type ChangeKpiWidgetMeasure } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardKpiWidgetMeasureChanged } from "../../events/index.js";
+import { type DashboardKpiWidgetMeasureChanged } from "../../events/index.js";
 import { kpiWidgetMeasureChanged } from "../../events/kpi.js";
-import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
+import { type MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { WidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type WidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
 
 function* validateMeasure(ctx: DashboardContext, cmd: ChangeKpiWidgetMeasure): SagaIterator<ICatalogMeasure> {
     const {

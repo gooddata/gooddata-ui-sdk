@@ -2,9 +2,9 @@
 
 import { cloneDeep, isEmpty, set } from "lodash-es";
 
-import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
+import { type IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
+import { type IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -16,14 +16,14 @@ import {
     PIE_UICONFIG_WITH_ONE_METRIC,
     UICONFIG,
 } from "../../../constants/uiConfig.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
-    IBucketItem,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

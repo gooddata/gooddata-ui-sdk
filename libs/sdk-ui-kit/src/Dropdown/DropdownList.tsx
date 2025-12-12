@@ -1,9 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { Fragment, KeyboardEvent, ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
+import {
+    Fragment,
+    type KeyboardEvent,
+    type ReactElement,
+    type ReactNode,
+    useCallback,
+    useEffect,
+    useState,
+} from "react";
 
 import cx from "classnames";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 
 import { DropdownTabs } from "./DropdownTabs.js";
 import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
@@ -13,10 +21,10 @@ import {
 } from "../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { AutoSize } from "../AutoSize/index.js";
 import { Input } from "../Form/index.js";
-import { IListProps, List } from "../List/index.js";
+import { type IListProps, List } from "../List/index.js";
 import { LoadingMask } from "../LoadingMask/index.js";
 import { NoData } from "../NoData/index.js";
-import { ITab } from "../Tabs/index.js";
+import { type ITab } from "../Tabs/index.js";
 import { isTypingKey } from "../utils/events.js";
 
 /**

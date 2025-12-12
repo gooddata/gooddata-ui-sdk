@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IResultHeader, isResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IResultHeader, isResultAttributeHeader } from "@gooddata/sdk-model";
 
 import { resultHeaders, transformedResultHeaders } from "./AfmResultConverter.fixtures.js";
 import { transformResultHeaders } from "../afm/result.js";

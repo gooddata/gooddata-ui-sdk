@@ -4,7 +4,7 @@ import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IDashboardTab } from "@gooddata/sdk-model";
+import { type IDashboardTab } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
 
 const DROPDOWN_WIDTH = 150;

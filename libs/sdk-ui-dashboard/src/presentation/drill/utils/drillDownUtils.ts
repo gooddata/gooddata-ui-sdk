@@ -3,19 +3,19 @@
 import { compact, isEqual, uniqWith } from "lodash-es";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IDrillDownIntersectionIgnoredAttributes,
+    type IAttributeDisplayFormMetadataObject,
+    type IDrillDownIntersectionIgnoredAttributes,
     isCrossFiltering,
     isDrillToLegacyDashboard,
 } from "@gooddata/sdk-model";
-import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
+import { type IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 
 import {
     getDrillOriginLocalIdentifier,
     isDrillConfigured,
     isDrillDownIntersectionIgnoredAttributesForHierarchy,
 } from "../../../_staging/drills/drillingUtils.js";
-import { DashboardDrillDefinition, IDrillDownDefinition } from "../../../types.js";
+import { type DashboardDrillDefinition, type IDrillDownDefinition } from "../../../types.js";
 import { isDrillToUrl } from "../types.js";
 
 /**

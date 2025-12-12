@@ -1,16 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { ColGroupDef, HeaderClassParams } from "ag-grid-enterprise";
+import { type ColGroupDef, type HeaderClassParams } from "ag-grid-enterprise";
 
 import {
-    ITableDataHeaderScope,
+    type ITableDataHeaderScope,
     isGrandTotalColumnDefinition,
     isSubtotalColumnDefinition,
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
 import { e } from "./bem.js";
-import { AgGridRowData } from "../../types/internal.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Returns a class name for a header cell.

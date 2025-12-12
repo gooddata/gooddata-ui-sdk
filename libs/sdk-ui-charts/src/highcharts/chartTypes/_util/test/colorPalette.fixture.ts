@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { IColorPalette } from "@gooddata/sdk-model";
+import { type IColorPalette } from "@gooddata/sdk-model";
 
 export const CUSTOM_COLOR_PALETTE: IColorPalette = [
     {

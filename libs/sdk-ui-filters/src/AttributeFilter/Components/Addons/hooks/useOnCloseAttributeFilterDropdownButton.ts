@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { usePrevious } from "@gooddata/sdk-ui";
 
-import { IAttributeFilterDropdownButtonProps } from "../../DropdownButton/AttributeFilterDropdownButton.js";
+import { type IAttributeFilterDropdownButtonProps } from "../../DropdownButton/AttributeFilterDropdownButton.js";
 
 /**
  * This hook is useful to inject custom onClose to AttributeFilterDropdownButton

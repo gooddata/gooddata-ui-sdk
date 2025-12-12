@@ -3,14 +3,14 @@
 import { cloneDeep } from "lodash-es";
 
 import {
-    IBucket,
-    IInsightDefinition,
-    VisualizationProperties,
+    type IBucket,
+    type IInsightDefinition,
+    type VisualizationProperties,
     isVirtualArithmeticMeasure,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
 
-import { ChartInteractions } from "./backendWithCapturing.js";
+import { type ChartInteractions } from "./backendWithCapturing.js";
 import { chartConfigToVisProperties, geoChartConfigToVisProperties } from "./chartConfigToVisProps.js";
 import { geoExecutionToInsightBuckets } from "./executionToInsightBuckets.js";
 import { pivotConfigToVisProperties } from "./pivotConfigToVisProps.js";

@@ -8,10 +8,15 @@ import { useIntl } from "react-intl";
 import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown.js";
 import { getGranteePossibilities } from "./permissionsLogic.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
-import { CurrentUserPermissions } from "../../types.js";
+import { type CurrentUserPermissions } from "../../types.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 import { GranteeGroupIcon } from "../GranteeIcons.js";
-import { DialogModeType, GranteeItem, IGranteeRules, IGranularGranteeGroup } from "../types.js";
+import {
+    type DialogModeType,
+    type GranteeItem,
+    type IGranteeRules,
+    type IGranularGranteeGroup,
+} from "../types.js";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils.js";
 
 interface IGranularGranteeGroupItemProps {

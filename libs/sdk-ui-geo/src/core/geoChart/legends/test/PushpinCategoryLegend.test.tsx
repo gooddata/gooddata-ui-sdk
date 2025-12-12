@@ -1,13 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
-import { PositionType } from "@gooddata/sdk-ui-vis-commons";
+import { type PositionType } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPushpinCategoryLegendProps, PushpinCategoryLegend } from "../PushpinCategoryLegend.js";
+import { type IPushpinCategoryLegendProps, PushpinCategoryLegend } from "../PushpinCategoryLegend.js";
 
 const segmentData = [
     {

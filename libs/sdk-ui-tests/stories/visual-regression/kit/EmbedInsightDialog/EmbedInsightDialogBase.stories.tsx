@@ -5,10 +5,10 @@ import { useState } from "react";
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { EmbedInsightDialogBase, IReactOptions, IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
+import { EmbedInsightDialogBase, type IReactOptions, type IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
 
 import { code } from "./CodeMock.js";
-import { INeobackstopScenarioConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function EmbedInsightDialogBaseExamples() {

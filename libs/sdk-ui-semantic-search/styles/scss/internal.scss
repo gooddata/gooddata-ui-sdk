@@ -6,19 +6,58 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
 @use "./main.scss" as main;
 
-// Context-dependent styles that cannot be expressed in CSS modules
-// These styles apply when semantic search is used within specific containers
+.gd-semantic-search {
+    &__overlay {
+        background: kit-variables.$gd-color-white;
+        margin: 10px 0;
 
-// Desktop header dropdown context
-.gd-header-search-dropdown {
-    .gd-semantic-search__overlay {
-        width: 440px;
+        // Desktop view
+        .gd-header-search-dropdown & {
+            width: 440px;
+        }
+
+        // Mobile view
+        .gd-header-menu-search & {
+            .gd-semantic-search__overlay-input {
+                margin-bottom: 10px;
+            }
+        }
     }
-}
 
-// Mobile header menu context
-.gd-header-menu-search {
-    .gd-semantic-search__overlay-input {
-        margin-bottom: 10px;
+    &__overlay-input {
+        margin: 0 10px;
+
+        input:focus-visible {
+            outline: 1px auto kit-variables.$gd-input-text-border-outline;
+            outline-offset: 0;
+        }
+    }
+
+    &__ai_assistant_button {
+        button.gd-ui-kit-button--variant-tertiary.gd-ui-kit-button--hasIconBefore {
+            padding-left: 7px;
+        }
+
+        button:focus-visible {
+            outline: 1px auto kit-variables.$gd-input-text-border-outline;
+            outline-offset: 0;
+        }
+    }
+
+    &__overlay-error,
+    &__overlay-no-results {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    &__overlay-error {
+        padding: 10px 10px 0;
+    }
+
+    &__overlay-no-results {
+        height: 100px;
+        padding: 0 10px;
     }
 }

@@ -1,17 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { EntitiesApiGetAllEntitiesMemoryItemsRequest } from "@gooddata/api-client-tiger";
+import { type EntitiesApiGetAllEntitiesMemoryItemsRequest } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesMemoryItems } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    IMemoryItemsFilterOptions,
+    type IMemoryItemsFilterOptions,
     type IMemoryItemsQuery,
     type IMemoryItemsQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertMemoryItem } from "../../../convertors/fromBackend/MemoryItemConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery, buildListClause, joinClauses } from "../../common/filtering.js";
 
 export class MemoryItemsQuery implements IMemoryItemsQuery {

@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { CreationPanel } from "./CreationPanel.js";
-import { ISidebarProps } from "./types.js";
+import { type ISidebarProps } from "./types.js";
 import { useWidgetSelection } from "../../../model/index.js";
 
 /**

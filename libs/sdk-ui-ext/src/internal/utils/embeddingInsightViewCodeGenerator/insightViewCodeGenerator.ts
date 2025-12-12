@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IInsight, IInsightDefinition, insightId, insightTitle } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightDefinition, insightId, insightTitle } from "@gooddata/sdk-model";
 
 import { configForInsightView, localeForInsightView } from "./insightViewConfig.js";
-import { IInsightViewProps } from "../../interfaces/InsightView.js";
-import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
+import { type IInsightViewProps } from "../../interfaces/InsightView.js";
+import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 import {
-    IEmbeddingCodeGeneratorSpecification,
-    PropsWithMeta,
+    type IEmbeddingCodeGeneratorSpecification,
+    type PropsWithMeta,
     getReactEmbeddingCodeGenerator,
 } from "../embeddingCodeGenerator/index.js";
 import { removeUseless } from "../removeUseless.js";

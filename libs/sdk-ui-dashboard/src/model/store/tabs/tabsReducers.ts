@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import { initializeFilterContext } from "./filterContext/filterContextUtils.js";
-import { TabState, TabsState } from "./tabsState.js";
+import { type TabState, type TabsState } from "./tabsState.js";
 
 /**
  * @alpha

@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { AlertFilters } from "@gooddata/sdk-model";
+import { type AlertFilters } from "@gooddata/sdk-model";
 import { Overlay, UiButton, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { NotificationFiltersDetailDialog } from "./NotificationFiltersDetailDialog.js";

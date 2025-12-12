@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 /**
  * @public

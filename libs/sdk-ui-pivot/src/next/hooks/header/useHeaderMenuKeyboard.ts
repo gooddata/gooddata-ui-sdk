@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { AgGridHeaderGroupParams, AgGridHeaderParams } from "../../types/agGrid.js";
+import { type AgGridHeaderGroupParams, type AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Hook that handles Alt + Down Arrow key press on header cells to open the menu.

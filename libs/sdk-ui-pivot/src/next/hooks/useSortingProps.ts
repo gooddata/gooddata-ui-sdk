@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { SortChangedEvent } from "ag-grid-enterprise";
+import { type SortChangedEvent } from "ag-grid-enterprise";
 import { isEqual } from "lodash-es";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -12,7 +12,7 @@ import { useColumnDefs } from "../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { getSortModel } from "../features/sorting/agGridSortingApi.js";
 import { sortModelToSortItems } from "../features/sorting/sortModelToSortItems.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with sorting applied.

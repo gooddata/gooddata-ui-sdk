@@ -1,18 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useCallback, useMemo } from "react";
+import { type RefObject, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
     UiAsyncTable,
-    UiAsyncTableColumn,
+    type UiAsyncTableColumn,
     UiAsyncTableScrollbarWidth,
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
 
-import { KdaItem, KdaItemGroup } from "../internalTypes.js";
+import { type KdaItem, type KdaItemGroup } from "../internalTypes.js";
 import { driverColumn } from "./columns/driverColumn.js";
 import { driversCountColumn } from "./columns/driversCount.js";
 import { titleColumn } from "./columns/titleColumn.js";

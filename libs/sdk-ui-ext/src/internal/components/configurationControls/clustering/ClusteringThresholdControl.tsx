@@ -2,7 +2,7 @@
 
 import { messages } from "../../../../locales.js";
 import { DEFAULT_CLUSTERING_THRESHOLD } from "../../../constants/scatter.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { InputControl } from "../InputControl.js";
 
 export interface IClusteringThresholdControlProps {

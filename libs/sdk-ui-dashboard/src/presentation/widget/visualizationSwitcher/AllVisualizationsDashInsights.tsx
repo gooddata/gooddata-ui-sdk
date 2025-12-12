@@ -2,12 +2,12 @@
 
 import cx from "classnames";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
-import { OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { type IInsightWidget } from "@gooddata/sdk-model";
+import { type OnError, type OnExportReady, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { selectInsightsMap, useDashboardSelector } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
-import { WidgetExportDataAttributes } from "../../export/index.js";
+import { type WidgetExportDataAttributes } from "../../export/index.js";
 import { DashboardInsight } from "../insight/DashboardInsight.js";
 
 export interface IAllVisualizationsDashInsightsProps {

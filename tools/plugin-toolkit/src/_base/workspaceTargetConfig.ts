@@ -4,7 +4,7 @@ import ora from "ora";
 
 import { createBackend } from "./backend.js";
 import {
-    BackendCredentials,
+    type BackendCredentials,
     completeCredentialsOrDie,
     createCredentialsFromEnv,
     promptCredentials,
@@ -14,7 +14,7 @@ import { loadEnv } from "./env.js";
 import { getHostnameFromOptions, getWorkspaceFromOptions } from "./inputHandling/extractors.js";
 import { createHostnameValidator, validOrDie } from "./inputHandling/validators.js";
 import { promptHostname, promptWorkspaceId } from "./terminal/prompts.js";
-import { ActionOptions } from "./types.js";
+import { type ActionOptions } from "./types.js";
 import { readPackageJsonIfExists } from "./utils.js";
 
 /**

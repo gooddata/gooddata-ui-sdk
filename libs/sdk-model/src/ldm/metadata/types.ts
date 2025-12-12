@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { ObjRef, ObjectType } from "../../objRef/index.js";
+import { type ObjRef, type ObjectType } from "../../objRef/index.js";
 
 /**
  * @public

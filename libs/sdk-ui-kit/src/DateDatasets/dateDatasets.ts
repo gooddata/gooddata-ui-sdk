@@ -2,7 +2,7 @@
 
 import { groupBy, takeWhile } from "lodash-es";
 
-import { IDateDataset, IDateDatasetHeader } from "./typings.js";
+import { type IDateDataset, type IDateDatasetHeader } from "./typings.js";
 
 /**
  * @internal

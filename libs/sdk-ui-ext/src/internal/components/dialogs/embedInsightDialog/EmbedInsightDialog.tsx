@@ -1,19 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IExecutionConfig, IInsight, ITheme } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type IColorPalette, type IExecutionConfig, type IInsight, type ITheme } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
-    CopyCodeOriginType,
+    type CopyCodeOriginType,
     EmbedInsightDialogBase,
-    EmbedOptionsType,
-    EmbedType,
-    IAlignPoint,
-    IReactOptions,
-    IWebComponentsOptions,
-    InsightCodeType,
+    type EmbedOptionsType,
+    type EmbedType,
+    type IAlignPoint,
+    type IReactOptions,
+    type IWebComponentsOptions,
+    type InsightCodeType,
     Overlay,
     getDefaultEmbedTypeOptions,
     getHeightWithUnitsForEmbedCode,

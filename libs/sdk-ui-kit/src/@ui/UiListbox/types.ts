@@ -1,18 +1,18 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    ComponentType,
-    Dispatch,
-    KeyboardEvent,
-    MouseEvent,
-    MutableRefObject,
-    ReactNode,
-    RefObject,
-    SetStateAction,
+    type ComponentType,
+    type Dispatch,
+    type KeyboardEvent,
+    type MouseEvent,
+    type MutableRefObject,
+    type ReactNode,
+    type RefObject,
+    type SetStateAction,
 } from "react";
 
-import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
-import { IconType } from "../@types/icon.js";
+import { type IDropdownBodyRenderProps } from "../../Dropdown/index.js";
+import { type IconType } from "../@types/icon.js";
 
 /**
  * @internal

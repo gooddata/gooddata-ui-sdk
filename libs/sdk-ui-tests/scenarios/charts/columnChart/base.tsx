@@ -7,7 +7,7 @@ import {
     newMeasureValueFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
+import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

@@ -2,14 +2,14 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IAbsoluteDateFilterForm,
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IRelativeDateFilterForm,
-    IRelativeDateFilterPresetOfGranularity,
+    type IAbsoluteDateFilterForm,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IRelativeDateFilterForm,
+    type IRelativeDateFilterPresetOfGranularity,
 } from "@gooddata/sdk-model";
 
-import { IDateFilterOptionsByType } from "../../interfaces/index.js";
+import { type IDateFilterOptionsByType } from "../../interfaces/index.js";
 import {
     filterVisibleDateFilterOptions,
     getDateFilterOptionGranularity,

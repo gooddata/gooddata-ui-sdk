@@ -3,10 +3,10 @@
 import { useIntl } from "react-intl";
 
 import {
-    IAttributeDescriptor,
-    IBucket,
-    IExecutionDefinition,
-    ITotal,
+    type IAttributeDescriptor,
+    type IBucket,
+    type IExecutionDefinition,
+    type ITotal,
     isMeasureValueFilter,
     isRankingFilter,
     measureValueFilterCondition,
@@ -17,7 +17,7 @@ import { messages } from "../../../locales.js";
 import { constructAggregationsMenuItems } from "../../components/Header/utils/constructAggregationsMenuItems.js";
 import { useCurrentDataView } from "../../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { IAggregationsSubMenuItem } from "../../types/menu.js";
+import { type IAggregationsSubMenuItem } from "../../types/menu.js";
 import { useUpdateTotals } from "../totals/useUpdateTotals.js";
 
 /**

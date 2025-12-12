@@ -3,7 +3,7 @@
 import stringify from "json-stable-stringify";
 import { merge } from "lodash-es";
 
-import { IDimension } from "./dimension.js";
+import { type IDimension } from "./dimension.js";
 
 type DimensionPropsToDefault = Pick<IDimension, "totals">;
 

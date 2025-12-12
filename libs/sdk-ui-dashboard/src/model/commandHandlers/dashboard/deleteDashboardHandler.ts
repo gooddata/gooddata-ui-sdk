@@ -1,22 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
 
 import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
-import { DeleteDashboard } from "../../commands/index.js";
+import { type DeleteDashboard } from "../../commands/index.js";
 import { dashboardDeleted } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { DashboardDeleted } from "../../events/index.js";
+import { type DashboardDeleted } from "../../events/index.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
 import { executionResultsActions } from "../../store/executionResults/index.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 function deleteDashboard(ctx: DashboardContext, dashboardRef: ObjRef): Promise<void> {
     const { backend, workspace } = ctx;

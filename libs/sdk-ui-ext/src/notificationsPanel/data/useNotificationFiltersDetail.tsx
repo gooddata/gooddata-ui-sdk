@@ -4,16 +4,16 @@ import { useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { IAnalyticalBackend, layoutWidgets } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, layoutWidgets } from "@gooddata/sdk-backend-spi";
 import {
-    IAlertNotification,
-    IAttributeFilter,
-    IFilter,
-    IInsight,
-    IInsightWidget,
-    IdentifierRef,
-    LocalIdRef,
-    ObjRef,
+    type IAlertNotification,
+    type IAttributeFilter,
+    type IFilter,
+    type IInsight,
+    type IInsightWidget,
+    type IdentifierRef,
+    type LocalIdRef,
+    type ObjRef,
     areObjRefsEqual,
     filterLocalIdentifier,
     filterObjRef,

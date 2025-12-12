@@ -2,18 +2,18 @@
 import { invariant } from "ts-invariant";
 
 import {
-    IWorkspaceCatalog,
-    IWorkspaceCatalogAvailableItemsFactory,
-    IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceCatalog,
+    type IWorkspaceCatalogAvailableItemsFactory,
+    type IWorkspaceCatalogFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItem,
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
+    type CatalogItem,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateDataset,
+    type ICatalogFact,
+    type ICatalogGroup,
+    type ICatalogMeasure,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
     isCatalogDateDataset,
@@ -22,7 +22,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { TigerWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceCatalog implements IWorkspaceCatalog {
     constructor(

@@ -1,15 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    IDashboardAttributeFilter,
-    ObjRef,
+    type IDashboardAttributeFilter,
+    type ObjRef,
     areObjRefsEqual,
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import {
-    DrillEventIntersectionElementHeader,
-    IDrillEventIntersectionElement,
-    IDrillIntersectionAttributeItem,
+    type DrillEventIntersectionElementHeader,
+    type IDrillEventIntersectionElement,
+    type IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
 

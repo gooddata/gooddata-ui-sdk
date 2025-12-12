@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { CSSProperties, ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 
 import { ItemsWrapper } from "@gooddata/sdk-ui-kit";
 

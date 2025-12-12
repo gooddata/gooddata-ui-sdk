@@ -11,7 +11,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import {
-    IDashboardWidgetOverlay,
+    type IDashboardWidgetOverlay,
     selectEnableCustomizedDashboardsWithoutPluginOverlay,
     useDashboardSelector,
 } from "../../../model/index.js";

@@ -1,5 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
-import { IMdObject, ToMdObjectDefinition, isMdObject, isMdObjectDefinition } from "../ldm/metadata/next.js";
+import {
+    type IMdObject,
+    type ToMdObjectDefinition,
+    isMdObject,
+    isMdObjectDefinition,
+} from "../ldm/metadata/next.js";
 
 /**
  * Type of the destination of the notification channel, where the notifications are to be sent.

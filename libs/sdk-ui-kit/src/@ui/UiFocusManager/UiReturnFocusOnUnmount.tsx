@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, RefObject, useCallback, useMemo, useRef } from "react";
+import { type ReactNode, type RefObject, useCallback, useMemo, useRef } from "react";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
-import { IUiFocusHelperConnectors } from "./types.js";
+import { type IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
 
 /**

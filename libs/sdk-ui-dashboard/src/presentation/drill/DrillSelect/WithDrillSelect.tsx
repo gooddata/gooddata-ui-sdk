@@ -1,13 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo, useRef, useState } from "react";
+import { type ReactElement, useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
 
 import {
-    IInsight,
-    ObjRef,
+    type IInsight,
+    type ObjRef,
     isCrossFiltering,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
@@ -19,11 +19,11 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
-import { DrillSelectContext } from "./types.js";
+import { type DrillSelectContext } from "./types.js";
 import {
-    DashboardCommandFailed,
-    DashboardDrillCommand,
-    DashboardKeyDriverCombinationItem,
+    type DashboardCommandFailed,
+    type DashboardDrillCommand,
+    type DashboardKeyDriverCombinationItem,
     selectBackendCapabilities,
     selectDashboardFiltersWithoutCrossFiltering,
     selectDisableDefaultDrills,
@@ -32,23 +32,23 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import {
-    DashboardDrillContext,
-    DashboardDrillDefinition,
-    IDashboardDrillEvent,
+    type DashboardDrillContext,
+    type DashboardDrillDefinition,
+    type IDashboardDrillEvent,
     isDrillDownDefinition,
 } from "../../../types.js";
 import { DASHBOARD_DRILL_MENU_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { useDrills } from "../hooks/useDrills.js";
 import {
-    OnDashboardDrill,
-    OnDrillDownSuccess,
-    OnDrillToAttributeUrlSuccess,
-    OnDrillToCustomUrlSuccess,
-    OnDrillToDashboardSuccess,
-    OnDrillToInsightSuccess,
-    OnKeyDriverAnalysisSuccess,
-    OnWidgetDrill,
+    type OnDashboardDrill,
+    type OnDrillDownSuccess,
+    type OnDrillToAttributeUrlSuccess,
+    type OnDrillToCustomUrlSuccess,
+    type OnDrillToDashboardSuccess,
+    type OnDrillToInsightSuccess,
+    type OnKeyDriverAnalysisSuccess,
+    type OnWidgetDrill,
 } from "../types.js";
 import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
 

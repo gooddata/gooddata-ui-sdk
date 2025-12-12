@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, useCallback, useEffect, useRef } from "react";
+import { type ReactNode, useCallback, useEffect, useRef } from "react";
 
 export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;

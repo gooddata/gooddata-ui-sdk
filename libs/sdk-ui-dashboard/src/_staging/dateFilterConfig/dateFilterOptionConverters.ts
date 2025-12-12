@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import { InvariantError } from "ts-invariant";
 
-import { IDashboardDateFilter, isAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import { type IDashboardDateFilter, isAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import {
-    DateFilterOption,
+    type DateFilterOption,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
 } from "@gooddata/sdk-ui-filters";

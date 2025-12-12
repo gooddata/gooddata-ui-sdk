@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { MessageDescriptor, defineMessages } from "react-intl";
+import { type MessageDescriptor, defineMessages } from "react-intl";
 
 export const messages: Record<string, MessageDescriptor> = defineMessages({
     searchResultsNone: { id: "search.results.none" },

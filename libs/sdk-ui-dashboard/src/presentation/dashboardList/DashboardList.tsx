@@ -9,7 +9,7 @@ import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { DashboardListButton } from "./DashboardListButton.js";
 import { DashboardListItem } from "./DashboardListItem.js";
-import { IDashboardListProps } from "./types.js";
+import { type IDashboardListProps } from "./types.js";
 import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
 
 const alignPoints = [

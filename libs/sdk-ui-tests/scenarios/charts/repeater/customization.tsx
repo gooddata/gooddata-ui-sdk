@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
+import { type IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
 
 import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

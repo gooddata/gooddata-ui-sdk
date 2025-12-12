@@ -1,18 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { KeyboardEvent, UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import { type KeyboardEvent, type UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import stringify from "json-stable-stringify";
 import { compact, groupBy } from "lodash-es";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IInsight,
-    IListedDashboard,
-    IWidget,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IInsight,
+    type IListedDashboard,
+    type IWidget,
+    type ObjRef,
     areObjRefsEqual,
     insightTitle,
     isAttributeDescriptor,
@@ -24,13 +24,13 @@ import {
     isIdentifierRef,
     isKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
-import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { type IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
 
 import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
-import { DrillSelectContext, DrillSelectItem, DrillType } from "./types.js";
+import { type DrillSelectContext, type DrillSelectItem, DrillType } from "./types.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
@@ -41,7 +41,7 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
+import { type DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import { useDrillSelectDropdownMenuItems } from "../hooks/useDrillSelectDropdownMenuItems.js";
 import { isDrillToUrl } from "../types.js";
 import { dashboardMatch } from "../utils/dashboardPredicate.js";

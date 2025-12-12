@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback } from "react";
+import { type KeyboardEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import {
-    IAutomationMetadataObject,
-    INotificationChannelIdentifier,
-    INotificationChannelMetadataObject,
+    type IAutomationMetadataObject,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import {
     LoadingSpinner,

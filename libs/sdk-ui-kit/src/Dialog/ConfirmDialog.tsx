@@ -3,7 +3,7 @@
 import { memo } from "react";
 
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
-import { IConfirmDialogBaseProps } from "./typings.js";
+import { type IConfirmDialogBaseProps } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
 
 /**

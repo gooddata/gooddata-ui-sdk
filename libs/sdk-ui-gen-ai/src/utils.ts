@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
 export function getVisualizationHref(wsId: string, visId: string) {
     return `/analyze/#/${wsId}/${visId}/edit`;

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject, useCallback, useId, useMemo } from "react";
+import { type RefObject, useCallback, useId, useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -8,7 +8,7 @@ import { Typography, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useAddNewAttributeHandler } from "./hooks/useAddNewAttributeHandler.js";
 import { useUnusedAttributes } from "./hooks/useUnusedAttributes.js";
-import { IAddAttributeFilterButtonProps } from "../../presentation/filterBar/attributeFilter/addAttributeFilter/AddAttributeFilterButton.js";
+import { type IAddAttributeFilterButtonProps } from "../../presentation/filterBar/attributeFilter/addAttributeFilter/AddAttributeFilterButton.js";
 import { AttributesDropdown } from "../../presentation/filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
 import { useKdaState } from "../providers/KdaState.js";
 

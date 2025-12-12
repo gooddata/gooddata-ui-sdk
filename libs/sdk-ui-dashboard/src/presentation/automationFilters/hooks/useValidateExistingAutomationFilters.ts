@@ -3,15 +3,15 @@
 import { differenceBy, omit, uniq } from "lodash-es";
 
 import {
-    FilterContextItem,
-    IAbsoluteDateFilter,
-    IAutomationMetadataObject,
-    IAutomationVisibleFilter,
-    IDashboardDateFilter,
-    IFilter,
-    IFilterableWidget,
-    IInsight,
-    IRelativeDateFilter,
+    type FilterContextItem,
+    type IAbsoluteDateFilter,
+    type IAutomationMetadataObject,
+    type IAutomationVisibleFilter,
+    type IDashboardDateFilter,
+    type IFilter,
+    type IFilterableWidget,
+    type IInsight,
+    type IRelativeDateFilter,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
@@ -34,7 +34,7 @@ import {
 } from "../../../_staging/automation/index.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 import {
-    ExtendedDashboardWidget,
+    type ExtendedDashboardWidget,
     selectAutomationCommonDateFilterId,
     selectAutomationFiltersByTab,
     selectDashboardFiltersWithoutCrossFiltering,
@@ -43,7 +43,7 @@ import {
     selectEnableDashboardTabs,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { IDashboardFilter } from "../../../types.js";
+import { type IDashboardFilter } from "../../../types.js";
 import {
     areFiltersEqual,
     isAllTimeDateFilterFixed,

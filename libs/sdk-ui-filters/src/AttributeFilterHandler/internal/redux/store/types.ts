@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Action, AnyAction } from "@reduxjs/toolkit";
+import { type Action, type AnyAction } from "@reduxjs/toolkit";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement, IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAttributeElement, type IAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
-import { AttributeFilterState } from "./state.js";
+import { type AttributeFilterState } from "./state.js";
 
 /**
  * Event listener that can be used to listen dispatched AttributeFilterHandlerStore actions.

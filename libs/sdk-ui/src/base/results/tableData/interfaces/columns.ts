@@ -3,15 +3,15 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    IResultAttributeHeader,
-    IResultMeasureHeader,
-    IResultTotalHeader,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
+    type IResultAttributeHeader,
+    type IResultMeasureHeader,
+    type IResultTotalHeader,
 } from "@gooddata/sdk-model";
 
-import { ITableDataHeaderScope } from "./scope.js";
+import { type ITableDataHeaderScope } from "./scope.js";
 
 /**
  * Represents all possible column types in a pivot table structure.

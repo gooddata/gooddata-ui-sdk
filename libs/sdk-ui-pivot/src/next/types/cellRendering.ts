@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { ICellRendererParams } from "ag-grid-enterprise";
+import { type ICellRendererParams } from "ag-grid-enterprise";
 
-import { AgGridRowData } from "./internal.js";
+import { type AgGridRowData } from "./internal.js";
 
 /**
  * Cell types derived from cell data, used for styling and rendering decisions.

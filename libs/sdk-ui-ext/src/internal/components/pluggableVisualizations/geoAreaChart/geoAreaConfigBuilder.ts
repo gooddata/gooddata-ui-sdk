@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoAreaChartConfig } from "@gooddata/sdk-ui-geo/next";
-import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IGeoAreaChartConfig } from "@gooddata/sdk-ui-geo/next";
+import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { IVisProps, IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IVisProps, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
 interface IBuildAreaVisualizationConfigParams {
     options: IVisProps;

@@ -8,7 +8,7 @@ import { Hyperlink } from "../../Hyperlink/index.js";
 import { LoadingSpinner } from "../../LoadingSpinner/index.js";
 import { Footer } from "../Footer.js";
 import { FooterButtons } from "../FooterButtons.js";
-import { IDialogBaseProps } from "../typings.js";
+import { type IDialogBaseProps } from "../typings.js";
 
 /**
  * @internal

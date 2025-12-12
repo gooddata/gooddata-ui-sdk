@@ -1,5 +1,5 @@
 // (C) 2023 GoodData Corporation
-import { IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 /**
  * Represents the visibility mode of a filter.

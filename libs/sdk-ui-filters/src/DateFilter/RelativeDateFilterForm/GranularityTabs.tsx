@@ -3,8 +3,8 @@
 import { sortBy } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { type IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../locales.js";
 import { granularityIntlCodes } from "../constants/i18n.js";

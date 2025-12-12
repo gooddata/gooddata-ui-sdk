@@ -1,20 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    IDashboardLayout,
-    IDashboardLayoutContainerDirection,
-    IDashboardLayoutSectionHeader,
-    ScreenSize,
+    type IDashboardLayout,
+    type IDashboardLayoutContainerDirection,
+    type IDashboardLayoutSectionHeader,
+    type ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { IDashboardEvent } from "./base.js";
+import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 import {
-    ExtendedDashboardItem,
-    ExtendedDashboardLayoutSection,
-    ExtendedDashboardWidget,
-    StashedDashboardItemsId,
+    type ExtendedDashboardItem,
+    type ExtendedDashboardLayoutSection,
+    type ExtendedDashboardWidget,
+    type StashedDashboardItemsId,
 } from "../types/layoutTypes.js";
 
 /**

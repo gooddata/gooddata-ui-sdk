@@ -3,15 +3,15 @@ import { useCallback } from "react";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
 import {
-    AttributeFilterInteractionType,
-    AttributeHierarchiesInteractionType,
-    AutomationInteractionData,
-    DateFilterInteractionType,
-    DescriptionTooltipOpenedData,
-    NestedLayoutInteractionType,
-    SavedFilterViewInteractionData,
-    ShareDialogInteractionData,
-    VisualizationSwitcherInteractionType,
+    type AttributeFilterInteractionType,
+    type AttributeHierarchiesInteractionType,
+    type AutomationInteractionData,
+    type DateFilterInteractionType,
+    type DescriptionTooltipOpenedData,
+    type NestedLayoutInteractionType,
+    type SavedFilterViewInteractionData,
+    type ShareDialogInteractionData,
+    type VisualizationSwitcherInteractionType,
     userInteractionTriggered,
 } from "../events/index.js";
 

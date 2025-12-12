@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IBucketOfFun, IReferencePoint } from "../../../../interfaces/Visualization.js";
+import { type IBucketOfFun, type IReferencePoint } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { getXirrBuckets } from "../xirrBucketHelper.js";
 

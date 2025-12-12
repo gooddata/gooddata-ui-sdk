@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { getContrast, shade } from "polished";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 
 import { getComplementaryPalette } from "../complementaryPalette.js";
 

@@ -5,9 +5,9 @@ import { describe, expect, it } from "vitest";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoLayerData } from "../../context/GeoLayersContext.js";
+import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { computeCombinedViewport } from "../../map/viewport.js";
 
 const baseLayerColorStrategy: IColorStrategy = {

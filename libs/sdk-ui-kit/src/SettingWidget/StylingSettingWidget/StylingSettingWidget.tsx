@@ -1,16 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import { type ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { StylingSettingBody } from "./StylingSettingBody.js";
 import { Button } from "../../Button/index.js";
-import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
+import { type IStylingPickerItem, type StylingPickerItemContent } from "../../Dialog/index.js";
 import { Hyperlink } from "../../Hyperlink/index.js";
 import { LoadingSpinner } from "../../LoadingSpinner/index.js";
 import { Message } from "../../Messages/index.js";

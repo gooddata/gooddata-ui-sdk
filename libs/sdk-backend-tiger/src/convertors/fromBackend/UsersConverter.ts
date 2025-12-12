@@ -2,15 +2,15 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IUserProfile,
-    JsonApiAnalyticalDashboardOutIncludes,
-    JsonApiMetricOutIncludes,
-    JsonApiUserIdentifierLinkage,
-    JsonApiUserIdentifierOutAttributes,
-    JsonApiWorkspaceAutomationOut,
-    JsonApiWorkspaceAutomationOutWithLinks,
+    type IUserProfile,
+    type JsonApiAnalyticalDashboardOutIncludes,
+    type JsonApiMetricOutIncludes,
+    type JsonApiUserIdentifierLinkage,
+    type JsonApiUserIdentifierOutAttributes,
+    type JsonApiWorkspaceAutomationOut,
+    type JsonApiWorkspaceAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { IUser, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IUser, idRef, uriRef } from "@gooddata/sdk-model";
 
 /**
  * To preserve the typing and bootstrap concept, we are using firstName

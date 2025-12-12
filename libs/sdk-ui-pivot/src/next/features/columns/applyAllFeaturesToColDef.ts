@@ -1,13 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
-import { ISortItem } from "@gooddata/sdk-model";
-import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
+import { type ISortItem } from "@gooddata/sdk-model";
+import { type DataViewFacade, type ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { AgGridColumnDef } from "../../types/agGrid.js";
-import { ColumnWidthItem } from "../../types/resizing.js";
-import { ITextWrapping } from "../../types/textWrapping.js";
+import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { type ColumnWidthItem } from "../../types/resizing.js";
+import { type ITextWrapping } from "../../types/textWrapping.js";
 import { applyCellRenderingToColDef } from "../drilling/applyCellRenderingToColDef.js";
 import { applyColumnWidthsToColDef } from "../resizing/applyColumnWidthsToColDef.js";
 import { applySortByToColDef } from "../sorting/applySortByToColDef.js";

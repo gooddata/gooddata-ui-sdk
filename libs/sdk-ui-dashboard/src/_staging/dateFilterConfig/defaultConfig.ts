@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IDateFilterConfig, idRef } from "@gooddata/sdk-model";
+import { type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 
 export const defaultDateFilterConfig: IDateFilterConfig = {
     ref: idRef("defaultDateFilterProjectConfig"),

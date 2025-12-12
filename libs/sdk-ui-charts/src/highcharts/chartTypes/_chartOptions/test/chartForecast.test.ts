@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ISeriesItem } from "../../../typings/unsafe.js";
+import { type ISeriesItem } from "../../../typings/unsafe.js";
 import { assignForecastAxes, updateForecastWithSettings } from "../chartForecast.js";
 
 describe("assignForecastAxes", () => {

@@ -1,20 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IColorPalette } from "@gooddata/sdk-model";
-import { IColorAssignment } from "@gooddata/sdk-ui";
-import { ChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type IColorAssignment } from "@gooddata/sdk-ui";
+import { type ChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
 
-import { ChartAlignTypes, IAxisConfig, IGridConfig } from "../../interfaces/index.js";
-import { StackingType } from "../constants/stacking.js";
+import { type ChartAlignTypes, type IAxisConfig, type IGridConfig } from "../../interfaces/index.js";
+import { type StackingType } from "../constants/stacking.js";
 import {
-    ColorAxisOptions,
-    DataLabelsOptionsObject,
-    HTMLDOMElement,
-    SVGAttributes,
-    SVGDOMElement,
-    StackItemObject,
-    TooltipPositionerPointObject,
-    YAxisOptions,
+    type ColorAxisOptions,
+    type DataLabelsOptionsObject,
+    type HTMLDOMElement,
+    type SVGAttributes,
+    type SVGDOMElement,
+    type StackItemObject,
+    type TooltipPositionerPointObject,
+    type YAxisOptions,
 } from "../lib/index.js";
 
 /*

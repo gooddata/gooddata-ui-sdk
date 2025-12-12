@@ -1,5 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
-import { IInsight, IInsightDefinition, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
+import {
+    type IInsight,
+    type IInsightDefinition,
+    type IVisualizationClass,
+    newAttribute,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 //

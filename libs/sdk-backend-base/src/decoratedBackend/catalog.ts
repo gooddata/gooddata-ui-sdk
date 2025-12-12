@@ -1,21 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IWorkspaceCatalog,
-    IWorkspaceCatalogAvailableItemsFactory,
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceCatalog,
+    type IWorkspaceCatalogAvailableItemsFactory,
+    type IWorkspaceCatalogFactory,
+    type IWorkspaceCatalogFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItem,
-    CatalogItemType,
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
-    ObjRef,
+    type CatalogItem,
+    type CatalogItemType,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateDataset,
+    type ICatalogFact,
+    type ICatalogGroup,
+    type ICatalogMeasure,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

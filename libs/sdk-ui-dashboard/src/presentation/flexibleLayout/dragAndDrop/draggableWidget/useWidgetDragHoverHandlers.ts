@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 
 import { uiActions, useDashboardDispatch } from "../../../../model/index.js";
-import { DropZoneType, ILayoutItemPath } from "../../../../types.js";
+import { type DropZoneType, type ILayoutItemPath } from "../../../../types.js";
 
 /**
  * @internal

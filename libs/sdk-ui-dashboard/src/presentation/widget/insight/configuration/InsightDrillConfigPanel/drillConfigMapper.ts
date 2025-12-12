@@ -3,11 +3,11 @@
 import { defineMessage } from "react-intl";
 
 import {
-    IDrillToDashboard,
-    IDrillToInsight,
-    IInsightWidget,
-    InsightDrillDefinition,
-    ObjRef,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IInsightWidget,
+    type InsightDrillDefinition,
+    type ObjRef,
     areObjRefsEqual,
     drillDownReferenceAttributeRef,
     isDrillFromAttribute,
@@ -17,7 +17,7 @@ import {
     isDrillToInsight,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import {
     getDrillOriginLocalIdentifier,
@@ -26,19 +26,19 @@ import {
     isDrillDownIntersectionIgnoredAttributesForHierarchy,
 } from "../../../../../_staging/drills/drillingUtils.js";
 import {
-    IDrillToUrlAttributeDefinition,
-    IGlobalDrillDownAttributeHierarchyDefinition,
+    type IDrillToUrlAttributeDefinition,
+    type IGlobalDrillDownAttributeHierarchyDefinition,
 } from "../../../../../types.js";
 import {
     DRILL_TARGET_TYPE,
-    IDrillConfigItem,
-    IDrillConfigItemBase,
-    IDrillDownAttributeHierarchyConfig,
-    IDrillToDashboardConfig,
-    IDrillToInsightConfig,
-    IDrillToUrl,
-    IDrillToUrlConfig,
-    UrlDrillTarget,
+    type IDrillConfigItem,
+    type IDrillConfigItemBase,
+    type IDrillDownAttributeHierarchyConfig,
+    type IDrillToDashboardConfig,
+    type IDrillToInsightConfig,
+    type IDrillToUrl,
+    type IDrillToUrlConfig,
+    type UrlDrillTarget,
     isDrillToUrl,
 } from "../../../../drill/types.js";
 

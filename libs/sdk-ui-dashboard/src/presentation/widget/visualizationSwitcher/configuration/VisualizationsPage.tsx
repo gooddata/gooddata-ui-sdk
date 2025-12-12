@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 
 import { InsightPicker } from "./InsightPicker.js";

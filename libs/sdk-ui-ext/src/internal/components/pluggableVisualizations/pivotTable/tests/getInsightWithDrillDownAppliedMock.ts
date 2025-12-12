@@ -2,11 +2,11 @@
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    IFilter,
-    IInsight,
-    IInsightDefinition,
-    IMeasureDescriptor,
-    ISortItem,
+    type IFilter,
+    type IInsight,
+    type IInsightDefinition,
+    type IMeasureDescriptor,
+    type ISortItem,
     bucketSetTotals,
     localIdRef,
     modifyAttribute,
@@ -18,10 +18,13 @@ import {
     newTotal,
     uriRef,
 } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
+import { type IDrillEventIntersectionElement, type IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
 
-import { IDrillDownDefinition, IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import {
+    type IDrillDownDefinition,
+    type IVisualizationProperties,
+} from "../../../../interfaces/Visualization.js";
 
 const { Department, Region, Status, Won } = ReferenceMd;
 const properties: IVisualizationProperties = {

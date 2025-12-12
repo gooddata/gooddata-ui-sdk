@@ -1,17 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { compact, omit } from "lodash-es";
 
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IBucket,
-    IDimension,
-    IExecutionDefinition,
-    INullableFilter,
-    ISortItem,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
+    type IDimension,
+    type IExecutionDefinition,
+    type INullableFilter,
+    type ISortItem,
     MeasureGroupIdentifier,
     bucketsAttributes,
     bucketsMeasures,
@@ -21,7 +21,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    ITranslationsComponentProps,
+    type ITranslationsComponentProps,
     IntlTranslationsProvider,
     IntlWrapper,
     useResolveValuesWithPlaceholders,
@@ -31,9 +31,9 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { CoreGeoChart } from "./core/CoreGeoChart.js";
 import {
-    GeoPushpinChartPropsUnion,
-    IGeoPushpinChartLatitudeLongitudeProps,
-    IGeoPushpinChartProps,
+    type GeoPushpinChartPropsUnion,
+    type IGeoPushpinChartLatitudeLongitudeProps,
+    type IGeoPushpinChartProps,
     isGeoPushpinChartProps,
 } from "./GeoChart.js";
 

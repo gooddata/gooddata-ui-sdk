@@ -1,11 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
-import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { type DataValue, type IMeasureGroupDescriptor, type ITheme } from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
+import {
+    type ChartFillConfig,
+    type IColorStrategy,
+    valueWithEmptyHandling,
+} from "@gooddata/sdk-ui-vis-commons";
 
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { IPointData } from "../../typings/unsafe.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IPointData } from "../../typings/unsafe.js";
 import { getChartFillProperties } from "../_chartOptions/patternFillOptions.js";
 import { parseValue, unwrap } from "../_util/common.js";
 

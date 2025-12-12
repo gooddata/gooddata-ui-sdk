@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { IBucket, IDimension, IExecutionDefinition } from "@gooddata/sdk-model";
+import { type IBucket, type IDimension, type IExecutionDefinition } from "@gooddata/sdk-model";
 
 /**
  * Tuple of dimensions (rows and columns) for the pivot table.

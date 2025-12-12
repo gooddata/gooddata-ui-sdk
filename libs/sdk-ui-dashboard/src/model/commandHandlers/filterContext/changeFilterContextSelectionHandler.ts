@@ -1,18 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { AnyAction } from "@reduxjs/toolkit";
+import { type AnyAction } from "@reduxjs/toolkit";
 import { compact, partition, uniqBy } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilter,
-    ObjRef,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilter,
+    type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
     getAttributeElementsItems,
@@ -29,7 +29,7 @@ import {
 
 import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "./common.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
-import { ChangeFilterContextSelection } from "../../commands/index.js";
+import { type ChangeFilterContextSelection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
@@ -39,8 +39,8 @@ import {
     selectAttributeFilterConfigsOverridesByTab,
 } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
-    IUpdateAttributeFilterSelectionPayload,
-    IUpsertDateFilterPayload,
+    type IUpdateAttributeFilterSelectionPayload,
+    type IUpsertDateFilterPayload,
 } from "../../store/tabs/filterContext/filterContextReducers.js";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
@@ -56,9 +56,12 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
-import { DisplayFormResolutionResult, resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
+import {
+    type DisplayFormResolutionResult,
+    resolveDisplayFormMetadata,
+} from "../../utils/displayFormResolver.js";
 
 export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { IInsightDefinition, insightModifyItems } from "@gooddata/sdk-model";
+import { type IInsightDefinition, insightModifyItems } from "@gooddata/sdk-model";
 
 import { fillMissingFormat } from "./fillMissingFormat.js";
 

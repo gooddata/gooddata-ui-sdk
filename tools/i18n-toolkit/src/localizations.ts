@@ -4,7 +4,7 @@ import * as path from "path";
 
 import glob from "fast-glob";
 
-import { LocalesItem, LocalesStructure } from "./schema/localization.js";
+import { type LocalesItem, type LocalesStructure } from "./schema/localization.js";
 import { readFile } from "./utils/index.js";
 
 export async function getLocalizationFiles(localizationPaths: string[]): Promise<[string, Buffer][]> {

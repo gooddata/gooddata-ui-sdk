@@ -6,9 +6,9 @@ import { describe, expect, it, vi } from "vitest";
 
 import { suppressConsole } from "@gooddata/util";
 
-import { IVisualizationProperties, InternalIntlWrapper } from "../../../../internal/index.js";
+import { type IVisualizationProperties, InternalIntlWrapper } from "../../../../internal/index.js";
 import {
-    IOrientationDropdownControl,
+    type IOrientationDropdownControl,
     OrientationDropdownControl,
     getAxesByChartOrientation,
 } from "../OrientationDropdownControl.js";

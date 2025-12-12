@@ -3,20 +3,20 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    Dimension,
-    SortKeyAttribute,
-    SortKeyAttributeAttributeDirectionEnum,
-    SortKeyAttributeAttributeSortTypeEnum,
-    SortKeyValue,
+    type Dimension,
+    type SortKeyAttribute,
+    type SortKeyAttributeAttributeDirectionEnum,
+    type SortKeyAttributeAttributeSortTypeEnum,
+    type SortKeyValue,
 } from "@gooddata/api-client-tiger";
 import {
-    IAttributeSortItem,
-    IExecutionDefinition,
-    ILocatorItem,
-    IMeasureSortItem,
-    ISortItem,
+    type IAttributeSortItem,
+    type IExecutionDefinition,
+    type ILocatorItem,
+    type IMeasureSortItem,
+    type ISortItem,
     MeasureGroupIdentifier,
-    SortDirection,
+    type SortDirection,
     isAttributeAreaSort,
     isAttributeLocator,
     isAttributeSort,

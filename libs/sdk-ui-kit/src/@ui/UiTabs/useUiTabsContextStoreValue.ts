@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { EmptyObject } from "@gooddata/util";
+import { type EmptyObject } from "@gooddata/util";
 
 import {
     DefaultUiTabsAllTabs,
@@ -13,7 +13,7 @@ import {
     DefaultUiTabsTabActionsButton,
     DefaultUiTabsTabValue,
 } from "./defaultComponents/index.js";
-import { IUiTabActionEventContext, IUiTabContext, IUiTabsProps } from "./types.js";
+import { type IUiTabActionEventContext, type IUiTabContext, type IUiTabsProps } from "./types.js";
 
 let actionIdCounter = 0;
 

@@ -1,7 +1,7 @@
 // (C) 2007-2023 GoodData Corporation
-import { IntlShape, MessageDescriptor, createIntl } from "react-intl";
+import { type IntlShape, type MessageDescriptor, createIntl } from "react-intl";
 
-import { DefaultLocale, ILocale } from "./Locale.js";
+import { DefaultLocale, type ILocale } from "./Locale.js";
 //import { resolveMessages } from "./messagesMap.js";
 //import { messagesMap } from "./messagesMap.js";
 

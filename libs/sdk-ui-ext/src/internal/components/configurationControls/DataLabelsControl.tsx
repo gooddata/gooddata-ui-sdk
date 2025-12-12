@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { dataLabelStyleDropdownItems, dataLabelsDropdownItems } from "../../constants/dropdowns.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 

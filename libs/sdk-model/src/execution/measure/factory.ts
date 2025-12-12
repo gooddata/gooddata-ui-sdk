@@ -5,18 +5,18 @@ import SparkMD5 from "spark-md5";
 import { InvariantError, invariant } from "ts-invariant";
 
 import {
-    ArithmeticMeasureOperator,
-    IArithmeticMeasureDefinition,
-    IInlineMeasureDefinition,
-    IMeasure,
-    IMeasureDefinition,
-    IMeasureDefinitionType,
-    IPoPMeasureDefinition,
-    IPreviousPeriodDateDataSet,
-    IPreviousPeriodMeasureDefinition,
-    IVirtualArithmeticMeasureDefinition,
-    MeasureAggregation,
-    MeasureOrLocalId,
+    type ArithmeticMeasureOperator,
+    type IArithmeticMeasureDefinition,
+    type IInlineMeasureDefinition,
+    type IMeasure,
+    type IMeasureDefinition,
+    type IMeasureDefinitionType,
+    type IPoPMeasureDefinition,
+    type IPreviousPeriodDateDataSet,
+    type IPreviousPeriodMeasureDefinition,
+    type IVirtualArithmeticMeasureDefinition,
+    type MeasureAggregation,
+    type MeasureOrLocalId,
     isArithmeticMeasure,
     isInlineMeasure,
     isMeasure,
@@ -26,9 +26,9 @@ import {
     measureLocalId,
 } from "./index.js";
 import { idRef } from "../../objRef/factory.js";
-import { Identifier, ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
+import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
 import { sanitizeLocalId } from "../../sanitizeLocalId.js";
-import { IMeasureFilter } from "../filter/index.js";
+import { type IMeasureFilter } from "../filter/index.js";
 
 /**
  * Simplified Previous Period Data DataSet specification

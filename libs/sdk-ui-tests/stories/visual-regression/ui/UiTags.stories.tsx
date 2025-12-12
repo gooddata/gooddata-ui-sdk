@@ -1,13 +1,19 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
-import { IAccessibilityConfigBase, UiCheckbox, UiTagDef, UiTags, UiTagsProps } from "@gooddata/sdk-ui-kit";
+import {
+    type IAccessibilityConfigBase,
+    UiCheckbox,
+    type UiTagDef,
+    UiTags,
+    type UiTagsProps,
+} from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const smallTags: UiTagDef[] = [

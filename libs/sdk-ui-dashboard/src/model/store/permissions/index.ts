@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { Reducer, createSlice } from "@reduxjs/toolkit";
+import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { permissionsReducers } from "./permissionsReducers.js";
-import { PermissionsState, permissionsInitialState } from "./permissionsState.js";
+import { type PermissionsState, permissionsInitialState } from "./permissionsState.js";
 
 const permissionsSlice = createSlice({
     name: "permissions",

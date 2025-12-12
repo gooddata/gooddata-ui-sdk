@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    DataValue,
-    IExecutionDefinition,
-    IResultHeader,
-    IResultMeasureHeader,
+    type DataValue,
+    type IExecutionDefinition,
+    type IResultHeader,
+    type IResultMeasureHeader,
     attributeLocalId,
     bucketsFind,
     isAttribute,
@@ -19,23 +19,23 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    DataViewFacade,
-    IMappingHeader,
+    type DataViewFacade,
+    type IMappingHeader,
     emptyHeaderTitleFromIntl,
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { getSubtotalStyles } from "./dataSourceUtils.js";
-import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes.js";
+import { type IAgGridPage, type IGridRow, type IGridTotalsRow } from "./resultTypes.js";
 import { messages } from "../../locales.js";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { type TableDescriptor } from "../structure/tableDescriptor.js";
 import {
-    MixedHeadersCol,
-    MixedValuesCol,
-    SliceCol,
-    SliceMeasureCol,
+    type MixedHeadersCol,
+    type MixedValuesCol,
+    type SliceCol,
+    type SliceMeasureCol,
     isSeriesCol,
 } from "../structure/tableDescriptorTypes.js";
 

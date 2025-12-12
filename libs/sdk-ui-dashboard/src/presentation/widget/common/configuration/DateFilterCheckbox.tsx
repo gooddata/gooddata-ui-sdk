@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ChangeEvent, useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ICatalogDateDataset, IWidget, ObjRef, isInsightWidget } from "@gooddata/sdk-model";
-import { IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { type ICatalogDateDataset, type IWidget, type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
+import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 
 import { getUnrelatedDateDataset } from "./utils.js";
 import { useCurrentDateFilterConfig } from "../../../dragAndDrop/index.js";

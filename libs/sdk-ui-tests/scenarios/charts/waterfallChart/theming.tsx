@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
+import { type IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
 import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

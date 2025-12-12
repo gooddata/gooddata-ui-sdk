@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactElement, useState } from "react";
+import { type ReactElement, useState } from "react";
 
 import { useIntl } from "react-intl";
 

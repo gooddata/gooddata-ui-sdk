@@ -7,19 +7,19 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import {
-    IOrganization,
-    IOrganizationAutomationService,
-    IOrganizationLlmEndpointsService,
-    IOrganizationNotificationChannelService,
-    IOrganizationNotificationService,
-    IOrganizationPermissionService,
-    IOrganizationSettingsService,
-    IOrganizationStylingService,
-    IOrganizationUserService,
-    IOrganizations,
-    ISecuritySettingsService,
+    type IOrganization,
+    type IOrganizationAutomationService,
+    type IOrganizationLlmEndpointsService,
+    type IOrganizationNotificationChannelService,
+    type IOrganizationNotificationService,
+    type IOrganizationPermissionService,
+    type IOrganizationSettingsService,
+    type IOrganizationStylingService,
+    type IOrganizationUserService,
+    type IOrganizations,
+    type ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationDescriptor, IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
+import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
 
 import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
@@ -30,7 +30,7 @@ import { SecuritySettingsService } from "./securitySettings.js";
 import { OrganizationSettingsService } from "./settings.js";
 import { OrganizationStylingService } from "./styling.js";
 import { OrganizationUsersService } from "./users.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(

@@ -2,7 +2,11 @@
 import { uniqWith } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { AttributeDisplayFormType, IAttributeDescriptor, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    type AttributeDisplayFormType,
+    type IAttributeDescriptor,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 
 import {
     selectAllCatalogAttributesMap,
@@ -10,7 +14,7 @@ import {
     selectSelectedWidgetRef,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { IAttributeWithDisplayForm } from "../../../../drill/DrillConfigPanel/DrillToUrl/types.js";
+import { type IAttributeWithDisplayForm } from "../../../../drill/DrillConfigPanel/DrillToUrl/types.js";
 
 export interface IUseAttributesWithDisplayFormsResult {
     linkDisplayForms: IAttributeWithDisplayForm[];

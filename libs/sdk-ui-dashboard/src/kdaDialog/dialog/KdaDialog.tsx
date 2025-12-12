@@ -19,7 +19,7 @@ import { KeyDriversPanel } from "../composition/KeyDriversPanel.js";
 import { MetricsBar } from "../composition/MetricsBar.js";
 import { KDA_DIALOG_OVERS_Z_INDEX } from "../const.js";
 import { useKdaState } from "../providers/KdaState.js";
-import { IKdaDialogProps } from "../types.js";
+import { type IKdaDialogProps } from "../types.js";
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
 import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";

@@ -2,7 +2,7 @@
 
 import type { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
-import { SearchTreeViewItem } from "../internal/LeveledSearchTreeView.js";
+import { type SearchTreeViewItem } from "../internal/LeveledSearchTreeView.js";
 
 export function thresholdFilter(threshold: number) {
     return (item: ISemanticSearchResultItem) => {

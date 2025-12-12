@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    DataViewFacade,
-    ExplicitDrill,
-    IMappingHeader,
+    type DataViewFacade,
+    type ExplicitDrill,
+    type IMappingHeader,
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
     isValueColumnDefinition,
@@ -14,8 +14,8 @@ import {
     extractAllRowMeasureMappingHeaders,
     extractRowMappingHeadersAtPosition,
 } from "./headerMapping.js";
-import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
-import { AgGridRowData } from "../../types/internal.js";
+import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Extracts headers for drill intersection for a cell

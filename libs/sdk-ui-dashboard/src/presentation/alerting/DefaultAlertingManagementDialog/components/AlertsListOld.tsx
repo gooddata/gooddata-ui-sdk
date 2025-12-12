@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, type IInsightWidget } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 

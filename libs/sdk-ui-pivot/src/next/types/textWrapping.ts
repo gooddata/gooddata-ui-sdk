@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ColumnLocator } from "./locators.js";
+import { type ColumnLocator } from "./locators.js";
 
 /**
  * Column text wrapping item that specifies text wrapping settings for specific column(s).

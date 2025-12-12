@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
-import { cancelAsyncAction, loadThreadAction, loadedSelector } from "../../store/index.js";
+import { type cancelAsyncAction, type loadThreadAction, loadedSelector } from "../../store/index.js";
 
 type ThreadLoadingProps = {
     initializing?: boolean;

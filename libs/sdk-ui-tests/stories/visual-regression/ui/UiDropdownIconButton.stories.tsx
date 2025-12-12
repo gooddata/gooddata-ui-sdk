@@ -3,11 +3,11 @@
 import {
     ComponentTable,
     UiDropdownIconButton,
-    UiDropdownIconButtonProps,
+    type UiDropdownIconButtonProps,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({

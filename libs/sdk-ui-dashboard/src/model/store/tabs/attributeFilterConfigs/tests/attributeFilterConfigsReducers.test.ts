@@ -4,9 +4,12 @@ import { produce } from "immer";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { DashboardDateFilterConfigModeValues, IDashboardAttributeFilterConfig } from "@gooddata/sdk-model";
+import {
+    DashboardDateFilterConfigModeValues,
+    type IDashboardAttributeFilterConfig,
+} from "@gooddata/sdk-model";
 
-import { TabsState, tabsActions } from "../../index.js";
+import { type TabsState, tabsActions } from "../../index.js";
 import { attributeFilterConfigsReducers } from "../attributeFilterConfigsReducers.js";
 
 describe("attributeFilterConfigsReducers", () => {

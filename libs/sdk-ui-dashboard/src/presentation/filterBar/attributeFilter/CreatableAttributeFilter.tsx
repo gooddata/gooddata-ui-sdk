@@ -13,7 +13,7 @@ import {
     selectSupportsMultipleDateFilters,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
+import { type ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
 import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/index.js";
 
 /**

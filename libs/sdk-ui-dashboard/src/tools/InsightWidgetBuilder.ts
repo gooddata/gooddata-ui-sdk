@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    IDashboardFilterReference,
-    IInsight,
-    IInsightWidgetBase,
-    IInsightWidgetConfiguration,
-    InsightDrillDefinition,
-    ObjRef,
-    VisualizationProperties,
+    type IDashboardFilterReference,
+    type IInsight,
+    type IInsightWidgetBase,
+    type IInsightWidgetConfiguration,
+    type InsightDrillDefinition,
+    type ObjRef,
+    type VisualizationProperties,
     insightRef,
     insightTitle,
     uriRef,

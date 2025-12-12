@@ -3,7 +3,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IResponsiveTextProps, ResponsiveText } from "../ResponsiveText.js";
+import { type IResponsiveTextProps, ResponsiveText } from "../ResponsiveText.js";
 
 describe("ResponsiveText", () => {
     function createWindowMock() {

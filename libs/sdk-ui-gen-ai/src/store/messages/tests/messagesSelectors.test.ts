@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { RootState } from "../../types.js";
+import { type RootState } from "../../types.js";
 import { lastMessageSelector } from "../messagesSelectors.js";
 
 const dummyState: RootState = {

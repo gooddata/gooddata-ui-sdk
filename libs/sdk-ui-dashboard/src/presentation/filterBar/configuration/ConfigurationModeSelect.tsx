@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ChangeEvent, useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
 
-import { IntlShape } from "react-intl/src/types.js";
+import { type IntlShape } from "react-intl/src/types.js";
 
 import { ModeSelectItem } from "./ConfigurationModeSelectItem.js";
 import { messages } from "../../../locales.js";

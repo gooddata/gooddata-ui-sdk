@@ -2,10 +2,10 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IDashboardDateFilterConfig,
-    IDashboardLayout,
-    IFilterContext as IFilterContextModel,
-    ObjRef,
+    type IDashboardDateFilterConfig,
+    type IDashboardLayout,
+    type IFilterContext as IFilterContextModel,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

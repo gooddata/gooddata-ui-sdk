@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAutomationMetadataObject, IInsight } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, type IInsight } from "@gooddata/sdk-model";
 
 import { useDashboardScheduledExportFilters } from "./useDashboardScheduledExportFilters.js";
 import { useWidgetScheduledExportFilters } from "./useWidgetScheduledExportFilters.js";
-import { FilterableDashboardWidget } from "../../types/layoutTypes.js";
+import { type FilterableDashboardWidget } from "../../types/layoutTypes.js";
 
 /**
  * @deprecated - can be removed, once `enableAutomationFilterContext` is removed

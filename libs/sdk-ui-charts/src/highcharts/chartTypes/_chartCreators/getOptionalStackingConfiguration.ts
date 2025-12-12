@@ -2,19 +2,19 @@
 
 import { merge, partial, set } from "lodash-es";
 
-import { IDrillConfig } from "@gooddata/sdk-ui";
+import { type IDrillConfig } from "@gooddata/sdk-ui";
 
 import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
 import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { StackingType } from "../../constants/stacking.js";
-import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type StackingType } from "../../constants/stacking.js";
+import { type HighchartsOptions, type XAxisOptions, type YAxisOptions } from "../../lib/index.js";
 import {
-    IAxis,
-    IChartOptions,
-    ISeriesItem,
-    IStackMeasuresConfig,
-    IYAxisConfig,
+    type IAxis,
+    type IChartOptions,
+    type ISeriesItem,
+    type IStackMeasuresConfig,
+    type IYAxisConfig,
 } from "../../typings/unsafe.js";
 import { supportedStackingAttributesChartTypes } from "../_chartOptions/chartCapabilities.js";
 import {

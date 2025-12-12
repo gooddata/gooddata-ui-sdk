@@ -5,7 +5,7 @@ import type mapboxgl from "mapbox-gl";
 import { colorPaletteToColors } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
-import { IGeoLngLat, IGeoViewports } from "../../../GeoChart.js";
+import { type IGeoLngLat, type IGeoViewports } from "../../../GeoChart.js";
 
 export const DEFAULT_WORLD_BOUNDS = { northEast: { lat: -84, lng: -180 }, southWest: { lat: 84, lng: 180 } };
 

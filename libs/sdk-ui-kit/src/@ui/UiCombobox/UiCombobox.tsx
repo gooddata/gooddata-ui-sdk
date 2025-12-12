@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import type { IUiComboboxParams } from "./types.js";
 import { UiComboboxContextProvider } from "./UiComboboxContext.js";

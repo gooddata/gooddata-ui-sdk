@@ -1,8 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IOrganizationUser, IOrganizationUserGroup, IUser, IUserGroup } from "@gooddata/sdk-model";
+import {
+    type IOrganizationUser,
+    type IOrganizationUserGroup,
+    type IUser,
+    type IUserGroup,
+} from "@gooddata/sdk-model";
 
-import { IPagedResource } from "../../common/paging.js";
+import { type IPagedResource } from "../../common/paging.js";
 
 /**
  * This service provides access to organization users.

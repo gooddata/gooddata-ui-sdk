@@ -3,9 +3,9 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
-import { ChartFillType } from "@gooddata/sdk-ui-vis-commons";
+import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { getMVS } from "../../_util/test/helper.js";

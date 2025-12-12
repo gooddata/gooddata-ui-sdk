@@ -3,7 +3,7 @@
 import { DashboardInner } from "./DashboardInner.js";
 import { selectDashboardLoading, useDashboardSelector } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import { IDashboardProps } from "../types.js";
+import { type IDashboardProps } from "../types.js";
 
 export function DashboardLoading(props: IDashboardProps) {
     const { loading, error, result } = useDashboardSelector(selectDashboardLoading);

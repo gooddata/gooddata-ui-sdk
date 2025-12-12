@@ -4,10 +4,10 @@ import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
-import { ChartFillType } from "@gooddata/sdk-ui-vis-commons";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
+import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { BulletChartColorStrategy } from "../bulletChartColoring.js";

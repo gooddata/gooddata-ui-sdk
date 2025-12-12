@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 
 /**
  * @public

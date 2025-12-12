@@ -1,15 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { QueryAttributeDataSet } from "./attributeDataSet.js";
-import { QueryAttributeElements } from "./attributeElements.js";
-import { QueryAttributeByDisplayForm } from "./attributes.js";
-import { QueryAvailableDatasetsForItems } from "./availableDatasetsForItems.js";
-import { QueryConnectedAttributes } from "./connectedAttributes.js";
-import { QueryConnectingAttributes } from "./connectingAttributes.js";
-import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights.js";
-import { QueryMeasureDateDatasets } from "./kpis.js";
-import { QueryMetricsAndFacts } from "./metricsAndFacts.js";
-import { QueryWidgetAlertCount, QueryWidgetBrokenAlerts, QueryWidgetFilters } from "./widgets.js";
+import { type QueryAttributeDataSet } from "./attributeDataSet.js";
+import { type QueryAttributeElements } from "./attributeElements.js";
+import { type QueryAttributeByDisplayForm } from "./attributes.js";
+import { type QueryAvailableDatasetsForItems } from "./availableDatasetsForItems.js";
+import { type QueryConnectedAttributes } from "./connectedAttributes.js";
+import { type QueryConnectingAttributes } from "./connectingAttributes.js";
+import { type QueryInsightAttributesMeta, type QueryInsightDateDatasets } from "./insights.js";
+import { type QueryMeasureDateDatasets } from "./kpis.js";
+import { type QueryMetricsAndFacts } from "./metricsAndFacts.js";
+import {
+    type QueryWidgetAlertCount,
+    type QueryWidgetBrokenAlerts,
+    type QueryWidgetFilters,
+} from "./widgets.js";
 
 export type { IDashboardQuery, DashboardQueryType } from "./base.js";
 export type {

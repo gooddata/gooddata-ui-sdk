@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { AriaAttributes, MouseEvent, ReactNode } from "react";
+import { type AriaAttributes, type MouseEvent, type ReactNode } from "react";
 
-import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 /**
  * @internal
  */

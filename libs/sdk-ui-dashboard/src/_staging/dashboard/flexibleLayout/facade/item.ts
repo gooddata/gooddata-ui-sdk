@@ -2,19 +2,19 @@
 import { isEqual } from "lodash-es";
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardWidget,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    IWidget,
-    IWidgetDefinition,
-    ObjRef,
-    ScreenSize,
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSize,
+    type IDashboardLayoutSizeByScreenSize,
+    type IDashboardWidget,
+    type IInsightWidget,
+    type IInsightWidgetDefinition,
+    type IKpiWidget,
+    type IKpiWidgetDefinition,
+    type IWidget,
+    type IWidgetDefinition,
+    type ObjRef,
+    type ScreenSize,
     areObjRefsEqual,
     isDashboardLayout,
     isDashboardLayoutItem,
@@ -27,8 +27,8 @@ import {
     isWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./interfaces.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { type IDashboardLayoutItemFacade, type IDashboardLayoutSectionFacade } from "./interfaces.js";
+import { type ILayoutItemPath } from "../../../../types.js";
 import { areLayoutPathsEqual, updateItemIndex } from "../../../layout/coordinates.js";
 import { determineWidthForScreen } from "../../../layout/sizing.js";
 

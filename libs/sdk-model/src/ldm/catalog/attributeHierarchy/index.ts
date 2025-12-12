@@ -2,8 +2,8 @@
 
 import { isEmpty } from "lodash-es";
 
-import { ObjRef } from "../../../objRef/index.js";
-import { IAttributeHierarchyMetadataObject } from "../../metadata/index.js";
+import { type ObjRef } from "../../../objRef/index.js";
+import { type IAttributeHierarchyMetadataObject } from "../../metadata/index.js";
 
 /**
  * Type representing catalog attribute hierarchy.

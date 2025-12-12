@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
-import { IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
+import { type IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 
 import {
-    DataViewWindow,
-    IWithLoadingEvents,
-    WithLoadingResult,
+    type DataViewWindow,
+    type IWithLoadingEvents,
+    type WithLoadingResult,
     withExecutionLoading,
 } from "./withExecutionLoading.js";
 import { DataViewFacade } from "../base/index.js";

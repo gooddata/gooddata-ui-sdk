@@ -5,9 +5,9 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IMeasure, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
+import { type IMeasure, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import { ComboChart } from "../ComboChart.js";
 import { CoreComboChart } from "../CoreComboChart.js";
 

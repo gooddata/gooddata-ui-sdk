@@ -3,7 +3,10 @@
 import { useEffect } from "react";
 
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
-import { CenterPositionChangedCallback, ZoomChangedCallback } from "../../types/common/callbacks.js";
+import {
+    type CenterPositionChangedCallback,
+    type ZoomChangedCallback,
+} from "../../types/common/callbacks.js";
 
 /**
  * Set up map interaction callbacks

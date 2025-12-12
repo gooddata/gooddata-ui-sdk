@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
 import { useDeepMemo } from "@gooddata/sdk-ui/internal";
 
-import { IGeoChartNextResolvedProps } from "../types/props/geoChartNext/internal.js";
+import { type IGeoChartNextResolvedProps } from "../types/props/geoChartNext/internal.js";
 
 type IGeoChartNextContextProps = IGeoChartNextResolvedProps;
 

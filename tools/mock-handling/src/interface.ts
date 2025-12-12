@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { range } from "lodash-es";
 
-import { IBucket, IExecutionDefinition } from "@gooddata/sdk-model";
+import { type IBucket, type IExecutionDefinition } from "@gooddata/sdk-model";
 
 /*
  * Interface between mock-handling tool and other tools is for now a set of file names that the other

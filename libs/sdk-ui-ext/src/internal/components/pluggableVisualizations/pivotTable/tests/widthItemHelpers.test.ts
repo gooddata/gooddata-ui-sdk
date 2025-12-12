@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
-import { ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import { type ColumnWidthItem, type MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 
 import {
     invalidAttributeColumnWidthItem,
@@ -19,7 +19,7 @@ import {
     validSliceMeasureColumnWidthItem,
     validWeakMeasureColumnWidthItem,
 } from "./widthItemsMock.js";
-import { IBucketFilter, IBucketItem } from "../../../../interfaces/Visualization.js";
+import { type IBucketFilter, type IBucketItem } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
 

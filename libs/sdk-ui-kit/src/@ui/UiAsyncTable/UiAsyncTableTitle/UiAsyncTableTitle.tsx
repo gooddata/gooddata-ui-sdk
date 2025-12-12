@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { Fragment, ReactNode, useCallback } from "react";
+import { Fragment, type ReactNode, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -8,7 +8,7 @@ import { Input } from "../../../Form/Input.js";
 import { SeparatorLine } from "../../../SeparatorLine/SeparatorLine.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { UiAsyncTableTitleAction, UiAsyncTableTitleProps } from "../types.js";
+import { type UiAsyncTableTitleAction, type UiAsyncTableTitleProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
 /**

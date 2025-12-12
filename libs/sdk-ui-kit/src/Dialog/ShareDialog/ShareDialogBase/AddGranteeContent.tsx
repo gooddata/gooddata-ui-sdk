@@ -2,18 +2,18 @@
 
 import { useCallback } from "react";
 
-import { IGranteeGranularity, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IGranteeGranularity, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { AddGranteeSelect } from "./AddGranteeSelect.js";
 import { GranteeList } from "./GranteeList.js";
 import {
-    GranteeItem,
-    IAddGranteeContentProps,
-    IGranteeGroup,
-    IGranteeRules,
-    IGranteeUser,
-    IGranularGranteeGroup,
-    IGranularGranteeUser,
+    type GranteeItem,
+    type IAddGranteeContentProps,
+    type IGranteeGroup,
+    type IGranteeRules,
+    type IGranteeUser,
+    type IGranularGranteeGroup,
+    type IGranularGranteeUser,
     isGranteeGroup,
     isGranteeRules,
     isGranteeUser,

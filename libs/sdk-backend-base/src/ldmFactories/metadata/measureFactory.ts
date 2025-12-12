@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IMeasureMetadataObject, IUser, MetricType, ObjRef } from "@gooddata/sdk-model";
+import { type IMeasureMetadataObject, type IUser, type MetricType, type ObjRef } from "@gooddata/sdk-model";
 
 import { MetadataObjectBuilder } from "./factory.js";
-import { BuilderModifications, builderFactory } from "../builder.js";
+import { type BuilderModifications, builderFactory } from "../builder.js";
 
 /**
  * Measure metadata object builder

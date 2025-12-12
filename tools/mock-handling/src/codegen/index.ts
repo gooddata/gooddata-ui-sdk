@@ -12,13 +12,13 @@ import { generateConstantsForDisplayForms } from "./displayForm.js";
 import { generateConstantsForExecutions } from "./execution.js";
 import { generateConstantsForInsights } from "./insight.js";
 import { generateConstantsForVisClasses } from "./visClasses.js";
-import { CatalogRecording } from "../recordings/catalog.js";
-import { IRecording, RecordingType } from "../recordings/common.js";
-import { DashboardRecording } from "../recordings/dashboards.js";
-import { DisplayFormRecording } from "../recordings/displayForms.js";
-import { ExecutionRecording } from "../recordings/execution.js";
-import { InsightRecording } from "../recordings/insights.js";
-import { VisClassesRecording } from "../recordings/visClasses.js";
+import { type CatalogRecording } from "../recordings/catalog.js";
+import { type IRecording, RecordingType } from "../recordings/common.js";
+import { type DashboardRecording } from "../recordings/dashboards.js";
+import { type DisplayFormRecording } from "../recordings/displayForms.js";
+import { type ExecutionRecording } from "../recordings/execution.js";
+import { type InsightRecording } from "../recordings/insights.js";
+import { type VisClassesRecording } from "../recordings/visClasses.js";
 
 const FILE_HEADER = `/* eslint-disable import/order */\n/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 

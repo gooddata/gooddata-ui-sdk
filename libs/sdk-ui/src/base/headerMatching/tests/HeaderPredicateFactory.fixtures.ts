@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import {
-    IAttributeDescriptor,
-    IMeasureDescriptor,
-    IResultAttributeHeader,
+    type IAttributeDescriptor,
+    type IMeasureDescriptor,
+    type IResultAttributeHeader,
     uriRef,
 } from "@gooddata/sdk-model";
 
 import { barChartForDrillTests } from "../../../../__mocks__/fixtures.js";
-import { IHeaderPredicateContext } from "../HeaderPredicate.js";
+import { type IHeaderPredicateContext } from "../HeaderPredicate.js";
 
 export const measureDescriptors: { [key: string]: IMeasureDescriptor } = {
     uriBasedMeasure: {

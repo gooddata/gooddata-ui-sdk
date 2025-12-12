@@ -1,18 +1,18 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { type ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import stableStringify from "json-stable-stringify";
 import { isEmpty } from "lodash-es";
 
-import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy, type ObjRef } from "@gooddata/sdk-model";
 
 import {
-    EmptyParamCallback,
-    IAttributeData,
-    ICatalogAttributeData,
-    SaveOrUpdateCallback,
-    SetLoadingCallback,
+    type EmptyParamCallback,
+    type IAttributeData,
+    type ICatalogAttributeData,
+    type SaveOrUpdateCallback,
+    type SetLoadingCallback,
 } from "./types.js";
 import { useBackendProvider } from "./useBackendProvider.js";
 import {

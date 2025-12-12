@@ -2,17 +2,17 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { IAnalyticalWidget, uriRef } from "@gooddata/sdk-model";
+import { type IAnalyticalWidget, uriRef } from "@gooddata/sdk-model";
 
-import { AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
+import { type AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionAdded,
+    type DashboardCommandFailed,
+    type DashboardLayoutChanged,
+    type DashboardLayoutSectionAdded,
 } from "../../../events/index.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures.js";
 import {
     EmptyDashboardIdentifier,

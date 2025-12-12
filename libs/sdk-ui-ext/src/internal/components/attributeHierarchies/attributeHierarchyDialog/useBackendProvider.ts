@@ -4,16 +4,16 @@ import { useCallback, useEffect, useState } from "react";
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy, type ObjRef } from "@gooddata/sdk-model";
 import { messages, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
-    EmptyParamCallback,
-    IAttributeData,
-    ICatalogAttributeData,
-    SaveOrUpdateCallback,
-    SetLoadingCallback,
+    type EmptyParamCallback,
+    type IAttributeData,
+    type ICatalogAttributeData,
+    type SaveOrUpdateCallback,
+    type SetLoadingCallback,
 } from "./types.js";
 import { convertToCatalogAttributeData, convertToCatalogAttributeDataByRefs } from "./utils.js";
 

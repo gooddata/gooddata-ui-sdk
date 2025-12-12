@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget } from "@gooddata/sdk-model";
 import { Checkbox, Typography } from "@gooddata/sdk-ui-kit";
 
 interface IVisualizationTitleConfigProps {

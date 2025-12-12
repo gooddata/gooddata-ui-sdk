@@ -38,7 +38,7 @@ import {
 } from "../permissions/permissionsSelectors.js";
 import { selectIsInEditMode, selectIsInViewMode } from "../renderMode/renderModeSelectors.js";
 import { selectIsLayoutEmpty } from "../tabs/layout/layoutSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
 
 /**

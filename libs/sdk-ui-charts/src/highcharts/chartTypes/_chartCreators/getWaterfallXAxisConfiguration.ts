@@ -1,8 +1,8 @@
 // (C) 2023 GoodData Corporation
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { HighchartsOptions } from "../../lib/index.js";
-import { IChartOptions } from "../../typings/unsafe.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type HighchartsOptions } from "../../lib/index.js";
+import { type IChartOptions } from "../../typings/unsafe.js";
 import { isWaterfall } from "../_util/common.js";
 
 export function getWaterfallXAxisConfiguration(

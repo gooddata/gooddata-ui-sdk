@@ -2,19 +2,19 @@
 
 import { isEmpty } from "lodash-es";
 
-import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
 
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
-import { DateFilterRoute } from "./types.js";
+import { type DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
 import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
 import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
-    IExtendedDateFilterErrors,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
+    type IExtendedDateFilterErrors,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 

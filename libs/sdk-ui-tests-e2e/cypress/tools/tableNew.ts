@@ -4,7 +4,7 @@
 // to work with the new Pivot Table Next DOM (aria roles/indices and new classes).
 // Keep the public API so existing tests do not need call-site changes.
 
-import { TotalTypes } from "./enum/TotalTypes";
+import { type TotalTypes } from "./enum/TotalTypes";
 
 const AUTO_SIZE_TOLERANCE = 10; // kept for backward compat where used
 const COLUMN_WIDTH_TOLERANCE = 12; // aligns with PT Next width variance

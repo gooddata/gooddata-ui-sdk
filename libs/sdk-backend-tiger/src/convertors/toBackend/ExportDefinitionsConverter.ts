@@ -3,23 +3,23 @@
 import { isEmpty, omitBy } from "lodash-es";
 
 import {
-    AutomationRawExportAutomationRequest,
-    DashboardFilter,
-    DashboardTabularExportRequestV2,
-    ImageExportRequest,
-    JsonApiExportDefinitionInDocument,
-    JsonApiExportDefinitionPostOptionalIdDocument,
-    SlidesExportRequest,
-    TabularExportRequest,
-    VisualExportRequest,
+    type AutomationRawExportAutomationRequest,
+    type DashboardFilter,
+    type DashboardTabularExportRequestV2,
+    type ImageExportRequest,
+    type JsonApiExportDefinitionInDocument,
+    type JsonApiExportDefinitionPostOptionalIdDocument,
+    type SlidesExportRequest,
+    type TabularExportRequest,
+    type VisualExportRequest,
 } from "@gooddata/api-client-tiger";
-import { IRawExportCustomOverrides, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { type IRawExportCustomOverrides, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    IExecutionDefinition,
-    IExportDefinitionDashboardRequestPayload,
-    IExportDefinitionMetadataObjectDefinition,
-    IExportDefinitionRequestPayload,
-    IExportDefinitionVisualizationObjectRequestPayload,
+    type IExecutionDefinition,
+    type IExportDefinitionDashboardRequestPayload,
+    type IExportDefinitionMetadataObjectDefinition,
+    type IExportDefinitionRequestPayload,
+    type IExportDefinitionVisualizationObjectRequestPayload,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";

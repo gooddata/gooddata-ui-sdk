@@ -3,18 +3,18 @@
 import { invariant } from "ts-invariant";
 
 import {
-    AnalyticalWidgetType,
-    IDashboardLayout,
-    IDashboardLayoutContainerDirection,
-    IDashboardLayoutItem,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    IInsight,
-    IInsightDefinition,
-    IKpi,
-    ISettings,
-    IVisualizationSwitcherWidget,
-    ScreenSize,
+    type AnalyticalWidgetType,
+    type IDashboardLayout,
+    type IDashboardLayoutContainerDirection,
+    type IDashboardLayoutItem,
+    type IDashboardLayoutSize,
+    type IDashboardLayoutSizeByScreenSize,
+    type IInsight,
+    type IInsightDefinition,
+    type IKpi,
+    type ISettings,
+    type IVisualizationSwitcherWidget,
+    type ScreenSize,
     widgetType as getWidgetType,
     isDashboardLayout,
     isDashboardWidget,
@@ -29,7 +29,7 @@ import {
 import {
     DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
     INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
-    IVisualizationSizeInfo,
+    type IVisualizationSizeInfo,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     MIN_VISUALIZATION_WIDTH,
     RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
@@ -44,11 +44,11 @@ import {
     KPI_WITH_COMPARISON_SIZE_INFO,
 } from "./constants.js";
 import { findItem, hasParent } from "./coordinates.js";
-import { ExtendedDashboardWidget, isCustomWidget } from "../../model/types/layoutTypes.js";
-import { ILayoutItemPath } from "../../types.js";
+import { type ExtendedDashboardWidget, isCustomWidget } from "../../model/types/layoutTypes.js";
+import { type ILayoutItemPath } from "../../types.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../dashboard/flexibleLayout/config.js";
 import { getLayoutConfiguration } from "../dashboard/flexibleLayout/layoutConfiguration.js";
-import { ObjRefMap } from "../metadata/objRefMap.js";
+import { type ObjRefMap } from "../metadata/objRefMap.js";
 
 /**
  * @internal

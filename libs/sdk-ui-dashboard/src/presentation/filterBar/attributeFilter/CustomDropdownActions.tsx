@@ -4,9 +4,9 @@ import { FormattedMessage } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    DashboardAttributeFilterSelectionMode,
-    IAttributeMetadataObject,
-    ObjRef,
+    type DashboardAttributeFilterSelectionMode,
+    type IAttributeMetadataObject,
+    type ObjRef,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { AttributeFilterConfigurationButton } from "@gooddata/sdk-ui-filters";

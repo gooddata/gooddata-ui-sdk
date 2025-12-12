@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IShareDialogLabels, ShareDialog } from "@gooddata/sdk-ui-kit";
+import { type IShareDialogLabels, ShareDialog } from "@gooddata/sdk-ui-kit";
 
-import { IShareDialogProps } from "./types.js";
+import { type IShareDialogProps } from "./types.js";
 import { selectLocale, useDashboardSelector } from "../../model/index.js";
 
 /**

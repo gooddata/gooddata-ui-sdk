@@ -1,14 +1,18 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useCallback, useRef, useState } from "react";
+import { type MutableRefObject, useCallback, useRef, useState } from "react";
 
-import { CompletionContext, CompletionResult, CompletionSource } from "@codemirror/autocomplete";
+import {
+    type CompletionContext,
+    type CompletionResult,
+    type CompletionSource,
+} from "@codemirror/autocomplete";
 import { useIntl } from "react-intl";
 
-import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
-import { CatalogItem, ICatalogDateAttribute } from "@gooddata/sdk-model";
+import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
+import { type CatalogItem, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { CompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
+import { type CompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
 
 const WORD_REGEX = /\p{L}[\p{L}\p{N}_]*/u;
 

@@ -2,10 +2,10 @@
 
 import cx from "classnames";
 
-import { ObjRefInScope } from "@gooddata/sdk-model";
+import { type ObjRefInScope } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-import { IMeasureDropdownItem } from "../types.js";
+import { type IMeasureDropdownItem } from "../types.js";
 
 interface IMeasureDropdownItemProps {
     item: IMeasureDropdownItem;

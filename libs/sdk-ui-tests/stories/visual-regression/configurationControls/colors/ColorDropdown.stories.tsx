@@ -5,7 +5,7 @@ import { action } from "storybook/actions";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { ColorDropdown, ColoredItemContent, InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 
-import { INeobackstopConfig, IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { getLargePalette } from "../mocks/testColorHelper.js";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";

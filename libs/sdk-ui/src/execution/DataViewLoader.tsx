@@ -1,11 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type INullableFilter,
+    type ISortItem,
+    type ITotal,
+} from "@gooddata/sdk-model";
 
 import { createExecution } from "./createExecution.js";
-import { DataViewWindow } from "./withExecutionLoading.js";
+import { type DataViewWindow } from "./withExecutionLoading.js";
 import { DataViewFacade } from "../base/index.js";
 
 /**

@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { ColorLegend, IColorLegendProps } from "../ColorLegend.js";
+import { ColorLegend, type IColorLegendProps } from "../ColorLegend.js";
 
 describe("ColorLegend", () => {
     function renderLegend(props: IColorLegendProps) {

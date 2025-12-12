@@ -14,7 +14,7 @@ import {
     getPaginationNextIcon,
     getPaginationPreviousIcon,
 } from "../features/styling/icons.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with our theming applied.

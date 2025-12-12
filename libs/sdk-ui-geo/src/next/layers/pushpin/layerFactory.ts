@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoLayerPushpin } from "../../types/layers/index.js";
+import { type IGeoLayerPushpin } from "../../types/layers/index.js";
 
 /**
  * Default id for the primary pushpin layer produced by GeoPushpinChartNext.

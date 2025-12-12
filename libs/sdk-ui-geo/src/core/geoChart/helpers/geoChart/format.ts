@@ -2,7 +2,7 @@
 import { escape, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 
 const customEscape = (str: string) => str && escape(unescape(str));
 

@@ -5,26 +5,26 @@ import { useEffect, useMemo } from "react";
 import stringify from "json-stable-stringify";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { IChangeAnalysisResults, IKeyDriver } from "@gooddata/sdk-backend-spi";
+import { type IChangeAnalysisResults, type IKeyDriver } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    ICatalogAttribute,
-    IDashboardAttributeFilter,
-    IMeasure,
-    ISeparators,
-    ObjRef,
+    type IAttribute,
+    type ICatalogAttribute,
+    type IDashboardAttributeFilter,
+    type IMeasure,
+    type ISeparators,
+    type ObjRef,
     isAllValuesDashboardAttributeFilter,
     newAttribute,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
-import { KdaItem, KdaState } from "../../internalTypes.js";
+import { type KdaItem, type KdaState } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
-import { DeepReadonly, IKdaDefinition } from "../../types.js";
+import { type DeepReadonly, type IKdaDefinition } from "../../types.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../utils.js";
 
 export function useChangeAnalysis() {

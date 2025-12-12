@@ -7,7 +7,7 @@ import { FormattedMessage, defineMessages } from "react-intl";
 
 import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
-import { IAlertDropdownProps } from "../../types.js";
+import { type IAlertDropdownProps } from "../../types.js";
 
 interface IDropdownItemProps {
     onClick: () => void;

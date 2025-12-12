@@ -3,24 +3,24 @@ import { isEmpty } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
 import {
-    IAnalyticalBackend,
-    IAnomalyDetectionConfig,
-    IAnomalyDetectionResult,
-    IClusteringConfig,
-    IClusteringResult,
-    IDataView,
-    IExecutionResult,
-    IForecastConfig,
-    IForecastResult,
-    IPreparedExecution,
+    type IAnalyticalBackend,
+    type IAnomalyDetectionConfig,
+    type IAnomalyDetectionResult,
+    type IClusteringConfig,
+    type IClusteringResult,
+    type IDataView,
+    type IExecutionResult,
+    type IForecastConfig,
+    type IForecastResult,
+    type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
 import {
     DecoratedExecutionFactory,
     DecoratedExecutionResult,
     DecoratedPreparedExecution,
-    PreparedExecutionWrapper,
+    type PreparedExecutionWrapper,
 } from "../decoratedBackend/execution.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 

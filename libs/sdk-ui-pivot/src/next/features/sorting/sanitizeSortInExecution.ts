@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
  * Exclude sorting updated from props to avoid unnecessary re-initializations.

@@ -2,14 +2,14 @@
 
 import cx from "classnames";
 
-import { WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 
 import { RECURRENCE_TYPES } from "./constants.js";
 import { CronExpression } from "./CronExpression.js";
 import { CronExpressionSuggestion } from "./CronExpressionSuggestion.js";
 import { RepeatTypeDescription } from "./RepeatTypeDescription.js";
 import { RepeatTypeSelect } from "./RepeatTypeSelect.js";
-import { RecurrenceType } from "./types.js";
+import { type RecurrenceType } from "./types.js";
 import { useCronValidation } from "./useCronValidation.js";
 import { useIdPrefixed } from "../utils/useId.js";
 

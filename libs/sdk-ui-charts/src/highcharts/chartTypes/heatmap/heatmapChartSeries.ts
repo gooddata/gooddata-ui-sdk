@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataValue, type IMeasureGroupDescriptor, type ITheme } from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
-import { IPatternObject, IPointData } from "../../typings/unsafe.js";
+import { type IPatternObject, type IPointData } from "../../typings/unsafe.js";
 import { GRAY, WHITE } from "../_util/color.js";
 import { parseValue, unwrap } from "../_util/common.js";
 

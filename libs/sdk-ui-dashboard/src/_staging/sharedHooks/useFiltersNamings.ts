@@ -4,9 +4,9 @@ import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    FilterContextItem,
-    IAttributeElement,
-    ObjRef,
+    type FilterContextItem,
+    type IAttributeElement,
+    type ObjRef,
     getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
@@ -15,7 +15,7 @@ import {
     isDashboardDateFilterWithDimension,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { ILocale } from "@gooddata/sdk-ui";
+import { type ILocale } from "@gooddata/sdk-ui";
 import {
     DateFilterHelpers,
     getAttributeFilterSubtitle,

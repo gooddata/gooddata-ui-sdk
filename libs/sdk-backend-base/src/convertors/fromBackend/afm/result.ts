@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { IPostProcessing, IResultHeader } from "@gooddata/sdk-model";
+import { type IPostProcessing, type IResultHeader } from "@gooddata/sdk-model";
 
 /**
  * @public

@@ -3,9 +3,9 @@
 import { render } from "@testing-library/react";
 
 import {
-    IInsight,
-    IInsightDefinition,
-    IVisualizationClass,
+    type IInsight,
+    type IInsightDefinition,
+    type IVisualizationClass,
     insightVisualizationUrl,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -16,8 +16,8 @@ import {
     FullVisualizationCatalog,
 } from "@gooddata/sdk-ui-ext/internal";
 
-import { ChartInteractions, backendWithCapturing } from "./backendWithCapturing.js";
-import { IScenario } from "../../src/index.js";
+import { type ChartInteractions, backendWithCapturing } from "./backendWithCapturing.js";
+import { type IScenario } from "../../src/index.js";
 
 function createVisualizationClass(insight: IInsightDefinition): IVisualizationClass {
     const visClassUri = insightVisualizationUrl(insight);

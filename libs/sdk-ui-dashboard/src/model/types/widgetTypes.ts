@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @beta

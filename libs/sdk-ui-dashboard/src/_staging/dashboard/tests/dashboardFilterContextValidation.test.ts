@@ -2,21 +2,21 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    DashboardAttributeFilterConfigMode,
-    DashboardAttributeFilterSelectionMode,
-    DashboardDateFilterConfigMode,
-    FilterContextItem,
-    IAttributeElements,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    ObjRef,
+    type DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterSelectionMode,
+    type DashboardDateFilterConfigMode,
+    type FilterContextItem,
+    type IAttributeElements,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
 
 import {
-    FilterValidationErrorType,
-    IDashboardFilterMergeConfig,
-    ValidationResult,
+    type FilterValidationErrorType,
+    type IDashboardFilterMergeConfig,
+    type ValidationResult,
     mergeFilterContextFilters,
 } from "../dashboardFilterContextValidation.js";
 

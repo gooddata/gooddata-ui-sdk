@@ -3,15 +3,15 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IInsightDefinition,
-    ISettings,
+    type IInsightDefinition,
+    type ISettings,
     insightProperties,
     insightVisualizationUrl,
 } from "@gooddata/sdk-model";
-import { IColumnSizing, PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
+import { type IColumnSizing, type PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
 
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import { PropWithMeta } from "../../../utils/embeddingCodeGenerator/index.js";
+import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import { type PropWithMeta } from "../../../utils/embeddingCodeGenerator/index.js";
 import {
     getPaginationFromProperties,
     getTextWrappingFromProperties,

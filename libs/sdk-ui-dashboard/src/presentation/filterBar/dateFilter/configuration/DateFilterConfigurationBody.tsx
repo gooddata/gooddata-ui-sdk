@@ -2,10 +2,10 @@
 
 import { useCallback, useState } from "react";
 
-import { IntlShape } from "react-intl/src/types.js";
+import { type IntlShape } from "react-intl/src/types.js";
 
-import { DashboardDateFilterConfigMode, ObjRef } from "@gooddata/sdk-model";
-import { IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
+import { type DashboardDateFilterConfigMode, type ObjRef } from "@gooddata/sdk-model";
+import { type IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
 
 import { DateFilterConfigurationActions } from "./DateFilterConfigurationActions.js";
 import { messages } from "../../../../locales.js";

@@ -3,7 +3,7 @@
 import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { ObjRef, isInsightWidget } from "@gooddata/sdk-model";
+import { type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 
 import { ParameterDetail } from "./ParameterDetail.js";
 import { selectInsightByRef, selectWidgetByRef, useDashboardSelector } from "../../../../../model/index.js";

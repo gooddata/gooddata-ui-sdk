@@ -2,16 +2,16 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ILayoutItemPath } from "../../../../types.js";
-import { MoveLayoutSection, moveSectionItem, undoLayoutChanges } from "../../../commands/index.js";
+import { type ILayoutItemPath } from "../../../../types.js";
+import { type MoveLayoutSection, moveSectionItem, undoLayoutChanges } from "../../../commands/index.js";
 import { moveSectionItemAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout.js";
 import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionItemMoved,
+    type DashboardCommandFailed,
+    type DashboardLayoutChanged,
+    type DashboardLayoutSectionItemMoved,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,

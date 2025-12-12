@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ChipDeleteButtonProps } from "./types.js";
+import { type ChipDeleteButtonProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 

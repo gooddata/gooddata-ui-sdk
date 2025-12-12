@@ -1,11 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { AnyAction, CaseReducer } from "@reduxjs/toolkit";
+import { type AnyAction, type CaseReducer } from "@reduxjs/toolkit";
 
-import { IAttributeElement, IAttributeFilter, IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import {
+    type IAttributeElement,
+    type IAttributeFilter,
+    type IAttributeMetadataObject,
+    type ObjRef,
+} from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AsyncOperationStatus, AttributeElementKey, ILoadElementsOptions } from "../../../types/index.js";
+import {
+    type AsyncOperationStatus,
+    type AttributeElementKey,
+    type ILoadElementsOptions,
+} from "../../../types/index.js";
 
 /**
  * @internal

@@ -1,15 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { type IAttributeMetadataObject } from "@gooddata/sdk-model";
 
 import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
-import { SetAttributeFilterDisplayForm } from "../../../commands/filters.js";
+import { type SetAttributeFilterDisplayForm } from "../../../commands/filters.js";
 import { attributeDisplayFormChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
@@ -22,7 +22,7 @@ import {
 } from "../../../store/config/configSelectors.js";
 import { selectFilterContextAttributeFilterByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
 export function* changeAttributeDisplayFormHandler(

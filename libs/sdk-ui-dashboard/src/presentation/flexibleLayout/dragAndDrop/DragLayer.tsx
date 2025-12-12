@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
+import { type CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useDragLayer } from "@evil-internetmann/react-dnd";
 
@@ -10,8 +10,8 @@ import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPrev
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import { emptyDOMRect } from "../../constants.js";
 import {
-    DraggableInternalItemType,
-    DraggableItemType,
+    type DraggableInternalItemType,
+    type DraggableItemType,
     isDraggableInternalItemType,
     useResizeHandlers,
 } from "../../dragAndDrop/index.js";

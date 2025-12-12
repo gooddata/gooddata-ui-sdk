@@ -3,12 +3,12 @@
 import { clone, escape, isEqual, setWith, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { DataValue } from "@gooddata/sdk-model";
+import { type DataValue } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { ChartOrientationType, IChartConfig } from "../../../interfaces/index.js";
+import { type ChartOrientationType, type IChartConfig } from "../../../interfaces/index.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
-import { IChartOptions, ISeriesItem } from "../../typings/unsafe.js";
+import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
 
 export function parseValue(value: DataValue): number | null {
     if (typeof value === "string") {

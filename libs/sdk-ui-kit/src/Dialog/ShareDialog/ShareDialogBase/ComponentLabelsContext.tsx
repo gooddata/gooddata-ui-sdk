@@ -2,8 +2,8 @@
 
 import { createContext, useContext } from "react";
 
-import { IComponentLabelsProviderProps } from "./types.js";
-import { IShareDialogLabels } from "../types.js";
+import { type IComponentLabelsProviderProps } from "./types.js";
+import { type IShareDialogLabels } from "../types.js";
 
 const defaultLabels: IShareDialogLabels = {
     accessTypeLabel: "access-type-label",

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ITotal, TotalType } from "@gooddata/sdk-model";
+import { type ITotal, type TotalType } from "@gooddata/sdk-model";
 
 /**
  * @public

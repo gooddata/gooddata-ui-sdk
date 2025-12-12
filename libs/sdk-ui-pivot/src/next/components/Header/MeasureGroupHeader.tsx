@@ -16,7 +16,11 @@ import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
-import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
+import {
+    type AgGridCellRendererParams,
+    type AgGridColumnDef,
+    type AgGridHeaderParams,
+} from "../../types/agGrid.js";
 
 /**
  * Renderer for measure group header.

@@ -1,11 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    IAbsoluteDateFilter,
-    IAttribute,
-    IMeasure,
-    IMeasureDefinition,
-    IPositiveAttributeFilter,
+    type IAbsoluteDateFilter,
+    type IAttribute,
+    type IMeasure,
+    type IMeasureDefinition,
+    type IPositiveAttributeFilter,
     newAbsoluteDateFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";

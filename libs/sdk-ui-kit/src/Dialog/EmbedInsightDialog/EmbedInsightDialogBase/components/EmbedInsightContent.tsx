@@ -6,7 +6,7 @@ import { EmbedInsightCodeArea } from "./CodeArea.js";
 import { PrepareEnvMessage } from "./PrepareEnvMessage.js";
 import { ReactOptions } from "./ReactOptions.js";
 import { WebComponentsOptions } from "./WebComponentsOptions.js";
-import { EmbedOptionsType, IReactOptions, IWebComponentsOptions } from "../types.js";
+import { type EmbedOptionsType, type IReactOptions, type IWebComponentsOptions } from "../types.js";
 
 interface IEmbedInsightContentProps {
     integrationDocLink: string;

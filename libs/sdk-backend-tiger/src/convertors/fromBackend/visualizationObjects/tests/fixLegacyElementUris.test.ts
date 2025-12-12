@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget } from "@gooddata/sdk-model";
 
 import { mockInsight, mockWidget } from "./fixLegacyElementUris.fixtures.js";
 import {
-    ColorMapping,
+    type ColorMapping,
     fixInsightLegacyElementUris,
     fixWidgetLegacyElementUris,
 } from "../../fixLegacyElementUris.js";

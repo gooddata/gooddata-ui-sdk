@@ -3,9 +3,9 @@
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import { type IAllTimeDateFilterOption } from "@gooddata/sdk-model";
 
-import { DateFilterOption } from "../interfaces/index.js";
+import { type DateFilterOption } from "../interfaces/index.js";
 import { ListItem } from "../ListItem/ListItem.js";
 
 export function AllTimeFilterItem({

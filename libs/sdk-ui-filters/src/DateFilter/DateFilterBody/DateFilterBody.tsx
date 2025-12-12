@@ -1,14 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, ReactElement, forwardRef, useEffect, useState } from "react";
+import { type CSSProperties, type ReactElement, forwardRef, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
-    DateFilterGranularity,
-    WeekStart,
+    type DateFilterGranularity,
+    type WeekStart,
     isAbsoluteDateFilterForm,
     isRelativeDateFilterForm,
 } from "@gooddata/sdk-model";
@@ -18,12 +18,12 @@ import { DateFilterBodyContent } from "./DateFilterBodyContent.js";
 import { DateFilterBodyMobileContent } from "./DateFilterBodyMobileContent.js";
 import { DateFilterConfigurationButton } from "./DateFilterConfigurationButton.js";
 import { EditModeMessage } from "./EditModeMessage.js";
-import { DateFilterRoute } from "./types.js";
+import { type DateFilterRoute } from "./types.js";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
 import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
-    IExtendedDateFilterErrors,
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
+    type IExtendedDateFilterErrors,
 } from "../interfaces/index.js";
 import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";

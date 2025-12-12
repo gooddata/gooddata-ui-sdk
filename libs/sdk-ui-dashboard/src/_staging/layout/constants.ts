@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
 export const GRID_ROW_HEIGHT_IN_PX = 20;
 

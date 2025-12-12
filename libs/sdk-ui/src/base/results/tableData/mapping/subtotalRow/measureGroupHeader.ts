@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import { UnexpectedSdkError } from "../../../../errors/GoodDataSdkError.js";
-import { ITableDataValue } from "../../interfaces/cells.js";
-import { ITableMeasureGroupHeaderColumnDefinition } from "../../interfaces/columns.js";
-import { IMappingOptions } from "../../interfaces/mappingOptions.js";
-import { ITableSubtotalRowDefinition } from "../../interfaces/rows.js";
-import { ITableDataMeasureTotalScope } from "../../interfaces/scope.js";
+import { type ITableDataValue } from "../../interfaces/cells.js";
+import { type ITableMeasureGroupHeaderColumnDefinition } from "../../interfaces/columns.js";
+import { type IMappingOptions } from "../../interfaces/mappingOptions.js";
+import { type ITableSubtotalRowDefinition } from "../../interfaces/rows.js";
+import { type ITableDataMeasureTotalScope } from "../../interfaces/scope.js";
 
 /**
  * @internal

@@ -1,11 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IFilter,
-    IInsight,
-    VisualizationProperties,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IFilter,
+    type IInsight,
+    type VisualizationProperties,
     areObjRefsEqual,
     attributeIdentifier,
     attributeLocalId,
@@ -30,13 +30,13 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
-    IDrillEventIntersectionElement,
+    type IDrillEventIntersectionElement,
     getIntersectionPartAfter,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { ColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { type ColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
-import { IDrillDownDefinition } from "../../interfaces/Visualization.js";
+import { type IDrillDownDefinition } from "../../interfaces/Visualization.js";
 import { drillDownDisplayForm, drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 
 function matchesDrillDownTargetAttribute(

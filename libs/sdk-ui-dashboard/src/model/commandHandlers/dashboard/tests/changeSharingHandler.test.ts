@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ChangeSharing, changeSharing } from "../../../commands/index.js";
-import { DashboardCommandFailed, DashboardSharingChanged } from "../../../events/index.js";
+import { type ChangeSharing, changeSharing } from "../../../commands/index.js";
+import { type DashboardCommandFailed, type DashboardSharingChanged } from "../../../events/index.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
 import { selectDashboardPermissions, selectDashboardShareStatus } from "../../../store/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

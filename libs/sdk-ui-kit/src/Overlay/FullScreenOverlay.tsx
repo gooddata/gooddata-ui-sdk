@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
 import { merge } from "lodash-es";
 
 import { Overlay } from "./Overlay.js";
-import { IOverlayProps, IOverlayState } from "./typings.js";
+import { type IOverlayProps, type IOverlayState } from "./typings.js";
 
 /**
  * @internal

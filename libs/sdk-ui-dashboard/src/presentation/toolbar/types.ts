@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentType, ReactNode } from "react";
+import { type ComponentType, type ReactNode } from "react";
 
 /**
  * @internal

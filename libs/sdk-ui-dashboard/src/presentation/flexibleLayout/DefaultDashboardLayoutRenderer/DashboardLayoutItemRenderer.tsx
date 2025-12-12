@@ -3,7 +3,7 @@
 import cx from "classnames";
 
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
-import { IDashboardLayoutItemRenderProps, IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { type IDashboardLayoutItemRenderProps, type IDashboardLayoutItemRenderer } from "./interfaces.js";
 import { isCustomWidgetBase } from "../../../model/index.js";
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { RowEndHotspot } from "../dragAndDrop/draggableWidget/RowEndHotspot.js";

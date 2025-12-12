@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 
-import { IUserSettings } from "../../common/settings.js";
+import { type IUserSettings } from "../../common/settings.js";
 
 /**
  * This query service provides access to feature flags that are in effect for particular user.

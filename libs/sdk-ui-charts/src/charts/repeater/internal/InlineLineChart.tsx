@@ -3,11 +3,11 @@
 import Highcharts from "highcharts/esm/highcharts.js";
 import { HighchartsReact } from "highcharts-react-official";
 
-import { IResultAttributeHeaderItem } from "@gooddata/sdk-model";
+import { type IResultAttributeHeaderItem } from "@gooddata/sdk-model";
 
-import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
+import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { getTooltipHtml } from "./highcharts.js";
-import { HighchartsOptions } from "../../../highcharts/lib/index.js";
+import { type HighchartsOptions } from "../../../highcharts/lib/index.js";
 
 export function InlineLineChart(props: IInlineLineChartOptions) {
     const options = createOptions(props);

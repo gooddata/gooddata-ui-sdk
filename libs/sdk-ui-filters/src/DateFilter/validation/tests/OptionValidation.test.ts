@@ -2,10 +2,10 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    DateFilterOption,
-    IExtendedDateFilterErrors,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    type DateFilterOption,
+    type IExtendedDateFilterErrors,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
 } from "../../interfaces/index.js";
 import { validateFilterOption } from "../OptionValidation.js";
 

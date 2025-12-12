@@ -1,10 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    type IFilter,
+    type IMeasure,
+    type ISortItem,
+    type ITotal,
+} from "@gooddata/sdk-model";
 import { useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
 
-import { IPivotTableNextResolvedProps } from "../types/internal.js";
-import { IPivotTableNextProps } from "../types/public.js";
+import { type IPivotTableNextResolvedProps } from "../types/internal.js";
+import { type IPivotTableNextProps } from "../types/public.js";
 
 /**
  * Resolves placeholders and returns strongly-typed props using generic inference.

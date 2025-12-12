@@ -1,22 +1,26 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties, PureComponent, createRef, useCallback, useEffect, useRef } from "react";
+import { type CSSProperties, PureComponent, createRef, useCallback, useEffect, useRef } from "react";
 
 import { isEqual } from "lodash-es";
-import { Root, createRoot } from "react-dom/client";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { type Root, createRoot } from "react-dom/client";
+import { type WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import {
     ExecutionFactoryUpgradingToExecByReference,
     ExecutionFactoryWithFixedFilters,
 } from "@gooddata/sdk-backend-base";
-import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
-    IColorPalette,
-    IInsightDefinition,
-    IInsightWidget,
-    ITheme,
+    type IExecutionFactory,
+    type IExportResult,
+    type IUserWorkspaceSettings,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IColorPalette,
+    type IInsightDefinition,
+    type IInsightWidget,
+    type ITheme,
     insightProperties,
     insightSetProperties,
     insightTitle,
@@ -26,13 +30,13 @@ import {
 import {
     DefaultLocale,
     ErrorComponent,
-    IExportFunction,
-    IExtendedExportConfig,
-    ILocale,
-    ITranslations,
+    type IExportFunction,
+    type IExtendedExportConfig,
+    type ILocale,
+    type ITranslations,
     IntlWrapper,
     LoadingComponent,
-    OnError,
+    type OnError,
     fillMissingFormats,
     fillMissingTitlesWithMessages,
     ignoreTitlesForSimpleMeasures,
@@ -44,9 +48,9 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import {
     DEFAULT_MESSAGES,
     FullVisualizationCatalog,
-    IInsightViewProps,
-    IVisProps,
-    IVisualization,
+    type IInsightViewProps,
+    type IVisProps,
+    type IVisualization,
     resolveMessages,
 } from "../internal/index.js";
 

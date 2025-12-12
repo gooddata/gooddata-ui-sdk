@@ -5,8 +5,8 @@ import { useCallback } from "react";
 import { useUpdateDefaultTextWrapping } from "./useUpdateDefaultTextWrapping.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { allowCellWrappingByColumnDefinition } from "../../features/textWrapping/allowCellWrappingByColumnDefinition.js";
-import { AgGridApi, AgGridColumnDef } from "../../types/agGrid.js";
-import { ITextWrapping } from "../../types/textWrapping.js";
+import { type AgGridApi, type AgGridColumnDef } from "../../types/agGrid.js";
+import { type ITextWrapping } from "../../types/textWrapping.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, RefObject, createContext, useCallback, useContext, useRef } from "react";
+import { type ReactNode, type RefObject, createContext, useCallback, useContext, useRef } from "react";
 
 type CloseMenuFn = () => void;
 

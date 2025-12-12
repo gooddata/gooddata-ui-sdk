@@ -4,13 +4,13 @@ import { useCallback } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ILocale } from "@gooddata/sdk-ui";
+import { type ILocale } from "@gooddata/sdk-ui";
 
 import { HeightSetting } from "./HeightSetting.js";
 import { LocaleSetting } from "./LocaleSetting.js";
 import { ToggleSwitch } from "./ToggleSwitch.js";
 import { dialogChangeMessageLabels } from "../../../../locales.js";
-import { IWebComponentsOptions, UnitsType } from "../types.js";
+import { type IWebComponentsOptions, type UnitsType } from "../types.js";
 
 /**
  * @internal

@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IAttribute, IBucket, IMeasure } from "@gooddata/sdk-model";
+import { type IAttribute, type IBucket, type IMeasure } from "@gooddata/sdk-model";
 
 export const measureItemM1: IMeasure = {
     measure: {

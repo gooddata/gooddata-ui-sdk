@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
 
 import { ChipContent } from "./ChipContent.js";
 import { ChipDeleteButton } from "./ChipDeleteButton.js";
-import { UiChipProps } from "./types.js";
+import { type UiChipProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 
 const { b } = bem("gd-ui-kit-chip");

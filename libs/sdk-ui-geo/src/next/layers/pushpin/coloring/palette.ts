@@ -2,10 +2,10 @@
 
 import { isEmpty, range } from "lodash-es";
 
-import { IRgbColorValue, isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
-import { IColorLegendItem, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IRgbColorValue, isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IColorLegendItem, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPushpinColor } from "../../../types/geoData/pushpin.js";
+import { type IPushpinColor } from "../../../types/geoData/pushpin.js";
 import { isFiniteNumber } from "../../../utils/guards.js";
 import {
     DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,

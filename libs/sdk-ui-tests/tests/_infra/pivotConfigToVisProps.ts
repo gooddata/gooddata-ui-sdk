@@ -1,5 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
-import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
+import { type IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
 
 /*
                                  __    _

@@ -1,20 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { RefObject, forwardRef, useCallback, useMemo } from "react";
+import { type RefObject, forwardRef, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
-import { IInsightWidget, IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget, type IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
 import {
     Dropdown,
-    IDropdownButtonRenderProps,
-    IUiListboxInteractiveItem,
-    IUiListboxItem,
+    type IDropdownButtonRenderProps,
+    type IUiListboxInteractiveItem,
+    type IUiListboxItem,
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardUserInteraction } from "../../../../model/index.js";
-import { CommonExportDataAttributes } from "../../../export/index.js";
+import { type CommonExportDataAttributes } from "../../../export/index.js";
 import { DashboardItemHeadline } from "../../../presentationComponents/index.js";
 
 interface IVisualizationSwitcherNavigationHeaderProps {

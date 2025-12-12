@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import { AnalyticalBackendError } from "@gooddata/sdk-backend-spi";
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type AnalyticalBackendError } from "@gooddata/sdk-backend-spi";
+import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { emptyWorkspacePermissions } from "./utils.js";

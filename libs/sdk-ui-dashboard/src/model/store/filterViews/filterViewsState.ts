@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IDashboardFilterView, ObjRef } from "@gooddata/sdk-model";
+import { type IDashboardFilterView, type ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @alpha

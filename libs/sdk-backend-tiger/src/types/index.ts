@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    DeclarativeSettingTypeEnum,
-    ITigerClientBase,
-    JsonApiOrganizationSettingOutWithLinksTypeEnum,
+    type DeclarativeSettingTypeEnum,
+    type ITigerClientBase,
+    type JsonApiOrganizationSettingOutWithLinksTypeEnum,
 } from "@gooddata/api-client-tiger";
-import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
-import { FilterContextItem } from "@gooddata/sdk-model";
+import { type AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
+import { type FilterContextItem } from "@gooddata/sdk-model";
 
 /**
  * Tiger authenticated call guard

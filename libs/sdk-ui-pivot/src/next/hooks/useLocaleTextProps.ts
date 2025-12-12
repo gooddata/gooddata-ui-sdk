@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../locales.js";
-import { AgGridProps } from "../types/agGrid.js";
+import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with localized texts.

@@ -8,7 +8,7 @@ import { isAssistantMessage, isUserMessage } from "../model.js";
 import { useCustomization } from "./CustomizationProvider.js";
 import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { useMessageScroller } from "./messages/MessageScroller.js";
-import { RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
+import { type RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
 
 type MessagesComponentProps = {
     messages: ReturnType<typeof messagesSelector>;

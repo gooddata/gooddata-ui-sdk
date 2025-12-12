@@ -4,8 +4,8 @@ import { useCallback, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IExportResult, isDataTooLargeError, isProtectedDataError } from "@gooddata/sdk-backend-spi";
-import { IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { type IExportResult, isDataTooLargeError, isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import { type IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";

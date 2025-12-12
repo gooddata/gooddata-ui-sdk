@@ -1,17 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { AvailableAssignees, ManageDashboardPermissionsRequestInner } from "@gooddata/api-client-tiger";
+import {
+    type AvailableAssignees,
+    type ManageDashboardPermissionsRequestInner,
+} from "@gooddata/api-client-tiger";
 import {
     ActionsApi_AvailableAssignees,
     ActionsApi_DashboardPermissions,
     ActionsApi_ManageDashboardPermissions,
 } from "@gooddata/api-client-tiger/actions";
-import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import {
-    AccessGranteeDetail,
-    IAvailableAccessGrantee,
-    IGranularAccessGrantee,
-    ObjRef,
+    type AccessGranteeDetail,
+    type IAvailableAccessGrantee,
+    type IGranularAccessGrantee,
+    type ObjRef,
     isGranularUserAccessGrantee,
 } from "@gooddata/sdk-model";
 
@@ -22,7 +25,7 @@ import {
     convertUserGroupPermission,
     convertUserPermission,
 } from "../../../convertors/fromBackend/AccessControlConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerWorkspaceAccessControlService implements IWorkspaceAccessControlService {

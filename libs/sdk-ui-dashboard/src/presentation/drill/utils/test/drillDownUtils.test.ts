@@ -3,9 +3,9 @@
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { ICrossFiltering, IDrillToAttributeUrl } from "@gooddata/sdk-model";
+import { type ICrossFiltering, type IDrillToAttributeUrl } from "@gooddata/sdk-model";
 
-import { IDrillDownDefinition } from "../../../../types.js";
+import { type IDrillDownDefinition } from "../../../../types.js";
 import { filterDrillFromAttributeByPriority } from "../drillDownUtils.js";
 
 describe("filterDrillFromAttributeByPriority", () => {

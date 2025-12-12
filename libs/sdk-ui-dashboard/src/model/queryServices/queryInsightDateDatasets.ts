@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 import { compact, uniqBy } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    ICatalogDateDataset,
-    IInsight,
-    IInsightDefinition,
-    ObjRef,
+    type ICatalogDateDataset,
+    type IInsight,
+    type IInsightDefinition,
+    type ObjRef,
     filterObjRef,
     insightFilters,
     insightRef,
@@ -20,29 +20,29 @@ import {
 } from "@gooddata/sdk-model";
 
 import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
-import { CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap.js";
+import { type CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap.js";
 import {
     sanitizeDateDatasetTitle,
     sortByRelevanceAndTitle,
 } from "../../_staging/catalog/dateDatasetOrdering.js";
-import { ObjRefMap, newDisplayFormMap } from "../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap, newDisplayFormMap } from "../../_staging/metadata/objRefMap.js";
 import { invalidQueryArguments } from "../events/general.js";
 import {
-    InsightAttributesMeta,
-    InsightDateDatasets,
-    QueryInsightDateDatasets,
+    type InsightAttributesMeta,
+    type InsightDateDatasets,
+    type QueryInsightDateDatasets,
     queryInsightAttributesMeta,
 } from "../queries/index.js";
 import { query } from "../store/_infra/queryCall.js";
-import { QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
+import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import { selectBackendCapabilities } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateAttributeToDataset,
 } from "../store/catalog/catalogSelectors.js";
-import { DashboardState } from "../store/index.js";
+import { type DashboardState } from "../store/index.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",

@@ -1,24 +1,24 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { AxiosInstance } from "axios";
+import { type AxiosInstance } from "axios";
 
 import {
     ActionsApi,
-    ActionsApiAnalyzeCsvRequest,
-    ActionsApiImportCsvRequest,
-    ActionsApiInterface,
-    AnalyzeCsvRequest,
-    AnalyzeCsvRequestItem,
-    AnalyzeCsvRequestItemConfig,
-    AnalyzeCsvResponse,
-    GdStorageFile,
-    ImportCsvRequestTable,
-    ImportCsvRequestTableSource,
-    ImportCsvRequestTableSourceConfig,
+    type ActionsApiAnalyzeCsvRequest,
+    type ActionsApiImportCsvRequest,
+    type ActionsApiInterface,
+    type AnalyzeCsvRequest,
+    type AnalyzeCsvRequestItem,
+    type AnalyzeCsvRequestItemConfig,
+    type AnalyzeCsvResponse,
+    type GdStorageFile,
+    type ImportCsvRequestTable,
+    type ImportCsvRequestTableSource,
+    type ImportCsvRequestTableSourceConfig,
     OGCAPIFeaturesApi,
-    OGCAPIFeaturesApiInterface,
-    OGCAPIFeaturesApi_GetCollectionItems,
-    ReadCsvFileManifestsResponse,
+    type OGCAPIFeaturesApiInterface,
+    type OGCAPIFeaturesApi_GetCollectionItems,
+    type ReadCsvFileManifestsResponse,
 } from "./generated/result-json-api/index.js";
 
 export const tigerResultClientFactory = (axios: AxiosInstance): ActionsApiInterface =>

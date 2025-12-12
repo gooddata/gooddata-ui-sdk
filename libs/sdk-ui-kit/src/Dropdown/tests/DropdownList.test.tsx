@@ -7,8 +7,12 @@ import { withIntl } from "@gooddata/sdk-ui";
 
 import { customMessages } from "./customDictionary.js";
 import { componentMock } from "./testUtils.js";
-import { IRenderListItemProps } from "../../List/index.js";
-import { DropdownList, IDropdownListNoDataRenderProps, IDropdownListProps } from "../DropdownList.js";
+import { type IRenderListItemProps } from "../../List/index.js";
+import {
+    DropdownList,
+    type IDropdownListNoDataRenderProps,
+    type IDropdownListProps,
+} from "../DropdownList.js";
 
 type IDropdownListMockProps = IDropdownListProps<string>;
 

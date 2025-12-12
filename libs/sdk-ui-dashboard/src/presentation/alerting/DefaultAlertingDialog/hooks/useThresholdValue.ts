@@ -1,18 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ChangeEvent, FocusEvent, useCallback, useEffect, useState } from "react";
+import { type ChangeEvent, type FocusEvent, useCallback, useEffect, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import {
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
-    IAttribute,
-    IAutomationAlert,
-    IMeasure,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAttribute,
+    type IAutomationAlert,
+    type IMeasure,
 } from "@gooddata/sdk-model";
 
-import { AlertAttribute, AlertMetric } from "../../types.js";
+import { type AlertAttribute, type AlertMetric } from "../../types.js";
 import { getAlertThreshold, getMeasureFormat } from "../utils/getters.js";
 import { convertThresholdValue } from "../utils/threshold.js";
 

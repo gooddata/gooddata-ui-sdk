@@ -1,19 +1,22 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { isEqual } from "lodash-es";
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { getHierarchyRef } from "@gooddata/sdk-model";
 
 import { hierarchyToDrillDownReference } from "./common/drillDown.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { AddDrillDownForInsightWidget } from "../../commands/index.js";
-import { DashboardInsightWidgetDrillDownAdded, insightWidgetDrillDownAdded } from "../../events/insight.js";
+import { type AddDrillDownForInsightWidget } from "../../commands/index.js";
+import {
+    type DashboardInsightWidgetDrillDownAdded,
+    insightWidgetDrillDownAdded,
+} from "../../events/insight.js";
 import { selectAllCatalogAttributeHierarchies } from "../../store/catalog/catalogSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 
 export function* addDrillDownForInsightWidgetHandler(

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { UiDrawerTransitionProps } from "../types.js";
+import { type UiDrawerTransitionProps } from "../types.js";
 
 const MIN_DELAY = 20;
 

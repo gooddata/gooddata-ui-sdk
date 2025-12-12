@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
-import { FilterContextItem, IDashboardDateFilter } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IDashboardDateFilter } from "@gooddata/sdk-model";
 
 const AutomationDateFilterContext = createContext<IAutomationDateFilterContext | null>(null);
 

@@ -1,12 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
-import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
+import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
+import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { BaseHeadline } from "../BaseHeadline.js";
 import * as CompareSection from "../CompareSection.js";

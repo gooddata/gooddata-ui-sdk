@@ -2,17 +2,17 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    DateFilterGranularity,
-    IAbsoluteDateFilterPreset,
-    IDateFilterOption,
-    IRelativeDateFilterPreset,
+    type DateFilterGranularity,
+    type IAbsoluteDateFilterPreset,
+    type IDateFilterOption,
+    type IRelativeDateFilterPreset,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
 import {
-    DateFilterOption,
-    DateFilterRelativeOptionGroup,
-    IDateFilterOptionsByType,
+    type DateFilterOption,
+    type DateFilterRelativeOptionGroup,
+    type IDateFilterOptionsByType,
     isUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 

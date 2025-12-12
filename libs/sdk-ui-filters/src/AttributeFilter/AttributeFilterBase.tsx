@@ -4,7 +4,7 @@ import { useBackendStrict } from "@gooddata/sdk-ui";
 
 import { AttributeFilterProviders } from "./AttributeFilterProviders.js";
 import { AttributeFilterDropdown } from "./Components/Dropdown/AttributeFilterDropdown.js";
-import { IAttributeFilterBaseProps } from "./types.js";
+import { type IAttributeFilterBaseProps } from "./types.js";
 import { validateAttributeFilterProps } from "./utils.js";
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2023 GoodData Corporation
 
-import { ICatalogDateDataset, IDateHierarchyTemplate } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset, type IDateHierarchyTemplate } from "@gooddata/sdk-model";
 
 export const defaultDateHierarchyTemplates: IDateHierarchyTemplate[] = [
     {

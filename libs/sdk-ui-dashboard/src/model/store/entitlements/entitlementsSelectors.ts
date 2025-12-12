@@ -3,10 +3,10 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { IEntitlementDescriptor } from "@gooddata/sdk-model";
+import { type IEntitlementDescriptor } from "@gooddata/sdk-model";
 
-import { ResolvedEntitlements } from "../../types/commonTypes.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type ResolvedEntitlements } from "../../types/commonTypes.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint, IconQuestionMark } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 50 } }];
 

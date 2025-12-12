@@ -1,11 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ICatalogDateDataset, IDashboardDateFilter, serializeObjRef } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset, type IDashboardDateFilter, serializeObjRef } from "@gooddata/sdk-model";
 import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
@@ -13,14 +13,14 @@ import { PopupHeader } from "./PopupHeader.js";
 import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 import { messages } from "../../../../../../../locales.js";
 import {
-    IDashboardDependentDateFilter,
+    type IDashboardDependentDateFilter,
     isDashboardDependentDateFilter,
     useDashboardUserInteraction,
 } from "../../../../../../../model/index.js";
-import { ValuesLimitingItem } from "../../../../types.js";
+import { type ValuesLimitingItem } from "../../../../types.js";
 import { UnknownItemTitle } from "../shared/LimitingItem.js";
 import {
-    IValuesLimitingItemWithTitle,
+    type IValuesLimitingItemWithTitle,
     useCommonDateItems,
     useDependentDateFilterTitle,
 } from "../shared/limitingItemsHook.js";

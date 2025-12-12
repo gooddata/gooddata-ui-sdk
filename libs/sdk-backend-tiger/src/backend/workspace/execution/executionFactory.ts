@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AbstractExecutionFactory, AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
-import { IPreparedExecution, IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { AbstractExecutionFactory, type AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
+import { type IPreparedExecution, type IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
+import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
 import { TigerPreparedExecution } from "./preparedExecution.js";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 
 /*
  * Note: if you come here one day to implement the forInsightByRef because tiger supports execute-by-reference,

@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import { IResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IResultAttributeHeader } from "@gooddata/sdk-model";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 
 type NameAndCategories = {
     name: string;

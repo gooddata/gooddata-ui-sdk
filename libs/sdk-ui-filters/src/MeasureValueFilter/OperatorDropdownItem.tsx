@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { MouseEvent, memo } from "react";
+import { type MouseEvent, memo } from "react";
 
 import cx from "classnames";
 import { capitalize } from "lodash-es";
@@ -10,7 +10,7 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
-import { MeasureValueFilterOperator } from "./types.js";
+import { type MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownItemOwnProps {
     selectedOperator: MeasureValueFilterOperator;

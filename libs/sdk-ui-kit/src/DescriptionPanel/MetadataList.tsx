@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IMetadataObjectBase } from "@gooddata/sdk-model";
+import { type IMetadataObjectBase } from "@gooddata/sdk-model";
 
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 

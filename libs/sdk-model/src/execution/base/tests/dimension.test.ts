@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { Account, Activity } from "../../../../__mocks__/model.js";
 import {
-    IDimension,
+    type IDimension,
     MeasureGroupIdentifier,
     dimensionSetTotals,
     dimensionTotals,
@@ -11,7 +11,7 @@ import {
     newDimension,
     newTwoDimensional,
 } from "../dimension.js";
-import { ITotal } from "../totals.js";
+import { type ITotal } from "../totals.js";
 
 const Total1: ITotal = {
     type: "avg",

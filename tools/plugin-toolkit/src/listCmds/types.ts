@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
-import { ListCmdActionConfig } from "./actionConfig.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ListCmdActionConfig } from "./actionConfig.js";
+import { type ActionOptions } from "../_base/types.js";
 
 export type ListEntry = {
     identifier: string;

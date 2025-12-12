@@ -5,12 +5,12 @@ import { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
+import { type IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
+import { type VisType } from "@gooddata/sdk-ui";
 import { useId } from "@gooddata/sdk-ui-kit";
 
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
-import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useInsightMenu } from "./useInsightMenu.js";
 import {

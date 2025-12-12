@@ -3,7 +3,11 @@ import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { ISeriesDataItem, IUnsafeDataLabels, UnsafeInternals } from "../../../../typings/unsafe.js";
+import {
+    type ISeriesDataItem,
+    type IUnsafeDataLabels,
+    type UnsafeInternals,
+} from "../../../../typings/unsafe.js";
 import * as autohideColumnLabels from "../autohideColumnLabels.js";
 
 describe("getStackLabelPointsForDualAxis", () => {

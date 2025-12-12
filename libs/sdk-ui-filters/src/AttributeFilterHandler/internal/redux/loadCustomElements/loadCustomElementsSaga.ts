@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { AnyAction } from "@reduxjs/toolkit";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, cancelled, put, race, take, takeEvery } from "redux-saga/effects";
+import { type AnyAction } from "@reduxjs/toolkit";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, cancelled, put, race, take, takeEvery } from "redux-saga/effects";
 
-import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
-import { ILoadElementsResult } from "../../../types/index.js";
+import { type ILoadElementsResult } from "../../../types/index.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { actions } from "../store/slice.js";
 

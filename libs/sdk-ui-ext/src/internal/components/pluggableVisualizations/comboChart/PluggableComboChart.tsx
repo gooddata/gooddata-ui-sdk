@@ -3,30 +3,30 @@
 import { cloneDeep, isEmpty, set } from "lodash-es";
 
 import {
-    IInsightDefinition,
+    type IInsightDefinition,
     bucketsIsEmpty,
     insightBucket,
     insightBuckets,
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
+import { type IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties.js";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { COMBO_CHART_UICONFIG, MAX_METRICS_COUNT } from "../../../constants/uiConfig.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { type ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IUiConfig,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
+    type IBucketItem,
+    type IBucketOfFun,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IUiConfig,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

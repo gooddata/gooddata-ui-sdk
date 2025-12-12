@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";

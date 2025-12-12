@@ -3,21 +3,21 @@ import { updateWith } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    AnalyticalDashboardModelV1,
-    JsonApiAnalyticalDashboardOutDocument,
-    JsonApiFilterContextOutDocument,
+    type AnalyticalDashboardModelV1,
+    type JsonApiAnalyticalDashboardOutDocument,
+    type JsonApiFilterContextOutDocument,
     isDataSetItem,
 } from "@gooddata/api-client-tiger";
-import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
+import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IDashboard,
-    IDashboardDateFilterConfig,
-    IDashboardLayout,
-    IDashboardWidget,
-    IFilterContext,
-    IInsightWidget,
-    ObjectType,
+    type FilterContextItem,
+    type IDashboard,
+    type IDashboardDateFilterConfig,
+    type IDashboardLayout,
+    type IDashboardWidget,
+    type IFilterContext,
+    type IInsightWidget,
+    type ObjectType,
     idRef,
 } from "@gooddata/sdk-model";
 

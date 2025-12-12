@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -9,7 +9,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { messages } from "./locales.js";
-import { IWithTelemetryProps, useTelemetry, withTelemetry } from "./TelemetryContext.js";
+import { type IWithTelemetryProps, useTelemetry, withTelemetry } from "./TelemetryContext.js";
 
 /**
  * @internal

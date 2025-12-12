@@ -8,7 +8,7 @@ import { describe, expect, it, vi } from "vitest";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import {
     DistinctPointShapesControl,
-    IDistinctPointShapesControlProps,
+    type IDistinctPointShapesControlProps,
 } from "../DistintcPointShapesControl.js";
 
 describe("DistinctPointShapesControl", () => {

@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { withIntl } from "@gooddata/sdk-ui";
-import { DropdownList, ISingleSelectListItemProps, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import { DropdownList, type ISingleSelectListItemProps, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const items: ISingleSelectListItemProps[] = [

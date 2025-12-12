@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ColDef, ColGroupDef } from "ag-grid-community";
+import { type ColDef, type ColGroupDef } from "ag-grid-community";
 import { describe, expect, it } from "vitest";
 
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 import {
     SingleAttribute,

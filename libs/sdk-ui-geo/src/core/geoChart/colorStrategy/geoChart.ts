@@ -1,20 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 import { omit } from "lodash-es";
 
-import { IAttributeDescriptor, IColor, IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { type IAttributeDescriptor, type IColor, type IColorPalette } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
     ColorStrategy,
-    IColorMapping,
-    IColorStrategy,
-    ICreateColorAssignmentReturnValue,
+    type IColorMapping,
+    type IColorStrategy,
+    type ICreateColorAssignmentReturnValue,
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoData } from "../../../GeoChart.js";
-import { IGeoAttributesInDimension, findGeoAttributesInDimension } from "../helpers/geoChart/data.js";
+import { type IGeoData } from "../../../GeoChart.js";
+import { type IGeoAttributesInDimension, findGeoAttributesInDimension } from "../helpers/geoChart/data.js";
 
 class GeoChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

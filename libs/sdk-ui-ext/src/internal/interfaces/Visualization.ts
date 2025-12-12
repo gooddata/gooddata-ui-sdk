@@ -1,44 +1,48 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { isEmpty } from "lodash-es";
 
-import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IColorPalette,
-    IExecutionConfig,
-    IInsight,
-    IInsightDefinition,
-    ILowerBoundedFilter,
-    ISeparators,
-    ISettings,
-    ISortItem,
-    ITheme,
-    ITotal,
-    IUpperBoundedFilter,
-    LocalIdRef,
-    ObjRef,
-    VisualizationProperties,
+    type IAnalyticalBackend,
+    type IExecutionFactory,
+    type IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IColorPalette,
+    type IExecutionConfig,
+    type IInsight,
+    type IInsightDefinition,
+    type ILowerBoundedFilter,
+    type ISeparators,
+    type ISettings,
+    type ISortItem,
+    type ITheme,
+    type ITotal,
+    type IUpperBoundedFilter,
+    type LocalIdRef,
+    type ObjRef,
+    type VisualizationProperties,
 } from "@gooddata/sdk-model";
 import {
-    ChartType,
+    type ChartType,
     ErrorCodes,
-    ExplicitDrill,
+    type ExplicitDrill,
     GoodDataSdkError,
-    IDrillEvent,
-    ILocale,
-    IOpenAsReportUiConfig,
-    IPushData,
-    IVisualizationCallbacks,
-    OverTimeComparisonType,
-    SdkErrorType,
-    VisualizationEnvironment,
+    type IDrillEvent,
+    type ILocale,
+    type IOpenAsReportUiConfig,
+    type IPushData,
+    type IVisualizationCallbacks,
+    type OverTimeComparisonType,
+    type SdkErrorType,
+    type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
-import { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
+import { type ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 
-import { IDefaultControlProperties } from "./ControlProperties.js";
-import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
+import { type IDefaultControlProperties } from "./ControlProperties.js";
+import { type IAvailableSortsGroup, type ISortConfig } from "./SortConfig.js";
 
 export type RenderFunction = (component: any, target: Element) => void;
 

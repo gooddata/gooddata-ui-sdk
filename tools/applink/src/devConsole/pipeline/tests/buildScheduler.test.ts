@@ -1,10 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture.js";
 import {
     EventBus,
-    PackagesRebuilt,
+    type PackagesRebuilt,
     packagesChanged,
     sourceInitialized,
     targetSelected,

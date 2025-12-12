@@ -6,7 +6,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { setAttributeFilterLimitingItems } from "../../../commands/index.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 const LIMITING_ITEM = idRef("my-metric", "measure");

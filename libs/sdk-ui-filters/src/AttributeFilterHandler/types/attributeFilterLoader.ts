@@ -1,15 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
-import { IAttributeFilter } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IAttributeFilter } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { IAttributeLoader } from "./attributeLoader.js";
+import { type IAttributeLoader } from "./attributeLoader.js";
 import {
-    AsyncOperationStatus,
-    CallbackPayloadWithCorrelation,
-    CallbackRegistration,
-    Correlation,
+    type AsyncOperationStatus,
+    type CallbackPayloadWithCorrelation,
+    type CallbackRegistration,
+    type Correlation,
 } from "./common.js";
-import { IAttributeElementLoader } from "./elementsLoader.js";
+import { type IAttributeElementLoader } from "./elementsLoader.js";
 
 /**
  * Handles the loading of the all required metadata for the attribute filter handler.

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { AnalyticalWidgetType, IInsight, IKpi, ObjRef } from "@gooddata/sdk-model";
+import { type AnalyticalWidgetType, type IInsight, type IKpi, type ObjRef } from "@gooddata/sdk-model";
 
 export type SdkCompliantWidgetContent = IKpi | IInsight;
 

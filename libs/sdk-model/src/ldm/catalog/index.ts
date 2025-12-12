@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
-import { ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
-import { ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";
-import { ICatalogDateDataset } from "./dateDataset/index.js";
-import { ICatalogFact, isCatalogFact } from "./fact/index.js";
-import { ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
-import { MetadataObject } from "../metadata/index.js";
+import { type ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
+import { type ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";
+import { type ICatalogDateDataset } from "./dateDataset/index.js";
+import { type ICatalogFact, isCatalogFact } from "./fact/index.js";
+import { type ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
+import { type MetadataObject } from "../metadata/index.js";
 
 /**
  * Type representing catalog item - attribute, measure, fact or dateDataset

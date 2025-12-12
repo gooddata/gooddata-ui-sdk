@@ -1,8 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { AnyAction } from "@reduxjs/toolkit";
+import { type AnyAction } from "@reduxjs/toolkit";
 
-import { IDashboardLayout, IDashboardLayoutItem, ScreenSize, isDashboardLayout } from "@gooddata/sdk-model";
+import {
+    type IDashboardLayout,
+    type IDashboardLayoutItem,
+    type ScreenSize,
+    isDashboardLayout,
+} from "@gooddata/sdk-model";
 
 import { getChildWidgetLayoutPaths, getUpdatedSizesOnly } from "./containerWidthSanitization.js";
 import {
@@ -10,10 +15,10 @@ import {
     getLayoutConfiguration,
 } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getParentPath } from "../../../_staging/layout/coordinates.js";
-import { ILayoutItemPath } from "../../../types.js";
-import { IDashboardCommand } from "../../commands/index.js";
+import { type ILayoutItemPath } from "../../../types.js";
+import { type IDashboardCommand } from "../../commands/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 
 function findNestedRowContainers(
     container: ExtendedDashboardWidget,

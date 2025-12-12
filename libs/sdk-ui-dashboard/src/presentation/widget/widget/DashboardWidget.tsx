@@ -1,11 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 
 import { isDashboardWidget } from "@gooddata/sdk-model";
 
 import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
-import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types.js";
+import { type CustomDashboardWidgetComponent, type IDashboardWidgetProps } from "./types.js";
 import { extendedWidgetDebugStr } from "../../../model/index.js";
 import {
     isInitialPlaceholderWidget,

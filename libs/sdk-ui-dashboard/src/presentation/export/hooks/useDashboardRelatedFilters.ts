@@ -1,19 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    DashboardAttributeFilterConfigMode,
-    DashboardDateFilterConfigMode,
-    FilterContextItem,
-    IAttributeElement,
-    IDashboardAttributeFilterConfig,
+    type DashboardAttributeFilterConfigMode,
+    type DashboardDateFilterConfigMode,
+    type FilterContextItem,
+    type IAttributeElement,
+    type IDashboardAttributeFilterConfig,
     areObjRefsEqual,
     getAttributeElementsItems,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { FilterNaming, useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
+import { type FilterNaming, useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectDateFilterConfigOverrides,

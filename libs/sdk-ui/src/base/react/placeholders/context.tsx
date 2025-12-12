@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, createContext, useContext, useDebugValue, useState } from "react";
+import { type ReactElement, type ReactNode, createContext, useContext, useDebugValue, useState } from "react";
 
-import { IPlaceholder } from "./base.js";
+import { type IPlaceholder } from "./base.js";
 
 /**
  * @internal

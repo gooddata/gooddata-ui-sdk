@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import {
-    IExportDefinitionMetadataObject,
+    type IExportDefinitionMetadataObject,
     exportDefinitionCreated,
     exportDefinitionTitle,
     exportDefinitionUpdated,

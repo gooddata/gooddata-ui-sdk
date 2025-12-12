@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, useCallback, useRef } from "react";
+import { type KeyboardEvent, useCallback, useRef } from "react";
 
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
 import { useId } from "@gooddata/sdk-ui-kit";
 
 import { DateFilterFormNavigationWrapper } from "./DateFilterFormNavigationWrapper.js";
-import { DateFilterRoute } from "./types.js";
+import { type DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterForm } from "../AbsoluteDateFilterForm/AbsoluteDateFilterForm.js";
 import {
     createDateFilterRelativeFormKeyboardHandler,
@@ -17,11 +17,11 @@ import {
 } from "../accessibility/keyboardNavigation.js";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
 import {
-    DateFilterOption,
-    IDateFilterOptionsByType,
-    IExtendedDateFilterErrors,
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    type DateFilterOption,
+    type IDateFilterOptionsByType,
+    type IExtendedDateFilterErrors,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { RelativeDateFilterForm } from "../RelativeDateFilterForm/RelativeDateFilterForm.js";
 

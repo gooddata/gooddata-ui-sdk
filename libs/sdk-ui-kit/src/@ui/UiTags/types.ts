@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 /**
  * @internal

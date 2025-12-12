@@ -2,7 +2,7 @@
 
 import { sortBy } from "lodash-es";
 
-import { ITotal } from "@gooddata/sdk-model";
+import { type ITotal } from "@gooddata/sdk-model";
 
 import { DEFAULT_TOTAL_FUNCTIONS } from "../../constants/internal.js";
 

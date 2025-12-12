@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+import { type KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
-import { OnChangeValue, SelectInstance } from "react-select";
+import { type OnChangeValue, type SelectInstance } from "react-select";
 import AsyncSelect from "react-select/async";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 
 import {
@@ -21,9 +21,9 @@ import {
 } from "./AsyncSelectComponents.js";
 import { messages } from "../locales.js";
 import {
-    IAddDataSourceSelectProps,
-    IDataSourceSelectOption,
-    ISelectErrorOption,
+    type IAddDataSourceSelectProps,
+    type IDataSourceSelectOption,
+    type ISelectErrorOption,
     isDataSourceItem,
     isSelectErrorOption,
 } from "../types.js";

@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ChangeEvent, FocusEvent, memo, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, type FocusEvent, memo, useEffect, useRef, useState } from "react";
 
 import { memoize } from "lodash-es";
 
-import { InputPure, InputPureProps } from "./InputPure.js";
-import { Separators } from "./typings.js";
+import { InputPure, type InputPureProps } from "./InputPure.js";
+import { type Separators } from "./typings.js";
 
 // Highest number (BIGINT) according to gooddata documentation help.gooddata.com object-datatypes
 export const MAX_NUMBER = 10 ** 15;

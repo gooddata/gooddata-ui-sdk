@@ -4,18 +4,18 @@ import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
 import {
-    DashboardDateFilterConfigMode,
-    DateFilterGranularity,
-    IDashboardDateFilterConfig,
-    IDateFilterConfig,
+    type DashboardDateFilterConfigMode,
+    type DateFilterGranularity,
+    type IDashboardDateFilterConfig,
+    type IDateFilterConfig,
 } from "@gooddata/sdk-model";
-import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
+import { type IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 import { convertDateFilterConfigToDateFilterOptions } from "../../../../_staging/dateFilterConfig/dateFilterConfigConverters.js";
-import { DateFilterValidationResult } from "../../../../types.js";
+import { type DateFilterValidationResult } from "../../../../types.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
-import { DashboardSelector } from "../../types.js";
+import { type DashboardSelector } from "../../types.js";
 import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../index.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);

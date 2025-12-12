@@ -2,23 +2,27 @@
 
 import { useMemo } from "react";
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IColorPalette, type IExecutionConfig } from "@gooddata/sdk-model";
 import {
     DataTooLargeToDisplaySdkError,
     DefaultColorPalette,
-    GoodDataSdkError,
-    UseCancelablePromiseStatus,
+    type GoodDataSdkError,
+    type UseCancelablePromiseStatus,
 } from "@gooddata/sdk-ui";
-import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { IGeoChartNextConfig } from "../../types/config/unified.js";
-import { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 import { getDataPointsLimit, validateLayersDataSize } from "../../utils/dataValidation.js";
 import { useLayersData } from "../layers/useLayersData.js";
-import { ILayerPreparedData, ILayersPrepareContext, useLayersPrepare } from "../layers/useLayersPrepare.js";
+import {
+    type ILayerPreparedData,
+    type ILayersPrepareContext,
+    useLayersPrepare,
+} from "../layers/useLayersPrepare.js";
 
 export interface IGeoChartDataResult {
     layerOutputs: Map<string, ILayerPreparedData>;

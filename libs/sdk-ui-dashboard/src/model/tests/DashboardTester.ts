@@ -1,31 +1,35 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction } from "@reduxjs/toolkit";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
-    RecordedBackendConfig,
+    type RecordedBackendConfig,
     defaultRecordedBackendCapabilities,
     objRefsToStringKey,
     recordedBackend,
 } from "@gooddata/sdk-backend-mockingbird";
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { Identifier, ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { type Identifier, type ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
 
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
-import { RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
-import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands/index.js";
+import { type RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
 import {
-    DashboardEventType,
-    DashboardEvents,
+    type DashboardCommandType,
+    type InitializeDashboard,
+    initializeDashboard,
+} from "../commands/index.js";
+import {
+    type DashboardEventType,
+    type DashboardEvents,
     isDashboardCommandStarted,
     isDashboardQueryCompleted,
     isDashboardQueryStarted,
 } from "../events/index.js";
-import { HeadlessDashboard, HeadlessDashboardConfig } from "../headlessDashboard/index.js";
-import { IDashboardQueryService } from "../store/_infra/queryService.js";
-import { DashboardState } from "../store/index.js";
-import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes.js";
+import { HeadlessDashboard, type HeadlessDashboardConfig } from "../headlessDashboard/index.js";
+import { type IDashboardQueryService } from "../store/_infra/queryService.js";
+import { type DashboardState } from "../store/index.js";
+import { type DashboardContext, type DashboardModelCustomizationFns } from "../types/commonTypes.js";
 
 type DashboardTesterConfig = {
     queryServices?: IDashboardQueryService<any, any>[];

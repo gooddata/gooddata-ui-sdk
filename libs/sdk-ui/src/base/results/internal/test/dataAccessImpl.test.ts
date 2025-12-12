@@ -5,13 +5,13 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
     DataViewFirstPage,
-    ScenarioRecording,
+    type ScenarioRecording,
     dummyDataView,
     recordedDataView,
 } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef, measureLocalId } from "@gooddata/sdk-model";
 
-import { DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig.js";
+import { type DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig.js";
 import { newDataAccessMethods } from "../dataAccessMethods.js";
 
 describe("DataAccessMethods", () => {

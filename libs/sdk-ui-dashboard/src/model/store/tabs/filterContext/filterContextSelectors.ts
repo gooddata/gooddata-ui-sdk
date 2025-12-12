@@ -4,15 +4,15 @@ import { createSelector } from "@reduxjs/toolkit";
 import { compact, isEmpty, isEqual, keyBy, sortBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
-    ObjRef,
+    type FilterContextItem,
+    type IAttributeDisplayFormMetadataObject,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IDashboardObjectIdentity,
+    type IFilterContextDefinition,
+    type ObjRef,
     areObjRefsEqual,
     getAttributeElementsItems,
     idRef,
@@ -24,12 +24,12 @@ import {
 } from "@gooddata/sdk-model";
 
 import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
-import { ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { selectSupportsCircularDependencyInFilters } from "../../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../drill/drillSelectors.js";
-import { DashboardSelector, DashboardState } from "../../types.js";
+import { type DashboardSelector, type DashboardState } from "../../types.js";
 import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs, selectTabsState } from "../index.js";
 import { type FilterContextState, filterContextInitialState } from "./filterContextState.js";
 

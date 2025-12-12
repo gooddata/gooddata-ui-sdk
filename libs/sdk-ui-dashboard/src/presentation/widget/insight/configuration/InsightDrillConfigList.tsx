@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { InsightDrillDefinition } from "@gooddata/sdk-model";
+import { type InsightDrillDefinition } from "@gooddata/sdk-model";
 import { ScrollableItem } from "@gooddata/sdk-ui-kit";
 
 import { DrillConfigItem } from "./InsightDrillConfigItem.js";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems.js";
-import { IDrillConfigItem, IDrillDownAttributeHierarchyDefinition } from "../../../drill/types.js";
+import { type IDrillConfigItem, type IDrillDownAttributeHierarchyDefinition } from "../../../drill/types.js";
 
 export interface IDrillConfigListProps {
     drillConfigItems?: IDrillConfigItem[];

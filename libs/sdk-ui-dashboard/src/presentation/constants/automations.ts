@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { AutomationColumnDefinition } from "@gooddata/sdk-ui-ext";
+import { type AutomationColumnDefinition } from "@gooddata/sdk-ui-ext";
 
 //management dialog
 export const AUTOMATIONS_COLUMN_CONFIG: Array<AutomationColumnDefinition> = [

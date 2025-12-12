@@ -2,18 +2,18 @@
 
 import { cloneDeep, omit, update } from "lodash-es";
 
-import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
-import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
+import { type AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
+import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardDefinition,
-    IDashboardLayout,
-    IDashboardPluginDefinition,
-    IDashboardPluginLink,
-    IDashboardTab,
-    IDashboardWidget,
-    IFilterContextDefinition,
-    IInsightWidget,
-    ObjRef,
+    type IDashboardDefinition,
+    type IDashboardLayout,
+    type IDashboardPluginDefinition,
+    type IDashboardPluginLink,
+    type IDashboardTab,
+    type IDashboardWidget,
+    type IFilterContextDefinition,
+    type IInsightWidget,
+    type ObjRef,
     isDashboardLayout,
     isDrillToCustomUrl,
     isInsightWidget,

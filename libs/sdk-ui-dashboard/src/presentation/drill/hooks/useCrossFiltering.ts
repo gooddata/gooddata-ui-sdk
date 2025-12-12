@@ -1,9 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    CrossFiltering,
-    DashboardCommandFailed,
-    DashboardCrossFilteringResolved,
+    type CrossFiltering,
+    type DashboardCommandFailed,
+    type DashboardCrossFilteringResolved,
     crossFiltering,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";

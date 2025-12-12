@@ -1,13 +1,24 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, ReactElement, ReactNode, memo, useCallback } from "react";
+import {
+    type KeyboardEvent,
+    type MouseEvent,
+    type ReactElement,
+    type ReactNode,
+    memo,
+    useCallback,
+} from "react";
 
 import cx from "classnames";
 
 import { ShortenedText } from "../../../../ShortenedText/index.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
-import { IUiMenuContentItemProps, IUiMenuContentItemWrapperProps, IUiMenuItemData } from "../../types.js";
+import {
+    type IUiMenuContentItemProps,
+    type IUiMenuContentItemWrapperProps,
+    type IUiMenuItemData,
+} from "../../types.js";
 /**
  * Default component for rendering content menu items.
  * @internal

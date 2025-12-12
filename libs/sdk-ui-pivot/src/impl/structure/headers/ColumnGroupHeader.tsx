@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IHeaderGroupParams } from "ag-grid-community";
+import { type IHeaderGroupParams } from "ag-grid-community";
 
-import { ALIGN_LEFT, HeaderCell, ICommonHeaderParams } from "./HeaderCell.js";
-import { IMenu } from "../../../publicTypes.js";
+import { ALIGN_LEFT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
+import { type IMenu } from "../../../publicTypes.js";
 import { agColId } from "../tableDescriptorTypes.js";
 
 export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {

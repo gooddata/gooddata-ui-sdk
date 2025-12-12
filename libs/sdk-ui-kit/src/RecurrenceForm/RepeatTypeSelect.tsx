@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { KeyboardEvent, RefObject } from "react";
+import { type KeyboardEvent, type RefObject } from "react";
 
-import { IntlShape, MessageDescriptor, useIntl } from "react-intl";
+import { type IntlShape, type MessageDescriptor, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
@@ -12,7 +12,7 @@ import {
     RECURRENCE_TYPES,
 } from "./constants.js";
 import { messages } from "./locales.js";
-import { RecurrenceType } from "./types.js";
+import { type RecurrenceType } from "./types.js";
 import { getIntlDayName, getWeekNumber, isLastOccurrenceOfWeekdayInMonth } from "./utils/utils.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
 import { Dropdown, DropdownButton } from "../Dropdown/index.js";

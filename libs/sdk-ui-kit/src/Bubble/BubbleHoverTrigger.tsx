@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { BubbleTrigger, IBubbleTriggerProps } from "./BubbleTrigger.js";
+import { BubbleTrigger, type IBubbleTriggerProps } from "./BubbleTrigger.js";
 
 export const SHOW_DELAY = 425;
 export const HIDE_DELAY = 200;

@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { type IAttributeElement } from "@gooddata/sdk-model";
 
-import { AttributeElementKey } from "../../../types/index.js";
-import { AttributeFilterState } from "../store/state.js";
+import { type AttributeElementKey } from "../../../types/index.js";
+import { type AttributeFilterState } from "../store/state.js";
 
 /**
  * Special key used to represent null values in the cache.

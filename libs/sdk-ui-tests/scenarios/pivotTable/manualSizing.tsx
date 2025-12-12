@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    IPivotTableProps,
+    type IPivotTableProps,
     PivotTable,
     newWidthForAllColumnsForMeasure,
     newWidthForAttributeColumn,

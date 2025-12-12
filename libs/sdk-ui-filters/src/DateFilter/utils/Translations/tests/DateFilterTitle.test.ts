@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import {
@@ -15,9 +15,9 @@ import {
     relativePresetFilter,
 } from "./fixtures.js";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
-import { IUiRelativeDateFilterForm } from "../../../interfaces/index.js";
+import { type IUiRelativeDateFilterForm } from "../../../interfaces/index.js";
 import { getDateFilterRepresentation, getDateFilterTitleUsingTranslator } from "../DateFilterTitle.js";
-import { IDateAndMessageTranslator } from "../Translators.js";
+import { type IDateAndMessageTranslator } from "../Translators.js";
 
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,

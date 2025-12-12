@@ -2,17 +2,17 @@
 
 import url from "url";
 
-import axios, { AxiosError } from "axios";
+import axios, { type AxiosError } from "axios";
 import { capitalize, isEmpty } from "lodash-es";
 import validateNpmPackageName from "validate-npm-package-name";
 
 import {
-    IAnalyticalBackend,
-    IAnalyticalWorkspace,
-    IDashboardWithReferences,
+    type IAnalyticalBackend,
+    type IAnalyticalWorkspace,
+    type IDashboardWithReferences,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import { IDashboardPlugin, idRef } from "@gooddata/sdk-model";
+import { type IDashboardPlugin, idRef } from "@gooddata/sdk-model";
 
 import { InputValidationError } from "../types.js";
 import { convertToPluginEntrypoint, extractRootCause } from "../utils.js";

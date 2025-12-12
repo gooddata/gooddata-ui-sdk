@@ -3,7 +3,7 @@
 import { memo, useCallback } from "react";
 
 import {
-    IMeasureValueFilter,
+    type IMeasureValueFilter,
     isComparisonCondition,
     isRangeCondition,
     isRangeConditionOperator,
@@ -13,8 +13,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { Dropdown } from "./Dropdown.js";
-import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
-import { IMeasureValueFilterCommonProps } from "./typings.js";
+import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
+import { type IMeasureValueFilterCommonProps } from "./typings.js";
 
 /**
  * @beta

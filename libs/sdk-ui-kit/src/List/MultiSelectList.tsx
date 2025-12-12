@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, useCallback, useMemo } from "react";
+import { type ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

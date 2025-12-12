@@ -1,23 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
+import { type AxiosInstance, type AxiosPromise, type AxiosRequestConfig } from "axios";
 import { merge, uniqBy } from "lodash-es";
 
-import { ITigerClientBase } from "./client.js";
+import { type ITigerClientBase } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";
 import {
-    EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
-    EntitiesApiGetAllEntitiesAttributesRequest,
-    EntitiesApiGetAllEntitiesDashboardPluginsRequest,
-    EntitiesApiGetAllEntitiesExportDefinitionsRequest,
-    EntitiesApiGetAllEntitiesFactsRequest,
-    EntitiesApiGetAllEntitiesMetricsRequest,
-    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
-    EntitiesApiGetAllEntitiesWorkspacesRequest,
-    JsonApiDataSourceIdentifierOutList,
-    JsonApiUserGroupOutList,
-    JsonApiUserOutList,
-    JsonApiWorkspaceOutList,
+    type EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
+    type EntitiesApiGetAllEntitiesAttributesRequest,
+    type EntitiesApiGetAllEntitiesDashboardPluginsRequest,
+    type EntitiesApiGetAllEntitiesExportDefinitionsRequest,
+    type EntitiesApiGetAllEntitiesFactsRequest,
+    type EntitiesApiGetAllEntitiesMetricsRequest,
+    type EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    type EntitiesApiGetAllEntitiesWorkspacesRequest,
+    type JsonApiDataSourceIdentifierOutList,
+    type JsonApiUserGroupOutList,
+    type JsonApiUserOutList,
+    type JsonApiWorkspaceOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;

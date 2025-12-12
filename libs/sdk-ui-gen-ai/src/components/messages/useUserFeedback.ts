@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IFeedbackData } from "./FeedbackPopup.js";
-import { AssistantMessage } from "../../model.js";
-import { setUserFeedback } from "../../store/index.js";
+import { type IFeedbackData } from "./FeedbackPopup.js";
+import { type AssistantMessage } from "../../model.js";
+import { type setUserFeedback } from "../../store/index.js";
 
 /**
  * @internal

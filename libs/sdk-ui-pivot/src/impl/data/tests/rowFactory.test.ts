@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";

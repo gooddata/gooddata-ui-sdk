@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { ToggleLayoutSectionHeaders } from "../../commands/layout.js";
-import { LayoutSectionHeadersToggled, layoutSectionHeadersToggled } from "../../events/layout.js";
+import { type ToggleLayoutSectionHeaders } from "../../commands/layout.js";
+import { type LayoutSectionHeadersToggled, layoutSectionHeadersToggled } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* toggleLayoutSectionHeadersHandler(
     ctx: DashboardContext,

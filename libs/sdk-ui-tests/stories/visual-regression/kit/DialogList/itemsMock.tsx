@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IDialogListItem, IconQuestionMark } from "@gooddata/sdk-ui-kit";
+import { type IDialogListItem, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 
 const deleteTooltipText = "Delete me";
 const icon = <IconQuestionMark color="red" />;

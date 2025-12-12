@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { PropsWithoutRef, ReactNode, Ref, RefAttributes, forwardRef } from "react";
+import { type PropsWithoutRef, type ReactNode, type Ref, type RefAttributes, forwardRef } from "react";
 
 /**
  * Usage: first define your component with generics and a second argument `ref`,

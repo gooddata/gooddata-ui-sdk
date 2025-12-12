@@ -4,7 +4,7 @@ import { cloneDeep } from "lodash-es";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
-import { IBucketItem, IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
+import { type IBucketItem, type IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
 import {
     findDerivedBucketItems,
     findMasterBucketItem,

@@ -4,20 +4,20 @@ import stringify from "json-stable-stringify";
 import { intersection, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { Identifier } from "../../objRef/index.js";
+import { type Identifier } from "../../objRef/index.js";
 import {
-    AttributePredicate,
-    IAttribute,
+    type AttributePredicate,
+    type IAttribute,
     anyAttribute,
     attributeIdentifier,
     idMatchAttribute,
     isAttribute,
 } from "../attribute/index.js";
-import { ITotal, isTotal } from "../base/totals.js";
+import { type ITotal, isTotal } from "../base/totals.js";
 import { modifySimpleMeasure } from "../measure/factory.js";
 import {
-    IMeasure,
-    MeasurePredicate,
+    type IMeasure,
+    type MeasurePredicate,
     anyMeasure,
     idMatchMeasure,
     isMeasure,

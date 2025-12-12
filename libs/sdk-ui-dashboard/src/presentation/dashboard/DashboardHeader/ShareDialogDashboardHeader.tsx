@@ -1,9 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { CurrentUserPermissions, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { type CurrentUserPermissions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
 import {
@@ -23,7 +23,7 @@ import {
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../model/index.js";
-import { ISharingApplyPayload, ShareDialog } from "../../shareDialog/index.js";
+import { type ISharingApplyPayload, ShareDialog } from "../../shareDialog/index.js";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
+import { Headline, type IHeadlineProps } from "@gooddata/sdk-ui-charts";
 
 import { HeadlinePositiveComparisonMeasures, comparisonDisabled, comparisonEnabled } from "./comparison.js";
 import { scenariosFor } from "../../../src/index.js";

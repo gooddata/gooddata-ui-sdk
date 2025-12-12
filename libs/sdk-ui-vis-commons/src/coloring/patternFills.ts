@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ChartFillType, IPatternOptionsObject } from "./types.js";
+import { type ChartFillType, type IPatternOptionsObject } from "./types.js";
 
 /**
  * SVG patterns used in series.color.pattern Highcharts config.

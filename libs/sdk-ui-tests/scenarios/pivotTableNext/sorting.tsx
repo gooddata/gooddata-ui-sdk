@@ -2,7 +2,7 @@
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newMeasureSort } from "@gooddata/sdk-model";
-import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
+import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
 import { PivotTableWithTwoMeasuresAndSingleRowAttr, getCommonPivotTableSizingConfig } from "./base.js";
 import { scenariosFor } from "../../src/index.js";

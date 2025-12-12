@@ -5,10 +5,10 @@ import { userEvent } from "@testing-library/user-event";
 import { parse } from "date-fns";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
-import { ITranslations, createIntlMock, resolveMessages } from "@gooddata/sdk-ui";
+import { type ITranslations, createIntlMock, resolveMessages } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
-import { DatePickerProps, WrappedDatePicker } from "../Datepicker.js";
+import { type DatePickerProps, WrappedDatePicker } from "../Datepicker.js";
 
 const defaultDateFormat = "MM/dd/yyyy";
 

@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { supportedDualAxesChartTypes } from "../../_chartOptions/chartCapabilities.js";
 import { getHighchartsOptions } from "../highChartsCreators.js";

@@ -1,18 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement, useState } from "react";
+import { type ReactElement, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
 import { Button } from "../../Button/index.js";
-import { ColorPreview, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
+import { ColorPreview, type IStylingPickerItem, type StylingPickerItemContent } from "../../Dialog/index.js";
 import { Item, ItemsWrapper, Separator } from "../../List/index.js";
-import { IOnOpenedChangeParams, Menu } from "../../Menu/index.js";
+import { type IOnOpenedChangeParams, Menu } from "../../Menu/index.js";
 import { ShortenedText } from "../../ShortenedText/index.js";
 
 interface IStylingSettingListItemProps<T extends StylingPickerItemContent> {

@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import { type ReactNode, createContext, useContext, useState } from "react";
 
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 /**
  * Context for sharing last loaded data view between data source and other components.

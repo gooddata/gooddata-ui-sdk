@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Dispatch, MouseEvent, SetStateAction, useMemo, useState } from "react";
+import { type Dispatch, type MouseEvent, type SetStateAction, useMemo, useState } from "react";
 
-import { IInsightWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { type IInsightWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import {
-    IUiMenuContext,
-    IUiMenuItem,
+    type IUiMenuContext,
+    type IUiMenuItem,
     UiFocusManager,
     UiMenu,
     getSelectedMenuId,
@@ -17,18 +17,18 @@ import {
     CustomUiMenuContentItemComponent,
     CustomUiMenuHeaderComponent,
     CustomUiMenuInteractiveItemComponent,
-    IMenuData,
-    IMenuItemData,
+    type IMenuData,
+    type IMenuItemData,
 } from "./CustomUiMenuComponents.js";
 import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
 import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
 import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer.js";
 import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
-import { RenderMode } from "../../../../../types.js";
+import { type RenderMode } from "../../../../../types.js";
 import {
-    IDashboardInsightMenuProps,
-    IInsightMenuItem,
-    IInsightMenuSubmenu,
+    type IDashboardInsightMenuProps,
+    type IInsightMenuItem,
+    type IInsightMenuSubmenu,
     isIInsightMenuSubmenu,
 } from "../../types.js";
 

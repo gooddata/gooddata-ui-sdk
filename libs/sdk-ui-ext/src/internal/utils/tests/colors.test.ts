@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { GuidType, IColor, idRef, uriRef } from "@gooddata/sdk-model";
-import { DefaultColorPalette, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { type GuidType, type IColor, idRef, uriRef } from "@gooddata/sdk-model";
+import { DefaultColorPalette, type IColorAssignment, type IMappingHeader } from "@gooddata/sdk-ui";
 
-import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors.js";
+import { type IColorConfiguration, type IColoredItem } from "../../interfaces/Colors.js";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors.js";
 
 describe("color utils", () => {

@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { getContext } from "redux-saga/effects";
 
-import { AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { type AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 /**
  * @internal

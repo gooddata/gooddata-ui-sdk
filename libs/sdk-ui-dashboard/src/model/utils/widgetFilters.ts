@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
+    type FilterContextItem,
+    type IDashboardAttributeFilter,
     areObjRefsEqual,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
@@ -10,7 +10,7 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-model";
 
-import { ExtendedDashboardWidget } from "../types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../types/layoutTypes.js";
 
 /**
  * @internal

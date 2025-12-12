@@ -1,16 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
+import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartNextProps } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoPushpinChartNextProps } from "@gooddata/sdk-ui-geo/next";
 
 import { PluggableGeoPushpinChartNext } from "./PluggableGeoPushpinChartNext.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
-    IVisualizationDescriptor,
-    IVisualizationMeta,
-    IVisualizationSizeInfo,
-    PluggableVisualizationFactory,
+    type IVisualizationDescriptor,
+    type IVisualizationMeta,
+    type IVisualizationSizeInfo,
+    type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,

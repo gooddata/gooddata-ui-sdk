@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ChangeEvent, useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
 
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
 import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 

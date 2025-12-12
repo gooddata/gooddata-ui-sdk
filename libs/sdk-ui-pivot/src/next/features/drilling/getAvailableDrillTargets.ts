@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IMeasureDescriptor } from "@gooddata/sdk-model";
 import {
-    DataViewFacade,
-    IAvailableDrillTargetAttribute,
-    IAvailableDrillTargetMeasure,
-    IAvailableDrillTargets,
+    type DataViewFacade,
+    type IAvailableDrillTargetAttribute,
+    type IAvailableDrillTargetMeasure,
+    type IAvailableDrillTargets,
     getIntersectionAttributes,
 } from "@gooddata/sdk-ui";
 
-import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transposition.js";
+import { type ColumnHeadersPosition, type MeasureGroupDimension } from "../../types/transposition.js";
 
 /**
  * Calculate available drill targets for the pivot table next implementation.

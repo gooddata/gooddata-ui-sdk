@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     ContextDeferredAuthProvider,
     TigerTokenAuthProvider,

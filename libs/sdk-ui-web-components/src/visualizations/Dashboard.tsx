@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -8,7 +8,7 @@ import { resolveLocale } from "@gooddata/sdk-ui";
 import type { Dashboard as OriginalDashboard } from "@gooddata/sdk-ui-dashboard";
 
 import { CustomElementAdapter, EVENT_HANDLER, GET_COMPONENT, LOAD_COMPONENT } from "../common/index.js";
-import { CustomElementContext } from "../context.js";
+import { type CustomElementContext } from "../context.js";
 
 type IDashboard = typeof OriginalDashboard;
 

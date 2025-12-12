@@ -2,7 +2,7 @@
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { Identifier, ObjRef, isIdentifierRef, isUriRef } from "../../objRef/index.js";
+import { type Identifier, type ObjRef, isIdentifierRef, isUriRef } from "../../objRef/index.js";
 
 /**
  * Attribute is our nomenclature for 'dimension' as typically used in multi-dimensional BI modeling.

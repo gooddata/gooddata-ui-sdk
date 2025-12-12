@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { IPushpinSizeControl, PushpinSizeControl } from "../PushpinSizeControl.js";
+import { type IPushpinSizeControl, PushpinSizeControl } from "../PushpinSizeControl.js";
 
 describe("PushpinSizeControl", () => {
     const defaultProps = {

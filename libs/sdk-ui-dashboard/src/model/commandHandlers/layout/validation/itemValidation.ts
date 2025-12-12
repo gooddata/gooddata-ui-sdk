@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    IDashboardAttributeFilter,
-    IInsight,
-    IInsightWidget,
-    IKpiWidget,
-    IRichTextWidget,
-    ObjRef,
+    type IDashboardAttributeFilter,
+    type IInsight,
+    type IInsightWidget,
+    type IKpiWidget,
+    type IRichTextWidget,
+    type ObjRef,
     areObjRefsEqual,
     insightRef,
     isDashboardAttributeFilterReference,
@@ -21,14 +21,14 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { ItemResolutionResult } from "./stashValidation.js";
+import { type ItemResolutionResult } from "./stashValidation.js";
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { IDashboardCommand } from "../../../commands/index.js";
+import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
-    InsightDateDatasets,
-    MeasureDateDatasets,
+    type InsightDateDatasets,
+    type MeasureDateDatasets,
     insightSelectDateDataset,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
@@ -36,10 +36,10 @@ import {
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
+import { type ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";
-import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
+import { type InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,

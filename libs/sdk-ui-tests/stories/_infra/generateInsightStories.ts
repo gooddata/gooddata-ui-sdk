@@ -5,16 +5,16 @@ import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 import { groupBy, keyBy, sortBy } from "lodash-es";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { type RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
+import { type IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
 
-import { INeobackstopScenarioConfig, IStoryParameters } from "./backstopScenario.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters } from "./backstopScenario.js";
 import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "./backstopWrapper.js";
 import { ConfigurationPanelWrapper } from "./ConfigurationPanelWrapper.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
 import { ScreenshotReadyWrapper } from "./ScreenshotReadyWrapper.js";
 import { allScenarios } from "../../scenarios/index.js";
-import { ScenarioGroup } from "../../src/index.js";
+import { type ScenarioGroup } from "../../src/index.js";
 
 // delete any pre-existing stories
 rmSync("./stories/visual-regression/visualizations/insightStories", { recursive: true, force: true });

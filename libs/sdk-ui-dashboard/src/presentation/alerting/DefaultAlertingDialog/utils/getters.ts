@@ -1,28 +1,28 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
-    DateAttributeGranularity,
-    IAlertAnomalyDetectionGranularity,
-    IAlertAnomalyDetectionSensitivity,
-    IAlertComparisonOperator,
-    IAlertRelativeArithmeticOperator,
-    IAlertRelativeOperator,
-    IAttribute,
-    IAttributeMetadataObject,
-    IAutomationAlert,
-    IAutomationMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    IFilter,
-    IMeasure,
-    IMeasureDescriptor,
-    ISeparators,
-    ObjRef,
+    type DateAttributeGranularity,
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertComparisonOperator,
+    type IAlertRelativeArithmeticOperator,
+    type IAlertRelativeOperator,
+    type IAttribute,
+    type IAttributeMetadataObject,
+    type IAutomationAlert,
+    type IAutomationMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogDateAttribute,
+    type ICatalogDateDataset,
+    type IFilter,
+    type IMeasure,
+    type IMeasureDescriptor,
+    type ISeparators,
+    type ObjRef,
     areObjRefsEqual,
     attributeAlias,
     isAttributeElementsByValue,
@@ -43,7 +43,7 @@ import {
 } from "@gooddata/sdk-ui-ext";
 
 import { isChangeOperator, isDifferenceOperator } from "./guards.js";
-import { AlertAttribute, AlertMetric, AlertMetricComparator } from "../../types.js";
+import { type AlertAttribute, type AlertMetric, type AlertMetricComparator } from "../../types.js";
 import { DEFAULT_MEASURE_FORMAT } from "../constants.js";
 
 export type IMeasureFormatMap = { [key: string]: string };

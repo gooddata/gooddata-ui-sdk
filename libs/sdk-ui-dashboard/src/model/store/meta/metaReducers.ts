@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { IDashboard, ObjRef } from "@gooddata/sdk-model";
+import { type IDashboard, type ObjRef } from "@gooddata/sdk-model";
 
-import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
+import { type DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
 
 type MetaReducer<A extends Action> = CaseReducer<DashboardMetaState, A>;
 

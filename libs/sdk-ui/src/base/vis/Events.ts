@@ -1,17 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
+import { type IDataView, type IExportConfig, type IExportResult } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDescriptor,
-    IColor,
-    IColorPalette,
-    IMeasureDescriptor,
-    ISortItem,
-    ITotal,
+    type IAttributeDescriptor,
+    type IColor,
+    type IColorPalette,
+    type IMeasureDescriptor,
+    type ISortItem,
+    type ITotal,
 } from "@gooddata/sdk-model";
 
-import { GoodDataSdkError } from "../errors/GoodDataSdkError.js";
-import { IMappingHeader } from "../headerMatching/MappingHeader.js";
-import { DataViewFacade } from "../results/facade.js";
+import { type GoodDataSdkError } from "../errors/GoodDataSdkError.js";
+import { type IMappingHeader } from "../headerMatching/MappingHeader.js";
+import { type DataViewFacade } from "../results/facade.js";
 
 /**
  * @public

@@ -2,7 +2,7 @@
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
-import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
+import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

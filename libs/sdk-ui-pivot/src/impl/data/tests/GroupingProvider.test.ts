@@ -11,7 +11,7 @@ import {
     twoAttributesTwoMeasuresEvenGroupsSecondPage,
     twoAttributesTwoMeasuresUnEvenGroups,
 } from "./GroupingProvider.fixtures.js";
-import { GroupingProviderFactory, IGroupingProvider } from "../rowGroupingProvider.js";
+import { GroupingProviderFactory, type IGroupingProvider } from "../rowGroupingProvider.js";
 
 function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundaries: boolean[]) {
     const boundaries = new Array(expectedBoundaries.length)

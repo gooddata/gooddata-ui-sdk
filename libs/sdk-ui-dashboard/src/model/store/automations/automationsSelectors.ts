@@ -3,13 +3,13 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
-    IAutomationMetadataObject,
+    type IAutomationMetadataObject,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { createMemoizedSelector } from "../_infra/selectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

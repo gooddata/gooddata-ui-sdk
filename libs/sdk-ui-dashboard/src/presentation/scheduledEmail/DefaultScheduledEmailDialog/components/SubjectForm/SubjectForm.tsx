@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { FocusEvent, useCallback } from "react";
+import { type FocusEvent, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import {
     ValidationContextStore,
     createInvalidDatapoint,

@@ -1,17 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 
-import { IDrillToAttributeUrl, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IDrillToAttributeUrl, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
-    IDrillEvent,
-    IDrillIntersectionAttributeItem,
+    type IDrillEvent,
+    type IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
 
 import { getElementTitle } from "./getElementTitle.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
+import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 function getDrillToAttributeUrlIntersectionAttributeItemHeader(
     drillConfig: IDrillToAttributeUrl,

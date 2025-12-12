@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { Headline, IChartConfig } from "@gooddata/sdk-ui-charts";
+import { Headline, type IChartConfig } from "@gooddata/sdk-ui-charts";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 
 import { HeadlineWithThreeMeasures } from "../../../../scenarios/charts/headline/base.js";
@@ -9,7 +9,7 @@ import {
     comparisonEnabled,
 } from "../../../../scenarios/charts/headline/comparison.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,

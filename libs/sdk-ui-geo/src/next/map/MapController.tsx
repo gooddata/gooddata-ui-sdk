@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactElement, RefObject, useMemo } from "react";
+import { type ReactElement, type RefObject, useMemo } from "react";
 
-import { ContentRect } from "react-measure";
+import { type ContentRect } from "react-measure";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { MapRuntimeProvider, useMapRuntime } from "../context/MapRuntimeContext.js";
 import { useGeoAdapterContext } from "../hooks/layers/useGeoAdapterContext.js";
@@ -14,10 +14,10 @@ import { useAfterRender } from "../hooks/map/useAfterRender.js";
 import { useMapCallbacks } from "../hooks/map/useMapCallbacks.js";
 import { useMapInitialization } from "../hooks/map/useMapInitialization.js";
 import { useMapResize } from "../hooks/map/useMapResize.js";
-import { CenterPositionChangedCallback, ZoomChangedCallback } from "../types/common/callbacks.js";
-import { IGeoChartNextConfig } from "../types/config/unified.js";
-import { IMapViewport } from "../types/map/provider.js";
-import { ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
+import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../types/common/callbacks.js";
+import { type IGeoChartNextConfig } from "../types/config/unified.js";
+import { type IMapViewport } from "../types/map/provider.js";
+import { type ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
 
 export type MapControllerProps = {
     mapContainerRef: RefObject<HTMLDivElement | null>;

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
+import { type IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
 
 import { PyramidChartWithArithmeticMeasures, PyramidChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";

@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { DashboardInsight } from "./DashboardInsight.js";
 import { WithDrillSelect } from "../../../../drill/index.js";
-import { IDashboardInsightProps } from "../../types.js";
+import { type IDashboardInsightProps } from "../../types.js";
 
 /**
  * @internal

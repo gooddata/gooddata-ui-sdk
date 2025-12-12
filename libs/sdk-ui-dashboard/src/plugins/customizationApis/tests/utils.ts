@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { CustomizerMutationsContext } from "../types.js";
+import { type CustomizerMutationsContext } from "../types.js";
 
 export const EMPTY_MUTATIONS: CustomizerMutationsContext = {
     kpi: [],

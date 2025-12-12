@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { IExecutionConfig } from "@gooddata/sdk-model";
+import { type IExecutionConfig } from "@gooddata/sdk-model";
 
-import { IPivotTableExecutionDefinition } from "./types.js";
+import { type IPivotTableExecutionDefinition } from "./types.js";
 
 /**
  * Applies provided execution config to the execution definition.

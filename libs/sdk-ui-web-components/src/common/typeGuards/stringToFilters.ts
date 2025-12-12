@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IFilter, isFilter } from "@gooddata/sdk-model";
+import { type IFilter, isFilter } from "@gooddata/sdk-model";
 
 export function stringToFilters(input: string): IFilter[] {
     const parsed = JSON.parse(input);

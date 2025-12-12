@@ -3,11 +3,11 @@
 import { invariant } from "ts-invariant";
 
 import {
-    AfmValidObjectsQuery,
-    AttributeItem,
-    EntitiesApiGetAllEntitiesAttributesRequest,
-    ITigerClientBase,
-    JsonApiDatasetOutWithLinks,
+    type AfmValidObjectsQuery,
+    type AttributeItem,
+    type EntitiesApiGetAllEntitiesAttributesRequest,
+    type ITigerClientBase,
+    type JsonApiDatasetOutWithLinks,
     MetadataUtilities,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
@@ -18,21 +18,21 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/validObjects";
 import {
-    IAttributeWithReferences,
-    IElementsQueryFactory,
-    IWorkspaceAttributesService,
+    type IAttributeWithReferences,
+    type IElementsQueryFactory,
+    type IWorkspaceAttributesService,
     NotSupported,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IDataSetMetadataObject,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    IdentifierRef,
-    ObjRef,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type IDataSetMetadataObject,
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type IdentifierRef,
+    type ObjRef,
     areObjRefsEqual,
     idRef,
     isIdentifierRef,
@@ -41,7 +41,7 @@ import {
 
 import { AttributesQuery } from "./attributesQuery.js";
 import { TigerWorkspaceElements } from "./elements/index.js";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import {
     convertAttributeLabels,
     convertAttributeWithSideloadedLabels,
@@ -53,7 +53,7 @@ import {
 import { getIdOrigin, isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { ldmItemUpdate } from "../../../utils/ldmItemUpdate.js";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {

@@ -2,7 +2,7 @@
 
 import ora from "ora";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { createBackend } from "../_base/backend.js";
 import {
@@ -10,9 +10,9 @@ import {
     createPluginUrlValidator,
     createWorkspaceValidator,
 } from "../_base/inputHandling/validators.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 import { convertToPluginIdentifier } from "../_base/utils.js";
-import { WorkspaceTargetConfig, createWorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
+import { type WorkspaceTargetConfig, createWorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 
 export type AddCmdActionConfig = WorkspaceTargetConfig & {
     pluginUrl: string;

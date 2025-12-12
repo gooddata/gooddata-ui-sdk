@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { DefaultKpiDeleteDialog } from "./DefaultKpiDeleteDialog.js";
-import { IKpiDeleteDialogProps } from "./types.js";
+import { type IKpiDeleteDialogProps } from "./types.js";
 
 /**
  * @internal

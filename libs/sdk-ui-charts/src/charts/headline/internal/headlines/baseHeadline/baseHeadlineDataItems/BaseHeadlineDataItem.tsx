@@ -8,8 +8,8 @@ import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
 import { useOutOfBoundsDetection } from "./useOutOfBoundsDetection.js";
 import { withDrillable } from "./withDrillable.js";
 import { withTitle } from "./withTitle.js";
-import { IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js";
-import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
+import { type IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js";
+import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
 function BaseHeadlineDataItemComponent({

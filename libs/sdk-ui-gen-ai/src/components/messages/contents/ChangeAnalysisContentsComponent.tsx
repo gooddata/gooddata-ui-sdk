@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
-import { ChangeAnalysisContents } from "../../../model.js";
-import { RootState, setKeyDriverAnalysisAction, settingsSelector } from "../../../store/index.js";
+import { type ChangeAnalysisContents } from "../../../model.js";
+import { type RootState, setKeyDriverAnalysisAction, settingsSelector } from "../../../store/index.js";
 import { useKdaDefinition, useKdaInfo } from "../../hooks/useKdaDefinition.js";
 
 export type ChangeAnalysisContentsProps = {

@@ -1,29 +1,29 @@
 // (C) 2023-2025 GoodData Corporation
-import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import {
-    AssignedDataSourcePermission,
-    AssignedWorkspacePermission,
-    IDataSourceIdentifierDescriptor,
-    IDataSourcePermissionAssignment,
-    IOrganizationUser,
-    IOrganizationUserGroup,
-    IUser,
-    IUserGroup,
-    IWorkspacePermissionAssignment,
+    type AssignedDataSourcePermission,
+    type AssignedWorkspacePermission,
+    type IDataSourceIdentifierDescriptor,
+    type IDataSourcePermissionAssignment,
+    type IOrganizationUser,
+    type IOrganizationUserGroup,
+    type IUser,
+    type IUserGroup,
+    type IWorkspacePermissionAssignment,
     isAssignedWorkspacePermission,
     isIOrganizationUser,
 } from "@gooddata/sdk-model";
 
 import {
-    DataSourcePermission,
-    DataSourcePermissionSubject,
-    IGrantedDataSource,
-    IGrantedUserGroup,
-    IGrantedWorkspace,
-    IUserMember,
-    WorkspacePermission,
-    WorkspacePermissionSubject,
-    WorkspacePermissions,
+    type DataSourcePermission,
+    type DataSourcePermissionSubject,
+    type IGrantedDataSource,
+    type IGrantedUserGroup,
+    type IGrantedWorkspace,
+    type IUserMember,
+    type WorkspacePermission,
+    type WorkspacePermissionSubject,
+    type WorkspacePermissions,
 } from "./types.js";
 
 export interface IComparableItemWithTitle {

@@ -2,14 +2,14 @@
 import { compact, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IDimension,
-    INullableFilter,
-    ISortItem,
-    ITotal,
+    type IAttribute,
+    type IAttributeOrMeasure,
+    type IDimension,
+    type INullableFilter,
+    type ISortItem,
+    type ITotal,
     MeasureGroupIdentifier,
     isAttribute,
     isMeasure,

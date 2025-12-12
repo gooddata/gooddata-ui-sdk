@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties, ReactElement } from "react";
+import { type CSSProperties, type ReactElement } from "react";
 
 export function SmallScreenDecorator(components: ReactElement): ReactElement {
     const style: CSSProperties = {

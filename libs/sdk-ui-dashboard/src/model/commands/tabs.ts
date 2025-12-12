@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IDashboardCommand } from "./base.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link SwitchDashboardTab} command.

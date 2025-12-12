@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { commandEnvelopeWithPromise } from "./rootCommandHandler.js";
-import { DashboardCommands } from "../../commands/index.js";
-import { DashboardDispatch } from "../types.js";
+import { type DashboardCommands } from "../../commands/index.js";
+import { type DashboardDispatch } from "../types.js";
 
 /**
  * Dispatches a command and returns a promise to wait for it to get resolved.

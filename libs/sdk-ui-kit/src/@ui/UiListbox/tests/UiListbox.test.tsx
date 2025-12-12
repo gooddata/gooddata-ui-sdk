@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import cx from "classnames";
@@ -8,7 +8,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { separatorStaticItem } from "../defaults/DefaultUiListboxStaticItemComponent.js";
 import { b, e } from "../listboxBem.js";
-import { IUiListboxItem, UiListboxInteractiveItemProps, UiListboxStaticItemProps } from "../types.js";
+import {
+    type IUiListboxItem,
+    type UiListboxInteractiveItemProps,
+    type UiListboxStaticItemProps,
+} from "../types.js";
 import { UiListbox } from "../UiListbox.js";
 
 describe("UiListbox", () => {

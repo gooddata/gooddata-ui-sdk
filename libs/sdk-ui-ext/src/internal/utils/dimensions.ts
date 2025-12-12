@@ -2,10 +2,10 @@
 import { compact } from "lodash-es";
 
 import {
-    BucketPredicate,
-    IAttribute,
-    IDimension,
-    IInsightDefinition,
+    type BucketPredicate,
+    type IAttribute,
+    type IDimension,
+    type IInsightDefinition,
     MeasureGroupIdentifier,
     bucketAttributes,
     insightAttributes,
@@ -15,9 +15,9 @@ import {
     newDimension,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
-    MeasureGroupDimension,
+    type MeasureGroupDimension,
     getPivotTableDimensions as getPivotTableDimensionsShared,
 } from "@gooddata/sdk-ui-pivot";
 

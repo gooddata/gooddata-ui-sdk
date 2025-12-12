@@ -1,6 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
-import { JsonApiColorPaletteOutDocument, JsonApiColorPaletteOutWithLinks } from "@gooddata/api-client-tiger";
-import { IColorPalette, IColorPaletteMetadataObject, idRef, isColorPaletteItem } from "@gooddata/sdk-model";
+import {
+    type JsonApiColorPaletteOutDocument,
+    type JsonApiColorPaletteOutWithLinks,
+} from "@gooddata/api-client-tiger";
+import {
+    type IColorPalette,
+    type IColorPaletteMetadataObject,
+    idRef,
+    isColorPaletteItem,
+} from "@gooddata/sdk-model";
 
 export const unwrapColorPaletteContent = (value: object): IColorPalette => {
     return (value as { colorPalette: IColorPalette })?.colorPalette ?? [];

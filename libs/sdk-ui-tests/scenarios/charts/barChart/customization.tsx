@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
+import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     BarChartWithLargeLegend,

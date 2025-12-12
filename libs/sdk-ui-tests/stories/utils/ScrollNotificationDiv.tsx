@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { CSSProperties, ReactNode, memo, useCallback, useRef } from "react";
+import { type CSSProperties, type ReactNode, memo, useCallback, useRef } from "react";
 
 interface IScrollNotificationDiv {
     style?: CSSProperties;

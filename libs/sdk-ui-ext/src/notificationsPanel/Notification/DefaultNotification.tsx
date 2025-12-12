@@ -2,7 +2,7 @@
 
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
-import { INotification } from "@gooddata/sdk-model";
+import { type INotification } from "@gooddata/sdk-model";
 
 import { Notification } from "./Notification.js";
 import { bem } from "../bem.js";

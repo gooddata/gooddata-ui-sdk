@@ -3,12 +3,18 @@
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { IBucket, ITheme, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
+import {
+    type IBucket,
+    type ITheme,
+    newMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { CalculateAs, DEFAULT_COMPARISON_PALETTE, IChartConfig } from "@gooddata/sdk-ui-charts";
+import { CalculateAs, DEFAULT_COMPARISON_PALETTE, type IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
 import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 import { createInternalIntl } from "../../internalIntlProvider.js";

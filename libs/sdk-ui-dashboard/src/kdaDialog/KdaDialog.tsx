@@ -2,7 +2,7 @@
 
 import { KdaDialog as KdaDialogComponent } from "./dialog/KdaDialog.js";
 import { KdaStateProvider } from "./providers/KdaState.js";
-import { IKdaDialogProps } from "./types.js";
+import { type IKdaDialogProps } from "./types.js";
 import { IntlWrapper } from "../presentation/localization/index.js";
 
 /**

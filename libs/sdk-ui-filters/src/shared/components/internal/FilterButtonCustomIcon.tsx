@@ -2,9 +2,9 @@
 
 import cx from "classnames";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { IFilterButtonCustomIcon } from "../../interfaces/index.js";
+import { type IFilterButtonCustomIcon } from "../../interfaces/index.js";
 
 const DEFAULT_BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl", offset: { x: 0, y: 5 } }];
 

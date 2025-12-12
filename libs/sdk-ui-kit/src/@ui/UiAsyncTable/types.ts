@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, Ref } from "react";
+import { type ReactNode, type Ref } from "react";
 
-import { SortDirection } from "@gooddata/sdk-model";
+import { type SortDirection } from "@gooddata/sdk-model";
 
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
-import { IconType } from "../@types/icon.js";
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IconType } from "../@types/icon.js";
 
 /**
  * Variant for UiAsyncTable component.

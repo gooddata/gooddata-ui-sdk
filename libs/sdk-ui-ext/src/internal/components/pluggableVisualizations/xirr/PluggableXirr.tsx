@@ -2,28 +2,28 @@
 
 import { cloneDeep } from "lodash-es";
 
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    IDimension,
-    IInsightDefinition,
-    ISettings,
+    type IDimension,
+    type IInsightDefinition,
+    type ISettings,
     MeasureGroupIdentifier,
     bucketAttributes,
     insightBucket,
     newDimension,
 } from "@gooddata/sdk-model";
-import { BucketNames, IPushData } from "@gooddata/sdk-ui";
+import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 
 import { getXirrBuckets } from "./xirrBucketHelper.js";
 import {
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationOptions,
-    RenderFunction,
-    UnmountFunction,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
+    type IVisualizationOptions,
+    type RenderFunction,
+    type UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import {
     removeAllArithmeticMeasuresFromDerived,

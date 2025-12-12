@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 import { describe, expect, it } from "vitest";
 
-import { HueColorPicker, IHueColorPickerProps } from "../HueColorPicker.js";
+import { HueColorPicker, type IHueColorPickerProps } from "../HueColorPicker.js";
 
 const initColor: ColorFormats.HSL = {
     h: 3,

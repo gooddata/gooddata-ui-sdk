@@ -2,7 +2,7 @@
 
 import { type MouseEvent, useEffect } from "react";
 
-import { AgGridHeaderGroupParams, AgGridHeaderParams } from "../../types/agGrid.js";
+import { type AgGridHeaderGroupParams, type AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Hook that handles Space and Enter key press on header cells.

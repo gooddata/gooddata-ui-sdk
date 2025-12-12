@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IAttributeElements, IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { type IAttributeElements, type IAttributeMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * @internal

@@ -13,7 +13,7 @@ import {
 } from "./table.fixture.js";
 import { newWidthForAttributeColumn } from "../../../columnWidths.js";
 import { TableDescriptor } from "../tableDescriptor.js";
-import { ScopeCol, SeriesCol } from "../tableDescriptorTypes.js";
+import { type ScopeCol, type SeriesCol } from "../tableDescriptorTypes.js";
 
 describe("TableDescriptor", () => {
     describe("isFirstCol", () => {

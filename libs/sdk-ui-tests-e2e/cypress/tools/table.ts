@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { TotalTypes } from "./enum/TotalTypes";
+import { type TotalTypes } from "./enum/TotalTypes";
 
 const AUTO_SIZE_TOLERANCE = 10;
 const RESIZE_SELECTOR = `.ag-header-cell-resize`;

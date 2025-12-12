@@ -5,15 +5,15 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import { decoratedBackend } from "@gooddata/sdk-backend-base";
 import { dummyBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    IAnalyticalBackend,
-    IElementsQueryFactory,
-    IWorkspaceAttributesService,
+    type IAnalyticalBackend,
+    type IElementsQueryFactory,
+    type IWorkspaceAttributesService,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAbsoluteDateFilter,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-    IRelativeDateFilter,
+    type IAbsoluteDateFilter,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type IRelativeDateFilter,
     attributeDisplayFormRef,
     newAbsoluteDateFilter,
     newNegativeAttributeFilter,

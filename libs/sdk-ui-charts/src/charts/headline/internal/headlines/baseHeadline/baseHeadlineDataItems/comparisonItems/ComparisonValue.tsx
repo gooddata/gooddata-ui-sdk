@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
 import cx from "classnames";
 
-import { IBaseHeadlineValueItem } from "../../../../interfaces/BaseHeadlines.js";
+import { type IBaseHeadlineValueItem } from "../../../../interfaces/BaseHeadlines.js";
 import { useBaseHeadlineDataItem } from "../useBaseHeadlineDataItem.js";
 
 interface IComparisonValueProps {

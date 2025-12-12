@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useEffect } from "react";
 
-import { ICatalogDateDataset } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset } from "@gooddata/sdk-model";
 
 import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
 import {

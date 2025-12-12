@@ -1,15 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ReactNode, createContext, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import {
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    IDashboardLayoutItemFacade,
+    type IDashboardLayoutItemFacade,
 } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import { ExtendedDashboardWidget } from "../../../model/index.js";
-import { ILayoutItemPath } from "../../../types.js";
+import { type ExtendedDashboardWidget } from "../../../model/index.js";
+import { type ILayoutItemPath } from "../../../types.js";
 
 export interface IDashboardItemPathAndSizeContextProps {
     layoutItem?: IDashboardLayoutItemFacade<ExtendedDashboardWidget>;

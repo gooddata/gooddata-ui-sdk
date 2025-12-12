@@ -2,7 +2,7 @@
 import { LRUCache } from "lru-cache";
 
 import { LOADER_CACHE_SIZE } from "./constants.js";
-import { IDataLoaderFactory } from "./types.js";
+import { type IDataLoaderFactory } from "./types.js";
 
 export const dataLoaderAbstractFactory = <TLoader>(
     createLoader: (workspace: string) => TLoader,

@@ -4,11 +4,11 @@ import { useCallback, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IDashboardLayout, IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
+import { type IDashboardLayout, type IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import {
     Bubble,
     Dropdown,
-    IAlignPoint,
+    type IAlignPoint,
     UiDropdownIconButton,
     UiIconButton,
     UiTooltip,
@@ -17,7 +17,7 @@ import {
 
 import { LayoutDirectionConfigurationDialog } from "./LayoutDirectionConfigurationDialog.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
-import { ExtendedDashboardWidget, useDashboardUserInteraction } from "../../../../model/index.js";
+import { type ExtendedDashboardWidget, useDashboardUserInteraction } from "../../../../model/index.js";
 
 const TOOLBAR_ALIGN_POINTS: IAlignPoint[] = [
     { align: "tr tl", offset: { x: 0, y: 11 } },

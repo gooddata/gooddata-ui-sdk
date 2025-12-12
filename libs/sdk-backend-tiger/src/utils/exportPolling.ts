@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { AxiosError, AxiosPromise, AxiosRequestConfig } from "axios";
+import { type AxiosError, type AxiosPromise, type AxiosRequestConfig } from "axios";
 
-import { ITigerClientBase } from "@gooddata/api-client-tiger";
+import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
     ExportApi_GetExportedFile,
     ExportApi_GetImageExport,
@@ -12,8 +12,8 @@ import {
 } from "@gooddata/api-client-tiger/export";
 import {
     DataTooLargeError,
-    DataTooLargeResponseBody,
-    IExportResult,
+    type DataTooLargeResponseBody,
+    type IExportResult,
     TimeoutError,
 } from "@gooddata/sdk-backend-spi";
 

@@ -4,7 +4,10 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { IWorkspacePickerHomeFooterProps, WorkspacePickerHomeFooter } from "../WorkspacePickerHomeFooter.js";
+import {
+    type IWorkspacePickerHomeFooterProps,
+    WorkspacePickerHomeFooter,
+} from "../WorkspacePickerHomeFooter.js";
 
 describe("WorkspacePickerHomeFooter", () => {
     function renderWorkspacePickerHomeFooter(props: IWorkspacePickerHomeFooterProps = {}) {

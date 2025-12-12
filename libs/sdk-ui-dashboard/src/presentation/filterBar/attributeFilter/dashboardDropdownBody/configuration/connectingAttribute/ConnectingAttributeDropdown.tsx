@@ -2,11 +2,11 @@
 
 import { invariant } from "ts-invariant";
 
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
-import { IConnectingAttribute } from "../../../../../../model/index.js";
+import { type IConnectingAttribute } from "../../../../../../model/index.js";
 
 interface IConnectingAttributeDropdownProps {
     itemLocalId: string;

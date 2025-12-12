@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { Separator } from "../../../List/index.js";
-import { UiListboxStaticItemProps } from "../types.js";
+import { type UiListboxStaticItemProps } from "../types.js";
 
 /**
  * @internal

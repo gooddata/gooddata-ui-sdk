@@ -1,16 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
+import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import {
-    FilterContextItem,
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    IDashboardAttributeFilterConfig,
-    IDashboardDateFilterConfigItem,
-    ObjRef,
+    type FilterContextItem,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
@@ -26,7 +26,7 @@ import {
     getNonSelectedFilters,
 } from "./utils.js";
 import {
-    IAutomationFiltersTab,
+    type IAutomationFiltersTab,
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
     selectAutomationCommonDateFilterId,

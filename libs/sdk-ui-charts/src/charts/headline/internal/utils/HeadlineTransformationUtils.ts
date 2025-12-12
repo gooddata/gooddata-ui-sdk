@@ -1,22 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
 import { cloneDeep, isEmpty } from "lodash-es";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataValue, IMeasureDescriptor, Identifier } from "@gooddata/sdk-model";
+import { type IDataView } from "@gooddata/sdk-backend-spi";
+import { type DataValue, type IMeasureDescriptor, type Identifier } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    HeadlineElementType,
-    IDrillEvent,
-    IDrillEventContextHeadline,
-    IDrillEventIntersectionElement,
-    IHeaderPredicate,
+    type HeadlineElementType,
+    type IDrillEvent,
+    type IDrillEventContextHeadline,
+    type IDrillEventIntersectionElement,
+    type IHeaderPredicate,
     VisualizationTypes,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
-import { IHeadlineData, IHeadlineDataItem } from "../interfaces/Headlines.js";
+import { type IHeadlineData, type IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export interface IHeadlineExecutionData {
     measureHeaderItem: IMeasureDescriptor["measureHeaderItem"];

@@ -1,9 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
-import { IBucket, IMeasure, bucketMeasure, bucketMeasures, insightBucket } from "@gooddata/sdk-model";
+import {
+    type IBucket,
+    type IMeasure,
+    bucketMeasure,
+    bucketMeasures,
+    insightBucket,
+} from "@gooddata/sdk-model";
 
 import {
-    IInsightToPropConversion,
-    PropMeta,
+    type IInsightToPropConversion,
+    type PropMeta,
     sdkModelPropMetas,
 } from "../../../utils/embeddingCodeGenerator/index.js";
 

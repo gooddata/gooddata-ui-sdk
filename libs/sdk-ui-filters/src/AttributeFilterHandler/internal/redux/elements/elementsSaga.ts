@@ -1,16 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { omit } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
-import { CancelableOptions } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { type CancelableOptions } from "@gooddata/sdk-backend-spi";
+import { type ObjRef } from "@gooddata/sdk-model";
 
 import { selectStaticElements } from "./elementsSelectors.js";
 import { loadElements } from "./loadElements.js";
-import { ILoadElementsOptions, ILoadElementsResult } from "../../../types/index.js";
-import { PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
+import { type ILoadElementsOptions, type ILoadElementsResult } from "../../../types/index.js";
+import { type PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
 import {
     selectAttributeFilterDisplayAsLabel,
     selectAttributeFilterDisplayForm,

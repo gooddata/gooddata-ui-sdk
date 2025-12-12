@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode, RefObject, createContext, useContext, useRef } from "react";
+import { type ReactNode, type RefObject, createContext, useContext, useRef } from "react";
 
-import { ExplicitDrill } from "@gooddata/sdk-ui";
+import { type ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "./PivotTablePropsContext.js";
 

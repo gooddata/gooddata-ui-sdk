@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 
-import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+import { type IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
-import { DataSourcePermissionSubject, IGrantedDataSource } from "../types.js";
+import { type DataSourcePermissionSubject, type IGrantedDataSource } from "../types.js";
 import { grantedDataSourceAsPermissionAssignment, sortByName } from "../utils.js";
 
 export const useAddDataSource = (

@@ -1,6 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { KeyboardEvent, MouseEvent, RefObject, useCallback, useEffect, useMemo, useState } from "react";
+import {
+    type KeyboardEvent,
+    type MouseEvent,
+    type RefObject,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 
 import { v4 as uuid } from "uuid";
 
@@ -28,12 +36,12 @@ import {
     unwrapGroupItems,
 } from "./itemUtils.js";
 import {
-    IUiMenuContext,
-    IUiMenuControlType,
-    IUiMenuFocusableItem,
-    IUiMenuItem,
-    IUiMenuItemData,
-    UiMenuProps,
+    type IUiMenuContext,
+    type IUiMenuControlType,
+    type IUiMenuFocusableItem,
+    type IUiMenuItem,
+    type IUiMenuItemData,
+    type UiMenuProps,
 } from "./types.js";
 import { isElementTextInput } from "../../utils/domUtilities.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";

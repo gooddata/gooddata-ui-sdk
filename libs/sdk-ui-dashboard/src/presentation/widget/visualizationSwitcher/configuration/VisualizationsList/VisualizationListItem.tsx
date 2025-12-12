@@ -4,8 +4,8 @@ import { useCallback, useState } from "react";
 
 import cx from "classnames";
 
-import { IInsight, IInsightWidget, insightVisualizationType } from "@gooddata/sdk-model";
-import { Button, IAlignPoint, InsightListItemTypeIcon, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { type IInsight, type IInsightWidget, insightVisualizationType } from "@gooddata/sdk-model";
+import { Button, type IAlignPoint, InsightListItemTypeIcon, ShortenedText } from "@gooddata/sdk-ui-kit";
 
 import { VisualizationListMenu } from "./VisualizationListMenu.js";
 

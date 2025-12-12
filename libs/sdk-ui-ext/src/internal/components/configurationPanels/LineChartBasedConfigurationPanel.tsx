@@ -1,13 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
-import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,

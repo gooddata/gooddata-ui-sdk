@@ -2,12 +2,12 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IRelativeDateFilterPreset,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
-import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "../../interfaces/index.js";
+import { type IUiAbsoluteDateFilterForm, type IUiRelativeDateFilterForm } from "../../interfaces/index.js";
 import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "../AFMConversions.js";
 
 const dataSet = {

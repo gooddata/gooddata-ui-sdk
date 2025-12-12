@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-model";
+import { type IDashboardLayoutItem, type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 /**
  * This function is used to transform each item in the section to a slide.

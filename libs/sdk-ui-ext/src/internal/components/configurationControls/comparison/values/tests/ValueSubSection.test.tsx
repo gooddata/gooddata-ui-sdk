@@ -6,8 +6,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages } from "../../../../../../locales.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import {
     TEST_DECIMAL_FORMAT_PRESET,
     TEST_DEFAULT_SEPARATOR,

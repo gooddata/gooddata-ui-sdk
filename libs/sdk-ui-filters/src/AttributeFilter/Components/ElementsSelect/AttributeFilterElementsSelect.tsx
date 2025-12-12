@@ -4,11 +4,11 @@ import { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { type IAttributeElement } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { InvertableSelectVirtualised, UiAutofocus, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { IAttributeFilterElementsSelectProps } from "./types.js";
+import { type IAttributeFilterElementsSelectProps } from "./types.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";

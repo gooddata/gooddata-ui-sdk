@@ -2,10 +2,10 @@
 
 import { invariant } from "ts-invariant";
 
-import { ObjRef, idRef, serializeObjRef } from "@gooddata/sdk-model";
+import { type ObjRef, idRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { DashboardStoreAccessor } from "./DashboardStoreAccessor.js";
-import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
+import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
 
 /**
  * This singleton class serves the selector and the dispatcher properties for given dashboard.

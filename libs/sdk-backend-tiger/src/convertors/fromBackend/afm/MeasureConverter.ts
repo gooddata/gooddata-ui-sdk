@@ -1,17 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    ArithmeticMeasureDefinition,
-    InlineMeasureDefinition,
-    MeasureItem,
-    PopDatasetMeasureDefinition,
-    PopDateMeasureDefinition,
-    SimpleMeasureDefinition,
+    type ArithmeticMeasureDefinition,
+    type InlineMeasureDefinition,
+    type MeasureItem,
+    type PopDatasetMeasureDefinition,
+    type PopDateMeasureDefinition,
+    type SimpleMeasureDefinition,
 } from "@gooddata/api-client-tiger";
 import {
-    ArithmeticMeasureOperator,
-    IMeasure,
-    MeasureAggregation,
+    type ArithmeticMeasureOperator,
+    type IMeasure,
+    type MeasureAggregation,
     isSimpleMeasureFilter,
     objRefToString,
 } from "@gooddata/sdk-model";

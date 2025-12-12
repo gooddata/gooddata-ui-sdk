@@ -5,7 +5,11 @@ import { useMemo, useRef, useState } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IAttributeMetadataObject, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
+import {
+    type IAttributeMetadataObject,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+} from "@gooddata/sdk-model";
 import {
     Button,
     InvertableSelectSearchBar,
@@ -20,8 +24,8 @@ import {
     DASHBOARD_DIALOG_OVERS_Z_INDEX,
     IGNORED_CONFIGURATION_MENU_CLICK_CLASS,
 } from "../../../constants/index.js";
-import { AlertAttribute } from "../../types.js";
-import { AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
+import { type AlertAttribute } from "../../types.js";
+import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
 import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../utils/getters.js";
 
 export interface IAlertAttributeSelectOldProps {

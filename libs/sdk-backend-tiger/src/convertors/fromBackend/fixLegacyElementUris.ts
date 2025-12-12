@@ -3,11 +3,11 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IInsightDefinition,
-    ILocatorItem,
-    ISortItem,
-    IWidgetDefinition,
-    VisualizationProperties,
+    type IInsightDefinition,
+    type ILocatorItem,
+    type ISortItem,
+    type IWidgetDefinition,
+    type VisualizationProperties,
     isAttributeLocator,
     isInsightWidget,
     isMeasureSort,

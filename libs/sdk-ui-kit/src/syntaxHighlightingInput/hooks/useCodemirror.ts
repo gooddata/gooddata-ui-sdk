@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 import { HighlightStyle, bracketMatching, syntaxHighlighting } from "@codemirror/language";
-import { EditorState, Extension } from "@codemirror/state";
+import { EditorState, type Extension } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
 
@@ -14,7 +14,7 @@ import { useCodemirrorEditable } from "./useCodemirrorEditable.js";
 import { useCodemirrorEvents } from "./useCodemirrorEvents.js";
 import { useCodemirrorKeymap } from "./useCodemirrorKeymap.js";
 import { useCodemirrorOptions } from "./useCodemirrorOptions.js";
-import { IUseEventHandlersProps, useEventHandlers } from "./useEventHandlers.js";
+import { type IUseEventHandlersProps, useEventHandlers } from "./useEventHandlers.js";
 
 // Custom syntax highlighting
 const customHighlightStyle = HighlightStyle.define([

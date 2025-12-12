@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
-import { ScreenSize } from "@gooddata/sdk-model";
+import { type ScreenSize } from "@gooddata/sdk-model";
 
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
-import { IDashboardLayoutItemFacade } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
+import { type IDashboardLayoutItemFacade } from "../../../DefaultDashboardLayoutRenderer/index.js";
 
 export interface IDashboardEditLayoutWidgetProps {
     item: IDashboardLayoutItemFacade<IDashboardEditLayoutContent>;

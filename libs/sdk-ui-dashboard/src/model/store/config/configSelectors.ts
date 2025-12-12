@@ -5,21 +5,21 @@ import { invariant } from "ts-invariant";
 
 import {
     type DashboardFiltersApplyMode,
-    IColorPalette,
-    IDateFilterConfig,
-    ISeparators,
-    ISettings,
-    PlatformEdition,
-    WeekStart,
+    type IColorPalette,
+    type IDateFilterConfig,
+    type ISeparators,
+    type ISettings,
+    type PlatformEdition,
+    type WeekStart,
 } from "@gooddata/sdk-model";
-import { ILocale } from "@gooddata/sdk-ui";
+import { type ILocale } from "@gooddata/sdk-ui";
 
 import {
-    DashboardFocusObject,
-    ObjectAvailabilityConfig,
-    ResolvedDashboardConfig,
+    type DashboardFocusObject,
+    type ObjectAvailabilityConfig,
+    type ResolvedDashboardConfig,
 } from "../../types/commonTypes.js";
-import { DashboardSelector, DashboardState } from "../types.js";
+import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

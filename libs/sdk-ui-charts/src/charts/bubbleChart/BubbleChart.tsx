@@ -1,19 +1,25 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
-    AttributeOrPlaceholder,
+    type IAttribute,
+    type IMeasure,
+    type INullableFilter,
+    type ISortItem,
+    newBucket,
+} from "@gooddata/sdk-model";
+import {
+    type AttributeOrPlaceholder,
     BucketNames,
-    MeasureOrPlaceholder,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
+    type MeasureOrPlaceholder,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
 import { CoreBubbleChart } from "./CoreBubbleChart.js";
-import { IBucketChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { pointyChartDimensions } from "../_commons/dimensions.js";
 
 //

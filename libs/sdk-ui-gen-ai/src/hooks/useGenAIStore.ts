@@ -2,17 +2,17 @@
 
 import { useEffect, useMemo } from "react";
 
-import { EnhancedStore } from "@reduxjs/toolkit";
+import { type EnhancedStore } from "@reduxjs/toolkit";
 
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { GenAIObjectType, IColorPalette } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
 import {
     setColorPaletteAction,
     setObjectTypesAction,
     setSettingsAction,
 } from "../store/chatWindow/chatWindowSlice.js";
-import { ChatEventHandler, EventDispatcher } from "../store/events.js";
+import { type ChatEventHandler, EventDispatcher } from "../store/events.js";
 import { getStore } from "../store/index.js";
 import { OptionsDispatcher } from "../store/options.js";
 

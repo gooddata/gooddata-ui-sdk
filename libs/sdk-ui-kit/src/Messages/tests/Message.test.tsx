@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -8,7 +8,7 @@ import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
 import { Message } from "../Message.js";
-import { IMessageProps } from "../typings.js";
+import { type IMessageProps } from "../typings.js";
 
 const DefaultLocale = "en-US";
 const messages = {

@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
+import { type SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 
-import { IAutomationMetadataObject, isObjRef } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, isObjRef } from "@gooddata/sdk-model";
 
-import { SaveAlert } from "../../commands/alerts.js";
-import { DashboardAlertSaved, alertSaved } from "../../events/alerts.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { type SaveAlert } from "../../commands/alerts.js";
+import { type DashboardAlertSaved, alertSaved } from "../../events/alerts.js";
+import { type DashboardContext } from "../../types/commonTypes.js";
 
 function saveAlert(
     ctx: DashboardContext,

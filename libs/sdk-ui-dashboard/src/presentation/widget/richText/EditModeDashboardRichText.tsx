@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { IDashboardRichTextProps } from "./types.js";
+import { type IDashboardRichTextProps } from "./types.js";
 import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { cloneDeep, range } from "lodash-es";
 
-import { HighchartsResponsiveOptions, XAxisOptions, YAxisOptions } from "../../lib/index.js";
+import { type HighchartsResponsiveOptions, type XAxisOptions, type YAxisOptions } from "../../lib/index.js";
 
 const UPPER_LIMIT_RATIO = 35;
 const BOTTOM_LIMIT_HEIGHT_RATIO = 15;

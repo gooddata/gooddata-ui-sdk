@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
+import { type UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import {
     BULK_DELETE_CONFIRM_DIALOG_ID,
@@ -13,7 +13,7 @@ import {
     BULK_UNSUBSCRIBE_CONFIRM_DIALOG_ID,
 } from "../constants.js";
 import { messages } from "../messages.js";
-import { IUseAutomationBulkActionsProps } from "../types.js";
+import { type IUseAutomationBulkActionsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
 
 export const useAutomationBulkActions = ({

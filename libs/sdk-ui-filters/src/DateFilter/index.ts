@@ -4,11 +4,11 @@ import { defaultDateFilterOptions } from "./constants/config.js";
 import { granularityIntlCodes } from "./constants/i18n.js";
 import {
     DateFilter,
-    IDateFilterCallbackProps,
-    IDateFilterOwnProps,
-    IDateFilterProps,
-    IDateFilterState,
-    IDateFilterStatePropsIntersection,
+    type IDateFilterCallbackProps,
+    type IDateFilterOwnProps,
+    type IDateFilterProps,
+    type IDateFilterState,
+    type IDateFilterStatePropsIntersection,
 } from "./DateFilter.js";
 import { mapOptionToAfm } from "./utils/AFMConversions.js";
 import { filterVisibleDateFilterOptions } from "./utils/OptionUtils.js";

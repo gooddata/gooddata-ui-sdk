@@ -4,7 +4,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
-import { ITextareaProps, Textarea } from "../Textarea.js";
+import { type ITextareaProps, Textarea } from "../Textarea.js";
 
 describe("Textarea", () => {
     function renderComponent(customProps: Partial<ITextareaProps> = {}) {

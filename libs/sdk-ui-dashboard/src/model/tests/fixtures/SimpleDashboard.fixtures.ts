@@ -1,22 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDescriptor,
-    IDrillToAttributeUrl,
-    IDrillToCustomUrl,
-    IDrillToDashboard,
-    IDrillToInsight,
-    IFilterContext,
-    IKpiWidget,
-    IListedDashboard,
+    type IAttributeDescriptor,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IFilterContext,
+    type IKpiWidget,
+    type IListedDashboard,
     idRef,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
-import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
+import { type IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 
 export const SimpleDashboardIdentifier = "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0";
 export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards?.[

@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { IRowNode, ValueGetterParams } from "ag-grid-enterprise";
-import { IntlShape } from "react-intl";
+import { type IRowNode, type ValueGetterParams } from "ag-grid-enterprise";
+import { type IntlShape } from "react-intl";
 
-import { IResultAttributeHeader, IResultTotalHeader, TotalType } from "@gooddata/sdk-model";
+import { type IResultAttributeHeader, type IResultTotalHeader, type TotalType } from "@gooddata/sdk-model";
 import {
-    ITableAttributeColumnDefinition,
-    ITableDataValue,
+    type ITableAttributeColumnDefinition,
+    type ITableDataValue,
     emptyHeaderTitleFromIntl,
     isTableGrandTotalHeaderValue,
     isTableGrandTotalMeasureValue,
@@ -17,8 +17,8 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { totalTypeMessages } from "../../../locales.js";
-import { AgGridCellRendererParams } from "../../types/agGrid.js";
-import { AgGridRowData } from "../../types/internal.js";
+import { type AgGridCellRendererParams } from "../../types/agGrid.js";
+import { type AgGridRowData } from "../../types/internal.js";
 
 export { isTableGrandTotalHeaderValue, isTableTotalHeaderValue };
 
@@ -196,7 +196,6 @@ export function getAttributeHeaderName(attributeHeader: IResultAttributeHeader, 
     return (
         convertEmptyStringToNull(attributeHeader.attributeHeaderItem.formattedName) ??
         convertEmptyStringToNull(attributeHeader.attributeHeaderItem.name) ??
-        convertEmptyStringToNull(attributeHeader.attributeHeaderItem.uri) ??
         emptyHeaderTitleFromIntl(intl)
     );
 }

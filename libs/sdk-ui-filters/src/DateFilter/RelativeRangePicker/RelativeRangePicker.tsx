@@ -1,30 +1,30 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode, memo, useCallback, useMemo, useState } from "react";
+import { type ReactNode, memo, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import {
-    IInvalidDatapoint,
+    type IInvalidDatapoint,
     createInvalidDatapoint,
     createInvalidNode,
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
-import { IAccessibilityConfigBase, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { type IAccessibilityConfigBase, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import {
-    IRelativeRangeDynamicSelectProps,
+    type IRelativeRangeDynamicSelectProps,
     RelativeRangeDynamicSelect,
 } from "../DynamicSelect/RelativeRangeDynamicSelect.js";
-import { DynamicSelectItem } from "../DynamicSelect/types.js";
+import { type DynamicSelectItem } from "../DynamicSelect/types.js";
 import {
     findRelativeDateFilterOptionByLabel,
     findRelativeDateFilterOptionByValue,
     getRelativeDateFilterItems,
 } from "../DynamicSelect/utils.js";
-import { DateFilterOption, IUiRelativeDateFilterForm } from "../interfaces/index.js";
+import { type DateFilterOption, type IUiRelativeDateFilterForm } from "../interfaces/index.js";
 import { defaultVisibleItemsRange } from "../Select/ScrollableSelectMenu.js";
 import { itemToString } from "../Select/utils.js";
 

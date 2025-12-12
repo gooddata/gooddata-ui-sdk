@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ElementType, ReactElement, useCallback, useMemo, useState } from "react";
+import { type ElementType, type ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { has, keyBy, take } from "lodash-es";
-import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage, type WrappedComponentProps, injectIntl } from "react-intl";
 
 import { guidFor } from "./guid.js";
 import { LegacyMultiSelectListWithIntl } from "./LegacyMultiSelectList.js";

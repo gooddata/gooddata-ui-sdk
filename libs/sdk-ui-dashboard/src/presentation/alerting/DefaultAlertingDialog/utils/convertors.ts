@@ -1,19 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
-    IAlertComparisonOperator,
-    IAutomationAlertCondition,
-    IAutomationAlertTrigger,
-    IAutomationMetadataObjectDefinition,
-    IAutomationRecipient,
-    IAutomationSchedule,
-    IAutomationVisibleFilter,
-    IFilter,
+    type IAlertComparisonOperator,
+    type IAutomationAlertCondition,
+    type IAutomationAlertTrigger,
+    type IAutomationMetadataObjectDefinition,
+    type IAutomationRecipient,
+    type IAutomationSchedule,
+    type IAutomationVisibleFilter,
+    type IFilter,
 } from "@gooddata/sdk-model";
 
-import { IMeasureFormatMap, getMeasureFormat, getMeasureTitle } from "./getters.js";
+import { type IMeasureFormatMap, getMeasureFormat, getMeasureTitle } from "./getters.js";
 import { transformAlertExecutionByMetric } from "./transformation.js";
-import { AlertMetric } from "../../types.js";
+import { type AlertMetric } from "../../types.js";
 
 /**
  * @internal

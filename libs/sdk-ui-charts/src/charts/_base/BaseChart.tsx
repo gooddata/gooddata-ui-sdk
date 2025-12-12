@@ -1,21 +1,21 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ComponentType, useMemo } from "react";
+import { type ComponentType, useMemo } from "react";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import {
-    ChartType,
+    type ChartType,
     ErrorCodes,
-    IErrorDescriptors,
-    IErrorProps,
-    ILoadingInjectedProps,
-    ILoadingProps,
+    type IErrorDescriptors,
+    type IErrorProps,
+    type ILoadingInjectedProps,
+    type ILoadingProps,
     newErrorMapping,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
 
-import { IRawChartProps, RawChart } from "./RawChart.js";
-import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
+import { type IRawChartProps, RawChart } from "./RawChart.js";
+import { type ICoreChartProps, type OnLegendReady } from "../../interfaces/index.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 
 /**

@@ -2,11 +2,11 @@
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject, ISeparators } from "@gooddata/sdk-model";
-import { Input, InputPureProps } from "@gooddata/sdk-ui-kit";
+import { type IAutomationMetadataObject, type ISeparators } from "@gooddata/sdk-model";
+import { Input, type InputPureProps } from "@gooddata/sdk-ui-kit";
 
 import { getDescription } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
-import { AlertMetric } from "../../../../alerting/types.js";
+import { type AlertMetric } from "../../../../alerting/types.js";
 
 export interface AlertTitleProps {
     id?: string;

@@ -5,12 +5,12 @@ import { useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { IInsightWidget } from "@gooddata/sdk-model";
+import { type IInsightWidget } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
     GD_COLOR_HIGHLIGHT,
-    IAlignPoint,
+    type IAlignPoint,
     IconArrowLeft,
     IconArrowRight,
     IconTrash,

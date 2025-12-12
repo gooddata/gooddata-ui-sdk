@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { IGeoCommonData, IGeoDataItem, IGeoMeasureItem } from "./common.js";
-import { IGeoLngLat } from "../common/coordinates.js";
+import { type IGeoCommonData, type IGeoDataItem, type IGeoMeasureItem } from "./common.js";
+import { type IGeoLngLat } from "../common/coordinates.js";
 
 /**
  * Represents a location item with coordinate data

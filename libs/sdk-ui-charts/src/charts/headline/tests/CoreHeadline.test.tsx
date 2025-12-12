@@ -4,11 +4,11 @@ import { render, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { ICoreChartProps } from "../../../interfaces/chartProps.js";
-import { CoreHeadline, ICoreHeadlineExtendedProps } from "../CoreHeadline.js";
+import { type ICoreChartProps } from "../../../interfaces/chartProps.js";
+import { CoreHeadline, type ICoreHeadlineExtendedProps } from "../CoreHeadline.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

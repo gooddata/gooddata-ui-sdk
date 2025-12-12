@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IAttributeMetadataObject, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IAttributeMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { ParentFiltersListItem } from "./ParentFiltersListItem.js";
 import { ParentFiltersListItemWithoutConnectingAttributes } from "./ParentFiltersListItemWithoutConnectingAttributes.js";
 import {
-    IConnectingAttribute,
-    IDashboardAttributeFilterParentItem,
+    type IConnectingAttribute,
+    type IDashboardAttributeFilterParentItem,
     selectSupportsSettingConnectingAttributes,
     useDashboardSelector,
 } from "../../../../../../model/index.js";

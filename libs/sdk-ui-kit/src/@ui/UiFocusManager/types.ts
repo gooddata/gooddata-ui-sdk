@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent, Ref } from "react";
+import { type KeyboardEvent, type Ref } from "react";
 
 /**
  * @internal

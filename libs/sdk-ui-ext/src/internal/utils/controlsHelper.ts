@@ -1,20 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 import { set } from "lodash-es";
-import { WrappedComponentProps } from "react-intl";
+import { type WrappedComponentProps } from "react-intl";
 
 import {
-    IInsightDefinition,
+    type IInsightDefinition,
     bucketItems,
     bucketsFind,
     insightBuckets,
     insightProperties,
 } from "@gooddata/sdk-model";
-import { BucketNames, IPushData } from "@gooddata/sdk-ui";
+import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 
 import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 import { getTranslation } from "./translations.js";
 import { messages } from "../../locales.js";
-import { IMinMaxControlProps, IMinMaxControlState } from "../interfaces/MinMaxControl.js";
+import { type IMinMaxControlProps, type IMinMaxControlState } from "../interfaces/MinMaxControl.js";
 
 function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);

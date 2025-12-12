@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
-import postcss, { Root } from "postcss";
+import postcss, { type Root } from "postcss";
 import valueParser from "postcss-value-parser";
 
 import { errorParsingFile } from "./log.js";
-import { CssVariableUsage } from "./types.js";
+import { type CssVariableUsage } from "./types.js";
 
 /**
  * Parse CSS file content into variable usages with their default values.

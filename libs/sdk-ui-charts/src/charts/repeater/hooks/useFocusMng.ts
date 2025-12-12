@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
 
-import { FocusGridInnerElementParams } from "ag-grid-community";
+import { type FocusGridInnerElementParams } from "ag-grid-community";
 
 /**
  * Hook that manages focus handling for the grid

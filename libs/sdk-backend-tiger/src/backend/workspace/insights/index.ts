@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
-    EntitiesApiGetEntityVisualizationObjectsRequest,
-    JsonApiAttributeOutWithLinks,
-    JsonApiMetricOutIncludes,
-    JsonApiVisualizationObjectOutDocument,
+    type EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    type EntitiesApiGetEntityVisualizationObjectsRequest,
+    type JsonApiAttributeOutWithLinks,
+    type JsonApiMetricOutIncludes,
+    type JsonApiVisualizationObjectOutDocument,
     MetadataUtilities,
-    VisualizationObjectModelV1,
-    VisualizationObjectModelV2,
+    type VisualizationObjectModelV1,
+    type VisualizationObjectModelV2,
     isAttributeItem,
     isDataSetItem,
     isFactItem,
@@ -28,27 +28,27 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    IGetInsightOptions,
-    IInsightReferences,
-    IInsightReferencing,
-    IInsightsQuery,
-    IInsightsQueryOptions,
-    IInsightsQueryResult,
-    IWorkspaceInsightsService,
-    SupportedInsightReferenceTypes,
+    type IGetInsightOptions,
+    type IInsightReferences,
+    type IInsightReferencing,
+    type IInsightsQuery,
+    type IInsightsQueryOptions,
+    type IInsightsQueryResult,
+    type IWorkspaceInsightsService,
+    type SupportedInsightReferenceTypes,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    ICatalogAttribute,
-    ICatalogFact,
-    ICatalogMeasure,
-    IFilter,
-    IInsight,
-    IInsightDefinition,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    IVisualizationClass,
-    ObjRef,
+    type ICatalogAttribute,
+    type ICatalogFact,
+    type ICatalogMeasure,
+    type IFilter,
+    type IInsight,
+    type IInsightDefinition,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
+    type IVisualizationClass,
+    type ObjRef,
     insightFilters,
     insightId,
     insightSetFilters,
@@ -75,7 +75,7 @@ import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInherit
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
 import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefToUri } from "../../../utils/api.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {

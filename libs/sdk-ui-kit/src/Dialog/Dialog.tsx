@@ -3,7 +3,7 @@
 import { memo } from "react";
 
 import { DialogBase } from "./DialogBase.js";
-import { IDialogProps } from "./typings.js";
+import { type IDialogProps } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
 
 /**

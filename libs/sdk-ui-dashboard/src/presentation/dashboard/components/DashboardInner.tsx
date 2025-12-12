@@ -37,7 +37,7 @@ import { DashboardContent } from "../DashboardContent.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
-import { IDashboardProps } from "../types.js";
+import { type IDashboardProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 const toastsOverlayController = OverlayController.getInstance(DASHBOARD_TOASTS_OVERLAY_Z_INDEX);

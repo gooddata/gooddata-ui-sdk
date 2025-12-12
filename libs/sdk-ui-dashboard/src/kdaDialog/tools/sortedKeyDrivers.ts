@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { KdaItemGroup } from "../internalTypes.js";
+import { type KdaItemGroup } from "../internalTypes.js";
 
 export function getSortedSignificantDriver(item: KdaItemGroup) {
     return item.significantDrivers.slice().sort((a, b) => {

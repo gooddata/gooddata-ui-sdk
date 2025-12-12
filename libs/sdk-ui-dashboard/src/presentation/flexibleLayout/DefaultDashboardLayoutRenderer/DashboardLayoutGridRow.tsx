@@ -1,20 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import {
-    IDashboardLayoutGridRowRenderer,
-    IDashboardLayoutItemKeyGetter,
-    IDashboardLayoutItemRenderer,
-    IDashboardLayoutWidgetRenderer,
+    type IDashboardLayoutGridRowRenderer,
+    type IDashboardLayoutItemKeyGetter,
+    type IDashboardLayoutItemRenderer,
+    type IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
 import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
-import { RenderMode } from "../../../types.js";
+import { type RenderMode } from "../../../types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 /**

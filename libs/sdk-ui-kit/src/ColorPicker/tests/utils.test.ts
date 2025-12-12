@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
-import { ColorFormats } from "tinycolor2";
+import { type ColorFormats } from "tinycolor2";
 import { describe, expect, it } from "vitest";
 
 import {

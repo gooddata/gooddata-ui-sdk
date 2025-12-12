@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IChartConfig } from "../../../interfaces/index.js";
-import { HighchartsOptions, SeriesPieOptions } from "../../lib/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
+import { type HighchartsOptions, type SeriesPieOptions } from "../../lib/index.js";
 import { alignChart } from "../_chartCreators/helpers.js";
 import { getPieResponsiveConfig } from "../_chartCreators/responsive.js";
 import { highlightChartPoints } from "../_chartHighlighting/highlightPoints.js";

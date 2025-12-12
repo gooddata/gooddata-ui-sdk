@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 
-import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attrtibuteFilterConfigsState.js";
+import { type AttributeFilterConfigsState } from "./attributeFilterConfigs/attrtibuteFilterConfigsState.js";
 import type { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
-import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
+import { type DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 import type { FilterContextState } from "./filterContext/filterContextState.js";
 import type { LayoutState } from "./layout/layoutState.js";
 

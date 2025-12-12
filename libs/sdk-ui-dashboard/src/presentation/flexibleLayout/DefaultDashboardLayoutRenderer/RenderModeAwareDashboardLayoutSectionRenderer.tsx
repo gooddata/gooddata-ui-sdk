@@ -3,7 +3,7 @@
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
 import { EditableDashboardLayoutSectionRenderer } from "./EditableDashboardLayoutSectionRenderer.js";
 import { ExportableDashboardLayoutSectionRenderer } from "./ExportableDashboardLayoutSectionRenderer.js";
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+import { type IDashboardLayoutSectionRenderer } from "./interfaces.js";
 import { renderModeAware } from "../../componentDefinition/index.js";
 
 /**

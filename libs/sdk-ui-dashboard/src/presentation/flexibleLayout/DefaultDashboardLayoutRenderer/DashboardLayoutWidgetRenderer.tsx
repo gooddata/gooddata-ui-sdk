@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { CSSProperties, ReactElement, useMemo } from "react";
+import { type CSSProperties, type ReactElement, useMemo } from "react";
 
 import cx from "classnames";
 
-import { IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
+import { type IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
 import {
     selectEnableSnapshotExportAccessibility,
     selectIsExport,

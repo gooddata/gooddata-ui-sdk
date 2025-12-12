@@ -1,23 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    DateAttributeGranularity,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    IDataSetMetadataObject,
-    ObjRef,
+    type DateAttributeGranularity,
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeMetadataObject,
+    type ICatalogDateAttribute,
+    type ICatalogDateDataset,
+    type IDataSetMetadataObject,
+    type ObjRef,
     isAttributeDisplayFormMetadataObject,
     isAttributeMetadataObject,
     isDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 
-import { Builder, BuilderModifications, builderFactory } from "../builder.js";
-import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory.js";
-import { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../metadata/dataSetFactory.js";
+import { Builder, type BuilderModifications, builderFactory } from "../builder.js";
 import {
-    AttributeDisplayFormMetadataObjectBuilder,
+    type AttributeMetadataObjectBuilder,
+    newAttributeMetadataObject,
+} from "../metadata/attributeFactory.js";
+import { type DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../metadata/dataSetFactory.js";
+import {
+    type AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "../metadata/displayFormFactory.js";
 

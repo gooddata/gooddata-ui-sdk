@@ -2,8 +2,8 @@
 
 import { memo } from "react";
 
-import { ICoreChartProps } from "../../interfaces/index.js";
-import { BaseChart, IBaseChartProps } from "../_base/BaseChart.js";
+import { type ICoreChartProps } from "../../interfaces/index.js";
+import { BaseChart, type IBaseChartProps } from "../_base/BaseChart.js";
 
 export const CoreScatterPlot = memo(function CoreScatterPlot(props: ICoreChartProps) {
     const { config } = props;

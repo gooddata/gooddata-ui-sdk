@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { DateFilter, DateFilterOption, defaultDateFilterOptions } from "@gooddata/sdk-ui-filters";
+import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { DateFilter, type DateFilterOption, defaultDateFilterOptions } from "@gooddata/sdk-ui-filters";
 
-import { IDateFilterComponentExampleState } from "./Example.js";
+import { type IDateFilterComponentExampleState } from "./Example.js";
 
 const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",

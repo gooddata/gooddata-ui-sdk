@@ -1,30 +1,30 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { isEmpty, partition } from "lodash-es";
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaIterator } from "redux-saga";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
-    IAnalyticalWidget,
-    ICatalogDateDataset,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IInsight,
-    IInsightWidget,
-    IKpiWidget,
-    IRichTextWidget,
-    ObjRef,
+    type IAnalyticalWidget,
+    type ICatalogDateDataset,
+    type IDashboardAttributeFilter,
+    type IDashboardDateFilter,
+    type IInsight,
+    type IInsightWidget,
+    type IKpiWidget,
+    type IRichTextWidget,
+    type ObjRef,
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
 
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
-import { IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
-    InsightDateDatasets,
-    MeasureDateDatasets,
+    type InsightDateDatasets,
+    type MeasureDateDatasets,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
@@ -39,7 +39,7 @@ import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 
 /**

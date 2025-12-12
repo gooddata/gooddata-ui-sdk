@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 
-import { UiIconButtonPublicProps, UiIconButtonRenderer } from "./UiIconButtonRenderer.js";
+import { type UiIconButtonPublicProps, UiIconButtonRenderer } from "./UiIconButtonRenderer.js";
 
 /**
  * @internal

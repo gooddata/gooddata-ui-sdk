@@ -1,19 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { IForecastConfig } from "@gooddata/sdk-backend-spi";
+import { type IForecastConfig } from "@gooddata/sdk-backend-spi";
 import {
-    IInsightDefinition,
+    type IInsightDefinition,
     factoryNotationFor,
     insightProperties,
     isColorMappingItem,
 } from "@gooddata/sdk-model";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
+import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 import {
-    IAdditionalFactoryDefinition,
-    IInsightToPropConversion,
-    PropMeta,
+    type IAdditionalFactoryDefinition,
+    type IInsightToPropConversion,
+    type PropMeta,
     insightConversion,
 } from "../../utils/embeddingCodeGenerator/index.js";
 import { getChartSupportedControls } from "../../utils/propertiesHelper.js";

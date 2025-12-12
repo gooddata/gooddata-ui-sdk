@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ICatalogDateDataset, IInsight, insightRef } from "@gooddata/sdk-model";
+import { type ICatalogDateDataset, type IInsight, insightRef } from "@gooddata/sdk-model";
 
 import { addLayoutSection, initializeDashboard } from "../../commands/index.js";
-import { InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/index.js";
+import { type InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/index.js";
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     MockAvailabilityWithDifferentRelevance,

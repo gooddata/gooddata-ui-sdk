@@ -3,21 +3,21 @@
 import { useState } from "react";
 
 import {
-    IAttribute,
-    IAttributeLocatorItem,
-    ILocatorItem,
-    IMeasure,
-    IMeasureLocatorItem,
+    type IAttribute,
+    type IAttributeLocatorItem,
+    type ILocatorItem,
+    type IMeasure,
+    type IMeasureLocatorItem,
     attributeLocalId,
     measureLocalId,
     newAttributeLocator,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
-    ColumnWidthItem,
-    IMeasureColumnWidthItem,
-    IMixedValuesColumnWidthItem,
-    ISliceMeasureColumnWidthItem,
+    type ColumnWidthItem,
+    type IMeasureColumnWidthItem,
+    type IMixedValuesColumnWidthItem,
+    type ISliceMeasureColumnWidthItem,
     PivotTable,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,

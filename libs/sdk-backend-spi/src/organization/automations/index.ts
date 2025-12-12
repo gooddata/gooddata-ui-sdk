@@ -1,13 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
-    AutomationFilterType,
-    AutomationType,
-    IGetAutomationsQueryOptions,
+    type AutomationFilterType,
+    type AutomationType,
+    type IGetAutomationsQueryOptions,
 } from "../../common/automations.js";
-import { IPagedResource } from "../../common/paging.js";
+import { type IPagedResource } from "../../common/paging.js";
 
 /**
  * Service to query automations across the organization for centralized automation management.

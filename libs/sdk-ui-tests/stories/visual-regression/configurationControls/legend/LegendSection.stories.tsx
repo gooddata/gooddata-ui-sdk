@@ -10,7 +10,7 @@ import { InternalIntlWrapper, LegendSection } from "@gooddata/sdk-ui-ext/interna
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = {
     width: 400,

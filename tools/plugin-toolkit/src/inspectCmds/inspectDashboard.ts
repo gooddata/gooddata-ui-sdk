@@ -5,9 +5,9 @@ import { isEmpty } from "lodash-es";
 
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
-import { InspectCmdActionConfig } from "./actionConfig.js";
+import { type InspectCmdActionConfig } from "./actionConfig.js";
 import { printObjectSummary } from "./output.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 
 export async function inspectDashboard(
     config: InspectCmdActionConfig,

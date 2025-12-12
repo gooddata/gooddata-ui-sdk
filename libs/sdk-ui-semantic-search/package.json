@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-semantic-search",
-    "version": "11.14.0-alpha.0",
+    "version": "11.14.0-alpha.1",
     "description": "GoodData SDK TypeScript & React skeleton",
     "repository": {
         "type": "git",
@@ -28,7 +28,6 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
-        "esm/**/*.css",
         "styles"
     ],
     "scripts": {
@@ -47,16 +46,15 @@
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "scss": "sass --load-path=node_modules styles/scss:styles/css && sass --load-path=node_modules src:esm",
+        "scss": "sass --load-path=node_modules styles/scss:styles/css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
         "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
         "test-once": "vitest run",
-        "tsm": "typed-scss-modules 'src/**/*.module.scss' --logLevel 'silent' --includePaths 'node_modules' --ignore 'node_modules' || echo 'SCSS type generation completed with warnings'",
         "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
-        "validate-esm": "node --loader ./scripts/validateEsmLoader.mjs --input-type=module --eval 'import \"@gooddata/sdk-ui-semantic-search\"'",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-semantic-search\"'",
         "validate-locales": "i18n-toolkit",
         "validate-locales-ci": "i18n-toolkit",
         "validate-theming": "npm run scss && node scripts/validateCss.js"
@@ -114,7 +112,6 @@
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^9.0.5",
-        "typed-scss-modules": "^8.1.1",
         "typescript": "5.8.3",
         "vitest": "3.2.4",
         "vitest-dom": "0.1.1"

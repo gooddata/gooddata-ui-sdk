@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    IInsightDefinition,
+    type IInsightDefinition,
     areObjRefsEqual,
     attributeLocalId,
     bucketAttributes,
@@ -14,12 +14,12 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
-    ColumnLocator,
-    ColumnWidthItem,
-    IMeasureColumnLocator,
-    IMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
-    MeasureGroupDimension,
+    type ColumnLocator,
+    type ColumnWidthItem,
+    type IMeasureColumnLocator,
+    type IMeasureColumnWidthItem,
+    type IWeakMeasureColumnWidthItem,
+    type MeasureGroupDimension,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
@@ -29,7 +29,11 @@ import {
     isWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
-import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
+import {
+    type IAttributeFilter,
+    type IBucketFilter,
+    type IBucketItem,
+} from "../../../interfaces/Visualization.js";
 import { isAttributeFilter } from "../../../utils/bucketHelper.js";
 
 const isMeasureWidthItemMatchedByFilter = (

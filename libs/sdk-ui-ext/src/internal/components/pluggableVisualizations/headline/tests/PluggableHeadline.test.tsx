@@ -4,16 +4,16 @@ import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IDrillableItem } from "@gooddata/sdk-ui";
-import { CalculateAs, CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
+import { type IDrillableItem } from "@gooddata/sdk-ui";
+import { CalculateAs, CoreHeadline, type ICoreChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
-    IBucketOfFun,
-    ICustomProps,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IBucketOfFun,
+    type ICustomProps,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";

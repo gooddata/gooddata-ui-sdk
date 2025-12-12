@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import { uniq } from "lodash-es";
 
-import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
-import { HeaderPredicates, IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
+import { HeaderPredicates, type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 /**
  * Converts post message with drilling specification into header predicates. Given the message with

@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { InspectCmdActionConfig, getInspectCmdActionConfig } from "./actionConfig.js";
-import { InspectObjectFn } from "./types.js";
+import { type InspectCmdActionConfig, getInspectCmdActionConfig } from "./actionConfig.js";
+import { type InspectObjectFn } from "./types.js";
 import { logInfo } from "../_base/terminal/loggers.js";
-import { ActionOptions } from "../_base/types.js";
+import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printInspectConfigSummary({ identifier, hostname, workspace }: InspectCmdActionConfig) {

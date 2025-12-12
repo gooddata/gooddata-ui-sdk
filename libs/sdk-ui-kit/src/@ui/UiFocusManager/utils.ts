@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
-import { NavigationDirection } from "../../typings/navigation.js";
+import { type NavigationDirection } from "../../typings/navigation.js";
 
 /**
  * @internal

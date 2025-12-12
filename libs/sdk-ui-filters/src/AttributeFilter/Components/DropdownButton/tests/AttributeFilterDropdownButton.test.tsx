@@ -8,7 +8,7 @@ import { withIntl } from "@gooddata/sdk-ui";
 import * as shared from "../../../../shared/index.js";
 import {
     AttributeFilterDropdownButton,
-    IAttributeFilterDropdownButtonProps,
+    type IAttributeFilterDropdownButtonProps,
 } from "../AttributeFilterDropdownButton.js";
 
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter";

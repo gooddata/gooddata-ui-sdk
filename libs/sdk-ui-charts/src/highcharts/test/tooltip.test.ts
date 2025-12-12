@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { ISeparators } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-model";
 
 import { formatValueForTooltip, getFormattedValueForTooltip } from "../chartTypes/_chartOptions/tooltip.js";
 

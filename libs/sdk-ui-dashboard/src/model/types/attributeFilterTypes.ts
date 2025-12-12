@@ -1,6 +1,10 @@
 // (C) 2022-2023 GoodData Corporation
 
-import { IAttributeDisplayFormMetadataObject, IAttributeElement, ObjRef } from "@gooddata/sdk-model";
+import {
+    type IAttributeDisplayFormMetadataObject,
+    type IAttributeElement,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal

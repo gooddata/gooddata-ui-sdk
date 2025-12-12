@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IWorkspaceUser } from "@gooddata/sdk-model";
+import { type IWorkspaceUser } from "@gooddata/sdk-model";
 
-import { IPagedResource } from "../../common/paging.js";
+import { type IPagedResource } from "../../common/paging.js";
 
 /**
  * Configuration options for querying users

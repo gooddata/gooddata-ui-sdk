@@ -1,10 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ComponentType, MouseEvent, ReactElement, ReactNode, RefObject } from "react";
+import {
+    type ComponentType,
+    type MouseEvent,
+    type ReactElement,
+    type ReactNode,
+    type RefObject,
+} from "react";
 
-import { ArrowOffsets } from "../Bubble/index.js";
-import { IButtonAccessibilityConfig } from "../Button/typings.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import { type ArrowOffsets } from "../Bubble/index.js";
+import { type IButtonAccessibilityConfig } from "../Button/typings.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 
 /**
  * @internal

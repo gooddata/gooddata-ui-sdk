@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { type ObjRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel.js";

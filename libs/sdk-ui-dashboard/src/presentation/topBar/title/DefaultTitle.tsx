@@ -3,7 +3,7 @@
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { TitleWrapper } from "./TitleWrapper.js";
-import { ITitleProps } from "./types.js";
+import { type ITitleProps } from "./types.js";
 
 /**
  * @alpha

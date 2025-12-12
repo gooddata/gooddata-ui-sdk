@@ -10,7 +10,7 @@ import {
 } from "./table.fixture.js";
 import { createColumnLocator, createTransposedColumnLocator } from "../colLocatorFactory.js";
 import { TableDescriptor } from "../tableDescriptor.js";
-import { MixedValuesCol, ScopeCol, SliceMeasureCol } from "../tableDescriptorTypes.js";
+import { type MixedValuesCol, type ScopeCol, type SliceMeasureCol } from "../tableDescriptorTypes.js";
 
 describe("createColumnLocator", () => {
     it("creates valid leaf column locator in table without column attributes", () => {

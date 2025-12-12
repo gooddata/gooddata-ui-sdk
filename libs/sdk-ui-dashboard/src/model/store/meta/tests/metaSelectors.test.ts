@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    IInsightWidgetDefinition,
+    type IInsightWidgetDefinition,
     newAbsoluteDateFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
@@ -29,14 +29,14 @@ import {
     replaceSectionItem,
     unignoreFilterOnInsightWidget,
 } from "../../../commands/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardFilters,
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
+import { type ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { selectIsDashboardDirty } from "../metaSelectors.js";
 
 describe("selectIsDashboardDirty", () => {

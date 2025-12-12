@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { FormattedMessage } from "react-intl";
 

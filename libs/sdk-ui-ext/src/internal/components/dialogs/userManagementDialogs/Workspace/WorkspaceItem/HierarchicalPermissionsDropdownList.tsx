@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { defineMessages } from "react-intl";
 
-import { IAlignPoint, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { HierarchicalPermissionDropdownItem } from "./HierarchicalPermissionDropdownItem.js";
 

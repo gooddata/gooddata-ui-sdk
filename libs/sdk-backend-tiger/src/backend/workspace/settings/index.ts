@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    FeatureContext,
-    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
-    JsonApiWorkspaceSettingOutWithLinks,
+    type FeatureContext,
+    type JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+    type JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
 } from "@gooddata/api-client-tiger";
@@ -17,19 +17,24 @@ import {
 } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
 import {
-    IUserWorkspaceSettings,
-    IWorkspaceSettings,
-    IWorkspaceSettingsService,
+    type IUserWorkspaceSettings,
+    type IWorkspaceSettings,
+    type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { type DashboardFiltersApplyMode, IAlertDefault, ISeparators, ISettings } from "@gooddata/sdk-model";
+import {
+    type DashboardFiltersApplyMode,
+    type IAlertDefault,
+    type ISeparators,
+    type ISettings,
+} from "@gooddata/sdk-model";
 
 import { LIB_VERSION } from "../../../__version.js";
 import {
-    IWrappedDateFilterConfig,
+    type IWrappedDateFilterConfig,
     convertDateFilterConfig,
 } from "../../../convertors/fromBackend/DateFilterConfigurationConverter.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
+import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../../types/index.js";
 import {
     TigerFeaturesService,
     getControlledFeatureRollout,

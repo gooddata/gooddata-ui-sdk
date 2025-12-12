@@ -5,7 +5,7 @@ import { BulletChart } from "@gooddata/sdk-ui-charts";
 
 import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { type IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without x axis title", width: 650, height: 120 },

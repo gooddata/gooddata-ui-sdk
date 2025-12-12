@@ -3,11 +3,11 @@ import { describe, expect, it } from "vitest";
 
 import { ActivityType, Department, WinRate, Won } from "../../../../__mocks__/model.js";
 import { modifyAttribute } from "../../attribute/factory.js";
-import { IAttribute } from "../../attribute/index.js";
+import { type IAttribute } from "../../attribute/index.js";
 import { modifyMeasure } from "../../measure/factory.js";
-import { IMeasure } from "../../measure/index.js";
+import { type IMeasure } from "../../measure/index.js";
 import { emptyDef } from "../factory.js";
-import { IExecutionDefinition } from "../index.js";
+import { type IExecutionDefinition } from "../index.js";
 import { defValidate } from "../validation.js";
 
 describe("defValidate", () => {

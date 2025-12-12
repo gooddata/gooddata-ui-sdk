@@ -1,23 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IAnalyticalBackend, IDashboardReferences } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IDashboardReferences } from "@gooddata/sdk-backend-spi";
 import {
-    FilterContextItem,
-    IColorPalette,
-    IDashboard,
-    IDashboardLayout,
-    IDateFilterConfig,
-    IEntitlementDescriptor,
-    IInsight,
-    ISeparators,
-    ISettings,
-    Identifier,
-    ObjRef,
+    type FilterContextItem,
+    type IColorPalette,
+    type IDashboard,
+    type IDashboardLayout,
+    type IDateFilterConfig,
+    type IEntitlementDescriptor,
+    type IInsight,
+    type ISeparators,
+    type ISettings,
+    type Identifier,
+    type ObjRef,
 } from "@gooddata/sdk-model";
-import { ILocale } from "@gooddata/sdk-ui";
+import { type ILocale } from "@gooddata/sdk-ui";
 
-import { ExtendedDashboardWidget } from "./layoutTypes.js";
-import { IDashboardFilter, IMenuButtonItemsVisibility, RenderMode } from "../../types.js";
+import { type ExtendedDashboardWidget } from "./layoutTypes.js";
+import { type IDashboardFilter, type IMenuButtonItemsVisibility, type RenderMode } from "../../types.js";
 
 /**
  * Dashboard component may offer users to pick objects to use on the dashboard.

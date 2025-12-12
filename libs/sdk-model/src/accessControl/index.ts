@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import { isEmpty } from "lodash-es";
 
-import { ObjRef } from "../objRef/index.js";
-import { IWorkspaceUser } from "../user/index.js";
-import { IWorkspaceUserGroup } from "../userGroup/index.js";
+import { type ObjRef } from "../objRef/index.js";
+import { type IWorkspaceUser } from "../user/index.js";
+import { type IWorkspaceUserGroup } from "../userGroup/index.js";
 
 /**
  * User having access to the object.

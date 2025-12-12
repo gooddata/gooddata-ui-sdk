@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { IResultWarning, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IResultWarning, type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { IDashboardCommand } from "./base.js";
-import { IExecutionResultEnvelope } from "../store/executionResults/types.js";
+import { type IDashboardCommand } from "./base.js";
+import { type IExecutionResultEnvelope } from "../store/executionResults/types.js";
 
 /**
  * Triggers an event.

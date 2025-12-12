@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IColorPalette, ISeparators, Identifier } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
-import { ChartFillConfig, IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorPalette, type ISeparators, type Identifier } from "@gooddata/sdk-model";
+import { type IDrillEventIntersectionElement, type VisType } from "@gooddata/sdk-ui";
+import { type ChartFillConfig, type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { IComparison } from "./comparison.js";
+import { type IComparison } from "./comparison.js";
 
 /**
  * Chart config is used to customize visual aspects of the different charts.

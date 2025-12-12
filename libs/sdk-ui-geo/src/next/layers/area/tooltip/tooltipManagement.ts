@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { ISeparators } from "@gooddata/sdk-model";
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type ISeparators } from "@gooddata/sdk-model";
+import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { formatValueForTooltip } from "../../../map/style/tooltipFormatting.js";
-import { IGeoAreaChartConfig } from "../../../types/config/areaChart.js";
-import { JsonValue, isRecord } from "../../../utils/guards.js";
+import { type IGeoAreaChartConfig } from "../../../types/config/areaChart.js";
+import { type JsonValue, isRecord } from "../../../utils/guards.js";
 import type { IPopupFacade } from "../../common/mapFacade.js";
 import type { IGeoTooltipConfig } from "../../registry/adapterTypes.js";
 

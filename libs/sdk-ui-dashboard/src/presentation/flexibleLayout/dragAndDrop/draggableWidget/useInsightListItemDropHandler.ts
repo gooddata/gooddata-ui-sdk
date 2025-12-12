@@ -1,14 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
-import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
+import { type IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { serializeLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
-    ChangeInsightWidgetFilterSettings,
-    DashboardCommandFailed,
+    type ChangeInsightWidgetFilterSettings,
+    type DashboardCommandFailed,
     addNestedLayoutSectionItem,
     dispatchAndWaitFor,
     enableInsightWidgetDateFilter,
@@ -19,7 +19,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { type ILayoutItemPath } from "../../../../types.js";
 import { newLoadingPlaceholderWidget } from "../../../../widgets/index.js";
 
 export function useInsightListItemDropHandler(layoutPath: ILayoutItemPath) {

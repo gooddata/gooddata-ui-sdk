@@ -1,20 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactElement, ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import cx from "classnames";
 
-import { ITheme } from "@gooddata/sdk-model";
+import { type ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import {
-    IColorLegendBox,
-    IColorLegendConfig,
-    IHeatmapLegendLabel as IColorLegendLabel,
+    type IColorLegendBox,
+    type IColorLegendConfig,
+    type IHeatmapLegendLabel as IColorLegendLabel,
     getColorLegendConfiguration,
 } from "./helpers.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
-import { IColorLegendItem, IColorLegendSize } from "./types.js";
+import { type IColorLegendItem, type IColorLegendSize } from "./types.js";
 
 /**
  * @internal

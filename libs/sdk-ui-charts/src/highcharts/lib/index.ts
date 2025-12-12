@@ -5,7 +5,7 @@
 // se ambient module for types
 // we also need import Highcharts from "highcharts/esm/highcharts.js"; directly in code files because any reexport caused
 // error/warning Cannot find type definition file for 'src/highcharts.js
-import HighchartsModules from "highcharts";
+import type HighchartsModules from "highcharts";
 
 export type HChart = HighchartsModules.Chart;
 export type HTMLDOMElement = HighchartsModules.HTMLDOMElement;

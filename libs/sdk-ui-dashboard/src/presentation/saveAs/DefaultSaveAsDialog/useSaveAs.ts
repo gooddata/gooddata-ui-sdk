@@ -2,11 +2,11 @@
 
 import { useCallback } from "react";
 
-import { IDashboard } from "@gooddata/sdk-model";
-import { ILocale } from "@gooddata/sdk-ui";
+import { type IDashboard } from "@gooddata/sdk-model";
+import { type ILocale } from "@gooddata/sdk-ui";
 
 import {
-    CommandProcessingStatus,
+    type CommandProcessingStatus,
     saveDashboardAs,
     selectBackendCapabilities,
     selectDashboardTitle,

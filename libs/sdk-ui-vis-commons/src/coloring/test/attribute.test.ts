@@ -3,15 +3,15 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IColorPalette, IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
-import { DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type IColorPalette, type IColorPaletteItem, type RgbType } from "@gooddata/sdk-model";
+import { type DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 
 import { getColorsFromStrategy } from "./helper.js";
 import { recordedDataFacade } from "../../../__mocks__/recordings.js";
 import { AttributeColorStrategy } from "../attribute.js";
 import { getRgbString } from "../color.js";
-import { IColorMapping } from "../types.js";
+import { type IColorMapping } from "../types.js";
 
 const RgbPalette: IColorPalette = [
     {

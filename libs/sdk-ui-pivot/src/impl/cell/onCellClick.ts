@@ -1,17 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import { AgEventType, CellEvent } from "ag-grid-community";
+import { type AgEventType, type CellEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
 import {
-    IDrillEvent,
-    IDrillEventContextTable,
+    type IDrillEvent,
+    type IDrillEventContextTable,
     VisualizationTypes,
     convertDrillableItemsToPredicates,
 } from "@gooddata/sdk-ui";
 
-import { ICorePivotTableProps } from "../../publicTypes.js";
+import { type ICorePivotTableProps } from "../../publicTypes.js";
 import { isSomeTotal } from "../data/dataSourceUtils.js";
-import { IGridRow } from "../data/resultTypes.js";
+import { type IGridRow } from "../data/resultTypes.js";
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
 import { createDrilledRow } from "../drilling/drilledRowFactory.js";
 import { createDrillIntersection } from "../drilling/drillIntersectionFactory.js";
@@ -23,7 +23,7 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "../structure/tableDescriptorTypes.js";
-import { TableFacade } from "../tableFacade.js";
+import { type TableFacade } from "../tableFacade.js";
 
 export type CellClickedHandler = (cellEvent: CellEvent<AgEventType>) => boolean;
 

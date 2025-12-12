@@ -3,11 +3,11 @@
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
 
-import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import {
     selectEnableSnapshotExportAccessibility,
@@ -15,7 +15,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import { HeaderExportData } from "../../export/index.js";
+import { type HeaderExportData } from "../../export/index.js";
 
 export interface IDashboardLayoutSectionHeaderProps {
     section: IDashboardLayoutSectionFacade<unknown>;

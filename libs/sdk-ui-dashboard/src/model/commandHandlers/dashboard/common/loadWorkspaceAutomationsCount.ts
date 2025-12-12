@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-model";
+import { type ISettings } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../../types/commonTypes.js";
+import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export async function loadWorkspaceAutomationsCount(
     ctx: DashboardContext,

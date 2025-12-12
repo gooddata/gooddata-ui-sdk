@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-import { DashboardRecording } from "../recordings/dashboards.js";
+import { type DashboardRecording } from "../recordings/dashboards.js";
 
 /**
  * Generate constants for the dashboard recordings. This function will return non-exported constant per recording.

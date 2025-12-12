@@ -3,10 +3,15 @@
 import { useEffect, useState } from "react";
 
 import { LRUCache } from "lru-cache";
-import { IntlShape, defineMessages, useIntl } from "react-intl";
+import { type IntlShape, defineMessages, useIntl } from "react-intl";
 
-import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend, type IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    type AttributeDisplayFormType,
+    type IAttributeElement,
+    type ObjRef,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
 
 import { ParameterDetail } from "./ParameterDetail.js";

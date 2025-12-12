@@ -1,26 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IWorkspaceCatalog,
-    IWorkspaceCatalogAvailableItemsFactory,
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogFactoryOptions,
-    IWorkspaceCatalogWithAvailableItems,
-    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    type IWorkspaceCatalog,
+    type IWorkspaceCatalogAvailableItemsFactory,
+    type IWorkspaceCatalogFactory,
+    type IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceCatalogWithAvailableItems,
+    type IWorkspaceCatalogWithAvailableItemsFactoryOptions,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItem,
-    CatalogItemType,
-    IAttributeOrMeasure,
-    ICatalogAttribute,
-    ICatalogAttributeHierarchy,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
-    IInsightDefinition,
-    ObjRef,
+    type CatalogItem,
+    type CatalogItemType,
+    type IAttributeOrMeasure,
+    type ICatalogAttribute,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateDataset,
+    type ICatalogFact,
+    type ICatalogGroup,
+    type ICatalogMeasure,
+    type IInsightDefinition,
+    type ObjRef,
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
     isCatalogDateDataset,
@@ -28,7 +28,7 @@ import {
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
 
-import { RecordedBackendConfig, RecordingIndex } from "./types.js";
+import { type RecordedBackendConfig, type RecordingIndex } from "./types.js";
 
 /**
  * @internal

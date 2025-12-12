@@ -3,8 +3,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { IAccessibilityConfigBase } from "../../../typings/accessibility.js";
-import { UiPopover, UiPopoverProps } from "../UiPopover.js";
+import { type IAccessibilityConfigBase } from "../../../typings/accessibility.js";
+import { UiPopover, type UiPopoverProps } from "../UiPopover.js";
 
 describe("UiPopover", () => {
     const renderPopover = (props: Partial<UiPopoverProps> = {}) => {

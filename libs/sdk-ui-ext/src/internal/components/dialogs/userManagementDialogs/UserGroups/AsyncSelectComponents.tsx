@@ -1,21 +1,21 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import {
-    GroupHeadingProps,
-    InputProps,
-    MenuListProps,
-    NoticeProps,
-    OptionProps,
+    type GroupHeadingProps,
+    type InputProps,
+    type MenuListProps,
+    type NoticeProps,
+    type OptionProps,
     components as ReactSelectComponents,
 } from "react-select";
 
 import { LoadingMask, Typography } from "@gooddata/sdk-ui-kit";
 
 import {
-    ISelectErrorOption,
-    IUserGroupSelectOption,
+    type ISelectErrorOption,
+    type IUserGroupSelectOption,
     isGrantedUserGroup,
     isSelectErrorOption,
 } from "../types.js";

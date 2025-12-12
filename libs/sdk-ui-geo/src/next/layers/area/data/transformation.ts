@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IAttributeDescriptor,
-    IBucket,
-    IMeasureDescriptor,
-    IResultHeader,
+    type IAttributeDescriptor,
+    type IBucket,
+    type IMeasureDescriptor,
+    type IResultHeader,
     attributeLocalId,
     isAttribute,
     isMeasure,
@@ -12,12 +12,16 @@ import {
     measureLocalId,
     resultHeaderName,
 } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { dataValueAsFloat } from "../../../map/style/dataTransformation.js";
-import { IAvailableLegends, IGeoLegendItem } from "../../../types/common/legends.js";
-import { IAreaGeoData, IGeoAreaItem } from "../../../types/geoData/area.js";
-import { IGeoAttributeItem, IGeoMeasureItem, IGeoSegmentItem } from "../../../types/geoData/common.js";
+import { type IAvailableLegends, type IGeoLegendItem } from "../../../types/common/legends.js";
+import { type IAreaGeoData, type IGeoAreaItem } from "../../../types/geoData/area.js";
+import {
+    type IGeoAttributeItem,
+    type IGeoMeasureItem,
+    type IGeoSegmentItem,
+} from "../../../types/geoData/common.js";
 import { getMinMax } from "../../pushpin/size/calculations.js";
 
 interface ISegmentData {

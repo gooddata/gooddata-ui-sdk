@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
-import { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge.js";
+import { HeaderBadge, type IHeaderBadgeProps } from "./HeaderBadge.js";
 
 /**
  * @internal

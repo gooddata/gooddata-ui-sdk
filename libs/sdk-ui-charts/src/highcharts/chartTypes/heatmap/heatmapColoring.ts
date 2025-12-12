@@ -2,12 +2,12 @@
 import { isEqual, range } from "lodash-es";
 import { darken, mix, saturate } from "polished";
 
-import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { type IColorPalette, type IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
+import { type DataViewFacade, type IColorAssignment, type IMappingHeader } from "@gooddata/sdk-ui";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import {
     ColorStrategy,
-    ICreateColorAssignmentReturnValue,
+    type ICreateColorAssignmentReturnValue,
     getColorByGuid,
     getColorFromMapping,
     getRgbStringFromRGB,
@@ -15,7 +15,7 @@ import {
     normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IColorMapping } from "../../../interfaces/index.js";
+import { type IColorMapping } from "../../../interfaces/index.js";
 import {
     DEFAULT_HEATMAP_BLUE_BASE_COLOR,
     DEFAULT_HEATMAP_BLUE_COLOR,

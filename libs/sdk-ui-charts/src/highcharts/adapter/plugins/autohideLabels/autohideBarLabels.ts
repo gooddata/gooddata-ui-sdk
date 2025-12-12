@@ -17,7 +17,7 @@ import {
     showStackLabelInAxisRange,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import {
-    IAxisRangeForAxes,
+    type IAxisRangeForAxes,
     getAxisRangeForAxes,
     getAxisWithCategories,
     getDataPointsOfVisibleSeries,
@@ -28,7 +28,7 @@ import {
     isStacked,
     toNeighbors,
 } from "../../../chartTypes/_chartCreators/helpers.js";
-import { Axis } from "../../../lib/index.js";
+import { type Axis } from "../../../lib/index.js";
 
 const toggleStackedChartLabels = (
     visiblePoints: any[],

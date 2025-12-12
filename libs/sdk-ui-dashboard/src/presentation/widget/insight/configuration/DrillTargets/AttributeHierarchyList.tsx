@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { ICatalogAttributeHierarchy, ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy, type ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
 import { DropdownList, withBubble } from "@gooddata/sdk-ui-kit";
 
 import { AttributeHierarchyListFooter } from "./AttributeHierarchyListFooter.js";

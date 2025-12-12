@@ -4,9 +4,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import {
-    IAnalyticalBackend,
-    IUserWorkspaceSettings,
-    IWorkspaceSettingsService,
+    type IAnalyticalBackend,
+    type IUserWorkspaceSettings,
+    type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
 
 import { userWorkspaceSettingsDataLoaderFactory } from "../UserWorkspaceSettingsDataLoader.js";

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactElement, ReactNode, memo, useCallback, useState } from "react";
+import { type ReactElement, type ReactNode, memo, useCallback, useState } from "react";
 
 import cx from "classnames";
 
@@ -8,10 +8,10 @@ import { ITEM_HEIGHT, STATIC_PAGING_HEIGHT, calculateStaticLegend } from "./help
 import { LegendLabelItem } from "./LegendLabelItem.js";
 import { LegendList } from "./LegendList.js";
 import { LegendSeries } from "./LegendSeries.js";
-import { ButtonsOrientationType, Paging } from "./Paging.js";
+import { type ButtonsOrientationType, Paging } from "./Paging.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
-import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
-import { ChartFillType } from "../coloring/types.js";
+import { type ISeriesItem, type ItemBorderRadiusPredicate } from "./types.js";
+import { type ChartFillType } from "../coloring/types.js";
 
 /**
  * @internal

@@ -1,24 +1,24 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    AutomationAlertDescription as AlertDescription,
-    AutomationAlertEvaluationRow as AlertEvaluationRow,
-    AutomationAutomationNotification,
-    AutomationNotification as Notification,
-    AutomationTestNotification as TestNotification,
-    AutomationWebhookMessageData as WebhookMessageData,
+    type AutomationAlertDescription as AlertDescription,
+    type AutomationAlertEvaluationRow as AlertEvaluationRow,
+    type AutomationAutomationNotification,
+    type AutomationNotification as Notification,
+    type AutomationTestNotification as TestNotification,
+    type AutomationWebhookMessageData as WebhookMessageData,
 } from "@gooddata/api-client-tiger";
 import {
-    AlertDescriptionStatus,
-    IAlertDescription,
-    IAlertEvaluationRow,
-    IAlertNotification,
-    IAlertNotificationDetails,
-    INotification,
-    IScheduleNotification,
-    IScheduleNotificationDetails,
-    IWebhookMessageDataAlert,
-    IWebhookMessageDataSchedule,
+    type AlertDescriptionStatus,
+    type IAlertDescription,
+    type IAlertEvaluationRow,
+    type IAlertNotification,
+    type IAlertNotificationDetails,
+    type INotification,
+    type IScheduleNotification,
+    type IScheduleNotificationDetails,
+    type IWebhookMessageDataAlert,
+    type IWebhookMessageDataSchedule,
 } from "@gooddata/sdk-model";
 
 /**

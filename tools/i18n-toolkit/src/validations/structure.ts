@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ValidationError, Validator } from "jsonschema";
+import { type ValidationError, Validator } from "jsonschema";
 
-import { LocalesStructure, LocalizationSchema } from "../schema/localization.js";
+import { type LocalesStructure, LocalizationSchema } from "../schema/localization.js";
 import { done, fail, message, skipped } from "../utils/console.js";
 
 export async function getStructureCheck(

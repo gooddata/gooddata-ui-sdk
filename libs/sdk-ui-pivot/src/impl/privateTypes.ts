@@ -1,27 +1,38 @@
 // (C) 2007-2025 GoodData Corporation
 
 import {
-    AgGridEvent,
-    BodyScrollEvent,
-    ColumnResizedEvent,
-    GridOptions,
-    GridReadyEvent,
-    PinnedRowDataChangedEvent,
-    SortChangedEvent,
+    type AgGridEvent,
+    type BodyScrollEvent,
+    type ColumnResizedEvent,
+    type GridOptions,
+    type GridReadyEvent,
+    type PinnedRowDataChangedEvent,
+    type SortChangedEvent,
 } from "ag-grid-community";
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, ISeparators, ITotal, TotalType } from "@gooddata/sdk-model";
-import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
-
-import { IScrollPosition } from "./stickyRowHandler.js";
-import { ColumnWidthItem } from "../columnWidths.js";
+import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    ColumnHeadersPosition,
-    ColumnResizedCallback,
-    DefaultColumnWidth,
-    IMenu,
-    MeasureGroupDimension,
+    type IExecutionDefinition,
+    type ISeparators,
+    type ITotal,
+    type TotalType,
+} from "@gooddata/sdk-model";
+import {
+    type DataViewFacade,
+    type GoodDataSdkError,
+    type ILoadingState,
+    type IPushData,
+    type OnExportReady,
+} from "@gooddata/sdk-ui";
+
+import { type IScrollPosition } from "./stickyRowHandler.js";
+import { type ColumnWidthItem } from "../columnWidths.js";
+import {
+    type ColumnHeadersPosition,
+    type ColumnResizedCallback,
+    type DefaultColumnWidth,
+    type IMenu,
+    type MeasureGroupDimension,
 } from "../publicTypes.js";
 
 export interface IMenuAggregationClickConfig {

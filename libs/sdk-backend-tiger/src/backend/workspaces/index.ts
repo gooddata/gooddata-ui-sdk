@@ -4,29 +4,29 @@ import { compact } from "lodash-es";
 
 import {
     ActionsUtilities,
-    EntitiesApiGetAllEntitiesWorkspacesRequest,
-    JsonApiWorkspaceOutList,
+    type EntitiesApiGetAllEntitiesWorkspacesRequest,
+    type JsonApiWorkspaceOutList,
 } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    IAnalyticalWorkspace,
-    IPagedResource,
-    IWorkspaceDescriptor,
-    IWorkspacesQuery,
-    IWorkspacesQueryFactory,
-    IWorkspacesQueryFilter,
-    IWorkspacesQueryOptions,
-    IWorkspacesQueryResult,
+    type IAnalyticalWorkspace,
+    type IPagedResource,
+    type IWorkspaceDescriptor,
+    type IWorkspacesQuery,
+    type IWorkspacesQueryFactory,
+    type IWorkspacesQueryFilter,
+    type IWorkspacesQueryOptions,
+    type IWorkspacesQueryResult,
 } from "@gooddata/sdk-backend-spi";
 
 import {
-    DateFormatter,
-    DateNormalizer,
-    DateStringifier,
+    type DateFormatter,
+    type DateNormalizer,
+    type DateStringifier,
 } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { TigerWorkspace } from "../workspace/index.js";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {

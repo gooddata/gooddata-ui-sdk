@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { IColorLegendSize } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorLegendSize } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * Geo chart has special breakpoints related to responsive behavior

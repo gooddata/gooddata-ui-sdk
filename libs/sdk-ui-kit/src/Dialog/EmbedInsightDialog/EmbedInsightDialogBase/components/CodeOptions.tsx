@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { HeightSetting } from "./HeightSetting.js";
 import { ToggleSwitch } from "./ToggleSwitch.js";
-import { IReactOptions, UnitsType } from "../types.js";
+import { type IReactOptions, type UnitsType } from "../types.js";
 
 /**
  * @internal

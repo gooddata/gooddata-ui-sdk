@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode, Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { isFocusVisible } from "@react-aria/interactions";
 import cx from "classnames";
 import { defaultImport } from "default-import";
 import { FormattedMessage, useIntl } from "react-intl";
-import DefaultMeasure, { ContentRect } from "react-measure";
+import DefaultMeasure, { type ContentRect } from "react-measure";
 
 import {
     Bubble,
@@ -19,7 +19,7 @@ import {
 import { FilterViews } from "./filterViews/FilterViews.js";
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
-import { CalculatedRows, useRowsCalculator } from "./hooks/useRowsCalculator.js";
+import { type CalculatedRows, useRowsCalculator } from "./hooks/useRowsCalculator.js";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 import {

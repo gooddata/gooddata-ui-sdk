@@ -2,7 +2,7 @@
 
 import { FormattedMessage } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint, Typography } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint, Typography } from "@gooddata/sdk-ui-kit";
 
 interface INoDataErrorProps {
     fullContent: boolean;

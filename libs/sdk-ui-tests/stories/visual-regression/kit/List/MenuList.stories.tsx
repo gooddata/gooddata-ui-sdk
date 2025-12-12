@@ -2,7 +2,7 @@
 
 import { Header, Item, ItemsWrapper, Separator } from "@gooddata/sdk-ui-kit";
 
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";

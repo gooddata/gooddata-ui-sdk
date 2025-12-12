@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import {
     IconAborted,
@@ -104,7 +104,7 @@ import {
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
-import { IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 interface IIconWrapperProps {
     name: string;

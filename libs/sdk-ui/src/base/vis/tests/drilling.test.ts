@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { describe, expect, it, vi } from "vitest";
 
-import { IDrillEvent } from "../DrillEvents.js";
+import { type IDrillEvent } from "../DrillEvents.js";
 import { fireDrillEvent } from "../drilling.js";
 
 describe("fireDrillEvent", () => {

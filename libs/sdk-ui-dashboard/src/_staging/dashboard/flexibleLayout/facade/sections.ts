@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { IDashboardLayoutSection } from "@gooddata/sdk-model";
+import { type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 import {
-    IDashboardLayoutFacade,
-    IDashboardLayoutSectionFacade,
-    IDashboardLayoutSectionsFacade,
+    type IDashboardLayoutFacade,
+    type IDashboardLayoutSectionFacade,
+    type IDashboardLayoutSectionsFacade,
 } from "./interfaces.js";
 import { DashboardLayoutSectionFacade } from "./section.js";
-import { ILayoutItemPath } from "../../../../types.js";
+import { type ILayoutItemPath } from "../../../../types.js";
 
 /**
  * @alpha

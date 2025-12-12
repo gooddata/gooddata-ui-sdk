@@ -2,8 +2,8 @@
 
 import { invariant } from "ts-invariant";
 
-import { ObjRef } from "../../../objRef/index.js";
-import { IMetadataObject, isMetadataObject } from "../types.js";
+import { type ObjRef } from "../../../objRef/index.js";
+import { type IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
  * Attribute display form type

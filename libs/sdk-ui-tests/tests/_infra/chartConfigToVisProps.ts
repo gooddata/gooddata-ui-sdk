@@ -3,8 +3,8 @@
 import { isEmpty, omit } from "lodash-es";
 
 import { attributeDisplayFormRef, isUriRef } from "@gooddata/sdk-model";
-import { IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { type IAxisConfig, type IChartConfig } from "@gooddata/sdk-ui-charts";
+import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
 
 const ConfigNotApplicableInInsight: Array<keyof IChartConfig | keyof IGeoConfig> = [
     "colorPalette",

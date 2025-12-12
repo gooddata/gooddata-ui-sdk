@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import { ShareStatusIndicator } from "./ShareStatusIndicator.js";
-import { IShareStatusProps } from "./types.js";
+import { type IShareStatusProps } from "./types.js";
 import {
     selectCanManageAnalyticalDashboard,
     selectSupportsAccessControlCapability,

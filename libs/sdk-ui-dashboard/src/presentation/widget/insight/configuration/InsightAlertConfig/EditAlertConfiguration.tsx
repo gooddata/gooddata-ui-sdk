@@ -4,13 +4,13 @@ import { useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
     Button,
     IconQuestionMark,
-    OverlayPositionType,
+    type OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 

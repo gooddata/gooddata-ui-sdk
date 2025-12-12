@@ -2,12 +2,12 @@
 
 import {
     type DashboardFiltersApplyMode,
-    IAlertDefault,
-    IMetricFormatOverrideSetting,
-    IOpenAiConfig,
-    ISeparators,
-    ISettings,
-    IWhiteLabeling,
+    type IAlertDefault,
+    type IMetricFormatOverrideSetting,
+    type IOpenAiConfig,
+    type ISeparators,
+    type ISettings,
+    type IWhiteLabeling,
 } from "@gooddata/sdk-model";
 
 /**

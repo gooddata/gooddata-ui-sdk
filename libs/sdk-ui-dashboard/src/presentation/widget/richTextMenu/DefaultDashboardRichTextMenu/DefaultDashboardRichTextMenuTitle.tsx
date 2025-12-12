@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { IDashboardRichTextMenuTitleProps } from "../types.js";
+import { type IDashboardRichTextMenuTitleProps } from "../types.js";
 
 /**
  * @internal

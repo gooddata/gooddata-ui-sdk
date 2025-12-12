@@ -1,17 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { KeyboardEvent as ReactKeyboardEvent, useCallback, useRef } from "react";
+import { type KeyboardEvent as ReactKeyboardEvent, useCallback, useRef } from "react";
 
 import {
-    CellClickedEvent,
-    CellKeyDownEvent,
-    CellMouseDownEvent,
-    CellMouseOverEvent,
+    type CellClickedEvent,
+    type CellKeyDownEvent,
+    type CellMouseDownEvent,
+    type CellMouseOverEvent,
 } from "ag-grid-enterprise";
 
 import {
-    IDrillEvent,
-    IDrillEventContextTable,
+    type IDrillEvent,
+    type IDrillEventContextTable,
     UnexpectedSdkError,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
@@ -29,8 +29,13 @@ import { useSyncDrillableItems } from "./drilling/useSyncDrillableItems.js";
 import { createCustomDrillEvent } from "../features/drilling/events.js";
 import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { isCellDrillable } from "../features/drilling/isDrillable.js";
-import { AgGridApi, AgGridColumn, AgGridColumnDef, AgGridProps } from "../types/agGrid.js";
-import { AgGridRowData } from "../types/internal.js";
+import {
+    type AgGridApi,
+    type AgGridColumn,
+    type AgGridColumnDef,
+    type AgGridProps,
+} from "../types/agGrid.js";
+import { type AgGridRowData } from "../types/internal.js";
 
 /**
  * Keyboard navigation action map for pivot table

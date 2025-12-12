@@ -2,7 +2,7 @@
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
+import { BubbleChart, type IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";

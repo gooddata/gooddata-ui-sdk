@@ -1,24 +1,24 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IMeasure, INullableFilter, ISeparators } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IMeasure, type INullableFilter, type ISeparators } from "@gooddata/sdk-model";
 
 import { FormattedNumber } from "./FormattedNumber.js";
 import { KpiError } from "./KpiError.js";
 import {
-    DataViewFacade,
-    IErrorProps,
-    ILoadingProps,
+    type DataViewFacade,
+    type IErrorProps,
+    type ILoadingProps,
     IntlWrapper,
     LoadingComponent,
     withContexts,
 } from "../base/index.js";
-import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/index.js";
+import { type IRawExecuteProps, type IWithLoadingEvents, RawExecute } from "../execution/index.js";
 
 //
 // Internals

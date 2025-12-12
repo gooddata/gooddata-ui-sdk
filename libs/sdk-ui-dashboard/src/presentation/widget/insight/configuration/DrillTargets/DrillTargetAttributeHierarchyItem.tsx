@@ -3,8 +3,8 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttributeHierarchy,
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
     areObjRefsEqual,
     getHierarchyAttributes,
     isCatalogAttributeHierarchy,
@@ -19,7 +19,7 @@ import {
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../model/index.js";
-import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
+import { type IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
 
 interface IDrillTargetDashboardItemProps {
     config: IDrillDownAttributeHierarchyConfig;

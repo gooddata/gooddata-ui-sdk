@@ -1,9 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    Dispatch,
-    ReactNode,
-    SetStateAction,
+    type Dispatch,
+    type ReactNode,
+    type SetStateAction,
     createContext,
     useCallback,
     useContext,
@@ -11,7 +11,7 @@ import {
     useState,
 } from "react";
 
-import { KdaState } from "../internalTypes.js";
+import { type KdaState } from "../internalTypes.js";
 
 const defaultState: KdaState = {
     //main items

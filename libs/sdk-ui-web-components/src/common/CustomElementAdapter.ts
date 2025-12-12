@@ -1,13 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement, createElement } from "react";
+import { type ReactElement, createElement } from "react";
 
-import { Root, createRoot } from "react-dom/client";
+import { type Root, createRoot } from "react-dom/client";
 import { invariant } from "ts-invariant";
 
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
-import { CustomElementContext, getContext } from "../context.js";
+import { type CustomElementContext, getContext } from "../context.js";
 
 // Since JS does not support private properties natively,
 // use Symbols to hide them. Otherwise, would be seen on the element instance.

@@ -2,11 +2,11 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
+import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
 import { getMVS } from "../../_util/test/helper.js";
 import { getTooltipWaterfallChart } from "../chartTooltips.js";
 

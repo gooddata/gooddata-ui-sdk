@@ -3,27 +3,27 @@
 import { compact } from "lodash-es";
 import stringifyObject from "stringify-object";
 
-import { ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";
-import { IAttribute, isAttribute } from "../attribute/index.js";
+import { type ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";
+import { type IAttribute, isAttribute } from "../attribute/index.js";
 import {
-    IAttributeLocatorItem,
-    IAttributeSortItem,
-    IMeasureLocatorItem,
-    IMeasureSortItem,
+    type IAttributeLocatorItem,
+    type IAttributeSortItem,
+    type IMeasureLocatorItem,
+    type IMeasureSortItem,
     isAttributeAreaSort,
     isAttributeSort,
     isMeasureLocator,
     isMeasureSort,
 } from "../base/sort.js";
-import { ITotal, isTotal } from "../base/totals.js";
+import { type ITotal, isTotal } from "../base/totals.js";
 import {
-    IAbsoluteDateFilter,
-    IFilter,
-    IMeasureValueFilter,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-    IRankingFilter,
-    IRelativeDateFilter,
+    type IAbsoluteDateFilter,
+    type IFilter,
+    type IMeasureValueFilter,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
+    type IRankingFilter,
+    type IRelativeDateFilter,
     isAbsoluteDateFilter,
     isComparisonCondition,
     isMeasureValueFilter,
@@ -35,12 +35,12 @@ import {
     isRelativeDateFilter,
 } from "../filter/index.js";
 import {
-    IArithmeticMeasureDefinition,
-    IInlineMeasureDefinition,
-    IMeasure,
-    IMeasureDefinition,
-    IPoPMeasureDefinition,
-    IPreviousPeriodMeasureDefinition,
+    type IArithmeticMeasureDefinition,
+    type IInlineMeasureDefinition,
+    type IMeasure,
+    type IMeasureDefinition,
+    type IPoPMeasureDefinition,
+    type IPreviousPeriodMeasureDefinition,
     isArithmeticMeasureDefinition,
     isInlineMeasureDefinition,
     isMeasure,

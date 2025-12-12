@@ -2,7 +2,7 @@
 
 import { cloneDeep, set } from "lodash-es";
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { transformBuckets } from "./bucketHelper.js";
@@ -10,10 +10,10 @@ import { BUCKETS } from "../../../constants/bucket.js";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig.js";
 import {
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
+    type IExtendedReferencePoint,
+    type IReferencePoint,
+    type IVisConstruct,
+    type IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {

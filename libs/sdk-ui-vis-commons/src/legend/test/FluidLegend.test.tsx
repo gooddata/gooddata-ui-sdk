@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 import { DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { FluidLegend } from "../FluidLegend.js";
-import { ISeriesItem } from "../types.js";
+import { type ISeriesItem } from "../types.js";
 
 describe("FluidLegend", () => {
     const DefaultLocale = "en-US";

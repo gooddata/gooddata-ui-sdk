@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
+import { type IMeasureGroupDescriptor, type ITheme } from "@gooddata/sdk-model";
 import { GD_COLOR_WHITE } from "@gooddata/sdk-ui-kit";
 import {
-    ChartFillConfig,
-    PatternFillName,
+    type ChartFillConfig,
+    type PatternFillName,
     getLighterColor,
     getPatternFill,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPatternObject } from "../../typings/unsafe.js";
+import { type IPatternObject } from "../../typings/unsafe.js";
 
 function sanitizePatternFill(
     theme: ITheme | undefined,

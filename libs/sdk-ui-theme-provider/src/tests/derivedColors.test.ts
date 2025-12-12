@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IThemePalette, ThemeColor } from "@gooddata/sdk-model";
+import { type IThemePalette, type ThemeColor } from "@gooddata/sdk-model";
 
 import {
     getHigherContrastColor,

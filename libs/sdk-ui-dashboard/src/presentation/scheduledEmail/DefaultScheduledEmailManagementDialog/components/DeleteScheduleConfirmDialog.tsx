@@ -1,11 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactNode, RefObject } from "react";
+import { type ReactNode, type RefObject } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError, convertError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
+import { type GoodDataSdkError, convertError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
 import {

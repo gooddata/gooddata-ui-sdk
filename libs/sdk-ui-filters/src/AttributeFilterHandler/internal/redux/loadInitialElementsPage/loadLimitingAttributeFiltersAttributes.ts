@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { IAttributeMetadataObject, filterObjRef } from "@gooddata/sdk-model";
+import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { type IAttributeMetadataObject, filterObjRef } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
-import { AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { type AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 /**
  * @internal

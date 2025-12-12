@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { IDashboardDateFilterConfig, IDateFilterConfig, idRef } from "@gooddata/sdk-model";
+import { type IDashboardDateFilterConfig, type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 
 import { absoluteForm, allTime, lastMonth, lastYear, relativeForm, year2019 } from "./fixtures.js";
 import { mergeDateFilterConfigs } from "../merge.js";

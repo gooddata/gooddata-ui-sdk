@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { AgGridApi, AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { type AgGridApi, type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
 
 /**
  * Updates column defs in ag-grid.

@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { IGdcMessageEvent } from "../../iframe/common.js";
+import { type IGdcMessageEvent } from "../../iframe/common.js";
 import { addListener, postEvent, removeListener, setConfig, setHost } from "../messagingUtils.js";
 
 describe("Post events", () => {

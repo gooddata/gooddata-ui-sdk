@@ -2,10 +2,10 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IBucket, IMeasure, newBucket } from "@gooddata/sdk-model";
+import { type IBucket, type IMeasure, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/index.js";
 import { createHeadlineProvider } from "../HeadlineProviderFactory.js";
 import { ComparisonProvider } from "../internal/providers/ComparisonProvider.js";
 import { MultiMeasuresProvider } from "../internal/providers/MultiMeasuresProvider.js";

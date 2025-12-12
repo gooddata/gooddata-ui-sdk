@@ -1,10 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IDashboardLayout, IDashboardLayoutContainerDirection, isDashboardLayout } from "@gooddata/sdk-model";
+import {
+    type IDashboardLayout,
+    type IDashboardLayoutContainerDirection,
+    isDashboardLayout,
+} from "@gooddata/sdk-model";
 
-import { IDashboardLayoutItemFacade } from "./facade/interfaces.js";
-import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
-import { ILayoutItemPath } from "../../../types.js";
+import { type IDashboardLayoutItemFacade } from "./facade/interfaces.js";
+import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
+import { type ILayoutItemPath } from "../../../types.js";
 import { findItem } from "../../layout/coordinates.js";
 
 /**

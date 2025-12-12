@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { createContextStore, useAutoupdateRef } from "@gooddata/sdk-ui";
 
-import { IMessage, IMessageDefinition } from "../typings.js";
+import { type IMessage, type IMessageDefinition } from "../typings.js";
 
 const DEFAULT_DURATION = 2500;
 let toastsCenterCounter = 0;

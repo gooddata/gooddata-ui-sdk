@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IFilterLabelProps } from "./typings.js";
+import { type IFilterLabelProps } from "./typings.js";
 
 /**
  * @internal

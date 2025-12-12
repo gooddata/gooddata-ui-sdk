@@ -2,7 +2,7 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { IChartConfig } from "../../../../../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../../../../../interfaces/index.js";
 import { EvaluationType } from "../../../../../interfaces/BaseHeadlines.js";
 import {
     TEST_COLOR_CONFIGS,

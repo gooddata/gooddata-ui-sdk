@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
+import { type AttributeDisplayFormType, type IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { Parameter } from "./Parameter.js";

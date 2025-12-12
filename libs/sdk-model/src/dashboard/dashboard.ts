@@ -2,17 +2,21 @@
 
 import { isEmpty } from "lodash-es";
 
-import { IDashboardObjectIdentity } from "./common.js";
-import { IFilterContext, IFilterContextDefinition, ITempFilterContext } from "./filterContext.js";
-import { IDashboardLayout, IDashboardWidget } from "./layout.js";
-import { IAuditable, IAuditableDates, IAuditableUsers } from "../base/metadata.js";
+import { type IDashboardObjectIdentity } from "./common.js";
 import {
-    DateFilterGranularity,
-    IAbsoluteDateFilterPreset,
-    IRelativeDateFilterPreset,
+    type IFilterContext,
+    type IFilterContextDefinition,
+    type ITempFilterContext,
+} from "./filterContext.js";
+import { type IDashboardLayout, type IDashboardWidget } from "./layout.js";
+import { type IAuditable, type IAuditableDates, type IAuditableUsers } from "../base/metadata.js";
+import {
+    type DateFilterGranularity,
+    type IAbsoluteDateFilterPreset,
+    type IRelativeDateFilterPreset,
 } from "../dateFilterConfig/index.js";
-import { IDataSetMetadataObject } from "../ldm/metadata/dataSet/index.js";
-import { Identifier, ObjRef } from "../objRef/index.js";
+import { type IDataSetMetadataObject } from "../ldm/metadata/dataSet/index.js";
+import { type Identifier, type ObjRef } from "../objRef/index.js";
 
 /**
  * Date filter configuration mode

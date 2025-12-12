@@ -6,8 +6,8 @@ import { useIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";
 import { xAxisPositionDropdownItems, yAxisPositionDropdownItems } from "../../../constants/dropdowns.js";
-import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { type IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
+import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../../utils/translations.js";
 import { DropdownControl } from "../DropdownControl.js";
 

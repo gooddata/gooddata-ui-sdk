@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
@@ -10,7 +10,10 @@ import { bucketsById, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent, IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../constants/axis.js";
 import {
@@ -19,7 +22,7 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { IAxisProperties } from "../../interfaces/AxisType.js";
+import { type IAxisProperties } from "../../interfaces/AxisType.js";
 import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.js";
 import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";

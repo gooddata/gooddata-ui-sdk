@@ -3,42 +3,46 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    IDrillToAttributeUrl,
-    IDrillToCustomUrl,
-    IDrillToInsight,
-    IInsight,
-    IKeyDriveAnalysis,
-    IListedDashboard,
-    ObjRef,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToInsight,
+    type IInsight,
+    type IKeyDriveAnalysis,
+    type IListedDashboard,
+    type ObjRef,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { type IAvailableDrillTargetMeasure, type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import { IKdaDefinition } from "../../kdaDialog/index.js";
+import { type IKdaDefinition } from "../../kdaDialog/index.js";
 import {
-    CrossFiltering,
-    DashboardCommandFailed,
-    DashboardCrossFilteringResolved,
-    DashboardDrillCommand,
-    DashboardDrillDownResolved,
-    DashboardDrillResolved,
-    DashboardDrillToAttributeUrlResolved,
-    DashboardDrillToCustomUrlResolved,
-    DashboardDrillToDashboardResolved,
-    DashboardDrillToInsightResolved,
-    DashboardDrillToLegacyDashboardResolved,
-    DashboardKeyDriverAnalysisResolved,
-    Drill,
-    DrillDown,
-    DrillToAttributeUrl,
-    DrillToCustomUrl,
-    DrillToDashboard,
-    DrillToInsight,
-    DrillToLegacyDashboard,
-    KeyDriverAnalysis,
+    type CrossFiltering,
+    type DashboardCommandFailed,
+    type DashboardCrossFilteringResolved,
+    type DashboardDrillCommand,
+    type DashboardDrillDownResolved,
+    type DashboardDrillResolved,
+    type DashboardDrillToAttributeUrlResolved,
+    type DashboardDrillToCustomUrlResolved,
+    type DashboardDrillToDashboardResolved,
+    type DashboardDrillToInsightResolved,
+    type DashboardDrillToLegacyDashboardResolved,
+    type DashboardKeyDriverAnalysisResolved,
+    type Drill,
+    type DrillDown,
+    type DrillToAttributeUrl,
+    type DrillToCustomUrl,
+    type DrillToDashboard,
+    type DrillToInsight,
+    type DrillToLegacyDashboard,
+    type KeyDriverAnalysis,
 } from "../../model/index.js";
-import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
+import {
+    type DashboardDrillContext,
+    type IDashboardDrillEvent,
+    type IDrillDownDefinition,
+} from "../../types.js";
 
 /**
  * @alpha

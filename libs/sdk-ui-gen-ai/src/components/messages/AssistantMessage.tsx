@@ -10,7 +10,7 @@ import { FeedbackPopup } from "./FeedbackPopup.js";
 import { MessageContents } from "./MessageContents.js";
 import { getAssistantMessageState } from "./messageState.js";
 import { useUserFeedback } from "./useUserFeedback.js";
-import { AssistantMessage } from "../../model.js";
+import { type AssistantMessage } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
 
 type AssistantMessageProps = {

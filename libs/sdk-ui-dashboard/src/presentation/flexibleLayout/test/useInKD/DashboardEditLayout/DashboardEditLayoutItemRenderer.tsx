@@ -2,12 +2,12 @@
 
 import cx from "classnames";
 
-import { ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
+import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import {
     DashboardLayoutItemViewRenderer,
-    IDashboardLayoutItemRenderProps,
+    type IDashboardLayoutItemRenderProps,
 } from "../../../DefaultDashboardLayoutRenderer/index.js";
 
 export interface IDashboardEditLayoutItemRendererStateProps {

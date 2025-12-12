@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import { useCallback, useRef } from "react";
 
-import { IExportResult, isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import { type IExportResult, isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
