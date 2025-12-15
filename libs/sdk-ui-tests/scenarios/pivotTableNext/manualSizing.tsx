@@ -27,6 +27,7 @@ const justManualResizing = scenariosFor<IPivotTableNextProps>("PivotTableNext", 
     .withVisualTestConfig({
         screenshotSize: { width: 1200, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("simple table with custom attribute column size", {
@@ -79,6 +80,7 @@ const withColumnAutoresize = scenariosFor<IPivotTableNextProps>("PivotTableNext"
     .withVisualTestConfig({
         screenshotSize: { width: 1200, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addCustomizedScenarios(
@@ -94,6 +96,7 @@ const withGrowToFit = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
     .withVisualTestConfig({
         screenshotSize: { width: 1200, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addCustomizedScenarios(
@@ -109,6 +112,7 @@ const withAllAutoresizing = scenariosFor<IPivotTableNextProps>("PivotTableNext",
     .withVisualTestConfig({
         screenshotSize: { width: 1200, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addCustomizedScenarios(

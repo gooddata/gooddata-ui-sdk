@@ -74,7 +74,10 @@ export function TableWithResizing() {
         </ScreenshotReadyWrapper>
     );
 }
-TableWithResizing.parameters = { kind: "table with resizing", screenshot: true } satisfies IStoryParameters;
+TableWithResizing.parameters = {
+    kind: "table with resizing",
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
+} satisfies IStoryParameters;
 
 export const Themed = () =>
     wrapWithTheme(
@@ -85,6 +88,8 @@ export const Themed = () =>
 Themed.parameters = {
     kind: "themed",
     screenshot: {
+        readySelector: ".screenshot-ready-wrapper-done",
+        misMatchThreshold: 0.01,
         hoverSelector:
             ".s-table-measure-column-header-group-cell-0.s-table-measure-column-header-cell-0.s-table-measure-column-header-index-2",
         postInteractionWait: 200,
@@ -102,10 +107,14 @@ DrillUnderlineStyle.parameters = {
     kind: "drill underline style",
     screenshots: {
         "standard cell": {
+            readySelector: ".screenshot-ready-wrapper-done",
+            misMatchThreshold: 0.01,
             hoverSelector: ".s-cell-1-2",
             postInteractionWait: 1000,
         },
         "empty cell": {
+            readySelector: ".screenshot-ready-wrapper-done",
+            misMatchThreshold: 0.01,
             hoverSelector: ".s-cell-3-2",
             postInteractionWait: 1000,
         },
@@ -122,7 +131,7 @@ export function AutoResizingOfAllColumns() {
 AutoResizingOfAllColumns.parameters = {
     kind: "auto-resizing of all columns",
     screenshots: {
-        "initial viewport": {},
+        "initial viewport": { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
         "scrolled right": {
             /*
                 this scroll is done to check if virtualized hidden cells
@@ -131,6 +140,8 @@ AutoResizingOfAllColumns.parameters = {
                 ag-grid has a problem with programatically scrolled header
                 so we used a cell in the body to scroll instead
             */
+            readySelector: ".screenshot-ready-wrapper-done",
+            misMatchThreshold: 0.01,
             scrollToSelector: ".s-cell-0-9",
             postInteractionWait: 1000,
         },
@@ -154,7 +165,7 @@ export function AutoResizingOfVisibleColumns() {
 AutoResizingOfVisibleColumns.parameters = {
     kind: "auto-resizing of visible columns",
     screenshots: {
-        "initial viewport": {},
+        "initial viewport": { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
         "scrolled right": {
             /*
                 this scroll is done to check if virtualized hidden cells
@@ -163,6 +174,8 @@ AutoResizingOfVisibleColumns.parameters = {
                 ag-grid has a problem with programatically scrolled header
                 so we used a cell in the body to scroll instead
             */
+            readySelector: ".screenshot-ready-wrapper-done",
+            misMatchThreshold: 0.01,
             scrollToSelector: ".s-cell-0-9",
             postInteractionWait: 1000,
         },
@@ -203,6 +216,6 @@ export function AutoResizingOfVisibleColumnsWithSomeOfThemManuallyShrinked() {
 AutoResizingOfVisibleColumnsWithSomeOfThemManuallyShrinked.parameters = {
     kind: "auto-resizing of visible columns with some of them manually shrinked",
     screenshots: {
-        "initial viewport": {},
+        "initial viewport": { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
     },
 } satisfies IStoryParameters;

@@ -15,6 +15,7 @@ import {
     bucketsMeasures,
     insightBuckets,
     insightVisualizationType,
+    isObjRef,
     isSimpleMeasure,
 } from "@gooddata/sdk-model";
 import {
@@ -114,6 +115,26 @@ export function sanitizeFilters(
             if (attributeBucketItems.length === 0) {
                 return false;
             }
+
+            // Validate dimensionality - each item based on its type
+            const hasValidDimensionality =
+                !filter.dimensionality ||
+                filter.dimensionality.every((item) => {
+                    if (isObjRef(item)) {
+                        // ObjRef (catalog attribute) - valid only when the feature flag is enabled
+                        return enableImprovedAdFilters;
+                    } else {
+                        // Local identifier - must exist in attribute bucket items
+                        return attributeBucketItems.some(
+                            (attributeBucketItem) => attributeBucketItem.localIdentifier === item,
+                        );
+                    }
+                });
+
+            if (!hasValidDimensionality) {
+                return false;
+            }
+
             // When enableImprovedAdFilters is true, allow measure filters even if measure is not in buckets
             if (enableImprovedAdFilters && filter.measureRef !== undefined) {
                 return true;

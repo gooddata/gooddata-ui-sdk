@@ -34,12 +34,14 @@ export function XAxis() {
 XAxis.parameters = {
     kind: "x-axis",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-target" },
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-button-primary",
             postInteractionWait: 200,
         },
         "select-option": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".gd-button-primary", ".s-left"],
             postInteractionWait: 200,
         },
@@ -61,7 +63,10 @@ export function Disabled() {
         </div>
     );
 }
-Disabled.parameters = { kind: "disabled", screenshot: true };
+Disabled.parameters = {
+    kind: "disabled",
+    screenshot: { readySelector: ".screenshot-target" },
+};
 
 export function YAxisLocalized() {
     return (
@@ -81,12 +86,14 @@ export function YAxisLocalized() {
 YAxisLocalized.parameters = {
     kind: "y-axis - localized",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-target" },
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-button-primary",
             postInteractionWait: 200,
         },
         "select-option": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".gd-button-primary", ".s-mitte"],
             postInteractionWait: 200,
         },

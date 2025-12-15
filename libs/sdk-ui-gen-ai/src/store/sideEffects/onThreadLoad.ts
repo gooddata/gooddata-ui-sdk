@@ -1,15 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { call, cancelled, getContext, put, race, take } from "redux-saga/effects";
+import { call, cancelled, getContext, put, race, select, take } from "redux-saga/effects";
 
 import {
     type IAnalyticalBackend,
     type IChatThread,
     type IChatThreadHistory,
+    type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 
 import { interactionsToMessages } from "./converters/interactionsToMessages.js";
 import { extractError } from "./utils.js";
+import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     cancelAsyncAction,
     loadThreadErrorAction,
@@ -25,6 +27,8 @@ export function* onThreadLoad() {
         // Retrieve backend from context
         const backend: IAnalyticalBackend = yield getContext("backend");
         const workspace: string = yield getContext("workspace");
+        const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
+        const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
 
         const chatThread = backend.workspace(workspace).genAI().getChatThread();
 
@@ -36,7 +40,7 @@ export function* onThreadLoad() {
         } else {
             yield put(
                 loadThreadSuccessAction({
-                    messages: interactionsToMessages(results?.interactions ?? []),
+                    messages: interactionsToMessages(results?.interactions ?? [], { showReasoning }),
                     threadId: results?.threadId ?? "",
                 }),
             );

@@ -6,22 +6,31 @@
  * @beta
  */
 
-export type { GenAIChatProps, GenAIAssistantProps } from "./components/GenAIChat.js";
-export { GenAIChat, GenAIAssistant } from "./components/GenAIChat.js";
-export type {
-    Message,
-    BaseMessage,
-    UserMessage,
-    AssistantMessage,
-    Contents,
-    TextContents,
-    SearchContents,
-    SemanticSearchContents,
-    RoutingContents,
-    VisualizationContents,
-    ChangeAnalysisContents,
-    ErrorContents,
-    TextContentObject,
+export {
+    GenAIChat,
+    GenAIAssistant,
+    type GenAIChatProps,
+    type GenAIAssistantProps,
+} from "./components/GenAIChat.js";
+export {
+    makeUserMessage,
+    makeTextContents,
+    type Message,
+    type BaseMessage,
+    type UserMessage,
+    type AssistantMessage,
+    type Contents,
+    type TextContents,
+    type SearchContents,
+    type SemanticSearchContents,
+    type RoutingContents,
+    type ReasoningContents,
+    type ReasoningStep,
+    type ReasoningThought,
+    type VisualizationContents,
+    type ChangeAnalysisContents,
+    type ErrorContents,
+    type TextContentObject,
 } from "./model.js";
 export {
     type ChatEventHandler,
@@ -52,15 +61,18 @@ export {
 } from "./store/events.js";
 
 export { clearThreadAction, newMessageAction } from "./store/index.js";
-export { makeUserMessage, makeTextContents } from "./model.js";
-export type { LinkHandlerEvent } from "./components/ConfigContext.js";
+export { type LinkHandlerEvent } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 
 //customization
 
-export type { LandingScreenProps } from "./components/customized/LandingScreen.js";
-export { DefaultLandingScreen } from "./components/customized/LandingScreen.js";
-export type { LandingTitleProps } from "./components/customized/LandingTitle.js";
-export { DefaultLandingTitle, DefaultLandingTitleAscent } from "./components/customized/LandingTitle.js";
-export type { LandingQuestionProps } from "./components/customized/LandingQuestion.js";
-export { DefaultLandingQuestion } from "./components/customized/LandingQuestion.js";
+export { DefaultLandingScreen, type LandingScreenProps } from "./components/customized/LandingScreen.js";
+export {
+    DefaultLandingTitle,
+    DefaultLandingTitleAscent,
+    type LandingTitleProps,
+} from "./components/customized/LandingTitle.js";
+export {
+    DefaultLandingQuestion,
+    type LandingQuestionProps,
+} from "./components/customized/LandingQuestion.js";

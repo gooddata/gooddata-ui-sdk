@@ -809,6 +809,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAIReasoningVisibility,
+            "enableGenAIReasoningVisibility",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAIReasoningVisibility,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.AIChatSearchLimit,
             "aiChatSearchLimit",
             "NUMBER",

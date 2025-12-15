@@ -26,7 +26,10 @@ export function Buttons() {
         </div>
     );
 }
-Buttons.parameters = { kind: "buttons", screenshot: true } satisfies IStoryParameters;
+Buttons.parameters = {
+    kind: "buttons",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function IconButtons() {
     return (
@@ -44,7 +47,10 @@ export function IconButtons() {
         </div>
     );
 }
-IconButtons.parameters = { kind: "icon-buttons", screenshot: true } satisfies IStoryParameters;
+IconButtons.parameters = {
+    kind: "icon-buttons",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function ThemedButtons() {
     return wrapWithTheme(<Buttons />);

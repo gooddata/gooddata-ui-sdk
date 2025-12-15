@@ -11,13 +11,19 @@ import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const scenarios: INeobackstopConfig = {
-    closed: {},
-    opened: { clickSelector: ".s-mvf-operator-dropdown-button", postInteractionWait: 200 },
+    closed: { readySelector: ".screenshot-target" },
+    opened: {
+        readySelector: ".screenshot-target",
+        clickSelector: ".s-mvf-operator-dropdown-button",
+        postInteractionWait: 200,
+    },
     "between-selected": {
+        readySelector: ".screenshot-target",
         clickSelectors: [".s-mvf-operator-dropdown-button", 200, ".s-mvf-operator-between"],
         postInteractionWait: 200,
     },
     "greater-than-selected": {
+        readySelector: ".screenshot-target",
         clickSelectors: [".s-mvf-operator-dropdown-button", 200, ".s-mvf-operator-greater_than"],
         postInteractionWait: 200,
     },
@@ -106,7 +112,7 @@ export function WithDisabledOperatorSelection() {
 }
 WithDisabledOperatorSelection.parameters = {
     kind: "with-disabled-operator-selection",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;
 
 export function Localized() {

@@ -15,8 +15,9 @@ const german = "de-DE";
 const defaultProps = {};
 
 const commonScenarios: INeobackstopConfig = {
-    closed: {},
+    closed: { readySelector: ".screenshot-target" },
     opened: {
+        readySelector: ".screenshot-target",
         clickSelector: ".gd-button-primary",
         postInteractionWait: ".gd-list",
         delay: {
@@ -24,6 +25,7 @@ const commonScenarios: INeobackstopConfig = {
         },
     },
     "label-toggle": {
+        readySelector: ".screenshot-target",
         clickSelectors: [".s-checkbox-toggle-label"],
         delay: {
             postOperation: 500,
@@ -51,7 +53,10 @@ export function XAxisDisabled() {
         </div>
     );
 }
-XAxisDisabled.parameters = { kind: "x-axis: Disabled", screenshot: true } satisfies IStoryParameters;
+XAxisDisabled.parameters = {
+    kind: "x-axis: Disabled",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function XAxisEnabled() {
     function HandleState() {

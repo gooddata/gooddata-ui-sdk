@@ -158,7 +158,7 @@ func main() {
 
 		debugScenario1.Delay = &delay
 
-		screenshotter.Job(saveDir, debugScenario1.Viewport.Label, page, debugScenario1, testChan, true)
+		screenshotter.Job("debug |", saveDir, debugScenario1.Viewport.Label, page, debugScenario1, testChan, "debug", configuration)
 		fmt.Println("Screenshot taken", delayValue)
 
 		time.Sleep(3 * time.Second)
@@ -179,7 +179,7 @@ func main() {
 			Delay: &piwValue,
 		}
 
-		screenshotter.Job(saveDir, debugScenario2.Viewport.Label, page, debugScenario2, testChan, true)
+		screenshotter.Job("debug |", saveDir, debugScenario2.Viewport.Label, page, debugScenario2, testChan, "debug", configuration)
 		fmt.Println("Screenshot taken", piwValue)
 
 		time.Sleep(3 * time.Second)

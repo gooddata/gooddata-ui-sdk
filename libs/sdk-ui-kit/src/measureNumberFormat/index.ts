@@ -16,6 +16,7 @@ export type { UseCurrencyFormatDefaultsConfig } from "./hooks/useCurrencyFormatD
 export {
     createCurrencyPresets,
     CURRENCY_PRESET_DEFINITIONS,
+    CURRENCY_SHORTENED_FORMAT,
     type ICurrencyPresetDefinition,
 } from "./presets/currencyPresets.js";
 export {
@@ -26,6 +27,7 @@ export {
 export {
     createTemplates,
     createAllTemplates,
+    createAdvancedTemplates,
     STANDARD_TEMPLATE_DEFINITIONS,
     CURRENCY_TEMPLATE_DEFINITIONS,
     ADVANCED_TEMPLATE_DEFINITIONS,

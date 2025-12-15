@@ -387,17 +387,20 @@ const DialogExamples = memo(function DialogExamples() {
 });
 
 // const confirmDialogWithWarningProps = {
+//     readySelector: ".screenshot-target",
 //     clickSelector: "#confirm-dialog-with-warning-example button",
 //     postInteractionWait: 200,
 // };
 
 // const confirmDialogWithProgressProps = {
+//     readySelector: ".screenshot-target",
 //     clickSelector: "#confirm-dialog-with-progress-example button",
 //     postInteractionWait: 200,
 //     misMatchThreshold: 0.05,
 // };
 
 // const exportDialogProps = {
+//     readySelector: ".screenshot-target",
 //     clickSelector: "#export-dialog-example button",
 //     postInteractionWait: 200,
 // };
@@ -409,20 +412,24 @@ const DialogExamples = memo(function DialogExamples() {
 // };
 
 // const stylingEditorDialogProps: INeobackstopScenarioConfig = {
+//     readySelector: ".screenshot-target",
 //     clickSelector: "#styling-editor-dialog-example button",
 //     postInteractionWait: 200,
 // };
 
 // const screenshotProps: INeobackstopConfig = {
 //     dialog: {
+//         readySelector: ".screenshot-target",
 //         clickSelector: "#dialog-example button",
 //         postInteractionWait: 200,
 //     },
 //     "confirm-dialog": {
+//         readySelector: ".screenshot-target",
 //         clickSelector: "#confirm-dialog-example button",
 //         postInteractionWait: 200,
 //     },
 //     "confirm-dialog-with-no-submit-button": {
+//         readySelector: ".screenshot-target",
 //         clickSelector: "#confirm-dialog-with-no-submit-button-example button",
 //         postInteractionWait: 200,
 //     },

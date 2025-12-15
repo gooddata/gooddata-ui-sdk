@@ -343,13 +343,17 @@ function convertChatHistoryInteraction(
         userFeedback: data.userFeedback,
         errorResponse: data.errorResponse,
         routing: convertRouting(data.routing),
+        ...(data.reasoning
+            ? {
+                  reasoning: data.reasoning,
+              }
+            : {}),
         ...(data.foundObjects
             ? {
                   foundObjects: convertFoundObjects(data.foundObjects),
               }
             : {}),
-        // NOTE: Remove type check once client is updated.
-        ...("semanticSearch" in data && data.semanticSearch
+        ...(data.semanticSearch
             ? {
                   semanticSearch: convertSemanticSearch(data.semanticSearch as SearchResult),
               }
@@ -384,6 +388,11 @@ function convertChatEvaluation(
                   routing: convertRouting(data.routing),
               }
             : {}),
+        ...(data.reasoning
+            ? {
+                  reasoning: data.reasoning,
+              }
+            : {}),
         ...(data.question
             ? {
                   question: data.question,
@@ -399,8 +408,7 @@ function convertChatEvaluation(
                   foundObjects: convertFoundObjects(data.foundObjects),
               }
             : {}),
-        // NOTE: Remove type check once client is updated.
-        ...("semanticSearch" in data && data.semanticSearch
+        ...(data.semanticSearch
             ? {
                   semanticSearch: convertSemanticSearch(data.semanticSearch as SearchResult),
               }

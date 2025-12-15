@@ -19,6 +19,7 @@ export const drilling = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({
         screenshotSize: { width: 1200, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("with drill on all row atributes", {

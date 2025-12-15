@@ -15,6 +15,7 @@ import {
     type SizeXSmall,
     type SizeXXLarge,
 } from "../@types/size.js";
+import { type ThemeColor } from "../@types/themeColors.js";
 import {
     type VariantBare,
     type VariantDanger,
@@ -33,6 +34,7 @@ import { UiIcon } from "../UiIcon/UiIcon.js";
  */
 export interface UiIconButtonPublicProps {
     icon: IconType;
+    iconColor?: ThemeColor;
     label?: string;
     size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
 
@@ -72,6 +74,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
     (
         {
             icon,
+            iconColor,
             iconAfter,
             iconAfterSize = "xsmall",
             disableAnimation,
@@ -114,7 +117,13 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                 {...accessibilityConfigToAttributes(accessibilityConfig)}
                 {...ariaAttributes}
             >
-                <UiIcon type={icon} size={iconSize} ariaHidden disableAnimation={disableAnimation} />
+                <UiIcon
+                    type={icon}
+                    size={iconSize}
+                    color={iconColor}
+                    ariaHidden
+                    disableAnimation={disableAnimation}
+                />
                 {iconAfter ? (
                     <UiIcon type={iconAfter} size={getButtonIconSize(iconAfterSize)} ariaHidden />
                 ) : null}

@@ -30,7 +30,10 @@ export function Disabled() {
         </div>
     );
 }
-Disabled.parameters = { kind: "disabled", screenshot: true } satisfies IStoryParameters;
+Disabled.parameters = {
+    kind: "disabled",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function YAxis() {
     return (
@@ -50,9 +53,14 @@ export function YAxis() {
 YAxis.parameters = {
     kind: "y-axis",
     screenshots: {
-        closed: {},
-        opened: { clickSelectors: [".gd-button-primary"], postInteractionWait: 200 },
+        closed: { readySelector: ".screenshot-target" },
+        opened: {
+            readySelector: ".screenshot-target",
+            clickSelectors: [".gd-button-primary"],
+            postInteractionWait: 200,
+        },
         "select-option": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".gd-button-primary", ".s-inherit"],
             postInteractionWait: 200,
         },

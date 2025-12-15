@@ -151,6 +151,12 @@ $tag_large_gap: 5px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    &__icon-before {
+        display: flex;
+        flex-shrink: 0;
+        margin-right: 4px;
+    }
 }
 
 .gd-ui-kit-tag__tooltip {

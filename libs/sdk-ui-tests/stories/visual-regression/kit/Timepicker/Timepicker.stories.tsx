@@ -34,7 +34,10 @@ export default {
     title: "12 UI Kit/TimePicker",
 };
 
-const screenshotConfig: INeobackstopScenarioConfig = { misMatchThreshold: 0.05 }; // screenshots ~current time, which changes every run
+const screenshotConfig: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
+    misMatchThreshold: 0.05, // screenshots ~current time, which changes every run
+};
 
 export function FullFeatured() {
     return <TimePickerExamples />;

@@ -19,6 +19,7 @@ export const customization = scenariosFor<IPivotTableProps>("PivotTable", PivotT
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("german number format", {

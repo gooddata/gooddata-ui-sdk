@@ -44,6 +44,7 @@ EmptyDefaultSelection.parameters = {
     kind: "empty default selection",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -76,6 +77,7 @@ NotFitIntoContent.parameters = {
     kind: "not fit into content",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -99,6 +101,7 @@ EmptyDefaultSelectionLocalized.parameters = {
     kind: "empty default selection - localized",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -123,6 +126,7 @@ PreSelectedElements.parameters = {
     kind: "pre-selected elements",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -152,6 +156,7 @@ TitleWithPreSelectedElementsPositiveAttributefilter.parameters = {
     kind: "title with pre-selected elements - positive AttributeFilter",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -181,6 +186,7 @@ TitleWithPreSelectedElementsNegativeAttributefilter.parameters = {
     kind: "title with pre-selected elements - negative AttributeFilter",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -213,6 +219,7 @@ AllElementsSelectedInNegativeSelection.parameters = {
     kind: "all elements selected in negative selection",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -233,7 +240,7 @@ export function AttributeFilterError() {
 }
 AttributeFilterError.parameters = {
     kind: "attribute filter error",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;
 
 export const Themed = () =>
@@ -251,6 +258,7 @@ Themed.parameters = {
     kind: "themed",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -278,6 +286,7 @@ SingleSelectionFilter.parameters = {
     kind: "single selection filter",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -304,6 +313,7 @@ SingleSelectionFilterThemed.parameters = {
     kind: "single selection filter - themed",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -328,6 +338,7 @@ FilterWithDisplayAsLabel.parameters = {
     kind: "filter with display as label",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },

@@ -5,6 +5,7 @@
 ```ts
 
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { ComparisonConditionOperator } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
@@ -46,6 +47,7 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { PureComponent } from 'react';
+import { RangeConditionOperator } from '@gooddata/sdk-model';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
@@ -261,6 +263,9 @@ export type DateRangePosition = "from" | "to";
 
 // @public
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
+
+// @beta
+export type DimensionalityItemType = "attribute" | "chronologicalDate" | "genericDate";
 
 // @internal
 export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBarProps): JSX.Element;
@@ -863,6 +868,13 @@ export interface IDateTranslator {
     formatDate: IntlShape["formatDate"];
 }
 
+// @beta
+export interface IDimensionalityItem {
+    identifier: ObjRefInScope;
+    title: string;
+    type: DimensionalityItemType;
+}
+
 // @public
 export interface IExtendedDateFilterErrors {
     absoluteForm?: IDateFilterAbsoluteDateTimeFormErrors;
@@ -951,11 +963,17 @@ export interface IMeasureDropdownItem {
 // @beta (undocumented)
 export interface IMeasureValueFilterCommonProps {
     // (undocumented)
+    dimensionality?: IDimensionalityItem[];
+    // (undocumented)
     displayTreatNullAsZeroOption?: boolean;
     // (undocumented)
     enableOperatorSelection?: boolean;
     // (undocumented)
     filter?: IMeasureValueFilter;
+    // (undocumented)
+    insightDimensionality?: IDimensionalityItem[];
+    // (undocumented)
+    isDimensionalityEnabled?: boolean;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -1009,6 +1027,9 @@ export interface IMultiSelectAttributeFilterHandlerOptions extends IAttributeFil
     // (undocumented)
     selectionMode: "multi";
 }
+
+// @internal
+export function intervalIncludesZero(operator: MeasureValueFilterOperator, value?: number, to?: number): boolean;
 
 // @public
 export type InvertableAttributeElementSelection = InvertableSelection<AttributeElementKey>;
@@ -1184,6 +1205,9 @@ export const MeasureValueFilter: NamedExoticComponent<IMeasureValueFilterProps>;
 
 // @beta (undocumented)
 export const MeasureValueFilterDropdown: NamedExoticComponent<IMeasureValueFilterDropdownProps>;
+
+// @beta (undocumented)
+export type MeasureValueFilterOperator = ComparisonConditionOperator | RangeConditionOperator | "ALL";
 
 // @public (undocumented)
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: ISingleSelectAttributeFilterHandlerOptions): ISingleSelectAttributeFilterHandler;

@@ -159,7 +159,10 @@ export default {
     title: "12 UI Kit/EmbedInsightDialog/EmbedInsightDialogBase",
 };
 
-const screenshotConfig: INeobackstopScenarioConfig = { clickSelector: "h4" };
+const screenshotConfig: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
+    clickSelector: "h4",
+};
 
 export function FullFeatured() {
     return <EmbedInsightDialogBaseExamples />;

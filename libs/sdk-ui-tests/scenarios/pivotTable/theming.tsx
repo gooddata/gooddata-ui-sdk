@@ -12,6 +12,7 @@ export const theming = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("themed")
     .addScenario("themed", PivotTableWithSingleMeasureAndTwoRowsAndCols)

@@ -2,22 +2,14 @@
 
 import { useMemo } from "react";
 
-import { defineMessages } from "react-intl";
-
 import type { MetricType } from "@gooddata/sdk-model";
 
 import { createCurrencyPresets } from "../presets/currencyPresets.js";
 import { createStandardPresets } from "../presets/standardPresets.js";
-import { CURRENCY_TEMPLATE_IDS, createAllTemplates } from "../presets/templates.js";
+import { createAdvancedTemplates } from "../presets/templates.js";
 import { type IFormatPreset, type IFormatTemplate } from "../typings.js";
 
-/**
- * Message IDs for metric type presets.
- * @internal
- */
-const metricTypePresetMessages = defineMessages({
-    inherit: { id: "measureNumberFormat.numberFormat.preset.inherit" },
-});
+const INHERIT_MESSAGE_ID = "measureNumberFormat.numberFormat.preset.inherit";
 
 /**
  * Configuration for the useMetricTypePresets hook.
@@ -55,8 +47,9 @@ export interface UseMetricTypePresetsResult {
     presets: IFormatPreset[];
 
     /**
-     * Format templates. For CURRENCY metrics, currency templates are excluded
-     * from the general list (they're already in presets).
+     * Format templates for the Custom dialog.
+     * For CURRENCY metrics: only advanced templates (currency formats are in presets).
+     * For other types: all templates.
      */
     templates: IFormatTemplate[];
 
@@ -107,7 +100,7 @@ export function useMetricTypePresets({
     const inheritPreset: IFormatPreset | null = useMemo(() => {
         if (metricType === "CURRENCY" && currencyFormatOverride) {
             return {
-                name: formatMessage({ id: metricTypePresetMessages.inherit.id }),
+                name: formatMessage({ id: INHERIT_MESSAGE_ID }),
                 localIdentifier: "inherit",
                 format: currencyFormatOverride,
                 previewNumber: 1000.12,
@@ -127,16 +120,15 @@ export function useMetricTypePresets({
         return standardPresets;
     }, [metricType, standardPresets, currencyPresets, inheritPreset]);
 
-    // Templates - for CURRENCY, show ONLY currency templates
+    // Templates - for CURRENCY, no templates (all formats are presets, Custom dialog is manual-only)
     const templates = useMemo(() => {
         if (metricType === "CURRENCY") {
-            // For CURRENCY metrics, show only currency-specific templates
-            return createAllTemplates(formatMessage).filter((t) =>
-                CURRENCY_TEMPLATE_IDS.includes(t.localIdentifier),
-            );
+            // For CURRENCY metrics, no templates - all formats are in presets
+            // Custom dialog only allows manual format entry
+            return [];
         }
-        // For non-CURRENCY, show all templates
-        return createAllTemplates(formatMessage);
+        // For non-CURRENCY, show advanced templates
+        return createAdvancedTemplates(formatMessage);
     }, [metricType, formatMessage]);
 
     return {
@@ -159,23 +151,13 @@ export function useStandardPresets(formatMessage: (descriptor: { id: string }) =
 }
 
 /**
- * Hook that creates all format templates.
- * Use this when you need templates without metric type filtering.
+ * Hook that creates advanced format templates.
+ * Returns only templates that don't duplicate presets (complex conditional formats).
  *
  * @param formatMessage - Function to format localized messages
- * @param excludeCurrencyTemplates - Whether to exclude currency-specific templates
- * @returns Array of format templates
+ * @returns Array of advanced format templates
  * @internal
  */
-export function useFormatTemplates(
-    formatMessage: (descriptor: { id: string }) => string,
-    excludeCurrencyTemplates = false,
-): IFormatTemplate[] {
-    return useMemo(() => {
-        const allTemplates = createAllTemplates(formatMessage);
-        if (excludeCurrencyTemplates) {
-            return allTemplates.filter((t) => !CURRENCY_TEMPLATE_IDS.includes(t.localIdentifier));
-        }
-        return allTemplates;
-    }, [formatMessage, excludeCurrencyTemplates]);
+export function useFormatTemplates(formatMessage: (descriptor: { id: string }) => string): IFormatTemplate[] {
+    return useMemo(() => createAdvancedTemplates(formatMessage), [formatMessage]);
 }

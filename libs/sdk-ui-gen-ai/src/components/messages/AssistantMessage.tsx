@@ -45,8 +45,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                 <MessageContents
                     useMarkdown
                     content={message.content}
-                    isLoading={messageState === "loading"}
-                    isCancelled={message.cancelled}
+                    messageState={messageState}
                     isLastMessage={isLast}
                     messageId={message.localId}
                 />

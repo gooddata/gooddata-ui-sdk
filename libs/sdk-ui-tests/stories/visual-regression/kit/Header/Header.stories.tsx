@@ -349,20 +349,24 @@ const messages = {
 const WithIntl = withIntl(HeaderExamples, "en-US", messages);
 
 const screenshotProps: INeobackstopConfig = {
-    closed: { delay: 300 },
+    closed: { readySelector: ".screenshot-target", delay: 300 },
     openedProjectPicker: {
+        readySelector: ".screenshot-target",
         clickSelector: ".s-default-header .s-goodsales",
         postInteractionWait: 200,
     },
     openedProjectPickerWithFooter: {
+        readySelector: ".screenshot-target",
         clickSelector: ".s-freemium-header .s-project_1",
         postInteractionWait: 200,
     },
     openedHelp: {
+        readySelector: ".screenshot-target",
         clickSelector: ".s-default-header .gd-header-help",
         postInteractionWait: 200,
     },
     openedAccount: {
+        readySelector: ".screenshot-target",
         clickSelector: ".s-default-header .gd-header-account",
         postInteractionWait: 200,
     },
@@ -474,5 +478,5 @@ export function WithSearchMenuItem() {
 }
 WithSearchMenuItem.parameters = {
     kind: "with search menu item",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;

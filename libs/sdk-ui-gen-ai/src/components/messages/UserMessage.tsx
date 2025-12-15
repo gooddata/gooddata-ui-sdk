@@ -28,6 +28,7 @@ export function UserMessageComponent({ message, isLast }: UserMessageProps) {
             <MessageContents
                 useMarkdown
                 content={message.content}
+                messageState="complete"
                 isLastMessage={isLast}
                 messageId={message.localId}
             />

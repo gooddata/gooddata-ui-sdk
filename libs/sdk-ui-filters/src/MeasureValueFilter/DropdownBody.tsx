@@ -1,19 +1,25 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
+import {
+    type ObjRefInScope,
+    isComparisonConditionOperator,
+    isRangeConditionOperator,
+} from "@gooddata/sdk-model";
 import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { ComparisonInput } from "./ComparisonInput.js";
+import { DimensionalitySection, areDimensionalitySetsEqual } from "./DimensionalitySection.js";
+import { intervalIncludesZero } from "./helpers/intervalIncludesZero.js";
 import { OperatorDropdown } from "./OperatorDropdown.js";
 import { RangeInput } from "./RangeInput.js";
 import { TreatNullValuesAsZeroCheckbox } from "./TreatNullValuesAsZeroCheckbox.js";
 import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
-import { type WarningMessage } from "./typings.js";
+import { type IDimensionalityItem, type WarningMessage } from "./typings.js";
 import { WarningMessageComponent } from "./WarningMessage.js";
 
 interface IDropdownBodyProps {
@@ -28,18 +34,23 @@ interface IDropdownBodyProps {
         operator: MeasureValueFilterOperator | null,
         value: IMeasureValueFilterValue,
         treatNullValuesAsZero: boolean,
+        dimensionality?: ObjRefInScope[],
     ) => void;
     separators?: ISeparators;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
     valuePrecision?: number;
     enableOperatorSelection?: boolean;
+    dimensionality?: IDimensionalityItem[];
+    insightDimensionality?: IDimensionalityItem[];
+    isDimensionalityEnabled?: boolean;
 }
 
 interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;
     value: IMeasureValueFilterValue;
     enabledTreatNullValuesAsZero: boolean | undefined;
+    dimensionality: IDimensionalityItem[];
 }
 
 const DefaultValuePrecision = 6;
@@ -53,6 +64,8 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         usePercentage,
         treatNullAsZeroValue,
         valuePrecision = DefaultValuePrecision,
+        isDimensionalityEnabled = false,
+        insightDimensionality,
     } = props;
 
     const trimToPrecision = useCallback(
@@ -91,11 +104,18 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         [trimToPrecision, fromDecimalToPercent],
     );
 
-    const [state, setState] = useState<IDropdownBodyState>(() => ({
-        operator: propsOperator || "ALL",
-        value: (usePercentage ? convertToPercentageValue(value, propsOperator) : value) || {},
-        enabledTreatNullValuesAsZero: treatNullAsZeroValue,
-    }));
+    const [state, setState] = useState<IDropdownBodyState>(() => {
+        // If the filter has dimensionality, use it; otherwise fall back to insight dimensionality (bucket defaults)
+        const initialDimensionality =
+            (props.dimensionality?.length ?? 0) > 0 ? props.dimensionality : (insightDimensionality ?? []);
+
+        return {
+            operator: propsOperator || "ALL",
+            value: (usePercentage ? convertToPercentageValue(value, propsOperator) : value) || {},
+            enabledTreatNullValuesAsZero: treatNullAsZeroValue,
+            dimensionality: initialDimensionality ?? [],
+        };
+    });
 
     const convertToRawValue = useCallback(
         (value: IMeasureValueFilterValue, operator: string): IMeasureValueFilterValue => {
@@ -112,11 +132,23 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         [trimToPrecision, fromPercentToDecimal],
     );
 
+    const isDimensionalityChanged = useCallback(
+        () => !areDimensionalitySetsEqual(props.dimensionality, state.dimensionality),
+        [props.dimensionality, state.dimensionality],
+    );
+
     const isChanged = useCallback(
         () =>
             state.operator !== props.operator ||
-            state.enabledTreatNullValuesAsZero !== props.treatNullAsZeroValue,
-        [state.operator, state.enabledTreatNullValuesAsZero, props.operator, props.treatNullAsZeroValue],
+            state.enabledTreatNullValuesAsZero !== props.treatNullAsZeroValue ||
+            isDimensionalityChanged(),
+        [
+            state.operator,
+            state.enabledTreatNullValuesAsZero,
+            props.operator,
+            props.treatNullAsZeroValue,
+            isDimensionalityChanged,
+        ],
     );
 
     const isApplyButtonDisabledForComparison = useCallback(() => {
@@ -202,58 +234,108 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         setState((prev) => ({ ...prev, enabledTreatNullValuesAsZero: checked }));
     }, []);
 
+    const handleDimensionalityChange = useCallback((dimensionality: IDimensionalityItem[]) => {
+        setState((prev) => ({ ...prev, dimensionality }));
+    }, []);
+
     const onApply = useCallback(() => {
         if (isApplyButtonDisabled()) {
             return;
         }
 
-        const { enabledTreatNullValuesAsZero, operator: stateOperator, value: stateValue } = state;
+        const {
+            enabledTreatNullValuesAsZero,
+            operator: stateOperator,
+            value: stateValue,
+            dimensionality: stateDimensionality,
+        } = state;
         const { usePercentage } = props;
 
         const finalOperator = stateOperator === "ALL" ? null : stateOperator;
         const finalValue = usePercentage ? convertToRawValue(stateValue, stateOperator) : stateValue;
 
-        props.onApply(finalOperator, finalValue, enabledTreatNullValuesAsZero ?? false);
-    }, [isApplyButtonDisabled, state, props, convertToRawValue]);
+        // Always include dimensionality in the output.
+        // When current dimensionality matches insight defaults (same set, order-insensitive),
+        // use the default order from insightDimensionality.
+        let finalDimensionality: ObjRefInScope[] | undefined;
+        if (insightDimensionality?.length) {
+            if (areDimensionalitySetsEqual(stateDimensionality, insightDimensionality)) {
+                // Use default order from insight dimensionality
+                finalDimensionality = insightDimensionality.map((item) => item.identifier);
+            } else {
+                // Use current state order
+                finalDimensionality =
+                    stateDimensionality.length > 0
+                        ? stateDimensionality.map((item) => item.identifier)
+                        : undefined;
+            }
+        } else {
+            // No insight defaults - use current state
+            finalDimensionality =
+                stateDimensionality.length > 0
+                    ? stateDimensionality.map((item) => item.identifier)
+                    : undefined;
+        }
 
-    const renderInputSection = useCallback(() => {
-        const { usePercentage, disableAutofocus, separators } = props;
-        const {
-            operator,
-            value: { value = null, from = null, to = null },
-        } = state;
+        props.onApply(finalOperator, finalValue, enabledTreatNullValuesAsZero ?? false, finalDimensionality);
+    }, [isApplyButtonDisabled, state, props, convertToRawValue, insightDimensionality]);
 
-        if (isComparisonConditionOperator(operator)) {
+    const renderInputSection = useMemo(() => {
+        if (isComparisonConditionOperator(state.operator)) {
             return (
                 <ComparisonInput
-                    value={value}
-                    usePercentage={usePercentage ?? false}
+                    value={state.value.value}
+                    usePercentage={props.usePercentage ?? false}
                     onValueChange={handleValueChange}
                     onEnterKeyPress={onApply}
-                    disableAutofocus={disableAutofocus}
-                    separators={separators}
+                    disableAutofocus={props.disableAutofocus}
+                    separators={props.separators}
                 />
             );
-        } else if (isRangeConditionOperator(operator)) {
+        } else if (isRangeConditionOperator(state.operator)) {
             return (
                 <RangeInput
-                    from={from}
-                    to={to}
-                    usePercentage={usePercentage ?? false}
+                    from={state.value.from}
+                    to={state.value.to}
+                    usePercentage={props.usePercentage ?? false}
                     onFromChange={handleFromChange}
                     onToChange={handleToChange}
                     onEnterKeyPress={onApply}
-                    disableAutofocus={disableAutofocus}
-                    separators={separators}
+                    disableAutofocus={props.disableAutofocus}
+                    separators={props.separators}
                 />
             );
         }
 
         return null;
-    }, [props, state, handleValueChange, handleFromChange, handleToChange, onApply]);
+    }, [
+        handleValueChange,
+        handleFromChange,
+        handleToChange,
+        onApply,
+        state.value,
+        state.operator,
+        props.usePercentage,
+        props.disableAutofocus,
+        props.separators,
+    ]);
 
     const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection } = props;
-    const { operator, enabledTreatNullValuesAsZero } = state;
+    const { operator, enabledTreatNullValuesAsZero, dimensionality } = state;
+
+    // Determine if the checkbox should be shown based on whether zero is in the filter interval
+    const shouldShowTreatNullAsZeroCheckbox = useMemo(() => {
+        if (!displayTreatNullAsZeroOption || operator === "ALL") {
+            return false;
+        }
+
+        // For comparison operators, use state.value.value
+        // For range operators, use state.value.from and state.value.to
+        const valueParam = isComparisonConditionOperator(operator) ? state.value.value : state.value.from;
+        const toParam = isRangeConditionOperator(operator) ? state.value.to : undefined;
+
+        return intervalIncludesZero(operator, valueParam, toParam);
+    }, [displayTreatNullAsZeroOption, operator, state.value]);
 
     return (
         <div className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body">
@@ -274,8 +356,8 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
 
                 {operator === "ALL" ? null : (
                     <div className="gd-mvf-dropdown-section">
-                        {renderInputSection()}{" "}
-                        {displayTreatNullAsZeroOption ? (
+                        {renderInputSection}{" "}
+                        {shouldShowTreatNullAsZeroCheckbox ? (
                             <TreatNullValuesAsZeroCheckbox
                                 onChange={handleTreatNullAsZeroClicked}
                                 checked={enabledTreatNullValuesAsZero}
@@ -284,6 +366,14 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                         ) : null}
                     </div>
                 )}
+
+                {isDimensionalityEnabled ? (
+                    <DimensionalitySection
+                        dimensionality={dimensionality}
+                        insightDimensionality={insightDimensionality}
+                        onDimensionalityChange={handleDimensionalityChange}
+                    />
+                ) : null}
             </div>
             <div className="gd-mvf-dropdown-footer">
                 <Button

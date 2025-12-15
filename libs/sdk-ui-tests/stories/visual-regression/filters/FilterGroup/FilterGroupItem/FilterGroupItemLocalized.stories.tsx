@@ -38,5 +38,5 @@ export function Localized() {
 }
 Localized.parameters = {
     kind: "localized",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 };

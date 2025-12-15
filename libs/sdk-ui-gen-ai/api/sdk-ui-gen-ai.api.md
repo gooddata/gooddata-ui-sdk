@@ -134,7 +134,7 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThreadAction">;
 
 // @public (undocumented)
-export type Contents = TextContents | RoutingContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
+export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
 // @beta (undocumented)
 export const DefaultLandingQuestion: FC<LandingQuestionProps>;
@@ -260,6 +260,23 @@ export type Message = UserMessage | AssistantMessage;
 
 // @public (undocumented)
 export const newMessageAction: ActionCreatorWithPayload<Message, "messages/newMessageAction">;
+
+// @public (undocumented)
+export type ReasoningContents = {
+    type: "reasoning";
+    steps: ReasoningStep[];
+};
+
+// @public (undocumented)
+export type ReasoningStep = {
+    title: string;
+    thoughts?: ReasoningThought[];
+};
+
+// @public (undocumented)
+export type ReasoningThought = {
+    text: string;
+};
 
 // @public (undocumented)
 export type RoutingContents = {

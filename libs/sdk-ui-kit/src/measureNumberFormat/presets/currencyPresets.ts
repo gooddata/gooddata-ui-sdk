@@ -14,6 +14,23 @@ export interface ICurrencyPresetDefinition {
 }
 
 /**
+ * Currency shortened format string.
+ * Displays large values in shortened form with currency symbol (e.g., $1.0 K, $1.0 M).
+ * @internal
+ */
+export const CURRENCY_SHORTENED_FORMAT =
+    "[>=1000000000000]$#,,,,.0 T;\n" +
+    "[>=1000000000]$#,,,.0 B;\n" +
+    "[>=1000000]$#,,.0 M;\n" +
+    "[>=1000]$#,.0 K;\n" +
+    "[>=0]$#,##0;\n" +
+    "[<=-1000000000000]-$#,,,,.0 T;\n" +
+    "[<=-1000000000]-$#,,,.0 B;\n" +
+    "[<=-1000000]-$#,,.0 M;\n" +
+    "[<=-1000]-$#,.0 K;\n" +
+    "[<0]-$#,##0";
+
+/**
  * Base currency preset definitions.
  * These are the raw preset data that can be used to create localized presets.
  * @internal
@@ -36,6 +53,12 @@ export const CURRENCY_PRESET_DEFINITIONS: readonly ICurrencyPresetDefinition[] =
         format: "$#,##0",
         previewNumber: 1000.12,
         messageId: "measureNumberFormat.numberFormat.preset.currencyRounded",
+    },
+    {
+        localIdentifier: "currency-shortened",
+        format: CURRENCY_SHORTENED_FORMAT,
+        previewNumber: 1234567.89,
+        messageId: "measureNumberFormat.numberFormat.preset.currencyShortened",
     },
 ] as const;
 

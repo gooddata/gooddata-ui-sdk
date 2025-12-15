@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 /**
  * This package provides several React components related to filters.
  *
@@ -52,10 +53,14 @@ export type { IMeasureValueFilterDropdownProps } from "./MeasureValueFilter/Meas
 export { MeasureValueFilterDropdown } from "./MeasureValueFilter/MeasureValueFilterDropdown.js";
 export type {
     IMeasureValueFilterCommonProps,
+    IDimensionalityItem,
+    DimensionalityItemType,
     WarningMessage,
     IWarningMessage,
 } from "./MeasureValueFilter/typings.js";
 export { isWarningMessage } from "./MeasureValueFilter/typings.js";
+export type { MeasureValueFilterOperator } from "./MeasureValueFilter/types.js";
+export { intervalIncludesZero } from "./MeasureValueFilter/helpers/intervalIncludesZero.js";
 export type { IRankingFilterProps } from "./RankingFilter/RankingFilter.js";
 export { RankingFilter } from "./RankingFilter/RankingFilter.js";
 export type { IRankingFilterDropdownProps } from "./RankingFilter/RankingFilterDropdown.js";

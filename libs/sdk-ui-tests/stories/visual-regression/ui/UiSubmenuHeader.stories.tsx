@@ -66,4 +66,7 @@ export function FullFeatured() {
         </div>
     );
 }
-FullFeatured.parameters = { kind: "Full featured", screenshot: true } satisfies IStoryParameters;
+FullFeatured.parameters = {
+    kind: "Full featured",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;

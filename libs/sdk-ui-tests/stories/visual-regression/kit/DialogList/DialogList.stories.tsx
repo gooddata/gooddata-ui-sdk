@@ -80,7 +80,10 @@ export default {
 export function FullFeatured() {
     return <DialogListExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
+FullFeatured.parameters = {
+    kind: "full-featured",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function Loading() {
     return <DialogListLoadingExample />;
@@ -88,4 +91,7 @@ export function Loading() {
 Loading.parameters = { kind: "loading" } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DialogListExamples />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;

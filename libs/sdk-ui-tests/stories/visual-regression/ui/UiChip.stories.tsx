@@ -57,10 +57,16 @@ export default {
 export function FullFeaturedChip() {
     return <UiChipTest />;
 }
-FullFeaturedChip.parameters = { kind: "full-featured chip", screenshot: true } satisfies IStoryParameters;
+FullFeaturedChip.parameters = {
+    kind: "full-featured chip",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiChipTest />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function Interface() {
     return <UiChipTest showCode />;

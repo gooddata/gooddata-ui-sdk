@@ -222,6 +222,39 @@ export const measureValueFilter: IMeasureValueFilter = {
     },
 };
 
+export const measureValueFilterWithDimensionality: IMeasureValueFilter = {
+    measureLocalIdentifier: masterMeasureItems[0].localIdentifier,
+    condition: {
+        comparison: {
+            operator: "GREATER_THAN",
+            value: 100,
+        },
+    },
+    dimensionality: ["a1", "a2"],
+};
+
+export const measureValueFilterWithDimensionalityRefs: IMeasureValueFilter = {
+    measureLocalIdentifier: masterMeasureItems[0].localIdentifier,
+    condition: {
+        comparison: {
+            operator: "GREATER_THAN",
+            value: 100,
+        },
+    },
+    dimensionality: [idRef("catalogAttr1", "displayForm"), idRef("catalogAttr2", "displayForm")],
+};
+
+export const measureValueFilterWithMixedDimensionality: IMeasureValueFilter = {
+    measureLocalIdentifier: masterMeasureItems[0].localIdentifier,
+    condition: {
+        comparison: {
+            operator: "GREATER_THAN",
+            value: 100,
+        },
+    },
+    dimensionality: ["a1", idRef("catalogAttr1", "displayForm")],
+};
+
 export const rankingFilter: IRankingFilter = {
     measure: masterMeasureItems[0].localIdentifier,
     operator: "TOP",

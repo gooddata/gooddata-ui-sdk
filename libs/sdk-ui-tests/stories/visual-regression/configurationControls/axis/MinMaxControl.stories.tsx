@@ -32,7 +32,10 @@ export function Disabled() {
         </div>
     );
 }
-Disabled.parameters = { kind: "disabled", screenshot: true } satisfies IStoryParameters;
+Disabled.parameters = {
+    kind: "disabled",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function Enabled() {
     return (
@@ -52,12 +55,14 @@ export function Enabled() {
 Enabled.parameters = {
     kind: "enabled",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-target" },
         opened: {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
             postInteractionWait: 200,
         },
         "opened-mobile": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
             postInteractionWait: 200,
             viewports: mobileViewport,
@@ -84,12 +89,14 @@ export function EnabledLocale() {
 EnabledLocale.parameters = {
     kind: "enabled - locale",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-target" },
         opened: {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
             postInteractionWait: 200,
         },
         "opened-mobile": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
             postInteractionWait: 200,
             viewports: mobileViewport,

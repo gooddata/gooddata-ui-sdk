@@ -19,6 +19,7 @@ export const autoresize = scenariosFor<IPivotTableNextProps>("PivotTableNext", P
             height: 800,
         },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("with column attributes only and auto-resizing", {

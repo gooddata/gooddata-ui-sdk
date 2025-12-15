@@ -18,12 +18,14 @@ const wrapperStyle = {
 const german = "de-DE";
 
 const defaultScenarios: INeobackstopConfig = {
-    closed: {},
+    closed: { readySelector: ".screenshot-target" },
     opened: {
+        readySelector: ".screenshot-target",
         clickSelector: ".gd-icon-navigatedown",
         postInteractionWait: 200,
     },
     "select-custom-color": {
+        readySelector: ".screenshot-target",
         clickSelectors: [".s-colored-items-list-item", ".s-custom-section-button"],
         postInteractionWait: 200,
     },

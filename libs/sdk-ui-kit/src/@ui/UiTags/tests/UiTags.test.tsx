@@ -4,6 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAccessibilityConfigBase } from "../../../typings/accessibility.js";
+import { UiFocusTrap } from "../../UiFocusManager/UiFocusTrap.js";
 import { type UiTagsProps } from "../types.js";
 import { UiTags } from "../UiTags.js";
 
@@ -139,6 +140,33 @@ describe("UiTags", () => {
         fireEvent.change(screen.getByRole("combobox"), { target: { value: "john_doe" } });
         fireEvent.click(screen.getByText("Save"));
         expect(onTagAdd).toHaveBeenCalled();
+    });
+
+    it("should allow tabbing to Cancel/Save in add tag popover even when wrapped in parent focus trap", async () => {
+        render(
+            <UiFocusTrap root={<div />}>
+                <div style={{ width: 300 }}>
+                    <UiTags tags={[]} onTagAdd={onTagAdd} onTagClick={onTagClick} onTagRemove={onTagRemove} />
+                </div>
+            </UiFocusTrap>,
+        );
+
+        fireEvent.click(screen.getByText("Add tag"));
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+        // In unit tests, `UiAutofocus` relies on `IntersectionObserver` which may not always focus immediately.
+        // Focus the input explicitly to verify tab navigation behaviour.
+        input.focus();
+        expect(input).toHaveFocus();
+
+        // Enable the Save button (disabled buttons are not focusable, so Tab navigation cannot reach it).
+        fireEvent.change(input, { target: { value: "john_doe" } });
+
+        fireEvent.keyDown(input, { code: "Tab", key: "Tab" });
+        expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus();
+
+        fireEvent.keyDown(screen.getByRole("button", { name: "Cancel" }), { code: "Tab", key: "Tab" });
+        expect(screen.getByRole("button", { name: "Save" })).toHaveFocus();
     });
 });
 

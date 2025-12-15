@@ -23,30 +23,46 @@ import "./styles.scss";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const dropdownSingleAttributeScenario: INeobackstopConfig = {
-    default: {},
-    attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
+    default: { readySelector: ".screenshot-target" },
+    attributeDropdownOpen: {
+        readySelector: ".screenshot-target",
+        clickSelectors: [".s-attribute-dropdown-button", 200],
+    },
 };
 
 const dropdownSingleChronologicalDateScenario: INeobackstopConfig = {
-    default: {},
-    attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
+    default: { readySelector: ".screenshot-target" },
+    attributeDropdownOpen: {
+        readySelector: ".screenshot-target",
+        clickSelectors: [".s-attribute-dropdown-button", 200],
+    },
 };
 
 const dropdownSingleGenericDateScenario: INeobackstopConfig = {
-    default: {},
-    attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
+    default: { readySelector: ".screenshot-target" },
+    attributeDropdownOpen: {
+        readySelector: ".screenshot-target",
+        clickSelectors: [".s-attribute-dropdown-button", 200],
+    },
     applyButtonActivated: {
+        readySelector: ".screenshot-target",
         clickSelectors: [".s-attribute-dropdown-button", 200, ".s-smallest_to_largest", 200],
     },
 };
 
 const dropdownSingleAttributeSingleMetricScenario: INeobackstopConfig = {
-    default: {},
-    attributeDropdownOpen: { clickSelectors: [".s-attribute-dropdown-button", 200] },
+    default: { readySelector: ".screenshot-target" },
+    attributeDropdownOpen: {
+        readySelector: ".screenshot-target",
+        clickSelectors: [".s-attribute-dropdown-button", 200],
+    },
 };
 const dropdownMultipleAttributesMultipleMetricsScenario: INeobackstopConfig = {
-    default: {},
-    measureDropdownOpen: { clickSelectors: [".s-snapshot__m1_", 200] },
+    default: { readySelector: ".screenshot-target" },
+    measureDropdownOpen: {
+        readySelector: ".screenshot-target",
+        clickSelectors: [".s-snapshot__m1_", 200],
+    },
 };
 
 const bucketItemNames: IBucketItemDescriptors = {
@@ -190,7 +206,7 @@ export function DropdownSingleAttributeMultipleMetrics() {
 }
 DropdownSingleAttributeMultipleMetrics.parameters = {
     kind: "dropdown single attribute multiple metrics",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;
 
 export function DropdownMultipleAttributesMultipleMetrics() {
@@ -231,5 +247,5 @@ export const Themed = () =>
     );
 Themed.parameters = {
     kind: "themed",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;

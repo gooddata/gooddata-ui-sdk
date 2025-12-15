@@ -3,6 +3,8 @@
 import { type KeyboardEvent, type MouseEvent, forwardRef, useLayoutEffect, useState } from "react";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { type IconType } from "../@types/icon.js";
+import { type ThemeColor } from "../@types/themeColors.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
@@ -23,6 +25,8 @@ export type UiTagProps = {
     label: string;
     variant?: "solid" | "outlined" | "decorated";
     size?: "small" | "large";
+    iconBefore?: IconType;
+    iconBeforeColor?: ThemeColor;
     isDeletable?: boolean;
     isDisabled?: boolean;
     dataTestId?: string;
@@ -42,6 +46,8 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
         label,
         size = "small",
         variant = "solid",
+        iconBefore,
+        iconBeforeColor,
         tabIndex,
         deleteTabIndex,
         accessibilityConfig,
@@ -66,6 +72,10 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
         }
     }, [labelRef]);
 
+    const iconSize = size === "small" ? 14 : 16;
+    const defaultIconColor = variant === "decorated" ? "complementary-0" : "complementary-6";
+    const iconColor = iconBeforeColor ?? defaultIconColor;
+
     const button = (
         <button
             ref={ref}
@@ -78,6 +88,11 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
             aria-labelledby={ariaLabelledBy}
             onClick={onClick}
         >
+            {iconBefore ? (
+                <span className={e("icon-before")}>
+                    <UiIcon type={iconBefore} size={iconSize} color={iconColor} ariaHidden />
+                </span>
+            ) : null}
             <span className={e("label")} ref={setLabelRef}>
                 {label}
             </span>

@@ -159,6 +159,14 @@
         "value": "Generating your response…",
         "comment": "Status message displayed while the AI chatbot is generating a response"
     },
+    "gd.gen-ai.state.thinking": {
+        "value": "Thinking",
+        "comment": "Status message displayed in the thought process while the AI is processing"
+    },
+    "gd.gen-ai.routing.thinking-process": {
+        "value": "Reasoning",
+        "comment": "Button label to expand and show the AI's thinking process and reasoning information"
+    },
     "gd.gen-ai.button.send": {
         "value": "Send message",
         "comment": "Button label to send a message to the AI chatbot"

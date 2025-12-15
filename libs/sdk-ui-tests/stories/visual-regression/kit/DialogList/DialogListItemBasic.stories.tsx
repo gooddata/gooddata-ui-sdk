@@ -176,12 +176,14 @@ function DialogListItemBasicExamples() {
 const testItemSelector = ".s-dialog-list-item-basic";
 
 const scenarios: INeobackstopConfig = {
-    normal: {},
+    normal: { readySelector: ".screenshot-target" },
     hover: {
+        readySelector: ".screenshot-target",
         hoverSelector: testItemSelector,
         postInteractionWait: 100,
     },
     "hover-delete": {
+        readySelector: ".screenshot-target",
         hoverSelectors: [testItemSelector, 100, `${testItemSelector} .s-dialog-list-item-delete-icon`, 100],
     },
 };

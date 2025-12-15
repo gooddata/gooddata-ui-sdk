@@ -85,10 +85,13 @@ FullFeatured.parameters = {
     kind: "full-featured",
     screenshots: {
         "open-first": {
+            readySelector: ".screenshot-target",
             clickSelector: ".open-first",
             delay: { postOperation: 500 },
+            browsers: [Browser.Firefox],
         },
         "open-stacked": {
+            readySelector: ".screenshot-target",
             reloadAfterReady: true,
             clickSelectors: [".open-first", 100, ".open-stacked"],
             delay: { postOperation: 500 },

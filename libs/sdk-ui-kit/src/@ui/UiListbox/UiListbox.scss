@@ -28,6 +28,7 @@
         outline: none;
 
         &:focus-visible #{$root}__item--isFocused {
+            background-color: variables.$is-focused-background;
             @include mixins.focus-ring;
         }
     }
@@ -48,8 +49,9 @@
             color: variables.$is-focused-color;
         }
 
+        // Only show focus highlight when navigating by keyboard
+        // The --isFocused class is applied programmatically, but background only shows on keyboard focus
         &--isFocused {
-            background-color: variables.$is-focused-background;
             color: variables.$is-focused-color;
         }
 

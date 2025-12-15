@@ -10,6 +10,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     currency: { id: "measureNumberFormat.numberFormat.preset.currency" },
     currency1: { id: "measureNumberFormat.numberFormat.preset.currency1" },
     currencyRounded: { id: "measureNumberFormat.numberFormat.preset.currencyRounded" },
+    currencyShortened: { id: "measureNumberFormat.numberFormat.preset.currencyShortened" },
     inherit: { id: "measureNumberFormat.numberFormat.preset.inherit" },
     sum: { id: "visualizations.measure.arithmetic.sum.title" },
     difference: { id: "visualizations.measure.arithmetic.difference.title" },

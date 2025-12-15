@@ -425,7 +425,8 @@ describe("Measure value filter dropdown", () => {
             });
 
             it("should enable apply button when operator and value is unchanged, but treat-null-values-as checkbox has been toggled", () => {
-                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 10);
+                // Use LESS_THAN 10 so zero is in the interval and checkbox is shown
+                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
 
                 renderComponent({ filter, displayTreatNullAsZeroOption: true });
 
@@ -542,8 +543,9 @@ describe("Measure value filter dropdown", () => {
     describe("filter with treat-null-values-as", () => {
         it("should contain 'treatNullValuesAs' property if checked", () => {
             const onApply = vi.fn();
-            const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
-            const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
+            // Use GREATER_THAN -10 so zero is in the interval ((-10, ∞) includes zero)
+            const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", -10);
+            const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", -10, 0);
 
             renderComponent({
                 filter,
@@ -558,8 +560,9 @@ describe("Measure value filter dropdown", () => {
 
         it("should contain 'treatNullValuesAs' equal to 0 if checked, but no 'treatNullAsZeroDefaultValue' was provided", () => {
             const onApply = vi.fn();
-            const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
-            const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
+            // Use LESS_THAN 10 so zero is in the interval ((-∞, 10) includes zero)
+            const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
+            const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10, 0);
 
             renderComponent({
                 filter,
@@ -575,13 +578,15 @@ describe("Measure value filter dropdown", () => {
         it("should be called with filter not containing 'treatNullValuesAs' property if treat-null-values-as checkbox was unchecked", () => {
             const onApply = vi.fn();
 
+            // Use BETWEEN -5 and 5 so zero is in the interval ([-5, 5] includes zero)
             const filterWithTreatNullValuesAsZero = newMeasureValueFilter(
                 localIdRef("myMeasure"),
-                "GREATER_THAN",
-                100,
+                "BETWEEN",
+                -5,
+                5,
                 0,
             );
-            const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
+            const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", -5, 5);
 
             renderComponent({
                 filter: filterWithTreatNullValuesAsZero,
@@ -608,12 +613,46 @@ describe("Measure value filter dropdown", () => {
             expect(component.getTreatNullAsCheckbox()).not.toBeInTheDocument();
         });
 
-        it("should be displayed when enabled by 'displayOptionTreatNullValuesAs' prop and all operator is not selected", () => {
+        it("should be displayed when enabled by 'displayOptionTreatNullValuesAs' prop and zero is in the interval", () => {
             renderComponent({ displayTreatNullAsZeroOption: true });
 
-            component.openOperatorDropdown().selectOperator("GREATER_THAN");
+            // LESS_THAN 10 creates interval (-∞, 10) which includes zero
+            component.openOperatorDropdown().selectOperator("LESS_THAN");
+            component.setComparisonValue("10");
 
             expect(component.getTreatNullAsCheckbox()).toBeInTheDocument();
+        });
+
+        it("should not be displayed when zero is not in the interval", () => {
+            renderComponent({ displayTreatNullAsZeroOption: true });
+
+            // GREATER_THAN 100 creates interval (100, ∞) which does NOT include zero
+            component.openOperatorDropdown().selectOperator("GREATER_THAN");
+            component.setComparisonValue("100");
+
+            expect(component.getTreatNullAsCheckbox()).not.toBeInTheDocument();
+        });
+
+        it("should be displayed for range operator when zero is in the interval", () => {
+            renderComponent({ displayTreatNullAsZeroOption: true });
+
+            // BETWEEN -5 and 5 creates interval [-5, 5] which includes zero
+            component.openOperatorDropdown().selectOperator("BETWEEN");
+            component.setRangeFrom("-5");
+            component.setRangeTo("5");
+
+            expect(component.getTreatNullAsCheckbox()).toBeInTheDocument();
+        });
+
+        it("should not be displayed for range operator when zero is not in the interval", () => {
+            renderComponent({ displayTreatNullAsZeroOption: true });
+
+            // BETWEEN 10 and 20 creates interval [10, 20] which does NOT include zero
+            component.openOperatorDropdown().selectOperator("BETWEEN");
+            component.setRangeFrom("10");
+            component.setRangeTo("20");
+
+            expect(component.getTreatNullAsCheckbox()).not.toBeInTheDocument();
         });
 
         describe("checked state", () => {
@@ -627,7 +666,9 @@ describe("Measure value filter dropdown", () => {
                     filter: emptyFilter,
                 });
 
-                component.openOperatorDropdown().selectOperator("GREATER_THAN");
+                // Use LESS_THAN 10 so zero is in the interval and checkbox is shown
+                component.openOperatorDropdown().selectOperator("LESS_THAN");
+                component.setComparisonValue("10");
 
                 expect(component.getTreatNullAsCheckbox()!.checked).toEqual(true);
             });
@@ -638,20 +679,24 @@ describe("Measure value filter dropdown", () => {
                     filter: emptyFilter,
                 });
 
-                component.openOperatorDropdown().selectOperator("GREATER_THAN");
+                // Use LESS_THAN 10 so zero is in the interval and checkbox is shown
+                component.openOperatorDropdown().selectOperator("LESS_THAN");
+                component.setComparisonValue("10");
 
                 expect(component.getTreatNullAsCheckbox()!.checked).toEqual(false);
             });
 
             it("should be checked when passed filter has a condition with 'treatNullValuesAsZero' property set to true", () => {
-                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100, 0);
+                // Use GREATER_THAN -10 so zero is in the interval ((-10, ∞) includes zero)
+                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", -10, 0);
                 renderComponentWithTreatNullAsZeroOption({ filter });
 
                 expect(component.getTreatNullAsCheckbox()!.checked).toEqual(true);
             });
 
             it("should not be checked when passed filter has a condition without 'treatNullValuesAsZero' property even if 'treatNullAsZeroDefaultValue' property is truthy", () => {
-                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 100);
+                // Use LESS_THAN 10 so zero is in the interval ((-∞, 10) includes zero)
+                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 10);
                 renderComponentWithTreatNullAsZeroOption({ filter });
 
                 expect(component.getTreatNullAsCheckbox()!.checked).toEqual(false);

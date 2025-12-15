@@ -192,12 +192,14 @@ export function ResponsivePopupLegend() {
 ResponsivePopupLegend.parameters = {
     kind: "responsive popup legend",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-ready-wrapper-done" },
         menuLegendClick: {
+            readySelector: ".screenshot-ready-wrapper-done",
             clickSelector: ".s-legend-popup-icon",
             postInteractionWait: 300,
         },
         paginatorClick: {
+            readySelector: ".screenshot-ready-wrapper-done",
             clickSelectors: [".s-legend-popup-icon", 200, ".gd-icon-chevron-right"],
             postInteractionWait: 300,
         },
@@ -213,8 +215,9 @@ export const ThemedPopupLegend = () =>
 ThemedPopupLegend.parameters = {
     kind: "themed popup legend",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-ready-wrapper-done" },
         menuLegendClick: {
+            readySelector: ".screenshot-ready-wrapper-done",
             clickSelector: ".s-legend-popup-icon",
             postInteractionWait: 300,
         },
@@ -230,7 +233,7 @@ export function HidingOfHierarchicalAxisLabels() {
 }
 HidingOfHierarchicalAxisLabels.parameters = {
     kind: "hiding of hierarchical axis labels",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
 } satisfies IStoryParameters;
 
 export function ZoomingEnabled() {
@@ -248,7 +251,7 @@ export function BackplateDataLabels() {
 
 BackplateDataLabels.parameters = {
     kind: "backplate data labels",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
 } satisfies IStoryParameters;
 
 export const ThemedDataLabels = () =>
@@ -259,4 +262,7 @@ export const ThemedDataLabels = () =>
         </ScreenshotReadyWrapper>,
         ["themed", "dataLabels"],
     );
-ThemedDataLabels.parameters = { kind: "themed data labels", screenshot: true } satisfies IStoryParameters;
+ThemedDataLabels.parameters = {
+    kind: "themed data labels",
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
+} satisfies IStoryParameters;

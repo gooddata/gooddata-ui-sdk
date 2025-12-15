@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
@@ -188,6 +189,135 @@ describe("sanitizeFilters", () => {
             localIdentifier: "filters",
             items: [],
         });
+    });
+
+    it("should keep measure value filter with valid dimensionality local identifiers", () => {
+        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        // Use filter with dimensionality pointing to valid attribute local identifiers
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbv1",
+                filters: [referencePointMocks.measureValueFilterWithDimensionality],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
+    });
+
+    it("should remove measure value filter with invalid dimensionality local identifiers", () => {
+        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        // Use filter with dimensionality pointing to non-existent attribute local identifiers
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbv1",
+                filters: [
+                    {
+                        ...referencePointMocks.measureValueFilter,
+                        dimensionality: ["non_existent_attr"],
+                    },
+                ],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
+    });
+
+    it("should remove measure value filter with dimensionality ObjRefs when feature flag is disabled", () => {
+        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbv1",
+                filters: [referencePointMocks.measureValueFilterWithDimensionalityRefs],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        // Feature flag disabled (default)
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
+    });
+
+    it("should keep measure value filter with dimensionality ObjRefs when feature flag is enabled", () => {
+        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbv1",
+                filters: [referencePointMocks.measureValueFilterWithDimensionalityRefs],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        // Pass enableImprovedAdFilters=true as second parameter
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, true);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
+    });
+
+    it("should handle mixed dimensionality with valid local IDs and ObjRefs when feature flag is enabled", () => {
+        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbv1",
+                filters: [referencePointMocks.measureValueFilterWithMixedDimensionality],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        // Pass enableImprovedAdFilters=true as second parameter
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, true);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
+    });
+
+    it("should remove filter with mixed dimensionality when local ID is invalid (even with feature flag)", () => {
+        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbv1",
+                filters: [
+                    {
+                        ...referencePointMocks.measureValueFilter,
+                        // Mix of invalid local ID and valid ObjRef
+                        dimensionality: [
+                            "non_existent_attr",
+                            { identifier: "catalogAttr1", type: "displayForm" },
+                        ],
+                    },
+                ],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        // Pass enableImprovedAdFilters=true as second parameter
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, true);
+
+        // Should be removed because one of the local identifiers is invalid
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
     });
 });
 

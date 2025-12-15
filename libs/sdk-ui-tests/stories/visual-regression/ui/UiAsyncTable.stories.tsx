@@ -262,6 +262,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
 }
 
 const screenshotViewport: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
     viewports: [{ label: "desktop", width: 1076, height: 768 }],
 };
 

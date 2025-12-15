@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
-import type { Message } from "../../model.js";
+import { type Message } from "../../model.js";
 
 const STABLE_SCROLL_TICKS = 3;
 
