@@ -59,7 +59,10 @@ function AttributeFilterEmptyResultExamples(): ReactElement {
     );
 }
 
-const delayConfig: INeobackstopScenarioConfig = { delay: 200 };
+const delayConfig: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
+    delay: 200,
+};
 
 // eslint-disable-next-line no-restricted-exports
 export default {

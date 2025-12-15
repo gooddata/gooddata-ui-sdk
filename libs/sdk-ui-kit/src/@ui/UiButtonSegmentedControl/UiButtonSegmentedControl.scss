@@ -3,6 +3,18 @@
 .gd-ui-kit-button-segmented-control {
     display: flex;
 
+    // Layout variants
+    &--layout-fill {
+        flex: 1;
+
+        // UiButton
+        .gd-ui-kit-button,
+        // UiIconButton
+        .gd-ui-kit-icon-button {
+            flex: 1;
+        }
+    }
+
     // Single border approach with nesting support for UiButton and UiIconButton
     // 1. Remove left border from adjacent buttons
     // 2. Set border radius for first and last buttons
@@ -44,6 +56,14 @@
     > :last-child:not(.gd-ui-kit-icon-button) .gd-ui-kit-icon-button {
         border-top-right-radius: $button-border-radius;
         border-bottom-right-radius: $button-border-radius;
+    }
+
+    // Active state background for buttons inside segmented control
+    // UiButton
+    .gd-ui-kit-button--active,
+    // UiIconButton
+    .gd-ui-kit-icon-button--active {
+        background-color: var(--gd-palette-complementary-2);
     }
 
     // UiButton

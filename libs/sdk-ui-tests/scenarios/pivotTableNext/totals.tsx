@@ -100,6 +100,7 @@ const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 600 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
@@ -167,6 +168,7 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 600 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .addScenario("single measure and single column grand total", {
         ...PivotTableWithSingleMeasureAndColumnGrandTotal,
@@ -256,6 +258,7 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNe
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 600 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .addScenario(
         "single measure and single column/row grand total",

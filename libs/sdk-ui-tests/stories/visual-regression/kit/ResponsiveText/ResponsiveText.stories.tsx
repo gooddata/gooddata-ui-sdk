@@ -88,7 +88,10 @@ export default {
 export function FullFeatured() {
     return <ResponsiveTextExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
+FullFeatured.parameters = {
+    kind: "full-featured",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function Dynamic() {
     return <ResponsiveTextDynamicExamples />;
@@ -96,12 +99,14 @@ export function Dynamic() {
 Dynamic.parameters = {
     kind: "dynamic",
     screenshots: {
-        default: {},
+        default: { readySelector: ".screenshot-target" },
         "tagClassName prop change": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-change-class"],
             postInteractionWait: 200,
         },
         "children prop change": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-change-text"],
             postInteractionWait: 200,
         },
@@ -109,4 +114,7 @@ Dynamic.parameters = {
 };
 
 export const Themed = () => wrapWithTheme(<ResponsiveTextExamples />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;

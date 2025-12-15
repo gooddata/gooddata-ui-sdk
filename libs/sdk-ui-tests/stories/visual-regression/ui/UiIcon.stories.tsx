@@ -153,10 +153,16 @@ IconGallery.parameters = { kind: "icon gallery" } satisfies IStoryParameters;
 export function FullFeaturedIcon() {
     return <UiIconTest />;
 }
-FullFeaturedIcon.parameters = { kind: "full-featured icon", screenshot: true } satisfies IStoryParameters;
+FullFeaturedIcon.parameters = {
+    kind: "full-featured icon",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiIconTest />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function Interface() {
     return <UiIconTest showCode />;

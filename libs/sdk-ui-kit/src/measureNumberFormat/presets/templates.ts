@@ -65,40 +65,12 @@ export const STANDARD_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
 ] as const;
 
 /**
- * Message IDs for currency template definitions.
+ * Currency template definitions are now empty - currency formats have been moved to presets.
+ * This array is kept for backward compatibility but should not be used.
  * @internal
+ * @deprecated Currency formats are now in CURRENCY_PRESET_DEFINITIONS
  */
-const currencyTemplateMessages = defineMessages({
-    currency: { id: "measureNumberFormat.numberFormat.template.currency" },
-    currencyShortened: { id: "measureNumberFormat.numberFormat.template.currencyShortened" },
-});
-
-/**
- * Currency format template definitions.
- * @internal
- */
-export const CURRENCY_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [
-    {
-        localIdentifier: "currency",
-        format: "$#,##0.00",
-        messageId: currencyTemplateMessages.currency.id,
-    },
-    {
-        localIdentifier: "currency-shortened",
-        format:
-            "[>=1000000000000]$#,,,,.0 T;\n" +
-            "[>=1000000000]$#,,,.0 B;\n" +
-            "[>=1000000]$#,,.0 M;\n" +
-            "[>=1000]$#,.0 K;\n" +
-            "[>=0]$#,##0;\n" +
-            "[<=-1000000000000]-$#,,,,.0 T;\n" +
-            "[<=-1000000000]-$#,,,.0 B;\n" +
-            "[<=-1000000]-$#,,.0 M;\n" +
-            "[<=-1000]-$#,.0 K;\n" +
-            "[<0]-$#,##0",
-        messageId: currencyTemplateMessages.currencyShortened.id,
-    },
-] as const;
+export const CURRENCY_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[] = [] as const;
 
 /**
  * Message IDs for advanced template definitions.
@@ -237,12 +209,27 @@ export function createTemplates(
 }
 
 /**
+ * Creates advanced format templates only.
+ * These are templates that don't duplicate presets (complex conditional formats).
+ *
+ * @param formatMessage - Function to format localized messages (e.g., from react-intl)
+ * @returns Array of advanced format templates with localized names
+ * @internal
+ */
+export function createAdvancedTemplates(
+    formatMessage: (descriptor: { id: string }) => string,
+): IFormatTemplate[] {
+    return createTemplates(formatMessage, ADVANCED_TEMPLATE_DEFINITIONS);
+}
+
+/**
  * Creates all localized format templates (standard + currency + advanced).
  *
  * @param formatMessage - Function to format localized messages (e.g., from react-intl)
  * @param messageIdPrefix - Optional prefix for message IDs (default: "measureNumberFormat.numberFormat.template")
  * @returns Array of all format templates with localized names
  * @internal
+ * @deprecated Use createAdvancedTemplates instead - standard and currency templates duplicate presets
  */
 export function createAllTemplates(formatMessage: (descriptor: { id: string }) => string): IFormatTemplate[] {
     return [

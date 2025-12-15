@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback } from "react";
 
 import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
@@ -77,21 +77,10 @@ export const CatalogDetailMetricSettings = memo(function CatalogDetailMetricSett
     const handleFormatChange = useFormatChangeHandler(presets, directFormatChange);
     const shouldBootstrapCurrencyFormat =
         metricOverridesEnabled && metricType === "CURRENCY" && format === undefined;
-    const currencyPresetFormats = useMemo(
-        () =>
-            presets
-                .filter((preset) => preset.localIdentifier !== "inherit")
-                .map((preset) => preset.format)
-                .filter((presetFormat): presetFormat is string => typeof presetFormat === "string"),
-        [presets],
-    );
 
     useCurrencyFormatDefaults({
         metricType: metricOverridesEnabled ? metricType : undefined,
-        normalizedFormat,
         currencyFormatOverride,
-        presetFormats: currencyPresetFormats,
-        hasInheritPreset: metricOverridesEnabled && inheritPreset !== null,
         onFormatChange: directFormatChange,
         shouldBootstrap: shouldBootstrapCurrencyFormat,
     });

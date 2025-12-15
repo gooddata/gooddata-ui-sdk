@@ -619,6 +619,11 @@ export interface ISettings {
     enableGenAIMemory?: boolean;
 
     /**
+     * Enable GenAI reasoning visibility.
+     */
+    enableGenAIReasoningVisibility?: boolean;
+
+    /**
      * AI Chat search limit
      */
     aiChatSearchLimit?: number;

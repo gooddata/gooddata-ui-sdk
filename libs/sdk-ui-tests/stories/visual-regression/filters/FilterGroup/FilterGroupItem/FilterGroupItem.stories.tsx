@@ -65,5 +65,5 @@ export function Default() {
 }
 Default.parameters = {
     kind: "default",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 };

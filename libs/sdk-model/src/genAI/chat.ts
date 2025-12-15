@@ -67,6 +67,47 @@ export interface IGenAIChatRouting {
 }
 
 /**
+ * Reasoning steps for the chat interaction.
+ * @internal
+ */
+export interface IGenAIChatReasoning {
+    /**
+     * Localized answer summarizing the assistant's reasoning.
+     */
+    answer?: string;
+    /**
+     * Array of reasoning steps describing the thought process.
+     */
+    steps: IGenAIChatReasoningStep[];
+}
+
+/**
+ * A single reasoning step.
+ * @internal
+ */
+export interface IGenAIChatReasoningStep {
+    /**
+     * Title or description of the reasoning step.
+     */
+    title: string;
+    /**
+     * Additional localized thoughts that belong to the step.
+     */
+    thoughts?: IGenAIChatReasoningThought[];
+}
+
+/**
+ * A single reasoning thought item.
+ * @internal
+ */
+export interface IGenAIChatReasoningThought {
+    /**
+     * Localized text that explains an individual thought.
+     */
+    text: string;
+}
+
+/**
  * User context for GenAI.
  * @internal
  */
@@ -317,6 +358,10 @@ export interface IGenAIChatInteraction {
      * Routing for the interaction.
      */
     routing: IGenAIChatRouting;
+    /**
+     * Reasoning steps accumulated during the interaction.
+     */
+    reasoning?: IGenAIChatReasoning;
     /**
      * A generic text response from the assistant.
      */

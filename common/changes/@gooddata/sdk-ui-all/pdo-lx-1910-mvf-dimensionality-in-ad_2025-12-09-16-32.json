@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "feat(sdk-ui-filters): Add DimensionalityItemType for date/attribute icon rendering in MVF dimensionality",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
+}

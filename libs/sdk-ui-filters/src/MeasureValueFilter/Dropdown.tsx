@@ -2,12 +2,13 @@
 
 import { memo, useCallback } from "react";
 
+import { type ObjRefInScope } from "@gooddata/sdk-model";
 import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { DropdownBody } from "./DropdownBody.js";
 import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
-import { type WarningMessage } from "./typings.js";
+import { type IDimensionalityItem, type WarningMessage } from "./typings.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 /*
@@ -22,6 +23,7 @@ interface IDropdownProps {
         operator: MeasureValueFilterOperator | null,
         value: IMeasureValueFilterValue,
         treatNullValuesAsZero: boolean,
+        dimensionality?: ObjRefInScope[],
     ) => void;
     onCancel: () => void;
     operator?: MeasureValueFilterOperator | null;
@@ -34,6 +36,9 @@ interface IDropdownProps {
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
     enableOperatorSelection?: boolean;
+    dimensionality?: IDimensionalityItem[];
+    insightDimensionality?: IDimensionalityItem[];
+    isDimensionalityEnabled?: boolean;
 }
 
 const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
@@ -50,6 +55,9 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         treatNullAsZeroValue = false,
         enableOperatorSelection,
         onApply: onApplyProp,
+        dimensionality,
+        insightDimensionality,
+        isDimensionalityEnabled,
     } = props;
 
     const onApply = useCallback(
@@ -57,8 +65,9 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
             operator: MeasureValueFilterOperator | null,
             value: IMeasureValueFilterValue,
             treatNullValuesAsZero: boolean,
+            newDimensionality?: ObjRefInScope[],
         ) => {
-            onApplyProp(operator, value, treatNullValuesAsZero);
+            onApplyProp(operator, value, treatNullValuesAsZero, newDimensionality);
         },
         [onApplyProp],
     );
@@ -86,6 +95,9 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                 treatNullAsZeroValue={treatNullAsZeroValue}
                 enableOperatorSelection={enableOperatorSelection}
+                dimensionality={dimensionality}
+                insightDimensionality={insightDimensionality}
+                isDimensionalityEnabled={isDimensionalityEnabled}
             />
         </Overlay>
     );

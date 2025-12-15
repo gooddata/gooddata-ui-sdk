@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-export type { RootState } from "./types.js";
+export { type RootState } from "./types.js";
 export { getStore } from "./store.js";
 
 export {

@@ -90,8 +90,9 @@ function DialogListHeaderExamples() {
 }
 
 const scenarios: INeobackstopConfig = {
-    normal: {},
+    normal: { readySelector: ".screenshot-target" },
     hover: {
+        readySelector: ".screenshot-target",
         hoverSelector: ".s-dialog-list-header-button",
         delay: { postOperation: 350 },
     },

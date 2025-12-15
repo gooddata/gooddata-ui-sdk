@@ -199,25 +199,37 @@ export default {
 export function FullFeatured() {
     return <AttributeFilterDropdownButtonExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
+FullFeatured.parameters = {
+    kind: "full-featured",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function FullFeaturedWithIcon() {
     return <AttributeFilterDropdownButtonExamples icon={AttributeIcon} />;
 }
 FullFeaturedWithIcon.parameters = {
     kind: "full-featured-with-icon",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;
 
 export function Draggable() {
     return <AttributeFilterDropdownButtonExamples isDraggable />;
 }
-Draggable.parameters = { kind: "draggable", screenshot: true } satisfies IStoryParameters;
+Draggable.parameters = {
+    kind: "draggable",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function DraggableWithIcon() {
     return <AttributeFilterDropdownButtonExamples isDraggable icon={AttributeIcon} />;
 }
-DraggableWithIcon.parameters = { kind: "draggable-with-icon", screenshot: true } satisfies IStoryParameters;
+DraggableWithIcon.parameters = {
+    kind: "draggable-with-icon",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AttributeFilterDropdownButtonExamples />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;

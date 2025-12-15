@@ -146,6 +146,7 @@ export function UiTags({
                                     <UiPopover
                                         onOpen={onMoreOpen}
                                         onClose={onMoreClose}
+                                        enableFocusTrap
                                         initialFocus={tooltipTagsContainerRef as RefObject<HTMLElement>}
                                         returnFocusTo={rootRef as RefObject<HTMLElement>}
                                         anchor={
@@ -245,6 +246,7 @@ export function UiTags({
                                 setTag("");
                                 onAddClose();
                             }}
+                            enableFocusTrap
                             anchor={
                                 <UiButton
                                     label={showedTags.length > 0 ? "" : addLabel}

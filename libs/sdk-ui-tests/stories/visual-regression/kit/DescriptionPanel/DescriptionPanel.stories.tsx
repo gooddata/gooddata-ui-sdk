@@ -55,7 +55,13 @@ export default {
 export function FullFeatured() {
     return <DescriptionPanelTest />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
+FullFeatured.parameters = {
+    kind: "full-featured",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<DescriptionPanelTest />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;

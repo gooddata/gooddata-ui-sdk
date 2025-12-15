@@ -208,7 +208,10 @@ export default {
     title: "15 Ui/UiTabs",
 };
 
-const screenshotConfig: INeobackstopScenarioConfig = { misMatchThreshold: 0.01 };
+const screenshotConfig: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
+    misMatchThreshold: 0.01,
+};
 
 export function Default() {
     return <UiTabsTest />;

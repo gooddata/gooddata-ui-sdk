@@ -45,7 +45,7 @@ export function LegendsectionDisabled() {
 }
 LegendsectionDisabled.parameters = {
     kind: "LegendSection: Disabled",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;
 
 export function LegendsectionEnabled() {
@@ -75,12 +75,14 @@ export function LegendsectionEnabled() {
 LegendsectionEnabled.parameters = {
     kind: "LegendSection: Enabled",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-target" },
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-button-primary",
             postInteractionWait: 200,
         },
         "select-position": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".gd-button-primary", ".s-bottom"],
             postInteractionWait: 200,
         },
@@ -114,12 +116,14 @@ export function LegendsectionEnabledLocalized() {
 LegendsectionEnabledLocalized.parameters = {
     kind: "LegendSection: Enabled - localized",
     screenshots: {
-        closed: {},
+        closed: { readySelector: ".screenshot-target" },
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-button-primary",
             postInteractionWait: 200,
         },
         "select-position": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".gd-button-primary", ".s-unten"],
             postInteractionWait: 200,
         },

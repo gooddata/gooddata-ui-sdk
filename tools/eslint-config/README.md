@@ -78,6 +78,7 @@ module.exports = {
 ```
 
 **What `tsOverride` does:**
+
 - Sets up the TypeScript parser (`@typescript-eslint/parser`)
 - Configures `tsconfigRootDir` to point to your project directory
 - Configures the import resolver to handle TypeScript imports correctly

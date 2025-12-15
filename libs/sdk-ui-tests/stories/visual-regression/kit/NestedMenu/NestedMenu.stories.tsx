@@ -65,12 +65,14 @@ function NestedMenuExamples() {
 }
 
 const screenshotProps: INeobackstopConfig = {
-    closed: {},
+    closed: { readySelector: ".screenshot-target" },
     openedMenu: {
+        readySelector: ".screenshot-target",
         clickSelector: ".s-menu-toggle",
         postInteractionWait: 250,
     },
     openedSubmenu: {
+        readySelector: ".screenshot-target",
         clickSelectors: [".s-menu-toggle", ".s-submenu-toggle"],
         postInteractionWait: 50,
         delay: {
@@ -78,6 +80,7 @@ const screenshotProps: INeobackstopConfig = {
         },
     },
     closedByOutsideClick: {
+        readySelector: ".screenshot-target",
         clickSelectors: [".s-menu-toggle", "#outside-click-anchor"],
         postInteractionWait: 250,
     },

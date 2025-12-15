@@ -6,6 +6,7 @@ import type {
     GenAIObjectType,
     IGenAIChangeAnalysisParams,
     IGenAIChatInteraction,
+    IGenAIChatReasoning,
     IGenAIChatRouting,
     IGenAICreatedVisualizations,
     IGenAIFoundObjects,
@@ -231,6 +232,7 @@ export interface IMemoryItemsService {
  */
 export interface IGenAIChatEvaluation {
     routing?: IGenAIChatRouting;
+    reasoning?: IGenAIChatReasoning;
     textResponse?: string;
     /** @deprecated Use `semanticSearch` property instead. */
     foundObjects?: IGenAIFoundObjects;

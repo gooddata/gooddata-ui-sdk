@@ -60,6 +60,7 @@ CustomComponent.parameters = {
     kind: "Custom component",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -83,6 +84,7 @@ EmptyComponent.parameters = {
     kind: "Empty component",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },

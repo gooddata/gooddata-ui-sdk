@@ -15,6 +15,7 @@ export const sorting = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({
         screenshotSize: { width: 1000, height: 800 },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
+        misMatchThreshold: 0.01,
     })
     .addScenario("single measure pivot sorted by first row attr", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,

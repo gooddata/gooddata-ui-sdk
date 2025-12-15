@@ -90,6 +90,7 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
     let reader: ReadableStreamReader<IGenAIChatEvaluation> | undefined = undefined;
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
     const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
+    const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
 
     try {
         const results: ReadableStream<IGenAIChatEvaluation> = yield call([
@@ -115,7 +116,7 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
                     evaluateMessageStreamingAction({
                         assistantMessageId: message.localId,
                         interactionId: value.chatHistoryInteractionId,
-                        contents: processContents(value, true),
+                        contents: processContents(value, true, { showReasoning }),
                     }),
                 );
             }

@@ -12,7 +12,14 @@ const { b } = bem("gd-ui-kit-button-segmented-control");
 export type UiButtonSegmentedControlProps = Omit<
     ComponentPropsWithRef<"div">,
     "className" // Intentionally omitted
->;
+> & {
+    /**
+     * Controls how buttons are sized within the segmented control.
+     * - "auto" (default): Buttons are sized based on their content.
+     * - "fill": Buttons stretch equally to fill the available space.
+     */
+    layout?: "auto" | "fill";
+};
 
 /**
  * A presentational container that visually groups multiple {@link UiButton} or {@link UiIconButton} components as a segmented control.
@@ -30,9 +37,9 @@ export type UiButtonSegmentedControlProps = Omit<
  * @internal
  */
 export const UiButtonSegmentedControl = forwardRef<HTMLDivElement, UiButtonSegmentedControlProps>(
-    function UiButtonSegmentedControl({ children, ...htmlProps }, ref) {
+    function UiButtonSegmentedControl({ children, layout = "auto", ...htmlProps }, ref) {
         return (
-            <div ref={ref} className={b()} {...htmlProps}>
+            <div ref={ref} className={b({ layout })} {...htmlProps}>
                 {children}
             </div>
         );

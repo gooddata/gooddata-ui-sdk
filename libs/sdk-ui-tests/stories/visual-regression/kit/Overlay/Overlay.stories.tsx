@@ -201,4 +201,7 @@ export default {
 export function FullFeatured() {
     return <OverlayExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshot: true } satisfies IStoryParameters;
+FullFeatured.parameters = {
+    kind: "full-featured",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;

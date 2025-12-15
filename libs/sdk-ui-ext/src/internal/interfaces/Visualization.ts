@@ -209,6 +209,12 @@ export interface IMeasureValueFilter {
      */
     measureRef?: ObjRef;
     condition?: IMeasureValueFilterCondition;
+    /**
+     * Attributes defining dimensionality for the filter.
+     * Can be local identifiers (strings) for attributes in buckets,
+     * or ObjRefs for catalog attributes.
+     */
+    dimensionality?: Array<string | ObjRef>;
 }
 
 export type RankingFilterOperator = "TOP" | "BOTTOM";

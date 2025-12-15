@@ -2160,10 +2160,28 @@ export interface IGenAIChatInteraction {
     foundObjects?: IGenAIFoundObjects;
     interactionFinished: boolean;
     question: string;
+    reasoning?: IGenAIChatReasoning;
     routing: IGenAIChatRouting;
     semanticSearch?: ISemanticSearchResult;
     textResponse?: string;
     userFeedback?: GenAIChatInteractionUserFeedback;
+}
+
+// @internal
+export interface IGenAIChatReasoning {
+    answer?: string;
+    steps: IGenAIChatReasoningStep[];
+}
+
+// @internal
+export interface IGenAIChatReasoningStep {
+    thoughts?: IGenAIChatReasoningThought[];
+    title: string;
+}
+
+// @internal
+export interface IGenAIChatReasoningThought {
+    text: string;
 }
 
 // @internal
@@ -3765,6 +3783,7 @@ export interface ISettings {
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableGenAIMemory?: boolean;
+    enableGenAIReasoningVisibility?: boolean;
     enableGeoArea?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;

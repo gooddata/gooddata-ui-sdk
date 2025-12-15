@@ -60,5 +60,5 @@ export function HidingOfHierarchicalAxisLabels() {
 }
 HidingOfHierarchicalAxisLabels.parameters = {
     kind: "hiding of hierarchical axis labels",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
 } satisfies IStoryParameters;

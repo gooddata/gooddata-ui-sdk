@@ -36,9 +36,14 @@ export const CustomFormatDialog = memo(function CustomFormatDialog({
     documentationLink,
     anchorEl,
     positioning = [
+        // Try positioning to the right first
         { snapPoints: { parent: SnapPoint.CenterRight, child: SnapPoint.CenterLeft } },
         { snapPoints: { parent: SnapPoint.TopRight, child: SnapPoint.TopLeft } },
         { snapPoints: { parent: SnapPoint.BottomRight, child: SnapPoint.BottomLeft } },
+        // Fall back to positioning to the left if no room on the right
+        { snapPoints: { parent: SnapPoint.CenterLeft, child: SnapPoint.CenterRight } },
+        { snapPoints: { parent: SnapPoint.TopLeft, child: SnapPoint.TopRight } },
+        { snapPoints: { parent: SnapPoint.BottomLeft, child: SnapPoint.BottomRight } },
     ],
     separators,
     templates,

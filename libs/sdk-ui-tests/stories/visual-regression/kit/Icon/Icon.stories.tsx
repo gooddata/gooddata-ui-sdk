@@ -451,9 +451,15 @@ export default {
 export function InsightIcons() {
     return <InsightIconsTest />;
 }
-InsightIcons.parameters = { kind: "insight icons", screenshot: true } satisfies IStoryParameters;
+InsightIcons.parameters = {
+    kind: "insight icons",
+    screenshot: { readySelector: ".screenshot-target", misMatchThreshold: 0.01 },
+} satisfies IStoryParameters;
 
 export function Icons() {
     return <IconsTest />;
 }
-Icons.parameters = { kind: "icons", screenshot: true } satisfies IStoryParameters;
+Icons.parameters = {
+    kind: "icons",
+    screenshot: { readySelector: ".screenshot-target", misMatchThreshold: 0.01 },
+} satisfies IStoryParameters;

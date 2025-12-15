@@ -160,15 +160,18 @@ function GranteeItemExamples(): ReactElement {
 const testItemSelector = `.${getGranteeItemTestId(user)}`;
 
 const scenarios: INeobackstopConfig = {
-    normal: {},
+    normal: { readySelector: ".screenshot-target" },
     hover: {
+        readySelector: ".screenshot-target",
         hoverSelector: testItemSelector,
         postInteractionWait: 100,
     },
     "hover-delete": {
+        readySelector: ".screenshot-target",
         hoverSelectors: [testItemSelector, 100, `${testItemSelector} .gd-grantee-icon-trash`, 100],
     },
     "click-select": {
+        readySelector: ".screenshot-target",
         clickSelector: ".s-granular-permission-button",
         postInteractionWait: 200,
     },

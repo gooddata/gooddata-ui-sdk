@@ -56,6 +56,6 @@
             "--disable-gpu"
         ]
     },
-    "asyncCaptureLimit": 6,
-    "asyncCompareLimit": 6
+    "asyncCaptureLimit": 20,
+    "asyncCompareLimit": 18
 }

@@ -58,7 +58,7 @@ export function ResponsiveWithComparison() {
 }
 ResponsiveWithComparison.parameters = {
     kind: "responsive with comparison",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
 } satisfies IStoryParameters;
 
 export function ResponsiveWithMultiMeasures() {
@@ -85,7 +85,7 @@ export function ResponsiveWithMultiMeasures() {
 }
 ResponsiveWithMultiMeasures.parameters = {
     kind: "responsive with multi measures",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
 } satisfies IStoryParameters;
 
 export const ThemedWithComparison = () =>
@@ -104,7 +104,7 @@ export const ThemedWithComparison = () =>
     );
 ThemedWithComparison.parameters = {
     kind: "themed with comparison",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
 } satisfies IStoryParameters;
 
 export const ThemedWithMultiMeasure = () =>
@@ -123,7 +123,7 @@ export const ThemedWithMultiMeasure = () =>
     );
 ThemedWithMultiMeasure.parameters = {
     kind: "themed with multi measure",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
 } satisfies IStoryParameters;
 
 export function CompactSizeWithComparison() {
@@ -161,7 +161,7 @@ export function CompactSizeWithComparison() {
 }
 CompactSizeWithComparison.parameters = {
     kind: "compactSize with comparison",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
 } satisfies IStoryParameters;
 
 export function CompactsizeWithMultiMeasure() {
@@ -199,5 +199,5 @@ export function CompactsizeWithMultiMeasure() {
 }
 CompactsizeWithMultiMeasure.parameters = {
     kind: "compactSize with multi measure",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
 } satisfies IStoryParameters;

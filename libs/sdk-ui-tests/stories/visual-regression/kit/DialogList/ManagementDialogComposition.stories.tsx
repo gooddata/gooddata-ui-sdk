@@ -204,7 +204,10 @@ export default {
     title: "12 UI Kit/DialogList/ManagementDialogComposition",
 };
 
-const screenshotConfig: INeobackstopScenarioConfig = { clickSelector: ".screenshot-target" };
+const screenshotConfig: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
+    clickSelector: ".screenshot-target",
+};
 
 export function FullFeatured() {
     return <ManagementDialogCompositionExamples />;

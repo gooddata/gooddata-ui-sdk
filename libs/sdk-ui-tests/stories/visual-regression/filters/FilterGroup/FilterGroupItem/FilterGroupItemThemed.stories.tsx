@@ -46,5 +46,5 @@ export function Themed() {
 }
 Themed.parameters = {
     kind: "themed",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 };

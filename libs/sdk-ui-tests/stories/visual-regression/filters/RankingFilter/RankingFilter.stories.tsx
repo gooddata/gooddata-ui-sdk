@@ -17,12 +17,13 @@ import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const dropdownScenarios: INeobackstopConfig = {
-    default: {},
+    default: { readySelector: ".screenshot-target" },
 };
 
 const dropdownWithOneAttributeItemScenarios: INeobackstopConfig = {
-    default: {},
+    default: { readySelector: ".screenshot-target" },
     attributeDropdownButtonTooltip: {
+        readySelector: ".screenshot-target",
         hoverSelector: ".s-rf-attribute-dropdown-button",
         postInteractionWait: 200,
     },
@@ -30,14 +31,19 @@ const dropdownWithOneAttributeItemScenarios: INeobackstopConfig = {
 
 const customGranularityScenarios: INeobackstopConfig = {
     attributeDropdownOpened: {
+        readySelector: ".screenshot-target",
         clickSelector: ".s-rf-attribute-dropdown-button",
         delay: { postOperation: 350 },
     },
 };
 
 const buttonScenarios: INeobackstopConfig = {
-    closed: {},
-    opened: { clickSelector: ".s-rf-dropdown-button", postInteractionWait: 200 },
+    closed: { readySelector: ".screenshot-target" },
+    opened: {
+        readySelector: ".screenshot-target",
+        clickSelector: ".s-rf-dropdown-button",
+        postInteractionWait: 200,
+    },
 };
 
 const rankingFilter = newRankingFilter(ReferenceMd.Amount, "TOP", 10);
@@ -130,7 +136,7 @@ export function DropdownWithNonDefaultValueAndLongItemsSelected() {
 }
 DropdownWithNonDefaultValueAndLongItemsSelected.parameters = {
     kind: "dropdown with non default value and long items selected",
-    screenshot: true,
+    screenshot: { readySelector: ".screenshot-target" },
 } satisfies IStoryParameters;
 
 export function DropdownWithCustomGranularitySelectionDisabled() {

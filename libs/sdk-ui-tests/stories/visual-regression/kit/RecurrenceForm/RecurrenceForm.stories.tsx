@@ -86,8 +86,9 @@ function RecurrenceFormTest() {
 }
 
 const screenshotProps: INeobackstopConfig = {
-    default: {},
+    default: { readySelector: ".screenshot-target" },
     openedRecurrenceType: {
+        readySelector: ".screenshot-target",
         clickSelector: "#first-example .s-recurrence-form-type",
         postInteractionWait: 200,
     },

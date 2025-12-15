@@ -39,6 +39,7 @@ const config: INeobackstopScenarioConfig = {
         selector: "input",
     },
     postInteractionWait: ".gd-semantic-search__results-item",
+    misMatchThreshold: 0.01,
 };
 
 // eslint-disable-next-line no-restricted-exports

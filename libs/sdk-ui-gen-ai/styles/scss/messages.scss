@@ -445,6 +445,183 @@
     }
 }
 
+// Thought process dropdown styles
+.gd-gen-ai-chat__thought-process-dropdown {
+    margin-bottom: 8px;
+
+    .gd-ui-kit-button {
+        padding: 0;
+        text-decoration: none;
+        transition: color 0.2s;
+        border: none;
+    }
+
+    .gd-ui-kit-button__text {
+        color: var(--gd-palette-complementary-7);
+    }
+
+    .gd-ui-kit-icon {
+        fill: var(--gd-palette-complementary-7);
+    }
+
+    &--loading .gd-ui-kit-button__text {
+        background: linear-gradient(
+            90deg,
+            kit-variables.$gd-color-link 0%,
+            kit-variables.$gd-color-link 40%,
+            kit-variables.$gd-color-white 50%,
+            kit-variables.$gd-color-link 60%,
+            kit-variables.$gd-color-link 100%
+        );
+        background-size: 200% 100%;
+        background-clip: text;
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gd-gen-ai-shimmer 20s infinite linear;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        border: none;
+        border-radius: 0;
+        padding: 0 0 0 0;
+        background: transparent;
+        animation: gd-gen-ai-dropdown-expand 0.2s ease-out;
+    }
+
+    &__timeline {
+        flex-shrink: 0;
+        width: 12px; // Same width as the arrow
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 50%; // Center in the timeline column
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: kit-variables.$gd-color-state-blank;
+            opacity: 0.3;
+        }
+    }
+
+    &__body {
+        flex: 1;
+    }
+}
+
+// Reasoning steps timeline styles
+.gd-gen-ai-chat__reasoning {
+    margin-top: 5px;
+    padding-left: 0;
+    position: relative;
+
+    p {
+        color: var(--gd-palette-complementary-7);
+    }
+
+    &__step {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: relative;
+        padding-bottom: 12px;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    &__row {
+        display: flex;
+        gap: 0;
+        align-items: flex-start;
+    }
+
+    &__bullet {
+        flex-shrink: 0;
+        width: 12px;
+        height: 6px;
+        margin-top: 5px; // Align with text baseline
+        position: relative;
+        z-index: 1; // Ensure bullet appears above the line
+
+        // Bullet circle
+        &::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(
+                -(3px + 12px)
+            ); // Move to the center of the line (half the size of the bullet + gap)
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--gd-palette-complementary-7);
+            box-shadow: 0 0 0 4px kit-variables.$gd-color-light; // break the line
+        }
+    }
+
+    &__content {
+        flex: 1;
+        padding-top: 0;
+
+        // Remove default paragraph margins
+        p {
+            padding: 0 0 0 0;
+            margin: 0;
+        }
+    }
+
+    &__title {
+        margin-bottom: 6px;
+        display: inline-block;
+
+        p {
+            font-weight: bold;
+        }
+    }
+
+    &__thoughts {
+        margin: 8px 0 0 12px;
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+@keyframes gd-gen-ai-dropdown-expand {
+    0% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gd-gen-ai-shimmer {
+    0% {
+        background-position: 1000% 0;
+    }
+
+    100% {
+        background-position: -1000% 0;
+    }
+}
+
 // Feedback Popup Content Styles (header, footer, and container now handled by UiPopover)
 .gd-gen-ai-feedback-popup {
     &__body {

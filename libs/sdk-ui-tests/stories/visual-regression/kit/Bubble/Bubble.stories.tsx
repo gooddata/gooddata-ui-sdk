@@ -216,26 +216,32 @@ FullFeatured.parameters = {
     kind: "full-featured",
     screenshots: {
         "primary-skin": {
+            readySelector: ".screenshot-target",
             hoverSelector: ".primary-skin",
             postInteractionWait: 1000,
         },
         "secondary-skin": {
+            readySelector: ".screenshot-target",
             hoverSelector: ".secondary-skin",
             postInteractionWait: 1000,
         },
         "negative-skin": {
+            readySelector: ".screenshot-target",
             hoverSelector: ".negative-skin",
             postInteractionWait: 1000,
         },
         "light-skin": {
+            readySelector: ".screenshot-target",
             hoverSelector: ".light-skin",
             postInteractionWait: 1000,
         },
         "dark-skin": {
+            readySelector: ".screenshot-target",
             hoverSelector: ".dark-skin",
             postInteractionWait: 1000,
         },
         "warning-skin": {
+            readySelector: ".screenshot-target",
             hoverSelector: ".warning-skin",
             postInteractionWait: 1000,
         },

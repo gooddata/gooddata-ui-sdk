@@ -43,7 +43,10 @@ export default {
     title: "12 UI Kit/SimpleSettingWidget",
 };
 
-const screenshotConfig: INeobackstopScenarioConfig = { misMatchThreshold: 0.025 }; // misMatchThreshold needed for loading spinner
+const screenshotConfig: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
+    misMatchThreshold: 0.025, // misMatchThreshold needed for loading spinner
+};
 
 export function FullFeatured() {
     return <SimpleSettingWidgetTest />;

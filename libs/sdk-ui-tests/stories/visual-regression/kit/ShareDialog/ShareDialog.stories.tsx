@@ -13,7 +13,7 @@ import { Button, ComponentLabelsProvider, ShareDialogBase } from "@gooddata/sdk-
 
 import { defaultUser, defaultUserPermissions, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -94,18 +94,23 @@ function ShareDialogExamples() {
 
 // const scenarios: INeobackstopConfig = {
 //     open: {
+//         readySelector: ".screenshot-target",
 //         clickSelectors: [".s-share-dialog-button"],
 //         delay: {
 //             postOperation: 500,
 //         },
+//         browsers: [Browser.Firefox],
 //     },
 //     "add-grantee": {
+//         readySelector: ".screenshot-target",
 //         clickSelectors: [".s-share-dialog-button", 50, ".s-add-users-or-groups", 50],
 //         delay: {
 //             postOperation: 500, // dialog appears slightly higher, then shifts down...
 //         },
+//         browsers: [Browser.Firefox],
 //     },
 //     "selected-grantee": {
+//         readySelector: ".screenshot-target",
 //         clickSelectors: [
 //             ".s-share-dialog-button",
 //             100,
@@ -114,26 +119,31 @@ function ShareDialogExamples() {
 //             granteeAllSelector,
 //             300,
 //         ],
+//         browsers: [Browser.Firefox],
 //     },
 // };
 
-const lockScenarios: INeobackstopConfig = {
-    open: {
-        clickSelectors: [".s-share-dialog-button", 300],
-    },
-    "toggle-lock": {
-        clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-lock", 300],
-    },
-};
+// const lockScenarios: INeobackstopConfig = {
+//     open: {
+//         readySelector: ".screenshot-target",
+//         clickSelectors: [".s-share-dialog-button", 300],
+//     },
+//     "toggle-lock": {
+//         readySelector: ".screenshot-target",
+//         clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-lock", 300],
+//     },
+// };
 
-const drillAvailabilityScenarios: INeobackstopConfig = {
-    open: {
-        clickSelectors: [".s-share-dialog-button", 300],
-    },
-    "toggle-availability-for-drill": {
-        clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-under-lenient-control", 300],
-    },
-};
+// const drillAvailabilityScenarios: INeobackstopConfig = {
+//     open: {
+//         readySelector: ".screenshot-target",
+//         clickSelectors: [".s-share-dialog-button", 300],
+//     },
+//     "toggle-availability-for-drill": {
+//         readySelector: ".screenshot-target",
+//         clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-under-lenient-control", 300],
+//     },
+// };
 
 // eslint-disable-next-line no-restricted-exports
 export default {
@@ -143,17 +153,17 @@ export default {
 export function FullFeatured() {
     return <ShareDialogExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured" } satisfies IStoryParameters;
+FullFeatured.parameters = { kind: "full-featured" /* screenshots: scenarios */ } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<ShareDialogExamples />);
-Themed.parameters = { kind: "themed" } satisfies IStoryParameters;
+Themed.parameters = { kind: "themed" /* screenshots: scenarios */ } satisfies IStoryParameters;
 
 export function LockInteraction() {
     return <ShareDialogExamples />;
 }
 LockInteraction.parameters = {
     kind: "lock-interaction",
-    screenshots: lockScenarios,
+    // screenshots: lockScenarios,
 } satisfies IStoryParameters;
 
 export function DrillAvailabilityInteraction() {
@@ -161,5 +171,5 @@ export function DrillAvailabilityInteraction() {
 }
 DrillAvailabilityInteraction.parameters = {
     kind: "drill-availability-interaction",
-    screenshots: drillAvailabilityScenarios,
+    // screenshots: drillAvailabilityScenarios,
 } satisfies IStoryParameters;

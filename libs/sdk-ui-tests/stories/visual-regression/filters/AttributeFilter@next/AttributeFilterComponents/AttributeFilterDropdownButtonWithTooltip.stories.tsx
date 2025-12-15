@@ -13,8 +13,9 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const attributeTitle = "Product";
 
 const dropdownButtonWithTooltip: INeobackstopConfig = {
-    default: {},
+    default: { readySelector: ".screenshot-target" },
     hover: {
+        readySelector: ".screenshot-target",
         hoverSelector: ".s-attribute-filter-tooltip-icon",
         postInteractionWait: 1000,
         misMatchThreshold: 0.001, // unsure why this is needed, but a pixel is probably off by a few rgb points

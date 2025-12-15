@@ -31,12 +31,13 @@ const EditableLabelExamples = memo(function EditableLabelExamples() {
 });
 
 const editLabelClickProps: INeobackstopScenarioConfig = {
+    readySelector: ".screenshot-target",
     clickSelector: ".s-my-editable-label",
     postInteractionWait: 200,
 };
 
 const screenshotProps: INeobackstopConfig = {
-    "initial-label": {},
+    "initial-label": { readySelector: ".screenshot-target" },
     "edited-label": editLabelClickProps,
 };
 

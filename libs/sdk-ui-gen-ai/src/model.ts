@@ -71,6 +71,43 @@ export const makeRoutingContents = (text: string, useCase: GenAIChatRoutingUseCa
 /**
  * @public
  */
+export type ReasoningContents = {
+    type: "reasoning";
+    steps: ReasoningStep[];
+};
+
+/**
+ * @public
+ */
+export type ReasoningStep = {
+    title: string;
+    thoughts?: ReasoningThought[];
+};
+
+/**
+ * @public
+ */
+export type ReasoningThought = {
+    text: string;
+};
+
+/**
+ * @internal
+ */
+export const isReasoningContents = (contents: Contents): contents is ReasoningContents =>
+    contents.type === "reasoning";
+
+/**
+ * @internal
+ */
+export const makeReasoningContents = (steps: ReasoningStep[]): ReasoningContents => ({
+    type: "reasoning",
+    steps,
+});
+
+/**
+ * @public
+ */
 export type SearchContents = {
     type: "search";
     text: string;
@@ -200,6 +237,7 @@ export const makeErrorContents = (text: string): ErrorContents => ({
 export type Contents =
     | TextContents
     | RoutingContents
+    | ReasoningContents
     | SearchContents
     | SemanticSearchContents
     | VisualizationContents

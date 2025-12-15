@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
@@ -63,39 +63,104 @@ export function Base() {
     return <InsightContainer insight={insightIds[15]} />;
 }
 
-Base.parameters = { kind: "Base", screenshot: true } satisfies IStoryParameters;
+Base.parameters = {
+    kind: "Base",
+    screenshot: { misMatchThreshold: 0.01 },
+} satisfies IStoryParameters;
 
 export function WithLocalization() {
     return <InsightContainer insight={insightIds[15]} locale="fr-FR" />;
 }
-WithLocalization.parameters = { kind: "With localization", screenshot: true } satisfies IStoryParameters;
+WithLocalization.parameters = {
+    kind: "With localization",
+    screenshot: { misMatchThreshold: 0.01 },
+} satisfies IStoryParameters;
 
 export function WithCustomTitle() {
     return <InsightContainer insight={insightIds[15]} title="Custom title" />;
 }
-WithCustomTitle.parameters = { kind: "With custom title", screenshot: true } satisfies IStoryParameters;
+WithCustomTitle.parameters = {
+    kind: "With custom title",
+    screenshot: { misMatchThreshold: 0.01 },
+} satisfies IStoryParameters;
 
 // JSX+React has issues with setting boolean props on custom element, so we can't use
 //  <InsightContainer title /> without specifying an empty string value or boolean
 export function WithDefaultTitle() {
     return <InsightContainer insight={insightIds[15]} title="" />;
 }
-WithDefaultTitle.parameters = { kind: "With default title", screenshot: true } satisfies IStoryParameters;
+WithDefaultTitle.parameters = {
+    kind: "With default title",
+    screenshot: { misMatchThreshold: 0.01 },
+} satisfies IStoryParameters;
+
+// Expected counts: 17 charts + 1 pivot + 2 headlines = 20 visualizations
+const EXPECTED_VIS_COUNT = 20;
+
+function AllInsightsTracker({ ids }: { ids: string[] }) {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [allReady, setAllReady] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        setWebComponentsContext(() => {
+            setIsLoaded(true);
+        });
+    }, []);
+
+    // Poll for actual rendered visualization elements
+    useEffect(() => {
+        if (!isLoaded || !containerRef.current) {
+            return;
+        }
+
+        const checkVisualizations = () => {
+            const container = containerRef.current;
+            if (!container) {
+                return false;
+            }
+
+            // Count actual rendered visualizations
+            const charts = container.querySelectorAll(".highcharts-container").length;
+            const pivots = container.querySelectorAll(".s-pivot-table").length;
+            const pivotsNext = container.querySelectorAll("[data-testid='pivot-table-next']").length;
+            const agGrid = container.querySelectorAll(".ag-root-wrapper").length;
+            const headlines = container.querySelectorAll(".s-headline-primary-item").length;
+
+            const total = charts + Math.max(pivots, pivotsNext, agGrid) + headlines;
+            return total >= EXPECTED_VIS_COUNT;
+        };
+
+        const interval = setInterval(() => {
+            if (checkVisualizations()) {
+                setAllReady(true);
+                clearInterval(interval);
+            }
+        }, 200);
+
+        return () => clearInterval(interval);
+    }, [isLoaded]);
+
+    return (
+        <div ref={containerRef} className={allReady ? "all-insights-ready" : undefined}>
+            {isLoaded
+                ? ids.map((id) => (
+                      // @ts-expect-error Unrecognised tag
+                      <gd-insight style={{ height: 500 }} insight={id} key={id} />
+                  ))
+                : "Loading..."}
+        </div>
+    );
+}
 
 export function AllInsightTypes() {
-    return (
-        <>
-            {insightIds.map((id) => (
-                <InsightContainer insight={id} key={id} />
-            ))}
-        </>
-    );
+    return <AllInsightsTracker ids={insightIds} />;
 }
 AllInsightTypes.parameters = {
     kind: "All insight types",
     screenshot: {
-        // Wait for AGgrid watermark to disappear
-        postInteractionWait: 6500,
+        // Wait for all insights to finish loading
+        readySelector: ".all-insights-ready",
         misMatchThreshold: 0.06,
     },
 } satisfies IStoryParameters;

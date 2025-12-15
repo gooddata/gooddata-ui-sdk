@@ -43,10 +43,16 @@ export default {
 export function FullFeaturedButton() {
     return <UiButtonTest />;
 }
-FullFeaturedButton.parameters = { kind: "full-featured button", screenshot: true } satisfies IStoryParameters;
+FullFeaturedButton.parameters = {
+    kind: "full-featured button",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiButtonTest />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function Interface() {
     return <UiButtonTest showCode />;

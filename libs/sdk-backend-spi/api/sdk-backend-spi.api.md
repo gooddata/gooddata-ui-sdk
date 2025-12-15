@@ -72,6 +72,7 @@ import type { IFilterContext } from '@gooddata/sdk-model';
 import type { IFilterContextDefinition } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIChatInteraction } from '@gooddata/sdk-model';
+import type { IGenAIChatReasoning } from '@gooddata/sdk-model';
 import type { IGenAIChatRouting } from '@gooddata/sdk-model';
 import type { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
 import type { IGenAIFoundObjects } from '@gooddata/sdk-model';
@@ -1027,6 +1028,8 @@ export interface IGenAIChatEvaluation {
     errorResponse?: string;
     // @deprecated (undocumented)
     foundObjects?: IGenAIFoundObjects;
+    // (undocumented)
+    reasoning?: IGenAIChatReasoning;
     // (undocumented)
     routing?: IGenAIChatRouting;
     // (undocumented)

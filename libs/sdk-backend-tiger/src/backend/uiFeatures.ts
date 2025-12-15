@@ -123,6 +123,7 @@ export enum TigerFeaturesNames {
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
     EnableGenAIMemory = "enableGenAIMemory",
+    EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableDashboardTabs = "enableDashboardTabs",
     EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
@@ -249,6 +250,7 @@ export type ITigerFeatureFlags = {
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
+    enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
     enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
@@ -375,6 +377,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPdfTabularExport: true,
     enableFilterAccessibility: true,
     enableGenAIMemory: false,
+    enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableDashboardTabs: true,
     enablePivotTableAutoSizeReset: true,
@@ -502,6 +505,7 @@ export const FeatureFlagsValues = {
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,
     enableGenAIMemory: [false, true] as const,
+    enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableDashboardTabs: [true, false] as const,
     enablePivotTableAutoSizeReset: [true, false] as const,

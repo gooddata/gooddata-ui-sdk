@@ -42,10 +42,16 @@ export default {
 export function Default() {
     return <UiDropdownIconButtonTest />;
 }
-Default.parameters = { kind: "default", screenshot: true } satisfies IStoryParameters;
+Default.parameters = {
+    kind: "default",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiDropdownIconButtonTest />);
-Themed.parameters = { kind: "themed", screenshot: true } satisfies IStoryParameters;
+Themed.parameters = {
+    kind: "themed",
+    screenshot: { readySelector: ".screenshot-target" },
+} satisfies IStoryParameters;
 
 export function Interface() {
     return <UiDropdownIconButtonTest showCode />;

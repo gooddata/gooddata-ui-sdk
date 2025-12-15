@@ -1263,6 +1263,54 @@
         "value": "If the filter condition includes 0, blank values will be treated as 0 and included in calculations.",
         "comment": "Checkbox label tooltip. 'blank values' are data rows without any value (empty), which can be considered to be 0 during calculations. If the filter is set to '< 1' for example, it includes values of 0 (less than one) and therefore all the blank (empty) values are going to be considered to be 0 in calculations."
     },
+    "mvf.dimensionality.forEach": {
+        "value": "For each",
+        "comment": "Label of list of attribute items that define granularity (rows) of the report."
+    },
+    "mvf.dimensionality.reset": {
+        "value": "Reset",
+        "comment": "Button that resets a list to its original state."
+    },
+    "mvf.dimensionality.reset.tooltip": {
+        "value": "Reset to all currently used attributes in the visualization.",
+        "comment": "Tooltip for the reset button in the dimensionality section of the measure value filter."
+    },
+    "mvf.dimensionality.addButton.tooltip": {
+        "value": "Add attributes",
+        "comment": "Tooltip for the add button when it is enabled in the dimensionality section."
+    },
+    "mvf.dimensionality.addButton.tooltip.disabled": {
+        "value": "Add attributes disabled — all attributes have been added",
+        "comment": "Tooltip for the add button when it is disabled because all attributes have been added."
+    },
+    "mvf.dimensionality.addAttributes": {
+        "value": "Add attribute",
+        "comment": "A label of button that adds a new attribute to the list."
+    },
+    "mvf.attributePicker.title": {
+        "value": "Select attributes or dates",
+        "comment": "Title/aria-label for the attribute picker dialog in measure value filter."
+    },
+    "mvf.attributePicker.add": {
+        "value": "Add",
+        "comment": "Button label to confirm adding selected attributes in the attribute picker dialog."
+    },
+    "mvf.attributePicker.header.fromInsight": {
+        "value": "From visualization",
+        "comment": "Header of the attribute picker dialog. Indicates that the attributes are being selected from the visualization buckets."
+    },
+    "mvf.attributePicker.filter.attributes": {
+        "value": "Attributes",
+        "comment": "Aria label for the button that filters the attribute picker list to show only attributes."
+    },
+    "mvf.attributePicker.filter.dates": {
+        "value": "Dates",
+        "comment": "Aria label for the button that filters the attribute picker list to show only date attributes."
+    },
+    "mvf.attributePicker.noResults": {
+        "value": "No item matches the search term.",
+        "comment": "Message shown when no items match the search in the attribute picker."
+    },
     "measureNumberFormat.custom.optionLabel": {
         "value": "Custom",
         "comment": "An item in list of presets. Denotes a custom preset"
@@ -1300,8 +1348,8 @@
         "comment": "Preset name for percentage format that displays percentages with two decimal places (e.g., 10.12%)"
     },
     "measureNumberFormat.numberFormat.preset.currency": {
-        "value": "Currency",
-        "comment": "Preset name for currency format that displays currency values with two decimal places (e.g., $1,000.00)"
+        "value": "Currency (2)",
+        "comment": "Preset name for currency format that displays currency values with two decimal places (e.g., $1,000.00). Note: Display text changed from 'Currency' to 'Currency (2)' for consistency."
     },
     "measureNumberFormat.numberFormat.preset.currency1": {
         "value": "Currency (1)",
@@ -1310,6 +1358,10 @@
     "measureNumberFormat.numberFormat.preset.currencyRounded": {
         "value": "Currency (rounded)",
         "comment": "Preset name for currency format that displays currency values rounded to whole numbers (e.g., $1,000)"
+    },
+    "measureNumberFormat.numberFormat.preset.currencyShortened": {
+        "value": "Currency (shortened)",
+        "comment": "Preset name for currency format that displays large currency values in shortened form (e.g., $1.0 K, $1.0 M, $1.0 B)"
     },
     "measureNumberFormat.numberFormat.template.rounded": {
         "value": "Rounded",
@@ -1334,14 +1386,6 @@
     "measureNumberFormat.numberFormat.template.percent2": {
         "value": "Percent (2)",
         "comment": "Template name for percentage format that displays percentages with two decimal places (e.g., 10.12%)"
-    },
-    "measureNumberFormat.numberFormat.template.currency": {
-        "value": "Currency",
-        "comment": "Template name for currency format that displays values with currency symbol (e.g., $1,000.00)"
-    },
-    "measureNumberFormat.numberFormat.template.currencyShortened": {
-        "value": "Currency shortened",
-        "comment": "Template name for currency format that displays large values in shortened form with currency symbol (e.g., $1.0 K, $1.0 M)"
     },
     "measureNumberFormat.numberFormat.template.largeNumbersShortened": {
         "value": "Large numbers shortened",

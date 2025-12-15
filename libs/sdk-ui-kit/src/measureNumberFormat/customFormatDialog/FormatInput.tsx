@@ -148,7 +148,7 @@ export const FormatInputWithIntl = memo(function FormatInputWithIntl(props: IFor
         <div className={"gd-measure-custom-format-dialog-section"}>
             <div className={"gd-measure-custom-format-dialog-section-title"}>
                 <span>{intl.formatMessage({ id: "measureNumberCustomFormatDialog.definition" })}</span>
-                {templates ? (
+                {templates?.length ? (
                     <FormatTemplatesDropdown
                         onChange={onFormatChange}
                         separators={separators}

@@ -47,6 +47,7 @@ EmptyDefaultSelection.parameters = {
     kind: "empty default selection",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -79,6 +80,7 @@ NotFitIntoContent.parameters = {
     kind: "not fit into content",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -102,6 +104,7 @@ EmptyDefaultSelectionLocalized.parameters = {
     kind: "empty default selection - localized",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -126,6 +129,7 @@ PreSelectedElements.parameters = {
     kind: "pre-selected elements",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -158,6 +162,7 @@ AllElementsSelectedInNegativeSelection.parameters = {
     kind: "all elements selected in negative selection",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -222,6 +227,7 @@ AttributeFilterError.parameters = {
     kind: "attribute filter error",
     screenshots: {
         hover: {
+            readySelector: ".screenshot-target",
             hoverSelectors: [
                 ".filter-hover .gd-attribute-filter-dropdown-button__next",
                 ".error-not-load-value-hover .gd-attribute-filter-dropdown-button__next",
@@ -246,6 +252,7 @@ Themed.parameters = {
     kind: "themed",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },
@@ -271,6 +278,7 @@ SingleSelection.parameters = {
     kind: "single selection",
     screenshots: {
         opened: {
+            readySelector: ".screenshot-target",
             clickSelector: ".gd-attribute-filter__next",
             postInteractionWait: LongPostInteractionTimeout,
         },

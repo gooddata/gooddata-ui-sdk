@@ -4,12 +4,13 @@ import { memo, useCallback } from "react";
 
 import {
     type IMeasureValueFilter,
+    type ObjRefInScope,
     isComparisonCondition,
     isRangeCondition,
     isRangeConditionOperator,
     measureValueFilterCondition,
     measureValueFilterOperator,
-    newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
 
 import { Dropdown } from "./Dropdown.js";
@@ -72,39 +73,49 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     displayTreatNullAsZeroOption = false,
     treatNullAsZeroDefaultValue = false,
     enableOperatorSelection = true,
+    dimensionality,
+    insightDimensionality,
+    isDimensionalityEnabled,
 }: IMeasureValueFilterDropdownProps) {
     const handleApply = useCallback(
         (
             operator: MeasureValueFilterOperator | null,
             value: IMeasureValueFilterValue,
             treatNullValuesAsZero: boolean,
+            newDimensionality?: ObjRefInScope[],
         ) => {
             if (operator === null || operator === "ALL") {
                 onApply(null);
             } else {
                 if (isRangeConditionOperator(operator)) {
                     onApply(
-                        newMeasureValueFilter(
+                        newMeasureValueFilterWithOptions(
                             { localIdentifier: measureIdentifier },
-                            operator,
-                            value.from ?? 0,
-                            value.to ?? 0,
-                            treatNullValuesAsZero ? 0 : undefined,
+                            {
+                                operator,
+                                from: value.from ?? 0,
+                                to: value.to ?? 0,
+                                treatNullValuesAs: treatNullValuesAsZero ? 0 : undefined,
+                                ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
+                            },
                         ),
                     );
                 } else {
                     onApply(
-                        newMeasureValueFilter(
+                        newMeasureValueFilterWithOptions(
                             { localIdentifier: measureIdentifier },
-                            operator,
-                            value.value ?? 0,
-                            treatNullValuesAsZero ? 0 : undefined,
+                            {
+                                operator,
+                                value: value.value ?? 0,
+                                treatNullValuesAs: treatNullValuesAsZero ? 0 : undefined,
+                                ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
+                            },
                         ),
                     );
                 }
             }
         },
-        [measureIdentifier, onApply],
+        [measureIdentifier, onApply, isDimensionalityEnabled],
     );
 
     return (
@@ -121,6 +132,9 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
             treatNullAsZeroValue={getTreatNullAsZeroValue(filter, treatNullAsZeroDefaultValue)}
             enableOperatorSelection={enableOperatorSelection}
+            dimensionality={dimensionality}
+            insightDimensionality={insightDimensionality}
+            isDimensionalityEnabled={isDimensionalityEnabled}
         />
     );
 });

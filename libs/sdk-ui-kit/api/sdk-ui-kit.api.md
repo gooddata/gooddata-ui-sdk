@@ -316,6 +316,11 @@ export function ContentDivider({ className }: {
 export type CopyCodeOriginType = "keyboard" | "button";
 
 // @internal
+export function createAdvancedTemplates(formatMessage: (descriptor: {
+    id: string;
+}) => string): IFormatTemplate[];
+
+// @internal @deprecated
 export function createAllTemplates(formatMessage: (descriptor: {
     id: string;
 }) => string): IFormatTemplate[];
@@ -339,6 +344,9 @@ export function createTemplates(formatMessage: (descriptor: {
 export const CURRENCY_PRESET_DEFINITIONS: readonly ICurrencyPresetDefinition[];
 
 // @internal
+export const CURRENCY_SHORTENED_FORMAT: string;
+
+// @internal @deprecated
 export const CURRENCY_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[];
 
 // @internal
@@ -6909,7 +6917,9 @@ export interface UiButtonProps {
 export const UiButtonSegmentedControl: ForwardRefExoticComponent<Omit<UiButtonSegmentedControlProps, "ref"> & RefAttributes<HTMLDivElement>>;
 
 // @internal (undocumented)
-export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "className">;
+export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "className"> & {
+    layout?: "auto" | "fill";
+};
 
 // @internal (undocumented)
 export const UiCard: ForwardRefExoticComponent<UiCardProps & RefAttributes<HTMLDivElement>>;
@@ -7143,6 +7153,8 @@ export interface UiIconButtonPublicProps {
     disableAnimation?: boolean;
     // (undocumented)
     icon: IconType;
+    // (undocumented)
+    iconColor?: ThemeColor;
     // (undocumented)
     id?: string;
     // (undocumented)
@@ -7541,6 +7553,8 @@ export type UiTagProps = {
     label: string;
     variant?: "solid" | "outlined" | "decorated";
     size?: "small" | "large";
+    iconBefore?: IconType;
+    iconBeforeColor?: ThemeColor;
     isDeletable?: boolean;
     isDisabled?: boolean;
     dataTestId?: string;
@@ -7686,7 +7700,7 @@ export function useAsyncTableResponsiveColumns<T>(columns: Array<UiAsyncTableCol
 export function useComboboxState(): IUiComboboxState;
 
 // @internal
-export function useCurrencyFormatDefaults({ metricType, normalizedFormat, currencyFormatOverride, presetFormats, hasInheritPreset, onFormatChange, shouldBootstrap, fallbackFormat, }: UseCurrencyFormatDefaultsConfig): void;
+export function useCurrencyFormatDefaults({ metricType, currencyFormatOverride, onFormatChange, shouldBootstrap, fallbackFormat, }: UseCurrencyFormatDefaultsConfig): void;
 
 // @internal (undocumented)
 export interface UseCurrencyFormatDefaultsConfig {
@@ -7695,15 +7709,9 @@ export interface UseCurrencyFormatDefaultsConfig {
     // (undocumented)
     fallbackFormat?: string;
     // (undocumented)
-    hasInheritPreset: boolean;
-    // (undocumented)
     metricType?: MetricType;
     // (undocumented)
-    normalizedFormat: string | null;
-    // (undocumented)
     onFormatChange: (format: string | null) => void;
-    // (undocumented)
-    presetFormats: string[];
     // (undocumented)
     shouldBootstrap: boolean;
 }
@@ -7723,7 +7731,7 @@ export function useFocusWithinContainer(idToFocus?: string | null): {
 // @internal
 export function useFormatTemplates(formatMessage: (descriptor: {
     id: string;
-}) => string, excludeCurrencyTemplates?: boolean): IFormatTemplate[];
+}) => string): IFormatTemplate[];
 
 // @internal
 export const useHeaderSearch: () => HeaderSearchContext;

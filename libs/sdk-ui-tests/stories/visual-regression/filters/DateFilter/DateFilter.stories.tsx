@@ -60,17 +60,24 @@ export function FullFeatured() {
 FullFeatured.parameters = {
     kind: "full-featured",
     screenshots: {
-        closed: {},
-        opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+        closed: { readySelector: ".screenshot-target" },
+        opened: {
+            readySelector: ".screenshot-target",
+            clickSelector: ".s-date-filter-button",
+            postInteractionWait: 200,
+        },
         "absolute-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-absolute-form"],
             postInteractionWait: 200,
         },
         "relative-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-relative-form"],
             postInteractionWait: 200,
         },
         "relative-form-error": {
+            readySelector: ".screenshot-target",
             clickSelectors: [
                 ".s-date-filter-button",
                 ".s-relative-form",
@@ -106,13 +113,19 @@ export function Localized() {
 Localized.parameters = {
     kind: "localized",
     screenshots: {
-        closed: {},
-        opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+        closed: { readySelector: ".screenshot-target" },
+        opened: {
+            readySelector: ".screenshot-target",
+            clickSelector: ".s-date-filter-button",
+            postInteractionWait: 200,
+        },
         "absolute-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-absolute-form"],
             postInteractionWait: 200,
         },
         "relative-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-relative-form"],
             postInteractionWait: 200,
         },
@@ -135,7 +148,7 @@ export function Dateformat() {
 }
 Dateformat.parameters = {
     kind: "dateFormat",
-    screenshot: { misMatchThreshold: 0.1 }, // shows current date, which changes (every day)
+    screenshot: { readySelector: ".screenshot-target", misMatchThreshold: 0.1 }, // shows current date, which changes (every day)
 } satisfies IStoryParameters;
 
 export const Themed = () =>
@@ -163,13 +176,19 @@ export const Themed = () =>
 Themed.parameters = {
     kind: "themed",
     screenshots: {
-        closed: {},
-        opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+        closed: { readySelector: ".screenshot-target" },
+        opened: {
+            readySelector: ".screenshot-target",
+            clickSelector: ".s-date-filter-button",
+            postInteractionWait: 200,
+        },
         "absolute-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-absolute-form"],
             postInteractionWait: 200,
         },
         "relative-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-relative-form"],
             postInteractionWait: 200,
         },
@@ -204,13 +223,19 @@ export function DateFilterAlignedToTheRight() {
 DateFilterAlignedToTheRight.parameters = {
     kind: "Date filter aligned to the right",
     screenshots: {
-        closed: {},
-        opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+        closed: { readySelector: ".screenshot-target" },
+        opened: {
+            readySelector: ".screenshot-target",
+            clickSelector: ".s-date-filter-button",
+            postInteractionWait: 200,
+        },
         "absolute-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-absolute-form"],
             postInteractionWait: 200,
         },
         "relative-form": {
+            readySelector: ".screenshot-target",
             clickSelectors: [".s-date-filter-button", ".s-relative-form"],
             postInteractionWait: 200,
         },
@@ -242,7 +267,11 @@ export function DateformatWithTime() {
 DateformatWithTime.parameters = {
     kind: "dateformat with time",
     screenshots: {
-        closed: {},
-        opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+        closed: { readySelector: ".screenshot-target" },
+        opened: {
+            readySelector: ".screenshot-target",
+            clickSelector: ".s-date-filter-button",
+            postInteractionWait: 200,
+        },
     },
 } satisfies IStoryParameters;
