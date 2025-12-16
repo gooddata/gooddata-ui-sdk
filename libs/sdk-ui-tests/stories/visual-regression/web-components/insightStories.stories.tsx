@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-import { type IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { setWebComponentsContext } from "../../_infra/webComponents.js";
 
 /**
@@ -160,7 +160,7 @@ AllInsightTypes.parameters = {
     kind: "All insight types",
     screenshot: {
         // Wait for all insights to finish loading
-        readySelector: ".all-insights-ready",
+        readySelector: { selector: ".all-insights-ready", state: State.Attached },
         misMatchThreshold: 0.06,
     },
 } satisfies IStoryParameters;

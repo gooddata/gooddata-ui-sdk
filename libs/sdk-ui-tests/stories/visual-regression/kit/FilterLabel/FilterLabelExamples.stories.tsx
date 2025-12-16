@@ -3,7 +3,7 @@
 import { withIntl } from "@gooddata/sdk-ui";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 function FilterLabelExamples() {
     return (
@@ -37,5 +37,5 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

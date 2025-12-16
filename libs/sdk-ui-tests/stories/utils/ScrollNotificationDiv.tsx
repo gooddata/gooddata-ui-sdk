@@ -2,6 +2,8 @@
 
 import { type CSSProperties, type ReactNode, memo, useCallback, useRef } from "react";
 
+import { GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
+
 interface IScrollNotificationDiv {
     style?: CSSProperties;
     children?: ReactNode;
@@ -13,7 +15,7 @@ export const ScrollNotificationDiv = memo(function ScrollNotificationDiv(props: 
     const onScroll = useCallback(() => {
         if (divRef) {
             const node = divRef.current;
-            node?.dispatchEvent(new CustomEvent("goodstrap.scrolled", { bubbles: true }));
+            node?.dispatchEvent(new CustomEvent(GOODSTRAP_SCROLLED_EVENT, { bubbles: true }));
         }
     }, []);
 

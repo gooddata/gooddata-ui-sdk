@@ -23,7 +23,7 @@ import {
     user,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { Browser, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { Browser, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { useResetFocus } from "../../../utils/useResetFocus.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -200,11 +200,19 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target", delay: 300, browsers: [Browser.Firefox] },
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        delay: { postReady: 300 },
+        browsers: [Browser.Firefox],
+    },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AddGranteeExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target", delay: 300, browsers: [Browser.Firefox] },
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        delay: { postReady: 300 },
+        browsers: [Browser.Firefox],
+    },
 } satisfies IStoryParameters;

@@ -2,7 +2,7 @@
 
 import { UiButton, UiButtonSegmentedControl, UiIconButton } from "@gooddata/sdk-ui-kit";
 
-import { type IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // eslint-disable-next-line no-restricted-exports
@@ -28,7 +28,7 @@ export function Buttons() {
 }
 Buttons.parameters = {
     kind: "buttons",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function IconButtons() {
@@ -49,7 +49,7 @@ export function IconButtons() {
 }
 IconButtons.parameters = {
     kind: "icon-buttons",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function ThemedButtons() {

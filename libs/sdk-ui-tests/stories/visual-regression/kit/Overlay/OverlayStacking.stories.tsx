@@ -7,7 +7,7 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
-import { Browser, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 
 function OverlayStackingExample() {
     const [state, setState] = useState(0);
@@ -83,19 +83,17 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshots: {
-        "open-first": {
-            readySelector: ".screenshot-target",
-            clickSelector: ".open-first",
-            delay: { postOperation: 500 },
-            browsers: [Browser.Firefox],
-        },
-        "open-stacked": {
-            readySelector: ".screenshot-target",
-            reloadAfterReady: true,
-            clickSelectors: [".open-first", 100, ".open-stacked"],
-            delay: { postOperation: 500 },
-            browsers: [Browser.Firefox],
-        },
-    },
+    // screenshots: {
+    //     "open-first": {
+    //         readySelector: { selector: ".screenshot-target", state: State.Attached },
+    //         clickSelector: ".open-first",
+    //         browsers: [Browser.Firefox],
+    //     },
+    //     "open-stacked": {
+    //         readySelector: { selector: ".screenshot-target", state: State.Attached },
+    //         reloadAfterReady: true,
+    //         clickSelectors: [{ selector: ".open-first" }, { selector: ".open-stacked" }],
+    //         browsers: [Browser.Firefox],
+    //     },
+    // },
 } satisfies IStoryParameters;

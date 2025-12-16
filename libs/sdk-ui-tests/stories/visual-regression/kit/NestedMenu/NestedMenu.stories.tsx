@@ -13,7 +13,7 @@ import {
     SubMenu,
 } from "@gooddata/sdk-ui-kit";
 
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./NestedMenu.scss";
@@ -65,24 +65,25 @@ function NestedMenuExamples() {
 }
 
 const screenshotProps: INeobackstopConfig = {
-    closed: { readySelector: ".screenshot-target" },
+    closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     openedMenu: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-menu-toggle",
-        postInteractionWait: 250,
+        postInteractionWait: { delay: 250 },
     },
     openedSubmenu: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-menu-toggle", ".s-submenu-toggle"],
-        postInteractionWait: 50,
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-menu-toggle" }, { selector: ".s-submenu-toggle" }],
         delay: {
             postOperation: 250,
         },
     },
     closedByOutsideClick: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-menu-toggle", "#outside-click-anchor"],
-        postInteractionWait: 250,
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-menu-toggle" }, { selector: "#outside-click-anchor" }],
+        delay: {
+            postOperation: 250,
+        },
     },
 };
 

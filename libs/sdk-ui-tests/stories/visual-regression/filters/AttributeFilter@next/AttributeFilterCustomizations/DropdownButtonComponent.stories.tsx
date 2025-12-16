@@ -7,8 +7,7 @@ import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, type IAttributeFilterDropdownButtonProps } from "@gooddata/sdk-ui-filters";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
-import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
-import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
+import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
@@ -45,9 +44,9 @@ CustomComponent.parameters = {
     kind: "Custom component",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;

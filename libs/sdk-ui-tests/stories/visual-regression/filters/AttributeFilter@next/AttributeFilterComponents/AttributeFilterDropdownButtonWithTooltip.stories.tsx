@@ -5,7 +5,7 @@ import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 
-import { type INeobackstopConfig } from "../../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
@@ -13,11 +13,11 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 const attributeTitle = "Product";
 
 const dropdownButtonWithTooltip: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     hover: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         hoverSelector: ".s-attribute-filter-tooltip-icon",
-        postInteractionWait: 1000,
+        postInteractionWait: { delay: 1000 },
         misMatchThreshold: 0.001, // unsure why this is needed, but a pixel is probably off by a few rgb points
     },
 };

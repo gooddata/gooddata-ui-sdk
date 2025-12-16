@@ -103,7 +103,7 @@ export const computeArrowOffset = (
     floatingDimensions: Dimensions,
     isEnabled: boolean,
     theme?: ITheme,
-) => {
+): number | null => {
     if (isEnabled) {
         const arrowEdgeOffset = getArrowEdgeOffset(theme);
         const { basicPlacement, axisPlacement } = parsePlacement(arrowPlacement);
@@ -113,8 +113,12 @@ export const computeArrowOffset = (
         if (axisPlacement === "start") {
             return arrowEdgeOffset;
         } else if (axisPlacement === "end") {
+            // Return null if dimensions not yet available to avoid negative offset
+            if (sideLength <= 0) {
+                return null;
+            }
             return sideLength - (ARROW_WIDTH + arrowEdgeOffset);
         }
     }
-    return 0;
+    return null;
 };

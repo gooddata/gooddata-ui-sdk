@@ -96,7 +96,7 @@ export function DefaultUiTabsContainer<
                 aria-expanded={accessibilityConfig?.ariaExpanded}
                 role={accessibilityConfig?.role}
             >
-                <ScopedIdStore value={scopedIdStoreValue as any}>
+                <ScopedIdStore value={scopedIdStoreValue}>
                     {tabs.map((tab) => {
                         const isSelected = selectedTabId === tab.id;
                         const onSelect = () => onTabSelect(tab);

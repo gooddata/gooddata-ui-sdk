@@ -3,7 +3,7 @@
 import { withIntl } from "@gooddata/sdk-ui";
 import { DropdownList, type ISingleSelectListItemProps, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const items: ISingleSelectListItemProps[] = [
@@ -62,11 +62,11 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<WithIntl />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

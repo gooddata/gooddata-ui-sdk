@@ -4,7 +4,7 @@ import { memo, useRef, useState } from "react";
 
 import { type IColor, type IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { type ChartFillConfig } from "@gooddata/sdk-ui-charts";
-import { DropdownList } from "@gooddata/sdk-ui-kit";
+import { DropdownList, GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
 
 import { ColoredItem } from "./ColoredItem.js";
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
@@ -48,7 +48,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
     const onScroll = () => {
         if (listRef?.current) {
             const node = listRef.current;
-            node.dispatchEvent(new CustomEvent("goodstrap.scrolled", { bubbles: true }));
+            node.dispatchEvent(new CustomEvent(GOODSTRAP_SCROLLED_EVENT, { bubbles: true }));
         }
     };
 

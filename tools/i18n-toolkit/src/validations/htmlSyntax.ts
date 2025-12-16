@@ -2,10 +2,17 @@
 
 import { HtmlValidate } from "html-validate";
 
+import { type LocalesStructure } from "../schema/localization.js";
 import { done, fail, message, skipped } from "../utils/console.js";
 
+interface IHtmlError {
+    key: string;
+    file: string;
+    value: string;
+}
+
 export async function getHtmlSyntaxCheck(
-    localizations: Array<string>,
+    localizations: Array<[string, LocalesStructure]>,
     run: boolean = true,
     debug: boolean = false,
 ) {
@@ -18,11 +25,17 @@ export async function getHtmlSyntaxCheck(
 
     const htmlValidate = new HtmlValidate();
     const htmlRegex = new RegExp(/<[^>]*>/);
+    const errors: IHtmlError[] = [];
 
-    localizations
-        .filter((localization) => localization.match(htmlRegex))
-        .forEach((localization) => {
-            const validation = htmlValidate.validateStringSync(localization);
+    localizations.forEach(([file, content]) => {
+        Object.entries(content).forEach(([key, item]) => {
+            const value = typeof item === "object" ? item.value : item;
+
+            if (!value.match(htmlRegex)) {
+                return;
+            }
+
+            const validation = htmlValidate.validateStringSync(value);
 
             if (!validation.valid) {
                 const validationResults = validation.results.map((validationResult) =>
@@ -31,13 +44,26 @@ export async function getHtmlSyntaxCheck(
 
                 const count = validationResults.flat().length;
                 if (count) {
-                    fail(`Html message check ends with ${count} errors.`, true);
-                    throw new Error(
-                        `Html format of localization is not correct, see: ${JSON.stringify(localization)}`,
-                    );
+                    errors.push({ key, file, value });
                 }
             }
         });
+    });
+
+    if (errors.length > 0) {
+        fail(`Html message check ends with ${errors.length} error(s).`, true);
+
+        const errorDetails = errors
+            .map(
+                (err) =>
+                    `  Key: "${err.key}"\n` +
+                    `  File: ${err.file}\n` +
+                    `  Value: ${JSON.stringify(err.value)}`,
+            )
+            .join("\n\n");
+
+        throw new Error(`Html format of localizations is not correct.\n\n${errorDetails}`);
+    }
 
     done("Done", debug);
 }

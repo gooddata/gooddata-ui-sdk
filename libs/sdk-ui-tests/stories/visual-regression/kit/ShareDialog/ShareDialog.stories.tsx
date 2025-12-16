@@ -94,7 +94,7 @@ function ShareDialogExamples() {
 
 // const scenarios: INeobackstopConfig = {
 //     open: {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelectors: [".s-share-dialog-button"],
 //         delay: {
 //             postOperation: 500,
@@ -102,7 +102,7 @@ function ShareDialogExamples() {
 //         browsers: [Browser.Firefox],
 //     },
 //     "add-grantee": {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelectors: [".s-share-dialog-button", 50, ".s-add-users-or-groups", 50],
 //         delay: {
 //             postOperation: 500, // dialog appears slightly higher, then shifts down...
@@ -110,7 +110,7 @@ function ShareDialogExamples() {
 //         browsers: [Browser.Firefox],
 //     },
 //     "selected-grantee": {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelectors: [
 //             ".s-share-dialog-button",
 //             100,
@@ -125,22 +125,22 @@ function ShareDialogExamples() {
 
 // const lockScenarios: INeobackstopConfig = {
 //     open: {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelectors: [".s-share-dialog-button", 300],
 //     },
 //     "toggle-lock": {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-lock", 300],
 //     },
 // };
 
 // const drillAvailabilityScenarios: INeobackstopConfig = {
 //     open: {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelectors: [".s-share-dialog-button", 300],
 //     },
 //     "toggle-availability-for-drill": {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelectors: [".s-share-dialog-button", 300, ".s-shared-object-under-lenient-control", 300],
 //     },
 // };

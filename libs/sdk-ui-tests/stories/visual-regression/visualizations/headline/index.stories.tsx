@@ -9,7 +9,7 @@ import {
     comparisonEnabled,
 } from "../../../../scenarios/charts/headline/comparison.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
@@ -58,7 +58,10 @@ export function ResponsiveWithComparison() {
 }
 ResponsiveWithComparison.parameters = {
     kind: "responsive with comparison",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;
 
 export function ResponsiveWithMultiMeasures() {
@@ -85,7 +88,10 @@ export function ResponsiveWithMultiMeasures() {
 }
 ResponsiveWithMultiMeasures.parameters = {
     kind: "responsive with multi measures",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;
 
 export const ThemedWithComparison = () =>
@@ -104,7 +110,10 @@ export const ThemedWithComparison = () =>
     );
 ThemedWithComparison.parameters = {
     kind: "themed with comparison",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;
 
 export const ThemedWithMultiMeasure = () =>
@@ -123,7 +132,10 @@ export const ThemedWithMultiMeasure = () =>
     );
 ThemedWithMultiMeasure.parameters = {
     kind: "themed with multi measure",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;
 
 export function CompactSizeWithComparison() {
@@ -161,7 +173,10 @@ export function CompactSizeWithComparison() {
 }
 CompactSizeWithComparison.parameters = {
     kind: "compactSize with comparison",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;
 
 export function CompactsizeWithMultiMeasure() {
@@ -199,5 +214,8 @@ export function CompactsizeWithMultiMeasure() {
 }
 CompactsizeWithMultiMeasure.parameters = {
     kind: "compactSize with multi measure",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;

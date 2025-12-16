@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 import { ScrollGradient } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/scrollGradient.css";
@@ -152,17 +152,17 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<GradientTextThemed />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Custom = () => wrapWithTheme(<GradientTextCustom />);
 Custom.parameters = {
     kind: "custom",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

@@ -12,7 +12,11 @@ import {
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
 
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../_infra/backstopScenario.js";
+import {
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
+    State,
+} from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 // eslint-disable-next-line no-restricted-exports
@@ -262,7 +266,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
 }
 
 const screenshotViewport: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
     viewports: [{ label: "desktop", width: 1076, height: 768 }],
 };
 

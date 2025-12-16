@@ -9,7 +9,7 @@ import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 import { Button, IconAttribute } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const attributeTitle = "Product";
@@ -201,7 +201,7 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function FullFeaturedWithIcon() {
@@ -209,7 +209,7 @@ export function FullFeaturedWithIcon() {
 }
 FullFeaturedWithIcon.parameters = {
     kind: "full-featured-with-icon",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Draggable() {
@@ -217,7 +217,7 @@ export function Draggable() {
 }
 Draggable.parameters = {
     kind: "draggable",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function DraggableWithIcon() {
@@ -225,11 +225,11 @@ export function DraggableWithIcon() {
 }
 DraggableWithIcon.parameters = {
     kind: "draggable-with-icon",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AttributeFilterDropdownButtonExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

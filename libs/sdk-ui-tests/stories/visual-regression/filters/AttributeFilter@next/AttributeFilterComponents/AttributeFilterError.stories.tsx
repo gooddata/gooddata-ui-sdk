@@ -5,7 +5,7 @@ import { type ReactElement } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterError } from "@gooddata/sdk-ui-filters";
 
-import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
@@ -33,11 +33,11 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<AttributeFilterErrorExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

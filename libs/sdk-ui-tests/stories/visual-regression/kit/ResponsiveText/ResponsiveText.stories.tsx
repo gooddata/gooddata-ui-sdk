@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -90,7 +90,7 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Dynamic() {
@@ -99,22 +99,26 @@ export function Dynamic() {
 Dynamic.parameters = {
     kind: "dynamic",
     screenshots: {
-        default: { readySelector: ".screenshot-target" },
+        default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         "tagClassName prop change": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".s-change-class"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".s-change-class" }],
+            delay: {
+                postOperation: 200,
+            },
         },
         "children prop change": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".s-change-text"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".s-change-text" }],
+            delay: {
+                postOperation: 200,
+            },
         },
     },
-};
+} satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<ResponsiveTextExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

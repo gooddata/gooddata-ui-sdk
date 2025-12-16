@@ -1,12 +1,19 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { throttle } from "lodash-es";
+
+/**
+ * Custom event name for goodstrap drag events.
+ * Used by Overlay to handle closeOnMouseDrag and other drag-related behaviors.
+ * @internal
+ */
+export const GOODSTRAP_DRAG_EVENT = "goodstrap.drag";
 
 const fireGoodstrapDragEvent = (
     node: HTMLElement,
     windowInstance = { dispatchEvent: (_event: Event) => true },
 ) => {
     windowInstance.dispatchEvent(
-        new CustomEvent("goodstrap.drag", {
+        new CustomEvent(GOODSTRAP_DRAG_EVENT, {
             // this will close dropdowns with closeOnMouseDrag=true
             bubbles: true,
             detail: {

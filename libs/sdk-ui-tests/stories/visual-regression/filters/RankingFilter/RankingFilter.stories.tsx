@@ -12,37 +12,37 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/rankingFilter.css";
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const dropdownScenarios: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 };
 
 const dropdownWithOneAttributeItemScenarios: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     attributeDropdownButtonTooltip: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         hoverSelector: ".s-rf-attribute-dropdown-button",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
 };
 
 const customGranularityScenarios: INeobackstopConfig = {
     attributeDropdownOpened: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-rf-attribute-dropdown-button",
         delay: { postOperation: 350 },
     },
 };
 
 const buttonScenarios: INeobackstopConfig = {
-    closed: { readySelector: ".screenshot-target" },
+    closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     opened: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-rf-dropdown-button",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
 };
 
@@ -136,7 +136,7 @@ export function DropdownWithNonDefaultValueAndLongItemsSelected() {
 }
 DropdownWithNonDefaultValueAndLongItemsSelected.parameters = {
     kind: "dropdown with non default value and long items selected",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function DropdownWithCustomGranularitySelectionDisabled() {

@@ -6,7 +6,7 @@ import { InternalIntlWrapper, NamePositionControl } from "@gooddata/sdk-ui-ext/i
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { type INeobackstopConfig } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, State } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const german = "de-DE";
@@ -34,16 +34,20 @@ export function XAxis() {
 XAxis.parameters = {
     kind: "x-axis",
     screenshots: {
-        closed: { readySelector: ".screenshot-target" },
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-button-primary",
-            postInteractionWait: 200,
+            delay: {
+                postOperation: 200,
+            },
         },
         "select-option": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".gd-button-primary", ".s-left"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-left" }],
+            delay: {
+                postOperation: 200,
+            },
         },
     } satisfies INeobackstopConfig,
 };
@@ -65,7 +69,7 @@ export function Disabled() {
 }
 Disabled.parameters = {
     kind: "disabled",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 };
 
 export function YAxisLocalized() {
@@ -86,16 +90,20 @@ export function YAxisLocalized() {
 YAxisLocalized.parameters = {
     kind: "y-axis - localized",
     screenshots: {
-        closed: { readySelector: ".screenshot-target" },
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-button-primary",
-            postInteractionWait: 200,
+            delay: {
+                postOperation: 200,
+            },
         },
         "select-option": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".gd-button-primary", ".s-mitte"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-mitte" }],
+            delay: {
+                postOperation: 200,
+            },
         },
     } satisfies INeobackstopConfig,
 };

@@ -439,7 +439,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             : {};
 
     return (
-        <ScopedIdStore value={scopedIdStoreValue as any}>
+        <ScopedIdStore value={scopedIdStoreValue}>
             <div className="gd-invertable-select">
                 <div className="gd-invertable-select-search-bar" onKeyDown={handleSearchBarKeyDown}>
                     {renderSearchBar({ onSearch: onSearch ?? (() => {}), searchPlaceholder, searchString })}

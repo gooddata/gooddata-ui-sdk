@@ -6,7 +6,7 @@ import { action } from "storybook/actions";
 
 import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
@@ -90,9 +90,9 @@ function DialogListHeaderExamples() {
 }
 
 const scenarios: INeobackstopConfig = {
-    normal: { readySelector: ".screenshot-target" },
+    normal: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     hover: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         hoverSelector: ".s-dialog-list-header-button",
         delay: { postOperation: 350 },
     },

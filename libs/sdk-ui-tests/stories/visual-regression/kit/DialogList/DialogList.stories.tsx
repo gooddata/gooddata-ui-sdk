@@ -7,7 +7,7 @@ import { action } from "storybook/actions";
 import { DialogList } from "@gooddata/sdk-ui-kit";
 
 import { itemsMock as items } from "./itemsMock.js";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
@@ -82,7 +82,7 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Loading() {
@@ -93,5 +93,5 @@ Loading.parameters = { kind: "loading" } satisfies IStoryParameters;
 export const Themed = () => wrapWithTheme(<DialogListExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

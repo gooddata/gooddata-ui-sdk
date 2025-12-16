@@ -18,6 +18,7 @@ export type * from "./typings/accessibility.js";
 export * from "./utils/constants.js";
 export * from "./utils/featureFlags.js";
 export * from "./utils/drag.js";
+export { GOODSTRAP_SCROLLED_EVENT } from "./utils/scroll.js";
 export * from "./utils/dateTimeConfig.js";
 export * from "./utils/events.js";
 export * from "./utils/useId.js";
@@ -301,6 +302,7 @@ export {
     useScopedId,
     useScopedIdOptional,
 } from "./@ui/hooks/useScopedId.js";
+export type { IScopedIdStoreValue } from "./@ui/hooks/useScopedId.js";
 
 export { UiNavigationBypass } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
 export type {
@@ -343,6 +345,35 @@ export type { UiTagProps, IUiTagAccessibilityConfig } from "./@ui/UiTag/UiTag.js
 
 export { UiPopover } from "./@ui/UiPopover/UiPopover.js";
 export type { UiPopoverProps } from "./@ui/UiPopover/UiPopover.js";
+
+export { UiFloatingElement } from "./@ui/UiFloatingElement/UiFloatingElement.js";
+export { useFloatingPosition } from "./@ui/UiFloatingElement/useFloatingPosition.js";
+export type {
+    IUiFloatingElementProps,
+    IUseFloatingPositionOptions,
+    IUseFloatingPositionResult,
+    ILegacyAlignPoint,
+    IFloatingAnchor,
+} from "./@ui/UiFloatingElement/types.js";
+export {
+    alignPointToPlacement,
+    alignPointsToPlacement,
+    alignPointsToFallbackPlacements,
+    resolveAnchor,
+} from "./@ui/UiFloatingElement/utils.js";
+
+export { useCloseOnOutsideClick, FLOATING_ELEMENT_DATA_ATTR } from "./@ui/hooks/useCloseOnOutsideClick.js";
+export type { IUseCloseOnOutsideClickOptions } from "./@ui/hooks/useCloseOnOutsideClick.js";
+export { useCloseOnEscape } from "./@ui/hooks/useCloseOnEscape.js";
+export { useCloseOnParentScroll } from "./@ui/hooks/useCloseOnParentScroll.js";
+export { useCloseOnMouseDrag } from "./@ui/hooks/useCloseOnMouseDrag.js";
+
+export { UiDropdown } from "./@ui/UiDropdown/UiDropdown.js";
+export type {
+    IUiDropdownProps,
+    IUiDropdownButtonRenderProps,
+    IUiDropdownBodyRenderProps,
+} from "./@ui/UiDropdown/types.js";
 
 export {
     UiSearchResultsAnnouncement,

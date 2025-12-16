@@ -2,7 +2,11 @@
 
 import { SimpleSettingWidget } from "@gooddata/sdk-ui-kit";
 
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import {
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
+    State,
+} from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function SimpleSettingWidgetTest() {
@@ -44,7 +48,7 @@ export default {
 };
 
 const screenshotConfig: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
     misMatchThreshold: 0.025, // misMatchThreshold needed for loading spinner
 };
 

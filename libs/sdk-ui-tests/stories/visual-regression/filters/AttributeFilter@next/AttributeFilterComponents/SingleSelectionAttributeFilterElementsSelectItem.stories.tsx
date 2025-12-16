@@ -9,7 +9,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { SingleSelectionAttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const item: IAttributeElement = {
@@ -67,11 +67,11 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<SingleSelectionAttributeFilterElementsSelectItemExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

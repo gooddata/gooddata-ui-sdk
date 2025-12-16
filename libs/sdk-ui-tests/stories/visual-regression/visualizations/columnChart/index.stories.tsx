@@ -5,7 +5,7 @@ import "@gooddata/sdk-ui-charts/styles/css/main.css";
 
 import { ColumnChartWithSingleMeasureAndTwoViewByAndStack } from "../../../../scenarios/charts/columnChart/base.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
@@ -60,5 +60,5 @@ export function HidingOfHierarchicalAxisLabels() {
 }
 HidingOfHierarchicalAxisLabels.parameters = {
     kind: "hiding of hierarchical axis labels",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
+    screenshot: { readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached } },
 } satisfies IStoryParameters;

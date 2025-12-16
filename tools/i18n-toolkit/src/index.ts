@@ -5,34 +5,27 @@ import { program } from "commander";
 
 import { configure } from "./config.js";
 import { DefaultConfigName, type ToolkitConfigFile, type ToolkitOptions } from "./data.js";
-import { done, error, fail, hr } from "./utils/console.js";
+import { done, error, fail } from "./utils/console.js";
 import { validate } from "./validate.js";
 
 async function loadConfig(cwd: string, opts: ToolkitOptions) {
-    const { debug } = opts;
-
     try {
         return await configure(cwd, opts);
     } catch (err: any) {
-        hr(debug);
         fail("Can not process localisation config file!", true);
-        error(err, debug);
+        error(err);
         process.exit(1);
     }
 }
 
 async function runValidation(cwd: string, config: ToolkitConfigFile) {
-    const { debug } = config;
-
     try {
         await validate(cwd, config);
-        hr(debug);
         done("Localizations are valid!", true);
         process.exit(0);
     } catch (err: any) {
-        hr(debug);
         fail("Localizations are invalid!", true);
-        error(err, debug);
+        error(err);
         process.exit(1);
     }
 }

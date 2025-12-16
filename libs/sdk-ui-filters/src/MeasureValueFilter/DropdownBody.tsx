@@ -338,7 +338,10 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     }, [displayTreatNullAsZeroOption, operator, state.value]);
 
     return (
-        <div className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body">
+        <div
+            className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body"
+            data-testid="mvf-dropdown-body"
+        >
             <div className="gd-mvf-dropdown-content">
                 {warningMessage ? (
                     <div className="gd-mvf-dropdown-section">

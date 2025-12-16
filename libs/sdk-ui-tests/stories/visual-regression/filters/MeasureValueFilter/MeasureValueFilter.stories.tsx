@@ -6,26 +6,38 @@ import { type IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/measureValueFilter.css";
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const scenarios: INeobackstopConfig = {
-    closed: { readySelector: ".screenshot-target" },
+    closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     opened: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-mvf-operator-dropdown-button",
-        postInteractionWait: 200,
+        delay: {
+            postOperation: 200,
+        },
     },
     "between-selected": {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-mvf-operator-dropdown-button", 200, ".s-mvf-operator-between"],
-        postInteractionWait: 200,
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [
+            { selector: ".s-mvf-operator-dropdown-button" },
+            { selector: ".s-mvf-operator-between" },
+        ],
+        delay: {
+            postOperation: 200,
+        },
     },
     "greater-than-selected": {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-mvf-operator-dropdown-button", 200, ".s-mvf-operator-greater_than"],
-        postInteractionWait: 200,
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [
+            { selector: ".s-mvf-operator-dropdown-button" },
+            { selector: ".s-mvf-operator-greater_than" },
+        ],
+        delay: {
+            postOperation: 200,
+        },
     },
 };
 
@@ -112,7 +124,7 @@ export function WithDisabledOperatorSelection() {
 }
 WithDisabledOperatorSelection.parameters = {
     kind: "with-disabled-operator-selection",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Localized() {

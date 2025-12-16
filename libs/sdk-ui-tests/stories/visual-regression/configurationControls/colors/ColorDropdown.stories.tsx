@@ -5,7 +5,7 @@ import { action } from "storybook/actions";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { ColorDropdown, ColoredItemContent, InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { getLargePalette } from "../mocks/testColorHelper.js";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
@@ -18,16 +18,23 @@ const wrapperStyle = {
 const german = "de-DE";
 
 const defaultScenarios: INeobackstopConfig = {
-    closed: { readySelector: ".screenshot-target" },
+    closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     opened: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".gd-icon-navigatedown",
-        postInteractionWait: 200,
+        delay: {
+            postOperation: 200,
+        },
     },
     "select-custom-color": {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-colored-items-list-item", ".s-custom-section-button"],
-        postInteractionWait: 200,
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [
+            { selector: ".s-colored-items-list-item" },
+            { selector: ".s-custom-section-button" },
+        ],
+        delay: {
+            postOperation: 200,
+        },
     },
 };
 

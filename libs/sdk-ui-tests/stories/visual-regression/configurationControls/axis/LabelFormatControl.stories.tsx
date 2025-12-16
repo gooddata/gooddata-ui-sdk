@@ -6,7 +6,7 @@ import { InternalIntlWrapper, LabelFormatControl } from "@gooddata/sdk-ui-ext/in
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
@@ -32,7 +32,7 @@ export function Disabled() {
 }
 Disabled.parameters = {
     kind: "disabled",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function YAxis() {
@@ -53,16 +53,20 @@ export function YAxis() {
 YAxis.parameters = {
     kind: "y-axis",
     screenshots: {
-        closed: { readySelector: ".screenshot-target" },
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".gd-button-primary"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".gd-button-primary" }],
+            delay: {
+                postOperation: 200,
+            },
         },
         "select-option": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".gd-button-primary", ".s-inherit"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-inherit" }],
+            delay: {
+                postOperation: 200,
+            },
         },
     },
 } satisfies IStoryParameters;

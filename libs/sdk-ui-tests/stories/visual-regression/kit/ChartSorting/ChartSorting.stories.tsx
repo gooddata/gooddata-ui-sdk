@@ -15,7 +15,7 @@ import {
     singleChronologicalDateSortConfig,
     singleGenericDateAndMetricSortConfig,
 } from "./ChartSortingMock.js";
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
@@ -23,45 +23,48 @@ import "./styles.scss";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const dropdownSingleAttributeScenario: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     attributeDropdownOpen: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-attribute-dropdown-button", 200],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-attribute-dropdown-button" }],
     },
 };
 
 const dropdownSingleChronologicalDateScenario: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     attributeDropdownOpen: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-attribute-dropdown-button", 200],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-attribute-dropdown-button" }],
     },
 };
 
 const dropdownSingleGenericDateScenario: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     attributeDropdownOpen: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-attribute-dropdown-button", 200],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-attribute-dropdown-button" }],
     },
     applyButtonActivated: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-attribute-dropdown-button", 200, ".s-smallest_to_largest", 200],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [
+            { selector: ".s-attribute-dropdown-button" },
+            { selector: ".s-smallest_to_largest" },
+        ],
     },
 };
 
 const dropdownSingleAttributeSingleMetricScenario: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     attributeDropdownOpen: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-attribute-dropdown-button", 200],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-attribute-dropdown-button" }],
     },
 };
 const dropdownMultipleAttributesMultipleMetricsScenario: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     measureDropdownOpen: {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-snapshot__m1_", 200],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-snapshot__m1_" }],
     },
 };
 
@@ -206,7 +209,7 @@ export function DropdownSingleAttributeMultipleMetrics() {
 }
 DropdownSingleAttributeMultipleMetrics.parameters = {
     kind: "dropdown single attribute multiple metrics",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function DropdownMultipleAttributesMultipleMetrics() {
@@ -247,5 +250,5 @@ export const Themed = () =>
     );
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

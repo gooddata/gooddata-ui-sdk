@@ -32,10 +32,8 @@ export function fail(msg: string, debug = false) {
     }
 }
 
-export function error(msg: Error, debug = false) {
-    if (debug) {
-        console.error(chalk.redBright(msg));
-    }
+export function error(msg: Error) {
+    console.error(chalk.redBright(msg));
 }
 
 export function hr(debug = false) {

@@ -7,8 +7,7 @@ import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddat
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
-import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
@@ -44,9 +43,9 @@ EmptyDefaultSelection.parameters = {
     kind: "empty default selection",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -77,9 +76,9 @@ NotFitIntoContent.parameters = {
     kind: "not fit into content",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -101,9 +100,9 @@ EmptyDefaultSelectionLocalized.parameters = {
     kind: "empty default selection - localized",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -126,9 +125,9 @@ PreSelectedElements.parameters = {
     kind: "pre-selected elements",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -156,9 +155,9 @@ TitleWithPreSelectedElementsPositiveAttributefilter.parameters = {
     kind: "title with pre-selected elements - positive AttributeFilter",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -186,9 +185,9 @@ TitleWithPreSelectedElementsNegativeAttributefilter.parameters = {
     kind: "title with pre-selected elements - negative AttributeFilter",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -219,9 +218,9 @@ AllElementsSelectedInNegativeSelection.parameters = {
     kind: "all elements selected in negative selection",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -240,7 +239,7 @@ export function AttributeFilterError() {
 }
 AttributeFilterError.parameters = {
     kind: "attribute filter error",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () =>
@@ -258,9 +257,9 @@ Themed.parameters = {
     kind: "themed",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -286,9 +285,9 @@ SingleSelectionFilter.parameters = {
     kind: "single selection filter",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -313,9 +312,9 @@ SingleSelectionFilterThemed.parameters = {
     kind: "single selection filter - themed",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -338,9 +337,9 @@ FilterWithDisplayAsLabel.parameters = {
     kind: "filter with display as label",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;

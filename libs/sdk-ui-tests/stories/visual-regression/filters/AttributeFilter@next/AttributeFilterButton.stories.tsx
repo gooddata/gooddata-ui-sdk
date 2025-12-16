@@ -11,8 +11,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
-import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
@@ -47,9 +46,9 @@ EmptyDefaultSelection.parameters = {
     kind: "empty default selection",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -80,9 +79,9 @@ NotFitIntoContent.parameters = {
     kind: "not fit into content",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -104,9 +103,9 @@ EmptyDefaultSelectionLocalized.parameters = {
     kind: "empty default selection - localized",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -129,9 +128,9 @@ PreSelectedElements.parameters = {
     kind: "pre-selected elements",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -162,9 +161,9 @@ AllElementsSelectedInNegativeSelection.parameters = {
     kind: "all elements selected in negative selection",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -227,12 +226,12 @@ AttributeFilterError.parameters = {
     kind: "attribute filter error",
     screenshots: {
         hover: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelectors: [
-                ".filter-hover .gd-attribute-filter-dropdown-button__next",
-                ".error-not-load-value-hover .gd-attribute-filter-dropdown-button__next",
+                { selector: ".filter-hover .gd-attribute-filter-dropdown-button__next" },
+                { selector: ".error-not-load-value-hover .gd-attribute-filter-dropdown-button__next" },
             ],
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -252,9 +251,9 @@ Themed.parameters = {
     kind: "themed",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;
@@ -278,9 +277,9 @@ SingleSelection.parameters = {
     kind: "single selection",
     screenshots: {
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: LongPostInteractionTimeout,
+            postInteractionWait: { delay: 5000 },
         },
     },
 } satisfies IStoryParameters;

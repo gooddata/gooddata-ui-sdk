@@ -11,6 +11,18 @@ export interface IViewport {
     height: number;
 }
 
+export enum State {
+    Attached = "attached",
+    Detached = "detached",
+    Visible = "visible",
+    Hidden = "hidden",
+}
+
+export interface IReadySelector {
+    selector: string;
+    state: State;
+}
+
 export interface IDelay {
     postReady?: number;
     postOperation?: number;
@@ -19,6 +31,17 @@ export interface IDelay {
 export interface IKeyPressSelector {
     keyPress: string;
     selector: string;
+}
+
+export interface ISelectorWithBeforeAfterDelay {
+    selector: string;
+    waitBefore?: number;
+    waitAfter?: number;
+}
+
+export interface ISelectorThenDelay {
+    selector?: string;
+    delay?: number;
 }
 
 /** The Backstop test definition. See https://github.com/gooddata/gooddata-neobackstop/tree/master/scenario/types.go */
@@ -36,7 +59,7 @@ export interface INeobackstopScenarioConfig {
     /**
      * Wait until this selector exists before continuing
      */
-    readySelector?: string;
+    readySelector?: IReadySelector;
 
     /**
      * Reload the page after the ready selector is found
@@ -46,7 +69,7 @@ export interface INeobackstopScenarioConfig {
     /**
      * Wait for x milliseconds
      */
-    delay?: number | IDelay;
+    delay?: IDelay;
 
     /**
      * Press key in the DOM element prior to screenshot
@@ -59,17 +82,19 @@ export interface INeobackstopScenarioConfig {
     hoverSelector?: string;
 
     /**
-     * Simulates multiple sequential hover interactions. It is also possible to include a wait in milliseconds
-     * inside this array. Just specify a number of millis.
+     * Simulates multiple sequential hover interactions.
      *
-     * Example: [ 'selector-1', 100, 'selector-2' ] == first hover selector-1, then wait 100 millis, then
-     * hover 'selector-2'.
+     * Array of objects with explicit timing:
+     * - `selector`: CSS selector to hover
+     * - `waitBefore`: (optional) delay in ms before hovering
+     * - `waitAfter`: (optional) delay in ms after hovering
      *
-     * Note: after performing this hovering, backstop driver will proceed deal with clickSelectors. if you need
-     * to wait before starting clicking, then include trailing timeout here. There is also postInteractionWait; this
-     * is applied _after_ the click selectors processing.
+     * Example: [ \{ selector: 'selector-1', waitAfter: 200 \}, \{ selector: 'selector-2' \} ]
+     * Results in: hover selector-1, wait 200ms, hover selector-2
+     *
+     * Note: postInteractionWait is applied after these operations complete.
      */
-    hoverSelectors?: Array<string | number>;
+    hoverSelectors?: ISelectorWithBeforeAfterDelay[];
 
     /**
      * Click the specified DOM element prior to screenshot
@@ -77,21 +102,24 @@ export interface INeobackstopScenarioConfig {
     clickSelector?: string;
 
     /**
-     * Simulates multiple sequential click interactions. It is also possible to include a wait in milliseconds
-     * inside this array. Just specify a number of millis.
+     * Simulates multiple sequential click interactions.
      *
-     * Example: [ 'selector-1', 100, 'selector-2' ] == first click selector-1, then wait 100 millis, then
-     * click 'selector-2'.
+     * Array of objects with explicit timing:
+     * - `selector`: CSS selector to click
+     * - `waitBefore`: (optional) delay in ms before clicking
+     * - `waitAfter`: (optional) delay in ms after clicking
      *
-     * Note: after performing these operations, the backstop driver will apply 'postInteractionWait' so there
-     * is no need to include a trailing timeout.
+     * Example: [ \{ selector: 'selector-1', waitAfter: 100 \}, \{ selector: 'selector-2' \} ]
+     * Results in: click selector-1, wait 100ms, click selector-2
+     *
+     * Note: postInteractionWait is applied after these operations complete.
      */
-    clickSelectors?: Array<string | number>;
+    clickSelectors?: ISelectorWithBeforeAfterDelay[];
 
     /**
-     * Wait for either selector or a defined number of millis before taking screenshot
+     * Wait for either selector or a defined number of millis before taking screenshot, or both (selector first)
      */
-    postInteractionWait?: string | number;
+    postInteractionWait?: ISelectorThenDelay;
 
     /**
      * Scroll the specified DOM element into view prior to screenshots

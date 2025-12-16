@@ -17,7 +17,7 @@ import {
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { custom, gd } from "./logos.js";
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";
 
@@ -349,26 +349,31 @@ const messages = {
 const WithIntl = withIntl(HeaderExamples, "en-US", messages);
 
 const screenshotProps: INeobackstopConfig = {
-    closed: { readySelector: ".screenshot-target", delay: 300 },
+    closed: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        delay: {
+            postReady: 300,
+        },
+    },
     openedProjectPicker: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-default-header .s-goodsales",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
     openedProjectPickerWithFooter: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-freemium-header .s-project_1",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
     openedHelp: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-default-header .gd-header-help",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
     openedAccount: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-default-header .gd-header-account",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
 };
 
@@ -478,5 +483,5 @@ export function WithSearchMenuItem() {
 }
 WithSearchMenuItem.parameters = {
     kind: "with search menu item",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

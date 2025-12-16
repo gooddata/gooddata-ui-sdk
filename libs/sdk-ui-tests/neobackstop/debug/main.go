@@ -152,7 +152,7 @@ func main() {
 
 		fmt.Println(delayValue)
 
-		delay := internals.Delay{
+		delay := scenario.Delay{
 			PostReady: time.Duration(i) * increment,
 		}
 
@@ -175,7 +175,7 @@ func main() {
 
 		fmt.Println(piwValue)
 
-		debugScenario2.PostInteractionWait = &internals.SelectorOrDelay{
+		debugScenario2.PostInteractionWait = &scenario.SelectorThenDelay{
 			Delay: &piwValue,
 		}
 

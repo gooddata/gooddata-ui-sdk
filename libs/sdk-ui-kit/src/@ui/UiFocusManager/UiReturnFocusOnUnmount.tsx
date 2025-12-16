@@ -6,6 +6,7 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { type IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
+import { getFocusableElements, isElementFocusable } from "../../utils/domUtilities.js";
 
 /**
  * @internal
@@ -48,13 +49,16 @@ export const useUiReturnFocusOnUnmountConnectors = <T extends HTMLElement = HTML
                 return;
             }
 
-            const elementToFocus = resolveRef(returnFocusToRef.current) ?? originalFocusRef.current;
+            const generalElementToFocus = resolveRef(returnFocusToRef.current) ?? originalFocusRef.current;
+            const focusableElement = isElementFocusable(generalElementToFocus)
+                ? generalElementToFocus
+                : getFocusableElements(generalElementToFocus).firstElement;
 
-            if (!hasMountedRef.current || !elementToFocus) {
+            if (!hasMountedRef.current || !focusableElement) {
                 return;
             }
 
-            elementToFocus.focus();
+            focusableElement.focus();
             hasMountedRef.current = false;
         },
         [returnFocusToRef],

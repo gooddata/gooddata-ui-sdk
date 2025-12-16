@@ -10,7 +10,7 @@ import { InternalIntlWrapper, LegendSection } from "@gooddata/sdk-ui-ext/interna
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = {
     width: 400,
@@ -45,7 +45,7 @@ export function LegendsectionDisabled() {
 }
 LegendsectionDisabled.parameters = {
     kind: "LegendSection: Disabled",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function LegendsectionEnabled() {
@@ -75,16 +75,20 @@ export function LegendsectionEnabled() {
 LegendsectionEnabled.parameters = {
     kind: "LegendSection: Enabled",
     screenshots: {
-        closed: { readySelector: ".screenshot-target" },
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-button-primary",
-            postInteractionWait: 200,
+            delay: {
+                postOperation: 200,
+            },
         },
         "select-position": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".gd-button-primary", ".s-bottom"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-bottom" }],
+            delay: {
+                postOperation: 200,
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -116,16 +120,20 @@ export function LegendsectionEnabledLocalized() {
 LegendsectionEnabledLocalized.parameters = {
     kind: "LegendSection: Enabled - localized",
     screenshots: {
-        closed: { readySelector: ".screenshot-target" },
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-button-primary",
-            postInteractionWait: 200,
+            delay: {
+                postOperation: 200,
+            },
         },
         "select-position": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".gd-button-primary", ".s-unten"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-unten" }],
+            delay: {
+                postOperation: 200,
+            },
         },
     },
 } satisfies IStoryParameters;

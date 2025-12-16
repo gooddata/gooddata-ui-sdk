@@ -8,6 +8,7 @@ import {
     type INeobackstopConfig,
     type INeobackstopScenarioConfig,
     type IStoryParameters,
+    State,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -75,18 +76,20 @@ function DatePickerTest() {
 }
 
 const openedProps: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
     clickSelector: "#external-date input",
-    postInteractionWait: 200,
+    postInteractionWait: { delay: 200 },
 };
 
 const screenshotScenarios: INeobackstopConfig = {
-    closed: { readySelector: ".screenshot-target" },
+    closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     opened: openedProps,
     "next-month": {
-        readySelector: ".screenshot-target",
-        clickSelectors: ["#external-date input", ".rdp-button_next"],
-        postInteractionWait: 200,
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: "#external-date input" }, { selector: ".rdp-button_next" }],
+        delay: {
+            postOperation: 200,
+        },
     },
 };
 

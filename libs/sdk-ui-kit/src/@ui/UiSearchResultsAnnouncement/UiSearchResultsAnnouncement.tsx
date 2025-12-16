@@ -8,6 +8,9 @@ import { useDebouncedState } from "@gooddata/sdk-ui";
 
 import { messages } from "./locales.js";
 
+// Stable empty array to avoid re-creating on every render
+const EMPTY_RESULT_VALUES: string[] = [];
+
 /**
  * Props for the SearchResultsAnnouncement component
  * @internal
@@ -45,7 +48,7 @@ const DEBOUNCE_DELAY = 1000;
  */
 export function UiSearchResultsAnnouncement({
     totalResults,
-    resultValues = [],
+    resultValues = EMPTY_RESULT_VALUES,
     announcementDelay = DEBOUNCE_DELAY,
 }: ISearchResultsAnnouncementProps) {
     const intl = useIntl();

@@ -25,6 +25,7 @@ import { EmptyObject } from '@gooddata/util';
 import { Extension } from '@codemirror/state';
 import { FC } from 'react';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { FloatingContext } from '@floating-ui/react';
 import { FocusEvent as FocusEvent_2 } from 'react';
 import { FocusEventHandler } from 'react';
 import { ForwardRefExoticComponent } from 'react';
@@ -63,13 +64,16 @@ import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoExoticComponent } from 'react';
 import { MessageDescriptor } from 'react-intl';
 import type { MetricType } from '@gooddata/sdk-model';
+import { Middleware } from '@floating-ui/react';
 import { ModifierKey } from 'react';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import { MutableRefObject } from 'react';
 import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
+import { OffsetOptions } from '@floating-ui/react';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
+import { Placement } from '@floating-ui/react';
 import { PropsWithChildren } from 'react';
 import { PropsWithoutRef } from 'react';
 import { Provider } from 'react';
@@ -79,13 +83,15 @@ import { ReactNode } from 'react';
 import { Ref } from 'react';
 import { RefAttributes } from 'react';
 import { RefCallback } from 'react';
-import type { ReferenceType } from '@floating-ui/react';
+import { ReferenceType } from '@floating-ui/react';
 import { RefObject } from 'react';
 import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
+import { Strategy } from '@floating-ui/react';
 import { SyntheticEvent } from 'react';
 import type { UseInteractionsReturn } from '@floating-ui/react';
+import { VirtualElement } from '@floating-ui/react';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -130,6 +136,15 @@ export type Alignment = {
     height?: number;
     align: string;
 };
+
+// @internal (undocumented)
+export function alignPointsToFallbackPlacements(alignPoints: ILegacyAlignPoint[]): Placement[];
+
+// @internal (undocumented)
+export function alignPointsToPlacement(alignPoints: ILegacyAlignPoint[]): Placement;
+
+// @internal (undocumented)
+export function alignPointToPlacement(alignPoint: ILegacyAlignPoint): Placement;
 
 // @internal (undocumented)
 export const AppHeader: ComponentType<Omit<IAppHeaderProps, "theme" | "themeIsLoading" | "themeStatus">>;
@@ -604,6 +619,9 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
 }
 
 // @internal
+export const FLOATING_ELEMENT_DATA_ATTR = "data-gd-floating-element";
+
+// @internal
 export const focusAndEnsureReachableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection, focusCheckFn?: (element: HTMLElement) => boolean) => void;
 
 // @internal (undocumented)
@@ -744,6 +762,12 @@ export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMen
 
 // @internal (undocumented)
 export function getTypedUiTabsContextStore<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(): IContextStore<IUiTabContext<TTabProps, TTabActionProps>>;
+
+// @internal
+export const GOODSTRAP_DRAG_EVENT = "goodstrap.drag";
+
+// @internal
+export const GOODSTRAP_SCROLLED_EVENT = "goodstrap.scrolled";
 
 // @internal (undocumented)
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
@@ -2577,6 +2601,9 @@ export interface IFlexDimensionsState {
     width: number;
 }
 
+// @internal
+export type IFloatingAnchor = HTMLElement | RefObject<HTMLElement | null> | VirtualElement | string | null;
+
 // @internal (undocumented)
 export interface IFormatPreset {
     // (undocumented)
@@ -3386,6 +3413,17 @@ export interface IItemsWrapperProps {
     style?: CSSProperties;
     // (undocumented)
     wrapperRef?: RefObject<HTMLDivElement | null>;
+}
+
+// @internal
+export interface ILegacyAlignPoint {
+    // (undocumented)
+    align: string;
+    // (undocumented)
+    offset?: {
+        x?: number;
+        y?: number;
+    };
 }
 
 // @internal (undocumented)
@@ -4564,6 +4602,17 @@ export const isActionKey: (event: KeyboardEvent_2) => boolean;
 // @internal
 export const isArrowKey: (event: KeyboardEvent_2) => boolean;
 
+// @internal (undocumented)
+export interface IScopedIdStoreValue {
+    // (undocumented)
+    containerId: string;
+    // (undocumented)
+    makeId: (params: {
+        item: any;
+        specifier?: string;
+    }) => string;
+}
+
 // @internal
 export const isCopyKey: (event: KeyboardEvent_2) => boolean;
 
@@ -5432,6 +5481,111 @@ export interface IUiComboboxState {
     setReferenceRef: (node: ReferenceType | null) => void;
 }
 
+// @internal
+export interface IUiDropdownBodyRenderProps {
+    ariaAttributes: {
+        id: string;
+    };
+    closeDropdown: () => void;
+}
+
+// @internal
+export interface IUiDropdownButtonRenderProps {
+    ariaAttributes: {
+        role: "button" | "combobox";
+        "aria-haspopup": "listbox" | "tree" | "grid" | "dialog" | "menu" | true;
+        "aria-expanded": boolean;
+        "aria-controls"?: string;
+    };
+    closeDropdown: () => void;
+    dropdownId: string;
+    isOpen: boolean;
+    openDropdown: () => void;
+    ref: RefObject<HTMLElement>;
+    toggleDropdown: () => void;
+}
+
+// @internal
+export interface IUiDropdownProps {
+    accessibilityConfig?: {
+        triggerRole?: "button" | "combobox";
+        popupRole?: "listbox" | "tree" | "grid" | "dialog" | "menu";
+    };
+    alignPoints?: ILegacyAlignPoint[];
+    autofocusOnOpen?: boolean;
+    closeOnEscape?: boolean;
+    closeOnMouseDrag?: boolean;
+    closeOnOutsideClick?: boolean;
+    closeOnParentScroll?: boolean;
+    enableFocusTrap?: boolean;
+    ignoreClicksOnByClass?: string[];
+    initialFocus?: RefObject<HTMLElement> | string;
+    isOpen?: boolean;
+    offset?: OffsetOptions;
+    onClose?: () => void;
+    onOpen?: () => void;
+    onOpenChange?: (isOpen: boolean) => void;
+    openOnInit?: boolean;
+    placement?: Placement;
+    renderBody: (props: IUiDropdownBodyRenderProps) => ReactNode;
+    renderButton: (props: IUiDropdownButtonRenderProps) => ReactNode;
+    returnFocusTo?: RefObject<HTMLElement> | string;
+    width?: number | "same-as-anchor" | "auto";
+    zIndex?: number;
+}
+
+// @internal
+export interface IUiFloatingElementProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    alignPoints?: ILegacyAlignPoint[];
+    // (undocumented)
+    anchor: IFloatingAnchor;
+    // (undocumented)
+    autoFlip?: boolean;
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    closeOnEscape?: boolean;
+    // (undocumented)
+    closeOnMouseDrag?: boolean;
+    // (undocumented)
+    closeOnOutsideClick?: boolean;
+    // (undocumented)
+    closeOnParentScroll?: boolean;
+    // (undocumented)
+    contentClassName?: string;
+    // (undocumented)
+    ignoreClicksOn?: Array<string | HTMLElement>;
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    maxHeight?: number | string;
+    // (undocumented)
+    maxWidth?: number | string;
+    // (undocumented)
+    offset?: OffsetOptions;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onPlacementChange?: (placement: Placement) => void;
+    // (undocumented)
+    placement?: Placement;
+    // (undocumented)
+    shouldCloseOnClick?: (event: Event) => boolean;
+    // (undocumented)
+    strategy?: Strategy;
+    // (undocumented)
+    style?: CSSProperties;
+    // (undocumented)
+    width?: number | "same-as-anchor" | "auto";
+    // (undocumented)
+    zIndex?: number;
+}
+
 // @internal (undocumented)
 export interface IUiFocusHelperConnectors<T extends HTMLElement = HTMLElement> {
     // (undocumented)
@@ -5975,6 +6129,70 @@ export interface IUiTreeViewSelectionMods {
 }
 
 // @internal (undocumented)
+export interface IUseCloseOnOutsideClickOptions {
+    // (undocumented)
+    anchorRef: RefObject<ReferenceType | null>;
+    // (undocumented)
+    floatingRef: RefObject<HTMLElement | null>;
+    // (undocumented)
+    ignoreClicksOn?: Array<string | HTMLElement>;
+    // (undocumented)
+    shouldCloseOnClick?: (event: Event) => boolean;
+}
+
+// @internal (undocumented)
+export interface IUseFloatingPositionOptions {
+    // (undocumented)
+    alignPoints?: ILegacyAlignPoint[];
+    // (undocumented)
+    arrowRef?: RefObject<SVGSVGElement | null>;
+    // (undocumented)
+    autoFlip?: boolean;
+    // (undocumented)
+    customMiddleware?: Middleware[];
+    // (undocumented)
+    fallbackPlacements?: Placement[];
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    maxHeight?: number | string;
+    // (undocumented)
+    maxWidth?: number | string;
+    // (undocumented)
+    offset?: OffsetOptions;
+    // (undocumented)
+    onOpenChange?: (open: boolean) => void;
+    // (undocumented)
+    placement?: Placement;
+    shiftPadding?: number;
+    // (undocumented)
+    strategy?: Strategy;
+    // (undocumented)
+    zIndex?: number;
+}
+
+// @internal (undocumented)
+export interface IUseFloatingPositionResult {
+    // (undocumented)
+    context: FloatingContext;
+    // (undocumented)
+    floatingStyles: CSSProperties;
+    // (undocumented)
+    middlewareData: Record<string, any>;
+    // (undocumented)
+    placement: Placement;
+    // (undocumented)
+    refs: {
+        setReference: (node: any) => void;
+        setFloating: (node: HTMLElement | null) => void;
+        reference: MutableRefObject<any>;
+        floating: MutableRefObject<HTMLElement | null>;
+    };
+    // (undocumented)
+    zIndex: number | undefined;
+}
+
+// @internal (undocumented)
 export interface IUseKeyboardNavigationTargetProps {
     // (undocumented)
     label?: string;
@@ -6331,6 +6549,9 @@ export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 export const relatedHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
+export function resolveAnchor(anchor: IFloatingAnchor): HTMLElement | VirtualElement | null;
+
+// @internal (undocumented)
 export const resolveRef: (ref: string | RefObject<HTMLElement | null> | (() => HTMLElement | null) | undefined | null) => HTMLElement | null;
 
 // @internal (undocumented)
@@ -6352,13 +6573,7 @@ export function RichTextWithTooltip(props: IRichTextWithTooltipProps): JSX.Eleme
 export type SameAsTargetPosition = "sameAsTarget";
 
 // @internal (undocumented)
-export const ScopedIdStore: IContextStore<    {
-makeId: ({ item, specifier }: {
-item: unknown;
-specifier?: string;
-}) => string;
-containerId: string;
-}>;
+export const ScopedIdStore: IContextStore<IScopedIdStoreValue>;
 
 // @internal
 export function ScreenReaderToast(): JSX.Element;
@@ -7111,6 +7326,9 @@ export type UiDrawerTransitionProps = {
     delay?: number;
 };
 
+// @internal
+export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpenChange, openOnInit, placement, offset, alignPoints, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOnByClass, zIndex, width, enableFocusTrap, autofocusOnOpen, initialFocus, returnFocusTo, onOpen, onClose, accessibilityConfig, }: IUiDropdownProps): JSX.Element;
+
 // @internal (undocumented)
 export const UiDropdownIconButton: ForwardRefExoticComponent<UiDropdownIconButtonProps & RefAttributes<HTMLButtonElement>>;
 
@@ -7119,6 +7337,9 @@ export interface UiDropdownIconButtonProps extends UiIconButtonPublicProps {
     // (undocumented)
     isDropdownOpen: boolean;
 }
+
+// @internal
+export function UiFloatingElement({ children, anchor, isOpen, onClose, placement, alignPoints, strategy, offset, autoFlip, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOn, shouldCloseOnClick, zIndex: zIndexProp, className, contentClassName, style, width, maxWidth, maxHeight, accessibilityConfig, onPlacementChange, }: IUiFloatingElementProps): JSX.Element | null;
 
 // @internal (undocumented)
 export function UiFocusManager({ children, ...args }: IUiFocusManagerProps): JSX.Element;
@@ -7696,6 +7917,18 @@ export function useAsyncTableResponsiveColumns<T>(columns: Array<UiAsyncTableCol
     columns: UiAsyncTableColumnDefinitionResponsive<T>[];
 };
 
+// @internal
+export function useCloseOnEscape(isOpen: boolean, onClose: () => void): void;
+
+// @internal
+export function useCloseOnMouseDrag(isOpen: boolean, onClose: () => void): void;
+
+// @internal
+export function useCloseOnOutsideClick(isOpen: boolean, onClose: () => void, options: IUseCloseOnOutsideClickOptions): void;
+
+// @internal
+export function useCloseOnParentScroll(isOpen: boolean, onClose: () => void, anchorRef: RefObject<ReferenceType | null>): void;
+
 // @internal (undocumented)
 export function useComboboxState(): IUiComboboxState;
 
@@ -7722,6 +7955,9 @@ export function useElementSize<T extends HTMLElement>(): {
     height: number;
     width: number;
 };
+
+// @internal
+export function useFloatingPosition({ isOpen, onOpenChange, placement: placementProp, alignPoints, strategy, offset: offsetProp, autoFlip, fallbackPlacements: fallbackPlacementsProp, arrowRef, customMiddleware, maxWidth, maxHeight, zIndex: zIndexProp, shiftPadding, }: IUseFloatingPositionOptions): IUseFloatingPositionResult;
 
 // @internal (undocumented)
 export function useFocusWithinContainer(idToFocus?: string | null): {
