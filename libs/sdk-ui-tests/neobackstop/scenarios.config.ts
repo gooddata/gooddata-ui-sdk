@@ -30,7 +30,9 @@ const ScenarioConfig = [
          */
         idRegex: /01.*BarChart.*base.*single_measure$/g,
         config: {
-            delay: 200,
+            delay: {
+                postReady: 200,
+            },
         },
     },
     {
@@ -41,7 +43,9 @@ const ScenarioConfig = [
          */
         idRegex: /01.*ColumnChart.*customization.*theme.*font/g,
         config: {
-            delay: 200,
+            delay: {
+                postReady: 200,
+            },
         },
     },
     {
@@ -52,7 +56,9 @@ const ScenarioConfig = [
          */
         idRegex: /01.*FunnelChart.*customization.*theme.*font/g,
         config: {
-            delay: 200,
+            delay: {
+                postReady: 200,
+            },
         },
     },
     {
@@ -62,7 +68,9 @@ const ScenarioConfig = [
          */
         idRegex: /01.*WaterfallChart.*customization.*theme.*multi.measures.with.font/g,
         config: {
-            delay: 100,
+            delay: {
+                postReady: 100,
+            },
         },
     },
     {
@@ -71,7 +79,9 @@ const ScenarioConfig = [
          */
         idRegex: /(01).*Repeater.*/g,
         config: {
-            delay: 2500,
+            delay: {
+                postReady: 2500,
+            },
         },
     },
     {
@@ -86,18 +96,11 @@ const ScenarioConfig = [
         /*
          * PivotTableNext only: give it a small settle time.
          */
-        idRegex: /(01|02|04).*PivotTableNext.*/g,
+        idRegex: /(01|04).*PivotTableNext.*/g,
         config: {
-            delay: 4000, // wait for column resizing to complete
-        },
-    },
-    {
-        /*
-         * Tests for visualization stories created automatically
-         */
-        idRegex: /(01).*/g,
-        config: {
-            readySelector: ".screenshot-ready-wrapper-done",
+            delay: {
+                postReady: 4000, // wait for column resizing to complete
+            },
         },
     },
 ];

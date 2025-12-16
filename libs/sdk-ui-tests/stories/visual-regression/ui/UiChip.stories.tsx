@@ -2,7 +2,7 @@
 
 import { ComponentTable, UiChip, type UiChipProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
-import { type IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({
@@ -59,13 +59,13 @@ export function FullFeaturedChip() {
 }
 FullFeaturedChip.parameters = {
     kind: "full-featured chip",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiChipTest />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Interface() {

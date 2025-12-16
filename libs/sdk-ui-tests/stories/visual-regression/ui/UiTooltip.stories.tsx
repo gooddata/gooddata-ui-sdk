@@ -12,7 +12,7 @@ import { indigoDarkTheme, redLightTheme } from "@gooddata/sdk-ui-theme-provider/
 
 import { wrapWithTheme } from "../themeWrapper.js";
 import tooltipImage from "./assets/tooltip-image.png";
-import { type IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 
 const propCombination = propCombinationsFor({} as UiTooltipProps);
 
@@ -232,13 +232,13 @@ export function Default() {
 }
 Default.parameters = {
     kind: "default",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiTooltipTest />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Interface() {

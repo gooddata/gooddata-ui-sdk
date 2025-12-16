@@ -104,7 +104,7 @@ import {
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 interface IIconWrapperProps {
     name: string;
@@ -453,7 +453,10 @@ export function InsightIcons() {
 }
 InsightIcons.parameters = {
     kind: "insight icons",
-    screenshot: { readySelector: ".screenshot-target", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;
 
 export function Icons() {
@@ -461,5 +464,8 @@ export function Icons() {
 }
 Icons.parameters = {
     kind: "icons",
-    screenshot: { readySelector: ".screenshot-target", misMatchThreshold: 0.01 },
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
 } satisfies IStoryParameters;

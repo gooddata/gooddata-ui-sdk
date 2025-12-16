@@ -6,7 +6,7 @@ import { InternalIntlWrapper, MinMaxControl } from "@gooddata/sdk-ui-ext/interna
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { type IStoryParameters, type IViewport } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, type IViewport, State } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const mobileViewport: IViewport[] = [{ label: "mobile-view", height: 800, width: 480 }];
@@ -34,7 +34,7 @@ export function Disabled() {
 }
 Disabled.parameters = {
     kind: "disabled",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Enabled() {
@@ -55,16 +55,26 @@ export function Enabled() {
 Enabled.parameters = {
     kind: "enabled",
     screenshots: {
-        closed: { readySelector: ".screenshot-target" },
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [
+                { selector: ".s-configuration-subsection-properties-axis-scale" },
+                { selector: ".gd-input-field" },
+            ],
+            delay: {
+                postOperation: 200,
+            },
         },
         "opened-mobile": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [
+                { selector: ".s-configuration-subsection-properties-axis-scale" },
+                { selector: ".gd-input-field" },
+            ],
+            delay: {
+                postOperation: 200,
+            },
             viewports: mobileViewport,
             misMatchThreshold: 0.01,
         },
@@ -89,16 +99,26 @@ export function EnabledLocale() {
 EnabledLocale.parameters = {
     kind: "enabled - locale",
     screenshots: {
-        closed: { readySelector: ".screenshot-target" },
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [
+                { selector: ".s-configuration-subsection-properties-axis-scale" },
+                { selector: ".gd-input-field" },
+            ],
+            delay: {
+                postOperation: 200,
+            },
         },
         "opened-mobile": {
-            readySelector: ".screenshot-target",
-            clickSelectors: [".s-configuration-subsection-properties-axis-scale", ".gd-input-field"],
-            postInteractionWait: 200,
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [
+                { selector: ".s-configuration-subsection-properties-axis-scale" },
+                { selector: ".gd-input-field" },
+            ],
+            delay: {
+                postOperation: 200,
+            },
             viewports: mobileViewport,
         },
     },

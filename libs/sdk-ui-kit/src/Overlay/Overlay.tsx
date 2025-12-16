@@ -20,7 +20,9 @@ import { type IOverlayProps, type IOverlayState } from "./typings.js";
 import { type Alignment, type OverlayPositionType, type SameAsTargetPosition } from "../typings/overlay.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
+import { GOODSTRAP_DRAG_EVENT } from "../utils/drag.js";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
+import { GOODSTRAP_SCROLLED_EVENT } from "../utils/scroll.js";
 
 const events = [
     {
@@ -34,8 +36,8 @@ const events = [
         target: typeof document === "undefined" ? null : document,
         requiredProp: "closeOnOutsideClick",
     },
-    { name: "goodstrap.scrolled", handler: "closeOnParentScroll" },
-    { name: "goodstrap.drag", handler: "closeOnMouseDrag" },
+    { name: GOODSTRAP_SCROLLED_EVENT, handler: "closeOnParentScroll" },
+    { name: GOODSTRAP_DRAG_EVENT, handler: "closeOnMouseDrag" },
     { name: "keydown", handler: "closeOnEscape" },
 ];
 

@@ -7,7 +7,7 @@ import { action } from "storybook/actions";
 import { DialogListItemBasic, IconQuestionMark } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
@@ -176,15 +176,18 @@ function DialogListItemBasicExamples() {
 const testItemSelector = ".s-dialog-list-item-basic";
 
 const scenarios: INeobackstopConfig = {
-    normal: { readySelector: ".screenshot-target" },
+    normal: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     hover: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         hoverSelector: testItemSelector,
-        postInteractionWait: 100,
+        postInteractionWait: { delay: 100 },
     },
     "hover-delete": {
-        readySelector: ".screenshot-target",
-        hoverSelectors: [testItemSelector, 100, `${testItemSelector} .s-dialog-list-item-delete-icon`, 100],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        hoverSelectors: [
+            { selector: testItemSelector },
+            { selector: `${testItemSelector} .s-dialog-list-item-delete-icon` },
+        ],
     },
 };
 

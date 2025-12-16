@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Bubble, BubbleFocusTrigger, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
@@ -216,34 +216,34 @@ FullFeatured.parameters = {
     kind: "full-featured",
     screenshots: {
         "primary-skin": {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".primary-skin",
-            postInteractionWait: 1000,
+            postInteractionWait: { delay: 1000 },
         },
         "secondary-skin": {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".secondary-skin",
-            postInteractionWait: 1000,
+            postInteractionWait: { delay: 1000 },
         },
         "negative-skin": {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".negative-skin",
-            postInteractionWait: 1000,
+            postInteractionWait: { delay: 1000 },
         },
         "light-skin": {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".light-skin",
-            postInteractionWait: 1000,
+            postInteractionWait: { delay: 1000 },
         },
         "dark-skin": {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".dark-skin",
-            postInteractionWait: 1000,
+            postInteractionWait: { delay: 1000 },
         },
         "warning-skin": {
-            readySelector: ".screenshot-target",
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".warning-skin",
-            postInteractionWait: 1000,
+            postInteractionWait: { delay: 1000 },
         },
     },
 } satisfies IStoryParameters;

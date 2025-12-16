@@ -84,7 +84,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 | CellClickedEvent<AgGridRowData, string | null>
                 | CellKeyDownEvent<AgGridRowData, string | null>,
         ) => {
-            if (!onDrill || drillableItems.length === 0 || !currentDataView) {
+            if (!onDrill || !drillableItems || !currentDataView) {
                 return;
             }
 
@@ -331,7 +331,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
             }
 
             // Handle drilling only if there are drillable items
-            if (!onDrill || drillableItems.length === 0) {
+            if (!onDrill || !drillableItems) {
                 return;
             }
 

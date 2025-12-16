@@ -4,6 +4,8 @@ import { IntlProvider } from "react-intl";
 
 import { FilterGroupItem as FilterGroupItemComponent } from "@gooddata/sdk-ui-kit";
 
+import { State } from "../../../../_infra/backstopScenario.js";
+
 const wrapperStyle = {
     width: 250,
     height: 800,
@@ -38,5 +40,5 @@ export function Localized() {
 }
 Localized.parameters = {
     kind: "localized",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 };

@@ -7,7 +7,11 @@ import { SearchOverlay } from "@gooddata/sdk-ui-semantic-search/internal";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../_infra/backstopScenario.js";
+import {
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
+    State,
+} from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const backend = StorybookBackend();
@@ -33,12 +37,12 @@ function SemanticSearchBase({ width = 200 }: { width?: number }) {
 }
 
 const config: INeobackstopScenarioConfig = {
-    readySelector: "input",
+    readySelector: { selector: "input", state: State.Attached },
     keyPressSelector: {
         keyPress: "test",
         selector: "input",
     },
-    postInteractionWait: ".gd-semantic-search__results-item",
+    postInteractionWait: { selector: ".gd-semantic-search__results-item" },
     misMatchThreshold: 0.01,
 };
 

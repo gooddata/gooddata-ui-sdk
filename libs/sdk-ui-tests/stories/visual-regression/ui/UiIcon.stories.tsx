@@ -8,7 +8,7 @@ import {
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 
-import { type IStoryParameters } from "../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const iconCombinations = propCombinationsFor({ label: "icon", size: 20 } as UiIconProps);
@@ -155,13 +155,13 @@ export function FullFeaturedIcon() {
 }
 FullFeaturedIcon.parameters = {
     kind: "full-featured icon",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<UiIconTest />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function Interface() {

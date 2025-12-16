@@ -3,7 +3,7 @@
 import * as path from "path";
 
 import { type ToolkitConfigFile } from "./data.js";
-import { getLocalizationFiles, getLocalizationValues, getParsedLocalizations } from "./localizations.js";
+import { getLocalizationFiles, getParsedLocalizations } from "./localizations.js";
 import { getCommentValidationCheck } from "./validations/commentValidation.js";
 import { getDefaultLocalesCheck } from "./validations/defaultLocales.js";
 import { getHtmlSyntaxCheck } from "./validations/htmlSyntax.js";
@@ -19,15 +19,13 @@ export async function validate(cwd: string, opts: ToolkitConfigFile) {
     }
 
     const localizationPaths = paths.map((pth) => path.join(cwd, pth));
-
     const localizations = getParsedLocalizations(await getLocalizationFiles(localizationPaths));
-    const localizationValues = getLocalizationValues(localizations);
 
     await getDefaultLocalesCheck(localizationPaths, localizations, opts.debug);
     await getStructureCheck(localizations, opts.structure || false, opts.debug);
     await getCommentValidationCheck(localizations, opts.comments || false, opts.debug);
-    await getIntlMessageFormatCheck(localizationValues, opts.intl || false, opts.debug);
-    await getHtmlSyntaxCheck(localizationValues, opts.html || false, opts.debug);
+    await getIntlMessageFormatCheck(localizations, opts.intl || false, opts.debug);
+    await getHtmlSyntaxCheck(localizations, opts.html || false, opts.debug);
 
     const { rules, source } = opts;
     await getUsageMessagesCheck(cwd, localizations, opts.usage || false, { source, rules }, opts.debug);

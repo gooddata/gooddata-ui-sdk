@@ -8,6 +8,7 @@ import {
     type INeobackstopConfig,
     type INeobackstopScenarioConfig,
     type IStoryParameters,
+    State,
 } from "../../../_infra/backstopScenario.js";
 
 const EditableLabelExamples = memo(function EditableLabelExamples() {
@@ -31,13 +32,13 @@ const EditableLabelExamples = memo(function EditableLabelExamples() {
 });
 
 const editLabelClickProps: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
     clickSelector: ".s-my-editable-label",
-    postInteractionWait: 200,
+    postInteractionWait: { delay: 200 },
 };
 
 const screenshotProps: INeobackstopConfig = {
-    "initial-label": { readySelector: ".screenshot-target" },
+    "initial-label": { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     "edited-label": editLabelClickProps,
 };
 

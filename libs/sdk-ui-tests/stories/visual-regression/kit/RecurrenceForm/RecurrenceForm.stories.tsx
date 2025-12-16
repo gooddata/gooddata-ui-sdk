@@ -5,7 +5,7 @@ import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { RecurrenceForm } from "@gooddata/sdk-ui-kit";
 
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -86,11 +86,11 @@ function RecurrenceFormTest() {
 }
 
 const screenshotProps: INeobackstopConfig = {
-    default: { readySelector: ".screenshot-target" },
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     openedRecurrenceType: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: "#first-example .s-recurrence-form-type",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
 };
 

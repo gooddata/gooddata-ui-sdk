@@ -51,6 +51,7 @@ function WithAddButton({
                     variant="tertiary"
                     isDisabled={isDisabled}
                     onClick={onClick}
+                    dataTestId="mvf-dimensionality-plus"
                 />
                 <Bubble alignPoints={[{ align: "bc tc" }]}>{tooltip}</Bubble>
             </BubbleHoverTrigger>
@@ -197,7 +198,10 @@ export const DimensionalitySection = memo(function DimensionalitySection({
     const actualAnchor = anchorType === "inline" ? inlineAddButtonRef.current : standaloneAnchor;
 
     return (
-        <div className="gd-mvf-dropdown-section gd-mvf-dimensionality s-mvf-dimensionality">
+        <div
+            className="gd-mvf-dropdown-section gd-mvf-dimensionality s-mvf-dimensionality"
+            data-testid="mvf-dimensionality"
+        >
             <div className="gd-mvf-dimensionality-header">
                 <label>{intl.formatMessage({ id: "mvf.dimensionality.forEach" })}</label>
                 {shouldShowResetButton ? (

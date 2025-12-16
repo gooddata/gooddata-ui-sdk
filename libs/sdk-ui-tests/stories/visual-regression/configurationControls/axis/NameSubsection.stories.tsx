@@ -8,25 +8,25 @@ import { InternalIntlWrapper, NameSubsection } from "@gooddata/sdk-ui-ext/intern
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const german = "de-DE";
 const defaultProps = {};
 
 const commonScenarios: INeobackstopConfig = {
-    closed: { readySelector: ".screenshot-target" },
+    closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     opened: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".gd-button-primary",
-        postInteractionWait: ".gd-list",
+        postInteractionWait: { selector: ".gd-list" },
         delay: {
             postOperation: 500,
         },
     },
     "label-toggle": {
-        readySelector: ".screenshot-target",
-        clickSelectors: [".s-checkbox-toggle-label"],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelectors: [{ selector: ".s-checkbox-toggle-label" }],
         delay: {
             postOperation: 500,
         },
@@ -55,7 +55,7 @@ export function XAxisDisabled() {
 }
 XAxisDisabled.parameters = {
     kind: "x-axis: Disabled",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function XAxisEnabled() {

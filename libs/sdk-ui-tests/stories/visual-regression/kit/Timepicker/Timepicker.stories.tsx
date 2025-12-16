@@ -4,7 +4,11 @@ import { useState } from "react";
 
 import { Timepicker } from "@gooddata/sdk-ui-kit";
 
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import {
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
+    State,
+} from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -35,7 +39,7 @@ export default {
 };
 
 const screenshotConfig: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
     misMatchThreshold: 0.05, // screenshots ~current time, which changes every run
 };
 

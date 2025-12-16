@@ -40,7 +40,7 @@ export function useHeaderDrilling(params: AgGridHeaderParams | AgGridHeaderGroup
      * Check if the header cell is drillable (memoized)
      */
     const isDrillable = useMemo(() => {
-        if (!isRegularHeader || !drillableItems.length || !currentDataView) {
+        if (!isRegularHeader || !drillableItems || !currentDataView) {
             return false;
         }
 

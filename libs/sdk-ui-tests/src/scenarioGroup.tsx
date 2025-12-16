@@ -19,6 +19,7 @@ import {
     type VisProps,
     type WorkspaceType,
 } from "./scenario.js";
+import { type IDelay } from "../stories/_infra/backstopScenario.js";
 
 //
 // Scenario groups
@@ -357,7 +358,7 @@ export type VisualTestConfiguration = {
      * Specify a delay in milliseconds before taking the screenshot.
      * This is useful when charts need time for animations, legend positioning, or font loading.
      */
-    delay?: number;
+    delay?: IDelay;
 
     /**
      * Specify custom viewports for the browser window during screenshot capture.

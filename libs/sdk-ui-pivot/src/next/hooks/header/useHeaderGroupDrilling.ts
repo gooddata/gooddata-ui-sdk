@@ -27,7 +27,7 @@ export function useHeaderGroupDrilling(params: AgGridHeaderGroupParams) {
      * Check if the header group is drillable (memoized)
      */
     const isDrillable = useMemo(() => {
-        if (!drillableItems.length || !currentDataView) {
+        if (!drillableItems || !currentDataView) {
             return false;
         }
 

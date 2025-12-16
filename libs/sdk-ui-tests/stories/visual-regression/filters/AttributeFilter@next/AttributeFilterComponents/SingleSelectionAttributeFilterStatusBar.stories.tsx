@@ -6,7 +6,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { SingleSelectionAttributeFilterStatusBar } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
-import { type IStoryParameters } from "../../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 
 const elements = [
     { title: "PhoenixSoft", uri: "/uri1" },
@@ -54,5 +54,5 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

@@ -387,51 +387,51 @@ const DialogExamples = memo(function DialogExamples() {
 });
 
 // const confirmDialogWithWarningProps = {
-//     readySelector: ".screenshot-target",
+//     readySelector: { selector: ".screenshot-target", state: State.Attached },
 //     clickSelector: "#confirm-dialog-with-warning-example button",
-//     postInteractionWait: 200,
+//     postInteractionWait: { delay: 200 },
 // };
 
 // const confirmDialogWithProgressProps = {
-//     readySelector: ".screenshot-target",
+//     readySelector: { selector: ".screenshot-target", state: State.Attached },
 //     clickSelector: "#confirm-dialog-with-progress-example button",
-//     postInteractionWait: 200,
+//     postInteractionWait: { delay: 200 },
 //     misMatchThreshold: 0.05,
 // };
 
 // const exportDialogProps = {
-//     readySelector: ".screenshot-target",
+//     readySelector: { selector: ".screenshot-target", state: State.Attached },
 //     clickSelector: "#export-dialog-example button",
-//     postInteractionWait: 200,
+//     postInteractionWait: { delay: 200 },
 // };
 
 // flaky, removed
 // const communityEditionDialogProps = {
 //     clickSelector: "#community-dialog-example button",
-//     postInteractionWait: 200,
+//     postInteractionWait: { delay: 200 },
 // };
 
 // const stylingEditorDialogProps: INeobackstopScenarioConfig = {
-//     readySelector: ".screenshot-target",
+//     readySelector: { selector: ".screenshot-target", state: State.Attached },
 //     clickSelector: "#styling-editor-dialog-example button",
-//     postInteractionWait: 200,
+//     postInteractionWait: { delay: 200 },
 // };
 
 // const screenshotProps: INeobackstopConfig = {
 //     dialog: {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelector: "#dialog-example button",
-//         postInteractionWait: 200,
+//         postInteractionWait: { delay: 200 },
 //     },
 //     "confirm-dialog": {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelector: "#confirm-dialog-example button",
-//         postInteractionWait: 200,
+//         postInteractionWait: { delay: 200 },
 //     },
 //     "confirm-dialog-with-no-submit-button": {
-//         readySelector: ".screenshot-target",
+//         readySelector: { selector: ".screenshot-target", state: State.Attached },
 //         clickSelector: "#confirm-dialog-with-no-submit-button-example button",
-//         postInteractionWait: 200,
+//         postInteractionWait: { delay: 200 },
 //     },
 //     // "confirm-dialog-with-warning": confirmDialogWithWarningProps,
 //     "confirm-dialog-with-progress": confirmDialogWithProgressProps,

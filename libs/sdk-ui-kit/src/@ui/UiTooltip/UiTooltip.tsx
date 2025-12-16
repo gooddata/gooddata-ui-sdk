@@ -1,19 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import {
     FloatingArrow,
     FloatingPortal,
     type Middleware,
-    arrow,
-    autoUpdate,
-    flip,
-    offset,
     safePolygon,
     useClick,
     useDismiss,
-    useFloating,
     useFocus,
     useHover,
     useInteractions,
@@ -22,17 +17,17 @@ import {
 import { ConditionalScopedThemeProvider, useIsScopeThemed, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
-import { type UiTooltipProps } from "./types.js";
+import { type Dimensions, type UiTooltipProps } from "./types.js";
 import {
     computeArrowOffset,
     computeTooltipShift,
     getDimensionsFromRect,
-    getDimensionsFromRef,
     getFlipFallbackOrder,
     getOppositeBasicPlacement,
 } from "./utils.js";
-import { useOverlayZIndexWithRegister } from "../../Overlay/index.js";
 import { bem } from "../@utils/bem.js";
+import { FLOATING_ELEMENT_DATA_ATTR } from "../hooks/useCloseOnOutsideClick.js";
+import { useFloatingPosition } from "../UiFloatingElement/useFloatingPosition.js";
 
 const { b, e } = bem("gd-ui-kit-tooltip");
 
@@ -69,9 +64,7 @@ export function UiTooltip({
     const isScopeThemed = useIsScopeThemed();
     const theme = isScopeThemed ? themeFromContext : undefined;
 
-    const zIndex = useOverlayZIndexWithRegister();
-
-    const handleOpen = useCallback(
+    const handleOpenChange = useCallback(
         (open: boolean) => {
             setIsOpen(open);
             if (open) {
@@ -88,49 +81,58 @@ export function UiTooltip({
         onClose?.();
     }, [onClose]);
 
-    const customShiftMiddleware: Middleware = {
-        name: "customShift",
-        fn(args) {
-            if (behaviour === "popover") {
-                return {};
-            }
-            const { x, y, rects, middlewareData } = args;
-            const currentFloatingDimensions = getDimensionsFromRect(rects?.floating);
-            const enable = !middlewareData?.flip?.index;
-            const shift = computeTooltipShift(arrowPlacement, currentFloatingDimensions, enable, theme);
-            return {
-                x: shift.x ? x + shift.x : x,
-                y: shift.y ? y + shift.y : y,
-            };
-        },
-    };
+    // Custom shift middleware for tooltip arrow positioning
+    const customShiftMiddleware: Middleware = useMemo(
+        () => ({
+            name: "customShift",
+            fn(args) {
+                if (behaviour === "popover") {
+                    return {};
+                }
+                const { x, y, rects, middlewareData } = args;
+                const currentFloatingDimensions = getDimensionsFromRect(rects?.floating);
+                const enable = !middlewareData?.["flip"]?.index;
+                const shift = computeTooltipShift(arrowPlacement, currentFloatingDimensions, enable, theme);
+                return {
+                    x: shift.x ? x + shift.x : x,
+                    y: shift.y ? y + shift.y : y,
+                };
+            },
+        }),
+        [arrowPlacement, behaviour, theme],
+    );
 
-    const { refs, floatingStyles, context, middlewareData } = useFloating({
-        open: isOpen,
-        onOpenChange: handleOpen,
+    // Use shared floating position hook
+    const { refs, floatingStyles, zIndex, context, middlewareData } = useFloatingPosition({
+        isOpen,
+        onOpenChange: handleOpenChange,
         placement: getOppositeBasicPlacement(arrowPlacement, behaviour),
-        whileElementsMounted: autoUpdate,
-        middleware: [
-            offset(offsetProp ?? ARROW_HEIGHT),
-            customShiftMiddleware,
-            ...(optimalPlacement
-                ? [
-                      flip({
-                          fallbackPlacements: getFlipFallbackOrder(arrowPlacement, behaviour),
-                          fallbackStrategy: "initialPlacement",
-                      }),
-                  ]
-                : []),
-            arrow({
-                element: arrowRef,
-            }),
-        ],
+        offset: offsetProp ?? ARROW_HEIGHT,
+        autoFlip: optimalPlacement,
+        fallbackPlacements: optimalPlacement ? getFlipFallbackOrder(arrowPlacement, behaviour) : undefined,
+        arrowRef: showArrow ? arrowRef : undefined,
+        customMiddleware: [customShiftMiddleware],
     });
 
-    const triggerDimensions = getDimensionsFromRef(refs.reference);
-    const floatingDimensions = getDimensionsFromRef(refs.floating);
+    // Get dimensions for width calculation
+    const triggerDimensions = useMemo(() => {
+        const rect = refs.reference.current?.getBoundingClientRect?.();
+        return getDimensionsFromRect(rect ?? null);
+    }, [refs.reference, isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // trigger events
+    // Use state + layoutEffect to get dimensions AFTER DOM paints
+    // This fixes arrow positioning for *-end placements on initial render
+    const [floatingDimensions, setFloatingDimensions] = useState<Dimensions>({ width: 0, height: 0 });
+    useLayoutEffect(() => {
+        if (isOpen && refs.floating.current) {
+            const rect = refs.floating.current.getBoundingClientRect();
+            setFloatingDimensions(getDimensionsFromRect(rect));
+        } else {
+            setFloatingDimensions({ width: 0, height: 0 });
+        }
+    }, [isOpen, refs.floating]);
+
+    // Trigger events using floating-ui interactions (handles hover, focus, click)
     const hover = useHover(context, {
         enabled: triggerBy.includes("hover"),
         move: false,
@@ -140,6 +142,7 @@ export function UiTooltip({
             close: hoverCloseDelay,
         },
     });
+
     const focus = useFocus(context, {
         enabled: triggerBy.includes("focus"),
     });
@@ -148,7 +151,7 @@ export function UiTooltip({
         enabled: triggerBy.includes("click"),
     });
 
-    // close on escape: keep interactions array length stable between renders
+    // Close on escape/outside click
     const dismiss = useDismiss(context, { enabled: isOpenProp === undefined });
     const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, hover, focus, click]);
 
@@ -186,6 +189,7 @@ export function UiTooltip({
                                 ...floatingStyles,
                                 width: width === "same-as-anchor" ? triggerDimensions?.width : width,
                             }}
+                            {...{ [FLOATING_ELEMENT_DATA_ATTR]: true }}
                             aria-label={accessibilityConfig?.ariaLabel}
                             aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                             aria-describedby={accessibilityConfig?.ariaDescribedBy}
@@ -202,7 +206,7 @@ export function UiTooltip({
                                     staticOffset={computeArrowOffset(
                                         arrowPlacement,
                                         floatingDimensions,
-                                        !middlewareData?.flip?.index,
+                                        !middlewareData?.["flip"]?.index,
                                         theme,
                                     )}
                                     className={e("arrow")}

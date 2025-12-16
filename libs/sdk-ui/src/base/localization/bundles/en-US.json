@@ -3271,6 +3271,14 @@
         "value": "Show all tabs",
         "comment": "Accessibility label for the overflow dropdown button in tabs component. Used by screen readers to describe the action of opening a dropdown with all available tabs."
     },
+    "tabs.allTabsListLabel.withActions": {
+        "value": "List of all tabs. Use the right arrow key to move to the tab actions menu.",
+        "comment": "Screen reader description for the list of all tabs. Includes the possible actions."
+    },
+    "tabs.allTabsListLabel.noActions": {
+        "value": "List of all tabs",
+        "comment": "Screen reader description for the list of all tabs when there are no actions available."
+    },
     "messages.accessibility.noMessages": {
         "value": "No messages",
         "comment": "Accessibility label for the empty state of the message list. Used by screen readers."

@@ -38,7 +38,7 @@ describe("validate structure tests", () => {
                     test: 2,
                 } as any,
             },
-            `Structure of localizations is not correct, see: [{"value":"This is value","comment":"This is comment","translate":false,"test":2}]`,
+            `Structure of localizations is not correct`,
         ],
         [
             "basic format with missing comment",
@@ -47,7 +47,7 @@ describe("validate structure tests", () => {
                     value: "This is value",
                 } as any,
             },
-            `Structure of localizations is not correct, see: [{"value":"This is value"}]`,
+            `Structure of localizations is not correct`,
         ],
         [
             "basic format with missing value",
@@ -56,7 +56,7 @@ describe("validate structure tests", () => {
                     comment: "",
                 } as any,
             },
-            `Structure of localizations is not correct, see: [{"comment":""}]`,
+            `Structure of localizations is not correct`,
         ],
     ];
 
@@ -73,5 +73,18 @@ describe("validate structure tests", () => {
         } else {
             await expect(getStructureCheck([["en-US.json", structure]])).resolves.not.toThrow();
         }
+    });
+
+    it("includes file in error message", async () => {
+        const structure = {
+            "message.id": {
+                value: "This is value",
+            } as any,
+        };
+        await expect(
+            suppressConsole(() => getStructureCheck([["/path/to/en-US.json", structure]]), "error", [
+                { type: "startsWith", value: "✘" },
+            ]),
+        ).rejects.toThrowError(/File: \/path\/to\/en-US\.json/);
     });
 });

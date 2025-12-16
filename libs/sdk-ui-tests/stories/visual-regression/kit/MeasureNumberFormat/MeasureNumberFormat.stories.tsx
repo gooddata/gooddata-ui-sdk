@@ -11,7 +11,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
@@ -112,13 +112,13 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<MeasureNumberFormatTest />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 
 /*
@@ -126,10 +126,10 @@ Themed.parameters = {
             closed: {},
             opened: {
                 clickSelector: ".s-measure-number-format-button",
-                postInteractionWait: 2000 },
+                postInteractionWait: { delay: 2000 } },
             "custom-editor": {
                 clickSelectors: [".s-measure-number-format-button", ".s-format-preset-customFormat"],
-                postInteractionWait: 2000,
+                postInteractionWait: { delay: 2000 },
             },
             "custom-editor-extended-preview": {
                 clickSelectors: [
@@ -137,7 +137,7 @@ Themed.parameters = {
                     ".s-format-preset-customFormat",
                     ".s-custom-format-dialog-extended-preview-button",
                 ],
-                postInteractionWait: 2000,
+                postInteractionWait: { delay: 2000 },
             },
             "custom-editor-templates": {
                 clickSelectors: [
@@ -145,7 +145,7 @@ Themed.parameters = {
                     ".s-format-preset-customFormat",
                     ".s-measure-format-templates-toggle-button",
                 ],
-                postInteractionWait: 2000,
+                postInteractionWait: { delay: 2000 },
             },
             "custom-editor-templates-selected": {
                 clickSelectors: [
@@ -154,7 +154,7 @@ Themed.parameters = {
                     ".s-measure-format-templates-toggle-button",
                     ".s-measure-format-template-decimal_number",
                 ],
-                postInteractionWait: 2000,
+                postInteractionWait: { delay: 2000 },
             },
         },
     );*/

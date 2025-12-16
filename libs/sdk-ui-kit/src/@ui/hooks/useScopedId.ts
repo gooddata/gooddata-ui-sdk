@@ -21,7 +21,7 @@ export const useScopedIdStoreValue = <T>(getIdFromItem: (item: T) => string) => 
         [containerId, getIdFromItem],
     );
 
-    return { makeId, containerId };
+    return { makeId, containerId } satisfies IScopedIdStoreValue;
 };
 
 /**
@@ -51,4 +51,12 @@ export function useScopedIdOptional<T>(item?: T, specifier?: string) {
 /**
  * @internal
  */
-export const ScopedIdStore = createContextStore<ReturnType<typeof useScopedIdStoreValue>>("ScopedIdStore");
+export interface IScopedIdStoreValue {
+    makeId: (params: { item: any; specifier?: string }) => string;
+    containerId: string;
+}
+
+/**
+ * @internal
+ */
+export const ScopedIdStore = createContextStore<IScopedIdStoreValue>("ScopedIdStore");

@@ -8,6 +8,7 @@ import {
     type ITableAttributeColumnDefinition,
     type ITableDataValue,
     emptyHeaderTitleFromIntl,
+    isTableAttributeHeaderValue,
     isTableGrandTotalHeaderValue,
     isTableGrandTotalMeasureValue,
     isTableGrandTotalSubtotalMeasureValue,
@@ -51,6 +52,19 @@ export function extractFormattedValue(
     }
 
     return cell.formattedValue;
+}
+
+/**
+ * Extracts attribute URI from cell data.
+ *
+ * @internal
+ */
+export function extractAttributeUri(cellData: ITableDataValue | undefined): string | null {
+    if (!cellData || !isTableAttributeHeaderValue(cellData)) {
+        return null;
+    }
+
+    return cellData.value.attributeHeaderItem.uri;
 }
 
 /**
@@ -98,7 +112,12 @@ function translateTotalValue(totalType: TotalType | null, intl: IntlShape) {
  * Determines if an attribute should be grouped (not rendered) based on hierarchical comparison.
  *
  * For hierarchical attributes, we only group if ALL parent attributes (attributes with lower columnIndex)
- * have the same values in both current and previous rows.
+ * have the same URIs AND labels in both current and previous rows.
+ *
+ * @remarks
+ * Uses both URI and label comparison. Both must match for grouping to occur.
+ * This ensures that two different attribute elements with the same label are NOT grouped together,
+ * and also handles cases where the same element might have different formatted labels.
  *
  * @param params - Current cell renderer params
  * @param previousRow - Previous row data
@@ -118,14 +137,20 @@ export function shouldGroupAttribute(
         return false;
     }
 
-    // If all parent attributes match, check if the current attribute value matches
-    const currentValue = params.value;
-    const previousValue = extractFormattedValue(
-        previousRow,
-        columnDefinition.attributeDescriptor.attributeHeader.localIdentifier,
-    );
+    // If all parent attributes match, check if the current attribute URI matches
+    const colId = columnDefinition.attributeDescriptor.attributeHeader.localIdentifier;
+    const currentCellData = data?.cellDataByColId?.[colId];
+    const previousCellData = previousRow?.data?.cellDataByColId?.[colId];
 
-    return currentValue === previousValue && currentValue !== undefined && currentValue !== "";
+    const currentUri = extractAttributeUri(currentCellData);
+    const previousUri = extractAttributeUri(previousCellData);
+
+    // Don't group if either URI is null (e.g., total headers don't have URIs)
+    if (currentUri === null || previousUri === null) {
+        return false;
+    }
+
+    return currentUri === previousUri;
 }
 
 /**
@@ -143,7 +168,7 @@ export function getAttributeColIds(rowData?: AgGridRowData): string[] {
 
 /**
  * Checks whether all parent attributes (with lower columnIndex than currentColumnIndex)
- * have identical formatted values in both rows.
+ * have identical URIs in both rows.
  *
  * @internal
  */
@@ -170,10 +195,18 @@ export function parentsMatch(
             continue;
         }
 
-        const currentValue = cellData.formattedValue;
-        const compareValue = compareRow?.cellDataByColId?.[attrColId]?.formattedValue;
+        const compareCellData = compareRow?.cellDataByColId?.[attrColId];
 
-        if (currentValue !== compareValue) {
+        // Compare by URI only (don't match if either is null)
+        const currentUri = extractAttributeUri(cellData);
+        const compareUri = extractAttributeUri(compareCellData);
+
+        // If either URI is null, treat as not matching (don't group)
+        if (currentUri === null || compareUri === null) {
+            return false;
+        }
+
+        if (currentUri !== compareUri) {
             return false;
         }
     }

@@ -8,7 +8,11 @@ import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { EmbedInsightDialogBase, type IReactOptions, type IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
 
 import { code } from "./CodeMock.js";
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import {
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
+    State,
+} from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 function EmbedInsightDialogBaseExamples() {
@@ -160,7 +164,7 @@ export default {
 };
 
 const screenshotConfig: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
     clickSelector: "h4",
 };
 

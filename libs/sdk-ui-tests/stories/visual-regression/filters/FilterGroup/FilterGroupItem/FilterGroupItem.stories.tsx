@@ -3,6 +3,8 @@
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { FilterGroupItem as FilterGroupItemComponent, UiBadge, UiIcon } from "@gooddata/sdk-ui-kit";
 
+import { State } from "../../../../_infra/backstopScenario.js";
+
 const wrapperStyle = {
     width: 250,
     height: 800,
@@ -65,5 +67,5 @@ export function Default() {
 }
 Default.parameters = {
     kind: "default",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 };

@@ -9,7 +9,7 @@ import {
     BarChartWithTwoMeasuresAndTwoViewBy,
 } from "../../../../scenarios/charts/barChart/base.js";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
@@ -192,16 +192,23 @@ export function ResponsivePopupLegend() {
 ResponsivePopupLegend.parameters = {
     kind: "responsive popup legend",
     screenshots: {
-        closed: { readySelector: ".screenshot-ready-wrapper-done" },
+        closed: { readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached } },
         menuLegendClick: {
-            readySelector: ".screenshot-ready-wrapper-done",
+            readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
             clickSelector: ".s-legend-popup-icon",
-            postInteractionWait: 300,
+            delay: {
+                postOperation: 300,
+            },
         },
         paginatorClick: {
-            readySelector: ".screenshot-ready-wrapper-done",
-            clickSelectors: [".s-legend-popup-icon", 200, ".gd-icon-chevron-right"],
-            postInteractionWait: 300,
+            readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+            clickSelectors: [
+                { selector: ".s-legend-popup-icon", waitAfter: 200 },
+                { selector: ".gd-icon-chevron-right" },
+            ],
+            delay: {
+                postOperation: 300,
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -215,11 +222,11 @@ export const ThemedPopupLegend = () =>
 ThemedPopupLegend.parameters = {
     kind: "themed popup legend",
     screenshots: {
-        closed: { readySelector: ".screenshot-ready-wrapper-done" },
+        closed: { readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached } },
         menuLegendClick: {
-            readySelector: ".screenshot-ready-wrapper-done",
+            readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
             clickSelector: ".s-legend-popup-icon",
-            postInteractionWait: 300,
+            postInteractionWait: { delay: 300 },
         },
     },
 } satisfies IStoryParameters;
@@ -233,7 +240,7 @@ export function HidingOfHierarchicalAxisLabels() {
 }
 HidingOfHierarchicalAxisLabels.parameters = {
     kind: "hiding of hierarchical axis labels",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
+    screenshot: { readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export function ZoomingEnabled() {
@@ -251,7 +258,7 @@ export function BackplateDataLabels() {
 
 BackplateDataLabels.parameters = {
     kind: "backplate data labels",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
+    screenshot: { readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached } },
 } satisfies IStoryParameters;
 
 export const ThemedDataLabels = () =>
@@ -264,5 +271,5 @@ export const ThemedDataLabels = () =>
     );
 ThemedDataLabels.parameters = {
     kind: "themed data labels",
-    screenshot: { readySelector: ".screenshot-ready-wrapper-done" },
+    screenshot: { readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached } },
 } satisfies IStoryParameters;

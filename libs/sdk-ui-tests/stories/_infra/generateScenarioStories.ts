@@ -4,7 +4,9 @@ import { mkdirSync, rmSync, writeFileSync } from "fs";
 
 import { groupBy, sortBy } from "lodash-es";
 
+import { type INeobackstopScenarioConfig, State } from "./backstopScenario.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
+import { replaceStateInJson } from "./stateReplacer.js";
 import { allScenarios } from "../../scenarios/index.js";
 import { type ScenarioGroup } from "../../src/index.js";
 
@@ -96,15 +98,43 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
 
                 const exportName = generateExportName(group.testConfig.visual.groupUnder);
 
-                // Build screenshot config with delay and/or viewports and/or reloadAfterReady and/or misMatchThreshold if specified
-                let screenshotConfig = "true";
-                if (
-                    group.testConfig.visual.delay !== undefined ||
-                    group.testConfig.visual.viewports ||
-                    group.testConfig.visual.reloadAfterReady ||
-                    group.testConfig.visual.misMatchThreshold !== undefined
-                ) {
-                    const config: any = {};
+                // Build screenshot config - always include readySelector for "01" stories
+                const config: INeobackstopScenarioConfig = {
+                    readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+                };
+                if (group.testConfig.visual.delay !== undefined) {
+                    config.delay = group.testConfig.visual.delay;
+                }
+                if (group.testConfig.visual.viewports) {
+                    config.viewports = group.testConfig.visual.viewports;
+                }
+                if (group.testConfig.visual.reloadAfterReady) {
+                    config.reloadAfterReady = group.testConfig.visual.reloadAfterReady;
+                }
+                if (group.testConfig.visual.misMatchThreshold !== undefined) {
+                    config.misMatchThreshold = group.testConfig.visual.misMatchThreshold;
+                }
+
+                storyExports.push(`export const ${exportName} = () => groupedStory(getScenariosGroupByIndexes(${groupsIndex}, ${groupIndex}), ${JSON.stringify(
+                    wrapperStyle,
+                    null,
+                    4,
+                )})();
+${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: ${group.testConfig.visual.skip ? "undefined" : replaceStateInJson(JSON.stringify(config))} } satisfies IStoryParameters;`);
+
+                // we need an additional import
+                helperFileNamedImports.push("groupedStory");
+            } else {
+                // otherwise there will be story-per-scenario
+                const scenarios = visualOnly.asScenarioDescAndScenario();
+
+                scenarios.forEach(([name]) => {
+                    const exportName = generateExportName(name);
+
+                    // Build screenshot config - always include readySelector for "01" stories
+                    const config: INeobackstopScenarioConfig = {
+                        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
+                    };
                     if (group.testConfig.visual.delay !== undefined) {
                         config.delay = group.testConfig.visual.delay;
                     }
@@ -116,48 +146,6 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
                     }
                     if (group.testConfig.visual.misMatchThreshold !== undefined) {
                         config.misMatchThreshold = group.testConfig.visual.misMatchThreshold;
-                    }
-                    screenshotConfig = JSON.stringify(config);
-                }
-
-                storyExports.push(`export const ${exportName} = () => groupedStory(getScenariosGroupByIndexes(${groupsIndex}, ${groupIndex}), ${JSON.stringify(
-                    wrapperStyle,
-                    null,
-                    4,
-                )})();
-${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} } satisfies IStoryParameters;`);
-
-                // we need an additional import
-                helperFileNamedImports.push("groupedStory");
-            } else {
-                // otherwise there will be story-per-scenario
-                const scenarios = visualOnly.asScenarioDescAndScenario();
-
-                scenarios.forEach(([name]) => {
-                    const exportName = generateExportName(name);
-
-                    // Build screenshot config with delay and/or viewports and/or reloadAfterReady and/or misMatchThreshold if specified
-                    let screenshotConfig = "true";
-                    if (
-                        group.testConfig.visual.delay !== undefined ||
-                        group.testConfig.visual.viewports ||
-                        group.testConfig.visual.reloadAfterReady ||
-                        group.testConfig.visual.misMatchThreshold !== undefined
-                    ) {
-                        const config: any = {};
-                        if (group.testConfig.visual.delay !== undefined) {
-                            config.delay = group.testConfig.visual.delay;
-                        }
-                        if (group.testConfig.visual.viewports) {
-                            config.viewports = group.testConfig.visual.viewports;
-                        }
-                        if (group.testConfig.visual.reloadAfterReady) {
-                            config.reloadAfterReady = group.testConfig.visual.reloadAfterReady;
-                        }
-                        if (group.testConfig.visual.misMatchThreshold !== undefined) {
-                            config.misMatchThreshold = group.testConfig.visual.misMatchThreshold;
-                        }
-                        screenshotConfig = JSON.stringify(config);
                     }
 
                     storyExports.push(`export const ${exportName} = () => (() => {
@@ -184,7 +172,7 @@ ${exportName}.parameters = { kind: "${group.testConfig.visual.groupUnder}", scre
         scenario.tags,
     )();
 })();
-${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.visual.skip ? "undefined" : screenshotConfig} } satisfies IStoryParameters;`);
+${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.visual.skip ? "undefined" : replaceStateInJson(JSON.stringify(config))} } satisfies IStoryParameters;`);
                 });
 
                 // we need additional imports
@@ -203,7 +191,7 @@ ${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.vis
             },
             {
                 source: `${pathToRoot}stories/_infra/backstopScenario.js`,
-                namedImports: ["IStoryParameters"],
+                namedImports: ["IStoryParameters", "State"],
             },
         ]);
 

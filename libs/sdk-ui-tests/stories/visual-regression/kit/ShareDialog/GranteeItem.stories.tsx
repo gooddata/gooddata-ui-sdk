@@ -27,7 +27,7 @@ import {
     userInactive,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { type INeobackstopConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "../styles/goodstrap.scss";
 
@@ -160,20 +160,23 @@ function GranteeItemExamples(): ReactElement {
 const testItemSelector = `.${getGranteeItemTestId(user)}`;
 
 const scenarios: INeobackstopConfig = {
-    normal: { readySelector: ".screenshot-target" },
+    normal: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     hover: {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         hoverSelector: testItemSelector,
-        postInteractionWait: 100,
+        postInteractionWait: { delay: 100 },
     },
     "hover-delete": {
-        readySelector: ".screenshot-target",
-        hoverSelectors: [testItemSelector, 100, `${testItemSelector} .gd-grantee-icon-trash`, 100],
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        hoverSelectors: [
+            { selector: testItemSelector },
+            { selector: `${testItemSelector} .gd-grantee-icon-trash` },
+        ],
     },
     "click-select": {
-        readySelector: ".screenshot-target",
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-granular-permission-button",
-        postInteractionWait: 200,
+        postInteractionWait: { delay: 200 },
     },
 };
 

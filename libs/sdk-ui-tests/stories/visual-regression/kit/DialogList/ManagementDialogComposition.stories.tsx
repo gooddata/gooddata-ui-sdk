@@ -7,7 +7,11 @@ import { action } from "storybook/actions";
 import { ConfirmDialogBase, ContentDivider, DialogList, DialogListHeader } from "@gooddata/sdk-ui-kit";
 
 import { itemsMock as items } from "./itemsMock.js";
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import {
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
+    State,
+} from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
@@ -205,7 +209,7 @@ export default {
 };
 
 const screenshotConfig: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
     clickSelector: ".screenshot-target",
 };
 

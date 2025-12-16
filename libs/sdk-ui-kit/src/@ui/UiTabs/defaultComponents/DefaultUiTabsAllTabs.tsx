@@ -4,7 +4,6 @@ import { type RefObject, useCallback, useEffect, useState } from "react";
 
 import { type EmptyObject } from "@gooddata/util";
 
-import { Dropdown } from "../../../Dropdown/index.js";
 import { useMediaQuery } from "../../../responsive/index.js";
 import { useFocusWithinContainer } from "../../hooks/useFocusWithinContainer.js";
 import {
@@ -12,6 +11,7 @@ import {
     useListWithActionsKeyboardNavigation,
 } from "../../hooks/useListWithActionsKeyboardNavigation.js";
 import { ScopedIdStore, useScopedIdStoreValue } from "../../hooks/useScopedId.js";
+import { UiDropdown } from "../../UiDropdown/UiDropdown.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { type IUiTab, type IUiTabComponentProps } from "../types.js";
@@ -87,6 +87,17 @@ export function DefaultUiTabsAllTabs<
         }, 50);
     });
 
+    const handleOpenChange = useCallback((newIsOpen: boolean) => {
+        setIsOpen(newIsOpen);
+    }, []);
+
+    const handleOpen = useCallback(() => {
+        const selectedTabIndex = tabs.findIndex((t) => t.id === selectedTabId);
+
+        setFocusedIndex(selectedTabIndex >= 0 ? selectedTabIndex : 0);
+        setFocusedAction(SELECT_ITEM_ACTION);
+    }, [tabs, selectedTabId, setFocusedIndex, setFocusedAction]);
+
     if (!isOverflowing) {
         return null;
     }
@@ -94,56 +105,51 @@ export function DefaultUiTabsAllTabs<
     return (
         <div className={UiTabsBem.e("dropdown-wrapper", { mobile: isMobile })}>
             <div className={UiTabsBem.e("dropdown", { mobile: isMobile })}>
-                <Dropdown
-                    renderButton={({ toggleDropdown, isOpen, buttonRef, ariaAttributes }) => (
+                <UiDropdown
+                    renderButton={({ toggleDropdown, isOpen, ref, ariaAttributes }) => (
                         <AllTabsButton
                             onClick={toggleDropdown}
                             isOpen={isOpen}
-                            ref={buttonRef as RefObject<HTMLElement>}
+                            ref={ref}
                             ariaAttributes={ariaAttributes}
                         />
                     )}
-                    renderBody={({ ariaAttributes }) => (
-                        <ScopedIdStore value={scopedIdStoreValue as any}>
-                            <div
-                                className={UiTabsBem.e("tab-list", { mobile: isMobile })}
-                                ref={containerRef as RefObject<HTMLDivElement>}
-                                onKeyDown={onKeyboardNavigation}
-                                tabIndex={-1}
-                                aria-label={"TODO"}
-                                aria-rowcount={tabs.length}
-                                {...ariaAttributes}
-                                role="grid"
-                                id={scopedIdStoreValue.containerId}
-                            >
-                                {tabs.map((item, index) => (
-                                    <TabListItem
-                                        key={item.id}
-                                        item={item}
-                                        index={index}
-                                        focusedAction={item === focusedItem ? focusedAction : undefined}
-                                        onApply={handleDropdownSelect(item)}
-                                    />
-                                ))}
-                            </div>
-                        </ScopedIdStore>
-                    )}
+                    renderBody={({ ariaAttributes }) => {
+                        return (
+                            <ScopedIdStore value={scopedIdStoreValue}>
+                                <div
+                                    className={UiTabsBem.e("tab-list", { mobile: isMobile })}
+                                    ref={containerRef as RefObject<HTMLDivElement>}
+                                    onKeyDown={onKeyboardNavigation}
+                                    tabIndex={-1}
+                                    {...ariaAttributes}
+                                    role="grid"
+                                    aria-rowcount={tabs.length}
+                                >
+                                    {tabs.map((item, index) => (
+                                        <TabListItem
+                                            key={item.id}
+                                            item={item}
+                                            index={index}
+                                            focusedAction={item === focusedItem ? focusedAction : undefined}
+                                            onApply={handleDropdownSelect(item)}
+                                        />
+                                    ))}
+                                </div>
+                            </ScopedIdStore>
+                        );
+                    }}
                     autofocusOnOpen
-                    shouldTrapFocus
+                    enableFocusTrap
                     alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
                     closeOnEscape
                     accessibilityConfig={{
                         triggerRole: "button",
                         popupRole: "listbox",
                     }}
-                    onToggle={(desiredState) => {
-                        setIsOpen((wasOpen) => desiredState ?? !wasOpen);
-                    }}
+                    onOpenChange={handleOpenChange}
                     isOpen={isOpen}
-                    onOpenStateChanged={() => {
-                        setFocusedIndex(tabs.findIndex((t) => t.id === selectedTabId) ?? 0);
-                        setFocusedAction(SELECT_ITEM_ACTION);
-                    }}
+                    onOpen={handleOpen}
                 />
             </div>
         </div>
@@ -211,6 +217,7 @@ function TabListItem<
                         focused: isFocused,
                     })}
                     role={"gridcell"}
+                    id={makeId?.({ item, specifier: "actions" })}
                 >
                     <TabActions
                         tab={item}

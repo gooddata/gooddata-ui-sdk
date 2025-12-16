@@ -6,4 +6,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     all: { id: "tabs.all" },
     actions: { id: "tabs.actions" },
     showAllTabs: { id: "tabs.showAllTabs" },
+    allTabsListLabelWithActions: { id: "tabs.allTabsListLabel.withActions" },
+    allTabsListLabelNoActions: { id: "tabs.allTabsListLabel.noActions" },
 });

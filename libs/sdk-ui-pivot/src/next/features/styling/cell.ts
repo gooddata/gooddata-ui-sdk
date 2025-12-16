@@ -35,7 +35,7 @@ import { CELL_CLASSNAME, e } from "./bem.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { type CellTypes } from "../../types/cellRendering.js";
 import { type AgGridRowData } from "../../types/internal.js";
-import { getAttributeColIds, parentsMatch } from "../columns/shared.js";
+import { extractAttributeUri, getAttributeColIds, parentsMatch } from "../columns/shared.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
 
 /**
@@ -356,26 +356,55 @@ const isAttributeGroupedCell = (params: CommonCellParams, colId: string): boolea
         return false;
     }
 
-    const currentRow = data?.cellDataByColId?.[colId];
+    const currentCellData = data?.cellDataByColId?.[colId];
     if (
-        !currentRow ||
-        currentRow.type !== "attributeHeader" ||
-        currentRow.columnDefinition.type !== "attribute"
+        !currentCellData ||
+        currentCellData.type !== "attributeHeader" ||
+        currentCellData.columnDefinition.type !== "attribute"
     ) {
         return false;
     }
 
-    const currentColumnIndex = currentRow.columnDefinition.columnIndex;
+    const currentColumnIndex = currentCellData.columnDefinition.columnIndex;
 
     // Ensure all parent attributes (lower columnIndex) match between current and previous rows
     if (!parentsMatch(data, previousRow.data, currentColumnIndex)) {
         return false;
     }
 
-    const currentValue = currentRow.formattedValue;
-    const previousValue = previousRow.data.cellDataByColId?.[colId]?.formattedValue;
+    // Compare by URI only (don't group if either is null, e.g., total headers)
+    const previousCellData = previousRow.data.cellDataByColId?.[colId];
 
-    return currentValue === previousValue && currentValue !== undefined && currentValue !== "";
+    const currentUri = extractAttributeUri(currentCellData);
+    const previousUri = extractAttributeUri(previousCellData);
+
+    if (currentUri === null || previousUri === null) {
+        return false;
+    }
+
+    return currentUri === previousUri;
+};
+
+/**
+ * Helper to check if two cells match by URI.
+ * Returns false if either URI is null (e.g., total headers don't have URIs).
+ */
+const cellsMatchByUri = (
+    currentCellData: ITableDataValue | undefined,
+    compareCellData: ITableDataValue | undefined,
+): boolean => {
+    if (!currentCellData || !compareCellData) {
+        return false;
+    }
+
+    const currentUri = extractAttributeUri(currentCellData);
+    const compareUri = extractAttributeUri(compareCellData);
+
+    if (currentUri === null || compareUri === null) {
+        return false;
+    }
+
+    return currentUri === compareUri;
 };
 
 const isRowFirstOfGroup = (params: CommonCellParams, attributeColId: string): boolean => {
@@ -386,41 +415,34 @@ const isRowFirstOfGroup = (params: CommonCellParams, attributeColId: string): bo
         return false;
     }
 
-    const currentRow = data?.cellDataByColId?.[attributeColId];
-    if (!currentRow || currentRow.columnDefinition.type !== "attribute") {
+    const currentCellData = data?.cellDataByColId?.[attributeColId];
+    if (!currentCellData || currentCellData.columnDefinition.type !== "attribute") {
         return false;
     }
 
-    const currentValue = currentRow.formattedValue;
-    if (currentValue === undefined || currentValue === "") {
-        return false;
-    }
+    const currentColumnIndex = currentCellData.columnDefinition.columnIndex;
 
-    const currentColumnIndex = currentRow.columnDefinition.columnIndex;
-
-    // Check if the next row has the same attribute value
+    // Check if the next row has the same attribute (by URI)
     const nextRow = api.getDisplayedRowAtIndex(rowIndex + 1);
     if (!nextRow?.data) {
         return false;
     }
 
-    const nextRowData = nextRow.data.cellDataByColId?.[attributeColId];
-    if (!nextRowData || nextRowData.columnDefinition.type !== "attribute") {
+    const nextCellData = nextRow.data.cellDataByColId?.[attributeColId];
+    if (!nextCellData || nextCellData.columnDefinition.type !== "attribute") {
         return false;
     }
 
-    const nextValue = nextRowData.formattedValue;
-
-    // If current value equals next value, check if this is the first occurrence
-    if (currentValue === nextValue) {
-        // Check if all parent attributes have the same values in current and next rows
+    // If current matches next (by URI), check if this is the first occurrence
+    if (cellsMatchByUri(currentCellData, nextCellData)) {
+        // Check if all parent attributes have the same URIs in current and next rows
         if (!parentsMatch(data, nextRow.data, currentColumnIndex)) {
             return false;
         }
 
-        // Check if the previous row has a different value (making this the first of the group)
+        // Check if the previous row has a different URI (making this the first of the group)
         if (rowIndex === 0) {
-            // First row is always the first of its group if it has the same value as next row
+            // First row is always the first of its group if it has the same URI as next row
             return true;
         }
 
@@ -429,15 +451,13 @@ const isRowFirstOfGroup = (params: CommonCellParams, attributeColId: string): bo
             return true;
         }
 
-        const previousRowData = previousRow.data.cellDataByColId?.[attributeColId];
-        if (!previousRowData || previousRowData.columnDefinition.type !== "attribute") {
+        const previousCellData = previousRow.data.cellDataByColId?.[attributeColId];
+        if (!previousCellData || previousCellData.columnDefinition.type !== "attribute") {
             return true;
         }
 
-        const previousValue = previousRowData.formattedValue;
-
-        // This is the first of a group if previous value is different
-        return previousValue !== currentValue;
+        // This is the first of a group if previous doesn't match current (by URI)
+        return !cellsMatchByUri(currentCellData, previousCellData);
     }
 
     return false;

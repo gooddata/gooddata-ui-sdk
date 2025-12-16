@@ -3,6 +3,7 @@
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { FilterGroupItem as FilterGroupItemComponent, UiBadge, UiIcon } from "@gooddata/sdk-ui-kit";
 
+import { State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const wrapperStyle = {
@@ -46,5 +47,5 @@ export function Themed() {
 }
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 };

@@ -8,6 +8,7 @@ import { AttributeFilterEmptyResult } from "@gooddata/sdk-ui-filters";
 import {
     type INeobackstopScenarioConfig,
     type IStoryParameters,
+    State,
 } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
@@ -60,8 +61,8 @@ function AttributeFilterEmptyResultExamples(): ReactElement {
 }
 
 const delayConfig: INeobackstopScenarioConfig = {
-    readySelector: ".screenshot-target",
-    delay: 200,
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
+    delay: { postReady: 200 },
 };
 
 // eslint-disable-next-line no-restricted-exports

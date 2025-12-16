@@ -8,7 +8,7 @@ import { MediaQuery } from "react-responsive";
 import { Button, FullScreenOverlay, Overlay } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
-import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
+import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 
 interface IOverlayExampleProps {
     index: number;
@@ -203,5 +203,5 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: ".screenshot-target" },
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;

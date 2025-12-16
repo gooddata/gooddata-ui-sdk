@@ -8,11 +8,11 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { type IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
 
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "./backstopScenario.js";
-import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "./backstopWrapper.js";
+import { type INeobackstopScenarioConfig, type IStoryParameters, type State } from "./backstopScenario.js";
 import { ConfigurationPanelWrapper } from "./ConfigurationPanelWrapper.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
 import { ScreenshotReadyWrapper } from "./ScreenshotReadyWrapper.js";
+import { unquoteStateInJson } from "./stateReplacer.js";
 import { allScenarios } from "../../scenarios/index.js";
 import { type ScenarioGroup } from "../../src/index.js";
 
@@ -145,7 +145,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
             },
             {
                 source: `${pathToRoot}stories/_infra/backstopScenario.js`,
-                namedImports: ["IStoryParameters"],
+                namedImports: ["IStoryParameters", "State"],
             },
             {
                 source: `${pathToRoot}/stories/visual-regression/visualizations/insightStories.css`,
@@ -185,13 +185,18 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
                 ? undefined
                 : {
                       clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
-                      readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
+                      readySelector: {
+                          selector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
+                          state: `State.Attached` as unknown as State,
+                      },
                       // give specific charts some more time to finish rendering
-                      postInteractionWait: insightVisualizationUrl(insight).includes("table")
-                          ? ShortPostInteractionTimeout
-                          : insightVisualizationUrl(insight).includes("repeater")
-                            ? LongPostInteractionTimeout
-                            : 200,
+                      postInteractionWait: {
+                          delay: insightVisualizationUrl(insight).includes("table")
+                              ? 1000
+                              : insightVisualizationUrl(insight).includes("repeater")
+                                ? 5000
+                                : 200,
+                      },
                       ...(undefined === group.testConfig.visual.delay
                           ? {}
                           : { delay: group.testConfig.visual.delay }),
@@ -211,13 +216,15 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
                 null,
                 4,
             )} as unknown as IInsight, getScenariosGroupByIndexes(${groupsIndex}, ${groupIndex}, ${scenarioIndex}))();
-${exportName}.parameters = ${JSON.stringify(
-                {
-                    kind: scenario.name,
-                    screenshot: screenshotConfig,
-                } satisfies IStoryParameters,
-                null,
-                4,
+${exportName}.parameters = ${unquoteStateInJson(
+                JSON.stringify(
+                    {
+                        kind: scenario.name,
+                        screenshot: screenshotConfig,
+                    } satisfies IStoryParameters,
+                    null,
+                    4,
+                ),
             )} satisfies IStoryParameters;`);
         });
 

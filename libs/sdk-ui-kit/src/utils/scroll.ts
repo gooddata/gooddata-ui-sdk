@@ -1,12 +1,19 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { throttle } from "lodash-es";
+
+/**
+ * Custom event name for goodstrap scroll events.
+ * Used by Overlay to handle closeOnParentScroll and other scroll-related behaviors.
+ * @internal
+ */
+export const GOODSTRAP_SCROLLED_EVENT = "goodstrap.scrolled";
 
 const fireGoodstrapScrollEvent = (
     node: HTMLElement,
     windowInstance = { dispatchEvent: (_event: Event) => true },
 ) => {
     windowInstance.dispatchEvent(
-        new CustomEvent("goodstrap.scrolled", {
+        new CustomEvent(GOODSTRAP_SCROLLED_EVENT, {
             // this will close dropdowns with closeOnParentScroll=true
             bubbles: true,
             detail: {

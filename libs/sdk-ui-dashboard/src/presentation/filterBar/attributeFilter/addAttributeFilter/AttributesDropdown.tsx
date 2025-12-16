@@ -98,7 +98,7 @@ export function AttributesDropdown({
     // 1) Dragging this component into FilterBar could change height of FilterBar (FilterBar is sticky)
     // 2) When size of sticky element changed, then scroll position of dashboard is changed
     // 3) Then onScroll event is fired (By default window scroll event)
-    // 4) KD or external app onScroll could fire "goodstrap.scrolled" custom event to close all opened overlays that have closeOnParentScroll = true
+    // 4) KD or external app onScroll could fire GOODSTRAP_SCROLLED_EVENT custom event to close all opened overlays that have closeOnParentScroll = true
     // 5) Result is when this component change height of FilterBar it will be immediately closed after user drop it into FilterBar
     // 6) To prevent this behavior we initialize this component with closeOnParentScroll = false
     // 7) And in timeout 0.5 we set closeOnParentScroll = true to keep behavior that dropdown is closed when user scroll

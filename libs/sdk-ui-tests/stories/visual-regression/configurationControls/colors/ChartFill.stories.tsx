@@ -6,8 +6,11 @@ import { type ChartFillType, type PatternFillName } from "@gooddata/sdk-ui-chart
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { type INeobackstopScenarioConfig, type IStoryParameters } from "../../../_infra/backstopScenario.js";
-import { ShortPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
+import {
+    type INeobackstopScenarioConfig,
+    type IStoryParameters,
+    State,
+} from "../../../_infra/backstopScenario.js";
 import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
@@ -17,9 +20,9 @@ import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "./styles.css";
 
 const config: INeobackstopScenarioConfig = {
-    postInteractionWait: ShortPostInteractionTimeout,
+    postInteractionWait: { delay: 1000 },
     // use ScreenshotReadyWrapper, override default selector for suite "11" in backstop.json
-    readySelector: ".screenshot-ready-wrapper-done",
+    readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
 };
 
 const backend = StorybookBackend();

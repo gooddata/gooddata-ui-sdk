@@ -4,8 +4,8 @@ import { useCallback, useMemo } from "react";
 
 import { type EmptyObject } from "@gooddata/util";
 
-import { Dropdown } from "../../../Dropdown/index.js";
 import { useScopedId } from "../../hooks/useScopedId.js";
+import { UiDropdown } from "../../UiDropdown/UiDropdown.js";
 import { isSeparator } from "../../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 import { type IUiMenuItem } from "../../UiMenu/types.js";
 import { UiMenu } from "../../UiMenu/UiMenu.js";
@@ -77,13 +77,16 @@ export function DefaultUiTabsTabActions<
                                           block: "nearest",
                                           behavior: "instant",
                                       });
-                                      // The second scrollIntoView is needed to make sure the actions end up visible
-                                      // if the tab is larger than the tablist element. This can happen for very long names.
-                                      document.getElementById(tabActionsId)?.scrollIntoView({
-                                          inline: "nearest",
-                                          block: "nearest",
-                                          behavior: "instant",
-                                      });
+
+                                      if (location === "tabs") {
+                                          // The second scrollIntoView is needed to make sure the actions end up visible
+                                          // if the tab is larger than the tablist element. This can happen for very long names.
+                                          document.getElementById(tabActionsId)?.scrollIntoView({
+                                              inline: "nearest",
+                                              block: "nearest",
+                                              behavior: "instant",
+                                          });
+                                      }
                                   }, 50);
                               }) as IUiTabAction<TTabProps, TTabActionProps>["onSelect"],
                           },
@@ -114,45 +117,49 @@ export function DefaultUiTabsTabActions<
     }
 
     return (
-        <Dropdown
-            className={UiTabsBem.e("actions-wrapper", { location })}
-            renderButton={({ toggleDropdown, isOpen, ariaAttributes }) => (
-                <TabActionsButton
-                    tab={tab}
-                    isOpen={isOpen}
-                    location={location}
-                    onClick={toggleDropdown}
-                    ariaAttributes={ariaAttributes}
-                    id={id}
-                    tabIndex={tabIndex}
-                />
-            )}
-            renderBody={({ ariaAttributes, closeDropdown }) => (
-                <UiMenu
-                    items={menuItems}
-                    onSelect={handleItemSelected}
-                    onClose={closeDropdown}
-                    shouldCloseOnSelect={false}
-                    ariaAttributes={ariaAttributes}
-                    maxWidth={160}
-                    maxHeight={400}
-                    size={"small"}
-                    containerBottomPadding={"small"}
-                    containerTopPadding={"small"}
-                    itemDataTestId={itemDataTestId}
-                />
-            )}
-            autofocusOnOpen
-            shouldTrapFocus
-            alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
-            closeOnEscape
-            closeOnOutsideClick
-            accessibilityConfig={{
-                triggerRole: "button",
-                popupRole: "listbox",
-            }}
-            isOpen={isOpen}
-            onToggle={onToggleOpen}
-        />
+        <div className={UiTabsBem.e("actions-wrapper", { location })}>
+            <UiDropdown
+                renderButton={({ toggleDropdown, isOpen, ariaAttributes }) => (
+                    <TabActionsButton
+                        tab={tab}
+                        isOpen={isOpen}
+                        location={location}
+                        onClick={toggleDropdown}
+                        ariaAttributes={ariaAttributes}
+                        id={id}
+                        tabIndex={tabIndex}
+                    />
+                )}
+                renderBody={({ ariaAttributes, closeDropdown }) => {
+                    return (
+                        <UiMenu
+                            items={menuItems}
+                            onSelect={handleItemSelected}
+                            onClose={closeDropdown}
+                            shouldCloseOnSelect={false}
+                            ariaAttributes={ariaAttributes}
+                            maxWidth={160}
+                            maxHeight={400}
+                            size={"small"}
+                            containerBottomPadding={"small"}
+                            containerTopPadding={"small"}
+                            itemDataTestId={itemDataTestId}
+                        />
+                    );
+                }}
+                autofocusOnOpen
+                returnFocusTo={tabActionsId}
+                enableFocusTrap={false}
+                alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
+                closeOnEscape
+                closeOnOutsideClick
+                accessibilityConfig={{
+                    triggerRole: "button",
+                    popupRole: "listbox",
+                }}
+                isOpen={isOpen}
+                onOpenChange={onToggleOpen}
+            />
+        </div>
     );
 }
