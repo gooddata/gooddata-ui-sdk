@@ -194,6 +194,11 @@ const FormExamples = memo(function FormExamples() {
     );
 });
 
+const screenshotConfig = {
+    readySelector: { selector: ".screenshot-target", state: State.Attached },
+    misMatchThreshold: 0.01,
+};
+
 // eslint-disable-next-line no-restricted-exports
 export default {
     title: "12 UI Kit/Form",
@@ -204,11 +209,11 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    screenshot: screenshotConfig,
 } satisfies IStoryParameters;
 
 export const Themed = () => wrapWithTheme(<FormExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    screenshot: screenshotConfig,
 } satisfies IStoryParameters;

@@ -55,7 +55,9 @@ CustomComponent.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // cancel button has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;

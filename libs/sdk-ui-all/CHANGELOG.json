@@ -8,13 +8,13 @@
             "comments": {
                 "none": [
                     {
-                        "comment": "chore: sdk-ui-filters: Props totalElementsCount and totalElementsCountWithCurrentSettings are now optional in AttributeFilter components."
+                        "comment": "sdk-ui-filters: Make props totalElementsCount and totalElementsCountWithCurrentSettings optional in AttributeFilter components."
                     },
                     {
-                        "comment": "sdk-ui-kit: Introduce typescript strict mode."
+                        "comment": "sdk-ui-kit: Introduce TypeScript strict mode."
                     },
                     {
-                        "comment": "sdk-ui-filters: Introduce typescript strict mode."
+                        "comment": "sdk-ui-filters: Introduce TypeScript strict mode."
                     },
                     {
                         "comment": "sdk-ui-kit: Introduce a new composable combobox component that enables users to select from a filtered list of options."
@@ -23,22 +23,19 @@
                         "comment": "sdk-ui-kit: Add support for tags autocomplete in Analytics Catalog detail view."
                     },
                     {
-                        "comment": "sdk-ui-catalog: Introduce a shared `CatalogResourceProvider` + `useCatalogTags` context so Analytics Catalog fetch tags once and reuse them instead of querying the backend per component."
+                        "comment": "sdk-ui-catalog: Introduce a shared `CatalogResourceProvider` and `useCatalogTags` context so Analytics Catalog fetches tags once and reuses them instead of querying the backend per component."
                     },
                     {
                         "comment": "sdk-ui-semantic-search: Sort semantic search results based on score."
                     },
                     {
-                        "comment": "sdk-ui-semantic-search,sdk-ui-gen-ai: Make semantic search tree view accessible in the AI assistant chat."
+                        "comment": "sdk-ui-semantic-search: Make semantic search tree view accessible in the AI assistant chat."
                     },
                     {
-                        "comment": "upgrade test fixture version"
+                        "comment": "sdk-ui-all: Upgrade test fixture version."
                     },
                     {
-                        "comment": "Upgrade GD text fixture version"
-                    },
-                    {
-                        "comment": "sdk-ui-dashboard: preselect group by granularity in visualization"
+                        "comment": "sdk-ui-dashboard: Preselect group by granularity in visualization."
                     },
                     {
                         "comment": "sdk-ui-dashboard: Fix KDA filter dropdown to restore focus to the add-filter trigger after closing."
@@ -47,22 +44,22 @@
                         "comment": "sdk-ui-kit: Allow InvertableSelect search fields to bubble Escape presses so dropdowns can close when focus returns."
                     },
                     {
-                        "comment": "sdk-ui-dashboard: Gating anomaly alerts on AI permission"
+                        "comment": "sdk-ui-dashboard: Gate anomaly alerts on AI permission."
                     },
                     {
-                        "comment": "sdk-ui-semantic-search: Scope footer AI assistant button styles"
+                        "comment": "sdk-ui-semantic-search: Scope footer AI assistant button styles."
                     },
                     {
                         "comment": "sdk-ui-dashboard: Extend filter context command by tab identifier."
                     },
                     {
-                        "comment": "gdc-ui-dashboard: Use proper selectors in case of filters per tab."
+                        "comment": "sdk-ui-dashboard: Use proper selectors in case of filters per tab."
                     },
                     {
-                        "comment": "Add useMetricTypePresets hook for CURRENCY metric format support"
+                        "comment": "sdk-ui-all: Add useMetricTypePresets hook for CURRENCY metric format support."
                     },
                     {
-                        "comment": "Add missing currency format preset translations for Analytics Catalog"
+                        "comment": "sdk-ui-all: Add missing currency format preset translations for Analytics Catalog."
                     },
                     {
                         "comment": "sdk-ui-pivot: Add accessibility mode support to pivot table."
@@ -74,99 +71,60 @@
                         "comment": "sdk-ui-ext: Enhance pivot table embedding support."
                     },
                     {
-                        "comment": "Add support for multiple executions in pluggable visualizations."
+                        "comment": "sdk-ui-ext: Add support for multiple executions in pluggable visualizations."
                     },
                     {
-                        "comment": "Add support for multiple layers in new geo charts implementation, currently in alpha stage."
+                        "comment": "sdk-ui-geo: Add support for multiple layers in new geo charts implementation, currently in alpha stage."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-all: Replace injectIntl usages with useIntl hook."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-charts: Rewrite HighChartsRenderer as functional component."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-ext: Rewrite LocalizedUnknownVisualizationClass as functional component."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-kit: Rewrite InputWithNumberFormat as a functional component."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-all: Disallow default exports internally, deprecate external-facing default exports."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-all: Enable Dashboard Tabs feature."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-dashboard: Support dashboard plugins on dashboards with tabs."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-pivot: Support automatic drill into URL for all attributes with hyperlink label in pivot tables."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-all: Add async loading of translations. en-US translations are linked statically, while other translations are loaded asynchronously."
                     },
                     {
-                        "comment": "chore: Rewrite HighChartsRenderer as functional component"
+                        "comment": "sdk-ui-charts: Enable enableHighchartsAccessibility feature flag by default."
                     },
                     {
-                        "comment": "chore: Rewrite LocalizedUnknownVisualizationClass as functional component"
+                        "comment": "sdk-ui-ext: Add support for measure value filters for metrics not in the insight buckets."
                     },
                     {
-                        "comment": "chore: Rewrite LocalizedUnknownVisualizationClass as functional component"
+                        "comment": "sdk-ui-dashboard: Enable enableCustomizedDashboardsWithoutPluginOverlay feature flag by default."
                     },
                     {
-                        "comment": "chore: Rewrite InputWithNumberFormat as a functional component"
+                        "comment": "sdk-backend-spi: Add support for measure value filter dimensionality."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
+                        "comment": "sdk-ui-ext: Swap invalidation ref for invalidation id in automations."
                     },
                     {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
-                    },
-                    {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
-                    },
-                    {
-                        "comment": "chore: Replace injectIntl usages with useIntl hook"
-                    },
-                    {
-                        "comment": "chore: Disallow default exports internally, deprecate external-facing default exports"
-                    },
-                    {
-                        "comment": "gdc-ui-all: Enable Dashboard Tabs feature"
-                    },
-                    {
-                        "comment": "sdk-ui-dashboard: Support dashboard plugins on dashboard with tabs."
-                    },
-                    {
-                        "comment": "Support automatic drill into URL for all attributes with hyperlink label in pivot tables"
-                    },
-                    {
-                        "comment": "Add async loading of translations. en-US translations are linked statically, while other translations are loaded asynchronously."
-                    },
-                    {
-                        "comment": "Added: Enable enableHighchartsAccessibility feature flag by default"
-                    },
-                    {
-                        "comment": "feat: Add support for measure value filters for metrics not in the insight buckets"
-                    },
-                    {
-                        "comment": "Added: Enabled enableCustomizedDashboardsWithoutPluginOverlay feature flag by default"
-                    },
-                    {
-                        "comment": "Added: Support for measure value filter dimensionality in SPI"
-                    },
-                    {
-                        "comment": "sdk-ui-ext: Automations - swap invalidation ref for invalidation id"
-                    },
-                    {
-                        "comment": "sdk-ui-all: Add metric format override features, currency settings management, and Analytics Catalog enhancements"
+                        "comment": "sdk-ui-all: Add metric format override features, currency settings management, and Analytics Catalog enhancements."
                     }
                 ],
                 "patch": [
                     {
-                        "comment": "Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
+                        "comment": "sdk-ui-dashboard: Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
                     }
                 ]
             }

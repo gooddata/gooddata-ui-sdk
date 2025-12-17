@@ -456,7 +456,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                     </div>
                 ) : null}
 
-                <div className="gd-mvf-dropdown-section">
+                <div className="gd-mvf-dropdown-section" data-testid="mvf-operator-section">
                     <OperatorDropdown
                         onSelect={handleOperatorSelection}
                         operator={operator}
