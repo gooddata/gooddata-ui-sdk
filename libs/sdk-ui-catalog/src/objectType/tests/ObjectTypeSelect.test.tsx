@@ -17,6 +17,7 @@ describe("ObjectTypeSelect", () => {
             measure: 0,
             fact: 0,
             attribute: 0,
+            dataSet: 0,
             insight: 0,
             analyticalDashboard: 0,
         },
@@ -29,6 +30,7 @@ describe("ObjectTypeSelect", () => {
             measure: 3,
             fact: 4,
             attribute: 5,
+            dataSet: 6,
         };
         render(<ObjectTypeSelect {...commonProps} counter={counter} />, { wrapper });
 
@@ -37,6 +39,7 @@ describe("ObjectTypeSelect", () => {
         expect(screen.getByRole("button", { name: "Metric: 3" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Fact: 4" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Attribute: 5" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Date dataset: 6" })).toBeInTheDocument();
     });
 
     it("calls onSelect with added type when clicking an unselected type", () => {
@@ -66,12 +69,13 @@ describe("ObjectTypeSelect", () => {
         render(<ObjectTypeSelect {...commonProps} />, { wrapper });
 
         const objectTypeElements = screen.getAllByTestId(testIds.objectType);
-        expect(objectTypeElements.length).toBe(5);
+        expect(objectTypeElements.length).toBe(6);
 
         expect(screen.getByTestId(`${testIds.objectType}/analyticalDashboard`)).toBeVisible();
         expect(screen.getByTestId(`${testIds.objectType}/insight`)).toBeVisible();
         expect(screen.getByTestId(`${testIds.objectType}/measure`)).toBeVisible();
         expect(screen.getByTestId(`${testIds.objectType}/fact`)).toBeVisible();
         expect(screen.getByTestId(`${testIds.objectType}/attribute`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/dataSet`)).toBeVisible();
     });
 });

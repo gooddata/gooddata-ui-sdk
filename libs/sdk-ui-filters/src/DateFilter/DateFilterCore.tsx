@@ -292,7 +292,7 @@ export function DateFilterCore({
                                             {...(!improveAccessibility && { id: ariaAttributes.id })}
                                             ref={dateFilterContainerRef}
                                             onKeyDown={(e) => handleKeyDown(e, closeDropdown)}
-                                            {...(!improveAccessibility && { ariaLabel: customFilterName })}
+                                            {...(!improveAccessibility && { "aria-label": customFilterName })}
                                         >
                                             <DateFilterBodyComponent
                                                 {...dropdownBodyProps}

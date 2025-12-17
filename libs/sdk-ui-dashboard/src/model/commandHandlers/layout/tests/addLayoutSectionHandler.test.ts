@@ -2,8 +2,10 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type IAnalyticalWidget, uriRef } from "@gooddata/sdk-model";
+import { type IAnalyticalWidget, type IDashboard, idRef, uriRef } from "@gooddata/sdk-model";
 
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import { type AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
     type DashboardCommandFailed,
@@ -16,6 +18,7 @@ import { type DashboardTester, preloadedTesterFactory } from "../../../tests/Das
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures.js";
 import {
     EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
     TestCorrelation,
     TestStash,
 } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -30,10 +33,27 @@ import {
     testItemWithFilterIgnoreList,
 } from "../../../tests/fixtures/Layout.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
+import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
+
+        const dashboardWithDefaults: IDashboard = {
+            ...EmptyDashboardWithReferences.dashboard,
+            ref: idRef(EmptyDashboardIdentifier),
+            identifier: EmptyDashboardIdentifier,
+            layout: EmptyDashboardLayout,
+            filterContext: createDefaultFilterContext(
+                defaultDateFilterConfig,
+                true,
+            ) as IDashboard["filterContext"],
+        };
+
+        const customizationFnsWithPreload: PrivateDashboardContext = {
+            preloadedDashboard: dashboardWithDefaults,
+        };
 
         beforeEach(async () => {
             await preloadedTesterFactory(
@@ -45,6 +65,7 @@ describe("add layout section handler", () => {
                     backendConfig: {
                         useRefType: "id",
                     },
+                    customizationFns: customizationFnsWithPreload,
                 },
             );
         });

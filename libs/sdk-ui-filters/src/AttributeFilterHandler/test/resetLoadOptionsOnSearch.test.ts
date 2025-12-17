@@ -1,7 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 import { describe, expect, it, vi } from "vitest";
 
-import { newTestAttributeFilterHandler } from "./fixtures.js";
+import {
+    negativeAttributeFilterDefaultDF,
+    newTestAttributeFilterHandlerWithAttributeFilter,
+} from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 
 describe("AttributeFilterHandler", () => {
@@ -9,7 +12,9 @@ describe("AttributeFilterHandler", () => {
         const onLoadNextElementsPageStart = vi.fn();
         const onLoadNextElementsPageSuccess = vi.fn();
 
-        const attributeFilterHandler = newTestAttributeFilterHandler("negative");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            negativeAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();

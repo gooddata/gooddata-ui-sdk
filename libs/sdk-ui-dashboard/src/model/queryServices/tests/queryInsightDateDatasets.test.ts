@@ -1,8 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type ICatalogDateDataset, type IInsight, insightRef } from "@gooddata/sdk-model";
+import {
+    type ICatalogDateDataset,
+    type IDashboard,
+    type IInsight,
+    idRef,
+    insightRef,
+} from "@gooddata/sdk-model";
 
+import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import { EmptyDashboardLayout } from "../../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { addLayoutSection, initializeDashboard } from "../../commands/index.js";
 import { type InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/index.js";
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
@@ -10,13 +19,17 @@ import {
     MockAvailabilityWithDifferentRelevance,
     MockAvailabilityWithSameRelevance,
 } from "../../tests/fixtures/CatalogAvailability.fixtures.js";
-import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../tests/fixtures/Dashboard.fixtures.js";
 import {
     PivotTableWithDateFilter,
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
 } from "../../tests/fixtures/Insights.fixtures.js";
 import { TestSectionHeader, createTestInsightItem } from "../../tests/fixtures/Layout.fixtures.js";
+import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 
 function datasetsDigest(
     datasets: ReadonlyArray<ICatalogDateDataset | undefined>,
@@ -25,6 +38,21 @@ function datasetsDigest(
 }
 
 describe("query insight date datasets", () => {
+    const dashboardWithDefaults: IDashboard = {
+        ...EmptyDashboardWithReferences.dashboard,
+        ref: idRef(EmptyDashboardIdentifier),
+        identifier: EmptyDashboardIdentifier,
+        layout: EmptyDashboardLayout,
+        filterContext: createDefaultFilterContext(
+            defaultDateFilterConfig,
+            true,
+        ) as IDashboard["filterContext"],
+    };
+
+    const customizationFnsWithPreload: PrivateDashboardContext = {
+        preloadedDashboard: dashboardWithDefaults,
+    };
+
     async function addTestSection(tester: DashboardTester, insight: IInsight) {
         await tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
         await tester.dispatchAndWaitFor(
@@ -37,9 +65,15 @@ describe("query insight date datasets", () => {
         let Tester: DashboardTester;
 
         beforeEach(async () => {
-            await preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, EmptyDashboardIdentifier);
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                EmptyDashboardIdentifier,
+                {
+                    customizationFns: customizationFnsWithPreload,
+                },
+            );
         });
 
         it("should return date datasets for insight with date attributes in buckets", async () => {
@@ -77,7 +111,9 @@ describe("query insight date datasets", () => {
         it("should order date datasets by relevance desc", async () => {
             const Tester = DashboardTester.forRecording(
                 EmptyDashboardIdentifier,
-                {},
+                {
+                    customizationFns: customizationFnsWithPreload,
+                },
                 {
                     catalogAvailability: {
                         availableDateDatasets: MockAvailabilityWithDifferentRelevance,
@@ -104,7 +140,9 @@ describe("query insight date datasets", () => {
         it("should order date datasets by relevance and title if tied", async () => {
             const Tester = DashboardTester.forRecording(
                 EmptyDashboardIdentifier,
-                {},
+                {
+                    customizationFns: customizationFnsWithPreload,
+                },
                 {
                     catalogAvailability: {
                         availableDateDatasets: MockAvailabilityWithSameRelevance,

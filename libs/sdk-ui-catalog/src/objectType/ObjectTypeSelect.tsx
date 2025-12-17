@@ -16,6 +16,7 @@ const icons: Record<ObjectType, IconType> = {
     [ObjectTypes.METRIC]: "metric",
     [ObjectTypes.ATTRIBUTE]: "ldmAttribute",
     [ObjectTypes.FACT]: "fact",
+    [ObjectTypes.DATASET]: "date",
 };
 
 const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
@@ -24,6 +25,7 @@ const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
     [ObjectTypes.METRIC]: { id: "analyticsCatalog.objectType.metric.button.ariaLabel" },
     [ObjectTypes.FACT]: { id: "analyticsCatalog.objectType.fact.button.ariaLabel" },
     [ObjectTypes.ATTRIBUTE]: { id: "analyticsCatalog.objectType.attribute.button.ariaLabel" },
+    [ObjectTypes.DATASET]: { id: "analyticsCatalog.objectType.dateDataset.button.ariaLabel" },
 });
 
 type Props = {

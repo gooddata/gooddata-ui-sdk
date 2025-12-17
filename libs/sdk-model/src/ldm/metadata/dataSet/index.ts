@@ -1,4 +1,5 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+
 import { type IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
@@ -8,7 +9,30 @@ import { type IMetadataObject, isMetadataObject } from "../types.js";
  */
 export interface IDataSetMetadataObject extends IMetadataObject {
     type: "dataSet";
+
+    /**
+     * Whether the dataset is locked for editing.
+     */
+    isLocked?: boolean;
+
+    /**
+     * Attributes that belong to this dataset (if supplied by backend include).
+     *
+     * @beta
+     */
+    attributes?: IDataSetAttributeMetadataObject[];
 }
+
+/**
+ * Attribute metadata object that can appear in {@link IDataSetMetadataObject.attributes}.
+ *
+ * @remarks
+ * This intentionally does not use `IAttributeMetadataObject` to avoid a circular dependency in `sdk-model`
+ * (`IAttributeMetadataObject` already references {@link IDataSetMetadataObject} via `dataSet`).
+ *
+ * @beta
+ */
+export type IDataSetAttributeMetadataObject = IMetadataObject & { type: "attribute" };
 
 /**
  * Tests whether the provided object is of type {@link IDataSetMetadataObject}.

@@ -2,6 +2,10 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { type IDashboard, idRef } from "@gooddata/sdk-model";
+
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import { type RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
     type DashboardCommandFailed,
@@ -12,19 +16,43 @@ import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSele
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
     TestCorrelation,
     TestStash,
 } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
+import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
 
 describe("remove layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
 
+        const dashboardWithDefaults: IDashboard = {
+            ...EmptyDashboardWithReferences.dashboard,
+            ref: idRef(EmptyDashboardIdentifier),
+            identifier: EmptyDashboardIdentifier,
+            layout: EmptyDashboardLayout,
+            filterContext: createDefaultFilterContext(
+                defaultDateFilterConfig,
+                true,
+            ) as IDashboard["filterContext"],
+        };
+
+        const customizationFnsWithPreload: PrivateDashboardContext = {
+            preloadedDashboard: dashboardWithDefaults,
+        };
+
         beforeEach(async () => {
-            await preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, EmptyDashboardIdentifier);
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                EmptyDashboardIdentifier,
+                {
+                    customizationFns: customizationFnsWithPreload,
+                },
+            );
         });
 
         it("should fail the command", async () => {

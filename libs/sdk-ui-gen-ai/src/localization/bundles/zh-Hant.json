@@ -39,7 +39,7 @@
     "gd.gen-ai.semantic-search.title": "搜尋",
     "gd.gen-ai.state.cancelled": "評估取消…",
     "gd.gen-ai.state.generating": "正在產生您的回覆…",
-    "gd.gen-ai.state.thinking": "正在思考中 ",
+    "gd.gen-ai.state.thinking": "正在思考中",
     "gd.gen-ai.routing.thinking-process": "推理過程",
     "gd.gen-ai.button.send": "發送訊息",
     "gd.gen-ai.button.save": "儲存",

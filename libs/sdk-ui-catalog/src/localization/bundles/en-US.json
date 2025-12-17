@@ -35,6 +35,10 @@
         "value": "Attribute: {count}",
         "comment": "ARIA label for the Attribute object type"
     },
+    "analyticsCatalog.objectType.dateDataset.button.ariaLabel": {
+        "value": "Date dataset: {count}",
+        "comment": "Analytics Catalog: ARIA label for the Date dataset object type filter button, showing the number of matching date datasets. Example: 'Date dataset: 6'."
+    },
     "analyticsCatalog.filter.title": {
         "value": "Filters",
         "comment": "Title of the header section containing the filter group."
@@ -126,6 +130,10 @@
     "analyticsCatalog.column.title.isHidden": {
         "value": "Show in AI results",
         "comment": "Title of the field indicating whether the object is hidden in AI results."
+    },
+    "analyticsCatalog.column.title.granularities": {
+        "value": "Granularities",
+        "comment": "Analytics Catalog: Label for the granularities field in the catalog item details (metadata tab), listing the available date granularities for a date dataset."
     },
     "analyticsCatalog.column.isHidden.icon.tooltip": {
         "value": "Hidden from Smart Search and AI Assistant results for all users.",

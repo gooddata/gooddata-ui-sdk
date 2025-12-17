@@ -17,6 +17,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "attr.f_product.product",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
@@ -34,6 +37,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "label.f_product.product.name",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Name",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
@@ -52,6 +58,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "label.f_product.product.image",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Image",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
@@ -70,6 +79,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "label.f_product.product.link",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Link",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
@@ -104,6 +116,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "attr.f_product.product",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
@@ -121,6 +136,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "label.f_product.product.name",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Name",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
@@ -139,6 +157,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "label.f_product.product.image",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Image",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
@@ -157,6 +178,9 @@ exports[`AttributeFilterHandler > getAttribute() should return the attribute aft
         "identifier": "label.f_product.product.link",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Link",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
@@ -240,6 +264,9 @@ exports[`AttributeFilterHandler > loadAttribute() that was successful should tri
             "identifier": "attr.f_product.product",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
@@ -257,6 +284,9 @@ exports[`AttributeFilterHandler > loadAttribute() that was successful should tri
             "identifier": "label.f_product.product.name",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
@@ -275,6 +305,9 @@ exports[`AttributeFilterHandler > loadAttribute() that was successful should tri
             "identifier": "label.f_product.product.image",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Image",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
@@ -293,6 +326,9 @@ exports[`AttributeFilterHandler > loadAttribute() that was successful should tri
             "identifier": "label.f_product.product.link",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Link",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",

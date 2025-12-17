@@ -82,6 +82,8 @@ export class MeasureValueFilterFragment {
     public getWarningMessageBySeverity = (severity: string) =>
         document.querySelector(`.s-mvf-warning-message-${severity}`);
 
+    public getPreview = (): HTMLElement | null => document.querySelector("[data-testid='mvf-preview-text']");
+
     public clickTreatNullAsCheckbox = () => {
         fireEvent.click(this.getTreatNullAsCheckbox()!);
         return this;

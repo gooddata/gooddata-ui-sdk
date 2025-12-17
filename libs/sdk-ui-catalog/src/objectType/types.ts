@@ -9,5 +9,5 @@ import type { ObjectType as ModelObjectType } from "@gooddata/sdk-model";
  */
 export type ObjectType = Extract<
     ModelObjectType,
-    "analyticalDashboard" | "insight" | "measure" | "fact" | "attribute"
+    "analyticalDashboard" | "insight" | "measure" | "fact" | "attribute" | "dataSet"
 >;

@@ -100,11 +100,13 @@ export const convertToRawExportRequest = (
                   labels: overrides?.displayForms,
               };
 
+    const contentFilters = exportRequest.content.filters;
     const metadata = omitBy(
         {
             widget: exportRequest.content.widget,
             visualizationObject: exportRequest.content.visualizationObject,
             dashboard: exportRequest.content.dashboard,
+            filters: contentFilters?.map(cloneWithSanitizedIds),
         },
         (value) => value === undefined || (Array.isArray(value) && value.length === 0),
     );

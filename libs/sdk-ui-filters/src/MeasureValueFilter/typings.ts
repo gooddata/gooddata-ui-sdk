@@ -36,6 +36,11 @@ export interface IDimensionalityItem {
  */
 export interface IMeasureValueFilterCommonProps {
     filter?: IMeasureValueFilter;
+    /**
+     * Human-readable measure title used in UI texts (e.g., preview).
+     * If not provided, the preview falls back to showing only operator/value parts.
+     */
+    measureTitle?: string;
     measureIdentifier: string;
     onApply: (filter: IMeasureValueFilter | null) => void;
     usePercentage?: boolean;

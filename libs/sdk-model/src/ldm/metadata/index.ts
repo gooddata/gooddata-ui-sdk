@@ -16,7 +16,11 @@ import {
     isAttributeHierarchyMetadataObject,
 } from "./attributeHierarchy/index.js";
 import { type IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard/index.js";
-import { type IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet/index.js";
+import {
+    type IDataSetAttributeMetadataObject,
+    type IDataSetMetadataObject,
+    isDataSetMetadataObject,
+} from "./dataSet/index.js";
 import { type IFactMetadataObject, isFactMetadataObject } from "./fact/index.js";
 import {
     type IMeasureMetadataObject,
@@ -55,6 +59,7 @@ export type {
     IMeasureMetadataObjectDefinition,
     MetricType,
     IDataSetMetadataObject,
+    IDataSetAttributeMetadataObject,
     IVariableMetadataObject,
     IDashboardMetadataObject,
     IAttributeHierarchyMetadataObject,

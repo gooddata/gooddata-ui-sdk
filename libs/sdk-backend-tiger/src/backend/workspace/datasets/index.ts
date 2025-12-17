@@ -1,16 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
-import { EntitiesApi_GetAllEntitiesDatasets } from "@gooddata/api-client-tiger/entitiesObjects";
-import { type IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
+
+import {
+    EntitiesApi_GetAllEntitiesDatasets,
+    EntitiesApi_GetEntityDatasets,
+    EntitiesApi_PatchEntityDatasets,
+    jsonApiHeaders,
+} from "@gooddata/api-client-tiger";
+import type { IDatasetsQuery, IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
 import {
     type IDataSetMetadataObject,
     type IDataset,
     type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectIdentity,
     type ObjRef,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
+import { DatasetsQuery } from "./datasetsQuery.js";
 import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
-import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
     constructor(
@@ -41,7 +51,66 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
                 filter,
             });
             const result = dataSets?.data?.data ?? [];
-            return result.map(convertDataSetItem);
+            return result.map((dataSet) => convertDataSetItem(dataSet));
         });
+    }
+
+    public async getDataset(ref: ObjRef): Promise<IDataSetMetadataObject> {
+        const objectId = await objRefToIdentifier(ref, this.authCall);
+
+        return this.authCall(async (client) => {
+            const result = await EntitiesApi_GetEntityDatasets(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspace,
+                    objectId,
+                    include: ["attributes"],
+                    metaInclude: ["origin"],
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+            return convertDataSetItem(result.data.data, result.data.included);
+        });
+    }
+
+    public async updateDatasetMeta(
+        dataSet: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IDataSetMetadataObject> {
+        const objectId = await objRefToIdentifier(dataSet.ref, this.authCall);
+
+        return this.authCall(async (client) => {
+            const result = await EntitiesApi_PatchEntityDatasets(
+                client.axios,
+                client.basePath,
+                {
+                    objectId,
+                    workspaceId: this.workspace,
+                    jsonApiDatasetPatchDocument: {
+                        data: {
+                            id: objectId,
+                            type: "dataset",
+                            attributes: {
+                                ...(dataSet.title === undefined ? {} : { title: dataSet.title }),
+                                ...(dataSet.description === undefined
+                                    ? {}
+                                    : { description: dataSet.description }),
+                                ...(dataSet.tags === undefined ? {} : { tags: dataSet.tags }),
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+            return convertDataSetItem(result.data.data);
+        });
+    }
+
+    public getDatasetsQuery(): IDatasetsQuery {
+        return new DatasetsQuery(this.authCall, { workspaceId: this.workspace });
     }
 }

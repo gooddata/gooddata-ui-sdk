@@ -202,7 +202,10 @@ export const AttributePicker = memo(function AttributePicker({
             onClose={onCancel}
         >
             <div className="gd-dropdown overlay">
-                <div className="gd-mvf-attribute-picker-body s-mvf-attribute-picker">
+                <div
+                    className="gd-mvf-attribute-picker-body s-mvf-attribute-picker"
+                    data-testid="mvf-attribute-picker"
+                >
                     <div className="gd-mvf-attribute-picker-header">
                         <div className="gd-mvf-attribute-picker-header-title">
                             <UiIcon type="navigateLeft" size={12} color="complementary-7" ariaHidden />
@@ -236,7 +239,10 @@ export const AttributePicker = memo(function AttributePicker({
                         />
                     </div>
                     {showTypeFilter ? (
-                        <div className="gd-mvf-attribute-picker-type-filter">
+                        <div
+                            className="gd-mvf-attribute-picker-type-filter"
+                            data-testid="mvf-attribute-picker-type-filter"
+                        >
                             <UiButtonSegmentedControl layout="fill">
                                 <UiIconButton
                                     icon="ldmAttribute"

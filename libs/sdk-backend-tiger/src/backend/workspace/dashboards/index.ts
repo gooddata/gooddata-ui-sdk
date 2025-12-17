@@ -215,7 +215,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             .filter(isDashboardPluginsItem)
             .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included));
 
-        const dataSets = included.filter(isDataSetItem).map(convertDataSetItem);
+        const dataSets = included.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet));
 
         const { filterContext, title, hideWidgetTitles } = await this.prepareMetadata(
             options?.exportId,
@@ -251,7 +251,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 plugins: included
                     .filter(isDashboardPluginsItem)
                     .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included)),
-                dataSets: included.filter(isDataSetItem).map(convertDataSetItem),
+                dataSets: included.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet)),
             };
         });
     };

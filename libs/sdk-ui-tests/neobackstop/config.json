@@ -57,5 +57,6 @@
         ]
     },
     "asyncCaptureLimit": 20,
-    "asyncCompareLimit": 18
+    "asyncCompareLimit": 18,
+    "requireSameDimensions": false
 }

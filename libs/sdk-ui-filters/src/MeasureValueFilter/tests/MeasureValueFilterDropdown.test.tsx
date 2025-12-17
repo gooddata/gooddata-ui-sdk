@@ -118,6 +118,55 @@ describe("Measure value filter dropdown", () => {
         expect(component.getOperatorDropdownButton()).toHaveClass("disabled");
     });
 
+    it("should render preview reflecting current form state including dimensionality titles concatenation", () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            isDimensionalityEnabled: true,
+            dimensionality: [
+                { identifier: localIdRef("product"), title: "Product", type: "attribute" },
+                { identifier: localIdRef("brand"), title: "Brand", type: "attribute" },
+            ],
+        });
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+        component.setComparisonValue("300");
+
+        const preview = component.getPreview();
+        expect(preview).toBeInTheDocument();
+        expect(preview!.textContent).toContain("# of Returned is greater than 300 for each Product & Brand");
+    });
+
+    it("should render preview without dimensionality when all dimensionality titles are empty", () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            isDimensionalityEnabled: true,
+            dimensionality: [
+                { identifier: localIdRef("product"), title: "", type: "attribute" },
+                { identifier: localIdRef("brand"), title: "", type: "attribute" },
+            ],
+        });
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+        component.setComparisonValue("300");
+
+        const preview = component.getPreview();
+        expect(preview).toBeInTheDocument();
+        // Should use "filterWithoutDimensionality" template, not contain "for each undefined"
+        expect(preview!.textContent).not.toContain("for each");
+        expect(preview!.textContent).not.toContain("undefined");
+        expect(preview!.textContent).toContain("# of Returned is greater than 300");
+    });
+
+    it("should not render preview when measureTitle is not provided", () => {
+        renderComponent();
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+        component.setComparisonValue("300");
+
+        const preview = component.getPreview();
+        expect(preview).not.toBeInTheDocument();
+    });
+
     describe("warning message", () => {
         it("should not render warning message if not provided", () => {
             renderComponent();

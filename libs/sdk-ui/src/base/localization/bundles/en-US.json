@@ -1219,33 +1219,65 @@
         "value": "greater than",
         "comment": "Filter operator that matches values greater than the specified value. Used in measure value filters to filter data points above a certain threshold."
     },
+    "mvf.operator.greaterThan.withValue": {
+        "value": "greater than {value}",
+        "comment": "Filter operator that matches values greater than the specified value. Used in measure value filters to previewfilter data points above a certain threshold."
+    },
     "mvf.operator.greaterThanOrEqualTo": {
         "value": "greater than or equal to",
         "comment": "Filter operator that matches values greater than or equal to the specified value. Used in measure value filters to include the threshold value in the results."
+    },
+    "mvf.operator.greaterThanOrEqualTo.withValue": {
+        "value": "greater than or equal to {value}",
+        "comment": "Filter operator that matches values greater than or equal to the specified value. Used in measure value filters to preview the filter data points above a certain threshold."
     },
     "mvf.operator.lessThan": {
         "value": "less than",
         "comment": "Filter operator that matches values less than the specified value. Used in measure value filters to filter data points below a certain threshold."
     },
+    "mvf.operator.lessThan.withValue": {
+        "value": "less than {value}",
+        "comment": "Filter operator that matches values less than the specified value. Used in measure value filters to preview the filter data points below a certain threshold."
+    },
     "mvf.operator.lessThanOrEqualTo": {
         "value": "less than or equal to",
         "comment": "Filter operator that matches values less than or equal to the specified value. Used in measure value filters to include the threshold value in the results."
+    },
+    "mvf.operator.lessThanOrEqualTo.withValue": {
+        "value": "less than or equal to {value}",
+        "comment": "Filter operator that matches values less than or equal to the specified value. Used in measure value filters to preview the filter data points below a certain threshold."
     },
     "mvf.operator.equalTo": {
         "value": "equal to",
         "comment": "Filter operator that matches values exactly equal to the specified value. Used in measure value filters to find specific data points."
     },
+    "mvf.operator.equalTo.withValue": {
+        "value": "equal to {value}",
+        "comment": "Filter operator that matches values exactly equal to the specified value. Used in measure value filters to preview the filter data points exactly equal to the specified value."
+    },
     "mvf.operator.notEqualTo": {
         "value": "not equal to",
         "comment": "Filter operator that matches all values except the specified value. Used in measure value filters to exclude specific data points."
+    },
+    "mvf.operator.notEqualTo.withValue": {
+        "value": "not equal to {value}",
+        "comment": "Filter operator that matches all values except the specified value. Used in measure value filters to preview the filter data points not equal to the specified value."
     },
     "mvf.operator.between": {
         "value": "between",
         "comment": "Filter operator that matches values within a specified range (inclusive of boundaries). Used in measure value filters to find data points within a specific range."
     },
+    "mvf.operator.between.withValue": {
+        "value": "between {from} and {to}",
+        "comment": "Filter operator that matches values within a specified range (inclusive of boundaries). Used in measure value filters to preview the filter data points within a specific range."
+    },
     "mvf.operator.notBetween": {
         "value": "not between",
         "comment": "Filter operator that matches values outside a specified range (exclusive of boundaries). Used in measure value filters to exclude data points within a specific range."
+    },
+    "mvf.operator.notBetween.withValue": {
+        "value": "not between {from} and {to}",
+        "comment": "Filter operator that matches values outside a specified range (exclusive of boundaries). Used in measure value filters to preview the filter data points outside a specific range."
     },
     "mvf.operator.between.tooltip.bubble": {
         "value": "Start and end values are included.",
@@ -1262,6 +1294,14 @@
     "mvf.treatNullValuesAsZeroTooltip": {
         "value": "If the filter condition includes 0, blank values will be treated as 0 and included in calculations.",
         "comment": "Checkbox label tooltip. 'blank values' are data rows without any value (empty), which can be considered to be 0 during calculations. If the filter is set to '< 1' for example, it includes values of 0 (less than one) and therefore all the blank (empty) values are going to be considered to be 0 in calculations."
+    },
+    "mvf.preview.filterWithoutDimensionality": {
+        "value": "{metric} is <b>{condition}</b>",
+        "comment": "Template for preview of the measure value filter without dimensionality. Example: 'Sales is greater than 1000'. Do not translate the {metric} and {condition}. These placeholders will be replaced with the actual metric and condition at runtime. <b> is used to bold the condition."
+    },
+    "mvf.preview.filterWithDimensionality": {
+        "value": "{metric} is <b>{condition} for each {dimensionality}</b>",
+        "comment": "Template for preview of the measure value filter with dimensionality. Example: 'Sales is greater than 1000 for each Product & Brand'. Do not translate the {metric}, {condition}, and {dimensionality} placeholders. These placeholders will be replaced with the actual metric, condition, and dimensionality at runtime. <b> is used to bold the condition and the dimensionality."
     },
     "mvf.dimensionality.forEach": {
         "value": "For each",

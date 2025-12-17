@@ -65,6 +65,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     onCancel,
     onApply,
     measureIdentifier,
+    measureTitle,
     usePercentage,
     warningMessage,
     locale,
@@ -129,6 +130,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             locale={locale}
             anchorEl={anchorEl}
             separators={separators}
+            measureTitle={measureTitle}
             displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
             treatNullAsZeroValue={getTreatNullAsZeroValue(filter, treatNullAsZeroDefaultValue)}
             enableOperatorSelection={enableOperatorSelection}

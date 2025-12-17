@@ -39,7 +39,7 @@
     "gd.gen-ai.semantic-search.title": "검색",
     "gd.gen-ai.state.cancelled": "평가가 취소되었습니다…",
     "gd.gen-ai.state.generating": "응답을 생성 중입니다…",
-    "gd.gen-ai.state.thinking": "생각하는 중입니다.",
+    "gd.gen-ai.state.thinking": "생각 중입니다",
     "gd.gen-ai.routing.thinking-process": "추론",
     "gd.gen-ai.button.send": "메시지 보내기",
     "gd.gen-ai.button.save": "저장",

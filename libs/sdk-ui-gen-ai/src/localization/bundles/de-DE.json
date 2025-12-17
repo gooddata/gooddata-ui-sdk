@@ -39,7 +39,7 @@
     "gd.gen-ai.semantic-search.title": "Suche",
     "gd.gen-ai.state.cancelled": "Bewertung abgebrochen…",
     "gd.gen-ai.state.generating": "Ihre Antwort wird generiert…",
-    "gd.gen-ai.state.thinking": "Wird analysiert...",
+    "gd.gen-ai.state.thinking": "Wird analysiert",
     "gd.gen-ai.routing.thinking-process": "Begründung",
     "gd.gen-ai.button.send": "Nachricht senden",
     "gd.gen-ai.button.save": "Speichern",

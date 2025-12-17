@@ -1,26 +1,54 @@
 // (C) 2021-2025 GoodData Corporation
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { insightRef } from "@gooddata/sdk-model";
+import { type IDashboard, idRef, insightRef } from "@gooddata/sdk-model";
 
+import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import { EmptyDashboardLayout } from "../../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { addLayoutSection } from "../../commands/index.js";
 import { type InsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../tests/fixtures/Dashboard.fixtures.js";
 import {
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
     TreemapWithSingleMeasureAndViewByFilteredToOneElement,
 } from "../../tests/fixtures/Insights.fixtures.js";
 import { TestSectionHeader, createTestInsightItem } from "../../tests/fixtures/Layout.fixtures.js";
+import { type PrivateDashboardContext } from "../../types/commonTypes.js";
 
 describe("query insight attributes meta", () => {
     let Tester: DashboardTester;
 
+    const dashboardWithDefaults: IDashboard = {
+        ...EmptyDashboardWithReferences.dashboard,
+        ref: idRef(EmptyDashboardIdentifier),
+        identifier: EmptyDashboardIdentifier,
+        layout: EmptyDashboardLayout,
+        filterContext: createDefaultFilterContext(
+            defaultDateFilterConfig,
+            true,
+        ) as IDashboard["filterContext"],
+    };
+
+    const customizationFnsWithPreload: PrivateDashboardContext = {
+        preloadedDashboard: dashboardWithDefaults,
+    };
+
     beforeEach(async () => {
-        await preloadedTesterFactory((tester) => {
-            Tester = tester;
-        }, EmptyDashboardIdentifier);
+        await preloadedTesterFactory(
+            (tester) => {
+                Tester = tester;
+            },
+            EmptyDashboardIdentifier,
+            {
+                customizationFns: customizationFnsWithPreload,
+            },
+        );
     });
 
     it("should return metadata for insight with multiple attributes in buckets", async () => {

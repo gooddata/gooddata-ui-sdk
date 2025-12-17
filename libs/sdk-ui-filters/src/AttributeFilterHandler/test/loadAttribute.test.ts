@@ -3,12 +3,18 @@ import { describe, expect, it, vi } from "vitest";
 
 import { suppressConsole } from "@gooddata/util";
 
-import { newTestAttributeFilterHandler } from "./fixtures.js";
+import {
+    newTestAttributeFilterHandler,
+    newTestAttributeFilterHandlerWithAttributeFilter,
+    positiveAttributeFilterDefaultDF,
+} from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 
 describe("AttributeFilterHandler", () => {
     it("getAttribute() should return the attribute after successful initialization", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
 
@@ -18,7 +24,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getAttribute() should return the attribute after successful loadAttribute() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -30,7 +38,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadAttribute() should trigger onLoadAttributeStart() callback", async () => {
         const onLoadAttributeStart = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -46,7 +56,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadAttribute() that was successful should trigger onLoadAttributeSuccess() callback", async () => {
         const onLoadAttributeSuccess = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -92,7 +104,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadAttribute() that was canceled by another loadAttribute() call should trigger onLoadAttributeCancel() callback", async () => {
         const onLoadAttributeCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -109,7 +123,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadAttribute() that was canceled by cancelAttributeLoad() call should trigger onLoadAttributeCancel() callback", async () => {
         const onLoadAttributeCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -124,7 +140,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getAttributeStatus() should return proper status for successful load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         expect(attributeFilterHandler.getAttributeStatus()).toMatchSnapshot("before the load");
 

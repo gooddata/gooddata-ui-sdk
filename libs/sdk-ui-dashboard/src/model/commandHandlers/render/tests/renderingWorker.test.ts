@@ -1,13 +1,38 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { type IDashboard, idRef } from "@gooddata/sdk-model";
+
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import { initializeDashboard } from "../../../commands/index.js";
 import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render.js";
 import { DashboardTester } from "../../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
+import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
 
 describe("renderingWorker", () => {
     let Tester: DashboardTester;
+
+    const dashboardWithDefaults: IDashboard = {
+        ...EmptyDashboardWithReferences.dashboard,
+        ref: idRef(EmptyDashboardIdentifier),
+        identifier: EmptyDashboardIdentifier,
+        layout: EmptyDashboardLayout,
+        filterContext: createDefaultFilterContext(
+            defaultDateFilterConfig,
+            true,
+        ) as IDashboard["filterContext"],
+    };
+
+    const customizationFnsWithPreload: PrivateDashboardContext = {
+        preloadedDashboard: dashboardWithDefaults,
+    };
 
     describe("maximum timeout", () => {
         const asyncRenderRequestedTimeout = 200;
@@ -23,6 +48,7 @@ describe("renderingWorker", () => {
                         maxTimeout,
                         correlationIdGenerator: () => "correlation",
                     },
+                    customizationFns: customizationFnsWithPreload,
                 })) as any,
         );
 
@@ -50,6 +76,7 @@ describe("renderingWorker", () => {
                         maxTimeout,
                         correlationIdGenerator: () => "correlation",
                     },
+                    customizationFns: customizationFnsWithPreload,
                 })) as any,
         );
 

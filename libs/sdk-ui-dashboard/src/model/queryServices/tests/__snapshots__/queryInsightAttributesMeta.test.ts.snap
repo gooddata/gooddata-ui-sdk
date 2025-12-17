@@ -19,6 +19,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "attr.f_product.product",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
@@ -36,6 +39,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_product.product.name",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
@@ -54,6 +60,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_product.product.image",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Image",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
@@ -72,16 +81,26 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_product.product.link",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Link",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
         },
       ],
+      "drillToAttributeLink": {
+        "identifier": "label.f_product.product.link",
+        "type": "displayForm",
+      },
       "id": "attr.f_product.product",
       "ref": {
         "identifier": "attr.f_product.product",
         "type": "attribute",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product",
       "type": "attribute",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
@@ -101,6 +120,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "label.f_product.product.name",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Name",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
@@ -143,6 +165,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "dt_closedate_timestamp.year",
             "type": "displayForm",
           },
+          "tags": [
+            "Closed",
+          ],
           "title": "Closed - Year",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_closedate_timestamp.year",
@@ -153,6 +178,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "dt_closedate_timestamp.year",
         "type": "attribute",
       },
+      "tags": [
+        "Closed",
+      ],
       "title": "Closed - Year",
       "type": "attribute",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/dt_closedate_timestamp.year",
@@ -173,6 +201,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "dt_oppcreated_timestamp.year",
             "type": "displayForm",
           },
+          "tags": [
+            "Created",
+          ],
           "title": "Created - Year",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_oppcreated_timestamp.year",
@@ -183,6 +214,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "dt_oppcreated_timestamp.year",
         "type": "attribute",
       },
+      "tags": [
+        "Created",
+      ],
       "title": "Created - Year",
       "type": "attribute",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/dt_oppcreated_timestamp.year",
@@ -202,6 +236,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "dt_closedate_timestamp.year",
         "type": "displayForm",
       },
+      "tags": [
+        "Closed",
+      ],
       "title": "Closed - Year",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_closedate_timestamp.year",
@@ -219,6 +256,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "dt_oppcreated_timestamp.year",
         "type": "displayForm",
       },
+      "tags": [
+        "Created",
+      ],
       "title": "Created - Year",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/dt_oppcreated_timestamp.year",
@@ -260,6 +300,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "attr.f_product.product",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
@@ -277,6 +320,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_product.product.name",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
@@ -295,6 +341,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_product.product.image",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Image",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
@@ -313,16 +362,26 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_product.product.link",
             "type": "displayForm",
           },
+          "tags": [
+            "product",
+          ],
           "title": "Product Link",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
         },
       ],
+      "drillToAttributeLink": {
+        "identifier": "label.f_product.product.link",
+        "type": "displayForm",
+      },
       "id": "attr.f_product.product",
       "ref": {
         "identifier": "attr.f_product.product",
         "type": "attribute",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product",
       "type": "attribute",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
@@ -343,6 +402,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "f_owner.department_id",
             "type": "displayForm",
           },
+          "tags": [
+            "owner",
+          ],
           "title": "Department",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.department_id",
@@ -361,16 +423,26 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "f_owner.department_id.departmenthyperlink",
             "type": "displayForm",
           },
+          "tags": [
+            "owner",
+          ],
           "title": "Department hyperlink",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.department_id.departmenthyperlink",
         },
       ],
+      "drillToAttributeLink": {
+        "identifier": "f_owner.department_id.departmenthyperlink",
+        "type": "displayForm",
+      },
       "id": "f_owner.department_id",
       "ref": {
         "identifier": "f_owner.department_id",
         "type": "attribute",
       },
+      "tags": [
+        "owner",
+      ],
       "title": "Department",
       "type": "attribute",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/f_owner.department_id",
@@ -391,6 +463,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "attr.f_stage.stagename",
             "type": "displayForm",
           },
+          "tags": [
+            "Stage",
+          ],
           "title": "Stage Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_stage.stagename",
@@ -408,6 +483,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_stage.stagename.stagename",
             "type": "displayForm",
           },
+          "tags": [
+            "Stage",
+          ],
           "title": "Stage Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_stage.stagename.stagename",
@@ -425,6 +503,9 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "label.f_stage.stagename.order",
             "type": "displayForm",
           },
+          "tags": [
+            "Stage",
+          ],
           "title": "Order",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_stage.stagename.order",
@@ -435,6 +516,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "attr.f_stage.stagename",
         "type": "attribute",
       },
+      "tags": [
+        "Stage",
+      ],
       "title": "Stage Name",
       "type": "attribute",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_stage.stagename",
@@ -442,6 +526,26 @@ exports[`query insight attributes meta > should return metadata for insight with
     {
       "description": "Region",
       "displayForms": [
+        {
+          "attribute": {
+            "identifier": "f_owner.region_id",
+            "type": "attribute",
+          },
+          "description": "Region",
+          "id": "f_owner.region_id",
+          "isDefault": true,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "f_owner.region_id",
+            "type": "displayForm",
+          },
+          "tags": [
+            "owner",
+          ],
+          "title": "Region",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id",
+        },
         {
           "attribute": {
             "identifier": "f_owner.region_id",
@@ -456,33 +560,26 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "f_owner.region_id.regionhyperlink",
             "type": "displayForm",
           },
+          "tags": [
+            "owner",
+          ],
           "title": "Region hyperlink",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id.regionhyperlink",
         },
-        {
-          "attribute": {
-            "identifier": "f_owner.region_id",
-            "type": "attribute",
-          },
-          "description": "Region",
-          "id": "f_owner.region_id",
-          "isDefault": true,
-          "isPrimary": true,
-          "ref": {
-            "identifier": "f_owner.region_id",
-            "type": "displayForm",
-          },
-          "title": "Region",
-          "type": "displayForm",
-          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id",
-        },
       ],
+      "drillToAttributeLink": {
+        "identifier": "f_owner.region_id.regionhyperlink",
+        "type": "displayForm",
+      },
       "id": "f_owner.region_id",
       "ref": {
         "identifier": "f_owner.region_id",
         "type": "attribute",
       },
+      "tags": [
+        "owner",
+      ],
       "title": "Region",
       "type": "attribute",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/f_owner.region_id",
@@ -502,6 +599,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "label.f_product.product.name",
         "type": "displayForm",
       },
+      "tags": [
+        "product",
+      ],
       "title": "Product Name",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
@@ -519,6 +619,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "f_owner.department_id",
         "type": "displayForm",
       },
+      "tags": [
+        "owner",
+      ],
       "title": "Department",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.department_id",
@@ -536,6 +639,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "attr.f_stage.stagename",
         "type": "displayForm",
       },
+      "tags": [
+        "Stage",
+      ],
       "title": "Stage Name",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_stage.stagename",
@@ -553,6 +659,9 @@ exports[`query insight attributes meta > should return metadata for insight with
         "identifier": "f_owner.region_id",
         "type": "displayForm",
       },
+      "tags": [
+        "owner",
+      ],
       "title": "Region",
       "type": "displayForm",
       "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id",

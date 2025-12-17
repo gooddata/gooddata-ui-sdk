@@ -6,6 +6,7 @@ import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@goo
 import {
     convertAttributeToCatalogItem,
     convertDashboardToCatalogItem,
+    convertDataSetToCatalogItem,
     convertFactToCatalogItem,
     convertInsightToCatalogItem,
     convertMeasureToCatalogItem,
@@ -105,6 +106,14 @@ async function loadObjectDefinition(
                     },
                 )
                 .then(convertAttributeToCatalogItem);
+        case "dataSet":
+            return workspace
+                .datasets()
+                .getDataset({
+                    type: "dataSet",
+                    identifier: id,
+                })
+                .then(convertDataSetToCatalogItem);
         case "analyticalDashboard":
             return workspace
                 .dashboards()

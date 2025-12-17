@@ -203,6 +203,7 @@ export function useEditAlert({
                     widget!,
                     insight!,
                     commonDateFilterId,
+                    true,
                 ),
                 supportedMeasures,
                 defaultMeasure,
@@ -492,6 +493,7 @@ export function useEditAlert({
                     widget,
                     insight,
                     commonDateFilterId,
+                    true,
                 );
                 const visibleFilters = getVisibleFiltersByFilters(
                     filters,

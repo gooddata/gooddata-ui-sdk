@@ -10,6 +10,8 @@ import {
     limitingDateFilters,
     limitingMeasures,
     newTestAttributeFilterHandler,
+    newTestAttributeFilterHandlerWithAttributeFilter,
+    positiveAttributeFilterDefaultDF,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import * as elements from "../internal/redux/elements/loadElements.js";
@@ -17,7 +19,9 @@ import * as elements from "../internal/redux/elements/loadElements.js";
 describe("AttributeFilterHandler", () => {
     it("loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback", async () => {
         const onLoadNextElementsPageStart = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
@@ -34,7 +38,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadNextElementsPage() should not trigger onLoadNextElementsPageStart() callback, when all elements are loaded", async () => {
         const onLoadNextElementsPageStart = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -49,7 +55,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadNextElementsPage() that was successful should trigger onLoadNextElementsPageSuccess() callback", async () => {
         const onLoadNextElementsPageSuccess = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
@@ -66,7 +74,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadNextElementsPage() that failed should trigger onLoadNextElementsPageError() callback", async () => {
         const onLoadNextElementsPageError = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
@@ -86,7 +96,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadNextElementsPage() that was canceled by another loadNextElementsPage() call should trigger onLoadNextElementsPageCancel() callback", async () => {
         const onLoadNextElementsPageCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
@@ -104,7 +116,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadNextElementsPage() that was canceled by cancelLoadNextElementsLoad() call should trigger onLoadNextElementsPageCancel() callback", async () => {
         const onLoadNextElementsPageCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
@@ -120,13 +134,17 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if it's called before the initialization", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         expect(attributeFilterHandler.loadNextElementsPage).toThrowErrorMatchingSnapshot();
     });
 
     it("loadNextElementsPage() should throw error if it's called and there is still running loadInitialElementsPage()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -137,7 +155,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if order() was set before the load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -148,7 +168,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if limit() was set before the load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -158,7 +180,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if search() was set before the load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -168,7 +192,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if setLimitingAttributeFilters() was set before the load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -178,7 +204,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if setLimitingMeasures() was set before the load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -189,7 +217,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadNextElementsPage() should throw error if setLimitingValidationItems() was set before the load", async () => {
         const metricRefs = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -199,7 +229,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadNextElementsPage() should throw error if setLimitingDateFilters() was set before the load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -209,7 +241,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getNextElementsPageStatus() should return proper status for successful load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         expect(attributeFilterHandler.getNextElementsPageStatus()).toMatchSnapshot("before the load");
 
@@ -240,7 +274,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getNextElementsPageError() should return error", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();

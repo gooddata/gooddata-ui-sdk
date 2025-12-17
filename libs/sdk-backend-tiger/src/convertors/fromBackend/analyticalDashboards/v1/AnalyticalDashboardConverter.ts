@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { updateWith } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
@@ -106,7 +107,7 @@ export function convertDashboard(
         filterContext,
         dateFilterConfig,
         layout,
-        dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
+        dataSets: included?.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet)) ?? [],
     };
 }
 

@@ -1688,6 +1688,11 @@ export interface IDataset {
     dataset: IDatasetBody;
 }
 
+// @beta
+export type IDataSetAttributeMetadataObject = IMetadataObject & {
+    type: "attribute";
+};
+
 // @public
 export interface IDatasetBody {
     // (undocumented)
@@ -1720,6 +1725,9 @@ export interface IDatasetLoadInfo {
 
 // @public
 export interface IDataSetMetadataObject extends IMetadataObject {
+    // @beta
+    attributes?: IDataSetAttributeMetadataObject[];
+    isLocked?: boolean;
     // (undocumented)
     type: "dataSet";
 }

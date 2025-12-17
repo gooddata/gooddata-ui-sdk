@@ -5,6 +5,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import type {
     IAttributesQueryResult,
     IDashboardsQueryResult,
+    IDatasetsQueryResult,
     IFactsQueryResult,
     IInsightsQueryResult,
     IMeasuresQueryResult,
@@ -14,6 +15,7 @@ import { convertEntityToCatalogItem } from "./converter.js";
 import {
     getAttributesQuery,
     getDashboardsQuery,
+    getDateDatasetsQuery,
     getFactsQuery,
     getInsightsQuery,
     getMetricsQuery,
@@ -159,6 +161,12 @@ function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOption
             if (types.includes(ObjectTypes.FACT) || types.length === 0) {
                 promises.push({ query: () => getFactsQuery(queryOptions).query(), type: ObjectTypes.FACT });
             }
+            if (types.includes(ObjectTypes.DATASET) || types.length === 0) {
+                promises.push({
+                    query: () => getDateDatasetsQuery(queryOptions).query(),
+                    type: ObjectTypes.DATASET,
+                });
+            }
         }
         return promises;
     }, [queryOptions, types]);
@@ -172,6 +180,7 @@ function useFeedCache() {
             | IFactsQueryResult
             | IInsightsQueryResult
             | IAttributesQueryResult
+            | IDatasetsQueryResult
         )[]
     >([]);
     const initialized = useRef(false);
@@ -374,6 +383,7 @@ function getTotalCountByType(endpoints: ReturnType<typeof useEndpoints>, totalCo
         [ObjectTypes.METRIC]: 0,
         [ObjectTypes.ATTRIBUTE]: 0,
         [ObjectTypes.FACT]: 0,
+        [ObjectTypes.DATASET]: 0,
     };
 
     endpoints.forEach((endpoint, idx) => {

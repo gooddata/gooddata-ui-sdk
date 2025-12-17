@@ -185,7 +185,7 @@ export interface IAttributesQuery {
      * @param filter - filter to apply
      * @returns attributes query
      */
-    withFilter(filter: IFilterBaseOptions): IAttributesQuery;
+    withFilter(filter: IAttributesQueryFilterOptions): IAttributesQuery;
 
     /**
      * Sets sorting for the query.
@@ -235,3 +235,17 @@ export interface IAttributesQuery {
  * @public
  */
 export type IAttributesQueryResult = IPagedResource<IAttributeMetadataObject>;
+
+/**
+ * Attributes query filter options.
+ *
+ * @beta
+ */
+export interface IAttributesQueryFilterOptions extends IFilterBaseOptions {
+    /**
+     * Excludes date dataset attributes from results.
+     *
+     * @beta
+     */
+    excludeDateAttributes?: boolean;
+}

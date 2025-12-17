@@ -204,3 +204,13 @@ $dialog_width: 250px;
         text-align: right;
     }
 }
+
+.gd-mvf-preview {
+    font-size: 12px;
+    padding: 5px 10px 10px;
+
+    .gd-mvf-preview-content {
+        border-top: 1px solid variables.$gd-border-color;
+        padding-top: 10px;
+    }
+}

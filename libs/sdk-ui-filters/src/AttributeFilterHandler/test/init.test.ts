@@ -3,7 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type Matcher, suppressConsole } from "@gooddata/util";
 
-import { newTestAttributeFilterHandler } from "./fixtures.js";
+import {
+    newTestAttributeFilterHandler,
+    newTestAttributeFilterHandlerWithAttributeFilter,
+    positiveAttributeFilterDefaultDF,
+} from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 
 describe("AttributeFilterHandler", () => {
@@ -20,7 +24,9 @@ describe("AttributeFilterHandler", () => {
 
     it("init() should trigger onInitStart() callback", async () => {
         const onInitStart = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.onInitStart(onInitStart);
         attributeFilterHandler.init("start");
@@ -33,7 +39,9 @@ describe("AttributeFilterHandler", () => {
 
     it("init() that was successful should trigger onInitSuccess() callback", async () => {
         const onInitSuccess = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.onInitSuccess(onInitSuccess);
         attributeFilterHandler.init("success");
@@ -59,7 +67,9 @@ describe("AttributeFilterHandler", () => {
 
     it("init() that was canceled should trigger onInitCancel() callback", async () => {
         const onInitCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.onInitCancel(onInitCancel);
 
@@ -73,7 +83,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getInitStatus() should return proper status for successful load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         expect(attributeFilterHandler.getInitStatus()).toMatchSnapshot("before the load");
 
@@ -111,7 +123,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getElementsByKey() should return selection elements after successful initialization", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
 

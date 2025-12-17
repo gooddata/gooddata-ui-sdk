@@ -21,9 +21,13 @@ function initializeStores(): DefinitionStores | undefined {
     const rootDir = process.env[StoreEnvVar];
 
     if (!rootDir) {
-        console.warn(
-            `The smoke-and-capture suite is not configured with store root. The suite will run but will not store any recording definitions.`,
-        );
+        const isTestRun = process.env["NODE_ENV"] === "test" || process.env["VITEST"] !== undefined;
+
+        if (!isTestRun) {
+            console.warn(
+                `The smoke-and-capture suite is not configured with store root. The suite will run but will not store any recording definitions.`,
+            );
+        }
 
         return;
     }

@@ -301,7 +301,7 @@ export function convertDashboard(
         evaluationFrequency,
         sectionHeadersDateDataSet,
         tabs,
-        dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
+        dataSets: included?.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet)) ?? [],
     };
 }
 

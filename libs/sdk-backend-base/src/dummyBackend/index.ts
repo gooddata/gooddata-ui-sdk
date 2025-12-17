@@ -7,6 +7,7 @@ import {
     type AutomationType,
     type ExplainType,
     type FilterWithResolvableElements,
+    type FiltersByTab,
     type IAnalyticalBackend,
     type IAnalyticalBackendConfig,
     type IAnalyticalWorkspace,
@@ -14,6 +15,7 @@ import {
     type IAttributeHierarchiesService,
     type IAttributeWithReferences,
     type IAttributesQuery,
+    type IAttributesQueryResult,
     type IAuthenticatedPrincipal,
     type IAuthenticationProvider,
     type IAutomationsQuery,
@@ -23,9 +25,20 @@ import {
     type IClusteringResult,
     type ICollectionItemsConfig,
     type ICollectionItemsResult,
+    type IDashboardExportImageOptions,
+    type IDashboardExportPdfOptions,
+    type IDashboardExportPresentationOptions,
+    type IDashboardExportRawOptions,
+    type IDashboardExportTabularOptions,
+    type IDashboardReferences,
+    type IDashboardWithReferences,
+    type IDashboardsQuery,
+    type IDashboardsQueryResult,
     type IDataFiltersService,
     type IDataSourcesService,
     type IDataView,
+    type IDatasetsQuery,
+    type IDatasetsQueryResult,
     type IDateFilterConfigsQuery,
     type IElementsQuery,
     type IElementsQueryAttributeFilter,
@@ -39,6 +52,8 @@ import {
     type IExplainProvider,
     type IExportConfig,
     type IExportResult,
+    type IFactsQuery,
+    type IFactsQueryResult,
     type IFilterElementsQuery,
     type IForecastConfig,
     type IForecastResult,
@@ -47,10 +62,16 @@ import {
     type IGeoService,
     type IGetAutomationOptions,
     type IGetAutomationsOptions,
+    type IGetDashboardOptions,
+    type IGetDashboardPluginOptions,
+    type IGetScheduledMailOptions,
+    type IInsightsQuery,
+    type IInsightsQueryResult,
     type IMeasureExpressionToken,
     type IMeasureKeyDrivers,
     type IMeasureReferencing,
     type IMeasuresQuery,
+    type IMeasuresQueryResult,
     type IOrganization,
     type IOrganizationAutomationService,
     type IOrganizationLlmEndpointsService,
@@ -69,6 +90,8 @@ import {
     type ISemanticSearchQuery,
     type IUserService,
     type IUserWorkspaceSettings,
+    type IWidgetAlertCount,
+    type IWidgetReferences,
     type IWorkspaceAccessControlService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
@@ -96,6 +119,8 @@ import {
     type IWorkspacesQueryFactory,
     NoDataError,
     NotSupported,
+    type SupportedDashboardReferenceTypes,
+    type SupportedWidgetReferenceTypes,
     type ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -103,6 +128,7 @@ import {
     type CatalogItemType,
     type DashboardFiltersApplyMode,
     type DimensionGenerator,
+    type FilterContextItem,
     type IAbsoluteDateFilter,
     type IAlertDefault,
     type IAttributeDisplayFormMetadataObject,
@@ -120,10 +146,30 @@ import {
     type ICatalogMeasure,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
+    type IDashboard,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardBase,
+    type IDashboardDefinition,
+    type IDashboardFilterView,
+    type IDashboardFilterViewSaveRequest,
+    type IDashboardObjectIdentity,
+    type IDashboardPermissions,
+    type IDashboardPlugin,
+    type IDashboardPluginDefinition,
+    type IDataSetMetadataObject,
+    type IDataset,
+    type IDateFilter,
     type IDimension,
     type IExecutionConfig,
     type IExecutionDefinition,
+    type IExistingDashboard,
+    type IFactMetadataObject,
+    type IFilter,
+    type IFilterContext,
+    type IFilterContextDefinition,
+    type IInsight,
     type IInsightDefinition,
+    type IListedDashboard,
     type ILlmEndpointBase,
     type ILlmEndpointOpenAI,
     type IMeasure,
@@ -137,10 +183,15 @@ import {
     type INotificationChannelMetadataObject,
     type IOrganizationDescriptor,
     type IRelativeDateFilter,
+    type IScheduledMail,
+    type IScheduledMailDefinition,
     type ISeparators,
     type ISortItem,
     type IThemeDefinition,
     type IThemeMetadataObject,
+    type IWidget,
+    type IWidgetAlert,
+    type IWidgetAlertDefinition,
     type ObjRef,
     defFingerprint,
     defWithBuckets,
@@ -367,7 +418,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             return new DummyWorkspaceMeasuresService(workspace);
         },
         facts(): IWorkspaceFactsService {
-            throw new NotSupported("not supported");
+            return new DummyWorkspaceFactsService(workspace);
         },
         keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService {
             throw new NotSupported("not supported");
@@ -376,16 +427,16 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             return new DummyWorkspaceSettingsService(workspace);
         },
         insights(): IWorkspaceInsightsService {
-            throw new NotSupported("not supported");
+            return new DummyWorkspaceInsightsService(workspace);
         },
         dashboards(): IWorkspaceDashboardsService {
-            throw new NotSupported("not supported");
+            return new DummyWorkspaceDashboardsService(workspace);
         },
         styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
         },
         datasets(): IWorkspaceDatasetsService {
-            throw new NotSupported("not supported");
+            return new DummyWorkspaceDatasetsService(workspace);
         },
         permissions(): IWorkspacePermissionsService {
             throw new NotSupported("not supported");
@@ -1323,7 +1374,7 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     }
 
     getAttributesQuery(): IAttributesQuery {
-        throw new NotSupported("not supported");
+        return new DummyAttributesQuery();
     }
 }
 
@@ -1372,7 +1423,7 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     }
 
     getMeasuresQuery(): IMeasuresQuery {
-        throw new NotSupported("not supported");
+        return new DummyMeasuresQuery();
     }
 
     getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject> {
@@ -1394,6 +1445,55 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
 
     getConnectedAttributes(_definition: IMeasure): Promise<ObjRef[]> {
         return Promise.resolve([]);
+    }
+}
+
+class DummyWorkspaceDatasetsService implements IWorkspaceDatasetsService {
+    constructor(public readonly workspace: string) {}
+
+    public async getDatasets(): Promise<IDataset[]> {
+        return [];
+    }
+
+    public async getAllDatasetsMeta(): Promise<IMetadataObject[]> {
+        return [];
+    }
+
+    public getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]> {
+        return Promise.all(refs.map((ref) => this.getDataset(ref)));
+    }
+
+    public async getDataset(ref: ObjRef): Promise<IDataSetMetadataObject> {
+        const id = isIdentifierRef(ref) ? ref.identifier : "dummyDataset";
+
+        return {
+            id,
+            uri: isUriRef(ref) ? ref.uri : `/gdc/md/${id}`,
+            ref,
+            title: "Dummy dataset",
+            description: "Dummy dataset",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            type: "dataSet",
+            isLocked: false,
+        };
+    }
+
+    public async updateDatasetMeta(
+        dataSet: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IDataSetMetadataObject> {
+        const existing = await this.getDataset(dataSet.ref);
+
+        return {
+            ...existing,
+            ...dataSet,
+            type: "dataSet",
+        };
+    }
+
+    public getDatasetsQuery(): IDatasetsQuery {
+        return new DummyDatasetsQuery();
     }
 }
 
@@ -1643,6 +1743,540 @@ class DummyAutomationsQueryResult implements IAutomationsQueryResult {
     }
 
     next(): Promise<IPagedResource<IAutomationMetadataObject>> {
+        throw new NotSupported("not supported");
+    }
+}
+
+function createEmptyPagedResource<T>(): IPagedResource<T> {
+    const emptyPage: IPagedResource<T> = {
+        items: [],
+        limit: 50,
+        offset: 0,
+        totalCount: 0,
+        async next() {
+            return emptyPage;
+        },
+        async goTo() {
+            return emptyPage;
+        },
+        async all() {
+            return [];
+        },
+        async allSorted() {
+            return [];
+        },
+    };
+    return emptyPage;
+}
+
+class DummyDashboardsQuery implements IDashboardsQuery {
+    query(): Promise<IDashboardsQueryResult> {
+        return Promise.resolve(createEmptyPagedResource<IListedDashboard>());
+    }
+
+    withFilter(): IDashboardsQuery {
+        return this;
+    }
+
+    withInclude(): IDashboardsQuery {
+        return this;
+    }
+
+    withMetaInclude(): IDashboardsQuery {
+        return this;
+    }
+
+    withMethod(): IDashboardsQuery {
+        return this;
+    }
+
+    withOrigin(): IDashboardsQuery {
+        return this;
+    }
+
+    withPage(): IDashboardsQuery {
+        return this;
+    }
+
+    withSize(): IDashboardsQuery {
+        return this;
+    }
+
+    withSorting(): IDashboardsQuery {
+        return this;
+    }
+}
+
+class DummyInsightsQuery implements IInsightsQuery {
+    query(): Promise<IInsightsQueryResult> {
+        return Promise.resolve(createEmptyPagedResource<IInsight>());
+    }
+
+    withFilter(): IInsightsQuery {
+        return this;
+    }
+
+    withInclude(): IInsightsQuery {
+        return this;
+    }
+
+    withMethod(): IInsightsQuery {
+        return this;
+    }
+
+    withOrigin(): IInsightsQuery {
+        return this;
+    }
+
+    withPage(): IInsightsQuery {
+        return this;
+    }
+
+    withSize(): IInsightsQuery {
+        return this;
+    }
+
+    withSorting(): IInsightsQuery {
+        return this;
+    }
+}
+
+class DummyFactsQuery implements IFactsQuery {
+    query(): Promise<IFactsQueryResult> {
+        return Promise.resolve(createEmptyPagedResource<IFactMetadataObject>());
+    }
+
+    withFilter(): IFactsQuery {
+        return this;
+    }
+
+    withInclude(): IFactsQuery {
+        return this;
+    }
+
+    withMethod(): IFactsQuery {
+        return this;
+    }
+
+    withOrigin(): IFactsQuery {
+        return this;
+    }
+
+    withPage(): IFactsQuery {
+        return this;
+    }
+
+    withSize(): IFactsQuery {
+        return this;
+    }
+
+    withSorting(): IFactsQuery {
+        return this;
+    }
+}
+
+class DummyAttributesQuery implements IAttributesQuery {
+    query(): Promise<IAttributesQueryResult> {
+        return Promise.resolve(createEmptyPagedResource<IAttributeMetadataObject>());
+    }
+
+    withFilter(): IAttributesQuery {
+        return this;
+    }
+
+    withInclude(): IAttributesQuery {
+        return this;
+    }
+
+    withMethod(): IAttributesQuery {
+        return this;
+    }
+
+    withOrigin(): IAttributesQuery {
+        return this;
+    }
+
+    withPage(): IAttributesQuery {
+        return this;
+    }
+
+    withSize(): IAttributesQuery {
+        return this;
+    }
+
+    withSorting(): IAttributesQuery {
+        return this;
+    }
+}
+
+class DummyMeasuresQuery implements IMeasuresQuery {
+    query(): Promise<IMeasuresQueryResult> {
+        return Promise.resolve(createEmptyPagedResource<IMeasureMetadataObject>());
+    }
+
+    withFilter(): IMeasuresQuery {
+        return this;
+    }
+
+    withInclude(): IMeasuresQuery {
+        return this;
+    }
+
+    withMethod(): IMeasuresQuery {
+        return this;
+    }
+
+    withOrigin(): IMeasuresQuery {
+        return this;
+    }
+
+    withPage(): IMeasuresQuery {
+        return this;
+    }
+
+    withSize(): IMeasuresQuery {
+        return this;
+    }
+
+    withSorting(): IMeasuresQuery {
+        return this;
+    }
+}
+
+class DummyDatasetsQuery implements IDatasetsQuery {
+    query(): Promise<IDatasetsQueryResult> {
+        return Promise.resolve(createEmptyPagedResource<IDataSetMetadataObject>());
+    }
+
+    withFilter(): IDatasetsQuery {
+        return this;
+    }
+
+    withInclude(): IDatasetsQuery {
+        return this;
+    }
+
+    withMethod(): IDatasetsQuery {
+        return this;
+    }
+
+    withOrigin(): IDatasetsQuery {
+        return this;
+    }
+
+    withPage(): IDatasetsQuery {
+        return this;
+    }
+
+    withSize(): IDatasetsQuery {
+        return this;
+    }
+
+    withSorting(): IDatasetsQuery {
+        return this;
+    }
+}
+
+class DummyWorkspaceDashboardsService implements IWorkspaceDashboardsService {
+    constructor(public readonly workspace: string) {}
+
+    getDashboardsQuery(): IDashboardsQuery {
+        return new DummyDashboardsQuery();
+    }
+
+    getDashboards(_options?: IGetDashboardOptions): Promise<IListedDashboard[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getDashboard(
+        _ref: ObjRef,
+        _filterContextRef?: ObjRef,
+        _options?: IGetDashboardOptions,
+    ): Promise<IDashboard> {
+        throw new NotSupported("not supported");
+    }
+
+    getDashboardWithReferences(
+        _ref: ObjRef,
+        _filterContextRef?: ObjRef,
+        _options?: IGetDashboardOptions,
+        _types?: SupportedDashboardReferenceTypes[],
+    ): Promise<IDashboardWithReferences> {
+        throw new NotSupported("not supported");
+    }
+
+    getDashboardReferencedObjects(
+        _dashboard: IDashboard,
+        _types?: SupportedDashboardReferenceTypes[],
+    ): Promise<IDashboardReferences> {
+        throw new NotSupported("not supported");
+    }
+
+    getFilterContextByExportId(
+        _exportId: string,
+        _type: "visual" | "slides" | undefined,
+        _tabId?: string,
+    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> {
+        throw new NotSupported("not supported");
+    }
+
+    createDashboard(_dashboard: IDashboardDefinition): Promise<IDashboard> {
+        throw new NotSupported("not supported");
+    }
+
+    updateDashboard(_dashboard: IDashboard, _updatedDashboard: IDashboardDefinition): Promise<IDashboard> {
+        throw new NotSupported("not supported");
+    }
+
+    updateDashboardMeta(
+        _updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>,
+    ): Promise<IDashboard> {
+        throw new NotSupported("not supported");
+    }
+
+    deleteDashboard(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    exportDashboardToPdf(
+        _ref: ObjRef,
+        _filters?: FilterContextItem[],
+        _filtersByTab?: FiltersByTab,
+        _options?: IDashboardExportPdfOptions,
+    ): Promise<IExportResult> {
+        throw new NotSupported("not supported");
+    }
+
+    exportDashboardToPresentation(
+        _ref: ObjRef,
+        _format: "PDF" | "PPTX",
+        _filters?: FilterContextItem[],
+        _filtersByTab?: FiltersByTab,
+        _options?: IDashboardExportPresentationOptions,
+    ): Promise<IExportResult> {
+        throw new NotSupported("not supported");
+    }
+
+    exportDashboardToImage(
+        _ref: ObjRef,
+        _filters?: FilterContextItem[],
+        _filtersByTab?: FiltersByTab,
+        _options?: IDashboardExportImageOptions,
+    ): Promise<IExportResult> {
+        throw new NotSupported("not supported");
+    }
+
+    exportDashboardToTabular(
+        _ref: ObjRef,
+        _options?: IDashboardExportTabularOptions,
+    ): Promise<IExportResult> {
+        throw new NotSupported("not supported");
+    }
+
+    exportDashboardToCSVRaw(
+        _definition: IExecutionDefinition,
+        _fileName: string,
+        _customOverrides?: IRawExportCustomOverrides,
+        _options?: IDashboardExportRawOptions,
+    ): Promise<IExportResult> {
+        throw new NotSupported("not supported");
+    }
+
+    createScheduledMail(
+        _scheduledMail: IScheduledMailDefinition,
+        _exportFilterContext?: IFilterContextDefinition,
+    ): Promise<IScheduledMail> {
+        throw new NotSupported("not supported");
+    }
+
+    updateScheduledMail(
+        _ref: ObjRef,
+        _scheduledMail: IScheduledMailDefinition,
+        _filterContextRef?: ObjRef,
+    ): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    deleteScheduledMail(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    getScheduledMailsForDashboard(
+        _ref: ObjRef,
+        _options?: IGetScheduledMailOptions,
+    ): Promise<IScheduledMail[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getScheduledMailsCountForDashboard(_ref: ObjRef): Promise<number> {
+        throw new NotSupported("not supported");
+    }
+
+    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getDashboardWidgetAlertsForCurrentUser(_ref: ObjRef): Promise<IWidgetAlert[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getWidgetAlertsCountForWidgets(_refs: ObjRef[]): Promise<IWidgetAlertCount[]> {
+        throw new NotSupported("not supported");
+    }
+
+    createWidgetAlert(_alert: IWidgetAlertDefinition): Promise<IWidgetAlert> {
+        throw new NotSupported("not supported");
+    }
+
+    updateWidgetAlert(_alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert> {
+        throw new NotSupported("not supported");
+    }
+
+    deleteWidgetAlert(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    deleteWidgetAlerts(_refs: ObjRef[]): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    getWidgetReferencedObjects(
+        _widget: IWidget,
+        _types?: SupportedWidgetReferenceTypes[],
+    ): Promise<IWidgetReferences> {
+        throw new NotSupported("not supported");
+    }
+
+    getResolvedFiltersForWidget(
+        _widget: IWidget,
+        _filters: IFilter[],
+        _attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getResolvedFiltersForWidgetWithMultipleDateFilters(
+        _widget: IWidget,
+        _commonDateFilters: IDateFilter[],
+        _otherFilters: IFilter[],
+        _attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getDashboardPlugins(_options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getDashboardPlugin(_ref: ObjRef, _options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin> {
+        throw new NotSupported("not supported");
+    }
+
+    createDashboardPlugin(_plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin> {
+        throw new NotSupported("not supported");
+    }
+
+    deleteDashboardPlugin(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    getDashboardPermissions(_ref: ObjRef): Promise<IDashboardPermissions> {
+        throw new NotSupported("not supported");
+    }
+
+    validateDashboardsExistence(_dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getFilterViewsForCurrentUser(_dashboardRef: ObjRef): Promise<IDashboardFilterView[]> {
+        throw new NotSupported("not supported");
+    }
+
+    createFilterView(_filterView: IDashboardFilterViewSaveRequest): Promise<IDashboardFilterView> {
+        throw new NotSupported("not supported");
+    }
+
+    deleteFilterView(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    setFilterViewAsDefault(_ref: ObjRef, _isDefault: boolean): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+}
+
+class DummyWorkspaceInsightsService implements IWorkspaceInsightsService {
+    constructor(public readonly workspace: string) {}
+
+    getInsightsQuery(): IInsightsQuery {
+        return new DummyInsightsQuery();
+    }
+
+    getInsights(): Promise<IInsightsQueryResult> {
+        throw new NotSupported("not supported");
+    }
+
+    getInsight(): Promise<IInsight> {
+        throw new NotSupported("not supported");
+    }
+
+    getInsightWithCatalogItems(): Promise<never> {
+        throw new NotSupported("not supported");
+    }
+
+    createInsight(): Promise<IInsight> {
+        throw new NotSupported("not supported");
+    }
+
+    updateInsight(): Promise<IInsight> {
+        throw new NotSupported("not supported");
+    }
+
+    updateInsightMeta(): Promise<IInsight> {
+        throw new NotSupported("not supported");
+    }
+
+    deleteInsight(): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
+    getInsightReferencedObjects(): Promise<never> {
+        throw new NotSupported("not supported");
+    }
+
+    getInsightReferencingObjects(): Promise<never> {
+        throw new NotSupported("not supported");
+    }
+
+    getInsightWithAddedFilters(): Promise<never> {
+        throw new NotSupported("not supported");
+    }
+
+    getVisualizationClass(): Promise<never> {
+        throw new NotSupported("not supported");
+    }
+
+    getVisualizationClasses(): Promise<never> {
+        throw new NotSupported("not supported");
+    }
+}
+
+class DummyWorkspaceFactsService implements IWorkspaceFactsService {
+    constructor(public readonly workspace: string) {}
+
+    getFactsQuery(): IFactsQuery {
+        return new DummyFactsQuery();
+    }
+
+    getFactDatasetMeta(): Promise<IMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    getFact(): Promise<IFactMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    updateFactMeta(): Promise<IFactMetadataObject> {
         throw new NotSupported("not supported");
     }
 }
