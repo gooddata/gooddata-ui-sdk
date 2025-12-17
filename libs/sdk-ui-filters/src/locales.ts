@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { type MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -61,6 +62,14 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     NOT_EQUAL_TO: { id: "mvf.operator.notEqualTo" },
     BETWEEN: { id: "mvf.operator.between" },
     NOT_BETWEEN: { id: "mvf.operator.notBetween" },
+    GREATER_THAN_WITH_VALUE: { id: "mvf.operator.greaterThan.withValue" },
+    GREATER_THAN_OR_EQUAL_TO_WITH_VALUE: { id: "mvf.operator.greaterThanOrEqualTo.withValue" },
+    LESS_THAN_WITH_VALUE: { id: "mvf.operator.lessThan.withValue" },
+    LESS_THAN_OR_EQUAL_TO_WITH_VALUE: { id: "mvf.operator.lessThanOrEqualTo.withValue" },
+    EQUAL_TO_WITH_VALUE: { id: "mvf.operator.equalTo.withValue" },
+    NOT_EQUAL_TO_WITH_VALUE: { id: "mvf.operator.notEqualTo.withValue" },
+    BETWEEN_WITH_VALUE: { id: "mvf.operator.between.withValue" },
+    NOT_BETWEEN_WITH_VALUE: { id: "mvf.operator.notBetween.withValue" },
     thisMinute: { id: "filters.thisMinute.title" },
     lastMinute: { id: "filters.lastMinute.title" },
     nextMinute: { id: "filters.nextMinute.title" },

@@ -54,6 +54,28 @@ export function buildListClause(
 }
 
 /**
+ * Builds an equality clause if value is provided.
+ * @internal
+ */
+export function buildIsClause(field: string, value?: string): string | undefined {
+    if (!value) {
+        return undefined;
+    }
+    return `${field}==${formatValue(value)}`;
+}
+
+/**
+ * Builds an "is null" clause if the value is provided.
+ * @internal
+ */
+export function buildIsNullClause(field: string, value?: boolean): string | undefined {
+    if (value === undefined) {
+        return undefined;
+    }
+    return `${field}=isnull=${value}`;
+}
+
+/**
  * Builds a case-insensitive contains clause for a single string value.
  * @internal
  */

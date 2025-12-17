@@ -11,6 +11,7 @@ export const ObjectTypes = {
     METRIC: "measure",
     ATTRIBUTE: "attribute",
     FACT: "fact",
+    DATASET: "dataSet",
 } as const satisfies Record<string, ObjectType>;
 
 /**
@@ -22,4 +23,5 @@ export const OBJECT_TYPE_ORDER: ObjectType[] = [
     ObjectTypes.METRIC,
     ObjectTypes.ATTRIBUTE,
     ObjectTypes.FACT,
+    ObjectTypes.DATASET,
 ];

@@ -4,16 +4,21 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import {
+    emptyPositiveAttributeFilterDefaultDF,
     limitingAttributeFilters,
     limitingDateFilters,
     limitingMeasures,
-    newTestAttributeFilterHandler,
+    newTestAttributeFilterHandlerWithAttributeFilter,
+    staticElements,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 
 describe("AttributeFilterHandler", () => {
     it("staticElements option should replace loaded elements on init", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimit(5);
         attributeFilterHandler.init();
@@ -23,7 +28,10 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements option should work properly with loadNextElementsPage() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimit(5);
         attributeFilterHandler.init();
@@ -36,14 +44,20 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements option with setLimitingAttributeFilters() option should throw error on init() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimitingAttributeFilters(limitingAttributeFilters);
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
     it("staticElements option with setLimitingMeasures() option should throw error on init() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimitingMeasures(limitingMeasures);
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
@@ -51,21 +65,30 @@ describe("AttributeFilterHandler", () => {
 
     it("staticElements option with setLimitingValidationItems() option should throw error on init() call", async () => {
         const metricRefs = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimitingValidationItems(metricRefs);
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
     it("staticElements option with setLimitingDateFilters() option should throw error on init() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimitingDateFilters(limitingDateFilters);
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
     it("staticElements option with setLimitingAttributeFilters() option should throw error on loadInitialElementsPage() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -75,7 +98,10 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements option with setLimitingMeasures() option should throw error on loadInitialElementsPage() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -86,7 +112,10 @@ describe("AttributeFilterHandler", () => {
 
     it("staticElements option with setLimitingValidationItems() option should throw error on loadInitialElementsPage() call", async () => {
         const metricRefs = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -96,7 +125,10 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements option with setLimitingDateFilters() option should throw error on loadInitialElementsPage() call", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -106,7 +138,10 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements should be filtered by order()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimit(5);
         attributeFilterHandler.setOrder("desc");
@@ -117,7 +152,10 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements should be filtered by limit()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setLimit(3);
         attributeFilterHandler.init();
@@ -127,7 +165,10 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("staticElements should be filtered by search()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("static");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            emptyPositiveAttributeFilterDefaultDF,
+            { staticElements },
+        );
 
         attributeFilterHandler.setSearch("Element 0");
         attributeFilterHandler.init();

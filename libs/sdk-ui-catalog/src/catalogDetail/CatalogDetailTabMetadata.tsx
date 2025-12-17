@@ -7,6 +7,7 @@ import type { ISeparators, MetricType } from "@gooddata/sdk-model";
 import { UiDate, UiIcon, type UiTagDef, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
+import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
 import { CatalogDetailTags } from "./CatalogDetailTags.js";
 import type { ICatalogItem } from "../catalogItem/index.js";
@@ -43,13 +44,21 @@ export function CatalogDetailTabMetadata({
 }: Props) {
     const intl = useIntl();
     const isMeasure = item.type === "measure";
+    const isDataSet = item.type === "dataSet";
+    const granularities = item.dataSet?.attributes ?? [];
 
     return (
         <div className="gd-analytics-catalog-detail__tab-content">
-            {item.dataSet ? (
+            {item.dataSet && !isDataSet ? (
                 <CatalogDetailContentRow
                     title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}
                     content={item.dataSet.title}
+                />
+            ) : null}
+            {isDataSet && granularities.length > 0 ? (
+                <CatalogDetailContentRow
+                    title={<FormattedMessage id="analyticsCatalog.column.title.granularities" />}
+                    content={<CatalogDetailGranularities granularities={granularities} />}
                 />
             ) : null}
             <CatalogDetailContentRow

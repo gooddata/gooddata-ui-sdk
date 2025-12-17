@@ -1,7 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
+import { type IDashboard, idRef } from "@gooddata/sdk-model";
+
+import { createDefaultFilterContext } from "../../../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../../../_staging/dateFilterConfig/defaultConfig.js";
 import { initializeDashboard } from "../../../../commands/index.js";
 import { type DashboardInitialized } from "../../../../events/index.js";
 import { selectConfig } from "../../../../store/config/configSelectors.js";
@@ -14,12 +18,35 @@ import {
 } from "../../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../../../store/tabs/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+    TestCorrelation,
+} from "../../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { type PrivateDashboardContext } from "../../../../types/commonTypes.js";
+import { EmptyDashboardLayout } from "../../../dashboard/common/dashboardInitialize.js";
 
 describe("initialize dashboard handler", () => {
+    const dashboardWithDefaults: IDashboard = {
+        ...EmptyDashboardWithReferences.dashboard,
+        ref: idRef(EmptyDashboardIdentifier),
+        identifier: EmptyDashboardIdentifier,
+        layout: EmptyDashboardLayout,
+        filterContext: createDefaultFilterContext(
+            defaultDateFilterConfig,
+            true,
+        ) as IDashboard["filterContext"],
+    };
+
+    const customizationFnsWithPreload: PrivateDashboardContext = {
+        preloadedDashboard: dashboardWithDefaults,
+    };
+
     it("should emit event when dashboard successfully loaded", async () => {
-        const tester = DashboardTester.forRecording(EmptyDashboardIdentifier);
+        const tester = DashboardTester.forRecording(EmptyDashboardIdentifier, {
+            customizationFns: customizationFnsWithPreload,
+        });
 
         tester.dispatch(initializeDashboard());
         const event: DashboardInitialized = await tester.waitFor("GDC.DASH/EVT.INITIALIZED");
@@ -47,6 +74,7 @@ describe("initialize dashboard handler", () => {
                 maxTimeout: 60000,
                 correlationIdGenerator: () => "renderCorrelation",
             },
+            customizationFns: customizationFnsWithPreload,
         });
 
         tester.dispatch(initializeDashboard());
@@ -106,11 +134,20 @@ describe("initialize dashboard handler", () => {
 
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
+        let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
         beforeAll(async () => {
+            // we expect the errors here as the tests are in fact checking that
+            // the missing layout or filtercontext are added
+            consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
             await preloadedTesterFactory((tester) => {
                 Tester = tester;
             }, EmptyDashboardIdentifier);
+        });
+
+        afterAll(() => {
+            consoleErrorSpy.mockRestore();
         });
 
         it("should add default layout for an empty dashboard", () => {

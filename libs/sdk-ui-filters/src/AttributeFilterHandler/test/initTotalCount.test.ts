@@ -2,12 +2,17 @@
 
 import { describe, expect, it, vi } from "vitest";
 
-import { newTestAttributeFilterHandler } from "./fixtures.js";
+import {
+    newTestAttributeFilterHandlerWithAttributeFilter,
+    positiveAttributeFilterDefaultDF,
+} from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 
 describe("AttributeFilterHandler", () => {
     it("initTotalCount() should trigger onInitStart() callback", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init("start");
 
@@ -23,7 +28,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("initTotalCount() should set status", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init("start");
 
@@ -39,7 +46,9 @@ describe("AttributeFilterHandler", () => {
     it("initTotalCount() should call success callback", async () => {
         const onInitTotalCountSuccess = vi.fn();
 
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init("start");
 
@@ -57,7 +66,9 @@ describe("AttributeFilterHandler", () => {
     it("initTotalCount() should call cancel callback", async () => {
         const onInitTotalCountCancel = vi.fn();
 
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init("start");
 

@@ -722,6 +722,7 @@ export type {
     AttributeDisplayFormType,
     IAttributeMetadataObject,
     IDataSetMetadataObject,
+    IDataSetAttributeMetadataObject,
     IVariableMetadataObject,
     IFactMetadataObject,
     IMetadataObjectDefinition,

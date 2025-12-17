@@ -146,15 +146,28 @@ $content-font-size: 14px;
         }
     }
 
+    &__granularities {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 4px;
+
+        &__item {
+            margin: 0;
+            padding: 0;
+            line-height: 20px;
+        }
+    }
+
     &__title-cell {
         display: flex;
         gap: 5px;
-        align-items: center;
         color: kit-variables.$gd-color-link;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
-        line-height: normal;
+        line-height: 20px;
 
         .gd-ui-kit-tooltip__anchor {
             display: flex;

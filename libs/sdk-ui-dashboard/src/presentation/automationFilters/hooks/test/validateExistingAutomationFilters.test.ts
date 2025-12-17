@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -12,7 +13,6 @@ import {
     idRef,
     isAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
-    newAllTimeFilter,
     newPositiveAttributeFilter,
     newRelativeDashboardDateFilter,
     newRelativeDateFilter,
@@ -138,7 +138,6 @@ const changedAttributeFilterContextItem: FilterContextItem = {
     },
 };
 
-const commonInsightAllTimeDateFilter = newAllTimeFilter(commonDataSetRef);
 const commonInsightNonAllTimeDateFilter = newRelativeDateFilter(commonDataSetRef, "GDC.time.date", 1, 2);
 const nonCommonInsightNonAllTimeDateFilter = newRelativeDateFilter(
     nonCommonDataSetRef,
@@ -146,21 +145,10 @@ const nonCommonInsightNonAllTimeDateFilter = newRelativeDateFilter(
     1,
     2,
 );
-const nonCommonInsightChangedNonAllTimeDateFilter = newRelativeDateFilter(
-    nonCommonDataSetRef,
-    "GDC.time.date",
-    3,
-    4,
-);
 
 const insightAttributeFilter = newPositiveAttributeFilter(
     idRef("attribute", "attribute"),
     ["element"],
-    "insightAttribute",
-);
-const changedInsightAttributeFilter = newPositiveAttributeFilter(
-    idRef("attribute", "attribute"),
-    ["changedElement"],
     "insightAttribute",
 );
 
@@ -829,241 +817,6 @@ describe("validateExistingAutomationFilters", () => {
 
             expect(isValid).toBe(false);
             expect(ignoredFilterIsAppliedInSavedFilters).toBe(true);
-        });
-    });
-
-    //
-    // Insight filters
-    //
-
-    describe("insight filters", () => {
-        it("should be valid with empty insight filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight,
-            });
-
-            expect(isValid).toBe(true);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(false);
-            expect(insightFilterIsMissingInSavedFilters).toBe(false);
-        });
-
-        it("should be valid with all-time date filters in insight filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget: widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [commonInsightAllTimeDateFilter, commonInsightAllTimeDateFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(true);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(false);
-            expect(insightFilterIsMissingInSavedFilters).toBe(false);
-        });
-
-        it("should be valid with attribute filter saved in automation filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [insightAttributeFilter],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [insightAttributeFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(true);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(false);
-            expect(insightFilterIsMissingInSavedFilters).toBe(false);
-        });
-
-        it("should be valid with common date filter saved in automation filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [commonInsightNonAllTimeDateFilter],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [commonInsightNonAllTimeDateFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(true);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(false);
-            expect(insightFilterIsMissingInSavedFilters).toBe(false);
-        });
-
-        it("should be valid with non-common date filter saved in automation filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [nonCommonInsightNonAllTimeDateFilter],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [nonCommonInsightNonAllTimeDateFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(true);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(false);
-            expect(insightFilterIsMissingInSavedFilters).toBe(false);
-        });
-
-        it("should be invalid with attribute filter missing in automation filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [insightAttributeFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(false);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(false);
-            expect(insightFilterIsMissingInSavedFilters).toBe(true);
-        });
-
-        it("should be invalid with changed attribute filter saved in automation filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [changedInsightAttributeFilter],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [insightAttributeFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(false);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(true);
-            expect(insightFilterIsMissingInSavedFilters).toBe(false);
-        });
-
-        it("should be invalid with non-common date filter missing in automation filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [nonCommonInsightNonAllTimeDateFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(false);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(false);
-            expect(insightFilterIsMissingInSavedFilters).toBe(true);
-        });
-
-        it("should be invalid with changed non-common date filter saved in automation filters", () => {
-            const {
-                isValid,
-                insightFilterHasDifferentValueInSavedFilter,
-                insightFilterIsMissingInSavedFilters,
-            } = validateExistingAutomationFilters({
-                savedAutomationFilters: [nonCommonInsightChangedNonAllTimeDateFilter],
-                savedAutomationVisibleFilters: [],
-                hiddenFilters: [],
-                lockedFilters: [],
-                ignoredFilters: [],
-                dashboardFilters: [],
-                widget,
-                insight: {
-                    insight: {
-                        ...insight.insight,
-                        filters: [nonCommonInsightNonAllTimeDateFilter],
-                    },
-                },
-            });
-
-            expect(isValid).toBe(false);
-            expect(insightFilterHasDifferentValueInSavedFilter).toBe(true);
-            expect(insightFilterIsMissingInSavedFilters).toBe(false);
         });
     });
 

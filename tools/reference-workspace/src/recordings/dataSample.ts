@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 /* eslint-disable import/order */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-10-07T06:22:15.619Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-08T12:36:48.130Z; */
 
 import df_label_f_activity_subject from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
 import df_label_f_product_product_name from "./metadata/displayForms/label.f_product.product.name/elements.json" with { type: "json" };
+import df_attr_f_product_product from "./metadata/displayForms/attr.f_product.product/elements.json" with { type: "json" };
 import df_f_owner_department_id from "./metadata/displayForms/f_owner.department_id/elements.json" with { type: "json" };
 import df_f_owner_region_id from "./metadata/displayForms/f_owner.region_id/elements.json" with { type: "json" };
 import df_f_stage_status_id from "./metadata/displayForms/f_stage.status_id/elements.json" with { type: "json" };
@@ -71,6 +72,15 @@ export const DataSamples = {
         AAndRTarpaulins: df_label_f_account_account_name[47],
         AMortgageServices: df_label_f_account_account_name[48],
         ATutorU: df_label_f_account_account_name[49],
+    },
+    Product: {
+        CompuSci: df_attr_f_product_product[0],
+        Educationly: df_attr_f_product_product[1],
+        Explorer: df_attr_f_product_product[2],
+        GrammarPlus: df_attr_f_product_product[3],
+        PhoenixSoft: df_attr_f_product_product[4],
+        TouchAll: df_attr_f_product_product[5],
+        WonderKid: df_attr_f_product_product[6],
     },
     ProductName: {
         CompuSci: df_label_f_product_product_name[0],

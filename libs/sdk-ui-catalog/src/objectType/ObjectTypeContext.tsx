@@ -16,6 +16,7 @@ const initialState: IObjectTypeState = {
         measure: 0,
         fact: 0,
         attribute: 0,
+        dataSet: 0,
         insight: 0,
         analyticalDashboard: 0,
     },

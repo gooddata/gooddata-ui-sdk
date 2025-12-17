@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 /* eslint-disable import/order */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-10-07T06:22:15.619Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-08T12:36:48.130Z; */
 
 import fp_004031cbc9081950b7284311b004fe11_definition from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json" with { type: "json" };
 import fp_004031cbc9081950b7284311b004fe11_executionResult from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json" with { type: "json" };
@@ -3177,6 +3177,14 @@ const df_label_f_product_product_name = {
     elements: df_label_f_product_product_name_elements,
     obj: df_label_f_product_product_name_obj,
     req: df_label_f_product_product_name_req,
+};
+import df_attr_f_product_product_elements from "./metadata/displayForms/attr.f_product.product/elements.json" with { type: "json" };
+import df_attr_f_product_product_obj from "./metadata/displayForms/attr.f_product.product/obj.json" with { type: "json" };
+import df_attr_f_product_product_req from "./metadata/displayForms/attr.f_product.product/request.json" with { type: "json" };
+const df_attr_f_product_product = {
+    elements: df_attr_f_product_product_elements,
+    obj: df_attr_f_product_product_obj,
+    req: df_attr_f_product_product_req,
 };
 import df_f_owner_department_id_elements from "./metadata/displayForms/f_owner.department_id/elements.json" with { type: "json" };
 import df_f_owner_department_id_obj from "./metadata/displayForms/f_owner.department_id/obj.json" with { type: "json" };
@@ -9588,6 +9596,7 @@ export const Recordings: RecordingIndex = {
         displayForms: {
             df_label_f_activity_subject,
             df_label_f_product_product_name,
+            df_attr_f_product_product,
             df_f_owner_department_id,
             df_f_owner_region_id,
             df_f_stage_status_id,

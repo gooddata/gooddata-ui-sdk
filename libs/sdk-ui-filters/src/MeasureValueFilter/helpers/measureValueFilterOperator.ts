@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { messages } from "../../locales.js";
 import { type MeasureValueFilterOperator } from "../types.js";
 
@@ -22,6 +23,33 @@ export const getOperatorTranslationKey = (operator: MeasureValueFilterOperator):
             return messages["BETWEEN"].id;
         case "NOT_BETWEEN":
             return messages["NOT_BETWEEN"].id;
+        default:
+            return undefined;
+    }
+};
+
+export const getOperatorWithValueTranslationKey = (
+    operator: MeasureValueFilterOperator,
+): string | undefined => {
+    switch (operator) {
+        case "ALL":
+            return messages["ALL"].id;
+        case "GREATER_THAN":
+            return messages["GREATER_THAN_WITH_VALUE"].id;
+        case "GREATER_THAN_OR_EQUAL_TO":
+            return messages["GREATER_THAN_OR_EQUAL_TO_WITH_VALUE"].id;
+        case "LESS_THAN":
+            return messages["LESS_THAN_WITH_VALUE"].id;
+        case "LESS_THAN_OR_EQUAL_TO":
+            return messages["LESS_THAN_OR_EQUAL_TO_WITH_VALUE"].id;
+        case "EQUAL_TO":
+            return messages["EQUAL_TO_WITH_VALUE"].id;
+        case "NOT_EQUAL_TO":
+            return messages["NOT_EQUAL_TO_WITH_VALUE"].id;
+        case "BETWEEN":
+            return messages["BETWEEN_WITH_VALUE"].id;
+        case "NOT_BETWEEN":
+            return messages["NOT_BETWEEN_WITH_VALUE"].id;
         default:
             return undefined;
     }

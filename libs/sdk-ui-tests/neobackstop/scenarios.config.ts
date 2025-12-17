@@ -118,7 +118,8 @@ function scenarioLabel(storyKind: string, storyName: string, scenarioName: strin
 }
 
 function scenarioUrlForId(id: string) {
-    return `http://${process.env.DOCKER === "true" ? "storybook" : "localhost"}:8080/iframe.html?id=${encodeURIComponent(id)}`;
+    // see docker-compose-neobackstop.yaml for the network name, to hide watermark in tests we need localhost or ag-grid.com
+    return `http://${process.env.DOCKER === "true" ? "ag-grid.com" : "localhost"}:8080/iframe.html?id=${encodeURIComponent(id)}`;
 }
 
 /**

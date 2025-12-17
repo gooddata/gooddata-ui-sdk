@@ -1,6 +1,7 @@
 {
     "label.f_activity.subject": { "elementCount": 10 },
     "label.f_product.product.name": {},
+    "attr.f_product.product": {},
     "f_owner.department_id": {},
     "f_owner.region_id": {},
     "f_stage.status_id": {},

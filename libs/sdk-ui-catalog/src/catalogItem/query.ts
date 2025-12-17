@@ -111,7 +111,16 @@ export function getAttributesQuery({
             .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
-            .withFilter({ search, id, excludeId, tags, excludeTags, isHidden })
+            .withFilter({
+                // Excluding date attributes since those are already handled in date dataset query.
+                excludeDateAttributes: true,
+                search,
+                id,
+                excludeId,
+                tags,
+                excludeTags,
+                isHidden,
+            })
             .withMethod("POST")
     );
 }
@@ -144,6 +153,34 @@ export function getFactsQuery({
     );
 }
 
+export function getDateDatasetsQuery({
+    backend,
+    workspace,
+    search,
+    origin,
+    id,
+    excludeId,
+    tags,
+    excludeTags,
+    isHidden,
+    pageSize = PAGE_SIZE,
+}: ICatalogItemQueryOptions) {
+    return (
+        backend
+            .workspace(workspace)
+            .datasets()
+            .getDatasetsQuery()
+            .withPage(0)
+            .withSize(pageSize)
+            .withInclude(["attributes"])
+            .withSorting(["title,asc"])
+            .withOrigin(origin)
+            // NOTE: Date datasets do not currently support createdBy filtering.
+            .withFilter({ dataSetType: "DATE", search, id, excludeId, tags, excludeTags, isHidden })
+            .withMethod("POST")
+    );
+}
+
 export function updateCatalogItem(
     backend: IAnalyticalBackend,
     workspace: string,
@@ -160,6 +197,8 @@ export function updateCatalogItem(
             return updateAttributeCatalogItem(backend, workspace, item);
         case "fact":
             return updateFactCatalogItem(backend, workspace, item);
+        case "dataSet":
+            return updateDataSetCatalogItem(backend, workspace, item);
         default:
             throw new Error(`Unsupported catalog item type: ${item.type}`);
     }
@@ -246,6 +285,22 @@ function updateFactCatalogItem(
             description: item.description,
             tags: item.tags,
             isHidden: item.isHidden,
+        });
+}
+
+function updateDataSetCatalogItem(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: Partial<ICatalogItem> & ICatalogItemRef,
+) {
+    return backend
+        .workspace(workspace)
+        .datasets()
+        .updateDatasetMeta({
+            ...buildIdentity(item),
+            title: item.title,
+            description: item.description,
+            tags: item.tags,
         });
 }
 

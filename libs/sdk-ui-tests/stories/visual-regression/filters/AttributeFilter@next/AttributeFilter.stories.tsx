@@ -339,7 +339,9 @@ FilterWithDisplayAsLabel.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;

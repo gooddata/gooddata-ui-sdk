@@ -357,7 +357,10 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                         "automations.error",
                     ],
                     // prolong the check limit, otherwise this will flood the logs on CI with non-actionable warnings
-                    warnAfter: 128,
+                    warnAfter: 4096,
+                },
+                immutableCheck: {
+                    warnAfter: 4096,
                 },
             })
                 .prepend(actionMetaFillingMiddleware)

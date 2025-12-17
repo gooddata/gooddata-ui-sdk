@@ -2,18 +2,28 @@
 
 services:
     backstop:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-neobackstop:0.16.0
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-neobackstop:0.19.0
         volumes:
           - ./neobackstop/output:/usr/neobackstop/output
           - ./neobackstop/config.json:/usr/neobackstop/config.json:ro
           - ./neobackstop/scenarios.json:/usr/neobackstop/scenarios.json:ro
         command: ${COMMAND_ARGS}
         depends_on:
-          - storybook
+          - ag-grid.com
+        networks:
+          - isolated
 
-    storybook:
+    ag-grid.com:
         build:
           context: ./neobackstop/serve
           dockerfile: Dockerfile
+        networks:
+          - isolated
 #        volumes:
 #            - ./dist-storybook:/srv/storybook:ro # this is now copied in Dockerfile
+
+# hide ag-grid watermark in tests by using isolated network and accessing storybook
+# at http://ag-grid.com:8080 (see isDisplayWatermark() in ag-grid-enterprise.js)
+networks:
+  isolated:
+    internal: true

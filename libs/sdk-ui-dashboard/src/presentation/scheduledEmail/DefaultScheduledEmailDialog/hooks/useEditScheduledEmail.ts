@@ -37,7 +37,6 @@ import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
-    getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
     isCsvVisualizationExportDefinition,
     isDashboardAutomation,
@@ -173,6 +172,18 @@ export function useEditScheduledEmail({
               widget,
               insight,
               commonDateFilterId,
+              false,
+          )
+        : widgetFilters;
+
+    const effectiveWidgetFiltersWithInsight = enableAutomationFilterContext
+        ? getAppliedWidgetFilters(
+              editedAutomationFilters ?? [],
+              dashboardHiddenFilters,
+              widget,
+              insight,
+              commonDateFilterId,
+              true,
           )
         : widgetFilters;
 
@@ -241,6 +252,7 @@ export function useEditScheduledEmail({
                           widget,
                           recipient: defaultRecipient,
                           widgetFilters: effectiveWidgetFilters,
+                          widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
                           dashboardFilters: effectiveDashboardFilters,
                           visibleFiltersMetadata: effectiveVisibleWidgetFilters,
                           enableNewScheduledExport,
@@ -410,6 +422,7 @@ export function useEditScheduledEmail({
                     dashboardId: dashboardId!,
                     format,
                     widgetFilters: effectiveWidgetFilters,
+                    widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
                     dashboardFilters: effectiveDashboardFilters,
                     enableNewScheduledExport,
                 }),
@@ -481,8 +494,11 @@ export function useEditScheduledEmail({
                 widget,
                 dashboardId: dashboardId!,
                 format,
-                scheduledExportToEdit,
                 widgetFilters: enableAutomationFilterContext ? effectiveWidgetFilters : widgetFilters,
+                widgetFiltersWithInsight: enableAutomationFilterContext
+                    ? effectiveWidgetFiltersWithInsight
+                    : widgetFilters,
+                dashboardFilters: effectiveDashboardFilters,
                 enableNewScheduledExport,
             });
 
@@ -549,12 +565,22 @@ export function useEditScheduledEmail({
                         dashboardHiddenFilters,
                         true,
                     );
-                    const appliedWidgetFilters = getAppliedWidgetFilters(
+                    const appliedWidgetFiltersWithInsight = getAppliedWidgetFilters(
                         filters,
                         dashboardHiddenFilters,
                         widget,
                         insight,
                         commonDateFilterId,
+                        true,
+                    );
+
+                    const appliedWidgetFiltersWithoutInsight = getAppliedWidgetFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        widget,
+                        insight,
+                        commonDateFilterId,
+                        false,
                     );
                     const visibleFilters = getVisibleFiltersByFilters(
                         filters,
@@ -571,12 +597,16 @@ export function useEditScheduledEmail({
                                 )
                             ) {
                                 const format = exportDefinition.requestPayload.format;
-                                const shouldUseWidgetFilters = enableNewScheduledExport
+                                const shouldUseWidgetFiltersWithInsight = enableNewScheduledExport
                                     ? format === "CSV"
                                     : format === "XLSX" || format === "CSV";
-                                const appliedFilters = shouldUseWidgetFilters
-                                    ? appliedWidgetFilters
-                                    : appliedDashboardFilters;
+                                const shouldUseWidgetFiltersWithoutInsight =
+                                    enableNewScheduledExport && format === "CSV_RAW";
+                                const appliedFilters = shouldUseWidgetFiltersWithInsight
+                                    ? appliedWidgetFiltersWithInsight
+                                    : shouldUseWidgetFiltersWithoutInsight
+                                      ? appliedWidgetFiltersWithoutInsight
+                                      : appliedDashboardFilters;
                                 return {
                                     ...exportDefinition,
                                     requestPayload: {
@@ -926,7 +956,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     dashboardId,
     format,
     widgetFilters,
-    scheduledExportToEdit,
+    widgetFiltersWithInsight,
     dashboardFilters,
     enableNewScheduledExport,
 }: {
@@ -935,26 +965,30 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     dashboardId: string;
     format: WidgetAttachmentType;
     widgetFilters?: IFilter[];
-    scheduledExportToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
+    widgetFiltersWithInsight?: IFilter[];
     dashboardFilters?: FilterContextItem[];
     enableNewScheduledExport: boolean;
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
-    const { executionFilters: existingScheduleFilters } =
-        getAutomationVisualizationFilters(scheduledExportToEdit);
 
-    // in case of editing widget schedule, we never overwrite already stored filters
-    const allWidgetFilters = scheduledExportToEdit ? existingScheduleFilters : (widgetFilters ?? []);
-
-    const shouldUseWidgetFilters = enableNewScheduledExport
+    // Determine which filters to use based on format:
+    // - CSV: Use widgetFiltersWithInsight (insight filters merged on frontend)
+    // - CSV_RAW: Use widgetFilters (insight filters merged on backend)
+    // - Other formats: Use dashboardFilters (backend handles insight filter merging)
+    const shouldUseCsvFilters = enableNewScheduledExport
         ? format === "CSV"
         : format === "XLSX" || format === "CSV";
-    const filtersObj =
-        shouldUseWidgetFilters && (allWidgetFilters ?? []).length > 0
-            ? { filters: allWidgetFilters }
-            : !shouldUseWidgetFilters && (dashboardFilters ?? []).length > 0
-              ? { filters: dashboardFilters }
-              : {};
+    const shouldUseCsvRawFilters = enableNewScheduledExport && format === "CSV_RAW";
+
+    let filtersObj: { filters?: IFilter[] | FilterContextItem[] } = {};
+    if (shouldUseCsvFilters && (widgetFiltersWithInsight ?? []).length > 0) {
+        filtersObj = { filters: widgetFiltersWithInsight };
+    } else if (shouldUseCsvRawFilters && (widgetFilters ?? []).length > 0) {
+        filtersObj = { filters: widgetFilters };
+    } else if (!shouldUseCsvFilters && !shouldUseCsvRawFilters && (dashboardFilters ?? []).length > 0) {
+        filtersObj = { filters: dashboardFilters };
+    }
+
     const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
 
     return {
@@ -986,6 +1020,7 @@ function newAutomationMetadataObjectDefinition({
     dashboardFilters,
     filtersByTab,
     widgetFilters,
+    widgetFiltersWithInsight,
     visibleFiltersMetadata,
     visibleFiltersByTab,
     enableNewScheduledExport,
@@ -1002,6 +1037,7 @@ function newAutomationMetadataObjectDefinition({
     dashboardFilters?: FilterContextItem[];
     filtersByTab?: Record<string, FilterContextItem[]>;
     widgetFilters?: IFilter[];
+    widgetFiltersWithInsight?: IFilter[];
     visibleFiltersMetadata?: IAutomationVisibleFilter[];
     visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
     enableNewScheduledExport: boolean;
@@ -1017,6 +1053,7 @@ function newAutomationMetadataObjectDefinition({
                   dashboardId,
                   format: enableNewScheduledExport ? "PNG" : "XLSX",
                   widgetFilters,
+                  widgetFiltersWithInsight,
                   dashboardFilters,
                   enableNewScheduledExport,
               })

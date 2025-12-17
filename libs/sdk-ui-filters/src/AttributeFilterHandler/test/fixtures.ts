@@ -46,11 +46,15 @@ export const limitingDateFilters: IRelativeDateFilter[] = [
 const productNameAttrId = attributeIdentifier(ReferenceMd.Product.Name)!;
 const amountMeasureId = measureIdentifier(ReferenceMd.Amount)!;
 const snapshotDateId = ReferenceMd.DateDatasets.Snapshot.SnapshotDate.identifier;
+const productDefaultId = attributeIdentifier(ReferenceMd.Product.Default)!;
 
 const backend = recordedBackend(ReferenceRecordings.Recordings, {
     attributeElementsFiltering: {
         attributeFilters: {
             [productNameAttrId]: (_element: IAttributeElement, index: number) => {
+                return (index + 1) % 2 === 0;
+            },
+            [productDefaultId]: (_element: IAttributeElement, index: number) => {
                 return (index + 1) % 2 === 0;
             },
         },
@@ -100,7 +104,7 @@ const createDummyElements = (
         return result;
     }, []);
 
-const staticElements = createDummyElements((index) => {
+export const staticElements = createDummyElements((index) => {
     return {
         title: `Element ${index}`,
         uri: `/element?id=${index}`,
@@ -134,4 +138,34 @@ export const newTestAttributeFilterHandler = (
     }
 
     return newAttributeFilterHandler(backend, workspace, filter, options);
+};
+
+export const positiveAttributeFilterDefaultDF = newPositiveAttributeFilter(ReferenceMd.Product.Default, {
+    uris: [
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    ],
+});
+
+export const emptyPositiveAttributeFilterDefaultDF = newPositiveAttributeFilter(ReferenceMd.Product.Default, {
+    uris: [],
+});
+
+export const negativeAttributeFilterDefaultDF = newNegativeAttributeFilter(ReferenceMd.Product.Default, {
+    uris: [
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    ],
+});
+
+export const newTestAttributeFilterHandlerWithAttributeFilter = (
+    attributeFilter: IAttributeFilter,
+    advancedOptions?: { staticElements?: IAttributeElement[]; hiddenElements?: string[] },
+) => {
+    const options: IAttributeFilterHandlerOptions = {
+        selectionMode: "multi",
+        ...(advancedOptions ?? {}),
+    };
+
+    return newAttributeFilterHandler(backend, workspace, attributeFilter, options);
 };

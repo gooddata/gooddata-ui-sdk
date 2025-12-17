@@ -39,7 +39,7 @@
     "gd.gen-ai.semantic-search.title": "Cerca",
     "gd.gen-ai.state.cancelled": "Valutazione annullata...",
     "gd.gen-ai.state.generating": "Sto generando la risposta…",
-    "gd.gen-ai.state.thinking": "Elaborazione in corso",
+    "gd.gen-ai.state.thinking": "Elaborazione",
     "gd.gen-ai.routing.thinking-process": "Ragionamento",
     "gd.gen-ai.button.send": "Invia il messaggio",
     "gd.gen-ai.button.save": "Salva",

@@ -3,6 +3,7 @@
 import {
     type IAttributeMetadataObject,
     type IDashboard,
+    type IDataSetMetadataObject,
     type IFactMetadataObject,
     type IInsight,
     type IListedDashboard,
@@ -10,6 +11,7 @@ import {
     type IUser,
     isAttributeMetadataObject,
     isDashboard,
+    isDataSetMetadataObject,
     isFactMetadataObject,
     isInsight,
     isListedDashboard,
@@ -26,6 +28,7 @@ export function convertEntityToCatalogItem(
         | IMeasureMetadataObject
         | IFactMetadataObject
         | IAttributeMetadataObject
+        | IDataSetMetadataObject
         | undefined,
 ): ICatalogItem {
     if (isInsight(entity)) {
@@ -42,6 +45,9 @@ export function convertEntityToCatalogItem(
     }
     if (isAttributeMetadataObject(entity)) {
         return convertAttributeToCatalogItem(entity);
+    }
+    if (isDataSetMetadataObject(entity)) {
+        return convertDataSetToCatalogItem(entity);
     }
     throw new Error("Unknown entity type");
 }
@@ -138,6 +144,24 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
         isEditable: true,
         isHidden: attribute.isHidden,
         dataSet: attribute.dataSet,
+    };
+}
+
+export function convertDataSetToCatalogItem(dataSet: IDataSetMetadataObject): ICatalogItem {
+    return {
+        identifier: dataSet.id,
+        type: "dataSet",
+        title: dataSet.title,
+        description: dataSet.description,
+        tags: dataSet.tags ?? [],
+        createdBy: "", // TODO: Created by not defined
+        createdAt: null,
+        updatedBy: "", // TODO: Updated by not defined
+        updatedAt: null,
+        isLocked: dataSet.isLocked ?? false,
+        isEditable: true,
+        isHidden: dataSet.isHidden,
+        dataSet: dataSet,
     };
 }
 

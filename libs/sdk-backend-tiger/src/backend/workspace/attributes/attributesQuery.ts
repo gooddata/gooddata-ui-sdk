@@ -11,21 +11,21 @@ import {
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IAttributesQuery,
+    type IAttributesQueryFilterOptions,
     type IAttributesQueryResult,
-    type IFilterBaseOptions,
     type QueryMethod,
 } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertAttributesWithSideloadedLabels } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { buildFilterQuery } from "../../common/filtering.js";
+import { buildFilterQuery, buildIsNullClause, joinClauses } from "../../common/filtering.js";
 import { buildSortQuery } from "../../common/sorting.js";
 
 export class AttributesQuery implements IAttributesQuery {
     private size = 50;
     private page = 0;
-    private filter: IFilterBaseOptions | undefined = undefined;
+    private filter: IAttributesQueryFilterOptions | undefined = undefined;
     private sort: string[] | undefined = undefined;
     private include: EntitiesApiGetAllEntitiesAttributesRequest["include"] = undefined;
     private origin: ObjectOrigin | undefined = undefined;
@@ -51,7 +51,7 @@ export class AttributesQuery implements IAttributesQuery {
         return this;
     }
 
-    withFilter(filter: IFilterBaseOptions): IAttributesQuery {
+    withFilter(filter: IAttributesQueryFilterOptions): IAttributesQuery {
         this.filter = filter;
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
@@ -82,8 +82,11 @@ export class AttributesQuery implements IAttributesQuery {
     query(): Promise<IAttributesQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                const filterOptions: IFilterBaseOptions = this.filter ?? {};
-                const filterQuery = buildFilterQuery(filterOptions);
+                const filterOptions: IAttributesQueryFilterOptions = this.filter ?? {};
+                const filterQuery = joinClauses([
+                    buildFilterQuery(filterOptions),
+                    buildIsNullClause("granularity", filterOptions.excludeDateAttributes),
+                ]);
 
                 /**
                  * For backend performance reasons, we do not want to ask for paging info each time.

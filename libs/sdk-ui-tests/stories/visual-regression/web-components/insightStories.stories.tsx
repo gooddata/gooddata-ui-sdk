@@ -120,6 +120,8 @@ function AllInsightsTracker({ ids }: { ids: string[] }) {
                 return false;
             }
 
+            const loading = container.querySelectorAll(".s-loading").length;
+
             // Count actual rendered visualizations
             const charts = container.querySelectorAll(".highcharts-container").length;
             const pivots = container.querySelectorAll(".s-pivot-table").length;
@@ -128,7 +130,7 @@ function AllInsightsTracker({ ids }: { ids: string[] }) {
             const headlines = container.querySelectorAll(".s-headline-primary-item").length;
 
             const total = charts + Math.max(pivots, pivotsNext, agGrid) + headlines;
-            return total >= EXPECTED_VIS_COUNT;
+            return total >= EXPECTED_VIS_COUNT && loading === 0;
         };
 
         const interval = setInterval(() => {

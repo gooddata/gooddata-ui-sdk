@@ -1,23 +1,19 @@
 // (C) 2025 GoodData Corporation
 
-import { differenceBy, omit, uniq } from "lodash-es";
+import { differenceBy, omit } from "lodash-es";
 
 import {
     type FilterContextItem,
     type IAbsoluteDateFilter,
     type IAutomationMetadataObject,
     type IAutomationVisibleFilter,
-    type IDashboardDateFilter,
     type IFilter,
     type IFilterableWidget,
     type IInsight,
     type IRelativeDateFilter,
-    areObjRefsEqual,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
-    filterObjRef,
     isDashboardCommonDateFilter,
-    isDashboardDateFilter,
     isDateFilter,
     isInsightWidget,
     isLocalIdRef,
@@ -115,8 +111,6 @@ export interface IAutomationValidationResult {
     lockedFilterIsMissingInSavedFilters: boolean;
     lockedFilterHasDifferentValueInSavedFilter: boolean;
     ignoredFilterIsAppliedInSavedFilters: boolean;
-    insightFilterIsMissingInSavedFilters: boolean;
-    insightFilterHasDifferentValueInSavedFilter: boolean;
     removedFilterIsAppliedInSavedFilters: boolean;
     commonDateFilterIsMissingInSavedVisibleFilters: boolean;
     visibleFilterIsMissingInSavedFilters: boolean;
@@ -130,8 +124,6 @@ const defaultValidState: IAutomationValidationResult = {
     lockedFilterIsMissingInSavedFilters: false,
     lockedFilterHasDifferentValueInSavedFilter: false,
     ignoredFilterIsAppliedInSavedFilters: false,
-    insightFilterIsMissingInSavedFilters: false,
-    insightFilterHasDifferentValueInSavedFilter: false,
     removedFilterIsAppliedInSavedFilters: false,
     commonDateFilterIsMissingInSavedVisibleFilters: false,
     visibleFilterIsMissingInSavedFilters: false,
@@ -291,16 +283,6 @@ export function validateExistingAutomationFilters({
         widget,
     );
 
-    const { insightFilterIsMissingInSavedFilters, insightFilterHasDifferentValueInSavedFilter } =
-        validateInsightFilters(
-            savedAutomationFilters,
-            dashboardFilters,
-            ignoredFilters,
-            hiddenFilters,
-            insightFilters,
-            widget,
-        );
-
     // This is handling also changed display forms
     const { removedFilterIsAppliedInSavedFilters } = validateRemovedFilters(
         savedAutomationFilters,
@@ -326,8 +308,6 @@ export function validateExistingAutomationFilters({
         lockedFilterIsMissingInSavedFilters,
         lockedFilterHasDifferentValueInSavedFilter,
         ignoredFilterIsAppliedInSavedFilters,
-        insightFilterIsMissingInSavedFilters,
-        insightFilterHasDifferentValueInSavedFilter,
         removedFilterIsAppliedInSavedFilters,
         commonDateFilterIsMissingInSavedVisibleFilters,
         visibleFilterIsMissingInSavedFilters,
@@ -341,8 +321,6 @@ export function validateExistingAutomationFilters({
         lockedFilterIsMissingInSavedFilters,
         lockedFilterHasDifferentValueInSavedFilter,
         ignoredFilterIsAppliedInSavedFilters,
-        insightFilterIsMissingInSavedFilters,
-        insightFilterHasDifferentValueInSavedFilter,
         removedFilterIsAppliedInSavedFilters,
         commonDateFilterIsMissingInSavedVisibleFilters,
         visibleFilterIsMissingInSavedFilters,
@@ -421,12 +399,6 @@ export function validateExistingAutomationFiltersPerTab({
             ignoredFilterIsAppliedInSavedFilters:
                 aggregated.ignoredFilterIsAppliedInSavedFilters ||
                 tabResult.ignoredFilterIsAppliedInSavedFilters,
-            insightFilterIsMissingInSavedFilters:
-                aggregated.insightFilterIsMissingInSavedFilters ||
-                tabResult.insightFilterIsMissingInSavedFilters,
-            insightFilterHasDifferentValueInSavedFilter:
-                aggregated.insightFilterHasDifferentValueInSavedFilter ||
-                tabResult.insightFilterHasDifferentValueInSavedFilter,
             removedFilterIsAppliedInSavedFilters:
                 aggregated.removedFilterIsAppliedInSavedFilters ||
                 tabResult.removedFilterIsAppliedInSavedFilters,
@@ -605,71 +577,6 @@ function validateRemovedFilters(
 
     return {
         removedFilterIsAppliedInSavedFilters,
-    };
-}
-
-function validateInsightFilters(
-    savedAutomationFilters: IFilter[],
-    dashboardFilters: FilterContextItem[],
-    ignoredFilters: FilterContextItem[],
-    hiddenFilters: FilterContextItem[],
-    insightFilters: IFilter[],
-    widget?: ExtendedDashboardWidget,
-) {
-    let insightFilterIsMissingInSavedFilters = false;
-    let insightFilterHasDifferentValueInSavedFilter = false;
-
-    const visibleDateFilterIds = dashboardFilters
-        .filter(isDashboardDateFilter)
-        .map((filter) => dashboardFilterLocalIdentifier(filter));
-
-    const hiddenDateFilterIds = hiddenFilters
-        .filter(isDashboardDateFilter)
-        .map((filter) => dashboardFilterLocalIdentifier(filter));
-
-    const possibleDateFilters = [...dashboardFilters, ...hiddenFilters];
-    const dateFilterOverridesIds = uniq([...visibleDateFilterIds, ...hiddenDateFilterIds]);
-    const dateFilters = dateFilterOverridesIds.map((id) =>
-        possibleDateFilters.find((filter) => dashboardFilterLocalIdentifier(filter) === id),
-    ) as IDashboardDateFilter[];
-    const nonIgnoredDateFilters = differenceBy(dateFilters, ignoredFilters, dashboardFilterLocalIdentifier);
-
-    for (const insightFilter of insightFilters) {
-        const objRef = filterObjRef(insightFilter);
-        const isDateOverride =
-            (isInsightWidget(widget) && areObjRefsEqual(objRef, widget.dateDataSet)) ||
-            nonIgnoredDateFilters.some((dateFilter) =>
-                areObjRefsEqual(objRef, dateFilter.dateFilter.dataSet),
-            );
-
-        // All-time date filters are not saved in automation filters, so we can skip them.
-        // Also, we can skip insight filter with the same dateDataSet that is configured on the widget,
-        // it does not make sense to validate it - both missing (was saved as all-time),
-        // or different value (was changed by the dashboard) are valid cases,
-        // same applies for other non-ignored date filters.
-        if (isAllTimeDateFilterFixed(insightFilter) || isDateOverride) {
-            continue;
-        }
-
-        const storedInsightFilter = savedAutomationFilters.find((filter) =>
-            isFilterMatch(filter, insightFilter),
-        );
-
-        if (!storedInsightFilter && !insightFilterIsMissingInSavedFilters) {
-            insightFilterIsMissingInSavedFilters = true;
-        }
-
-        if (storedInsightFilter && !insightFilterHasDifferentValueInSavedFilter) {
-            insightFilterHasDifferentValueInSavedFilter = !areFiltersEqual(
-                storedInsightFilter,
-                insightFilter,
-            );
-        }
-    }
-
-    return {
-        insightFilterIsMissingInSavedFilters,
-        insightFilterHasDifferentValueInSavedFilter,
     };
 }
 

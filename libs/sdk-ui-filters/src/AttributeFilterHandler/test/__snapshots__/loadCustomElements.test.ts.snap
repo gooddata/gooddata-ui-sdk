@@ -60,9 +60,7 @@ exports[`AttributeFilterHandler > loadCustomElements() that was successful shoul
         "uri": "WonderKid",
       },
     ],
-    "options": {
-      "filterByPrimaryLabel": true,
-    },
+    "options": {},
     "totalCount": 7,
   },
 ]

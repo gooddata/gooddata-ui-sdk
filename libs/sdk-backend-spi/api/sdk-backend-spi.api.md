@@ -376,7 +376,7 @@ export interface IAttributeHierarchiesService {
 // @public
 export interface IAttributesQuery {
     query(): Promise<IAttributesQueryResult>;
-    withFilter(filter: IFilterBaseOptions): IAttributesQuery;
+    withFilter(filter: IAttributesQueryFilterOptions): IAttributesQuery;
     withInclude(include: string[]): IAttributesQuery;
     // @beta
     withMethod(method: QueryMethod): IAttributesQuery;
@@ -384,6 +384,11 @@ export interface IAttributesQuery {
     withPage(page: number): IAttributesQuery;
     withSize(size: number): IAttributesQuery;
     withSorting(sort: string[]): IAttributesQuery;
+}
+
+// @beta
+export interface IAttributesQueryFilterOptions extends IFilterBaseOptions {
+    excludeDateAttributes?: boolean;
 }
 
 // @public
@@ -697,6 +702,26 @@ export interface IDataFiltersService {
     updateDataFilter(updatedDataFilter: IWorkspaceDataFilter): Promise<IWorkspaceDataFilter>;
     updateDataFilterValue(dataFilter: ObjRef, values: string[]): Promise<void>;
 }
+
+// @beta
+export interface IDatasetsQuery {
+    query(): Promise<IDatasetsQueryResult>;
+    withFilter(filter: IDatasetsQueryFilterOptions): IDatasetsQuery;
+    withInclude(include: string[]): IDatasetsQuery;
+    withMethod(method: QueryMethod): IDatasetsQuery;
+    withOrigin(origin: ObjectOrigin | (string & {})): IDatasetsQuery;
+    withPage(page: number): IDatasetsQuery;
+    withSize(size: number): IDatasetsQuery;
+    withSorting(sort: string[]): IDatasetsQuery;
+}
+
+// @beta
+export interface IDatasetsQueryFilterOptions extends IFilterBaseOptions {
+    dataSetType?: "DATE" | "NORMAL";
+}
+
+// @beta
+export type IDatasetsQueryResult = IPagedResource<IDataSetMetadataObject>;
 
 // @alpha
 export interface IDataSourcesService {
@@ -1872,8 +1897,14 @@ export interface IWorkspaceDashboardsService {
 // @public
 export interface IWorkspaceDatasetsService {
     getAllDatasetsMeta(): Promise<IMetadataObject[]>;
+    // @beta
+    getDataset(ref: ObjRef): Promise<IDataSetMetadataObject>;
     getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]>;
     getDatasets(): Promise<IDataset[]>;
+    // @beta
+    getDatasetsQuery(): IDatasetsQuery;
+    // @beta
+    updateDatasetMeta(dataSet: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IDataSetMetadataObject>;
 }
 
 // @public

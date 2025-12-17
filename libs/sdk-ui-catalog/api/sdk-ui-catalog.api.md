@@ -131,7 +131,7 @@ export interface ICatalogItemRef extends IdentifierRef {
 }
 
 // @internal
-export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "fact" | "attribute">;
+export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "fact" | "attribute" | "dataSet">;
 
 // @internal (undocumented)
 export type OpenHandlerEvent = {

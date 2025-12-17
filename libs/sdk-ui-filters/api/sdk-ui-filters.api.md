@@ -978,6 +978,7 @@ export interface IMeasureValueFilterCommonProps {
     locale?: string;
     // (undocumented)
     measureIdentifier: string;
+    measureTitle?: string;
     // (undocumented)
     onApply: (filter: IMeasureValueFilter | null) => void;
     // (undocumented)

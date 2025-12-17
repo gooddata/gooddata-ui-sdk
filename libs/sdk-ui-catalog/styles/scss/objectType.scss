@@ -9,6 +9,10 @@
         --catalog-object-type-icon-color: #14b2e2;
     }
 
+    &[data-object-type="dataSet"] {
+        --catalog-object-type-icon-color: #14b2e2;
+    }
+
     &[data-object-type="measure"],
     &[data-object-type="fact"] {
         --catalog-object-type-icon-color: #00c18d;

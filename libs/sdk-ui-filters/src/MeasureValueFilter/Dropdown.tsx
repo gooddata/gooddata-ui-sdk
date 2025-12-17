@@ -33,6 +33,7 @@ interface IDropdownProps {
     locale?: string;
     anchorEl?: HTMLElement | string;
     separators?: ISeparators;
+    measureTitle?: string;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
     enableOperatorSelection?: boolean;
@@ -51,6 +52,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         onCancel,
         anchorEl,
         separators,
+        measureTitle,
         displayTreatNullAsZeroOption = false,
         treatNullAsZeroValue = false,
         enableOperatorSelection,
@@ -92,6 +94,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 onCancel={onCancel}
                 onApply={onApply}
                 separators={separators}
+                measureTitle={measureTitle}
                 displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                 treatNullAsZeroValue={treatNullAsZeroValue}
                 enableOperatorSelection={enableOperatorSelection}

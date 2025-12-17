@@ -242,6 +242,13 @@ export interface PreloadedTesterOptions {
      * on the recorded analytical backend.
      */
     queryServices?: IDashboardQueryService<any, any>[];
+
+    /**
+     * Customize dashboard model customization functions.
+     *
+     * Default is no customization.
+     */
+    customizationFns?: DashboardModelCustomizationFns;
 }
 
 /**
@@ -281,12 +288,18 @@ export async function preloadedTesterFactory(
     identifier?: Identifier,
     options: PreloadedTesterOptions = {},
 ) {
-    const { initCommand = initializeDashboard(), queryServices, backendConfig, customCapabilities } = options;
+    const {
+        initCommand = initializeDashboard(),
+        queryServices,
+        backendConfig,
+        customCapabilities,
+        customizationFns,
+    } = options;
 
     const tester = identifier
         ? DashboardTester.forRecording(
               identifier,
-              { queryServices },
+              { queryServices, customizationFns },
               {
                   ...backendConfig,
               },
@@ -295,7 +308,7 @@ export async function preloadedTesterFactory(
               },
           )
         : DashboardTester.forNewDashboard(
-              { queryServices },
+              { queryServices, customizationFns },
               {
                   ...backendConfig,
               },

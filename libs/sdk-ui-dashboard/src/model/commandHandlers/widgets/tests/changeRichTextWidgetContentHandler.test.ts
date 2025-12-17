@@ -2,8 +2,10 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type IRichTextWidgetDefinition, idRef } from "@gooddata/sdk-model";
+import { type IDashboard, type IRichTextWidgetDefinition, idRef } from "@gooddata/sdk-model";
 
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import {
     type ChangeRichTextWidgetContent,
     addLayoutSection,
@@ -15,11 +17,32 @@ import {
 } from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier, TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+    TestCorrelation,
+} from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestRichTextItem } from "../../../tests/fixtures/Layout.fixtures.js";
+import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
+import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
 
 describe("rich text widget", () => {
     let Tester: DashboardTester;
+
+    const dashboardWithDefaults: IDashboard = {
+        ...EmptyDashboardWithReferences.dashboard,
+        ref: idRef(EmptyDashboardIdentifier),
+        identifier: EmptyDashboardIdentifier,
+        layout: EmptyDashboardLayout,
+        filterContext: createDefaultFilterContext(
+            defaultDateFilterConfig,
+            true,
+        ) as IDashboard["filterContext"],
+    };
+
+    const customizationFnsWithPreload: PrivateDashboardContext = {
+        preloadedDashboard: dashboardWithDefaults,
+    };
 
     beforeEach(async () => {
         await preloadedTesterFactory(
@@ -31,6 +54,7 @@ describe("rich text widget", () => {
                 backendConfig: {
                     useRefType: "id",
                 },
+                customizationFns: customizationFnsWithPreload,
             },
         );
 

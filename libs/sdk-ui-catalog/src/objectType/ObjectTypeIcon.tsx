@@ -35,6 +35,7 @@ export function ObjectTypeIcon({
             {type === "fact" ? <UiIcon type="fact" {...sizes} /> : null}
             {type === "measure" ? <UiIcon type="metric" {...sizes} /> : null}
             {type === "analyticalDashboard" ? <UiIcon type="dashboard" {...sizes} /> : null}
+            {type === "dataSet" ? <UiIcon type="date" {...sizes} /> : null}
             {type === "insight" ? (
                 <UiIcon
                     type={(visualizationType && visualizationIconMap[visualizationType]) ?? "visualization"}

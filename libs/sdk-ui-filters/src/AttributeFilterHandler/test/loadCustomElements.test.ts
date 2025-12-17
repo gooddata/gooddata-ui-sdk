@@ -4,14 +4,19 @@ import { describe, expect, it, vi } from "vitest";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
-import { newTestAttributeFilterHandler } from "./fixtures.js";
+import {
+    newTestAttributeFilterHandlerWithAttributeFilter,
+    positiveAttributeFilterDefaultDF,
+} from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import * as elements from "../internal/redux/elements/loadElements.js";
 
 describe("AttributeFilterHandler", () => {
     it("loadCustomElements() should trigger onLoadCustomElementsStart() callback", async () => {
         const onLoadCustomElementsStart = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -27,7 +32,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that was successful should trigger onLoadCustomElementsSuccess() callback", async () => {
         const onLoadCustomElementsSuccess = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -43,7 +50,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that failed should trigger onLoadCustomElementsError() callback", async () => {
         const onLoadCustomElementsError = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -64,7 +73,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that was canceled by cancelCustomElementsLoad() call should trigger onLoadCustomElementsCancel() callback", async () => {
         const onLoadCustomElementsCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -80,7 +91,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that was called multiple times should trigger onLoadCustomElementsStart() callback multiple times", async () => {
         const onLoadCustomElementsStart = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -96,7 +109,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that was called multiple times should trigger onLoadCustomElementsSuccess() callback multiple times", async () => {
         const onLoadCustomElementsSuccess = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -112,7 +127,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadCustomElements() that was called multiple times should trigger onLoadCustomElementsError() callback multiple times", async () => {
         const onLoadCustomElementsError = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();

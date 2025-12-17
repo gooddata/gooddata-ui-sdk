@@ -17,6 +17,9 @@ export function mapGenAIObjectType(type: ObjectType): GenAIObjectType {
     if (type === "measure") {
         return "metric";
     }
+    if (type === "dataSet") {
+        return "dataset";
+    }
     return type;
 }
 
@@ -32,6 +35,9 @@ export function mapObjectType(type: GenAIObjectType): ObjectType {
     }
     if (type === "metric") {
         return "measure";
+    }
+    if (type === "dataset") {
+        return "dataSet";
     }
     return type as ObjectType;
 }

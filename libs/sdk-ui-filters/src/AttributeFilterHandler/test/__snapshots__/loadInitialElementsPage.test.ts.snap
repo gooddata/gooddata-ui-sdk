@@ -217,7 +217,6 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() that was successful 
     ],
     "options": {
       "excludePrimaryLabel": false,
-      "filterByPrimaryLabel": true,
       "limit": 500,
       "limitingAttributeFilters": [],
       "limitingDateFilters": [],

@@ -4,9 +4,13 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
     type DashboardAttributeFilterSelectionMode,
     type IAttributeElementsByRef,
+    type IDashboard,
     type ObjRef,
+    idRef,
 } from "@gooddata/sdk-model";
 
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import {
     addAttributeFilter,
     changeFilterContextSelection,
@@ -14,11 +18,31 @@ import {
 } from "../../../commands/index.js";
 import { selectFilterContextAttributeFilters } from "../../../store/index.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import {
+    EmptyDashboardIdentifier,
+    EmptyDashboardWithReferences,
+} from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
+import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
 
 describe("change filter context selection handler", () => {
     const FILTER_ELEMENTS = ["element1", "element2", "element3"];
     const FIRST_ELEMENT = [FILTER_ELEMENTS[0]];
+
+    const dashboardWithDefaults: IDashboard = {
+        ...EmptyDashboardWithReferences.dashboard,
+        ref: idRef(EmptyDashboardIdentifier),
+        identifier: EmptyDashboardIdentifier,
+        layout: EmptyDashboardLayout,
+        filterContext: createDefaultFilterContext(
+            defaultDateFilterConfig,
+            true,
+        ) as IDashboard["filterContext"],
+    };
+
+    const customizationFnsWithPreload: PrivateDashboardContext = {
+        preloadedDashboard: dashboardWithDefaults,
+    };
 
     const addFilter = async (
         Tester: DashboardTester,
@@ -75,9 +99,15 @@ describe("change filter context selection handler", () => {
 
         let Tester: DashboardTester;
         beforeEach(async () => {
-            await preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, EmptyDashboardIdentifier);
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                EmptyDashboardIdentifier,
+                {
+                    customizationFns: customizationFnsWithPreload,
+                },
+            );
         });
 
         const removeFilter = async () => {
@@ -169,15 +199,21 @@ describe("change filter context selection handler", () => {
         describe("backend supportsElementUris", () => {
             let Tester: DashboardTester;
             beforeEach(async () => {
-                await preloadedTesterFactory(async (tester) => {
-                    Tester = tester;
-                    await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM);
-                    await changeFilterSelection(Tester, {
-                        displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
-                        negativeSelection: false,
-                        elements: FIRST_ELEMENT,
-                    });
-                }, EmptyDashboardIdentifier);
+                await preloadedTesterFactory(
+                    async (tester) => {
+                        Tester = tester;
+                        await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM);
+                        await changeFilterSelection(Tester, {
+                            displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
+                            negativeSelection: false,
+                            elements: FIRST_ELEMENT,
+                        });
+                    },
+                    EmptyDashboardIdentifier,
+                    {
+                        customizationFns: customizationFnsWithPreload,
+                    },
+                );
             });
 
             it("should apply elements from command correctly", async () => {

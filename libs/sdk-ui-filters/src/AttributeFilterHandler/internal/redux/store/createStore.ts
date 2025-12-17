@@ -110,6 +110,10 @@ export function createAttributeFilterHandlerStore(
                         "elements.initialPageLoad.error",
                         "elements.nextPageLoad.error",
                     ],
+                    warnAfter: 4096,
+                },
+                immutableCheck: {
+                    warnAfter: 4096,
                 },
             }).concat([sagaMiddleware, eventListeningMiddleware(context.eventListener)]);
         },

@@ -11,6 +11,8 @@ import {
     limitingDateFilters,
     limitingMeasures,
     newTestAttributeFilterHandler,
+    newTestAttributeFilterHandlerWithAttributeFilter,
+    positiveAttributeFilterDefaultDF,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import * as elements from "../internal/redux/elements/loadElements.js";
@@ -18,7 +20,9 @@ import * as elements from "../internal/redux/elements/loadElements.js";
 describe("AttributeFilterHandler", () => {
     it("loadInitialElementsPage() should trigger onLoadInitialElementsPageStart() callback", async () => {
         const onLoadInitialElementsPageStart = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -34,7 +38,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadInitialElementsPage() that was successful should trigger onLoadInitialElementsPageSuccess() callback", async () => {
         const onLoadInitialElementsPageSuccess = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -50,7 +56,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadInitialElementsPage() that failed should trigger onLoadInitialElementsPageError() callback", async () => {
         const onLoadInitialElementsPageError = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -72,7 +80,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadInitialElementsPage() that was canceled by another loadInitialElementsPage() call should trigger onLoadInitialElementsPageCancel() callback", async () => {
         const onLoadInitialElementsPageCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -89,7 +99,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadInitialElementsPage() that was canceled by cancelInitialElementsPageLoad() call should trigger onLoadInitialElementsPageCancel() callback", async () => {
         const onLoadInitialElementsPageCancel = vi.fn();
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -104,13 +116,17 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should throw error if it's called before the initialization", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         expect(attributeFilterHandler.loadInitialElementsPage).toThrowErrorMatchingSnapshot();
     });
 
     it("getInitialElementsPageStatus() should return proper status for successful load", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         expect(attributeFilterHandler.getInitialElementsPageStatus()).toMatchSnapshot("before the load");
 
@@ -147,7 +163,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("getInitialElementsPageError() should return error", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -163,7 +181,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should be filtered by order()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -176,7 +196,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should be filtered by limit()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -189,7 +211,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should be filtered by search()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -202,7 +226,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should be filtered by setLimitingAttributeFilters()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -215,7 +241,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should be filtered by setLimitingMeasures()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -229,7 +257,9 @@ describe("AttributeFilterHandler", () => {
 
     it("loadInitialElementsPage() should be filtered by setLimitingValidationItems()", async () => {
         const validationItems: ObjRef[] = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();
@@ -242,7 +272,9 @@ describe("AttributeFilterHandler", () => {
     });
 
     it("loadInitialElementsPage() should be filtered by setLimitingDateFilters()", async () => {
-        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+        const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
+            positiveAttributeFilterDefaultDF,
+        );
 
         attributeFilterHandler.init();
         await waitForAsync();

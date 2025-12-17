@@ -183,6 +183,7 @@ export type {
     IWorkspaceAttributesService,
     IAttributeWithReferences,
     IAttributesQuery,
+    IAttributesQueryFilterOptions,
     IAttributesQueryResult,
 } from "./workspace/attributes/index.js";
 
@@ -247,7 +248,12 @@ export type {
     IWorkspaceCatalogMethods,
 } from "./workspace/ldm/catalog.js";
 
-export type { IWorkspaceDatasetsService } from "./workspace/ldm/datasets.js";
+export type {
+    IDatasetsQueryFilterOptions,
+    IDatasetsQuery,
+    IDatasetsQueryResult,
+    IWorkspaceDatasetsService,
+} from "./workspace/ldm/datasets.js";
 
 export type {
     IMeasureExpressionToken,

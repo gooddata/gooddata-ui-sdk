@@ -111,6 +111,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
 
             {
                 <Bubble
+                    key={isOpen ? "open" : "closed"}
                     id={tooltipContentId}
                     className={bubbleClassName}
                     overlayClassName={overlayClassName}
