@@ -17,7 +17,9 @@ const dropdownButtonWithTooltip: INeobackstopConfig = {
     hover: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         hoverSelector: ".s-attribute-filter-tooltip-icon",
-        postInteractionWait: { delay: 1000 },
+        delay: {
+            postOperation: 425, // default SHOW_DELAY of BubbleHoverTrigger is 425ms
+        },
         misMatchThreshold: 0.001, // unsure why this is needed, but a pixel is probably off by a few rgb points
     },
 };

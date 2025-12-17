@@ -27,7 +27,10 @@ export const OperatorDropdownBody = memo(function OperatorDropdownBody({
     return (
         <Overlay closeOnOutsideClick alignTo={alignTo} alignPoints={[{ align: "bl tl" }]} onClose={onClose}>
             <div className="gd-dropdown overlay">
-                <div className="gd-mvf-operator-dropdown-body s-mvf-operator-dropdown-body">
+                <div
+                    className="gd-mvf-operator-dropdown-body s-mvf-operator-dropdown-body"
+                    data-testid="mvf-operator-dropdown-body"
+                >
                     <OperatorDropdownItem
                         operator="ALL"
                         selectedOperator={selectedOperator}

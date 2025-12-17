@@ -25,6 +25,7 @@ export function ComparisonInput({
     return (
         <InputWithNumberFormat
             className="s-mvf-comparison-value-input"
+            dataTestId="mvf-comparison-value-input"
             value={value ?? undefined}
             onEnterKeyPress={onEnterKeyPress}
             onChange={(val) => onValueChange(val as number)}

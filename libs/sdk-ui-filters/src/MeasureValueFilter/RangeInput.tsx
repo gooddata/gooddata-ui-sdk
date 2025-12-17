@@ -27,9 +27,10 @@ export function RangeInput({
     separators,
 }: IRangeInputProps): ReactElement {
     return (
-        <div className={"gd-mvf-range-input"}>
+        <div className={"gd-mvf-range-input"} data-testid="mvf-range-input">
             <InputWithNumberFormat
                 className="s-mvf-range-from-input"
+                dataTestId="mvf-range-from-input"
                 value={from!}
                 onChange={(val) => onFromChange(val as number)}
                 onEnterKeyPress={onEnterKeyPress}
@@ -40,6 +41,7 @@ export function RangeInput({
             />
             <InputWithNumberFormat
                 className="s-mvf-range-to-input"
+                dataTestId="mvf-range-to-input"
                 value={to!}
                 onChange={(val) => onToChange(val as number)}
                 onEnterKeyPress={onEnterKeyPress}

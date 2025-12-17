@@ -21,6 +21,7 @@ export function TreatNullValuesAsZeroCheckbox({
     return (
         <label
             className={"input-checkbox-label gd-mvf-treat-null-values-as-zero s-treat-null-values-as-zero"}
+            data-testid="mvf-treat-null-values-as-zero"
         >
             <input
                 type="checkbox"

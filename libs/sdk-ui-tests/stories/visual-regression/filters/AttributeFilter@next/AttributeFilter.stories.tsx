@@ -45,7 +45,9 @@ EmptyDefaultSelection.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -78,7 +80,9 @@ NotFitIntoContent.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -102,7 +106,9 @@ EmptyDefaultSelectionLocalized.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -127,7 +133,9 @@ PreSelectedElements.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -157,7 +165,9 @@ TitleWithPreSelectedElementsPositiveAttributefilter.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -187,7 +197,9 @@ TitleWithPreSelectedElementsNegativeAttributefilter.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -220,7 +232,9 @@ AllElementsSelectedInNegativeSelection.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -259,7 +273,9 @@ Themed.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -287,7 +303,9 @@ SingleSelectionFilter.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
@@ -314,7 +332,9 @@ SingleSelectionFilterThemed.parameters = {
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelector: ".gd-attribute-filter__next",
-            postInteractionWait: { delay: 5000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;

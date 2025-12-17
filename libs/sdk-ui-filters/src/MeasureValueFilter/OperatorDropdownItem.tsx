@@ -59,7 +59,11 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
         operatorTranslationKey === undefined ? operator : intl.formatMessage({ id: operatorTranslationKey });
 
     return (
-        <div className={className} onClick={handleOnClick}>
+        <div
+            className={className}
+            onClick={handleOnClick}
+            data-testid={`mvf-operator-${stringUtils.simplifyText(operator)}`}
+        >
             <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />
             <span title={title}>{capitalize(title)}</span>
             {bubbleText ? renderBubble(bubbleText) : null}

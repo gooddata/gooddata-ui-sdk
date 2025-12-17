@@ -32,9 +32,6 @@ const defaultScenarios: INeobackstopConfig = {
             { selector: ".s-colored-items-list-item" },
             { selector: ".s-custom-section-button" },
         ],
-        delay: {
-            postOperation: 200,
-        },
     },
 };
 

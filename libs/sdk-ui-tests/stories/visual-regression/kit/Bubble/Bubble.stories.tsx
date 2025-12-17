@@ -83,42 +83,42 @@ function BubbleExamples() {
             </BubbleHoverTrigger>
             <h4>Color Skins</h4>
             <p>Hover over this link to see bubble skins</p>
-            <BubbleHoverTrigger>
+            <BubbleHoverTrigger showDelay={0}>
                 <Button tagName="span" value="Primary" className="gd-button-link primary-skin" />
 
                 <Bubble className="bubble-primary" alignPoints={[{ align: "cr cl" }]}>
                     This is bubble content.
                 </Bubble>
             </BubbleHoverTrigger>
-            <BubbleHoverTrigger>
+            <BubbleHoverTrigger showDelay={0}>
                 <Button tagName="span" value="Secondary" className="gd-button-link secondary-skin" />
 
                 <Bubble className="bubble-secondary" alignPoints={[{ align: "cr cl" }]}>
                     This is bubble content.
                 </Bubble>
             </BubbleHoverTrigger>
-            <BubbleHoverTrigger>
+            <BubbleHoverTrigger showDelay={0}>
                 <Button tagName="span" value="Negative" className="gd-button-link negative-skin" />
 
                 <Bubble className="bubble-negative" alignPoints={[{ align: "cr cl" }]}>
                     This is bubble content.
                 </Bubble>
             </BubbleHoverTrigger>
-            <BubbleHoverTrigger>
+            <BubbleHoverTrigger showDelay={0}>
                 <Button tagName="span" value="Light" className="gd-button-link light-skin" />
 
                 <Bubble className="bubble-light" alignPoints={[{ align: "cr cl" }]}>
                     This is bubble content.
                 </Bubble>
             </BubbleHoverTrigger>
-            <BubbleHoverTrigger>
+            <BubbleHoverTrigger showDelay={0}>
                 <Button tagName="span" value="Dark" className="gd-button-link dark-skin" />
 
                 <Bubble className="bubble-dark" alignPoints={[{ align: "cr cl" }]}>
                     This is bubble content.
                 </Bubble>
             </BubbleHoverTrigger>
-            <BubbleHoverTrigger>
+            <BubbleHoverTrigger showDelay={0}>
                 <Button tagName="span" value="Warning" className="gd-button-link warning-skin" />
 
                 <Bubble className="bubble-warning" alignPoints={[{ align: "cr cl" }]}>
@@ -218,32 +218,44 @@ FullFeatured.parameters = {
         "primary-skin": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".primary-skin",
-            postInteractionWait: { delay: 1000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
         "secondary-skin": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".secondary-skin",
-            postInteractionWait: { delay: 1000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
         "negative-skin": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".negative-skin",
-            postInteractionWait: { delay: 1000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
         "light-skin": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".light-skin",
-            postInteractionWait: { delay: 1000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
         "dark-skin": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".dark-skin",
-            postInteractionWait: { delay: 1000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
         "warning-skin": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             hoverSelector: ".warning-skin",
-            postInteractionWait: { delay: 1000 },
+            delay: {
+                postOperation: 250, // search icon has .25s transition
+            },
         },
     },
 } satisfies IStoryParameters;
