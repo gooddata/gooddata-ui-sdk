@@ -1,6 +1,39 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 11 Dec 2025 17:13:20 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Dec 2025 07:14:24 GMT and should not be manually modified.
+
+## 11.14.0
+
+Thu, 18 Dec 2025 07:14:24 GMT
+
+### Patches
+
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
+
+### Updates
+
+- sdk-model: Extend `IDataSetMetadataObject` with optional `isLocked` property.
+- sdk-backend-tiger/spi: Add `getDataset()`, `updateDatasetMeta()`, and `getDatasetsQuery()` methods to the `IWorkspaceDatasetsService` interface. Introduce the `IDatasetsQuery` interface and its `DatasetsQuery` implementation.
+- sdk-ui-catalog: Date datasets can now be managed and displayed directly in the catalog.
+- sdk-model: Expose `attributes` property on `IDataSetMetadataObject` and introduce `IDataSetAttributeMetadataObject` type.
+- sdk-ui-catalog: Show dataset date granularities in Analytics Catalog detail tab.
+- sdk-ui-catalog: Add tooltips to catalog object type indicators.
+- upgrade test fixture change primary attribute state to state_code
+- Added feature flag and setting to configure aggregated data sharing with LLMs
+- sdk-ui-kit: Introduce the UiDropdown component.
+- Fix currency format presets and SDK translation integration
+- sdk-ui-pivot: Fix formatting, labels and custom props preference in pivot table.
+- sdk-ui-filters: Introduce logic for conditional showing of chackbox in MVF.
+- Add support for multi layer legends in new geo charts.
+- Add data-testId for measure value filter dropdown picker
+- Add data-testId for measure value filter dropdown
+- add datatestid for mvf dropdown button
+- add data-testid for MVF dropdown
+- sdk-ui-filters: Add DimensionalityItemType for date/attribute icon rendering in MVF dimensionality
+- sdk-ui-kit: Change UiTag delete button color on hover
+- sdk-ui-filters: Textual preview of measure value filter condition inside of the filter body
+- sdk-ui-kit, sdk-ui-filters: Deduplicated measure value filter number formatter
+- Added Reasoning to the chatbot
 
 ## 11.13.0
 
