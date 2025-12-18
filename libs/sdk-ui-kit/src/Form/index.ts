@@ -13,3 +13,4 @@ export type {
     InputWithNumberFormatState,
 } from "./InputWithNumberFormat.js";
 export { InputWithNumberFormat } from "./InputWithNumberFormat.js";
+export { DEFAULT_SEPARATORS, formatNumberWithSeparators } from "./numberFormat.js";

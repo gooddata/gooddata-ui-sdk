@@ -1,0 +1,542 @@
+// (C) 2025 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+//
+// Multi-Layer Legend Styles
+// Based on Figma design: https://www.figma.com/design/L2DE4SJXqNxEECwidh88HT/25Q4---Geocharts
+//
+
+$legend-border-color: #c9d5e0;
+$legend-divider-color: var(--gd-palette-complementary-3, #dde4eb);
+$legend-title-color: var(--gd-palette-complementary-8, #464e56);
+$legend-text-color: var(--gd-palette-complementary-7, #6d7680);
+$legend-chevron-color: #94a1ad;
+$legend-toggle-bg: #f2f6f7;
+$legend-toggle-border: #c6d5e1;
+$legend-toggle-thumb-border: var(--gd-palette-complementary-5, #b0beca);
+$legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
+
+.gd-geo-multi-layer-legend {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3; // Above MapLibre controls
+    background-color: kit-variables.$gd-color-white;
+    border: 1px solid $legend-border-color;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px 0 rgba(20, 57, 93, 0.1);
+    width: 220px;
+    max-height: calc(100% - 20px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: kit-variables.$gd-font-primary;
+    font-size: 12px;
+    line-height: 1.4;
+    // Single source of truth for section header height (hardcoded OK per request).
+    --gd-geo-multi-layer-legend__section-header-height: 34px;
+    // Single source of truth for expand/collapse timing.
+    --gd-geo-multi-layer-legend__toggle-duration: 0.2s;
+
+    // Position modifiers
+    &--top-left {
+        top: 10px;
+        left: 10px;
+        right: auto;
+        bottom: auto;
+    }
+
+    &--top-right {
+        top: 10px;
+        right: 10px;
+        left: auto;
+        bottom: auto;
+    }
+
+    &--bottom-left {
+        bottom: 10px;
+        left: 10px;
+        top: auto;
+        right: auto;
+    }
+
+    &--bottom-right {
+        bottom: 10px;
+        right: 10px;
+        top: auto;
+        left: auto;
+    }
+
+    // ==========================================================================
+    // SECTION = One layer's legend
+    // ==========================================================================
+    //
+    // NOTES - WHAT DOESN'T WORK (DO NOT REPEAT):
+    // - flex-basis: 0 on all sections → Legend not visible
+    // - Changing flex on collapse/expand → Causes flicker (instant size change before animation)
+    // - max-height on collapsed → No animation (instant snap)
+    // - position: absolute on collapsed content → No animation
+    // - visibility/opacity hidden on content → Doesn't prevent LAYOUT flicker
+    // - flex: 1 1 auto on all sections → Headers overflow (bad distribution)
+    // - transition: flex-grow → Still flickers (doesn't prevent instant size to content)
+    //
+    // WORKING: CSS Grid animation (grid-template-rows) for content expand/collapse
+    // PROBLEM: Section size comes from flex, grid only affects content inside
+    // FUNDAMENTAL ISSUE: On collapse, flex-basis:auto makes section size to content before animation
+    //
+    &__section {
+        // Use CSS Grid on section itself - animate rows instead of relying on flex
+        display: grid;
+        // IMPORTANT: fixed header row height prevents "header shrinking" during flex redistribution.
+        grid-template-rows: var(--gd-geo-multi-layer-legend__section-header-height) 0fr; // header fixed, content 0fr (collapsed)
+        align-content: start; // Prevent centering (causes bounce)
+        // Do NOT animate flex distribution on expand (causes "bouncing"/headers slipping out).
+        // On collapse, delay flex redistribution until after the grid row collapses to 0fr, but ANIMATE that redistribution
+        // to avoid the end-of-collapse "snap/bounce".
+        transition:
+            grid-template-rows var(--gd-geo-multi-layer-legend__toggle-duration) ease-out,
+            flex-grow var(--gd-geo-multi-layer-legend__toggle-duration) ease-out
+                var(--gd-geo-multi-layer-legend__toggle-duration),
+            flex-shrink var(--gd-geo-multi-layer-legend__toggle-duration) ease-out
+                var(--gd-geo-multi-layer-legend__toggle-duration);
+        overflow: hidden;
+        // Never allow the section to shrink below the header height (prevents header overflow during transitions).
+        min-height: var(--gd-geo-multi-layer-legend__section-header-height);
+        // Flex item properties - collapsed sections take only header height
+        flex-grow: 0;
+        flex-shrink: 0;
+        // Use fixed basis so expanded sections share remaining space evenly without "auto" jumps.
+        flex-basis: 0%;
+
+        // Expanded: content row becomes 1fr, participate in flex distribution
+        &--expanded {
+            grid-template-rows: var(--gd-geo-multi-layer-legend__section-header-height) 1fr;
+            flex-shrink: 1; // Can shrink to make room for siblings
+            flex-grow: 1; // Take available space
+            // Expand should apply flex sizing immediately (no delay), but keep the grid animation.
+            transition:
+                grid-template-rows var(--gd-geo-multi-layer-legend__toggle-duration) ease-out,
+                flex-grow 0s linear 0s,
+                flex-shrink 0s linear 0s;
+        }
+
+        // Border between sections (not on first)
+        & + & {
+            border-top: 1px solid $legend-divider-color;
+        }
+
+        // Hidden layer styling (dimmed)
+        &--hidden {
+            .gd-geo-multi-layer-legend__section-title {
+                opacity: 0.5;
+            }
+            // Content styling is in &__section-content block to ensure it comes after
+            // --scroll-enabled in cascade order (so hidden state wins over scroll-enabled's opacity: 1).
+        }
+    }
+
+    // Section header with layer title, chevron, and toggle
+    &__section-header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        height: var(--gd-geo-multi-layer-legend__section-header-height);
+        box-sizing: border-box;
+        padding: 5px 10px;
+        background-color: kit-variables.$gd-color-white;
+        cursor: pointer;
+        user-select: none;
+        // Never shrink - header must always be visible
+        flex-shrink: 0;
+
+        &:hover {
+            background-color: var(--gd-palette-complementary-0-from-theme, #f8fafb);
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--gd-palette-primary-base, #14b2e2);
+            outline-offset: -2px;
+        }
+    }
+
+    // Chevron icon container
+    &__section-chevron {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+    }
+
+    // Chevron icon with rotation animation
+    &__chevron-icon {
+        display: inline-flex;
+        color: $legend-chevron-color;
+        transition: transform var(--gd-geo-multi-layer-legend__toggle-duration) ease-out;
+        transform: rotate(0deg);
+
+        &--expanded {
+            transform: rotate(90deg);
+        }
+    }
+
+    // Layer title
+    &__section-title {
+        flex: 1;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 16px;
+        color: $legend-title-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // Toggle switch container
+    &__section-toggle {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    // Content wrapper for CSS Grid animation (smooth expand/collapse)
+    &__section-content-wrapper {
+        // The section itself animates (grid-template-rows), so wrapper only needs clipping.
+        overflow: hidden;
+        min-height: 0;
+        height: 100%;
+    }
+
+    // Section content (scrollable area for groups)
+    // No border between header and content - borders only between sections
+    &__section-content {
+        display: flex;
+        flex-direction: column;
+        // Required for CSS Grid 0fr animation to work
+        min-height: 0;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: hidden; // enabled after expand animation (see --scroll-enabled modifier)
+        scrollbar-gutter: stable;
+
+        // Hide content when collapsed (prevents visible flicker)
+        .gd-geo-multi-layer-legend__section--collapsed & {
+            opacity: 0;
+            overflow-y: hidden;
+            animation: none;
+        }
+
+        // Enable scrolling only after expand animation finishes (set by React via --scroll-enabled modifier).
+        .gd-geo-multi-layer-legend__section--scroll-enabled & {
+            overflow-y: auto;
+            opacity: 1;
+        }
+
+        // Hidden layer: dimmed and desaturated content.
+        // Placed after --scroll-enabled so hidden state wins over scroll-enabled's opacity: 1.
+        .gd-geo-multi-layer-legend__section--hidden & {
+            cursor: default;
+            opacity: 0.35;
+            filter: grayscale(1);
+        }
+
+        // Scrollbar styling
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 4px 0;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--gd-palette-complementary-4, #ccd8e2);
+            border: 2px solid transparent;
+            border-radius: 48px;
+            background-clip: padding-box;
+        }
+
+        // Firefox scrollbar
+        scrollbar-width: thin;
+        scrollbar-color: var(--gd-palette-complementary-4, #ccd8e2) transparent;
+    }
+
+    // ==========================================================================
+    // GROUP = One data bucket (size, color, etc.)
+    // ==========================================================================
+    &__group {
+        // Figma: pl-31px pr-0 for color/size items
+        // No right padding - scrollbar-gutter handles alignment
+        padding: 0 0 15px 31px;
+
+        // Space between groups
+        & + & {
+            margin-top: 10px;
+        }
+
+        // Color scale has different padding (Figma: pl-32px pr-10px)
+        &--color-scale {
+            padding-left: 32px;
+            padding-right: 10px;
+        }
+    }
+
+    // Group title (like "Type:", "30-Day Priority Index")
+    &__group-title {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+        color: $legend-text-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // ==========================================================================
+    // SIZE LEGEND
+    // ==========================================================================
+    &__size-list {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 6px;
+        padding: 5px 0;
+    }
+
+    &__size-anchor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+    }
+
+    &__size-circle {
+        border: 1px solid variables.$border-color-circle-legend;
+        border-radius: 50%;
+        box-sizing: content-box;
+        background-color: transparent;
+    }
+
+    &__size-label {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        color: $legend-text-color;
+        white-space: nowrap;
+    }
+
+    // ==========================================================================
+    // COLOR LEGEND
+    // ==========================================================================
+    &__color-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__color-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        min-height: 20px;
+
+        // Clickable item styles
+        &--clickable {
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 2px;
+            margin: 0 -2px;
+
+            &:hover {
+                background-color: var(--gd-palette-complementary-0-from-theme, #f8fafb);
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &:focus-visible {
+                outline: 2px solid var(--gd-palette-primary-base, #14b2e2);
+                outline-offset: 1px;
+            }
+        }
+
+        // Disabled item styles (hidden on chart)
+        &--disabled {
+            .gd-geo-multi-layer-legend__color-swatch {
+                opacity: 0.4;
+            }
+
+            .gd-geo-multi-layer-legend__color-label {
+                opacity: 0.5;
+            }
+
+            .gd-geo-multi-layer-legend__color-count {
+                opacity: 0.3;
+            }
+        }
+    }
+
+    &__color-swatch {
+        flex-shrink: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 0;
+    }
+
+    &__color-label {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+        color: $legend-text-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__color-count {
+        font-size: 11px;
+        color: $legend-text-color;
+        opacity: 0.7;
+    }
+
+    // ==========================================================================
+    // COLOR SCALE LEGEND (gradient for numeric color)
+    // ==========================================================================
+    &__color-scale {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 5px 0;
+    }
+
+    &__color-scale-bar {
+        height: 8px;
+        width: 100%;
+        border-radius: 2px;
+        // Default gradient - light to primary color
+        background: linear-gradient(
+            to right,
+            var(--gd-palette-complementary-2, #ebeff4),
+            var(--gd-palette-primary-base, #14b2e2)
+        );
+    }
+
+    &__color-scale-labels {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__color-scale-min,
+    &__color-scale-max {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        color: $legend-text-color;
+    }
+}
+
+// ==========================================================================
+// LAYER TOGGLE SWITCH
+// Pill-shaped toggle switch (30x14) matching Figma design
+// ==========================================================================
+.gd-geo-legend-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 30px;
+    height: 14px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        .gd-geo-legend-toggle__track {
+            outline: 2px solid var(--gd-palette-primary-base, #14b2e2);
+            outline-offset: 1px;
+        }
+    }
+
+    // Track (pill background)
+    &__track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 14px;
+        background-color: $legend-toggle-bg;
+        border: 1px solid $legend-toggle-border;
+        border-radius: 7px;
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    // Thumb (sliding circle)
+    &__thumb {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 10px;
+        height: 10px;
+        background-color: kit-variables.$gd-color-white;
+        border: 1px solid $legend-toggle-thumb-border;
+        border-radius: 50%;
+        transition:
+            left 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    // Checked state
+    &--checked {
+        .gd-geo-legend-toggle__track {
+            background-color: $legend-toggle-active-bg;
+            border-color: $legend-toggle-active-bg;
+        }
+
+        .gd-geo-legend-toggle__thumb {
+            left: 16px;
+            background-color: kit-variables.$gd-color-white;
+            border-color: kit-variables.$gd-color-white;
+        }
+    }
+
+    // Hover state
+    &:hover:not(&--disabled) {
+        .gd-geo-legend-toggle__thumb {
+            border-color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+
+        &.gd-geo-legend-toggle--checked {
+            .gd-geo-legend-toggle__track {
+                background-color: var(--gd-palette-primary-base-d06, #129cc6);
+            }
+        }
+    }
+
+    // Disabled state
+    &--disabled {
+        cursor: not-allowed;
+
+        .gd-geo-legend-toggle__track {
+            opacity: 0.5;
+        }
+
+        .gd-geo-legend-toggle__thumb {
+            opacity: 0.5;
+        }
+    }
+}

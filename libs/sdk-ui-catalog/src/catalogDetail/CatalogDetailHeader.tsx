@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { EditableLabel, UiCard } from "@gooddata/sdk-ui-kit";
 
 import { CatalogItemLockMemo, type ICatalogItem } from "../catalogItem/index.js";
-import { ObjectTypeIconMemo } from "../objectType/index.js";
+import { ObjectTypeIconMemo, ObjectTypeTooltip } from "../objectType/index.js";
 
 export interface CatalogDetailHeaderRef {
     focusTitle: () => void;
@@ -33,6 +33,9 @@ export function CatalogDetailHeader({
 }: Props) {
     const intl = useIntl();
 
+    const type = item.type ?? "analyticalDashboard";
+    const visualizationType = item.visualizationType;
+
     const titleRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLDivElement>(null);
 
@@ -54,10 +57,17 @@ export function CatalogDetailHeader({
             <div className="gd-analytics-catalog-detail__card">
                 <div className="gd-analytics-catalog-detail__card__header">
                     <div className="gd-analytics-catalog-detail__card__header__title">
-                        <ObjectTypeIconMemo
-                            type={item.type ?? "analyticalDashboard"}
-                            visualizationType={item.visualizationType}
-                            backgroundSize={32}
+                        <ObjectTypeTooltip
+                            intl={intl}
+                            type={type}
+                            visualizationType={visualizationType}
+                            anchor={
+                                <ObjectTypeIconMemo
+                                    type={type}
+                                    visualizationType={visualizationType}
+                                    backgroundSize={32}
+                                />
+                            }
                         />
                         {item?.isLocked ? <CatalogItemLockMemo intl={intl} /> : null}
                         <div className="gd-analytics-catalog-detail__card__header__title__name">

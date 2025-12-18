@@ -24,7 +24,7 @@ const screenshotWithClicks = {
         { selector: ".gd-input-field" },
     ],
     delay: {
-        postOperation: 50,
+        postOperation: 100,
     },
 };
 

@@ -69,6 +69,7 @@ export enum TigerFeaturesNames {
     EnableGenAIChat = "enableGenAIChat",
     EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableGenAICatalogQualityChecker = "enableGenAICatalogQualityChecker",
+    EnableAIDataSetting = "enableAIDataSetting",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableCustomizedDashboardsWithoutPluginOverlay = "enableCustomizedDashboardsWithoutPluginOverlay",
     EnableAlertingRollout = "enableAlertingRollout",
@@ -193,6 +194,7 @@ export type ITigerFeatureFlags = {
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
     enableGenAIChatRollout: (typeof FeatureFlagsValues)["enableGenAIChatRollout"][number];
     enableGenAICatalogQualityChecker: (typeof FeatureFlagsValues)["enableGenAICatalogQualityChecker"][number];
+    enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
     enableAlertingRollout: (typeof FeatureFlagsValues)["enableAlertingRollout"][number];
     enableDashboardFilterViews: (typeof FeatureFlagsValues)["enableDashboardFilterViews"][number];
     enableCustomizedDashboardsWithoutPluginOverlay: (typeof FeatureFlagsValues)["enableCustomizedDashboardsWithoutPluginOverlay"][number];
@@ -320,6 +322,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
     enableGenAICatalogQualityChecker: false,
+    enableAIDataSetting: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
     enableCustomizedDashboardsWithoutPluginOverlay: true,
@@ -447,6 +450,7 @@ export const FeatureFlagsValues = {
     enableGenAIChat: [true, false] as const,
     enableGenAIChatRollout: [true, false] as const,
     enableGenAICatalogQualityChecker: [false, true] as const,
+    enableAIDataSetting: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
     enableCustomizedDashboardsWithoutPluginOverlay: [true, false] as const,

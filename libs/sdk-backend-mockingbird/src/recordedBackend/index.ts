@@ -293,6 +293,9 @@ function recordedWorkspace(
                 async deleteDashboardFiltersApplyMode(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setEnableAiOnData(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setColorPalette(): Promise<void> {
                     return Promise.resolve();
                 },

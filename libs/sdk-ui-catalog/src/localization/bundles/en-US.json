@@ -37,7 +37,115 @@
     },
     "analyticsCatalog.objectType.dateDataset.button.ariaLabel": {
         "value": "Date dataset: {count}",
-        "comment": "Analytics Catalog: ARIA label for the Date dataset object type filter button, showing the number of matching date datasets. Example: 'Date dataset: 6'."
+        "comment": "ARIA label for the Date dataset object type filter button, showing the number of matching date datasets. Example: 'Date dataset: 6'."
+    },
+    "analyticsCatalog.objectType.dashboard.tooltip": {
+        "value": "Dashboard",
+        "comment": "Tooltip label shown when hovering the dashboard object type indicator (e.g., in the catalog table or the detail header)."
+    },
+    "analyticsCatalog.objectType.visualization.tooltip": {
+        "value": "Visualization",
+        "comment": "Tooltip label shown when hovering the visualization object type indicator when the specific visualization type is not available."
+    },
+    "analyticsCatalog.objectType.metric.tooltip": {
+        "value": "Metric",
+        "comment": "Tooltip label shown when hovering the metric object type indicator."
+    },
+    "analyticsCatalog.objectType.attribute.tooltip": {
+        "value": "Attribute",
+        "comment": "Tooltip label shown when hovering the attribute object type indicator."
+    },
+    "analyticsCatalog.objectType.fact.tooltip": {
+        "value": "Fact",
+        "comment": "Tooltip label shown when hovering the fact object type indicator."
+    },
+    "analyticsCatalog.objectType.dateDataset.tooltip": {
+        "value": "Date dataset",
+        "comment": "Tooltip label shown when hovering the date dataset object type indicator."
+    },
+    "analyticsCatalog.visualizationType.table.tooltip": {
+        "value": "Table",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type table."
+    },
+    "analyticsCatalog.visualizationType.area.tooltip": {
+        "value": "Area chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type area chart."
+    },
+    "analyticsCatalog.visualizationType.treemap.tooltip": {
+        "value": "Treemap chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type treemap chart."
+    },
+    "analyticsCatalog.visualizationType.scatter.tooltip": {
+        "value": "Scatter plot",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type scatter plot."
+    },
+    "analyticsCatalog.visualizationType.donut.tooltip": {
+        "value": "Donut chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type donut chart."
+    },
+    "analyticsCatalog.visualizationType.headline.tooltip": {
+        "value": "Headline",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type headline."
+    },
+    "analyticsCatalog.visualizationType.column.tooltip": {
+        "value": "Column chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type column chart."
+    },
+    "analyticsCatalog.visualizationType.line.tooltip": {
+        "value": "Line chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type line chart."
+    },
+    "analyticsCatalog.visualizationType.pyramid.tooltip": {
+        "value": "Pyramid chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type pyramid chart."
+    },
+    "analyticsCatalog.visualizationType.funnel.tooltip": {
+        "value": "Funnel chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type funnel chart."
+    },
+    "analyticsCatalog.visualizationType.heatmap.tooltip": {
+        "value": "Heatmap",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type heatmap."
+    },
+    "analyticsCatalog.visualizationType.bubble.tooltip": {
+        "value": "Bubble chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type bubble chart."
+    },
+    "analyticsCatalog.visualizationType.pie.tooltip": {
+        "value": "Pie chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type pie chart."
+    },
+    "analyticsCatalog.visualizationType.bar.tooltip": {
+        "value": "Bar chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type bar chart."
+    },
+    "analyticsCatalog.visualizationType.combo.tooltip": {
+        "value": "Combo chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type combo chart."
+    },
+    "analyticsCatalog.visualizationType.bullet.tooltip": {
+        "value": "Bullet chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type bullet chart."
+    },
+    "analyticsCatalog.visualizationType.waterfall.tooltip": {
+        "value": "Waterfall chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type waterfall chart."
+    },
+    "analyticsCatalog.visualizationType.dependencywheel.tooltip": {
+        "value": "Dependency wheel chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type dependency wheel chart."
+    },
+    "analyticsCatalog.visualizationType.sankey.tooltip": {
+        "value": "Sankey chart",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type Sankey chart."
+    },
+    "analyticsCatalog.visualizationType.pushpin.tooltip": {
+        "value": "Pushpin",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type pushpin (map)."
+    },
+    "analyticsCatalog.visualizationType.repeater.tooltip": {
+        "value": "Repeater",
+        "comment": "Tooltip label shown when hovering a visualization item for insights of type repeater."
     },
     "analyticsCatalog.filter.title": {
         "value": "Filters",
@@ -133,7 +241,7 @@
     },
     "analyticsCatalog.column.title.granularities": {
         "value": "Granularities",
-        "comment": "Analytics Catalog: Label for the granularities field in the catalog item details (metadata tab), listing the available date granularities for a date dataset."
+        "comment": "Label for the granularities field in the catalog item details (metadata tab), listing the available date granularities for a date dataset."
     },
     "analyticsCatalog.column.isHidden.icon.tooltip": {
         "value": "Hidden from Smart Search and AI Assistant results for all users.",

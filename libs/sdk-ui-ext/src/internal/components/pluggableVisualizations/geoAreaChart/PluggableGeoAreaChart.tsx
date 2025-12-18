@@ -17,6 +17,7 @@ import {
     insightFilters,
     insightHasDataDefined,
     insightLayers,
+    insightTitle,
     newAttribute,
 } from "@gooddata/sdk-model";
 import {
@@ -330,7 +331,10 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             ? { ...fullConfig, tooltipText: tooltipTextAttribute }
             : fullConfig;
 
+        // Set primary layer name to the insight title so legend/title logic is consistent for all layers.
+        const title = insightTitle(insight);
         const primaryLayer = createAreaLayer({
+            ...(title ? { name: title } : {}),
             area: area as IAttribute,
             ...(color ? { color } : {}),
             ...(segmentBy ? { segmentBy } : {}),

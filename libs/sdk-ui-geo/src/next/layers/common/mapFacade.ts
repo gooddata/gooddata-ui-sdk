@@ -52,6 +52,8 @@ type PanToArgs = Parameters<MapLibreMap["panTo"]>;
 type ZoomToArgs = Parameters<MapLibreMap["zoomTo"]>;
 type QueryRenderedFeaturesArgs = Parameters<MapLibreMap["queryRenderedFeatures"]>;
 type QueryRenderedFeaturesResult = ReturnType<MapLibreMap["queryRenderedFeatures"]>;
+type SetLayoutPropertyArgs = Parameters<MapLibreMap["setLayoutProperty"]>;
+type SetFilterArgs = Parameters<MapLibreMap["setFilter"]>;
 type StyleResult = ReturnType<MapLibreMap["getStyle"]>;
 type CenterResult = ReturnType<MapLibreMap["getCenter"]>;
 type ZoomResult = ReturnType<MapLibreMap["getZoom"]>;
@@ -89,6 +91,8 @@ export interface IMapFacade {
     loaded(): LoadedResult;
     areTilesLoaded(): TilesLoadedResult;
     queryRenderedFeatures(...args: QueryRenderedFeaturesArgs): QueryRenderedFeaturesResult;
+    setLayoutProperty(...args: SetLayoutPropertyArgs): IMapFacade;
+    setFilter(...args: SetFilterArgs): IMapFacade;
     readonly [MAP_FACADE_SOURCE]?: MapLibreMap;
 }
 
@@ -179,6 +183,14 @@ export function createMapFacade(map: MapLibreMap): IMapFacade {
         loaded: () => map.loaded(),
         areTilesLoaded: () => map.areTilesLoaded(),
         queryRenderedFeatures: (...args: QueryRenderedFeaturesArgs) => map.queryRenderedFeatures(...args),
+        setLayoutProperty: (...args: SetLayoutPropertyArgs) => {
+            map.setLayoutProperty(...args);
+            return facade;
+        },
+        setFilter: (...args: SetFilterArgs) => {
+            map.setFilter(...args);
+            return facade;
+        },
         [MAP_FACADE_SOURCE]: map,
     };
 

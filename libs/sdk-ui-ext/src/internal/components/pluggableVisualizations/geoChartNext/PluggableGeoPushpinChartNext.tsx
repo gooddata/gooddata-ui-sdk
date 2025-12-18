@@ -16,6 +16,7 @@ import {
     insightFilters,
     insightHasDataDefined,
     insightLayers,
+    insightTitle,
     newAttribute,
 } from "@gooddata/sdk-model";
 import {
@@ -400,7 +401,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             tooltipText: tooltipTextAttribute ?? undefined,
         };
 
+        // Set primary layer name to the insight title so legend/title logic is consistent for all layers.
+        const title = insightTitle(insight);
         const primaryLayer = createPushpinLayer({
+            ...(title ? { name: title } : {}),
             latitude: latitudeAttribute,
             longitude: longitudeAttribute,
             filters,

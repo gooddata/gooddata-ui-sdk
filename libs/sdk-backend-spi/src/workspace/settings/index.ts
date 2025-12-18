@@ -147,6 +147,16 @@ export interface IWorkspaceSettingsService {
     deleteDashboardFiltersApplyMode(): Promise<void>;
 
     /**
+     * Sets enable AI on data setting for current workspace.
+     *
+     * @param enabled - whether to enable sending aggregated data to LLM.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableAiOnData(enabled: boolean): Promise<void>;
+
+    /**
      * Sets color palette for current workspace.
      *
      * @param colorPaletteId - ID of the color palette to apply to charts in workspace.

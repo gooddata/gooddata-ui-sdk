@@ -53,6 +53,8 @@ function createMapFacadeStub(): IMapFacade {
         loaded: vi.fn(() => true),
         areTilesLoaded: vi.fn(() => true),
         queryRenderedFeatures: vi.fn(() => []),
+        setLayoutProperty: vi.fn(() => map),
+        setFilter: vi.fn(() => map),
     };
     return map;
 }
@@ -125,7 +127,6 @@ describe("MapController", () => {
         const mapContainerRef = { current: document.createElement("div") };
         const config = undefined;
         const layerExecutions: ILayerExecutionRecord<IGeoLayer>[] = [];
-        const selectedSegmentItems: string[] = [];
         const drillablePredicates: IHeaderPredicate[] = [];
         const afterRender = vi.fn();
         const onCenterPositionChanged = vi.fn();
@@ -139,7 +140,6 @@ describe("MapController", () => {
                 chartContainerRect={null}
                 initialViewport={null}
                 layerExecutions={layerExecutions}
-                selectedSegmentItems={selectedSegmentItems}
                 drillablePredicates={drillablePredicates}
                 onCenterPositionChanged={onCenterPositionChanged}
                 onZoomChanged={onZoomChanged}

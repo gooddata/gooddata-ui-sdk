@@ -7,12 +7,15 @@ import { defaultImport } from "default-import";
 import ReactMeasure, { type ContentRect, type MeasuredComponentProps } from "react-measure";
 import { v4 } from "uuid";
 
-import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
+import {
+    type ITranslationsComponentProps,
+    IntlTranslationsProvider,
+    convertDrillableItemsToPredicates,
+} from "@gooddata/sdk-ui";
 
-import { Legend } from "./legends/Legend.js";
+import { GeoChartNextLegendOverlay } from "./multiLayerLegend/GeoChartNextLegendOverlay.js";
 import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
 import { useGeoLayers } from "../context/GeoLayersContext.js";
-import { useLegendRenderState } from "../hooks/legend/useLegendRenderState.js";
 import { MapController } from "../map/MapController.js";
 import { computeCombinedViewport } from "../map/viewport.js";
 import { PushDataSync } from "../pushData/PushDataSync.js";
@@ -39,14 +42,14 @@ const containerBaseId = "geo-chart-next";
  */
 export function RenderGeoChartNext(): ReactElement {
     const props = useGeoChartNextProps();
-    const { layers, layerExecutions, colorPalette } = useGeoLayers();
+    const { layers, layerExecutions, colorPalette, primaryLayer } = useGeoLayers();
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const containerId = useMemo(() => `${containerBaseId}-${v4()}`, []);
 
     const [chartContainerRect, setChartContainerRect] = useState<ContentRect | null>(null);
 
-    const { primaryLayer, colorStrategy, legendItems, selectedSegmentItems, isLegendRenderedFirst, isRow } =
-        useLegendRenderState(props.config, chartContainerRect);
+    const colorStrategy = primaryLayer?.colorStrategy ?? null;
+    const availableLegends = primaryLayer?.availableLegends;
 
     const initialViewport = useMemo(() => computeCombinedViewport(layers), [layers]);
 
@@ -55,28 +58,15 @@ export function RenderGeoChartNext(): ReactElement {
         [props.drillableItems],
     );
 
-    const flexDirection = isRow ? "flex-direction-row" : "flex-direction-column";
     const isExportMode = props.config?.isExportMode ?? false;
     const containerClass = cx(
         "gd-geo-chart-next__container",
         "gd-geo-component",
         containerBaseId,
         containerId,
-        flexDirection,
-        isRow ? "gd-geo-chart-next__container--flex-row" : "gd-geo-chart-next__container--flex-column",
         {
             isExportMode,
         },
-    );
-
-    const legendComponent = (
-        <Legend
-            colorStrategy={colorStrategy}
-            config={props.config}
-            categoryItems={legendItems}
-            containerId={containerId}
-            chartContainerRect={chartContainerRect ?? undefined}
-        />
     );
 
     return (
@@ -88,15 +78,25 @@ export function RenderGeoChartNext(): ReactElement {
                     className={containerClass}
                     ref={measureRef}
                 >
-                    {isLegendRenderedFirst ? legendComponent : null}
-                    <div ref={mapContainerRef} className="gd-geo-chart-next__map" />
-                    {isLegendRenderedFirst ? null : legendComponent}
+                    <div ref={mapContainerRef} className="gd-geo-chart-next__map">
+                        <IntlTranslationsProvider>
+                            {(translationProps: ITranslationsComponentProps) => (
+                                <GeoChartNextLegendOverlay
+                                    config={props.config}
+                                    chartContainerRect={chartContainerRect}
+                                    layers={layers}
+                                    layerExecutions={layerExecutions}
+                                    primaryLayer={primaryLayer}
+                                    numericSymbols={translationProps.numericSymbols}
+                                />
+                            )}
+                        </IntlTranslationsProvider>
+                    </div>
                     <MapController
                         mapContainerRef={mapContainerRef}
                         chartContainerRect={chartContainerRect}
                         initialViewport={initialViewport}
                         layerExecutions={layerExecutions}
-                        selectedSegmentItems={selectedSegmentItems}
                         drillablePredicates={drillablePredicates}
                         onCenterPositionChanged={props.onCenterPositionChanged}
                         onZoomChanged={props.onZoomChanged}
@@ -107,7 +107,7 @@ export function RenderGeoChartNext(): ReactElement {
                     <PushDataSync
                         colorStrategy={colorStrategy}
                         colorPalette={colorPalette}
-                        availableLegends={primaryLayer?.availableLegends}
+                        availableLegends={availableLegends}
                     />
                 </div>
             )}

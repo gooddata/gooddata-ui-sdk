@@ -3746,6 +3746,7 @@ export interface ISettings {
     enableAccessibleChartTooltip?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
+    enableAiOnData?: boolean;
     enableAlertAttributes?: boolean;
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;

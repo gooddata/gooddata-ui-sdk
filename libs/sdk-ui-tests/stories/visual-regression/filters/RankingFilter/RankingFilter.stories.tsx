@@ -25,7 +25,7 @@ const dropdownWithOneAttributeItemScenarios: INeobackstopConfig = {
     attributeDropdownButtonTooltip: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         hoverSelector: ".s-rf-attribute-dropdown-button",
-        postInteractionWait: { delay: 200 },
+        delay: { postOperation: 200 }, // element has .2s transition
     },
 };
 
@@ -33,7 +33,7 @@ const customGranularityScenarios: INeobackstopConfig = {
     attributeDropdownOpened: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-rf-attribute-dropdown-button",
-        delay: { postOperation: 350 },
+        delay: { postOperation: 200 }, // element has .2s transition
     },
 };
 
@@ -42,7 +42,7 @@ const buttonScenarios: INeobackstopConfig = {
     opened: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-rf-dropdown-button",
-        postInteractionWait: { delay: 200 },
+        delay: { postOperation: 200 }, // element has .2s transition
     },
 };
 

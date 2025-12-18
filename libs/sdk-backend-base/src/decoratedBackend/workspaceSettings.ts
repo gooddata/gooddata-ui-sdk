@@ -78,6 +78,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.deleteDashboardFiltersApplyMode();
     }
 
+    async setEnableAiOnData(enabled: boolean): Promise<void> {
+        return this.decorated.setEnableAiOnData(enabled);
+    }
+
     async setTheme(themeId: string): Promise<void> {
         return this.decorated.setTheme(themeId);
     }

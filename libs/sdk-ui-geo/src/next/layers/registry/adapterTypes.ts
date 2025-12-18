@@ -13,7 +13,12 @@ import type { IAreaGeoData } from "../../types/geoData/area.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import type { GeoLayerType, IGeoLayer, IGeoLayerArea, IGeoLayerPushpin } from "../../types/layers/index.js";
 import type { IMapViewport } from "../../types/map/provider.js";
-import type { GeoJSONSourceSpecification, IMapFacade, IPopupFacade } from "../common/mapFacade.js";
+import type {
+    FilterSpecification,
+    GeoJSONSourceSpecification,
+    IMapFacade,
+    IPopupFacade,
+} from "../common/mapFacade.js";
 
 /**
  * Context provided to adapter methods.
@@ -339,4 +344,44 @@ export interface IGeoLayerAdapter<
      * @param map - Map facade instance
      */
     removeFromMap(layer: TLayer, map: IMapFacade): void;
+
+    /**
+     * Get all MapLibre layer IDs created by this adapter.
+     *
+     * @remarks
+     * Returns the IDs of all MapLibre layers that this adapter manages.
+     * Used for visibility toggling without removing/re-adding layers.
+     *
+     * @param layer - Layer definition
+     * @returns Array of MapLibre layer IDs
+     */
+    getMapLibreLayerIds(layer: TLayer): string[];
+
+    /**
+     * Get MapLibre layer IDs that support segment filtering.
+     *
+     * @remarks
+     * Returns the IDs of layers that can be filtered by segment URIs.
+     * This is typically the main data layers (not cluster or label layers).
+     * Used for efficient filter updates without removing/re-adding layers.
+     *
+     * @param layer - Layer definition
+     * @returns Array of filterable MapLibre layer IDs
+     *
+     * @deprecated Use getFilterableLayers instead
+     */
+    getFilterableLayerIds?(layer: TLayer): string[];
+
+    /**
+     * Get MapLibre layers that support segment filtering with their base filters.
+     *
+     * @remarks
+     * Returns layer IDs along with any base filter that must be preserved.
+     * The segment filter will be combined with the base filter using "all".
+     * Used for efficient filter updates without removing/re-adding layers.
+     *
+     * @param layer - Layer definition
+     * @returns Array of filterable layer configs with base filters
+     */
+    getFilterableLayers?(layer: TLayer): Array<{ layerId: string; baseFilter?: FilterSpecification }>;
 }

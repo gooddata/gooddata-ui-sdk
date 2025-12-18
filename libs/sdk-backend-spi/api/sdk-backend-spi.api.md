@@ -2036,6 +2036,8 @@ export interface IWorkspaceSettingsService {
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
+    // @alpha
+    setEnableAiOnData(enabled: boolean): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;
