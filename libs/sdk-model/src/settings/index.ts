@@ -345,6 +345,11 @@ export interface ISettings {
     enableGenAICatalogQualityChecker?: boolean;
 
     /**
+     * Allow sending aggregated data to LLM.
+     */
+    enableAiOnData?: boolean;
+
+    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;

@@ -76,6 +76,7 @@ function createMapFacadeStub(initial?: { layers?: string[]; sources?: string[] }
     map.loaded = vi.fn((() => true) as IMapFacade["loaded"]);
     map.areTilesLoaded = vi.fn((() => true) as IMapFacade["areTilesLoaded"]);
     map.queryRenderedFeatures = vi.fn((() => []) as IMapFacade["queryRenderedFeatures"]);
+    map.setLayoutProperty = vi.fn((() => map) as IMapFacade["setLayoutProperty"]);
 
     return {
         map,

@@ -394,6 +394,9 @@ export const DEFAULT_ITEM_HEIGHT = 28;
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
 // @internal
+export const DEFAULT_SEPARATORS: ISeparators_3;
+
+// @internal
 export const DEFAULT_TEMPLATE_PREFIX = "measureNumberFormat.numberFormat.template";
 
 // @internal
@@ -626,6 +629,9 @@ export const focusAndEnsureReachableElement: (initialElement: HTMLElement | unde
 
 // @internal (undocumented)
 export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
+
+// @internal
+export function formatNumberWithSeparators(value: number | null | undefined, separators?: ISeparators_3): string;
 
 // @internal (undocumented)
 export function formatTime(h: number, m: number, format?: string): string;

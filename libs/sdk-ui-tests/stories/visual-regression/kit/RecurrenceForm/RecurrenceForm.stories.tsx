@@ -90,7 +90,9 @@ const screenshotProps: INeobackstopConfig = {
     openedRecurrenceType: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: "#first-example .s-recurrence-form-type",
-        postInteractionWait: { delay: 200 },
+        delay: {
+            postOperation: 200, // element has transition
+        },
     },
 };
 

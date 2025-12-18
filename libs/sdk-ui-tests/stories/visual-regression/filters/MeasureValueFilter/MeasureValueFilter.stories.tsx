@@ -13,14 +13,14 @@ const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const scenarios: INeobackstopConfig = {
     closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     opened: {
-        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        readySelector: { selector: ".s-mvf-operator-dropdown-button", state: State.Attached },
         clickSelector: ".s-mvf-operator-dropdown-button",
         delay: {
             postOperation: 200,
         },
     },
     "between-selected": {
-        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        readySelector: { selector: ".s-mvf-operator-dropdown-button", state: State.Attached },
         clickSelectors: [
             { selector: ".s-mvf-operator-dropdown-button" },
             { selector: ".s-mvf-operator-between" },
@@ -30,7 +30,7 @@ const scenarios: INeobackstopConfig = {
         },
     },
     "greater-than-selected": {
-        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        readySelector: { selector: ".s-mvf-operator-dropdown-button", state: State.Attached },
         clickSelectors: [
             { selector: ".s-mvf-operator-dropdown-button" },
             { selector: ".s-mvf-operator-greater_than" },

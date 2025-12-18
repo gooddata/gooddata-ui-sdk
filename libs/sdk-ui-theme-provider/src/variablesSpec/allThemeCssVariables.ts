@@ -1,10 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
+
 // Theme
 import { chartThemeDeprecatedVariables } from "./deprecated/chart.js";
 import { paletteBaseThemeDeprecatedVariables } from "./deprecated/palette-base.js";
 import { inconsistentVariables } from "./inconsistent/inconsistent.js";
 import { internalButtonThemeVariables } from "./internal/button.js";
 import { internalFontThemeVariables } from "./internal/font.js";
+import { internalGeoThemeVariables } from "./internal/geo.js";
 import { internalIconThemeVariables } from "./internal/icon.js";
 import { internalModelerThemeVariables } from "./internal/modeler.js";
 import { internalSpacingThemeVariables } from "./internal/spacing.js";
@@ -74,6 +76,8 @@ export const themeInternalCssVariables: ThemeInternalCssVariable[] = [
     ...internalFontThemeVariables,
     ...internalSpacingThemeVariables,
     ...internalTransitionThemeVariables,
+    // Geo
+    ...internalGeoThemeVariables,
     // Components
     ...internalButtonThemeVariables,
     ...internalIconThemeVariables,

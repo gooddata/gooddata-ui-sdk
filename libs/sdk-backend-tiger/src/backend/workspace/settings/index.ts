@@ -168,6 +168,10 @@ export class TigerWorkspaceSettings
         return this.deleteSettingByType("DASHBOARD_FILTERS_APPLY_MODE");
     }
 
+    public async setEnableAiOnData(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_AI_ON_DATA", { value: enabled });
+    }
+
     public override async setTheme(activeThemeId: string): Promise<void> {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }

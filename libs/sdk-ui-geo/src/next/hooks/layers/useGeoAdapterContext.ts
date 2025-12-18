@@ -10,18 +10,12 @@ import { useGeoChartNextProps } from "../../context/GeoChartNextContext.js";
 import { useGeoLayers } from "../../context/GeoLayersContext.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 
-interface IUseGeoAdapterContextOptions {
-    selectedSegmentItems?: string[];
-}
-
 /**
  * Builds adapter context shared by layer rendering logic.
  *
  * @internal
  */
-export function useGeoAdapterContext({
-    selectedSegmentItems,
-}: IUseGeoAdapterContextOptions = {}): IGeoAdapterContext {
+export function useGeoAdapterContext(): IGeoAdapterContext {
     const props = useGeoChartNextProps();
     const { colorPalette: contextColorPalette } = useGeoLayers();
     const intl = useIntl();
@@ -35,24 +29,16 @@ export function useGeoAdapterContext({
 
     const colorMapping = useMemo(() => props.config?.colorMapping ?? [], [props.config?.colorMapping]);
 
-    const mergedConfig = useMemo(
-        () => ({
-            ...props.config,
-            selectedSegmentItems,
-        }),
-        [props.config, selectedSegmentItems],
-    );
-
     return useMemo(
         () => ({
             backend,
             workspace,
-            config: mergedConfig,
+            config: props.config,
             execConfig: props.execConfig,
             colorPalette,
             colorMapping,
             intl,
         }),
-        [backend, workspace, mergedConfig, props.execConfig, colorPalette, colorMapping, intl],
+        [backend, workspace, props.config, props.execConfig, colorPalette, colorMapping, intl],
     );
 }

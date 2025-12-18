@@ -24,7 +24,6 @@ export type MapControllerProps = {
     chartContainerRect: ContentRect | null;
     initialViewport: Partial<IMapViewport> | null;
     layerExecutions: ILayerExecutionRecord[];
-    selectedSegmentItems: string[];
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
@@ -42,7 +41,6 @@ export function MapController({
     chartContainerRect,
     initialViewport,
     layerExecutions,
-    selectedSegmentItems,
     drillablePredicates,
     onCenterPositionChanged,
     onZoomChanged,
@@ -56,7 +54,7 @@ export function MapController({
         initialViewport,
         backend,
     );
-    const adapterContext = useGeoAdapterContext({ selectedSegmentItems });
+    const adapterContext = useGeoAdapterContext();
 
     const runtimeValue = useMemo(
         () => ({

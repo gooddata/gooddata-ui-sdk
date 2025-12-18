@@ -78,7 +78,6 @@ function DatePickerTest() {
 const openedProps: INeobackstopScenarioConfig = {
     readySelector: { selector: ".screenshot-target", state: State.Attached },
     clickSelector: "#external-date input",
-    postInteractionWait: { delay: 200 },
 };
 
 const screenshotScenarios: INeobackstopConfig = {
@@ -87,9 +86,6 @@ const screenshotScenarios: INeobackstopConfig = {
     "next-month": {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelectors: [{ selector: "#external-date input" }, { selector: ".rdp-button_next" }],
-        delay: {
-            postOperation: 200,
-        },
     },
 };
 

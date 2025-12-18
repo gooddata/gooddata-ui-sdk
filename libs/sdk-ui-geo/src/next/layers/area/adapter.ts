@@ -174,4 +174,24 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
 
         return createAreaTooltipConfig(tooltip, config, drillablePredicates, context.intl, layerIds);
     },
+
+    getMapLibreLayerIds(layer) {
+        const ids = getAreaLayerIds(layer.id);
+        return [ids.fillLayerId, ids.outlineLayerId];
+    },
+
+    getFilterableLayerIds(layer) {
+        const ids = getAreaLayerIds(layer.id);
+        // Both fill and outline layers support segment filtering
+        return [ids.fillLayerId, ids.outlineLayerId];
+    },
+
+    getFilterableLayers(layer) {
+        const ids = getAreaLayerIds(layer.id);
+        // Area layers have no base filters - segment filter is the only filter
+        return [
+            { layerId: ids.fillLayerId, baseFilter: undefined },
+            { layerId: ids.outlineLayerId, baseFilter: undefined },
+        ];
+    },
 };

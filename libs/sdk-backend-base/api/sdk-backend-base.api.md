@@ -698,6 +698,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     setDateFormat(dateFormat: string): Promise<void>;
     // (undocumented)
+    setEnableAiOnData(enabled: boolean): Promise<void>;
+    // (undocumented)
     setFormatLocale(locale: string): Promise<void>;
     // (undocumented)
     setLocale(locale: string): Promise<void>;

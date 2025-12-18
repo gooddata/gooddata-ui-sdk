@@ -424,6 +424,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAIDataSetting,
+            "enableAIDataSetting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAIDataSetting,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDashboardFilterViews,
             "enableDashboardFilterViews",
             "BOOLEAN",

@@ -196,18 +196,12 @@ ResponsivePopupLegend.parameters = {
         menuLegendClick: {
             readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
             clickSelector: ".s-legend-popup-icon",
-            delay: {
-                postOperation: 300,
-            },
         },
         paginatorClick: {
             readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
-            clickSelectors: [
-                { selector: ".s-legend-popup-icon", waitAfter: 200 },
-                { selector: ".gd-icon-chevron-right" },
-            ],
+            clickSelectors: [{ selector: ".s-legend-popup-icon" }, { selector: ".gd-icon-chevron-right" }],
             delay: {
-                postOperation: 300,
+                postOperation: 250, // chevron right button has .25s transition
             },
         },
     },
@@ -226,7 +220,6 @@ ThemedPopupLegend.parameters = {
         menuLegendClick: {
             readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
             clickSelector: ".s-legend-popup-icon",
-            postInteractionWait: { delay: 300 },
         },
     },
 } satisfies IStoryParameters;

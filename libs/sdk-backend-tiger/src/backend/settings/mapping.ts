@@ -4,91 +4,66 @@ import { type ISettings } from "@gooddata/sdk-model";
 
 import { type TigerOrgSettingsType, type TigerSettingsType } from "../../types/index.js";
 
+// All possible setting types
+type AllSettingsType = TigerSettingsType | TigerOrgSettingsType;
+
+// These types are intentionally not mapped to maintain an exhaustive check.
+type UnmappedTypes =
+    | "OPERATOR_OVERRIDES"
+    | "TIMEZONE_VALIDATION_ENABLED"
+    | "ENABLE_FILE_ANALYTICS"
+    | "JIT_PROVISIONING"
+    | "ENABLE_SLIDES_EXPORT"
+    | "JWT_JIT_PROVISIONING"
+    | "ATTACHMENT_LINK_TTL"
+    | "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE"
+    | "DATA_LOCALE"
+    | "LDM_DEFAULT_LOCALE"
+    | "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS"
+    | "SORT_CASE_SENSITIVE";
+
+// Only mandatory types
+type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;
+
+// Mapping from Tiger settings type to ISettings key
+const TYPE_TO_KEY_MAP = {
+    WHITE_LABELING: "whiteLabeling",
+    ALERT: "alertDefault",
+    FORMAT_LOCALE: "formatLocale",
+    ACTIVE_COLOR_PALETTE: "activeColorPalette",
+    ACTIVE_THEME: "activeTheme",
+    LOCALE: "locale",
+    MAPBOX_TOKEN: "mapboxToken",
+    AG_GRID_TOKEN: "agGridToken",
+    METADATA_LOCALE: "metadataLocale",
+    TIMEZONE: "timezone",
+    WEEK_START: "weekStart",
+    FISCAL_YEAR: "fiscalYear",
+    SHOW_HIDDEN_CATALOG_ITEMS: "showHiddenCatalogItems",
+    OPENAI_CONFIG: "openAiConfig",
+    DASHBOARD_FILTERS_APPLY_MODE: "dashboardFiltersApplyMode",
+    SEPARATORS: "separators",
+    organizationSetting: "organizationSetting",
+    DATE_FILTER_CONFIG: "dateFilterConfig",
+    AI_RATE_LIMIT: "aiRateLimit",
+    ACTIVE_LLM_ENDPOINT: "llmEndpoint",
+    ATTACHMENT_SIZE_LIMIT: "attachmentSizeLimit",
+    ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS: "allowUnsafeFlexConnectEndpoints",
+    ENABLE_AUTOMATION_EVALUATION_MODE: "enableAutomationEvaluationMode",
+    ENABLE_SNAPSHOT_EXPORT: "enableSnapshotExport",
+    ENABLE_ACCESSIBILITY_MODE: "enableAccessibilityMode",
+    REGISTERED_PLUGGABLE_APPLICATIONS: "registeredPluggableApplications",
+    ENABLE_DRILL_TO_URL_BY_DEFAULT: "enableDrillToUrlByDefault",
+    METRIC_FORMAT_OVERRIDE: "metricFormatOverride",
+    MAX_ZOOM_LEVEL: "maxZoomLevel",
+    ENABLE_AI_ON_DATA: "enableAiOnData",
+} as const satisfies Record<MandatoryTypes, keyof ISettings>;
+
 export function mapTypeToKey(
     type: TigerSettingsType | TigerOrgSettingsType | undefined,
     fallback = "",
 ): keyof ISettings {
-    switch (type) {
-        case "WHITE_LABELING":
-            return "whiteLabeling";
-        case "ALERT":
-            return "alertDefault";
-        case "FORMAT_LOCALE":
-            return "formatLocale";
-        case "ACTIVE_COLOR_PALETTE":
-            return "activeColorPalette";
-        case "ACTIVE_THEME":
-            return "activeTheme";
-        case "LOCALE":
-            return "locale";
-        case "MAPBOX_TOKEN":
-            return "mapboxToken";
-        case "AG_GRID_TOKEN":
-            return "agGridToken";
-        case "METADATA_LOCALE":
-            return "metadataLocale";
-        case "TIMEZONE":
-            return "timezone";
-        case "WEEK_START":
-            return "weekStart";
-        case "FISCAL_YEAR":
-            return "fiscalYear";
-        case "SHOW_HIDDEN_CATALOG_ITEMS":
-            return "showHiddenCatalogItems";
-        case "OPENAI_CONFIG":
-            return "openAiConfig";
-        case "DASHBOARD_FILTERS_APPLY_MODE":
-            return "dashboardFiltersApplyMode";
-        case "SEPARATORS":
-            return "separators";
-        case "organizationSetting":
-            return "organizationSetting";
-        case "DATE_FILTER_CONFIG":
-            return "dateFilterConfig";
-        case "AI_RATE_LIMIT":
-            return "aiRateLimit";
-        case "ACTIVE_LLM_ENDPOINT":
-            return "llmEndpoint";
-        case "ATTACHMENT_SIZE_LIMIT":
-            return "attachmentSizeLimit";
-        case "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS":
-            return "allowUnsafeFlexConnectEndpoints";
-        case "ENABLE_AUTOMATION_EVALUATION_MODE":
-            return "enableAutomationEvaluationMode";
-        case "ENABLE_SNAPSHOT_EXPORT":
-            return "enableSnapshotExport";
-        case "ENABLE_ACCESSIBILITY_MODE":
-            return "enableAccessibilityMode";
-        case "REGISTERED_PLUGGABLE_APPLICATIONS":
-            return "registeredPluggableApplications";
-        case "ENABLE_DRILL_TO_URL_BY_DEFAULT":
-            return "enableDrillToUrlByDefault";
-        case "METRIC_FORMAT_OVERRIDE":
-            return "metricFormatOverride";
-        case "MAX_ZOOM_LEVEL":
-            return "maxZoomLevel";
-        // These cases are intentionally not mapped to maintain an exhaustive check.
-        // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
-        case "OPERATOR_OVERRIDES":
-        case "TIMEZONE_VALIDATION_ENABLED":
-        case "ENABLE_FILE_ANALYTICS":
-        case "JIT_PROVISIONING":
-        case "ENABLE_SLIDES_EXPORT":
-        case "JWT_JIT_PROVISIONING":
-        case "ATTACHMENT_LINK_TTL":
-        case "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE":
-        case "DATA_LOCALE":
-        case "LDM_DEFAULT_LOCALE":
-        case "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS":
-        case "SORT_CASE_SENSITIVE":
-        case "ENABLE_AI_ON_DATA":
-        case undefined:
-            return fallback;
-        default:
-            return exhaustiveCheck(type, fallback);
-    }
-}
-
-function exhaustiveCheck(_type: never, fallback: string): string {
-    return fallback;
+    // For undefined or unmapped type - return fallback
+    // exhaustive check is done statically through `satisfies` condition above
+    return TYPE_TO_KEY_MAP[type as keyof typeof TYPE_TO_KEY_MAP] ?? fallback;
 }

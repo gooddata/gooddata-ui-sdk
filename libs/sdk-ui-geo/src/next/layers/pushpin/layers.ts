@@ -58,7 +58,13 @@ const DEFAULT_CLUSTER_POINT_SIZES: ExpressionSpecification = [
     25, // point count is greater than or equal to 100
 ];
 
-const UNCLUSTER_FILTER: FilterSpecification = ["!", ["has", "point_count"]];
+/**
+ * Filter for unclustered points (points not part of a cluster).
+ * Used to show individual points in clustered mode.
+ *
+ * @internal
+ */
+export const UNCLUSTER_FILTER: FilterSpecification = ["!", ["has", "point_count"]];
 
 const UNCLUSTER_COLOR: ExpressionSpecification = ["get", "background", ["get", "color"]];
 

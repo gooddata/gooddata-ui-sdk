@@ -5,12 +5,13 @@ import { type ReactNode, memo, useCallback, useMemo, useState } from "react";
 import { type IntlShape, useIntl } from "react-intl";
 
 import {
+    type ISeparators,
     type ObjRefInScope,
     isComparisonConditionOperator,
     isRangeConditionOperator,
 } from "@gooddata/sdk-model";
-import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+import { Button, formatNumberWithSeparators } from "@gooddata/sdk-ui-kit";
 
 import { ComparisonInput } from "./ComparisonInput.js";
 import { DimensionalitySection, areDimensionalitySetsEqual } from "./DimensionalitySection.js";
@@ -60,7 +61,7 @@ const getConditionLabel = (
     value: NumberForPreview,
     from: NumberForPreview,
     to: NumberForPreview,
-    separators: ISeparators,
+    separators: ISeparators | undefined,
     suffix: string,
     intl: IntlShape,
 ): string | undefined => {
@@ -91,26 +92,17 @@ const getConditionLabel = (
 
 const DefaultValuePrecision = 6;
 
-const DEFAULT_SEPARATORS: ISeparators = {
-    thousand: ",",
-    decimal: ".",
-};
-
 type NumberForPreview = number | null | undefined;
 
 const formatNumberForPreview = (
     value: NumberForPreview,
-    separators: ISeparators,
+    separators: ISeparators | undefined,
     suffix: string,
 ): string | undefined => {
     if (value === null || value === undefined || isNaN(value)) {
         return undefined;
     }
-    const [aboveDecimal, belowDecimal] = value.toString().split(".");
-    const aboveDecimalFormatted = aboveDecimal.replace(/(\d)(?=(\d{3})+(?!\d))/g, `$1${separators.thousand}`);
-    const formattedNumber = belowDecimal
-        ? `${aboveDecimalFormatted}${separators.decimal}${belowDecimal}`
-        : aboveDecimalFormatted;
+    const formattedNumber = formatNumberWithSeparators(value, separators);
     return `${formattedNumber}${suffix}`;
 };
 
@@ -139,7 +131,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         valuePrecision = DefaultValuePrecision,
         isDimensionalityEnabled = false,
         insightDimensionality,
-        separators = DEFAULT_SEPARATORS,
+        separators,
     } = props;
 
     const trimToPrecision = useCallback(

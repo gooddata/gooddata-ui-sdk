@@ -145,6 +145,12 @@ $tag_large_gap: 5px;
     &__delete {
         flex-shrink: 0;
         flex-grow: 0;
+
+        &:hover {
+            .gd-ui-kit-icon {
+                --gd-icon-fill-color: var(--gd-palette-error-base);
+            }
+        }
     }
 
     &__label {

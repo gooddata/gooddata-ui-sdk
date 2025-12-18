@@ -1170,6 +1170,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
         return Promise.resolve();
     }
 
+    setEnableAiOnData(_enabled: boolean): Promise<void> {
+        return Promise.resolve();
+    }
+
     setTheme(_themeId: string): Promise<void> {
         return Promise.resolve();
     }

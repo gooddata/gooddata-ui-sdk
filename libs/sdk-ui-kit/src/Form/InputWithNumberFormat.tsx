@@ -5,6 +5,7 @@ import { type ChangeEvent, type FocusEvent, memo, useEffect, useRef, useState } 
 import { memoize } from "lodash-es";
 
 import { InputPure, type InputPureProps } from "./InputPure.js";
+import { DEFAULT_SEPARATORS, formatNumberWithSeparators } from "./numberFormat.js";
 import { type Separators } from "./typings.js";
 
 // Highest number (BIGINT) according to gooddata documentation help.gooddata.com object-datatypes
@@ -12,11 +13,6 @@ export const MAX_NUMBER = 10 ** 15;
 
 // Max number of digits right to decimal point according to gooddata documentation help.gooddata.com object-datatypes
 const MAX_DECIMAL_POINT_NUMBERS = 6;
-
-export const DEFAULT_SEPARATORS = {
-    thousand: ",",
-    decimal: ".",
-};
 
 const getDanglingDecimalPointRegExp = memoize((decimal) => new RegExp(`\\${decimal}$`));
 
@@ -50,7 +46,7 @@ const convertFormattedStringToStandard = (formattedString: string, { thousand, d
     return withStandardDecimalPoint.length > 0 ? withStandardDecimalPoint : null;
 };
 
-const parse = (value: any | string, separators: Separators) => {
+const parse = (value: any | string, separators: Separators = DEFAULT_SEPARATORS) => {
     if (value === null || value === "" || value === "-") {
         return null;
     }
@@ -64,22 +60,11 @@ const parse = (value: any | string, separators: Separators) => {
     return parseStandardNumberString(numberString);
 };
 
-const isValid = (value: any, separators: Separators) => {
+const isValid = (value: any, separators: Separators = DEFAULT_SEPARATORS) => {
     const parsed = parse(value, separators);
     return getFormatValidationRegExp(separators).test(value) && Math.abs(parsed ?? 0) <= MAX_NUMBER;
 };
 
-const format = (value: any, { thousand, decimal }: Separators) => {
-    if (value === null || value === undefined) {
-        return "";
-    }
-
-    const [aboveDecimal, belowDecimal] = value.toString().split(".");
-
-    const aboveDecimalFormatted = aboveDecimal.replace(/(\d)(?=(\d{3})+(?!\d))/g, `$1${thousand}`);
-
-    return belowDecimal ? `${aboveDecimalFormatted}${decimal}${belowDecimal}` : aboveDecimalFormatted;
-};
 /**
  * @internal
  */
@@ -102,12 +87,19 @@ export interface InputWithNumberFormatState {
 
 export type InputWithNumberFormatProps = InputWithNumberFormatOwnProps & InputPureProps;
 
+// Coerces input value to number for formatting (handles string/number/null/undefined)
+const toNumberValue = (value: string | number | null | undefined): number | null | undefined => {
+    if (value === null || value === undefined || value === "") {
+        return null;
+    }
+    return typeof value === "number" ? value : Number(value);
+};
+
 /**
  * @internal
  */
-
 export const InputWithNumberFormat = memo(function InputWithNumberFormat({
-    separators = DEFAULT_SEPARATORS,
+    separators,
     value: propValue,
     onChange,
     onFocus,
@@ -115,12 +107,14 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
     ...restProps
 }: InputWithNumberFormatProps) {
     const inputRef = useRef<InputPure | null>(null);
-    const [value, setValue] = useState(() => format(propValue, separators));
+    const [value, setValue] = useState(() =>
+        formatNumberWithSeparators(toNumberValue(propValue), separators),
+    );
     const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
         if (!isFocused) {
-            setValue(format(propValue, separators));
+            setValue(formatNumberWithSeparators(toNumberValue(propValue), separators));
         }
     }, [propValue, isFocused, separators]);
 
@@ -133,7 +127,8 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
         }, 0);
     };
 
-    const handleChange = (newValue: number, e: ChangeEvent<HTMLInputElement>): void => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- InputPure onChange passes string, but types it loosely
+    const handleChange = (newValue: any, e: ChangeEvent<HTMLInputElement>): void => {
         if (value === newValue) {
             return;
         }
@@ -154,7 +149,7 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
     };
 
     const handleBlur = (e: FocusEvent<HTMLInputElement>): void => {
-        setValue(format(parse(value, separators), separators));
+        setValue(formatNumberWithSeparators(parse(value, separators), separators));
         setIsFocused(false);
         onBlur?.(e);
     };

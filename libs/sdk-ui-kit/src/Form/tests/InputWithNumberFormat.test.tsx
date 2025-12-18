@@ -75,6 +75,13 @@ describe("InputWithNumberFormat", () => {
         expect(screen.getByDisplayValue("")).toBeInTheDocument();
     });
 
+    it("should display empty string when initialized with empty string value", () => {
+        render(<InputWithNumberFormat value="" onChange={() => {}} placeholder="empty string input" />);
+
+        const input = screen.getByPlaceholderText("empty string input");
+        expect(input).toHaveValue("");
+    });
+
     it("should not be able to type number higher than max number", () => {
         const input = new InputWithNumberFormatFragment({ value: 100 });
 

@@ -3,35 +3,71 @@
 import { type ReactNode, createContext, useCallback, useContext, useState } from "react";
 
 /**
- * Context for managing legend item visibility state.
+ * Per-layer enabled items state.
  *
  * @remarks
- * This context manages which legend items are enabled/visible for filtering.
+ * Each layer has its own enabled items state:
+ * - `null` means all items are enabled (initial state for that layer)
+ * - Empty array means all items are disabled
+ * - Array with URIs means only those items are enabled
+ *
+ * @alpha
+ */
+export type EnabledItemsByLayer = Map<string, string[] | null>;
+
+/**
+ * Context for managing legend item and layer visibility state.
+ *
+ * @remarks
+ * This context manages which legend items and layers are enabled/visible for filtering.
+ * Legend items are now tracked per-layer to allow independent filtering when multiple
+ * layers share the same segment-by attribute.
  *
  * @alpha
  */
 interface IGeoLegendContext {
     /**
-     * URIs of enabled legend items.
+     * Per-layer enabled legend items.
      *
      * @remarks
-     * `null` signals that all items are currently enabled. An empty array means the user explicitly
-     * disabled every legend item (the map remains unfiltered, but legend items render as disabled).
+     * Map from layerId to enabled items for that layer.
+     * If a layer is not in the map, all its items are enabled (initial state).
+     * `null` value for a layer means all items are enabled.
+     * Empty array means all items are disabled.
      */
-    enabledLegendItems: string[] | null;
+    enabledItemsByLayer: EnabledItemsByLayer;
 
     /**
-     * Updates the enabled legend items
-     */
-    setEnabledLegendItems: (items: string[] | null) => void;
-
-    /**
-     * Toggles a legend item's enabled state
+     * Updates the enabled legend items for a specific layer.
      *
-     * @param uri - The URI of the legend item to toggle
-     * @param allUris - All available legend item URIs (for toggle logic)
+     * @param layerId - The ID of the layer
+     * @param items - The enabled items (null = all enabled)
      */
-    toggleLegendItem: (uri: string, allUris: string[]) => void;
+    setEnabledItemsForLayer: (layerId: string, items: string[] | null) => void;
+
+    /**
+     * Toggles a legend item's enabled state for a specific layer.
+     *
+     * @param layerId - The ID of the layer containing the item
+     * @param uri - The URI of the legend item to toggle
+     * @param allUrisForLayer - All available legend item URIs for that layer
+     */
+    toggleLegendItem: (layerId: string, uri: string, allUrisForLayer: string[]) => void;
+
+    /**
+     * Set of layer IDs that are currently hidden.
+     *
+     * @remarks
+     * Layers not in this set are visible. Empty set means all layers are visible.
+     */
+    hiddenLayers: Set<string>;
+
+    /**
+     * Toggles a layer's visibility on the map.
+     *
+     * @param layerId - The ID of the layer to toggle
+     */
+    toggleLayerVisibility: (layerId: string) => void;
 }
 
 const GeoLegendContext = createContext<IGeoLegendContext | undefined>(undefined);
@@ -45,10 +81,10 @@ const GeoLegendContext = createContext<IGeoLegendContext | undefined>(undefined)
  * - Empty array means all items are disabled
  * - Array with URIs means only those items are enabled
  *
- * @param prev - Previous enabled items state
+ * @param prev - Previous enabled items state for a layer
  * @param uri - URI of the item being toggled
- * @param allUris - All available URIs
- * @returns New enabled items state
+ * @param allUris - All available URIs for that layer
+ * @returns New enabled items state for that layer
  *
  * @internal
  */
@@ -70,26 +106,66 @@ export function computeNextEnabledItems(
 }
 
 /**
- * Provider for legend item visibility state management.
+ * Provider for legend item and layer visibility state management.
  *
  * @remarks
- * This provider manages which legend items are visible/enabled for filtering.
+ * This provider manages which legend items and layers are visible/enabled for filtering.
+ * Legend items are tracked per-layer to allow independent filtering.
  *
  * @alpha
  */
 export function GeoLegendProvider({ children }: { children: ReactNode }) {
-    const [enabledLegendItems, setEnabledLegendItems] = useState<string[] | null>(null);
+    const [enabledItemsByLayer, setEnabledItemsByLayer] = useState<EnabledItemsByLayer>(new Map());
+    const [hiddenLayers, setHiddenLayers] = useState<Set<string>>(new Set());
 
-    const toggleLegendItem = useCallback((uri: string, allUris: string[]) => {
-        setEnabledLegendItems((prev) => computeNextEnabledItems(prev, uri, allUris));
+    const setEnabledItemsForLayer = useCallback((layerId: string, items: string[] | null) => {
+        setEnabledItemsByLayer((prev) => {
+            const next = new Map(prev);
+            if (items === null) {
+                // null means all enabled - remove from map to indicate default state
+                next.delete(layerId);
+            } else {
+                next.set(layerId, items);
+            }
+            return next;
+        });
+    }, []);
+
+    const toggleLegendItem = useCallback((layerId: string, uri: string, allUrisForLayer: string[]) => {
+        setEnabledItemsByLayer((prev) => {
+            const next = new Map(prev);
+            const currentItems = prev.get(layerId) ?? null;
+            const newItems = computeNextEnabledItems(currentItems, uri, allUrisForLayer);
+            if (newItems === null) {
+                // null means all enabled - remove from map to indicate default state
+                next.delete(layerId);
+            } else {
+                next.set(layerId, newItems);
+            }
+            return next;
+        });
+    }, []);
+
+    const toggleLayerVisibility = useCallback((layerId: string) => {
+        setHiddenLayers((prev) => {
+            const next = new Set(prev);
+            if (next.has(layerId)) {
+                next.delete(layerId);
+            } else {
+                next.add(layerId);
+            }
+            return next;
+        });
     }, []);
 
     return (
         <GeoLegendContext.Provider
             value={{
-                enabledLegendItems,
-                setEnabledLegendItems,
+                enabledItemsByLayer,
+                setEnabledItemsForLayer,
                 toggleLegendItem,
+                hiddenLayers,
+                toggleLayerVisibility,
             }}
         >
             {children}

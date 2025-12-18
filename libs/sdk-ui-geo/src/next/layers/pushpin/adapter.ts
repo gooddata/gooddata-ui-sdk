@@ -7,6 +7,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { isClusteringAllowed } from "./clustering/clustering.js";
 import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
 import { transformPushpinData } from "./data/transformation.js";
+import { UNCLUSTER_FILTER } from "./layers.js";
 import { getPushpinLayerIds, removePushpinLayer, syncPushpinLayerToMap } from "./operations.js";
 import { createPushpinDataSource } from "./source.js";
 import { createPushpinTooltipConfig } from "./tooltip/tooltipManagement.js";
@@ -159,5 +160,30 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         }
 
         return createPushpinTooltipConfig(tooltip, config, drillablePredicates, context.intl, layerIds);
+    },
+
+    getMapLibreLayerIds(layer) {
+        const ids = getPushpinLayerIds(layer.id);
+        return [ids.pointLayerId, ids.clusterLayerId, ids.clusterLabelsLayerId, ids.unclusterLayerId];
+    },
+
+    getFilterableLayerIds(layer) {
+        const ids = getPushpinLayerIds(layer.id);
+        // Return both point layer (non-clustered mode) and uncluster layer (clustered mode)
+        // Only one will exist at a time based on clustering config
+        // setLayerFilter safely handles non-existent layers
+        return [ids.pointLayerId, ids.unclusterLayerId];
+    },
+
+    getFilterableLayers(layer) {
+        const ids = getPushpinLayerIds(layer.id);
+        // Return both point layer (non-clustered mode) and uncluster layer (clustered mode)
+        // with their respective base filters. Only one will exist at a time.
+        return [
+            // Non-clustered mode: point layer has no base filter
+            { layerId: ids.pointLayerId, baseFilter: undefined },
+            // Clustered mode: uncluster layer has base filter for unclustered points
+            { layerId: ids.unclusterLayerId, baseFilter: UNCLUSTER_FILTER },
+        ];
     },
 };

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { memo } from "react";
+
 import type { IntlShape } from "react-intl";
 
 import { type UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
@@ -9,7 +11,7 @@ import {
     CatalogItemVisibilityIconMemo,
     type ICatalogItem,
 } from "../../catalogItem/index.js";
-import { ObjectTypeIconMemo } from "../../objectType/index.js";
+import { ObjectTypeIconMemo, ObjectTypeTooltip } from "../../objectType/index.js";
 import { QualityIconMemo } from "../../quality/index.js";
 
 export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn<ICatalogItem> = (
@@ -23,11 +25,10 @@ export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.label" }),
         renderRoleIcon: (item) => {
             return (
-                <ObjectTypeIconMemo
-                    className="gd-analytics-catalog__table__column-icon"
+                <ObjectTypeRoleIconMemo
+                    intl={intl}
                     type={item.type}
                     visualizationType={item.visualizationType}
-                    backgroundSize={26}
                 />
             );
         },
@@ -54,3 +55,28 @@ export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn
         getTextTitle: (item) => item.title,
     };
 };
+
+type ObjectTypeRoleIconProps = {
+    intl: IntlShape;
+    type: ICatalogItem["type"];
+    visualizationType?: ICatalogItem["visualizationType"];
+};
+
+const ObjectTypeRoleIconMemo = memo(function ObjectTypeRoleIcon(props: ObjectTypeRoleIconProps) {
+    const { intl, type, visualizationType } = props;
+    return (
+        <ObjectTypeTooltip
+            intl={intl}
+            type={type}
+            visualizationType={visualizationType}
+            anchor={
+                <ObjectTypeIconMemo
+                    className="gd-analytics-catalog__table__column-icon"
+                    type={type}
+                    visualizationType={visualizationType}
+                    backgroundSize={26}
+                />
+            }
+        />
+    );
+});
