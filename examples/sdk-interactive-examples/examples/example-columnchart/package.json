@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-columnchart",
-    "version": "11.14.0-alpha.5",
+    "version": "11.15.0-alpha.0",
     "private": false,
     "description": "This example demonstrates the usage of the ColumnChart component with the viewBy and stackBy properties.",
     "license": "LicenseRef-LICENSE",

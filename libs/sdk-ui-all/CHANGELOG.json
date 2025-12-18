@@ -2,6 +2,86 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.14.0",
+            "tag": "@gooddata/sdk-ui-all_v11.14.0",
+            "date": "Thu, 18 Dec 2025 07:14:24 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-model: Extend `IDataSetMetadataObject` with optional `isLocked` property."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger/spi: Add `getDataset()`, `updateDatasetMeta()`, and `getDatasetsQuery()` methods to the `IWorkspaceDatasetsService` interface. Introduce the `IDatasetsQuery` interface and its `DatasetsQuery` implementation."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Date datasets can now be managed and displayed directly in the catalog."
+                    },
+                    {
+                        "comment": "sdk-model: Expose `attributes` property on `IDataSetMetadataObject` and introduce `IDataSetAttributeMetadataObject` type."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Show dataset date granularities in Analytics Catalog detail tab."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add tooltips to catalog object type indicators."
+                    },
+                    {
+                        "comment": "upgrade test fixture change primary attribute state to state_code"
+                    },
+                    {
+                        "comment": "Added feature flag and setting to configure aggregated data sharing with LLMs"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Introduce the UiDropdown component."
+                    },
+                    {
+                        "comment": "Fix currency format presets and SDK translation integration"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix formatting, labels and custom props preference in pivot table."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Introduce logic for conditional showing of chackbox in MVF."
+                    },
+                    {
+                        "comment": "Add support for multi layer legends in new geo charts."
+                    },
+                    {
+                        "comment": "Add data-testId for measure value filter dropdown picker"
+                    },
+                    {
+                        "comment": "Add data-testId for measure value filter dropdown"
+                    },
+                    {
+                        "comment": "add datatestid for mvf dropdown button"
+                    },
+                    {
+                        "comment": "add data-testid for MVF dropdown"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Add DimensionalityItemType for date/attribute icon rendering in MVF dimensionality"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Change UiTag delete button color on hover"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Textual preview of measure value filter condition inside of the filter body"
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-filters: Deduplicated measure value filter number formatter"
+                    },
+                    {
+                        "comment": "Added Reasoning to the chatbot"
+                    }
+                ],
+                "patch": [
+                    {
+                        "comment": "Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.13.0",
             "tag": "@gooddata/sdk-ui-all_v11.13.0",
             "date": "Thu, 11 Dec 2025 17:13:20 GMT",
