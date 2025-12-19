@@ -27,7 +27,7 @@ const emptyColorPaletteItem: IColorFromPalette = { type: "guid", value: "none" }
 export class MeasureColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         _viewByAttribute: any,
         _stackByAttribute: any,
         dv: DataViewFacade,
@@ -46,7 +46,7 @@ export class MeasureColorStrategy extends ColorStrategy {
 
     private mapColorsFromMeasures(
         dv: DataViewFacade,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         colorPalette: IColorPalette,
     ): { allMeasuresAssignment: IColorAssignment[]; nonDerivedMeasuresAssignment: IColorAssignment[] } {
         let currentColorPaletteIndex = 0;
@@ -86,12 +86,12 @@ export class MeasureColorStrategy extends ColorStrategy {
         descriptor: IMeasureDescriptor,
         currentColorPaletteIndex: number,
         colorPalette: IColorPalette,
-        colorAssignment: IColorMapping[],
+        colorAssignment: IColorMapping[] | undefined,
         dv: DataViewFacade,
     ): IColorAssignment {
         const mappedColor = getColorFromMapping(descriptor, colorAssignment, dv);
 
-        const color: IColor = isValidMappedColor(mappedColor, colorPalette)
+        const color: IColor | undefined = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
             : {
                   type: "guid",
@@ -128,7 +128,7 @@ export class MeasureColorStrategy extends ColorStrategy {
             if (parentMeasureIndex > -1) {
                 const sourceMeasureColor = measuresColorAssignment[parentMeasureIndex].color;
                 return this.getDerivedMeasureColorAssignment(
-                    sourceMeasureColor,
+                    sourceMeasureColor!,
                     colorPalette,
                     measureItemIndex,
                     mapItem,

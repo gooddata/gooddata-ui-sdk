@@ -29,9 +29,9 @@ export function getColumnWidths(resizingState: ResizingState): RepeaterColumnWid
     return [
         ...resizingState.manuallyResizedColumns.map((col: Column) => {
             const column = columnApi.getColumn(col.getColId());
-            const item = getSizeItem(resizingState, column);
-            const sizeItem = getColumnWidthItem(item, column, {
-                value: column.getActualWidth(),
+            const item = getSizeItem(resizingState, column!);
+            const sizeItem = getColumnWidthItem(item!, column!, {
+                value: column!.getActualWidth(),
                 //TODO: Grow to fit
                 allowGrowToFit: false,
             });

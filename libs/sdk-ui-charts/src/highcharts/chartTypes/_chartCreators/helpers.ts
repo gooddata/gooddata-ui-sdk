@@ -73,7 +73,7 @@ export const isStacked = (chart: Highcharts.Chart): boolean => {
     return (isStackedByChartType || isStackedBySeries) && hasStackedAxis;
 };
 
-export function getChartProperties(config: IChartConfig, type: VisType): any {
+export function getChartProperties(config: IChartConfig, type: VisType | undefined): any {
     const isInvertedType = isInvertedChartType(type, config?.orientation?.position);
     const chartProps: any = {
         xAxisProps: isInvertedType ? { ...config.yaxis } : { ...config.xaxis },
@@ -201,7 +201,7 @@ function isSerieVisible(serie: ISeriesItem): boolean {
 function getNonStackedMaxValue(series: ISeriesItem[]): number {
     return series.reduce((maxValue: number, serie: ISeriesItem) => {
         if (isSerieVisible(serie)) {
-            const maxSerieValue = getSerieMaxDataValue(serie.data);
+            const maxSerieValue = getSerieMaxDataValue(serie.data!);
 
             return maxValue > maxSerieValue ? maxValue : maxSerieValue;
         }
@@ -212,7 +212,7 @@ function getNonStackedMaxValue(series: ISeriesItem[]): number {
 function getNonStackedMinValue(series: ISeriesItem[]): number {
     return series.reduce((minValue: number, serie: ISeriesItem) => {
         if (isSerieVisible(serie)) {
-            const minSerieValue = getSerieMinDataValue(serie.data);
+            const minSerieValue = getSerieMinDataValue(serie.data!);
 
             return minValue < minSerieValue ? minValue : minSerieValue;
         }
@@ -224,24 +224,24 @@ function getDataExtremeDataValues(chartOptions: IChartOptions) {
     const series = chartOptions?.data?.series;
 
     const maxDataValue = chartOptions.hasStackByAttribute
-        ? getStackedMaxValue(series)
-        : getNonStackedMaxValue(series);
+        ? getStackedMaxValue(series!)
+        : getNonStackedMaxValue(series!);
 
     const minDataValue = chartOptions.hasStackByAttribute
-        ? getStackedMinValue(series)
-        : getNonStackedMinValue(series);
+        ? getStackedMinValue(series!)
+        : getNonStackedMinValue(series!);
 
     return { minDataValue, maxDataValue };
 }
 
 function getSerieMaxDataValue(serieData: ISeriesDataItem[]): number {
     const max = maxBy(serieData, (item: ISeriesDataItem) => (item?.y ? item.y : null));
-    return max ? max.y : Number.MIN_SAFE_INTEGER;
+    return max ? max.y! : Number.MIN_SAFE_INTEGER;
 }
 
 function getSerieMinDataValue(serieData: ISeriesDataItem[]): number {
     const min = minBy(serieData, (item: ISeriesDataItem) => (item?.y ? item.y : null));
-    return min ? min.y : Number.MAX_SAFE_INTEGER;
+    return min ? min.y! : Number.MAX_SAFE_INTEGER;
 }
 
 export function getStackedMaxValue(series: ISeriesItem[]): number {
@@ -264,8 +264,8 @@ function getColumnExtremeValue(
 ): number[] {
     const seriesDataPerColumn = zip(...series.filter(isSerieVisible).map((serie) => serie.data));
 
-    const seriesDataYValue = seriesDataPerColumn.map((data) => data.map((x) => x.y));
-    return seriesDataYValue.map(extremeColumnGetter);
+    const seriesDataYValue = seriesDataPerColumn.map((data) => data.map((x) => x!.y));
+    return seriesDataYValue.map((data) => extremeColumnGetter(data as number[]));
 }
 
 function getMaxFromPositiveNegativeStacks(data: number[]): number {
@@ -313,8 +313,8 @@ export function shouldStartOnTick(
 
     const series = chartOptions?.data?.series;
     const minDataValue = chartOptions.hasStackByAttribute
-        ? getStackedMinValue(series)
-        : getNonStackedMinValue(series);
+        ? getStackedMinValue(series!)
+        : getNonStackedMinValue(series!);
 
     return !isNaN(max) && max <= minDataValue;
 }
@@ -335,8 +335,8 @@ export function shouldEndOnTick(
 
     const series = chartOptions?.data?.series;
     const maxDataValue = chartOptions.hasStackByAttribute
-        ? getStackedMaxValue(series)
-        : getNonStackedMaxValue(series);
+        ? getStackedMaxValue(series!)
+        : getNonStackedMaxValue(series!);
 
     return !isNaN(min) && min >= maxDataValue;
 }
@@ -351,7 +351,7 @@ export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: IChartOption
     const min = parseFloat(chartOptions?.yAxisProps?.min ?? "");
 
     const series = chartOptions?.data?.series;
-    const maxDataValue = getNonStackedMaxValue(series);
+    const maxDataValue = getNonStackedMaxValue(series!);
 
     return isNaN(min) || min > maxDataValue;
 }
@@ -388,7 +388,10 @@ export function getAxisRangeForAxes(chart: Highcharts.Chart): IAxisRangeForAxes 
         );
 }
 
-export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean {
+export function pointInRange(pointValue: number | undefined, axisRange: IAxisRange | undefined): boolean {
+    if (pointValue === undefined || axisRange === undefined) {
+        return false;
+    }
     return axisRange.minAxisValue <= pointValue && pointValue <= axisRange.maxAxisValue;
 }
 

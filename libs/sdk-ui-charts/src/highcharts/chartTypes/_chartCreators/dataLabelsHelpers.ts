@@ -121,12 +121,12 @@ export interface IInsideResult {
 
 export function showDataLabelInAxisRange(
     point: Highcharts.Point,
-    value: number,
+    value: number | undefined,
     axisRangeForAxes: IAxisRangeForAxes,
     isVisibleInZoomedAxis: boolean,
 ): void {
     const isSecondAxis = point?.series?.yAxis?.options?.opposite ?? false;
-    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
+    const axisRange: IAxisRange | undefined = axisRangeForAxes[isSecondAxis ? "second" : "first"];
     const isInsideAxisRange = pointInRange(value, axisRange);
     if (!isInsideAxisRange || !isVisibleInZoomedAxis) {
         hideDataLabel(point);
@@ -141,11 +141,11 @@ export function showStackLabelInAxisRange(
     isVisibleInZoomedAxis: boolean,
 ): void {
     const isSecondAxis = point.series?.yAxis?.options?.opposite ?? false;
-    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
+    const axisRange: IAxisRange | undefined = axisRangeForAxes[isSecondAxis ? "second" : "first"];
     const end = (point as any).stackY || point.total;
-    const start = end - point.y;
-    const isWholeUnderMin: boolean = start <= axisRange.minAxisValue && end <= axisRange.minAxisValue;
-    const isWholeAboveMax: boolean = start >= axisRange.maxAxisValue && end >= axisRange.maxAxisValue;
+    const start = end - point.y!;
+    const isWholeUnderMin: boolean = start <= axisRange!.minAxisValue && end <= axisRange!.minAxisValue;
+    const isWholeAboveMax: boolean = start >= axisRange!.maxAxisValue && end >= axisRange!.maxAxisValue;
     if (isWholeUnderMin || isWholeAboveMax || !isVisibleInZoomedAxis) {
         hideDataLabel(point);
     }
@@ -219,8 +219,8 @@ export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number): 
 }
 
 export function getLabelStyle(
-    type: string,
-    stacking: StackingType,
+    type: string | undefined,
+    stacking: StackingType | undefined,
     theme?: ITheme,
     isBackplateStyle: boolean = false,
 ): Highcharts.CSSObject {
@@ -248,8 +248,8 @@ export function getLabelStyle(
 }
 
 export function getLabelsStyling(
-    type: string,
-    stacking: StackingType,
+    type: string | undefined,
+    stacking: StackingType | undefined,
     theme?: ITheme,
     isBackplateStyle: boolean = false,
 ): Highcharts.DataLabelsOptions {
@@ -277,8 +277,8 @@ export function isInPercent(format: string = ""): boolean {
 
 // returns totalVisible based on the current conditions
 // it returns auto in case of missing chartConfig and not being requested in context of barchart
-export function getTotalsVisibility(chartConfig: IChartConfig): IDataLabelsVisible {
-    const totalsVisibility: IDataLabelsVisible = chartConfig?.dataLabels?.totalsVisible;
+export function getTotalsVisibility(chartConfig?: IChartConfig): IDataLabelsVisible | undefined {
+    const totalsVisibility = chartConfig?.dataLabels?.totalsVisible;
 
     if (!(totalsVisibility === null || totalsVisibility === undefined)) {
         return totalsVisibility;
@@ -287,7 +287,7 @@ export function getTotalsVisibility(chartConfig: IChartConfig): IDataLabelsVisib
     return chartConfig?.dataLabels?.visible;
 }
 
-export function getTotalsVisibilityConfig(type: string, chartConfig?: IChartConfig) {
+export function getTotalsVisibilityConfig(type: string | undefined, chartConfig?: IChartConfig) {
     if (!(isColumnChart(type) || isBarChart(type))) {
         return {};
     }
@@ -298,7 +298,7 @@ export function getTotalsVisibilityConfig(type: string, chartConfig?: IChartConf
     if (
         isBarChart(type) &&
         (!totalsVisible || totalsVisible === null || totalsVisible === undefined) &&
-        !chartConfig.enableSeparateTotalLabels
+        !chartConfig?.enableSeparateTotalLabels
     ) {
         return { enabled: false };
     }
@@ -313,7 +313,7 @@ export function getTotalsVisibilityConfig(type: string, chartConfig?: IChartConf
     );
 }
 
-export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): DataLabelsOptions {
+export function getLabelsVisibilityConfig(visible: IDataLabelsVisible | undefined): DataLabelsOptions {
     switch (visible) {
         case "auto":
             return {

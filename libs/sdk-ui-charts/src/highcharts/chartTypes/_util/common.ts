@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { clone, escape, isEqual, setWith, unescape } from "lodash-es";
+import { clone, escape, setWith, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type DataValue } from "@gooddata/sdk-model";
@@ -40,113 +40,124 @@ export function isRotationInRange(rotation: number, min: number, max: number): b
 /**
  * @internal
  */
-export const isColumnChart = (type: string) => isEqual(type, VisualizationTypes.COLUMN);
+export const isColumnChart = (type: string | undefined): boolean => type === VisualizationTypes.COLUMN;
 
 /**
  * @internal
  */
-export const isBarChart = (type: string) => isEqual(type, VisualizationTypes.BAR);
+export const isBarChart = (type: string | undefined): boolean => type === VisualizationTypes.BAR;
 
 /**
  * @internal
  */
-export const isBulletChart = (type: string) => isEqual(type, VisualizationTypes.BULLET);
+export const isBulletChart = (type: string | undefined): boolean => type === VisualizationTypes.BULLET;
 
 /**
  * @internal
  */
-export const isLineChart = (type: string) => isEqual(type, VisualizationTypes.LINE);
+export const isLineChart = (type: string | undefined): boolean => type === VisualizationTypes.LINE;
 
 /**
  * @internal
  */
-export const isScatterPlot = (type: string) => isEqual(type, VisualizationTypes.SCATTER);
+export const isScatterPlot = (type: string | undefined): boolean => type === VisualizationTypes.SCATTER;
 
 /**
  * @internal
  */
-export const isPieChart = (type: string) => isEqual(type, VisualizationTypes.PIE);
+export const isPieChart = (type: string | undefined): boolean => type === VisualizationTypes.PIE;
 
 /**
  * @internal
  */
-export const isDonutChart = (type: string) => isEqual(type, VisualizationTypes.DONUT);
+export const isDonutChart = (type: string | undefined): boolean => type === VisualizationTypes.DONUT;
 
 /**
  * @internal
  */
-export const isPieOrDonutChart = (type: string): boolean => isPieChart(type) || isDonutChart(type);
+export const isPieOrDonutChart = (type: string | undefined): boolean =>
+    isPieChart(type) || isDonutChart(type);
 
 /**
  * @internal
  */
-export const isAreaChart = (type: string) => isEqual(type, VisualizationTypes.AREA);
+export const isAreaChart = (type: string | undefined): boolean => type === VisualizationTypes.AREA;
 
 /**
  * @internal
  */
-export const isBubbleChart = (type: string) => isEqual(type, VisualizationTypes.BUBBLE);
+export const isBubbleChart = (type: string | undefined): boolean => type === VisualizationTypes.BUBBLE;
 
 /**
  * @internal
  */
-export const isComboChart = (type: string): boolean =>
-    isEqual(type, VisualizationTypes.COMBO) || isEqual(type, VisualizationTypes.COMBO2);
+export const isComboChart = (type: string | undefined): boolean =>
+    type === VisualizationTypes.COMBO || type === VisualizationTypes.COMBO2;
 
 /**
  * @internal
  */
-export const isTreemap = (type: string) => isEqual(type, VisualizationTypes.TREEMAP);
+export const isTreemap = (type: string | undefined): boolean => type === VisualizationTypes.TREEMAP;
 
 /**
  * @internal
  */
-export const isHeatmap = (type: string) => isEqual(type, VisualizationTypes.HEATMAP);
+export const isHeatmap = (type: string | undefined): boolean => type === VisualizationTypes.HEATMAP;
 
 /**
  * @internal
  */
-export const isFunnel = (type: string) => isEqual(type, VisualizationTypes.FUNNEL);
+export const isFunnel = (type: string | undefined): boolean => type === VisualizationTypes.FUNNEL;
 
 /**
  * @internal
  */
-export const isPyramid = (type: string) => isEqual(type, VisualizationTypes.PYRAMID);
+export const isPyramid = (type: string | undefined): boolean => type === VisualizationTypes.PYRAMID;
 
 /**
  * @internal
  */
-export const isSankey = (type: string) => isEqual(type, VisualizationTypes.SANKEY);
+export const isSankey = (type: string | undefined): boolean => type === VisualizationTypes.SANKEY;
 
 /**
  * @internal
  */
-export const isDependencyWheel = (type: string) => isEqual(type, VisualizationTypes.DEPENDENCY_WHEEL);
+export const isDependencyWheel = (type: string | undefined): boolean =>
+    type === VisualizationTypes.DEPENDENCY_WHEEL;
 
 /**
  * @internal
  */
-export const isSankeyOrDependencyWheel = (type: string): boolean => isSankey(type) || isDependencyWheel(type);
+export const isSankeyOrDependencyWheel = (type: string | undefined): boolean =>
+    isSankey(type) || isDependencyWheel(type);
 
 /**
  * @internal
  */
-export const isWaterfall = (type: string) => isEqual(type, VisualizationTypes.WATERFALL);
+export const isWaterfall = (type: string | undefined): boolean => type === VisualizationTypes.WATERFALL;
 
 /**
  * @internal
  */
-export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
+export const isSupportingJoinedAttributeAxisName = (type: string | undefined): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 
 /**
  * @internal
  */
-export const isInvertedChartType = (type: string, orientationPosition?: ChartOrientationType): boolean =>
+export const isInvertedChartType = (
+    type: string | undefined,
+    orientationPosition?: ChartOrientationType,
+): boolean =>
     isBarChart(type) || isBulletChart(type) || (isWaterfall(type) && orientationPosition === "vertical");
-export const isChartSupported = (type: string): boolean =>
-    Object.values<string>(VisualizationTypes).includes(type);
-export const isOneOfTypes = (type: string, types: string[]): boolean => types.includes(type);
+export const isChartSupported = (type: string | undefined): boolean => {
+    if (!type) {
+        return false;
+    }
+    return Object.values<string>(VisualizationTypes).includes(type);
+};
+export const isOneOfTypes = (type: string | undefined, types: string[]): boolean =>
+    types.includes(type ?? "");
 export const stringifyChartTypes = (): string => Object.values(VisualizationTypes).join(", ");
 
 export function formatLegendLabel(
@@ -213,7 +224,7 @@ const getNumberOfDecimalsFromDefaultFormat = (format: string): number => {
     );
 };
 
-export function percentFormatter(value: number, format?: string): string {
+export function percentFormatter(value: number | null | undefined, format?: string): string {
     if (value === null || value === undefined) {
         return "";
     }
@@ -228,7 +239,7 @@ export const isCssMultiLineTruncationSupported = (): boolean => {
     // support -webkit-line-clamp
     return "webkitLineClamp" in document.body.style;
 };
-export const customEscape = (str: string): string => str && escape(unescape(str));
+export const customEscape = (str: string | undefined): string | undefined => str && escape(unescape(str));
 
 export const getAxesCounts = (config: IChartConfig): [number, number] => {
     const hasSecondaryXAxis = config.secondary_xaxis && config.secondary_xaxis?.measures?.length !== 0;

@@ -851,10 +851,10 @@ describe("helpers", () => {
             "should update chart margin %s",
             (
                 verticalAlign: ChartAlignTypes,
-                spacingTop: number,
-                spacingBottom: number,
-                marginTop: number,
-                marginBottom: number,
+                spacingTop: number | undefined,
+                spacingBottom: number | undefined,
+                marginTop: number | undefined,
+                marginBottom: number | undefined,
             ) => {
                 const chart: any = {
                     ...getCommonChartOptionsMock(200, 300),
@@ -909,7 +909,7 @@ describe("helpers", () => {
 
         it.each<[ChartAlignTypes | undefined]>([["middle"], [undefined]])(
             "should not update when verticalAlign is %s",
-            (verticalAlign: ChartAlignTypes) => {
+            (verticalAlign: ChartAlignTypes | undefined) => {
                 const chart: any = {
                     ...getCommonChartOptionsMock(200, 300),
                     userOptions: {

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { SortIndicator } from "./SortIndicator.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
 import { useHeaderSpaceKey } from "../../hooks/header/useHeaderSpaceKey.js";
@@ -46,6 +47,7 @@ export function AttributeHeader(params: AgGridHeaderParams) {
         handleSortingItemClick,
         isDrillable,
         handleHeaderClick,
+        headerCellAriaLabel,
     } = useHeaderMenu(
         {
             allowAggregations,
@@ -68,6 +70,7 @@ export function AttributeHeader(params: AgGridHeaderParams) {
         },
         hasMenuItems,
     );
+    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel);
 
     return (
         <div

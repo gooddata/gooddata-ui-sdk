@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { compact, uniqBy } from "lodash-es";
 
 import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
@@ -14,7 +15,7 @@ import {
 export class SankeyChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         fromAttribute: any,
         toAttribute: any,
         dv: DataViewFacade,

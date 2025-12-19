@@ -55,7 +55,7 @@ export function DateFilterButtonLocalized({
     ) : (
         <>{textTitle}</>
     );
-    const textSubtitle = useDateFilterText({ filter: dateFilterOption, dateFormat });
+    const textSubtitle = useDateFilterText({ filter: dateFilterOption, dateFormat, labelMode: "full" });
 
     const Component = ButtonComponent ?? DateFilterButton;
 
@@ -74,7 +74,7 @@ export function DateFilterButtonLocalized({
             dropdownId={dropdownId}
         >
             <span className="s-button-text">
-                <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} />
+                <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} labelMode="full" />
             </span>
         </Component>
     );

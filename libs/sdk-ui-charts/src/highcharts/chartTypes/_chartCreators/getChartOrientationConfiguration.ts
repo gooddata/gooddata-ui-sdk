@@ -42,7 +42,7 @@ export function getChartOrientationConfiguration(
         plotOptions: {
             waterfall: {
                 dataLabels: {
-                    ...config.plotOptions.waterfall.dataLabels,
+                    ...config.plotOptions?.waterfall?.dataLabels,
                     crop: false,
                     overflow: "allow",
                     inside: false,

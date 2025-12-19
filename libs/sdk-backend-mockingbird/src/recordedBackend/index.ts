@@ -281,10 +281,7 @@ function recordedWorkspace(
                 async setWeekStart(): Promise<void> {
                     return Promise.resolve();
                 },
-                async setCalendar(): Promise<void> {
-                    return Promise.resolve();
-                },
-                async deleteCalendar(): Promise<void> {
+                async setFiscalCalendar(): Promise<void> {
                     return Promise.resolve();
                 },
                 async setDashboardFiltersApplyMode(): Promise<void> {
@@ -312,6 +309,9 @@ function recordedWorkspace(
                     return Promise.resolve();
                 },
                 async deleteMetricFormatOverride(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setActiveCalendars(): Promise<void> {
                     return Promise.resolve();
                 },
             };
@@ -513,8 +513,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 setWeekStart: () => Promise.resolve(),
-                setCalendar: () => Promise.resolve(),
-                deleteCalendar: () => Promise.resolve(),
+                setFiscalCalendar: () => Promise.resolve(),
                 getSettings: () => Promise.resolve({}),
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
@@ -526,6 +525,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setAttachmentSizeLimit: () => Promise.resolve(),
                 setMaxZoomLevel: () => Promise.resolve(),
                 setMetricFormatOverride: () => Promise.resolve(),
+                setActiveCalendars: () => Promise.resolve(),
             };
         },
         notificationChannels(): IOrganizationNotificationChannelService {

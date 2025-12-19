@@ -40,14 +40,14 @@ function ComparisonIndicatorDown() {
     );
 }
 
-export const ComparisonIndicators: Record<EvaluationType, ComponentType> = {
+export const ComparisonIndicators: Record<EvaluationType, ComponentType | null> = {
     [EvaluationType.POSITIVE_VALUE]: ComparisonIndicatorUp,
     [EvaluationType.NEGATIVE_VALUE]: ComparisonIndicatorDown,
     [EvaluationType.EQUALS_VALUE]: null,
 };
 
 export const getComparisonAriaLabelMessage = (
-    evaluationType: EvaluationType | undefined,
+    evaluationType: EvaluationType | null | undefined,
     hasSecondaryValue: boolean,
 ): MessageDescriptor | null => {
     if (evaluationType === undefined && hasSecondaryValue) {

@@ -294,6 +294,9 @@ export function bucketTotals(bucket: IBucket): ITotal[];
 export const BuiltInWidgetTypes: string[];
 
 // @public
+export type CalendarType = "STANDARD" | "FISCAL";
+
+// @public
 export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset | ICatalogAttributeHierarchy;
 
 // @public
@@ -368,13 +371,13 @@ export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE"
 export type DataValue = null | string | number;
 
 // @public
-export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour" | "GDC.time.fiscal_year" | "GDC.time.fiscal_quarter" | "GDC.time.fiscal_month";
+export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.fiscal_year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
 
 // @beta
 export type DateFilterAbsoluteType = "absolute";
 
 // @beta
-export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.year" | "GDC.time.fiscal_year";
 
 // @alpha
 export type DateFilterOptionAbsoluteFormType = "absoluteForm";
@@ -685,6 +688,13 @@ export interface IAccessControlAware {
 
 // @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
+
+// @public
+export interface IActiveCalendars {
+    default: CalendarType;
+    fiscal: boolean;
+    standard: boolean;
+}
 
 // @alpha (undocumented)
 export type IAlertAnomalyDetectionGranularity = "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
@@ -2136,6 +2146,9 @@ export interface IFilterContextDefinition extends IFilterContextBase, Partial<ID
 // @public
 export interface IFiscalYear {
     monthOffset: number;
+    monthPrefix?: string;
+    quarterPrefix?: string;
+    yearPrefix?: string;
 }
 
 // @internal
@@ -3727,6 +3740,7 @@ export interface ISeparators {
 export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined | null;
+    activeCalendars?: IActiveCalendars;
     ADCatalogGroupsExpanded?: boolean;
     aiChatSearchLimit?: number;
     aiRateLimit?: number;
@@ -3997,7 +4011,7 @@ export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition;
 export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor;
 
 // @public
-export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): boolean;
+export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string | undefined): boolean;
 
 // @public
 export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;

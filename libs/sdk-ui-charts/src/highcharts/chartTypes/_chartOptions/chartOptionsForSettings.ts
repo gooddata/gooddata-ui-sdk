@@ -25,7 +25,10 @@ function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
 /**
  * @internal
  */
-export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig {
+export function updateConfigWithSettings(
+    config: IChartConfig,
+    settings: ISettings | undefined,
+): IChartConfig {
     if (!settings) {
         return {
             enableCompactSize: true,

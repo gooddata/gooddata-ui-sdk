@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { merge } from "lodash-es";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -110,13 +111,13 @@ export function isDataOfReasonableSize(
 
     const nodesLimit = limits.nodes;
     if (nodesLimit !== undefined) {
-        result = result && chartData.series.every((serie: ISeriesItem) => serie.nodes.length <= nodesLimit);
+        result = result && chartData.series.every((serie: ISeriesItem) => serie.nodes!.length <= nodesLimit);
     }
 
     const dataPointsLimit = limits?.dataPoints;
     if (dataPointsLimit !== undefined) {
         result =
-            result && chartData.series.every((serie: ISeriesItem) => serie.data.length <= dataPointsLimit);
+            result && chartData.series.every((serie: ISeriesItem) => serie.data!.length <= dataPointsLimit);
     }
 
     return result;

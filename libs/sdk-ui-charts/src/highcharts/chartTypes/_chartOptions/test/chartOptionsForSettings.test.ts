@@ -25,7 +25,7 @@ describe("updateConfigWithSettings", () => {
 
     it("should return correct config from undefined feature flags", async () => {
         const config: IChartConfig = {};
-        const featureFlags: ISettings = undefined;
+        const featureFlags: ISettings | undefined = undefined;
         const expectedConfig = {
             enableCompactSize: true,
         };

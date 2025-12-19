@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { type GridApi, type IDatasource, type IGetRowsParams } from "ag-grid-community";
 
 import { DataViewFacade, type GoodDataSdkError, convertDataWindowError } from "@gooddata/sdk-ui";
@@ -28,9 +29,13 @@ export class AgGridDatasource implements IDatasource {
     private dataViewFacade: DataViewFacade;
     private onError: AdGridCallbacks["onError"];
     private setRuntimeError: AdGridCallbacks["setRuntimeError"];
-    private config: IRepeaterChartConfig;
+    private config: IRepeaterChartConfig | undefined;
 
-    constructor(dataViewFacade: DataViewFacade, callbacks: AdGridCallbacks, config: IRepeaterChartConfig) {
+    constructor(
+        dataViewFacade: DataViewFacade,
+        callbacks: AdGridCallbacks,
+        config: IRepeaterChartConfig | undefined,
+    ) {
         const [firstDimCount] = dataViewFacade.dataView.count;
         this.dataViewFacade = dataViewFacade;
         this.rowCount = firstDimCount;

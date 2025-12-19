@@ -41,13 +41,8 @@ function StatelessBaseChart(props: Props) {
     const TypedLoadingComponent = LoadingComponent as ComponentType<ILoadingProps>;
 
     if (error) {
-        const key = Object.prototype.hasOwnProperty.call(errorMap, seType)
-            ? seType
-            : Object.prototype.hasOwnProperty.call(errorMap, error)
-              ? error
-              : ErrorCodes.UNKNOWN_ERROR;
-
-        const errorProps = errorMap[key];
+        const errorProps =
+            (seType && errorMap[seType]) || errorMap[error] || errorMap[ErrorCodes.UNKNOWN_ERROR];
         return TypedErrorComponent ? <TypedErrorComponent code={error} {...errorProps} /> : null;
     }
 

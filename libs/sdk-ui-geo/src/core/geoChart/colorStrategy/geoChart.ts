@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { omit } from "lodash-es";
 
 import { type IAttributeDescriptor, type IColor, type IColorPalette } from "@gooddata/sdk-model";
@@ -19,7 +20,7 @@ import { type IGeoAttributesInDimension, findGeoAttributesInDimension } from "..
 class GeoChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         locationAttribute: any,
         segmentByAttribute: any,
         dv: DataViewFacade,
@@ -46,7 +47,7 @@ class GeoChartColorStrategy extends ColorStrategy {
 
     private getColorStrategyForSegmentBy(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         segmentByAttribute: any,
         dv: DataViewFacade,
     ): IColorAssignment[] {
@@ -63,7 +64,7 @@ class GeoChartColorStrategy extends ColorStrategy {
 
     private getColorStrategyForLocation(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         locationAttribute: any,
         dv: DataViewFacade,
     ): IColorAssignment {

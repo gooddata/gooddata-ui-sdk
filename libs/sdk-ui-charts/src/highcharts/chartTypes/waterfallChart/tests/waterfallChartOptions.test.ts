@@ -61,7 +61,13 @@ describe("waterfallChartOptions", () => {
         function renderChartOptions(rec: ScenarioRecording, config: ITotalConfig = {}, drillOnItemId = "") {
             const dv = recordedDataFacade(rec);
             const { measureGroup, viewByAttribute } = getMVS(dv);
-            const colorStrategy = new WaterfallChartColorStrategy(DefaultColorPalette, null, null, null, dv);
+            const colorStrategy = new WaterfallChartColorStrategy(
+                DefaultColorPalette,
+                undefined,
+                undefined,
+                undefined,
+                dv,
+            );
             const chartSeries = getWaterfallChartSeries(
                 dv,
                 measureGroup,
@@ -75,8 +81,8 @@ describe("waterfallChartOptions", () => {
                 dv,
                 chartSeries,
                 [localIdentifierMatch(drillOnItemId)],
-                [viewByAttribute, null],
-                null,
+                [viewByAttribute, undefined],
+                undefined,
                 "waterfall",
             );
 
@@ -106,7 +112,7 @@ describe("waterfallChartOptions", () => {
                 );
                 const seriesData = waterfallSeries[0].data;
 
-                expect(seriesData[seriesData.length - 1].isSum).toBeTruthy();
+                expect(seriesData![seriesData!.length - 1].isSum).toBeTruthy();
             });
 
             it("should custom the total column name", () => {
@@ -117,7 +123,7 @@ describe("waterfallChartOptions", () => {
                 );
                 const seriesData = waterfallSeries[0].data;
 
-                expect(seriesData[seriesData.length - 1].name).toBe("Balance");
+                expect(seriesData![seriesData!.length - 1].name).toBe("Balance");
             });
 
             it("should not display the total column when the config is not enabled", () => {
@@ -128,7 +134,7 @@ describe("waterfallChartOptions", () => {
                 );
                 const seriesData = waterfallSeries[0].data;
 
-                expect(seriesData[seriesData.length - 1].isSum).not.toBeDefined();
+                expect(seriesData![seriesData!.length - 1].isSum).not.toBeDefined();
             });
         });
 

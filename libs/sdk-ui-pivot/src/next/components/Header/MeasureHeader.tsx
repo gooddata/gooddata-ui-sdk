@@ -14,6 +14,7 @@ import {
 } from "./utils/common.js";
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
 import { useHeaderSpaceKey } from "../../hooks/header/useHeaderSpaceKey.js";
@@ -66,6 +67,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
         handleTextWrappingItemClick,
         handleSortingItemClick,
         handleHeaderClick,
+        headerCellAriaLabel,
     } = useHeaderMenu(
         {
             allowAggregations,
@@ -88,6 +90,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
         },
         hasMenuItems,
     );
+    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel);
 
     return (
         <div

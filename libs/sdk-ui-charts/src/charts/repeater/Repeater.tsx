@@ -131,11 +131,11 @@ function createExecution(buckets: IBucket[], props: IRepeaterProps): IPreparedEx
     const { backend, workspace, execConfig } = props;
     const dimensions = constructRepeaterDimensions(buckets);
 
-    return backend
+    return backend!
         .withTelemetry("Repeater", props)
-        .workspace(workspace)
+        .workspace(workspace!)
         .execution()
         .forBuckets(buckets, props.filters as INullableFilter[])
         .withDimensions(...dimensions)
-        .withExecConfig(execConfig);
+        .withExecConfig(execConfig!);
 }

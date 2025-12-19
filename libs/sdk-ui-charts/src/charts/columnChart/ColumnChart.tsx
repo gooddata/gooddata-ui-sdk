@@ -48,14 +48,14 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
 
-        return backend
+        return backend!
             .withTelemetry("ColumnChart", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as IFilter[])
             .withSorting(...sortBy)
             .withDimensions(stackedChartDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
     propOverridesFactory: (props, buckets) => {
         return {

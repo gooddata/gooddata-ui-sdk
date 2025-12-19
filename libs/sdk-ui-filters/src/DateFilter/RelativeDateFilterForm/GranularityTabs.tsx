@@ -7,17 +7,20 @@ import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { type IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../locales.js";
-import { granularityIntlCodes } from "../constants/i18n.js";
+import { granularityIntlCodesFull } from "../constants/i18n.js";
 import { Tab, TabsWrapper } from "../Tabs/Tabs.js";
 
 const granularityOrders: { [G in DateFilterGranularity]: number } = {
-    "GDC.time.year": 0,
-    "GDC.time.quarter": 1,
-    "GDC.time.month": 2,
-    "GDC.time.week_us": 3,
-    "GDC.time.date": 4,
-    "GDC.time.hour": 5,
-    "GDC.time.minute": 6,
+    "GDC.time.fiscal_year": 0,
+    "GDC.time.fiscal_quarter": 1,
+    "GDC.time.fiscal_month": 2,
+    "GDC.time.year": 3,
+    "GDC.time.quarter": 4,
+    "GDC.time.month": 5,
+    "GDC.time.week_us": 6,
+    "GDC.time.date": 7,
+    "GDC.time.hour": 8,
+    "GDC.time.minute": 9,
 };
 
 const sortGranularities = (granularities: DateFilterGranularity[]): DateFilterGranularity[] =>
@@ -40,7 +43,7 @@ export function GranularityTabs({
         <TabsWrapper className="gd-relative-filter-form-granularity-tabs s-relative-filter-form-granularity-tabs">
             {sortGranularities(availableGranularities)
                 .map((granularity) => {
-                    const intlGranularity = granularityIntlCodes[granularity];
+                    const intlGranularity = granularityIntlCodesFull[granularity];
                     if (intlGranularity === undefined) {
                         return null;
                     }

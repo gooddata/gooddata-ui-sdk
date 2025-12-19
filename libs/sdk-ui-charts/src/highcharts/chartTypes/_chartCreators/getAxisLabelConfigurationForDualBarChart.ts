@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { type IAxisConfig } from "../../../interfaces/index.js";
 import {
     ALIGN_LEFT,
@@ -16,7 +17,7 @@ import { isBarChart } from "../_util/common.js";
 function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.XAxisOptions {
     const isOppositeAxis: boolean = index === 1;
     const align: Highcharts.AlignValue = aligns[index];
-    const y: number = isOppositeAxis ? undefined : BOTTOM_AXIS_MARGIN;
+    const y: number | undefined = isOppositeAxis ? undefined : BOTTOM_AXIS_MARGIN;
     return {
         labels: {
             align,
@@ -26,7 +27,7 @@ function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highch
 }
 
 export function getAxisLabelConfigurationForDualBarChart(chartOptions: IChartOptions): {
-    yAxis?: XAxisOptions[];
+    yAxis?: (XAxisOptions | undefined)[];
 } {
     const { type, yAxes = [] } = chartOptions;
     const isBar: boolean = isBarChart(type);
@@ -38,8 +39,8 @@ export function getAxisLabelConfigurationForDualBarChart(chartOptions: IChartOpt
     }
 
     const { yAxisProps, secondary_yAxisProps } = chartOptions;
-    const yAxesConfig: Highcharts.XAxisOptions[] = [yAxisProps, secondary_yAxisProps].map(
-        (axis: IAxisConfig = {}, index: number): Highcharts.XAxisOptions => {
+    const yAxesConfig = [yAxisProps, secondary_yAxisProps].map(
+        (axis: IAxisConfig = {}, index: number): Highcharts.XAxisOptions | undefined => {
             const { rotation } = axis;
 
             switch (rotation) {

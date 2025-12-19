@@ -21,7 +21,13 @@ describe("waterfallChartsSeries", () => {
                 ReferenceRecordings.Scenarios.WaterfallChart.SingleMeasure as unknown as ScenarioRecording,
             );
             const { measureGroup, viewByAttribute } = getMVS(dv);
-            const colorStrategy = new WaterfallChartColorStrategy(DefaultColorPalette, null, null, null, dv);
+            const colorStrategy = new WaterfallChartColorStrategy(
+                DefaultColorPalette,
+                undefined,
+                undefined,
+                undefined,
+                dv,
+            );
             const chartSeries = getWaterfallChartSeries(
                 dv,
                 measureGroup,
@@ -41,7 +47,13 @@ describe("waterfallChartsSeries", () => {
                     .SingleMeasureWithViewBy as unknown as ScenarioRecording,
             );
             const { measureGroup, viewByAttribute } = getMVS(dv);
-            const colorStrategy = new WaterfallChartColorStrategy(DefaultColorPalette, null, null, null, dv);
+            const colorStrategy = new WaterfallChartColorStrategy(
+                DefaultColorPalette,
+                undefined,
+                undefined,
+                undefined,
+                dv,
+            );
             const chartSeries = getWaterfallChartSeries(
                 dv,
                 measureGroup,
@@ -60,7 +72,13 @@ describe("waterfallChartsSeries", () => {
                 ReferenceRecordings.Scenarios.WaterfallChart.MultiMeasures as unknown as ScenarioRecording,
             );
             const { measureGroup, viewByAttribute } = getMVS(dv);
-            const colorStrategy = new WaterfallChartColorStrategy(DefaultColorPalette, null, null, null, dv);
+            const colorStrategy = new WaterfallChartColorStrategy(
+                DefaultColorPalette,
+                undefined,
+                undefined,
+                undefined,
+                dv,
+            );
             const chartSeries = getWaterfallChartSeries(
                 dv,
                 measureGroup,
@@ -81,7 +99,13 @@ describe("waterfallChartsSeries", () => {
             const { measureGroup, viewByAttribute } = getMVS(dv);
             measureGroup.items[0].measureHeaderItem.format = "#,##0.0";
             measureGroup.items[2].measureHeaderItem.format = "#,##0.00%";
-            const colorStrategy = new WaterfallChartColorStrategy(DefaultColorPalette, null, null, null, dv);
+            const colorStrategy = new WaterfallChartColorStrategy(
+                DefaultColorPalette,
+                undefined,
+                undefined,
+                undefined,
+                dv,
+            );
             const chartSeries = getWaterfallChartSeries(
                 dv,
                 measureGroup,

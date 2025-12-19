@@ -19,7 +19,7 @@ export function MultiMeasuresTransformation({
     onAfterRender,
     onDrill,
 }: IHeadlineTransformationProps) {
-    const { handleFiredDrillEvent } = useFireDrillEvent(dataView, onDrill);
+    const { handleFiredDrillEvent } = useFireDrillEvent(dataView, onDrill!);
 
     const data = useMemo(() => getBaseHeadlineData(dataView, drillableItems), [dataView, drillableItems]);
 

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -21,7 +22,9 @@ import {
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {
-        expect(getOptionalStackingConfiguration({ type: VisualizationTypes.LINE }, undefined)).toEqual({});
+        expect(getOptionalStackingConfiguration({ type: VisualizationTypes.LINE }, undefined as any)).toEqual(
+            {},
+        );
     });
 
     it("should set drillConfig to X axis", () => {
@@ -784,7 +787,7 @@ describe("getOptionalStackingConfiguration", () => {
             const chartConfig = {
                 stackMeasuresToPercent: false,
             };
-            const result = convertMinMaxFromPercentToNumber(undefined, undefined, chartConfig);
+            const result = convertMinMaxFromPercentToNumber(undefined as any, undefined as any, chartConfig);
             expect(result).toEqual({});
         });
 
@@ -856,7 +859,7 @@ describe("getOptionalStackingConfiguration", () => {
                 },
             ],
         ])("should convert min/max for %s", (_: string, config: any, expectedConfig: any) => {
-            const result = convertMinMaxFromPercentToNumber(undefined, config, {
+            const result = convertMinMaxFromPercentToNumber(undefined as any, config, {
                 stackMeasuresToPercent: true,
             });
             expect(result).toEqual(expectedConfig);

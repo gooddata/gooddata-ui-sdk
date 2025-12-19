@@ -21,7 +21,11 @@ import { type ILocale, type ITranslations, getIntl } from "@gooddata/sdk-ui";
 
 import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
 import { messages } from "../../../locales.js";
-import { granularityIntlCodes } from "../../constants/i18n.js";
+import {
+    type DateFilterLabelMode,
+    granularityIntlCodes,
+    granularityIntlCodesFull,
+} from "../../constants/i18n.js";
 import {
     DAY_END_TIME,
     DAY_START_TIME,
@@ -194,8 +198,10 @@ export const formatRelativeDateRange = (
     granularity: DateFilterGranularity,
     translator: IDateAndMessageTranslator,
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
+    labelMode: DateFilterLabelMode = "short",
 ): string => {
-    const intlGranularity = granularityIntlCodes[granularity];
+    const intlCodes = labelMode === "full" ? granularityIntlCodesFull : granularityIntlCodes;
+    const intlGranularity = intlCodes[granularity];
     if (intlGranularity === undefined) {
         return granularity; // in the case when invalid granularity was found in metadata
     }
@@ -222,6 +228,7 @@ const getAbsolutePresetFilterRepresentation = (
 const getRelativeFormFilterRepresentation = (
     filter: IUiRelativeDateFilterForm,
     translator: IDateAndMessageTranslator,
+    labelMode: DateFilterLabelMode = "short",
 ): string =>
     typeof filter.from === "number" && typeof filter.to === "number" && filter.granularity
         ? formatRelativeDateRange(
@@ -230,28 +237,41 @@ const getRelativeFormFilterRepresentation = (
               filter.granularity,
               translator,
               filter.boundedFilter,
+              labelMode,
           )
         : "";
 
 const getRelativePresetFilterRepresentation = (
     filter: IRelativeDateFilterPreset,
     translator: IDateAndMessageTranslator,
+    labelMode: DateFilterLabelMode = "short",
 ): string =>
-    formatRelativeDateRange(filter.from, filter.to, filter.granularity, translator, filter.boundedFilter);
+    formatRelativeDateRange(
+        filter.from,
+        filter.to,
+        filter.granularity,
+        translator,
+        filter.boundedFilter,
+        labelMode,
+    );
 
 export const getDateFilterRepresentationByFilterType = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
     dateFormat: string,
+    labelMode: DateFilterLabelMode = "short",
 ) => {
     if (isAbsoluteDateFilterForm(filter) || isRelativeDateFilterForm(filter)) {
-        return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat);
+        return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
     } else if (
         isAllTimeDateFilterOption(filter) ||
         isAbsoluteDateFilterPreset(filter) ||
         isRelativeDateFilterPreset(filter)
     ) {
-        return filter.name || getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat);
+        return (
+            filter.name ||
+            getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode)
+        );
     } else {
         throw new Error("Unknown DateFilterOption type");
     }
@@ -273,7 +293,8 @@ export const getDateFilterTitleUsingTranslator = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
     dateFormat: string = DEFAULT_DATE_FORMAT,
-): string => getDateFilterRepresentationByFilterType(filter, translator, dateFormat);
+    labelMode: DateFilterLabelMode = "short",
+): string => getDateFilterRepresentationByFilterType(filter, translator, dateFormat, labelMode);
 
 /**
  * Gets the filter representation regardless of custom name.
@@ -283,6 +304,7 @@ const getDateFilterRepresentationUsingTranslator = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
     dateFormat: string,
+    labelMode: DateFilterLabelMode = "short",
 ): string => {
     if (isAbsoluteDateFilterForm(filter)) {
         return getAbsoluteFormFilterRepresentation(filter, dateFormat);
@@ -291,9 +313,9 @@ const getDateFilterRepresentationUsingTranslator = (
     } else if (isAllTimeDateFilterOption(filter)) {
         return getAllTimeFilterRepresentation(translator);
     } else if (isRelativeDateFilterForm(filter)) {
-        return getRelativeFormFilterRepresentation(filter, translator);
+        return getRelativeFormFilterRepresentation(filter, translator, labelMode);
     } else if (isRelativeDateFilterPreset(filter)) {
-        return getRelativePresetFilterRepresentation(filter, translator);
+        return getRelativePresetFilterRepresentation(filter, translator, labelMode);
     } else {
         throw new Error("Unknown DateFilterOption type");
     }
@@ -304,8 +326,9 @@ export const getDateFilterRepresentation = (
     locale: ILocale,
     messages: ITranslations,
     dateFormat: string = DEFAULT_DATE_FORMAT,
+    labelMode: DateFilterLabelMode = "short",
 ): string => {
     const translator = getIntl(locale, messages);
 
-    return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat);
+    return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
 };

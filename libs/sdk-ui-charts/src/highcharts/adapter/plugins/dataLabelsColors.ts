@@ -33,7 +33,7 @@ const setContrastColor = (point: any) => {
     point.dataLabel.element.classList.add("gd-contrast-label");
 };
 
-const changeDataLabelsColor = (condition: boolean, point: any, theme: ITheme) => {
+const changeDataLabelsColor = (condition: boolean, point: any, theme: ITheme | null) => {
     const whiteLabelStyle = getWhiteLabelStyle(theme);
     if (condition) {
         setWhiteColor(point, whiteLabelStyle.color, whiteLabelStyle["textShadow"]);
@@ -50,7 +50,7 @@ function getVisiblePointsWithLabel(chart: any) {
     );
 }
 
-function setBarDataLabelsColor(chart: any, theme: ITheme) {
+function setBarDataLabelsColor(chart: any, theme: ITheme | null) {
     const points = getVisiblePointsWithLabel(chart);
 
     return points.forEach((point: any) => {
@@ -78,7 +78,7 @@ function setBarDataLabelsColor(chart: any, theme: ITheme) {
     });
 }
 
-function setColumnDataLabelsColor(chart: any, theme: ITheme) {
+function setColumnDataLabelsColor(chart: any, theme: ITheme | null) {
     const points = getVisiblePointsWithLabel(chart);
 
     return points
@@ -126,7 +126,7 @@ export function isLightNotContrastEnough(
     }
 }
 
-function setContrastLabelsColor(chart: any, theme: ITheme) {
+function setContrastLabelsColor(chart: any, theme: ITheme | null) {
     const points = getVisiblePointsWithLabel(chart);
     const lightStyle = getWhiteLabelStyle(theme);
     const darkColor = getBlackLabelStyle(theme).color;
@@ -175,7 +175,7 @@ function getDataLabelsStyle(chart: any) {
     return chart.options.plotOptions?.gdcOptions?.dataLabels?.style;
 }
 
-function applyNormalModeColorLogic(chart: any, type: string, theme: ITheme): void {
+function applyNormalModeColorLogic(chart: any, type: string | undefined, theme: ITheme | null): void {
     // Normal mode: Use custom color logic
     if (type === VisualizationTypes.BAR) {
         setTimeout(() => {
@@ -197,9 +197,9 @@ function applyNormalModeColorLogic(chart: any, type: string, theme: ITheme): voi
     }
 }
 
-export function extendDataLabelColors(Highcharts: any, theme: ITheme): void {
+export function extendDataLabelColors(Highcharts: any, theme: ITheme | null): void {
     Highcharts.Chart.prototype.callbacks.push((chart: any) => {
-        const type: string = getChartType(chart);
+        const type = getChartType(chart);
         const labelsStyle = getDataLabelsStyle(chart);
 
         const changeLabelColor = () => {

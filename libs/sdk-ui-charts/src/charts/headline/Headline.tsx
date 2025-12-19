@@ -6,7 +6,7 @@ import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { type IBucket, type IMeasure, type INullableFilter, newBucket } from "@gooddata/sdk-model";
+import { type IBucket, type IFilter, type IMeasure, newBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
     type MeasureOrPlaceholder,
@@ -134,11 +134,11 @@ function createExecution(
     props: IHeadlineProps,
 ): IPreparedExecution {
     const { backend, workspace, execConfig, filters } = props;
-    const executionFactory = backend.withTelemetry("Headline", props).workspace(workspace).execution();
+    const executionFactory = backend!.withTelemetry("Headline", props).workspace(workspace!).execution();
 
     return provider.createExecution(executionFactory, {
         buckets,
-        filters: filters as INullableFilter[],
-        executionConfig: execConfig,
+        filters: filters as IFilter[], // this violates strict null check
+        executionConfig: execConfig!,
     });
 }

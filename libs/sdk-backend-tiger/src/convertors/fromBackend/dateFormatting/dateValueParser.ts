@@ -35,12 +35,15 @@ const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: st
     "GDC.time.day_in_quarter": "DDD", // 01-92 or 001-092
     "GDC.time.day_in_year": "DDD", // 001-366
     "GDC.time.month": "yyyy-MM", // 2020-06
+    "GDC.time.fiscal_month": "yyyy-MM", // 2020-06 (fiscal month uses same format as regular month)
     "GDC.time.month_in_year": "LL", // 01-12
     "GDC.time.quarter": "yyyy-Q", // 2020-1
+    "GDC.time.fiscal_quarter": "yyyy-Q", // 2020-1 (fiscal quarter uses same format as regular quarter)
     "GDC.time.quarter_in_year": "qq", // 1-4
     "GDC.time.week_us": "RRRR-II", // (ISO tokens) 2020-05
     "GDC.time.week_in_year": "II", // (ISO tokens) 05
     "GDC.time.year": "yyyy", // 2020
+    "GDC.time.fiscal_year": "yyyy", // 2020 (fiscal year uses same format as regular year)
 };
 
 /**

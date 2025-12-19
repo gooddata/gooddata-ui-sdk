@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -12,12 +13,9 @@ import { MultiMeasuresProvider } from "../internal/providers/MultiMeasuresProvid
 
 describe("HeadlineProviderFactory", () => {
     describe("createHeadlineProvider", () => {
-        const createBuckets = (
-            primaryMeasure: IMeasure = null,
-            secondaryMeasures: IMeasure[] = [],
-        ): IBucket[] => {
+        const createBuckets = (primaryMeasure?: IMeasure, secondaryMeasures: IMeasure[] = []): IBucket[] => {
             return [
-                newBucket(BucketNames.MEASURES, primaryMeasure),
+                newBucket(BucketNames.MEASURES, ...(primaryMeasure ? [primaryMeasure] : [])),
                 newBucket(BucketNames.SECONDARY_MEASURES, ...secondaryMeasures),
             ];
         };

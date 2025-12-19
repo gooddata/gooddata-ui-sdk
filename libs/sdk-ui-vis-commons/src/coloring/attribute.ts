@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 
@@ -15,7 +16,7 @@ import { type IColorMapping } from "./types.js";
 export class AttributeColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,

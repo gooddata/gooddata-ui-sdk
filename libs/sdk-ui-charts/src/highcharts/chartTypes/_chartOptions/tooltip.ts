@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
@@ -8,10 +9,10 @@ import { type IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
 import { customEscape, percentFormatter } from "../_util/common.js";
 
 export function formatValueForTooltip(
-    value: string | number,
-    format: string,
+    value: string | number | null | undefined,
+    format: string | undefined,
     separators?: ISeparators,
-): string {
+): string | undefined {
     const parsedNumber = ClientFormatterFacade.convertValue(value);
 
     // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
@@ -34,7 +35,7 @@ export function getFormattedValueForTooltip(
     point: IUnsafeHighchartsTooltipPoint,
     separators?: ISeparators,
     percentageValue?: number,
-): string {
+): string | undefined {
     const { target, y, low, high } = point;
 
     if (!(low === null || low === undefined) && !(high === null || high === undefined)) {
@@ -72,7 +73,7 @@ function getFormattedValue(
     isDualChartWithRightAxis: boolean,
     stackMeasuresToPercent: boolean,
     point: IUnsafeHighchartsTooltipPoint,
-    value: number,
+    value: number | undefined,
     separators?: ISeparators,
     percentageValue?: number,
 ) {

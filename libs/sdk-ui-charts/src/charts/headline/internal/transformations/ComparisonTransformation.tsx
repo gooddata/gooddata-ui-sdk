@@ -31,7 +31,7 @@ export function ComparisonTransformation({
     const { handleFiredDrillEvent } = useFireDrillEvent(dataView, onDrill);
 
     const data = useMemo(
-        () => getComparisonBaseHeadlineData(dataView, drillableItems, comparison, intl),
+        () => getComparisonBaseHeadlineData(dataView, drillableItems, comparison!, intl),
         [dataView, drillableItems, comparison, intl],
     );
 

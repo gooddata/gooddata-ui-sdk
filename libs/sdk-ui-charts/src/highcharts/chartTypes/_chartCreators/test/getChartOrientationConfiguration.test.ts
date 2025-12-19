@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { getChartOrientationConfiguration } from "../getChartOrientationConfiguration.js";
@@ -37,7 +38,7 @@ describe("getChartOrientationConfiguration", () => {
         );
 
         expect(customConfig.chart).toEqual({ inverted: true });
-        expect(customConfig.plotOptions.waterfall).toEqual({
+        expect(customConfig.plotOptions!.waterfall).toEqual({
             dataLabels: { crop: false, overflow: "allow", inside: false, verticalAlign: "middle", y: 0 },
         });
         expect(customConfig.xAxis).toBeUndefined();

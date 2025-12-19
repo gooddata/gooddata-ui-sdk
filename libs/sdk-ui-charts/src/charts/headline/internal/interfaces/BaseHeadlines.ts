@@ -13,9 +13,8 @@ export const COMPARISON_DEFAULT_OBJECT: IComparison = {
     enabled: true,
 };
 
-export type BaseHeadlineDataItemComponentType<T> = ComponentType<
-    IBaseHeadlineDataItemProps<T> & IWithTitleProps<T> & IWithDrillableItemProps<T>
->;
+export type BaseHeadlineDataItemComponentType<T extends IBaseHeadlineTitle & IBaseHeadlineDrillable> =
+    ComponentType<IBaseHeadlineDataItemProps<T> & IWithTitleProps<T> & IWithDrillableItemProps<T>>;
 
 export interface IBaseHeadlineTitle {
     title?: string;
@@ -37,8 +36,8 @@ export interface IWithDrillableItemProps<T extends IBaseHeadlineDrillable> {
 }
 
 export interface IBaseHeadlineValueItem {
-    value: string;
-    format?: string;
+    value: string | null;
+    format?: string | null;
 }
 
 export enum EvaluationType {
@@ -47,10 +46,10 @@ export enum EvaluationType {
     POSITIVE_VALUE = "positive",
 }
 
-export interface IBaseHeadlineItem<T> {
+export interface IBaseHeadlineItem<T extends IBaseHeadlineTitle & IBaseHeadlineDrillable> {
     data: T;
     baseHeadlineDataItemComponent: BaseHeadlineDataItemComponentType<T>;
-    evaluationType?: EvaluationType;
+    evaluationType?: EvaluationType | undefined | null;
     elementType?: HeadlineElementType;
 }
 
@@ -73,13 +72,13 @@ export type BaseHeadlineItemAccepted = IHeadlineDataItem | ComparisonDataItem;
 
 export interface IBaseHeadlineData {
     primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
-    secondaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
-    tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
+    secondaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted> | null;
+    tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted> | null;
 }
 
 export interface IBaseHeadlineDataItemProps<T> {
     dataItem: T;
-    evaluationType: EvaluationType;
+    evaluationType?: EvaluationType | null;
     onValueOverflow?: (isOverflowing: boolean) => void;
     measurementTrigger?: number; // Used to trigger remeasurement
     includeHeightCheck?: boolean;

@@ -78,7 +78,7 @@ interface IExtendedAxis extends Highcharts.Axis {
 }
 
 interface IExtendedChart extends Highcharts.Chart {
-    spacingBox: { width: number; height: number };
+    spacingBox?: { width: number; height: number };
     mouseIsDown?: boolean;
 }
 
@@ -323,8 +323,8 @@ function getTooltipVerticalOffset(chartType: any, stacking: any, point: any) {
 
 export function getTooltipPositionInChartContainer(
     this: Highcharts.Tooltip,
-    chartType: string,
-    stacking: string,
+    chartType: string | undefined,
+    stacking: string | undefined,
     labelWidth: number,
     labelHeight: number,
     point: IUnsafeTooltipPositionerPointObject,
@@ -349,7 +349,7 @@ export function getTooltipPositionInChartContainer(
     };
 }
 
-function getHighchartTooltipTopOffset(chartType: string): number {
+function getHighchartTooltipTopOffset(chartType: string | undefined): number {
     if (
         isBarChart(chartType) ||
         isBulletChart(chartType) ||
@@ -361,7 +361,7 @@ function getHighchartTooltipTopOffset(chartType: string): number {
     return HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET;
 }
 
-function getHighchartTooltipLeftOffset(chartType: string): number {
+function getHighchartTooltipLeftOffset(chartType: string | undefined): number {
     if (
         isBarChart(chartType) ||
         isBulletChart(chartType) ||
@@ -377,7 +377,7 @@ function getRelativeCoordinates(
     absoluteX: number,
     absoluteY: number,
     container: HTMLElement,
-    chartType: string,
+    chartType: string | undefined,
 ) {
     // Get the bounding rectangle of the container
     const containerRect = container.getBoundingClientRect();
@@ -395,8 +395,8 @@ function getRelativeCoordinates(
 
 export function getTooltipPositionInViewPort(
     this: Highcharts.Tooltip,
-    chartType: string,
-    stacking: string,
+    chartType: string | undefined,
+    stacking: string | undefined,
     labelWidth: number,
     labelHeight: number,
     point: IUnsafeTooltipPositionerPointObject,
@@ -443,7 +443,7 @@ function getColorFromHighchartsPointColor(color: Point["color"]): string {
         return color;
     }
     if ("pattern" in color) {
-        return color.pattern.color;
+        return color.pattern.color!;
     }
     if ("stops" in color && color.stops.length > 0) {
         const gradientColor = color.stops[0].color;
@@ -456,16 +456,18 @@ function getColorFromHighchartsPointColor(color: Point["color"]): string {
 function formatTooltip(
     this: IExtendedPoint,
     tooltipCallback: ITooltipFactory,
-    chartConfig: IChartConfig,
+    chartConfig?: IChartConfig,
     intl?: IntlShape,
 ) {
     const { chart } = this.series;
 
     const pointColor = getColorFromHighchartsPointColor(this.color);
 
-    const chartWidth = (chart as IExtendedChart).spacingBox.width;
+    const chartWidth = (chart as IExtendedChart).spacingBox?.width;
     const isFullScreenTooltip = isTooltipShownInFullScreen();
-    const maxTooltipContentWidth = isFullScreenTooltip ? chartWidth : Math.min(chartWidth, TOOLTIP_MAX_WIDTH);
+    const maxTooltipContentWidth = isFullScreenTooltip
+        ? chartWidth
+        : Math.min(chartWidth!, TOOLTIP_MAX_WIDTH);
     const isDrillable = this.drilldown;
 
     // when brushing, do not show tooltip
@@ -477,9 +479,9 @@ function formatTooltip(
     const tooltipStyle = isFullScreenTooltip ? `width: ${maxTooltipContentWidth}px;` : "";
 
     // null disables whole tooltip
-    const tooltipContent: string = tooltipCallback(
+    const tooltipContent: string | null = tooltipCallback(
         this as any, // IUnsafeHighchartsTooltipPoint is expected by the callback
-        maxTooltipContentWidth,
+        maxTooltipContentWidth!,
         this.percentage,
     );
     const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
@@ -495,7 +497,11 @@ function formatTooltip(
         </div>`;
 }
 
-function getInteractionMessage(isDrillable: boolean, chartConfig: IChartConfig, intl: IntlShape) {
+function getInteractionMessage(
+    isDrillable: boolean | undefined,
+    chartConfig: IChartConfig | undefined = {},
+    intl?: IntlShape,
+) {
     const message = intl
         ? chartConfig.useGenericInteractionTooltip
             ? intl.formatMessage({ id: "visualization.tooltip.generic.interaction" })
@@ -504,7 +510,7 @@ function getInteractionMessage(isDrillable: boolean, chartConfig: IChartConfig, 
     return isDrillable && intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
 }
 
-function formatLabel(value: any, format: string, config: IChartConfig = {}) {
+function formatLabel(value: any, format: string | undefined, config: IChartConfig = {}) {
     // no labels for missing values
     if (value === null || value === undefined) {
         return null;
@@ -522,7 +528,7 @@ function formatLabel(value: any, format: string, config: IChartConfig = {}) {
         return escapeAngleBrackets(formatted.formattedValue);
     }
 
-    return parsedNumber.toString();
+    return parsedNumber!.toString();
 }
 
 function labelFormatter(this: IDataLabelFormatterContext, config?: IChartConfig) {
@@ -532,7 +538,7 @@ function labelFormatter(this: IDataLabelFormatterContext, config?: IChartConfig)
 function axisLabelFormatter(
     this: Highcharts.AxisLabelsFormatterContextObject,
     config: IChartConfig,
-    format: string,
+    format: string | undefined,
 ) {
     return this.value === 0 ? 0 : formatLabel(this.value, format, config);
 }
@@ -586,8 +592,8 @@ function labelFormatterBubble(this: { point: IExtendedPoint } & Highcharts.Point
     if (
         (!(xAxisMax === null || xAxisMax === undefined) && this.x > xAxisMax) ||
         (!(xAxisMin === null || xAxisMin === undefined) && this.x < xAxisMin) ||
-        (!(xAxisMax === null || xAxisMax === undefined) && this.y > yAxisMax) ||
-        (!(xAxisMin === null || xAxisMin === undefined) && this.y < yAxisMin)
+        (!(xAxisMax === null || xAxisMax === undefined) && this.y! > yAxisMax!) ||
+        (!(xAxisMin === null || xAxisMin === undefined) && this.y! < yAxisMin!)
     ) {
         return null;
     } else {
@@ -648,7 +654,7 @@ function getTooltipConfiguration(
                   shadow: false,
                   useHTML: true,
                   outside: true,
-                  positioner: partial(getTooltipPositionInViewPort, chartType, stacking),
+                  positioner: partial(getTooltipPositionInViewPort, chartType, stacking as any),
                   formatter: partial(formatTooltip, tooltipAction, chartConfig, intl),
                   enabled: chartConfig?.tooltip?.enabled ?? true,
                   className: chartConfig?.tooltip?.className,
@@ -721,7 +727,7 @@ function getTreemapLabelsConfiguration(
 }
 
 function shouldDisableHeatmapDataLabels(series: ISeriesItem[]): boolean {
-    return series.some((item) => item.data?.length >= HEATMAP_DATA_LABELS_LIMIT);
+    return series.some((item) => (item.data?.length ?? 0) >= HEATMAP_DATA_LABELS_LIMIT);
 }
 
 function getDataLabelsConfiguration(
@@ -922,7 +928,7 @@ function getStackingConfiguration(
             ...totalLabelsConfig,
             formatter: partial(stackLabelFormatter, chartConfig),
         },
-    }));
+    })) as YAxisOptions[];
 
     const connectNulls = isAreaChart(type) ? { connectNulls: true } : {};
     const nonStacking = isNonStackingConfiguration(chartOptions, chartConfig);
@@ -988,7 +994,7 @@ function getSeries(series: any) {
 function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOptions {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
-    const categories = data.categories;
+    const categories = data.categories ?? [];
 
     return {
         series,
@@ -1008,7 +1014,7 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOpt
     };
 }
 
-export function escapeCategories(dataCategories: any[]): any {
+export function escapeCategories(dataCategories: any[] | undefined): any {
     return dataCategories?.map((category) => {
         return typeof category === "string"
             ? escapeAngleBrackets(category)
@@ -1287,7 +1293,7 @@ function getYAxisTickConfiguration(
     chartOptions: IChartOptions,
     axisPropsKey: "yAxisProps" | "secondary_yAxisProps",
 ) {
-    const { type, yAxes } = chartOptions;
+    const { type, yAxes = [] } = chartOptions;
     if (isBubbleChart(type) || isScatterPlot(type)) {
         return {
             startOnTick: shouldYAxisStartOnTickOnBubbleScatter(chartOptions),
@@ -1309,7 +1315,7 @@ export const getFormatterProperty = (
     chartOptions: IChartOptions,
     axisPropsKey: "yAxisProps" | "xAxisProps" | "secondary_yAxisProps" | "secondary_xAxisProps",
     chartConfig: IChartConfig,
-    axisFormat: string,
+    axisFormat: string | undefined,
 ): { formatter?: AxisLabelsFormatterCallbackFunction } => {
     if (isMeasureFormatInPercent(axisFormat)) {
         return { formatter: partial(formatAsPercent, 100) };
@@ -1469,7 +1475,7 @@ function buildXAxisOptions(
     const minRange = getXAxisMinRange(chartConfig, chartOptions);
 
     const joinedAttributeAxisName: boolean =
-        chartConfig?.enableJoinedAttributeAxisName && isSupportingJoinedAttributeAxisName(type);
+        !!chartConfig?.enableJoinedAttributeAxisName && isSupportingJoinedAttributeAxisName(type);
     const titleTextProp = getXAxisTitleTextProp(visible, isViewByTwoAttributes, joinedAttributeAxisName);
 
     const plotLinesProp = getXAxisPlotLinesProp(axis.plotLines, plotLineColor);
@@ -1593,7 +1599,7 @@ function getTargetCursorConfigurationForBulletChart({ type, data }: IChartOption
         return {};
     }
 
-    const isTargetDrillable = data.series.some(
+    const isTargetDrillable = data?.series?.some(
         (series: ISeriesItem) => series.type === "bullet" && series.isDrillable,
     );
 
@@ -1603,8 +1609,8 @@ function getTargetCursorConfigurationForBulletChart({ type, data }: IChartOption
 function getZoomingAndPanningConfiguration(
     _chartOptions: IChartOptions,
     _config: any,
-    chartConfig: IChartConfig,
-): HighchartsOptions {
+    chartConfig?: IChartConfig,
+): HighchartsOptions | undefined {
     return chartConfig?.zoomInsight
         ? {
               chart: {
@@ -1627,7 +1633,7 @@ function getZoomingAndPanningConfiguration(
         : undefined;
 }
 
-function getReversedStacking(chartOptions: IChartOptions, _config: any, chartConfig: IChartConfig) {
+function getReversedStacking(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { yAxes = [] } = chartOptions;
     const hasAnyStackOptionSelected =
         chartConfig?.stackMeasures ||

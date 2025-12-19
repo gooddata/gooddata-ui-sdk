@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type ILowerBoundedFilter, type IUpperBoundedFilter } from "../execution/filter/index.js";
@@ -68,8 +69,11 @@ export type DateFilterGranularity =
     | "GDC.time.date"
     | "GDC.time.week_us"
     | "GDC.time.month"
+    | "GDC.time.fiscal_month"
     | "GDC.time.quarter"
-    | "GDC.time.year";
+    | "GDC.time.fiscal_quarter"
+    | "GDC.time.year"
+    | "GDC.time.fiscal_year";
 
 const dateFilterGranularity: DateFilterGranularity[] = [
     "GDC.time.minute",
@@ -77,8 +81,11 @@ const dateFilterGranularity: DateFilterGranularity[] = [
     "GDC.time.date",
     "GDC.time.week_us",
     "GDC.time.month",
+    "GDC.time.fiscal_month",
     "GDC.time.quarter",
+    "GDC.time.fiscal_quarter",
     "GDC.time.year",
+    "GDC.time.fiscal_year",
 ];
 
 /**

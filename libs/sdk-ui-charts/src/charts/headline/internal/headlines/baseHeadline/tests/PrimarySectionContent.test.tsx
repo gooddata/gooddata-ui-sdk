@@ -9,7 +9,7 @@ import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySectionContent } from "../PrimarySectionContent.js";
 
 describe("PrimarySectionContent", () => {
-    const renderPrimarySectionContent = (props?: {
+    const renderPrimarySectionContent = (props: {
         primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
     }) => {
         return render(<PrimarySectionContent {...props} />);

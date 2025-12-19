@@ -31,15 +31,19 @@ const EditableLabelExamples = memo(function EditableLabelExamples() {
     );
 });
 
-const editLabelClickProps: INeobackstopScenarioConfig = {
-    readySelector: { selector: ".screenshot-target", state: State.Attached },
-    clickSelector: ".s-my-editable-label",
-    postInteractionWait: { delay: 200 },
+const baseScreenshotConfig: INeobackstopScenarioConfig = {
+    readySelector: {
+        selector: ".screenshot-target",
+        state: State.Attached,
+    },
 };
 
-const screenshotProps: INeobackstopConfig = {
-    "initial-label": { readySelector: { selector: ".screenshot-target", state: State.Attached } },
-    "edited-label": editLabelClickProps,
+const screenshotConfig: INeobackstopConfig = {
+    "initial-label": baseScreenshotConfig,
+    "edited-label": {
+        ...baseScreenshotConfig,
+        clickSelector: ".s-my-editable-label",
+    },
 };
 
 // eslint-disable-next-line no-restricted-exports
@@ -50,4 +54,4 @@ export default {
 export function FullFeatured() {
     return <EditableLabelExamples />;
 }
-FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps } satisfies IStoryParameters;
+FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotConfig } satisfies IStoryParameters;

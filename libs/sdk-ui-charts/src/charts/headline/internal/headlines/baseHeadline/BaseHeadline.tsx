@@ -64,12 +64,12 @@ export function BaseHeadline({ data, config, onDrill, onAfterRender }: IHeadline
                 // onResize is called also initially when dimensions
                 // are not yet fully materialized, defer afterRender
                 if (
-                    dimensions?.client?.width > 0 &&
-                    dimensions?.client?.height > 0 &&
+                    (dimensions?.client?.width ?? 0) > 0 &&
+                    (dimensions?.client?.height ?? 0) > 0 &&
                     !afterRenderCalled.current
                 ) {
                     afterRenderCalled.current = true;
-                    onAfterRender();
+                    onAfterRender?.();
                 }
             }}
         >
@@ -77,8 +77,8 @@ export function BaseHeadline({ data, config, onDrill, onAfterRender }: IHeadline
                 return (
                     <BaseHeadlineContext.Provider
                         value={{
-                            clientWidth: contentRect.client?.width,
-                            clientHeight: contentRect.client?.height,
+                            clientWidth: contentRect.client?.width as number,
+                            clientHeight: contentRect.client?.height as number,
                             config,
                             fireDrillEvent,
                         }}

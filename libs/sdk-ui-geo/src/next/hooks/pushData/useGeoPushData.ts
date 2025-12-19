@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { type IColorPalette } from "@gooddata/sdk-model";
-import { type IPushData } from "@gooddata/sdk-ui";
+import { type IPushData, getMultiLayerDrillTargets } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
+import { useGeoLayers } from "../../context/GeoLayersContext.js";
 import { useInitialExecution } from "../../context/InitialExecutionContext.js";
 import { type IAvailableLegends } from "../../types/common/legends.js";
 
@@ -46,10 +47,22 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
     const props = useProps();
     const { availableLegends } = useLegendContext();
     const { initialDataView } = useInitialExecution();
+    const { layers } = useGeoLayers();
     const { pushData } = props;
     const legendVisibilitySelector = getLegendVisibility ?? defaultLegendVisibility;
 
     const isLegendVisible = legendVisibilitySelector(availableLegends);
+
+    // Build drill targets from all layers (combines measures from all layers)
+    const layerDataViews = Array.from(layers.values()).map((l) => l.dataView);
+    const fingerprintsKey = layerDataViews.map((dv) => dv?.fingerprint() ?? "null").join("|");
+
+    // Use fingerprints key as dependency
+    // We can't use layers as dependency because they are not stable across renders resulting in infinite loop
+    const availableDrillTargets = useMemo(() => {
+        return getMultiLayerDrillTargets(layerDataViews, initialDataView);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fingerprintsKey, initialDataView]);
 
     useEffect(() => {
         if (!pushData || !colorStrategy) {
@@ -58,6 +71,7 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
 
         pushData({
             dataView: initialDataView?.dataView,
+            availableDrillTargets,
             propertiesMeta: {
                 legend_enabled: isLegendVisible,
             },
@@ -66,5 +80,5 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
                 colorPalette,
             },
         });
-    }, [pushData, colorStrategy, colorPalette, initialDataView, isLegendVisible]);
+    }, [pushData, colorStrategy, colorPalette, initialDataView, isLegendVisible, availableDrillTargets]);
 }

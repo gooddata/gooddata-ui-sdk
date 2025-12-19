@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import type Highcharts from "highcharts/esm/highcharts.js";
 
 import {
@@ -39,9 +40,9 @@ export const autohidePieLabels = (chart: Highcharts.Chart): void => {
             const intersects = isIntersecting(actualLabel, neighborLabel);
             if (intersects) {
                 visibilityMap[neighborIdx] = false;
-                neighborLabel.hide();
+                neighborLabel.hide?.();
             } else {
-                neighborLabel.show();
+                neighborLabel.show?.();
             }
         }
     }

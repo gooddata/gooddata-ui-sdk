@@ -24,7 +24,7 @@ const POINT_SHAPES_CONFIGS: { symbol: PointShapeSymbolType }[] = [
 /**
  * Checks if the chart type supports distinct point shapes
  */
-function supportsDistinctPointShapes(chartType: string): boolean {
+function supportsDistinctPointShapes(chartType: string | undefined): boolean {
     return isLineChart(chartType) || isAreaChart(chartType) || isComboChart(chartType);
 }
 
@@ -75,7 +75,7 @@ function setupDistinctPointShapes(
  * Applies distinct point shapes to series when enabled
  */
 export function setupDistinctPointShapesToSeries(
-    type: string,
+    type: string | undefined,
     series: ISeriesItem[],
     chartConfig: IChartConfig,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],

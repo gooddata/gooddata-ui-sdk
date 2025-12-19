@@ -59,11 +59,13 @@ function getStackingValue(chartOptions: IChartOptions, seriesItem: ISeriesItem):
     const seriesChartType = seriesItem.type || type;
     const defaultStackingValue: StackingType = isComboChart(type) ? null : "normal";
 
-    return isPrimaryYAxis(yAxes[yAxis]) && !isLineChart(seriesChartType) ? stacking : defaultStackingValue;
+    return isPrimaryYAxis(yAxes![yAxis!]) && !isLineChart(seriesChartType)
+        ? stacking!
+        : defaultStackingValue!;
 }
 
 function handleDualAxis(chartOptions: IChartOptions, seriesItem: ISeriesItem): ISeriesItem {
-    const { yAxes, type } = chartOptions;
+    const { yAxes = [], type } = chartOptions;
     const isDualAxis = yAxes.length === 2;
 
     if (!isDualAxis && !isComboChart(type)) {
@@ -100,7 +102,7 @@ function handleLabelStyle(chartOptions: IChartOptions, seriesItem: ISeriesItem):
 function countMeasuresInSeries(series: ISeriesItem[]): number[] {
     return series.reduce(
         (result: number[], seriesItem: ISeriesItem) => {
-            result[seriesItem.yAxis] += 1;
+            result[seriesItem.yAxis!] += 1;
             return result;
         },
         [0, 0],
@@ -128,7 +130,7 @@ export function getSanitizedStackingForSeries(series: ISeriesItem[]): ISeriesIte
             if (seriesItem.yAxis === 1) {
                 return {
                     ...seriesItem,
-                    stack: null as number,
+                    stack: null as number | null,
                     // reset stackMeasuresToPercent in this case (stacking: PERCENT_STACK)
                     stacking: seriesItem.stacking ? "normal" : null,
                 };
@@ -187,11 +189,11 @@ export function getYAxisConfiguration(
 
     const { enabled: stackingDataLabelEnabled } = getTotalsVisibilityConfig(type, chartConfig);
 
-    const yAxisWithStackLabel = yAxis.map((axis: YAxisOptions, index: number) => {
+    const yAxisWithStackLabel = yAxis.map((axis: YAxisOptions | undefined, index: number) => {
         // disable stack labels for primary Y axis when there is 'Stack to 100%' on
         const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && !!stackingDataLabelEnabled;
         return {
-            ...axis,
+            ...(axis ?? {}),
             stackLabels: {
                 enabled: stackLabelEnabled,
             },
@@ -328,8 +330,8 @@ export function convertMinMaxFromPercentToNumber(
     if (!Array.isArray(yAxes)) {
         yAxes = [yAxes];
     }
-    const yAxis = yAxes.map((axis: YAxisOptions, _: number, axes: YAxisOptions[]) => {
-        const { min, max } = axis;
+    const yAxis = (yAxes as (YAxisOptions | undefined)[]).map((axis, _, axes) => {
+        const { min, max } = axis! as YAxisOptions;
         const newAxis = {};
 
         if (!(min === null || min === undefined) && typeof min === "number") {
@@ -345,7 +347,7 @@ export function convertMinMaxFromPercentToNumber(
             return newAxis;
         }
 
-        const { opposite = false } = axis;
+        const { opposite = false } = axis! as YAxisOptions;
         return opposite ? {} : newAxis;
     });
 
@@ -359,10 +361,11 @@ export function getOptionalStackingConfiguration(
     drillConfig?: IDrillConfig,
 ): HighchartsOptions {
     const { type } = chartOptions;
-    return (supportedStackingAttributesChartTypes as string[]).includes(type)
+    // supportedStackingAttributesChartTypes not include empty string so cast undefined to empty string is ok
+    return (supportedStackingAttributesChartTypes as string[]).includes(type ?? "")
         ? merge(
               {},
-              setDrillConfigToXAxis(drillConfig),
+              drillConfig ? setDrillConfigToXAxis(drillConfig) : {},
               getParentAttributeConfiguration(chartOptions, config, chartConfig),
               getStackMeasuresConfiguration(chartOptions, config, chartConfig),
               getShowInPercentConfiguration(chartOptions, chartConfig, config),

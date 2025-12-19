@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { type IMeasureValueFilter, type ObjRefInScope } from "@gooddata/sdk-model";
+import { type IMeasureValueFilter, type ObjRef, type ObjRefInScope } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
 
 /**
@@ -29,6 +29,38 @@ export interface IDimensionalityItem {
      * Defaults to "attribute" if not specified.
      */
     type: DimensionalityItemType;
+    /**
+     * Optional object reference for the item (typically the attribute/date display form reference).
+     *
+     * This is useful when the item `identifier` is a LocalIdRef (bucket item),
+     * but we still want to compare/deduplicate it against catalog candidates that are referenced by ObjRef.
+     *
+     * @beta
+     */
+    ref?: ObjRef;
+    /**
+     * Optional dataset information for grouping catalog items.
+     * Present for catalog items, undefined for bucket items.
+     */
+    dataset?: {
+        /**
+         * Dataset identifier.
+         */
+        identifier: ObjRef;
+        /**
+         * Human-readable dataset title.
+         */
+        title: string;
+    };
+}
+
+/**
+ * Date dataset option for the date dataset picker.
+ * @internal
+ */
+export interface IDateDatasetOption {
+    key: string;
+    title: string;
 }
 
 /**
@@ -53,6 +85,20 @@ export interface IMeasureValueFilterCommonProps {
     dimensionality?: IDimensionalityItem[];
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
+    /**
+     * Catalog items available for dimensionality
+     */
+    catalogDimensionality?: IDimensionalityItem[];
+    /**
+     * Callback triggered when dimensionality changes.
+     * Used to revalidate catalog items after selection changes.
+     */
+    onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
+    /**
+     * Whether catalog dimensionality is currently being loaded.
+     * If true, the attribute picker can show a small loading indicator.
+     */
+    isLoadingCatalogDimensionality?: boolean;
 }
 
 /**

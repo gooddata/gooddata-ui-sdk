@@ -21,7 +21,7 @@ const HEATMAP_TEMPLATE = {
                 events: {
                     // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
                     mouseOver(this: Highcharts.Point) {
-                        if ((this as any).drilldown) {
+                        if ((this as any).drilldown && this.graphic?.element?.style) {
                             this.graphic.element.style.cursor = "pointer";
                         }
                     },
@@ -43,13 +43,13 @@ const HEATMAP_TEMPLATE = {
                     const { axis, isLast } = this;
                     const { tickPositions, categories } = axis;
                     // tickPositions is array of index of categories
-                    const lastIndex = parseInt(tickPositions.at(-1).toString(), 10);
+                    const lastIndex = parseInt(tickPositions!.at(-1)!.toString(), 10);
                     const lastCategory = categories ? categories[lastIndex] : null;
-                    let labelValue = axis.defaultLabelFormatter.call(this);
+                    let labelValue: string | null = axis.defaultLabelFormatter.call(this);
 
                     // When generate linear tick positions base on categories length.
                     // Last tick position can be out of index of categories.
-                    // In this case, set label value to null to ignore last label.
+                    // In this case, set label value to undefined to ignore last label.
                     if (isLast && categories && !lastCategory) {
                         labelValue = null;
                     }

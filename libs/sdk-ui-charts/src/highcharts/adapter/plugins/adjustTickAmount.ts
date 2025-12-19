@@ -147,7 +147,7 @@ export function adjustTicks(axis: Axis): void {
 
 export function getSelectionRange(axis: Axis): number[] {
     const { tickAmount } = axis as UnsafeInternals;
-    const { tickPositions } = axis;
+    const tickPositions = axis.tickPositions ?? [];
     const { dataMin, dataMax } = axis.getExtremes();
     const currentTickAmount: number = tickPositions.length;
     if (dataMin >= 0) {
@@ -214,7 +214,7 @@ export function alignToBaseAxis(yAxis: Axis, baseYAxis: Axis): void {
         direction !== ALIGNED;
         direction = getDirection(baseYAxis, yAxis)
     ) {
-        let tickPositions: number[] = yAxis.tickPositions.slice();
+        let tickPositions: number[] = yAxis.tickPositions!.slice();
 
         if (direction === MOVE_ZERO_RIGHT) {
             // add new tick to the start
@@ -238,11 +238,11 @@ function updateAxis(axis: Axis, currentTickAmount: number): void {
 
     (axis as UnsafeInternals).transA *= (currentTickAmount - 1) / (Math.max(tickAmount, 2) - 1); // avoid N/0 case
 
-    axis.min = options.startOnTick ? tickPositions[0] : Math.min(axis.min, tickPositions[0]);
+    axis.min = options.startOnTick ? tickPositions![0] : Math.min(axis.min!, tickPositions![0]);
 
     axis.max = options.endOnTick
-        ? tickPositions[tickPositions.length - 1]
-        : Math.max(axis.max, tickPositions[tickPositions.length - 1]);
+        ? tickPositions![tickPositions!.length - 1]
+        : Math.max(axis.max!, tickPositions![tickPositions!.length - 1]);
 }
 
 /**
@@ -259,7 +259,7 @@ export function preventDataCutOff(axis: Axis): void {
     }
 
     (axis as UnsafeInternals).tickInterval *= 2;
-    axis.tickPositions = axis.tickPositions.map((value: number): number => value * 2);
+    axis.tickPositions = (axis.tickPositions ?? []).map((value: number): number => value * 2);
     updateAxis(axis, (axis as UnsafeInternals).tickAmount);
 }
 

@@ -1629,12 +1629,19 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
 }
 
 export interface OutlierDetectionRequest {
-    measures: Array<MeasureItem>;
-    dateAttribute: AttributeItem;
     /**
-     * Optional filters to apply
+     * Attributes to be used in the computation.
      */
-    filters?: Array<OutlierDetectionRequestFiltersInner>;
+    attributes: Array<AttributeItem>;
+    /**
+     * Various filter types to filter the execution result.
+     */
+    filters: Array<OutlierDetectionRequestFiltersInner>;
+    measures: Array<MeasureItem>;
+    /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    auxMeasures?: Array<MeasureItem>;
     /**
      * Sensitivity level for outlier detection
      */
@@ -1661,7 +1668,13 @@ export interface OutlierDetectionResponse {
 }
 
 export interface OutlierDetectionResult {
-    attribute: Array<string>;
+    /**
+     * Attribute values for outlier detection results.
+     */
+    attribute: Array<string> | null;
+    /**
+     * Map of measure identifiers to their outlier detection values. Each value is a list of nullable numbers.
+     */
     values: { [key: string]: Array<number | null> | null } | null;
 }
 

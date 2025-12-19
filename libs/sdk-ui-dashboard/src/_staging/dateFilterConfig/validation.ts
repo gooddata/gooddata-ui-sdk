@@ -3,6 +3,7 @@
 import { groupBy, isEmpty } from "lodash-es";
 
 import {
+    type DateFilterGranularity,
     type IDateFilterConfig,
     type IDateFilterOption,
     type IRelativeDateFilterForm,
@@ -131,6 +132,79 @@ const conditionallyStripToDateFilters = (
     };
 };
 
+const FISCAL_GRANULARITIES: DateFilterGranularity[] = [
+    "GDC.time.fiscal_year",
+    "GDC.time.fiscal_quarter",
+    "GDC.time.fiscal_month",
+];
+
+const getFiscalPresetsFromDefault = () => {
+    return (
+        defaultDateFilterConfig.relativePresets?.filter((preset) =>
+            FISCAL_GRANULARITIES.includes(preset.granularity),
+        ) ?? []
+    );
+};
+
+const getFiscalGranularitiesFromDefault = () => {
+    return (
+        defaultDateFilterConfig.relativeForm?.availableGranularities.filter((g) =>
+            FISCAL_GRANULARITIES.includes(g),
+        ) ?? []
+    );
+};
+
+const conditionallyHandleFiscalFilters = (
+    config: IDateFilterConfig,
+    enableFiscalCalendars: boolean,
+): IDateFilterConfig => {
+    if (!enableFiscalCalendars) {
+        return {
+            ...config,
+            relativePresets:
+                config.relativePresets?.filter(
+                    (preset) => !FISCAL_GRANULARITIES.includes(preset.granularity),
+                ) ?? [],
+            relativeForm: config.relativeForm
+                ? {
+                      ...config.relativeForm,
+                      availableGranularities: config.relativeForm.availableGranularities.filter(
+                          (g) => !FISCAL_GRANULARITIES.includes(g),
+                      ),
+                  }
+                : undefined,
+        };
+    }
+
+    const existingFiscalPresets =
+        config.relativePresets?.filter((preset) => FISCAL_GRANULARITIES.includes(preset.granularity)) ?? [];
+
+    const existingFiscalGranularities =
+        config.relativeForm?.availableGranularities.filter((g) => FISCAL_GRANULARITIES.includes(g)) ?? [];
+
+    if (existingFiscalPresets.length > 0 && existingFiscalGranularities.length > 0) {
+        return config;
+    }
+
+    const fiscalPresetsToAdd = existingFiscalPresets.length === 0 ? getFiscalPresetsFromDefault() : [];
+    const fiscalGranularitiesToAdd =
+        existingFiscalGranularities.length === 0 ? getFiscalGranularitiesFromDefault() : [];
+
+    return {
+        ...config,
+        relativePresets: [...(config.relativePresets ?? []), ...fiscalPresetsToAdd],
+        relativeForm: config.relativeForm
+            ? {
+                  ...config.relativeForm,
+                  availableGranularities: [
+                      ...config.relativeForm.availableGranularities,
+                      ...fiscalGranularitiesToAdd,
+                  ],
+              }
+            : undefined,
+    };
+};
+
 /**
  * Given the date filter config loaded from backend and the settings, this function will perform validation
  * of the config and if needed also cleanup of invalid/disabled presets.
@@ -140,9 +214,10 @@ export function getValidDateFilterConfig(
     settings: ISettings,
 ): [IDateFilterConfig, DateFilterConfigValidationResult] {
     const configValidation = validateDateFilterConfig(config);
-    const validConfig = FallbackToDefault.includes(configValidation)
-        ? defaultDateFilterConfig
-        : conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? true);
+    let validConfig = FallbackToDefault.includes(configValidation) ? defaultDateFilterConfig : config;
+
+    validConfig = conditionallyStripToDateFilters(validConfig, settings.enableToDateFilters ?? true);
+    validConfig = conditionallyHandleFiscalFilters(validConfig, settings.enableFiscalCalendars ?? false);
 
     return [validConfig, configValidation];
 }

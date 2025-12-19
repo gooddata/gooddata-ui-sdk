@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { type AgGridHeaderParams } from "../../types/agGrid.js";
 
@@ -28,6 +29,7 @@ export function EmptyMeasureGroupHeader(params: AgGridHeaderParams) {
         handleAggregationsItemClick,
         handleTextWrappingItemClick,
         handleSortingItemClick,
+        headerCellAriaLabel,
     } = useHeaderMenu(
         {
             allowAggregations,
@@ -42,6 +44,7 @@ export function EmptyMeasureGroupHeader(params: AgGridHeaderParams) {
     );
 
     const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
+    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel);
 
     return (
         <div

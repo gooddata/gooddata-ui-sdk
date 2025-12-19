@@ -36,7 +36,7 @@ class AreaColorStrategy extends ColorStrategy {
      */
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         areaAttribute: IAttributeDescriptor,
         segmentByAttribute: IAttributeDescriptor | null,
         dv: DataViewFacade,
@@ -66,7 +66,7 @@ class AreaColorStrategy extends ColorStrategy {
      */
     private getColorStrategyForSegmentBy(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         segmentByAttribute: IAttributeDescriptor,
         dv: DataViewFacade,
     ): IColorAssignment[] {
@@ -86,7 +86,7 @@ class AreaColorStrategy extends ColorStrategy {
      */
     private getColorStrategyForLocation(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         areaAttribute: IAttributeDescriptor,
         dv: DataViewFacade,
     ): IColorAssignment {

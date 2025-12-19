@@ -5,7 +5,10 @@ import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type HeadlineElementType, withIntl } from "@gooddata/sdk-ui";
 
-import { type IWithDrillableItemProps } from "../../../../interfaces/BaseHeadlines.js";
+import {
+    type IBaseHeadlineDrillable,
+    type IWithDrillableItemProps,
+} from "../../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import { HEADLINE_ITEM_LINK_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
 import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
@@ -15,7 +18,7 @@ describe("withDrillable", () => {
     const wrappedComponentClassName = "s-wrapped-component-class-name";
     const WrappedComponent = vi.fn().mockReturnValue(<div className={wrappedComponentClassName}></div>);
     const WithDrillableComponent = withDrillable(WrappedComponent);
-    const renderWithDrillableComponent = (props: IWithDrillableItemProps<unknown>) => {
+    const renderWithDrillableComponent = (props: IWithDrillableItemProps<IBaseHeadlineDrillable>) => {
         const WrappedWithDrillableComponent = withIntl(WithDrillableComponent);
         return render(<WrappedWithDrillableComponent {...props} />);
     };
@@ -56,7 +59,7 @@ describe("withDrillable", () => {
         mockUseBaseHeadline({ fireDrillEvent });
         const { container } = renderWithDrillableComponent({ dataItem, elementType });
 
-        const drillLink = container.querySelector(HEADLINE_ITEM_LINK_SELECTOR);
+        const drillLink = container.querySelector(HEADLINE_ITEM_LINK_SELECTOR)!;
         fireEvent.click(drillLink);
 
         expect(fireDrillEvent).toHaveBeenCalledWith(dataItem, elementType, expect.anything());
@@ -69,7 +72,7 @@ describe("withDrillable", () => {
         mockUseBaseHeadline({ fireDrillEvent });
         const { container } = renderWithDrillableComponent({ dataItem: TEST_DATA_ITEM, elementType });
 
-        fireEvent.click(container.querySelector(`.${wrappedComponentClassName}`));
+        fireEvent.click(container.querySelector(`.${wrappedComponentClassName}`)!);
 
         expect(fireDrillEvent).not.toHaveBeenCalled();
     });

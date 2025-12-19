@@ -40,13 +40,13 @@ const dependencyWheelChartDefinition: IChartDefinition<
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
-        return backend
+        return backend!
             .withTelemetry("DependencyWheelChart", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withDimensions(dependencyWheelDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
 };
 

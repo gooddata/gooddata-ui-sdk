@@ -1,10 +1,13 @@
 // (C) 2025 GoodData Corporation
 
+import { useState } from "react";
+
 import { isEmpty } from "lodash-es";
 
 import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
 
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
+import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
 import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 import { type DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
@@ -17,6 +20,15 @@ import {
     type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
+import {
+    type CalendarTabType,
+    filterFiscalGranularities,
+    filterFiscalPresets,
+    filterStandardGranularities,
+    filterStandardPresets,
+    getFiscalTabsConfig,
+    getTabForPreset,
+} from "../utils/presetFilterUtils.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 
@@ -53,8 +65,27 @@ export function DateFilterBodyContent({
     onApplyClick,
     onSelectedFilterOptionChange,
 }: IDateFilterBodyContentProps) {
+    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset);
+
+    const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
+        getTabForPreset(selectedFilterOption),
+    );
+
+    const filteredRelativePreset = showTabs
+        ? selectedTab === "standard"
+            ? filterStandardPresets(filterOptions.relativePreset!)
+            : filterFiscalPresets(filterOptions.relativePreset!)
+        : filterOptions.relativePreset;
+
+    const filteredAvailableGranularities = showTabs
+        ? selectedTab === "standard"
+            ? filterStandardGranularities(availableGranularities)
+            : filterFiscalGranularities(availableGranularities)
+        : availableGranularities;
+
     return (
         <>
+            {showTabs ? <CalendarTypeTabs selectedTab={selectedTab} onTabSelect={setSelectedTab} /> : null}
             <AllTimeFilterSection
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}
@@ -75,12 +106,12 @@ export function DateFilterBodyContent({
                 weekStart={weekStart}
                 withoutApply={withoutApply}
             />
-            {isEmpty(availableGranularities) ? null : (
+            {isEmpty(filteredAvailableGranularities) ? null : (
                 <RelativeDateFilterFormSection
                     filterOptions={filterOptions}
                     onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                     selectedFilterOption={selectedFilterOption as IUiRelativeDateFilterForm}
-                    availableGranularities={availableGranularities}
+                    availableGranularities={filteredAvailableGranularities}
                     isMobile={isMobile}
                     changeRoute={changeRoute}
                     route={route}
@@ -99,10 +130,10 @@ export function DateFilterBodyContent({
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}
                 />
             ) : null}
-            {filterOptions.relativePreset ? (
+            {filteredRelativePreset ? (
                 <RelativePresetFilterItems
                     dateFormat={dateFormat}
-                    filterOption={filterOptions.relativePreset}
+                    filterOption={filteredRelativePreset}
                     selectedFilterOption={selectedFilterOption}
                     onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}

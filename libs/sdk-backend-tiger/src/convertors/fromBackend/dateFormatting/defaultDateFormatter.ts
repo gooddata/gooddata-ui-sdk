@@ -51,10 +51,13 @@ const defaultGranularityFormatPatterns: {
     "GDC.time.week_us": "w/Y", // 5/2020
     "GDC.time.week_in_year": "w", // 5
     "GDC.time.month": "MMM y", // Jun 2020
+    "GDC.time.fiscal_month": "M y", // 6 2020 (prefix will be added based on org/workspace settings)
     "GDC.time.month_in_year": "LLL", // Jan-Dec
     "GDC.time.quarter": "QQQ y", // Q1 2020
+    "GDC.time.fiscal_quarter": "Q y", // 1 2020 (prefix will be added based on org/workspace settings)
     "GDC.time.quarter_in_year": "qqq", // Q1-Q4
     "GDC.time.year": "y", // 2020
+    "GDC.time.fiscal_year": "y", // 2020 (prefix will be added based on org/workspace settings)
 };
 
 const localeConversions = {

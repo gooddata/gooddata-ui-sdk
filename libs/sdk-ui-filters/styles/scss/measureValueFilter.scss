@@ -73,6 +73,16 @@ $dialog_width: 250px;
     width: 100%;
 }
 
+.gd-mvf-operator-dropdown {
+    display: flex;
+    flex-direction: column;
+}
+
+.gd-mvf-operator-dropdown-label {
+    font-size: 12px;
+    color: variables.$gd-color-link;
+}
+
 .gd-mvf-operator-dropdown-body {
     width: $dialog_width - 20px;
     padding: 5px 0;
@@ -113,6 +123,14 @@ $dialog_width: 250px;
     }
 }
 
+// Align MVF numeric inputs (comparison + range) to the right, as requested by design.
+// MVF uses InputWithNumberFormat -> InputPure which renders the actual <input> as `.gd-input-field`.
+.s-mvf-comparison-value-input .gd-input-field,
+.s-mvf-range-from-input .gd-input-field,
+.s-mvf-range-to-input .gd-input-field {
+    text-align: right;
+}
+
 .gd-mvf-dimensionality-header {
     display: flex;
     justify-content: space-between;
@@ -120,6 +138,8 @@ $dialog_width: 250px;
 
     label {
         font-size: 12px;
+        line-height: 20px;
+        color: variables.$gd-color-link;
     }
 }
 
@@ -128,6 +148,14 @@ $dialog_width: 250px;
     flex-wrap: wrap;
     align-items: center;
     gap: 5px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.gd-mvf-dimensionality-tag-wrapper {
+    max-width: 180px;
+    min-width: 0;
+    display: flex;
 }
 
 .gd-mvf-dimensionality-add-wrapper {
@@ -142,6 +170,21 @@ $dialog_width: 250px;
     width: 250px;
     height: inherit;
     font-size: 12px;
+
+    // Prevent the item icon from shrinking when the item label is long.
+    // Let the title take the truncation instead of compressing the icon.
+    .gd-mvf-attribute-picker-item {
+        .gd-ui-kit-icon {
+            flex-shrink: 0;
+        }
+
+        .gd-ui-kit-listbox__item-title {
+            flex: 1 1 auto;
+            min-width: 0; // required for text-overflow to work in flex layouts
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
 
     .gd-mvf-attribute-picker-header {
         display: flex;
@@ -161,6 +204,11 @@ $dialog_width: 250px;
             font-size: 11px;
             font-weight: bold;
         }
+    }
+
+    .gd-mvf-attribute-picker-loading-spinner {
+        display: inline-flex;
+        align-items: center;
     }
 
     .gd-mvf-attribute-picker-search-bar {
@@ -183,11 +231,33 @@ $dialog_width: 250px;
         flex: 1 1 auto;
     }
 
+    .gd-mvf-attribute-picker-loading-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+
     .gd-mvf-attribute-picker-list-header {
         text-transform: uppercase;
         color: variables.$gd-color-state-blank;
         font-size: 10px;
+        padding: 10px 10px 0;
+        line-height: 16px;
+    }
+
+    // Divider between "From visualization" and catalog sections
+    .gd-mvf-attribute-picker-divider {
+        height: 10px;
         padding: 0 10px;
+
+        &::before {
+            content: "";
+            display: block;
+            position: relative;
+            top: 50%;
+            border-top: 1px solid variables.$gd-border-color;
+        }
     }
 
     .gd-mvf-attribute-picker-no-results {
@@ -196,12 +266,44 @@ $dialog_width: 250px;
         text-align: center;
     }
 
-    .gd-mvf-attribute-picker-footer {
-        flex: 0 0 auto;
-        margin: 0 10px;
-        padding: 10px 0;
-        border-top: 1px solid variables.$gd-border-color;
-        text-align: right;
+    // Date dataset selector ("Date as") shown in Date tab
+    .gd-mvf-attribute-picker-date-dataset {
+        padding: 5px 10px 10px;
+    }
+
+    .gd-mvf-attribute-picker-date-dataset-label {
+        color: variables.$gd-color-state-blank;
+        font-size: 12px;
+        line-height: 20px;
+        margin-bottom: 5px;
+    }
+
+    .gd-mvf-attribute-picker-date-dataset-control {
+        position: relative;
+
+        .gd-ui-kit-button {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+
+    .gd-mvf-attribute-picker-date-dataset-dropdown {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(100% + 4px);
+        background: variables.$gd-color-white;
+        border: 1px solid variables.$gd-border-color;
+        border-radius: 3px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 2;
+        overflow: hidden;
+    }
+
+    .gd-ui-kit-listbox {
+        padding: 0;
+        min-width: 0;
+        max-height: 200px;
     }
 }
 

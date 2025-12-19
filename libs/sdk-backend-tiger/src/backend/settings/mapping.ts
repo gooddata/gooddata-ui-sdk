@@ -56,6 +56,7 @@ const TYPE_TO_KEY_MAP = {
     ENABLE_DRILL_TO_URL_BY_DEFAULT: "enableDrillToUrlByDefault",
     METRIC_FORMAT_OVERRIDE: "metricFormatOverride",
     MAX_ZOOM_LEVEL: "maxZoomLevel",
+    ACTIVE_CALENDARS: "activeCalendars",
     ENABLE_AI_ON_DATA: "enableAiOnData",
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 

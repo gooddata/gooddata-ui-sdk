@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { omit, without } from "lodash-es";
 
 import { type IAttributeDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
@@ -17,10 +18,13 @@ import { type IPointData, type ISeriesDataItem } from "../../typings/unsafe.js";
 import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
-function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
-    let viewByHeader: IResultAttributeHeader = null;
+function getViewBy(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    viewByIndex: number,
+) {
+    let viewByHeader: IResultAttributeHeader | null = null;
     let viewByItem = null;
-    let viewByAttributeDescriptor: IAttributeDescriptor = null;
+    let viewByAttributeDescriptor: IAttributeDescriptor | null = null;
 
     if (viewByAttribute) {
         viewByHeader = viewByAttribute.items[viewByIndex];
@@ -38,10 +42,13 @@ function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByI
     };
 }
 
-function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stackByIndex: number) {
-    let stackByHeader: IResultAttributeHeader = null;
+function getStackBy(
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByIndex: number,
+) {
+    let stackByHeader: IResultAttributeHeader | null = null;
     let stackByItem = null;
-    let stackByAttributeDescriptor: IAttributeDescriptor = null;
+    let stackByAttributeDescriptor: IAttributeDescriptor | null = null;
 
     if (stackByAttribute) {
         // stackBy item index is always equal to seriesIndex
@@ -64,9 +71,9 @@ export function getDrillableSeries(
     dv: DataViewFacade,
     series: any[],
     drillableItems: IHeaderPredicate[],
-    viewByAttributes: IUnwrappedAttributeHeadersWithItems[],
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    type: VisType,
+    viewByAttributes: (IUnwrappedAttributeHeadersWithItems | undefined | null)[],
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    type: VisType | undefined,
 ): any {
     const [viewByChildAttribute, viewByParentAttribute] = viewByAttributes;
 
@@ -90,7 +97,7 @@ export function getDrillableSeries(
                     // not leaf -> can't be drillable
                     return pointData;
                 }
-                const measureIndex = viewByChildAttribute ? 0 : parseInt(pointData.parent, 10);
+                const measureIndex = viewByChildAttribute ? 0 : parseInt(pointData.parent!, 10);
                 measureHeaders = [measureGroup.items[measureIndex]];
             } else {
                 // measureIndex is usually seriesIndex,
@@ -114,12 +121,12 @@ export function getDrillableSeries(
             const {
                 viewByHeader: viewByChildHeader,
                 viewByAttributeDescriptor: viewByChildAttributeDescriptor,
-            } = getViewBy(viewByChildAttribute, viewByIndex);
+            } = getViewBy(viewByChildAttribute, viewByIndex!);
 
             const {
                 viewByHeader: viewByParentHeader,
                 viewByAttributeDescriptor: viewByParentAttributeDescriptor,
-            } = getViewBy(viewByParentAttribute, viewByIndex);
+            } = getViewBy(viewByParentAttribute, viewByIndex!);
 
             // point is drillable if a drillableItem matches:
             //   point's measure,
@@ -138,7 +145,7 @@ export function getDrillableSeries(
                     stackByHeader,
                 ],
                 null,
-            );
+            ) as IMappingHeader[];
 
             const drilldown: boolean = drillableHooks.some((drillableHook) =>
                 isSomeHeaderPredicateMatched(drillableItems, drillableHook, dv),
@@ -149,7 +156,7 @@ export function getDrillableSeries(
             };
 
             if (drilldown) {
-                const headers: IMappingHeader[] = [
+                const headers: (IMappingHeader | null)[] = [
                     ...measureHeaders,
                     viewByChildHeader,
                     viewByChildAttributeDescriptor,
@@ -158,7 +165,7 @@ export function getDrillableSeries(
                     stackByHeader,
                     stackByAttributeDescriptor,
                 ];
-                const sanitizedHeaders = without([...headers], null);
+                const sanitizedHeaders: IMappingHeader[] = without([...headers], null) as IMappingHeader[];
                 drillableProps.drillIntersection = getDrillIntersection(sanitizedHeaders);
                 isSeriesDrillable = true;
             }

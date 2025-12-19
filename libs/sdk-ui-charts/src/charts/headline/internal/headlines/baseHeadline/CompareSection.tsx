@@ -1,5 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
+import { type RefObject } from "react";
+
 import { useIntl } from "react-intl";
 
 import { HeadlinePagination } from "@gooddata/sdk-ui-vis-commons";
@@ -10,7 +12,7 @@ import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../int
 
 interface ICompareSectionProps {
     secondaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
-    tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
+    tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted> | null;
 }
 
 export function CompareSection({ secondaryItem, tertiaryItem }: ICompareSectionProps) {
@@ -31,14 +33,14 @@ export function CompareSection({ secondaryItem, tertiaryItem }: ICompareSectionP
                 renderSecondaryItem={() => (
                     <CompareSectionItem
                         dataItem={secondaryItem}
-                        titleRef={secondaryItemTitleWrapperRef}
+                        titleRef={secondaryItemTitleWrapperRef as RefObject<HTMLDivElement>}
                         onValueOverflow={undefined} // No overflow detection needed in pagination mode
                         measurementTrigger={overflowState.measurementKey}
                     />
                 )}
                 renderTertiaryItem={() => (
                     <CompareSectionItem
-                        dataItem={tertiaryItem}
+                        dataItem={tertiaryItem!}
                         onValueOverflow={undefined} // No overflow detection needed in pagination mode
                         measurementTrigger={overflowState.measurementKey}
                     />
@@ -64,7 +66,7 @@ export function CompareSection({ secondaryItem, tertiaryItem }: ICompareSectionP
             ) : null}
             <CompareSectionItem
                 dataItem={secondaryItem}
-                titleRef={secondaryItemTitleWrapperRef}
+                titleRef={secondaryItemTitleWrapperRef as RefObject<HTMLDivElement>}
                 onValueOverflow={handleSecondaryOverflow}
                 measurementTrigger={overflowState.measurementKey}
             />

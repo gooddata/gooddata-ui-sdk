@@ -7,7 +7,7 @@ import { styleVariables } from "../chartTypes/_chartCreators/styles/variables.js
 import { type CSSObject } from "../lib/index.js";
 import { isHighContrastMode } from "../utils/highContrastMode.js";
 
-export const getWhiteLabelStyle = (theme: ITheme): CSSObject => {
+export const getWhiteLabelStyle = (theme?: ITheme | null): CSSObject => {
     const textShadow = theme?.chart?.dataLabel?.autoLightTextShadow ?? true;
     return {
         color: theme?.chart?.dataLabel?.autoLightTextColor ?? styleVariables.gdColorBackground,
@@ -15,20 +15,22 @@ export const getWhiteLabelStyle = (theme: ITheme): CSSObject => {
     };
 };
 
-export const getBlackLabelStyle = (theme: ITheme): CSSObject => {
+export const getBlackLabelStyle = (theme?: ITheme | null): CSSObject => {
     return {
         color: theme?.chart?.dataLabel?.autoDarkTextColor ?? "var(--gd-palette-complementary-9, #000)",
         textShadow: "none",
     };
 };
 
-export const getBlackStackedLabelStyle = (theme: ITheme): CSSObject => {
+export const getBlackStackedLabelStyle = (theme?: ITheme | null): CSSObject => {
     return {
         color: theme?.chart?.dataLabel?.autoDarkTextColor ?? "#000",
     };
 };
 
-export const getBackplateStackedLabelStyling = (theme: ITheme): Highcharts.YAxisStackLabelsOptions => {
+export const getBackplateStackedLabelStyling = (
+    theme?: ITheme | null,
+): Highcharts.YAxisStackLabelsOptions => {
     return {
         style: getBackplateLabelStyle(theme),
         backgroundColor: getBackplateLabelBackgroundColor(theme),
@@ -37,7 +39,7 @@ export const getBackplateStackedLabelStyling = (theme: ITheme): Highcharts.YAxis
     };
 };
 
-export const getBackplateLabelStyling = (theme: ITheme): Highcharts.DataLabelsOptions => {
+export const getBackplateLabelStyling = (theme?: ITheme | null): Highcharts.DataLabelsOptions => {
     return {
         style: getBackplateLabelStyle(theme),
         color: getBackplateLabelColor(theme),
@@ -59,14 +61,14 @@ export const getBackplateLabelStyling = (theme: ITheme): Highcharts.DataLabelsOp
     };
 };
 
-export const getBackplateLabelStyle = (theme: ITheme): CSSObject => {
+export const getBackplateLabelStyle = (theme?: ITheme | null): CSSObject => {
     return {
         textOutline: "none",
         color: getBackplateLabelColor(theme),
     };
 };
 
-export const getBackplateLabelColor = (theme: ITheme): string => {
+export const getBackplateLabelColor = (theme?: ITheme | null): string => {
     if (isHighContrastMode()) {
         return "canvastext";
     }
@@ -77,7 +79,7 @@ export const getBackplateLabelColor = (theme: ITheme): string => {
     );
 };
 
-const getBackplateLabelBackgroundColor = (theme: ITheme): string => {
+const getBackplateLabelBackgroundColor = (theme?: ITheme | null): string => {
     if (isHighContrastMode()) {
         return "canvas";
     }
@@ -88,14 +90,14 @@ const getBackplateLabelBackgroundColor = (theme: ITheme): string => {
     );
 };
 
-const getBackplateLabelBorderColor = (theme: ITheme): string => {
+const getBackplateLabelBorderColor = (theme?: ITheme | null): string => {
     if (isHighContrastMode()) {
         return "canvastext";
     }
     return theme?.chart?.dataLabel?.backplateBorderColor ?? theme?.palette?.complementary?.c3 ?? "#dde4eb";
 };
 
-const getBackplateLabelBorderRadius = (theme: ITheme): number => {
+const getBackplateLabelBorderRadius = (theme?: ITheme | null): number => {
     return theme?.chart?.dataLabel?.backplateBorderRadius ?? 2;
 };
 

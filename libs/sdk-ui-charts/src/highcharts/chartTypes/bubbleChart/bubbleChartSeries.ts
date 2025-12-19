@@ -19,7 +19,7 @@ function createBubbleDataPoint(
     primaryMeasuresBucketEmpty: boolean,
     secondaryMeasuresBucketEmpty: boolean,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     index: number,
     emptyHeaderTitle: string,
 ) {
@@ -41,7 +41,7 @@ function createBubbleDataPoint(
 export function getBubbleChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartConfig?: IChartConfig,

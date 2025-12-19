@@ -29,7 +29,7 @@ export abstract class AbstractProvider implements IHeadlineProvider {
         }
 
         if (!isEmpty(sortItems)) {
-            execution.withSorting(...sortItems);
+            execution.withSorting(...(sortItems ?? []));
         }
 
         return execution;

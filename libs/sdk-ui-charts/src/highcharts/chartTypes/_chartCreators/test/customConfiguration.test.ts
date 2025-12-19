@@ -74,19 +74,19 @@ const chartOptions: IChartOptions = {
             name: "<b>bbb</b>",
             y: 10,
         },
-        null,
+        null as any,
     ]),
 };
 
 describe("getCustomizedConfiguration", () => {
     it("should escape series names", () => {
         const result = getCustomizedConfiguration(chartOptions);
-        expect(result.series[0].name).toEqual("&lt;b&gt;aaa&lt;/b&gt;");
+        expect(result.series![0].name).toEqual("&lt;b&gt;aaa&lt;/b&gt;");
     });
 
     it("should escape data items in series", () => {
         const result = getCustomizedConfiguration(chartOptions);
-        const serie: any = result.series[0];
+        const serie: any = result.series![0];
         const point: any = serie.data[0];
         expect(point.name).toEqual("&lt;b&gt;bbb&lt;/b&gt;");
     });
@@ -138,7 +138,7 @@ describe("getCustomizedConfiguration", () => {
             stacking: "normal",
         });
 
-        expect(result.plotOptions.series.connectNulls).toBeTruthy();
+        expect(result.plotOptions!.series!.connectNulls).toBeTruthy();
     });
 
     it("should NOT set connectNulls for NON stacked Area chart", () => {
@@ -148,13 +148,13 @@ describe("getCustomizedConfiguration", () => {
             stacking: null,
         });
 
-        expect(result.plotOptions.series).toEqual({});
+        expect(result.plotOptions!.series).toEqual({});
     });
 
     it("should set load event in configuration", () => {
         const result = getCustomizedConfiguration(chartOptions);
 
-        expect(result.chart.events).toEqual({ load: expect.any(Function) });
+        expect(result.chart!.events).toEqual({ load: expect.any(Function) });
     });
 
     it("should NOT set stacking for the Area chart only has one metric", () => {
@@ -167,7 +167,7 @@ describe("getCustomizedConfiguration", () => {
             { continuousLine: { enabled: true } },
         );
 
-        expect(result.plotOptions.series.stacking).toBeUndefined();
+        expect(result.plotOptions!.series!.stacking).toBeUndefined();
     });
 
     it("should set stacking for the Area chart has more than one metric", () => {
@@ -194,7 +194,7 @@ describe("getCustomizedConfiguration", () => {
             { continuousLine: { enabled: true } },
         );
 
-        expect(result.plotOptions.series.stacking).toBe("normal");
+        expect(result.plotOptions!.series!.stacking).toBe("normal");
     });
 
     it("should set stacking for the Combo chart has the primary chart type is Area", () => {
@@ -207,7 +207,7 @@ describe("getCustomizedConfiguration", () => {
             { continuousLine: { enabled: true }, primaryChartType: "area" },
         );
 
-        expect(result.plotOptions.series.stacking).toBe("normal");
+        expect(result.plotOptions!.series!.stacking).toBe("normal");
     });
 
     it("should set stacking for the chart if the stackingMeasures is true", () => {
@@ -220,7 +220,7 @@ describe("getCustomizedConfiguration", () => {
             { continuousLine: { enabled: true }, stackMeasures: true },
         );
 
-        expect(result.plotOptions.series.stacking).toBe("normal");
+        expect(result.plotOptions!.series!.stacking).toBe("normal");
     });
 
     it("should NOT set stacking for the Combo chart has the secondary chart type is Area", () => {
@@ -233,7 +233,7 @@ describe("getCustomizedConfiguration", () => {
             { continuousLine: { enabled: true }, secondaryChartType: "area" },
         );
 
-        expect(result.plotOptions.series.stacking).toBeUndefined();
+        expect(result.plotOptions!.series!.stacking).toBeUndefined();
     });
 
     it("should NOT set connectNulls for stacked Line chart", () => {
@@ -242,7 +242,7 @@ describe("getCustomizedConfiguration", () => {
             stacking: "normal",
         });
 
-        expect(result.plotOptions.series.connectNulls).toBeUndefined();
+        expect(result.plotOptions!.series!.connectNulls).toBeUndefined();
     });
 
     describe("getAxesConfiguration", () => {
@@ -330,7 +330,7 @@ describe("getCustomizedConfiguration", () => {
                 {
                     zoomInsight: true,
                 },
-                null,
+                undefined,
                 intl,
             );
             const expectedResult = {
@@ -356,7 +356,7 @@ describe("getCustomizedConfiguration", () => {
                 {
                     zoomInsight: true,
                 },
-                null,
+                undefined,
                 intl,
             );
             const expectedResult = {
@@ -530,7 +530,7 @@ describe("getCustomizedConfiguration", () => {
             const expectedPlotOptions = {
                 getExtremesFromAll: true,
             };
-            expect(result.plotOptions.series).toEqual(expectedPlotOptions);
+            expect(result.plotOptions!.series).toEqual(expectedPlotOptions);
         });
 
         it("should set axis line width to 1 in scatter plot when axis is enabled", () => {
@@ -592,7 +592,7 @@ describe("getCustomizedConfiguration", () => {
                 },
             );
 
-            expect(result.xAxis[0].title.text).toEqual(chartOptions.xAxes[0].label);
+            expect(result.xAxis[0].title.text).toEqual(chartOptions.xAxes![0].label);
         });
     });
 
@@ -635,8 +635,8 @@ describe("getCustomizedConfiguration", () => {
                 stacking: "normal",
             });
 
-            const treemapConfig = result.plotOptions.treemap;
-            expect(treemapConfig.levels.length).toEqual(2);
+            const treemapConfig = result.plotOptions!.treemap;
+            expect(treemapConfig!.levels!.length).toEqual(2);
         });
 
         it("should set one level labels for single-level treemap", () => {
@@ -646,8 +646,8 @@ describe("getCustomizedConfiguration", () => {
                 stacking: null,
             });
 
-            const treemapConfig = result.plotOptions.treemap;
-            expect(treemapConfig.levels.length).toEqual(1);
+            const treemapConfig = result.plotOptions!.treemap;
+            expect(treemapConfig!.levels!.length).toEqual(1);
         });
 
         it("should set global HCH dataLabels config according user config for treemap", () => {
@@ -664,8 +664,8 @@ describe("getCustomizedConfiguration", () => {
                 },
             );
 
-            const treemapConfig = result.plotOptions.treemap;
-            expect(treemapConfig.dataLabels).toEqual({
+            const treemapConfig = result.plotOptions!.treemap;
+            expect(treemapConfig!.dataLabels).toEqual({
                 allowOverlap: true,
                 enabled: true,
             });
@@ -859,7 +859,7 @@ describe("getCustomizedConfiguration", () => {
                     },
                 });
 
-                expect(result.tooltip.followPointer).toBeTruthy();
+                expect(result.tooltip!.followPointer).toBeTruthy();
             },
         );
 
@@ -876,7 +876,7 @@ describe("getCustomizedConfiguration", () => {
                     },
                 });
 
-                expect(result.tooltip.followPointer).toBeFalsy();
+                expect(result.tooltip!.followPointer).toBeFalsy();
             },
         );
 
@@ -1250,12 +1250,12 @@ describe("getCustomizedConfiguration", () => {
 
         it("should set the target cursor to pointer if the target is drillable", () => {
             const result = getCustomizedConfiguration(chartOptionsWithDrillableTarget);
-            expect(result.plotOptions.bullet.cursor).toBe("pointer");
+            expect(result.plotOptions!.bullet!.cursor).toBe("pointer");
         });
 
         it("should not set the target cursor to pointer if the target is not drillable", () => {
             const result = getCustomizedConfiguration(chartOptionsWithNonDrillableTarget);
-            expect(result.plotOptions.bullet).toBe(undefined);
+            expect(result.plotOptions!.bullet).toBe(undefined);
         });
     });
 });
@@ -1333,12 +1333,12 @@ describe("highlighting configuration", () => {
     it("should return load event", () => {
         const result = getChartHighlightingConfiguration(chartOptions, {}, {});
 
-        expect(result.chart.events).toEqual({ load: expect.any(Function) });
+        expect(result.chart!.events).toEqual({ load: expect.any(Function) });
     });
 
     it.each([["pie"], ["donut"]])("should not return load event", (type: string) => {
         const result = getChartHighlightingConfiguration({ ...chartOptions, type }, {}, {});
 
-        expect(result.chart.events).toEqual({});
+        expect(result.chart!.events).toEqual({});
     });
 });

@@ -1,9 +1,15 @@
 // (C) 2025 GoodData Corporation
 
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
+import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
 import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
-import { type DateFilterOption, type IDateFilterOptionsByType } from "../interfaces/index.js";
+import {
+    type DateFilterOption,
+    type DateFilterRelativeOptionGroup,
+    type IDateFilterOptionsByType,
+} from "../interfaces/index.js";
+import { type CalendarTabType } from "../utils/presetFilterUtils.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 
@@ -13,6 +19,10 @@ interface IDateFilterBodyContentFilteredProps {
     isMobile: boolean;
     dateFormat: string;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
+    showTabs: boolean;
+    selectedTab: CalendarTabType;
+    onTabSelect: (tab: CalendarTabType) => void;
+    filteredRelativePreset: DateFilterRelativeOptionGroup | undefined;
 }
 
 /**
@@ -25,9 +35,14 @@ export function DateFilterBodyContentFiltered({
     isMobile,
     dateFormat,
     onSelectedFilterOptionChange,
+    showTabs,
+    selectedTab,
+    onTabSelect,
+    filteredRelativePreset,
 }: IDateFilterBodyContentFilteredProps) {
     return (
         <>
+            {showTabs ? <CalendarTypeTabs selectedTab={selectedTab} onTabSelect={onTabSelect} /> : null}
             <AllTimeFilterSection
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}
@@ -47,10 +62,10 @@ export function DateFilterBodyContentFiltered({
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}
                 />
             ) : null}
-            {filterOptions.relativePreset ? (
+            {filteredRelativePreset ? (
                 <RelativePresetFilterItems
                     dateFormat={dateFormat}
-                    filterOption={filterOptions.relativePreset}
+                    filterOption={filteredRelativePreset}
                     selectedFilterOption={selectedFilterOption}
                     onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}

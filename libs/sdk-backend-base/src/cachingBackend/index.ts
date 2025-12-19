@@ -46,19 +46,23 @@ import {
     isAbortError,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardFiltersApplyMode,
     type IAbsoluteDateFilter,
+    type IActiveCalendars,
     type IAlertDefault,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeMetadataObject,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IExecutionDefinition,
+    type IFiscalYear,
     type IGeoJsonFeature,
     type IMeasure,
     type IMeasureDefinitionType,
     type IMetadataObject,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
+    type IMetricFormatOverrideSetting,
     type IRelativeDateFilter,
     type ISeparators,
     type ObjRef,
@@ -757,52 +761,107 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
     }
 
     public override async setAlertDefault(value: IAlertDefault): Promise<void> {
-        return super.setAlertDefault(value);
+        await super.setAlertDefault(value);
+        this.invalidateCache();
     }
 
     public override async setLocale(locale: string): Promise<void> {
-        return super.setLocale(locale);
+        await super.setLocale(locale);
+        this.invalidateCache();
     }
 
     public override async setMetadataLocale(locale: string): Promise<void> {
-        return super.setMetadataLocale(locale);
+        await super.setMetadataLocale(locale);
+        this.invalidateCache();
     }
 
     public override async setFormatLocale(locale: string): Promise<void> {
-        return super.setFormatLocale(locale);
+        await super.setFormatLocale(locale);
+        this.invalidateCache();
     }
 
     public override async setSeparators(separators: ISeparators): Promise<void> {
-        return super.setSeparators(separators);
+        await super.setSeparators(separators);
+        this.invalidateCache();
     }
 
     public override async setTimezone(timezone: string): Promise<void> {
-        return super.setTimezone(timezone);
+        await super.setTimezone(timezone);
+        this.invalidateCache();
     }
 
     public override async setDateFormat(dateFormat: string): Promise<void> {
-        return super.setDateFormat(dateFormat);
+        await super.setDateFormat(dateFormat);
+        this.invalidateCache();
     }
 
     public override async setWeekStart(weekStart: string): Promise<void> {
-        return super.setWeekStart(weekStart);
+        await super.setWeekStart(weekStart);
+        this.invalidateCache();
     }
 
     public override async setColorPalette(colorPaletteId: string): Promise<void> {
-        return super.setColorPalette(colorPaletteId);
+        await super.setColorPalette(colorPaletteId);
+        this.invalidateCache();
     }
 
     public override async setTheme(themeId: string): Promise<void> {
-        return super.setTheme(themeId);
+        await super.setTheme(themeId);
+        this.invalidateCache();
     }
 
-    public override deleteColorPalette(): Promise<void> {
-        return super.deleteColorPalette();
+    public override async deleteColorPalette(): Promise<void> {
+        await super.deleteColorPalette();
+        this.invalidateCache();
     }
 
-    public override deleteTheme(): Promise<void> {
-        return super.deleteTheme();
+    public override async deleteTheme(): Promise<void> {
+        await super.deleteTheme();
+        this.invalidateCache();
     }
+
+    public override async setActiveLlmEndpoint(endpoint: string): Promise<void> {
+        await super.setActiveLlmEndpoint(endpoint);
+        this.invalidateCache();
+    }
+
+    public override async setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void> {
+        await super.setFiscalCalendar(fiscalYear);
+        this.invalidateCache();
+    }
+
+    public override async setActiveCalendars(calendars: IActiveCalendars): Promise<void> {
+        await super.setActiveCalendars(calendars);
+        this.invalidateCache();
+    }
+
+    public override async setDashboardFiltersApplyMode(
+        dashboardFiltersApplyMode: DashboardFiltersApplyMode,
+    ): Promise<void> {
+        await super.setDashboardFiltersApplyMode(dashboardFiltersApplyMode);
+        this.invalidateCache();
+    }
+
+    public override async deleteDashboardFiltersApplyMode(): Promise<void> {
+        await super.deleteDashboardFiltersApplyMode();
+        this.invalidateCache();
+    }
+
+    public override async setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void> {
+        await super.setMetricFormatOverride(override);
+        this.invalidateCache();
+    }
+
+    public override async deleteMetricFormatOverride(): Promise<void> {
+        await super.deleteMetricFormatOverride();
+        this.invalidateCache();
+    }
+
+    private invalidateCache = (): void => {
+        const entry = this.getOrCreateWorkspaceEntry(this.workspace);
+        entry.workspaceSettings.clear();
+        entry.userWorkspaceSettings.clear();
+    };
 
     private getOrCreateWorkspaceEntry = (workspace: string): WorkspaceSettingsCacheEntry => {
         const cache = this.ctx.caches.workspaceSettings!;

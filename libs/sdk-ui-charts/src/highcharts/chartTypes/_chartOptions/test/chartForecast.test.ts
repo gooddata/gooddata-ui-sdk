@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type ISeriesItem } from "../../../typings/unsafe.js";
@@ -47,7 +48,7 @@ describe("assignForecastAxes", () => {
         expect(data).toEqual([
             {
                 ...baseSeries,
-                data: [...baseSeries.data, null, null, null],
+                data: [...baseSeries.data!, null, null, null],
             },
             {
                 color: "rgb(204,204,204)",

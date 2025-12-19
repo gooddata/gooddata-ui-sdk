@@ -225,7 +225,7 @@ export function compressForUrl<T>(data: T): string;
 export function convertDataWindowError(error: unknown): GoodDataSdkError;
 
 // @public (undocumented)
-export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[];
+export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[] | undefined): IHeaderPredicate[];
 
 // @public
 export function convertError(error: unknown): GoodDataSdkError;
@@ -495,7 +495,7 @@ export type FilterOrPlaceholder = ValueOrPlaceholder<IFilter> | ValueOrPlacehold
 export type FiltersOrPlaceholders = Array<FilterOrMultiValuePlaceholder>;
 
 // @internal
-export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEventData: IDrillEvent, target: EventTarget): void;
+export function fireDrillEvent(drillEventFunction: IDrillEventCallback | undefined, drillEventData: IDrillEvent, target: EventTarget): void;
 
 // @public
 export type Flatten<T> = T extends Array<infer A> ? A : T;
@@ -543,7 +543,7 @@ export const getInvalidDatapointsInTree: <T extends IInvalidNode<any>>(rootNode:
 export const getInvalidNodeAtPath: <T extends IInvalidNode<any>, P extends IInvalidNodePath<T>>(node: T, path?: P) => IInvalidNodeAtPath<T, P>;
 
 // @internal
-export function getMappingHeaderFormattedName(header: IMappingHeader | IResultMeasureHeader): string | undefined | null;
+export function getMappingHeaderFormattedName(header: IMappingHeader | IResultMeasureHeader | undefined): string | undefined | null;
 
 // @internal (undocumented)
 export function getMappingHeaderIdentifier(header: IMappingHeader): string | undefined;
@@ -552,10 +552,13 @@ export function getMappingHeaderIdentifier(header: IMappingHeader): string | und
 export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string;
 
 // @internal (undocumented)
-export function getMappingHeaderName(header: IMappingHeader | IResultMeasureHeader): string | undefined | null;
+export function getMappingHeaderName(header: IMappingHeader | IResultMeasureHeader | undefined): string | undefined | null;
 
 // @internal (undocumented)
 export function getMappingHeaderUri(header: IMappingHeader): string | undefined;
+
+// @internal
+export function getMultiLayerDrillTargets(layerDataViews: Array<DataViewFacade | null>, primaryDataView: DataViewFacade | null): IAvailableDrillTargets | undefined;
 
 // @internal
 export function getObjectDiff(prevObj: Record<string, any> | null, currObj: Record<string, any>, equalityFn?: (A: any, B: any) => boolean): {
@@ -718,7 +721,7 @@ export interface IClientWorkspaceStatus {
 // @internal (undocumented)
 export interface IColorAssignment {
     // (undocumented)
-    color: IColor;
+    color: IColor | undefined;
     // (undocumented)
     headerItem: IMappingHeader;
 }
@@ -898,11 +901,11 @@ export interface IDrillEventContext {
     // (undocumented)
     type: VisType;
     // (undocumented)
-    value?: string;
+    value?: string | null;
     // (undocumented)
     x?: number;
     // (undocumented)
-    y?: number;
+    y?: number | null;
     // (undocumented)
     z?: number;
 }
@@ -926,7 +929,7 @@ export interface IDrillEventContextHeadline {
     // (undocumented)
     type: HeadlineType;
     // (undocumented)
-    value: string;
+    value: string | null;
 }
 
 // @public
@@ -980,7 +983,7 @@ export interface IDrillEventContextXirr {
     // (undocumented)
     type: XirrType;
     // (undocumented)
-    value: string;
+    value: string | null;
 }
 
 // @public (undocumented)
@@ -1002,7 +1005,7 @@ export interface IDrillPoint {
     // (undocumented)
     x: number;
     // (undocumented)
-    y: number;
+    y: number | null;
 }
 
 // @public

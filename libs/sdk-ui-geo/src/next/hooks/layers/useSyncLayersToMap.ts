@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { type IHeaderPredicate } from "@gooddata/sdk-ui";
+import type { IHeaderPredicate, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
+import { useLayerClickEvent } from "./useLayerClickEvent.js";
 import { useLayerTooltips } from "./useLayerTooltips.js";
 import { type IGeoLayerData, useGeoLayers } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
@@ -21,6 +22,11 @@ interface IUseLayerSyncParams {
      * Drillable predicates for tooltip interactions.
      */
     drillablePredicates: IHeaderPredicate[];
+
+    /**
+     * Callback fired when user triggers a drill.
+     */
+    onDrill?: OnFiredDrillEvent;
 }
 
 /**
@@ -61,7 +67,7 @@ function syncLayerToMap(
  *
  * @internal
  */
-export function useSyncLayersToMap({ drillablePredicates }: IUseLayerSyncParams): void {
+export function useSyncLayersToMap({ drillablePredicates, onDrill }: IUseLayerSyncParams): void {
     const { map, isMapReady, tooltip, adapterContext } = useMapRuntime();
     const { layers, layerExecutions } = useGeoLayers();
     const { hiddenLayers, enabledItemsByLayer } = useGeoLegend();
@@ -208,4 +214,6 @@ export function useSyncLayersToMap({ drillablePredicates }: IUseLayerSyncParams)
         layers,
         adapterContext,
     });
+
+    useLayerClickEvent(map, isMapReady, layers, drillablePredicates, onDrill);
 }

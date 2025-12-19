@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { type IChartConfig } from "../../../interfaces/index.js";
 import { type HighchartsOptions } from "../../lib/index.js";
@@ -16,7 +16,7 @@ export function getWaterfallXAxisConfiguration(
         return {};
     }
 
-    const hasTotalMeasure = chartConfig?.total?.measures?.length > 0;
+    const hasTotalMeasure = (chartConfig?.total?.measures?.length ?? 0) > 0;
 
     return {
         xAxis: [

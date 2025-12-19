@@ -66,3 +66,49 @@ export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTar
         attributes: getAvailableDrillAttributes(dv),
     };
 }
+
+/**
+ * Builds available drill targets combining measures from multiple data views.
+ * Used for multi-layer visualizations where each layer may have its own measures.
+ *
+ * @param layerDataViews - Array of DataViewFacades from all layers
+ * @param primaryDataView - The primary layer's DataViewFacade (used for base attributes)
+ * @returns Combined available drill targets with measures from all layers
+ * @internal
+ */
+export function getMultiLayerDrillTargets(
+    layerDataViews: Array<DataViewFacade | null>,
+    primaryDataView: DataViewFacade | null,
+): IAvailableDrillTargets | undefined {
+    if (!primaryDataView) {
+        return undefined;
+    }
+
+    const primaryTargets = getAvailableDrillTargets(primaryDataView);
+    const primaryMeasures = primaryTargets.measures ?? [];
+
+    const allMeasures: IAvailableDrillTargetMeasure[] = [...primaryMeasures];
+    const seenMeasureIds = new Set(primaryMeasures.map((m) => m.measure.measureHeaderItem.localIdentifier));
+
+    for (const dataView of layerDataViews) {
+        if (!dataView) {
+            continue;
+        }
+
+        const layerTargets = getAvailableDrillTargets(dataView);
+        const layerMeasures = layerTargets.measures ?? [];
+
+        for (const measureTarget of layerMeasures) {
+            const measureId = measureTarget.measure.measureHeaderItem.localIdentifier;
+            if (!seenMeasureIds.has(measureId)) {
+                seenMeasureIds.add(measureId);
+                allMeasures.push(measureTarget);
+            }
+        }
+    }
+
+    return {
+        ...primaryTargets,
+        measures: allMeasures,
+    };
+}

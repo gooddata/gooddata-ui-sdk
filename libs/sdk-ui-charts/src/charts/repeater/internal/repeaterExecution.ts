@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import {
     type DimensionItem,
     type IAttribute,
@@ -86,7 +87,7 @@ export function constructRepeaterBuckets(
     columns: IAttributeOrMeasure[],
     viewBy?: IAttribute,
     inlineVisualizations?: IInlineVisualizationsConfig,
-) {
+): IBucket[] {
     const mainRowAttributeRef = attributeDisplayFormRef(rowAttribute) as IdentifierRef;
     const mainRowAttributeId = mainRowAttributeRef.identifier;
     const isExecutionSliced = !!viewBy;
@@ -109,7 +110,7 @@ export function constructRepeaterBuckets(
         newBucket(BucketNames.ATTRIBUTE, rowAttribute),
         newBucket(BucketNames.COLUMNS, ...sanitizedColumnsBucketItems),
         viewBy ? newBucket(BucketNames.VIEW, viewBy) : undefined,
-    ].filter(Boolean);
+    ].filter(Boolean) as IBucket[];
 }
 
 /**

@@ -47,6 +47,9 @@ interface IDropdownBodyProps {
     dimensionality?: IDimensionalityItem[];
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
+    catalogDimensionality?: IDimensionalityItem[];
+    onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
+    isLoadingCatalogDimensionality?: boolean;
 }
 
 interface IDropdownBodyState {
@@ -132,6 +135,9 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         isDimensionalityEnabled = false,
         insightDimensionality,
         separators,
+        catalogDimensionality,
+        onDimensionalityChange,
+        isLoadingCatalogDimensionality,
     } = props;
 
     const trimToPrecision = useCallback(
@@ -300,9 +306,13 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         setState((prev) => ({ ...prev, enabledTreatNullValuesAsZero: checked }));
     }, []);
 
-    const handleDimensionalityChange = useCallback((dimensionality: IDimensionalityItem[]) => {
-        setState((prev) => ({ ...prev, dimensionality }));
-    }, []);
+    const handleDimensionalityChange = useCallback(
+        (dimensionality: IDimensionalityItem[]) => {
+            setState((prev) => ({ ...prev, dimensionality }));
+            onDimensionalityChange?.(dimensionality.map((item) => item.identifier));
+        },
+        [onDimensionalityChange],
+    );
 
     const onApply = useCallback(() => {
         if (isApplyButtonDisabled()) {
@@ -474,6 +484,8 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                         <DimensionalitySection
                             dimensionality={dimensionality}
                             insightDimensionality={insightDimensionality}
+                            catalogDimensionality={catalogDimensionality}
+                            isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                             onDimensionalityChange={handleDimensionalityChange}
                         />
                         {textPreview ? (

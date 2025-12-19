@@ -18,6 +18,7 @@ import { FiltersByTab } from '@gooddata/sdk-backend-spi';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
+import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
@@ -81,6 +82,7 @@ import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IFiscalYear } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IForecastResult } from '@gooddata/sdk-backend-spi';
 import { IGeoService } from '@gooddata/sdk-backend-spi';
@@ -672,8 +674,6 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     protected decorated: IWorkspaceSettingsService;
     // (undocumented)
-    deleteCalendar(): Promise<void>;
-    // (undocumented)
     deleteColorPalette(): Promise<void>;
     // (undocumented)
     deleteDashboardFiltersApplyMode(): Promise<void>;
@@ -686,11 +686,11 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     // (undocumented)
+    setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
+    // (undocumented)
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     // (undocumented)
     setAlertDefault(value: IAlertDefault): Promise<void>;
-    // (undocumented)
-    setCalendar(monthOffset: number): Promise<void>;
     // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;
     // (undocumented)
@@ -699,6 +699,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setDateFormat(dateFormat: string): Promise<void>;
     // (undocumented)
     setEnableAiOnData(enabled: boolean): Promise<void>;
+    // (undocumented)
+    setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     // (undocumented)
     setFormatLocale(locale: string): Promise<void>;
     // (undocumented)

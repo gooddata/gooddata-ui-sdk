@@ -87,7 +87,7 @@ export interface ISeriesWithPlotLines {
 }
 
 const isThresholdSetupValid = (
-    type: VisType,
+    type: VisType | undefined,
     series: ISeriesItem[],
     config: IChartConfig,
     thresholdMeasures: string[],
@@ -96,7 +96,7 @@ const isThresholdSetupValid = (
     config.enableLineChartTrendThreshold &&
     thresholdMeasures.length > 0 &&
     series.length > 0 &&
-    series[0].data.length > 0;
+    (series[0].data?.length ?? 0) > 0;
 
 const findThresholdMeasureIndex = (dv: DataViewFacade, thresholdMeasures: string[]) =>
     dv
@@ -121,7 +121,7 @@ const isThresholdMeasureIndexValid = (
 ) => thresholdMeasureIndex > -1 && (isStackedChart(dv) || thresholdMeasureIndex < series.length);
 
 export function setupThresholdZones(
-    type: VisType,
+    type: VisType | undefined,
     series: ISeriesItem[],
     dv: DataViewFacade,
     config: IChartConfig,
@@ -161,7 +161,7 @@ function computeZonesForNonStackedChart(
     const renderedSeries = series.filter((_value, index) => index !== thresholdMeasureIndex);
     const thresholdSeries = series[thresholdMeasureIndex];
 
-    const zones = generateZones(thresholdSeries.data);
+    const zones = generateZones(thresholdSeries.data!);
 
     if (!areZonesValid(zones)) {
         // no zone was generated, just don't render the threshold series, and fix legend index for the rest
@@ -170,7 +170,7 @@ function computeZonesForNonStackedChart(
 
     return {
         series: renderedSeries.map((series, index) => {
-            if (thresholdExcludedMeasureIndices.includes(series.seriesIndex)) {
+            if (thresholdExcludedMeasureIndices.includes(series.seriesIndex!)) {
                 return {
                     ...series,
                     legendIndex: index,
@@ -185,7 +185,7 @@ function computeZonesForNonStackedChart(
                 zones,
             };
         }),
-        plotLines: getTrendDividerPlotLines(thresholdSeries.data),
+        plotLines: getTrendDividerPlotLines(thresholdSeries.data!),
     };
 }
 
@@ -195,7 +195,7 @@ function computeZonesForStackedChart(
 ): ISeriesWithPlotLines {
     const pairedSeries = series.map((series) => {
         // split each series data to two new series, one with series data, one with threshold zone data
-        const [oddData, evenData] = series.data.reduce<[ISeriesDataItem[], ISeriesDataItem[]]>(
+        const [oddData, evenData] = (series.data ?? []).reduce<[ISeriesDataItem[], ISeriesDataItem[]]>(
             ([odd, even], item, index) => {
                 if (index % 2 === 0) {
                     even.push(item);
@@ -245,7 +245,7 @@ function computeZonesForStackedChart(
 }
 
 export const filterThresholdZonesCategories = (
-    type: VisType,
+    type: VisType | undefined,
     categories: any[],
     series: ISeriesItem[],
     dv: DataViewFacade,
@@ -267,7 +267,7 @@ export const filterThresholdZonesCategories = (
 };
 
 export const setupComboThresholdZones = (
-    type: VisType,
+    type: VisType | undefined,
     series: ISeriesItem[],
     dv: DataViewFacade,
     config: IChartConfig,
@@ -297,19 +297,19 @@ export const setupComboThresholdZones = (
             return series;
         }
 
-        if (thresholdExcludedMeasureIndices.includes(series.seriesIndex)) {
+        if (thresholdExcludedMeasureIndices.includes(series.seriesIndex!)) {
             return series;
         }
 
         return {
             ...series,
-            zones: generateComboZones(thresholdSeries, series.color),
+            zones: generateComboZones(thresholdSeries!, series.color),
         };
     });
 
     return {
         series: comboSeries,
-        plotLines: getTrendDividerPlotLines(thresholdSeries, true),
+        plotLines: getTrendDividerPlotLines(thresholdSeries!, true),
     };
 };
 

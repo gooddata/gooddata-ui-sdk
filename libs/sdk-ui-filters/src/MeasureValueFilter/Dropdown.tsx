@@ -40,6 +40,9 @@ interface IDropdownProps {
     dimensionality?: IDimensionalityItem[];
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
+    catalogDimensionality?: IDimensionalityItem[];
+    onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
+    isLoadingCatalogDimensionality?: boolean;
 }
 
 const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
@@ -60,6 +63,9 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         dimensionality,
         insightDimensionality,
         isDimensionalityEnabled,
+        catalogDimensionality,
+        onDimensionalityChange,
+        isLoadingCatalogDimensionality,
     } = props;
 
     const onApply = useCallback(
@@ -101,6 +107,9 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 dimensionality={dimensionality}
                 insightDimensionality={insightDimensionality}
                 isDimensionalityEnabled={isDimensionalityEnabled}
+                catalogDimensionality={catalogDimensionality}
+                onDimensionalityChange={onDimensionalityChange}
+                isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
             />
         </Overlay>
     );

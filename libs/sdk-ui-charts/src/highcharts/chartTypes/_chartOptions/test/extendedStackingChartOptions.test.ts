@@ -260,19 +260,22 @@ describe("getDrillableSeriesWithParentAttribute", () => {
                 ["measure", [m0id]],
                 ["parent and child attributes", [a0id, a1id]],
                 ["parent attribute and measure", [a0id, m0id]],
-            ])('should return 3 drill items with "%s" configured', (_desc: string, itemIds: string[]) => {
-                const drillableItems = itemIds.map((id: string) => HeaderPredicates.identifierMatch(id));
-                const drillableMeasuresSeriesData = getDrillableSeries(
-                    dv,
-                    seriesWithoutDrillability,
-                    drillableItems,
-                    [viewByAttribute, viewByParentAttribute],
-                    stackByAttribute,
-                    type,
-                );
+            ])(
+                'should return 3 drill items with "%s" configured',
+                (_desc: string, itemIds: (string | undefined)[]) => {
+                    const drillableItems = itemIds.map((id) => HeaderPredicates.identifierMatch(id!));
+                    const drillableMeasuresSeriesData = getDrillableSeries(
+                        dv,
+                        seriesWithoutDrillability,
+                        drillableItems,
+                        [viewByAttribute, viewByParentAttribute],
+                        stackByAttribute,
+                        type,
+                    );
 
-                expect(drillableMeasuresSeriesData[0].data[0].drillIntersection).toMatchSnapshot();
-            });
+                    expect(drillableMeasuresSeriesData[0].data[0].drillIntersection).toMatchSnapshot();
+                },
+            );
         },
     );
 });

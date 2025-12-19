@@ -563,6 +563,30 @@
         "value": "Open header menu",
         "comment": "ARIA label for the button that opens the header context menu in pivot table."
     },
+    "visualizations.table.header.keyboardInstructions.mac": {
+        "value": "Open menu with Option + Down Arrow. Sort with Return. Add to multi-sort with Shift + Return. Resize column with Option + Left or Right Arrow.",
+        "comment": "ARIA description for column header keyboard shortcuts on macOS. Screen readers announce this when users focus on a sortable column header."
+    },
+    "visualizations.table.header.keyboardInstructions.windows": {
+        "value": "Open menu with Alt + Down Arrow. Sort with Enter. Add to multi-sort with Shift + Enter. Resize column with Alt + Left or Right Arrow.",
+        "comment": "ARIA description for column header keyboard shortcuts on Windows/Linux. Screen readers announce this when users focus on a sortable column header."
+    },
+    "visualizations.table.header.aria.sortedAscending": {
+        "value": "ascending",
+        "comment": "ARIA label indicating the column is sorted in ascending order. Used in screen reader announcements for sorted columns."
+    },
+    "visualizations.table.header.aria.sortedDescending": {
+        "value": "descending",
+        "comment": "ARIA label indicating the column is sorted in descending order. Used in screen reader announcements for sorted columns."
+    },
+    "visualizations.table.header.aria.priority": {
+        "value": "rank {rank}",
+        "comment": "ARIA label for multi-sort priority. Example: 'priority 2' means this is the second column in the sort order."
+    },
+    "visualizations.table.header.aria.sorted": {
+        "value": "sorted {direction}",
+        "comment": "ARIA label for header cell sort state. Example: 'sorted ascending'. The {direction} placeholder is replaced with 'ascending' or 'descending'."
+    },
     "apply": {
         "value": "Apply",
         "comment": "Button label to confirm and apply changes or selections in a dialog or form."
@@ -606,6 +630,14 @@
     "dateFilterDropdown.relativeForm.label": {
         "value": "Granularity",
         "comment": "Label for the granularity selection in the date filter dropdown component, allowing users to select a time range for filtering data."
+    },
+    "dateFilter.tab.standard": {
+        "value": "Standard",
+        "comment": "Tab label for standard calendar date presets in the date filter dropdown."
+    },
+    "dateFilter.tab.fiscal": {
+        "value": "Fiscal",
+        "comment": "Tab label for fiscal calendar date presets in the date filter dropdown."
     },
     "filters.thisMinute.title": {
         "value": "This minute",
@@ -707,6 +739,54 @@
         "value": "Next year",
         "comment": "Filter option for the next year"
     },
+    "filters.thisFiscalMonth.title": {
+        "value": "This fiscal month",
+        "comment": "Filter option for the current fiscal month"
+    },
+    "filters.thisFiscalMonthToDate.title": {
+        "value": "This fiscal month to date",
+        "comment": "Filter option for the current fiscal month to date"
+    },
+    "filters.lastFiscalMonth.title": {
+        "value": "Last fiscal month",
+        "comment": "Filter option for the previous fiscal month"
+    },
+    "filters.nextFiscalMonth.title": {
+        "value": "Next fiscal month",
+        "comment": "Filter option for the next fiscal month"
+    },
+    "filters.thisFiscalQuarter.title": {
+        "value": "This fiscal quarter",
+        "comment": "Filter option for the current fiscal quarter"
+    },
+    "filters.thisFiscalQuarterToDate.title": {
+        "value": "This fiscal quarter to date",
+        "comment": "Filter option for the current fiscal quarter to date"
+    },
+    "filters.lastFiscalQuarter.title": {
+        "value": "Last fiscal quarter",
+        "comment": "Filter option for the previous fiscal quarter"
+    },
+    "filters.nextFiscalQuarter.title": {
+        "value": "Next fiscal quarter",
+        "comment": "Filter option for the next fiscal quarter"
+    },
+    "filters.thisFiscalYear.title": {
+        "value": "This fiscal year",
+        "comment": "Filter option for the current fiscal year"
+    },
+    "filters.thisFiscalYearToDate.title": {
+        "value": "This fiscal year to date",
+        "comment": "Filter option for the current fiscal year to date"
+    },
+    "filters.lastFiscalYear.title": {
+        "value": "Last fiscal year",
+        "comment": "Filter option for the previous fiscal year"
+    },
+    "filters.nextFiscalYear.title": {
+        "value": "Next fiscal year",
+        "comment": "Filter option for the next fiscal year"
+    },
     "filters.lastNMinutes": {
         "value": "{n, plural, one {Last # minute} other {Last # minutes}}",
         "comment": "Filter option for the last N minutes (singular/plural)"
@@ -735,6 +815,18 @@
         "value": "{n, plural, one {Last # year} other {Last # years}}",
         "comment": "Filter option for the last N years (singular/plural)"
     },
+    "filters.lastNFiscalMonths": {
+        "value": "{n, plural, one {Last # fiscal month} other {Last # fiscal months}}",
+        "comment": "Filter option for the last N fiscal months (singular/plural)"
+    },
+    "filters.lastNFiscalQuarters": {
+        "value": "{n, plural, one {Last # fiscal quarter} other {Last # fiscal quarters}}",
+        "comment": "Filter option for the last N fiscal quarters (singular/plural)"
+    },
+    "filters.lastNFiscalYears": {
+        "value": "{n, plural, one {Last # fiscal year} other {Last # fiscal years}}",
+        "comment": "Filter option for the last N fiscal years (singular/plural)"
+    },
     "filters.nextNMinutes": {
         "value": "{n, plural, one {Next # minute} other {Next # minutes}}",
         "comment": "Filter option for the next N minutes (singular/plural)"
@@ -762,6 +854,18 @@
     "filters.nextNYears": {
         "value": "{n, plural, one {Next # year} other {Next # years}}",
         "comment": "Filter option for the next N years (singular/plural)"
+    },
+    "filters.nextNFiscalMonths": {
+        "value": "{n, plural, one {Next # fiscal month} other {Next # fiscal months}}",
+        "comment": "Filter option for the next N fiscal months (singular/plural)"
+    },
+    "filters.nextNFiscalQuarters": {
+        "value": "{n, plural, one {Next # fiscal quarter} other {Next # fiscal quarters}}",
+        "comment": "Filter option for the next N fiscal quarters (singular/plural)"
+    },
+    "filters.nextNFiscalYears": {
+        "value": "{n, plural, one {Next # fiscal year} other {Next # fiscal years}}",
+        "comment": "Filter option for the next N fiscal years (singular/plural)"
     },
     "filters.interval.minutes.past": {
         "value": "From {from} to {to} {to, plural, one {minute} other {minutes}} ago",
@@ -903,6 +1007,66 @@
         "value": "From {from} {from, plural, one {year} other {years}} ago to {to} {to, plural, one {year} other {years}} ahead",
         "comment": "Time interval spanning both past and future years (e.g., 'From 1 year ago to 2 years ahead'). The placeholders {from} and {to} represent the number of years in the past and future respectively."
     },
+    "filters.interval.fiscalMonths.past": {
+        "value": "From {from} to {to} {to, plural, one {fiscal month} other {fiscal months}} ago",
+        "comment": "Time interval in past fiscal months"
+    },
+    "filters.interval.fiscalMonths.past.sameValue": {
+        "value": "{value} {value, plural, one {fiscal month} other {fiscal months}} ago",
+        "comment": "Time interval for a single past fiscal month"
+    },
+    "filters.interval.fiscalMonths.future": {
+        "value": "From {from} to {to} {to, plural, one {fiscal month} other {fiscal months}} ahead",
+        "comment": "Time interval in future fiscal months"
+    },
+    "filters.interval.fiscalMonths.future.sameValue": {
+        "value": "{value} {value, plural, one {fiscal month} other {fiscal months}} ahead",
+        "comment": "Time interval for a single future fiscal month"
+    },
+    "filters.interval.fiscalMonths.mixed": {
+        "value": "From {from} {from, plural, one {fiscal month} other {fiscal months}} ago to {to} {to, plural, one {fiscal month} other {fiscal months}} ahead",
+        "comment": "Time interval spanning both past and future fiscal months"
+    },
+    "filters.interval.fiscalQuarters.past": {
+        "value": "From {from} to {to} {to, plural, one {fiscal quarter} other {fiscal quarters}} ago",
+        "comment": "Time interval in past fiscal quarters"
+    },
+    "filters.interval.fiscalQuarters.past.sameValue": {
+        "value": "{value} {value, plural, one {fiscal quarter} other {fiscal quarters}} ago",
+        "comment": "Time interval for a single past fiscal quarter"
+    },
+    "filters.interval.fiscalQuarters.future": {
+        "value": "From {from} to {to} {to, plural, one {fiscal quarter} other {fiscal quarters}} ahead",
+        "comment": "Time interval in future fiscal quarters"
+    },
+    "filters.interval.fiscalQuarters.future.sameValue": {
+        "value": "{value} {value, plural, one {fiscal quarter} other {fiscal quarters}} ahead",
+        "comment": "Time interval for a single future fiscal quarter"
+    },
+    "filters.interval.fiscalQuarters.mixed": {
+        "value": "From {from} {from, plural, one {fiscal quarter} other {fiscal quarters}} ago to {to} {to, plural, one {fiscal quarter} other {fiscal quarters}} ahead",
+        "comment": "Time interval spanning both past and future fiscal quarters"
+    },
+    "filters.interval.fiscalYears.past": {
+        "value": "From {from} to {to} {to, plural, one {fiscal year} other {fiscal years}} ago",
+        "comment": "Time interval in past fiscal years"
+    },
+    "filters.interval.fiscalYears.past.sameValue": {
+        "value": "{value} {value, plural, one {fiscal year} other {fiscal years}} ago",
+        "comment": "Time interval for a single past fiscal year"
+    },
+    "filters.interval.fiscalYears.future": {
+        "value": "From {from} to {to} {to, plural, one {fiscal year} other {fiscal years}} ahead",
+        "comment": "Time interval in future fiscal years"
+    },
+    "filters.interval.fiscalYears.future.sameValue": {
+        "value": "{value} {value, plural, one {fiscal year} other {fiscal years}} ahead",
+        "comment": "Time interval for a single future fiscal year"
+    },
+    "filters.interval.fiscalYears.mixed": {
+        "value": "From {from} {from, plural, one {fiscal year} other {fiscal years}} ago to {to} {to, plural, one {fiscal year} other {fiscal years}} ahead",
+        "comment": "Time interval spanning both past and future fiscal years"
+    },
     "filters.granularity.minutes": {
         "value": "Minutes",
         "comment": "Time granularity option for filtering data at the minute level. Used in time-based filters and selectors."
@@ -930,6 +1094,18 @@
     "filters.granularity.years": {
         "value": "Years",
         "comment": "Time granularity option for filtering data at the year level. Used in time-based filters and selectors."
+    },
+    "filters.granularity.fiscalYears": {
+        "value": "Fiscal years",
+        "comment": "Time granularity option for filtering data at the fiscal year level. Used in time-based filters and selectors."
+    },
+    "filters.granularity.fiscalQuarters": {
+        "value": "Fiscal quarters",
+        "comment": "Time granularity option for filtering data at the fiscal quarter level. Used in time-based filters and selectors."
+    },
+    "filters.granularity.periods": {
+        "value": "Periods",
+        "comment": "Time granularity option for filtering data at the fiscal month (period) level. Used in time-based filters and selectors."
     },
     "filters.staticPeriod.dateFrom": {
         "value": "Start date",
@@ -1167,6 +1343,18 @@
         "value": "Exclude this year",
         "comment": "Option to exclude the current year from the filtered results. Useful when the current year's data might be incomplete or still being collected."
     },
+    "filters.fiscalYear.title": {
+        "value": "FISCAL YEAR",
+        "comment": "Header label for fiscal year-level time filter options."
+    },
+    "filters.fiscalQuarter.title": {
+        "value": "FISCAL QUARTER",
+        "comment": "Header label for fiscal quarter-level time filter options."
+    },
+    "filters.period.title": {
+        "value": "PERIOD",
+        "comment": "Header label for fiscal month (period) time filter options."
+    },
     "filters.excludeCurrentPeriod.unavailable": {
         "value": "Not available for the selected date range",
         "comment": "Message displayed when the 'exclude current period' option is not applicable to the currently selected date range filter settings."
@@ -1214,6 +1402,10 @@
     "mvf.operator.all": {
         "value": "all",
         "comment": "Covers all the operators like 'Greater than', 'Less than', etc."
+    },
+    "mvf.condition": {
+        "value": "Condition",
+        "comment": "Measure value filter dropdown label"
     },
     "mvf.operator.greaterThan": {
         "value": "greater than",
@@ -1319,25 +1511,17 @@
         "value": "Add attributes",
         "comment": "Tooltip for the add button when it is enabled in the dimensionality section."
     },
-    "mvf.dimensionality.addButton.tooltip.disabled": {
-        "value": "Add attributes disabled — all attributes have been added",
-        "comment": "Tooltip for the add button when it is disabled because all attributes have been added."
-    },
     "mvf.dimensionality.addAttributes": {
         "value": "Add attribute",
         "comment": "A label of button that adds a new attribute to the list."
     },
+    "mvf.dimensionality.section.fromVisualization": {
+        "value": "From Visualization",
+        "comment": "Section header label for attributes that are currently used in the visualization buckets."
+    },
     "mvf.attributePicker.title": {
         "value": "Select attributes or dates",
         "comment": "Title/aria-label for the attribute picker dialog in measure value filter."
-    },
-    "mvf.attributePicker.add": {
-        "value": "Add",
-        "comment": "Button label to confirm adding selected attributes in the attribute picker dialog."
-    },
-    "mvf.attributePicker.header.fromInsight": {
-        "value": "From visualization",
-        "comment": "Header of the attribute picker dialog. Indicates that the attributes are being selected from the visualization buckets."
     },
     "mvf.attributePicker.filter.attributes": {
         "value": "Attributes",
@@ -1347,9 +1531,17 @@
         "value": "Dates",
         "comment": "Aria label for the button that filters the attribute picker list to show only date attributes."
     },
+    "mvf.attributePicker.dateAs": {
+        "value": "Date as",
+        "comment": "Label for the date dataset selector shown in the Date tab of the measure value filter dimensionality picker."
+    },
     "mvf.attributePicker.noResults": {
         "value": "No item matches the search term.",
         "comment": "Message shown when no items match the search in the attribute picker."
+    },
+    "mvf.attributePicker.noItems": {
+        "value": "No items available.",
+        "comment": "Message shown in the measure value filter dimensionality picker when there are no items to select and no search term is entered."
     },
     "measureNumberFormat.custom.optionLabel": {
         "value": "Custom",

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { compact } from "lodash-es";
 
 import { type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
@@ -34,7 +35,7 @@ const buildEmptyData = (dv: DataViewFacade) => {
 
 const buildData = (
     dv: DataViewFacade,
-    attributeHeaders: IUnwrappedAttributeHeadersWithItems[],
+    attributeHeaders: (IUnwrappedAttributeHeadersWithItems | undefined | null)[],
     emptyHeaderTitle: string,
 ) => {
     const [from, to] = compact(attributeHeaders);
@@ -63,7 +64,7 @@ const buildData = (
 
 export const buildSankeyChartSeries = (
     dv: DataViewFacade,
-    attributeHeaders: IUnwrappedAttributeHeadersWithItems[],
+    attributeHeaders: (IUnwrappedAttributeHeadersWithItems | undefined | null)[],
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
 ): ISeriesItem[] => {

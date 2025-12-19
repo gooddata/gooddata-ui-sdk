@@ -2,7 +2,7 @@
 
 import {
     type FeatureContext,
-    type JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+    type JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
     type JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
@@ -23,7 +23,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
+    type IActiveCalendars,
     type IAlertDefault,
+    type IFiscalYear,
     type ISeparators,
     type ISettings,
 } from "@gooddata/sdk-model";
@@ -98,7 +100,7 @@ export class TigerWorkspaceSettings
 
     private mapSettingsToKeysByOrigin = (
         data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+        origin: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
     ): ISettings => {
         return data.reduce((result: ISettings, setting) => {
             const isValueApplicable = setting.meta?.origin?.originType === origin;
@@ -150,12 +152,12 @@ export class TigerWorkspaceSettings
         return this.setSetting("WEEK_START", { value: weekStart });
     }
 
-    public async setCalendar(monthOffset: number): Promise<void> {
-        return this.setSetting("FISCAL_YEAR", { monthOffset });
+    public async setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void> {
+        return this.setSetting("FISCAL_YEAR", fiscalYear);
     }
 
-    public async deleteCalendar(): Promise<void> {
-        return this.deleteSettingByType("FISCAL_YEAR");
+    public async setActiveCalendars(calendars: IActiveCalendars): Promise<void> {
+        return this.setSetting("ACTIVE_CALENDARS", calendars);
     }
 
     public async setDashboardFiltersApplyMode(

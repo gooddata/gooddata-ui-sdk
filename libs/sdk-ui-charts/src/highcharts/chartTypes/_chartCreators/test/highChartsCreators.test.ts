@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -207,14 +208,14 @@ describe("highChartCreators", () => {
         it("encountered a declaration exception", () => {
             supportedDualAxesChartTypes.forEach((type: string) => {
                 const config = getConfig(type);
-                expect(config.chart.events.render).toBeTruthy();
+                expect(config.chart!.events!.render).toBeTruthy();
             });
         });
 
         it("should other charts not be registered render event", () => {
             // Bubble chart is an example, as long as it's not dual axis charts
             const config = getConfig(VisualizationTypes.BUBBLE);
-            expect(config.chart.events.render).toBeFalsy();
+            expect(config.chart!.events!.render).toBeFalsy();
         });
     });
 });

@@ -2323,22 +2323,19 @@
                 "description": "Filter able to limit element values by label and related selected negated elements."
             },
             "OutlierDetectionRequest": {
-                "required": ["dateAttribute", "granularity", "measures", "sensitivity"],
+                "required": ["attributes", "filters", "granularity", "measures", "sensitivity"],
                 "type": "object",
                 "properties": {
-                    "measures": {
-                        "minItems": 1,
+                    "attributes": {
                         "type": "array",
+                        "description": "Attributes to be used in the computation.",
                         "items": {
-                            "$ref": "#/components/schemas/MeasureItem"
+                            "$ref": "#/components/schemas/AttributeItem"
                         }
-                    },
-                    "dateAttribute": {
-                        "$ref": "#/components/schemas/AttributeItem"
                     },
                     "filters": {
                         "type": "array",
-                        "description": "Optional filters to apply",
+                        "description": "Various filter types to filter the execution result.",
                         "items": {
                             "oneOf": [
                                 {
@@ -2351,6 +2348,20 @@
                                     "$ref": "#/components/schemas/InlineFilterDefinition"
                                 }
                             ]
+                        }
+                    },
+                    "measures": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    },
+                    "auxMeasures": {
+                        "type": "array",
+                        "description": "Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
                         }
                     },
                     "sensitivity": {
@@ -4826,6 +4837,8 @@
                 "properties": {
                     "attribute": {
                         "type": "array",
+                        "description": "Attribute values for outlier detection results.",
+                        "nullable": true,
                         "items": {
                             "type": "string"
                         }
@@ -4834,12 +4847,15 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "array",
+                            "description": "Map of measure identifiers to their outlier detection values. Each value is a list of nullable numbers.",
                             "nullable": true,
                             "items": {
                                 "type": "number",
+                                "description": "Map of measure identifiers to their outlier detection values. Each value is a list of nullable numbers.",
                                 "nullable": true
                             }
                         },
+                        "description": "Map of measure identifiers to their outlier detection values. Each value is a list of nullable numbers.",
                         "nullable": true
                     }
                 }

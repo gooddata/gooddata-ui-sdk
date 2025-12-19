@@ -10,6 +10,6 @@ import { AbstractProvider } from "../AbstractProvider.js";
  */
 export class MockProvider extends AbstractProvider {
     public getHeadlineTransformationComponent(): ComponentType<IHeadlineTransformationProps> {
-        return null;
+        return null as any;
     }
 }

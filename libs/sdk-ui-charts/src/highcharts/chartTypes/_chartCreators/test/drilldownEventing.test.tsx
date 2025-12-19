@@ -103,7 +103,7 @@ describe("Drilldown Eventing", () => {
         const target = { dispatchEvent: vi.fn() };
         const pointClickEventDataWithNullPoints: DrilldownEventObject = {
             ...pointClickEventData,
-            points: null,
+            points: null as any,
         };
 
         chartClick(

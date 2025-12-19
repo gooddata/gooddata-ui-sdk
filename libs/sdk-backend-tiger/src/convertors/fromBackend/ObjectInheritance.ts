@@ -1,15 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
-    type JsonApiAnalyticalDashboardOutMeta,
-    type JsonApiAnalyticalDashboardOutMetaOrigin,
-    type JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+    type JsonApiVisualizationObjectOutMeta,
+    type JsonApiVisualizationObjectOutMetaOrigin,
+    type JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
 } from "@gooddata/api-client-tiger";
 
 type JsonApiMetadataLikeObject<T> = T & {
     id: string;
     type: string;
-    meta?: JsonApiAnalyticalDashboardOutMeta;
+    meta?: JsonApiVisualizationObjectOutMeta;
 };
 const PrefixSeparator = ":";
 
@@ -20,7 +20,7 @@ export function isInheritedObject<T = unknown>(obj: JsonApiMetadataLikeObject<T>
 
 export function getObjectOrigin<T = unknown>(
     obj: JsonApiMetadataLikeObject<T>,
-): JsonApiAnalyticalDashboardOutMetaOrigin {
+): JsonApiVisualizationObjectOutMetaOrigin {
     const { origin } = obj.meta || {};
     return origin || { originType: "NATIVE", originId: "" };
 }
@@ -29,7 +29,7 @@ export function getObjectOrigin<T = unknown>(
  * @internal
  */
 export interface OriginInfoWithId {
-    originType: JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum;
+    originType: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum;
     originId: string;
     id: string;
 }

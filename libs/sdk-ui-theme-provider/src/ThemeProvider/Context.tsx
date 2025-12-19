@@ -29,9 +29,10 @@ export type ThemeStatus = "pending" | "loading" | "success";
  */
 export interface IThemeContextProviderProps {
     /**
-     * Theme object contains properties to be used instead of default ones
+     * Theme object contains properties to be used instead of default ones.
+     * When undefined, no theme is applied and default styling is used.
      */
-    theme: ITheme;
+    theme: ITheme | undefined;
 
     /**
      * Flag telling whether the theme object is being loaded or not

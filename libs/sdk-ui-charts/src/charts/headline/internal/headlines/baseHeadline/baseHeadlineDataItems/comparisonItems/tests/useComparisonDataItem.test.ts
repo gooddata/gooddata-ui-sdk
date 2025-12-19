@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -44,7 +45,7 @@ describe("useComparisonDataItem", () => {
             config: {
                 ...DEFAULT_CONFIG,
                 comparison: {
-                    ...DEFAULT_CONFIG.comparison,
+                    ...DEFAULT_CONFIG.comparison!,
                     isArrowEnabled: false,
                 },
             },

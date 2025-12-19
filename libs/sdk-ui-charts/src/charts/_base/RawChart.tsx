@@ -56,6 +56,7 @@ export function RawChart(props: IRawChartProps) {
         const sanitizedConfig = getSanitizedStackingConfig(dataView!.definition, fullConfig);
 
         return (
+            // theme can be undefined for pluggable charts in AD that should not respect theming
             <ThemeContextProvider theme={theme} themeIsLoading={false}>
                 <IntlWrapper locale={locale}>
                     <IntlTranslationsProvider>

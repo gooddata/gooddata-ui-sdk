@@ -53,7 +53,6 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     ["DAY_OF_WEEK"]: "GDC.time.day_in_week",
     ["HOUR_OF_DAY"]: "GDC.time.hour_in_day",
     ["MINUTE_OF_HOUR"]: "GDC.time.minute_in_hour",
-
     ["FISCAL_YEAR"]: "GDC.time.fiscal_year",
     ["FISCAL_QUARTER"]: "GDC.time.fiscal_quarter",
     ["FISCAL_MONTH"]: "GDC.time.fiscal_month",

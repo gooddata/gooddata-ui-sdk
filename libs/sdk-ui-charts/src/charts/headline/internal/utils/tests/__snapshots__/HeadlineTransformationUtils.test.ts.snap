@@ -3,12 +3,14 @@
 exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the both items (primary, secondary) 1`] = `
 {
   "primaryItem": {
+    "format": null,
     "isDrillable": true,
     "localIdentifier": "m1",
     "title": "Lost",
     "value": "120",
   },
   "secondaryItem": {
+    "format": null,
     "isDrillable": true,
     "localIdentifier": "m2",
     "title": "Found",
@@ -20,6 +22,7 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drill
 exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the primary item identified by the drillable item identifier 1`] = `
 {
   "primaryItem": {
+    "format": null,
     "isDrillable": true,
     "localIdentifier": "m1",
     "title": "Lost",
@@ -31,6 +34,7 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drill
 exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the primary item identified by the drillable item uri 1`] = `
 {
   "primaryItem": {
+    "format": null,
     "isDrillable": true,
     "localIdentifier": "m1",
     "title": "Lost",
@@ -41,7 +45,15 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drill
 
 exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the secondary item identified by the drillable item identifier 1`] = `
 {
+  "primaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "m1",
+    "title": "Lost",
+    "value": "120",
+  },
   "secondaryItem": {
+    "format": null,
     "isDrillable": true,
     "localIdentifier": "m2",
     "title": "Found",
@@ -52,7 +64,15 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drill
 
 exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the secondary item identified by the drillable item uri 1`] = `
 {
+  "primaryItem": {
+    "format": null,
+    "isDrillable": false,
+    "localIdentifier": "m1",
+    "title": "Lost",
+    "value": "120",
+  },
   "secondaryItem": {
+    "format": null,
     "isDrillable": true,
     "localIdentifier": "m2",
     "title": "Found",
@@ -64,6 +84,7 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drill
 exports[`HeadlineTransformationUtils > applyDrillableItems > should reset drilling state of every item when drillable items does not match any header item 1`] = `
 {
   "primaryItem": {
+    "format": null,
     "isDrillable": false,
     "localIdentifier": "m1",
     "title": "Lost",
@@ -75,6 +96,7 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should reset drilli
 exports[`HeadlineTransformationUtils > applyDrillableItems > should treat provided data object as immutable 1`] = `
 {
   "primaryItem": {
+    "format": null,
     "isDrillable": true,
     "localIdentifier": "m1",
     "title": "Lost",

@@ -53,13 +53,13 @@ export class Chart extends Component<IChartProps> {
         domProps: {},
     };
 
-    private chart: HChart;
-    private chartRef: HTMLElement;
+    private chart!: HChart;
+    private chartRef!: HTMLElement;
 
     private id = `gd-highcharts-chart-${uuid()}`;
 
     private focusDatapoint = (event: CustomEventInit<IFocusHighchartsDatapointEventDetail>): void => {
-        const { chartId, seriesIndex, pointIndex } = event.detail;
+        const { chartId, seriesIndex, pointIndex } = event.detail!;
 
         if (chartId !== this.id) {
             return;

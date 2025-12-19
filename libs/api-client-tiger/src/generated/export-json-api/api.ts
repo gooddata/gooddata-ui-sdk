@@ -555,6 +555,7 @@ export type ExportIdentifierRefIdentifierTypeEnum =
     | "automation"
     | "automationResult"
     | "memoryItem"
+    | "knowledgeRecommendation"
     | "prompt"
     | "visualizationObject"
     | "filterContext"

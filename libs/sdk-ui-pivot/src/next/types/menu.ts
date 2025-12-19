@@ -111,4 +111,5 @@ export interface ISortingMenuItem {
     title: string;
     isActive: boolean;
     direction: "asc" | "desc" | null;
+    ariaLabel?: string;
 }

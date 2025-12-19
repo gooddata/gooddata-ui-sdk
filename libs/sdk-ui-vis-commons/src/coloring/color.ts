@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty, isEqual } from "lodash-es";
 
 import {
@@ -220,7 +221,7 @@ export function isCustomPalette(palette: IColorPalette): boolean {
  */
 export function getColorFromMapping(
     mappingHeader: IMappingHeader,
-    colorMapping: IColorMapping[],
+    colorMapping: IColorMapping[] | undefined,
     dv: DataViewFacade,
 ): IColor | undefined {
     if (!colorMapping) {

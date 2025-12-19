@@ -200,6 +200,9 @@ export function AttributeFilterSimpleDropdownButtonWithSelection({ isOpen, subti
 // @beta
 export function AttributeFilterStatusBar({ attributeTitle, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, getItemTitle, isInverted, selectedItems, selectedItemsLimit, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters, withoutApply, }: IAttributeFilterStatusBarProps): JSX.Element;
 
+// @alpha
+export type CalendarTabType = "standard" | "fiscal";
+
 // @public (undocumented)
 export type Callback<T> = (payload: T) => void;
 
@@ -230,13 +233,16 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
 // @beta (undocumented)
 export const DateFilterHelpers: {
     validateFilterOption: (filterOption: DateFilterOption) => IExtendedDateFilterErrors;
-    getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string) => string;
-    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, dateFormat?: string) => string;
+    getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
+    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
     granularityIntlCodes: {
         "GDC.time.year": GranularityIntlKey;
+        "GDC.time.fiscal_year": GranularityIntlKey;
         "GDC.time.week_us": GranularityIntlKey;
         "GDC.time.quarter": GranularityIntlKey;
+        "GDC.time.fiscal_quarter": GranularityIntlKey;
         "GDC.time.month": GranularityIntlKey;
+        "GDC.time.fiscal_month": GranularityIntlKey;
         "GDC.time.date": GranularityIntlKey;
         "GDC.time.hour": GranularityIntlKey;
         "GDC.time.minute": GranularityIntlKey;
@@ -246,9 +252,12 @@ export const DateFilterHelpers: {
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
     mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | null;
     formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string, splitter?: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter, labelMode?: DateFilterLabelMode) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
+
+// @beta
+export type DateFilterLabelMode = "short" | "full";
 
 // @public
 export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
@@ -270,17 +279,44 @@ export type DimensionalityItemType = "attribute" | "chronologicalDate" | "generi
 // @internal
 export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBarProps): JSX.Element;
 
+// @internal
+export function ensureCompatibleGranularity<T extends IUiRelativeDateFilterFormLike>(filterOption: T, availableGranularities: DateFilterGranularity[], fiscalFirst: boolean): T;
+
+// @internal
+export function filterFiscalGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[];
+
+// @alpha
+export function filterFiscalPresets(presets: DateFilterRelativeOptionGroup): DateFilterRelativeOptionGroup;
+
+// @internal
+export function filterStandardGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[];
+
+// @alpha
+export function filterStandardPresets(presets: DateFilterRelativeOptionGroup): DateFilterRelativeOptionGroup;
+
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
 // @internal (undocumented)
 export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean, committedSelectionElements: IAttributeElement[], intl: IntlShape): string;
 
+// @alpha
+export function getFiscalTabsConfig(presets: DateFilterRelativeOptionGroup | undefined): IFiscalTabsConfig;
+
 // @internal
 export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
 
-// @beta (undocumented)
+// @alpha
+export function getTabForPreset(preset: DateFilterOption): CalendarTabType;
+
+// @beta
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
+
+// @alpha
+export function hasFiscalPresets(presets: DateFilterRelativeOptionGroup): boolean;
+
+// @alpha
+export function hasStandardPresets(presets: DateFilterRelativeOptionGroup): boolean;
 
 // @internal (undocumented)
 export interface IAttributeDatasetInfoProps {
@@ -870,7 +906,12 @@ export interface IDateTranslator {
 
 // @beta
 export interface IDimensionalityItem {
+    dataset?: {
+        identifier: ObjRef;
+        title: string;
+    };
     identifier: ObjRefInScope;
+    ref?: ObjRef;
     title: string;
     type: DimensionalityItemType;
 }
@@ -893,6 +934,16 @@ export interface IFilterButtonCustomIcon {
 export interface IFilterConfigurationProps {
     onCancelButtonClick: () => void;
     onSaveButtonClick: () => void;
+}
+
+// @alpha
+export interface IFiscalTabsConfig {
+    // (undocumented)
+    hasFiscal: boolean;
+    // (undocumented)
+    hasStandard: boolean;
+    // (undocumented)
+    showTabs: boolean;
 }
 
 // @public
@@ -962,6 +1013,7 @@ export interface IMeasureDropdownItem {
 
 // @beta (undocumented)
 export interface IMeasureValueFilterCommonProps {
+    catalogDimensionality?: IDimensionalityItem[];
     // (undocumented)
     dimensionality?: IDimensionalityItem[];
     // (undocumented)
@@ -974,6 +1026,7 @@ export interface IMeasureValueFilterCommonProps {
     insightDimensionality?: IDimensionalityItem[];
     // (undocumented)
     isDimensionalityEnabled?: boolean;
+    isLoadingCatalogDimensionality?: boolean;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -981,6 +1034,7 @@ export interface IMeasureValueFilterCommonProps {
     measureTitle?: string;
     // (undocumented)
     onApply: (filter: IMeasureValueFilter | null) => void;
+    onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
     // (undocumented)
     separators?: ISeparators;
     // (undocumented)
@@ -1096,6 +1150,9 @@ export interface IRankingFilterProps {
 // @public
 export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
 
+// @alpha
+export function isFiscalGranularity(granularity: DateFilterGranularity): boolean;
+
 // @public
 export interface ISingleSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedSingleSelectionHandler<AttributeElementKey | undefined> {
 }
@@ -1159,6 +1216,16 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
     from?: RelativeDateFilterGranularityOffset;
     granularity?: DateFilterGranularity;
     to?: RelativeDateFilterGranularityOffset;
+}
+
+// @internal (undocumented)
+export interface IUiRelativeDateFilterFormLike {
+    // (undocumented)
+    from?: number;
+    // (undocumented)
+    granularity?: DateFilterGranularity;
+    // (undocumented)
+    to?: number;
 }
 
 // @public

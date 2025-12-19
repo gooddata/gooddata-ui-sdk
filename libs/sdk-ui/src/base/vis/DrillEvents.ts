@@ -154,7 +154,7 @@ export interface IDrillEventContextTable {
 export interface IDrillEventContextHeadline {
     type: HeadlineType;
     element: HeadlineElementType;
-    value: string;
+    value: string | null;
     intersection: IDrillEventIntersectionElement[];
 }
 
@@ -166,7 +166,7 @@ export interface IDrillEventContextHeadline {
 export interface IDrillEventContextXirr {
     type: XirrType;
     element: HeadlineElementType; // XIRR uses Headline internally, so its drill context is the same as that of Headline
-    value: string;
+    value: string | null;
     intersection: IDrillEventIntersectionElement[];
 }
 
@@ -196,7 +196,7 @@ export interface IDrillEventContextPoint {
  */
 export interface IDrillPoint {
     x: number;
-    y: number;
+    y: number | null;
     intersection: IDrillEventIntersectionElement[];
     type?: ChartType;
 }
@@ -221,7 +221,7 @@ export interface IDrillEventContext {
     type: VisType; // type of visualization
     element: VisElementType; // type of visualization element drilled
     x?: number; // chart x coordinate (if supported)
-    y?: number; // chart y coordinate (if supported)
+    y?: number | null; // chart y coordinate (if supported)
     z?: number; // chart z coordinate (if supported)
     seriesIndex?: number; // index of series within the chart (if supported)
     pointIndex?: number; // index of point within the series (if supported)
@@ -229,7 +229,7 @@ export interface IDrillEventContext {
     columnIndex?: number;
     rowIndex?: number;
     row?: any[]; // table row data of the drilled row
-    value?: string; // cell or element value drilled
+    value?: string | null; // cell or element value drilled
 
     // some drill headers that are relevant for current drill element
     intersection?: IDrillEventIntersectionElement[];

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { type IColor, type IColorDescriptor, type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
@@ -17,7 +18,7 @@ const DEFAULT_COLOR_PALETTE_ITEMS: IColorDescriptor[] = DEFAULT_WATERFALL_COLORS
 
 const getColorHeaderItem = (
     colorPalette: IColorPalette,
-    colorMapping: IColorMapping[],
+    colorMapping: IColorMapping[] | undefined,
     dv: DataViewFacade,
     item: IColorDescriptor,
     index: number,
@@ -34,7 +35,7 @@ const getColorHeaderItem = (
 export class WaterfallChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         _viewByParentAttribute: any,
         _viewByAttribute: any,
         dv: DataViewFacade,

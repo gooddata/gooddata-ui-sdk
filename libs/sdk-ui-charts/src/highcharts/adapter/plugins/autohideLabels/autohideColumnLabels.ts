@@ -104,7 +104,7 @@ const toggleNonStackedChartLabels = (
 };
 
 const getWaterfallAxisRangeForAxes = (axisRangeForAxes: IAxisRangeForAxes) => {
-    const { minAxisValue, maxAxisValue } = axisRangeForAxes.first;
+    const { minAxisValue, maxAxisValue } = axisRangeForAxes.first!;
     return {
         first: {
             minAxisValue,
@@ -165,8 +165,8 @@ export function areNeighborsOverlapping(neighbors: IUnsafeDataLabels[][]): boole
         const [firstLabel, nextLabel]: IUnsafeDataLabels[] = labelsPair || [];
 
         if (!isEmpty(firstLabel) && !isEmpty(nextLabel)) {
-            const firstClientRect = firstLabel.element.getBoundingClientRect();
-            const nextClientRect = nextLabel.element.getBoundingClientRect();
+            const firstClientRect = firstLabel.element!.getBoundingClientRect();
+            const nextClientRect = nextLabel.element!.getBoundingClientRect();
             if (firstClientRect && nextClientRect) {
                 const firstLabelRight = firstClientRect.right;
                 const nextLabelLeft = nextClientRect.left;
@@ -238,7 +238,7 @@ export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Point
     return zip(
         ...stacks.map((item: any) => {
             const columnKey = Object.keys(item).find(findColumnKey);
-            return Object.values<any>(item[columnKey]);
+            return Object.values<any>(item[columnKey!]);
         }),
     )
         .flat()
@@ -285,7 +285,7 @@ function toggleStackedLabelsForSingleAxis(this: any) {
     if (stacks && stackTotalGroup) {
         const columnKey = Object.keys(stacks).find(findColumnKey);
         // We need to use Lodash map, because we are iterating through an object
-        const labels = Object.values(stacks[columnKey]).map((point: any) => point.label);
+        const labels = Object.values(stacks[columnKey!]).map((point: any) => point.label);
         const neighbors = toNeighbors(labels);
         const stackTotalGroupVisible = !areNeighborsOverlapping(neighbors);
         setStackVisibilityByOpacity(stackTotalGroup, stackTotalGroupVisible);

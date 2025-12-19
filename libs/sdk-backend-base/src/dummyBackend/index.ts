@@ -130,6 +130,7 @@ import {
     type DimensionGenerator,
     type FilterContextItem,
     type IAbsoluteDateFilter,
+    type IActiveCalendars,
     type IAlertDefault,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElement,
@@ -167,6 +168,7 @@ import {
     type IFilter,
     type IFilterContext,
     type IFilterContextDefinition,
+    type IFiscalYear,
     type IInsight,
     type IInsightDefinition,
     type IListedDashboard,
@@ -958,8 +960,7 @@ class DummyOrganization implements IOrganization {
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),
-            setCalendar: () => Promise.resolve(),
-            deleteCalendar: () => Promise.resolve(),
+            setFiscalCalendar: () => Promise.resolve(),
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
             setOpenAiConfig: () => Promise.resolve(),
@@ -971,6 +972,7 @@ class DummyOrganization implements IOrganization {
             setAttachmentSizeLimit: () => Promise.resolve(),
             setMaxZoomLevel: () => Promise.resolve(),
             setMetricFormatOverride: () => Promise.resolve(),
+            setActiveCalendars: () => Promise.resolve(),
         };
     }
 
@@ -1154,11 +1156,11 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
         return Promise.resolve();
     }
 
-    setCalendar(_monthOffset: number): Promise<void> {
+    setFiscalCalendar(_fiscalYear: IFiscalYear): Promise<void> {
         return Promise.resolve();
     }
 
-    deleteCalendar(): Promise<void> {
+    setActiveCalendars(_calendars: IActiveCalendars): Promise<void> {
         return Promise.resolve();
     }
 

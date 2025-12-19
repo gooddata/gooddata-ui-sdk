@@ -24,7 +24,7 @@ describe("TreemapColorStrategy", () => {
         );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "treemap";
-        const colorPalette: IColorPalette = undefined;
+        const colorPalette: IColorPalette | undefined = undefined;
 
         const colorStrategy = ColorFactory.getColorStrategy(
             colorPalette,

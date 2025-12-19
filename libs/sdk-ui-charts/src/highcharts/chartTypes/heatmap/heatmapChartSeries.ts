@@ -21,7 +21,7 @@ export function getHeatmapSeries(
         .twoDimData()
         .forEach((rowItem: DataValue[], rowItemIndex: number) => {
             rowItem.forEach((columnItem: DataValue, columnItemIndex: number) => {
-                const value: number = parseValue(String(columnItem));
+                const value = parseValue(String(columnItem));
                 const pointData: IPointData = { x: columnItemIndex, y: rowItemIndex, value };
                 if (value === null || value === undefined) {
                     data.push({

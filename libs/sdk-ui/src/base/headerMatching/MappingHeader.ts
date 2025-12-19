@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import {
     type IAttributeDescriptor,
     type IColorDescriptor,
@@ -66,7 +67,7 @@ export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string 
  * @internal
  */
 export function getMappingHeaderName(
-    header: IMappingHeader | IResultMeasureHeader,
+    header: IMappingHeader | IResultMeasureHeader | undefined,
 ): string | undefined | null {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.formOf.name;
@@ -89,7 +90,7 @@ export function getMappingHeaderName(
  * @internal
  */
 export function getMappingHeaderFormattedName(
-    header: IMappingHeader | IResultMeasureHeader,
+    header: IMappingHeader | IResultMeasureHeader | undefined,
 ): string | undefined | null {
     if (isResultAttributeHeader(header)) {
         return getAttributeHeaderItemName(header.attributeHeaderItem);

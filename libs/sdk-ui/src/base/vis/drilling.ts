@@ -40,7 +40,12 @@ export function isSomeHeaderPredicateMatched(
  *
  * @public
  */
-export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[] {
+export function convertDrillableItemsToPredicates(
+    drillableItems: ExplicitDrill[] | undefined,
+): IHeaderPredicate[] {
+    if (!drillableItems) {
+        return [];
+    }
     return drillableItems.map((drillableItem: ExplicitDrill) => {
         if (isDrillableItemUri(drillableItem)) {
             return uriMatch(drillableItem.uri);
@@ -115,7 +120,7 @@ export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventI
  * @internal
  */
 export function fireDrillEvent(
-    drillEventFunction: IDrillEventCallback,
+    drillEventFunction: IDrillEventCallback | undefined,
     drillEventData: IDrillEvent,
     target: EventTarget,
 ): void {

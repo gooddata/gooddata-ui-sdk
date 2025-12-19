@@ -12,6 +12,7 @@
  */
 export type DateAttributeGranularity =
     | "GDC.time.year"
+    | "GDC.time.fiscal_year"
     | "GDC.time.week_us"
     | "GDC.time.week_in_year"
     | "GDC.time.week_in_quarter"
@@ -19,8 +20,10 @@ export type DateAttributeGranularity =
     | "GDC.time.euweek_in_year"
     | "GDC.time.euweek_in_quarter"
     | "GDC.time.quarter"
+    | "GDC.time.fiscal_quarter"
     | "GDC.time.quarter_in_year"
     | "GDC.time.month"
+    | "GDC.time.fiscal_month"
     | "GDC.time.month_in_quarter"
     | "GDC.time.month_in_year"
     | "GDC.time.day_in_year"
@@ -32,10 +35,7 @@ export type DateAttributeGranularity =
     | "GDC.time.hour"
     | "GDC.time.hour_in_day"
     | "GDC.time.minute"
-    | "GDC.time.minute_in_hour"
-    | "GDC.time.fiscal_year"
-    | "GDC.time.fiscal_quarter"
-    | "GDC.time.fiscal_month";
+    | "GDC.time.minute_in_hour";
 
 /**
  * Special granularity used to indicate there should be no date filtering for the given dimension.

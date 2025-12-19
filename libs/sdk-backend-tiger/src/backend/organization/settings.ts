@@ -9,7 +9,9 @@ import {
 import { type IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
+    type IActiveCalendars,
     type IAlertDefault,
+    type IFiscalYear,
     type IOpenAiConfig,
     type ISeparators,
     type ISettings,
@@ -76,12 +78,12 @@ export class OrganizationSettingsService
         return this.setSetting("WEEK_START", { value: weekStart });
     }
 
-    public async setCalendar(monthOffset: number): Promise<void> {
-        return this.setSetting("FISCAL_YEAR", { monthOffset });
+    public async setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void> {
+        return this.setSetting("FISCAL_YEAR", fiscalYear);
     }
 
-    public async deleteCalendar(): Promise<void> {
-        return this.deleteSettingByType("FISCAL_YEAR");
+    public async setActiveCalendars(calendars: IActiveCalendars): Promise<void> {
+        return this.setSetting("ACTIVE_CALENDARS", calendars);
     }
 
     public override async setTheme(activeThemeId: string) {

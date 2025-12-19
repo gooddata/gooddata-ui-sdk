@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import { type ICreateColorAssignmentReturnValue } from "@gooddata/sdk-ui-vis-commons";
@@ -9,7 +10,7 @@ import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
 export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     protected override createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,

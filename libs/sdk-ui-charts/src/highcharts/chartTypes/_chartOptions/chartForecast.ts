@@ -18,7 +18,7 @@ function getForecastColor(color: string | IPatternObject): string | IPatternObje
     return {
         pattern: {
             ...color.pattern,
-            color: getLighterColor(color.pattern.color, FORECAST_COLOR_PERCENT),
+            color: getLighterColor(color.pattern.color!, FORECAST_COLOR_PERCENT),
         },
     };
 }
@@ -27,11 +27,11 @@ function getForecastLineColor(color: string | IPatternObject): string {
     if (typeof color === "string") {
         return getLighterColor(color, FORECAST_LINE_COLOR_PERCENT);
     }
-    return getLighterColor(color.pattern.color, FORECAST_LINE_COLOR_PERCENT);
+    return getLighterColor(color.pattern.color!, FORECAST_LINE_COLOR_PERCENT);
 }
 
 export function assignForecastAxes(
-    type: VisType,
+    type: VisType | undefined,
     series: ISeriesItem[],
     forecastValues: ForecastDataValue[][],
 ): ISeriesItem[] {
@@ -49,7 +49,7 @@ export function assignForecastAxes(
     const { data } = firstSeries;
 
     //if there is no data, we don't need to add forecast axis
-    if (data.length === 0) {
+    if (data && data.length === 0) {
         return series;
     }
 
@@ -59,11 +59,11 @@ export function assignForecastAxes(
         return series;
     }
 
-    const last = data[data.length - 1];
-    const seriesData = [...data, ...forecastData.map((): null => null)];
+    const last = data![data!.length - 1];
+    const seriesData = [...data!, ...forecastData.map((): null => null)];
 
     const rangeData = [
-        ...data.slice(0, -1).map((): null => null),
+        ...data!.slice(0, -1).map((): null => null),
         {
             low: last.y,
             high: last.y,
@@ -81,7 +81,7 @@ export function assignForecastAxes(
         }),
     ];
     const predictedData = [
-        ...data.slice(0, -1).map((): null => null),
+        ...data!.slice(0, -1).map((): null => null),
         last,
         ...forecastData.map((item) => {
             return {
@@ -94,22 +94,22 @@ export function assignForecastAxes(
     ];
 
     return [
-        { ...firstSeries, data: seriesData },
+        { ...firstSeries, data: seriesData as ISeriesDataItem[] },
         {
             ...firstSeries,
-            data: rangeData,
+            data: rangeData as ISeriesDataItem[],
             type: "arearange",
             marker: {
                 enabled: false,
             },
-            color: getForecastColor(firstSeries.color),
+            color: getForecastColor(firstSeries.color!),
             lineWidth: 2,
-            lineColor: getForecastLineColor(firstSeries.color),
+            lineColor: getForecastLineColor(firstSeries.color!),
             showInLegend: false,
         },
         {
             ...firstSeries,
-            data: predictedData,
+            data: predictedData as ISeriesDataItem[],
             dashStyle: "dash",
             showInLegend: false,
         },

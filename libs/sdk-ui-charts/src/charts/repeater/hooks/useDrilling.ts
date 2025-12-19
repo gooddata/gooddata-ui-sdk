@@ -53,7 +53,7 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
         }
 
         const columnIndex = cellEvent.api.getAllGridColumns().findIndex((col) => col === cellEvent.column);
-        const attributeHeaderItem = cellEvent.data[cellEvent.colDef.field];
+        const attributeHeaderItem = cellEvent.data[cellEvent.colDef.field!];
 
         const intersectionElement: IDrillEventIntersectionElement = {
             header: {
@@ -65,7 +65,7 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
         const drillEvent = createDrillEvent(
             drillingState,
             columnIndex,
-            cellEvent.rowIndex,
+            cellEvent.rowIndex!,
             attributeHeaderItem?.name,
             intersectionElement,
         );
@@ -125,13 +125,13 @@ function getDrillable(dataView: DataViewFacade, drillablePredicates: IHeaderPred
         }
         return item.measureHeaderItem.localIdentifier === colDef.field;
     });
-    return isSomeHeaderPredicateMatched(drillablePredicates, found, dataView) ? found : null;
+    return isSomeHeaderPredicateMatched(drillablePredicates, found!, dataView) ? found : null;
 }
 
 function createDrillEvent(
     drillingState: MutableRefObject<DrillingState>,
     columnIndex: number,
-    rowIndex: number,
+    rowIndex: number | undefined,
     value: string | undefined,
     el: IDrillEventIntersectionElement,
 ): IDrillEvent {

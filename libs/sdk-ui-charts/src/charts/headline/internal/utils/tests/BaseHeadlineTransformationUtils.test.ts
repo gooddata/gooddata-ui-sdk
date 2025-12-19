@@ -36,14 +36,14 @@ describe("BaseHeadlineTransformationUtils", () => {
 
         it.each([true, false])("Should return base headline item with drillable is %s", (expected) => {
             const baseHeadlineItem = createBaseHeadlineItem(firstExecutionData, expected, "primaryValue");
-            expect(baseHeadlineItem.data.isDrillable).toBe(expected);
+            expect(baseHeadlineItem!.data.isDrillable).toBe(expected);
         });
 
         it.each<[HeadlineElementType]>([["primaryValue"], ["secondaryValue"]])(
             "Should return base headline item with elementType is %s",
             (elementType: HeadlineElementType) => {
                 const baseHeadlineItem = createBaseHeadlineItem(firstExecutionData, false, elementType);
-                expect(baseHeadlineItem.elementType).toBe(elementType);
+                expect(baseHeadlineItem!.elementType).toBe(elementType);
             },
         );
     });

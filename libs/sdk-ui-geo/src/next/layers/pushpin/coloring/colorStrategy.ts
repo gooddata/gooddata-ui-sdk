@@ -39,7 +39,7 @@ class PushpinColorStrategy extends ColorStrategy {
      */
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         locationAttribute: IAttributeDescriptor,
         segmentByAttribute: IAttributeDescriptor | null,
         dv: DataViewFacade,
@@ -69,7 +69,7 @@ class PushpinColorStrategy extends ColorStrategy {
      */
     private getColorStrategyForSegmentBy(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         segmentByAttribute: IAttributeDescriptor,
         dv: DataViewFacade,
     ): IColorAssignment[] {
@@ -89,7 +89,7 @@ class PushpinColorStrategy extends ColorStrategy {
      */
     private getColorStrategyForLocation(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         locationAttribute: IAttributeDescriptor,
         dv: DataViewFacade,
     ): IColorAssignment {

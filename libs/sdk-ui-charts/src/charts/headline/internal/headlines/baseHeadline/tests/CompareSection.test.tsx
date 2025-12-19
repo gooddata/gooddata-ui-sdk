@@ -20,7 +20,7 @@ describe("CompareSection", () => {
     const secondaryItem: IBaseHeadlineItem<IHeadlineDataItem> = TEST_BASE_HEADLINE_ITEM;
     const tertiaryItem: IBaseHeadlineItem<IHeadlineDataItem> = {
         ...TEST_BASE_HEADLINE_ITEM,
-        elementType: null,
+        elementType: null as any,
         data: {
             ...TEST_BASE_HEADLINE_ITEM.data,
             localIdentifier: "tertiary_local_identifier",

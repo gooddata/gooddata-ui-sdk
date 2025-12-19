@@ -17,6 +17,7 @@ import type { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model'
 import type { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -70,6 +71,7 @@ import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import type { IFilterContext } from '@gooddata/sdk-model';
 import type { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IFiscalYear } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIChatInteraction } from '@gooddata/sdk-model';
 import type { IGenAIChatReasoning } from '@gooddata/sdk-model';
@@ -1434,18 +1436,18 @@ export interface IOrganizations {
 // @public
 export interface IOrganizationSettingsService {
     deleteActiveLlmEndpoint(): Promise<void>;
-    deleteCalendar(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
+    setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setAttachmentSizeLimit(size: number): Promise<void>;
-    setCalendar(monthOffset: number): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
+    setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMaxZoomLevel(level: number | null): Promise<void>;
@@ -2021,7 +2023,6 @@ export interface IWorkspaceSettings extends ISettings {
 
 // @public
 export interface IWorkspaceSettingsService {
-    deleteCalendar(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteDashboardFiltersApplyMode(): Promise<void>;
@@ -2029,15 +2030,16 @@ export interface IWorkspaceSettingsService {
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
-    setCalendar(monthOffset: number): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     // @alpha
     setEnableAiOnData(enabled: boolean): Promise<void>;
+    setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;

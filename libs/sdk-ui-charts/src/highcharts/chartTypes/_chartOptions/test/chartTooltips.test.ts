@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -54,7 +55,7 @@ describe("chartTooltips", () => {
             const tooltipContent = tooltipRenderer(normalDataPoint, maxItemWidth, undefined);
 
             expect(tooltipContent).toMatchSnapshot();
-            expect(tooltipContent).toContain(normalDataPoint.series.name);
+            expect(tooltipContent).toContain(normalDataPoint.series!.name);
             expect(tooltipContent).toContain(normalDataPoint.name);
         });
 
@@ -68,7 +69,7 @@ describe("chartTooltips", () => {
             const tooltipContent = tooltipRenderer(totalDataPoint, maxItemWidth, undefined);
 
             expect(tooltipContent).toMatchSnapshot();
-            expect(tooltipContent).not.toContain(totalDataPoint.series.name);
+            expect(tooltipContent).not.toContain(totalDataPoint.series!.name);
             expect(tooltipContent).toContain(totalDataPoint.name);
         });
 
@@ -81,7 +82,7 @@ describe("chartTooltips", () => {
             const tooltipContent = tooltipRenderer(normalDataPoint, maxItemWidth, undefined);
 
             expect(tooltipContent).toMatchSnapshot();
-            expect(tooltipContent).not.toContain(normalDataPoint.series.name);
+            expect(tooltipContent).not.toContain(normalDataPoint.series!.name);
             expect(tooltipContent).toContain(normalDataPoint.name);
         });
 
@@ -94,7 +95,7 @@ describe("chartTooltips", () => {
             const tooltipContent = tooltipRenderer(totalDataPoint, maxItemWidth, undefined);
 
             expect(tooltipContent).toMatchSnapshot();
-            expect(tooltipContent).not.toContain(totalDataPoint.series.name);
+            expect(tooltipContent).not.toContain(totalDataPoint.series!.name);
             expect(tooltipContent).toContain(totalDataPoint.name);
         });
     });

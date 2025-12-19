@@ -351,29 +351,28 @@ const WithIntl = withIntl(HeaderExamples, "en-US", messages);
 const screenshotProps: INeobackstopConfig = {
     closed: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
-        delay: {
-            postReady: 300,
-        },
     },
     openedProjectPicker: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-default-header .s-goodsales",
-        postInteractionWait: { delay: 200 },
     },
     openedProjectPickerWithFooter: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-freemium-header .s-project_1",
-        postInteractionWait: { delay: 200 },
     },
     openedHelp: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-default-header .gd-header-help",
-        postInteractionWait: { delay: 200 },
+        delay: {
+            postOperation: 200, // element has .2s transition
+        },
     },
     openedAccount: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".s-default-header .gd-header-account",
-        postInteractionWait: { delay: 200 },
+        delay: {
+            postOperation: 200, // element has .2s transition
+        },
     },
 };
 

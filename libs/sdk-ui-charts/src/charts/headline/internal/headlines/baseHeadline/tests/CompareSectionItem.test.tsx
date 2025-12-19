@@ -11,7 +11,7 @@ import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { CompareSectionItem } from "../CompareSectionItem.js";
 
 describe("CompareSectionItem", () => {
-    const renderCompareSectionItem = (props?: {
+    const renderCompareSectionItem = (props: {
         dataItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
         titleRef?: RefObject<HTMLDivElement>;
     }) => {

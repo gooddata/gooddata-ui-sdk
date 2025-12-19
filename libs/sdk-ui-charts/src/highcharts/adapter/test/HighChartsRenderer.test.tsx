@@ -109,7 +109,7 @@ vi.mock("../HighChartsRenderer.js", () => {
         );
 
         const legendContent =
-            legend?.enabled && legend?.items?.length > 0 ? (
+            legend?.enabled && (legend?.items?.length ?? 0) > 0 ? (
                 legendRenderer ? (
                     legendRenderer({
                         position: legend.position,

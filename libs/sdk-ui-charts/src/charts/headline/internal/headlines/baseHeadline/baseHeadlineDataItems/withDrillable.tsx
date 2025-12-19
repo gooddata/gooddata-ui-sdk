@@ -23,7 +23,7 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         const handleDrillable = useCallback(
             (event: MouseEvent<EventTarget>) => {
                 if (dataItem?.isDrillable) {
-                    fireDrillEvent(dataItem, elementType, event.target);
+                    fireDrillEvent(dataItem, elementType!, event.target);
                 }
             },
             [dataItem, elementType, fireDrillEvent],
@@ -32,7 +32,7 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         const handleKeyDown = useCallback(
             (event: KeyboardEvent<HTMLDivElement>) => {
                 if (dataItem?.isDrillable && isActionKey(event)) {
-                    fireDrillEvent(dataItem, elementType, event.target);
+                    fireDrillEvent(dataItem, elementType!, event.target);
                 }
             },
             [dataItem, elementType, fireDrillEvent],

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -164,7 +165,7 @@ describe("getColorMappingPredicate", () => {
         });
 
         it("should match predicate when referenced null uri matches", () => {
-            const predicate = getColorMappingPredicate(null);
+            const predicate = getColorMappingPredicate(null as unknown as string);
 
             expect(predicate(falsyAttributeHeaderItem(null), {} as any)).toEqual(true);
         });
@@ -176,7 +177,7 @@ describe("getColorMappingPredicate", () => {
         });
 
         it("should not match predicate when referenced undefined uri matches", () => {
-            const predicate = getColorMappingPredicate(undefined);
+            const predicate = getColorMappingPredicate(undefined as unknown as string);
 
             expect(predicate(falsyAttributeHeaderItem(undefined), {} as any)).toEqual(false);
         });

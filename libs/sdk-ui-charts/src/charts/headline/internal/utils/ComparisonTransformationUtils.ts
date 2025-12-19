@@ -40,7 +40,7 @@ import {
 
 export function getComparisonBaseHeadlineData(
     dataView: IDataView,
-    drillableItems: ExplicitDrill[],
+    drillableItems: ExplicitDrill[] | undefined,
     comparison: IComparison,
     intl: IntlShape,
 ): IBaseHeadlineData {
@@ -66,7 +66,7 @@ export function getComparisonBaseHeadlineData(
     const comparisonItem = createComparisonItem(
         executionData,
         dv.meta().isDerivedMeasure(secondaryItemHeader),
-        primaryItem.data?.format,
+        primaryItem?.data?.format,
         comparison,
         intl,
     );
@@ -74,7 +74,7 @@ export function getComparisonBaseHeadlineData(
     const baseHeadlineData: IBaseHeadlineData = {
         primaryItem: primaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
         secondaryItem: secondaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-        tertiaryItem: comparisonItem,
+        tertiaryItem: comparisonItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
     };
 
     return positionBaseHeadlineItems(baseHeadlineData, comparison);
@@ -87,7 +87,7 @@ function positionBaseHeadlineItems(
     switch (comparison?.position) {
         case ComparisonPositionValues.TOP:
             return {
-                primaryItem: baseHeadlineData.tertiaryItem,
+                primaryItem: baseHeadlineData.tertiaryItem!,
                 secondaryItem: baseHeadlineData.secondaryItem,
                 tertiaryItem: baseHeadlineData.primaryItem,
             };
@@ -109,7 +109,7 @@ function positionBaseHeadlineItems(
 function createComparisonItem(
     executionData: IHeadlineExecutionData[],
     isSecondaryDerivedMeasure: boolean,
-    inheritFormat: string,
+    inheritFormat: string | null | undefined,
     comparison: IComparison,
     intl: IntlShape,
 ): IBaseHeadlineItem<IComparisonDataItem | IComparisonDataWithSubItem> {
@@ -145,7 +145,7 @@ function createComparisonItem(
     }
 }
 
-function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): EvaluationType {
+function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): EvaluationType | null {
     const [primaryItem, secondaryItem, tertiaryItem, quaternaryItem] = executionData;
     if (
         !isNumeric(primaryItem.value) ||
@@ -172,8 +172,8 @@ function getComparisonEvaluationType(executionData: IHeadlineExecutionData[]): E
 function createComparisonDataItem(
     executionData: IHeadlineExecutionData[],
     isSecondaryDerivedMeasure: boolean,
-    evaluationType: EvaluationType,
-    inheritFormat: string,
+    evaluationType: EvaluationType | null,
+    inheritFormat: string | null | undefined,
     comparison: IComparison,
     intl: IntlShape,
 ): IComparisonDataItem {
@@ -186,7 +186,7 @@ function createComparisonDataItem(
 
     return {
         title: getComparisonTitle(
-            labelConfig,
+            labelConfig ?? {},
             defaultLabelKeys,
             evaluationType,
             calculationType ?? defaultCalculationType,
@@ -199,8 +199,8 @@ function createComparisonDataItem(
 
 function createComparisonDataWithSubItem(
     executionData: IHeadlineExecutionData[],
-    evaluationType: EvaluationType,
-    inheritFormat: string,
+    evaluationType: EvaluationType | null,
+    inheritFormat: string | null | undefined,
     comparison: IComparison,
     intl: IntlShape,
 ): IComparisonDataWithSubItem {
@@ -221,27 +221,28 @@ function createComparisonDataWithSubItem(
     };
 }
 
-function getComparisonValue(executionData: IHeadlineExecutionData[], isSubValue?: boolean): string {
+function getComparisonValue(executionData: IHeadlineExecutionData[], isSubValue?: boolean): string | null {
     const [primaryItem, secondaryItem, tertiaryItem, quaternaryItem] = executionData;
     if (!isNumeric(primaryItem.value) || !isNumeric(secondaryItem.value)) {
         return null;
     }
 
     const { value } = isSubValue ? quaternaryItem : tertiaryItem;
-    return value === null || value === undefined ? (value as any) : String(value);
+    return value === null || value === undefined ? null : String(value);
 }
 
 function isNumeric(value: DataValue): boolean {
     return (
-        (typeof value === "number" || (typeof value === "string" && value.trim())) && !isNaN(value as number)
+        (typeof value === "number" || (typeof value === "string" && value.trim() !== "")) &&
+        !isNaN(value as number)
     );
 }
 
 function getComparisonTitle(
-    labelConfig: ILabelConfig,
+    labelConfig: ILabelConfig | undefined,
     defaultLabelKeys: IDefaultLabelKeys,
-    evaluationType: EvaluationType,
-    calculationType: CalculationType,
+    evaluationType: EvaluationType | undefined | null,
+    calculationType: CalculationType | undefined,
     intl: IntlShape,
 ): string {
     if (labelConfig?.isConditional && calculationType !== CalculateAs.RATIO) {
