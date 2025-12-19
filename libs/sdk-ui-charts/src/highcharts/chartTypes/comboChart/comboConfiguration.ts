@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { type IExecutionDefinition, type ITheme, bucketIsEmpty, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -10,7 +11,7 @@ import { LINE_WIDTH } from "../lineChart/lineConfiguration.js";
 
 const { COLUMN, LINE } = VisualizationTypes;
 
-function getDefaultComboTypes(config?: IChartConfig): IChartConfig {
+function getDefaultComboTypes(config?: IChartConfig) {
     return {
         primaryChartType: config?.primaryChartType ?? COLUMN,
         secondaryChartType: config?.secondaryChartType ?? LINE,
@@ -30,7 +31,7 @@ export function getDefaultChartType(config?: IChartConfig): "line" | "column" | 
     return LINE;
 }
 
-function isOnlyLineSeries(config: IChartConfig, definition?: IExecutionDefinition): boolean {
+function isOnlyLineSeries(config?: IChartConfig, definition?: IExecutionDefinition): boolean {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
     const buckets = definition ? definition.buckets : [];
     const primaryBucket = bucketsFind(buckets, BucketNames.MEASURES);

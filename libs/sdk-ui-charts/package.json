@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-charts",
-    "version": "11.15.0-alpha.0",
+    "version": "11.15.0-alpha.1",
     "description": "GoodData.UI SDK - Charts",
     "repository": {
         "type": "git",
@@ -55,6 +55,7 @@
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
+        "build-ts": "tsc -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage  styles/css *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",

@@ -18,7 +18,7 @@ let dataLabelColorsInitialized = false;
 export function initChartPlugins(
     highcharts: any,
     enableAccessibleChartTooltip?: boolean,
-    theme?: ITheme,
+    theme?: ITheme | null,
 ): void {
     if (!basePluginsInitialized) {
         autohideLabels(highcharts);

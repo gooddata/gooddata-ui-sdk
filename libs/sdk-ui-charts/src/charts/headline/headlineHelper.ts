@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { defineMessage } from "react-intl";
 
 import {
@@ -16,8 +17,8 @@ import { CalculateAs, type CalculationType } from "../../interfaces/index.js";
  */
 interface ICalculationDefaultValue {
     defaultLabelKeys: IDefaultLabelKeys;
-    defaultFormat: string;
-    defaultSubFormat?: string;
+    defaultFormat: string | null;
+    defaultSubFormat: string | null;
 }
 
 /**
@@ -42,23 +43,25 @@ enum ComparisonColorType {
 /**
  * @internal
  */
-const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefaultValue } = {
-    [CalculateAs.CHANGE]: {
+const CALCULATION_VALUES_DEFAULT: Record<CalculationType, ICalculationDefaultValue> = {
+    change: {
         defaultLabelKeys: {
             nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.change" }).id,
             positiveKey: defineMessage({ id: "visualizations.headline.comparison.title.change.positive" }).id,
             negativeKey: defineMessage({ id: "visualizations.headline.comparison.title.change.negative" }).id,
             equalsKey: defineMessage({ id: "visualizations.headline.comparison.title.change.equals" }).id,
         },
+        defaultSubFormat: null,
         defaultFormat: "#,##0%",
     },
-    [CalculateAs.RATIO]: {
+    ratio: {
         defaultLabelKeys: {
             nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.ratio" }).id,
         },
+        defaultSubFormat: null,
         defaultFormat: "#,##0%",
     },
-    [CalculateAs.CHANGE_DIFFERENCE]: {
+    change_difference: {
         defaultLabelKeys: {
             nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.change" }).id,
             positiveKey: defineMessage({ id: "visualizations.headline.comparison.title.change.positive" }).id,
@@ -68,7 +71,7 @@ const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefau
         defaultFormat: "#,##0%",
         defaultSubFormat: null,
     },
-    [CalculateAs.DIFFERENCE]: {
+    difference: {
         defaultLabelKeys: {
             nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.difference" })
                 .id,
@@ -79,6 +82,7 @@ const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefau
             equalsKey: defineMessage({ id: "visualizations.headline.comparison.title.difference.equals" }).id,
         },
         defaultFormat: null,
+        defaultSubFormat: null,
     },
 };
 
@@ -117,7 +121,10 @@ const DEFAULT_COMPARISON_PALETTE: IColorPalette = [
  *
  * @internal
  */
-const getComparisonFormat = (providedFormat: string, defaultFormat: string): string => {
+const getComparisonFormat = (
+    providedFormat: string | null | undefined,
+    defaultFormat: string | null,
+): string | null => {
     return providedFormat === undefined ? defaultFormat : providedFormat;
 };
 
@@ -151,7 +158,7 @@ const getComparisonPaletteColorByType = (
  * @internal
  */
 const getComparisonRgbColor = (
-    color: IColor,
+    color: IColor | null | undefined,
     colorType: ComparisonColorType,
     colorPalette: IColorPalette = DEFAULT_COMPARISON_PALETTE,
 ): IRgbColorValue => {
@@ -159,9 +166,11 @@ const getComparisonRgbColor = (
         return getComparisonDefaultColor(colorType, colorPalette);
     }
 
-    return isColorFromPalette(color)
-        ? getComparisonPaletteColorByType(color.value, colorType, colorPalette)
-        : color?.value;
+    if (isColorFromPalette(color)) {
+        return getComparisonPaletteColorByType(color.value, colorType, colorPalette);
+    }
+
+    return color!.value;
 };
 
 /**

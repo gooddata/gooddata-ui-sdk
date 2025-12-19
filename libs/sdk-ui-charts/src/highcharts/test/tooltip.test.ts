@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type ISeparators } from "@gooddata/sdk-model";
@@ -38,11 +39,15 @@ describe("tooltip", () => {
     describe("getFormattedValueForTooltip()", () => {
         it.each([
             [false, false, 45.24], // stackMeasuresToPercent
-            [false, true, null], // percentageValue
+            [false, true, undefined], // percentageValue
             [true, true, 45.24], // isDualAxis + isSecondAxis
         ])(
             "should return number if isDualChartWithRightAxis is %s, stackMeasuresToPercent is %s, percentageValue is %s",
-            (isDualChartWithRightAxis: boolean, stackMeasuresToPercent: boolean, percentageValue: number) => {
+            (
+                isDualChartWithRightAxis: boolean,
+                stackMeasuresToPercent: boolean,
+                percentageValue: number | undefined,
+            ) => {
                 const formattedValue = getFormattedValueForTooltip(
                     isDualChartWithRightAxis,
                     stackMeasuresToPercent,
@@ -77,12 +82,12 @@ describe("tooltip", () => {
         );
 
         it.each([
-            ["123.00", 123, null],
-            ["321.00", null, 321],
+            ["123.00", 123, undefined],
+            ["321.00", undefined, 321],
             ["321.00", 123, 321],
         ])(
             "should return %s when value is %s and target is %s",
-            (expectedValue: string, value: number, targetValue: number) => {
+            (expectedValue: string, value: number | undefined, targetValue: number | undefined) => {
                 const targetPointData = {
                     ...testPointData,
                     format: testFormat,

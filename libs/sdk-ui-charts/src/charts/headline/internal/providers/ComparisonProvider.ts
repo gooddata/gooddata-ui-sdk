@@ -27,7 +27,7 @@ const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 export class ComparisonProvider extends AbstractProvider {
     private readonly comparison: IComparison;
 
-    constructor(comparison: IComparison) {
+    constructor(comparison: IComparison | undefined) {
         super();
 
         this.comparison = comparison || COMPARISON_DEFAULT_OBJECT;
@@ -51,7 +51,7 @@ export class ComparisonProvider extends AbstractProvider {
 
         return newBucket(
             ARITHMETIC_BUCKET_IDENTIFIER,
-            ...this.createVirtualArithmeticMeasures(primaryMeasure, secondaryMeasures),
+            ...this.createVirtualArithmeticMeasures(primaryMeasure!, secondaryMeasures!),
         );
     }
 

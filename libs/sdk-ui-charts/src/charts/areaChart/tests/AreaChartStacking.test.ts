@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -28,7 +29,7 @@ describe("getPropsForArea", () => {
                 backend: dummyBackend(),
                 measures: [],
                 viewBy: [],
-                stackBy: null,
+                stackBy: null as any,
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [],
@@ -138,7 +139,7 @@ describe("getPropsForArea", () => {
                 backend: dummyBackend(),
                 measures: [ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
-                stackBy: null,
+                stackBy: null as any,
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [ReferenceMd.Amount],
@@ -154,7 +155,7 @@ describe("getPropsForArea", () => {
                 backend: dummyBackend(),
                 measures: [ReferenceMd.Amount, ReferenceMd.Amount],
                 viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
-                stackBy: null,
+                stackBy: null as any,
             };
             expect(getPropsForArea(props)).toEqual({
                 measures: [ReferenceMd.Amount],

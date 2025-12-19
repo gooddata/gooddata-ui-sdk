@@ -44,15 +44,15 @@ function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
 
 export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const legendItemsLength = chartOptions?.data?.series?.reduce<number[]>((prev, cur: ISeriesItem) => {
-        if (prev.includes(cur.legendIndex)) {
+        if (prev.includes(cur.legendIndex!)) {
             return prev;
         }
-        return [...prev, cur.legendIndex];
+        return [...prev, cur.legendIndex!];
     }, []).length;
 
     const { type, hasStackByAttribute, hasViewByAttribute } = chartOptions;
 
-    const hasMoreThanOneLegend = legendItemsLength > 1;
+    const hasMoreThanOneLegend = (legendItemsLength ?? 0) > 1;
     const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
     const isStacked = isStackedChart(chartOptions);
     const sliceTypes = [
@@ -64,17 +64,18 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
         VisualizationTypes.DEPENDENCY_WHEEL,
     ];
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
-        isOneOfTypes(type, sliceTypes) && (hasViewByAttribute || chartOptions.data.series[0].data.length > 1);
+        isOneOfTypes(type, sliceTypes) &&
+        (hasViewByAttribute || (chartOptions.data?.series?.[0]?.data?.length ?? 0) > 1);
     const isBubbleWithViewByAttribute =
-        isBubbleChart(type) && hasViewByAttribute && chartOptions.data.series.length > 1;
+        isBubbleChart(type) && hasViewByAttribute && (chartOptions.data?.series?.length ?? 0) > 1;
     const isScatterPlotWithSegmentationOrClustering =
         isScatterPlot(type) &&
         !!(
-            chartOptions.data.series[0]?.data[0]?.segmentName ||
-            chartOptions.data.series[0]?.data[0]?.clusterName
+            chartOptions.data?.series?.[0]?.data?.[0]?.segmentName ||
+            chartOptions.data?.series?.[0]?.data?.[0]?.clusterName
         );
     const isTreemapWithViewByAttribute = isTreemap(type) && hasViewByAttribute;
-    const isTreemapWithManyCategories = isTreemap(type) && chartOptions.data.categories.length > 1;
+    const isTreemapWithManyCategories = isTreemap(type) && (chartOptions.data?.categories?.length ?? 0) > 1;
     const isSankeyChart = isSankeyOrDependencyWheel(type);
     const isWaterfallChart = isWaterfall(type);
 
@@ -129,7 +130,7 @@ export function getLegendItems(
     }
 
     if (isSankeyOrDependencyWheel(type)) {
-        return chartOptions.data.series[0].nodes.map((it: ISeriesNodeItem, index: number) => {
+        return (chartOptions.data?.series?.[0]?.nodes ?? []).map((it: ISeriesNodeItem, index: number) => {
             return {
                 name: it.id,
                 color: it.color,
@@ -139,12 +140,12 @@ export function getLegendItems(
     }
 
     if (isWaterfall(type)) {
-        return createWaterfallLegendItems(chartOptions, intl, theme) as LegendOptionsItemType[];
+        return createWaterfallLegendItems(chartOptions, intl!, theme) as LegendOptionsItemType[];
     }
 
     const legendDataSource = isOneOfTypes(type, firstSeriesDataTypes)
-        ? chartOptions.data.series[0].data
-        : chartOptions.data.series;
+        ? chartOptions.data?.series?.[0]?.data
+        : chartOptions.data?.series;
 
     let pickedProps = ["name", "color", "legendIndex", "type"];
     if (isOneOfTypes(type, supportedDualAxesChartTypes)) {
@@ -166,7 +167,7 @@ export function getLegendItems(
 
     if (isScatterPlot(type)) {
         const uniqueItems = sortBy(
-            uniqBy(chartOptions.data.series[0]?.data, (it: ISeriesItem) => it.legendIndex),
+            uniqBy(chartOptions.data?.series?.[0]?.data, (it: ISeriesItem) => it.legendIndex),
             (it) => it.legendIndex,
         );
         return uniqueItems.map((it: ISeriesItem, index: number): ISeriesItemMetric => {
@@ -180,7 +181,7 @@ export function getLegendItems(
         });
     }
 
-    return legendDataSource
+    return (legendDataSource ?? [])
         .filter((legendDataSourceItem: any) => legendDataSourceItem.showInLegend !== false)
         .map((legendDataSourceItem: any) => {
             const newProps = pick(legendDataSourceItem, pickedProps);
@@ -306,7 +307,7 @@ export function buildLegendOptions(
  *
  * @param chartType - top-level chart type (combo chart will have legend items of different types)
  */
-function createItemBorderRadiusPredicate(chartType: string): boolean | ItemBorderRadiusPredicate {
+function createItemBorderRadiusPredicate(chartType: string | undefined): boolean | ItemBorderRadiusPredicate {
     if (isLineChart(chartType) || isAreaChart(chartType)) {
         /*
          * It is clear that all items are of same type and should have indicators as circles.
@@ -333,7 +334,7 @@ function createItemBorderRadiusPredicate(chartType: string): boolean | ItemBorde
  * It is likely that the code was glued-in while implementing combo and dual axes charts. Perhaps better way is to
  * refactor the legend builders (which can be chart-specific) to create the legend items correctly.
  */
-function createSeriesMapper(chartType: string) {
+function createSeriesMapper(chartType: string | undefined) {
     if (isComboChart(chartType)) {
         return getComboChartSeries;
     }

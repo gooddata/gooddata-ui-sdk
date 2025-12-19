@@ -54,7 +54,7 @@ export function getBubbleConfiguration(
                     allowOverlap: false,
                 },
                 marker: {
-                    radius: null,
+                    radius: undefined,
                 },
             },
         },

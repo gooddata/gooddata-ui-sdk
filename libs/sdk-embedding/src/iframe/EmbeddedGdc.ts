@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -285,7 +286,10 @@ export type DateFilterGranularity =
     | "GDC.time.week_us"
     | "GDC.time.month"
     | "GDC.time.quarter"
-    | "GDC.time.year";
+    | "GDC.time.year"
+    | "GDC.time.fiscal_month"
+    | "GDC.time.fiscal_quarter"
+    | "GDC.time.fiscal_year";
 
 /**
  * @public

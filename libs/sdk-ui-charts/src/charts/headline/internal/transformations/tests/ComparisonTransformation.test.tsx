@@ -48,7 +48,7 @@ describe("ComparisonTransformation", () => {
             const data = getComparisonBaseHeadlineData(
                 dataFacade.dataView,
                 drillableItems,
-                config.comparison,
+                config.comparison!,
                 mockIntl,
             );
 

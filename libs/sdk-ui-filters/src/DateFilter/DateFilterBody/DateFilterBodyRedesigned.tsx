@@ -19,7 +19,18 @@ import { DateFilterFormContent } from "./DateFilterFormContent.js";
 import { EditModeMessage } from "./EditModeMessage.js";
 import { type DateFilterRoute } from "./types.js";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
+import { type IUiRelativeDateFilterForm } from "../interfaces/index.js";
 import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
+import {
+    type CalendarTabType,
+    ensureCompatibleGranularity,
+    filterFiscalGranularities,
+    filterFiscalPresets,
+    filterStandardGranularities,
+    filterStandardPresets,
+    getFiscalTabsConfig,
+    getTabForPreset,
+} from "../utils/presetFilterUtils.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;
@@ -37,6 +48,25 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
     const relativeButtonRef = useRef<HTMLButtonElement>(null);
 
     const intl = useIntl();
+
+    const { showTabs } = getFiscalTabsConfig(props.filterOptions.relativePreset);
+
+    const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
+        getTabForPreset(props.selectedFilterOption),
+    );
+
+    const filteredRelativePreset = showTabs
+        ? selectedTab === "standard"
+            ? filterStandardPresets(props.filterOptions.relativePreset!)
+            : filterFiscalPresets(props.filterOptions.relativePreset!)
+        : props.filterOptions.relativePreset;
+
+    const filteredAvailableGranularities = showTabs
+        ? selectedTab === "standard"
+            ? filterStandardGranularities(props.availableGranularities)
+            : filterFiscalGranularities(props.availableGranularities)
+        : props.availableGranularities;
+
     const changeRoute = (newRoute: DateFilterRoute = null): void => {
         setRoute(newRoute);
     };
@@ -58,12 +88,28 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         const newForm = route === "relativeForm" ? null : "relativeForm";
         setRoute(newForm);
 
-        if (
-            newForm === "relativeForm" &&
-            filterOptions.relativeForm &&
-            selectedFilterOption.localIdentifier !== filterOptions.relativeForm.localIdentifier
-        ) {
-            onSelectedFilterOptionChange(filterOptions.relativeForm);
+        if (newForm === "relativeForm" && filterOptions.relativeForm) {
+            const isFiscal = showTabs && selectedTab === "fiscal";
+
+            // Determine which filter option to use as base
+            const baseOption =
+                selectedFilterOption.localIdentifier === filterOptions.relativeForm.localIdentifier
+                    ? (selectedFilterOption as IUiRelativeDateFilterForm)
+                    : filterOptions.relativeForm;
+
+            // Ensure granularity is compatible with available granularities for current tab
+            const correctedOption = ensureCompatibleGranularity(
+                baseOption,
+                filteredAvailableGranularities,
+                isFiscal,
+            );
+
+            // Only update if something changed
+            if (correctedOption !== baseOption) {
+                onSelectedFilterOptionChange(correctedOption);
+            } else if (selectedFilterOption.localIdentifier !== filterOptions.relativeForm.localIdentifier) {
+                onSelectedFilterOptionChange(filterOptions.relativeForm);
+            }
         }
     };
 
@@ -208,7 +254,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                         dateFormat={dateFormat}
                         weekStart={weekStart}
                         isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
-                        availableGranularities={availableGranularities}
+                        availableGranularities={filteredAvailableGranularities}
                         isMobile={isMobile}
                         withoutApply={withoutApply}
                         activeForm={route}
@@ -264,6 +310,10 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                                 isMobile={isMobile}
                                 dateFormat={dateFormat}
+                                showTabs={showTabs}
+                                selectedTab={selectedTab}
+                                onTabSelect={setSelectedTab}
+                                filteredRelativePreset={filteredRelativePreset}
                             />
                         </VisibleScrollbar>
                     )}

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IColorFromPalette, type IRgbColor } from "@gooddata/sdk-model";
@@ -18,7 +19,7 @@ describe("headlineHelper", () => {
     const DECIMAL_FORMAT = "#,##0.0";
 
     describe("getCalculationValuesDefault", () => {
-        const specs: Array<[CalculationType, ICalculationDefaultValue]> = [
+        const specs: Array<[CalculationType | undefined, ICalculationDefaultValue]> = [
             [
                 undefined,
                 {
@@ -29,6 +30,7 @@ describe("headlineHelper", () => {
                         equalsKey: "visualizations.headline.comparison.title.change.equals",
                     },
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
+                    defaultSubFormat: null,
                 },
             ],
             [
@@ -38,6 +40,7 @@ describe("headlineHelper", () => {
                         nonConditionalKey: "visualizations.headline.comparison.title.ratio",
                     },
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
+                    defaultSubFormat: null,
                 },
             ],
             [
@@ -50,6 +53,7 @@ describe("headlineHelper", () => {
                         equalsKey: "visualizations.headline.comparison.title.change.equals",
                     },
                     defaultFormat: PERCENT_ROUNDED_FORMAT,
+                    defaultSubFormat: null,
                 },
             ],
             [
@@ -75,13 +79,14 @@ describe("headlineHelper", () => {
                         equalsKey: "visualizations.headline.comparison.title.difference.equals",
                     },
                     defaultFormat: null,
+                    defaultSubFormat: null,
                 },
             ],
         ];
 
         it.each(specs)(
             "Should get correctly default values when calculation type is %s",
-            (calculationType: CalculationType, expected: ICalculationDefaultValue) => {
+            (calculationType: CalculationType | undefined, expected: ICalculationDefaultValue) => {
                 expect(getCalculationValuesDefault(calculationType)).toEqual(expected);
             },
         );

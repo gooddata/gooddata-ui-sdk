@@ -75,6 +75,24 @@ export {
 
 export type { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 export { defaultDateFilterOptions } from "./constants/config.js";
-export type { GranularityIntlKey } from "./constants/i18n.js";
+export type { GranularityIntlKey, DateFilterLabelMode } from "./constants/i18n.js";
 export { getLocalizedIcuDateFormatPattern } from "./utils/FormattingUtils.js";
 export type { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
+
+export type {
+    CalendarTabType,
+    IFiscalTabsConfig,
+    IUiRelativeDateFilterFormLike,
+} from "./utils/presetFilterUtils.js";
+export {
+    getFiscalTabsConfig,
+    hasFiscalPresets,
+    hasStandardPresets,
+    filterStandardPresets,
+    filterFiscalPresets,
+    filterStandardGranularities,
+    filterFiscalGranularities,
+    getTabForPreset,
+    isFiscalGranularity,
+    ensureCompatibleGranularity,
+} from "./utils/presetFilterUtils.js";

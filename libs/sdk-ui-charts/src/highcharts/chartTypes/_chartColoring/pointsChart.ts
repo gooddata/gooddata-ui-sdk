@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import {
     type IColor,
     type IColorPalette,
@@ -20,12 +21,12 @@ import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js"
 export class PointsChartColorStrategy extends AttributeColorStrategy {
     protected singleMeasureColorMapping(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         dv: DataViewFacade,
     ): IColorAssignment[] {
         const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
         const measureHeaderItem = measureGroup.items[0];
-        const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, dv);
+        const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, dv)!;
         const color: IColor = isValidMappedColor(measureColorMapping, colorPalette)
             ? measureColorMapping
             : { type: "guid", value: colorPalette[0].guid };
@@ -45,7 +46,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
         const length = viewByAttribute ? viewByAttribute.items.length : 1;
         const color = isColorFromPalette(colorAssignment[0].color)
             ? getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0)
-            : (colorAssignment[0].color.value as IRgbColorValue);
+            : (colorAssignment[0].color?.value as IRgbColorValue);
         const colorString = getRgbStringFromRGB(color);
         return Array(length).fill(colorString);
     }

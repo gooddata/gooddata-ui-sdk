@@ -846,6 +846,7 @@ export type AutomationIdentifierRefIdentifierTypeEnum =
     | "automation"
     | "automationResult"
     | "memoryItem"
+    | "knowledgeRecommendation"
     | "prompt"
     | "visualizationObject"
     | "filterContext"

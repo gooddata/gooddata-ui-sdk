@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { type CSSProperties } from "react";
 
 import { type DataValue, type Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineDataItem {
     localIdentifier: Identifier;
-    value: string;
+    value: string | null;
     title?: string;
-    format?: string;
+    format: string | null;
     isDrillable?: boolean;
 }
 

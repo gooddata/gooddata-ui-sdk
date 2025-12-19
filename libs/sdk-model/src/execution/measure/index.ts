@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -677,7 +678,7 @@ export function measureFormat(measure: IMeasure): string | undefined {
  *    otherwise the parsing would need access to a particular value.
  * B) percentage symbol is found (not directly preceded by backslash)
  */
-export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): boolean {
+export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string | undefined): boolean {
     const format = isMeasure(measureOrFormat) ? measureFormat(measureOrFormat) : measureOrFormat;
     // no reasonable way to avoid the super-linear backtracking right now
     // eslint-disable-next-line regexp/no-super-linear-backtracking

@@ -1,4 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+
 export function getTooltipHtml({
     sliceValue,
     metricValue,
@@ -7,9 +8,9 @@ export function getTooltipHtml({
     pointColor = "#14B2E2",
 }: {
     metricTitle: string;
-    metricValue: string;
+    metricValue: string | null;
     sliceTitle?: string;
-    sliceValue?: string;
+    sliceValue?: string | null;
     pointColor?: string;
 }) {
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : "";

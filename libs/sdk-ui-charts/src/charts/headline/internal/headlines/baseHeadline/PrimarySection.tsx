@@ -15,7 +15,7 @@ export function PrimarySection({ primaryItem, isOnlyPrimaryItem }: IPrimarySecti
 
     return (
         <div className="gd-flex-container primary-section s-primary-section">
-            {config.enableCompactSize ? (
+            {config?.enableCompactSize ? (
                 <PrimarySectionCompactContent
                     primaryItem={primaryItem}
                     isOnlyPrimaryItem={isOnlyPrimaryItem}

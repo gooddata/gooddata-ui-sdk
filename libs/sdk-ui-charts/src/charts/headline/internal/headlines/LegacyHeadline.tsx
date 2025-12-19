@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { type MouseEvent, useCallback, useEffect, useRef } from "react";
+import { type MouseEvent, type ReactElement, type RefObject, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -15,7 +15,11 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IChartConfig } from "../../../../interfaces/index.js";
-import { type HeadlineFiredDrillEvent } from "../interfaces/DrillEvents.js";
+import { type IBaseHeadlineValueItem } from "../interfaces/BaseHeadlines.js";
+import {
+    type HeadlineFiredDrillEvent,
+    type IHeadlineFiredDrillEventItemContext,
+} from "../interfaces/DrillEvents.js";
 import {
     type IFormattedHeadlineDataItem,
     type IHeadlineData,
@@ -80,13 +84,13 @@ export function LegacyHeadline({
         ]);
     }, []);
 
-    const getSecondaryItemClasses = useCallback((secondaryItem: IHeadlineDataItem) => {
+    const getSecondaryItemClasses = useCallback((secondaryItem: IHeadlineDataItem | undefined) => {
         return cx([
             "gd-flex-item",
             "headline-compare-section-item",
             "headline-secondary-item",
             "s-headline-secondary-item",
-            ...getDrillableClasses(secondaryItem.isDrillable),
+            ...getDrillableClasses(secondaryItem?.isDrillable),
         ]);
     }, []);
 
@@ -100,7 +104,7 @@ export function LegacyHeadline({
     const fireDrillEvent = useCallback(
         (item: IHeadlineDataItem, elementType: HeadlineElementType, elementTarget: EventTarget) => {
             if (onDrill) {
-                const itemContext = {
+                const itemContext: IHeadlineFiredDrillEventItemContext = {
                     localIdentifier: item.localIdentifier,
                     value: item.value,
                     element: elementType,
@@ -125,20 +129,20 @@ export function LegacyHeadline({
         (event: MouseEvent<EventTarget>) => {
             const { secondaryItem } = data;
 
-            fireDrillEvent(secondaryItem, "secondaryValue", event.target);
+            fireDrillEvent(secondaryItem!, "secondaryValue", event.target);
         },
         [data, fireDrillEvent],
     );
 
     const renderTertiaryItem = useCallback(() => {
         const { tertiaryItem } = data;
-        const formattedItem = formatPercentageValue(tertiaryItem);
+        const formattedItem = formatPercentageValue(tertiaryItem!);
 
         return (
             <div className="gd-flex-item headline-compare-section-item headline-tertiary-item s-headline-tertiary-item">
                 <div className={getValueWrapperClasses(formattedItem)}>{formattedItem.value}</div>
-                <div className="headline-title-wrapper s-headline-title-wrapper" title={tertiaryItem.title}>
-                    {tertiaryItem.title}
+                <div className="headline-title-wrapper s-headline-title-wrapper" title={tertiaryItem?.title}>
+                    {tertiaryItem?.title}
                 </div>
             </div>
         );
@@ -180,10 +184,10 @@ export function LegacyHeadline({
     const renderSecondaryItem = useCallback(() => {
         const { secondaryItem } = data;
 
-        const formattedItem = formatItemValue(secondaryItem, config);
-        const valueClickCallback = secondaryItem.isDrillable ? handleClickOnSecondaryItem : null;
+        const formattedItem = formatItemValue(secondaryItem as IBaseHeadlineValueItem, config);
+        const valueClickCallback = secondaryItem?.isDrillable ? handleClickOnSecondaryItem : undefined;
 
-        const secondaryValue = secondaryItem.isDrillable
+        const secondaryValue = secondaryItem?.isDrillable
             ? renderHeadlineItemAsLink(formattedItem)
             : renderHeadlineItemAsValue(formattedItem);
 
@@ -197,10 +201,10 @@ export function LegacyHeadline({
                 </div>
                 <div
                     className="headline-title-wrapper s-headline-title-wrapper"
-                    title={secondaryItem.title}
+                    title={secondaryItem?.title}
                     ref={secondaryItemTitleWrapperRef}
                 >
-                    {secondaryItem.title}
+                    {secondaryItem?.title}
                 </div>
             </div>
         );
@@ -221,21 +225,30 @@ export function LegacyHeadline({
                 return null;
             }
 
-            const pagination = shouldRenderPagination(config.enableCompactSize, clientWidth, clientHeight);
+            const pagination = shouldRenderPagination(
+                !!config.enableCompactSize,
+                clientWidth ?? 0,
+                clientHeight ?? 0,
+            );
 
             if (pagination) {
                 return (
                     <div className="gd-flex-container headline-compare-section headline-paginated-compare-section">
                         <HeadlinePagination
-                            renderSecondaryItem={renderSecondaryItem}
-                            renderTertiaryItem={renderTertiaryItem}
+                            renderSecondaryItem={renderSecondaryItem as () => ReactElement}
+                            renderTertiaryItem={renderTertiaryItem as () => ReactElement}
                         />
                     </div>
                 );
             }
 
             return (
-                <div className={getCompareSectionClasses(clientWidth, secondaryItemTitleWrapperRef)}>
+                <div
+                    className={getCompareSectionClasses(
+                        clientWidth ?? 0,
+                        secondaryItemTitleWrapperRef as RefObject<HTMLDivElement>,
+                    )}
+                >
                     {renderTertiaryItem()}
                     {renderSecondaryItem()}
                 </div>
@@ -248,8 +261,8 @@ export function LegacyHeadline({
         (clientHeight?: number) => {
             const { primaryItem, secondaryItem } = data;
 
-            const formattedItem = formatItemValue(primaryItem, config);
-            const valueClickCallback = primaryItem.isDrillable ? handleClickOnPrimaryItem : null;
+            const formattedItem = formatItemValue(primaryItem as IBaseHeadlineValueItem, config);
+            const valueClickCallback = primaryItem.isDrillable ? handleClickOnPrimaryItem : undefined;
 
             if (config.enableCompactSize) {
                 if (!clientHeight) {
@@ -295,8 +308,8 @@ export function LegacyHeadline({
             client
             onResize={(dimensions) => {
                 if (
-                    dimensions?.client?.width > 0 &&
-                    dimensions?.client?.height > 0 &&
+                    (dimensions?.client?.width ?? 0) > 0 &&
+                    (dimensions?.client?.height ?? 0) > 0 &&
                     !afterRenderCalledRef.current
                 ) {
                     onAfterRender();

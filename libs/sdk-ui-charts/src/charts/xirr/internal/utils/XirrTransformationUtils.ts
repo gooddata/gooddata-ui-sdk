@@ -1,9 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { cloneDeep, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
-import { type DataValue, type IMeasureDescriptor, type Identifier } from "@gooddata/sdk-model";
+import { type DataValue, type Identifier } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     type HeadlineElementType,
@@ -26,7 +27,7 @@ export interface IXirrExecutionData {
 
 export interface IXirrDrillItemContext {
     localIdentifier: Identifier;
-    value: string;
+    value: string | null;
     element: HeadlineElementType;
 }
 
@@ -62,7 +63,7 @@ function getExecutionData(dv: DataViewFacade): IXirrExecutionData[] {
               invariant(item.attributeHeaderItem, "Missing expected attributeHeaderItem");
 
               return {
-                  date: getMappingHeaderFormattedName(item),
+                  date: getMappingHeaderFormattedName(item) ?? "",
                   value,
               };
           })
@@ -128,7 +129,7 @@ export function applyDrillableItems(
  */
 export function buildDrillEventData(itemContext: IXirrDrillItemContext, dataView: IDataView): IDrillEvent {
     const dv = DataViewFacade.for(dataView);
-    const measureHeaderItem: IMeasureDescriptor = dv.meta().measureDescriptor(itemContext.localIdentifier);
+    const measureHeaderItem = dv.meta().measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");
     }

@@ -121,7 +121,7 @@ export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
             pushData?.({
                 colors: {
                     colorAssignments: colorAssignment,
-                    colorPalette: configWithColorPalette.colorPalette,
+                    colorPalette: configWithColorPalette.colorPalette!,
                 },
             });
         }
@@ -138,7 +138,7 @@ export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
                         .meta()
                         .attributeDescriptors()
                         .filter((descriptor) =>
-                            columns.items.find((item) => {
+                            columns?.items.find((item) => {
                                 if (isAttribute(item)) {
                                     return (
                                         item.attribute.localIdentifier ===
@@ -208,7 +208,7 @@ const CoreRepeaterWithIntl = withTheme(CoreRepeaterImpl);
  */
 export function CoreRepeater(props: ICoreRepeaterChartProps) {
     return (
-        <ThemeContextProvider theme={props.theme} themeIsLoading={false}>
+        <ThemeContextProvider theme={props.theme!} themeIsLoading={false}>
             <IntlWrapper locale={props.locale}>
                 <CoreRepeaterWithIntl {...props} />
             </IntlWrapper>

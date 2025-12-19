@@ -44,14 +44,14 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
         const { backend, workspace, execConfig } = props;
         const sortBy = props.sortBy ?? getDefaultHeatmapSort(buckets);
 
-        return backend
+        return backend!
             .withTelemetry("Heatmap", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...(sortBy as ISortItem[]))
             .withDimensions(heatmapDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
 };
 

@@ -37,13 +37,13 @@ const sankeyChartDefinition: IChartDefinition<ISankeyChartBucketProps, ISankeyCh
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
 
-        return backend
+        return backend!
             .withTelemetry("SankeyChart", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withDimensions(sankeyDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
 };
 

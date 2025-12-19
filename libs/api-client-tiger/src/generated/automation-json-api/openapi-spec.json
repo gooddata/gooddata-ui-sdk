@@ -1582,6 +1582,7 @@
                                     "automation",
                                     "automationResult",
                                     "memoryItem",
+                                    "knowledgeRecommendation",
                                     "prompt",
                                     "visualizationObject",
                                     "filterContext",

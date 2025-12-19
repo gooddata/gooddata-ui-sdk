@@ -36,7 +36,7 @@ const TREEMAP_TEMPLATE = {
                 events: {
                     // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
                     mouseOver(this: Highcharts.Point) {
-                        if ((this as any).drilldown) {
+                        if ((this as any).drilldown && this.graphic?.element?.style) {
                             this.graphic.element.style.cursor = "pointer";
                         }
                     },

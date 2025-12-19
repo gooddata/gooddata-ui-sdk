@@ -40,14 +40,14 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
 
-        return backend
+        return backend!
             .withTelemetry("PieChart", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
             .withDimensions(roundChartDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
 };
 

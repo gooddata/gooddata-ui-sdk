@@ -80,11 +80,11 @@ const getDrillPointCustomProps = (
     return {};
 };
 
-const getYValueForBulletChartTarget = (point: IHighchartsPointObject): number => {
+const getYValueForBulletChartTarget = (point: IHighchartsPointObject): number | null => {
     if (point.isNullTarget) {
         return null;
     }
-    return point.target;
+    return point.target!;
 };
 
 function composeDrillContextGroup(
@@ -97,7 +97,7 @@ function composeDrillContextGroup(
 
         return {
             x: point.x,
-            y: elementChartType === "bullet" ? getYValueForBulletChartTarget(point) : point.y,
+            y: elementChartType === "bullet" ? getYValueForBulletChartTarget(point) : point.y!,
             intersection: point.drillIntersection,
             ...customProps,
         };
@@ -118,7 +118,7 @@ function composeDrillContextPoint(
     point: IHighchartsPointObject,
     chartType: ChartType,
 ): IDrillEventContextPoint {
-    const zProp = isNaN(point.z) ? {} : { z: point.z };
+    const zProp = isNaN(point.z!) ? {} : { z: point.z };
     const valueProp =
         isTreemap(chartType) || isHeatmap(chartType)
             ? {
@@ -226,7 +226,7 @@ const tickLabelClickDebounce = debounce(
 
             return {
                 x: point.x,
-                y: point.y,
+                y: point.y!,
                 intersection: cloneDeep(point.drillIntersection),
                 ...customProps,
             };

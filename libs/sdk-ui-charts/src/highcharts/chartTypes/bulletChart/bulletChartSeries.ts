@@ -37,10 +37,10 @@ const isTargetMeasurePresent = (bucketLocalIdentifiers: Identifier[]) =>
     bucketLocalIdentifiers.includes(BucketNames.SECONDARY_MEASURES);
 
 const getValue = (
-    value: number,
+    value: number | null,
     isTarget: boolean,
 ): {
-    y: number;
+    y: number | null;
     target?: number;
 } =>
     isTarget
@@ -189,9 +189,11 @@ export function getOccupiedMeasureBucketsLocalIdentifiers(dv: DataViewFacade): I
     const notEmptyMeasureBucketsLocalIdentifiers = buckets
         .filter(
             (b) =>
-                !bucketIsEmpty(b) && availableMeasureBucketsLocalIdentifiers.indexOf(b.localIdentifier) >= 0,
+                !bucketIsEmpty(b) &&
+                b.localIdentifier &&
+                availableMeasureBucketsLocalIdentifiers.indexOf(b.localIdentifier) >= 0,
         )
-        .map((b) => b.localIdentifier);
+        .map((b) => b.localIdentifier!);
 
     return isEmpty(notEmptyMeasureBucketsLocalIdentifiers)
         ? availableMeasureBucketsLocalIdentifiers.slice(0, executionResultData.length)

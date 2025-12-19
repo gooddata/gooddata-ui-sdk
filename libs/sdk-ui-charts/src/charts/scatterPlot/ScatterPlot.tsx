@@ -42,14 +42,14 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
 
-        return backend
+        return backend!
             .withTelemetry("ScatterPlot", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
             .withDimensions(pointyChartDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
 };
 

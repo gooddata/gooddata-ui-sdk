@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { type RefObject } from "react";
 
 import cx from "classnames";
@@ -16,13 +17,17 @@ const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";
 const PERCENTAGE_VALUE_LIMIT = 999;
 
-function formatValueToLabelWithColors(value: string | null, format: string, separators?: ISeparators) {
+function formatValueToLabelWithColors(
+    value: string | null,
+    format: string | null | undefined,
+    separators?: ISeparators,
+) {
     const parsedNumber = ClientFormatterFacade.convertValue(value);
 
     // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
     // Additionally, the test necessitates that the value should remain unformatted.
     if (!isEmpty(format)) {
-        return ClientFormatterFacade.formatValue(parsedNumber, format, separators);
+        return ClientFormatterFacade.formatValue(parsedNumber, format!, separators);
     }
 
     if (parsedNumber === null || parsedNumber === undefined) {
@@ -117,7 +122,7 @@ export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadli
     };
 }
 
-export function getDrillableClasses(isDrillable: boolean) {
+export function getDrillableClasses(isDrillable: boolean | undefined) {
     return isDrillable ? ["is-drillable", "s-is-drillable"] : [];
 }
 

@@ -6,8 +6,8 @@ import { describe, expect, it, vi } from "vitest";
 import { type IHeadlineVisualizationProps, LegacyHeadline } from "../LegacyHeadline.js";
 
 describe("LegacyHeadline", () => {
-    function createComponent(props: IHeadlineVisualizationProps) {
-        return render(<LegacyHeadline {...props} />);
+    function createComponent(props: Omit<IHeadlineVisualizationProps, "data"> & { data: any }) {
+        return render(<LegacyHeadline {...(props as IHeadlineVisualizationProps)} />);
     }
 
     it("should call after render callback on componentDidMount", () => {

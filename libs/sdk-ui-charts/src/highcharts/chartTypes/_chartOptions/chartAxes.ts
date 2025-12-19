@@ -41,8 +41,8 @@ export function getXAxes(
     dv: DataViewFacade,
     config: IChartConfig,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     plotLines: number[] | undefined,
 ): IAxis[] {
     const { type, enableJoinedAttributeAxisName } = config;
@@ -115,7 +115,7 @@ function getScatterOrBubbleYAxes(
     return [{ ...measureItem }];
 }
 
-function getHeatmapYAxes(stackByAttribute: IUnwrappedAttributeHeadersWithItems): IAxis[] {
+function getHeatmapYAxes(stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null): IAxis[] {
     return [
         {
             label: stackByAttribute ? stackByAttribute.formOf.name : "",
@@ -181,7 +181,7 @@ export function getYAxes(
     dv: DataViewFacade,
     config: IChartConfig,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
 ): IAxis[] {
     const { type } = config;
 
@@ -254,14 +254,14 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
 }
 
 export function assignYAxes(series: ISeriesItem[], yAxes: IAxis[]): ISeriesItem[] {
-    return series.reduce((result, item, index) => {
+    return series.reduce<ISeriesItem[]>((result, item, index) => {
         const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
             return (axis.seriesIndices ?? []).includes(index);
         });
         // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series
         // then 'yAxis' in other series should follow the first one
         const firstYAxisIndex = result.length > 0 ? result[0].yAxis : 0;
-        const seriesItem = {
+        const seriesItem: ISeriesItem = {
             ...item,
             yAxis: yAxisIndex === -1 ? firstYAxisIndex : yAxisIndex,
         };

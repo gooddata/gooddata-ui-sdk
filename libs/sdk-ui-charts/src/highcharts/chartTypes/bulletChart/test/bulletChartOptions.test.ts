@@ -63,7 +63,7 @@ describe("getBulletChartSeries", () => {
             "should return expected bullet chart series",
             (colorPalette: IColorPalette, dv: DataViewFacade) => {
                 const colorStrategy = getColorStrategy(colorPalette, dv);
-                const measureGroup = dv.meta().measureGroupDescriptor().measureGroupHeader;
+                const measureGroup = dv.meta().measureGroupDescriptor()!.measureGroupHeader;
 
                 expect(
                     getBulletChartSeries(
@@ -85,7 +85,7 @@ describe("getBulletChartSeries", () => {
             HackedUpNullValue.execution["dataView_all"].data[1][0] = null;
 
             const dv = recordedDataFacade(HackedUpNullValue);
-            const measureGroup = dv.meta().measureGroupDescriptor().measureGroupHeader;
+            const measureGroup = dv.meta().measureGroupDescriptor()!.measureGroupHeader;
 
             const colorStrategy = getColorStrategy(colorPaletteRed, dv);
             const series: any = getBulletChartSeries(

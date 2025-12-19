@@ -3,7 +3,12 @@
 import { debounce } from "lodash-es";
 
 import { type IColorDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
-import { BucketNames, type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    type DataViewFacade,
+    type IColorAssignment,
+    getMappingHeaderFormattedName,
+} from "@gooddata/sdk-ui";
 import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
@@ -62,8 +67,8 @@ const resetOpacityOfOtherClustersOnMouseOut = debounce(_resetOpacityOfOtherClust
 
 export function getScatterPlotSeries(
     dv: DataViewFacade,
-    viewByAttribute: { items: IResultAttributeHeader[] } | undefined,
-    stackByAttribute: { items: IResultAttributeHeader[] } | undefined,
+    viewByAttribute: { items: IResultAttributeHeader[] } | undefined | null,
+    stackByAttribute: { items: IResultAttributeHeader[] } | undefined | null,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
 ): ISeriesItemConfig[] {
@@ -71,7 +76,7 @@ export function getScatterPlotSeries(
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
     const colorAssignments = colorStrategy.getColorAssignment();
 
-    const isClustering = dv?.dataView?.clusteringConfig?.numberOfClusters > 0;
+    const isClustering = (dv?.dataView?.clusteringConfig?.numberOfClusters ?? 0) > 0;
     const isClusteringLoading = isClustering && !dv?.dataView?.clusteringResult;
     const isClusteringError = isClustering && dv?.dataView?.clusteringResult?.clusters?.length === 0;
     const isClusteringLoaded = isClustering && !!dv?.dataView?.clusteringResult && !isClusteringError;
@@ -84,7 +89,7 @@ export function getScatterPlotSeries(
                 return parseValue(value);
             });
 
-            let colorAssignment = colorAssignments[0];
+            let colorAssignment: IColorAssignment | undefined = colorAssignments[0];
             if (stackByAttribute) {
                 colorAssignment = colorAssignments.find(
                     (a) =>
@@ -98,7 +103,7 @@ export function getScatterPlotSeries(
                 );
             }
 
-            const colorAssignmentIndex = colorAssignments.indexOf(colorAssignment);
+            const colorAssignmentIndex = colorAssignments.indexOf(colorAssignment!);
             const assignedColor = colorStrategy.getColorByIndex(colorAssignmentIndex);
 
             return {

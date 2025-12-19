@@ -25,7 +25,7 @@ import { SVGAttributes } from 'react';
 // @internal (undocumented)
 export class AttributeColorStrategy extends ColorStrategy {
     // (undocumented)
-    protected createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade): ICreateColorAssignmentReturnValue;
+    protected createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[] | undefined, viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade): ICreateColorAssignmentReturnValue;
 }
 
 // @internal (undocumented)
@@ -51,11 +51,11 @@ export const ColorLegend: ComponentType<Omit<IColorLegendProps, "theme" | "theme
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
-    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, theme?: ITheme, clusterTitle?: string);
+    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[] | undefined, viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, theme?: ITheme, clusterTitle?: string);
     // (undocumented)
     protected clusterTitle?: string;
     // (undocumented)
-    protected abstract createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, clusterTitle?: string): ICreateColorAssignmentReturnValue;
+    protected abstract createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[] | undefined, viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, clusterTitle?: string): ICreateColorAssignmentReturnValue;
     // (undocumented)
     protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[], _viewByAttribute: any, _stackByAttribute: any): string[];
     // (undocumented)
@@ -99,13 +99,13 @@ export const FluidLegend: NamedExoticComponent<IFluidLegendProps>;
 export function formatLegendLabel(value: number, format: string | undefined, diff: number, numericSymbols: string[]): string;
 
 // @internal (undocumented)
-export function getAttributeColorAssignment(attribute: any, colorPalette: IColorPalette, colorMapping: IColorMapping[], dv: DataViewFacade): IColorAssignment[];
+export function getAttributeColorAssignment(attribute: any, colorPalette: IColorPalette, colorMapping: IColorMapping[] | undefined, dv: DataViewFacade): IColorAssignment[];
 
 // @internal (undocumented)
 export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number): IRgbColorValue;
 
 // @internal (undocumented)
-export function getColorFromMapping(mappingHeader: IMappingHeader, colorMapping: IColorMapping[], dv: DataViewFacade): IColor | undefined;
+export function getColorFromMapping(mappingHeader: IMappingHeader, colorMapping: IColorMapping[] | undefined, dv: DataViewFacade): IColor | undefined;
 
 // @public
 export function getColorMappingPredicate(testValue: string): IHeaderPredicate;
@@ -539,7 +539,7 @@ export interface IStaticLegendProps {
 }
 
 // @internal (undocumented)
-export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalette): boolean;
+export function isValidMappedColor(colorItem: IColor | null | undefined, colorPalette: IColorPalette): boolean;
 
 // @internal (undocumented)
 export type ItemBorderRadiusPredicate = (item: any) => boolean;

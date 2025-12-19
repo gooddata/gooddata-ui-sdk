@@ -31,12 +31,12 @@ function XirrStateless(props: Props): ReactElement {
             errorMap[
                 Object.prototype.hasOwnProperty.call(errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
             ];
-        return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
+        return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : <></>;
     }
 
     // when in pageable mode (getPage present) never show loading (its handled by the component)
     if (isLoading || !dataView) {
-        return LoadingComponent ? <LoadingComponent /> : null;
+        return LoadingComponent ? <LoadingComponent /> : <></>;
     }
 
     return (

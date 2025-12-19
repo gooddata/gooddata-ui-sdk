@@ -15,7 +15,7 @@ export type ColumnResizingConfig = {
     widths: RepeaterColumnWidthItem[] | undefined;
 
     clientWidth: number;
-    containerRef: HTMLDivElement | undefined;
+    containerRef: HTMLDivElement | undefined | null;
     separators: ISeparators | undefined;
 
     isMetaOrCtrlKeyPressed: boolean;

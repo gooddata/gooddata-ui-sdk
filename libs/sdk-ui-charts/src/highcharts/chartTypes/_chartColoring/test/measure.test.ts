@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -150,7 +151,7 @@ describe("MeasureColorStrategy", () => {
         );
         const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "column";
-        const colorPalette: IColorPalette = undefined;
+        const colorPalette: IColorPalette | undefined = undefined;
 
         const colorStrategy = ColorFactory.getColorStrategy(
             colorPalette,

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { range } from "lodash-es";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
@@ -16,6 +17,9 @@ export const WEEK_US: DateFilterGranularity = "GDC.time.week_us";
 export const MONTH: DateFilterGranularity = "GDC.time.month";
 export const QUARTER: DateFilterGranularity = "GDC.time.quarter";
 export const YEAR: DateFilterGranularity = "GDC.time.year";
+export const FISCAL_MONTH: DateFilterGranularity = "GDC.time.fiscal_month";
+export const FISCAL_QUARTER: DateFilterGranularity = "GDC.time.fiscal_quarter";
+export const FISCAL_YEAR: DateFilterGranularity = "GDC.time.fiscal_year";
 
 type InputCategory = "Empty" | "TooBig" | "Numeric" | "Textual";
 
@@ -60,6 +64,9 @@ const granularityOffsetLimits: { [key in DateFilterGranularity]: number } = {
     [MONTH]: 60,
     [QUARTER]: 20,
     [YEAR]: 20,
+    [FISCAL_MONTH]: 60,
+    [FISCAL_QUARTER]: 20,
+    [FISCAL_YEAR]: 20,
 };
 
 const offsetMaxValue = 99_999;

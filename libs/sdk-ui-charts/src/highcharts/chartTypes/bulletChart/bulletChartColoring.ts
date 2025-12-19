@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import {
     type IColor,
     type IColorPalette,
@@ -35,7 +36,7 @@ import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js"
 export class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         _viewByAttribute: any,
         _stackByAttribute: any,
         dv: DataViewFacade,
@@ -83,19 +84,19 @@ export class BulletChartColorStrategy extends ColorStrategy {
                 return undefined;
             })
             .filter(Boolean)
-            .map((color) => getRgbStringFromRGB(color));
+            .map((color) => getRgbStringFromRGB(color!));
     }
 
     protected mapMeasureColor(
         headerItem: IMeasureDescriptor,
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         dv: DataViewFacade,
         defaultColorsAssignment: IColorAssignment[],
     ): IColor {
-        const mappedColor = getColorFromMapping(headerItem, colorMapping, dv);
+        const mappedColor = getColorFromMapping(headerItem, colorMapping, dv)!;
         if (isValidMappedColor(mappedColor, colorPalette)) {
-            return mappedColor;
+            return mappedColor!;
         }
 
         const defaultColorAssignment = defaultColorsAssignment.find(
@@ -104,7 +105,7 @@ export class BulletChartColorStrategy extends ColorStrategy {
                 headerItem.measureHeaderItem.localIdentifier,
         );
 
-        return defaultColorAssignment.color;
+        return defaultColorAssignment!.color!;
     }
 
     private getDefaultColorAssignment(
@@ -113,7 +114,7 @@ export class BulletChartColorStrategy extends ColorStrategy {
         occupiedMeasureBucketsLocalIdentifiers: Identifier[],
     ): IColorAssignment[] {
         return measureGroup.items.map((headerItem: IMeasureDescriptor, index: number): IColorAssignment => {
-            const color: IColor =
+            const color: IColor | undefined =
                 (isPrimarySeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
                     type: "guid",
                     value: colorPalette[0].guid,
@@ -122,12 +123,16 @@ export class BulletChartColorStrategy extends ColorStrategy {
                     type: "rgb",
                     value: getLighterColorFromRGB(colorPalette[0].fill, isDarkTheme(this.theme) ? 0.5 : -0.3),
                 }) ||
-                (isComparativeSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
+                ((isComparativeSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
                     type: "rgb",
                     value: this.theme?.palette?.complementary
-                        ? parseRGBString(normalizeColorToRGB(this.theme?.palette?.complementary?.c2))
+                        ? parseRGBString(
+                              normalizeColorToRGB(
+                                  this.theme?.palette?.complementary?.c2 as unknown as string,
+                              ),
+                          )
                         : DEFAULT_BULLET_GRAY_COLOR,
-                });
+                }) as IColor);
 
             return {
                 headerItem,

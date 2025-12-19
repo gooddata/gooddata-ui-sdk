@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { type CSSProperties } from "react";
 
 import { type IntlShape } from "react-intl";
@@ -16,8 +17,8 @@ import { formatItemValue } from "../../../../utils/HeadlineDataItemUtils.js";
 import { useBaseHeadline } from "../../BaseHeadlineContext.js";
 
 function createComparisonAriaLabelFactory(
-    evaluationType: EvaluationType | undefined,
-    chartConfig: IChartConfig,
+    evaluationType: EvaluationType | null | undefined,
+    chartConfig?: IChartConfig,
     dataItem?: ComparisonDataItem,
 ) {
     return (intl: IntlShape) => {
@@ -47,14 +48,14 @@ function createComparisonAriaLabelFactory(
 }
 
 export const useComparisonDataItem = (
-    evaluationType: EvaluationType | undefined,
+    evaluationType: EvaluationType | undefined | null,
     dataItem?: ComparisonDataItem,
 ) => {
     const { config } = useBaseHeadline();
-    const { colorConfig, isArrowEnabled } = config.comparison;
+    const { colorConfig, isArrowEnabled } = config?.comparison ?? {};
 
-    const color = getComparisonColor(colorConfig, evaluationType, config.colorPalette);
-    const indicator = isArrowEnabled ? ComparisonIndicators[evaluationType] : null;
+    const color = getComparisonColor(colorConfig, evaluationType, config?.colorPalette);
+    const indicator = isArrowEnabled && evaluationType ? ComparisonIndicators[evaluationType] : undefined;
 
     // Prepare aria-label factory using the same formatting logic as ComparisonValue
     const comparisonAriaLabelFactory = createComparisonAriaLabelFactory(

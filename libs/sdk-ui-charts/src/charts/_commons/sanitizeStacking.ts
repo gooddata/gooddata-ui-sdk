@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -27,7 +28,7 @@ export function sanitizeConfig(
         return config;
     }
 
-    const items = isItemsArray(input) ? input : bucketItems(bucketsFind(input, BucketNames.MEASURES));
+    const items = isItemsArray(input) ? input : bucketItems(bucketsFind(input, BucketNames.MEASURES)!);
 
     if (items) {
         const isComputeRatio = isComputeRatioMeasure(items[0]);

@@ -40,14 +40,14 @@ const pyramidChartDefinition: IChartDefinition<IPyramidChartBucketProps, IPyrami
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
 
-        return backend
+        return backend!
             .withTelemetry("PyramidChart", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
             .withDimensions(roundChartDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
 };
 

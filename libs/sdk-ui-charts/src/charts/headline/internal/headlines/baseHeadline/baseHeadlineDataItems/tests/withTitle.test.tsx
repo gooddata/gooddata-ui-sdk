@@ -3,20 +3,20 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IWithTitleProps } from "../../../../interfaces/BaseHeadlines.js";
+import { type IBaseHeadlineTitle, type IWithTitleProps } from "../../../../interfaces/BaseHeadlines.js";
 import { HEADLINE_TITLE_WRAPPER_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
 import { withTitle } from "../withTitle.js";
 
 describe("withTitle", () => {
     const WrappedComponent = vi.fn();
     const WithTitleComponent = withTitle(WrappedComponent);
-    const renderWithTitleComponent = (props: IWithTitleProps<unknown>) => {
+    const renderWithTitleComponent = (props: IWithTitleProps<IBaseHeadlineTitle>) => {
         return render(<WithTitleComponent {...props} />);
     };
 
     it("Should render with title", () => {
         const { getByText } = renderWithTitleComponent({ dataItem: TEST_DATA_ITEM });
-        expect(getByText(TEST_DATA_ITEM.title)).toBeInTheDocument();
+        expect(getByText(TEST_DATA_ITEM.title!)).toBeInTheDocument();
     });
 
     it("Should render without title", () => {

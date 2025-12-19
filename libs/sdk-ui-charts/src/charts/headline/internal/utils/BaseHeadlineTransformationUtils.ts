@@ -23,7 +23,10 @@ import {
 } from "../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../interfaces/Headlines.js";
 
-export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
+export function getBaseHeadlineData(
+    dataView: IDataView,
+    drillableItems: ExplicitDrill[] | undefined,
+): IBaseHeadlineData {
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems ?? []);
 
     const dv = DataViewFacade.for(dataView);
@@ -36,10 +39,10 @@ export function getBaseHeadlineData(dataView: IDataView, drillableItems: Explici
         "primaryValue",
     );
 
-    let secondaryItemData: IHeadlineExecutionData;
-    let secondaryItemHeader: IMeasureDescriptor;
-    let tertiaryItemData: IHeadlineExecutionData;
-    let tertiaryItemHeader: IMeasureDescriptor;
+    let secondaryItemData: IHeadlineExecutionData | undefined;
+    let secondaryItemHeader: IMeasureDescriptor | undefined;
+    let tertiaryItemData: IHeadlineExecutionData | undefined;
+    let tertiaryItemHeader: IMeasureDescriptor | undefined;
     if (executionData.length === 3) {
         // There are 2 secondary metrics
         // The left item will be the second metric
@@ -61,7 +64,7 @@ export function getBaseHeadlineData(dataView: IDataView, drillableItems: Explici
 
     const tertiaryItem = createBaseHeadlineItem(
         tertiaryItemData,
-        tertiaryItemHeader && isSomeHeaderPredicateMatched(drillablePredicates, tertiaryItemHeader, dv),
+        !!tertiaryItemHeader && isSomeHeaderPredicateMatched(drillablePredicates, tertiaryItemHeader, dv),
         "secondaryValue",
     );
 
@@ -73,10 +76,10 @@ export function getBaseHeadlineData(dataView: IDataView, drillableItems: Explici
 }
 
 export function createBaseHeadlineItem(
-    executionData: IHeadlineExecutionData,
+    executionData: IHeadlineExecutionData | undefined,
     isDrillable: boolean,
     elementType: HeadlineElementType,
-): IBaseHeadlineItem<IHeadlineDataItem> {
+): IBaseHeadlineItem<IHeadlineDataItem> | null {
     const data = createHeadlineDataItem(executionData, isDrillable);
 
     return data

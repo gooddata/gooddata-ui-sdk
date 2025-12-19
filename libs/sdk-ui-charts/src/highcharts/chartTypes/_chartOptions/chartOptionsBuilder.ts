@@ -92,10 +92,10 @@ const isAreaChartStackingEnabled = (options: IChartConfig) => {
 };
 
 function getCategories(
-    type: string,
+    type: string | undefined,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     emptyHeaderTitle: string,
 ): any[] {
     // We need an explicit any[] return type otherwise the code down the line no longer type checks, no time to fix all of it now
@@ -140,7 +140,7 @@ function getCategories(
 }
 
 function getStackingConfig(
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     options: IChartConfig,
 ): StackingType {
     const { type, stackMeasures, stackMeasuresToPercent } = options;
@@ -300,9 +300,9 @@ export function getScatterPlotAttributes(dv: DataViewFacade): ChartedAttributes 
 }
 
 type ChartedAttributes = {
-    viewByAttribute?: IUnwrappedAttributeHeadersWithItems;
-    viewByParentAttribute?: IUnwrappedAttributeHeadersWithItems;
-    stackByAttribute?: IUnwrappedAttributeHeadersWithItems;
+    viewByAttribute?: IUnwrappedAttributeHeadersWithItems | null;
+    viewByParentAttribute?: IUnwrappedAttributeHeadersWithItems | null;
+    stackByAttribute?: IUnwrappedAttributeHeadersWithItems | null;
     isViewByTwoAttributes?: boolean;
 };
 
@@ -343,7 +343,7 @@ function defaultChartedAttributeDiscovery(dv: DataViewFacade): ChartedAttributes
     };
 }
 
-function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string): ChartedAttributes {
+function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string | undefined): ChartedAttributes {
     if (isTreemap(chartType)) {
         return getTreemapAttributes(dv);
     }
@@ -356,9 +356,9 @@ function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string): Chart
 }
 
 function getLegendLabel(
-    type: string,
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    type: string | undefined,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
 ) {
     let legendLabel;
     if (isTreemap(type)) {
@@ -372,7 +372,10 @@ function getLegendLabel(
     return legendLabel;
 }
 
-function isAutoSortableChart(type: string, viewByAttribute: IUnwrappedAttributeHeadersWithItems) {
+function isAutoSortableChart(
+    type: string | undefined,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+) {
     const isPyramidWithViewByAttribute = isPyramid(type) && Boolean(viewByAttribute);
     return (
         isOneOfTypes(type, [VisualizationTypes.DONUT, VisualizationTypes.PIE, VisualizationTypes.FUNNEL]) ||
@@ -460,7 +463,7 @@ export function getChartOptions(
 
     // When custom sorting is enabled and is chart which does the auto-sorting,
     // need to skip this, so the sort specified by the user does not get override.
-    if (isAutoSortableChart(type, viewByAttribute) && !config.enableChartSorting) {
+    if (isAutoSortableChart(type, viewByAttribute) && !config.enableChartSorting && initialSeries[0]?.data) {
         // dataPoints are sorted by default by value in descending order
         const dataPoints = initialSeries[0].data;
         const indexSortOrder: number[] = [];
@@ -469,15 +472,15 @@ export function getChartOptions(
                 if (pointDataA.y === pointDataB.y) {
                     return 0;
                 }
-                return pointDataB.y - pointDataA.y;
+                return pointDataB.y! - pointDataA.y!;
             })
             .map((dataPoint, dataPointIndex: number) => {
                 // Legend index equals original dataPoint index
-                indexSortOrder.push(dataPoint.legendIndex);
+                indexSortOrder.push(dataPoint.legendIndex!);
                 return {
                     // after sorting, colors need to be reassigned in original order and legendIndex needs to be reset
                     ...dataPoint,
-                    color: dataPoints[dataPointIndex].color,
+                    color: dataPoints[dataPointIndex]?.color,
                     legendIndex: dataPointIndex,
                 };
             });
@@ -639,26 +642,26 @@ export function getChartOptions(
     }
 
     if (isBubbleChart(type)) {
-        const measures: IMeasureDescriptor[] = [];
+        const measures: (IMeasureDescriptor | null)[] = [];
         const measureGroupCopy = cloneDeep(measureGroup);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
         if (dv.def().isBucketEmpty(BucketNames.MEASURES)) {
             measures.push(null);
         } else {
-            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift()! : null);
         }
 
         if (dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES)) {
             measures.push(null);
         } else {
-            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift()! : null);
         }
 
         if (dv.def().isBucketEmpty(BucketNames.TERTIARY_MEASURES)) {
             measures.push(null);
         } else {
-            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift()! : null);
         }
 
         return {
@@ -715,8 +718,8 @@ export function getChartOptions(
             series,
             chartConfig,
             colorAssignments[0],
-            colorPalette,
-            totalColumnTitle,
+            colorPalette!,
+            totalColumnTitle!,
             config.chartFill,
             theme,
         );
@@ -724,7 +727,7 @@ export function getChartOptions(
             categories,
             chartConfig,
             measureGroup,
-            totalColumnTitle,
+            totalColumnTitle!,
         );
         return {
             type,
@@ -757,7 +760,7 @@ export function getChartOptions(
     }
 
     const isDualAxis = yAxes.length === 2;
-    let measure: IMeasureDescriptor;
+    let measure: IMeasureDescriptor | undefined;
 
     /**
      * Because of the problem described in TNT-16, we decided to change the visual of the tooltip.

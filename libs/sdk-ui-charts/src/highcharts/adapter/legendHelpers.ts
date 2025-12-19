@@ -187,13 +187,13 @@ export function getComboChartSeries(series: any[]): any[] {
     ];
 }
 
-export function createDualAxesSeriesMapper(chartType: string) {
+export function createDualAxesSeriesMapper(chartType: string | undefined) {
     return (series: any[]): any[] => {
         return transformToDualAxesSeries(series, chartType);
     };
 }
 
-export function transformToDualAxesSeries(series: any[], chartType: string): any[] {
+export function transformToDualAxesSeries(series: any[], chartType: string | undefined): any[] {
     const { itemsOnFirstAxis, itemsOnSecondAxis } = separateLegendItems(series);
 
     if (
@@ -204,7 +204,8 @@ export function transformToDualAxesSeries(series: any[], chartType: string): any
         return series;
     }
 
-    const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS[chartType];
+    // fallback to column should not happen running common keys ["left", "right"]
+    const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS[chartType ?? "column"];
 
     return [
         { type: LEGEND_AXIS_INDICATOR, labelKey: firstAxisKey },
@@ -216,7 +217,7 @@ export function transformToDualAxesSeries(series: any[], chartType: string): any
 }
 
 export function isStackedChart(chartOptions: IChartOptions): boolean {
-    const seriesLength = chartOptions?.data?.series?.length;
+    const seriesLength = chartOptions?.data?.series?.length ?? 0;
     const { type, stacking, hasStackByAttribute } = chartOptions;
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
@@ -228,10 +229,10 @@ export function createWaterfallLegendItems(
     intl: IntlShape,
     theme: ITheme | undefined,
 ) {
-    return chartOptions.colorAssignments.map((colorAssignment: IColorAssignment, index: number) => {
+    return (chartOptions.colorAssignments ?? []).map((colorAssignment: IColorAssignment, index: number) => {
         const { color, headerItem } = colorAssignment;
         const colorString = getRgbStringFromRGB(
-            getColorByGuid(chartOptions.colorPalette, color.value as string, 0),
+            getColorByGuid(chartOptions.colorPalette ?? [], color?.value as string, 0),
         );
         const legendName = (headerItem as IColorDescriptor).colorHeaderItem.name;
         const colorProperties = getChartFillProperties(theme, chartOptions.chartFill, colorString, index);

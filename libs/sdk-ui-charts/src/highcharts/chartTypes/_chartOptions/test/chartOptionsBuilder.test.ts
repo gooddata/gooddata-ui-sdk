@@ -24,7 +24,11 @@ import {
 } from "../../../constants/limits.js";
 import { type StackingType } from "../../../constants/stacking.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
-import { type IChartOptions, type IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
+import {
+    type IChartOptions,
+    type ITooltipFactory,
+    type IUnsafeHighchartsTooltipPoint,
+} from "../../../typings/unsafe.js";
 import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
 import { GRAY } from "../../_util/color.js";
 import { customEscape } from "../../_util/common.js";
@@ -77,19 +81,19 @@ describe("chartOptionsBuilder", () => {
         fixtures.barChartWith3MetricsAndViewByAttribute,
     );
 
-    function getValues(str: string): string[] {
+    function getValues(str: string): string[] | null {
         const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]+<\/span>/g, "");
         const test = />[^<]+<\/span>/g;
-        const result = strWithoutHiddenSpan.match(test).map((match: string) => match.slice(1, -7));
-        return result?.length >= 2 ? result : null;
+        const result = strWithoutHiddenSpan.match(test)?.map((match: string) => match.slice(1, -7));
+        return result?.length && result.length >= 2 ? result : null;
     }
 
     function getStyleMaxWidth(str: string): string[] {
-        const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]+<\/span>/g, "");
+        const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]*<\/span>/g, "");
         const testRegex = /max-width: [^;:]+px;/g;
         // Get all max-width values but normalize them for happy-dom compatibility
         // happy-dom may calculate slightly different pixel values than jsdom
-        return strWithoutHiddenSpan.match(testRegex).map((match: string): string => {
+        return strWithoutHiddenSpan.match(testRegex)!.map((match: string): string => {
             const value = parseInt(match.slice(11, -3), 10);
             // If the value is close to 180 (between 160-180), normalize it to "180"
             // This handles the difference between jsdom (180) and happy-dom (164) calculations
@@ -132,10 +136,10 @@ describe("chartOptionsBuilder", () => {
 
     describe("isNegativeValueIncluded", () => {
         it("should return true if there is at least one negative value in series", () => {
-            expect(isNegativeValueIncluded(pieChartOptionsWithNegativeValue.data.series)).toBe(true);
+            expect(isNegativeValueIncluded(pieChartOptionsWithNegativeValue.data!.series)).toBe(true);
         });
         it("should return false if there are no negative values in series", () => {
-            expect(isNegativeValueIncluded(pieChartWithMetricsOnlyOptions.data.series)).toBe(false);
+            expect(isNegativeValueIncluded(pieChartWithMetricsOnlyOptions.data!.series)).toBe(false);
         });
     });
 
@@ -201,7 +205,7 @@ describe("chartOptionsBuilder", () => {
                     const chartOptions = generateChartOptions(
                         fixtures.barChartWith3MetricsAndViewByAttribute,
                     );
-                    chartOptions.data.categories = range(DEFAULT_CATEGORIES_LIMIT + 1).map((category) => [
+                    chartOptions.data!.categories = range(DEFAULT_CATEGORIES_LIMIT + 1).map((category) => [
                         category.toString(),
                     ]);
 
@@ -233,7 +237,7 @@ describe("chartOptionsBuilder", () => {
                     const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, {
                         type: "pie",
                     });
-                    chartOptions.data.categories = range(PIE_CHART_LIMIT + 1).map((category) => [
+                    chartOptions.data!.categories = range(PIE_CHART_LIMIT + 1).map((category) => [
                         category.toString(),
                     ]);
                     const validationResult = validateData(undefined, chartOptions);
@@ -255,9 +259,11 @@ describe("chartOptionsBuilder", () => {
                     stacking: false,
                 });
 
-                sankeyChartOptions.data.series[0].nodes = range(SANKEY_CHART_NODE_LIMIT + 1).map((index) => ({
-                    id: index,
-                }));
+                sankeyChartOptions.data!.series![0].nodes = range(SANKEY_CHART_NODE_LIMIT + 1).map(
+                    (index) => ({
+                        id: index,
+                    }),
+                );
                 const validationResult = validateData(undefined, sankeyChartOptions);
 
                 expect(validationResult).toEqual({
@@ -2000,7 +2006,7 @@ describe("chartOptionsBuilder", () => {
                             },
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
-                        expect(getValues(tooltip)).toEqual([
+                        expect(getValues(tooltip!)).toEqual([
                             "Department",
                             "category",
                             "&lt;series&gt;",
@@ -2018,7 +2024,7 @@ describe("chartOptionsBuilder", () => {
                             },
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
-                        expect(getValues(tooltip)).toEqual([
+                        expect(getValues(tooltip!)).toEqual([
                             "Department",
                             "category",
                             "&quot;&amp;&#39;&lt;",
@@ -2036,7 +2042,7 @@ describe("chartOptionsBuilder", () => {
                             },
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
-                        expect(getValues(tooltip)).toEqual([
+                        expect(getValues(tooltip!)).toEqual([
                             "Department",
                             "&gt;&quot;&amp;&#39;&lt;",
                             "series",
@@ -2076,7 +2082,7 @@ describe("chartOptionsBuilder", () => {
                         set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
 
                         const tooltip = tooltipFn(testData, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.0111);
-                        expect(getValues(tooltip)).toEqual([
+                        expect(getValues(tooltip!)).toEqual([
                             "Department",
                             "category",
                             "series",
@@ -2088,31 +2094,31 @@ describe("chartOptionsBuilder", () => {
                 it("should render correct values in usecase of bar chart without attribute", () => {
                     const tooltipFn = buildTooltipFactory(null, "column");
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["series", " 1"]);
                 });
 
                 it("should render correct values in usecase of pie chart with an attribute", () => {
                     const tooltipFn = buildTooltipFactory(viewByAttribute, "pie");
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["Department", "category", "series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["Department", "category", "series", " 1"]);
                 });
 
                 it("should render correct values in usecase of pie chart with measures", () => {
                     const tooltipFn = buildTooltipFactory(null, "pie");
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["point", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["point", " 1"]);
                 });
 
                 it("should render correct values in usecase of treemap chart with an attribute", () => {
                     const tooltipFn = buildTooltipFactory(viewByAttribute, "treemap");
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["Department", "category", "series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["Department", "category", "series", " 1"]);
                 });
 
                 it("should render correct values in usecase of treemap chart with measures", () => {
                     const tooltipFn = buildTooltipFactory(null, "treemap");
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["point", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["point", " 1"]);
                 });
 
                 it("should generate correct tooltip for chart with small width", () => {
@@ -2122,7 +2128,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = buildTooltipFactory(viewByAttribute, "donut", chartConfig);
                     const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
-                    expect(getStyleMaxWidth(tooltip)).toEqual([
+                    expect(getStyleMaxWidth(tooltip!)).toEqual([
                         "180",
                         "180",
                         "180",
@@ -2156,7 +2162,7 @@ describe("chartOptionsBuilder", () => {
                 it("should render correct values in usecase of bar chart without attribute", () => {
                     const tooltipFn = buildTooltipForTwoAttributesFactory(null, null);
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["series", " 1"]);
                 });
 
                 it("should render correct values in usecase of bar chart with no attribute and no category", () => {
@@ -2172,13 +2178,13 @@ describe("chartOptionsBuilder", () => {
                         },
                         DEFAULT_TOOLTIP_CONTENT_WIDTH,
                     );
-                    expect(getValues(tooltip)).toEqual(["series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["series", " 1"]);
                 });
 
                 it("should render correct values in usecase of bar chart with one attribute", () => {
                     const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, null);
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["Region", "category", "series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["Region", "category", "series", " 1"]);
                 });
 
                 it("should render correct values in usecase of bar chart with one attribute and no category", () => {
@@ -2194,7 +2200,7 @@ describe("chartOptionsBuilder", () => {
                         },
                         DEFAULT_TOOLTIP_CONTENT_WIDTH,
                     );
-                    expect(getValues(tooltip)).toEqual(["series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["series", " 1"]);
                 });
 
                 it("should render correct values in usecase of bar chart with two attributes", () => {
@@ -2203,7 +2209,7 @@ describe("chartOptionsBuilder", () => {
                         viewByParentAttribute,
                     );
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Department",
                         "parent category",
                         "Region",
@@ -2232,7 +2238,7 @@ describe("chartOptionsBuilder", () => {
                         },
                         DEFAULT_TOOLTIP_CONTENT_WIDTH,
                     );
-                    expect(getValues(tooltip)).toEqual(["Region", "category", "series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["Region", "category", "series", " 1"]);
                 });
 
                 it.each([
@@ -2266,7 +2272,7 @@ describe("chartOptionsBuilder", () => {
                         set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
 
                         const tooltip = tooltipFn(testData, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.0111);
-                        expect(getValues(tooltip)).toEqual([
+                        expect(getValues(tooltip!)).toEqual([
                             "Department",
                             "parent category",
                             "Region",
@@ -2288,7 +2294,7 @@ describe("chartOptionsBuilder", () => {
                         chartConfig,
                     );
                     const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
-                    expect(getStyleMaxWidth(tooltip)).toEqual(["180", "180", "180", "180"]);
+                    expect(getStyleMaxWidth(tooltip!)).toEqual(["180", "180", "180", "180"]);
                 });
             });
 
@@ -2316,7 +2322,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["Sales Rep", "point name"]);
+                    expect(getValues(tooltip!)).toEqual(["Sales Rep", "point name"]);
                 });
 
                 it("should generate valid tooltip for 1 measure", () => {
@@ -2324,7 +2330,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Sales Rep",
                         "point name",
                         "_Snapshot [EOP-2]",
@@ -2337,7 +2343,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Sales Rep",
                         "point name",
                         "_Snapshot [EOP-2]",
@@ -2352,7 +2358,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Sales Rep",
                         "point name",
                         "_Snapshot [EOP-2]",
@@ -2371,7 +2377,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Sales Rep",
                         "point name",
                         "_Snapshot [EOP-2]",
@@ -2393,7 +2399,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute, chartConfig);
                     const tooltip = tooltipFn(pointForSmallCharts, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Sales Rep",
                         "name",
                         "_Snapshot [EOP-2]",
@@ -2430,7 +2436,7 @@ describe("chartOptionsBuilder", () => {
                 it("should generate valid tooltip for 1 measure", () => {
                     const tooltipFn = buildTooltipTreemapFactory(null, null, "empty value");
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["category", "300"]);
+                    expect(getValues(tooltip!)).toEqual(["category", "300"]);
                 });
 
                 it("should respect measure format", () => {
@@ -2439,7 +2445,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = buildTooltipTreemapFactory(null, null, "empty value");
                     const tooltip = tooltipFn(pointWithFormat, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["category", "abcd"]);
+                    expect(getValues(tooltip!)).toEqual(["category", "abcd"]);
                 });
 
                 it("should generate valid tooltip for 1 measure and view by", () => {
@@ -2452,7 +2458,7 @@ describe("chartOptionsBuilder", () => {
                         "empty value",
                     );
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["Department", "Direct Sales", "serie name", "300"]);
+                    expect(getValues(tooltip!)).toEqual(["Department", "Direct Sales", "serie name", "300"]);
                 });
 
                 it("should generate valid tooltip for 1 measure and stack by", () => {
@@ -2465,7 +2471,7 @@ describe("chartOptionsBuilder", () => {
                         "empty value",
                     );
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual(["Department", "Direct Sales", "category", "300"]);
+                    expect(getValues(tooltip!)).toEqual(["Department", "Direct Sales", "category", "300"]);
                 });
 
                 it("should generate valid tooltip for 1 measure, view by and stack by", () => {
@@ -2478,7 +2484,7 @@ describe("chartOptionsBuilder", () => {
                         "empty value",
                     );
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Department",
                         "Direct Sales",
                         "Region",
@@ -2502,7 +2508,7 @@ describe("chartOptionsBuilder", () => {
                         chartConfig,
                     );
                     const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
-                    expect(getStyleMaxWidth(tooltip)).toEqual([
+                    expect(getStyleMaxWidth(tooltip!)).toEqual([
                         "180",
                         "180",
                         "180",
@@ -2542,7 +2548,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should enable grid", () => {
-                    expect(chartOptionsWithCustomOptions.grid.enabled).toBe(true);
+                    expect(chartOptionsWithCustomOptions.grid!.enabled).toBe(true);
                 });
 
                 it("should disable grid", () => {
@@ -2550,7 +2556,7 @@ describe("chartOptionsBuilder", () => {
                         grid: { enabled: false },
                         type: "line",
                     });
-                    expect(chartOptions.grid.enabled).toEqual(false);
+                    expect(chartOptions.grid!.enabled).toEqual(false);
                 });
 
                 describe("getCategoriesForTwoAttributes", () => {
@@ -2559,7 +2565,7 @@ describe("chartOptionsBuilder", () => {
                     );
 
                     it("should assign two-level categories", () => {
-                        expect(chartOptions.data.categories).toEqual([
+                        expect(chartOptions.data!.categories).toEqual([
                             {
                                 categories: ["East Coast", "West Coast"],
                                 name: "Direct Sales",
@@ -2597,11 +2603,11 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign number of series equal to number of measures", () => {
-                        expect(chartOptions.data.series.length).toBe(3);
+                        expect(chartOptions.data!.series!.length).toBe(3);
                     });
 
                     it("should assign categories equal to view by attribute values", () => {
-                        expect(chartOptions.data.categories).toEqual([
+                        expect(chartOptions.data!.categories).toEqual([
                             "<button>2008</button>",
                             "2009",
                             "2010",
@@ -2611,7 +2617,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign 3 colors from default colorPalette", () => {
-                        const seriesColors = chartOptions.data.series.map((serie: any) => serie.color);
+                        const seriesColors = chartOptions.data!.series!.map((serie: any) => serie.color);
                         expect(seriesColors).toEqual(
                             DefaultColorPalette.slice(0, 3).map((defaultColor: IColorPaletteItem) =>
                                 getRgbString(defaultColor),
@@ -2632,7 +2638,7 @@ describe("chartOptionsBuilder", () => {
                                 name: "series",
                             },
                         };
-                        const tooltip = chartOptions.actions.tooltip(
+                        const tooltip = chartOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
@@ -2654,11 +2660,11 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign number of series equal to number of stack by attribute values", () => {
-                        expect(chartOptions.data.series.length).toBe(2);
+                        expect(chartOptions.data!.series!.length).toBe(2);
                     });
 
                     it("should assign categories equal to view by attribute values", () => {
-                        expect(chartOptions.data.categories).toEqual(["Direct Sales", "Inside Sales"]);
+                        expect(chartOptions.data!.categories).toEqual(["Direct Sales", "Inside Sales"]);
                     });
 
                     it("should assign correct tooltip function", () => {
@@ -2676,8 +2682,8 @@ describe("chartOptionsBuilder", () => {
                                 name: "series",
                             },
                         };
-                        let measure: IMeasureDescriptor;
-                        const tooltip = chartOptions.actions.tooltip(
+                        let measure: IMeasureDescriptor | undefined;
+                        const tooltip = chartOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
@@ -2710,13 +2716,13 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should always assign 1 series", () => {
-                        expect(pieChartOptions.data.series.length).toBe(1);
-                        expect(treemapOptions.data.series.length).toBe(1);
+                        expect(pieChartOptions.data!.series!.length).toBe(1);
+                        expect(treemapOptions.data!.series!.length).toBe(1);
                     });
 
                     it("should assign categories equal to view by attribute values", () => {
-                        expect(pieChartOptions.data.categories).toEqual(["Direct Sales", "Inside Sales"]);
-                        expect(treemapOptions.data.categories).toEqual(["Direct Sales", "Inside Sales"]);
+                        expect(pieChartOptions.data!.categories).toEqual(["Direct Sales", "Inside Sales"]);
+                        expect(treemapOptions.data!.categories).toEqual(["Direct Sales", "Inside Sales"]);
                     });
 
                     it("should assign correct tooltip function", () => {
@@ -2742,7 +2748,7 @@ describe("chartOptionsBuilder", () => {
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
 
-                        const pieChartTooltip = pieChartOptions.actions.tooltip(
+                        const pieChartTooltip = pieChartOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
@@ -2750,11 +2756,11 @@ describe("chartOptionsBuilder", () => {
 
                         expectedTooltip = buildTooltipTreemapFactory(
                             viewByAttribute,
-                            null,
+                            undefined,
                             "empty value",
                         )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
 
-                        const treemapTooltip = treemapOptions.actions.tooltip(
+                        const treemapTooltip = treemapOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
@@ -2776,13 +2782,13 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should always assign 1 series", () => {
-                        expect(pieChartOptions.data.series.length).toBe(1);
-                        expect(treemapOptions.data.series.length).toBe(1);
+                        expect(pieChartOptions.data!.series!.length).toBe(1);
+                        expect(treemapOptions.data!.series!.length).toBe(1);
                     });
 
                     it("should assign categories with names of measures", () => {
-                        expect(pieChartOptions.data.categories).toEqual(["Won", "Lost", "Expected"]);
-                        expect(treemapOptions.data.categories).toEqual(["Lost", "Won", "Expected"]);
+                        expect(pieChartOptions.data!.categories).toEqual(["Won", "Lost", "Expected"]);
+                        expect(treemapOptions.data!.categories).toEqual(["Lost", "Won", "Expected"]);
                     });
 
                     it("should assign correct tooltip function", () => {
@@ -2802,22 +2808,22 @@ describe("chartOptionsBuilder", () => {
                             value: 2,
                         };
 
-                        const expectedPieChartTooltip = buildTooltipFactory(null, "pie")(
+                        const expectedPieChartTooltip = buildTooltipFactory(undefined, "pie")(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
-                        const pieChartTooltip = pieChartOptions.actions.tooltip(
+                        const pieChartTooltip = pieChartOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
                         expect(pieChartTooltip).toBe(expectedPieChartTooltip);
 
                         const expectedTreemapTooltip = buildTooltipTreemapFactory(
-                            null,
-                            null,
+                            undefined,
+                            undefined,
                             "empty value",
                         )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                        const treemapTooltip = treemapOptions.actions.tooltip(
+                        const treemapTooltip = treemapOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
@@ -2838,11 +2844,11 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should always assign number of series equal to number of measures", () => {
-                        expect(chartOptions.data.series.length).toBe(2);
+                        expect(chartOptions.data!.series!.length).toBe(2);
                     });
 
                     it("should assign categories", () => {
-                        expect(chartOptions.data.categories).toEqual([
+                        expect(chartOptions.data!.categories).toEqual([
                             "2008",
                             "2009",
                             "2010",
@@ -2853,8 +2859,8 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign updated color for pop measure", () => {
-                        expect(chartOptions.data.series[0].color).toEqual("rgb(161,224,243)");
-                        expect(chartOptions.data.series[1].color).toEqual("rgb(20,178,226)");
+                        expect(chartOptions.data!.series![0].color).toEqual("rgb(161,224,243)");
+                        expect(chartOptions.data!.series![1].color).toEqual("rgb(20,178,226)");
                     });
 
                     it("should assign correct tooltip function for pop measure", () => {
@@ -2870,7 +2876,7 @@ describe("chartOptionsBuilder", () => {
                                 name: "series",
                             },
                         };
-                        const tooltip = chartOptions.actions.tooltip(
+                        const tooltip = chartOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
@@ -2894,7 +2900,7 @@ describe("chartOptionsBuilder", () => {
                                 name: "series",
                             },
                         };
-                        const tooltip = chartOptions.actions.tooltip(
+                        const tooltip = chartOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
@@ -2963,8 +2969,8 @@ describe("chartOptionsBuilder", () => {
                             },
                         );
 
-                        expect(chartOptions.data.series[0].type).toBe(COLUMN);
-                        expect(chartOptions.data.series[1].type).toBe(LINE);
+                        expect(chartOptions.data!.series![0].type).toBe(COLUMN);
+                        expect(chartOptions.data!.series![1].type).toBe(LINE);
                     });
 
                     it("should handle missing buckets", () => {
@@ -2975,8 +2981,8 @@ describe("chartOptionsBuilder", () => {
                             },
                         );
 
-                        expect(chartOptions.data.series[0].type).toBeUndefined();
-                        expect(chartOptions.data.series[1].type).toBeUndefined();
+                        expect(chartOptions.data!.series![0].type).toBeUndefined();
+                        expect(chartOptions.data!.series![1].type).toBeUndefined();
                     });
 
                     it.each<[StackingType, boolean]>([
@@ -3160,7 +3166,7 @@ describe("chartOptionsBuilder", () => {
                             },
                         );
 
-                        expect(chartOptions.data.series.length).toEqual(20);
+                        expect(chartOptions.data!.series!.length).toEqual(20);
                     });
 
                     it("should flip axis if primary measure bucket is empty", () => {
@@ -3171,7 +3177,7 @@ describe("chartOptionsBuilder", () => {
                             },
                         );
 
-                        expect(chartOptions.data.series[0].data[0].x).toEqual(0);
+                        expect(chartOptions.data!.series![0].data![0].x).toEqual(0);
                     });
 
                     it("Should generate correct axes", () => {
@@ -3182,10 +3188,10 @@ describe("chartOptionsBuilder", () => {
                             },
                         );
 
-                        expect(chartOptions.xAxes.length).toEqual(1);
-                        expect(chartOptions.yAxes.length).toEqual(1);
-                        expect(chartOptions.xAxes[0].label).toEqual("_Snapshot [EOP-2]");
-                        expect(chartOptions.yAxes[0].label).toEqual("# of Open Opps.");
+                        expect(chartOptions.xAxes!.length).toEqual(1);
+                        expect(chartOptions.yAxes!.length).toEqual(1);
+                        expect(chartOptions.xAxes![0].label).toEqual("_Snapshot [EOP-2]");
+                        expect(chartOptions.yAxes![0].label).toEqual("# of Open Opps.");
                     });
                 });
 
@@ -3253,7 +3259,7 @@ describe("chartOptionsBuilder", () => {
                             const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, "empty value");
                             const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
 
-                            expect(getValues(tooltip)).toEqual([
+                            expect(getValues(tooltip!)).toEqual([
                                 "stackAttr",
                                 "stackHeader",
                                 "viewAttr",
@@ -3275,7 +3281,7 @@ describe("chartOptionsBuilder", () => {
                             );
                             const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
 
-                            expect(getStyleMaxWidth(tooltip)).toEqual([
+                            expect(getStyleMaxWidth(tooltip!)).toEqual([
                                 "180",
                                 "180",
                                 "180",
@@ -3299,12 +3305,12 @@ describe("chartOptionsBuilder", () => {
                             )(
                                 {
                                     ...point,
-                                    value: null,
+                                    value: null as unknown as number,
                                 },
                                 DEFAULT_TOOLTIP_CONTENT_WIDTH,
                             );
 
-                            expect(getValues(tooltipValue)).toEqual([
+                            expect(getValues(tooltipValue!)).toEqual([
                                 "stackAttr",
                                 "stackHeader",
                                 "viewAttr",
@@ -3344,7 +3350,7 @@ describe("chartOptionsBuilder", () => {
                                 },
                             ];
 
-                            expect(chartOptions.data.series).toEqual(expectedSeries);
+                            expect(chartOptions.data!.series).toEqual(expectedSeries);
                         });
 
                         it("should generate valid categories", () => {
@@ -3361,7 +3367,7 @@ describe("chartOptionsBuilder", () => {
                                 ["East Coast", "West Coast"],
                             ];
 
-                            expect(chartOptions.data.categories).toEqual(expectedCategories);
+                            expect(chartOptions.data!.categories).toEqual(expectedCategories);
                         });
 
                         it("should generate categories with empty strings", () => {
@@ -3373,7 +3379,7 @@ describe("chartOptionsBuilder", () => {
                                 },
                             );
                             const expectedCategories = [[""], [""]];
-                            expect(chartOptions.data.categories).toEqual(expectedCategories);
+                            expect(chartOptions.data!.categories).toEqual(expectedCategories);
                         });
 
                         it("should generate Yaxes without format from measure", () => {
@@ -3427,7 +3433,13 @@ describe("chartOptionsBuilder", () => {
 
                                 const dataClasses = getHeatmapDataClasses(
                                     series,
-                                    new HeatmapColorStrategy(null, null, null, null, emptyDataView),
+                                    new HeatmapColorStrategy(
+                                        DefaultColorPalette,
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        emptyDataView,
+                                    ),
                                 );
 
                                 expect(dataClasses).toMatchSnapshot();
@@ -3451,7 +3463,13 @@ describe("chartOptionsBuilder", () => {
                                 ];
                                 const dataClasses = getHeatmapDataClasses(
                                     series,
-                                    new HeatmapColorStrategy(null, null, null, null, emptyDataView),
+                                    new HeatmapColorStrategy(
+                                        DefaultColorPalette,
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        emptyDataView,
+                                    ),
                                 );
 
                                 expect(dataClasses).toMatchSnapshot();
@@ -3493,21 +3511,21 @@ describe("chartOptionsBuilder", () => {
 
                 it("should generate right y series with correct yAxis value", () => {
                     const expectedYAxisValues = [0, 1, 0]; // Left: Lost, Expected and Right: Won
-                    const yAxisValues = chartOptions.data.series.map(({ yAxis }: any) => yAxis);
+                    const yAxisValues = chartOptions.data!.series!.map(({ yAxis }: any) => yAxis);
                     expect(yAxisValues).toEqual(expectedYAxisValues);
                 });
 
                 it("should generate % format for both Y axes", () => {
                     const dv = fixtures.barChartWith3MetricsAndViewByAttributeFunformat;
                     const chartOptions = generateChartOptions(dv, config);
-                    const formatValues = chartOptions.yAxes.map(({ format }: any) => format);
+                    const formatValues = chartOptions.yAxes!.map(({ format }: any) => format);
                     expect(formatValues).toEqual(["#,##0.00%", "#,##0.00%"]);
                 });
 
                 it("should generate % format for right Y axis", () => {
                     const dv = fixtures.barChartWith3MetricsAndViewByAttributePercInFormat;
                     const chartOptions = generateChartOptions(dv, config);
-                    const formatValues = chartOptions.yAxes.map(({ format }: any) => format);
+                    const formatValues = chartOptions.yAxes!.map(({ format }: any) => format);
                     expect(formatValues).toEqual(["#,##0.00", "#,##0.00%"]);
                 });
 
@@ -3540,7 +3558,7 @@ describe("chartOptionsBuilder", () => {
                     const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
                     const {
                         actions: { tooltip: tooltipFn },
-                    } = generateChartOptions(dataSet, newConfig);
+                    } = generateChartOptions(dataSet, newConfig) as { actions: { tooltip: ITooltipFactory } };
 
                     const pointDataForDualAxes = {
                         y: 1,
@@ -3561,7 +3579,7 @@ describe("chartOptionsBuilder", () => {
                     };
 
                     const tooltip = tooltipFn(pointDataForDualAxes, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.011);
-                    expect(getValues(tooltip)).toEqual(["Year created", "category", "series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["Year created", "category", "series", " 1"]);
                 });
             });
 
@@ -3584,13 +3602,12 @@ describe("chartOptionsBuilder", () => {
                 };
 
                 it("should return grouped categories with viewing by 2 attributes", () => {
-                    const {
-                        data: { categories },
-                        isViewByTwoAttributes,
-                    } = generateChartOptions(fixtures.barChartWith4MetricsAndViewByTwoAttributes);
+                    const chartOptions = generateChartOptions(
+                        fixtures.barChartWith4MetricsAndViewByTwoAttributes,
+                    );
 
-                    expect(isViewByTwoAttributes).toBeTruthy();
-                    expect(categories).toEqual([
+                    expect(chartOptions.isViewByTwoAttributes).toBeTruthy();
+                    expect(chartOptions.data!.categories).toEqual([
                         {
                             name: "Direct Sales",
                             categories: ["East Coast", "West Coast"],
@@ -3603,22 +3620,29 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should not return grouped categories with viewing by one attribute", () => {
-                    const {
-                        data: { categories },
-                        isViewByTwoAttributes,
-                    } = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+                    const chartOptions = generateChartOptions(
+                        fixtures.barChartWith3MetricsAndViewByAttribute,
+                    );
 
-                    expect(isViewByTwoAttributes).toBeFalsy();
-                    expect(categories).toEqual(["<button>2008</button>", "2009", "2010", "2011", "2012"]);
+                    expect(chartOptions.isViewByTwoAttributes).toBeFalsy();
+                    expect(chartOptions.data!.categories).toEqual([
+                        "<button>2008</button>",
+                        "2009",
+                        "2010",
+                        "2011",
+                        "2012",
+                    ]);
                 });
 
                 it("should return full information in tooltip with viewing by 2 attributes", () => {
                     const {
                         actions: { tooltip: tooltipFn },
-                    } = generateChartOptions(fixtures.barChartWith4MetricsAndViewByTwoAttributes);
+                    } = generateChartOptions(fixtures.barChartWith4MetricsAndViewByTwoAttributes) as {
+                        actions: { tooltip: ITooltipFactory };
+                    };
 
                     const tooltip = tooltipFn(pointDataForTwoAttributes, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Department",
                         "parent category",
                         "Region",
@@ -3634,14 +3658,14 @@ describe("chartOptionsBuilder", () => {
                     } = generateChartOptions(fixtures.barChartWith4MetricsAndViewByTwoAttributes, {
                         stackMeasuresToPercent: true,
                         type: COLUMN,
-                    });
+                    }) as { actions: { tooltip: ITooltipFactory } };
 
                     const tooltip = tooltipFn(
                         pointDataForTwoAttributes,
                         DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         49.011,
                     );
-                    expect(getValues(tooltip)).toEqual([
+                    expect(getValues(tooltip!)).toEqual([
                         "Department",
                         "parent category",
                         "Region",

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -147,7 +148,7 @@ describe("Common utils", () => {
             ["49.01%", 49.01],
             ["100%", 100],
             ["", null],
-        ])('should return "%s" when input is %s', (formattedValue: string, value: number) => {
+        ])('should return "%s" when input is %s', (formattedValue: string, value: number | null) => {
             expect(percentFormatter(value)).toEqual(formattedValue);
         });
     });

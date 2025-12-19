@@ -9,6 +9,7 @@ import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@goodd
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { getColumnScope, getPivotAttributeDescriptors, isValueColumnDef } from "./utils/common.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderGroupDrilling } from "../../hooks/header/useHeaderGroupDrilling.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
@@ -78,6 +79,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
         handleAggregationsItemClick,
         handleTextWrappingItemClick,
         handleSortingItemClick,
+        headerCellAriaLabel,
     } = useHeaderMenu(
         {
             allowAggregations,
@@ -117,6 +119,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
         },
         hasMenuItems,
     );
+    useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel);
 
     return (
         <div

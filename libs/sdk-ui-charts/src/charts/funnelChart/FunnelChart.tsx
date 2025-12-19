@@ -40,14 +40,14 @@ const funnelChartDefinition: IChartDefinition<IFunnelChartBucketProps, IFunnelCh
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
 
-        return backend
+        return backend!
             .withTelemetry("FunnelChart", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
             .withDimensions(roundChartDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
 };
 

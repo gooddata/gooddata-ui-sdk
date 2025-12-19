@@ -74,11 +74,11 @@ export interface IStackMeasuresConfig {
 }
 
 export interface ISeriesDataItem {
-    x?: number;
-    y?: number;
+    x?: number | null;
+    y?: number | null;
     low?: number;
     high?: number;
-    value?: number;
+    value?: number | null;
     name?: string;
     legendIndex?: number;
     color?: TooltipPositionerPointObject["color"];
@@ -128,7 +128,7 @@ export interface ISeriesItem {
     yAxis?: number;
     zIndex?: number;
     labelKey?: string;
-    stack?: number;
+    stack?: number | null;
     stacking?: StackingType;
     dataLabels?: DataLabelsOptionsObject;
     dataLabelsGroup?: SVGAttributes;
@@ -151,7 +151,7 @@ export type ITooltipFactory = (
     point: IUnsafeHighchartsTooltipPoint,
     maxTooltipContentWidth: number,
     percentageValue?: number,
-) => string;
+) => string | null;
 
 export interface IChartOptions {
     type?: string;
@@ -210,10 +210,10 @@ export interface IPointData {
     negative?: boolean;
     h?: number;
 
-    x?: number;
-    y?: number;
-    z?: number;
-    value?: number;
+    x?: number | null;
+    y?: number | null;
+    z?: number | null;
+    value?: number | null;
     format?: string;
     marker?: {
         enabled: boolean;

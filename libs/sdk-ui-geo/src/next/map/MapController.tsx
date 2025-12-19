@@ -5,7 +5,7 @@ import { type ReactElement, type RefObject, useMemo } from "react";
 import { type ContentRect } from "react-measure";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IHeaderPredicate } from "@gooddata/sdk-ui";
+import type { IHeaderPredicate, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
 import { MapRuntimeProvider, useMapRuntime } from "../context/MapRuntimeContext.js";
 import { useGeoAdapterContext } from "../hooks/layers/useGeoAdapterContext.js";
@@ -27,6 +27,7 @@ export type MapControllerProps = {
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
+    onDrill?: OnFiredDrillEvent;
     afterRender?: () => void;
     config: IGeoChartNextConfig | undefined;
     backend?: IAnalyticalBackend;
@@ -44,6 +45,7 @@ export function MapController({
     drillablePredicates,
     onCenterPositionChanged,
     onZoomChanged,
+    onDrill,
     afterRender,
     config,
     backend,
@@ -75,6 +77,7 @@ export function MapController({
                 drillablePredicates={drillablePredicates}
                 onCenterPositionChanged={onCenterPositionChanged}
                 onZoomChanged={onZoomChanged}
+                onDrill={onDrill}
                 afterRender={afterRender}
             />
         </MapRuntimeProvider>
@@ -88,6 +91,7 @@ function MapLifecycleEffects({
     drillablePredicates,
     onCenterPositionChanged,
     onZoomChanged,
+    onDrill,
     afterRender,
 }: {
     chartContainerRect: ContentRect | null;
@@ -96,6 +100,7 @@ function MapLifecycleEffects({
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
+    onDrill?: OnFiredDrillEvent;
     afterRender?: () => void;
 }): ReactElement | null {
     const { map, isMapReady } = useMapRuntime();
@@ -109,6 +114,7 @@ function MapLifecycleEffects({
 
     useSyncLayersToMap({
         drillablePredicates,
+        onDrill,
     });
 
     useAfterRender(map, afterRender, layerExecutions);

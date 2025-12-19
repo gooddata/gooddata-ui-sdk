@@ -26,12 +26,16 @@ export type {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
     GranularityIntlKey,
+    DateFilterLabelMode,
     IDateAndMessageTranslator,
     IDateTranslator,
     IMessageTranslator,
     IFilterConfigurationProps,
     IDateFilterAbsoluteDateTimeFormErrors,
     DateRangePosition,
+    CalendarTabType,
+    IFiscalTabsConfig,
+    IUiRelativeDateFilterFormLike,
 } from "./DateFilter/index.js";
 export {
     DateFilter,
@@ -43,6 +47,16 @@ export {
     filterVisibleDateFilterOptions,
     isUiRelativeDateFilterForm,
     getLocalizedIcuDateFormatPattern,
+    getFiscalTabsConfig,
+    hasFiscalPresets,
+    hasStandardPresets,
+    filterStandardPresets,
+    filterFiscalPresets,
+    filterStandardGranularities,
+    filterFiscalGranularities,
+    getTabForPreset,
+    isFiscalGranularity,
+    ensureCompatibleGranularity,
 } from "./DateFilter/index.js";
 export type {
     IMeasureValueFilterProps,

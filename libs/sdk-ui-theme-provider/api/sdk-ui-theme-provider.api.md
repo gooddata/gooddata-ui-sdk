@@ -33,7 +33,7 @@ export const isDarkTheme: (theme: ITheme | undefined) => boolean;
 export interface IThemeContextProviderProps {
     children?: ReactNode;
     isScopeThemed?: boolean;
-    theme: ITheme;
+    theme: ITheme | undefined;
     // @deprecated
     themeIsLoading: boolean;
     themeStatus?: ThemeStatus;

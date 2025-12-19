@@ -21,7 +21,7 @@ function getSeriesItemData(
     seriesItem: DataValue[],
     seriesIndex: number,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
@@ -29,7 +29,7 @@ function getSeriesItemData(
 ): IPointData[] {
     return seriesItem.map((pointValue, pointIndex) => {
         const yValue = parseValue(pointValue);
-        const valueIndex = getColorOrLegendIndex(yValue);
+        const valueIndex = getColorOrLegendIndex(yValue!);
         const color = colorStrategy.getColorByIndex(valueIndex);
         const colorProperties = getChartFillProperties(theme, chartFill, color, valueIndex);
 
@@ -39,7 +39,7 @@ function getSeriesItemData(
         );
 
         return {
-            y: yValue,
+            y: yValue ?? undefined,
             format: unwrap(measureGroup.items[viewByAttribute ? seriesIndex : pointIndex]).format,
             name,
             legendIndex: valueIndex,
@@ -51,7 +51,7 @@ function getSeriesItemData(
 }
 
 function getSeriesItemName(
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     emptyHeaderTitle: string,
     seriesIndex: number,
@@ -68,7 +68,7 @@ function getSeriesItemName(
 export function getWaterfallChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,

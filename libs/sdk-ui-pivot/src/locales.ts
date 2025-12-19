@@ -31,6 +31,12 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     sortDescending: { id: "visualizations.menu.sort.descending" },
     // Accessibility
     openHeaderMenuAria: { id: "visualizations.menu.header.openAriaLabel" },
+    keyboardInstructionsMac: { id: "visualizations.table.header.keyboardInstructions.mac" },
+    keyboardInstructionsWindows: { id: "visualizations.table.header.keyboardInstructions.windows" },
+    ariaSortedAscending: { id: "visualizations.table.header.aria.sortedAscending" },
+    ariaSortedDescending: { id: "visualizations.table.header.aria.sortedDescending" },
+    ariaPriority: { id: "visualizations.table.header.aria.priority" },
+    ariaSorted: { id: "visualizations.table.header.aria.sorted" },
     // Pagination
     paginationOf: { id: "visualizations.table.pagination.of" },
     ariaPagePrevious: { id: "visualizations.pagination.previous" },

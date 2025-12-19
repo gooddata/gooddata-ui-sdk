@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
@@ -11,8 +12,8 @@ import {
 import { EvaluationType } from "../interfaces/BaseHeadlines.js";
 
 export const getComparisonColor = (
-    colorConfig: IColorConfig,
-    evaluationType: EvaluationType | undefined,
+    colorConfig: IColorConfig | undefined,
+    evaluationType: EvaluationType | undefined | null,
     colorPalette: IColorPalette = DEFAULT_COMPARISON_PALETTE,
 ) => {
     if (colorConfig?.disabled || !evaluationType) {
@@ -26,7 +27,7 @@ export const getComparisonColor = (
 };
 
 const getProvidedColorByEvaluationType = (
-    colorConfig: IColorConfig,
+    colorConfig: IColorConfig | undefined,
     evaluationType: EvaluationType | undefined,
 ) => {
     switch (evaluationType) {

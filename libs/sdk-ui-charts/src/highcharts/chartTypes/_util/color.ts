@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { defineMessages } from "react-intl";
 
@@ -53,6 +54,6 @@ export function getValidColorPalette(config: IChartConfig): IColorPalette {
     return isEmpty(config.colorPalette)
         ? isEmpty(config.colors)
             ? DefaultColorPalette
-            : getColorPaletteFromColors(config.colors)
-        : config.colorPalette;
+            : getColorPaletteFromColors(config.colors!)
+        : config.colorPalette!;
 }

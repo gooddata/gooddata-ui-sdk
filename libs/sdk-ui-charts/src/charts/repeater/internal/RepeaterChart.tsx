@@ -72,7 +72,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
     const items = useMemo(() => {
         const columnsBucket = bucketsFind(dataView.definition.buckets, BucketNames.COLUMNS);
 
-        return columnsBucket.items ?? [];
+        return columnsBucket?.items ?? [];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataView.fingerprint()]);
 
@@ -80,7 +80,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
         let measureIndex = 0;
         return items.map((bucketItem): ColDef => {
             const sharedColDef: ColDef = {
-                headerName: getRepeaterColumnTitle(bucketItem, dataView, config.enableAliasAttributeLabel),
+                headerName: getRepeaterColumnTitle(bucketItem, dataView, config?.enableAliasAttributeLabel),
                 field: getRepeaterColumnId(bucketItem),
                 cellClass: "gd-cell",
                 minWidth: MANUALLY_SIZED_MIN_WIDTH,
@@ -113,7 +113,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                             measureTitle,
                             measureDataPoints: params.data?.[localId],
                             viewByAttributeTitle,
-                            viewByAttributeHeaderItems: params.data?.[viewByAttributeLocalId] ?? [],
+                            viewByAttributeHeaderItems: params.data?.[viewByAttributeLocalId!] ?? [],
                             config,
                             measureColor,
                         };
@@ -232,7 +232,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
 }
 
 interface IRepeaterImageProps {
-    src?: string;
+    src: string | null | undefined;
 }
 
 function RepeaterImage({ src }: IRepeaterImageProps) {
@@ -249,7 +249,13 @@ function RepeaterImage({ src }: IRepeaterImageProps) {
     return <img className="gd-repeater-image" src={src} alt={src} onError={() => setImageLoadError(true)} />;
 }
 
-function RepeaterHyperLink({ value, hyperlinkStaticText }: { value?: string; hyperlinkStaticText?: string }) {
+function RepeaterHyperLink({
+    value,
+    hyperlinkStaticText,
+}: {
+    value?: string | null;
+    hyperlinkStaticText?: string;
+}) {
     const intl = useIntl();
     return value ? (
         <a className="gd-repeater-link" href={value} target="_blank" rel="noopener noreferrer">
@@ -262,14 +268,14 @@ function RepeaterHyperLink({ value, hyperlinkStaticText }: { value?: string; hyp
 
 interface IMeasureColumnData {
     measureLocalId: string;
-    measureTitle: string;
+    measureTitle: string | undefined;
     measureDataPoints: RepeaterInlineVisualizationDataPoint[];
     measureColor: string;
 
     viewByAttributeTitle?: string;
     viewByAttributeHeaderItems?: IResultAttributeHeaderItem[];
 
-    config: IChartConfig;
+    config: IChartConfig | undefined;
 }
 
 function MeasureCellRenderer({
@@ -299,22 +305,22 @@ function MeasureCellRenderer({
     if (visualizationType === "line") {
         return (
             <InlineLineChart
-                metricTitle={measureTitle}
+                metricTitle={measureTitle!}
                 sliceTitle={viewByAttributeTitle}
                 data={measureDataPoints}
                 color={measureColumnData.measureColor}
-                headerItems={viewByAttributeHeaderItems}
+                headerItems={viewByAttributeHeaderItems!}
                 height={rowHeight}
             />
         );
     } else if (visualizationType === "column") {
         return (
             <InlineColumnChart
-                metricTitle={measureTitle}
+                metricTitle={measureTitle!}
                 sliceTitle={viewByAttributeTitle}
                 data={measureDataPoints}
                 color={measureColumnData.measureColor}
-                headerItems={viewByAttributeHeaderItems}
+                headerItems={viewByAttributeHeaderItems!}
                 height={rowHeight}
             />
         );
@@ -343,7 +349,7 @@ interface IAttributeColumnData {
     value: string | null;
     attributeLocalId: string;
     renderingType: "image" | "hyperlink" | "text";
-    config: IChartConfig;
+    config: IChartConfig | undefined;
 }
 
 function AttributeCellRenderer({
@@ -440,13 +446,18 @@ function getRepeaterColumnId(columnBucketItem: IAttributeOrMeasure) {
     return attributeLocalId(columnBucketItem);
 }
 
-function getMetricColor(measure: IMeasure, dataView: DataViewFacade, config: IChartConfig, index: number) {
+function getMetricColor(
+    measure: IMeasure,
+    dataView: DataViewFacade,
+    config: IChartConfig | undefined,
+    index: number,
+) {
     const descriptor = getMetricDescriptor(measure, dataView);
     const colorPalette = config?.colorPalette;
     const colorMappingForMeasure = config?.colorMapping?.find((cm) =>
-        cm.predicate?.(descriptor, { dv: dataView }),
+        cm.predicate?.(descriptor!, { dv: dataView }),
     );
-    let color: string;
+    let color: string | undefined;
     if (colorMappingForMeasure?.color?.type === "rgb") {
         const rgbColor = colorMappingForMeasure.color.value;
         color = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
@@ -497,7 +508,7 @@ function getAttributeTitle(
         : attributeDescriptor?.attributeHeader?.name;
 }
 
-function getInlineVisualizationType(measureLocalId: string, config: IChartConfig) {
+function getInlineVisualizationType(measureLocalId: string, config: IChartConfig | undefined) {
     return config?.inlineVisualizations?.[measureLocalId]?.type ?? "metric";
 }
 
@@ -518,9 +529,9 @@ function getViewByAttributeTitle(dataView: DataViewFacade) {
 }
 
 function getAttributeRenderingType(
-    attributeDescriptor: IAttributeDescriptor,
+    attributeDescriptor: IAttributeDescriptor | undefined,
 ): "image" | "hyperlink" | "text" {
-    const labelType = attributeDescriptor.attributeHeader.labelType;
+    const labelType = attributeDescriptor?.attributeHeader.labelType;
     if (labelType === "GDC.image") {
         return "image";
     } else if (labelType === "GDC.link") {
@@ -530,6 +541,6 @@ function getAttributeRenderingType(
     return "text";
 }
 
-function getHyperLinkStaticElementsText(attributeLocalId: string, config: IChartConfig) {
+function getHyperLinkStaticElementsText(attributeLocalId: string, config: IChartConfig | undefined) {
     return config?.hyperLinks?.[attributeLocalId]?.staticElementsText;
 }

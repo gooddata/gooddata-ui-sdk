@@ -1,14 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { formatItemValue, formatPercentageValue } from "../HeadlineDataItemUtils.js";
 
-function buildHeaderDataItem(value: string, format?: string) {
+function buildHeaderDataItem(value: string | null | undefined, format: string | null = null) {
     return {
         uri: "42",
         title: "Apples",
         localIdentifier: "abc",
-        value,
+        value: value as string | null,
         format,
     };
 }

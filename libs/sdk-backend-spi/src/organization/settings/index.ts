@@ -2,7 +2,9 @@
 
 import {
     type DashboardFiltersApplyMode,
+    type IActiveCalendars,
     type IAlertDefault,
+    type IFiscalYear,
     type IMetricFormatOverrideSetting,
     type IOpenAiConfig,
     type ISeparators,
@@ -117,18 +119,20 @@ export interface IOrganizationSettingsService {
     /**
      * Sets fiscal calendar for organization.
      *
-     * @param monthOffset - number of months the fiscal year is offset from the calendar year. Can be positive or negative.
+     * @param fiscalYear - fiscal year configuration including month offset and optional prefixes.
      *
      * @returns promise
      */
-    setCalendar(monthOffset: number): Promise<void>;
+    setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
 
     /**
-     * Deletes fiscal calendar from organization settings returning calendar to default.
+     * Sets active calendars configuration for organization.
+     *
+     * @param calendars - configuration for which calendars are enabled and which is the default.
      *
      * @returns promise
      */
-    deleteCalendar(): Promise<void>;
+    setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
 
     /**
      * Sets theme for organization.

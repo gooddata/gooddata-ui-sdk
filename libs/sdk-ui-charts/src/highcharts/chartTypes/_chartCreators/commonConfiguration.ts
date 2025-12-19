@@ -38,7 +38,7 @@ function handleTooltipOffScreen(renderTo: HTMLDOMElement) {
 }
 
 function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
-    const range: number = axis.max - axis.min;
+    const range: number = axis.max! - axis.min!;
     if (range < 0) {
         // all data points is outside
         axis.translationSlope = axis.transA = HIGHCHART_PLOT_LIMITED_RANGE;
@@ -73,7 +73,8 @@ function getActiveDataLabelColor(
     if (isBackplateStyle) {
         return getBackplateLabelColor(theme);
     }
-    return getBlackLabelStyle(theme).color;
+    // color is guaranteed to be defined because as return value of getBlackLabelStyle
+    return getBlackLabelStyle(theme).color!;
 }
 
 function getStackLabelsConfig(isBackplateStyle: boolean, theme: ITheme | undefined): any {

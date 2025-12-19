@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { uniqBy } from "lodash-es";
 
 import {
@@ -6,6 +7,7 @@ import {
     type IColorPalette,
     type IColorPaletteItem,
     type IResultAttributeHeader,
+    type IRgbColorValue,
     type ITheme,
     isColorFromPalette,
 } from "@gooddata/sdk-model";
@@ -45,7 +47,7 @@ export abstract class ColorStrategy implements IColorStrategy {
 
     constructor(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -94,14 +96,15 @@ export abstract class ColorStrategy implements IColorStrategy {
         return colorAssignment.map((map, index: number) => {
             const color = isColorFromPalette(map.color)
                 ? getColorByGuid(colorPalette, map.color.value, index)
-                : map.color.value;
-            return getRgbStringFromRGB(color);
+                : map.color?.value;
+
+            return getRgbStringFromRGB(color as unknown as IRgbColorValue);
         });
     }
 
     protected abstract createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -116,7 +119,10 @@ export abstract class ColorStrategy implements IColorStrategy {
 /**
  * @internal
  */
-export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalette): boolean {
+export function isValidMappedColor(
+    colorItem: IColor | null | undefined,
+    colorPalette: IColorPalette,
+): boolean {
     if (!colorItem) {
         return false;
     }
@@ -143,7 +149,7 @@ function isColorItemInPalette(colorItem: IColor, colorPalette: IColorPalette) {
 export function getAttributeColorAssignment(
     attribute: any,
     colorPalette: IColorPalette,
-    colorMapping: IColorMapping[],
+    colorMapping: IColorMapping[] | undefined,
     dv: DataViewFacade,
 ): IColorAssignment[] {
     let currentColorPaletteIndex = 0;

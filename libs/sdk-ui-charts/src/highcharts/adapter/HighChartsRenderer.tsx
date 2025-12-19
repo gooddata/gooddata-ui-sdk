@@ -15,7 +15,7 @@ import {
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
 import { isEqual, partial, set, throttle } from "lodash-es";
-import { type ContentRect } from "react-measure";
+import { type ContentRect, type Rect } from "react-measure";
 import { v4 } from "uuid";
 
 import { type ITheme } from "@gooddata/sdk-model";
@@ -63,17 +63,17 @@ export interface IChartHTMLElement extends HTMLElement {
 export interface IHighChartsRendererProps {
     chartOptions: IChartOptions;
     hcOptions: HighchartsOptions;
-    documentObj?: Document;
-    height: number;
-    width: number;
-    legend: ILegendOptions;
-    locale: string;
+    documentObj?: Document | null;
+    height?: number | null;
+    width?: number;
+    legend?: ILegendOptions;
+    locale?: string;
     theme?: ITheme;
-    onLegendReady: OnLegendReady;
-    legendRenderer(legendProps: ILegendProps): any;
-    chartRenderer(chartProps: IChartProps): any;
-    afterRender(): void;
-    resetZoomButtonTooltip?: string;
+    onLegendReady?: OnLegendReady;
+    legendRenderer?: (legendProps: ILegendProps) => any;
+    chartRenderer?: (chartProps: IChartProps) => any;
+    afterRender?: () => void;
+    resetZoomButtonTooltip?: string | null;
     contentRect?: ContentRect;
     config?: IChartConfig;
 }
@@ -133,7 +133,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
     chartOptions,
     hcOptions,
     documentObj = defaultDocumentObj,
-    height = null as number,
+    height = null,
     legend: legendProp,
     locale,
     theme,
@@ -144,7 +144,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
     resetZoomButtonTooltip,
     contentRect,
     config,
-}: IHighChartsRendererProps): ReactElement {
+}: IHighChartsRendererProps): ReactElement | null {
     const legend: ILegendOptions = legendProp ?? defaultLegend;
 
     const highchartsRendererRef = useRef<HTMLDivElement>(null); // whole component = legend + chart
@@ -153,7 +153,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
 
     const shouldShowFluid = useCallback((): boolean => {
         return (
-            documentObj?.documentElement?.clientWidth < FLUID_LEGEND_THRESHOLD &&
+            (documentObj?.documentElement?.clientWidth ?? 0) < FLUID_LEGEND_THRESHOLD &&
             legend?.responsive !== "autoPositionWithPopup"
         );
     }, [documentObj, legend?.responsive]);
@@ -237,13 +237,13 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
                 VisualizationTypes.PYRAMID,
                 VisualizationTypes.SCATTER,
             ];
-            const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
+            const multipleSeries = isOneOfTypes(chart?.type, firstSeriesTypes);
 
-            let items: any[] = isOneOfTypes(chart.type, firstSeriesTypes)
+            let items: any[] = isOneOfTypes(chart?.type, firstSeriesTypes)
                 ? (series?.[0] as any)?.data
                 : series;
 
-            if (isFunnel(chart.type)) {
+            if (isFunnel(chart?.type)) {
                 items = skipLeadingZeros(items).filter((i) => !(i.y === null || i.y === undefined));
             }
 
@@ -264,7 +264,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
                         ...series?.[0],
                         data: updatedItems,
                     },
-                    ...series.slice(1),
+                    ...(series?.slice(1) ?? []),
                 ];
             }
 
@@ -299,13 +299,17 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
         [onChartSelection],
     );
 
-    const getHighChartsConfigOverride = useCallback((): Partial<HighchartsOptions> => {
+    const getHighChartsConfigOverride = useCallback((): Partial<HighchartsOptions> | undefined => {
         try {
             // YAML value was automatically merged from visualization properties to chart config from where
             // we will load it now and transform to JSON, expecting that it contains valid partial
             // HighChart configuration.
             const rawConfigOverride = config?.chartConfigOverride;
-            return rawConfigOverride === undefined ? undefined : jsYaml.load(rawConfigOverride);
+
+            if (rawConfigOverride) {
+                return jsYaml.load(rawConfigOverride) as Partial<HighchartsOptions>;
+            }
+            return undefined;
         } catch (e) {
             console.error("Visualization properties contains invalid HighCharts config override", e);
             return undefined;
@@ -332,7 +336,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
     );
 
     const onZoomOutButtonClick = useCallback((): void => {
-        chartRef.current.getChart().zoomOut();
+        chartRef.current?.getChart().zoomOut();
     }, []);
 
     // componentDidMount equivalent
@@ -371,7 +375,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
 
     const renderLegendContent = (
         legendDetails: ILegendDetails,
-        contentRectParam: ContentRect,
+        contentRectParam: ContentRect | undefined,
         containerIdParam: string,
     ): ReactNode => {
         const { items, format } = legend;
@@ -395,7 +399,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
             onItemClick,
             legendItemsEnabled: legendItemsEnabled,
             heatmapLegend: isHeatmap(type),
-            height,
+            height: height as number,
             legendLabel: legendDetails?.name,
             maximumRows: legendDetails?.maxRows,
             position: legendDetails.position,
@@ -403,7 +407,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
             locale,
             showFluidLegend,
             validateOverHeight: () => {},
-            contentDimensions: contentRectParam?.client,
+            contentDimensions: contentRectParam?.client as Rect,
             containerId: containerIdParam,
             chartFill: chartOptions.chartFill?.type,
         };
@@ -468,7 +472,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
 
         const loading: ISeriesItem[] =
             data?.series?.filter((series: ISeriesItem) => {
-                return series.data.some((seriesData?: ISeriesDataItem) => seriesData?.loading);
+                return series.data?.some((seriesData?: ISeriesDataItem) => seriesData?.loading);
             }) ?? [];
 
         if (!loading.length || !container) {
@@ -476,7 +480,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
         }
 
         const loadingSeries = loading.reduce<number[]>((loadingSeriesArr: number[], series: ISeriesItem) => {
-            if (!loadingSeriesArr.includes(series.legendIndex)) {
+            if (series?.legendIndex && !loadingSeriesArr.includes(series.legendIndex)) {
                 loadingSeriesArr.push(series.legendIndex);
             }
             return loadingSeriesArr;
@@ -516,7 +520,7 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
         };
         const legendDetails = getLegendDetails(
             legend.position,
-            legend.responsive,
+            legend.responsive!,
             legendDetailOptions,
             config?.respectLegendPosition,
         );

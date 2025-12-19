@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
@@ -51,7 +52,7 @@ describe("setupDrilldown", () => {
         const highchartObject: any = {
             xAxis: [{}],
         };
-        expect(setupDrilldown(highchartObject, null)).toBeFalsy();
+        expect(setupDrilldown(highchartObject, null as any)).toBeFalsy();
     });
 
     it("should set parent item drillable", () => {
@@ -226,7 +227,7 @@ describe("getDDPointsInParentTick", () => {
                     },
                 },
                 x: 0,
-                y: null as number,
+                y: null as unknown as number,
                 target: 0,
                 isNullTarget: true,
             },

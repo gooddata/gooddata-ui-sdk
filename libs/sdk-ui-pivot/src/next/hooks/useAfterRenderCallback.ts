@@ -6,33 +6,46 @@ import { type FirstDataRenderedEvent } from "ag-grid-enterprise";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
+import { fixMissingRowgroupRoles } from "./useAccessibilityProps.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { useTableReady } from "../context/TableReadyContext.js";
 import { type AgGridProps } from "../types/agGrid.js";
 
 /**
- * Hook that provides proper afterRender callback timing.
+ * Hook that consolidates all onFirstDataRendered handlers.
  *
- * Notifies TableReadyContext when ag-grid first renders data.
- * The actual afterRender callback is called by the context
- * when both firstDataRendered AND visibility are ready.
+ * This is the single source of truth for the onFirstDataRendered callback.
+ * It handles:
+ * - Notifying TableReadyContext for afterRender callback timing
+ * - Fixing missing ARIA roles when accessibility mode is enabled
  *
  * @internal
  */
 export function useAfterRenderCallback(): (agGridReactProps: AgGridProps) => AgGridProps {
-    const { afterRender } = usePivotTableProps();
+    const { afterRender, config } = usePivotTableProps();
     const { onFirstDataRendered: notifyFirstDataRendered } = useTableReady();
 
+    const accessibilityEnabled = config.enableAccessibility ?? false;
+
     const handleFirstDataRendered = useCallback(
-        (_event: FirstDataRenderedEvent) => {
-            notifyFirstDataRendered();
+        (event: FirstDataRenderedEvent) => {
+            // Notify table ready context for afterRender timing
+            if (afterRender) {
+                notifyFirstDataRendered();
+            }
+
+            // Fix missing ARIA roles when accessibility mode is enabled
+            if (accessibilityEnabled) {
+                fixMissingRowgroupRoles(event);
+            }
         },
-        [notifyFirstDataRendered],
+        [afterRender, accessibilityEnabled, notifyFirstDataRendered],
     );
 
     return useCallback(
         (agGridReactProps: AgGridProps) => {
-            if (!afterRender) {
+            // Only set onFirstDataRendered if we have something to do
+            if (!afterRender && !accessibilityEnabled) {
                 return agGridReactProps;
             }
 
@@ -42,12 +55,9 @@ export function useAfterRenderCallback(): (agGridReactProps: AgGridProps) => AgG
 
             return {
                 ...agGridReactProps,
-                onFirstDataRendered: (event: FirstDataRenderedEvent) => {
-                    agGridReactProps.onFirstDataRendered?.(event);
-                    handleFirstDataRendered(event);
-                },
+                onFirstDataRendered: handleFirstDataRendered,
             };
         },
-        [afterRender, handleFirstDataRendered],
+        [afterRender, accessibilityEnabled, handleFirstDataRendered],
     );
 }

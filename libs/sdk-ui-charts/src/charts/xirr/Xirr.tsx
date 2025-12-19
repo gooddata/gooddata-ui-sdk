@@ -125,11 +125,11 @@ export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
 function createExecution(buckets: IBucket[], props: IXirrProps): IPreparedExecution {
     const { backend, workspace, execConfig } = props;
 
-    return backend
+    return backend!
         .withTelemetry("Xirr", props)
-        .workspace(workspace)
+        .workspace(workspace!)
         .execution()
         .forBuckets(buckets, props.filters as INullableFilter[])
         .withDimensions(newDimension([MeasureGroupIdentifier, ...bucketsAttributes(buckets)]))
-        .withExecConfig(execConfig);
+        .withExecConfig(execConfig!);
 }

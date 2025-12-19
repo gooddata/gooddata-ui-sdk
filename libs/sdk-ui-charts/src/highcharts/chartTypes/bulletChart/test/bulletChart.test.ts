@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
@@ -66,7 +67,7 @@ describe("BulletChartColorStrategy", () => {
             [CUSTOM_COLOR_PALETTE, AllMeasures, ["rgb(195,49,73)", "rgb(137,34,51)", "rgb(217,220,226)"]],
         ])(
             "should create palette",
-            (palette: IColorPalette, dv: DataViewFacade, expectedColors: string[]) => {
+            (palette: IColorPalette | undefined, dv: DataViewFacade, expectedColors: string[]) => {
                 const colorStrategy = getBulletColorStrategy({
                     palette,
                     dv,

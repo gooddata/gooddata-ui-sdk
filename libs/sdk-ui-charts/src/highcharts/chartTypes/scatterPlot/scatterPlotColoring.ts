@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 // import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
 import { uniq } from "lodash-es";
 
@@ -17,13 +18,13 @@ import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 export class ScatterPlotColorStrategy extends MeasureColorStrategy {
     protected override createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
         clusterTitle?: string,
     ): ICreateColorAssignmentReturnValue {
-        const isClustering = dv?.dataView?.clusteringConfig?.numberOfClusters > 0;
+        const isClustering = (dv?.dataView?.clusteringConfig?.numberOfClusters ?? 0) > 0;
         const isClusteringError = isClustering && dv?.dataView?.clusteringResult?.clusters?.length === 0;
         const isClusteringLoaded = isClustering && !!dv?.dataView?.clusteringResult && !isClusteringError;
 
@@ -65,7 +66,7 @@ export class ScatterPlotColorStrategy extends MeasureColorStrategy {
                 stackByAttribute,
                 dv,
             );
-            colorAssignment = result.outputColorAssignment.slice(0, 1);
+            colorAssignment = result.outputColorAssignment!.slice(0, 1);
         }
 
         return {

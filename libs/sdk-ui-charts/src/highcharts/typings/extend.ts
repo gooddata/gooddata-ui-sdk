@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import {
     type Axis,
     type ChartParallelAxesOptions,
@@ -8,7 +9,7 @@ import {
 
 export type IHighchartsAxis = Partial<Axis> & Partial<ExtremesObject> & ChartParallelAxesOptions;
 
-export interface IHighchartsAxisExtend extends IHighchartsAxis {
+export interface IHighchartsAxisExtend extends Omit<IHighchartsAxis, "len"> {
     len?: number | null;
     transA?: number;
     translationSlope?: number;

@@ -1,6 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { createRef, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+    type RefObject,
+    createRef,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { shouldRenderPagination } from "@gooddata/sdk-ui-vis-commons";
 
@@ -87,19 +96,20 @@ const SIGNIFICANT_CHANGE_THRESHOLD_IN_PX = 5;
 
 export const usePagination = (hasTertiaryItem: boolean) => {
     const { config, clientHeight, clientWidth } = useBaseHeadline();
-    const { enableCompactSize } = config;
+    const { enableCompactSize } = config ?? {};
 
     const secondaryItemTitleWrapperRef = createRef<HTMLDivElement>();
 
     // Determine if the container is too small and need to render pagination based on its width and height
     const isContainerTooSmall = useMemo(
-        () => shouldRenderPagination(enableCompactSize, clientWidth, clientHeight),
+        () => shouldRenderPagination(enableCompactSize ?? false, clientWidth, clientHeight),
         [enableCompactSize, clientHeight, clientWidth],
     );
 
     // Determine the classes to apply to the compare section based on the container width
     const compareSectionClassNames = useMemo(
-        () => getCompareSectionClasses(clientWidth, secondaryItemTitleWrapperRef),
+        () =>
+            getCompareSectionClasses(clientWidth, secondaryItemTitleWrapperRef as RefObject<HTMLDivElement>),
         [clientWidth, secondaryItemTitleWrapperRef],
     );
 

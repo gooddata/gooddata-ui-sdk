@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 
 import {
@@ -64,13 +65,13 @@ export function getComboChartSeries(
         .buckets()
         .forEach((bucket: IBucket) => {
             const bucketItems = bucket.items || [];
-            measureBuckets[bucket.localIdentifier] = getMeasureIndices(bucketItems, measureGroupIdentifiers);
+            measureBuckets[bucket.localIdentifier!] = getMeasureIndices(bucketItems, measureGroupIdentifiers);
         });
 
     [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES].forEach((name: string, index: number) => {
         (measureBuckets[name] || []).forEach((measureIndex: number) => {
-            const chartType: string = CHART_ORDER[types[index]]
-                ? types[index]
+            const chartType: string = CHART_ORDER[types[index!]!]
+                ? types[index!]!
                 : DEFAULT_COMBO_CHART_TYPES[index];
 
             set(updatedSeries, [measureIndex, "type"], chartType);
@@ -98,15 +99,15 @@ export function getComboChartSeries(
     return updatedSeries;
 }
 
-function isAllSeriesOnLeftAxis(series: ISeriesItem[] = []): boolean {
+function isAllSeriesOnLeftAxis(series: ISeriesItem[] | undefined = []): boolean {
     return series.every((item) => item.yAxis === 0);
 }
 
-function isSomeSeriesWithLineChart(series: ISeriesItem[] = []): boolean {
+function isSomeSeriesWithLineChart(series: ISeriesItem[] | undefined = []): boolean {
     return series.some((item) => isLineChart(item.type));
 }
 
-export function canComboChartBeStackedInPercent(series: ISeriesItem[]): boolean {
+export function canComboChartBeStackedInPercent(series: ISeriesItem[] | undefined): boolean {
     const isAllSeriesOnLeft = isAllSeriesOnLeftAxis(series);
     const hasLineChartType = isSomeSeriesWithLineChart(series);
 

@@ -211,7 +211,7 @@ describe("HeatmapColorStrategy", () => {
     });
 
     describe("theme", () => {
-        const Scenarios: Array<[string, ITheme, IColorPalette, string[]]> = [
+        const Scenarios: Array<[string, ITheme, IColorPalette | undefined, string[]]> = [
             [
                 "dark theme colors from theme chart background",
                 {

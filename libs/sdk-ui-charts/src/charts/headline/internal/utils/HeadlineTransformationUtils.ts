@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { cloneDeep, isEmpty } from "lodash-es";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -25,11 +26,14 @@ export interface IHeadlineExecutionData {
 
 export interface IHeadlineDrillItemContext {
     localIdentifier: Identifier;
-    value: string;
+    value: string | null;
     element: HeadlineElementType;
 }
 
-function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlShape): IHeadlineDataItem {
+function createTertiaryItem(
+    executionData: IHeadlineExecutionData[],
+    intl: IntlShape,
+): IHeadlineDataItem | null {
     const secondaryHeaderItem = executionData?.[1]?.measureHeaderItem;
     if (!secondaryHeaderItem) {
         return null;
@@ -58,9 +62,9 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
 }
 
 export function createHeadlineDataItem(
-    executionDataItem: IHeadlineExecutionData,
+    executionDataItem: IHeadlineExecutionData | undefined,
     isDrillable?: boolean,
-): IHeadlineDataItem {
+): IHeadlineDataItem | null {
     if (!executionDataItem) {
         return null;
     }
@@ -113,7 +117,7 @@ export function getHeadlineData(dataView: IDataView, intl: IntlShape): IHeadline
     const tertiaryItemProp = tertiaryItem ? { tertiaryItem } : {};
 
     return {
-        primaryItem,
+        primaryItem: primaryItem!,
         ...secondaryItemProp,
         ...tertiaryItemProp,
     };
@@ -161,7 +165,7 @@ export function buildDrillEventData(
     dataView: IDataView,
 ): IDrillEvent {
     const dv = DataViewFacade.for(dataView);
-    const measureHeaderItem: IMeasureDescriptor = dv.meta().measureDescriptor(itemContext.localIdentifier);
+    const measureHeaderItem = dv.meta().measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");
     }

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { type IDataView, type IExportConfig, type IExportResult } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeDescriptor,
@@ -58,7 +59,7 @@ export type OnExportReady = (exportFunction: IExportFunction) => void;
 export interface IColorAssignment {
     // << send from SDK up
     headerItem: IMappingHeader;
-    color: IColor;
+    color: IColor | undefined;
 }
 
 /**

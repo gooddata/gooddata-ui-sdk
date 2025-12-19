@@ -21,16 +21,15 @@ const commonScenarios: INeobackstopConfig = {
     opened: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".gd-button-primary",
-        postInteractionWait: { selector: ".gd-list" },
         delay: {
-            postOperation: 500,
+            postOperation: 200, // element has .2s transition
         },
     },
     "label-toggle": {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelectors: [{ selector: ".s-checkbox-toggle-label" }],
         delay: {
-            postOperation: 500,
+            postOperation: 400, // checkbox has .4s transition
         },
     },
 };

@@ -4,26 +4,24 @@ import { type KeyboardEvent, type ReactNode, memo, useCallback, useId, useMemo, 
 
 import { useIntl } from "react-intl";
 
-import { isIdentifierRef, isLocalIdRef, isUriRef } from "@gooddata/sdk-model";
+import { isIdentifierRef, isLocalIdRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
 import {
     type IUiListboxInteractiveItem,
     Input,
     Overlay,
-    UiButton,
     UiButtonSegmentedControl,
-    UiCheckbox,
     UiIcon,
     UiIconButton,
     UiListbox,
     type UiListboxInteractiveItemProps,
 } from "@gooddata/sdk-ui-kit";
 
-import { type IDimensionalityItem } from "./typings.js";
-
-interface IAttributePickerItemData {
-    dimensionalityItem: IDimensionalityItem;
-    isChecked: boolean;
-}
+import { type IDateDatasetOption, type IDimensionalityItem } from "./typings.js";
+import { isDateDimensionalityItem, useAttributePickerItemsData } from "./useAttributePickerItemsData.js";
+import {
+    type IAttributePickerItemData,
+    useAttributePickerListboxItems,
+} from "./useAttributePickerListboxItems.js";
 
 function AttributePickerItemComponent({
     item,
@@ -31,7 +29,7 @@ function AttributePickerItemComponent({
     isCompact,
     onSelect,
 }: UiListboxInteractiveItemProps<IAttributePickerItemData>): ReactNode {
-    const { dimensionalityItem, isChecked } = item.data;
+    const { dimensionalityItem } = item.data;
     const isDateItem =
         dimensionalityItem.type === "chronologicalDate" || dimensionalityItem.type === "genericDate";
     const iconType = isDateItem ? "date" : "ldmAttribute";
@@ -43,8 +41,7 @@ function AttributePickerItemComponent({
             onClick={onSelect}
             data-object-type={dimensionalityItem.type ?? "attribute"}
         >
-            <UiCheckbox checked={isChecked} preventDefault />
-            <UiIcon type={iconType} size={20} color={iconColor} ariaHidden />
+            <UiIcon type={iconType} size={18} color={iconColor} ariaHidden />
             <span className="gd-ui-kit-listbox__item-title">{dimensionalityItem.title}</span>
         </div>
     );
@@ -52,9 +49,19 @@ function AttributePickerItemComponent({
 
 interface IAttributePickerProps {
     /**
-     * Available items that can be added (items from insight that are not in filter dimensionality).
+     * Available items from the current visualization (bucket-based dimensionality).
+     * These are already filtered to only include items that can be added.
      */
-    availableItems: IDimensionalityItem[];
+    availableInsightItems: IDimensionalityItem[];
+    /**
+     * Available items from catalog (validated via computeValidObjects).
+     * These are already filtered to only include items that can be added.
+     */
+    availableCatalogItems: IDimensionalityItem[];
+    /**
+     * Whether catalog dimensionality is currently being loaded.
+     */
+    isLoadingCatalogDimensionality?: boolean;
     /**
      * Callback when items are added.
      */
@@ -74,22 +81,37 @@ interface IAttributePickerProps {
  * AttributePicker dialog for selecting dimensionality items to add to the filter.
  */
 export const AttributePicker = memo(function AttributePicker({
-    availableItems,
+    availableInsightItems,
+    availableCatalogItems,
+    isLoadingCatalogDimensionality,
     onAdd,
     onCancel,
     anchorElement,
 }: IAttributePickerProps) {
     const intl = useIntl();
     const listboxId = useId();
-    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
     const [searchString, setSearchString] = useState("");
     const [typeFilter, setTypeFilter] = useState<"attribute" | "date">("attribute");
+    const [selectedDateDatasetKey, setSelectedDateDatasetKey] = useState<string | undefined>(undefined);
+    const [isDateDatasetDropdownOpen, setIsDateDatasetDropdownOpen] = useState(false);
+
+    const availableItems = useMemo(() => {
+        return [...availableInsightItems, ...availableCatalogItems];
+    }, [availableInsightItems, availableCatalogItems]);
+
+    // While catalog is still loading (and we have not received any catalog items yet),
+    // decide which tabs to show purely from insight items.
+    const itemsForTypeDetection = useMemo(() => {
+        const isCatalogNotLoadedYet =
+            (availableCatalogItems?.length ?? 0) === 0 && !!isLoadingCatalogDimensionality;
+        return isCatalogNotLoadedYet ? availableInsightItems : availableItems;
+    }, [availableCatalogItems, isLoadingCatalogDimensionality, availableInsightItems, availableItems]);
 
     // Check if we have items of each type
     const { hasAttributes, hasDates } = useMemo(() => {
         let hasAttributes = false;
         let hasDates = false;
-        for (const item of availableItems) {
+        for (const item of itemsForTypeDetection) {
             const isDateItem = item.type === "chronologicalDate" || item.type === "genericDate";
             if (isDateItem) {
                 hasDates = true;
@@ -99,10 +121,18 @@ export const AttributePicker = memo(function AttributePicker({
             if (hasAttributes && hasDates) break;
         }
         return { hasAttributes, hasDates };
-    }, [availableItems]);
+    }, [itemsForTypeDetection]);
 
-    // Only show type filter when both types exist
+    // Show type filter only when both tabs would be meaningful.
+    // In particular, hide the Date tab when there are no date attributes available.
     const showTypeFilter = hasAttributes && hasDates;
+
+    // When only one type exists, avoid filtering out everything by forcing the effective type.
+    const effectiveTypeFilter: "attribute" | "date" = showTypeFilter
+        ? typeFilter
+        : hasDates
+          ? "date"
+          : "attribute";
 
     const handleSearch = useCallback((value: string | number) => {
         setSearchString(String(value));
@@ -131,71 +161,79 @@ export const AttributePicker = memo(function AttributePicker({
         return String(ref);
     }, []);
 
-    const handleItemToggle = useCallback((item: IUiListboxInteractiveItem<IAttributePickerItemData>) => {
-        const itemId = item.id;
-        setSelectedIds((prev) => {
-            const newSet = new Set(prev);
-            if (newSet.has(itemId)) {
-                newSet.delete(itemId);
-            } else {
-                newSet.add(itemId);
-            }
-            return newSet;
-        });
-    }, []);
+    const handleItemSelect = useCallback(
+        (item: IUiListboxInteractiveItem<IAttributePickerItemData>) => {
+            const selectedItem = item.data.dimensionalityItem;
+            onAdd([selectedItem]);
+        },
+        [onAdd],
+    );
 
-    const handleAdd = useCallback(() => {
-        const itemsToAdd = availableItems.filter((item) => selectedIds.has(getItemId(item)));
-        onAdd(itemsToAdd);
-    }, [availableItems, selectedIds, getItemId, onAdd]);
+    const dateDatasetOptions = useMemo((): IDateDatasetOption[] => {
+        const optionsMap = new Map<string, string>();
 
-    const isAddDisabled = selectedIds.size === 0;
-
-    const filteredItems = useMemo(() => {
-        let items = availableItems;
-
-        // Filter by type when both types exist
-        if (showTypeFilter) {
-            items = items.filter((item) => {
-                const isDateItem = item.type === "chronologicalDate" || item.type === "genericDate";
-                return typeFilter === "date" ? isDateItem : !isDateItem;
+        // Build options from all date items (ignoring search) so the dataset selector is stable while typing.
+        [...availableInsightItems, ...availableCatalogItems]
+            .filter(isDateDimensionalityItem)
+            .forEach((item) => {
+                if (!item.dataset) {
+                    return;
+                }
+                const key = objRefToString(item.dataset.identifier);
+                optionsMap.set(key, item.dataset.title);
             });
+
+        return Array.from(optionsMap.entries())
+            .map(([key, title]) => ({ key, title }))
+            .sort((a, b) => a.title.localeCompare(b.title));
+    }, [availableInsightItems, availableCatalogItems]);
+
+    const effectiveSelectedDateDatasetKey = useMemo(() => {
+        if (dateDatasetOptions.length === 0) {
+            return undefined;
         }
+        return dateDatasetOptions.some((o) => o.key === selectedDateDatasetKey)
+            ? selectedDateDatasetKey
+            : dateDatasetOptions[0].key;
+    }, [dateDatasetOptions, selectedDateDatasetKey]);
 
-        // Filter by search string
-        if (searchString.trim()) {
-            const lowerSearch = searchString.toLowerCase();
-            items = items.filter((item) => item.title.toLowerCase().includes(lowerSearch));
-        }
+    const shouldShowDateDatasetSelector = effectiveTypeFilter === "date" && dateDatasetOptions.length > 1;
 
-        return items;
-    }, [availableItems, searchString, showTypeFilter, typeFilter]);
+    const { filteredInsightItems, catalogItemsByDataset, filteredCatalogItems } = useAttributePickerItemsData(
+        {
+            availableInsightItems,
+            availableCatalogItems,
+            searchString,
+            effectiveTypeFilter,
+            effectiveSelectedDateDatasetKey,
+        },
+    );
 
-    const listboxItems = useMemo((): IUiListboxInteractiveItem<IAttributePickerItemData>[] => {
-        return filteredItems.map((item) => {
-            const itemId = getItemId(item);
-            const isChecked = selectedIds.has(itemId);
-            return {
-                type: "interactive",
-                id: itemId,
-                stringTitle: item.title,
-                data: {
-                    dimensionalityItem: item,
-                    isChecked,
-                },
-            };
-        });
-    }, [filteredItems, getItemId, selectedIds]);
+    // Build listbox items with sections
+    const listboxItems = useAttributePickerListboxItems({
+        filteredInsightItems,
+        filteredCatalogItems,
+        catalogItemsByDataset,
+        getItemId,
+        intl,
+        effectiveTypeFilter,
+        shouldShowDateDatasetSelector,
+        dateDatasetOptions,
+        effectiveSelectedDateDatasetKey,
+        isDateDatasetDropdownOpen,
+        setSelectedDateDatasetKey,
+        setIsDateDatasetDropdownOpen,
+        listboxId,
+        isLoadingCatalogDimensionality,
+    });
+
+    const hasSelectableItems = filteredInsightItems.length > 0 || filteredCatalogItems.length > 0;
+    const shouldShowEmptyStateMessage = !isLoadingCatalogDimensionality && !hasSelectableItems;
 
     return (
         <Overlay
             alignTo={anchorElement}
-            alignPoints={[
-                { align: "br tr", offset: { x: 4, y: 0 } },
-                { align: "bl tl", offset: { x: -4, y: 0 } },
-                { align: "tr br", offset: { x: 4, y: 0 } },
-                { align: "tl bl", offset: { x: -4, y: 0 } },
-            ]}
+            alignPoints={[{ align: "tr tl" }, { align: "tl tr" }, { align: "br bl" }, { align: "bl br" }]}
             positionType="sameAsTarget"
             closeOnOutsideClick
             closeOnEscape
@@ -208,7 +246,6 @@ export const AttributePicker = memo(function AttributePicker({
                 >
                     <div className="gd-mvf-attribute-picker-header">
                         <div className="gd-mvf-attribute-picker-header-title">
-                            <UiIcon type="navigateLeft" size={12} color="complementary-7" ariaHidden />
                             {intl.formatMessage({ id: "mvf.attributePicker.title" })}
                         </div>
                         <UiIconButton
@@ -276,48 +313,32 @@ export const AttributePicker = memo(function AttributePicker({
                         </div>
                     ) : null}
                     <div className="gd-mvf-attribute-picker-content">
-                        {listboxItems.length === 0 ? (
+                        {shouldShowEmptyStateMessage ? (
                             <div className="gd-mvf-attribute-picker-no-results">
-                                {intl.formatMessage({ id: "mvf.attributePicker.noResults" })}
+                                {searchString.trim()
+                                    ? intl.formatMessage({
+                                          id: "mvf.attributePicker.noResults",
+                                      })
+                                    : intl.formatMessage({
+                                          id: "mvf.attributePicker.noItems",
+                                      })}
                             </div>
                         ) : (
-                            <>
-                                {showTypeFilter ? (
-                                    <div className="gd-mvf-attribute-picker-list-header">
-                                        {intl.formatMessage({ id: "mvf.attributePicker.header.fromInsight" })}
-                                    </div>
-                                ) : null}
-                                <UiListbox
-                                    items={listboxItems}
-                                    onSelect={handleItemToggle}
-                                    shouldCloseOnSelect={false}
-                                    isCompact
-                                    InteractiveItemComponent={AttributePickerItemComponent}
-                                    ariaAttributes={{
-                                        id: listboxId,
-                                        "aria-label": intl.formatMessage({
-                                            id: "mvf.attributePicker.title",
-                                        }),
-                                    }}
-                                    dataTestId="s-mvf-attribute-picker-list"
-                                />
-                            </>
+                            <UiListbox
+                                items={listboxItems}
+                                onSelect={handleItemSelect}
+                                shouldCloseOnSelect={false}
+                                isCompact
+                                InteractiveItemComponent={AttributePickerItemComponent}
+                                ariaAttributes={{
+                                    id: listboxId,
+                                    "aria-label": intl.formatMessage({
+                                        id: "mvf.attributePicker.title",
+                                    }),
+                                }}
+                                dataTestId="s-mvf-attribute-picker-list"
+                            />
                         )}
-                    </div>
-                    <div className="gd-mvf-attribute-picker-footer">
-                        <UiButton
-                            variant="secondary"
-                            size="small"
-                            onClick={onCancel}
-                            label={intl.formatMessage({ id: "cancel" })}
-                        />
-                        <UiButton
-                            variant="primary"
-                            size="small"
-                            onClick={handleAdd}
-                            label={intl.formatMessage({ id: "mvf.attributePicker.add" })}
-                            isDisabled={isAddDisabled}
-                        />
                     </div>
                 </div>
             </div>

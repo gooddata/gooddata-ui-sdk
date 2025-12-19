@@ -70,17 +70,31 @@ export function useHeaderMenu(
         : { textWrappingItems: [], handleTextWrappingItemClick: () => {} };
 
     // Sorting
-    const { sortDirection, sortIndex, sortingItems, handleSortingItemClick, handleProgressSort } =
-        useHeaderMenuSorting(agGridHeaderParams);
+    const {
+        sortDirection,
+        sortIndex,
+        sortingItems,
+        handleSortingItemClick,
+        handleProgressSort,
+        headerCellAriaLabel,
+    } = useHeaderMenuSorting(agGridHeaderParams);
 
     const sanitizedSortingProps = allowSorting
-        ? { sortingItems, sortDirection, sortIndex, handleSortingItemClick, handleProgressSort }
+        ? {
+              sortingItems,
+              sortDirection,
+              sortIndex,
+              handleSortingItemClick,
+              handleProgressSort,
+              headerCellAriaLabel,
+          }
         : {
               sortingItems: [],
               sortDirection: undefined,
               sortIndex: undefined,
               handleSortingItemClick: () => {},
               handleProgressSort: (_event: MouseEvent<HTMLDivElement> | KeyboardEvent) => {},
+              headerCellAriaLabel,
           };
 
     // Drills

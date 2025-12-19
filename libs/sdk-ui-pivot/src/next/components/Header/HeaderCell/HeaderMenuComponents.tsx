@@ -255,6 +255,7 @@ function buildUiSortingMenuItems(
                 isSelected: sortItem.isActive,
                 data: sortItem,
                 iconRight: sortItem.isActive ? <i className="gd-icon-checkmark" /> : null,
+                ariaAttributes: sortItem.ariaLabel ? { "aria-label": sortItem.ariaLabel } : undefined,
             });
         });
     }

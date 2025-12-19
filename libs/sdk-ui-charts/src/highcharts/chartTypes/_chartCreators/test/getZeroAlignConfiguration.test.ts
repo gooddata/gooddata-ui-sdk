@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -795,14 +796,14 @@ describe("getZeroAlignConfiguration", () => {
 
     describe("convertNumberToPercent", () => {
         it("should convert number to percent", () => {
-            const data: number[][] = [
+            const data: (number | null)[][] = [
                 [1, 2, 7],
                 [10, 40, null],
                 [10, 90, null],
                 [null, null, null],
                 [null, 20, null],
             ];
-            const result = convertNumberToPercent(data);
+            const result = convertNumberToPercent(data as number[][]);
             expect(result).toEqual([[10, 20, 70], [20, 80], [10, 90], [], [100]]);
         });
     });

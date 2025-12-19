@@ -12,20 +12,20 @@ import { type IChartConfig } from "../../../interfaces/index.js";
  * @param selectedPoints - selected points defined by drill intersections
  */
 export const highlightChartPoints = (series: Highcharts.Series[], config?: IChartConfig) => {
-    const { selectedPoints, type } = config;
+    const { selectedPoints, type } = config ?? {};
 
     if (!selectedPoints?.length) {
         return;
     }
 
-    const borderClassName = ["heatmap", "dependencywheel", "sankey"].includes(type)
+    const borderClassName = ["heatmap", "dependencywheel", "sankey"].includes(type ?? "")
         ? "gd-point-highlighted-border"
         : undefined;
     const classNames = cx("gd-point-highlighted", borderClassName);
 
     series.forEach((seriesItem) => {
         seriesItem.points.forEach((point) => {
-            selectedPoints.forEach((selectedPointIntersection) => {
+            selectedPoints.forEach((selectedPointIntersection: any) => {
                 if (isEqual((point as any).drillIntersection, selectedPointIntersection)) {
                     /**
                      * In case of waterfall chart, we make sure that the `x` value is not changed.

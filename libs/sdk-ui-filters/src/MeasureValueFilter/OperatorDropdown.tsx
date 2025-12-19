@@ -71,7 +71,12 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
 
     return (
         <>
-            {renderDropdownButton()}
+            <div className="gd-mvf-operator-dropdown">
+                <div className="gd-mvf-operator-dropdown-label">
+                    {intl.formatMessage({ id: "mvf.condition" })}
+                </div>
+                {renderDropdownButton()}
+            </div>
             {opened ? (
                 <OperatorDropdownBody
                     alignTo={".gd-mvf-operator-dropdown-button"}

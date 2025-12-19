@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
@@ -12,7 +13,7 @@ import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 export class TreemapColorStrategy extends MeasureColorStrategy {
     protected override createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -28,7 +29,7 @@ export class TreemapColorStrategy extends MeasureColorStrategy {
                 stackByAttribute,
                 dv,
             );
-            colorAssignment = result.outputColorAssignment;
+            colorAssignment = result.outputColorAssignment!;
         }
 
         return {

@@ -149,9 +149,9 @@ async function onColumnsManualReset(
         // otherwise, the column will be auto-resized to fit
         if (!resizingConfig.growToFit) {
             const columnIds = [column.getColId()];
-            setColumnMaxWidth(resizingState.current.columnApi!, columnIds, AUTO_SIZED_MAX_WIDTH);
-            columnApi.autoSizeColumns(columnIds);
-            setColumnMaxWidth(columnApi, columnIds, MANUALLY_SIZED_MAX_WIDTH);
+            setColumnMaxWidth(columnApi!, columnIds, AUTO_SIZED_MAX_WIDTH);
+            columnApi!.autoSizeColumns(columnIds);
+            setColumnMaxWidth(columnApi!, columnIds, MANUALLY_SIZED_MAX_WIDTH);
             resizingState.current.manuallyResizedColumns.push(column);
         }
     }
@@ -198,12 +198,14 @@ function applyColumnSizes(
                 const columnDef = columnApi
                     .getAllGridColumns()
                     .find((col) => col.getColDef().field === column.field);
-                columnWidthItems.push({
-                    key: columnDef.getColId(),
-                    newWidth: columnWidth.attributeColumnWidthItem.width.value,
-                });
-                if (!getManualResizedColumn(resizingState, columnDef)) {
-                    resizingState.current.manuallyResizedColumns.push(columnDef);
+                if (columnDef) {
+                    columnWidthItems.push({
+                        key: columnDef.getColId(),
+                        newWidth: columnWidth.attributeColumnWidthItem.width.value,
+                    });
+                    if (!getManualResizedColumn(resizingState, columnDef)) {
+                        resizingState.current.manuallyResizedColumns.push(columnDef);
+                    }
                 }
             }
         }
@@ -259,11 +261,13 @@ function applyMeasureColumnSize(
                 .getAllGridColumns()
                 .find((col) => col.getColDef().field === column.field);
 
-            if (!getManualResizedColumn(resizingState, columnDef)) {
-                resizingState.current.manuallyResizedColumns.push(columnDef);
-            }
+            if (columnDef) {
+                if (!getManualResizedColumn(resizingState, columnDef)) {
+                    resizingState.current.manuallyResizedColumns.push(columnDef);
+                }
 
-            return { key: columnDef.getColId(), newWidth: width };
+                return { key: columnDef.getColId(), newWidth: width };
+            }
         }
         //TODO: Autoresize column, value === "auto
     }

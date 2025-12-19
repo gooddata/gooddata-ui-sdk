@@ -24,7 +24,7 @@ interface ICoreHeadlineExtendedProps {
 
 type CoreHeadlineProps = ICoreChartProps & ILoadingInjectedProps & ICoreHeadlineExtendedProps;
 
-function HeadlineStateless(props: CoreHeadlineProps): ReactElement {
+function HeadlineStateless(props: CoreHeadlineProps) {
     const {
         dataView,
         error,
@@ -46,7 +46,7 @@ function HeadlineStateless(props: CoreHeadlineProps): ReactElement {
         return (
             <IntlWrapper locale={locale}>
                 <HeadlineTransformation
-                    dataView={dataView}
+                    dataView={dataView!}
                     onAfterRender={afterRender}
                     onDrill={onDrill}
                     drillableItems={drillableItems}

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { useState } from "react";
+
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
@@ -18,6 +20,13 @@ import {
     type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
+import {
+    type CalendarTabType,
+    filterFiscalPresets,
+    filterStandardPresets,
+    getFiscalTabsConfig,
+    getTabForPreset,
+} from "../utils/presetFilterUtils.js";
 
 interface IDateFilterBodyMobileContentProps {
     filterOptions: IDateFilterOptionsByType;
@@ -55,6 +64,18 @@ export function DateFilterBodyMobileContent({
     isRedesigned = false,
 }: IDateFilterBodyMobileContentProps) {
     const intl = useIntl();
+
+    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset);
+
+    const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
+        getTabForPreset(selectedFilterOption),
+    );
+
+    const filteredRelativePreset = showTabs
+        ? selectedTab === "standard"
+            ? filterStandardPresets(filterOptions.relativePreset!)
+            : filterFiscalPresets(filterOptions.relativePreset!)
+        : filterOptions.relativePreset;
 
     if (!isRedesigned && route === "absoluteForm") {
         const title = intl.formatMessage({ id: "filters.staticPeriod" });
@@ -108,6 +129,10 @@ export function DateFilterBodyMobileContent({
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                 isMobile={isMobile}
                 dateFormat={dateFormat}
+                showTabs={showTabs}
+                selectedTab={selectedTab}
+                onTabSelect={setSelectedTab}
+                filteredRelativePreset={filteredRelativePreset}
             />
         );
     }

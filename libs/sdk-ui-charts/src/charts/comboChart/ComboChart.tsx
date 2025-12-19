@@ -62,14 +62,14 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
 
-        return backend
+        return backend!
             .withTelemetry("ComboChart", props)
-            .workspace(workspace)
+            .workspace(workspace!)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
             .withDimensions(defaultDimensions)
-            .withExecConfig(execConfig);
+            .withExecConfig(execConfig!);
     },
     propOverridesFactory: (props) => {
         return {
@@ -81,7 +81,7 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
 function getConfiguration(props: IComboChartProps): IChartConfig {
     const { primaryMeasures, secondaryMeasures, config } = props;
     const isDualAxis = props.config?.dualAxis ?? true;
-    const measuresOnPrimaryAxis = isDualAxis ? primaryMeasures : [...primaryMeasures, ...secondaryMeasures];
+    const measuresOnPrimaryAxis = isDualAxis ? primaryMeasures : [...primaryMeasures!, ...secondaryMeasures!];
 
     return sanitizeConfig(measuresOnPrimaryAxis as IMeasure[], config);
 }

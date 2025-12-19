@@ -7,7 +7,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
+    type IActiveCalendars,
     type IAlertDefault,
+    type IFiscalYear,
     type IMetricFormatOverrideSetting,
     type ISeparators,
 } from "@gooddata/sdk-model";
@@ -62,12 +64,12 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setWeekStart(weekStart);
     }
 
-    async setCalendar(monthOffset: number): Promise<void> {
-        return this.decorated.setCalendar(monthOffset);
+    async setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void> {
+        return this.decorated.setFiscalCalendar(fiscalYear);
     }
 
-    async deleteCalendar(): Promise<void> {
-        return this.decorated.deleteCalendar();
+    async setActiveCalendars(calendars: IActiveCalendars): Promise<void> {
+        return this.decorated.setActiveCalendars(calendars);
     }
 
     async setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void> {

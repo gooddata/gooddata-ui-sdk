@@ -19,7 +19,7 @@ describe("ComparisonProvider", () => {
     };
 
     describe("createExecution", () => {
-        const specs: [string, CalculationType][] = [
+        const specs: [string, CalculationType | undefined][] = [
             ["change", undefined],
             ["change", CalculateAs.CHANGE],
             ["ratio", CalculateAs.RATIO],
@@ -27,9 +27,9 @@ describe("ComparisonProvider", () => {
             ["change (difference)", CalculateAs.CHANGE_DIFFERENCE],
         ];
 
-        it.each<[string, CalculationType]>(specs)(
+        it.each<[string, CalculationType | undefined]>(specs)(
             "Should build execution with %s operator when provided calculation is %s",
-            (_operator: string, calculationType: CalculationType) => {
+            (_operator: string, calculationType: CalculationType | undefined) => {
                 const comparison: IComparison = {
                     enabled: true,
                     calculationType,

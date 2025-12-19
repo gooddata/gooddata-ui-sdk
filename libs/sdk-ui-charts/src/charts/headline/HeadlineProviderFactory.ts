@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type IBucket, type IMeasure, bucketMeasure, bucketMeasures, bucketsFind } from "@gooddata/sdk-model";
@@ -21,7 +22,7 @@ enum HeadlineType {
  *
  * @internal
  */
-const createHeadlineProvider = (buckets: IBucket[], config: IChartConfig): IHeadlineProvider => {
+const createHeadlineProvider = (buckets: IBucket[], config: IChartConfig | undefined): IHeadlineProvider => {
     const headlineType = getHeadlineType(buckets, config);
     if (headlineType === HeadlineType.COMPARISON) {
         return new ComparisonProvider(config?.comparison);
@@ -30,12 +31,12 @@ const createHeadlineProvider = (buckets: IBucket[], config: IChartConfig): IHead
     return new MultiMeasuresProvider();
 };
 
-const getHeadlineType = (buckets: IBucket[], config: IChartConfig): HeadlineType => {
+const getHeadlineType = (buckets: IBucket[], config: IChartConfig | undefined): HeadlineType => {
     const measureBucket = bucketsFind(buckets, BucketNames.MEASURES);
-    const primaryMeasure = measureBucket && bucketMeasure(measureBucket);
+    const primaryMeasure = measureBucket ? bucketMeasure(measureBucket) : undefined;
 
     const secondaryBucket = bucketsFind(buckets, BucketNames.SECONDARY_MEASURES);
-    const secondaryMeasures = isEmpty(secondaryBucket) ? [] : bucketMeasures(secondaryBucket);
+    const secondaryMeasures = isEmpty(secondaryBucket) ? [] : bucketMeasures(secondaryBucket!);
 
     if (isComparisonType(primaryMeasure, secondaryMeasures, config?.comparison)) {
         return HeadlineType.COMPARISON;
@@ -45,12 +46,12 @@ const getHeadlineType = (buckets: IBucket[], config: IChartConfig): HeadlineType
 };
 
 const isComparisonType = (
-    primaryMeasure: IMeasure,
+    primaryMeasure: IMeasure | undefined,
     secondaryMeasures: IMeasure[],
-    comparison: IComparison,
+    comparison?: IComparison,
 ): boolean => {
     const isComparisonEnabled = comparison?.enabled ?? true;
-    return primaryMeasure && secondaryMeasures?.length === 1 && isComparisonEnabled;
+    return !!primaryMeasure && secondaryMeasures?.length === 1 && isComparisonEnabled;
 };
 
 /**

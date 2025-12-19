@@ -16,8 +16,11 @@ import { RelativePresetTitleTranslated } from "../RelativePresetTitleTranslated/
 
 const granularityOrder: DateFilterGranularity[] = [
     "GDC.time.year",
+    "GDC.time.fiscal_year",
     "GDC.time.quarter",
+    "GDC.time.fiscal_quarter",
     "GDC.time.month",
+    "GDC.time.fiscal_month",
     "GDC.time.week_us",
     "GDC.time.date",
     "GDC.time.hour",

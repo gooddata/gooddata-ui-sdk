@@ -66,7 +66,7 @@ export interface IChartTransformationProps {
 
     afterRender(): void;
     onDataTooLarge(chartOptions: any, errorMessage?: string): void;
-    onNegativeValues(chartOptions: any): void;
+    onNegativeValues: ((chartOptions: any) => void) | null;
 
     numericSymbols?: string[];
     theme?: ITheme;
@@ -122,7 +122,7 @@ function ChartTransformationImpl({
         if (validationResult.dataTooLarge) {
             // always force onDataTooLarge error handling
             invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
-            onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
+            onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits!, chartOptions));
         } else if (validationResult.hasNegativeValue) {
             // ignore hasNegativeValue if validation already fails on dataTooLarge
             // force onNegativeValues error handling only for pie chart.

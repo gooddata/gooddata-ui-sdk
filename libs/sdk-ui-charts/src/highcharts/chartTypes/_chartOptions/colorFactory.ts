@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import { type DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
 import { AttributeColorStrategy, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -34,7 +35,7 @@ const attributeChartSupportedTypes = [
     VisualizationTypes.DEPENDENCY_WHEEL,
 ];
 
-function isAttributeColorPalette(type: string, dv: DataViewFacade, stackByAttribute: any) {
+function isAttributeColorPalette(type: string | undefined, dv: DataViewFacade, stackByAttribute: any) {
     const attributeChartSupported = isOneOfTypes(type, attributeChartSupportedTypes);
     return stackByAttribute || (attributeChartSupported && dv.def().hasAttributes());
 }
@@ -45,12 +46,12 @@ function isAttributeColorPalette(type: string, dv: DataViewFacade, stackByAttrib
 export class ColorFactory {
     public static getColorStrategy(
         colorPalette: IColorPalette = DefaultColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         viewByAttribute: any,
         viewByParentAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
-        type: string,
+        type: string | undefined,
         theme?: ITheme,
         clusterTitle?: string,
     ): IColorStrategy {

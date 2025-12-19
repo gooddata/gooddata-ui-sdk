@@ -90,6 +90,14 @@ interface IDimensionalitySectionProps {
      */
     insightDimensionality?: IDimensionalityItem[];
     /**
+     * Catalog dimensionality items (from computeValidObjects).
+     */
+    catalogDimensionality?: IDimensionalityItem[];
+    /**
+     * Whether catalog dimensionality is currently being loaded.
+     */
+    isLoadingCatalogDimensionality?: boolean;
+    /**
      * Callback when dimensionality changes.
      */
     onDimensionalityChange: (dimensionality: IDimensionalityItem[]) => void;
@@ -103,6 +111,8 @@ interface IDimensionalitySectionProps {
 export const DimensionalitySection = memo(function DimensionalitySection({
     dimensionality,
     insightDimensionality,
+    catalogDimensionality,
+    isLoadingCatalogDimensionality,
     onDimensionalityChange,
 }: IDimensionalitySectionProps) {
     const intl = useIntl();
@@ -127,26 +137,51 @@ export const DimensionalitySection = memo(function DimensionalitySection({
 
     /**
      * Compute available items for the AttributePicker.
-     * These are items from insight dimensionality that are not yet in filter dimensionality.
+     * Keep insight items and catalog items separate so the picker does not need to guess origin.
      */
-    const availableDimensionalityItems = useMemo(() => {
-        if (!insightDimensionality?.length) {
-            return [];
-        }
-        return insightDimensionality.filter(
-            (insightItem) =>
+    const availableInsightItems = useMemo(() => {
+        return (insightDimensionality ?? []).filter(
+            (availableItem) =>
                 !dimensionality.some((filterItem) =>
-                    areObjRefsEqual(insightItem.identifier, filterItem.identifier),
+                    areObjRefsEqual(availableItem.identifier, filterItem.identifier),
                 ),
         );
     }, [insightDimensionality, dimensionality]);
 
-    // Disable add buttons when there are no more items to add
-    const isAddButtonDisabled = availableDimensionalityItems.length === 0;
+    const availableCatalogItems = useMemo(() => {
+        const selectedFilteredOut = (catalogDimensionality ?? []).filter(
+            (availableItem) =>
+                !dimensionality.some((filterItem) =>
+                    areObjRefsEqual(availableItem.identifier, filterItem.ref),
+                ),
+        );
+
+        // Prevent duplicates between "From visualization" and catalog lists.
+        // Insight items may be represented as LocalIdRefs; when available, use `ref` (display-form ObjRef)
+        // for stable deduplication against catalog candidates (which use ObjRefs).
+        const insightRefKeys = new Set(
+            availableInsightItems
+                .map((i) => (i.ref ? objRefToString(i.ref) : undefined))
+                .filter((x): x is string => !!x),
+        );
+        const insightTitlesWithoutRef = new Set(
+            availableInsightItems.filter((i) => !i.ref).map((i) => i.title),
+        );
+
+        return selectedFilteredOut.filter((item) => {
+            const itemKey = objRefToString(item.identifier);
+            if (insightRefKeys.has(itemKey)) {
+                return false;
+            }
+            // Fallback for environments where insight items do not provide refs.
+            return !insightTitlesWithoutRef.has(item.title);
+        });
+    }, [catalogDimensionality, dimensionality, availableInsightItems]);
 
     const handleRemoveDimensionality = useCallback(
         (index: number) => {
-            onDimensionalityChange(dimensionality.filter((_, i) => i !== index));
+            const newDimensionality = dimensionality.filter((_, i) => i !== index);
+            onDimensionalityChange(newDimensionality);
         },
         [dimensionality, onDimensionalityChange],
     );
@@ -155,26 +190,20 @@ export const DimensionalitySection = memo(function DimensionalitySection({
      * Reset dimensionality to insight defaults (bucket attributes).
      */
     const handleResetDimensionality = useCallback(() => {
-        onDimensionalityChange(insightDimensionality ?? []);
+        const newDimensionality = insightDimensionality ?? [];
+        onDimensionalityChange(newDimensionality);
     }, [insightDimensionality, onDimensionalityChange]);
 
     const handleOpenInlineAttributePicker = useCallback(() => {
-        if (availableDimensionalityItems.length > 0) {
-            setAnchorType("inline");
-            setIsAttributePickerOpen(true);
-        }
-    }, [availableDimensionalityItems.length]);
+        setAnchorType("inline");
+        setIsAttributePickerOpen(true);
+    }, []);
 
-    const handleOpenStandaloneAttributePicker = useCallback(
-        (event: MouseEvent<HTMLButtonElement>) => {
-            if (availableDimensionalityItems.length > 0) {
-                setAnchorType("standalone");
-                setStandaloneAnchor(event.currentTarget);
-                setIsAttributePickerOpen(true);
-            }
-        },
-        [availableDimensionalityItems.length],
-    );
+    const handleOpenStandaloneAttributePicker = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+        setAnchorType("standalone");
+        setStandaloneAnchor(event.currentTarget);
+        setIsAttributePickerOpen(true);
+    }, []);
 
     const handleCloseAttributePicker = useCallback(() => {
         setIsAttributePickerOpen(false);
@@ -183,16 +212,15 @@ export const DimensionalitySection = memo(function DimensionalitySection({
 
     const handleAddDimensionalityItems = useCallback(
         (items: IDimensionalityItem[]) => {
-            onDimensionalityChange([...dimensionality, ...items]);
+            const newDimensionality = [...dimensionality, ...items];
+            onDimensionalityChange(newDimensionality);
             setIsAttributePickerOpen(false);
             setStandaloneAnchor(null);
         },
         [dimensionality, onDimensionalityChange],
     );
 
-    const addButtonTooltip = isAddButtonDisabled
-        ? intl.formatMessage({ id: "mvf.dimensionality.addButton.tooltip.disabled" })
-        : intl.formatMessage({ id: "mvf.dimensionality.addButton.tooltip" });
+    const addButtonTooltip = intl.formatMessage({ id: "mvf.dimensionality.addButton.tooltip" });
 
     // Determine the actual anchor element to use
     const actualAnchor = anchorType === "inline" ? inlineAddButtonRef.current : standaloneAnchor;
@@ -232,21 +260,23 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                             <WithAddButton
                                 key={objRefToString(item.identifier)}
                                 appendAddButton={index === dimensionality.length - 1}
-                                isDisabled={isAddButtonDisabled}
+                                isDisabled={false}
                                 tooltip={addButtonTooltip}
                                 buttonRef={inlineAddButtonRef}
                                 onClick={handleOpenInlineAttributePicker}
                             >
-                                <UiTag
-                                    variant="outlined"
-                                    size="large"
-                                    iconBefore={icon}
-                                    iconBeforeColor={iconColor}
-                                    label={item.title}
-                                    isDeletable
-                                    onDelete={() => handleRemoveDimensionality(index)}
-                                    dataTestId={`dimensionality-tag-${index}`}
-                                />
+                                <div className="gd-mvf-dimensionality-tag-wrapper">
+                                    <UiTag
+                                        variant="outlined"
+                                        size="large"
+                                        iconBefore={icon}
+                                        iconBeforeColor={iconColor}
+                                        label={item.title}
+                                        isDeletable
+                                        onDelete={() => handleRemoveDimensionality(index)}
+                                        dataTestId={`dimensionality-tag-${index}`}
+                                    />
+                                </div>
                             </WithAddButton>
                         );
                     })}
@@ -257,16 +287,17 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                     variant="tertiary"
                     size="small"
                     iconBefore="plus"
-                    isDisabled={isAddButtonDisabled}
                     onClick={handleOpenStandaloneAttributePicker}
                 />
             )}
             {isAttributePickerOpen && actualAnchor ? (
                 <AttributePicker
-                    availableItems={availableDimensionalityItems}
                     anchorElement={actualAnchor}
                     onAdd={handleAddDimensionalityItems}
                     onCancel={handleCloseAttributePicker}
+                    availableInsightItems={availableInsightItems}
+                    availableCatalogItems={availableCatalogItems}
+                    isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                 />
             ) : null}
         </div>

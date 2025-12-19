@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
@@ -30,15 +31,21 @@ export interface IValidationResult {
     hasNegativeValue: boolean;
 }
 
-export function isNegativeValueIncluded(series: ISeriesItem[]): boolean {
+const isNegativeNumber = (n: number | null | undefined): boolean => typeof n === "number" && n < 0;
+
+export function isNegativeValueIncluded(series: ISeriesItem[] | undefined): boolean {
+    if (!series) {
+        return false;
+    }
     return series.some((seriesItem: ISeriesItem) =>
         (seriesItem.data || []).some(
-            ({ y, value, weight }: ISeriesDataItem) => y < 0 || value < 0 || weight < 0,
+            ({ y, value, weight }: ISeriesDataItem) =>
+                isNegativeNumber(y) || isNegativeNumber(value) || isNegativeNumber(weight),
         ),
     );
 }
 
-function getChartLimits(type: string): IChartLimits {
+function getChartLimits(type: string | undefined): IChartLimits {
     switch (type) {
         case VisualizationTypes.SCATTER:
             return {
@@ -136,7 +143,7 @@ function getSoftChartLimits(type: ChartType): IChartLimits {
     }
 }
 
-export function cannotShowNegativeValues(type: string): boolean {
+export function cannotShowNegativeValues(type: string | undefined): boolean {
     return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
 
@@ -151,8 +158,12 @@ function getTreemapDataForValidation(data: any) {
     };
 }
 
-export function validateData(limits: IChartLimits, chartOptions: IChartOptions): IValidationResult {
-    const { type, isViewByTwoAttributes } = chartOptions;
+export function validateData(
+    limits: IChartLimits | undefined,
+    chartOptions: IChartOptions,
+): IValidationResult {
+    const type = chartOptions.type;
+    const { isViewByTwoAttributes } = chartOptions;
     const finalLimits = limits || getChartLimits(type);
     let dataToValidate = chartOptions.data;
     if (isTreemap(type)) {
@@ -161,7 +172,8 @@ export function validateData(limits: IChartLimits, chartOptions: IChartOptions):
 
     return {
         dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits, isViewByTwoAttributes),
-        hasNegativeValue: cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data.series),
+        hasNegativeValue:
+            cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data?.series),
     };
 }
 

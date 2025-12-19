@@ -99,7 +99,7 @@ export const convertMeasure = (
     measure: JsonApiMetricOutWithLinks,
     included: JsonApiMetricOutIncludes[] = [],
 ): ICatalogMeasure => {
-    const { maql = "", format = "", metricType } = measure.attributes?.content || {};
+    const { maql, format, metricType } = measure.attributes?.content ?? {};
 
     return newCatalogMeasure((catalogM) =>
         catalogM
@@ -107,7 +107,7 @@ export const convertMeasure = (
                 m
                     .modify(commonMetadataObjectModifications(measure))
                     .expression(maql)
-                    .format(format)
+                    .format(format ?? "")
                     .isLocked(isInheritedObject(measure))
                     .tags(measure.attributes?.tags ?? [])
                     .metricType(metricType as MetricType | undefined)

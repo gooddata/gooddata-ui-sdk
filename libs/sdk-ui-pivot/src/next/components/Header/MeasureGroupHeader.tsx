@@ -14,6 +14,7 @@ import {
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { e } from "../../features/styling/bem.js";
+import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
 import { useHeaderMenuKeyboard } from "../../hooks/header/useHeaderMenuKeyboard.js";
 import {
@@ -64,6 +65,7 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
         handleAggregationsItemClick,
         handleTextWrappingItemClick,
         handleSortingItemClick,
+        headerCellAriaLabel,
     } = useHeaderMenu(
         {
             allowAggregations,
@@ -87,6 +89,7 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
         },
         isHeader && hasMenuItems,
     );
+    useHeaderCellAriaLabel(isHeader ? params.eGridHeader : undefined, headerCellAriaLabel);
 
     const effectiveMeasure = rowScope.find((scope) => scope.type === "measureScope");
     // For non-header cells, get the measure name from the row scope's measure descriptor

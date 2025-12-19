@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { isEqual, range } from "lodash-es";
 import { darken, mix, saturate } from "polished";
 
@@ -32,13 +33,13 @@ export class HeatmapColorStrategy extends ColorStrategy {
 
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
+        colorMapping: IColorMapping[] | undefined,
         _viewByAttribute: any,
         _stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
         let mappedColor;
-        let colorAssignment: IColorAssignment[];
+        let colorAssignment: IColorAssignment[] | undefined;
         const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
         const headerItem = measureGroup?.items[0];
         if (colorMapping) {
@@ -89,7 +90,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
             return this.getCustomHeatmapColorPalette(colorFromPalette);
         }
 
-        return this.getCustomHeatmapColorPalette(colorAssignmentColor.value);
+        return this.getCustomHeatmapColorPalette(colorAssignmentColor?.value as IRgbColorValue);
     }
 
     private getCustomHeatmapColorPalette(baseColorRGB: IRgbColorValue): HighChartColorPalette {

@@ -63,6 +63,11 @@ export interface ISettings {
     fiscalYear?: IFiscalYear;
 
     /**
+     * Active calendars configuration
+     */
+    activeCalendars?: IActiveCalendars;
+
+    /**
      * Locale code to use for metadata.
      */
     metadataLocale?: string;
@@ -840,6 +845,45 @@ export interface IFiscalYear {
      * Month offset from January (0 = January, 1 = February, ..., -1 = December of previous year, etc.)
      */
     monthOffset: number;
+    /**
+     * Prefix for fiscal year labels (e.g. "FY")
+     */
+    yearPrefix?: string;
+    /**
+     * Prefix for fiscal quarter labels (e.g. "Q")
+     */
+    quarterPrefix?: string;
+    /**
+     * Prefix for fiscal month/period labels (e.g. "P")
+     */
+    monthPrefix?: string;
+}
+
+/**
+ * Calendar type
+ *
+ * @public
+ */
+export type CalendarType = "STANDARD" | "FISCAL";
+
+/**
+ * Active calendars configuration
+ *
+ * @public
+ */
+export interface IActiveCalendars {
+    /**
+     * Which calendar type is the default
+     */
+    default: CalendarType;
+    /**
+     * Whether standard calendar is enabled
+     */
+    standard: boolean;
+    /**
+     * Whether fiscal calendar is enabled
+     */
+    fiscal: boolean;
 }
 
 /**

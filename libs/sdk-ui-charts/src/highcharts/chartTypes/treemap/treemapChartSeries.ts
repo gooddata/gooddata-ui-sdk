@@ -34,7 +34,7 @@ function gradientPreviousGroup(solidColorLeafs: any[]): any[] {
 }
 
 function getRootPoint(
-    rootName: string,
+    rootName: string | null | undefined,
     index: number,
     format: string,
     colorStrategy: IColorStrategy,
@@ -51,7 +51,7 @@ function getRootPoint(
 }
 
 function getLeafPoint(
-    stackByAttribute: any,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     parentIndex: number,
     seriesIndex: number,
     data: any,
@@ -61,7 +61,7 @@ function getLeafPoint(
 ) {
     return {
         name: valueWithEmptyHandling(
-            getMappingHeaderFormattedName(stackByAttribute.items[seriesIndex]),
+            getMappingHeaderFormattedName(stackByAttribute?.items[seriesIndex]),
             emptyHeaderTitle,
         ),
         parent: `${parentIndex}`,
@@ -82,7 +82,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
 ): any[] {
@@ -90,7 +90,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     const leafs: any = [];
     let rootId = -1;
     let uncoloredLeafs: any = [];
-    let lastRoot: IResultAttributeHeader["attributeHeaderItem"] = null;
+    let lastRoot: IResultAttributeHeader["attributeHeaderItem"] | null = null;
 
     const executionResultData = dv.rawData().twoDimData();
     const dataLength = executionResultData.length;
@@ -174,7 +174,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
                 };
             });
 
-            const sortedLeafs = unsortedLeafs.sort((a: IPointData, b: IPointData) => b.value - a.value);
+            const sortedLeafs = unsortedLeafs.sort((a: IPointData, b: IPointData) => b.value! - a.value!);
 
             data = [
                 ...data,
@@ -194,8 +194,8 @@ export function getTreemapStackedSeriesDataWithMeasures(
 export function getTreemapStackedSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,

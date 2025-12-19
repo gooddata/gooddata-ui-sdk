@@ -100,6 +100,7 @@ export function RenderGeoChartNext(): ReactElement {
                         drillablePredicates={drillablePredicates}
                         onCenterPositionChanged={props.onCenterPositionChanged}
                         onZoomChanged={props.onZoomChanged}
+                        onDrill={props.onDrill}
                         afterRender={props.afterRender}
                         config={props.config}
                         backend={props.backend}

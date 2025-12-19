@@ -2,7 +2,9 @@
 
 import {
     type DashboardFiltersApplyMode,
+    type IActiveCalendars,
     type IAlertDefault,
+    type IFiscalYear,
     type IMetricFormatOverrideSetting,
     type ISeparators,
 } from "@gooddata/sdk-model";
@@ -114,18 +116,20 @@ export interface IWorkspaceSettingsService {
     /**
      * Sets fiscal calendar for current workspace.
      *
-     * @param monthOffset - number of months the fiscal year is offset from the calendar year. Can be positive or negative.
+     * @param fiscalYear - fiscal year configuration including month offset and optional prefixes.
      *
      * @returns promise
      */
-    setCalendar(monthOffset: number): Promise<void>;
+    setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
 
     /**
-     * Deletes fiscal calendar from workspace settings returning calendar to default.
+     * Sets active calendars configuration for current workspace.
+     *
+     * @param calendars - configuration for which calendars are enabled and which is the default.
      *
      * @returns promise
      */
-    deleteCalendar(): Promise<void>;
+    setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
 
     /**
      * Sets DashboardFiltersApplyMode configuration for workspace. Default is taken from organization setting.

@@ -81,9 +81,7 @@ export function BulletChart(props: IBulletChartProps): JSX.Element;
 export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType>;
 
 // @internal (undocumented)
-export const CALCULATION_VALUES_DEFAULT: {
-    [key in CalculationType]?: ICalculationDefaultValue;
-};
+export const CALCULATION_VALUES_DEFAULT: Record<CalculationType, ICalculationDefaultValue>;
 
 // @public
 export type CalculationType = "change" | "ratio" | "difference" | "change_difference";
@@ -156,7 +154,7 @@ export function CoreRepeater(props: ICoreRepeaterChartProps): JSX.Element;
 export const CoreXirr: ComponentType<ICoreChartProps>;
 
 // @internal
-export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig) => IHeadlineProvider;
+export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig | undefined) => IHeadlineProvider;
 
 // @internal (undocumented)
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
@@ -176,10 +174,10 @@ export const getCalculationValuesDefault: (calculationType?: CalculationType) =>
 export { getColorMappingPredicate }
 
 // @internal
-export const getComparisonFormat: (providedFormat: string, defaultFormat: string) => string;
+export const getComparisonFormat: (providedFormat: string | null | undefined, defaultFormat: string | null) => string | null;
 
 // @internal (undocumented)
-export const getComparisonRgbColor: (color: IColor, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
+export const getComparisonRgbColor: (color: IColor | null | undefined, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
 
 export { getPatternFill }
 
@@ -288,11 +286,11 @@ export interface IBulletChartProps extends IBulletChartBucketProps, IBucketChart
 // @internal (undocumented)
 export interface ICalculationDefaultValue {
     // (undocumented)
-    defaultFormat: string;
+    defaultFormat: string | null;
     // (undocumented)
     defaultLabelKeys: IDefaultLabelKeys;
     // (undocumented)
-    defaultSubFormat?: string;
+    defaultSubFormat: string | null;
 }
 
 // @public
@@ -857,16 +855,16 @@ export interface ISankeyChartProps extends IBucketChartProps, ISankeyChartBucket
 }
 
 // @internal (undocumented)
-export const isAreaChart: (type: string) => boolean;
+export const isAreaChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isBarChart: (type: string) => boolean;
+export const isBarChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isBubbleChart: (type: string) => boolean;
+export const isBubbleChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isBulletChart: (type: string) => boolean;
+export const isBulletChart: (type: string | undefined) => boolean;
 
 // @public (undocumented)
 export interface IScatterPlotBucketProps {
@@ -884,49 +882,49 @@ export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucket
 }
 
 // @internal (undocumented)
-export const isColumnChart: (type: string) => boolean;
+export const isColumnChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isComboChart: (type: string) => boolean;
+export const isComboChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isDependencyWheel: (type: string) => boolean;
+export const isDependencyWheel: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isDonutChart: (type: string) => boolean;
+export const isDonutChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isFunnel: (type: string) => boolean;
+export const isFunnel: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isHeatmap: (type: string) => boolean;
+export const isHeatmap: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isLineChart: (type: string) => boolean;
+export const isLineChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isPieChart: (type: string) => boolean;
+export const isPieChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isPieOrDonutChart: (type: string) => boolean;
+export const isPieOrDonutChart: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isPyramid: (type: string) => boolean;
+export const isPyramid: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isSankey: (type: string) => boolean;
+export const isSankey: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isSankeyOrDependencyWheel: (type: string) => boolean;
+export const isSankeyOrDependencyWheel: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isScatterPlot: (type: string) => boolean;
+export const isScatterPlot: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isTreemap: (type: string) => boolean;
+export const isTreemap: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
-export const isWaterfall: (type: string) => boolean;
+export const isWaterfall: (type: string | undefined) => boolean;
 
 // @public
 export interface ITooltipConfig {
@@ -1033,7 +1031,7 @@ export const TOP = "top";
 export function Treemap(props: ITreemapProps): JSX.Element;
 
 // @internal (undocumented)
-export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig;
+export function updateConfigWithSettings(config: IChartConfig, settings: ISettings | undefined): IChartConfig;
 
 // @internal (undocumented)
 export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {

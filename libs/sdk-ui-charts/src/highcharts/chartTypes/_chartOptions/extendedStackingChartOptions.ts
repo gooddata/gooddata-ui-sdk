@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { type IResultAttributeHeader } from "@gooddata/sdk-model";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
@@ -29,13 +30,13 @@ type NameAndCategories = {
  * ```
  */
 export function getCategoriesForTwoAttributes(
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     emptyHeaderTitle: string,
 ): NameAndCategories[] {
     const keys: string[] = [];
-    const { items: children } = viewByAttribute;
-    const { items: parent } = viewByParentAttribute;
+    const children = viewByAttribute?.items ?? [];
+    const parent = viewByParentAttribute?.items ?? [];
 
     const combinedResult = parent.reduce(
         (result: Record<string, NameAndCategories>, parentAttr: IResultAttributeHeader, index: number) => {

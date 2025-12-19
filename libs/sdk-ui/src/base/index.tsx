@@ -161,7 +161,10 @@ export type { ICancelablePromise } from "./react/CancelablePromise.js";
 export { CancelError, makeCancelable, isCancelError } from "./react/CancelablePromise.js";
 export type { ILoadingInjectedProps } from "./react/legacy/withEntireDataView.js";
 export { withEntireDataView } from "./react/legacy/withEntireDataView.js";
-export { getIntersectionAttributes } from "./react/legacy/availableDrillTargets.js";
+export {
+    getIntersectionAttributes,
+    getMultiLayerDrillTargets,
+} from "./react/legacy/availableDrillTargets.js";
 export { createContextStore } from "./react/contextStore.js";
 export type {
     IContextStore,

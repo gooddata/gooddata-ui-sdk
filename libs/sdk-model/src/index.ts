@@ -876,6 +876,8 @@ export type {
     IAlertDefault,
     WeekStart,
     IFiscalYear,
+    IActiveCalendars,
+    CalendarType,
     IOpenAiConfig,
     ILlmEndpoint,
     DashboardFiltersApplyMode,

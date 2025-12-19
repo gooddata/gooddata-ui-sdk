@@ -77,6 +77,9 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     dimensionality,
     insightDimensionality,
     isDimensionalityEnabled,
+    catalogDimensionality,
+    onDimensionalityChange,
+    isLoadingCatalogDimensionality,
 }: IMeasureValueFilterDropdownProps) {
     const handleApply = useCallback(
         (
@@ -87,34 +90,19 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
         ) => {
             if (operator === null || operator === "ALL") {
                 onApply(null);
-            } else {
-                if (isRangeConditionOperator(operator)) {
-                    onApply(
-                        newMeasureValueFilterWithOptions(
-                            { localIdentifier: measureIdentifier },
-                            {
-                                operator,
-                                from: value.from ?? 0,
-                                to: value.to ?? 0,
-                                treatNullValuesAs: treatNullValuesAsZero ? 0 : undefined,
-                                ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
-                            },
-                        ),
-                    );
-                } else {
-                    onApply(
-                        newMeasureValueFilterWithOptions(
-                            { localIdentifier: measureIdentifier },
-                            {
-                                operator,
-                                value: value.value ?? 0,
-                                treatNullValuesAs: treatNullValuesAsZero ? 0 : undefined,
-                                ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
-                            },
-                        ),
-                    );
-                }
+                return;
             }
+
+            const commonOptions = {
+                treatNullValuesAs: treatNullValuesAsZero ? 0 : undefined,
+                ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
+            };
+
+            const filterOptions = isRangeConditionOperator(operator)
+                ? { operator, from: value.from ?? 0, to: value.to ?? 0, ...commonOptions }
+                : { operator, value: value.value ?? 0, ...commonOptions };
+
+            onApply(newMeasureValueFilterWithOptions({ localIdentifier: measureIdentifier }, filterOptions));
         },
         [measureIdentifier, onApply, isDimensionalityEnabled],
     );
@@ -137,6 +125,9 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             dimensionality={dimensionality}
             insightDimensionality={insightDimensionality}
             isDimensionalityEnabled={isDimensionalityEnabled}
+            catalogDimensionality={catalogDimensionality}
+            onDimensionalityChange={onDimensionalityChange}
+            isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
         />
     );
 });

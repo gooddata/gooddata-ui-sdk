@@ -8,14 +8,14 @@ import { type FiredDrillEventCallback } from "../../interfaces/DrillEvents.js";
 interface IBaseHeadlineContextData {
     clientWidth: number;
     clientHeight: number;
-    config: IChartConfig;
+    config?: IChartConfig;
     fireDrillEvent: FiredDrillEventCallback;
 }
 
 export const BaseHeadlineContext = createContext<IBaseHeadlineContextData>({
     clientWidth: 0,
     clientHeight: 0,
-    config: null,
+    config: undefined,
     fireDrillEvent: () => {},
 });
 
