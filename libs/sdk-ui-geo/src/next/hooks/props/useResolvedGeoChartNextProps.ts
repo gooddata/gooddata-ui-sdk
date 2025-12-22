@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
 
-import { EMPTY_DRILLS, EMPTY_OBJECT } from "../../constants/emptyDefaults.js";
+import { EMPTY_DRILLS, EMPTY_FILTERS, EMPTY_OBJECT } from "../../constants/emptyDefaults.js";
 import { applyAreaConfigDefaults } from "../../layers/area/config/defaults.js";
 import { applyPushpinConfigDefaults } from "../../layers/pushpin/config/defaults.js";
 import { applySharedGeoConfigDefaults } from "../../map/style/sharedDefaults.js";
@@ -24,6 +24,7 @@ import { type IGeoChartNextProps } from "../../types/props/geoChartNext/public.j
  */
 export function useResolvedGeoChartNextProps(props: IGeoChartNextProps): IGeoChartNextResolvedProps {
     const resolvedLayers = useResolveValueWithPlaceholders(props.layers);
+    const resolvedFilters = useResolveValueWithPlaceholders(props.filters ?? EMPTY_FILTERS);
     const resolvedType = props.type ?? resolvedLayers[0]?.type ?? props.layers[0]?.type ?? "pushpin";
 
     const config = applyGeoChartNextConfigDefaults(props.config);
@@ -34,10 +35,11 @@ export function useResolvedGeoChartNextProps(props: IGeoChartNextProps): IGeoCha
             layers: resolvedLayers,
             type: resolvedType,
             drillableItems: props.drillableItems ?? EMPTY_DRILLS,
+            filters: resolvedFilters,
             execConfig: props.execConfig ?? EMPTY_OBJECT,
             config,
         }),
-        [props, resolvedLayers, resolvedType, config],
+        [props, resolvedLayers, resolvedFilters, resolvedType, config],
     );
 }
 

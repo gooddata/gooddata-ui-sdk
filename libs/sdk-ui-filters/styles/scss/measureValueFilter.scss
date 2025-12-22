@@ -316,3 +316,11 @@ $dialog_width: 250px;
         padding-top: 10px;
     }
 }
+
+.gd-mvf-backward-compatibility-message {
+    margin-top: 10px;
+
+    .gd-message-text {
+        font-size: 12px;
+    }
+}

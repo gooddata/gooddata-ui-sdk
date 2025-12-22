@@ -88,8 +88,12 @@ export interface IGeoLayerBase {
      *
      * @remarks
      * Array of filters applied only to this layer's data execution.
-     * Layer-specific filters are combined with any global filters
-     * from the parent component.
+     *
+     * These filters are applied **before** any global/component-level filters (e.g. `GeoChartNext.filters`).
+     * When both layer and global filters are provided, the global filters are applied *after* the layer
+     * filters and therefore take precedence for filter types with “last wins” merge rules (for example
+     * date filters for the same date dataset or measure value filters for the same measure). Other filter
+     * types may accumulate according to SDK merge semantics.
      */
     filters?: INullableFilter[];
 

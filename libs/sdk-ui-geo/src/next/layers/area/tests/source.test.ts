@@ -78,6 +78,7 @@ describe("createAreaDataSource", () => {
             title: "Region",
             value: "East",
             uri: "/gdc/md/1/obj/2?id=1",
+            uris: ["/gdc/md/1/obj/2?id=1"],
         });
     });
 });

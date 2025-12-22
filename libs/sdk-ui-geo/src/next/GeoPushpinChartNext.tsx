@@ -36,10 +36,9 @@ export function GeoPushpinChartNext(props: IGeoPushpinChartNextProps): ReactElem
                 size,
                 color,
                 segmentBy,
-                filters,
                 sortBy,
             }),
-        [latitude, longitude, size, color, segmentBy, filters, sortBy],
+        [latitude, longitude, size, color, segmentBy, sortBy],
     );
 
     const allLayers = useMemo<IGeoLayer[]>(
@@ -47,5 +46,5 @@ export function GeoPushpinChartNext(props: IGeoPushpinChartNextProps): ReactElem
         [primaryLayer, additionalLayers],
     );
 
-    return <GeoChartNext {...restProps} layers={allLayers} config={config} />;
+    return <GeoChartNext {...restProps} layers={allLayers} config={config} filters={filters} />;
 }

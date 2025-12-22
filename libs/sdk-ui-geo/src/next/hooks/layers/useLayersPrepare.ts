@@ -20,7 +20,7 @@ import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoLayerOutput } from "../../layers/registry/adapterTypes.js";
 import type { IGeoChartNextConfig } from "../../types/config/unified.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
-import { createDataViewsFingerprint } from "../../utils/fingerprint.js";
+import { createDataViewsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
 
 /**
  * Prepared output for a single layer.
@@ -168,6 +168,14 @@ export function useLayersPrepare(
         });
     }, [colorPalette, colorMapping]);
 
+    // Fingerprint that captures bucket structure (which items are in which buckets).
+    // This detects when measures are moved between buckets (e.g., COLOR to SIZE)
+    // even when the underlying data is the same.
+    const layersStructureFingerprint = useMemo(
+        () => createLayersStructureFingerprint(layerExecutions),
+        [layerExecutions],
+    );
+
     const adapterContext: IGeoAdapterContext = {
         backend,
         workspace,
@@ -185,7 +193,7 @@ export function useLayersPrepare(
                     ? () => prepareAllLayers(layerExecutions, layerDataViews, adapterContext)
                     : undefined,
         },
-        [backend, workspace, dataViewsFingerprint, configFingerprint, intl],
+        [backend, workspace, dataViewsFingerprint, configFingerprint, layersStructureFingerprint, intl],
     );
 
     const layerOutputs = useMemo(() => {

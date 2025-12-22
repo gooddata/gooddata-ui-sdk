@@ -32,7 +32,7 @@ export interface IUiComboboxParams {
     onValueChange?: (value: string) => void;
     /**
      * When enabled, the combobox will include a "creatable" option for the current input
-     * if there is not exactly one matching option.
+     * if there are multiple matching options and none of them matches the input exactly.
      */
     creatable?: boolean;
 }

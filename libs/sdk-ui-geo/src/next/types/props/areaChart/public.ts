@@ -1,36 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import {
-    type IAttribute,
-    type IAttributeOrMeasure,
-    type IExecutionConfig,
-    type INullableFilter,
-    type ISortItem,
-    type ITheme,
-} from "@gooddata/sdk-model";
-import { type IVisualizationCallbacks, type IVisualizationProps } from "@gooddata/sdk-ui";
+import { type IAttribute, type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
-import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../../common/callbacks.js";
 import { type IGeoAreaChartConfig } from "../../config/areaChart.js";
-import { type IGeoLayer } from "../../layers/index.js";
+import { type IGeoSingleLayerWrapperProps } from "../shared.js";
 
 /**
  * Shared props for {@link GeoAreaChart} before the required area attribute is applied.
  *
  * @alpha
  */
-export interface IGeoAreaChartBaseProps extends IVisualizationProps, IVisualizationCallbacks {
-    /**
-     * Backend used for data execution. Falls back to BackendProvider.
-     */
-    backend?: IAnalyticalBackend;
-
-    /**
-     * Workspace identifier. Falls back to WorkspaceProvider.
-     */
-    workspace?: string;
-
+export interface IGeoAreaChartBaseProps extends IGeoSingleLayerWrapperProps {
     /**
      * Measure or attribute used for color encoding.
      */
@@ -42,44 +22,9 @@ export interface IGeoAreaChartBaseProps extends IVisualizationProps, IVisualizat
     segmentBy?: IAttribute;
 
     /**
-     * Filters applied to the execution.
-     */
-    filters?: INullableFilter[];
-
-    /**
-     * Sorting applied to the execution definition.
-     */
-    sortBy?: ISortItem[];
-
-    /**
-     * Theme override. Defaults to ThemeProvider.
-     */
-    theme?: ITheme;
-
-    /**
      * Configuration specific to area layers.
      */
     config?: IGeoAreaChartConfig;
-
-    /**
-     * Additional execution configuration forwarded to backend.
-     */
-    execConfig?: IExecutionConfig;
-
-    /**
-     * Callback fired when map center changes.
-     */
-    onCenterPositionChanged?: CenterPositionChangedCallback;
-
-    /**
-     * Callback fired when zoom level changes.
-     */
-    onZoomChanged?: ZoomChangedCallback;
-
-    /**
-     * Layers rendered after the primary area layer (e.g., pushpins).
-     */
-    additionalLayers?: IGeoLayer[];
 }
 
 /**

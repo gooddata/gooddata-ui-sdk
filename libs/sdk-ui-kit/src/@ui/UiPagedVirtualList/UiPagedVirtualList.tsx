@@ -247,6 +247,7 @@ function useVirtualList<T>({
     }, [shouldLoadNextPageProps, defaultShouldLoadNextPage]);
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const prevScrollToItemRef = useRef<T | undefined>(undefined);
 
     const itemsCount = items ? items.length : 0;
 
@@ -301,7 +302,25 @@ function useVirtualList<T>({
 
     // Add scroll into view effect
     useEffect(() => {
-        if (!scrollToItem || !items || items.length === 0) {
+        // Reset the ref when scrollToItem becomes undefined so future scrolls work
+        if (!scrollToItem) {
+            prevScrollToItemRef.current = undefined;
+            return;
+        }
+
+        if (!items || items.length === 0) {
+            return;
+        }
+
+        // Determine if scrollToItem has actually changed to avoid scrolling
+        // when new batches of items are loaded during pagination
+        const isSameScrollTarget = checkIsSameScrollTarget(
+            prevScrollToItemRef.current,
+            scrollToItem,
+            scrollToItemKeyExtractor,
+        );
+
+        if (isSameScrollTarget) {
             return;
         }
 
@@ -319,6 +338,9 @@ function useVirtualList<T>({
         if (index === -1) {
             return;
         }
+
+        // Update ref to current scrollToItem after finding it
+        prevScrollToItemRef.current = scrollToItem;
 
         rowVirtualizer.scrollToIndex(index, {
             align: "center",
@@ -408,4 +430,18 @@ function useVirtualListKeyboardNavigation<T>(
         focusedIndex,
         onKeyboardNavigation: virtualListKeyboardNavigationHandler,
     };
+}
+
+function checkIsSameScrollTarget<T>(
+    prevItem: T | undefined,
+    currentItem: T,
+    keyExtractor?: (item: T) => string | number,
+): boolean {
+    if (prevItem === undefined) {
+        return false;
+    }
+    if (keyExtractor) {
+        return keyExtractor(prevItem) === keyExtractor(currentItem);
+    }
+    return prevItem === currentItem;
 }

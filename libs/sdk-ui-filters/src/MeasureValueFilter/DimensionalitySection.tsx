@@ -101,6 +101,11 @@ interface IDimensionalitySectionProps {
      * Callback when dimensionality changes.
      */
     onDimensionalityChange: (dimensionality: IDimensionalityItem[]) => void;
+    /**
+     * Indicates whether the filter is migrated from the old filter dialog (has no set dimensionality).
+     * This is used to determine whether to show the backward compatibility note.
+     */
+    isMigratedFilter: boolean;
 }
 
 /**
@@ -114,6 +119,7 @@ export const DimensionalitySection = memo(function DimensionalitySection({
     catalogDimensionality,
     isLoadingCatalogDimensionality,
     onDimensionalityChange,
+    isMigratedFilter,
 }: IDimensionalitySectionProps) {
     const intl = useIntl();
 
@@ -289,6 +295,18 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                     iconBefore="plus"
                     onClick={handleOpenStandaloneAttributePicker}
                 />
+            )}
+            {isMigratedFilter ? null : (
+                <div
+                    role="status"
+                    aria-live="polite"
+                    className="gd-message information gd-mvf-backward-compatibility-message"
+                    data-testid="mvf-backward-compatibility-note"
+                >
+                    <div className="gd-message-text">
+                        {intl.formatMessage({ id: "mvf.dimensionality.backwardCompatibilityNote" })}
+                    </div>
+                </div>
             )}
             {isAttributePickerOpen && actualAnchor ? (
                 <AttributePicker
