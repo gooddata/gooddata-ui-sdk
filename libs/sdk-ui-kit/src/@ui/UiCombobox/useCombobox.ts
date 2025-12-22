@@ -44,9 +44,10 @@ export function useCombobox(params: IUiComboboxParams): IUiComboboxState {
         }
 
         const matchedOptions = options.filter((option) => normalizeValue(option.label).includes(value));
+        const hasExactMatch = matchedOptions.some((option) => normalizeValue(option.label) === value);
 
-        // Add a creatable option if no options are matched or if there are multiple matches
-        if (creatable && matchedOptions.length !== 1) {
+        // Add a creatable option if there are multiple matches and none matches the input exactly
+        if (creatable && matchedOptions.length > 1 && !hasExactMatch) {
             matchedOptions.push({
                 id: `creatable/${inputValue}`,
                 label: inputValue,

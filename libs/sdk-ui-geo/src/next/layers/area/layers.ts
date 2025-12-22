@@ -1,16 +1,25 @@
 // (C) 2025 GoodData Corporation
 
+import { BucketNames } from "@gooddata/sdk-ui";
+
 import { DEFAULT_AREA_LAYER_NAME, DEFAULT_AREA_OUTLINE_LAYER_NAME } from "./constants.js";
-import { createSegmentFilter } from "../../map/style/sharedLayers.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import type {
     FillLayerSpecification,
     FilterSpecification,
     LineLayerSpecification,
 } from "../common/mapFacade.js";
+import { EMPTY_SEGMENT_VALUE } from "../pushpin/constants.js";
 
 /**
- * Creates a filter expression for geographic areas based on selected segment items
+ * Creates a filter expression for geographic areas based on selected segment items.
+ *
+ * @remarks
+ * For area charts, each feature stores ALL segment URIs it belongs to in `segment.uris`.
+ * This filter checks if ANY of the selected segment URIs is present in the feature's
+ * segment.uris array, showing the area if there's overlap.
+ *
+ * Uses MapLibre's `any` expression with `in` checks for each selected URI.
  *
  * @param selectedSegmentItems - Array of segment URIs to show
  * @returns MapLibre expression for filtering
@@ -18,7 +27,22 @@ import type {
  * @alpha
  */
 export function createAreaFilter(selectedSegmentItems: string[]): FilterSpecification {
-    return createSegmentFilter(selectedSegmentItems);
+    const urisToCheck = selectedSegmentItems.length ? selectedSegmentItems : [EMPTY_SEGMENT_VALUE];
+
+    // For each selected URI, check if it's in the feature's segment.uris array
+    // Show the feature if ANY selected URI matches
+    const uriChecks = urisToCheck.map((uri) => [
+        "in",
+        uri,
+        ["coalesce", ["get", "uris", ["object", ["get", BucketNames.SEGMENT]]], ["literal", []]],
+    ]);
+
+    // Use "any" to combine: show if any selected URI is in the feature's uris
+    if (uriChecks.length === 1) {
+        return uriChecks[0] as FilterSpecification;
+    }
+
+    return ["any", ...uriChecks] as FilterSpecification;
 }
 
 /**

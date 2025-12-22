@@ -20,6 +20,7 @@ import type { IMapViewport } from "../../types/map/provider.js";
 import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
+import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
 import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "../registry/adapterTypes.js";
 
 function getValidLocations(locations: Array<IGeoLngLat | null | undefined>): IGeoLngLat[] {
@@ -49,7 +50,7 @@ function computeInitialViewport(
 }
 
 function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): IPreparedExecution {
-    const { backend, workspace, config, execConfig } = context;
+    const { backend, workspace, config, execConfig, globalFilters, executionFactory } = context;
     const { latitude, longitude, size, color, segmentBy, filters = [], sortBy = [] } = layer;
     const { tooltipText } = config ?? {};
 
@@ -72,11 +73,16 @@ function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): 
         buckets.push(newBucket(BucketNames.TOOLTIP_TEXT, tooltipText));
     }
 
-    let execution = backend
-        .workspace(workspace)
-        .execution()
-        .forBuckets(buckets, filters)
-        .withSorting(...sortBy)
+    const layerInsight = createLayerInsight({
+        buckets,
+        layerName: layer.name ?? layer.id,
+        filters,
+        sortBy,
+    });
+    const factory = executionFactory ?? backend.workspace(workspace).execution();
+    const mergedGlobalFilters = sanitizeGlobalFilters(globalFilters);
+    let execution = factory
+        .forInsight(layerInsight, mergedGlobalFilters)
         .withDimensions(getGeoChartDimensions);
 
     if (execConfig) {

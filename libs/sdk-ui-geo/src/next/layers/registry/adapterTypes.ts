@@ -2,8 +2,8 @@
 
 import type { IntlShape } from "react-intl";
 
-import type { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import type { IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
+import type { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import type { IColorPalette, IExecutionConfig, INullableFilter } from "@gooddata/sdk-model";
 import type { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
 import type { IColorMapping, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
@@ -49,6 +49,25 @@ export interface IGeoAdapterContext {
      * Optional execution configuration.
      */
     execConfig?: IExecutionConfig;
+
+    /**
+     * Filters that must be applied to every layer execution (e.g., InsightView/global filters).
+     *
+     * @remarks
+     * These filters are applied *after* `IGeoLayer.filters` and therefore take precedence for filter types
+     * with “last wins” merge rules (e.g. date filters for the same dataset, measure value filters for the
+     * same measure). Other filter types may accumulate according to SDK merge semantics.
+     */
+    globalFilters?: INullableFilter[];
+
+    /**
+     * Execution factory provided by hosting environment.
+     *
+     * @remarks
+     * Adapters should use this factory when available so upstream decorators
+     * (telemetry, fixed filters, etc.) are preserved.
+     */
+    executionFactory?: IExecutionFactory;
 
     /**
      * Color palette for coloring features.

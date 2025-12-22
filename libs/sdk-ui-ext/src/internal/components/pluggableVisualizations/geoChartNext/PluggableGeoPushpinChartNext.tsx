@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
+    type IFilter,
     type IInsightDefinition,
     bucketAttribute,
     bucketItems,
@@ -251,29 +252,37 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     public override getExecution(
         options: IVisProps,
         insight: IInsightDefinition,
-        _executionFactory: IExecutionFactory,
+        executionFactory: IExecutionFactory,
     ) {
-        const { primaryLayer, config } = this.buildPrimaryLayerContext(options, insight);
+        const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
 
         return buildLayerExecution(primaryLayer, {
             backend: this.backend,
             workspace: this.workspace,
             config,
             execConfig: options.executionConfig,
+            globalFilters: filters,
+            executionFactory,
         });
     }
 
     public override getExecutions(
         options: IVisProps,
         insight: IInsightDefinition,
-        _executionFactory: IExecutionFactory,
+        executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
-        const { config } = this.buildPrimaryLayerContext(options, insight);
+        const { config, filters } = this.buildPrimaryLayerContext(options, insight);
         const insightLayerDefs = insightLayers(insight);
         const additionalLayers = insightLayersToGeoLayers(insightLayerDefs);
         const resolvedAdditionalLayers = additionalLayers.filter((layer) => !this.shouldSkipLayer(layer));
 
-        return this.buildAdditionalLayerExecutions(resolvedAdditionalLayers, options, config);
+        return this.buildAdditionalLayerExecutions(
+            resolvedAdditionalLayers,
+            options,
+            config,
+            filters,
+            executionFactory,
+        );
     }
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
@@ -357,7 +366,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private buildPrimaryLayerContext(
         options: IVisProps,
         insight: IInsightDefinition,
-    ): { primaryLayer: IGeoLayer; config: IGeoPushpinChartNextConfig } {
+    ): { primaryLayer: IGeoLayer; config: IGeoPushpinChartNextConfig; filters: IFilter[] } {
         const supportedControls = this.visualizationProperties.controls || {};
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const controlsWithFallback = {
@@ -407,7 +416,6 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             ...(title ? { name: title } : {}),
             latitude: latitudeAttribute,
             longitude: longitudeAttribute,
-            filters,
             sortBy,
             ...(size ? { size } : {}),
             ...(color ? { color } : {}),
@@ -417,6 +425,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         return {
             primaryLayer,
             config: configWithResolvedTooltip,
+            filters,
         };
     }
 
@@ -424,6 +433,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         layers: IGeoLayer[],
         options: IVisProps,
         config: IGeoPushpinChartNextConfig,
+        filters: IFilter[],
+        executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
         if (!layers.length) {
             return [];
@@ -435,6 +446,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 workspace: this.workspace,
                 config,
                 execConfig: options.executionConfig,
+                globalFilters: filters,
+                executionFactory,
             }),
         );
     }

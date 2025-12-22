@@ -17,6 +17,7 @@ import { type IGeoCollectionMetadata, getLocationCollectionMetadata } from "../.
 import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
+import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
 import {
     type IAreaLayerOutput,
     type IGeoAdapterContext,
@@ -32,7 +33,7 @@ function normalizeCollectionId(collectionId: string): string {
 }
 
 function createExecution(layer: IGeoLayerArea, context: IGeoAdapterContext): IPreparedExecution {
-    const { backend, workspace, config, execConfig } = context;
+    const { backend, workspace, config, execConfig, globalFilters, executionFactory } = context;
     const { area, color, segmentBy, filters = [], sortBy = [] } = layer;
     const { tooltipText } = config ?? {};
 
@@ -50,11 +51,16 @@ function createExecution(layer: IGeoLayerArea, context: IGeoAdapterContext): IPr
         buckets.push(newBucket(BucketNames.TOOLTIP_TEXT, tooltipText));
     }
 
-    let execution = backend
-        .workspace(workspace)
-        .execution()
-        .forBuckets(buckets, filters)
-        .withSorting(...sortBy)
+    const layerInsight = createLayerInsight({
+        buckets,
+        layerName: layer.name ?? layer.id,
+        filters,
+        sortBy,
+    });
+    const factory = executionFactory ?? backend.workspace(workspace).execution();
+    const mergedGlobalFilters = sanitizeGlobalFilters(globalFilters);
+    let execution = factory
+        .forInsight(layerInsight, mergedGlobalFilters)
         .withDimensions(getGeoChartDimensions);
 
     if (execConfig) {

@@ -267,19 +267,30 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     }, [propsOperator]);
 
     const isApplyButtonDisabled = useCallback(() => {
-        const { operator } = state;
+        // disable the Apply button when the filter has no currently set dimensionality but insight has it
+        // (e.g., non-headline insight that can have the dimensionality) but only when supported via ff
+        if (
+            isDimensionalityEnabled &&
+            state.dimensionality.length === 0 &&
+            (insightDimensionality?.length ?? 0) !== 0
+        ) {
+            return true;
+        }
 
-        if (isComparisonConditionOperator(operator)) {
+        if (isComparisonConditionOperator(state.operator)) {
             return isApplyButtonDisabledForComparison();
         }
 
-        if (isRangeConditionOperator(operator)) {
+        if (isRangeConditionOperator(state.operator)) {
             return isApplyButtonDisabledForRange();
         }
 
         return isApplyButtonDisabledForAll();
     }, [
-        state,
+        state.operator,
+        state.dimensionality,
+        isDimensionalityEnabled,
+        insightDimensionality,
         isApplyButtonDisabledForComparison,
         isApplyButtonDisabledForRange,
         isApplyButtonDisabledForAll,
@@ -487,6 +498,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                             catalogDimensionality={catalogDimensionality}
                             isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                             onDimensionalityChange={handleDimensionalityChange}
+                            isMigratedFilter={props.dimensionality !== undefined}
                         />
                         {textPreview ? (
                             <div className="gd-mvf-preview">

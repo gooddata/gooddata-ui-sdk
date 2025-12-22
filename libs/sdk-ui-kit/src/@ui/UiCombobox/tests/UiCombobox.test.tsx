@@ -108,7 +108,7 @@ describe("UiCombobox", () => {
         expect(input.value).toBe("Apple");
     });
 
-    it("shows creatable option when typing non-matching text", () => {
+    it("does not show creatable option when typing non-matching text", () => {
         render(<TestCombobox options={options} creatable />);
 
         const input: HTMLInputElement = screen.getByRole("combobox");
@@ -116,9 +116,10 @@ describe("UiCombobox", () => {
         fireEvent.focus(input);
         fireEvent.change(input, { target: { value: "Mango" } });
 
-        // No matching options, but creatable option should appear
+        // No matching options, so no creatable option should appear
         expect(screen.queryByText("Apple")).not.toBeInTheDocument();
-        expect(screen.getByText("Mango")).toBeInTheDocument();
+        expect(screen.queryByText("Mango")).not.toBeInTheDocument();
+        expect(screen.queryAllByRole("option")).toHaveLength(0);
     });
 
     it("shows creatable option alongside matching options when multiple matches exist", () => {
@@ -133,6 +134,25 @@ describe("UiCombobox", () => {
         expect(screen.getByText("Apple")).toBeInTheDocument();
         expect(screen.getByText("Apricot")).toBeInTheDocument();
         expect(screen.getByText("ap")).toBeInTheDocument(); // creatable option
+    });
+
+    it("does not show creatable option when input matches an existing option label", () => {
+        const optionsWithExactMatch: IUiComboboxOption[] = [
+            { id: "apple", label: "Apple" },
+            { id: "apple-pie", label: "Apple Pie" },
+        ];
+
+        render(<TestCombobox options={optionsWithExactMatch} creatable />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: "apple" } });
+
+        expect(screen.getByText("Apple")).toBeInTheDocument();
+        expect(screen.getByText("Apple Pie")).toBeInTheDocument();
+        expect(screen.queryByText("apple")).not.toBeInTheDocument(); // no creatable option
+        expect(screen.queryAllByText("Apple")).toHaveLength(1); // no duplicate
     });
 
     it("does not show creatable option when exactly one match exists", () => {

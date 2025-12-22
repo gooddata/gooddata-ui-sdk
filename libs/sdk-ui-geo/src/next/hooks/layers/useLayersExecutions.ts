@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 
 import type { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import type { IExecutionConfig } from "@gooddata/sdk-model";
+import type { IExecutionConfig, INullableFilter } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { buildLayerExecution } from "../../layers/execution/buildLayerExecution.js";
@@ -31,17 +31,18 @@ export function useLayersExecutions(props: {
     workspace?: string;
     config?: IGeoChartNextConfig;
     execConfig?: IExecutionConfig;
+    filters?: INullableFilter[];
 }): ILayerExecutionsResult {
-    const { layers, config, execConfig } = props;
+    const { layers, config, execConfig, filters } = props;
     const backend = useBackendStrict(props.backend, "useLayersExecutions");
     const workspace = useWorkspaceStrict(props.workspace, "useLayersExecutions");
 
     return useMemo(() => {
         const executions = layers.map((layer) =>
-            buildLayerExecution(layer, { backend, workspace, config, execConfig }),
+            buildLayerExecution(layer, { backend, workspace, config, execConfig, globalFilters: filters }),
         );
         const [primaryExecution, ...additionalExecutions] = executions;
 
         return { primaryExecution, additionalExecutions };
-    }, [layers, backend, workspace, config, execConfig]);
+    }, [layers, backend, workspace, config, execConfig, filters]);
 }

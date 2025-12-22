@@ -23,10 +23,9 @@ export function GeoAreaChart(props: IGeoAreaChartProps): ReactElement {
                 area,
                 color,
                 segmentBy,
-                filters,
                 sortBy,
             }),
-        [area, color, segmentBy, filters, sortBy],
+        [area, color, segmentBy, sortBy],
     );
 
     const allLayers = useMemo<IGeoLayer[]>(
@@ -34,5 +33,5 @@ export function GeoAreaChart(props: IGeoAreaChartProps): ReactElement {
         [primaryLayer, additionalLayers],
     );
 
-    return <GeoChartNext {...restProps} layers={allLayers} config={config} />;
+    return <GeoChartNext {...restProps} layers={allLayers} config={config} filters={filters} />;
 }

@@ -1495,6 +1495,10 @@
         "value": "{metric} is <b>{condition} for each {dimensionality}</b>",
         "comment": "Template for preview of the measure value filter with dimensionality. Example: 'Sales is greater than 1000 for each Product & Brand'. Do not translate the {metric}, {condition}, and {dimensionality} placeholders. These placeholders will be replaced with the actual metric, condition, and dimensionality at runtime. <b> is used to bold the condition and the dimensionality."
     },
+    "mvf.dimensionality.backwardCompatibilityNote": {
+        "value": "“For each” currently follows the visualization’s attributes. Editing the filter will stop this and let you choose which attributes it uses.",
+        "comment": "Note about backward compatibility of the 'For each' dimensionality feature. Explains that editing the filter will change its behavior and allow attribute selection."
+    },
     "mvf.dimensionality.forEach": {
         "value": "For each",
         "comment": "Label of list of attribute items that define granularity (rows) of the report."

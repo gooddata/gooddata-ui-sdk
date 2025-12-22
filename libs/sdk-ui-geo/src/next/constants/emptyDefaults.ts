@@ -11,3 +11,8 @@ export const EMPTY_DRILLS: [] = [];
  * @internal
  */
 export const EMPTY_OBJECT = {};
+
+/**
+ * @internal
+ */
+export const EMPTY_FILTERS: [] = [];

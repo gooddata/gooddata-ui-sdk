@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
-import { createExecutionsFingerprint } from "../../utils/fingerprint.js";
+import { createExecutionsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
 
 /**
  * Result of loading all layer execution data in parallel.
@@ -104,11 +104,20 @@ export function useLayersData(
         [layerExecutions],
     );
 
+    // Fingerprint that captures bucket structure (which items are in which buckets).
+    // This is needed because execution.fingerprint() doesn't include buckets, but the
+    // dataView's def().buckets() is what determines how data is interpreted (SIZE vs COLOR).
+    // When bucket structure changes, we need to re-execute to get a dataView with correct buckets.
+    const layersStructureFingerprint = useMemo(
+        () => createLayersStructureFingerprint(layerExecutions),
+        [layerExecutions],
+    );
+
     const { result, status, error } = useCancelablePromise<ILayerDataViewEntry[], GoodDataSdkError>(
         {
             promise: layerExecutions.length > 0 ? () => executeAllLayers(layerExecutions) : undefined,
         },
-        [resolvedBackend, resolvedWorkspace, executionsFingerprint],
+        [resolvedBackend, resolvedWorkspace, executionsFingerprint, layersStructureFingerprint],
     );
 
     const layerDataViews = useMemo(() => {

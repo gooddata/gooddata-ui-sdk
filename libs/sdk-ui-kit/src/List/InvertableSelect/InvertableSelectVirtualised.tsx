@@ -379,6 +379,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
 
     const handleFocus = useCallback<FocusEventHandler>(
         (e) => {
+            const isNavigatingByKeyboard = document.querySelector(":focus-visible") !== null;
+
             if (e.target.id !== scopedIdStoreValue.containerId) {
                 return;
             }
@@ -387,7 +389,9 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 scopedIdStoreValue.makeId({ item: focusedItem as T, specifier: SELECT_ITEM_ACTION }),
             );
 
-            listRef.current?.scrollToItem(focusedItem);
+            if (isNavigatingByKeyboard) {
+                listRef.current?.scrollToItem(focusedItem);
+            }
 
             if (!elementToFocus) {
                 return;
