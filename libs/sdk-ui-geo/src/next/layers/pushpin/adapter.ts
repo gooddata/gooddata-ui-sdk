@@ -51,8 +51,17 @@ function computeInitialViewport(
 
 function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): IPreparedExecution {
     const { backend, workspace, config, execConfig, globalFilters, executionFactory } = context;
-    const { latitude, longitude, size, color, segmentBy, filters = [], sortBy = [] } = layer;
-    const { tooltipText } = config ?? {};
+    const {
+        latitude,
+        longitude,
+        size,
+        color,
+        segmentBy,
+        filters = [],
+        sortBy = [],
+        tooltipText: layerTooltipText,
+    } = layer;
+    const tooltipText = layerTooltipText ?? config?.tooltipText;
 
     const buckets = [];
 

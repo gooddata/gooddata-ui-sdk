@@ -259,7 +259,10 @@ export const AttributePicker = memo(function AttributePicker({
                             dataTestId="s-mvf-attribute-picker-close"
                         />
                     </div>
-                    <div className="gd-mvf-attribute-picker-search-bar">
+                    <div
+                        className="gd-mvf-attribute-picker-search-bar"
+                        data-testid="s-mvf-attribute-picker-search-bar"
+                    >
                         <Input
                             className="gd-mvf-attribute-picker-search-input"
                             value={searchString}

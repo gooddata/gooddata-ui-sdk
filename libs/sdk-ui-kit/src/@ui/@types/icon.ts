@@ -64,6 +64,7 @@ export type IconType =
     | "rain"
     | "earth"
     | "minimize"
+    | "shrink"
     | "copyright"
     | "ellipsis"
     | "pencil"

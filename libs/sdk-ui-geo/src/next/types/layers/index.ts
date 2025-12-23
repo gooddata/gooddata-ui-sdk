@@ -105,6 +105,16 @@ export interface IGeoLayerBase {
      * Sorting can affect tooltip display order and rendering priority.
      */
     sortBy?: ISortItem[];
+
+    /**
+     * Tooltip text attribute for this layer.
+     *
+     * @remarks
+     * An attribute whose values are displayed in tooltips when hovering over
+     * data points in this layer. If not provided, falls back to the unified
+     * config's `tooltipText` setting.
+     */
+    tooltipText?: IAttribute;
 }
 
 /**

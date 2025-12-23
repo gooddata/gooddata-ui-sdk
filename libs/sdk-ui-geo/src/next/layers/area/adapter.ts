@@ -34,8 +34,8 @@ function normalizeCollectionId(collectionId: string): string {
 
 function createExecution(layer: IGeoLayerArea, context: IGeoAdapterContext): IPreparedExecution {
     const { backend, workspace, config, execConfig, globalFilters, executionFactory } = context;
-    const { area, color, segmentBy, filters = [], sortBy = [] } = layer;
-    const { tooltipText } = config ?? {};
+    const { area, color, segmentBy, filters = [], sortBy = [], tooltipText: layerTooltipText } = layer;
+    const tooltipText = layerTooltipText ?? config?.tooltipText;
 
     const buckets = [];
     if (area) {
