@@ -29,6 +29,7 @@ import { type IGeoLayer, type IGeoLayerArea, type IGeoLayerPushpin } from "../ty
 interface IGeoLayerControls {
     latitude?: string;
     longitude?: string;
+    tooltipText?: string;
 }
 
 /**
@@ -200,14 +201,17 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
 
     let latitude = getAttributeFromBucket(buckets, BucketNames.LATITUDE);
     let longitude = getAttributeFromBucket(buckets, BucketNames.LONGITUDE);
+    let tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
 
-    if (!latitude && !longitude && properties) {
-        const controlsCandidate = properties["controls"];
-        const controls = isGeoLayerControls(controlsCandidate) ? controlsCandidate : properties;
+    const controls = properties?.["controls"];
 
-        if (isGeoLayerControls(controls) && controls.latitude && controls.longitude) {
+    if (isGeoLayerControls(controls)) {
+        if (!latitude && !longitude && controls.latitude && controls.longitude) {
             latitude = createAttributeFromDisplayFormId(controls.latitude, "latitude_df");
             longitude = createAttributeFromDisplayFormId(controls.longitude, "longitude_df");
+        }
+        if (!tooltipText && controls.tooltipText) {
+            tooltipText = createAttributeFromDisplayFormId(controls.tooltipText, "tooltipText_df");
         }
     }
 
@@ -230,6 +234,7 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
         segmentBy,
         filters,
         sortBy: sorts,
+        tooltipText,
     };
 }
 
@@ -242,11 +247,18 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
  * @internal
  */
 function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerArea | null {
-    const { id, name, buckets, filters, sorts } = insightLayer;
+    const { id, name, buckets, filters, sorts, properties } = insightLayer;
 
     const area = getAttributeFromBucket(buckets, BucketNames.AREA);
+    let tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
+
     if (!area) {
         return null;
+    }
+
+    const controls = properties?.["controls"];
+    if (isGeoLayerControls(controls) && !tooltipText && controls.tooltipText) {
+        tooltipText = createAttributeFromDisplayFormId(controls.tooltipText, "tooltipText_df");
     }
 
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
@@ -261,6 +273,7 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
         segmentBy,
         filters,
         sortBy: sorts,
+        tooltipText,
     };
 }
 

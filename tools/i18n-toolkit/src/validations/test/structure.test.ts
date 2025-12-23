@@ -13,7 +13,7 @@ describe("validate structure tests", () => {
     const scenarios: Scenario[] = [
         [
             "basic format with required only",
-            { "message.id": { value: "This is value", comment: "This is comment" } },
+            { "message.id": { text: "This is value", crowdinContext: "This is comment" } },
             null,
         ],
         ["basic format with string", { "message.id": "This is value" }, null],
@@ -21,8 +21,8 @@ describe("validate structure tests", () => {
             "basic format with all props",
             {
                 "message.id": {
-                    value: "This is value",
-                    comment: "This is comment",
+                    text: "This is value",
+                    crowdinContext: "This is comment",
                     translate: false,
                 },
             },
@@ -32,10 +32,10 @@ describe("validate structure tests", () => {
             "basic format with more props",
             {
                 "message.id": {
-                    value: "This is value",
-                    comment: "This is comment",
+                    text: "This is value",
+                    crowdinContext: "This is comment",
                     translate: false,
-                    test: 2,
+                    limit: 2,
                 } as any,
             },
             `Structure of localizations is not correct`,
@@ -44,7 +44,7 @@ describe("validate structure tests", () => {
             "basic format with missing comment",
             {
                 "message.id": {
-                    value: "This is value",
+                    text: "This is value",
                 } as any,
             },
             `Structure of localizations is not correct`,
@@ -53,7 +53,7 @@ describe("validate structure tests", () => {
             "basic format with missing value",
             {
                 "message.id": {
-                    comment: "",
+                    crowdinContext: "",
                 } as any,
             },
             `Structure of localizations is not correct`,
@@ -78,7 +78,7 @@ describe("validate structure tests", () => {
     it("includes file in error message", async () => {
         const structure = {
             "message.id": {
-                value: "This is value",
+                text: "This is value",
             } as any,
         };
         await expect(

@@ -4,7 +4,7 @@ import * as path from "path";
 
 import glob from "fast-glob";
 
-import { type LocalesStructure } from "./schema/localization.js";
+import { type LocalesItem, type LocalesStructure } from "./schema/localization.js";
 import { readFile } from "./utils/index.js";
 
 export async function getLocalizationFiles(localizationPaths: string[]): Promise<[string, Buffer][]> {
@@ -26,4 +26,19 @@ export function getParsedLocalizations(
     localizations: Array<[string, Buffer]>,
 ): Array<[string, LocalesStructure]> {
     return localizations.map(([filename, localization]) => [filename, JSON.parse(localization.toString())]);
+}
+
+export function getLocalizationValues(localizations: Array<[string, LocalesStructure]>): Array<string> {
+    const mergedLocalizationValues: Array<LocalesItem | string> = localizations.flatMap(([, localization]) =>
+        Object.values(localization),
+    );
+
+    return mergedLocalizationValues.reduce((prev, current) => {
+        if (typeof current === "object") {
+            prev.push(current.text);
+        } else if (typeof current === "string") {
+            prev.push(current);
+        }
+        return prev;
+    }, [] as Array<string>);
 }

@@ -1,486 +1,486 @@
 {
     "analyticsCatalog.title": {
-        "value": "Analytics catalog",
-        "comment": "Title of the Analytics Catalog"
+        "text": "Analytics catalog",
+        "crowdinContext": "Title of the Analytics Catalog"
     },
     "analyticsCatalog.showMore": {
-        "value": "show more",
-        "comment": "Show more button label"
+        "text": "show more",
+        "crowdinContext": "Show more button label"
     },
     "analyticsCatalog.showLess": {
-        "value": "show less",
-        "comment": "Show less button label"
+        "text": "show less",
+        "crowdinContext": "Show less button label"
     },
     "analyticsCatalog.objectType.title": {
-        "value": "Object types",
-        "comment": "Title of the header section containing the object type selection."
+        "text": "Object types",
+        "crowdinContext": "Title of the header section containing the object type selection."
     },
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": {
-        "value": "Dashboard: {count}",
-        "comment": "ARIA label for the Dashboard object type"
+        "text": "Dashboard: {count}",
+        "crowdinContext": "ARIA label for the Dashboard object type"
     },
     "analyticsCatalog.objectType.visualization.button.ariaLabel": {
-        "value": "Visualization: {count}",
-        "comment": "ARIA label for the Visualization object type"
+        "text": "Visualization: {count}",
+        "crowdinContext": "ARIA label for the Visualization object type"
     },
     "analyticsCatalog.objectType.metric.button.ariaLabel": {
-        "value": "Metric: {count}",
-        "comment": "ARIA label for the Metric object type"
+        "text": "Metric: {count}",
+        "crowdinContext": "ARIA label for the Metric object type"
     },
     "analyticsCatalog.objectType.fact.button.ariaLabel": {
-        "value": "Fact: {count}",
-        "comment": "ARIA label for the Fact object type"
+        "text": "Fact: {count}",
+        "crowdinContext": "ARIA label for the Fact object type"
     },
     "analyticsCatalog.objectType.attribute.button.ariaLabel": {
-        "value": "Attribute: {count}",
-        "comment": "ARIA label for the Attribute object type"
+        "text": "Attribute: {count}",
+        "crowdinContext": "ARIA label for the Attribute object type"
     },
     "analyticsCatalog.objectType.dateDataset.button.ariaLabel": {
-        "value": "Date dataset: {count}",
-        "comment": "ARIA label for the Date dataset object type filter button, showing the number of matching date datasets. Example: 'Date dataset: 6'."
+        "text": "Date dataset: {count}",
+        "crowdinContext": "ARIA label for the Date dataset object type filter button, showing the number of matching date datasets. Example: 'Date dataset: 6'."
     },
     "analyticsCatalog.objectType.dashboard.tooltip": {
-        "value": "Dashboard",
-        "comment": "Tooltip label shown when hovering the dashboard object type indicator (e.g., in the catalog table or the detail header)."
+        "text": "Dashboard",
+        "crowdinContext": "Tooltip label shown when hovering the dashboard object type indicator (e.g., in the catalog table or the detail header)."
     },
     "analyticsCatalog.objectType.visualization.tooltip": {
-        "value": "Visualization",
-        "comment": "Tooltip label shown when hovering the visualization object type indicator when the specific visualization type is not available."
+        "text": "Visualization",
+        "crowdinContext": "Tooltip label shown when hovering the visualization object type indicator when the specific visualization type is not available."
     },
     "analyticsCatalog.objectType.metric.tooltip": {
-        "value": "Metric",
-        "comment": "Tooltip label shown when hovering the metric object type indicator."
+        "text": "Metric",
+        "crowdinContext": "Tooltip label shown when hovering the metric object type indicator."
     },
     "analyticsCatalog.objectType.attribute.tooltip": {
-        "value": "Attribute",
-        "comment": "Tooltip label shown when hovering the attribute object type indicator."
+        "text": "Attribute",
+        "crowdinContext": "Tooltip label shown when hovering the attribute object type indicator."
     },
     "analyticsCatalog.objectType.fact.tooltip": {
-        "value": "Fact",
-        "comment": "Tooltip label shown when hovering the fact object type indicator."
+        "text": "Fact",
+        "crowdinContext": "Tooltip label shown when hovering the fact object type indicator."
     },
     "analyticsCatalog.objectType.dateDataset.tooltip": {
-        "value": "Date dataset",
-        "comment": "Tooltip label shown when hovering the date dataset object type indicator."
+        "text": "Date dataset",
+        "crowdinContext": "Tooltip label shown when hovering the date dataset object type indicator."
     },
     "analyticsCatalog.visualizationType.table.tooltip": {
-        "value": "Table",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type table."
+        "text": "Table",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type table."
     },
     "analyticsCatalog.visualizationType.area.tooltip": {
-        "value": "Area chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type area chart."
+        "text": "Area chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type area chart."
     },
     "analyticsCatalog.visualizationType.treemap.tooltip": {
-        "value": "Treemap chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type treemap chart."
+        "text": "Treemap chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type treemap chart."
     },
     "analyticsCatalog.visualizationType.scatter.tooltip": {
-        "value": "Scatter plot",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type scatter plot."
+        "text": "Scatter plot",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type scatter plot."
     },
     "analyticsCatalog.visualizationType.donut.tooltip": {
-        "value": "Donut chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type donut chart."
+        "text": "Donut chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type donut chart."
     },
     "analyticsCatalog.visualizationType.headline.tooltip": {
-        "value": "Headline",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type headline."
+        "text": "Headline",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type headline."
     },
     "analyticsCatalog.visualizationType.column.tooltip": {
-        "value": "Column chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type column chart."
+        "text": "Column chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type column chart."
     },
     "analyticsCatalog.visualizationType.line.tooltip": {
-        "value": "Line chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type line chart."
+        "text": "Line chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type line chart."
     },
     "analyticsCatalog.visualizationType.pyramid.tooltip": {
-        "value": "Pyramid chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type pyramid chart."
+        "text": "Pyramid chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type pyramid chart."
     },
     "analyticsCatalog.visualizationType.funnel.tooltip": {
-        "value": "Funnel chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type funnel chart."
+        "text": "Funnel chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type funnel chart."
     },
     "analyticsCatalog.visualizationType.heatmap.tooltip": {
-        "value": "Heatmap",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type heatmap."
+        "text": "Heatmap",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type heatmap."
     },
     "analyticsCatalog.visualizationType.bubble.tooltip": {
-        "value": "Bubble chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type bubble chart."
+        "text": "Bubble chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type bubble chart."
     },
     "analyticsCatalog.visualizationType.pie.tooltip": {
-        "value": "Pie chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type pie chart."
+        "text": "Pie chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type pie chart."
     },
     "analyticsCatalog.visualizationType.bar.tooltip": {
-        "value": "Bar chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type bar chart."
+        "text": "Bar chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type bar chart."
     },
     "analyticsCatalog.visualizationType.combo.tooltip": {
-        "value": "Combo chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type combo chart."
+        "text": "Combo chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type combo chart."
     },
     "analyticsCatalog.visualizationType.bullet.tooltip": {
-        "value": "Bullet chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type bullet chart."
+        "text": "Bullet chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type bullet chart."
     },
     "analyticsCatalog.visualizationType.waterfall.tooltip": {
-        "value": "Waterfall chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type waterfall chart."
+        "text": "Waterfall chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type waterfall chart."
     },
     "analyticsCatalog.visualizationType.dependencywheel.tooltip": {
-        "value": "Dependency wheel chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type dependency wheel chart."
+        "text": "Dependency wheel chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type dependency wheel chart."
     },
     "analyticsCatalog.visualizationType.sankey.tooltip": {
-        "value": "Sankey chart",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type Sankey chart."
+        "text": "Sankey chart",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type Sankey chart."
     },
     "analyticsCatalog.visualizationType.pushpin.tooltip": {
-        "value": "Pushpin",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type pushpin (map)."
+        "text": "Pushpin",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type pushpin (map)."
     },
     "analyticsCatalog.visualizationType.repeater.tooltip": {
-        "value": "Repeater",
-        "comment": "Tooltip label shown when hovering a visualization item for insights of type repeater."
+        "text": "Repeater",
+        "crowdinContext": "Tooltip label shown when hovering a visualization item for insights of type repeater."
     },
     "analyticsCatalog.filter.title": {
-        "value": "Filters",
-        "comment": "Title of the header section containing the filter group."
+        "text": "Filters",
+        "crowdinContext": "Title of the header section containing the filter group."
     },
     "analyticsCatalog.filter.refresh": {
-        "value": "Refresh",
-        "comment": "Button label for retrying when the filter data is still syncing."
+        "text": "Refresh",
+        "crowdinContext": "Button label for retrying when the filter data is still syncing."
     },
     "analyticsCatalog.filter.createdBy.title": {
-        "value": "Created by",
-        "comment": "Title of the header section containing the created by filter."
+        "text": "Created by",
+        "crowdinContext": "Title of the header section containing the created by filter."
     },
     "analyticsCatalog.filter.createdBy.noOptions": {
-        "value": "No creators available",
-        "comment": "Label for the no options state in the created by filter."
+        "text": "No creators available",
+        "crowdinContext": "Label for the no options state in the created by filter."
     },
     "analyticsCatalog.filter.tags.title": {
-        "value": "Tags",
-        "comment": "Title of the header section containing the tags filter."
+        "text": "Tags",
+        "crowdinContext": "Title of the header section containing the tags filter."
     },
     "analyticsCatalog.filter.tags.noOptions": {
-        "value": "No tags available",
-        "comment": "Label for the no options state in the tags filter."
+        "text": "No tags available",
+        "crowdinContext": "Label for the no options state in the tags filter."
     },
     "analyticsCatalog.filter.origin.title": {
-        "value": "Origin",
-        "comment": "Title of the header section containing the origin filter."
+        "text": "Origin",
+        "crowdinContext": "Title of the header section containing the origin filter."
     },
     "analyticsCatalog.filter.origin.parents": {
-        "value": "Parent",
-        "comment": "Label for the parents option in the origin filter."
+        "text": "Parent",
+        "crowdinContext": "Label for the parents option in the origin filter."
     },
     "analyticsCatalog.filter.origin.native": {
-        "value": "Current workspace",
-        "comment": "Label for the native option in the origin filter."
+        "text": "Current workspace",
+        "crowdinContext": "Label for the native option in the origin filter."
     },
     "analyticsCatalog.filter.visibility.title": {
-        "value": "AI visibility",
-        "comment": "Title of the header section containing the AI visibility filter."
+        "text": "AI visibility",
+        "crowdinContext": "Title of the header section containing the AI visibility filter."
     },
     "analyticsCatalog.filter.visibility.visible": {
-        "value": "Visible in AI results",
-        "comment": "Label for the visible option in the AI visibility filter."
+        "text": "Visible in AI results",
+        "crowdinContext": "Label for the visible option in the AI visibility filter."
     },
     "analyticsCatalog.filter.visibility.hidden": {
-        "value": "Hidden from AI results",
-        "comment": "Label for the hidden option in the AI visibility filter."
+        "text": "Hidden from AI results",
+        "crowdinContext": "Label for the hidden option in the AI visibility filter."
     },
     "analyticsCatalog.filter.qualityCodes.title": {
-        "value": "Validations",
-        "comment": "Title of the header section containing the quality codes filter."
+        "text": "Validations",
+        "crowdinContext": "Title of the header section containing the quality codes filter."
     },
     "analyticsCatalog.filter.qualityCodes.noOptions": {
-        "value": "No validations available",
-        "comment": "Label for the no options state in the validations filter."
+        "text": "No validations available",
+        "crowdinContext": "Label for the no options state in the validations filter."
     },
     "analyticsCatalog.filter.reset": {
-        "value": "Reset filters",
-        "comment": "Label for the button that resets all applied filters."
+        "text": "Reset filters",
+        "crowdinContext": "Label for the button that resets all applied filters."
     },
     "analyticsCatalog.column.title.label": {
-        "value": "Title",
-        "comment": "Title of the column containing the title of the object."
+        "text": "Title",
+        "crowdinContext": "Title of the column containing the title of the object."
     },
     "analyticsCatalog.column.title.dataSet": {
-        "value": "Dataset",
-        "comment": "Title of the column containing the dataSet of the object."
+        "text": "Dataset",
+        "crowdinContext": "Title of the column containing the dataSet of the object."
     },
     "analyticsCatalog.column.title.createdBy": {
-        "value": "Created by",
-        "comment": "Title of the column containing the name of the creator of the object."
+        "text": "Created by",
+        "crowdinContext": "Title of the column containing the name of the creator of the object."
     },
     "analyticsCatalog.column.title.createdAt": {
-        "value": "Created at",
-        "comment": "Title of the column containing the creation date of the object."
+        "text": "Created at",
+        "crowdinContext": "Title of the column containing the creation date of the object."
     },
     "analyticsCatalog.column.title.tags": {
-        "value": "Tags",
-        "comment": "Title of the column containing the tags of the object."
+        "text": "Tags",
+        "crowdinContext": "Title of the column containing the tags of the object."
     },
     "analyticsCatalog.column.title.updatedAt": {
-        "value": "Last modified at",
-        "comment": "Title of the column containing the last modified date of the object."
+        "text": "Last modified at",
+        "crowdinContext": "Title of the column containing the last modified date of the object."
     },
     "analyticsCatalog.column.title.updatedBy": {
-        "value": "Last modified by",
-        "comment": "Title of the column containing the name of the last modifier of the object."
+        "text": "Last modified by",
+        "crowdinContext": "Title of the column containing the name of the last modifier of the object."
     },
     "analyticsCatalog.column.title.isHidden": {
-        "value": "Show in AI results",
-        "comment": "Title of the field indicating whether the object is hidden in AI results."
+        "text": "Show in AI results",
+        "crowdinContext": "Title of the field indicating whether the object is hidden in AI results."
     },
     "analyticsCatalog.column.title.granularities": {
-        "value": "Granularities",
-        "comment": "Label for the granularities field in the catalog item details (metadata tab), listing the available date granularities for a date dataset."
+        "text": "Granularities",
+        "crowdinContext": "Label for the granularities field in the catalog item details (metadata tab), listing the available date granularities for a date dataset."
     },
     "analyticsCatalog.column.isHidden.icon.tooltip": {
-        "value": "Hidden from Smart Search and AI Assistant results for all users.",
-        "comment": "Tooltip content displayed on the hidden icon that appears only when the catalog item's visibility is set to hidden (in table view)."
+        "text": "Hidden from Smart Search and AI Assistant results for all users.",
+        "crowdinContext": "Tooltip content displayed on the hidden icon that appears only when the catalog item's visibility is set to hidden (in table view)."
     },
     "analyticsCatalog.column.isHidden.field.tooltip": {
-        "value": "Include in Smart Search and AI Assistant results for all users.",
-        "comment": "Tooltip content for the field indicating whether the object is hidden in AI results."
+        "text": "Include in Smart Search and AI Assistant results for all users.",
+        "crowdinContext": "Tooltip content for the field indicating whether the object is hidden in AI results."
     },
     "analyticsCatalog.tags.manager.label.more": {
-        "value": "More tags",
-        "comment": "Label for the button that opens more tags  in tags manager component."
+        "text": "More tags",
+        "crowdinContext": "Label for the button that opens more tags  in tags manager component."
     },
     "analyticsCatalog.tags.manager.label.noTags": {
-        "value": "No tags",
-        "comment": "Label for the message shown when there are no tags in tags manager component."
+        "text": "No tags",
+        "crowdinContext": "Label for the message shown when there are no tags in tags manager component."
     },
     "analyticsCatalog.tags.manager.label.close": {
-        "value": "Close",
-        "comment": "Label for the button that closes tags manager component."
+        "text": "Close",
+        "crowdinContext": "Label for the button that closes tags manager component."
     },
     "analyticsCatalog.tags.manager.label.addLabel": {
-        "value": "Add tag",
-        "comment": "Label for the button that opens add tag modal in tags manager component."
+        "text": "Add tag",
+        "crowdinContext": "Label for the button that opens add tag modal in tags manager component."
     },
     "analyticsCatalog.tags.manager.label.nameLabel": {
-        "value": "Name",
-        "comment": "Label for the name input in add tag modal in tags manager component."
+        "text": "Name",
+        "crowdinContext": "Label for the name input in add tag modal in tags manager component."
     },
     "analyticsCatalog.tags.manager.label.cancelLabel": {
-        "value": "Cancel",
-        "comment": "Label for the cancel button in add tag modal in tags manager component."
+        "text": "Cancel",
+        "crowdinContext": "Label for the cancel button in add tag modal in tags manager component."
     },
     "analyticsCatalog.tags.manager.label.saveLabel": {
-        "value": "Save",
-        "comment": "Label for the save button in add tag modal in tags manager component."
+        "text": "Save",
+        "crowdinContext": "Label for the save button in add tag modal in tags manager component."
     },
     "analyticsCatalog.tags.manager.label.removeLabel": {
-        "value": "Remove",
-        "comment": "Label for the remove button in tags manager component."
+        "text": "Remove",
+        "crowdinContext": "Label for the remove button in tags manager component."
     },
     "analyticsCatalog.error.unknown.message": {
-        "value": "Unknown error",
-        "comment": "Generic error message for unidentified or unexpected errors"
+        "text": "Unknown error",
+        "crowdinContext": "Generic error message for unidentified or unexpected errors"
     },
     "analyticsCatalog.error.unknown.description": {
-        "value": "We’re not quite sure what went wrong. Please try again later.",
-        "comment": "Instructions for users when encountering unknown errors"
+        "text": "We’re not quite sure what went wrong. Please try again later.",
+        "crowdinContext": "Instructions for users when encountering unknown errors"
     },
     "analyticsCatalog.error.unauthorized.message": {
-        "value": "Unauthorized",
-        "comment": "Error message shown when the user does not have permission to view the analytics catalog or its data."
+        "text": "Unauthorized",
+        "crowdinContext": "Error message shown when the user does not have permission to view the analytics catalog or its data."
     },
     "analyticsCatalog.error.unauthorized.description": {
-        "value": "Sorry you don't have access to the analytics catalog. Ask your administrator to grant you permissions.",
-        "comment": "Explanation shown when the user lacks permissions to view the analytics catalog, providing instructions for resolution."
+        "text": "Sorry you don't have access to the analytics catalog. Ask your administrator to grant you permissions.",
+        "crowdinContext": "Explanation shown when the user lacks permissions to view the analytics catalog, providing instructions for resolution."
     },
     "analyticsCatalog.catalogItem.closeButtonLabel": {
-        "value": "Close",
-        "comment": "Label for the close button in the catalog item overlay."
+        "text": "Close",
+        "crowdinContext": "Label for the close button in the catalog item overlay."
     },
     "analyticsCatalog.catalogItem.overlayLabel": {
-        "value": "Catalog item details",
-        "comment": "Label for the catalog item overlay."
+        "text": "Catalog item details",
+        "crowdinContext": "Label for the catalog item overlay."
     },
     "analyticsCatalog.catalogItem.title.add": {
-        "value": "Add title…",
-        "comment": "Catalog item title placeholder."
+        "text": "Add title…",
+        "crowdinContext": "Catalog item title placeholder."
     },
     "analyticsCatalog.catalogItem.description": {
-        "value": "Description",
-        "comment": "Catalog item description label."
+        "text": "Description",
+        "crowdinContext": "Catalog item description label."
     },
     "analyticsCatalog.catalogItem.description.add": {
-        "value": "Add description…",
-        "comment": "Catalog item description placeholder."
+        "text": "Add description…",
+        "crowdinContext": "Catalog item description placeholder."
     },
     "analyticsCatalog.catalogItem.update.failed": {
-        "value": "Failed to update catalog item. Try again later.",
-        "comment": "Catalog item update failed message."
+        "text": "Failed to update catalog item. Try again later.",
+        "crowdinContext": "Catalog item update failed message."
     },
     "analyticsCatalog.catalogItem.id": {
-        "value": "Id",
-        "comment": "Catalog item id label."
+        "text": "Id",
+        "crowdinContext": "Catalog item id label."
     },
     "analyticsCatalog.catalogItem.open": {
-        "value": "Open",
-        "comment": "Catalog item open button label."
+        "text": "Open",
+        "crowdinContext": "Catalog item open button label."
     },
     "analyticsCatalog.catalogItem.tab.details": {
-        "value": "Details",
-        "comment": "Catalog item tab label."
+        "text": "Details",
+        "crowdinContext": "Catalog item tab label."
     },
     "analyticsCatalog.catalogItem.tab.quality": {
-        "value": "Validations {count}",
-        "comment": "Catalog item tab label."
+        "text": "Validations {count}",
+        "crowdinContext": "Catalog item tab label."
     },
     "analyticsCatalog.catalogItem.tab.quality.empty": {
-        "value": "No validation issues found.",
-        "comment": "Catalog item tab label."
+        "text": "No validation issues found.",
+        "crowdinContext": "Catalog item tab label."
     },
     "analyticsCatalog.catalogItem.lock": {
-        "value": "You can't edit or delete this catalog item — it was created in the parent workspace. To make changes, open the parent workspace.",
-        "comment": "Tooltip content for lock icon indicating the catalog item is locked and cannot be edited."
+        "text": "You can't edit or delete this catalog item — it was created in the parent workspace. To make changes, open the parent workspace.",
+        "crowdinContext": "Tooltip content for lock icon indicating the catalog item is locked and cannot be edited."
     },
     "analyticsCatalog.tooltip.content": {
-        "value": "Centralized catalog of dashboards, metrics, visualizations, facts, and attributes. Explore, manage, and update all objects in one place to support consistent governance, quicker insights, and improved collaboration.",
-        "comment": "Tooltip content for the help icon in the header."
+        "text": "Centralized catalog of dashboards, metrics, visualizations, facts, and attributes. Explore, manage, and update all objects in one place to support consistent governance, quicker insights, and improved collaboration.",
+        "crowdinContext": "Tooltip content for the help icon in the header."
     },
     "analyticsCatalog.search.label": {
-        "value": "Search by title or description…",
-        "comment": "Accessible label for the search input."
+        "text": "Search by title or description…",
+        "crowdinContext": "Accessible label for the search input."
     },
     "analyticsCatalog.empty.search.title": {
-        "value": "No match found",
-        "comment": "Title of the empty state when search input is filled."
+        "text": "No match found",
+        "crowdinContext": "Title of the empty state when search input is filled."
     },
     "analyticsCatalog.empty.search.description": {
-        "value": "Check the spelling or adjust filters.",
-        "comment": "Description of the empty state when search input is filled."
+        "text": "Check the spelling or adjust filters.",
+        "crowdinContext": "Description of the empty state when search input is filled."
     },
     "analyticsCatalog.empty.filters.title": {
-        "value": "No match found",
-        "comment": "Title of the empty state when filters are applied but search input is empty."
+        "text": "No match found",
+        "crowdinContext": "Title of the empty state when filters are applied but search input is empty."
     },
     "analyticsCatalog.empty.filters.description": {
-        "value": "No matching items found for the selected filters.",
-        "comment": "Description of the empty state when filters are applied but search input is empty."
+        "text": "No matching items found for the selected filters.",
+        "crowdinContext": "Description of the empty state when filters are applied but search input is empty."
     },
     "analyticsCatalog.quality.tooltip.title": {
-        "value": "Validation {count, plural, one {finding} other {findings}}:",
-        "comment": "Title for the quality tooltip."
+        "text": "Validation {count, plural, one {finding} other {findings}}:",
+        "crowdinContext": "Title for the quality tooltip."
     },
     "analyticsCatalog.quality.tooltip.identicalTitle": {
-        "value": "There {count, plural, one {is # field} other {are # fields}} with the same title",
-        "comment": "Title for quality issue tooltip when multiple catalog items have identical titles."
+        "text": "There {count, plural, one {is # field} other {are # fields}} with the same title",
+        "crowdinContext": "Title for quality issue tooltip when multiple catalog items have identical titles."
     },
     "analyticsCatalog.quality.tooltip.identicalDescription": {
-        "value": "There {count, plural, one {is # field} other {are # fields}} with the same description",
-        "comment": "Title for quality issue tooltip when multiple catalog items have identical descriptions."
+        "text": "There {count, plural, one {is # field} other {are # fields}} with the same description",
+        "crowdinContext": "Title for quality issue tooltip when multiple catalog items have identical descriptions."
     },
     "analyticsCatalog.quality.tooltip.similarTitle": {
-        "value": "There {count, plural, one {is # field} other {are # fields}} with similar title",
-        "comment": "Title for quality issue tooltip when multiple catalog items have similar titles."
+        "text": "There {count, plural, one {is # field} other {are # fields}} with similar title",
+        "crowdinContext": "Title for quality issue tooltip when multiple catalog items have similar titles."
     },
     "analyticsCatalog.quality.tooltip.similarDescription": {
-        "value": "There {count, plural, one {is # field} other {are # fields}} with similar description",
-        "comment": "Title for quality issue tooltip when multiple catalog items have similar descriptions."
+        "text": "There {count, plural, one {is # field} other {are # fields}} with similar description",
+        "crowdinContext": "Title for quality issue tooltip when multiple catalog items have similar descriptions."
     },
     "analyticsCatalog.quality.tooltip.unknownAbbreviation": {
-        "value": "There {count, plural, one {is # abbreviation that is not recognized} other {are # abbreviations that are not recognized}}",
-        "comment": "Title for quality issue tooltip when a catalog item contains unknown abbreviation."
+        "text": "There {count, plural, one {is # abbreviation that is not recognized} other {are # abbreviations that are not recognized}}",
+        "crowdinContext": "Title for quality issue tooltip when a catalog item contains unknown abbreviation."
     },
     "analyticsCatalog.quality.title.identicalTitle": {
-        "value": "Identical title",
-        "comment": "Title for quality issue when multiple catalog items have identical titles."
+        "text": "Identical title",
+        "crowdinContext": "Title for quality issue when multiple catalog items have identical titles."
     },
     "analyticsCatalog.quality.title.identicalDescription": {
-        "value": "Identical description",
-        "comment": "Title for quality issue when multiple catalog items have identical descriptions."
+        "text": "Identical description",
+        "crowdinContext": "Title for quality issue when multiple catalog items have identical descriptions."
     },
     "analyticsCatalog.quality.title.similarTitle": {
-        "value": "Similar title",
-        "comment": "Title for quality issue when multiple catalog items have similar titles."
+        "text": "Similar title",
+        "crowdinContext": "Title for quality issue when multiple catalog items have similar titles."
     },
     "analyticsCatalog.quality.title.similarDescription": {
-        "value": "Similar description",
-        "comment": "Title for quality issue when multiple catalog items have similar descriptions."
+        "text": "Similar description",
+        "crowdinContext": "Title for quality issue when multiple catalog items have similar descriptions."
     },
     "analyticsCatalog.quality.title.unknownAbbreviation": {
-        "value": "Unknown abbreviation",
-        "comment": "Title for quality issue when a catalog item contains unknown abbreviation."
+        "text": "Unknown abbreviation",
+        "crowdinContext": "Title for quality issue when a catalog item contains unknown abbreviation."
     },
     "analyticsCatalog.quality.title.none": {
-        "value": "Without issues",
-        "comment": "Title for the filter option that shows catalog items without quality issues."
+        "text": "Without issues",
+        "crowdinContext": "Title for the filter option that shows catalog items without quality issues."
     },
     "analyticsCatalog.quality.description.identicalTitle": {
-        "value": "Same title is used by other {count, plural, one {object} other {objects}}. Rename this or the following {count, plural, one {object} other {objects}} title to avoid confusion.",
-        "comment": "Description for quality issue when multiple catalog items have identical titles."
+        "text": "Same title is used by other {count, plural, one {object} other {objects}}. Rename this or the following {count, plural, one {object} other {objects}} title to avoid confusion.",
+        "crowdinContext": "Description for quality issue when multiple catalog items have identical titles."
     },
     "analyticsCatalog.quality.description.identicalDescription": {
-        "value": "Same description is used by other {count, plural, one {object} other {objects}}. Rename this or the following {count, plural, one {object} other {objects}} description to avoid confusion.",
-        "comment": "Description for quality issue when multiple catalog items have identical descriptions."
+        "text": "Same description is used by other {count, plural, one {object} other {objects}}. Rename this or the following {count, plural, one {object} other {objects}} description to avoid confusion.",
+        "crowdinContext": "Description for quality issue when multiple catalog items have identical descriptions."
     },
     "analyticsCatalog.quality.description.similarTitle": {
-        "value": "The title is similar to other {count, plural, one {object} other {objects}}. Distinguish it in its description to improve AI accuracy.",
-        "comment": "Description for quality issue when multiple catalog items have similar titles."
+        "text": "The title is similar to other {count, plural, one {object} other {objects}}. Distinguish it in its description to improve AI accuracy.",
+        "crowdinContext": "Description for quality issue when multiple catalog items have similar titles."
     },
     "analyticsCatalog.quality.description.similarDescription": {
-        "value": "The description is similar to other {count, plural, one {object} other {objects}}. Distinguish it in its title to improve AI accuracy.",
-        "comment": "Description for quality issue when multiple catalog items have similar descriptions."
+        "text": "The description is similar to other {count, plural, one {object} other {objects}}. Distinguish it in its title to improve AI accuracy.",
+        "crowdinContext": "Description for quality issue when multiple catalog items have similar descriptions."
     },
     "analyticsCatalog.quality.description.unknownAbbreviation": {
-        "value": "The abbreviation <u>{abbreviation}</u> is not recognized. Replace it with the full form to improve AI accuracy.",
-        "comment": "Description for quality issue when a catalog item contains unknown abbreviation."
+        "text": "The abbreviation <u>{abbreviation}</u> is not recognized. Replace it with the full form to improve AI accuracy.",
+        "crowdinContext": "Description for quality issue when a catalog item contains unknown abbreviation."
     },
     "analyticsCatalog.quality.issue.edit": {
-        "value": "Edit{attributeName, select, TITLE { title} DESCRIPTION { description} other {}}",
-        "comment": "Label for the edit button in quality issue component. The button allows users to edit either the title or description field of a catalog item based on the quality issue. Example output: if attributeName is 'TITLE', output is 'Edit title'; if attributeName is 'DESCRIPTION', output is 'Edit description'."
+        "text": "Edit{attributeName, select, TITLE { title} DESCRIPTION { description} other {}}",
+        "crowdinContext": "Label for the edit button in quality issue component. The button allows users to edit either the title or description field of a catalog item based on the quality issue. Example output: if attributeName is 'TITLE', output is 'Edit title'; if attributeName is 'DESCRIPTION', output is 'Edit description'."
     },
     "analyticsCatalog.quality.scoreCard.title": {
-        "value": "Semantic quality",
-        "comment": "Title of the quality score card."
+        "text": "Semantic quality",
+        "crowdinContext": "Title of the quality score card."
     },
     "analyticsCatalog.quality.scoreCard.runCheck": {
-        "value": "Run check",
-        "comment": "Label for the button that runs the quality check."
+        "text": "Run check",
+        "crowdinContext": "Label for the button that runs the quality check."
     },
     "analyticsCatalog.quality.scoreCard.action.empty": {
-        "value": "No findings",
-        "comment": "Label for the empty state of the quality score card action."
+        "text": "No findings",
+        "crowdinContext": "Label for the empty state of the quality score card action."
     },
     "analyticsCatalog.quality.scoreCard.action.loading": {
-        "value": "Running...",
-        "comment": "Label for the loading state of the quality score card action."
+        "text": "Running...",
+        "crowdinContext": "Label for the loading state of the quality score card action."
     },
     "analyticsCatalog.quality.scoreCard.action.success": {
-        "value": "Show objects",
-        "comment": "Label for the success state of the quality score card action."
+        "text": "Show objects",
+        "crowdinContext": "Label for the success state of the quality score card action."
     },
     "analyticsCatalog.quality.scoreCard.lastCheck": {
-        "value": "Last checked: {date}",
-        "comment": "Text that is prepended to the date of the last check of the quality score card."
+        "text": "Last checked: {date}",
+        "crowdinContext": "Text that is prepended to the date of the last check of the quality score card."
     },
     "metricComponent.metricType.label": {
-        "value": "Metric type",
-        "comment": "Analytics Catalog detail drawer: Label for the dropdown that selects whether a measure is treated as currency or left unspecified."
+        "text": "Metric type",
+        "crowdinContext": "Analytics Catalog detail drawer: Label for the dropdown that selects whether a measure is treated as currency or left unspecified."
     },
     "metricComponent.metricType.unspecified": {
-        "value": "Unspecified",
-        "comment": "Analytics Catalog detail drawer: Dropdown option indicating that the metric does not enforce a dedicated semantic type."
+        "text": "Unspecified",
+        "crowdinContext": "Analytics Catalog detail drawer: Dropdown option indicating that the metric does not enforce a dedicated semantic type."
     },
     "metricComponent.metricType.currency": {
-        "value": "Currency",
-        "comment": "Analytics Catalog detail drawer: Dropdown option indicating that the metric should be treated as currency."
+        "text": "Currency",
+        "crowdinContext": "Analytics Catalog detail drawer: Dropdown option indicating that the metric should be treated as currency."
     },
     "metricComponent.numberFormat.label": {
-        "value": "Number format",
-        "comment": "Analytics Catalog detail drawer: Heading for the number format editor that defines how metric values are rendered."
+        "text": "Number format",
+        "crowdinContext": "Analytics Catalog detail drawer: Heading for the number format editor that defines how metric values are rendered."
     }
 }
