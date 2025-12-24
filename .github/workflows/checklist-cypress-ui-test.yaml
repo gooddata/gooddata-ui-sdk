@@ -21,7 +21,7 @@ on:
       CYPRESS_TEST_TAGS:
         description: 'Test tags should be run. Tip: can get them inside each spec file'
         required: true
-        default: 'checklist_integrated_tiger,checklist_integrated_tiger_export'
+        default: 'checklist_integrated_tiger_fe,checklist_integrated_tiger_export_fe'
         type: string
       FILTER:
         type: string

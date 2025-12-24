@@ -23,7 +23,14 @@ describe("Dependent filter", () => {
 
     it(
         "should test parent - child interaction in view mode",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             table
                 .waitLoaded()
@@ -129,7 +136,14 @@ describe("Dependent filter", () => {
 
     it(
         "should test parent - child interaction in edit mode",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
             table
@@ -263,7 +277,14 @@ describe("Dependent filter", () => {
 
     it(
         "should test parent - child interaction in view mode",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             table
                 .waitLoaded()
@@ -372,7 +393,14 @@ describe("Dependent filter", () => {
 
     it(
         "should test parent - child interaction in edit mode",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
             new InsightsCatalog().waitForCatalogLoad();
@@ -513,7 +541,14 @@ describe("Dependent filter", () => {
 
     it(
         "child filter can reduce to zero element by parent filter",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
             new InsightsCatalog().waitForCatalogLoad();
@@ -526,7 +561,14 @@ describe("Dependent filter", () => {
 
     it(
         "can reload elements after selecting delete parent filter",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
             new InsightsCatalog().waitForCatalogLoad();
@@ -544,7 +586,14 @@ describe("Dependent filter", () => {
 
     it(
         "can reload elements after removing parent filter",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
             new InsightsCatalog().waitForCatalogLoad();
@@ -559,7 +608,14 @@ describe("Dependent filter", () => {
 
     it(
         "should test a circle parent - child filter in edit mode",
-        { tags: "checklist_integrated_tiger" },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
             new InsightsCatalog().waitForCatalogLoad();
@@ -595,7 +651,14 @@ describe("Dependent filter", () => {
     //This test script cover the bug LX-1123
     it(
         "should not appear blank page after resetting dependent filter",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             stateFilter.isLoaded().open().elementsAreLoaded().selectAttribute(["Connecticut"]).apply();
             table

@@ -5,7 +5,14 @@ import { Widget } from "../../tools/widget";
 
 describe(
     "Dashboard with Table Transpose",
-    { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+    {
+        tags: [
+            "checklist_integrated_tiger",
+            "checklist_integrated_tiger_fe",
+            "checklist_integrated_tiger_releng",
+            "checklist_integrated_tiger_releng_fe",
+        ],
+    },
     () => {
         it("rendering", () => {
             Navigation.visit("dashboard/dashboard-table-transpose");

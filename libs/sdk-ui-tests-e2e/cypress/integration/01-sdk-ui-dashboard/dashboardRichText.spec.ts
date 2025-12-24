@@ -46,7 +46,14 @@ describe("RichText - isolated", { tags: ["pre-merge_isolated_tiger"] }, () => {
 
 describe(
     "RichText - integrated",
-    { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+    {
+        tags: [
+            "checklist_integrated_tiger",
+            "checklist_integrated_tiger_fe",
+            "checklist_integrated_tiger_releng",
+            "checklist_integrated_tiger_releng_fe",
+        ],
+    },
     () => {
         beforeEach(() => {
             Navigation.visit("dashboard/rich-text");

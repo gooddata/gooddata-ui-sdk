@@ -22,7 +22,14 @@ describe("Header section", () => {
 
         it(
             "can update header for all sections",
-            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+            {
+                tags: [
+                    "checklist_integrated_tiger",
+                    "checklist_integrated_tiger_fe",
+                    "checklist_integrated_tiger_releng",
+                    "checklist_integrated_tiger_releng_fe",
+                ],
+            },
             () => {
                 new DashboardMenu().toggle().hasOption("Save as new");
                 new DashboardHeader().saveAsNew("save a new dashboard");
@@ -81,26 +88,34 @@ describe("Header section", () => {
         });
 
         //Cover ticket: RAIL-4674
-        it("Limitation of title", { tags: ["checklist_integrated_tiger"] }, () => {
-            cy.fixture("headerDataTest").then((data) => {
-                const title = data["LimitTexts"].title;
-                const desc = data["LimitTexts"].description;
-                const headerRow_01 = layoutRow_01.getHeader();
-                const headerRow_02 = layoutRow_02.getHeader();
-                insightCatalog.waitForCatalogReload();
-                headerRow_01
-                    .setTitle(title)
-                    .selectTitleInput()
-                    .hasLimitMessage(true, "128/256 caractères restant")
-                    .clickOutside()
-                    .hasLimitMessage(false, "128/256 caractères restant");
-                headerRow_02.scrollIntoView().setDescription(desc).selectDescriptionInput().clickOutside();
+        it(
+            "Limitation of title",
+            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
+            () => {
+                cy.fixture("headerDataTest").then((data) => {
+                    const title = data["LimitTexts"].title;
+                    const desc = data["LimitTexts"].description;
+                    const headerRow_01 = layoutRow_01.getHeader();
+                    const headerRow_02 = layoutRow_02.getHeader();
+                    insightCatalog.waitForCatalogReload();
+                    headerRow_01
+                        .setTitle(title)
+                        .selectTitleInput()
+                        .hasLimitMessage(true, "128/256 caractères restant")
+                        .clickOutside()
+                        .hasLimitMessage(false, "128/256 caractères restant");
+                    headerRow_02
+                        .scrollIntoView()
+                        .setDescription(desc)
+                        .selectDescriptionInput()
+                        .clickOutside();
 
-                editMode.save();
-                headerRow_01.hasTitleWithText(title);
-                headerRow_02.hasDescriptionWithText(desc);
-            });
-        });
+                    editMode.save();
+                    headerRow_01.hasTitleWithText(title);
+                    headerRow_02.hasDescriptionWithText(desc);
+                });
+            },
+        );
 
         it("Header placeholder should be translated", { tags: ["pre-merge_isolated_tiger"] }, () => {
             layoutRow_01

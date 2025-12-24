@@ -3,7 +3,7 @@
 import * as Navigation from "../../tools/navigation";
 import { TableNew } from "../../tools/tableNew";
 
-describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
+describe("Table Component", { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] }, () => {
     const table = new TableNew(".s-table-component-transpose");
 
     it(
@@ -21,7 +21,7 @@ describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
 
     it(
         "should display Row attribute and Column header on top",
-        { tags: ["checklist_integrated_tiger_releng"] },
+        { tags: ["checklist_integrated_tiger_releng", "checklist_integrated_tiger_releng_fe"] },
         () => {
             Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-rc-row-top");
             table.waitLoaded().hasColumnHeader(0, ["Product"]).hasColumnHeaderOnTop("Forecast Category");
@@ -44,7 +44,7 @@ describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
     });
 });
 
-describe("Insight View", { tags: ["checklist_integrated_tiger"] }, () => {
+describe("Insight View", { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] }, () => {
     const table = new TableNew(".s-insight-view-transpose");
 
     // TODO: skip this because of bug https://gooddata.atlassian.net/browse/F1-2003

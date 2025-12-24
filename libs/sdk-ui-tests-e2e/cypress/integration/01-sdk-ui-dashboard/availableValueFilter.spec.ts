@@ -24,7 +24,14 @@ const featureFlags: ISettings = {
 describe("Available value filter", () => {
     it(
         "should add metric filter by",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visit("dashboard/dashboard-tiger-hide-filters");
             new Dashboard().waitForDashboardLoaded();
@@ -83,7 +90,14 @@ describe("Available value filter", () => {
 
     it(
         "should extend attribute filter by date filter",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visit("dashboard/multiple-date-filters", featureFlags);
             cy.intercept("GET", "**/attributes**").as("attributes");
