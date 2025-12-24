@@ -94,7 +94,14 @@ describe("Date filtering on insight", () => {
 
     it(
         "remember last setting after selecting another insight",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             widget.waitChartLoaded();
 
@@ -110,7 +117,14 @@ describe("Date filtering on insight", () => {
 
     it(
         "change filter on added insight",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             widget.waitChartLoaded();
             widgetConfiguration.open().openConfiguration().selectDateDataset(DATASET_CREATED);

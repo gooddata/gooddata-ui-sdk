@@ -11,7 +11,7 @@ import { ShareDialog } from "../../tools/shareDialog";
 import { Users } from "../../tools/users";
 import { generateUUID } from "../../tools/utils";
 
-describe("Dashboard", { tags: ["checklist_integrated_tiger"] }, () => {
+describe("Dashboard", { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] }, () => {
     const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
     describe("Basic case", () => {
         beforeEach(() => {

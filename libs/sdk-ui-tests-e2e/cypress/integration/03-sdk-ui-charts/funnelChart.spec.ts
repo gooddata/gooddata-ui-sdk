@@ -1,10 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { Chart } from "../../tools/chart";
 import * as Navigation from "../../tools/navigation";
 
 describe(
     "Funnel Chart",
-    { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+    {
+        tags: [
+            "checklist_integrated_tiger",
+            "checklist_integrated_tiger_fe",
+            "checklist_integrated_tiger_releng",
+            "checklist_integrated_tiger_releng_fe",
+        ],
+    },
     () => {
         beforeEach(() => {
             Navigation.visit("visualizations/funnelchart/funnel-chart-scenario");

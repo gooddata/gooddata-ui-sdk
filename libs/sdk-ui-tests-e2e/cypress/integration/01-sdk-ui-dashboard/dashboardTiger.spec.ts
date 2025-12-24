@@ -17,7 +17,14 @@ const STAGE_NAME_CHECKBOX = ".s-stage_name";
 describe("Dashboard", () => {
     describe(
         "TopBar rendering advanced",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             //Cover ticket: RAIL-4702
             it("Should enable Save button when resize column", () => {

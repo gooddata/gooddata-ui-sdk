@@ -21,7 +21,14 @@ describe("Insight on dashboard", () => {
 
     it(
         "can add 3 widgets into the same row to create a new section",
-        { tags: ["checklist_integrated_tiger"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             new DashboardMenu().toggle().hasOption("Save as new");
             new DashboardHeader().saveAsNew("save after drag drop widgets");
@@ -78,7 +85,14 @@ describe("Insight on dashboard", () => {
 describe("Be able to resize widgeton dashboard", () => {
     it(
         "should able to resize widget when is placed next to other in one row",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visit("dashboard/insight");
             editMode.edit();

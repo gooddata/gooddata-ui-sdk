@@ -76,7 +76,7 @@ jobs:
     needs: [ setup-stage ]
     if: ${{ needs.setup-stage.outputs.run-cypress-sdk == 'true' }}
     with:
-      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_fe'
       GIT_REVISION: ${{ inputs.test-branch }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
@@ -90,7 +90,7 @@ jobs:
     needs: [ setup-stage, checklist-SDK ]
     if: ${{ !cancelled() && needs.setup-stage.outputs.run-export == 'true' }}
     with:
-      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export_fe'
       GIT_REVISION: ${{ inputs.test-branch }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'

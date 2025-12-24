@@ -17,7 +17,14 @@ describe("Interaction", () => {
     //Cover ticket: RAIL-4559
     it(
         "Should able to remove existing interactions",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visitCopyOf("dashboard/drill-to-insight");
             editMode.edit();
@@ -33,7 +40,14 @@ describe("Interaction", () => {
     //Cover ticket: RAIL-4717
     it(
         "Should correctly display attribute list in custom URL dialog",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visit("dashboard/drill-to-insight");
             editMode.edit();
@@ -65,7 +79,7 @@ describe("Interaction", () => {
     //Cover ticket: RAIL-4716
     it(
         "should display correct insight name on invalid interaction warning",
-        { tags: ["checklist_integrated_tiger"] },
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
         () => {
             const widget1 = new Widget(0, 1);
             const message = new Messages();

@@ -12,7 +12,14 @@ const editMode = new EditMode();
 describe("Date filtering", () => {
     it(
         "verify date filter default state",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visit("dashboard/new-dashboard");
             dateFilter.subtitleHasValue(DateFilterValue.THIS_MONTH);
@@ -21,7 +28,14 @@ describe("Date filtering", () => {
 
     it(
         "should update date filter value correctly",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visit("dashboard/dashboard-many-rows-columns");
             dateFilter.subtitleHasValue(DateFilterValue.ALL_TIME);
@@ -32,16 +46,34 @@ describe("Date filtering", () => {
         },
     );
 
-    it("should display message on the top date filter panel", { tags: "checklist_integrated_tiger" }, () => {
-        Navigation.visit("dashboard/dashboard-many-rows-columns");
-        dateFilter.open().isDateFilterMessageVisibled(false).cancel();
-        editMode.edit().isInEditMode(true);
-        dateFilter.open().isDateFilterMessageVisibled(true);
-    });
+    it(
+        "should display message on the top date filter panel",
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
+        () => {
+            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            dateFilter.open().isDateFilterMessageVisibled(false).cancel();
+            editMode.edit().isInEditMode(true);
+            dateFilter.open().isDateFilterMessageVisibled(true);
+        },
+    );
 
     it(
         "should reset the selected date filter on view mode when open edit mode",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visit("dashboard/dashboard-many-rows-columns");
             dateFilter
@@ -55,7 +87,14 @@ describe("Date filtering", () => {
 
     it(
         "should display the selected date interval correctly",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visitCopyOf("dashboard/dashboard-many-rows-columns");
 

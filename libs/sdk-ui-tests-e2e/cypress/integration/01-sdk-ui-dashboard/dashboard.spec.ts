@@ -48,7 +48,7 @@ describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
         //Cover ticket: RAIL-4431
         it(
             "should display placeholder and focus title for new dashboard",
-            { tags: ["checklist_integrated_tiger"] },
+            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
             () => {
                 Navigation.visit("dashboard/new-dashboard");
                 dashboardHeader.hasTitlePlaceholder();
@@ -114,7 +114,14 @@ describe("Dashboard actions", () => {
     //Cover ticket: RAIL-4772
     it(
         "should able to delete dashboard after save as new",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visitCopyOf("dashboard/kpis");
 
@@ -130,7 +137,14 @@ describe("Dashboard actions", () => {
     //Cover ticket: RAIL-4642
     it(
         "should able to scroll vertical/ horizontal on widget",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             const table = new TableNew(".s-dash-item-0_0");
 
@@ -143,7 +157,14 @@ describe("Dashboard actions", () => {
     //Cover ticket: RAIL-4750
     it(
         "should direct to view mode after save as new",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        {
+            tags: [
+                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_fe",
+                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_fe",
+            ],
+        },
         () => {
             Navigation.visitCopyOf("dashboard/kpis");
             dashboardHeader.editButtonIsVisible(true).shareButtonExists(true);
