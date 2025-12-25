@@ -1,334 +1,334 @@
 {
     "gd.gen-ai.global-error": {
-        "text": "Something went wrong",
-        "crowdinContext": "Generic error message displayed when the AI chatbot encounters an unexpected error"
+        "value": "Something went wrong",
+        "comment": "Generic error message displayed when the AI chatbot encounters an unexpected error"
     },
     "gd.gen-ai.global-error.description": {
-        "text": "Try restarting the chatbot and starting over.",
-        "crowdinContext": "User instruction on how to recover from a global error in the AI chatbot"
+        "value": "Try restarting the chatbot and starting over.",
+        "comment": "User instruction on how to recover from a global error in the AI chatbot"
     },
     "gd.gen-ai.global-error.button-details": {
-        "text": "See details",
-        "crowdinContext": "Button label to show more detailed error information"
+        "value": "See details",
+        "comment": "Button label to show more detailed error information"
     },
     "gd.gen-ai.global-error.button-clear": {
-        "text": "Restart chatbot",
-        "crowdinContext": "Button label to restart the AI chatbot and clear the current session"
+        "value": "Restart chatbot",
+        "comment": "Button label to restart the AI chatbot and clear the current session"
     },
     "gd.gen-ai.global-no-llm": {
-        "text": "No LLM provider configured",
-        "crowdinContext": "Error message when no LLM provider is configured"
+        "value": "No LLM provider configured",
+        "comment": "Error message when no LLM provider is configured"
     },
     "gd.gen-ai.global-no-llm.description": {
-        "text": "Configure a provider to enable the chatbot.",
-        "crowdinContext": "User instruction on how to configure a provider for the AI chatbot"
+        "value": "Configure a provider to enable the chatbot.",
+        "comment": "User instruction on how to configure a provider for the AI chatbot"
     },
     "gd.gen-ai.global-no-llm.button-create-llm": {
-        "text": "Configure provider",
-        "crowdinContext": "Button label to configure a provider for the AI chatbot"
+        "value": "Configure provider",
+        "comment": "Button label to configure a provider for the AI chatbot"
     },
     "gd.gen-ai.permission-error": {
-        "text": "Insufficient permissions",
-        "crowdinContext": "Error message when user does not have sufficient permissions to access the chatbot"
+        "value": "Insufficient permissions",
+        "comment": "Error message when user does not have sufficient permissions to access the chatbot"
     },
     "gd.gen-ai.permission-error.description": {
-        "text": "You don’t have access to the chatbot. Contact your administrator to request access.",
-        "crowdinContext": "User instruction on how to request access to the AI chatbot"
+        "value": "You don’t have access to the chatbot. Contact your administrator to request access.",
+        "comment": "User instruction on how to request access to the AI chatbot"
     },
     "gd.gen-ai.input-placeholder": {
-        "text": "Ask here…",
-        "crowdinContext": "Placeholder text in the input field where users type their questions to the AI chatbot"
+        "value": "Ask here…",
+        "comment": "Placeholder text in the input field where users type their questions to the AI chatbot"
     },
     "gd.gen-ai.input-label.mac": {
-        "text": "Ask your question. Use control+space or cmd+I for suggestions.",
-        "crowdinContext": "Label for the input field where users type their questions to the AI chatbot"
+        "value": "Ask your question. Use control+space or cmd+I for suggestions.",
+        "comment": "Label for the input field where users type their questions to the AI chatbot"
     },
     "gd.gen-ai.input-label.win": {
-        "text": "Ask your question. Use control+space or control+I for suggestions.",
-        "crowdinContext": "Label for the input field where Windows users type their questions to the AI chatbot"
+        "value": "Ask your question. Use control+space or control+I for suggestions.",
+        "comment": "Label for the input field where Windows users type their questions to the AI chatbot"
     },
     "gd.gen-ai.feedback.like": {
-        "text": "Mark this message as helpful",
-        "crowdinContext": "Button label to mark a message as helpful in the AI chatbot"
+        "value": "Mark this message as helpful",
+        "comment": "Button label to mark a message as helpful in the AI chatbot"
     },
     "gd.gen-ai.feedback.dislike": {
-        "text": "Mark this message as not helpful",
-        "crowdinContext": "Button label to mark a message as not helpful in the AI chatbot"
+        "value": "Mark this message as not helpful",
+        "comment": "Button label to mark a message as not helpful in the AI chatbot"
     },
     "gd.gen-ai.feedback.popup.title": {
-        "text": "We've got your feedback",
-        "crowdinContext": "Title of the feedback popup dialog"
+        "value": "We've got your feedback",
+        "comment": "Title of the feedback popup dialog"
     },
     "gd.gen-ai.feedback.popup.reasons-label": {
-        "text": "Tell us what went wrong",
-        "crowdinContext": "Label for the feedback reasons section in the popup"
+        "value": "Tell us what went wrong",
+        "comment": "Label for the feedback reasons section in the popup"
     },
     "gd.gen-ai.feedback.popup.description-label": {
-        "text": "Please, describe what happened",
-        "crowdinContext": "Label for the description text area in the feedback popup"
+        "value": "Please, describe what happened",
+        "comment": "Label for the description text area in the feedback popup"
     },
     "gd.gen-ai.feedback.popup.cancel": {
-        "text": "Cancel",
-        "crowdinContext": "Cancel button label in the feedback popup"
+        "value": "Cancel",
+        "comment": "Cancel button label in the feedback popup"
     },
     "gd.gen-ai.feedback.popup.send": {
-        "text": "Send",
-        "crowdinContext": "Send button label in the feedback popup"
+        "value": "Send",
+        "comment": "Send button label in the feedback popup"
     },
     "gd.gen-ai.feedback.popup.close": {
-        "text": "Close feedback dialog",
-        "crowdinContext": "Close button aria label in the feedback popup"
+        "value": "Close feedback dialog",
+        "comment": "Close button aria label in the feedback popup"
     },
     "gd.gen-ai.feedback.reason.forgot-context": {
-        "text": "Forgot previous context",
-        "crowdinContext": "Feedback reason option: AI forgot previous context"
+        "value": "Forgot previous context",
+        "comment": "Feedback reason option: AI forgot previous context"
     },
     "gd.gen-ai.feedback.reason.ignored-instructions": {
-        "text": "Ignored or refused instructions",
-        "crowdinContext": "Feedback reason option: AI ignored or refused instructions"
+        "value": "Ignored or refused instructions",
+        "comment": "Feedback reason option: AI ignored or refused instructions"
     },
     "gd.gen-ai.feedback.reason.factually-incorrect": {
-        "text": "Factually incorrect",
-        "crowdinContext": "Feedback reason option: AI provided factually incorrect information"
+        "value": "Factually incorrect",
+        "comment": "Feedback reason option: AI provided factually incorrect information"
     },
     "gd.gen-ai.feedback.reason.other": {
-        "text": "Other",
-        "crowdinContext": "Feedback reason option: Other reason not listed"
+        "value": "Other",
+        "comment": "Feedback reason option: Other reason not listed"
     },
     "gd.gen-ai.disclaimer": {
-        "text": "AI assistants can make mistakes. Check before relying on these answers.",
-        "crowdinContext": "Warning disclaimer about AI response accuracy shown to users"
+        "value": "AI assistants can make mistakes. Check before relying on these answers.",
+        "comment": "Warning disclaimer about AI response accuracy shown to users"
     },
     "gd.gen-ai.dialog.label": {
-        "text": "AI assistant conversation",
-        "crowdinContext": "Label for the dialog containing the AI chatbot interface"
+        "value": "AI assistant conversation",
+        "comment": "Label for the dialog containing the AI chatbot interface"
     },
     "gd.gen-ai.header.reset-tooltip": {
-        "text": "Reset",
-        "crowdinContext": "Tooltip for button that resets the AI chatbot conversation"
+        "value": "Reset",
+        "comment": "Tooltip for button that resets the AI chatbot conversation"
     },
     "gd.gen-ai.header.contract-tooltip": {
-        "text": "Contract",
-        "crowdinContext": "Tooltip for button that contracts the AI chatbot interface"
+        "value": "Contract",
+        "comment": "Tooltip for button that contracts the AI chatbot interface"
     },
     "gd.gen-ai.header.expand-tooltip": {
-        "text": "Expand",
-        "crowdinContext": "Tooltip for button that expands the AI chatbot interface"
+        "value": "Expand",
+        "comment": "Tooltip for button that expands the AI chatbot interface"
     },
     "gd.gen-ai.welcome.line-1": {
-        "text": "Hi there,",
-        "crowdinContext": "First line of the AI chatbot's welcome greeting"
+        "value": "Hi there,",
+        "comment": "First line of the AI chatbot's welcome greeting"
     },
     "gd.gen-ai.welcome.line-2": {
-        "text": "How can I help you?",
-        "crowdinContext": "Second line of the AI chatbot's welcome greeting asking how to assist"
+        "value": "How can I help you?",
+        "comment": "Second line of the AI chatbot's welcome greeting asking how to assist"
     },
     "gd.gen-ai.welcome.option-1.title": {
-        "text": "Search for a dashboard or visualization",
-        "crowdinContext": "Title for the first suggested action option in the welcome screen"
+        "value": "Search for a dashboard or visualization",
+        "comment": "Title for the first suggested action option in the welcome screen"
     },
     "gd.gen-ai.welcome.option-1.answer": {
-        "text": "Sure thing, what kind of dashboard or visualization would you like to see?",
-        "crowdinContext": "AI chatbot's response when user selects the search option"
+        "value": "Sure thing, what kind of dashboard or visualization would you like to see?",
+        "comment": "AI chatbot's response when user selects the search option"
     },
     "gd.gen-ai.welcome.option-2.title": {
-        "text": "Create a new visualization",
-        "crowdinContext": "Title for the second suggested action option in the welcome screen"
+        "value": "Create a new visualization",
+        "comment": "Title for the second suggested action option in the welcome screen"
     },
     "gd.gen-ai.welcome.option-2.answer": {
-        "text": "Sure thing, what kind of visualization would you like to create?",
-        "crowdinContext": "AI chatbot's response when user selects the create visualization option"
+        "value": "Sure thing, what kind of visualization would you like to create?",
+        "comment": "AI chatbot's response when user selects the create visualization option"
     },
     "gd.gen-ai.welcome.option-3.title": {
-        "text": "Answer a business question",
-        "crowdinContext": "Title for the third suggested action option in the welcome screen"
+        "value": "Answer a business question",
+        "comment": "Title for the third suggested action option in the welcome screen"
     },
     "gd.gen-ai.welcome.option-3.answer": {
-        "text": "Sure thing, what business question would you like to answer?",
-        "crowdinContext": "AI chatbot's response when user selects the business question option"
+        "value": "Sure thing, what business question would you like to answer?",
+        "comment": "AI chatbot's response when user selects the business question option"
     },
     "gd.gen-ai.semantic-search.title": {
-        "text": "Search",
-        "crowdinContext": "Title shown above semantic search results."
+        "value": "Search",
+        "comment": "Title shown above semantic search results."
     },
     "gd.gen-ai.state.cancelled": {
-        "text": "Evaluation cancelled…",
-        "crowdinContext": "Status message displayed when the AI chatbot's evaluation is cancelled"
+        "value": "Evaluation cancelled…",
+        "comment": "Status message displayed when the AI chatbot's evaluation is cancelled"
     },
     "gd.gen-ai.state.generating": {
-        "text": "Generating your response…",
-        "crowdinContext": "Status message displayed while the AI chatbot is generating a response"
+        "value": "Generating your response…",
+        "comment": "Status message displayed while the AI chatbot is generating a response"
     },
     "gd.gen-ai.state.thinking": {
-        "text": "Thinking",
-        "crowdinContext": "Status message displayed in the thought process while the AI is processing"
+        "value": "Thinking",
+        "comment": "Status message displayed in the thought process while the AI is processing"
     },
     "gd.gen-ai.routing.thinking-process": {
-        "text": "Reasoning",
-        "crowdinContext": "Button label to expand and show the AI's thinking process and reasoning information"
+        "value": "Reasoning",
+        "comment": "Button label to expand and show the AI's thinking process and reasoning information"
     },
     "gd.gen-ai.button.send": {
-        "text": "Send message",
-        "crowdinContext": "Button label to send a message to the AI chatbot"
+        "value": "Send message",
+        "comment": "Button label to send a message to the AI chatbot"
     },
     "gd.gen-ai.button.save": {
-        "text": "Save",
-        "crowdinContext": "Button label to save a visualization created by the AI"
+        "value": "Save",
+        "comment": "Button label to save a visualization created by the AI"
     },
     "gd.gen-ai.button.save_and_explore": {
-        "text": "Save & Open",
-        "crowdinContext": "Button label to save a visualization and immediately open it for exploration"
+        "value": "Save & Open",
+        "comment": "Button label to save a visualization and immediately open it for exploration"
     },
     "gd.gen-ai.button.cancel": {
-        "text": "Cancel",
-        "crowdinContext": "Button label to cancel the current operation"
+        "value": "Cancel",
+        "comment": "Button label to cancel the current operation"
     },
     "gd.gen-ai.save-dialog.label": {
-        "text": "Name",
-        "crowdinContext": "Label for the input field where users enter a name for their visualization"
+        "value": "Name",
+        "comment": "Label for the input field where users enter a name for their visualization"
     },
     "gd.gen-ai.save-dialog.title": {
-        "text": "Name your visualization",
-        "crowdinContext": "Title of the dialog for naming a visualization before saving"
+        "value": "Name your visualization",
+        "comment": "Title of the dialog for naming a visualization before saving"
     },
     "gd.gen-ai.save-dialog.description": {
-        "text": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
-        "crowdinContext": "Description explaining why users should provide a descriptive name for their visualization"
+        "value": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
+        "comment": "Description explaining why users should provide a descriptive name for their visualization"
     },
     "gd.gen-ai.save-dialog.description.explore": {
-        "text": "To open this visualization, it needs to be saved first. You can give it a name below.",
-        "crowdinContext": "Description explaining that the visualization must be saved before it can be opened"
+        "value": "To open this visualization, it needs to be saved first. You can give it a name below.",
+        "comment": "Description explaining that the visualization must be saved before it can be opened"
     },
     "gd.gen-ai.autocomplete.type": {
-        "text": "Type",
-        "crowdinContext": "Column header in autocomplete suggestions showing the type of data object"
+        "value": "Type",
+        "comment": "Column header in autocomplete suggestions showing the type of data object"
     },
     "gd.gen-ai.autocomplete.dataset": {
-        "text": "Dataset",
-        "crowdinContext": "Column header in autocomplete suggestions showing the dataset name"
+        "value": "Dataset",
+        "comment": "Column header in autocomplete suggestions showing the dataset name"
     },
     "gd.gen-ai.autocomplete.id": {
-        "text": "Id",
-        "crowdinContext": "Column header in autocomplete suggestions showing the object identifier"
+        "value": "Id",
+        "comment": "Column header in autocomplete suggestions showing the object identifier"
     },
     "gd.gen-ai.autocomplete.attribute": {
-        "text": "Attribute",
-        "crowdinContext": "Column header in autocomplete suggestions showing the attribute name"
+        "value": "Attribute",
+        "comment": "Column header in autocomplete suggestions showing the attribute name"
     },
     "gd.gen-ai.autocomplete.metric": {
-        "text": "Metric",
-        "crowdinContext": "Column header in autocomplete suggestions showing the metric name"
+        "value": "Metric",
+        "comment": "Column header in autocomplete suggestions showing the metric name"
     },
     "gd.gen-ai.autocomplete.fact": {
-        "text": "Fact",
-        "crowdinContext": "Column header in autocomplete suggestions showing the fact name"
+        "value": "Fact",
+        "comment": "Column header in autocomplete suggestions showing the fact name"
     },
     "gd.gen-ai.autocomplete.date": {
-        "text": "Date",
-        "crowdinContext": "Column header in autocomplete suggestions showing the date"
+        "value": "Date",
+        "comment": "Column header in autocomplete suggestions showing the date"
     },
     "gd.gen-ai.autocomplete.input-info.mac": {
-        "text": "<code>^+Space</code> or <code>⌘+I</code> for suggestions",
-        "crowdinContext": "Keyboard shortcut instructions for Mac users to trigger autocomplete suggestions"
+        "value": "<code>^+Space</code> or <code>⌘+I</code> for suggestions",
+        "comment": "Keyboard shortcut instructions for Mac users to trigger autocomplete suggestions"
     },
     "gd.gen-ai.autocomplete.input-info.win": {
-        "text": "<code>Ctrl+Space</code> or <code>Ctrl+I</code> for suggestions",
-        "crowdinContext": "Keyboard shortcut instructions for Windows users to trigger autocomplete suggestions"
+        "value": "<code>Ctrl+Space</code> or <code>Ctrl+I</code> for suggestions",
+        "comment": "Keyboard shortcut instructions for Windows users to trigger autocomplete suggestions"
     },
     "gd.gen-ai.visualisation.menu": {
-        "text": "More actions",
-        "crowdinContext": "Accessibility label for the visualization actions menu"
+        "value": "More actions",
+        "comment": "Accessibility label for the visualization actions menu"
     },
     "gd.gen-ai.visualisation.toggle.table": {
-        "text": "Show as table",
-        "crowdinContext": "Accessibility label for the visualization switch to table button"
+        "value": "Show as table",
+        "comment": "Accessibility label for the visualization switch to table button"
     },
     "gd.gen-ai.visualisation.toggle.original": {
-        "text": "Show original visualization",
-        "crowdinContext": "Accessibility label for the visualization switch to original button"
+        "value": "Show original visualization",
+        "comment": "Accessibility label for the visualization switch to original button"
     },
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {
-        "text": "Save visualization",
-        "crowdinContext": "Menu option to save the current visualization"
+        "value": "Save visualization",
+        "comment": "Menu option to save the current visualization"
     },
     "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": {
-        "text": "Save as new…",
-        "crowdinContext": "Menu option to save the current visualization as a new copy"
+        "value": "Save as new…",
+        "comment": "Menu option to save the current visualization as a new copy"
     },
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": {
-        "text": "Open in Analyze",
-        "crowdinContext": "Menu option to open the visualization in the full Analyze interface"
+        "value": "Open in Analyze",
+        "comment": "Menu option to open the visualization in the full Analyze interface"
     },
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": {
-        "text": "This will ask you to save the visualisation before you can open it.",
-        "crowdinContext": "Description for the open in Analyze menu option"
+        "value": "This will ask you to save the visualisation before you can open it.",
+        "comment": "Description for the open in Analyze menu option"
     },
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": {
-        "text": "Copy visualization link",
-        "crowdinContext": "Menu option to copy a shareable link to the visualization"
+        "value": "Copy visualization link",
+        "comment": "Menu option to copy a shareable link to the visualization"
     },
     "gd.gen-ai.messages.label": {
-        "text": "Chat messages",
-        "crowdinContext": "Label for the chat messages section in the AI chatbot interface"
+        "value": "Chat messages",
+        "comment": "Label for the chat messages section in the AI chatbot interface"
     },
     "gd.gen-ai.message.label.user": {
-        "text": "User:",
-        "crowdinContext": "Label identifying messages sent by the user in the chat conversation"
+        "value": "User:",
+        "comment": "Label identifying messages sent by the user in the chat conversation"
     },
     "gd.gen-ai.message.label.assistant": {
-        "text": "Bot:",
-        "crowdinContext": "Label identifying messages sent by the AI assistant in the chat conversation"
+        "value": "Bot:",
+        "comment": "Label identifying messages sent by the AI assistant in the chat conversation"
     },
     "gd.gen-ai.skip-messages-history": {
-        "text": "Skip to AI assistant input",
-        "crowdinContext": "Accessibility link to skip past the message history and go directly to the input field"
+        "value": "Skip to AI assistant input",
+        "comment": "Accessibility link to skip past the message history and go directly to the input field"
     },
     "gd.gen-ai.skip-navigation": {
-        "text": "Skip navigation",
-        "crowdinContext": "Accessibility link to skip past navigation elements in the interface"
+        "value": "Skip navigation",
+        "comment": "Accessibility link to skip past navigation elements in the interface"
     },
     "gd.gen-ai.changeAnalysis.default_message": {
-        "text": "Here is the key driver analysis for <metric>{title}</metric> between <b>{range}</b>.",
-        "crowdinContext": "Default message for change analysis"
+        "value": "Here is the key driver analysis for <metric>{title}</metric> between <b>{range}</b>.",
+        "comment": "Default message for change analysis"
     },
     "gd.gen-ai.changeAnalysis.splitter": {
-        "text": "and",
-        "crowdinContext": "Splitter for date range in change analysis"
+        "value": "and",
+        "comment": "Splitter for date range in change analysis"
     },
     "gd.gen-ai.changeAnalysis.explain_the_change": {
-        "text": "Open the analysis",
-        "crowdinContext": "Button label to explain the change"
+        "value": "Open the analysis",
+        "comment": "Button label to explain the change"
     },
     "gd.gen-ai.drill_modal_picker.label": {
-        "text": "Drill modal picker",
-        "crowdinContext": "Label for the drill modal picker"
+        "value": "Drill modal picker",
+        "comment": "Label for the drill modal picker"
     },
     "gd.gen-ai.drill_modal_picker.header.explain": {
-        "text": "Explain",
-        "crowdinContext": "Header for the drill modal picker explain section"
+        "value": "Explain",
+        "comment": "Header for the drill modal picker explain section"
     },
     "drill.kda.from": {
-        "text": "from",
-        "crowdinContext": "Key driver analysis drill from label, must be lowercase"
+        "value": "from",
+        "comment": "Key driver analysis drill from label, must be lowercase"
     },
     "drill.kda.in": {
-        "text": "in",
-        "crowdinContext": "Key driver analysis drill in label, must be lowercase"
+        "value": "in",
+        "comment": "Key driver analysis drill in label, must be lowercase"
     },
     "drill.kda.drop": {
-        "text": "Drop {where} {title}",
-        "crowdinContext": "Key driver analysis drill drop label"
+        "value": "Drop {where} {title}",
+        "comment": "Key driver analysis drill drop label"
     },
     "drill.kda.increase": {
-        "text": "Increase {where} {title}",
-        "crowdinContext": "Key driver analysis drill increase label"
+        "value": "Increase {where} {title}",
+        "comment": "Key driver analysis drill increase label"
     },
     "drill.kda.no_change": {
-        "text": "Stale {where} {title}",
-        "crowdinContext": "Key driver analysis drill increase label"
+        "value": "Stale {where} {title}",
+        "comment": "Key driver analysis drill increase label"
     },
     "drill.kda.year_to_year": {
-        "text": "Year over year change",
-        "crowdinContext": "Key driver analysis  drill year to year label"
+        "value": "Year over year change",
+        "comment": "Key driver analysis  drill year to year label"
     }
 }

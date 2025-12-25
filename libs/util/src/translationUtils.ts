@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 /**
  * Given an object containing the parsed translation bundle, this function creates a new object which contains
@@ -12,7 +12,7 @@ export function removeMetadata(translationsWithMetadata: Record<string, any>): R
     Object.keys(translationsWithMetadata).forEach((key) => {
         translations[key] =
             typeof translationsWithMetadata[key] === "object"
-                ? translationsWithMetadata[key].text
+                ? translationsWithMetadata[key].value
                 : translationsWithMetadata[key];
     });
     return translations;

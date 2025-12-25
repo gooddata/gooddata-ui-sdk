@@ -1,2070 +1,2070 @@
 {
     "or": {
-        "text": "or",
-        "crowdinContext": "Connects two or more conditions in a filter expression, e.g., 'Product is Shoes or Product is Socks'. Appears in filter components."
+        "value": "or",
+        "comment": "Connects two or more conditions in a filter expression, e.g., 'Product is Shoes or Product is Socks'. Appears in filter components."
     },
     "dashboard.bucket.measures_title.column": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.bar": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.line": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.area": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.pie": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.funnel": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.pyramid": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.treemap": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.donut": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.heatmap": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.headline": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.headline": {
-        "text": "primary",
-        "crowdinContext": "Label for the primary measures subtitle in headline chart"
+        "value": "primary",
+        "comment": "Label for the primary measures subtitle in headline chart"
     },
     "dashboard.bucket.secondary_measures_title.headline": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_subtitle.headline": {
-        "text": "secondary",
-        "crowdinContext": "Label for the secondary measures subtitle in headline chart"
+        "value": "secondary",
+        "comment": "Label for the secondary measures subtitle in headline chart"
     },
     "dashboard.bucket.measures_title.scatter": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_title.scatter": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.scatter": {
-        "text": "X-axis",
-        "crowdinContext": "Horizontal axis of a scatter plot."
+        "value": "X-axis",
+        "comment": "Horizontal axis of a scatter plot."
     },
     "dashboard.bucket.secondary_measures_subtitle.scatter": {
-        "text": "Y-axis",
-        "crowdinContext": "Vertical axis of a scatter plot."
+        "value": "Y-axis",
+        "comment": "Vertical axis of a scatter plot."
     },
     "dashboard.bucket.attribute_title.scatter": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.segment_title.scatter": {
-        "text": "Segment by",
-        "crowdinContext": "Label for the segment bucket in scatter chart"
+        "value": "Segment by",
+        "comment": "Label for the segment bucket in scatter chart"
     },
     "dashboard.bucket.measures_title.combo": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.combo": {
-        "text": "Column",
-        "crowdinContext": "Label for the column subtitle in combo chart"
+        "value": "Column",
+        "comment": "Label for the column subtitle in combo chart"
     },
     "dashboard.bucket.secondary_measures_title.combo": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_subtitle.combo": {
-        "text": "Line",
-        "crowdinContext": "Label for the line subtitle in combo chart"
+        "value": "Line",
+        "comment": "Label for the line subtitle in combo chart"
     },
     "dashboard.bucket.measures_title.xirr": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.waterfall": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.attribute_title.xirr": {
-        "text": "Date attribute",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "Date attribute",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.attribute_from_title.sankey": {
-        "text": "Attribute",
-        "crowdinContext": "Label for a categorical data field used to define the starting node in a flow diagram"
+        "value": "Attribute",
+        "comment": "Label for a categorical data field used to define the starting node in a flow diagram"
     },
     "dashboard.bucket.attribute_from_subtitle.sankey": {
-        "text": "from",
-        "crowdinContext": "Directional indicator for the origin point in a relationship between two attributes"
+        "value": "from",
+        "comment": "Directional indicator for the origin point in a relationship between two attributes"
     },
     "dashboard.bucket.attribute_to_title.sankey": {
-        "text": "Attribute",
-        "crowdinContext": "Label for a categorical data field used to define the destination node in a flow diagram"
+        "value": "Attribute",
+        "comment": "Label for a categorical data field used to define the destination node in a flow diagram"
     },
     "dashboard.bucket.attribute_to_subtitle.sankey": {
-        "text": "to",
-        "crowdinContext": "Directional indicator for the origin point in a relationship between two attributes"
+        "value": "to",
+        "comment": "Directional indicator for the origin point in a relationship between two attributes"
     },
     "dashboard.bucket.attribute_from_title.dependencywheel": {
-        "text": "Attribute",
-        "crowdinContext": "Label for a categorical data field used to define the starting node in a dependency relationship"
+        "value": "Attribute",
+        "comment": "Label for a categorical data field used to define the starting node in a dependency relationship"
     },
     "dashboard.bucket.attribute_from_subtitle.dependencywheel": {
-        "text": "from",
-        "crowdinContext": "Directional indicator for the origin point in a relationship between two attributes"
+        "value": "from",
+        "comment": "Directional indicator for the origin point in a relationship between two attributes"
     },
     "dashboard.bucket.attribute_to_title.dependencywheel": {
-        "text": "Attribute",
-        "crowdinContext": "Label for a categorical data field used to define the destination node in a dependency relationship"
+        "value": "Attribute",
+        "comment": "Label for a categorical data field used to define the destination node in a dependency relationship"
     },
     "dashboard.bucket.attribute_to_subtitle.dependencywheel": {
-        "text": "to",
-        "crowdinContext": "Directional indicator for the destination point in a relationship between two attributes"
+        "value": "to",
+        "comment": "Directional indicator for the destination point in a relationship between two attributes"
     },
     "dashboard.bucket.combo.subtitle.column": {
-        "text": "as columns",
-        "crowdinContext": "Display measures in column chart 'as columns'."
+        "value": "as columns",
+        "comment": "Display measures in column chart 'as columns'."
     },
     "dashboard.bucket.combo.subtitle.line": {
-        "text": "as lines",
-        "crowdinContext": "Display measures in line chart 'as lines'."
+        "value": "as lines",
+        "comment": "Display measures in line chart 'as lines'."
     },
     "dashboard.bucket.combo.subtitle.area": {
-        "text": "as areas",
-        "crowdinContext": "Display measures in area chart 'as areas'."
+        "value": "as areas",
+        "comment": "Display measures in area chart 'as areas'."
     },
     "dashboard.bucket.measures_title.bubble": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.secondary_measures_title.bubble": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.tertiary_measures_title.bubble": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_subtitle.bubble": {
-        "text": "X-axis",
-        "crowdinContext": "Horizontal axis of a bubble plot."
+        "value": "X-axis",
+        "comment": "Horizontal axis of a bubble plot."
     },
     "dashboard.bucket.secondary_measures_subtitle.bubble": {
-        "text": "Y-axis",
-        "crowdinContext": "Vertical axis of a bubble plot."
+        "value": "Y-axis",
+        "comment": "Vertical axis of a bubble plot."
     },
     "dashboard.bucket.tertiary_measures_subtitle.bubble": {
-        "text": "Size",
-        "crowdinContext": "Label for a measure that determines the size of visual elements in a chart (e.g., bubble size)"
+        "value": "Size",
+        "comment": "Label for a measure that determines the size of visual elements in a chart (e.g., bubble size)"
     },
     "dashboard.bucket.location_title.pushpin": {
-        "text": "Location",
-        "crowdinContext": "Position of a pin pushed to a map."
+        "value": "Location",
+        "comment": "Position of a pin pushed to a map."
     },
     "dashboard.bucket.area_title.choropleth": {
-        "text": "Area",
-        "crowdinContext": "Geo area chart bucket title for the attribute that defines colored map regions."
+        "value": "Area",
+        "comment": "Geo area chart bucket title for the attribute that defines colored map regions."
     },
     "dashboard.bucket.size_title.pushpin": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.size_subtitle.pushpin": {
-        "text": "Size",
-        "crowdinContext": "Size of a pin pushed to a map"
+        "value": "Size",
+        "comment": "Size of a pin pushed to a map"
     },
     "dashboard.bucket.color_title.pushpin": {
-        "text": "Metric",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metric",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.color_subtitle.pushpin": {
-        "text": "Color",
-        "crowdinContext": "Color of a pin pushed to a map"
+        "value": "Color",
+        "comment": "Color of a pin pushed to a map"
     },
     "dashboard.bucket.view_title.bubble": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.pie": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.treemap": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.donut": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.funnel": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.pyramid": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.column": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.bar": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.area": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.bullet": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.waterfall": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.view_title.heatmap": {
-        "text": "Rows",
-        "crowdinContext": "Label for categorical data fields that will be displayed as rows in a tabular visualization"
+        "value": "Rows",
+        "comment": "Label for categorical data fields that will be displayed as rows in a tabular visualization"
     },
     "dashboard.bucket.trend_title.line": {
-        "text": "Trend by",
-        "crowdinContext": "Label for a time-based field showing how data changes over time periods (e.g., Month, Year, Quarter)"
+        "value": "Trend by",
+        "comment": "Label for a time-based field showing how data changes over time periods (e.g., Month, Year, Quarter)"
     },
     "dashboard.bucket.view_title.combo": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.stack_title.column": {
-        "text": "Stack by",
-        "crowdinContext": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
+        "value": "Stack by",
+        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
     },
     "dashboard.bucket.stack_title.bar": {
-        "text": "Stack by",
-        "crowdinContext": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
+        "value": "Stack by",
+        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
     },
     "dashboard.bucket.stack_title.area": {
-        "text": "Stack by",
-        "crowdinContext": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
+        "value": "Stack by",
+        "comment": "Label for a categorical field used to create stacked segments in visualizations (e.g., splitting bars into segments by Product Category)"
     },
     "dashboard.bucket.stack_title.heatmap": {
-        "text": "Columns",
-        "crowdinContext": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
+        "value": "Columns",
+        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
     "dashboard.bucket.segment_title.line": {
-        "text": "Segment by",
-        "crowdinContext": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
+        "value": "Segment by",
+        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
     "dashboard.bucket.segment_title.treemap": {
-        "text": "Segment by",
-        "crowdinContext": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
+        "value": "Segment by",
+        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
     "dashboard.bucket.segment_title.pushpin": {
-        "text": "Segment by",
-        "crowdinContext": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
+        "value": "Segment by",
+        "comment": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
     "dashboard.bucket.metric_segment_by_warning": {
-        "text": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'segment by'</span>'",
-        "crowdinContext": "Warning message about metric limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text."
+        "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'segment by'</span>'",
+        "comment": "Warning message about metric limitations when using segment by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'segment by' text."
     },
     "dashboard.bucket.metric_stack_by_warning": {
-        "text": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
-        "crowdinContext": "Warning message about metric limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text."
+        "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
+        "comment": "Warning message about metric limitations when using stack by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'stack by' text."
     },
     "dashboard.bucket.metric_view_by_warning": {
-        "text": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
-        "crowdinContext": "Warning message about metric limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text."
+        "value": "To add additional metric, remove {icons} from '<span class=\"stack-by\">'view by'</span>'",
+        "comment": "Warning message about metric limitations when using view by. The {icons} placeholder shows UI icons, and HTML spans provide styling for 'view by' text."
     },
     "dashboard.bucket.category_view_by_warning": {
-        "text": "To view by another attribute, an visualization can have only one metric",
-        "crowdinContext": "Warning message explaining View By configuration limitations based on measure/metric count"
+        "value": "To view by another attribute, an visualization can have only one metric",
+        "comment": "Warning message explaining View By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.view_stack_by_warning": {
-        "text": "To add additional attribute, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
-        "crowdinContext": "Warning message explaining Stack By configuration limitations based on measure/metric count"
+        "value": "To add additional attribute, remove {icons} from '<span class=\"stack-by\">'stack by'</span>'",
+        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.category_stack_by_warning": {
-        "text": "To stack by, an visualization can have only one metric",
-        "crowdinContext": "Warning message explaining Stack By configuration limitations based on measure/metric count"
+        "value": "To stack by, an visualization can have only one metric",
+        "comment": "Warning message explaining Stack By configuration limitations based on measure/metric count"
     },
     "dashboard.bucket.stack_view_by_warning": {
-        "text": "To stack by, an visualization can have only one attribute in view by",
-        "crowdinContext": "Warning message explaining Stack By limitations when using View By"
+        "value": "To stack by, an visualization can have only one attribute in view by",
+        "comment": "Warning message explaining Stack By limitations when using View By"
     },
     "dashboard.bucket.measure_stack_by_warning": {
-        "text": "To stack by an attribute, an visualization can have only one metric",
-        "crowdinContext": "Warning message explaining that stacking requires limiting to one metric in insights"
+        "value": "To stack by an attribute, an visualization can have only one metric",
+        "comment": "Warning message explaining that stacking requires limiting to one metric in insights"
     },
     "dashboard.bucket.category_columns_warning": {
-        "text": "Cannot add columns: limit is {oldLimit} metrics and {oldRowsLimit} rows. Follow the limits to add more",
-        "crowdinContext": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 metrics and 20 rows. Follow the limits to add more'."
+        "value": "Cannot add columns: limit is {oldLimit} metrics and {oldRowsLimit} rows. Follow the limits to add more",
+        "comment": "Warning message when trying to add too many columns. The placeholders {oldLimit} and {oldRowsLimit} will be replaced with numbers, e.g., 'Cannot add columns: limit is 10 metrics and 20 rows. Follow the limits to add more'."
     },
     "dashboard.bucket.category_measures_rows_warning": {
-        "text": "To add up to {limit} more, remove all items from columns section",
-        "crowdinContext": "Warning message when trying to add more items. The placeholder {limit} will be replaced with a number, e.g., 'To add up to 5 more, remove all items from columns section'."
+        "value": "To add up to {limit} more, remove all items from columns section",
+        "comment": "Warning message when trying to add more items. The placeholder {limit} will be replaced with a number, e.g., 'To add up to 5 more, remove all items from columns section'."
     },
     "dashboard.bucket.category_category_by_warning": {
-        "text": "To view by, an visualization can have only one metric",
-        "crowdinContext": "Warning message explaining that 'View by' requires limiting to one metric in insights"
+        "value": "To view by, an visualization can have only one metric",
+        "comment": "Warning message explaining that 'View by' requires limiting to one metric in insights"
     },
     "dashboard.bucket.category_segment_by_warning": {
-        "text": "To segment by, an visualization can have only one metric",
-        "crowdinContext": "Warning message explaining that 'Segment by' requires limiting to one metric in insights"
+        "value": "To segment by, an visualization can have only one metric",
+        "comment": "Warning message explaining that 'Segment by' requires limiting to one metric in insights"
     },
     "dashboard.bucket.measures_title.table": {
-        "text": "Metrics",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "Metrics",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.sankey": {
-        "text": "METRIC",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "METRIC",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.measures_title.dependencywheel": {
-        "text": "METRIC",
-        "crowdinContext": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
+        "value": "METRIC",
+        "comment": "Label for calculated indicators based on metric data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
     "dashboard.bucket.attribute_title.table": {
-        "text": "Rows",
-        "crowdinContext": "Label for categorical data fields that will be displayed as rows in a table visualization"
+        "value": "Rows",
+        "comment": "Label for categorical data fields that will be displayed as rows in a table visualization"
     },
     "dashboard.bucket.columns_title.table": {
-        "text": "Columns",
-        "crowdinContext": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
+        "value": "Columns",
+        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
     "dashboard.bucket.attribute_title.repeater": {
-        "text": "Rows",
-        "crowdinContext": "Label for categorical data fields that will be displayed as rows in a repeater visualization"
+        "value": "Rows",
+        "comment": "Label for categorical data fields that will be displayed as rows in a repeater visualization"
     },
     "dashboard.bucket.view_title.repeater": {
-        "text": "View by",
-        "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
+        "value": "View by",
+        "comment": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
     },
     "dashboard.bucket.columns_title.repeater": {
-        "text": "Columns",
-        "crowdinContext": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
+        "value": "Columns",
+        "comment": "Label for categorical data fields or measures that will be displayed as columns in a tabular visualization"
     },
     "dashboard.error.missing_primary_bucket_item.heading": {
-        "text": "No primary metric in your visualization",
-        "crowdinContext": "Error message shown when a required data item is missing from a visualization or report"
+        "value": "No primary metric in your visualization",
+        "comment": "Error message shown when a required data item is missing from a visualization or report"
     },
     "dashboard.error.missing_primary_bucket_item.text": {
-        "text": "Add a primary metric to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
-        "crowdinContext": "Instructional message explaining how to fix a missing primary metric error in a visualization"
+        "value": "Add a primary metric to your visualization, or switch to table.\nOnce done, you'll be able to save it.",
+        "comment": "Instructional message explaining how to fix a missing primary metric error in a visualization"
     },
     "dashboard.xirr.error.invalid_buckets.heading": {
-        "text": "Incomplete configuration",
-        "crowdinContext": "Informs the user that they have not provided all the necessary configuration items (one measure and one date attribute)"
+        "value": "Incomplete configuration",
+        "comment": "Informs the user that they have not provided all the necessary configuration items (one measure and one date attribute)"
     },
     "dashboard.xirr.error.invalid_buckets.text": {
-        "text": "Make sure you have selected one metric and one date attribute",
-        "crowdinContext": "The user should be instructed to review that they have added one metric and one date attribute to the visualization"
+        "value": "Make sure you have selected one metric and one date attribute",
+        "comment": "The user should be instructed to review that they have added one metric and one date attribute to the visualization"
     },
     "properties.unsupported": {
-        "text": "This visualization doesn’t support configuration",
-        "crowdinContext": "Message displayed when a visualization type does not support configuration options"
+        "value": "This visualization doesn’t support configuration",
+        "comment": "Message displayed when a visualization type does not support configuration options"
     },
     "properties.config.not_applicable": {
-        "text": "Configuration Panel is not applicable for this configuration of the visualization",
-        "crowdinContext": "Message shown when configuration panel is not available for current insight setup"
+        "value": "Configuration Panel is not applicable for this configuration of the visualization",
+        "comment": "Message shown when configuration panel is not available for current insight setup"
     },
     "properties.not_applicable": {
-        "text": "Property is not applicable for this configuration of the visualization",
-        "crowdinContext": "Message shown when a specific property is not applicable for current insight configuration"
+        "value": "Property is not applicable for this configuration of the visualization",
+        "comment": "Message shown when a specific property is not applicable for current insight configuration"
     },
     "properties.auto_placeholder": {
-        "text": "auto",
-        "crowdinContext": "Label for automatic setting option in configuration"
+        "value": "auto",
+        "comment": "Label for automatic setting option in configuration"
     },
     "properties.auto_default": {
-        "text": "auto (default)",
-        "crowdinContext": "Label indicating automatic setting is the default option"
+        "value": "auto (default)",
+        "comment": "Label indicating automatic setting is the default option"
     },
     "properties.legend.title": {
-        "text": "Legend",
-        "crowdinContext": "Title for legend configuration section"
+        "value": "Legend",
+        "comment": "Title for legend configuration section"
     },
     "properties.legend.position": {
-        "text": "Position",
-        "crowdinContext": "Label for legend position setting"
+        "value": "Position",
+        "comment": "Label for legend position setting"
     },
     "properties.total.title": {
-        "text": "Total",
-        "crowdinContext": "Title for total/sum configuration section"
+        "value": "Total",
+        "comment": "Title for total/sum configuration section"
     },
     "properties.total.name": {
-        "text": "Name",
-        "crowdinContext": "Label for total row name configuration"
+        "value": "Name",
+        "comment": "Label for total row name configuration"
     },
     "properties.total.tooltip": {
-        "text": "Add sum of all values as a column at the end.",
-        "crowdinContext": "Tooltip explaining how total column functionality works"
+        "value": "Add sum of all values as a column at the end.",
+        "comment": "Tooltip explaining how total column functionality works"
     },
     "properties.total.measures.tooltip": {
-        "text": "Disable “is total” options in metric to add sum of all values as a column at the end.",
-        "crowdinContext": "The tooltip for the toggle total section when there is any metric set to total metric"
+        "value": "Disable “is total” options in metric to add sum of all values as a column at the end.",
+        "comment": "The tooltip for the toggle total section when there is any metric set to total metric"
     },
     "properties.color.total": {
-        "text": "Total",
-        "crowdinContext": "Label for total values color configuration"
+        "value": "Total",
+        "comment": "Label for total values color configuration"
     },
     "properties.color.positive": {
-        "text": "Positive",
-        "crowdinContext": "Label for positive values color configuration"
+        "value": "Positive",
+        "comment": "Label for positive values color configuration"
     },
     "properties.color.negative": {
-        "text": "Negative",
-        "crowdinContext": "Label for negative values color configuration"
+        "value": "Negative",
+        "comment": "Label for negative values color configuration"
     },
     "properties.canvas.title": {
-        "text": "Canvas",
-        "crowdinContext": "Title for canvas configuration section"
+        "value": "Canvas",
+        "comment": "Title for canvas configuration section"
     },
     "properties.canvas.gridline": {
-        "text": "Gridline",
-        "crowdinContext": "Label for gridline configuration option"
+        "value": "Gridline",
+        "comment": "Label for gridline configuration option"
     },
     "properties.canvas.labels.percentages": {
-        "text": "Percentage",
-        "crowdinContext": "applicable for funnel chart special data labels which can include percentages"
+        "value": "Percentage",
+        "comment": "applicable for funnel chart special data labels which can include percentages"
     },
     "properties.canvas.labels.percentages.info": {
-        "text": "Display percentages on each slice, with the top-most slice as 100% and the others as fractions of that value.",
-        "crowdinContext": "this is an explanation tooltip for the Percentage option for funnel chart (properties.canvas.labels.percentages)"
+        "value": "Display percentages on each slice, with the top-most slice as 100% and the others as fractions of that value.",
+        "comment": "this is an explanation tooltip for the Percentage option for funnel chart (properties.canvas.labels.percentages)"
     },
     "properties.canvas.labels.percentages.disabled": {
-        "text": "Percentages are hidden due to hidden data labels.",
-        "crowdinContext": "this is an explanation tooltip when the Percentage option for funnel chart is disabled (properties.canvas.labels.percentages)"
+        "value": "Percentages are hidden due to hidden data labels.",
+        "comment": "this is an explanation tooltip when the Percentage option for funnel chart is disabled (properties.canvas.labels.percentages)"
     },
     "properties.canvas.continuousLine.label": {
-        "text": "Continuous line",
-        "crowdinContext": "Label for continuous line configuration option"
+        "value": "Continuous line",
+        "comment": "Label for continuous line configuration option"
     },
     "properties.canvas.continuousLine.tooltip": {
-        "text": "Draw a line between points with missing values.",
-        "crowdinContext": "Tooltip for continuous line configuration option"
+        "value": "Draw a line between points with missing values.",
+        "comment": "Tooltip for continuous line configuration option"
     },
     "properties.canvas.distinctPointShapes.label": {
-        "text": "Distinct point shapes",
-        "crowdinContext": "Label for distinct point shapes configuration option"
+        "value": "Distinct point shapes",
+        "comment": "Label for distinct point shapes configuration option"
     },
     "properties.canvas.distinctPointShapes.tooltip": {
-        "text": "Property is not applicable for this configuration of the visualization",
-        "crowdinContext": "Tooltip for distinct point shapes configuration option"
+        "value": "Property is not applicable for this configuration of the visualization",
+        "comment": "Tooltip for distinct point shapes configuration option"
     },
     "properties.canvas.dataLabels": {
-        "text": "Data Labels",
-        "crowdinContext": "Label for data labels configuration option"
+        "value": "Data Labels",
+        "comment": "Label for data labels configuration option"
     },
     "properties.canvas.dataLabels.auto": {
-        "text": "auto (default)",
-        "crowdinContext": "Label for automatic data labels configuration option"
+        "value": "auto (default)",
+        "comment": "Label for automatic data labels configuration option"
     },
     "properties.canvas.dataLabels.show": {
-        "text": "show",
-        "crowdinContext": "Label for show data labels configuration option"
+        "value": "show",
+        "comment": "Label for show data labels configuration option"
     },
     "properties.canvas.dataLabels.hide": {
-        "text": "hide",
-        "crowdinContext": "Label for hide data labels configuration option"
+        "value": "hide",
+        "comment": "Label for hide data labels configuration option"
     },
     "properties.canvas.dataLabelStyle": {
-        "text": "Labels Style",
-        "crowdinContext": "Label for data label style configuration option"
+        "value": "Labels Style",
+        "comment": "Label for data label style configuration option"
     },
     "properties.canvas.dataLabelStyle.auto": {
-        "text": "auto (default)",
-        "crowdinContext": "Option for automatic data label style"
+        "value": "auto (default)",
+        "comment": "Option for automatic data label style"
     },
     "properties.canvas.dataLabelStyle.backplate": {
-        "text": "backplate",
-        "crowdinContext": "Option for data label style with backplate"
+        "value": "backplate",
+        "comment": "Option for data label style with backplate"
     },
     "properties.canvas.rowHeight": {
-        "text": "Row height",
-        "crowdinContext": "Label of the dropdown for configuring the row height of the chart"
+        "value": "Row height",
+        "comment": "Label of the dropdown for configuring the row height of the chart"
     },
     "properties.canvas.rowHeight.small": {
-        "text": "small",
-        "crowdinContext": "Option of the dropdown for configuring the row height of the chart (small)"
+        "value": "small",
+        "comment": "Option of the dropdown for configuring the row height of the chart (small)"
     },
     "properties.canvas.rowHeight.medium": {
-        "text": "medium",
-        "crowdinContext": "Option of the dropdown for configuring the row height of the chart (medium)"
+        "value": "medium",
+        "comment": "Option of the dropdown for configuring the row height of the chart (medium)"
     },
     "properties.canvas.rowHeight.large": {
-        "text": "large",
-        "crowdinContext": "Option of the dropdown for configuring the row height of the chart (large)"
+        "value": "large",
+        "comment": "Option of the dropdown for configuring the row height of the chart (large)"
     },
     "properties.canvas.verticalAlign": {
-        "text": "Vertical align",
-        "crowdinContext": "Label of the dropdown for configuring vertical alignment of the chart cells"
+        "value": "Vertical align",
+        "comment": "Label of the dropdown for configuring vertical alignment of the chart cells"
     },
     "properties.canvas.verticalAlign.top": {
-        "text": "top",
-        "crowdinContext": "Option of the dropdown for configuring vertical alignment of the chart cells (top)"
+        "value": "top",
+        "comment": "Option of the dropdown for configuring vertical alignment of the chart cells (top)"
     },
     "properties.canvas.verticalAlign.middle": {
-        "text": "middle",
-        "crowdinContext": "Vertical center (between top and bottom)"
+        "value": "middle",
+        "comment": "Vertical center (between top and bottom)"
     },
     "properties.canvas.verticalAlign.bottom": {
-        "text": "bottom",
-        "crowdinContext": "Option of the dropdown for configuring vertical alignment of the chart cells (bottom)"
+        "value": "bottom",
+        "comment": "Option of the dropdown for configuring vertical alignment of the chart cells (bottom)"
     },
     "properties.canvas.textWrapping": {
-        "text": "Text wrapping",
-        "crowdinContext": "Label of the dropdown for configuring text wrapping of the chart cells"
+        "value": "Text wrapping",
+        "comment": "Label of the dropdown for configuring text wrapping of the chart cells"
     },
     "properties.canvas.textWrapping.clip": {
-        "text": "clip",
-        "crowdinContext": "Option of the dropdown for configuring the text wrapping of the chart cell (clip)"
+        "value": "clip",
+        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (clip)"
     },
     "properties.canvas.textWrapping.wrap": {
-        "text": "wrap",
-        "crowdinContext": "Option of the dropdown for configuring the text wrapping of the chart cell (wrap)"
+        "value": "wrap",
+        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (wrap)"
     },
     "properties.canvas.image": {
-        "text": "Image",
-        "crowdinContext": "Label of the dropdown for configuring image sizing of the chart cells"
+        "value": "Image",
+        "comment": "Label of the dropdown for configuring image sizing of the chart cells"
     },
     "properties.canvas.image.fit": {
-        "text": "fit",
-        "crowdinContext": "Option of the dropdown for configuring the image sizing of the chart cell (fit)"
+        "value": "fit",
+        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fit)"
     },
     "properties.canvas.image.fill": {
-        "text": "fill",
-        "crowdinContext": "Option of the dropdown for configuring the image sizing of the chart cell (fill)"
+        "value": "fill",
+        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fill)"
     },
     "properties.forecast.title": {
-        "text": "Forecast",
-        "crowdinContext": "Title for forecast configuration section"
+        "value": "Forecast",
+        "comment": "Title for forecast configuration section"
     },
     "properties.forecastDisabled.title": {
-        "text": "Forecast is not available for this combination of buckets",
-        "crowdinContext": "Message shown when forecast feature is not available for current chart configuration"
+        "value": "Forecast is not available for this combination of buckets",
+        "comment": "Message shown when forecast feature is not available for current chart configuration"
     },
     "properties.forecastPeriod.title": {
-        "text": "Period",
-        "crowdinContext": "Label for forecast period configuration"
+        "value": "Period",
+        "comment": "Label for forecast period configuration"
     },
     "properties.forecastPeriod.placeholder": {
-        "text": "Period",
-        "crowdinContext": "Placeholder text for forecast period input field"
+        "value": "Period",
+        "comment": "Placeholder text for forecast period input field"
     },
     "properties.forecastSeasonal.title": {
-        "text": "Seasonality",
-        "crowdinContext": "Label for forecast seasonality configuration"
+        "value": "Seasonality",
+        "comment": "Label for forecast seasonality configuration"
     },
     "properties.forecastConfidence.title": {
-        "text": "Confidence",
-        "crowdinContext": "Label for confidence level when forecasting measure/metric trends"
+        "value": "Confidence",
+        "comment": "Label for confidence level when forecasting measure/metric trends"
     },
     "properties.forecastConfidence.70": {
-        "text": "70%",
-        "crowdinContext": "70% confidence level option for measure/metric trend forecasting"
+        "value": "70%",
+        "comment": "70% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.75": {
-        "text": "75%",
-        "crowdinContext": "75% confidence level option for measure/metric trend forecasting"
+        "value": "75%",
+        "comment": "75% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.80": {
-        "text": "80%",
-        "crowdinContext": "80% confidence level option for measure/metric trend forecasting"
+        "value": "80%",
+        "comment": "80% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.85": {
-        "text": "85%",
-        "crowdinContext": "85% confidence level option for measure/metric trend forecasting"
+        "value": "85%",
+        "comment": "85% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.90": {
-        "text": "90%",
-        "crowdinContext": "90% confidence level option for measure/metric trend forecasting"
+        "value": "90%",
+        "comment": "90% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastConfidence.95": {
-        "text": "95%",
-        "crowdinContext": "95% confidence level option for measure/metric trend forecasting"
+        "value": "95%",
+        "comment": "95% confidence level option for measure/metric trend forecasting"
     },
     "properties.forecastSliced.title": {
-        "text": "Showing partial forecast.",
-        "crowdinContext": "Message title shown when measure/metric trend forecast is not available for the entire selected period"
+        "value": "Showing partial forecast.",
+        "comment": "Message title shown when measure/metric trend forecast is not available for the entire selected period"
     },
     "properties.forecastSliced.description": {
-        "text": "The available data point don`t cover the entire selected period.",
-        "crowdinContext": "Message description that is shown when measure/metric trend forecast is not available for the entire selected period"
+        "value": "The available data point don`t cover the entire selected period.",
+        "comment": "Message description that is shown when measure/metric trend forecast is not available for the entire selected period"
     },
     "properties.clustering.title": {
-        "text": "Cluster",
-        "crowdinContext": "Title of the clustering configuration section."
+        "value": "Cluster",
+        "comment": "Title of the clustering configuration section."
     },
     "properties.clustering.amount": {
-        "text": "Amount",
-        "crowdinContext": "Label of the input for configuring the number of clusters."
+        "value": "Amount",
+        "comment": "Label of the input for configuring the number of clusters."
     },
     "properties.clustering.amount.placeholder": {
-        "text": "3",
-        "crowdinContext": "Placeholder of the input for configuring the number of clusters."
+        "value": "3",
+        "comment": "Placeholder of the input for configuring the number of clusters."
     },
     "properties.clustering.threshold": {
-        "text": "Threshold",
-        "crowdinContext": "Label of the input for configuring the clustering threshold."
+        "value": "Threshold",
+        "comment": "Label of the input for configuring the clustering threshold."
     },
     "properties.clustering.threshold.placeholder": {
-        "text": "0.03",
-        "crowdinContext": "Placeholder of the input for configuring the clustering threshold. This placeholder is used to show the default value and format in which the threshold is expected."
+        "value": "0.03",
+        "comment": "Placeholder of the input for configuring the clustering threshold. This placeholder is used to show the default value and format in which the threshold is expected."
     },
     "properties.clustering.threshold.tooltip": {
-        "text": "The threshold is a limit that determines when to group data. <link>Learn more</link>",
-        "crowdinContext": "Tooltip message of the clustering threshold input."
+        "value": "The threshold is a limit that determines when to group data. <link>Learn more</link>",
+        "comment": "Tooltip message of the clustering threshold input."
     },
     "properties.clustering.amount.partial.title": {
-        "text": "Showing partial clusters",
-        "crowdinContext": "Message title that is shown when clustering amount is higher than the number of visualization data points."
+        "value": "Showing partial clusters",
+        "comment": "Message title that is shown when clustering amount is higher than the number of visualization data points."
     },
     "properties.clustering.amount.partial.description": {
-        "text": "The available data points don't cover the entire selected amount.",
-        "crowdinContext": "Message description that is shown when clustering amount is higher than the number of visualization data points."
+        "value": "The available data points don't cover the entire selected amount.",
+        "comment": "Message description that is shown when clustering amount is higher than the number of visualization data points."
     },
     "properties.clustering.disabled": {
-        "text": "Clustering requires 2 Metrics and View by, without Segment by.",
-        "crowdinContext": "Tooltip message of the disabled toggle that enables clustering"
+        "value": "Clustering requires 2 Metrics and View by, without Segment by.",
+        "comment": "Tooltip message of the disabled toggle that enables clustering"
     },
     "properties.canvas.totalLabels": {
-        "text": "Total Labels",
-        "crowdinContext": "Label for total labels configuration option"
+        "value": "Total Labels",
+        "comment": "Label for total labels configuration option"
     },
     "properties.canvas.totalLabels.auto": {
-        "text": "auto (default)",
-        "crowdinContext": "Label for automatic total labels configuration option"
+        "value": "auto (default)",
+        "comment": "Label for automatic total labels configuration option"
     },
     "properties.canvas.totalLabels.show": {
-        "text": "show",
-        "crowdinContext": "Label for show total labels configuration option"
+        "value": "show",
+        "comment": "Label for show total labels configuration option"
     },
     "properties.canvas.totalLabels.hide": {
-        "text": "hide",
-        "crowdinContext": "Label for hide total labels configuration option"
+        "value": "hide",
+        "comment": "Label for hide total labels configuration option"
     },
     "properties.canvas.dataPoints": {
-        "text": "Data Points",
-        "crowdinContext": "Label for data points configuration option"
+        "value": "Data Points",
+        "comment": "Label for data points configuration option"
     },
     "properties.canvas.dataPoints.auto": {
-        "text": "auto (default)",
-        "crowdinContext": "Label for automatic data points configuration option"
+        "value": "auto (default)",
+        "comment": "Label for automatic data points configuration option"
     },
     "properties.canvas.dataPoints.show": {
-        "text": "show",
-        "crowdinContext": "Label for show data points configuration option"
+        "value": "show",
+        "comment": "Label for show data points configuration option"
     },
     "properties.canvas.dataPoints.hide": {
-        "text": "hide",
-        "crowdinContext": "Label for hide data points configuration option"
+        "value": "hide",
+        "comment": "Label for hide data points configuration option"
     },
     "properties.yaxis.title": {
-        "text": "Y-Axis",
-        "crowdinContext": "Vertical axis of a plot."
+        "value": "Y-Axis",
+        "comment": "Vertical axis of a plot."
     },
     "properties.axis.labels": {
-        "text": "labels",
-        "crowdinContext": "Label for axis labels configuration option"
+        "value": "labels",
+        "comment": "Label for axis labels configuration option"
     },
     "properties.axis.rotation": {
-        "text": "Rotation",
-        "crowdinContext": "Label for axis rotation configuration option"
+        "value": "Rotation",
+        "comment": "Label for axis rotation configuration option"
     },
     "properties.axis.format": {
-        "text": "Format",
-        "crowdinContext": "Label for axis format configuration option"
+        "value": "Format",
+        "comment": "Label for axis format configuration option"
     },
     "properties.axis.format.inherit": {
-        "text": "inherit",
-        "crowdinContext": "Axis format option to inherit formatting from used measure."
+        "value": "inherit",
+        "comment": "Axis format option to inherit formatting from used measure."
     },
     "properties.axis.format.info.inherit": {
-        "text": "The format is inherited from the first metric in the visualization.",
-        "crowdinContext": "Info text for axis format option."
+        "value": "The format is inherited from the first metric in the visualization.",
+        "comment": "Info text for axis format option."
     },
     "properties.axis.name": {
-        "text": "name",
-        "crowdinContext": "Name of the axis of a chart"
+        "value": "name",
+        "comment": "Name of the axis of a chart"
     },
     "properties.axis.name.position": {
-        "text": "Position",
-        "crowdinContext": "Position of the axis of a chart"
+        "value": "Position",
+        "comment": "Position of the axis of a chart"
     },
     "properties.axis.name.position.left": {
-        "text": "left",
-        "crowdinContext": "Left position option for axis name"
+        "value": "left",
+        "comment": "Left position option for axis name"
     },
     "properties.axis.name.position.center": {
-        "text": "center",
-        "crowdinContext": "Horizontal center (between left and right)"
+        "value": "center",
+        "comment": "Horizontal center (between left and right)"
     },
     "properties.axis.name.position.right": {
-        "text": "right",
-        "crowdinContext": "Right position option for axis name"
+        "value": "right",
+        "comment": "Right position option for axis name"
     },
     "properties.axis.name.position.top": {
-        "text": "top",
-        "crowdinContext": "Top position option for axis name"
+        "value": "top",
+        "comment": "Top position option for axis name"
     },
     "properties.axis.name.position.middle": {
-        "text": "middle",
-        "crowdinContext": "Vertical center (between top and bottom)"
+        "value": "middle",
+        "comment": "Vertical center (between top and bottom)"
     },
     "properties.axis.name.position.bottom": {
-        "text": "bottom",
-        "crowdinContext": "Bottom position option for axis name"
+        "value": "bottom",
+        "comment": "Bottom position option for axis name"
     },
     "properties.axis.min": {
-        "text": "Min",
-        "crowdinContext": "Label for minimum axis value configuration"
+        "value": "Min",
+        "comment": "Label for minimum axis value configuration"
     },
     "properties.axis.min.warning": {
-        "text": "Min value cannot be greater than max value",
-        "crowdinContext": "Warning message when minimum axis value exceeds maximum value"
+        "value": "Min value cannot be greater than max value",
+        "comment": "Warning message when minimum axis value exceeds maximum value"
     },
     "properties.axis.max": {
-        "text": "Max",
-        "crowdinContext": "Label for maximum axis value configuration"
+        "value": "Max",
+        "comment": "Label for maximum axis value configuration"
     },
     "properties.axis.max.warning": {
-        "text": "Max value cannot be smaller than min value",
-        "crowdinContext": "Warning message when maximum axis value is less than minimum value"
+        "value": "Max value cannot be smaller than min value",
+        "comment": "Warning message when maximum axis value is less than minimum value"
     },
     "properties.xaxis.title": {
-        "text": "X-Axis",
-        "crowdinContext": "Horizontal axis of a plot."
+        "value": "X-Axis",
+        "comment": "Horizontal axis of a plot."
     },
     "properties.axis.scale": {
-        "text": "scale",
-        "crowdinContext": "Label for axis scale configuration"
+        "value": "scale",
+        "comment": "Label for axis scale configuration"
     },
     "properties.axis.left": {
-        "text": "Left",
-        "crowdinContext": "Left axis position option"
+        "value": "Left",
+        "comment": "Left axis position option"
     },
     "properties.axis.right": {
-        "text": "Right",
-        "crowdinContext": "Right axis position option"
+        "value": "Right",
+        "comment": "Right axis position option"
     },
     "properties.axis.top": {
-        "text": "Top",
-        "crowdinContext": "Top axis position option"
+        "value": "Top",
+        "comment": "Top axis position option"
     },
     "properties.axis.bottom": {
-        "text": "Bottom",
-        "crowdinContext": "Bottom axis position option"
+        "value": "Bottom",
+        "comment": "Bottom axis position option"
     },
     "properties.rotation.0": {
-        "text": "0°",
-        "crowdinContext": "0 degrees rotation option"
+        "value": "0°",
+        "comment": "0 degrees rotation option"
     },
     "properties.rotation.30": {
-        "text": "30°",
-        "crowdinContext": "30 degrees rotation option"
+        "value": "30°",
+        "comment": "30 degrees rotation option"
     },
     "properties.rotation.45": {
-        "text": "45°",
-        "crowdinContext": "45 degrees rotation option"
+        "value": "45°",
+        "comment": "45 degrees rotation option"
     },
     "properties.rotation.60": {
-        "text": "60°",
-        "crowdinContext": "60 degrees rotation option"
+        "value": "60°",
+        "comment": "60 degrees rotation option"
     },
     "properties.rotation.90": {
-        "text": "90°",
-        "crowdinContext": "90 degrees rotation option"
+        "value": "90°",
+        "comment": "90 degrees rotation option"
     },
     "properties.legend.position.up": {
-        "text": "top",
-        "crowdinContext": "Top legend position option"
+        "value": "top",
+        "comment": "Top legend position option"
     },
     "properties.legend.position.down": {
-        "text": "bottom",
-        "crowdinContext": "Bottom legend position option"
+        "value": "bottom",
+        "comment": "Bottom legend position option"
     },
     "properties.legend.position.right": {
-        "text": "right",
-        "crowdinContext": "Right legend position option"
+        "value": "right",
+        "comment": "Right legend position option"
     },
     "properties.legend.position.left": {
-        "text": "left",
-        "crowdinContext": "Left legend position option"
+        "value": "left",
+        "comment": "Left legend position option"
     },
     "properties.orientation.title": {
-        "text": "Orientation",
-        "crowdinContext": "The title for the orientation configuration section"
+        "value": "Orientation",
+        "comment": "The title for the orientation configuration section"
     },
     "properties.orientation.horizontal": {
-        "text": "Horizontal (default)",
-        "crowdinContext": "The chart orientation configuration"
+        "value": "Horizontal (default)",
+        "comment": "The chart orientation configuration"
     },
     "properties.orientation.vertical": {
-        "text": "Vertical",
-        "crowdinContext": "The chart orientation configuration"
+        "value": "Vertical",
+        "comment": "The chart orientation configuration"
     },
     "properties.points.title": {
-        "text": "Points",
-        "crowdinContext": "Points on map"
+        "value": "Points",
+        "comment": "Points on map"
     },
     "properties.points.groupNearbyPoints": {
-        "text": "Group nearby points",
-        "crowdinContext": "Option to group nearby points on map visualizations"
+        "value": "Group nearby points",
+        "comment": "Option to group nearby points on map visualizations"
     },
     "properties.points.size.title": {
-        "text": "Point Size",
-        "crowdinContext": "Size of a point on a map"
+        "value": "Point Size",
+        "comment": "Size of a point on a map"
     },
     "properties.points.size.extra_small": {
-        "text": "0.5x",
-        "crowdinContext": "Multiplicator of size of a point on map. Means 50% of size."
+        "value": "0.5x",
+        "comment": "Multiplicator of size of a point on map. Means 50% of size."
     },
     "properties.points.size.small": {
-        "text": "0.75x",
-        "crowdinContext": "Multiplicator of size of a point on map. Means 75% of size."
+        "value": "0.75x",
+        "comment": "Multiplicator of size of a point on map. Means 75% of size."
     },
     "properties.points.size.normal": {
-        "text": "normal",
-        "crowdinContext": "Multiplicator of size of a point on map. Means 100% of size."
+        "value": "normal",
+        "comment": "Multiplicator of size of a point on map. Means 100% of size."
     },
     "properties.points.size.large": {
-        "text": "1.25x",
-        "crowdinContext": "Multiplicator of size of a point on map. Means 125% of size."
+        "value": "1.25x",
+        "comment": "Multiplicator of size of a point on map. Means 125% of size."
     },
     "properties.points.size.extra_large": {
-        "text": "1.5x",
-        "crowdinContext": "Multiplicator of size of a point on map. Means 150% of size."
+        "value": "1.5x",
+        "comment": "Multiplicator of size of a point on map. Means 150% of size."
     },
     "properties.points.size.min.title": {
-        "text": "Smallest",
-        "crowdinContext": "Smallest size of a point on a map"
+        "value": "Smallest",
+        "comment": "Smallest size of a point on a map"
     },
     "properties.points.size.max.title": {
-        "text": "Largest",
-        "crowdinContext": "Largest size of a point on a map"
+        "value": "Largest",
+        "comment": "Largest size of a point on a map"
     },
     "properties.map.title": {
-        "text": "Map",
-        "crowdinContext": "Map configuration"
+        "value": "Map",
+        "comment": "Map configuration"
     },
     "properties.viewport.area.title": {
-        "text": "Default viewport",
-        "crowdinContext": "Default viewport configuration"
+        "value": "Default viewport",
+        "comment": "Default viewport configuration"
     },
     "properties.viewport.area.auto_default": {
-        "text": "Include all data",
-        "crowdinContext": "All data will be visibled on the map"
+        "value": "Include all data",
+        "comment": "All data will be visibled on the map"
     },
     "properties.viewport.area.continents": {
-        "text": "continents",
-        "crowdinContext": "Viewport area option for continent-level map view"
+        "value": "continents",
+        "comment": "Viewport area option for continent-level map view"
     },
     "properties.viewport.area.continent_af": {
-        "text": "Africa",
-        "crowdinContext": "Continent Africa"
+        "value": "Africa",
+        "comment": "Continent Africa"
     },
     "properties.viewport.area.continent_as": {
-        "text": "Asia",
-        "crowdinContext": "Continent Asia"
+        "value": "Asia",
+        "comment": "Continent Asia"
     },
     "properties.viewport.area.continent_au": {
-        "text": "Australia",
-        "crowdinContext": "Continent Australia"
+        "value": "Australia",
+        "comment": "Continent Australia"
     },
     "properties.viewport.area.continent_eu": {
-        "text": "Europe",
-        "crowdinContext": "Continent Europe"
+        "value": "Europe",
+        "comment": "Continent Europe"
     },
     "properties.viewport.area.continent_na": {
-        "text": "America (North)",
-        "crowdinContext": "Continent North America"
+        "value": "America (North)",
+        "comment": "Continent North America"
     },
     "properties.viewport.area.continent_sa": {
-        "text": "America (South)",
-        "crowdinContext": "Continent South America"
+        "value": "America (South)",
+        "comment": "Continent South America"
     },
     "properties.viewport.area.world": {
-        "text": "World",
-        "crowdinContext": "Viewport area option for global world map view"
+        "value": "World",
+        "comment": "Viewport area option for global world map view"
     },
     "gs.color-dropdown.custom-color": {
-        "text": "Custom color",
-        "crowdinContext": "Option to select custom color in color dropdown"
+        "value": "Custom color",
+        "comment": "Option to select custom color in color dropdown"
     },
     "properties.colors.reset-colors": {
-        "text": "Reset Colors",
-        "crowdinContext": "Button to reset colors to default values"
+        "value": "Reset Colors",
+        "comment": "Button to reset colors to default values"
     },
     "properties.colors": {
-        "text": "Colors",
-        "crowdinContext": "Label for colors configuration section"
+        "value": "Colors",
+        "comment": "Label for colors configuration section"
     },
     "properties.colorsAndFills": {
-        "text": "Colors and fills",
-        "crowdinContext": "Label for colors configuration section"
+        "value": "Colors and fills",
+        "comment": "Label for colors configuration section"
     },
     "properties.fill": {
-        "text": "Fill",
-        "crowdinContext": "Label for a checkbox that enables usages of pattern fill instead of solid colors in charts"
+        "value": "Fill",
+        "comment": "Label for a checkbox that enables usages of pattern fill instead of solid colors in charts"
     },
     "properties.fill.solid": {
-        "text": "solid (default)",
-        "crowdinContext": "Label for a dropdown option that configures bar chart to be filled with a solid color."
+        "value": "solid (default)",
+        "comment": "Label for a dropdown option that configures bar chart to be filled with a solid color."
     },
     "properties.fill.pattern": {
-        "text": "pattern",
-        "crowdinContext": "Label for a dropdown option that configures bar chart to be filled with a pattern."
+        "value": "pattern",
+        "comment": "Label for a dropdown option that configures bar chart to be filled with a pattern."
     },
     "properties.fill.outline": {
-        "text": "outline",
-        "crowdinContext": "Label for a dropdown option that configures bar chart fill as a dark outline with light background."
+        "value": "outline",
+        "comment": "Label for a dropdown option that configures bar chart fill as a dark outline with light background."
     },
     "properties.colors.unsupported": {
-        "text": "There are no colors for this configuration of the visualization",
-        "crowdinContext": "Message when color configuration is not supported for insight visualization"
+        "value": "There are no colors for this configuration of the visualization",
+        "comment": "Message when color configuration is not supported for insight visualization"
     },
     "export_unsupported.colors": {
-        "text": "The visualization is not compatible with custom colors. To open the visualization as a report, click Reset Colors in Configuration —> Colors.",
-        "crowdinContext": "Message when insight visualization doesn't support custom colors"
+        "value": "The visualization is not compatible with custom colors. To open the visualization as a report, click Reset Colors in Configuration —> Colors.",
+        "comment": "Message when insight visualization doesn't support custom colors"
     },
     "dashboard.bucket.measures_title.bullet": {
-        "text": "Metric",
-        "crowdinContext": "Label for primary metric bucket in bullet chart"
+        "value": "Metric",
+        "comment": "Label for primary metric bucket in bullet chart"
     },
     "dashboard.bucket.secondary_measures_title.bullet": {
-        "text": "Metric",
-        "crowdinContext": "Label for secondary metric bucket in bullet chart"
+        "value": "Metric",
+        "comment": "Label for secondary metric bucket in bullet chart"
     },
     "dashboard.bucket.tertiary_measures_title.bullet": {
-        "text": "Metric",
-        "crowdinContext": "Label for tertiary metric bucket in bullet chart"
+        "value": "Metric",
+        "comment": "Label for tertiary metric bucket in bullet chart"
     },
     "dashboard.bucket.measures_subtitle.bullet": {
-        "text": "Primary",
-        "crowdinContext": "Primary measure of a bullet chart."
+        "value": "Primary",
+        "comment": "Primary measure of a bullet chart."
     },
     "dashboard.bucket.secondary_measures_subtitle.bullet": {
-        "text": "Target",
-        "crowdinContext": "Target of a bullet chart."
+        "value": "Target",
+        "comment": "Target of a bullet chart."
     },
     "dashboard.bucket.tertiary_measures_subtitle.bullet": {
-        "text": "Comparative",
-        "crowdinContext": "Comparative measures of a bullet chart"
+        "value": "Comparative",
+        "comment": "Comparative measures of a bullet chart"
     },
     "sorting.disabled.explanation.attribute": {
-        "text": "Sorting is not possible for this visualization configuration.",
-        "crowdinContext": "Explains why sort button is disabled. Shown as tooltip"
+        "value": "Sorting is not possible for this visualization configuration.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
     "sorting.disabled.explanation.measure": {
-        "text": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Metrics section to change their position in the visualization.",
-        "crowdinContext": "Explains why sort button is disabled. Shown as tooltip"
+        "value": "You must add at least one attribute to sort the visualization. You can also adjust the position of items in the Metrics section to change their position in the visualization.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip"
     },
     "properties.metrics.title": {
-        "text": "Metrics",
-        "crowdinContext": "Title for metrics section in table properties"
+        "value": "Metrics",
+        "comment": "Title for metrics section in table properties"
     },
     "properties.metrics.position": {
-        "text": "Position",
-        "crowdinContext": "Label for metrics position setting in table"
+        "value": "Position",
+        "comment": "Label for metrics position setting in table"
     },
     "properties.metrics.position.columns": {
-        "text": "columns (default)",
-        "crowdinContext": "Option to position metrics in columns (default layout)"
+        "value": "columns (default)",
+        "comment": "Option to position metrics in columns (default layout)"
     },
     "properties.metrics.position.rows": {
-        "text": "rows",
-        "crowdinContext": "Option to position metrics in rows"
+        "value": "rows",
+        "comment": "Option to position metrics in rows"
     },
     "properties.column.headers.title": {
-        "text": "Column Headers",
-        "crowdinContext": "Title for column headers configuration section"
+        "value": "Column Headers",
+        "comment": "Title for column headers configuration section"
     },
     "properties.column.headers.position": {
-        "text": "Position",
-        "crowdinContext": "Label for column headers position setting"
+        "value": "Position",
+        "comment": "Label for column headers position setting"
     },
     "properties.column.headers.position.top": {
-        "text": "top (default)",
-        "crowdinContext": "Option to position column headers at top (default)"
+        "value": "top (default)",
+        "comment": "Option to position column headers at top (default)"
     },
     "properties.column.headers.position.left": {
-        "text": "left",
-        "crowdinContext": "Option to position column headers on left side"
+        "value": "left",
+        "comment": "Option to position column headers on left side"
     },
     "properties.column.headers.wrapText": {
-        "text": "Wrap text",
-        "crowdinContext": "Title for column headers wrap text configuration section"
+        "value": "Wrap text",
+        "comment": "Title for column headers wrap text configuration section"
     },
     "properties.cells.title": {
-        "text": "Cells",
-        "crowdinContext": "Label for cells configuration section"
+        "value": "Cells",
+        "comment": "Label for cells configuration section"
     },
     "properties.cells.wrapText": {
-        "text": "Wrap text",
-        "crowdinContext": "Title for cells wrap text configuration section"
+        "value": "Wrap text",
+        "comment": "Title for cells wrap text configuration section"
     },
     "properties.cells.grandTotals.title": {
-        "text": "Grand Total Row",
-        "crowdinContext": "Label for grand totals configuration section in table"
+        "value": "Grand Total Row",
+        "comment": "Label for grand totals configuration section in table"
     },
     "properties.cells.grandTotals.position.label": {
-        "text": "Position",
-        "crowdinContext": "Label for grand totals position dropdown"
+        "value": "Position",
+        "comment": "Label for grand totals position dropdown"
     },
     "properties.cells.grandTotals.position.pinnedBottom": {
-        "text": "bottom pinned (default)",
-        "crowdinContext": "Option to pin grand totals at bottom (always visible)"
+        "value": "bottom pinned (default)",
+        "comment": "Option to pin grand totals at bottom (always visible)"
     },
     "properties.cells.grandTotals.position.bottom": {
-        "text": "bottom",
-        "crowdinContext": "Option to place grand totals at end of table data (scrolls)"
+        "value": "bottom",
+        "comment": "Option to place grand totals at end of table data (scrolls)"
     },
     "properties.cells.grandTotals.position.pinnedTop": {
-        "text": "top pinned",
-        "crowdinContext": "Option to pin grand totals at top (always visible)"
+        "value": "top pinned",
+        "comment": "Option to pin grand totals at top (always visible)"
     },
     "properties.cells.grandTotals.position.top": {
-        "text": "top",
-        "crowdinContext": "Option to place grand totals at beginning of table data (scrolls)"
+        "value": "top",
+        "comment": "Option to place grand totals at beginning of table data (scrolls)"
     },
     "properties.paging.title": {
-        "text": "Paging",
-        "crowdinContext": "Title for pagination configuration section"
+        "value": "Paging",
+        "comment": "Title for pagination configuration section"
     },
     "properties.paging.pageSize": {
-        "text": "Page size",
-        "crowdinContext": "Label for page size dropdown in pagination settings"
+        "value": "Page size",
+        "comment": "Label for page size dropdown in pagination settings"
     },
     "properties.paging.pageSize.auto": {
-        "text": "auto (default)",
-        "crowdinContext": "Option label for automatically sized pagination page size"
+        "value": "auto (default)",
+        "comment": "Option label for automatically sized pagination page size"
     },
     "dashboard.bucket.table.subtitle.columns": {
-        "text": "in columns",
-        "crowdinContext": "Subtitle indicating table data is arranged in columns"
+        "value": "in columns",
+        "comment": "Subtitle indicating table data is arranged in columns"
     },
     "dashboard.bucket.table.subtitle.rows": {
-        "text": "in rows",
-        "crowdinContext": "Subtitle indicating table data is arranged in rows"
+        "value": "in rows",
+        "comment": "Subtitle indicating table data is arranged in rows"
     },
     "properties.interactions.title": {
-        "text": "Interactions",
-        "crowdinContext": "The title for the interactions configuration section"
+        "value": "Interactions",
+        "comment": "The title for the interactions configuration section"
     },
     "properties.advanced.title": {
-        "text": "Advanced customizations",
-        "crowdinContext": "The title for the advanced configuration section"
+        "value": "Advanced customizations",
+        "comment": "The title for the advanced configuration section"
     },
     "properties.advanced.chartConfigOverride.noValueLabel": {
-        "text": "No customizations yet.",
-        "crowdinContext": "Text show when user did not define any customization yet."
+        "value": "No customizations yet.",
+        "comment": "Text show when user did not define any customization yet."
     },
     "properties.advanced.chartConfigOverride.link": {
-        "text": "Learn more",
-        "crowdinContext": "Text of link that leads to feature documentation."
+        "value": "Learn more",
+        "comment": "Text of link that leads to feature documentation."
     },
     "properties.advanced.chartConfigOverride.editorButton": {
-        "text": "Open editor",
-        "crowdinContext": "Text of button that opens editor of configuration."
+        "value": "Open editor",
+        "comment": "Text of button that opens editor of configuration."
     },
     "properties.advanced.chartConfigOverride.title": {
-        "text": "Advanced customization",
-        "crowdinContext": "Text of dialog that defines advanced customization of visualization."
+        "value": "Advanced customization",
+        "comment": "Text of dialog that defines advanced customization of visualization."
     },
     "properties.advanced.chartConfigOverride.snippets.header": {
-        "text": "Snippets",
-        "crowdinContext": "The header of list that contains snippets (recipes) of various charts configurations."
+        "value": "Snippets",
+        "comment": "The header of list that contains snippets (recipes) of various charts configurations."
     },
     "properties.advanced.chartConfigOverride.button.apply": {
-        "text": "Apply",
-        "crowdinContext": "The label of button in dialog that applies the dialog value."
+        "value": "Apply",
+        "comment": "The label of button in dialog that applies the dialog value."
     },
     "properties.advanced.chartConfigOverride.button.cancel": {
-        "text": "Cancel",
-        "crowdinContext": "The label of button in dialog that closes the dialog."
+        "value": "Cancel",
+        "comment": "The label of button in dialog that closes the dialog."
     },
     "properties.interactions.drillDown": {
-        "text": "Drill down",
-        "crowdinContext": "The text for the drill down checkbox"
+        "value": "Drill down",
+        "comment": "The text for the drill down checkbox"
     },
     "properties.interactions.drillIntoURL": {
-        "text": "Drill into URL",
-        "crowdinContext": "The text for the drill into URL checkbox. When enabled, it renders all cells with a defined link label as a clickable hyperlinks."
+        "value": "Drill into URL",
+        "comment": "The text for the drill into URL checkbox. When enabled, it renders all cells with a defined link label as a clickable hyperlinks."
     },
     "properties.interactions.alerts": {
-        "text": "Alert",
-        "crowdinContext": "Label of the checkbox that enables/disables alerts configuration for particular visualization."
+        "value": "Alert",
+        "comment": "Label of the checkbox that enables/disables alerts configuration for particular visualization."
     },
     "properties.interactions.alerts.tooltip": {
-        "text": "Enable users to create alerts for this visualization on dashboards.",
-        "crowdinContext": "Tooltip for the checkbox that enables/disables alerts configuration for particular visualization."
+        "value": "Enable users to create alerts for this visualization on dashboards.",
+        "comment": "Tooltip for the checkbox that enables/disables alerts configuration for particular visualization."
     },
     "properties.interactions.scheduledExports": {
-        "text": "Scheduled exports",
-        "crowdinContext": "Label of the checkbox that enables/disables scheduled exports configuration for particular visualization."
+        "value": "Scheduled exports",
+        "comment": "Label of the checkbox that enables/disables scheduled exports configuration for particular visualization."
     },
     "properties.interactions.scheduledExports.tooltip": {
-        "text": "Enable users to create scheduled exports for this visualization on dashboards.",
-        "crowdinContext": "Tooltip for the checkbox that enables/disables scheduled exports configuration for particular visualization."
+        "value": "Enable users to create scheduled exports for this visualization on dashboards.",
+        "comment": "Tooltip for the checkbox that enables/disables scheduled exports configuration for particular visualization."
     },
     "properties.comparison.title": {
-        "text": "Comparison",
-        "crowdinContext": "The title of comparison section"
+        "value": "Comparison",
+        "comment": "The title of comparison section"
     },
     "properties.comparison.calculationType.title": {
-        "text": "Calculated as",
-        "crowdinContext": "The label of calculation type dropdown"
+        "value": "Calculated as",
+        "comment": "The label of calculation type dropdown"
     },
     "properties.comparison.calculationType.as.change": {
-        "text": "Change",
-        "crowdinContext": "The title of the dropdown option that specifies the arithmetic operation to calculate the change between two values."
+        "value": "Change",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change between two values."
     },
     "properties.comparison.calculationType.as.ratio": {
-        "text": "Ratio",
-        "crowdinContext": "The title of the dropdown option that specifies the arithmetic operation to calculate the ratio between two values."
+        "value": "Ratio",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the ratio between two values."
     },
     "properties.comparison.calculationType.as.difference": {
-        "text": "Difference",
-        "crowdinContext": "The title of the dropdown option that specifies the arithmetic operation to calculate the difference between two values."
+        "value": "Difference",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the difference between two values."
     },
     "properties.comparison.calculationType.as.changeDifference": {
-        "text": "Change (difference)",
-        "crowdinContext": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values."
+        "value": "Change (difference)",
+        "comment": "The title of the dropdown option that specifies the arithmetic operation to calculate the change and difference between two values."
     },
     "properties.comparison.calculationType.as.change.tooltip.useIn": {
-        "text": "Calculates the relative change between primary and secondary metric values.",
-        "crowdinContext": "The content describes the pertinent scenarios for the change calculation."
+        "value": "Calculates the relative change between primary and secondary metric values.",
+        "comment": "The content describes the pertinent scenarios for the change calculation."
     },
     "properties.comparison.calculationType.as.ratio.tooltip.useIn": {
-        "text": "Quantifies the share of the primary metric value in the secondary metric value.",
-        "crowdinContext": "The content describes the pertinent scenarios for the ratio calculation."
+        "value": "Quantifies the share of the primary metric value in the secondary metric value.",
+        "comment": "The content describes the pertinent scenarios for the ratio calculation."
     },
     "properties.comparison.calculationType.as.difference.tooltip.useIn": {
-        "text": "Calculates the absolute difference between primary and secondary metric values.",
-        "crowdinContext": "The content describes the pertinent scenarios for the difference calculation."
+        "value": "Calculates the absolute difference between primary and secondary metric values.",
+        "comment": "The content describes the pertinent scenarios for the difference calculation."
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.useIn": {
-        "text": "Calculates both the relative change and absolute difference between primary and secondary metric values.",
-        "crowdinContext": "The content describes the pertinent scenarios for the change (difference) calculation."
+        "value": "Calculates both the relative change and absolute difference between primary and secondary metric values.",
+        "comment": "The content describes the pertinent scenarios for the change (difference) calculation."
     },
     "properties.comparison.calculationType.tooltip.formula.section": {
-        "text": "Formula",
-        "crowdinContext": "The title of the section that describes the formula for the calculation"
+        "value": "Formula",
+        "comment": "The title of the section that describes the formula for the calculation"
     },
     "properties.comparison.calculationType.tooltip.formulaChange.section": {
-        "text": "Formula (relative change)",
-        "crowdinContext": "The title of the section that describes the formula for the change calculation"
+        "value": "Formula (relative change)",
+        "comment": "The title of the section that describes the formula for the change calculation"
     },
     "properties.comparison.calculationType.tooltip.formulaDifference.section": {
-        "text": "Formula (absolute difference)",
-        "crowdinContext": "The title of the section that describes the formula for the difference calculation"
+        "value": "Formula (absolute difference)",
+        "comment": "The title of the section that describes the formula for the difference calculation"
     },
     "properties.comparison.calculationType.as.change.tooltip.formula": {
-        "text": "(Primary - Secondary) / Secondary",
-        "crowdinContext": "The content describes the formula of the change calculation."
+        "value": "(Primary - Secondary) / Secondary",
+        "comment": "The content describes the formula of the change calculation."
     },
     "properties.comparison.calculationType.as.ratio.tooltip.formula": {
-        "text": "Primary / Secondary",
-        "crowdinContext": "The content describes the formula of the ratio calculation."
+        "value": "Primary / Secondary",
+        "comment": "The content describes the formula of the ratio calculation."
     },
     "properties.comparison.calculationType.as.difference.tooltip.formula": {
-        "text": "Primary - Secondary",
-        "crowdinContext": "The content describes the formula of the difference calculation."
+        "value": "Primary - Secondary",
+        "comment": "The content describes the formula of the difference calculation."
     },
     "properties.comparison.calculationType.tooltip.example.section": {
-        "text": "Example",
-        "crowdinContext": "The title of the section that provides an example for the calculation"
+        "value": "Example",
+        "comment": "The title of the section that provides an example for the calculation"
     },
     "properties.comparison.calculationType.as.change.tooltip.example": {
-        "text": "Year-over-year sales change = (the current year's sales - the previous year's sales) / the previous year's sales",
-        "crowdinContext": "The example illustrating the change calculation."
+        "value": "Year-over-year sales change = (the current year's sales - the previous year's sales) / the previous year's sales",
+        "comment": "The example illustrating the change calculation."
     },
     "properties.comparison.calculationType.as.ratio.tooltip.example": {
-        "text": "Current sales compared to a quota = current sales / quota",
-        "crowdinContext": "The example illustrating the ratio calculation."
+        "value": "Current sales compared to a quota = current sales / quota",
+        "comment": "The example illustrating the ratio calculation."
     },
     "properties.comparison.calculationType.as.difference.tooltip.example": {
-        "text": "Year-over-year sales difference = the current year's sales - the previous year's sales",
-        "crowdinContext": "The example illustrating the difference calculation."
+        "value": "Year-over-year sales difference = the current year's sales - the previous year's sales",
+        "comment": "The example illustrating the difference calculation."
     },
     "properties.comparison.calculationType.as.changeDifference.tooltip.example": {
-        "text": "Year-over-year sales change = [(the current year's sales - the previous year's sales) / the previous year's sales] AND [the current year's sales - the previous year's sales]",
-        "crowdinContext": "The example illustrating the change (difference) calculation."
+        "value": "Year-over-year sales change = [(the current year's sales - the previous year's sales) / the previous year's sales] AND [the current year's sales - the previous year's sales]",
+        "comment": "The example illustrating the change (difference) calculation."
     },
     "properties.comparison.measureNumber.format.preset.inherit": {
-        "text": "Inherit",
-        "crowdinContext": "An item in list of formatting presets. Means: use inherited measure format"
+        "value": "Inherit",
+        "comment": "An item in list of formatting presets. Means: use inherited measure format"
     },
     "properties.comparison.measureNumber.format.preset.rounded": {
-        "text": "Rounded",
-        "crowdinContext": "An item in list of formatting presets. Whole number without decimal numbers."
+        "value": "Rounded",
+        "comment": "An item in list of formatting presets. Whole number without decimal numbers."
     },
     "properties.comparison.measureNumber.format.preset.decimal1": {
-        "text": "Decimal (1)",
-        "crowdinContext": "An item in list of formatting presets. Decimal number measure format with one decimal number."
+        "value": "Decimal (1)",
+        "comment": "An item in list of formatting presets. Decimal number measure format with one decimal number."
     },
     "properties.comparison.measureNumber.format.preset.decimal2": {
-        "text": "Decimal (2)",
-        "crowdinContext": "An item in list of formatting presets. Decimal number measure format with two decimal numbers."
+        "value": "Decimal (2)",
+        "comment": "An item in list of formatting presets. Decimal number measure format with two decimal numbers."
     },
     "properties.comparison.measureNumber.format.preset.percentRounded": {
-        "text": "Percent (rounded)",
-        "crowdinContext": "An item in list of formatting presets. Whole number without decimal numbers and with % sign at the end."
+        "value": "Percent (rounded)",
+        "comment": "An item in list of formatting presets. Whole number without decimal numbers and with % sign at the end."
     },
     "properties.comparison.measureNumber.format.preset.percent1": {
-        "text": "Percent (1)",
-        "crowdinContext": "An item in list of formatting presets. Decimal number with one decimal number and % sign at the end."
+        "value": "Percent (1)",
+        "comment": "An item in list of formatting presets. Decimal number with one decimal number and % sign at the end."
     },
     "properties.comparison.measureNumber.format.preset.percent2": {
-        "text": "Percent (2)",
-        "crowdinContext": "An item in list of formatting presets. Decimal number with two decimal numbers and % sign at the end."
+        "value": "Percent (2)",
+        "comment": "An item in list of formatting presets. Decimal number with two decimal numbers and % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.rounded": {
-        "text": "Rounded",
-        "crowdinContext": "An item in list of formatting templates. Whole number without decimal numbers."
+        "value": "Rounded",
+        "comment": "An item in list of formatting templates. Whole number without decimal numbers."
     },
     "properties.comparison.measureNumber.format.template.decimal1": {
-        "text": "Decimal (1)",
-        "crowdinContext": "An item in list of formatting templates. Decimal number measure format with one decimal number."
+        "value": "Decimal (1)",
+        "comment": "An item in list of formatting templates. Decimal number measure format with one decimal number."
     },
     "properties.comparison.measureNumber.format.template.decimal2": {
-        "text": "Decimal (2)",
-        "crowdinContext": "An item in list of formatting templates. Decimal number measure format with two decimal numbers."
+        "value": "Decimal (2)",
+        "comment": "An item in list of formatting templates. Decimal number measure format with two decimal numbers."
     },
     "properties.comparison.measureNumber.format.template.percentRounded": {
-        "text": "Percent (rounded)",
-        "crowdinContext": "An item in list of formatting templates. Whole number without decimal numbers and with % sign at the end."
+        "value": "Percent (rounded)",
+        "comment": "An item in list of formatting templates. Whole number without decimal numbers and with % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.percent1": {
-        "text": "Percent (1)",
-        "crowdinContext": "An item in list of formatting templates. Decimal number with one decimal number and % sign at the end."
+        "value": "Percent (1)",
+        "comment": "An item in list of formatting templates. Decimal number with one decimal number and % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.percent2": {
-        "text": "Percent (2)",
-        "crowdinContext": "An item in list of formatting templates. Decimal number with two decimal numbers and % sign at the end."
+        "value": "Percent (2)",
+        "comment": "An item in list of formatting templates. Decimal number with two decimal numbers and % sign at the end."
     },
     "properties.comparison.measureNumber.format.template.currency": {
-        "text": "Currency",
-        "crowdinContext": "An item in list of formatting templates. Number with currency sign."
+        "value": "Currency",
+        "comment": "An item in list of formatting templates. Number with currency sign."
     },
     "properties.comparison.measureNumber.format.template.currencyShortened": {
-        "text": "Currency shortened",
-        "crowdinContext": "An item in list of formatting templates. Number with currency sign shortened with K, M, B and T characters."
+        "value": "Currency shortened",
+        "comment": "An item in list of formatting templates. Number with currency sign shortened with K, M, B and T characters."
     },
     "properties.comparison.measureNumber.format.template.largeNumbersShortened": {
-        "text": "Large numbers shortened",
-        "crowdinContext": "An item in list of formatting templates. Number shortened with K, M, B and T characters."
+        "value": "Large numbers shortened",
+        "comment": "An item in list of formatting templates. Number shortened with K, M, B and T characters."
     },
     "properties.comparison.measureNumber.format.template.largeNumbersShortenedWithColors": {
-        "text": "Large numbers shortened with colors",
-        "crowdinContext": "An item in list of formatting templates. Colored number shortened with K, M, B and T characters."
+        "value": "Large numbers shortened with colors",
+        "comment": "An item in list of formatting templates. Colored number shortened with K, M, B and T characters."
     },
     "properties.comparison.measureNumber.format.template.negativeNumbersRed": {
-        "text": "Negative numbers in red",
-        "crowdinContext": "An item in list of formatting templates. Number is formatted in red color if negative."
+        "value": "Negative numbers in red",
+        "comment": "An item in list of formatting templates. Number is formatted in red color if negative."
     },
     "properties.comparison.measureNumber.format.template.financial": {
-        "text": "Financial",
-        "crowdinContext": "An item in list of formatting templates. Number is in brackets if negative."
+        "value": "Financial",
+        "comment": "An item in list of formatting templates. Number is in brackets if negative."
     },
     "properties.comparison.measureNumber.format.template.decimalWithoutThousandsSeparator": {
-        "text": "Decimal (2) without thousands separator",
-        "crowdinContext": "An item in list of formatting templates."
+        "value": "Decimal (2) without thousands separator",
+        "comment": "An item in list of formatting templates."
     },
     "properties.comparison.measureNumber.format.template.conditionalColors": {
-        "text": "Conditional colors",
-        "crowdinContext": "An item in list of formatting templates. Numbers is formatted in different colors based on its value."
+        "value": "Conditional colors",
+        "comment": "An item in list of formatting templates. Numbers is formatted in different colors based on its value."
     },
     "properties.comparison.measureNumber.format.template.trendSymbols": {
-        "text": "Trend symbols",
-        "crowdinContext": "An item in list of formatting templates. Numbers is formatted in different colors prefixed with arrow symbol based on its value."
+        "value": "Trend symbols",
+        "comment": "An item in list of formatting templates. Numbers is formatted in different colors prefixed with arrow symbol based on its value."
     },
     "properties.comparison.measureNumber.format.template.timeFromSeconds": {
-        "text": "Time (from seconds)",
-        "crowdinContext": "An item in list of formatting templates. Seconds are formatted properly in hours, minutes and seconds."
+        "value": "Time (from seconds)",
+        "comment": "An item in list of formatting templates. Seconds are formatted properly in hours, minutes and seconds."
     },
     "properties.comparison.measureNumber.format.template.zeroInsteadOfNull": {
-        "text": "Zero instead of blank value",
-        "crowdinContext": "An item in list of formatting templates. Null value is replaced with 0."
+        "value": "Zero instead of blank value",
+        "comment": "An item in list of formatting templates. Null value is replaced with 0."
     },
     "properties.comparison.valueSubSection.title": {
-        "text": "Value",
-        "crowdinContext": "The label of comparison value sub section."
+        "value": "Value",
+        "comment": "The label of comparison value sub section."
     },
     "properties.comparison.format.title": {
-        "text": "Format",
-        "crowdinContext": "The label of comparison format control."
+        "value": "Format",
+        "comment": "The label of comparison format control."
     },
     "properties.comparison.subFormat.title": {
-        "text": "(Format)",
-        "crowdinContext": "The label of comparison sub format control."
+        "value": "(Format)",
+        "comment": "The label of comparison sub format control."
     },
     "properties.comparison.indicator.title": {
-        "text": "Indicator",
-        "crowdinContext": "The label of comparison indicator sub section"
+        "value": "Indicator",
+        "comment": "The label of comparison indicator sub section"
     },
     "properties.comparison.indicator.arrow.title": {
-        "text": "Arrow",
-        "crowdinContext": "The label of the checkbox that controls whether to use the arrow indicator or not."
+        "value": "Arrow",
+        "comment": "The label of the checkbox that controls whether to use the arrow indicator or not."
     },
     "properties.comparison.indicator.colorConfig.title": {
-        "text": "Color",
-        "crowdinContext": "The label of the checkbox that controls whether to use the color or not."
+        "value": "Color",
+        "comment": "The label of the checkbox that controls whether to use the color or not."
     },
     "properties.comparison.indicator.colorConfig.equals": {
-        "text": "Primary = Secondary",
-        "crowdinContext": "The label of the color item will be set when the primary value is equal to the secondary value."
+        "value": "Primary = Secondary",
+        "comment": "The label of the color item will be set when the primary value is equal to the secondary value."
     },
     "properties.comparison.indicator.colorConfig.positive": {
-        "text": "Primary > Secondary",
-        "crowdinContext": "The label of the color item will be set when the primary value is greater than the secondary value."
+        "value": "Primary > Secondary",
+        "comment": "The label of the color item will be set when the primary value is greater than the secondary value."
     },
     "properties.comparison.indicator.colorConfig.negative": {
-        "text": "Primary < Secondary",
-        "crowdinContext": "The label of the color item will be set when the primary value is less than the secondary value."
+        "value": "Primary < Secondary",
+        "comment": "The label of the color item will be set when the primary value is less than the secondary value."
     },
     "properties.comparison.labelSubSection.title": {
-        "text": "Label",
-        "crowdinContext": "The label of comparison label sub section."
+        "value": "Label",
+        "comment": "The label of comparison label sub section."
     },
     "properties.comparison.labelSubSection.positionOnTop.disabled": {
-        "text": "Labels not applicable for value position top.",
-        "crowdinContext": "Disable tooltip message when the comparison position is set to top."
+        "value": "Labels not applicable for value position top.",
+        "comment": "Disable tooltip message when the comparison position is set to top."
     },
     "properties.comparison.labelSubSection.conditional.disabled": {
-        "text": "Conditional labels are not applicable to ratio calculations.",
-        "crowdinContext": "Disable tooltip message when the calculation is ratio."
+        "value": "Conditional labels are not applicable to ratio calculations.",
+        "comment": "Disable tooltip message when the calculation is ratio."
     },
     "properties.comparison.labelName.title": {
-        "text": "Name",
-        "crowdinContext": "The label of name input control."
+        "value": "Name",
+        "comment": "The label of name input control."
     },
     "properties.comparison.labelConditional.title": {
-        "text": "Conditional",
-        "crowdinContext": "The label of conditional checkbox control."
+        "value": "Conditional",
+        "comment": "The label of conditional checkbox control."
     },
     "properties.comparison.labelPositive.title": {
-        "text": "Primary > Secondary",
-        "crowdinContext": "The label of the input control will be set when the primary value is greater than the secondary value."
+        "value": "Primary > Secondary",
+        "comment": "The label of the input control will be set when the primary value is greater than the secondary value."
     },
     "properties.comparison.labelNegative.title": {
-        "text": "Primary < Secondary",
-        "crowdinContext": "The label of the input control will be set when the primary value is less than the secondary value."
+        "value": "Primary < Secondary",
+        "comment": "The label of the input control will be set when the primary value is less than the secondary value."
     },
     "properties.comparison.labelEquals.title": {
-        "text": "Primary = Secondary",
-        "crowdinContext": "The label of the input control will be set when the primary value is equal the secondary value."
+        "value": "Primary = Secondary",
+        "comment": "The label of the input control will be set when the primary value is equal the secondary value."
     },
     "properties.comparison.position.title": {
-        "text": "Position",
-        "crowdinContext": "The label of comparison position control."
+        "value": "Position",
+        "comment": "The label of comparison position control."
     },
     "properties.comparison.position.top": {
-        "text": "top",
-        "crowdinContext": "The title of dropdown option that specifies the position of comparison to be on top."
+        "value": "top",
+        "comment": "The title of dropdown option that specifies the position of comparison to be on top."
     },
     "properties.comparison.position.right": {
-        "text": "right",
-        "crowdinContext": "The title of dropdown option that specifies the position of comparison to be on right."
+        "value": "right",
+        "comment": "The title of dropdown option that specifies the position of comparison to be on right."
     },
     "properties.comparison.position.left": {
-        "text": "left",
-        "crowdinContext": "The title of dropdown option that specifies the position of comparison to be on left."
+        "value": "left",
+        "comment": "The title of dropdown option that specifies the position of comparison to be on left."
     },
     "visualizations.headline.tertiary.title": {
-        "text": "Versus",
-        "crowdinContext": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'."
+        "value": "Versus",
+        "comment": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'."
     },
     "gs.date.yesterday": {
-        "text": "Yesterday",
-        "crowdinContext": "Label for yesterday date option"
+        "value": "Yesterday",
+        "comment": "Label for yesterday date option"
     },
     "notifications.panel.button.label": {
-        "text": "Notifications",
-        "crowdinContext": "A global notifications button label in the main menu"
+        "value": "Notifications",
+        "comment": "A global notifications button label in the main menu"
     },
     "notifications.panel.notifications.list.label": {
-        "text": "Notifications",
-        "crowdinContext": "Label for notifications list in panel"
+        "value": "Notifications",
+        "comment": "Label for notifications list in panel"
     },
     "notifications.panel.tab.unread": {
-        "text": "Unread ({count})",
-        "crowdinContext": "Tab label showing unread notifications count"
+        "value": "Unread ({count})",
+        "comment": "Tab label showing unread notifications count"
     },
     "notifications.panel.tab.all": {
-        "text": "All",
-        "crowdinContext": "Tab label for all notifications"
+        "value": "All",
+        "comment": "Tab label for all notifications"
     },
     "notifications.panel.markAllAsRead": {
-        "text": "Mark all as read",
-        "crowdinContext": "Button to mark all notifications as read"
+        "value": "Mark all as read",
+        "comment": "Button to mark all notifications as read"
     },
     "notifications.panel.error.loading": {
-        "text": "Error loading notifications",
-        "crowdinContext": "Error message when notifications fail to load"
+        "value": "Error loading notifications",
+        "comment": "Error message when notifications fail to load"
     },
     "notifications.panel.empty.all": {
-        "text": "No notifications",
-        "crowdinContext": "Message when there are no notifications at all"
+        "value": "No notifications",
+        "comment": "Message when there are no notifications at all"
     },
     "notifications.panel.empty.unread": {
-        "text": "No unread notifications",
-        "crowdinContext": "Message when there are no unread notifications"
+        "value": "No unread notifications",
+        "comment": "Message when there are no unread notifications"
     },
     "notifications.panel.unsupported.notification.type": {
-        "text": "Unsupported notification type",
-        "crowdinContext": "Message for unsupported notification types"
+        "value": "Unsupported notification type",
+        "comment": "Message for unsupported notification types"
     },
     "notifications.panel.markAsRead": {
-        "text": "Mark as read",
-        "crowdinContext": "Button to mark individual notification as read"
+        "value": "Mark as read",
+        "comment": "Button to mark individual notification as read"
     },
     "notifications.panel.alert.notification.type.label": {
-        "text": "Alert notification",
-        "crowdinContext": "Label for alert type notifications"
+        "value": "Alert notification",
+        "comment": "Label for alert type notifications"
     },
     "notifications.panel.download": {
-        "text": "Download",
-        "crowdinContext": "Button label for downloading notification files"
+        "value": "Download",
+        "comment": "Button label for downloading notification files"
     },
     "notifications.panel.expiresOn": {
-        "text": "Expires on {date}",
-        "crowdinContext": "Message showing when notification expires"
+        "value": "Expires on {date}",
+        "comment": "Message showing when notification expires"
     },
     "notifications.panel.linkHasExpired": {
-        "text": "Link has expired",
-        "crowdinContext": "Message when download link has expired"
+        "value": "Link has expired",
+        "comment": "Message when download link has expired"
     },
     "notifications.panel.toast.warning.filesExpired": {
-        "text": "<strong>Download link expired</strong> — wait for the next export or create one manually.",
-        "crowdinContext": "Warning toast message when export files have expired"
+        "value": "<strong>Download link expired</strong> — wait for the next export or create one manually.",
+        "comment": "Warning toast message when export files have expired"
     },
     "notifications.panel.dashboardLinkHint": {
-        "text": "Open the dashboard used for this export",
-        "crowdinContext": "Hint text for dashboard link in notifications panel"
+        "value": "Open the dashboard used for this export",
+        "comment": "Hint text for dashboard link in notifications panel"
     },
     "notifications.panel.dashboardLink": {
-        "text": "From {dashboardTitle}",
-        "crowdinContext": "Link text showing which dashboard an export came from"
+        "value": "From {dashboardTitle}",
+        "comment": "Link text showing which dashboard an export came from"
     },
     "notifications.panel.downloadFilesHint": {
-        "text": "Download the exported files",
-        "crowdinContext": "Hint text for download files action"
+        "value": "Download the exported files",
+        "comment": "Hint text for download files action"
     },
     "notifications.filters.buttonLabel": {
-        "text": "{count, plural, one {# filter} other {# filters}}",
-        "crowdinContext": "Follow this guide for pluralization per locale https://formatjs.github.io/docs/core-concepts/icu-syntax#plural-format"
+        "value": "{count, plural, one {# filter} other {# filters}}",
+        "comment": "Follow this guide for pluralization per locale https://formatjs.github.io/docs/core-concepts/icu-syntax#plural-format"
     },
     "notifications.filters.dialog.title": {
-        "text": "Filters",
-        "crowdinContext": "Title for filters dialog in notifications"
+        "value": "Filters",
+        "comment": "Title for filters dialog in notifications"
     },
     "notifications.filters.dialog.dateRange": {
-        "text": "Date Range",
-        "crowdinContext": "Label for date range filter in notifications dialog"
+        "value": "Date Range",
+        "comment": "Label for date range filter in notifications dialog"
     },
     "notifications.panel.triggers.title": {
-        "text": "for {triggeredCount}/{totalCount} items",
-        "crowdinContext": "Title showing triggered count vs total count for notification items"
+        "value": "for {triggeredCount}/{totalCount} items",
+        "comment": "Title showing triggered count vs total count for notification items"
     },
     "notifications.panel.triggers.dialog.newValue": {
-        "text": "New value",
-        "crowdinContext": "Label for new value in notification triggers dialog"
+        "value": "New value",
+        "comment": "Label for new value in notification triggers dialog"
     },
     "notifications.panel.triggers.dialog.truncatedValues": {
-        "text": "…and {count} more",
-        "crowdinContext": "Label for truncated values in notification triggers dialog"
+        "value": "…and {count} more",
+        "comment": "Label for truncated values in notification triggers dialog"
     },
     "close": {
-        "text": "Close",
-        "crowdinContext": "Label of a button for closing a dialog window"
+        "value": "Close",
+        "comment": "Label of a button for closing a dialog window"
     },
     "notifications.panel.triggers.dialog.title": {
-        "text": "Triggered for",
-        "crowdinContext": "Title for notification triggers dialog"
+        "value": "Triggered for",
+        "comment": "Title for notification triggers dialog"
     },
     "notifications.panel.error.learnMore": {
-        "text": "Learn more",
-        "crowdinContext": "Link text to learn more about an error"
+        "value": "Learn more",
+        "comment": "Link text to learn more about an error"
     },
     "notifications.panel.error.traceId": {
-        "text": "Trace ID",
-        "crowdinContext": "Label for trace ID in error message"
+        "value": "Trace ID",
+        "comment": "Label for trace ID in error message"
     },
     "notifications.panel.error.alert.title": {
-        "text": "The alert could not be processed.",
-        "crowdinContext": "Error message when alert cannot be processed"
+        "value": "The alert could not be processed.",
+        "comment": "Error message when alert cannot be processed"
     },
     "notifications.panel.error.schedule.title": {
-        "text": "Scheduled export failed.",
-        "crowdinContext": "Error message when scheduled export cannot be processed"
+        "value": "Scheduled export failed.",
+        "comment": "Error message when scheduled export cannot be processed"
     },
     "notifications.panel.error.limitExceeded.message": {
-        "text": "Your export could not be sent, because your organization has reached the limit for maximum number of daily alerts and scheduled exports. Please contact your administrator.",
-        "crowdinContext": "Error message when export cannot be sent due to limit reached"
+        "value": "Your export could not be sent, because your organization has reached the limit for maximum number of daily alerts and scheduled exports. Please contact your administrator.",
+        "comment": "Error message when export cannot be sent due to limit reached"
     },
     "automations.alert.config.comparisonOperator.lessThan": {
-        "text": "Is less than",
-        "crowdinContext": "Comparison operator in alert configuration"
+        "value": "Is less than",
+        "comment": "Comparison operator in alert configuration"
     },
     "automations.alert.config.comparisonOperator.lessThanOrEquals": {
-        "text": "Is less than or equal to",
-        "crowdinContext": "Comparison operator in alert configuration"
+        "value": "Is less than or equal to",
+        "comment": "Comparison operator in alert configuration"
     },
     "automations.alert.config.comparisonOperator.greaterThan": {
-        "text": "Is greater than",
-        "crowdinContext": "Comparison operator in alert configuration"
+        "value": "Is greater than",
+        "comment": "Comparison operator in alert configuration"
     },
     "automations.alert.config.comparisonOperator.greaterThanOrEquals": {
-        "text": "Is greater than or equal to",
-        "crowdinContext": "Comparison operator in alert configuration"
+        "value": "Is greater than or equal to",
+        "comment": "Comparison operator in alert configuration"
     },
     "automations.alert.config.changeOperator.increasesBy": {
-        "text": "Increases by",
-        "crowdinContext": "Alert condition for when a metric's percentage change increases by a specified amount"
+        "value": "Increases by",
+        "comment": "Alert condition for when a metric's percentage change increases by a specified amount"
     },
     "automations.alert.config.changeOperator.decreasesBy": {
-        "text": "Decreases by",
-        "crowdinContext": "Alert condition for when a metric's percentage change decreases by a specified amount"
+        "value": "Decreases by",
+        "comment": "Alert condition for when a metric's percentage change decreases by a specified amount"
     },
     "automations.alert.config.changeOperator.changesBy": {
-        "text": "Changes by",
-        "crowdinContext": "Alert condition for when a metric's percentage change (either increase or decrease) exceeds a specified amount"
+        "value": "Changes by",
+        "comment": "Alert condition for when a metric's percentage change (either increase or decrease) exceeds a specified amount"
     },
     "automations.filter.untitledUser": {
-        "text": "Untitled user",
-        "crowdinContext": "Label for untitled user in filter options"
+        "value": "Untitled user",
+        "comment": "Label for untitled user in filter options"
     },
     "automations.alert.config.differenceOperator.increasesBy": {
-        "text": "Increases by",
-        "crowdinContext": "Alert condition for when a metric's numeric value increases by a specified amount"
+        "value": "Increases by",
+        "comment": "Alert condition for when a metric's numeric value increases by a specified amount"
     },
     "automations.alert.config.differenceOperator.decreasesBy": {
-        "text": "Decreases by",
-        "crowdinContext": "Alert condition for when a metric's numeric value decreases by a specified amount"
+        "value": "Decreases by",
+        "comment": "Alert condition for when a metric's numeric value decreases by a specified amount"
     },
     "automations.alert.config.differenceOperator.changesBy": {
-        "text": "Changes by",
-        "crowdinContext": "Alert condition for when a metric's numeric value changes (either increases or decreases) by a specified amount"
+        "value": "Changes by",
+        "comment": "Alert condition for when a metric's numeric value changes (either increases or decreases) by a specified amount"
     },
     "automations.alert.config.anomalyDetection.operatorName": {
-        "text": "has an anomaly",
-        "crowdinContext": "Part of sentence `{metric} has an anomaly`"
+        "value": "has an anomaly",
+        "comment": "Part of sentence `{metric} has an anomaly`"
     },
     "automations.filter.allDashboards": {
-        "text": "All dashboards",
-        "crowdinContext": "Filter option to show automations for all dashboards"
+        "value": "All dashboards",
+        "comment": "Filter option to show automations for all dashboards"
     },
     "automations.filter.allRecipients": {
-        "text": "All recipients",
-        "crowdinContext": "Filter option to show automations for all recipients"
+        "value": "All recipients",
+        "comment": "Filter option to show automations for all recipients"
     },
     "automations.filter.allAuthors": {
-        "text": "All authors",
-        "crowdinContext": "Filter option to show automations created by all authors"
+        "value": "All authors",
+        "comment": "Filter option to show automations created by all authors"
     },
     "automations.filter.allStatus": {
-        "text": "All statuses",
-        "crowdinContext": "Filter option to show automations for all statuses"
+        "value": "All statuses",
+        "comment": "Filter option to show automations for all statuses"
     },
     "automations.filter.status.label": {
-        "text": "Status",
-        "crowdinContext": "Label for status filter in automations table"
+        "value": "Status",
+        "comment": "Label for status filter in automations table"
     },
     "automations.filter.workspaces.label": {
-        "text": "Workspaces",
-        "crowdinContext": "Label for workspaces filter in automations table"
+        "value": "Workspaces",
+        "comment": "Label for workspaces filter in automations table"
     },
     "automations.filter.status.success": {
-        "text": "Success",
-        "crowdinContext": "Label for success status in automations table"
+        "value": "Success",
+        "comment": "Label for success status in automations table"
     },
     "automations.filter.status.failed": {
-        "text": "Failed",
-        "crowdinContext": "Label for failed status in automations table"
+        "value": "Failed",
+        "comment": "Label for failed status in automations table"
     },
     "automations.filter.status.neverRun": {
-        "text": "Never run",
-        "crowdinContext": "Label for never run status in automations table"
+        "value": "Never run",
+        "comment": "Label for never run status in automations table"
     },
     "automations.filter.dashboard.label": {
-        "text": "Dashboard",
-        "crowdinContext": "Label for dashboard filter in automations table"
+        "value": "Dashboard",
+        "comment": "Label for dashboard filter in automations table"
     },
     "automations.filter.recipients.label": {
-        "text": "Recipients",
-        "crowdinContext": "Label for recipients filter in automations table"
+        "value": "Recipients",
+        "comment": "Label for recipients filter in automations table"
     },
     "automations.filter.createdBy.label": {
-        "text": "Created by",
-        "crowdinContext": "Label for created by (author) filter in automations table"
+        "value": "Created by",
+        "comment": "Label for created by (author) filter in automations table"
     },
     "automations.filter.currentUser": {
-        "text": "Current user",
-        "crowdinContext": "Label for current user in filter options"
+        "value": "Current user",
+        "comment": "Label for current user in filter options"
     },
     "automations.cell.lastRun.never": {
-        "text": "Never",
-        "crowdinContext": "Cell content for last run column when value is missing"
+        "value": "Never",
+        "comment": "Cell content for last run column when value is missing"
     },
     "automations.column.id": {
-        "text": "ID",
-        "crowdinContext": "Column header for automation ID in the automations table"
+        "value": "ID",
+        "comment": "Column header for automation ID in the automations table"
     },
     "automations.column.name": {
-        "text": "Name",
-        "crowdinContext": "Column header for automation name in the automations table"
+        "value": "Name",
+        "comment": "Column header for automation name in the automations table"
     },
     "automations.column.dashboard": {
-        "text": "Dashboard",
-        "crowdinContext": "Column header for dashboard in the automations table"
+        "value": "Dashboard",
+        "comment": "Column header for dashboard in the automations table"
     },
     "automations.column.widget": {
-        "text": "Widget",
-        "crowdinContext": "Column header for widget in the automations table"
+        "value": "Widget",
+        "comment": "Column header for widget in the automations table"
     },
     "automations.column.attachments": {
-        "text": "Attachments",
-        "crowdinContext": "Column header for attachments in the automations table"
+        "value": "Attachments",
+        "comment": "Column header for attachments in the automations table"
     },
     "automations.column.nextRun": {
-        "text": "Next run",
-        "crowdinContext": "Column header for next run in the automations table"
+        "value": "Next run",
+        "comment": "Column header for next run in the automations table"
     },
     "automations.column.recipients": {
-        "text": "Recipients",
-        "crowdinContext": "Column header for recipients in the automations table"
+        "value": "Recipients",
+        "comment": "Column header for recipients in the automations table"
     },
     "automations.column.lastSent": {
-        "text": "Last sent",
-        "crowdinContext": "Column header for last sent date in the automations table"
+        "value": "Last sent",
+        "comment": "Column header for last sent date in the automations table"
     },
     "automations.column.state": {
-        "text": "State",
-        "crowdinContext": "Column header for automation state in the automations table"
+        "value": "State",
+        "comment": "Column header for automation state in the automations table"
     },
     "automations.column.lastRunStatus": {
-        "text": "Last run status",
-        "crowdinContext": "Column header for last run status in the automations table"
+        "value": "Last run status",
+        "comment": "Column header for last run status in the automations table"
     },
     "automations.column.createdBy": {
-        "text": "Created by",
-        "crowdinContext": "Column header for creator in the automations table"
+        "value": "Created by",
+        "comment": "Column header for creator in the automations table"
     },
     "automations.column.createdAt": {
-        "text": "Created at",
-        "crowdinContext": "Column header for creation date in the automations table"
+        "value": "Created at",
+        "comment": "Column header for creation date in the automations table"
     },
     "automations.column.notificationChannel": {
-        "text": "Notification channel",
-        "crowdinContext": "Column header for notification channel in the automations table"
+        "value": "Notification channel",
+        "comment": "Column header for notification channel in the automations table"
     },
     "automations.column.workspace": {
-        "text": "Workspace",
-        "crowdinContext": "Column header for workspace in the automations table"
+        "value": "Workspace",
+        "comment": "Column header for workspace in the automations table"
     },
     "automations.menu.edit": {
-        "text": "Edit",
-        "crowdinContext": "Menu item for editing an automation"
+        "value": "Edit",
+        "comment": "Menu item for editing an automation"
     },
     "automations.menu.delete": {
-        "text": "Delete",
-        "crowdinContext": "Menu item for deleting an automation"
+        "value": "Delete",
+        "comment": "Menu item for deleting an automation"
     },
     "automations.menu.unsubscribe": {
-        "text": "Unsubscribe",
-        "crowdinContext": "Menu item for unsubscribing from an automation"
+        "value": "Unsubscribe",
+        "comment": "Menu item for unsubscribing from an automation"
     },
     "automations.menu.pause": {
-        "text": "Pause",
-        "crowdinContext": "Menu item for pausing an automation"
+        "value": "Pause",
+        "comment": "Menu item for pausing an automation"
     },
     "automations.menu.resume": {
-        "text": "Resume",
-        "crowdinContext": "Menu item for resuming an automation"
+        "value": "Resume",
+        "comment": "Menu item for resuming an automation"
     },
     "automations.menu.ariaLabel": {
-        "text": "Actions for {title}",
-        "crowdinContext": "Accessibility label for the automation menu button that opens actions menu. {title} is the name of the automation. Example output: 'Automation menu for Weekly Sales Report'."
+        "value": "Actions for {title}",
+        "comment": "Accessibility label for the automation menu button that opens actions menu. {title} is the name of the automation. Example output: 'Automation menu for Weekly Sales Report'."
     },
     "automations.menu.edit.unavailable": {
-        "text": "Edit action is unavailable, no associated dashboard",
-        "crowdinContext": "Tooltip for edit action when dashboard ID is missing"
+        "value": "Edit action is unavailable, no associated dashboard",
+        "comment": "Tooltip for edit action when dashboard ID is missing"
     },
     "automations.icon.tooltip.header.schedule": {
-        "text": "Export failed",
-        "crowdinContext": "Header for schedule icon tooltip"
+        "value": "Export failed",
+        "comment": "Header for schedule icon tooltip"
     },
     "automations.icon.tooltip.header.alert": {
-        "text": "Alert failed",
-        "crowdinContext": "Header for alert icon tooltip"
+        "value": "Alert failed",
+        "comment": "Header for alert icon tooltip"
     },
     "automations.icon.tooltip.status": {
-        "text": "Status",
-        "crowdinContext": "Status label for automation icon tooltip"
+        "value": "Status",
+        "comment": "Status label for automation icon tooltip"
     },
     "automations.icon.tooltip.traceId": {
-        "text": "Trace ID",
-        "crowdinContext": "Trace ID label for automation icon tooltip"
+        "value": "Trace ID",
+        "comment": "Trace ID label for automation icon tooltip"
     },
     "automations.icon.tooltip.startsOn": {
-        "text": "Starts on",
-        "crowdinContext": "Label for automation icon tooltip section: Starts on"
+        "value": "Starts on",
+        "comment": "Label for automation icon tooltip section: Starts on"
     },
     "automations.icon.tooltip.repeats": {
-        "text": "Repeats",
-        "crowdinContext": "Label for automation icon tooltip section: Repeats"
+        "value": "Repeats",
+        "comment": "Label for automation icon tooltip section: Repeats"
     },
     "automations.menu.copyId": {
-        "text": "Copy ID",
-        "crowdinContext": "Menu item for copying an automation ID"
+        "value": "Copy ID",
+        "comment": "Menu item for copying an automation ID"
     },
     "automations.message.copyId.success": {
-        "text": "ID copied to clipboard",
-        "crowdinContext": "Success message when automation ID is copied to clipboard"
+        "value": "ID copied to clipboard",
+        "comment": "Success message when automation ID is copied to clipboard"
     },
     "automations.message.schedule.delete.success": {
-        "text": "Success! Your scheduled email was deleted.",
-        "crowdinContext": "Success message when schedule is deleted"
+        "value": "Success! Your scheduled email was deleted.",
+        "comment": "Success message when schedule is deleted"
     },
     "automations.message.schedule.delete.error": {
-        "text": "Error! Failed to delete your scheduled email.",
-        "crowdinContext": "Error message when schedule cannot be deleted"
+        "value": "Error! Failed to delete your scheduled email.",
+        "comment": "Error message when schedule cannot be deleted"
     },
     "automations.message.schedule.unsubscribe.success": {
-        "text": "Success! You have unsubscribed from the scheduled email.",
-        "crowdinContext": "Success message when schedule is unsubscribed from"
+        "value": "Success! You have unsubscribed from the scheduled email.",
+        "comment": "Success message when schedule is unsubscribed from"
     },
     "automations.message.schedule.unsubscribe.error": {
-        "text": "Error! Failed to unsubscribe from the scheduled email.",
-        "crowdinContext": "Error message when schedule cannot be unsubscribed from"
+        "value": "Error! Failed to unsubscribe from the scheduled email.",
+        "comment": "Error message when schedule cannot be unsubscribed from"
     },
     "automations.message.schedule.bulk.delete.success": {
-        "text": "Success! Your scheduled emails were deleted.",
-        "crowdinContext": "Success message when schedules are deleted"
+        "value": "Success! Your scheduled emails were deleted.",
+        "comment": "Success message when schedules are deleted"
     },
     "automations.message.schedule.bulk.delete.error": {
-        "text": "Error! Failed to delete your scheduled emails.",
-        "crowdinContext": "Error message when schedules cannot be deleted"
+        "value": "Error! Failed to delete your scheduled emails.",
+        "comment": "Error message when schedules cannot be deleted"
     },
     "automations.message.schedule.bulk.unsubscribe.success": {
-        "text": "Success! You have unsubscribed from the scheduled emails.",
-        "crowdinContext": "Success message when schedules are unsubscribed from"
+        "value": "Success! You have unsubscribed from the scheduled emails.",
+        "comment": "Success message when schedules are unsubscribed from"
     },
     "automations.message.schedule.bulk.unsubscribe.error": {
-        "text": "Error! Failed to unsubscribe from the scheduled emails.",
-        "crowdinContext": "Error message when schedules cannot be unsubscribed from"
+        "value": "Error! Failed to unsubscribe from the scheduled emails.",
+        "comment": "Error message when schedules cannot be unsubscribed from"
     },
     "automations.message.schedule.pause.success": {
-        "text": "Success! Your scheduled email was paused.",
-        "crowdinContext": "Success message when schedule is paused"
+        "value": "Success! Your scheduled email was paused.",
+        "comment": "Success message when schedule is paused"
     },
     "automations.message.schedule.pause.error": {
-        "text": "Error! Failed to pause your scheduled email.",
-        "crowdinContext": "Error message when schedule cannot be paused"
+        "value": "Error! Failed to pause your scheduled email.",
+        "comment": "Error message when schedule cannot be paused"
     },
     "automations.message.schedule.bulk.pause.success": {
-        "text": "Success! Your scheduled emails were paused.",
-        "crowdinContext": "Success message when schedules are paused"
+        "value": "Success! Your scheduled emails were paused.",
+        "comment": "Success message when schedules are paused"
     },
     "automations.message.schedule.bulk.pause.error": {
-        "text": "Error! Failed to pause your scheduled emails.",
-        "crowdinContext": "Error message when schedules cannot be paused"
+        "value": "Error! Failed to pause your scheduled emails.",
+        "comment": "Error message when schedules cannot be paused"
     },
     "automations.message.schedule.resume.success": {
-        "text": "Success! Your scheduled email was resumed.",
-        "crowdinContext": "Success message when schedule is resumed"
+        "value": "Success! Your scheduled email was resumed.",
+        "comment": "Success message when schedule is resumed"
     },
     "automations.message.schedule.resume.error": {
-        "text": "Error! Failed to resume your scheduled email.",
-        "crowdinContext": "Error message when schedule cannot be resumed"
+        "value": "Error! Failed to resume your scheduled email.",
+        "comment": "Error message when schedule cannot be resumed"
     },
     "automations.message.schedule.bulk.resume.success": {
-        "text": "Success! Your scheduled emails were resumed.",
-        "crowdinContext": "Success message when schedules are resumed"
+        "value": "Success! Your scheduled emails were resumed.",
+        "comment": "Success message when schedules are resumed"
     },
     "automations.message.schedule.bulk.resume.error": {
-        "text": "Error! Failed to resume your scheduled emails.",
-        "crowdinContext": "Error message when schedules cannot be resumed"
+        "value": "Error! Failed to resume your scheduled emails.",
+        "comment": "Error message when schedules cannot be resumed"
     },
     "automations.message.alert.delete.success": {
-        "text": "Success! Your alert was deleted.",
-        "crowdinContext": "Success message when alert is deleted"
+        "value": "Success! Your alert was deleted.",
+        "comment": "Success message when alert is deleted"
     },
     "automations.message.alert.delete.error": {
-        "text": "Error! Failed to delete your alert.",
-        "crowdinContext": "Error message when alert cannot be deleted"
+        "value": "Error! Failed to delete your alert.",
+        "comment": "Error message when alert cannot be deleted"
     },
     "automations.message.alert.unsubscribe.success": {
-        "text": "Success! You have unsubscribed from the alert.",
-        "crowdinContext": "Success message when alert is unsubscribed from"
+        "value": "Success! You have unsubscribed from the alert.",
+        "comment": "Success message when alert is unsubscribed from"
     },
     "automations.message.alert.unsubscribe.error": {
-        "text": "Error! Failed to unsubscribe from the alert.",
-        "crowdinContext": "Error message when alert cannot be unsubscribed from"
+        "value": "Error! Failed to unsubscribe from the alert.",
+        "comment": "Error message when alert cannot be unsubscribed from"
     },
     "automations.message.alert.pause.success": {
-        "text": "Success! Your alert was paused.",
-        "crowdinContext": "Success message when alert is paused"
+        "value": "Success! Your alert was paused.",
+        "comment": "Success message when alert is paused"
     },
     "automations.message.alert.pause.error": {
-        "text": "Error! Failed to pause your alert.",
-        "crowdinContext": "Error message when alert cannot be paused"
+        "value": "Error! Failed to pause your alert.",
+        "comment": "Error message when alert cannot be paused"
     },
     "automations.message.alert.resume.success": {
-        "text": "Success! Your alert was resumed.",
-        "crowdinContext": "Success message when alert is resumed"
+        "value": "Success! Your alert was resumed.",
+        "comment": "Success message when alert is resumed"
     },
     "automations.message.alert.resume.error": {
-        "text": "Error! Failed to resume your alert.",
-        "crowdinContext": "Error message when alert cannot be resumed"
+        "value": "Error! Failed to resume your alert.",
+        "comment": "Error message when alert cannot be resumed"
     },
     "automations.message.alert.bulk.delete.success": {
-        "text": "Success! Your alerts were deleted.",
-        "crowdinContext": "Success message when alerts are deleted"
+        "value": "Success! Your alerts were deleted.",
+        "comment": "Success message when alerts are deleted"
     },
     "automations.message.alert.bulk.delete.error": {
-        "text": "Error! Failed to delete your alerts.",
-        "crowdinContext": "Error message when alerts cannot be deleted"
+        "value": "Error! Failed to delete your alerts.",
+        "comment": "Error message when alerts cannot be deleted"
     },
     "automations.message.alert.bulk.unsubscribe.success": {
-        "text": "Success! You have unsubscribed from the alerts.",
-        "crowdinContext": "Success message when alerts are unsubscribed from"
+        "value": "Success! You have unsubscribed from the alerts.",
+        "comment": "Success message when alerts are unsubscribed from"
     },
     "automations.message.alert.bulk.unsubscribe.error": {
-        "text": "Error! Failed to unsubscribe from the alerts.",
-        "crowdinContext": "Error message when alerts cannot be unsubscribed from"
+        "value": "Error! Failed to unsubscribe from the alerts.",
+        "comment": "Error message when alerts cannot be unsubscribed from"
     },
     "automations.message.alert.bulk.pause.success": {
-        "text": "Success! Your alerts were paused.",
-        "crowdinContext": "Success message when alerts are paused"
+        "value": "Success! Your alerts were paused.",
+        "comment": "Success message when alerts are paused"
     },
     "automations.message.alert.bulk.pause.error": {
-        "text": "Error! Failed to pause your alerts.",
-        "crowdinContext": "Error message when alerts cannot be paused"
+        "value": "Error! Failed to pause your alerts.",
+        "comment": "Error message when alerts cannot be paused"
     },
     "automations.message.alert.bulk.resume.success": {
-        "text": "Success! Your alerts were resumed.",
-        "crowdinContext": "Success message when alerts are resumed"
+        "value": "Success! Your alerts were resumed.",
+        "comment": "Success message when alerts are resumed"
     },
     "automations.message.alert.bulk.resume.error": {
-        "text": "Error! Failed to resume your alerts.",
-        "crowdinContext": "Error message when alerts cannot be resumed"
+        "value": "Error! Failed to resume your alerts.",
+        "comment": "Error message when alerts cannot be resumed"
     },
     "automations.message.automationIconTooltipTraceIdCopied": {
-        "text": "Trace ID copied to clipboard",
-        "crowdinContext": "Success message when trace ID is copied to clipboard"
+        "value": "Trace ID copied to clipboard",
+        "comment": "Success message when trace ID is copied to clipboard"
     },
     "automations.confirmDialog.delete.schedule.headline": {
-        "text": "Delete Schedule?",
-        "crowdinContext": "Headline for deleting a single schedule"
+        "value": "Delete Schedule?",
+        "comment": "Headline for deleting a single schedule"
     },
     "automations.confirmDialog.delete.schedule.content": {
-        "text": "Schedule <b>{title}</b> will be permanently deleted.",
-        "crowdinContext": "Content for deleting a single schedule"
+        "value": "Schedule <b>{title}</b> will be permanently deleted.",
+        "comment": "Content for deleting a single schedule"
     },
     "automations.confirmDialog.delete.alert.headline": {
-        "text": "Delete Alert?",
-        "crowdinContext": "Headline for deleting a single alert"
+        "value": "Delete Alert?",
+        "comment": "Headline for deleting a single alert"
     },
     "automations.confirmDialog.delete.alert.content": {
-        "text": "Alert <b>{title}</b> will be permanently deleted.",
-        "crowdinContext": "Content for deleting a single alert"
+        "value": "Alert <b>{title}</b> will be permanently deleted.",
+        "comment": "Content for deleting a single alert"
     },
     "automations.confirmDialog.unsubscribe.schedule.headline": {
-        "text": "Unsubscribe from Schedule?",
-        "crowdinContext": "Headline for unsubscribing from a single schedule"
+        "value": "Unsubscribe from Schedule?",
+        "comment": "Headline for unsubscribing from a single schedule"
     },
     "automations.confirmDialog.unsubscribe.schedule.content": {
-        "text": "You will be unsubscribed from schedule <b>{title}</b>.",
-        "crowdinContext": "Content for unsubscribing from a single schedule"
+        "value": "You will be unsubscribed from schedule <b>{title}</b>.",
+        "comment": "Content for unsubscribing from a single schedule"
     },
     "automations.confirmDialog.unsubscribe.alert.headline": {
-        "text": "Unsubscribe from Alert?",
-        "crowdinContext": "Headline for unsubscribing from a single alert"
+        "value": "Unsubscribe from Alert?",
+        "comment": "Headline for unsubscribing from a single alert"
     },
     "automations.confirmDialog.unsubscribe.alert.content": {
-        "text": "You will be unsubscribed from alert <b>{title}</b>.",
-        "crowdinContext": "Content for unsubscribing from a single alert"
+        "value": "You will be unsubscribed from alert <b>{title}</b>.",
+        "comment": "Content for unsubscribing from a single alert"
     },
     "automations.confirmDialog.bulkDelete.schedule.headline": {
-        "text": "Delete Schedules?",
-        "crowdinContext": "Headline for deleting multiple schedules"
+        "value": "Delete Schedules?",
+        "comment": "Headline for deleting multiple schedules"
     },
     "automations.confirmDialog.bulkDelete.schedule.content": {
-        "text": "Are you sure you want to delete selected schedules?",
-        "crowdinContext": "Content for deleting multiple schedules"
+        "value": "Are you sure you want to delete selected schedules?",
+        "comment": "Content for deleting multiple schedules"
     },
     "automations.confirmDialog.bulkDelete.alert.headline": {
-        "text": "Delete alerts",
-        "crowdinContext": "Headline for deleting multiple alerts"
+        "value": "Delete alerts",
+        "comment": "Headline for deleting multiple alerts"
     },
     "automations.confirmDialog.bulkDelete.alert.content": {
-        "text": "Are you sure you want to delete selected alerts?",
-        "crowdinContext": "Content for deleting multiple alerts"
+        "value": "Are you sure you want to delete selected alerts?",
+        "comment": "Content for deleting multiple alerts"
     },
     "automations.confirmDialog.bulkUnsubscribe.schedule.headline": {
-        "text": "Unsubscribe from Schedules?",
-        "crowdinContext": "Headline for unsubscribing from multiple schedules"
+        "value": "Unsubscribe from Schedules?",
+        "comment": "Headline for unsubscribing from multiple schedules"
     },
     "automations.confirmDialog.bulkUnsubscribe.schedule.content": {
-        "text": "Are you sure you want to unsubscribe from selected schedules?",
-        "crowdinContext": "Content for unsubscribing from multiple schedules"
+        "value": "Are you sure you want to unsubscribe from selected schedules?",
+        "comment": "Content for unsubscribing from multiple schedules"
     },
     "automations.confirmDialog.bulkUnsubscribe.alert.headline": {
-        "text": "Unsubscribe from alerts",
-        "crowdinContext": "Headline for unsubscribing from multiple alerts"
+        "value": "Unsubscribe from alerts",
+        "comment": "Headline for unsubscribing from multiple alerts"
     },
     "automations.confirmDialog.bulkUnsubscribe.alert.content": {
-        "text": "Are you sure you want to unsubscribe from selected alerts?",
-        "crowdinContext": "Content for unsubscribing from multiple alerts"
+        "value": "Are you sure you want to unsubscribe from selected alerts?",
+        "comment": "Content for unsubscribing from multiple alerts"
     },
     "automations.confirmDialog.pause.schedule.headline": {
-        "text": "Pause Schedule?",
-        "crowdinContext": "Headline for pausing a single schedule"
+        "value": "Pause Schedule?",
+        "comment": "Headline for pausing a single schedule"
     },
     "automations.confirmDialog.pause.schedule.content": {
-        "text": "Schedule <b>{title}</b> will be paused.",
-        "crowdinContext": "Content for pausing a single schedule"
+        "value": "Schedule <b>{title}</b> will be paused.",
+        "comment": "Content for pausing a single schedule"
     },
     "automations.confirmDialog.pause.alert.headline": {
-        "text": "Pause Alert?",
-        "crowdinContext": "Headline for pausing a single alert"
+        "value": "Pause Alert?",
+        "comment": "Headline for pausing a single alert"
     },
     "automations.confirmDialog.pause.alert.content": {
-        "text": "Alert <b>{title}</b> will be paused.",
-        "crowdinContext": "Content for pausing a single alert"
+        "value": "Alert <b>{title}</b> will be paused.",
+        "comment": "Content for pausing a single alert"
     },
     "automations.confirmDialog.resume.schedule.headline": {
-        "text": "Resume Schedule?",
-        "crowdinContext": "Headline for resuming a single schedule"
+        "value": "Resume Schedule?",
+        "comment": "Headline for resuming a single schedule"
     },
     "automations.confirmDialog.resume.schedule.content": {
-        "text": "Schedule <b>{title}</b> will be resumed.",
-        "crowdinContext": "Content for resuming a single schedule"
+        "value": "Schedule <b>{title}</b> will be resumed.",
+        "comment": "Content for resuming a single schedule"
     },
     "automations.confirmDialog.resume.alert.headline": {
-        "text": "Resume Alert?",
-        "crowdinContext": "Headline for resuming a single alert"
+        "value": "Resume Alert?",
+        "comment": "Headline for resuming a single alert"
     },
     "automations.confirmDialog.resume.alert.content": {
-        "text": "Alert <b>{title}</b> will be resumed.",
-        "crowdinContext": "Content for resuming a single alert"
+        "value": "Alert <b>{title}</b> will be resumed.",
+        "comment": "Content for resuming a single alert"
     },
     "automations.confirmDialog.bulkPause.schedule.headline": {
-        "text": "Pause Schedules?",
-        "crowdinContext": "Headline for pausing multiple schedules"
+        "value": "Pause Schedules?",
+        "comment": "Headline for pausing multiple schedules"
     },
     "automations.confirmDialog.bulkPause.schedule.content": {
-        "text": "Are you sure you want to pause selected schedules?",
-        "crowdinContext": "Content for pausing multiple schedules"
+        "value": "Are you sure you want to pause selected schedules?",
+        "comment": "Content for pausing multiple schedules"
     },
     "automations.confirmDialog.bulkPause.alert.headline": {
-        "text": "Pause Alerts?",
-        "crowdinContext": "Headline for pausing multiple alerts"
+        "value": "Pause Alerts?",
+        "comment": "Headline for pausing multiple alerts"
     },
     "automations.confirmDialog.bulkPause.alert.content": {
-        "text": "Are you sure you want to pause selected alerts?",
-        "crowdinContext": "Content for pausing multiple alerts"
+        "value": "Are you sure you want to pause selected alerts?",
+        "comment": "Content for pausing multiple alerts"
     },
     "automations.confirmDialog.bulkResume.schedule.headline": {
-        "text": "Resume Schedules?",
-        "crowdinContext": "Headline for resuming multiple schedules"
+        "value": "Resume Schedules?",
+        "comment": "Headline for resuming multiple schedules"
     },
     "automations.confirmDialog.bulkResume.schedule.content": {
-        "text": "Are you sure you want to resume selected schedules?",
-        "crowdinContext": "Content for resuming multiple schedules"
+        "value": "Are you sure you want to resume selected schedules?",
+        "comment": "Content for resuming multiple schedules"
     },
     "automations.confirmDialog.bulkResume.alert.headline": {
-        "text": "Resume Alerts?",
-        "crowdinContext": "Headline for resuming multiple alerts"
+        "value": "Resume Alerts?",
+        "comment": "Headline for resuming multiple alerts"
     },
     "automations.confirmDialog.bulkResume.alert.content": {
-        "text": "Are you sure you want to resume selected alerts?",
-        "crowdinContext": "Content for resuming multiple alerts"
+        "value": "Are you sure you want to resume selected alerts?",
+        "comment": "Content for resuming multiple alerts"
     },
     "automations.confirmDialog.button.delete": {
-        "text": "Delete",
-        "crowdinContext": "Button text for confirming delete action"
+        "value": "Delete",
+        "comment": "Button text for confirming delete action"
     },
     "automations.confirmDialog.button.confirm": {
-        "text": "Confirm",
-        "crowdinContext": "Button text for confirming an action"
+        "value": "Confirm",
+        "comment": "Button text for confirming an action"
     },
     "automations.confirmDialog.button.cancel": {
-        "text": "Cancel",
-        "crowdinContext": "Button text for canceling an action"
+        "value": "Cancel",
+        "comment": "Button text for canceling an action"
     },
     "automations.emptyState.schedule.title": {
-        "text": "No scheduled exports",
-        "crowdinContext": "Empty state title when no scheduled exports are found and no filters are active"
+        "value": "No scheduled exports",
+        "comment": "Empty state title when no scheduled exports are found and no filters are active"
     },
     "automations.emptyState.schedule.description": {
-        "text": "Create a schedule export on the dashboard or visualization.",
-        "crowdinContext": "Empty state description explaining how to create the first scheduled export"
+        "value": "Create a schedule export on the dashboard or visualization.",
+        "comment": "Empty state description explaining how to create the first scheduled export"
     },
     "automations.emptyState.alert.title": {
-        "text": "No alerts",
-        "crowdinContext": "Empty state title when no alerts are found and no filters are active"
+        "value": "No alerts",
+        "comment": "Empty state title when no alerts are found and no filters are active"
     },
     "automations.emptyState.alert.description": {
-        "text": "Create an alert on the visualization in any dashboard.",
-        "crowdinContext": "Empty state description explaining how to create the first alert"
+        "value": "Create an alert on the visualization in any dashboard.",
+        "comment": "Empty state description explaining how to create the first alert"
     },
     "automations.accessibility.selectAll.alerts": {
-        "text": "Select all alerts",
-        "crowdinContext": "Accessibility label for the checkbox that selects all alerts in the alerts table"
+        "value": "Select all alerts",
+        "comment": "Accessibility label for the checkbox that selects all alerts in the alerts table"
     },
     "automations.accessibility.selectAll.schedules": {
-        "text": "Select all scheduled exports",
-        "crowdinContext": "Accessibility label for the checkbox that selects all scheduled exports in the schedules table"
+        "value": "Select all scheduled exports",
+        "comment": "Accessibility label for the checkbox that selects all scheduled exports in the schedules table"
     },
     "automations.accessibility.select.alert": {
-        "text": "Select alert: {title}",
-        "crowdinContext": "Accessibility label for individual alert selection checkbox. Example: 'Select alert: Revenue Alert'"
+        "value": "Select alert: {title}",
+        "comment": "Accessibility label for individual alert selection checkbox. Example: 'Select alert: Revenue Alert'"
     },
     "automations.accessibility.select.schedule": {
-        "text": "Select scheduled export: {title}",
-        "crowdinContext": "Accessibility label for individual scheduled export selection checkbox. Example: 'Select scheduled export: Weekly Revenue Report'"
+        "value": "Select scheduled export: {title}",
+        "comment": "Accessibility label for individual scheduled export selection checkbox. Example: 'Select scheduled export: Weekly Revenue Report'"
     },
     "automations.accessibility.search.alerts": {
-        "text": "Search alerts",
-        "crowdinContext": "Accessibility label for the search input field when searching through alerts"
+        "value": "Search alerts",
+        "comment": "Accessibility label for the search input field when searching through alerts"
     },
     "automations.accessibility.search.schedules": {
-        "text": "Search scheduled exports",
-        "crowdinContext": "Accessibility label for the search input field when searching through scheduled exports"
+        "value": "Search scheduled exports",
+        "comment": "Accessibility label for the search input field when searching through scheduled exports"
     },
     "automations.accessibility.gridLabel.alerts": {
-        "text": "List of alerts",
-        "crowdinContext": "Accessibility label for the alerts table grid, describing the content to screen readers"
+        "value": "List of alerts",
+        "comment": "Accessibility label for the alerts table grid, describing the content to screen readers"
     },
     "automations.accessibility.gridLabel.schedules": {
-        "text": "List of scheduled exports",
-        "crowdinContext": "Accessibility label for the scheduled exports table grid, describing the content to screen readers"
+        "value": "List of scheduled exports",
+        "comment": "Accessibility label for the scheduled exports table grid, describing the content to screen readers"
     }
 }
