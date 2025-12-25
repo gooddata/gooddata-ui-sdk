@@ -1,22 +1,22 @@
 {
     "properly.obj": {
-        "text": "test <span class='addon'>test</span>",
-        "crowdinContext": "test"
+        "value": "test <span class='addon'>test</span>",
+        "comment": "test"
     },
     "text.without.insight": {
-        "text": "Test text",
-        "crowdinContext": "test"
+        "value": "Test text",
+        "comment": "test"
     },
     "text.with.insight": {
-        "text": "Test text with insight",
-        "crowdinContext": "test"
+        "value": "Test text with insight",
+        "comment": "test"
     },
     "text.with.1": {
-        "text": "Test text 1 2 3",
-        "crowdinContext": "test"
+        "value": "Test text 1 2 3",
+        "comment": "test"
     },
     "text.big.insight": {
-        "text": "Test text with Insight",
-        "crowdinContext": "test"
+        "value": "Test text with Insight",
+        "comment": "test"
     }
 }

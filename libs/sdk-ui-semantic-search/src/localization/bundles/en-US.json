@@ -1,70 +1,70 @@
 {
     "semantic-search.error.title": {
-        "text": "Our search service is temporarily down.",
-        "crowdinContext": "Title for the error message shown when semantic search failed."
+        "value": "Our search service is temporarily down.",
+        "comment": "Title for the error message shown when semantic search failed."
     },
     "semantic-search.error.text": {
-        "text": "We are working to resolve the issue.",
-        "crowdinContext": "Body for the error message shown when semantic search failed."
+        "value": "We are working to resolve the issue.",
+        "comment": "Body for the error message shown when semantic search failed."
     },
     "semantic-search.no-results": {
-        "text": "No results found for “{query}”.",
-        "crowdinContext": "Message shown when semantic search returns no results. The {query} placeholder shows the search term entered by the user."
+        "value": "No results found for “{query}”.",
+        "comment": "Message shown when semantic search returns no results. The {query} placeholder shows the search term entered by the user."
     },
     "semantic-search.results.count": {
-        "text": "{count, plural, one {# result} other {# results}}",
-        "crowdinContext": "Information about number of search results."
+        "value": "{count, plural, one {# result} other {# results}}",
+        "comment": "Information about number of search results."
     },
     "semantic-search.label": {
-        "text": "Search dashboards or visualization",
-        "crowdinContext": "Label for the input box that is used in semantic search."
+        "value": "Search dashboards or visualization",
+        "comment": "Label for the input box that is used in semantic search."
     },
     "semantic-search.placeholder": {
-        "text": "Search dashboards or visualization…",
-        "crowdinContext": "Placeholder in the input box that is used in semantic search."
+        "value": "Search dashboards or visualization…",
+        "comment": "Placeholder in the input box that is used in semantic search."
     },
     "semantic-search.id": {
-        "text": "ID",
-        "crowdinContext": "Label of column that contains ID of the search results object."
+        "value": "ID",
+        "comment": "Label of column that contains ID of the search results object."
     },
     "semantic-search.tags": {
-        "text": "Tags",
-        "crowdinContext": "Label of column that contains tags of the search results object."
+        "value": "Tags",
+        "comment": "Label of column that contains tags of the search results object."
     },
     "semantic-search.match": {
-        "text": "{score}% match",
-        "crowdinContext": "Label showing match percentage in search results. The {score} placeholder displays the relevance score as a number."
+        "value": "{score}% match",
+        "comment": "Label showing match percentage in search results. The {score} placeholder displays the relevance score as a number."
     },
     "semantic-search.previous-search": {
-        "text": "Previous search: {query}",
-        "crowdinContext": "ARIA label for the search history item."
+        "value": "Previous search: {query}",
+        "comment": "ARIA label for the search history item."
     },
     "semantic-search.tree": {
-        "text": "Semantic search tree",
-        "crowdinContext": "ARIA label for the semantic search results tree view component."
+        "value": "Semantic search tree",
+        "comment": "ARIA label for the semantic search results tree view component."
     },
     "semantic-search.tree.history": {
-        "text": "Semantic search tree history",
-        "crowdinContext": "ARIA label for the semantic search history tree view component."
+        "value": "Semantic search tree history",
+        "comment": "ARIA label for the semantic search history tree view component."
     },
     "semantic-search.edit": {
-        "text": "Edit",
-        "crowdinContext": "Label for the edit action in semantic search results tree view."
+        "value": "Edit",
+        "comment": "Label for the edit action in semantic search results tree view."
     },
     "semantic-search.date.at": {
-        "text": "at",
-        "crowdinContext": "Label for the date range filter identifying hour. Example: Today at 4:30."
+        "value": "at",
+        "comment": "Label for the date range filter identifying hour. Example: Today at 4:30."
     },
     "semantic-search.ask.ai.assistant": {
-        "text": "Ask AI Assistant",
-        "crowdinContext": "Button label for the ask ai assistant feature. This button is on search results list on bottom of drop down."
+        "value": "Ask AI Assistant",
+        "comment": "Button label for the ask ai assistant feature. This button is on search results list on bottom of drop down."
     },
     "gs.date.today": {
-        "text": "Today",
-        "crowdinContext": "Label for the current day in date filters and selectors."
+        "value": "Today",
+        "comment": "Label for the current day in date filters and selectors."
     },
     "gs.date.yesterday": {
-        "text": "Yesterday",
-        "crowdinContext": "Label for the day before today in date filters and selectors."
+        "value": "Yesterday",
+        "comment": "Label for the day before today in date filters and selectors."
     }
 }
