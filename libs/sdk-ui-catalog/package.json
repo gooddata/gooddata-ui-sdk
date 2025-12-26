@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-catalog",
-    "version": "11.15.0-alpha.5",
+    "version": "11.15.0-alpha.6",
     "description": "GoodData SDK - Analytics Catalog",
     "repository": {
         "type": "git",
