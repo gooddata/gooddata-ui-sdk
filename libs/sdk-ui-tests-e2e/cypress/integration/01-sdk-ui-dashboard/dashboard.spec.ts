@@ -48,7 +48,7 @@ describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
         //Cover ticket: RAIL-4431
         it(
             "should display placeholder and focus title for new dashboard",
-            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
+            { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] },
             () => {
                 Navigation.visit("dashboard/new-dashboard");
                 dashboardHeader.hasTitlePlaceholder();
@@ -116,9 +116,9 @@ describe("Dashboard actions", () => {
         "should able to delete dashboard after save as new",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -139,9 +139,9 @@ describe("Dashboard actions", () => {
         "should able to scroll vertical/ horizontal on widget",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -159,9 +159,9 @@ describe("Dashboard actions", () => {
         "should direct to view mode after save as new",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },

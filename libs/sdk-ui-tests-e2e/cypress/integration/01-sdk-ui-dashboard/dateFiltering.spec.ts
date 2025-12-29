@@ -14,9 +14,9 @@ describe("Date filtering", () => {
         "verify date filter default state",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -30,9 +30,9 @@ describe("Date filtering", () => {
         "should update date filter value correctly",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -50,9 +50,9 @@ describe("Date filtering", () => {
         "should display message on the top date filter panel",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -68,9 +68,9 @@ describe("Date filtering", () => {
         "should reset the selected date filter on view mode when open edit mode",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -89,9 +89,9 @@ describe("Date filtering", () => {
         "should display the selected date interval correctly",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },

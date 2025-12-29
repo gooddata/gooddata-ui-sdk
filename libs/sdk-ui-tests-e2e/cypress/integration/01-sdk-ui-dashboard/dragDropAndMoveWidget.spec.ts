@@ -23,9 +23,9 @@ describe("Insight on dashboard", () => {
         "can add 3 widgets into the same row to create a new section",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -87,9 +87,9 @@ describe("Be able to resize widgeton dashboard", () => {
         "should able to resize widget when is placed next to other in one row",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },

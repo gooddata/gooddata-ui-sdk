@@ -48,9 +48,9 @@ describe(
     "RichText - integrated",
     {
         tags: [
-            "checklist_integrated_tiger",
+            "checklist_integrated_tiger_be",
             "checklist_integrated_tiger_fe",
-            "checklist_integrated_tiger_releng",
+            "checklist_integrated_tiger_releng_be",
             "checklist_integrated_tiger_releng_fe",
         ],
     },

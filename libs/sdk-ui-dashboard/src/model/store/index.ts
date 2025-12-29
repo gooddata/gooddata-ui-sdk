@@ -107,7 +107,6 @@ export {
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,
     selectEnableDashboardTabs,
-    selectEnablePreserveFilterSelectionDuringInit,
     selectExportResultPollingTimeout,
     selectEnableAnomalyDetectionAlert,
     selectEnableImplicitDrillToUrl,

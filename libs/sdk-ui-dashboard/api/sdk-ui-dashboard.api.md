@@ -9541,9 +9541,6 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean>;
 // @internal (undocumented)
 export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
 
-// @alpha
-export const selectEnablePreserveFilterSelectionDuringInit: DashboardSelector<boolean>;
-
 // @internal
 export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
 

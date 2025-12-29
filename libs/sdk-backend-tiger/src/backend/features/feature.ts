@@ -844,13 +844,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnablePreserveFilterSelectionDuringInit,
-            "enablePreserveFilterSelectionDuringInit",
-            "BOOLEAN",
-            FeatureFlagsValues.enablePreserveFilterSelectionDuringInit,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableRichTextWidgetFilterConfiguration,
             "enableRichTextWidgetFilterConfiguration",
             "BOOLEAN",

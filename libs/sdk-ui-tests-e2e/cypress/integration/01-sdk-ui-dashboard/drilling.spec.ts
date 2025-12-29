@@ -19,9 +19,9 @@ describe("Interaction", () => {
         "Should able to remove existing interactions",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -42,9 +42,9 @@ describe("Interaction", () => {
         "Should correctly display attribute list in custom URL dialog",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -79,7 +79,7 @@ describe("Interaction", () => {
     //Cover ticket: RAIL-4716
     it(
         "should display correct insight name on invalid interaction warning",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
+        { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] },
         () => {
             const widget1 = new Widget(0, 1);
             const message = new Messages();

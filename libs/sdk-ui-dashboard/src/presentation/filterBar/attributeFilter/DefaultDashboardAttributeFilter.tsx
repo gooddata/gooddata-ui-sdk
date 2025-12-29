@@ -47,7 +47,6 @@ import {
     selectAttributeFilterConfigsModeMapByTab,
     selectBackendCapabilities,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-    selectEnablePreserveFilterSelectionDuringInit,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsAttributeFilterDependentByLocalIdentifierForTab,
@@ -152,9 +151,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const enablePreserveSelectionDuringInit = useDashboardSelector(
-        selectEnablePreserveFilterSelectionDuringInit,
-    );
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -580,7 +576,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
                 withoutApply={isApplyAllAtOnceEnabledAndSet}
-                enablePreserveSelectionDuringInit={enablePreserveSelectionDuringInit}
             />
         </AttributeFilterParentFilteringProvider>
     );

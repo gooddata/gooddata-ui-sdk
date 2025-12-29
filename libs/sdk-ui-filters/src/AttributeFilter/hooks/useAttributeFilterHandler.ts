@@ -32,7 +32,6 @@ export interface IUseAttributeFilterHandlerProps {
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
     withoutApply?: boolean;
-    enablePreserveSelectionDuringInit?: boolean;
 }
 
 /**
@@ -51,7 +50,6 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         hiddenElements,
         staticElements,
         withoutApply = false,
-        enablePreserveSelectionDuringInit,
     } = props;
 
     const [, setInvalidate] = useState(0);
@@ -73,19 +71,9 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
                 staticElements,
                 displayAsLabel,
                 withoutApply,
-                enablePreserveSelectionDuringInit,
             },
         );
-    }, [
-        backend,
-        workspace,
-        filter,
-        hiddenElements,
-        staticElements,
-        displayAsLabel,
-        withoutApply,
-        enablePreserveSelectionDuringInit,
-    ]);
+    }, [backend, workspace, filter, hiddenElements, staticElements, displayAsLabel, withoutApply]);
 
     if (!handlerRef.current) {
         createNewHandler();

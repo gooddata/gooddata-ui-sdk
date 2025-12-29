@@ -38,7 +38,7 @@ fi
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
 HOST=${HOST:-}
-CYPRESS_TEST_TAGS=checklist_integrated_boiler_tiger
+CYPRESS_TEST_TAGS=checklist_integrated_boiler_tiger_be
 FIXTURE_TYPE=${FIXTURE_TYPE:-}
 FILTER=${FILTER:-}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:-}

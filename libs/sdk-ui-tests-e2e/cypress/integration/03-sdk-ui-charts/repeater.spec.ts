@@ -3,7 +3,7 @@
 import * as Navigation from "../../tools/navigation";
 import { Repeater } from "../../tools/repeater";
 
-describe("Repeater", { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] }, () => {
+describe("Repeater", { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] }, () => {
     it(`Should render apply full customize configurations`, () => {
         Navigation.visit("visualizations/repeater/repeater-full-configs");
         const repeater = new Repeater();
@@ -44,7 +44,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger", "checklist_integrate
 
     it(
         `Should render Dashboard Repeater`,
-        { tags: ["checklist_integrated_tiger_releng", "checklist_integrated_tiger_releng_fe"] },
+        { tags: ["checklist_integrated_tiger_releng_be", "checklist_integrated_tiger_releng_fe"] },
         () => {
             Navigation.visit("visualizations/repeater/repeater-dashboard");
             const repeater = new Repeater();

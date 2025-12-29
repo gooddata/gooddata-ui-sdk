@@ -109,7 +109,6 @@ export const useAttributeFilterController = (
         selectFirst = false,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         withoutApply,
-        enablePreserveSelectionDuringInit,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -164,7 +163,6 @@ export const useAttributeFilterController = (
         staticElements,
         displayAsLabel: displayAsLabel!,
         withoutApply,
-        enablePreserveSelectionDuringInit,
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(
         handler!,

@@ -3846,7 +3846,6 @@ export interface ISettings {
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;
-    enablePreserveFilterSelectionDuringInit?: boolean;
     enableRawExports?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRichTextDynamicReferences?: boolean;

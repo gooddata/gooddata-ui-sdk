@@ -12,7 +12,7 @@ import { Users } from "../../tools/users";
 
 describe(
     "Share Dashboard To Everyone",
-    { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
+    { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] },
     () => {
         const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
         const allUsers = "All users";

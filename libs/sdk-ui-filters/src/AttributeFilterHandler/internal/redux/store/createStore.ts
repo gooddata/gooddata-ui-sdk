@@ -94,7 +94,6 @@ export function createAttributeFilterHandlerStore(
                 hiddenElements: context.hiddenElements,
                 staticElements: context.staticElements,
                 withoutApply: context.withoutApply,
-                enablePreserveSelectionDuringInit: context.enablePreserveSelectionDuringInit,
             },
             originalFilter: context.attributeFilter,
         },
