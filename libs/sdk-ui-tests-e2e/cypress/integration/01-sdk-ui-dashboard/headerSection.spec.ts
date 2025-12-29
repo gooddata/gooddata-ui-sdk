@@ -24,9 +24,9 @@ describe("Header section", () => {
             "can update header for all sections",
             {
                 tags: [
-                    "checklist_integrated_tiger",
+                    "checklist_integrated_tiger_be",
                     "checklist_integrated_tiger_fe",
-                    "checklist_integrated_tiger_releng",
+                    "checklist_integrated_tiger_releng_be",
                     "checklist_integrated_tiger_releng_fe",
                 ],
             },
@@ -90,7 +90,7 @@ describe("Header section", () => {
         //Cover ticket: RAIL-4674
         it(
             "Limitation of title",
-            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
+            { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] },
             () => {
                 cy.fixture("headerDataTest").then((data) => {
                     const title = data["LimitTexts"].title;

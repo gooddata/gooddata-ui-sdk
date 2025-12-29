@@ -3,48 +3,52 @@
 import * as Navigation from "../../tools/navigation";
 import { TableNew } from "../../tools/tableNew";
 
-describe("Table Component", { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] }, () => {
-    const table = new TableNew(".s-table-component-transpose");
+describe(
+    "Table Component",
+    { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] },
+    () => {
+        const table = new TableNew(".s-table-component-transpose");
 
-    it(
-        "should display Metric in row, Column header on top",
-        { tags: ["checklist_integrated_tiger_releng"] },
-        () => {
-            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-top");
-            table
-                .waitLoaded()
-                .hasMetricHeaderInRow(1, 1, "Amount")
-                .hasMetricHeaderInRow(2, 1, "Amount")
-                .hasColumnHeader(0, ["Product"]);
-        },
-    );
+        it(
+            "should display Metric in row, Column header on top",
+            { tags: ["checklist_integrated_tiger_releng_be"] },
+            () => {
+                Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-top");
+                table
+                    .waitLoaded()
+                    .hasMetricHeaderInRow(1, 1, "Amount")
+                    .hasMetricHeaderInRow(2, 1, "Amount")
+                    .hasColumnHeader(0, ["Product"]);
+            },
+        );
 
-    it(
-        "should display Row attribute and Column header on top",
-        { tags: ["checklist_integrated_tiger_releng", "checklist_integrated_tiger_releng_fe"] },
-        () => {
-            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-rc-row-top");
-            table.waitLoaded().hasColumnHeader(0, ["Product"]).hasColumnHeaderOnTop("Forecast Category");
-        },
-    );
+        it(
+            "should display Row attribute and Column header on top",
+            { tags: ["checklist_integrated_tiger_releng_be", "checklist_integrated_tiger_releng_fe"] },
+            () => {
+                Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-rc-row-top");
+                table.waitLoaded().hasColumnHeader(0, ["Product"]).hasColumnHeaderOnTop("Forecast Category");
+            },
+        );
 
-    it("should display Row header on top", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-r-row-top");
-        table.waitLoaded().hasColumnHeader(0, ["Product"]);
-    });
+        it("should display Row header on top", () => {
+            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-r-row-top");
+            table.waitLoaded().hasColumnHeader(0, ["Product"]);
+        });
 
-    it("should display Metric in row", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-m-row-top");
-        table.waitLoaded().hasMetricHeaderInRow(0, 0, "Amount").hasCellValue(0, 1, "$116,625,456.54");
-    });
+        it("should display Metric in row", () => {
+            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-m-row-top");
+            table.waitLoaded().hasMetricHeaderInRow(0, 0, "Amount").hasCellValue(0, 1, "$116,625,456.54");
+        });
 
-    it("should display Column header on top", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-c-left");
-        table.isLoaded().hasColumnHeaderOnTop("Forecast Category");
-    });
-});
+        it("should display Column header on top", () => {
+            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-c-left");
+            table.isLoaded().hasColumnHeaderOnTop("Forecast Category");
+        });
+    },
+);
 
-describe("Insight View", { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] }, () => {
+describe("Insight View", { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] }, () => {
     const table = new TableNew(".s-insight-view-transpose");
 
     // TODO: skip this because of bug https://gooddata.atlassian.net/browse/F1-2003

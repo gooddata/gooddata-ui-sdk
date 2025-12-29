@@ -71,7 +71,6 @@ export interface AttributeFilterState {
         hiddenElements?: string[];
         staticElements?: IAttributeElement[];
         withoutApply?: boolean;
-        enablePreserveSelectionDuringInit?: boolean;
     };
     originalFilter?: IAttributeFilter;
 }

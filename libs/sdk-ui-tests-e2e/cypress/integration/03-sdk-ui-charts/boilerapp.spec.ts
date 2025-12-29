@@ -10,7 +10,7 @@ describe("Boiler app Chart", () => {
 
     it(
         `check boiler app tiger`,
-        { tags: ["checklist_integrated_boiler_tiger", "checklist_integrated_boiler_bear"] },
+        { tags: ["checklist_integrated_boiler_tiger_be", "checklist_integrated_boiler_bear"] },
         () => {
             const headline = new Headline(".insight-view-visualization .headline");
             headline.waitLoaded();

@@ -26,9 +26,9 @@ describe("Available value filter", () => {
         "should add metric filter by",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },
@@ -92,9 +92,9 @@ describe("Available value filter", () => {
         "should extend attribute filter by date filter",
         {
             tags: [
-                "checklist_integrated_tiger",
+                "checklist_integrated_tiger_be",
                 "checklist_integrated_tiger_fe",
-                "checklist_integrated_tiger_releng",
+                "checklist_integrated_tiger_releng_be",
                 "checklist_integrated_tiger_releng_fe",
             ],
         },

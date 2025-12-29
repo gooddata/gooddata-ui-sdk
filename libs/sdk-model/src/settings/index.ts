@@ -676,11 +676,6 @@ export interface ISettings {
     enableImplicitDrillToUrl?: boolean;
 
     /**
-     * Enable preserving filter selection during initialization
-     */
-    enablePreserveFilterSelectionDuringInit?: boolean;
-
-    /**
      * Enable anomaly detection alert
      */
     enableAnomalyDetectionAlert?: boolean;

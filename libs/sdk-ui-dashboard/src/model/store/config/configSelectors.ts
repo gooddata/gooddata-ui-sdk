@@ -972,18 +972,6 @@ export const selectEnableImplicitDrillToUrl: DashboardSelector<boolean> = create
 );
 
 /**
- * Returns whether preserving filter selection during initialization is enabled.
- *
- * @alpha
- */
-export const selectEnablePreserveFilterSelectionDuringInit: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enablePreserveFilterSelectionDuringInit ?? false;
-    },
-);
-
-/**
  * Returns the timeout to use when polling for export results (in milliseconds).
  *
  * @alpha

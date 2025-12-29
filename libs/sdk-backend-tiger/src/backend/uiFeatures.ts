@@ -128,7 +128,6 @@ export enum TigerFeaturesNames {
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableDashboardTabs = "enableDashboardTabs",
     EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
-    EnablePreserveFilterSelectionDuringInit = "enablePreserveFilterSelectionDuringInit",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
     EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
@@ -256,7 +255,6 @@ export type ITigerFeatureFlags = {
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
     enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
-    enablePreserveFilterSelectionDuringInit: (typeof FeatureFlagsValues)["enablePreserveFilterSelectionDuringInit"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
     enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
@@ -384,7 +382,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     aiChatSearchLimit: undefined,
     enableDashboardTabs: true,
     enablePivotTableAutoSizeReset: true,
-    enablePreserveFilterSelectionDuringInit: false,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
@@ -513,7 +510,6 @@ export const FeatureFlagsValues = {
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableDashboardTabs: [true, false] as const,
     enablePivotTableAutoSizeReset: [true, false] as const,
-    enablePreserveFilterSelectionDuringInit: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
     enableAnomalyDetectionAlert: [true, false] as const,

@@ -9,7 +9,7 @@ const TOOLTIP_TITLE_CSS = ".gd-viz-tooltip-title";
 
 describe(
     "Shorten Metric Name",
-    { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_fe"] },
+    { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] },
     () => {
         it(`check shorten in legend and tooltip in chart`, () => {
             Navigation.visit("visualizations/shortenmetricname/shorten-metric-name-chart-scenario");
