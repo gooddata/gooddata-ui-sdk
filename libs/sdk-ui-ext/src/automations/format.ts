@@ -105,7 +105,8 @@ export const formatAutomationUser = (user?: IUser) => {
 export const formatDate = (date: string, timeZone: string, format = DATE_FORMAT_HYPHEN) => {
     if (!date) return "";
 
-    return moment(date).tz(timeZone).format(format);
+    //moment.utc respects explicit offsets but parses naive dates as UTC
+    return moment.utc(date).tz(timeZone).format(format);
 };
 
 export function formatCellValue(
