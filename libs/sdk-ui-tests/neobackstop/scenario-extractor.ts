@@ -1,36 +1,36 @@
 // (C) 2025 GoodData Corporation
 
-import { createServer } from "vite";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
-import storiesToScenarios from "./scenarios.config";
+
+import { createServer } from "vite";
+
+import { storiesToScenarios } from "./scenarios.config.js";
 
 import "./mockWindow.js";
 
-(async () => {
-    // Create vite server in middleware mode for SSR
-    const server = await createServer({
-        server: { middlewareMode: true },
-        configFile: "./vite.config.ts",
-    });
+// Create vite server in middleware mode for SSR
+const server = await createServer({
+    server: { middlewareMode: true },
+    configFile: "./vite.config.ts",
+});
 
-    try {
-        // Import your existing toBackstopJson function via Vite's SSR loader
-        const modulePath = resolve(__dirname, "../stories/_infra/toBackstop.ts");
-        const toBackstop = await server.ssrLoadModule(modulePath);
+try {
+    // Import your existing toBackstopJson function via Vite's SSR loader
+    const modulePath = resolve(__dirname, "../stories/_infra/toBackstop.ts");
+    const toBackstop = await server.ssrLoadModule(modulePath);
 
-        // Call the function exactly as before
-        const stories = await toBackstop.toBackstopJson();
+    // Call the function exactly as before
+    const stories = await toBackstop["toBackstopJson"]();
 
-        const scenarios = storiesToScenarios(stories);
+    const scenarios = storiesToScenarios(stories);
 
-        writeFileSync("./neobackstop/scenarios.json", JSON.stringify(scenarios, null, 4), "utf-8");
+    writeFileSync("./neobackstop/scenarios.json", JSON.stringify(scenarios, null, 4), "utf-8");
 
-        await server.close();
-        process.exit(0);
-    } catch (err) {
-        console.error("❌ Failed to extract stories to JSON:", err);
-        await server.close();
-        process.exit(1);
-    }
-})();
+    await server.close();
+    process.exit(0);
+} catch (err) {
+    console.error("❌ Failed to extract stories to JSON:", err);
+    await server.close();
+    process.exit(1);
+}

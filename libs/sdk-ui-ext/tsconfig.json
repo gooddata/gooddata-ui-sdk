@@ -1,10 +1,9 @@
 {
-    "extends": "./tsconfig.build.json",
-    "exclude": ["node_modules", "../../common/temp"],
-    "include": ["src/**/*", "*.{ts,tsx}"],
+    "extends": "../tsconfig.react.json",
     "compilerOptions": {
-        "rootDir": "./",
         "noEmit": true,
-        "types": ["./vitest-matchers.d.ts"]
+        "skipLibCheck": true,
+        "types": ["./vitest-matchers.d.ts"],
+        "strictNullChecks": false
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -8,7 +8,7 @@ import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 import { hasGeoLayerContext } from "../../layers/execution/layerContext.js";
 import { type GeoLayerType, type IGeoLayer } from "../../types/layers/index.js";
 import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
-import { isRecord } from "../../utils/guards.js";
+import { createExecutionBucketsFingerprint } from "../../utils/fingerprint.js";
 
 type WithoutExecutions<T> = Omit<T, "execution" | "executions">;
 
@@ -17,6 +17,24 @@ type WithoutExecutions<T> = Omit<T, "execution" | "executions">;
  */
 interface IPropsWithLayerType {
     type?: GeoLayerType;
+}
+
+function executionContextFingerprint(execution: IPreparedExecution): string {
+    if (!hasGeoLayerContext(execution)) {
+        return "";
+    }
+
+    const { id, type, name } = execution.context;
+    return `${type}:${id}:${name ?? ""}`;
+}
+
+function executionNormalizationFingerprint(execution: IPreparedExecution, index: number): string {
+    return [
+        index,
+        execution.fingerprint(),
+        createExecutionBucketsFingerprint(execution),
+        executionContextFingerprint(execution),
+    ].join("|");
 }
 
 /**
@@ -82,42 +100,18 @@ function ensureUniqueLayerId(layer: IGeoLayer, usedIds: Set<string>, index: numb
 
 /**
  * Tries to extract a layer definition from an execution's context.
- * Even if the context is not a complete IGeoLayer, we try to preserve
- * as much information as possible (type, properties, etc).
+ * Unsupported context shapes are ignored; a minimal fallback layer is created.
  *
  * @internal
  */
 function extractLayerFromContext(
-    execution: IPreparedExecution,
+    _execution: IPreparedExecution,
     index: number,
     fallbackType: GeoLayerType,
     usedIds: Set<string>,
 ): IGeoLayer {
-    const context = execution.context;
-
-    // If no context at all, create minimal fallback
-    if (!isRecord(context)) {
-        const id = generateUniqueId(`${fallbackType}-layer-${index}`, usedIds);
-        return createMinimalLayer(id, fallbackType);
-    }
-
-    // Extract type from context if available
-    const contextType = context["type"];
-    const layerType: GeoLayerType =
-        contextType === "pushpin" || contextType === "area" ? contextType : fallbackType;
-
-    // Generate or fix the ID
-    const contextId = context["id"];
-    const hasValidId = typeof contextId === "string" && contextId.length > 0 && !usedIds.has(contextId);
-    const id = hasValidId ? contextId : generateUniqueId(`${layerType}-layer-${index}`, usedIds);
-
-    // Preserve all context properties and ensure required fields are set
-    // This maintains layer configuration (filters, sortBy, etc.) even if some fields were missing
-    return {
-        ...context,
-        id,
-        type: layerType,
-    } as IGeoLayer;
+    const id = generateUniqueId(`${fallbackType}-layer-${index}`, usedIds);
+    return createMinimalLayer(id, fallbackType);
 }
 
 /**
@@ -157,14 +151,27 @@ function createMinimalLayer(id: string, type: GeoLayerType): IGeoLayer {
  * @internal
  */
 export function useNormalizedLayerExecutions<
-    TCoreProps extends IDataVisualizationProps & IPropsWithLayerType,
+    TCoreProps extends IDataVisualizationProps & IPropsWithLayerType & { backend?: unknown },
 >(props: TCoreProps): INormalizedLayerExecutions<WithoutExecutions<TCoreProps>> {
-    const { execution, executions, type: rootLayerType, ...coreProps } = props;
+    const { execution, executions, type: rootLayerType } = props;
 
-    return useMemo(() => {
+    const normalizationFingerprint = [
+        rootLayerType ?? "",
+        executionNormalizationFingerprint(execution, 0),
+        ...(executions ?? []).map((e, index) => executionNormalizationFingerprint(e, index + 1)),
+    ].join("||");
+
+    const layerExecutionsCache = useMemo(() => new Map<string, ILayerExecutionRecord[]>(), []);
+
+    const layerExecutions = useMemo(() => {
+        const cached = layerExecutionsCache.get(normalizationFingerprint);
+        if (cached) {
+            return cached;
+        }
+
         const allExecutions = [execution, ...(executions ?? [])];
 
-        const layerExecutions: ILayerExecutionRecord[] = [];
+        const normalizedLayerExecutions: ILayerExecutionRecord[] = [];
         const usedIds = new Set<string>();
 
         allExecutions.forEach((candidate, index) => {
@@ -187,20 +194,32 @@ export function useNormalizedLayerExecutions<
 
             usedIds.add(layer.id);
 
-            layerExecutions.push({
+            normalizedLayerExecutions.push({
                 layerId: layer.id,
                 layer,
                 execution: candidate,
             });
         });
 
-        const layers = layerExecutions.map((record) => record.layer);
+        // Prevent unbounded growth in case the fingerprint changes frequently.
+        // The cache is only used to stabilize outputs and avoid flicker.
+        if (layerExecutionsCache.size > 20) {
+            layerExecutionsCache.clear();
+        }
+        layerExecutionsCache.set(normalizationFingerprint, normalizedLayerExecutions);
 
-        const propsWithLayers = {
-            ...coreProps,
+        return normalizedLayerExecutions;
+    }, [layerExecutionsCache, normalizationFingerprint, execution, executions, rootLayerType]);
+
+    const layers = useMemo(() => layerExecutions.map((record) => record.layer), [layerExecutions]);
+
+    const propsWithLayers = useMemo(() => {
+        const { execution: _execution, executions: _executions, type: _type, ...rest } = props;
+        return {
+            ...rest,
             layers,
         } as WithoutExecutions<TCoreProps> & { layers: IGeoLayer[] };
+    }, [props, layers]);
 
-        return { layerExecutions, propsWithLayers };
-    }, [execution, executions, rootLayerType, coreProps]);
+    return { layerExecutions, propsWithLayers };
 }

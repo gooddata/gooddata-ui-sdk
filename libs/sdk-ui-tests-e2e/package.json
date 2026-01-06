@@ -45,9 +45,9 @@
         "dev": "bash scripts/build.sh --dev-watch",
         "docker-build": "docker build --file Dockerfile -t gooddata-ui-sdk .",
         "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
-        "eslint": "eslint -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
-        "eslint-fix": "eslint -c .eslintrc.cjs --ext js,jsx,ts,tsx ./ --fix",
+        "eslint": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore .",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ignore-path ../.eslintignore .",
+        "eslint-fix": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore . --fix",
         "export-fixture": "node ./reference_workspace/export_workspace_fixture.js",
         "local-dev-test-visual": "node ./scripts/run_local_dev_isolated.js",
         "local-dev-test-visual-recordings": "node ./scripts/run_local_dev_isolated.js --with-recordings",
@@ -55,8 +55,8 @@
         "local-dev-wiremock-proxy": "node ./scripts/run_local_dev_wiremock.js --proxy",
         "local-dev-wiremock-proxy-verbose": "node ./scripts/run_local_dev_wiremock.js --proxy --verbose",
         "prepare-recording-workspace-id": "node ./reference_workspace/prepareRecordingWorkspaceId.js",
-        "prettier-check": "prettier --check './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check './**/*.{cjs,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write './**/*.{cjs,json,scss,md,yaml,html}'",
         "run-integrated": "node ./scripts/run_integrated.js",
         "run-isolated": "docker compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
         "run-isolated-ci": "npm run prepare-recording-workspace-id && npm run docker-build && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
@@ -66,9 +66,6 @@
         "start-scenarios": "cd scenarios && vite dev",
         "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace",
         "validate": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check"
-    },
-    "config": {
-        "eslint": "-c .eslintrc.cjs --ext js,jsx,ts,tsx ./"
     },
     "devDependencies": {
         "@babel/core": "^7.23.5",

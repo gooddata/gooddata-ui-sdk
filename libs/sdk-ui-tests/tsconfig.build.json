@@ -1,14 +1,7 @@
 {
     "extends": "../tsconfig.react.json",
-    "exclude": ["**/tests", "**/test"],
-    "include": [
-        "src/**/*",
-        "src/**/*.json",
-        "scenarios/**/*",
-        "scenarios/**/*.json",
-        "stories/**/*",
-        "stories/**/*.json"
-    ],
+    "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+    "include": ["src/**/*", "scenarios/**/*", "stories/**/*"],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDirs": ["./src", "./scenarios", "./stories"],

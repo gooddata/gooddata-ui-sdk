@@ -1,8 +1,0 @@
-# (C) 2022 GoodData Corporation
-node_modules
-dist
-esm
-cypress/results
-cypress/screenshots
-cypress/videos
-**/build

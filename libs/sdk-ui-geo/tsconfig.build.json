@@ -1,7 +1,7 @@
 {
     "extends": "../tsconfig.react.json",
-    "exclude": ["**/tests", "**/tests/**/*", "**/test", "**/test/**/*", "**/*.test.ts", "**/*.test.tsx"],
-    "include": ["src/**/*", "src/**/*.json", "scripts/validateCss.js"],
+    "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+    "include": ["src/**/*"],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",

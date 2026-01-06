@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.15.0-alpha.12",
+    "version": "11.15.0-alpha.13",
     "description": "GoodData SDK - Reference Workspace for tests",
     "repository": {
         "type": "git",
@@ -32,8 +32,8 @@
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "export-ref-workspace": "cd ../reference-workspace-mgmt && npm run export-ref-workspace",
         "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
         "refresh-md": "../reference-workspace-mgmt/bin/refresh-md.sh && npm run build",
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run prettier-write && npm run build",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check"

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "11.15.0-alpha.12",
+    "version": "11.15.0-alpha.13",
     "description": "GoodData SDK - All-In-One",
     "repository": {
         "type": "git",
@@ -26,17 +26,17 @@
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "tsc -p tsconfig.json && npm run api-extractor",
+        "build": "tsc -p tsconfig.build.json && npm run api-extractor",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "eslint": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore .",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ignore-path ../.eslintignore .",
+        "eslint-fix": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore . --fix",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "validate": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check"
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
+        "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",

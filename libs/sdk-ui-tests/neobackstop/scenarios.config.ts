@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /*
  * BackstopJS global configuration for scenarios created for storybook stories.
  *
@@ -19,7 +21,7 @@
  * If no config matches the scenario ID, then the scenario will not be tested using BackstopJS
  */
 
-import { IStoryInfo } from "../stories/_infra/toBackstop";
+import { type IStoryInfo } from "../stories/_infra/toBackstop.js";
 
 const ScenarioConfig = [
     {
@@ -111,15 +113,15 @@ const ScenarioConfig = [
 // there should be no need to touch these when customizing backstop scenarios config for stories
 // --------------------------------------------------------------------
 
-function scenarioLabel(storyKind: string, storyName: string, scenarioName: string) {
+function scenarioLabel(storyKind: string, storyName: string, scenarioName?: string) {
     const storyDerivedName = `${storyKind} - ${storyName}`;
 
-    return scenarioName !== undefined ? `${storyDerivedName} - ${scenarioName}` : storyDerivedName;
+    return scenarioName === undefined ? storyDerivedName : `${storyDerivedName} - ${scenarioName}`;
 }
 
 function scenarioUrlForId(id: string) {
     // see docker-compose-neobackstop.yaml for the network name, to hide watermark in tests we need localhost or ag-grid.com
-    return `http://${process.env.DOCKER === "true" ? "ag-grid.com" : "localhost"}:8080/iframe.html?id=${encodeURIComponent(id)}`;
+    return `http://${process.env["DOCKER"] === "true" ? "ag-grid.com" : "localhost"}:8080/iframe.html?id=${encodeURIComponent(id)}`;
 }
 
 /**
@@ -127,10 +129,10 @@ function scenarioUrlForId(id: string) {
  * to associate to scenarios automatically created for storybook stories. The association is done based on
  * story kind & name regex match.
  *
- * @param kind story kind
- * @param name story name
+ * @param kind - story kind
+ * @param name - story name
  */
-function scenarioGlobalConfig(kind, name) {
+function scenarioGlobalConfig(kind: string, name: string) {
     const id = `${kind}_${name}`;
 
     const configurations = ScenarioConfig.filter(({ idRegex }) => {
@@ -147,7 +149,7 @@ function scenarioGlobalConfig(kind, name) {
     return object;
 }
 
-export default (stories: IStoryInfo[]) => {
+export function storiesToScenarios(stories: IStoryInfo[]) {
     return stories
         .map((story) => {
             const { storyId, storyKind, storyName, scenarioName, scenarioConfig: localConfig } = story;
@@ -182,4 +184,4 @@ export default (stories: IStoryInfo[]) => {
             };
         })
         .filter((scenario) => scenario !== undefined);
-};
+}

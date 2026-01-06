@@ -50,7 +50,48 @@
         ],
         "filters": [],
         "identifier": "PivotTableNext.03402d49a1a4ee909a0f839253891d15",
-        "properties": { "controls": {} },
+        "properties": {
+            "controls": {
+                "columnWidths": [
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": {
+                                "measureLocatorItem": {
+                                    "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                                }
+                            },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": {
+                                "measureLocatorItem": {
+                                    "measureIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"
+                                }
+                            },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "measureColumnWidthItem": {
+                            "locator": {
+                                "measureLocatorItem": {
+                                    "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3"
+                                }
+                            },
+                            "width": { "value": 100 }
+                        }
+                    },
+                    {
+                        "attributeColumnWidthItem": {
+                            "attributeIdentifier": "a_label.f_product.product.name",
+                            "width": { "value": 120 }
+                        }
+                    }
+                ]
+            }
+        },
         "sorts": [
             {
                 "measureSortItem": {

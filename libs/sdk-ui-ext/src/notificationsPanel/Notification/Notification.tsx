@@ -140,7 +140,7 @@ export function Notification({
     };
 
     return (
-        <BubbleHoverTrigger enabled={hasExports && !isExpired ? !isError : null}>
+        <BubbleHoverTrigger enabled={hasExports && !isExpired ? !isError : undefined}>
             <div
                 className={b({ isRead: notification.isRead })}
                 onClick={handleNotificationClick}

@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 
 import { type IDashboardLayout } from "@gooddata/sdk-model";
 
-import { type ExtendedDashboardWidget } from "src/model/index.js";
-
 import { NESTED_LAYOUT } from "./coordinates.mock.js";
+import { type ExtendedDashboardWidget } from "../../../model/index.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
 import {
     areItemsInSameSection,

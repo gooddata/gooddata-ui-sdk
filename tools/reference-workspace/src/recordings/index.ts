@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 /* eslint-disable import/order */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-08T12:36:48.130Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-26T19:14:53.550Z; */
 
 import fp_004031cbc9081950b7284311b004fe11_definition from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json" with { type: "json" };
 import fp_004031cbc9081950b7284311b004fe11_executionResult from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json" with { type: "json" };
@@ -20,6 +20,16 @@ const fp_005a4c2e17417f0c5780fb84d4bb7490 = {
     definition: fp_005a4c2e17417f0c5780fb84d4bb7490_definition,
     executionResult: fp_005a4c2e17417f0c5780fb84d4bb7490_executionResult,
     dataView_o0_0s100_1000: fp_005a4c2e17417f0c5780fb84d4bb7490_dataView_o0_0s100_1000,
+};
+import fp_0087d8270a7e1f41ada5177a2f88205e_definition from "./uiTestScenarios/executions/0087d8270a7e1f41ada5177a2f88205e/definition.json" with { type: "json" };
+import fp_0087d8270a7e1f41ada5177a2f88205e_executionResult from "./uiTestScenarios/executions/0087d8270a7e1f41ada5177a2f88205e/executionResult.json" with { type: "json" };
+import fp_0087d8270a7e1f41ada5177a2f88205e_dataView_o0_0s100_1000 from "./uiTestScenarios/executions/0087d8270a7e1f41ada5177a2f88205e/dataView_o0_0s100_1000.json" with { type: "json" };
+import fp_0087d8270a7e1f41ada5177a2f88205e_scenarios from "./uiTestScenarios/executions/0087d8270a7e1f41ada5177a2f88205e/scenarios.json" with { type: "json" };
+const fp_0087d8270a7e1f41ada5177a2f88205e = {
+    definition: fp_0087d8270a7e1f41ada5177a2f88205e_definition,
+    executionResult: fp_0087d8270a7e1f41ada5177a2f88205e_executionResult,
+    dataView_o0_0s100_1000: fp_0087d8270a7e1f41ada5177a2f88205e_dataView_o0_0s100_1000,
+    scenarios: fp_0087d8270a7e1f41ada5177a2f88205e_scenarios,
 };
 import fp_0095badec8cf82cef537c0075a4329d8_definition from "./uiTestScenarios/executions/0095badec8cf82cef537c0075a4329d8/definition.json" with { type: "json" };
 import fp_0095badec8cf82cef537c0075a4329d8_executionResult from "./uiTestScenarios/executions/0095badec8cf82cef537c0075a4329d8/executionResult.json" with { type: "json" };
@@ -1100,12 +1110,14 @@ const fp_798df950f4dbb5d1df536bb33ba80a11 = {
 import fp_7aacee42d5804a99f3dab100b0a5669e_definition from "./uiTestScenarios/executions/7aacee42d5804a99f3dab100b0a5669e/definition.json" with { type: "json" };
 import fp_7aacee42d5804a99f3dab100b0a5669e_executionResult from "./uiTestScenarios/executions/7aacee42d5804a99f3dab100b0a5669e/executionResult.json" with { type: "json" };
 import fp_7aacee42d5804a99f3dab100b0a5669e_dataView_o0_0s100_1000 from "./uiTestScenarios/executions/7aacee42d5804a99f3dab100b0a5669e/dataView_o0_0s100_1000.json" with { type: "json" };
+import fp_7aacee42d5804a99f3dab100b0a5669e_dataView_o0_0s5_1000 from "./uiTestScenarios/executions/7aacee42d5804a99f3dab100b0a5669e/dataView_o0_0s5_1000.json" with { type: "json" };
 import fp_7aacee42d5804a99f3dab100b0a5669e_dataView_o0_0s22_1000 from "./uiTestScenarios/executions/7aacee42d5804a99f3dab100b0a5669e/dataView_o0_0s22_1000.json" with { type: "json" };
 import fp_7aacee42d5804a99f3dab100b0a5669e_scenarios from "./uiTestScenarios/executions/7aacee42d5804a99f3dab100b0a5669e/scenarios.json" with { type: "json" };
 const fp_7aacee42d5804a99f3dab100b0a5669e = {
     definition: fp_7aacee42d5804a99f3dab100b0a5669e_definition,
     executionResult: fp_7aacee42d5804a99f3dab100b0a5669e_executionResult,
     dataView_o0_0s100_1000: fp_7aacee42d5804a99f3dab100b0a5669e_dataView_o0_0s100_1000,
+    dataView_o0_0s5_1000: fp_7aacee42d5804a99f3dab100b0a5669e_dataView_o0_0s5_1000,
     dataView_o0_0s22_1000: fp_7aacee42d5804a99f3dab100b0a5669e_dataView_o0_0s22_1000,
     scenarios: fp_7aacee42d5804a99f3dab100b0a5669e_scenarios,
 };
@@ -1739,12 +1751,14 @@ const fp_c2b850d7baff511e45e237d6707d5f7c = {
 };
 import fp_c2ed90caa1677729885f2f90df6bdd73_definition from "./uiTestScenarios/executions/c2ed90caa1677729885f2f90df6bdd73/definition.json" with { type: "json" };
 import fp_c2ed90caa1677729885f2f90df6bdd73_executionResult from "./uiTestScenarios/executions/c2ed90caa1677729885f2f90df6bdd73/executionResult.json" with { type: "json" };
+import fp_c2ed90caa1677729885f2f90df6bdd73_dataView_o0_0s5_1000 from "./uiTestScenarios/executions/c2ed90caa1677729885f2f90df6bdd73/dataView_o0_0s5_1000.json" with { type: "json" };
 import fp_c2ed90caa1677729885f2f90df6bdd73_dataView_o0_0s100_1000 from "./uiTestScenarios/executions/c2ed90caa1677729885f2f90df6bdd73/dataView_o0_0s100_1000.json" with { type: "json" };
 import fp_c2ed90caa1677729885f2f90df6bdd73_dataView_o0_0s22_1000 from "./uiTestScenarios/executions/c2ed90caa1677729885f2f90df6bdd73/dataView_o0_0s22_1000.json" with { type: "json" };
 import fp_c2ed90caa1677729885f2f90df6bdd73_scenarios from "./uiTestScenarios/executions/c2ed90caa1677729885f2f90df6bdd73/scenarios.json" with { type: "json" };
 const fp_c2ed90caa1677729885f2f90df6bdd73 = {
     definition: fp_c2ed90caa1677729885f2f90df6bdd73_definition,
     executionResult: fp_c2ed90caa1677729885f2f90df6bdd73_executionResult,
+    dataView_o0_0s5_1000: fp_c2ed90caa1677729885f2f90df6bdd73_dataView_o0_0s5_1000,
     dataView_o0_0s100_1000: fp_c2ed90caa1677729885f2f90df6bdd73_dataView_o0_0s100_1000,
     dataView_o0_0s22_1000: fp_c2ed90caa1677729885f2f90df6bdd73_dataView_o0_0s22_1000,
     scenarios: fp_c2ed90caa1677729885f2f90df6bdd73_scenarios,
@@ -2322,6 +2336,245 @@ export const Scenarios = {
             execution: fp_fa9ce8aba21b38cbed227af04fbaa1e7,
         },
     },
+    PivotTableNext: {
+        TwoMeasuresAndGrandTotalsAndMultipleSubtotals: {
+            scenarioIndex: 0,
+            execution: fp_6ef5731c63a579f03fde4a9b01f7c607,
+        },
+        SingleMeasureAndSingleColumnGrandTotal: {
+            scenarioIndex: 1,
+            execution: fp_08a6c636ea0d007de91e886fc9fbd1bb,
+        },
+        TwoMeasuresAndOneSubtotal: { scenarioIndex: 1, execution: fp_10a1791bf91af3f9d71fec403da50bfc },
+        TwoMeasuresWithThreeRowsAndTwoColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_12d1eb593ce811011cea335d45b4e7d9,
+        },
+        TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute: {
+            scenarioIndex: 1,
+            execution: fp_17e1400e22cf959015e4be5bdb618c37,
+        },
+        WithTwoSameDates: { scenarioIndex: 1, execution: fp_1dee8e67d6f87c8f37dce28126fc893e },
+        TwoMeasuresAndMultipleGrandTotalsForEach: {
+            scenarioIndex: 1,
+            execution: fp_b15be8f3c2c0e721956f0563e80f2e07,
+        },
+        SingleAttribute: { scenarioIndex: 1, execution: fp_245cabd1fb1f98e24cd680cc9c52254b },
+        MultipleMeasuresAndNoColumnsWithTotals: {
+            scenarioIndex: 0,
+            execution: fp_dcaded12a70ed9c7556c96b4d4d54763,
+        },
+        SingleMeasurePivotSortedByFirstAndSecondRowAttr: {
+            scenarioIndex: 0,
+            execution: fp_300c0b908199156a328388972230be9a,
+        },
+        TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
+            scenarioIndex: 1,
+            execution: fp_6d744aacff949cf033683d86262b4e77,
+        },
+        MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
+            scenarioIndex: 1,
+            execution: fp_38b3cbb3e3c8b075d1b11de44c78a01e,
+        },
+        WithDateFilter: { scenarioIndex: 1, execution: fp_4765fcec9e0cf6a0f6474dfcc89346f9 },
+        SingleMeasure: { scenarioIndex: 10, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+        SingleMeasureAndMultipleGrandTotals: {
+            scenarioIndex: 1,
+            execution: fp_93b4400696ea330b3d49c0506eb90538,
+        },
+        SingleMeasureAndMultipleColumnGrandTotals: {
+            scenarioIndex: 0,
+            execution: fp_50c6b990ee6e7496159726ebb00e82e7,
+        },
+        TwoMeasuresAndMultipleColumnGrandTotalsForEach: {
+            scenarioIndex: 1,
+            execution: fp_b30b06df758636e35e03b96a9662e53f,
+        },
+        TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals: {
+            scenarioIndex: 1,
+            execution: fp_55a6a5d0f818f5a7676513e4378a2868,
+        },
+        TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals: {
+            scenarioIndex: 0,
+            execution: fp_f1e4efd7d700c6c819fa3568fc9bcae8,
+        },
+        MultipleMeasuresAndNoRowsWithTotals: {
+            scenarioIndex: 2,
+            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
+        },
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: {
+            scenarioIndex: 3,
+            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
+        },
+        TwoMeasuresAndOneColumnRowSubtotal: {
+            scenarioIndex: 1,
+            execution: fp_57e4abf06e14ca7c6ca589f5ba620932,
+        },
+        TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
+            scenarioIndex: 1,
+            execution: fp_628456d9adb09d97807468db6d357f34,
+        },
+        TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute: {
+            scenarioIndex: 1,
+            execution: fp_63e53a643477c7f0a1e4b96443d1a072,
+        },
+        TwoMeasures: { scenarioIndex: 6, execution: fp_681fd174545bf5e693b9b0df873870cb },
+        SingleMeasurePivotSortedBySecondRowAttr: {
+            scenarioIndex: 1,
+            execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
+        },
+        TwoMeasuresWithColumnAttribute: { scenarioIndex: 1, execution: fp_6b38289e3de520261ba662868a3bc5ba },
+        ArithmeticMeasures: { scenarioIndex: 1, execution: fp_70330fa367d33c4c428d5d3e54df8eb9 },
+        TwoMeasuresAndMultipleSubtotals: { scenarioIndex: 1, execution: fp_743dad3dce349764d1e2617b3e87026f },
+        TwoMeasuresAndMultipleColumnSubtotals: {
+            scenarioIndex: 1,
+            execution: fp_77f869ae69c392717c13b188e2074842,
+        },
+        TwoMeasuresAndSingleGrandTotalForEach: {
+            scenarioIndex: 1,
+            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
+        },
+        PaginationWith5RowsPerPageAndTotals: {
+            scenarioIndex: 2,
+            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
+        },
+        GrandTotalsPinnedAtBottomDefault: {
+            scenarioIndex: 3,
+            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
+        },
+        GrandTotalsPinnedAtTop: { scenarioIndex: 4, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+        GrandTotalsAtBottomNotPinned: { scenarioIndex: 5, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+        GrandTotalsAtTopNotPinned: { scenarioIndex: 6, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+        TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows: {
+            scenarioIndex: 0,
+            execution: fp_dfeebd400b7a16d1e3c434152fc9dd09,
+        },
+        SingleMeasureWithRowAndColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_8c58de518b0e42711e9379cce480a63b,
+        },
+        TwoMeasuresWithRowAndColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_8eaf6e86ea212a22493eb7c06370a1b1,
+        },
+        WithAttributesWithoutMeasures: { scenarioIndex: 1, execution: fp_956c1be097a9bb7880556e5ba651ad33 },
+        SingleMeasurePivotSortedByFirstRowAttr: {
+            scenarioIndex: 1,
+            execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
+        },
+        SingleMeasureWithColumnAttribute: {
+            scenarioIndex: 1,
+            execution: fp_9bcc3db7967bd54930a357186a0d39f9,
+        },
+        SingleMeasureAndSingleGrandTotal: {
+            scenarioIndex: 1,
+            execution: fp_a49032eb49179fa4f6f56427072f88bf,
+        },
+        SingleMeasureWithTwoRowAndTwoColumnAttributes: {
+            scenarioIndex: 4,
+            execution: fp_aea45a374b1f55e749275b328e30d94d,
+        },
+        EmptyValues: { scenarioIndex: 5, execution: fp_aea45a374b1f55e749275b328e30d94d },
+        TableWithMultipleMeasureColumnsAndWeakMeasureSize: {
+            scenarioIndex: 6,
+            execution: fp_aea45a374b1f55e749275b328e30d94d,
+        },
+        TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute: {
+            scenarioIndex: 1,
+            execution: fp_b01bccbf9167508268b7a901b4ccd063,
+        },
+        TwoMeasuresWithTwoRowAndOneColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_b034871dc7b2c8d7d9fc10a81b1b5fae,
+        },
+        SingleMeasureAndMultipleColumnRowGrandTotals: {
+            scenarioIndex: 1,
+            execution: fp_b3727c142e53427d1ac555b048019f88,
+        },
+        TwoMeasuresAndSingleColumnGrandTotalForOne: {
+            scenarioIndex: 1,
+            execution: fp_b8402b07097387493122f955cdae5e61,
+        },
+        TwoMeasuresAndOneColumnSubtotal: { scenarioIndex: 1, execution: fp_ba1ccbfca6ce3c9311d8becc13b28093 },
+        SingleMeasureWithRowAttribute: { scenarioIndex: 4, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
+        SingleMeasureWithTwoRowAndOneColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_bd4b4956516e1f429c2344f9b263c8df,
+        },
+        TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals: {
+            scenarioIndex: 0,
+            execution: fp_e2854c55ab10a6e23413a2322183ae8b,
+        },
+        OneMeasureAndRepeatingRowAttributesOnDifferentPositions: {
+            scenarioIndex: 1,
+            execution: fp_c1444f217c8e0aecfb14f64996bd7b7e,
+        },
+        TwoMeasuresWithTwoRowAndTwoColumnAttributes: {
+            scenarioIndex: 1,
+            execution: fp_c2ed90caa1677729885f2f90df6bdd73,
+        },
+        PaginationWith5RowsPerPage: { scenarioIndex: 2, execution: fp_c2ed90caa1677729885f2f90df6bdd73 },
+        TwoMeasuresAndSingleGrandTotalForOne: {
+            scenarioIndex: 1,
+            execution: fp_c32086d6716aa4b42b64be41f1dbdd04,
+        },
+        SingleColumn: { scenarioIndex: 1, execution: fp_c4c31413a7b65502296aba901f6b50f8 },
+        TwoMeasuresAndSingleColumnRowGrandTotalForEach: {
+            scenarioIndex: 1,
+            execution: fp_cd90f05d3866c307575d70866a88b1de,
+        },
+        TwoMeasuresAndSingleColumnRowGrandTotalForOne: {
+            scenarioIndex: 1,
+            execution: fp_d7a8d8ff7ac29c8223bb3ed015131833,
+        },
+        TwoMeasuresAndSingleColumnGrandTotalForEach: {
+            scenarioIndex: 1,
+            execution: fp_d7a98fc9b39a99b72c72f135740f2e54,
+        },
+        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
+            scenarioIndex: 1,
+            execution: fp_f304c0180efbca32eeccaa096410dc8f,
+        },
+        SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
+            scenarioIndex: 1,
+            execution: fp_f46be32e6d2334de1d485921c52cc8e4,
+        },
+        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
+            scenarioIndex: 1,
+            execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
+        },
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: {
+            scenarioIndex: 4,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling: {
+            scenarioIndex: 5,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes: {
+            scenarioIndex: 6,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics: {
+            scenarioIndex: 7,
+            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+        },
+        TwoMeasuresWithRowAttribute: { scenarioIndex: 1, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
+        CellTextWrappingEnabled: { scenarioIndex: 2, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
+        HeaderTextWrappingEnabled: { scenarioIndex: 3, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
+        SimpleTableWithAttributeAndMetricColumnSize: {
+            scenarioIndex: 4,
+            execution: fp_f6db2dc71e518b432dd21209ebdd0521,
+        },
+        SingleMeasureAndSingleColumnRowGrandTotal: {
+            scenarioIndex: 1,
+            execution: fp_f997d8a8ee1a67def6bb63d28708cbc3,
+        },
+        TwoMeasuresAndMultipleColumnRowSubtotals: {
+            scenarioIndex: 1,
+            execution: fp_fe9b7d7da26bca841ea91d1f0b83b67e,
+        },
+    },
     Repeater: {
         OneAttributeAndOneVisualisation: { scenarioIndex: 0, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
         Themed: { scenarioIndex: 1, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
@@ -2629,223 +2882,6 @@ export const Scenarios = {
         ComparisonWithNegativeArrowAndColor: {
             scenarioIndex: 3,
             execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50,
-        },
-    },
-    PivotTableNext: {
-        SingleMeasureAndSingleColumnGrandTotal: {
-            scenarioIndex: 1,
-            execution: fp_08a6c636ea0d007de91e886fc9fbd1bb,
-        },
-        TwoMeasuresAndGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_6ef5731c63a579f03fde4a9b01f7c607,
-        },
-        TwoMeasuresAndOneSubtotal: { scenarioIndex: 1, execution: fp_10a1791bf91af3f9d71fec403da50bfc },
-        TwoMeasuresWithThreeRowsAndTwoColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_12d1eb593ce811011cea335d45b4e7d9,
-        },
-        TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute: {
-            scenarioIndex: 1,
-            execution: fp_17e1400e22cf959015e4be5bdb618c37,
-        },
-        WithTwoSameDates: { scenarioIndex: 1, execution: fp_1dee8e67d6f87c8f37dce28126fc893e },
-        TwoMeasuresAndMultipleGrandTotalsForEach: {
-            scenarioIndex: 1,
-            execution: fp_b15be8f3c2c0e721956f0563e80f2e07,
-        },
-        SingleAttribute: { scenarioIndex: 1, execution: fp_245cabd1fb1f98e24cd680cc9c52254b },
-        MultipleMeasuresAndNoColumnsWithTotals: {
-            scenarioIndex: 0,
-            execution: fp_dcaded12a70ed9c7556c96b4d4d54763,
-        },
-        SingleMeasurePivotSortedByFirstAndSecondRowAttr: {
-            scenarioIndex: 0,
-            execution: fp_300c0b908199156a328388972230be9a,
-        },
-        TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
-            scenarioIndex: 1,
-            execution: fp_6d744aacff949cf033683d86262b4e77,
-        },
-        MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
-            scenarioIndex: 1,
-            execution: fp_38b3cbb3e3c8b075d1b11de44c78a01e,
-        },
-        WithDateFilter: { scenarioIndex: 1, execution: fp_4765fcec9e0cf6a0f6474dfcc89346f9 },
-        SingleMeasure: { scenarioIndex: 10, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        SingleMeasureAndMultipleGrandTotals: {
-            scenarioIndex: 1,
-            execution: fp_93b4400696ea330b3d49c0506eb90538,
-        },
-        SingleMeasureAndMultipleColumnGrandTotals: {
-            scenarioIndex: 0,
-            execution: fp_50c6b990ee6e7496159726ebb00e82e7,
-        },
-        TwoMeasuresAndMultipleColumnGrandTotalsForEach: {
-            scenarioIndex: 1,
-            execution: fp_b30b06df758636e35e03b96a9662e53f,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals: {
-            scenarioIndex: 1,
-            execution: fp_55a6a5d0f818f5a7676513e4378a2868,
-        },
-        TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_f1e4efd7d700c6c819fa3568fc9bcae8,
-        },
-        MultipleMeasuresAndNoRowsWithTotals: {
-            scenarioIndex: 2,
-            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: {
-            scenarioIndex: 3,
-            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
-        },
-        TwoMeasuresAndOneColumnRowSubtotal: {
-            scenarioIndex: 1,
-            execution: fp_57e4abf06e14ca7c6ca589f5ba620932,
-        },
-        TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
-            scenarioIndex: 1,
-            execution: fp_628456d9adb09d97807468db6d357f34,
-        },
-        TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute: {
-            scenarioIndex: 1,
-            execution: fp_63e53a643477c7f0a1e4b96443d1a072,
-        },
-        TwoMeasures: { scenarioIndex: 6, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        SingleMeasurePivotSortedBySecondRowAttr: {
-            scenarioIndex: 1,
-            execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
-        },
-        TwoMeasuresWithColumnAttribute: { scenarioIndex: 1, execution: fp_6b38289e3de520261ba662868a3bc5ba },
-        ArithmeticMeasures: { scenarioIndex: 1, execution: fp_70330fa367d33c4c428d5d3e54df8eb9 },
-        TwoMeasuresAndMultipleSubtotals: { scenarioIndex: 1, execution: fp_743dad3dce349764d1e2617b3e87026f },
-        TwoMeasuresAndMultipleColumnSubtotals: {
-            scenarioIndex: 1,
-            execution: fp_77f869ae69c392717c13b188e2074842,
-        },
-        TwoMeasuresAndSingleGrandTotalForEach: {
-            scenarioIndex: 1,
-            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
-        },
-        TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows: {
-            scenarioIndex: 0,
-            execution: fp_dfeebd400b7a16d1e3c434152fc9dd09,
-        },
-        SingleMeasureWithRowAndColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_8c58de518b0e42711e9379cce480a63b,
-        },
-        TwoMeasuresWithRowAndColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_8eaf6e86ea212a22493eb7c06370a1b1,
-        },
-        WithAttributesWithoutMeasures: { scenarioIndex: 1, execution: fp_956c1be097a9bb7880556e5ba651ad33 },
-        SingleMeasurePivotSortedByFirstRowAttr: {
-            scenarioIndex: 1,
-            execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
-        },
-        SingleMeasureWithColumnAttribute: {
-            scenarioIndex: 1,
-            execution: fp_9bcc3db7967bd54930a357186a0d39f9,
-        },
-        SingleMeasureAndSingleGrandTotal: {
-            scenarioIndex: 1,
-            execution: fp_a49032eb49179fa4f6f56427072f88bf,
-        },
-        SingleMeasureWithTwoRowAndTwoColumnAttributes: {
-            scenarioIndex: 4,
-            execution: fp_aea45a374b1f55e749275b328e30d94d,
-        },
-        EmptyValues: { scenarioIndex: 5, execution: fp_aea45a374b1f55e749275b328e30d94d },
-        TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute: {
-            scenarioIndex: 1,
-            execution: fp_b01bccbf9167508268b7a901b4ccd063,
-        },
-        TwoMeasuresWithTwoRowAndOneColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_b034871dc7b2c8d7d9fc10a81b1b5fae,
-        },
-        SingleMeasureAndMultipleColumnRowGrandTotals: {
-            scenarioIndex: 1,
-            execution: fp_b3727c142e53427d1ac555b048019f88,
-        },
-        TwoMeasuresAndSingleColumnGrandTotalForOne: {
-            scenarioIndex: 1,
-            execution: fp_b8402b07097387493122f955cdae5e61,
-        },
-        TwoMeasuresAndOneColumnSubtotal: { scenarioIndex: 1, execution: fp_ba1ccbfca6ce3c9311d8becc13b28093 },
-        SingleMeasureWithRowAttribute: { scenarioIndex: 4, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
-        SingleMeasureWithTwoRowAndOneColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_bd4b4956516e1f429c2344f9b263c8df,
-        },
-        TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_e2854c55ab10a6e23413a2322183ae8b,
-        },
-        OneMeasureAndRepeatingRowAttributesOnDifferentPositions: {
-            scenarioIndex: 1,
-            execution: fp_c1444f217c8e0aecfb14f64996bd7b7e,
-        },
-        TwoMeasuresWithTwoRowAndTwoColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_c2ed90caa1677729885f2f90df6bdd73,
-        },
-        TwoMeasuresAndSingleGrandTotalForOne: {
-            scenarioIndex: 1,
-            execution: fp_c32086d6716aa4b42b64be41f1dbdd04,
-        },
-        SingleColumn: { scenarioIndex: 1, execution: fp_c4c31413a7b65502296aba901f6b50f8 },
-        TwoMeasuresAndSingleColumnRowGrandTotalForEach: {
-            scenarioIndex: 1,
-            execution: fp_cd90f05d3866c307575d70866a88b1de,
-        },
-        TwoMeasuresAndSingleColumnRowGrandTotalForOne: {
-            scenarioIndex: 1,
-            execution: fp_d7a8d8ff7ac29c8223bb3ed015131833,
-        },
-        TwoMeasuresAndSingleColumnGrandTotalForEach: {
-            scenarioIndex: 1,
-            execution: fp_d7a98fc9b39a99b72c72f135740f2e54,
-        },
-        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
-            scenarioIndex: 1,
-            execution: fp_f304c0180efbca32eeccaa096410dc8f,
-        },
-        SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
-            scenarioIndex: 1,
-            execution: fp_f46be32e6d2334de1d485921c52cc8e4,
-        },
-        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
-            scenarioIndex: 1,
-            execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: {
-            scenarioIndex: 4,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling: {
-            scenarioIndex: 5,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes: {
-            scenarioIndex: 6,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics: {
-            scenarioIndex: 7,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresWithRowAttribute: { scenarioIndex: 1, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
-        SingleMeasureAndSingleColumnRowGrandTotal: {
-            scenarioIndex: 1,
-            execution: fp_f997d8a8ee1a67def6bb63d28708cbc3,
-        },
-        TwoMeasuresAndMultipleColumnRowSubtotals: {
-            scenarioIndex: 1,
-            execution: fp_fe9b7d7da26bca841ea91d1f0b83b67e,
         },
     },
     LineChart: {
@@ -7401,6 +7437,10 @@ import i_PivotTableNext_19f38ddb24bcba523a23b5d0208fbbe0_obj from "./uiTestScena
 const i_PivotTableNext_19f38ddb24bcba523a23b5d0208fbbe0 = {
     obj: i_PivotTableNext_19f38ddb24bcba523a23b5d0208fbbe0_obj,
 };
+import i_PivotTableNext_1c9b7faf46629983f73e2f3b8b6300cc_obj from "./uiTestScenarios/insights/PivotTableNext.1c9b7faf46629983f73e2f3b8b6300cc/obj.json" with { type: "json" };
+const i_PivotTableNext_1c9b7faf46629983f73e2f3b8b6300cc = {
+    obj: i_PivotTableNext_1c9b7faf46629983f73e2f3b8b6300cc_obj,
+};
 import i_PivotTableNext_1f92031de9e10dafdf0b0318799334ef_obj from "./uiTestScenarios/insights/PivotTableNext.1f92031de9e10dafdf0b0318799334ef/obj.json" with { type: "json" };
 const i_PivotTableNext_1f92031de9e10dafdf0b0318799334ef = {
     obj: i_PivotTableNext_1f92031de9e10dafdf0b0318799334ef_obj,
@@ -7408,6 +7448,10 @@ const i_PivotTableNext_1f92031de9e10dafdf0b0318799334ef = {
 import i_PivotTableNext_1fc9a36652046d654165c3ca9681e728_obj from "./uiTestScenarios/insights/PivotTableNext.1fc9a36652046d654165c3ca9681e728/obj.json" with { type: "json" };
 const i_PivotTableNext_1fc9a36652046d654165c3ca9681e728 = {
     obj: i_PivotTableNext_1fc9a36652046d654165c3ca9681e728_obj,
+};
+import i_PivotTableNext_1fe7c93076c78d3a4878b5e584e4f685_obj from "./uiTestScenarios/insights/PivotTableNext.1fe7c93076c78d3a4878b5e584e4f685/obj.json" with { type: "json" };
+const i_PivotTableNext_1fe7c93076c78d3a4878b5e584e4f685 = {
+    obj: i_PivotTableNext_1fe7c93076c78d3a4878b5e584e4f685_obj,
 };
 import i_PivotTableNext_237307ab4326ca12ccebd4725f0dce14_obj from "./uiTestScenarios/insights/PivotTableNext.237307ab4326ca12ccebd4725f0dce14/obj.json" with { type: "json" };
 const i_PivotTableNext_237307ab4326ca12ccebd4725f0dce14 = {
@@ -7464,6 +7508,10 @@ const i_PivotTableNext_4ca0d781598309a73bfd4b4ae9d5c65f = {
 import i_PivotTableNext_50a00c5c98085613d6669432ffb74b73_obj from "./uiTestScenarios/insights/PivotTableNext.50a00c5c98085613d6669432ffb74b73/obj.json" with { type: "json" };
 const i_PivotTableNext_50a00c5c98085613d6669432ffb74b73 = {
     obj: i_PivotTableNext_50a00c5c98085613d6669432ffb74b73_obj,
+};
+import i_PivotTableNext_54066f10a13954b47db9920efe3a035d_obj from "./uiTestScenarios/insights/PivotTableNext.54066f10a13954b47db9920efe3a035d/obj.json" with { type: "json" };
+const i_PivotTableNext_54066f10a13954b47db9920efe3a035d = {
+    obj: i_PivotTableNext_54066f10a13954b47db9920efe3a035d_obj,
 };
 import i_PivotTableNext_5474330193a9ae4d54971b79dd16f7f5_obj from "./uiTestScenarios/insights/PivotTableNext.5474330193a9ae4d54971b79dd16f7f5/obj.json" with { type: "json" };
 const i_PivotTableNext_5474330193a9ae4d54971b79dd16f7f5 = {
@@ -7525,6 +7573,10 @@ import i_PivotTableNext_80f6060fe0b4437d8efa3d714ee8e4ef_obj from "./uiTestScena
 const i_PivotTableNext_80f6060fe0b4437d8efa3d714ee8e4ef = {
     obj: i_PivotTableNext_80f6060fe0b4437d8efa3d714ee8e4ef_obj,
 };
+import i_PivotTableNext_83514b83a226a7871c7231076b317528_obj from "./uiTestScenarios/insights/PivotTableNext.83514b83a226a7871c7231076b317528/obj.json" with { type: "json" };
+const i_PivotTableNext_83514b83a226a7871c7231076b317528 = {
+    obj: i_PivotTableNext_83514b83a226a7871c7231076b317528_obj,
+};
 import i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16_obj from "./uiTestScenarios/insights/PivotTableNext.83c2cadca4ae3cd0444ea2e4d3a55a16/obj.json" with { type: "json" };
 const i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16 = {
     obj: i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16_obj,
@@ -7540,6 +7592,10 @@ const i_PivotTableNext_89a771aac8adf21f03a517f63c997216 = {
 import i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93_obj from "./uiTestScenarios/insights/PivotTableNext.8d4f990d7e3765eb6ee64a1886939d93/obj.json" with { type: "json" };
 const i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93 = {
     obj: i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93_obj,
+};
+import i_PivotTableNext_908325936ba6b439a7a579d7fe746017_obj from "./uiTestScenarios/insights/PivotTableNext.908325936ba6b439a7a579d7fe746017/obj.json" with { type: "json" };
+const i_PivotTableNext_908325936ba6b439a7a579d7fe746017 = {
+    obj: i_PivotTableNext_908325936ba6b439a7a579d7fe746017_obj,
 };
 import i_PivotTableNext_971af631f188c59bd80221fdaef2468f_obj from "./uiTestScenarios/insights/PivotTableNext.971af631f188c59bd80221fdaef2468f/obj.json" with { type: "json" };
 const i_PivotTableNext_971af631f188c59bd80221fdaef2468f = {
@@ -7625,6 +7681,10 @@ import i_PivotTableNext_c3e7f11e6d421d17f7e754185717aba4_obj from "./uiTestScena
 const i_PivotTableNext_c3e7f11e6d421d17f7e754185717aba4 = {
     obj: i_PivotTableNext_c3e7f11e6d421d17f7e754185717aba4_obj,
 };
+import i_PivotTableNext_c6ff6fc2578297f71ef831108a55fe52_obj from "./uiTestScenarios/insights/PivotTableNext.c6ff6fc2578297f71ef831108a55fe52/obj.json" with { type: "json" };
+const i_PivotTableNext_c6ff6fc2578297f71ef831108a55fe52 = {
+    obj: i_PivotTableNext_c6ff6fc2578297f71ef831108a55fe52_obj,
+};
 import i_PivotTableNext_c73c0198e33870a238c49d127f763b02_obj from "./uiTestScenarios/insights/PivotTableNext.c73c0198e33870a238c49d127f763b02/obj.json" with { type: "json" };
 const i_PivotTableNext_c73c0198e33870a238c49d127f763b02 = {
     obj: i_PivotTableNext_c73c0198e33870a238c49d127f763b02_obj,
@@ -7648,6 +7708,14 @@ const i_PivotTableNext_d2a50f7e4d593ba8db08c0c9e7a5d8e5 = {
 import i_PivotTableNext_d878bab8cca1f7fb55a801204e730681_obj from "./uiTestScenarios/insights/PivotTableNext.d878bab8cca1f7fb55a801204e730681/obj.json" with { type: "json" };
 const i_PivotTableNext_d878bab8cca1f7fb55a801204e730681 = {
     obj: i_PivotTableNext_d878bab8cca1f7fb55a801204e730681_obj,
+};
+import i_PivotTableNext_d9273a9e68b191b7dbd096341a868b5f_obj from "./uiTestScenarios/insights/PivotTableNext.d9273a9e68b191b7dbd096341a868b5f/obj.json" with { type: "json" };
+const i_PivotTableNext_d9273a9e68b191b7dbd096341a868b5f = {
+    obj: i_PivotTableNext_d9273a9e68b191b7dbd096341a868b5f_obj,
+};
+import i_PivotTableNext_da2a8ac003b9ccc5ef48b09bb7f8dd10_obj from "./uiTestScenarios/insights/PivotTableNext.da2a8ac003b9ccc5ef48b09bb7f8dd10/obj.json" with { type: "json" };
+const i_PivotTableNext_da2a8ac003b9ccc5ef48b09bb7f8dd10 = {
+    obj: i_PivotTableNext_da2a8ac003b9ccc5ef48b09bb7f8dd10_obj,
 };
 import i_PivotTableNext_df98d53c1649c7bba56762edd1ce8015_obj from "./uiTestScenarios/insights/PivotTableNext.df98d53c1649c7bba56762edd1ce8015/obj.json" with { type: "json" };
 const i_PivotTableNext_df98d53c1649c7bba56762edd1ce8015 = {
@@ -9141,7 +9209,9 @@ export const Insights = {
         TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling:
             i_PivotTableNext_15aecb6ecdf61eebe7c1acc21c97329f,
         TwoMeasuresAndSingleColumnGrandTotalForEach: i_PivotTableNext_19f38ddb24bcba523a23b5d0208fbbe0,
+        PaginationWith5RowsPerPage: i_PivotTableNext_1c9b7faf46629983f73e2f3b8b6300cc,
         SingleMeasurePivotSortedBySecondRowAttr: i_PivotTableNext_1fc9a36652046d654165c3ca9681e728,
+        GrandTotalsPinnedAtBottomDefault: i_PivotTableNext_1fe7c93076c78d3a4878b5e584e4f685,
         TwoMeasuresAndMultipleGrandTotalsForEach: i_PivotTableNext_237307ab4326ca12ccebd4725f0dce14,
         TwoMeasuresWithThreeRowsAndTwoColumnAttributes: i_PivotTableNext_27fe9e555b6b9c111bd318e15a041396,
         SingleMeasureAndSingleColumnGrandTotal: i_PivotTableNext_28ffb3523a88a0f57103c9c48035439f,
@@ -9156,6 +9226,7 @@ export const Insights = {
         SingleMeasureWithRowAndColumnAttributes: i_PivotTableNext_4bb4d26177c41122762db47541e1cd5f,
         TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute:
             i_PivotTableNext_4ca0d781598309a73bfd4b4ae9d5c65f,
+        CellTextWrappingEnabled: i_PivotTableNext_54066f10a13954b47db9920efe3a035d,
         TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals: i_PivotTableNext_5474330193a9ae4d54971b79dd16f7f5,
         TwoMeasuresAndMultipleColumnGrandTotalsForEach: i_PivotTableNext_54d5c31ea9db99b6f6f4948dc668b1b4,
         MultipleMeasuresAndNoColumnsWithTotals: i_PivotTableNext_56cec4491a707a7e6e547e548be163b1,
@@ -9166,9 +9237,11 @@ export const Insights = {
         TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute:
             i_PivotTableNext_7ecc17bce808d7267f47b3d4905b1a4a,
         TwoMeasuresAndGrandTotalsAndMultipleSubtotals: i_PivotTableNext_80f6060fe0b4437d8efa3d714ee8e4ef,
+        PaginationWith5RowsPerPageAndTotals: i_PivotTableNext_83514b83a226a7871c7231076b317528,
         WithDateFilter: i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16,
         TwoMeasuresWithTwoRowAndTwoColumnAttributes: i_PivotTableNext_88491bde1be3096cbe296086ada2c053,
         WithAttributesWithoutMeasures: i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93,
+        HeaderTextWrappingEnabled: i_PivotTableNext_908325936ba6b439a7a579d7fe746017,
         EmptyValues: i_PivotTableNext_98d19fbc15b9096896b18480d2c91a25,
         TwoMeasuresAndSingleGrandTotalForEach: i_PivotTableNext_9ea726d4eaa0ed17421b93c478da6005,
         TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals:
@@ -9185,9 +9258,13 @@ export const Insights = {
         TwoMeasuresWithSingleRowAttrWithMetricsInRows: i_PivotTableNext_bd8de61c4c2180f924e6861d46271ce5,
         TwoMeasuresWithColumnAttribute: i_PivotTableNext_bf593826c1e38745a8df19a181720ebf,
         TwoMeasuresAndMultipleColumnSubtotals: i_PivotTableNext_c0d95bb5d60068a1048f1e7079f9856c,
+        GrandTotalsPinnedAtTop: i_PivotTableNext_c6ff6fc2578297f71ef831108a55fe52,
         SingleAttribute: i_PivotTableNext_c96c0c862b7a3f84da7b1b656b8f203b,
         TwoMeasuresAndSingleGrandTotalForOne: i_PivotTableNext_d046d6ce6f4e610533e297d53fee57a2,
+        SimpleTableWithAttributeAndMetricColumnSize: i_PivotTableNext_d1fad21b44d4f428c6fa759fcbd8b2f8,
         SingleMeasureAndMultipleColumnGrandTotals: i_PivotTableNext_d878bab8cca1f7fb55a801204e730681,
+        GrandTotalsAtBottomNotPinned: i_PivotTableNext_d9273a9e68b191b7dbd096341a868b5f,
+        GrandTotalsAtTopNotPinned: i_PivotTableNext_da2a8ac003b9ccc5ef48b09bb7f8dd10,
         SingleMeasureAndSingleColumnRowGrandTotal: i_PivotTableNext_df98d53c1649c7bba56762edd1ce8015,
         MultipleMeasuresAndNoRowsWithTotals: i_PivotTableNext_e12bd90b45dd2e2a36c632b811114510,
         SingleMeasureWithRowAttribute: i_PivotTableNext_e68ec082d5a2e42b6a08b6d986d08056,
@@ -9195,6 +9272,7 @@ export const Insights = {
         TwoMeasuresAndSingleColumnGrandTotalForOne: i_PivotTableNext_e963b4949bd2066f6be27a2ad81f2769,
         ArithmeticMeasures: i_PivotTableNext_eb9b41ddc1f75996ee16ffda0753475c,
         SingleMeasurePivotSortedByFirstAndSecondRowAttr: i_PivotTableNext_eecaed208a29cbbcf2646114c82ee809,
+        TableWithMultipleMeasureColumnsAndWeakMeasureSize: i_PivotTableNext_f40a038fb7394d7ad8ed16714cd49a81,
         TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals:
             i_PivotTableNext_f5b0513a34d046a3297225b71d6f321d,
         TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: i_PivotTableNext_f7426a38f1f2ffd6ccad7ead71390ac6,
@@ -9355,6 +9433,7 @@ export const Recordings: RecordingIndex = {
     executions: {
         fp_004031cbc9081950b7284311b004fe11,
         fp_005a4c2e17417f0c5780fb84d4bb7490,
+        fp_0087d8270a7e1f41ada5177a2f88205e,
         fp_0095badec8cf82cef537c0075a4329d8,
         fp_013e1b802f58fb8ec4e3d1d116f74116,
         fp_016b56ca4717dd774265c039a39234cd,
@@ -10767,8 +10846,10 @@ export const Recordings: RecordingIndex = {
             i_PivotTableNext_15312b5cfb6071696fa331e3a9269388,
             i_PivotTableNext_15aecb6ecdf61eebe7c1acc21c97329f,
             i_PivotTableNext_19f38ddb24bcba523a23b5d0208fbbe0,
+            i_PivotTableNext_1c9b7faf46629983f73e2f3b8b6300cc,
             i_PivotTableNext_1f92031de9e10dafdf0b0318799334ef,
             i_PivotTableNext_1fc9a36652046d654165c3ca9681e728,
+            i_PivotTableNext_1fe7c93076c78d3a4878b5e584e4f685,
             i_PivotTableNext_237307ab4326ca12ccebd4725f0dce14,
             i_PivotTableNext_27fe9e555b6b9c111bd318e15a041396,
             i_PivotTableNext_28ffb3523a88a0f57103c9c48035439f,
@@ -10783,6 +10864,7 @@ export const Recordings: RecordingIndex = {
             i_PivotTableNext_4bb4d26177c41122762db47541e1cd5f,
             i_PivotTableNext_4ca0d781598309a73bfd4b4ae9d5c65f,
             i_PivotTableNext_50a00c5c98085613d6669432ffb74b73,
+            i_PivotTableNext_54066f10a13954b47db9920efe3a035d,
             i_PivotTableNext_5474330193a9ae4d54971b79dd16f7f5,
             i_PivotTableNext_54d5c31ea9db99b6f6f4948dc668b1b4,
             i_PivotTableNext_56cec4491a707a7e6e547e548be163b1,
@@ -10798,10 +10880,12 @@ export const Recordings: RecordingIndex = {
             i_PivotTableNext_7c2369cee8cb4d2e16e2f11ff014953f,
             i_PivotTableNext_7ecc17bce808d7267f47b3d4905b1a4a,
             i_PivotTableNext_80f6060fe0b4437d8efa3d714ee8e4ef,
+            i_PivotTableNext_83514b83a226a7871c7231076b317528,
             i_PivotTableNext_83c2cadca4ae3cd0444ea2e4d3a55a16,
             i_PivotTableNext_88491bde1be3096cbe296086ada2c053,
             i_PivotTableNext_89a771aac8adf21f03a517f63c997216,
             i_PivotTableNext_8d4f990d7e3765eb6ee64a1886939d93,
+            i_PivotTableNext_908325936ba6b439a7a579d7fe746017,
             i_PivotTableNext_971af631f188c59bd80221fdaef2468f,
             i_PivotTableNext_98d19fbc15b9096896b18480d2c91a25,
             i_PivotTableNext_9ea726d4eaa0ed17421b93c478da6005,
@@ -10823,12 +10907,15 @@ export const Recordings: RecordingIndex = {
             i_PivotTableNext_bf593826c1e38745a8df19a181720ebf,
             i_PivotTableNext_c0d95bb5d60068a1048f1e7079f9856c,
             i_PivotTableNext_c3e7f11e6d421d17f7e754185717aba4,
+            i_PivotTableNext_c6ff6fc2578297f71ef831108a55fe52,
             i_PivotTableNext_c73c0198e33870a238c49d127f763b02,
             i_PivotTableNext_c96c0c862b7a3f84da7b1b656b8f203b,
             i_PivotTableNext_d046d6ce6f4e610533e297d53fee57a2,
             i_PivotTableNext_d1fad21b44d4f428c6fa759fcbd8b2f8,
             i_PivotTableNext_d2a50f7e4d593ba8db08c0c9e7a5d8e5,
             i_PivotTableNext_d878bab8cca1f7fb55a801204e730681,
+            i_PivotTableNext_d9273a9e68b191b7dbd096341a868b5f,
+            i_PivotTableNext_da2a8ac003b9ccc5ef48b09bb7f8dd10,
             i_PivotTableNext_df98d53c1649c7bba56762edd1ce8015,
             i_PivotTableNext_e12bd90b45dd2e2a36c632b811114510,
             i_PivotTableNext_e677c39239daf020d379a1fe43aedafa,

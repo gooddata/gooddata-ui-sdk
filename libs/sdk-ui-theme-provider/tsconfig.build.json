@@ -1,7 +1,7 @@
 {
     "extends": "../tsconfig.react.json",
-    "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json"],
+    "exclude": ["**/*.test.ts", "**/*.test.tsx"],
+    "include": ["src/**/*"],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",

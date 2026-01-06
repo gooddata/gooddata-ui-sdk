@@ -4,9 +4,11 @@ import type { TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
 
 declare module "vitest" {
     // Extend Vitest's Assertion interface with vitest-dom matchers
-    interface Assertion<T = any> extends TestingLibraryMatchers<any, T> {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface Assertion<T = unknown> extends TestingLibraryMatchers<unknown, T> {}
     // Extend AsymmetricMatchersContaining for asymmetric matchers
-    interface AsymmetricMatchersContaining extends TestingLibraryMatchers<any, any> {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface AsymmetricMatchersContaining extends TestingLibraryMatchers<unknown, unknown> {}
 }
 
 // This ensures the file is treated as a module

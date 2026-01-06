@@ -66,7 +66,10 @@ https.request = function cookieRewritingRequestFactory(req) {
         const responseCookies = res.headers["set-cookie"];
 
         if (responseCookies) {
-            res.headers["set-cookie"] = stripDomain(responseCookies, "staging.dev-latest.stg11.panther.intgdc.com");
+            res.headers["set-cookie"] = stripDomain(
+                responseCookies,
+                "staging.dev-latest.stg11.panther.intgdc.com",
+            );
         }
     });
 

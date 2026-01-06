@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "11.15.0-alpha.12",
+    "version": "11.15.0-alpha.13",
     "description": "GoodData SDK Catalog Export tooling",
     "repository": {
         "type": "git",
@@ -34,8 +34,8 @@
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
         "test": "vitest watch",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
         "test-once": "vitest run",

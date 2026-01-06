@@ -177,13 +177,12 @@ AutoResizingOfVisibleColumns.parameters = {
                 this scroll is done to check if virtualized hidden cells
                 are correctly resized after scroll
 
-                ag-grid has a problem with programatically scrolled header
+                ag-grid has a problem with programmatically scrolled header
                 so we used a cell in the body to scroll instead
             */
             readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
             misMatchThreshold: 0.01,
             scrollToSelector: ".s-cell-0-9",
-            postInteractionWait: { delay: 1000 },
         },
     },
 } satisfies IStoryParameters;

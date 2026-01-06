@@ -456,13 +456,14 @@ function preprocessTotalHeaderItems(
     const columnIdentifiers = columns.map((item) => isAttribute(item) && item.attribute?.localIdentifier);
     const measuresIdentifiers = measures.map((m) => m.measure.localIdentifier);
 
-    columnTotals.sort(
+    // Sort column totals by measure identifier order for consistent measureIndex assignment
+    const sortedColumnTotals = [...columnTotals].sort(
         (a, b) =>
             measuresIdentifiers.indexOf(a.measureIdentifier) -
             measuresIdentifiers.indexOf(b.measureIdentifier),
     );
 
-    const lookups = columnTotals
+    const lookups = sortedColumnTotals
         .filter((total) => {
             return columnIdentifiers.includes(total.attributeIdentifier);
         })
@@ -474,28 +475,36 @@ function preprocessTotalHeaderItems(
 
     return headerItems.map((topHeaderItems) => {
         return topHeaderItems.map((items) => {
-            // process only header items with measures
-            let count = 0;
-            if (items.find(isResultMeasureHeader)) {
-                return items.map((item) => {
-                    if (isTotalDescriptor(item)) {
-                        const result = {
-                            ...item,
-                            totalHeaderItem: {
-                                ...item?.totalHeaderItem,
-                                measureIndex: uniqueLookups[count % uniqueLookups.length],
-                            },
-                        };
-
-                        count++;
-                        return result;
-                    }
-
-                    return item;
-                });
+            // Only add measureIndex when measure headers are present in the same header level
+            // For transposed tables, measures are in rows (not columns), so column totals
+            // should NOT have measureIndex - they should display "Sum", "Median" etc.
+            if (!items.find(isResultMeasureHeader)) {
+                return items;
             }
 
-            return items;
+            let count = 0;
+            return items.map((item) => {
+                if (isTotalDescriptor(item)) {
+                    // Skip if measureIndex already present (from Tiger backend)
+                    if (item.totalHeaderItem.measureIndex !== undefined) {
+                        count++;
+                        return item;
+                    }
+
+                    const result = {
+                        ...item,
+                        totalHeaderItem: {
+                            ...item?.totalHeaderItem,
+                            measureIndex: uniqueLookups[count % uniqueLookups.length],
+                        },
+                    };
+
+                    count++;
+                    return result;
+                }
+
+                return item;
+            });
         });
     });
 }

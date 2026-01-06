@@ -2,7 +2,12 @@
 
 import { requestPages } from "@gooddata/mock-handling";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { newNegativeAttributeFilter, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+import {
+    newAttributeSort,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newTotal,
+} from "@gooddata/sdk-model";
 import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
 import {
@@ -13,8 +18,6 @@ import {
     getCommonPivotTableSizingConfig,
 } from "./base.js";
 import { scenariosFor } from "../../src/index.js";
-
-// todo: some scenarios were commented out during neobackstop creation, make an option to disable only their adding to 04
 
 export const PivotTableWithTwoMeasuresAndTotals = {
     ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
@@ -31,12 +34,11 @@ export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
         newTotal("min", ReferenceMd.Amount, ReferenceMd.Product.Name),
         newTotal("max", ReferenceMd.Won, ReferenceMd.Product.Name),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.Product.Name),
+        newTotal("nat", ReferenceMd.Won, ReferenceMd.Product.Name),
         newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
-        //
         newTotal("med", ReferenceMd.Amount, ReferenceMd.Department.Default),
         newTotal("med", ReferenceMd.Won, ReferenceMd.Department.Default),
-        // newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default),
+        newTotal("nat", ReferenceMd.Won, ReferenceMd.Department.Default),
     ],
     config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
 };
@@ -149,19 +151,21 @@ const totalsForRows = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pivot
     })
     .addScenario("two measures and grand totals and multiple subtotals", {
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
-    });
-// .addScenario(
-//     "two measures and single grand total sorted by second attribute",
-//     {
-//         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-//         totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
-//         sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
-//     },
-//     (m) =>
-//         m.withCustomDataCapture({
-//             windows: [...requestPages([0, 0], [22, 1000], 1), ...requestPages([0, 0], [12, 1000], 1)],
-//         }),
-// );
+    })
+    .addScenario(
+        "two measures and single grand total sorted by second attribute",
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
+            sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
+        },
+        (m) =>
+            m
+                .withCustomDataCapture({
+                    windows: [...requestPages([0, 0], [22, 1000], 1), ...requestPages([0, 0], [12, 1000], 1)],
+                })
+                .withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
+    );
 
 const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "columns")
@@ -225,33 +229,41 @@ const totalsForColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", Pi
         ...PivotTableWithTwoMeasuresColumnGrandTotalsAndSubtotals,
         filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
         config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
-    });
-// .addScenario("two measures and column single grand total sorted by second attribute", {
-//     ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-//     totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory)],
-//     sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
-//     filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
-//     config: getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
-// });
-// .addScenario(
-//     "two measures and single column grand total and single subtotal sorted by second attribute",
-//     // The expected behaviour is that the subtotal will be removed and the scenario will be reduced to
-//     // the scenario "two measures and single grand total sorted by second attribute"
-//     // The requested windows also get affected so the base scenario requires multiple recorded responses
-//     {
-//         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-//         totals: [
-//             newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
-//             newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
-//         ],
-//         sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
-//         filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
-//         config: getCommonPivotTableSizingConfig([
-//             ReferenceMd.Product.Name,
-//             ReferenceMd.Department.Default,
-//         ]),
-//     },
-// );
+    })
+    .addScenario(
+        "two measures and column single grand total sorted by second attribute",
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory)],
+            sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
+            filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
+            config: getCommonPivotTableSizingConfig([
+                ReferenceMd.Product.Name,
+                ReferenceMd.Department.Default,
+            ]),
+        },
+        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
+    )
+    .addScenario(
+        "two measures and single column grand total and single subtotal sorted by second attribute",
+        // The expected behaviour is that the subtotal will be removed and the scenario will be reduced to
+        // the scenario "two measures and single grand total sorted by second attribute"
+        // The requested windows also get affected so the base scenario requires multiple recorded responses
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            totals: [
+                newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
+                newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
+            ],
+            sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
+            filters: [newPositiveAttributeFilter(ReferenceMd.Region.Default, ["West Coast"])],
+            config: getCommonPivotTableSizingConfig([
+                ReferenceMd.Product.Name,
+                ReferenceMd.Department.Default,
+            ]),
+        },
+        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
+    );
 
 const totalsForRowsAndColumns = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("totals", "rows & columns")
