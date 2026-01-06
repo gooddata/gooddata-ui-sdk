@@ -9,4 +9,5 @@ export const preview = {
     },
 };
 
+// eslint-disable-next-line no-restricted-exports
 export default preview;

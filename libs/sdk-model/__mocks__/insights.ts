@@ -1,17 +1,16 @@
 // (C) 2019 GoodData Corporation
-import { identity } from "lodash-es";
 
-import { IBucket } from "../src/execution/buckets/index.js";
-import { IFilter } from "../src/execution/filter/index.js";
-import { ISortItem, VisualizationProperties, uriRef } from "../src/index.js";
-import { IInsight } from "../src/insight/index.js";
+import { type IBucket } from "../src/execution/buckets/index.js";
+import { type IFilter } from "../src/execution/filter/index.js";
+import { type ISortItem, type VisualizationProperties, uriRef } from "../src/index.js";
+import { type IInsight } from "../src/insight/index.js";
 
 /*
  * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on
  * whether we should move it to prod code and expose on public API.
  */
 
-export function newInsight(visClassId: string, modifications: InsightsModifications = identity): IInsight {
+export function newInsight(visClassId: string, modifications: InsightsModifications = (i) => i): IInsight {
     const builder = new InsightBuilder(visClassId);
 
     return modifications(builder).build();

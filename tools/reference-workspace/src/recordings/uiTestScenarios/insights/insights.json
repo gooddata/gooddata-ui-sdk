@@ -3963,12 +3963,22 @@
         "scenarioName": "two measures and single column grand total for each",
         "visName": "PivotTableNext"
     },
+    "PivotTableNext.1c9b7faf46629983f73e2f3b8b6300cc": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - pagination with 5 rows per page.",
+        "scenarioName": "pagination with 5 rows per page",
+        "visName": "PivotTableNext"
+    },
     "PivotTableNext.1f92031de9e10dafdf0b0318799334ef": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - simple table with custom attribute column size."
     },
     "PivotTableNext.1fc9a36652046d654165c3ca9681e728": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - single measure pivot sorted by second row attr.",
         "scenarioName": "single measure pivot sorted by second row attr",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.1fe7c93076c78d3a4878b5e584e4f685": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - grand totals pinned at bottom (default).",
+        "scenarioName": "grand totals pinned at bottom (default)",
         "visName": "PivotTableNext"
     },
     "PivotTableNext.237307ab4326ca12ccebd4725f0dce14": {
@@ -4037,6 +4047,11 @@
     "PivotTableNext.50a00c5c98085613d6669432ffb74b73": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - simple table with attribute and metric column size."
     },
+    "PivotTableNext.54066f10a13954b47db9920efe3a035d": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - cell text wrapping enabled.",
+        "scenarioName": "cell text wrapping enabled",
+        "visName": "PivotTableNext"
+    },
     "PivotTableNext.5474330193a9ae4d54971b79dd16f7f5": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - two measures in rows and column attrs on left, with totals.",
         "scenarioName": "two measures in rows and column attrs on left, with totals",
@@ -4100,6 +4115,11 @@
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "visName": "PivotTableNext"
     },
+    "PivotTableNext.83514b83a226a7871c7231076b317528": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - pagination with 5 rows per page and totals.",
+        "scenarioName": "pagination with 5 rows per page and totals",
+        "visName": "PivotTableNext"
+    },
     "PivotTableNext.83c2cadca4ae3cd0444ea2e4d3a55a16": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - with date filter.",
         "scenarioName": "with date filter",
@@ -4116,6 +4136,11 @@
     "PivotTableNext.8d4f990d7e3765eb6ee64a1886939d93": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - with attributes without measures.",
         "scenarioName": "with attributes without measures",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.908325936ba6b439a7a579d7fe746017": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - header text wrapping enabled.",
+        "scenarioName": "header text wrapping enabled",
         "visName": "PivotTableNext"
     },
     "PivotTableNext.971af631f188c59bd80221fdaef2468f": {
@@ -4207,6 +4232,11 @@
     "PivotTableNext.c3e7f11e6d421d17f7e754185717aba4": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - simple table with custom metric column size."
     },
+    "PivotTableNext.c6ff6fc2578297f71ef831108a55fe52": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - grand totals pinned at top.",
+        "scenarioName": "grand totals pinned at top",
+        "visName": "PivotTableNext"
+    },
     "PivotTableNext.c73c0198e33870a238c49d127f763b02": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - with two measures and row attribute with auto-resizing."
     },
@@ -4221,7 +4251,9 @@
         "visName": "PivotTableNext"
     },
     "PivotTableNext.d1fad21b44d4f428c6fa759fcbd8b2f8": {
-        "comment": "Auto-generated insight for test scenario PivotTableNext - simple table with attribute and metric column size."
+        "comment": "Auto-generated insight for test scenario PivotTableNext - simple table with attribute and metric column size.",
+        "scenarioName": "simple table with attribute and metric column size",
+        "visName": "PivotTableNext"
     },
     "PivotTableNext.d2a50f7e4d593ba8db08c0c9e7a5d8e5": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - with two measures, grand totals and subtotals with auto-resizing and grow to fit."
@@ -4229,6 +4261,16 @@
     "PivotTableNext.d878bab8cca1f7fb55a801204e730681": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - single measure and multiple column grand totals.",
         "scenarioName": "single measure and multiple column grand totals",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.d9273a9e68b191b7dbd096341a868b5f": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - grand totals at bottom (not pinned).",
+        "scenarioName": "grand totals at bottom (not pinned)",
+        "visName": "PivotTableNext"
+    },
+    "PivotTableNext.da2a8ac003b9ccc5ef48b09bb7f8dd10": {
+        "comment": "Auto-generated insight for test scenario PivotTableNext - grand totals at top (not pinned).",
+        "scenarioName": "grand totals at top (not pinned)",
         "visName": "PivotTableNext"
     },
     "PivotTableNext.df98d53c1649c7bba56762edd1ce8015": {
@@ -4270,7 +4312,9 @@
         "visName": "PivotTableNext"
     },
     "PivotTableNext.f40a038fb7394d7ad8ed16714cd49a81": {
-        "comment": "Auto-generated insight for test scenario PivotTableNext - table with multiple measure columns and weak measure size."
+        "comment": "Auto-generated insight for test scenario PivotTableNext - table with multiple measure columns and weak measure size.",
+        "scenarioName": "table with multiple measure columns and weak measure size",
+        "visName": "PivotTableNext"
     },
     "PivotTableNext.f5b0513a34d046a3297225b71d6f321d": {
         "comment": "Auto-generated insight for test scenario PivotTableNext - two measures and column/row grand totals and multiple subtotals.",

@@ -91,7 +91,7 @@ const screenshotProps: INeobackstopConfig = {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: "#first-example .s-recurrence-form-type",
         delay: {
-            postOperation: 200, // element has transition
+            postOperation: 200, // element has .2s transition
         },
     },
 };

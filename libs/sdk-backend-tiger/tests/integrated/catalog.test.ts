@@ -1,8 +1,9 @@
 // (C) 2022 GoodData Corporation
-import { describe, beforeAll, expect, it } from "vitest";
-import { testBackend, testWorkspace, sanitizeWorkspace, sortToOrder } from "./backend.js";
+import { beforeAll, describe, expect, it } from "vitest";
+
 import { measureLocalId, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
 
+import { sanitizeWorkspace, sortToOrder, testBackend, testWorkspace } from "./backend.js";
 import * as Md from "../../src/fixtures/full.js";
 
 const backend = testBackend();

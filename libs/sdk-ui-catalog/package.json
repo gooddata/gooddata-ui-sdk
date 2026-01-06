@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-catalog",
-    "version": "11.15.0-alpha.12",
+    "version": "11.15.0-alpha.13",
     "description": "GoodData SDK - Analytics Catalog",
     "repository": {
         "type": "git",
@@ -40,11 +40,11 @@
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "eslint": "eslint $npm_package_config_eslint",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "eslint": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore .",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ignore-path ../.eslintignore .",
+        "eslint-fix": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore . --fix",
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,stories,styles,__mocks__}/**/*.{json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,stories,styles,__mocks__}/**/*.{json,scss,md,yaml,html}'",
         "scss": "sass --load-path=node_modules styles/scss:styles/css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
@@ -57,9 +57,6 @@
         "validate-locales": "i18n-toolkit",
         "validate-locales-ci": "i18n-toolkit",
         "validate-theming": "npm run scss && node scripts/validateCss.js"
-    },
-    "config": {
-        "eslint": "-c .eslintrc.cjs --ext ts,tsx src/"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",

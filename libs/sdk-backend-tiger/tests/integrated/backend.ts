@@ -1,14 +1,16 @@
 // (C) 2022-2024 GoodData Corporation
 
-import {
-    IAuthenticatedPrincipal,
-    IAuthenticationContext,
-    IAnalyticalBackend,
-    IAuthenticationProvider,
-} from "@gooddata/sdk-backend-spi";
-import tigerFactory, { TigerAuthProviderBase, TigerTokenAuthProvider } from "../../src/index.js";
 import { config } from "dotenv";
 import { invariant } from "ts-invariant";
+
+import {
+    type IAnalyticalBackend,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationContext,
+    type IAuthenticationProvider,
+} from "@gooddata/sdk-backend-spi";
+
+import tigerFactory, { TigerAuthProviderBase, TigerTokenAuthProvider } from "../../src/index.js";
 
 let GlobalBackend: IAnalyticalBackend | undefined;
 
@@ -36,25 +38,25 @@ function createBackend(): IAnalyticalBackend {
      * Does not work without the protocol within the `localhost` value.
      */
 
-    let hostname = (process.env.CI && "https://tiger") ?? "https://localhost";
-    if (process.env.HOST) {
-        hostname = process.env.HOST;
+    let hostname = (process.env["CI"] && "https://tiger") ?? "https://localhost";
+    if (process.env["HOST"]) {
+        hostname = process.env["HOST"];
     }
-    const port = process.env.HOST ? "" : ":8442";
+    const port = process.env["HOST"] ? "" : ":8442";
     const backend = tigerFactory({ hostname: `${hostname}${port}` });
     let authProvider;
 
-    if (process.env.GD_TIGER_REC) {
+    if (process.env["GD_TIGER_REC"]) {
         const credentials = config();
         invariant(
-            credentials.parsed?.TIGER_API_TOKEN,
+            credentials.parsed?.["TIGER_API_TOKEN"],
             "You have started integrated tests in recording mode - this mode requires " +
                 "credentials in order to log into platform. The credentials must be stored in .env file located " +
                 "in sdk-backend-tiger directory. This a dotenv file and should contain TIGER_API_TOKEN.",
         );
-        authProvider = new TigerTokenAuthProvider(credentials.parsed.TIGER_API_TOKEN);
-    } else if (process.env.TIGER_API_TOKEN) {
-        authProvider = new TigerTokenAuthProvider(process.env.TIGER_API_TOKEN);
+        authProvider = new TigerTokenAuthProvider(credentials.parsed["TIGER_API_TOKEN"]);
+    } else if (process.env["TIGER_API_TOKEN"]) {
+        authProvider = new TigerTokenAuthProvider(process.env["TIGER_API_TOKEN"]);
     } else {
         authProvider = new NoLoginAuthProvider();
     }
@@ -72,8 +74,7 @@ export function testBackend(): IAnalyticalBackend {
 
 export function testWorkspace(): string {
     // UI SDK Reference workspace ID
-    const workspace: string = process.env.WORKSPACE_ID ?? getRecordingsWorkspaceId();
-    return workspace;
+    return process.env["WORKSPACE_ID"] ?? getRecordingsWorkspaceId();
 }
 
 function getRecordingsWorkspaceId() {
@@ -86,8 +87,8 @@ export function sanitizeKeyWithNewValue(result: object, key: string, newValue: s
 }
 
 function sanitizeWorkspaceId(result: object) {
-    if (process.env.WORKSPACE_ID) {
-        const workspace: string = process.env.WORKSPACE_ID;
+    if (process.env["WORKSPACE_ID"]) {
+        const workspace: string = process.env["WORKSPACE_ID"];
         const dataString = JSON.stringify(result, null, 2).replace(
             new RegExp(workspace, "g"),
             getRecordingsWorkspaceId(),

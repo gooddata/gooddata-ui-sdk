@@ -1,11 +1,7 @@
 {
     "extends": "../tsconfig.base.json",
-    "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "baseUrl": ".",
-        "rootDir": "./src",
-        "outDir": "./esm",
-        "strict": true
+        "noEmit": true,
+        "skipLibCheck": true
     }
 }

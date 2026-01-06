@@ -81,6 +81,16 @@
                         "attributeIdentifier": "a_f_owner.department_id",
                         "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
                         "type": "med"
+                    },
+                    {
+                        "attributeIdentifier": "a_label.f_product.product.name",
+                        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                        "type": "nat"
+                    },
+                    {
+                        "attributeIdentifier": "a_f_owner.department_id",
+                        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+                        "type": "nat"
                     }
                 ]
             },

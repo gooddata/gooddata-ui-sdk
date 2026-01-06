@@ -1167,6 +1167,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "rollup",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "sass",
       "allowedCategories": [ "examples", "production" ]
     },

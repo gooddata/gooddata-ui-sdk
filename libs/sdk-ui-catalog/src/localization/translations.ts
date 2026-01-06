@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { memoize, merge } from "lodash-es";
 
 import {
@@ -46,6 +47,7 @@ const asyncCatalogTranslations: { [locale: string]: () => Promise<ITranslations>
 const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
     const catalogLoader = asyncCatalogTranslations[locale] || asyncCatalogTranslations["en-US"];
     const [catalogTranslations, sdkUiTranslations] = await Promise.all([
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         catalogLoader!(),
         resolveMessagesSdkUi(locale),
     ]);

@@ -1,5 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
+import type { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import type { IBucket } from "@gooddata/sdk-model";
 import type { DataViewFacade } from "@gooddata/sdk-ui";
 
@@ -79,6 +80,19 @@ function bucketStructureFingerprint(bucket: IBucket): string {
         return "unknown";
     });
     return `${bucket.localIdentifier}[${itemIds.join(",")}]`;
+}
+
+/**
+ * Creates a fingerprint from a single prepared execution's bucket structure.
+ *
+ * @remarks
+ * This is useful when you need a stable dependency key that captures bucket meaning,
+ * even in situations where `execution.fingerprint()` might not fully reflect bucket structure.
+ *
+ * @internal
+ */
+export function createExecutionBucketsFingerprint(execution: IPreparedExecution): string {
+    return execution.definition.buckets.map(bucketStructureFingerprint).join(";");
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo, useCallback } from "react";
 
@@ -23,8 +23,10 @@ const metricTypeMessages = defineMessages({
     currency: { id: "metricComponent.metricType.currency" },
 });
 
+const DEFAULT_METRIC_TYPE_OPTION = { value: undefined, message: metricTypeMessages.unspecified };
+
 const METRIC_TYPE_OPTIONS: Array<{ value: MetricType | undefined; message: MessageDescriptor }> = [
-    { value: undefined, message: metricTypeMessages.unspecified },
+    DEFAULT_METRIC_TYPE_OPTION,
     { value: "CURRENCY", message: metricTypeMessages.currency },
 ];
 
@@ -136,8 +138,8 @@ const MetricTypeDropdown = memo(function MetricTypeDropdown({
     onMetricTypeChange,
 }: MetricTypeDropdownProps) {
     const intl = useIntl();
-    const selectedOption = (METRIC_TYPE_OPTIONS.find((option) => option.value === metricType) ??
-        METRIC_TYPE_OPTIONS[0])!;
+    const selectedOption =
+        METRIC_TYPE_OPTIONS.find((option) => option.value === metricType) ?? DEFAULT_METRIC_TYPE_OPTION;
 
     return (
         <Dropdown

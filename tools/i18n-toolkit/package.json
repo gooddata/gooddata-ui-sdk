@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.15.0-alpha.12",
+    "version": "11.15.0-alpha.13",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "repository": {
         "type": "git",
@@ -34,8 +34,8 @@
         "eslint": "eslint $npm_package_config_eslint",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "eslint-fix": "eslint $npm_package_config_eslint --fix",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
         "run": "node ./esm/index.js",
         "test": "vitest watch",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",

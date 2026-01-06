@@ -1,7 +1,7 @@
 {
     "extends": "../tsconfig.base.json",
-    "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json"],
+    "exclude": ["**/*.test.ts", "**/*.fixture.ts", "**/*.fixtures.ts", "**/fixtures/**"],
+    "include": ["src/**/*"],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",

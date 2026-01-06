@@ -1,16 +1,17 @@
 // (C) 2022-2024 GoodData Corporation
-import { testBackend, testWorkspace } from "./backend.js";
+import { omit } from "lodash-es";
+import { beforeAll, describe, expect, it } from "vitest";
+
 import {
+    type IAttributeElement,
     attributeDisplayFormRef,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
-    IAttributeElement,
 } from "@gooddata/sdk-model";
-import { omit } from "lodash-es";
 
+import { testBackend, testWorkspace } from "./backend.js";
 import * as Md from "../../src/fixtures/full.js";
 import * as ReferenceRecords from "../../src/fixtures/referenceObjects.js";
-import { describe, expect, it, beforeAll } from "vitest";
 
 const backend = testBackend();
 

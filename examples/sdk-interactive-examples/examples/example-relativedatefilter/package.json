@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-relativedatefilter",
-    "version": "11.15.0-alpha.12",
+    "version": "11.15.0-alpha.13",
     "private": false,
     "description": "Example demonstrates how to set relative DateFilter for visualization.",
     "license": "LicenseRef-LICENSE",
@@ -15,8 +15,8 @@
         "clean": "rm -rf esm dist *.log",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
         "preview": "vite preview",
         "refresh-md": "gdc-catalog-export && npm run prettier-write",
         "start": "vite serve",

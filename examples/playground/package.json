@@ -24,8 +24,8 @@
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
+        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{json,scss,md,yaml,html}'",
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
         "validate": "npm run eslint && npm run prettier-check"
     },

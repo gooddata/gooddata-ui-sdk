@@ -8,8 +8,7 @@ import cx from "classnames";
 import { ClientFormatterFacade, type IFormattedResult } from "@gooddata/number-formatter";
 import { type DataValue, type ISeparators, isResultTotalHeader } from "@gooddata/sdk-model";
 
-import { type ColumnHeadersPosition } from "src/publicTypes.js";
-
+import { type ColumnHeadersPosition } from "../../publicTypes.js";
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL } from "../base/constants.js";
 import { type IGridRow } from "../data/resultTypes.js";
 import { type AnyCol, isMixedValuesCol, isScopeCol } from "../structure/tableDescriptorTypes.js";

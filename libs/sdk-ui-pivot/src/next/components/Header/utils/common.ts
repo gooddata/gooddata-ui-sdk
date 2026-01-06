@@ -6,6 +6,7 @@ import {
     type ITableDataHeaderScope,
     type ITableRowDefinition,
     isMeasureGroupHeaderColumnDefinition,
+    isSubtotalRowDefinition,
     isValueColumnDefinition,
     isValueRowDefinition,
 } from "@gooddata/sdk-ui";
@@ -60,6 +61,9 @@ export const getColumnScope = (columnDefinition: ITableColumnDefinition | undefi
  */
 export const getRowScope = (rowDefinition: ITableRowDefinition | undefined) => {
     if (rowDefinition && isValueRowDefinition(rowDefinition)) {
+        return rowDefinition.rowScope;
+    }
+    if (rowDefinition && isSubtotalRowDefinition(rowDefinition)) {
         return rowDefinition.rowScope;
     }
 

@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import environment from "vite-plugin-environment";
+import { OutputChunk } from "rollup";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 const require = createRequire(import.meta.url);
@@ -42,7 +43,7 @@ export default defineConfig(({ command, mode }) => {
                 VITE_WORKSPACE: JSON.stringify(env["VITE_WORKSPACE"]),
                 VITE_INSIGHT: JSON.stringify(env["VITE_INSIGHT"]),
                 VITE_AUTH_TOKEN: JSON.stringify(env["VITE_AUTH_TOKEN"]),
-                'process.env': {NODE_ENV:mode},
+                "process.env": { NODE_ENV: mode },
             },
             root: debugDir,
             publicDir: false,
@@ -67,17 +68,17 @@ export default defineConfig(({ command, mode }) => {
                 TEST_PSEUDOMAP: "",
             }),
             cssInjectedByJsPlugin({
-                jsAssetsFilterFunction: (chunk) => /^index\.js$/.test(chunk.fileName),
+                jsAssetsFilterFunction: (chunk: OutputChunk) => /^index\.js$/.test(chunk.fileName),
             }),
         ],
         define: {
             NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),
             NPM_PACKAGE_VERSION: JSON.stringify(sdkModelVersion),
-            'process.env': {NODE_ENV:mode},
+            "process.env": { NODE_ENV: mode },
         },
         build: {
-            minify: mode === "production" ? true : false,
-            sourcemap: mode === "development" ? true : false,
+            minify: mode === "production",
+            sourcemap: mode === "development",
             lib: {
                 entry: {
                     index: resolve(projectDir, "src", "index.ts"),

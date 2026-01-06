@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -27,7 +27,7 @@ export function useResolvedGeoChartNextProps(props: IGeoChartNextProps): IGeoCha
     const resolvedFilters = useResolveValueWithPlaceholders(props.filters ?? EMPTY_FILTERS);
     const resolvedType = props.type ?? resolvedLayers[0]?.type ?? props.layers[0]?.type ?? "pushpin";
 
-    const config = applyGeoChartNextConfigDefaults(props.config);
+    const config = useMemo(() => applyGeoChartNextConfigDefaults(props.config), [props.config]);
 
     return useMemo(
         () => ({

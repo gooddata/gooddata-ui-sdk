@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import { describe, beforeAll, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
+
 import { testBackend, testWorkspace } from "./backend.js";
 const backend = testBackend();
 
