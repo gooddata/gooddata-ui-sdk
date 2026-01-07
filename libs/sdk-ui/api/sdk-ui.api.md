@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AttributeDisplayFormType } from '@gooddata/sdk-model';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentClass } from 'react';
 import { ComponentType } from 'react';
@@ -638,6 +639,7 @@ export type IAutomationUrlBuilder = (workspaceId?: string, dashboardId?: string,
 export interface IAvailableDrillTargetAttribute {
     // (undocumented)
     attribute: IAttributeDescriptor;
+    drillTargetDisplayFormType?: AttributeDisplayFormType;
     // (undocumented)
     intersectionAttributes: IAttributeDescriptor[];
 }

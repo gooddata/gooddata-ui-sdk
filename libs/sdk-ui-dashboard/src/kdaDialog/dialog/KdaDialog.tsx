@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { useId } from "react";
+import { useId, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -8,6 +8,7 @@ import { ErrorComponent } from "@gooddata/sdk-ui";
 import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
+import { KdaDialogFloatingStatusBar } from "./KdaDialogFloatingStatusBar.js";
 import { KdaDialogSections } from "./KdaDialogSections.js";
 import { KdaContent } from "../components/KdaContent.js";
 import { KdaFooter } from "../components/KdaFooter.js";
@@ -23,6 +24,7 @@ import { type IKdaDialogProps } from "../types.js";
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
 import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";
+import { KdaDialogControls } from "./KdaDialogControls.js";
 
 const overlayController = OverlayController.getInstance(KDA_DIALOG_OVERS_Z_INDEX);
 
@@ -31,12 +33,21 @@ const overlayController = OverlayController.getInstance(KDA_DIALOG_OVERS_Z_INDEX
  */
 export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDialogProps) {
     const { state } = useKdaState();
+    const { isMinimized } = state;
 
     const metric = state.definition?.metric.measure;
     const title = metric?.alias ?? metric?.title ?? "";
-
-    const accessibilityConfig = useKdaDialogAccessibility(title);
     const detailsId = useId();
+
+    const minimizedAlignPoints = useMemo(
+        () => (isMinimized ? [{ align: "tc tc", offset: { x: 0, y: 30 } }] : undefined),
+        [isMinimized],
+    );
+
+    const accessibilityConfig = useKdaDialogAccessibility(title, isMinimized);
+
+    const dialogBaseClassName = cx(accessibilityConfig.dialogId, className);
+    const displayCloseButton = showCloseButton ? !isMinimized : undefined;
 
     useChangeAnalysis();
     useValidAttributes();
@@ -44,50 +55,69 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
 
     return (
         <OverlayControllerProvider overlayController={overlayController}>
-            <Dialog
-                closeOnEscape={!state.attributesDropdownOpen && !state.addFilterDropdownOpen}
-                className={cx(accessibilityConfig.dialogId, className)}
-                isModal={accessibilityConfig.isModal}
-                accessibilityConfig={accessibilityConfig}
-                displayCloseButton={showCloseButton}
-                onClose={onClose}
-            >
-                <KdaDialogSections
-                    header={
-                        <KdaHeader
-                            titleId={accessibilityConfig.titleElementId}
-                            title={accessibilityConfig.title}
-                            bars={
-                                <>
-                                    <MetricsBar />
-                                    <FiltersBar />
-                                </>
-                            }
-                        />
-                    }
-                    content={
-                        <KdaContent
-                            leftContent={<KeyDriversPanel detailsId={detailsId} />}
-                            leftLoader={<KeyDriversPanel detailsId={detailsId} loading />}
-                            leftError={
-                                <ErrorComponent
-                                    message="Unknown error"
-                                    description="Can not load key drivers attributes list. Please try again later."
-                                />
-                            }
-                            rightContent={<KeyDriversOverview detailsId={detailsId} />}
-                            rightLoader={<KeyDriversOverview loading />}
-                            rightError={
-                                <ErrorComponent
-                                    message="Unknown error"
-                                    description="Can not load key driver details. Please try again later."
-                                />
-                            }
-                        />
-                    }
-                    footer={<KdaFooter content={<KeyDriversFooter />} onClose={onClose} />}
-                />
-            </Dialog>
+            {isMinimized ? (
+                <Dialog
+                    className={cx(dialogBaseClassName, "gd-kda-dialog--minimized")}
+                    closeOnEscape={false}
+                    isModal={false}
+                    alignPoints={minimizedAlignPoints}
+                    accessibilityConfig={accessibilityConfig}
+                    displayCloseButton={displayCloseButton}
+                    onClose={onClose}
+                    CloseButton={KdaDialogControls}
+                >
+                    <KdaDialogFloatingStatusBar
+                        titleElementId={accessibilityConfig.titleElementId}
+                        onClose={onClose}
+                    />
+                </Dialog>
+            ) : (
+                <Dialog
+                    className={cx(dialogBaseClassName, "gd-kda-dialog--expanded")}
+                    closeOnEscape={!state.attributesDropdownOpen && !state.addFilterDropdownOpen}
+                    isModal
+                    accessibilityConfig={accessibilityConfig}
+                    displayCloseButton={displayCloseButton}
+                    onClose={onClose}
+                    CloseButton={KdaDialogControls}
+                >
+                    <KdaDialogSections
+                        header={
+                            <KdaHeader
+                                titleId={accessibilityConfig.titleElementId}
+                                title={accessibilityConfig.title}
+                                bars={
+                                    <>
+                                        <MetricsBar />
+                                        <FiltersBar />
+                                    </>
+                                }
+                            />
+                        }
+                        content={
+                            <KdaContent
+                                leftContent={<KeyDriversPanel detailsId={detailsId} />}
+                                leftLoader={<KeyDriversPanel detailsId={detailsId} loading />}
+                                leftError={
+                                    <ErrorComponent
+                                        message="Unknown error"
+                                        description="Can not load key drivers attributes list. Please try again later."
+                                    />
+                                }
+                                rightContent={<KeyDriversOverview detailsId={detailsId} />}
+                                rightLoader={<KeyDriversOverview loading />}
+                                rightError={
+                                    <ErrorComponent
+                                        message="Unknown error"
+                                        description="Can not load key driver details. Please try again later."
+                                    />
+                                }
+                            />
+                        }
+                        footer={<KdaFooter content={<KeyDriversFooter />} onClose={onClose} />}
+                    />
+                </Dialog>
+            )}
         </OverlayControllerProvider>
     );
 }

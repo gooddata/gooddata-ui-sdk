@@ -1,19 +1,25 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import type {
-    FilterSpecification,
-    LngLatBoundsLike,
-    MapOptions,
-    PopupOptions,
-} from "../../layers/common/mapFacade.js";
+import type { FilterSpecification, MapOptions, PopupOptions } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
+import type { IGeoConfigViewportAreaNext } from "../../types/config/viewport.js";
 
 /**
- * Type for viewport definitions
+ * Viewport preset keys (everything except the special "auto" value).
+ *
+ * @internal
  */
-type IGeoViewports = {
-    [key: string]: LngLatBoundsLike;
-};
+type ViewportPresetKey = Exclude<IGeoConfigViewportAreaNext, "auto">;
+
+/**
+ * Bounds format used by our preset table.
+ *
+ * MapLibre accepts `{ lng, lat }` objects as `LngLatLike`, so this is still compatible with
+ * `LngLatBoundsLike` where needed.
+ *
+ * @internal
+ */
+export type ViewportPresetBounds = readonly [IGeoLngLat, IGeoLngLat];
 
 /**
  * Default world bounds for the map viewport
@@ -27,7 +33,7 @@ export const DEFAULT_WORLD_BOUNDS = { northEast: { lat: 84, lng: 180 }, southWes
  *
  * @alpha
  */
-export const VIEWPORTS: IGeoViewports = {
+export const VIEWPORTS = {
     continent_af: [
         { lat: -36, lng: -20 },
         { lat: 38, lng: 54 },
@@ -53,7 +59,7 @@ export const VIEWPORTS: IGeoViewports = {
         { lat: 14, lng: -31 },
     ], // South America
     world: [DEFAULT_WORLD_BOUNDS.southWest, DEFAULT_WORLD_BOUNDS.northEast], // World
-};
+} as const satisfies Record<ViewportPresetKey, ViewportPresetBounds>;
 
 /**
  * Filter for identifying clustered points

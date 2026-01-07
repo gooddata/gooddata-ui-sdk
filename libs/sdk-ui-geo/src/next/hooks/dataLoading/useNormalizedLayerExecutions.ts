@@ -218,8 +218,9 @@ export function useNormalizedLayerExecutions<
         return {
             ...rest,
             layers,
+            type: rootLayerType,
         } as WithoutExecutions<TCoreProps> & { layers: IGeoLayer[] };
-    }, [props, layers]);
+    }, [props, layers, rootLayerType]);
 
     return { layerExecutions, propsWithLayers };
 }

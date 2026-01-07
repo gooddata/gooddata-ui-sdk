@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
@@ -68,44 +68,43 @@ function useChangeAnalysisResults(
             .join();
     }, [attrFilters]);
 
+    const dateAttribute = dateAttributeFinder(definition?.dateAttribute);
+    const shouldComputeChangeAnalysis = !!definition && !!dateAttribute && !loading;
+
     return useCancelablePromise<IChangeAnalysisResults | undefined>(
         {
-            promise: () => {
-                const dateAttribute = dateAttributeFinder(definition?.dateAttribute);
+            promise: shouldComputeChangeAnalysis
+                ? () => {
+                      const granularity = dateAttribute.granularity;
+                      const attributes = attrs
+                          .map((ref) => {
+                              const attr = attributeFinder(ref);
+                              return attr ? newAttribute(ref) : null;
+                          })
+                          .filter(Boolean) as IAttribute[];
+                      const filters = attrFilters
+                          .filter((f) => !isAllValuesDashboardAttributeFilter(f))
+                          .map(dashboardAttributeFilterToAttributeFilter);
 
-                if (!definition || !dateAttribute || loading) {
-                    return Promise.resolve(undefined);
-                }
-
-                const granularity = dateAttribute.granularity;
-                const attributes = attrs
-                    .map((ref) => {
-                        const attr = attributeFinder(ref);
-                        return attr ? newAttribute(ref) : null;
-                    })
-                    .filter(Boolean) as IAttribute[];
-                const filters = attrFilters
-                    .filter((f) => !isAllValuesDashboardAttributeFilter(f))
-                    .map(dashboardAttributeFilterToAttributeFilter);
-
-                return backend
-                    .workspace(workspace)
-                    .keyDriverAnalysis()
-                    .computeChangeAnalysis(
-                        {
-                            measure: definition.metric as IMeasure,
-                            auxMeasures: definition.metrics as IMeasure[],
-                            attributes,
-                            filters,
-                        },
-                        {
-                            dateAttribute: newAttribute(dateAttribute.defaultDisplayForm.ref),
-                            from: from ?? "",
-                            to: to ?? "",
-                            granularity,
-                        },
-                    );
-            },
+                      return backend
+                          .workspace(workspace)
+                          .keyDriverAnalysis()
+                          .computeChangeAnalysis(
+                              {
+                                  measure: definition.metric as IMeasure,
+                                  auxMeasures: definition.metrics as IMeasure[],
+                                  attributes,
+                                  filters,
+                              },
+                              {
+                                  dateAttribute: newAttribute(dateAttribute.defaultDisplayForm.ref),
+                                  from: from ?? "",
+                                  to: to ?? "",
+                                  granularity,
+                              },
+                          );
+                  }
+                : undefined,
         },
         [
             backend,
@@ -115,7 +114,7 @@ function useChangeAnalysisResults(
             from,
             to,
             loading,
-            dateAttributeFinder,
+            dateAttribute,
             attributeFiltersFingerprint,
         ],
     );

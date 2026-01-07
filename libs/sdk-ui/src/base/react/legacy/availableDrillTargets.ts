@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { uniqBy } from "lodash-es";
 
@@ -68,12 +68,12 @@ export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTar
 }
 
 /**
- * Builds available drill targets combining measures from multiple data views.
- * Used for multi-layer visualizations where each layer may have its own measures.
+ * Builds available drill targets combining measures and attributes from multiple data views.
+ * Used for multi-layer visualizations where each layer may have its own measures and attributes.
  *
  * @param layerDataViews - Array of DataViewFacades from all layers
- * @param primaryDataView - The primary layer's DataViewFacade (used for base attributes)
- * @returns Combined available drill targets with measures from all layers
+ * @param primaryDataView - The primary layer's DataViewFacade (used as base)
+ * @returns Combined available drill targets with measures and attributes from all layers
  * @internal
  */
 export function getMultiLayerDrillTargets(
@@ -86,9 +86,19 @@ export function getMultiLayerDrillTargets(
 
     const primaryTargets = getAvailableDrillTargets(primaryDataView);
     const primaryMeasures = primaryTargets.measures ?? [];
+    // Deduplicate primary attributes first (same attribute can appear in multiple buckets e.g. tooltip text)
+    const primaryAttributes = uniqBy(
+        primaryTargets.attributes ?? [],
+        (a) => a.attribute.attributeHeader.formOf.identifier,
+    );
 
     const allMeasures: IAvailableDrillTargetMeasure[] = [...primaryMeasures];
     const seenMeasureIds = new Set(primaryMeasures.map((m) => m.measure.measureHeaderItem.localIdentifier));
+
+    const allAttributes: IAvailableDrillTargetAttribute[] = [...primaryAttributes];
+    const seenAttributeIds = new Set(
+        primaryAttributes.map((a) => a.attribute.attributeHeader.formOf.identifier),
+    );
 
     for (const dataView of layerDataViews) {
         if (!dataView) {
@@ -96,19 +106,29 @@ export function getMultiLayerDrillTargets(
         }
 
         const layerTargets = getAvailableDrillTargets(dataView);
-        const layerMeasures = layerTargets.measures ?? [];
 
-        for (const measureTarget of layerMeasures) {
+        // Collect unique measures from this layer
+        for (const measureTarget of layerTargets.measures ?? []) {
             const measureId = measureTarget.measure.measureHeaderItem.localIdentifier;
             if (!seenMeasureIds.has(measureId)) {
                 seenMeasureIds.add(measureId);
                 allMeasures.push(measureTarget);
             }
         }
+
+        // Collect unique attributes from this layer
+        for (const attributeTarget of layerTargets.attributes ?? []) {
+            const attributeId = attributeTarget.attribute.attributeHeader.formOf.identifier;
+            if (!seenAttributeIds.has(attributeId)) {
+                seenAttributeIds.add(attributeId);
+                allAttributes.push(attributeTarget);
+            }
+        }
     }
 
     return {
         ...primaryTargets,
+        attributes: allAttributes,
         measures: allMeasures,
     };
 }

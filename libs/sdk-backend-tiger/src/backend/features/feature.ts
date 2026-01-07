@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { FeatureFlagsValues, type ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures.js";
 import { convertState } from "./state.js";
@@ -578,13 +578,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableChartAccessibilityFeatures,
-            "enableChartAccessibilityFeatures",
-            "BOOLEAN",
-            FeatureFlagsValues.enableChartAccessibilityFeatures,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExecutionCancelling,
             "enableExecutionCancelling",
             "BOOLEAN",
@@ -659,13 +652,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAlertsEvaluationFrequencySetup",
             "BOOLEAN",
             FeatureFlagsValues.enableAlertsEvaluationFrequencySetup,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableRichTooManyDatapointsErrors,
-            "enableRichTooManyDatapointsErrors",
-            "BOOLEAN",
-            FeatureFlagsValues.enableRichTooManyDatapointsErrors,
         ),
         ...loadFeature(
             features,

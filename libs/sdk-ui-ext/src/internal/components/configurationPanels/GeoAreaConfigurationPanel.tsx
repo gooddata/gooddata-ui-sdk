@@ -1,12 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
+import { messages } from "../../../locales.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
+import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { GeoViewportControl } from "../configurationControls/GeoViewportControl.js";
 
 /**
  * Configuration panel for GeoAreaChart
@@ -21,6 +24,25 @@ import { ColorsSection } from "../configurationControls/colors/ColorsSection.js"
  * @internal
  */
 export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
+    protected renderViewportSection(): ReactElement {
+        const { properties, propertiesMeta, pushData } = this.props;
+        return (
+            <ConfigSection
+                id="map_section"
+                title={messages["pointsMapTitle"].id}
+                propertiesMeta={propertiesMeta}
+                properties={properties}
+                pushData={pushData}
+            >
+                <GeoViewportControl
+                    properties={properties}
+                    disabled={this.isControlDisabled()}
+                    pushData={pushData}
+                />
+            </ConfigSection>
+        );
+    }
+
     protected renderConfigurationPanel(): ReactNode {
         return (
             <div>
@@ -30,6 +52,9 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
                 {/* Color Configuration */}
                 {this.renderColorSection()}
 
+                {/* Viewport Configuration */}
+                {this.renderViewportSection()}
+
                 {/* Canvas Configuration */}
                 {this.renderInteractionsSection()}
             </div>
@@ -37,8 +62,7 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
     }
 
     protected override renderColorSection(): ReactNode {
-        const { properties, propertiesMeta, pushData, colors, featureFlags, references, isLoading } =
-            this.props;
+        const { properties, propertiesMeta, pushData, colors, references, isLoading } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -51,7 +75,6 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
                 pushData={pushData}
                 hasMeasures // color configuration is category-driven
                 isLoading={isLoading}
-                isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
                 supportsChartFill={false}
             />
         );

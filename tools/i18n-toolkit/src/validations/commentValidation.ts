@@ -4,7 +4,7 @@ import { type LocalesItem, type LocalesStructure } from "../schema/localization.
 import { done, error, fail, message, skipped } from "../utils/console.js";
 
 const FILENAME_CHECK_ONLY = "en-US.json";
-const COMMENT_PROPERTY: keyof LocalesItem = "comment";
+const COMMENT_PROPERTY: keyof LocalesItem = "crowdinContext";
 const COMMENT_LENGTH_MIN = 3;
 
 function hasValidComment(value: LocalesItem): boolean {

@@ -53,12 +53,17 @@ describe("DataLabelsControl", () => {
             createComponent({
                 isDisabled: true,
             });
-            expect(screen.getByRole("combobox")).toHaveClass("disabled");
+            const buttons = screen.getAllByRole("combobox");
+            // Both Data Labels and Labels Style dropdowns should be disabled
+            expect(buttons[0]).toHaveClass("disabled");
+            expect(buttons[1]).toHaveClass("disabled");
         });
 
         it("should have `auto` by default", () => {
             createComponent();
-            expect(screen.queryByText(AUTO_LABEL)).toBeInTheDocument();
+            // Both Data Labels and Labels Style dropdowns have "auto (default)" by default
+            const autoLabels = screen.queryAllByText(AUTO_LABEL);
+            expect(autoLabels.length).toBeGreaterThanOrEqual(1);
         });
 
         it("should show value that was passed", () => {

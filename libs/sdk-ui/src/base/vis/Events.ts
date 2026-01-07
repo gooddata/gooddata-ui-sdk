@@ -1,7 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type IDataView, type IExportConfig, type IExportResult } from "@gooddata/sdk-backend-spi";
 import {
+    type AttributeDisplayFormType,
     type IAttributeDescriptor,
     type IColor,
     type IColorPalette,
@@ -92,6 +93,11 @@ export interface IAvailableDrillTargetMeasure {
 export interface IAvailableDrillTargetAttribute {
     attribute: IAttributeDescriptor;
     intersectionAttributes: IAttributeDescriptor[];
+    /**
+     * Preferred display form type for drill-down targets.
+     * Used by charts that rely on specific display forms (e.g. geo charts).
+     */
+    drillTargetDisplayFormType?: AttributeDisplayFormType;
 }
 
 /**

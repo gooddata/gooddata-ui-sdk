@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
@@ -17,8 +17,8 @@ import { type IMapViewport } from "../../types/map/provider.js";
  * 1. Calls map.resize() to update the MapLibre canvas size
  * 2. Reapplies the viewport so fitBounds can recalculate based on new dimensions
  *
- * This is separate from viewport updates triggered by data/config changes.
- * Those are handled in useMapDataSync.
+ * This is separate from viewport updates triggered by config changes (e.g. Analytical Designer viewport).
+ * Those are handled in `useApplyViewportOnConfigChange`.
  *
  * @param map - MapLibre map instance (null if not initialized)
  * @param isMapReady - Whether map is ready for updates

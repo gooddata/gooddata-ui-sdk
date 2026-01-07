@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { LngLatBoundsLike } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../../types/common/coordinates.js";
@@ -32,8 +32,9 @@ export function getViewportOptions(data: IGeoLngLat[], config: IGeoPushpinChartN
     const { area }: IGeoConfigViewportNext = config?.viewport ?? {};
 
     if (!center) {
-        if (area && VIEWPORTS[area]) {
-            const bounds: LngLatBoundsLike = VIEWPORTS[area];
+        if (area && area !== "auto") {
+            const [southWest, northEast] = VIEWPORTS[area];
+            const bounds: LngLatBoundsLike = [southWest, northEast];
             return { bounds };
         } else {
             const lngLatBounds: IGeoLngLatBounds | undefined = getLngLatBounds(data);

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -99,7 +99,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
             })}
             {...getPivotHeaderTestIdProps({ isTotal, isSubtotal })}
         >
-            <div className="gd-header-content">
+            <div className="gd-header-content" aria-hidden="true">
                 <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>
                     {params.displayName}
                 </span>
@@ -110,6 +110,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
             {!!colDef.sortable && (
                 <div
                     className="gd-header-cell-clickable-area"
+                    aria-hidden="true"
                     {...getPivotHeaderClickableAreaTestIdProps()}
                     onClick={handleHeaderClick}
                 ></div>

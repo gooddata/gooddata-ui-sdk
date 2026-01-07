@@ -6,14 +6,12 @@ import { removeMetadata, sanitizeLocaleForMoment } from "../translationUtils.js"
 
 const translations = {
     "some.key.1": {
-        value: "value1",
-        comment: "Some comment",
-        limit: 0,
+        text: "value1",
+        crowdinContext: "Some comment",
     },
     "some.key.2": {
-        value: "value2",
-        comment: "Some comment",
-        limit: 0,
+        text: "value2",
+        crowdinContext: "Some comment",
     },
 };
 

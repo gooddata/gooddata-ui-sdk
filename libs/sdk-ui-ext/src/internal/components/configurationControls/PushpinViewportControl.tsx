@@ -1,43 +1,21 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
-import { useIntl } from "react-intl";
-
-import { type IGeoConfigViewport } from "@gooddata/sdk-ui-geo";
-
-import { DropdownControl } from "./DropdownControl.js";
-import { messages } from "../../../locales.js";
-import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
-import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
-import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { GeoViewportControl, type IGeoViewportControl } from "./GeoViewportControl.js";
 
 export interface IPushpinViewportControl {
     disabled: boolean;
-    properties: IVisualizationProperties;
-    pushData: (data: any) => any;
+    properties: IGeoViewportControl["properties"];
+    pushData: IGeoViewportControl["pushData"];
 }
 
-function getPushpinProperty(props: IPushpinViewportControl): IGeoConfigViewport {
-    return props.properties?.controls?.["viewport"] ?? { area: "auto" };
-}
-
+/**
+ * Viewport control for pushpin charts.
+ * Thin wrapper around GeoViewportControl for backward compatibility.
+ *
+ * @internal
+ */
 export function PushpinViewportControl(props: IPushpinViewportControl): ReactElement {
-    const intl = useIntl();
-    const { area } = getPushpinProperty(props);
-    const { disabled, properties, pushData } = props;
-    return (
-        <div className="s-pushpin-viewport-control">
-            <DropdownControl
-                value={area}
-                valuePath="viewport.area"
-                labelText={messages["viewportAreaTitle"].id}
-                disabled={disabled}
-                showDisabledMessage={disabled}
-                properties={properties}
-                pushData={pushData}
-                items={getTranslatedDropdownItems(pushpinViewportDropdownItems, intl)}
-            />
-        </div>
-    );
+    return <GeoViewportControl {...props} className="s-pushpin-viewport-control" />;
 }

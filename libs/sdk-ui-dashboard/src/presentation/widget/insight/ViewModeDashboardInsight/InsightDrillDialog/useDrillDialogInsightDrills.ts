@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, useMemo } from "react";
 
@@ -22,6 +22,7 @@ export function KdaProvider({ children, definition, separators }: KdaProps) {
             fromValue: { ...definition?.range[0] },
             toValue: { ...definition?.range[1] },
             definitionStatus: "success",
+            isMinimized: true,
             attributeFilters: (definition.filters?.slice() ?? []).filter(
                 (f) => !isAllValuesDashboardAttributeFilter(f),
             ),

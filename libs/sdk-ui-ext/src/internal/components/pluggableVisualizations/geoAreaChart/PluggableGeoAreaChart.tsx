@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 
@@ -21,12 +21,7 @@ import {
     insightTitle,
     newAttribute,
 } from "@gooddata/sdk-model";
-import {
-    BucketNames,
-    type IAvailableDrillTargets,
-    type IPushData,
-    VisualizationTypes,
-} from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     GeoChartNextInternal,
     type IGeoAreaChartConfig,
@@ -94,36 +89,6 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         this.workspace = props.projectId;
         this.initializeProperties(props.visualizationProperties);
     }
-
-    /**
-     * Removes attribute drill targets since geo area charts don't support drilling from attributes.
-     */
-    private withEmptyAttributeTargets(drillTargets: IAvailableDrillTargets): IAvailableDrillTargets {
-        return {
-            ...drillTargets,
-            attributes: [],
-        };
-    }
-
-    /**
-     * Store reference to parent's handlePushData to call it from our override.
-     */
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    private superHandlePushData = this.handlePushData;
-
-    /**
-     * Override push data handler to filter out attribute drill targets.
-     * Geo area charts only support drilling from measures.
-     */
-    protected override handlePushData = (data: IPushData): void => {
-        this.superHandlePushData({
-            ...data,
-            ...(data?.availableDrillTargets && {
-                availableDrillTargets: this.withEmptyAttributeTargets(data.availableDrillTargets),
-            }),
-        });
-    };
 
     /**
      * Extends reference point with geo area-specific configuration.

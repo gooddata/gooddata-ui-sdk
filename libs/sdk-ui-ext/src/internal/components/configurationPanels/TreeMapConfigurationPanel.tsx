@@ -20,7 +20,7 @@ import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js
 
 export class TreeMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
-        const { propertiesMeta, properties, pushData, featureFlags } = this.props;
+        const { propertiesMeta, properties, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -41,7 +41,6 @@ export class TreeMapConfigurationPanel extends ConfigurationPanelContent {
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue="auto"
-                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
                     </ConfigSection>
                     {this.renderAdvancedSection()}

@@ -28,7 +28,7 @@ export async function getIntlMessageFormatCheck(
 
     localizations.forEach(([file, content]) => {
         Object.entries(content).forEach(([key, item]) => {
-            const value = typeof item === "object" ? item.value : item;
+            const value = typeof item === "object" ? item.text : item;
             try {
                 parse(value);
             } catch (err) {

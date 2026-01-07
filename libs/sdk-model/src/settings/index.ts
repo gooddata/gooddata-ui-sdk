@@ -163,11 +163,6 @@ export interface ISettings {
     enableAccessibleChartTooltip?: boolean;
 
     /**
-     * Enables additional chart accessibility features configurable in AD.
-     */
-    enableChartAccessibilityFeatures?: boolean;
-
-    /**
      * Headline component will not be underlined when it is set up with drilling.
      */
     disableKpiDashboardHeadlineUnderline?: boolean;

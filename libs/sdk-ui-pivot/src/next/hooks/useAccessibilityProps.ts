@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -8,28 +8,40 @@ import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { type AgGridProps } from "../types/agGrid.js";
 
 /**
- * Selectors for AG Grid containers that are missing role="rowgroup".
+ * Selectors for AG Grid containers that may need rowgroup role adjustment.
+ * These containers either have rowgroup without rows or are missing rowgroup with rows.
  */
-const MISSING_ROWGROUP_SELECTORS = [
-    ".ag-full-width-container:not([role='rowgroup'])",
-    ".ag-viewport.ag-sticky-top-viewport:not([role='rowgroup'])",
-    ".ag-sticky-top-full-width-container:not([role='rowgroup'])",
+const ROWGROUP_CONTAINER_SELECTORS = [
+    ".ag-full-width-container",
+    ".ag-viewport.ag-sticky-top-viewport",
+    ".ag-sticky-top-full-width-container",
+    ".ag-floating-bottom-full-width-container",
 ].join(", ");
 
 /**
- * Fix AG Grid containers by adding the missing role="rowgroup" attribute.
+ * Fix AG Grid containers by adjusting the role="rowgroup" attribute.
+ *
+ * ARIA spec requires rowgroup to contain at least one row element.
+ * This function:
+ * - Adds rowgroup role to containers that have row children
+ * - Removes rowgroup role from empty containers
  *
  * @internal
  */
-export function fixMissingRowgroupRoles(event: FirstDataRenderedEvent): void {
+export function fixRowgroupRoles(event: FirstDataRenderedEvent): void {
     const gridId = event.api.getGridId();
     const gridContainer = document.querySelector(`[grid-id="${gridId}"]`);
     if (!gridContainer) {
         return;
     }
 
-    gridContainer.querySelectorAll(MISSING_ROWGROUP_SELECTORS).forEach((el: Element) => {
-        el.setAttribute("role", "rowgroup");
+    gridContainer.querySelectorAll(ROWGROUP_CONTAINER_SELECTORS).forEach((el: Element) => {
+        const hasRowChildren = el.querySelector("[role='row']") !== null;
+        if (hasRowChildren) {
+            el.setAttribute("role", "rowgroup");
+        } else {
+            el.removeAttribute("role");
+        }
     });
 }
 

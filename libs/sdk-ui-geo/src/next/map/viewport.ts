@@ -1,7 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoLayerData } from "../context/GeoLayersContext.js";
 import { type IMapViewport } from "../types/map/provider.js";
+
+export { computeViewportFromConfig } from "./viewport/viewportResolution.js";
 
 function mergeBounds(
     a: IMapViewport["bounds"] | undefined,
@@ -28,6 +30,10 @@ function mergeBounds(
 /**
  * Computes a combined viewport from all layers.
  * Merges bounds from all layers to ensure all data is visible.
+ *
+ * @remarks
+ * The layer-provided `initialViewport` should be data-derived (used for `"auto"` behavior).
+ * Config-driven viewports are handled separately by `computeViewportFromConfig`.
  */
 export function computeCombinedViewport(layers: Map<string, IGeoLayerData>): Partial<IMapViewport> | null {
     let combinedBounds: IMapViewport["bounds"] | undefined;

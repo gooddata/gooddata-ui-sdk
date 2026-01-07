@@ -1,11 +1,163 @@
 // (C) 2025 GoodData Corporation
-@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+@keyframes gd-kda-dialog-enter-minimized {
+    0% {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes gd-kda-dialog-enter-expanded {
+    0% {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes gd-kda-success-enter {
+    0% {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+
+    60% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
 .gd-kda-dialog {
     width: 948px;
     height: 704px;
     //stylelint-disable-next-line
     max-width: none !important;
+    transform-origin: top center;
+
+    // Override sdk-ui-kit default dialog styles for minimized floating status bar.
+    &.gd-kda-dialog--minimized {
+        &#{&} {
+            width: 326px;
+            height: 35px;
+            padding: 4px 5px 4px 10px;
+            border-radius: 4px;
+            border-width: 1px;
+            border-color: var(--gd-palette-complementary-3);
+            box-shadow: 0 2px 10px 0 rgb(0 0 0 / 10%);
+            animation: gd-kda-dialog-enter-minimized 200ms cubic-bezier(0.22, 1, 0.36, 1) 50ms both;
+        }
+    }
+
+    // Align expanded dialog actions with the header title row.
+    &.gd-kda-dialog--expanded {
+        &#{&} {
+            animation: gd-kda-dialog-enter-expanded 200ms cubic-bezier(0.22, 1, 0.36, 1) 50ms both;
+
+            .gd-kda-dialog-controls {
+                top: 20px;
+            }
+        }
+    }
+
+    .gd-kda-dialog-controls {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .gd-kda-dialog-action-buttons {
+        display: flex;
+        align-items: center;
+
+        &__button {
+            display: flex;
+            cursor: pointer;
+        }
+
+        &__divider {
+            width: 1px;
+            background-color: var(--gd-palette-complementary-3);
+        }
+
+        &--size-small {
+            gap: 3px;
+
+            .gd-ui-kit-icon-button {
+                width: 22px;
+                height: 22px;
+
+                svg {
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+
+            .gd-kda-dialog-action-buttons__divider {
+                height: 17px;
+            }
+        }
+
+        &--size-medium {
+            gap: 5px;
+
+            .gd-kda-dialog-action-buttons__divider {
+                height: 32px;
+            }
+        }
+    }
+
+    .gd-kda-floating-status-bar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        height: 100%;
+
+        &__content {
+            display: flex;
+            flex: 1 0 0;
+            gap: 5px;
+            align-items: center;
+            min-width: 0;
+
+            // Play a short transition when the success icon appears (status transitions to `done`).
+            // This relies on the icon being conditionally mounted only in the `done` state.
+            .gd-ui-kit-icon--color-success {
+                animation: gd-kda-success-enter 250ms cubic-bezier(0.22, 1, 0.36, 1);
+                transform-origin: center;
+            }
+        }
+
+        &__spinner {
+            display: flex;
+        }
+
+        &__text {
+            flex: 1 0 0;
+            min-width: 0;
+            margin: 0;
+            color: var(--gd-palette-complementary-7);
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 17px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
 
     //dialog sections - structure
     .gd-kda-dialog-sections {
@@ -59,7 +211,7 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                margin-right: 30px;
+                margin-right: 60px;
             }
         }
 
@@ -561,6 +713,21 @@
     //attributes dropdown
     .gd-kda-attributes-dropdown {
         display: inline-flex;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gd-kda-dialog {
+        &#{&} {
+            transition: none;
+            animation: none;
+        }
+    }
+
+    .gd-kda-floating-status-bar__content {
+        .gd-ui-kit-icon--color-success {
+            animation: none;
+        }
     }
 }
 

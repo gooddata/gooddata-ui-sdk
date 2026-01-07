@@ -95,17 +95,8 @@ export abstract class ConfigurationPanelContent<
     }
 
     protected renderColorSection(): ReactNode {
-        const {
-            properties,
-            propertiesMeta,
-            pushData,
-            colors,
-            featureFlags,
-            references,
-            insight,
-            isLoading,
-            panelConfig,
-        } = this.props;
+        const { properties, propertiesMeta, pushData, colors, references, insight, isLoading, panelConfig } =
+            this.props;
 
         const controlsDisabled = this.isControlDisabled();
         const hasMeasures = getMeasuresFromMdObject(insight).length > 0;
@@ -120,7 +111,6 @@ export abstract class ConfigurationPanelContent<
                 pushData={pushData}
                 hasMeasures={hasMeasures}
                 isLoading={isLoading}
-                isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
                 supportsChartFill={panelConfig.supportsChartFill}
                 chartFillIgnoredMeasures={chartFillIgnoredMeasures}
                 isChartFillDisabled={panelConfig.isChartFillDisabled}

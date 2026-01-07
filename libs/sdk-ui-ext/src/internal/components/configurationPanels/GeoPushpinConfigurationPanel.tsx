@@ -139,8 +139,7 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     }
 
     protected override renderColorSection(): ReactNode {
-        const { properties, propertiesMeta, pushData, colors, featureFlags, references, isLoading } =
-            this.props;
+        const { properties, propertiesMeta, pushData, colors, references, isLoading } = this.props;
 
         const controlsDisabled = this.isControlDisabled();
 
@@ -154,7 +153,6 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
                 pushData={pushData}
                 hasMeasures // hasMeasures is true because Color Config is based on Attribute
                 isLoading={isLoading}
-                isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
                 supportsChartFill={false}
             />
         );

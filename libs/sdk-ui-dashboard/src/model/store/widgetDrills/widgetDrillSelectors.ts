@@ -1,12 +1,14 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { compact } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
+    type AttributeDisplayFormType,
     type DrillDefinition,
     type DrillOrigin,
+    type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttribute,
@@ -18,6 +20,7 @@ import {
     areObjRefsEqual,
     getHierarchyAttributes,
     getHierarchyRef,
+    isCatalogAttribute,
     isDrillFromAttribute,
     isDrillFromMeasure,
     isIdentifierRef,
@@ -110,6 +113,27 @@ function drillDefinitionToPredicates(drill: DrillDefinition): IHeaderPredicate[]
     ]);
 }
 
+/**
+ * Resolves the preferred display form for a drill target.
+ * If drillTargetDisplayFormType is specified (e.g., for geo charts), finds a matching display form.
+ * Falls back to the default display form if no matching type is found.
+ */
+function getDrillAttributeDisplayForm(
+    catalogAttribute: ICatalogAttribute | ICatalogDateAttribute,
+    drillTargetDisplayFormType?: AttributeDisplayFormType,
+): IAttributeDisplayFormMetadataObject {
+    if (drillTargetDisplayFormType && isCatalogAttribute(catalogAttribute)) {
+        const preferredDisplayForm = catalogAttribute.displayForms.find(
+            (df) => df.displayFormType === drillTargetDisplayFormType,
+        );
+        if (preferredDisplayForm) {
+            return preferredDisplayForm;
+        }
+    }
+
+    return catalogAttribute.defaultDisplayForm;
+}
+
 function createDrillDefinition(
     drill: IAvailableDrillTargetAttribute,
     descendantRef: ObjRef,
@@ -123,9 +147,13 @@ function createDrillDefinition(
      * On Bear, the drilldown is defined as "Attr --\> specific display form" (= drill target implicitly)
      */
     const drillTargetAttributeFromCatalog = allCatalogAttributesMap.get(descendantRef);
+
     const drillTargetDescriptionObj = drillTargetAttributeFromCatalog
         ? {
-              target: drillTargetAttributeFromCatalog.defaultDisplayForm.ref,
+              target: getDrillAttributeDisplayForm(
+                  drillTargetAttributeFromCatalog,
+                  drill.drillTargetDisplayFormType,
+              ).ref,
               title: drillTargetAttributeFromCatalog.attribute.title, // title is used to distinguish between multiple drill-downs
           }
         : {

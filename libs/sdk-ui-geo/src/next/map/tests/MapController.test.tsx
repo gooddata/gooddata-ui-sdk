@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -17,6 +17,7 @@ const resizeMock = vi.fn();
 const callbacksMock = vi.fn();
 const syncMock = vi.fn();
 const afterRenderMock = vi.fn();
+const applyViewportOnConfigChangeMock = vi.fn();
 
 function createMapFacadeStub(): IMapFacade {
     const style: StyleSpecification = { version: 8, sources: {}, layers: [] };
@@ -113,6 +114,9 @@ vi.mock("../../hooks/layers/useGeoAdapterContext.js", () => ({
 vi.mock("../../hooks/map/useAfterRender.js", () => ({
     useAfterRender: (...args: unknown[]) => afterRenderMock(...args),
 }));
+vi.mock("../../hooks/map/useApplyViewportOnConfigChange.js", () => ({
+    useApplyViewportOnConfigChange: (...args: unknown[]) => applyViewportOnConfigChangeMock(...args),
+}));
 
 describe("MapController", () => {
     beforeEach(() => {
@@ -121,6 +125,7 @@ describe("MapController", () => {
         callbacksMock.mockClear();
         syncMock.mockClear();
         afterRenderMock.mockClear();
+        applyViewportOnConfigChangeMock.mockClear();
     });
 
     it("wires map lifecycle hooks with provided props", () => {
@@ -139,6 +144,7 @@ describe("MapController", () => {
                 mapContainerRef={mapContainerRef}
                 chartContainerRect={null}
                 initialViewport={null}
+                dataViewport={null}
                 layerExecutions={layerExecutions}
                 drillablePredicates={drillablePredicates}
                 onCenterPositionChanged={onCenterPositionChanged}
@@ -150,6 +156,7 @@ describe("MapController", () => {
 
         expect(initMock).toHaveBeenCalledWith(mapContainerRef, config, null, undefined);
         expect(resizeMock).toHaveBeenCalledWith(mapFacadeStub, true, null, null);
+        expect(applyViewportOnConfigChangeMock).toHaveBeenCalledWith(mapFacadeStub, true, config, null);
         expect(callbacksMock).toHaveBeenCalledWith(mapFacadeStub, {
             onCenterPositionChanged,
             onZoomChanged,

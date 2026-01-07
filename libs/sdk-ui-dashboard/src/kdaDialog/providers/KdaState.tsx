@@ -1,17 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import {
-    type Dispatch,
-    type ReactNode,
-    type SetStateAction,
-    createContext,
-    useCallback,
-    useContext,
-    useMemo,
-    useState,
-} from "react";
+import { type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-import { type KdaState } from "../internalTypes.js";
+import type { KdaState } from "../internalTypes.js";
 
 const defaultState: KdaState = {
     //main items
@@ -19,6 +10,7 @@ const defaultState: KdaState = {
     toValue: undefined,
     fromValue: undefined,
     definitionStatus: "pending",
+    isMinimized: true,
     items: [],
     itemsStatus: "pending",
     //states
@@ -37,22 +29,25 @@ const defaultState: KdaState = {
     relevantStatus: "pending",
 };
 
-const KdaStateContext = createContext<{
+type KdaStateContextType = {
     state: KdaState;
-    setState: Dispatch<SetStateAction<Partial<KdaState>>>;
-}>({
+    setState: (newState: Partial<KdaState>) => void;
+};
+
+const KdaStateContext = createContext<KdaStateContextType>({
     state: defaultState,
-    setState: () => {},
+    setState: () => undefined,
 });
 
 export function KdaStateProvider({ children, value }: { children: ReactNode; value?: Partial<KdaState> }) {
-    const [state, setStateInternal] = useState<KdaState>({
-        ...defaultState,
-        ...value,
-    });
+    const [state, setStateInternal] = useState<KdaState>({ ...defaultState, ...value });
 
-    const setState = useCallback((newState: SetStateAction<Partial<KdaState>>) => {
-        setStateInternal((prev) => ({ ...prev, ...newState }));
+    useEffect(() => {
+        setStateInternal({ ...defaultState, ...value });
+    }, [value]);
+
+    const setState: KdaStateContextType["setState"] = useCallback((newState) => {
+        setStateInternal((prevState) => ({ ...prevState, ...newState }));
     }, []);
 
     const providerValue = useMemo(() => {
