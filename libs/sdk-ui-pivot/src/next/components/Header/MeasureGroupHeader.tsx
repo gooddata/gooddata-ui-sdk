@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -105,7 +105,7 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
                 "is-menu-open": isMenuOpen,
             })}
         >
-            <div className="gd-header-content">
+            <div className="gd-header-content" aria-hidden="true">
                 <span className="gd-header-text">{displayName}</span>
             </div>
             {hasMenuItems ? (

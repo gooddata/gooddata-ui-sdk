@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -80,7 +80,7 @@ export function AttributeHeader(params: AgGridHeaderParams) {
             })}
             {...getPivotHeaderTestIdProps({ drillable: isDrillable })}
         >
-            <div className="gd-header-content">
+            <div className="gd-header-content" aria-hidden="true">
                 <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>
                     {params.displayName}
                 </span>
@@ -91,6 +91,7 @@ export function AttributeHeader(params: AgGridHeaderParams) {
             {!!colDef.sortable || !!isDrillable ? (
                 <div
                     className="gd-header-cell-clickable-area"
+                    aria-hidden="true"
                     {...getPivotHeaderClickableAreaTestIdProps()}
                     onClick={handleHeaderClick}
                 ></div>

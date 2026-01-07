@@ -45,7 +45,6 @@ const defaultProps: IColorsSectionProps = {
     hasMeasures: true,
     colors,
     isLoading: false,
-    isChartAccessibilityFeaturesEnabled: false,
     supportsChartFill: false,
 };
 
@@ -85,7 +84,6 @@ describe("ColorsSection", () => {
     it("should render ColorSection with fills", () => {
         createComponent({
             supportsChartFill: true,
-            isChartAccessibilityFeaturesEnabled: true,
         });
 
         expect(screen.getByText("Colors and fills")).toBeInTheDocument();

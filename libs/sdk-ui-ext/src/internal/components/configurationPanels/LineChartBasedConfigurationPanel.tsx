@@ -31,7 +31,6 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
         const { gridEnabled, axes } = this.getControlProperties();
 
         const {
-            featureFlags,
             properties,
             propertiesMeta,
             pushData,
@@ -72,7 +71,6 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue={dataLabelDefaultValue}
-                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
 
                         <DataPointsControl
@@ -82,16 +80,12 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
                             showDisabledMessage={isDataPointsControlDisabled}
                         />
 
-                        {featureFlags["enableChartAccessibilityFeatures"] ? (
-                            <DistinctPointShapesControl
-                                pushData={pushData}
-                                checked={
-                                    shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled
-                                }
-                                properties={properties}
-                                disabled={shouldDistinctPointShapesDisabled}
-                            />
-                        ) : null}
+                        <DistinctPointShapesControl
+                            pushData={pushData}
+                            checked={shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled}
+                            properties={properties}
+                            disabled={shouldDistinctPointShapesDisabled}
+                        />
 
                         <CheckboxControl
                             valuePath="grid.enabled"

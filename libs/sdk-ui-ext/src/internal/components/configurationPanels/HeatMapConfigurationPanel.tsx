@@ -25,7 +25,7 @@ import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js
 
 export class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
-        const { featureFlags, propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData } = this.props;
         const { xAxisVisible, yAxisVisible } = this.getControlProperties();
 
         const controlsDisabled = this.isControlDisabled();
@@ -106,7 +106,6 @@ export class HeatMapConfigurationPanel extends ConfigurationPanelContent {
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue="auto"
-                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
                     </ConfigSection>
                     {this.renderAdvancedSection()}

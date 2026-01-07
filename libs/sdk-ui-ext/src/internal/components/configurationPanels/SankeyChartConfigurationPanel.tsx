@@ -45,7 +45,7 @@ export class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
     }
 
     private renderCanvasSection() {
-        const { propertiesMeta, properties, pushData, featureFlags } = this.props;
+        const { propertiesMeta, properties, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -60,11 +60,7 @@ export class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
                     pushData={pushData}
                     properties={properties}
                     isDisabled={controlsDisabled}
-                    enableStyleSelector={
-                        featureFlags.enableChartAccessibilityFeatures
-                            ? this.props.type !== VisualizationTypes.DEPENDENCY_WHEEL
-                            : false
-                    }
+                    enableStyleSelector={this.props.type !== VisualizationTypes.DEPENDENCY_WHEEL}
                 />
             </ConfigSection>
         );

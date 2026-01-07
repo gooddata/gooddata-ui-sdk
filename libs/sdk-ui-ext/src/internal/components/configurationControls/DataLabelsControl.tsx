@@ -30,7 +30,7 @@ export function DataLabelsControl({
     isTotalsDisabled = true,
     enableSeparateTotalLabels = false,
     enablePercentLabels,
-    enableStyleSelector,
+    enableStyleSelector = true,
 }: IDataLabelsControlProps) {
     const intl = useIntl();
     const dataLabels = properties?.controls?.["dataLabels"]?.visible ?? defaultValue;

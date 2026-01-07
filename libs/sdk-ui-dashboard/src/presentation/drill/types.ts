@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -291,6 +291,7 @@ export enum AttributeDisplayFormType {
     GEO_PUSHPIN = "GDC.geo.pin",
     GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
     GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
+    GEO_AREA = "GDC.geo.area",
 }
 
 export interface IAttributeDisplayForm {

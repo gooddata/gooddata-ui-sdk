@@ -27,7 +27,6 @@ export interface IColorsSectionProps {
     hasMeasures: boolean;
     colors: IColorConfiguration;
     isLoading: boolean;
-    isChartAccessibilityFeaturesEnabled: boolean;
     supportsChartFill: boolean;
     chartFillIgnoredMeasures?: string[];
     isChartFillDisabled?: boolean;
@@ -43,7 +42,6 @@ export function ColorsSection({
     hasMeasures,
     colors,
     isLoading,
-    isChartAccessibilityFeaturesEnabled,
     supportsChartFill,
     chartFillIgnoredMeasures = [],
     isChartFillDisabled,
@@ -103,7 +101,7 @@ export function ColorsSection({
     };
 
     const renderFillDropdown = () => {
-        if (!isChartAccessibilityFeaturesEnabled || !supportsChartFill) {
+        if (!supportsChartFill) {
             return null;
         }
         const isDisabled =
@@ -164,10 +162,9 @@ export function ColorsSection({
         return isColoredListVisible() ? renderColoredList() : renderUnsupportedColoredList();
     };
 
-    const sectionTitleTranslationId =
-        isChartAccessibilityFeaturesEnabled && supportsChartFill
-            ? messages["colorsAndFills"].id
-            : messages["colors"].id;
+    const sectionTitleTranslationId = supportsChartFill
+        ? messages["colorsAndFills"].id
+        : messages["colors"].id;
 
     return (
         <ConfigSection

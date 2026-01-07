@@ -3771,7 +3771,6 @@ export interface ISettings {
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
     enableChangeAnalysis?: boolean;
-    enableChartAccessibilityFeatures?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;

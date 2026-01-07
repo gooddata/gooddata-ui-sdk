@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, useMemo, useRef, useState } from "react";
 
@@ -17,7 +17,7 @@ import { GeoChartNextLegendOverlay } from "./multiLayerLegend/GeoChartNextLegend
 import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
 import { useGeoLayers } from "../context/GeoLayersContext.js";
 import { MapController } from "../map/MapController.js";
-import { computeCombinedViewport } from "../map/viewport.js";
+import { computeCombinedViewport, computeViewportFromConfig } from "../map/viewport.js";
 import { PushDataSync } from "../pushData/PushDataSync.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -51,7 +51,11 @@ export function RenderGeoChartNext(): ReactElement {
     const colorStrategy = primaryLayer?.colorStrategy ?? null;
     const availableLegends = primaryLayer?.availableLegends;
 
-    const initialViewport = useMemo(() => computeCombinedViewport(layers), [layers]);
+    const dataViewport = useMemo(() => computeCombinedViewport(layers), [layers]);
+    const initialViewport = useMemo(
+        () => computeViewportFromConfig(props.config, dataViewport),
+        [props.config, dataViewport],
+    );
 
     const drillablePredicates = useMemo(
         () => convertDrillableItemsToPredicates(props.drillableItems ?? []),
@@ -96,6 +100,7 @@ export function RenderGeoChartNext(): ReactElement {
                         mapContainerRef={mapContainerRef}
                         chartContainerRect={chartContainerRect}
                         initialViewport={initialViewport}
+                        dataViewport={dataViewport}
                         layerExecutions={layerExecutions}
                         drillablePredicates={drillablePredicates}
                         onCenterPositionChanged={props.onCenterPositionChanged}
@@ -109,6 +114,7 @@ export function RenderGeoChartNext(): ReactElement {
                         colorStrategy={colorStrategy}
                         colorPalette={colorPalette}
                         availableLegends={availableLegends}
+                        geoLayerType={props.type}
                     />
                 </div>
             )}

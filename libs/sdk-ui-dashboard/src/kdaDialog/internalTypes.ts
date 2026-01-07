@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ICatalogDateAttribute,
@@ -50,7 +50,9 @@ export interface KdaState {
     definition: DeepReadonly<IKdaDefinition> | null;
     fromValue: IKdaDataPoint | undefined;
     toValue: IKdaDataPoint | undefined;
-    definitionStatus: "loading" | "success" | "error" | "pending";
+    definitionStatus: KdaAsyncStatus;
+    //ui
+    isMinimized: boolean;
     //states
     attributesDropdownOpen: boolean;
     addFilterDropdownOpen: boolean;
@@ -59,12 +61,14 @@ export interface KdaState {
     //rest
     selectedTrend: ("up" | "down")[];
     selectedItem: IUiListboxInteractiveItem<KdaItem> | "summary";
-    selectedStatus: "loading" | "success" | "error" | "pending";
+    selectedStatus: KdaAsyncStatus;
     attributeFilters: IDashboardAttributeFilter[];
     items: IUiListboxInteractiveItem<KdaItem>[];
-    itemsStatus: "loading" | "success" | "error" | "pending";
+    itemsStatus: KdaAsyncStatus;
     selectedAttributes: ObjRef[];
-    relevantStatus: "loading" | "success" | "error" | "pending";
+    relevantStatus: KdaAsyncStatus;
     relevantAttributes: ObjRef[];
     selectedUpdated: number;
 }
+
+export type KdaAsyncStatus = "loading" | "success" | "error" | "pending";

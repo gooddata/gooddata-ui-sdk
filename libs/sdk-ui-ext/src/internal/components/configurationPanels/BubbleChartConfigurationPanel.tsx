@@ -28,7 +28,7 @@ import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIn
 
 export class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
-        const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
+        const { propertiesMeta, properties, pushData, type, insight } = this.props;
         const controls: IChartConfig = properties?.controls;
 
         const xAxisVisible = controls?.xaxis?.visible ?? true;
@@ -117,7 +117,6 @@ export class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
                             isDisabled={this.areDataLabelsDisabled()}
                             defaultValue={false}
                             showDisabledMessage={this.isDataLabelsWarningShown()}
-                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
                         <CheckboxControl
                             valuePath="grid.enabled"

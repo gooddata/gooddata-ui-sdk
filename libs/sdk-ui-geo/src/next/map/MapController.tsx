@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, type RefObject, useMemo } from "react";
 
@@ -11,6 +11,7 @@ import { MapRuntimeProvider, useMapRuntime } from "../context/MapRuntimeContext.
 import { useGeoAdapterContext } from "../hooks/layers/useGeoAdapterContext.js";
 import { useSyncLayersToMap } from "../hooks/layers/useSyncLayersToMap.js";
 import { useAfterRender } from "../hooks/map/useAfterRender.js";
+import { useApplyViewportOnConfigChange } from "../hooks/map/useApplyViewportOnConfigChange.js";
 import { useMapCallbacks } from "../hooks/map/useMapCallbacks.js";
 import { useMapInitialization } from "../hooks/map/useMapInitialization.js";
 import { useMapResize } from "../hooks/map/useMapResize.js";
@@ -23,6 +24,7 @@ export type MapControllerProps = {
     mapContainerRef: RefObject<HTMLDivElement | null>;
     chartContainerRect: ContentRect | null;
     initialViewport: Partial<IMapViewport> | null;
+    dataViewport: Partial<IMapViewport> | null;
     layerExecutions: ILayerExecutionRecord[];
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;
@@ -41,6 +43,7 @@ export function MapController({
     mapContainerRef,
     chartContainerRect,
     initialViewport,
+    dataViewport,
     layerExecutions,
     drillablePredicates,
     onCenterPositionChanged,
@@ -73,6 +76,8 @@ export function MapController({
             <MapLifecycleEffects
                 chartContainerRect={chartContainerRect}
                 initialViewport={initialViewport}
+                dataViewport={dataViewport}
+                config={config}
                 layerExecutions={layerExecutions}
                 drillablePredicates={drillablePredicates}
                 onCenterPositionChanged={onCenterPositionChanged}
@@ -87,6 +92,8 @@ export function MapController({
 function MapLifecycleEffects({
     chartContainerRect,
     initialViewport,
+    dataViewport,
+    config,
     layerExecutions,
     drillablePredicates,
     onCenterPositionChanged,
@@ -96,6 +103,8 @@ function MapLifecycleEffects({
 }: {
     chartContainerRect: ContentRect | null;
     initialViewport: Partial<IMapViewport> | null;
+    dataViewport: Partial<IMapViewport> | null;
+    config: IGeoChartNextConfig | undefined;
     layerExecutions: ILayerExecutionRecord[];
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;
@@ -106,6 +115,7 @@ function MapLifecycleEffects({
     const { map, isMapReady } = useMapRuntime();
 
     useMapResize(map, isMapReady, chartContainerRect, initialViewport);
+    useApplyViewportOnConfigChange(map, isMapReady, config, dataViewport);
 
     useMapCallbacks(map, {
         onCenterPositionChanged,

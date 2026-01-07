@@ -1,11 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
+import { useCallback } from "react";
 
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
 import { type ISeparators } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
-import { IntlWrapper, KdaDialog, KdaProvider, KdaStoreProvider } from "@gooddata/sdk-ui-dashboard/internal";
+import { IntlWrapper, KdaDialogController, KdaStoreProvider } from "@gooddata/sdk-ui-dashboard/internal";
 
 import { keyDriverAnalysisSelector, settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { type RootState, setKeyDriverAnalysisAction } from "../store/index.js";
@@ -21,6 +23,13 @@ function KeyDriverAnalysisComponent(props: KeyDriverAnalysisProps) {
     const { keyDriverAnalysis, separators, locale, setKeyDriverAnalysis } = props;
     const intl = useIntl();
 
+    const onRequestedDefinitionChange = useCallback(
+        (definition?: IKdaDefinition) => {
+            setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
+        },
+        [setKeyDriverAnalysis],
+    );
+
     if (!keyDriverAnalysis) {
         return null;
     }
@@ -28,15 +37,13 @@ function KeyDriverAnalysisComponent(props: KeyDriverAnalysisProps) {
     return (
         <IntlWrapper locale={locale ?? intl.locale}>
             <KdaStoreProvider>
-                <KdaProvider definition={keyDriverAnalysis} separators={separators}>
-                    <KdaDialog
-                        showCloseButton
-                        locale={locale ?? intl.locale}
-                        onClose={() => {
-                            setKeyDriverAnalysis?.({ keyDriverAnalysis: undefined });
-                        }}
-                    />
-                </KdaProvider>
+                <KdaDialogController
+                    requestedDefinition={keyDriverAnalysis}
+                    separators={separators}
+                    showCloseButton
+                    locale={locale ?? intl.locale}
+                    onRequestedDefinitionChange={onRequestedDefinitionChange}
+                />
             </KdaStoreProvider>
         </IntlWrapper>
     );

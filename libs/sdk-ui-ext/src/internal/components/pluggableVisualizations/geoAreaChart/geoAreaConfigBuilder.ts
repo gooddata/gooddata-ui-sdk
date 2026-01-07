@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoAreaChartConfig } from "@gooddata/sdk-ui-geo/next";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
@@ -27,7 +27,7 @@ export function buildAreaVisualizationConfig({
     environment: _environment,
 }: IBuildAreaVisualizationConfigParams): IGeoAreaChartConfig {
     const { config = {} } = options;
-    const { colorPalette, separators, maxZoomLevel: configMaxZoomLevel } = config;
+    const { colorPalette, separators, maxZoomLevel: configMaxZoomLevel, isInEditMode, isExportMode } = config;
     const controls = supportedControls.controls ?? supportedControls ?? {};
     const {
         legend = {},
@@ -39,6 +39,14 @@ export function buildAreaVisualizationConfig({
     // Explicit undefined check - null is a meaningful value that clears the zoom limit
     const maxZoomLevel = configMaxZoomLevel === undefined ? controlsMaxZoomLevel : configMaxZoomLevel;
 
+    // Build viewport configuration with frozen state during edit/export
+    const viewportProp = {
+        viewport: {
+            ...viewport,
+            frozen: isInEditMode || isExportMode,
+        },
+    };
+
     return {
         separators,
         colorPalette,
@@ -48,9 +56,7 @@ export function buildAreaVisualizationConfig({
             position: legend.position,
         },
         tooltipText,
-        viewport: {
-            area: viewport.area,
-        },
+        ...viewportProp,
         mapStyle,
         maxZoomLevel,
     };

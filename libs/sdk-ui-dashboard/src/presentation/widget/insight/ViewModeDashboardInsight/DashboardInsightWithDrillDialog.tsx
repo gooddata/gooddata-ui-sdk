@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo, useState } from "react";
 
@@ -7,7 +7,7 @@ import { type IDrillEventContext, createFocusHighchartsDatapointEvent } from "@g
 
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
-import { KdaDialog as KdaDialogComponent, KdaProvider } from "../../../../kdaDialog/internal.js";
+import { KdaDialogController } from "../../../../kdaDialog/internal.js";
 import {
     selectCatalogAttributeDisplayFormsById,
     selectEnableDrilledTooltip,
@@ -137,6 +137,18 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
         setKeyDriveInfo(undefined);
     }, [returnFocusToInsight]);
 
+    const onRequestedDefinitionChange = useCallback(
+        (definition: KeyDriveInfo["keyDriveDefinition"] | undefined) => {
+            // Keep the drill-derived state in sync with the controller
+            if (!definition) {
+                setKeyDriveInfo(undefined);
+                return;
+            }
+            setKeyDriveInfo((prev) => (prev ? { ...prev, keyDriveDefinition: definition } : prev));
+        },
+        [],
+    );
+
     return (
         <>
             <DashboardInsightWithDrillSelect
@@ -163,11 +175,13 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                     onDrillStart={onDrillStart}
                 />
             ) : null}
-            {keyDriveInfo ? (
-                <KdaProvider definition={keyDriveInfo.keyDriveDefinition} separators={separators}>
-                    <KdaDialogComponent onClose={onCloseKeyDriverAnalysis} showCloseButton />
-                </KdaProvider>
-            ) : null}
+            <KdaDialogController
+                requestedDefinition={keyDriveInfo?.keyDriveDefinition}
+                separators={separators}
+                showCloseButton
+                onRequestedDefinitionChange={onRequestedDefinitionChange}
+                onClose={onCloseKeyDriverAnalysis}
+            />
         </>
     );
 }

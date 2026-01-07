@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useId, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-export function useKdaDialogAccessibility(metric: string) {
+export function useKdaDialogAccessibility(metric: string, isMinimized: boolean) {
     const intl = useIntl();
     const titleElementId = useId();
 
@@ -19,7 +19,7 @@ export function useKdaDialogAccessibility(metric: string) {
                     metric,
                 },
             ),
-            isModal: true,
+            isModal: !isMinimized,
             dialogId: "gd-kda-dialog",
             closeButton: {
                 ariaLabel: intl.formatMessage({
@@ -27,5 +27,5 @@ export function useKdaDialogAccessibility(metric: string) {
                 }),
             },
         };
-    }, [intl, metric, titleElementId]);
+    }, [intl, metric, titleElementId, isMinimized]);
 }

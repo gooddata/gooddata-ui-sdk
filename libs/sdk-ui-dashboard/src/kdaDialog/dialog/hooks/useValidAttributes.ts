@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
@@ -31,16 +31,15 @@ function useValidObjectsResults(definition: DeepReadonly<IKdaDefinition> | null)
 
     return useCancelablePromise(
         {
-            promise: () => {
-                if (!metric) {
-                    return Promise.resolve(undefined);
-                }
-                return backend
-                    .workspace(workspace)
-                    .measures()
-                    .getConnectedAttributes(metric as IMeasure, metrics as IMeasure[]);
-            },
+            promise: metric
+                ? () => {
+                      return backend
+                          .workspace(workspace)
+                          .measures()
+                          .getConnectedAttributes(metric as IMeasure, metrics as IMeasure[]);
+                  }
+                : undefined,
         },
-        [],
+        [backend, workspace, metric, metrics],
     );
 }

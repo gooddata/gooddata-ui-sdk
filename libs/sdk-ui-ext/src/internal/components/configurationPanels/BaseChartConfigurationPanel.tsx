@@ -37,7 +37,7 @@ export class BaseChartConfigurationPanel<
     protected renderCanvasSection(): ReactNode {
         const { gridEnabled } = this.getControlProperties();
 
-        const { properties, propertiesMeta, pushData, featureFlags, insight } = this.props;
+        const { properties, propertiesMeta, pushData, insight } = this.props;
         const controlsDisabled = this.isControlDisabled();
         const { buckets } = insight.insight;
 
@@ -62,7 +62,6 @@ export class BaseChartConfigurationPanel<
                         (isNotStacked && !properties?.controls?.["stackMeasures"])
                     }
                     enableSeparateTotalLabels
-                    enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                 />
                 <CheckboxControl
                     valuePath="grid.enabled"

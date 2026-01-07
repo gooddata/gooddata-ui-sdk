@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { newBucket } from "@gooddata/sdk-model";
@@ -33,11 +33,8 @@ function getValidLocations(locations: Array<IGeoLngLat | null | undefined>): IGe
     );
 }
 
-function computeInitialViewport(
-    geoData: IPushpinGeoData,
-    config?: IGeoPushpinChartNextConfig,
-): Partial<IMapViewport> | null {
-    if (!config || !geoData.location?.data) {
+function computeInitialViewport(geoData: IPushpinGeoData): Partial<IMapViewport> | null {
+    if (!geoData.location?.data) {
         return null;
     }
 
@@ -46,7 +43,11 @@ function computeInitialViewport(
         return null;
     }
 
-    return calculateViewport(validLocations, config);
+    // IMPORTANT: this must stay *data-derived* (i.e. independent of config).
+    // If presets/center influenced this value, then switching from a preset -> "auto" would
+    // keep using the preset viewport because "auto" falls back to this per-layer hint.
+    const dataViewportConfig: IGeoPushpinChartNextConfig = { viewport: { area: "auto" } };
+    return calculateViewport(validLocations, dataViewportConfig);
 }
 
 function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): IPreparedExecution {
@@ -141,7 +142,7 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             layerType: "pushpin",
             hasSizeData: Boolean(geoData.size),
         });
-        const initialViewport = computeInitialViewport(geoData, pushpinConfig);
+        const initialViewport = computeInitialViewport(geoData);
 
         return { source, legend, geoData, colorStrategy, initialViewport };
     },

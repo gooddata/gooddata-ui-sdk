@@ -37,13 +37,7 @@ export class WaterfallChartConfigurationPanel extends BaseChartConfigurationPane
     protected override renderConfigurationPanel(): ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
-        const {
-            properties,
-            propertiesMeta,
-            pushData,
-            dataLabelDefaultValue = false,
-            featureFlags,
-        } = this.props;
+        const { properties, propertiesMeta, pushData, dataLabelDefaultValue = false } = this.props;
 
         const controlsDisabled = this.isControlDisabled();
 
@@ -84,7 +78,6 @@ export class WaterfallChartConfigurationPanel extends BaseChartConfigurationPane
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue={dataLabelDefaultValue}
-                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
 
                         <CheckboxControl

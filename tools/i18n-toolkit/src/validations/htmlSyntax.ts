@@ -29,7 +29,7 @@ export async function getHtmlSyntaxCheck(
 
     localizations.forEach(([file, content]) => {
         Object.entries(content).forEach(([key, item]) => {
-            const value = typeof item === "object" ? item.value : item;
+            const value = typeof item === "object" ? item.text : item;
 
             if (!value.match(htmlRegex)) {
                 return;

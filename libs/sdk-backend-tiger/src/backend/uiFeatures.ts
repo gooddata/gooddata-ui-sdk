@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type IEarlyAccessFeaturesConfig, type IProductionFeaturesConfig } from "@gooddata/sdk-model";
 
@@ -90,7 +90,6 @@ export enum TigerFeaturesNames {
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableSlideshowExports = "enableSlideshowExports",
     EnableRawExports = "enableRawExports",
-    EnableChartAccessibilityFeatures = "enableChartAccessibilityFeatures",
     EnableExecutionCancelling = "enableExecutionCancelling",
     EnableDashboardTabularExport = "enableDashboardTabularExport",
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
@@ -102,7 +101,6 @@ export enum TigerFeaturesNames {
     EnableAutomationFilterContext = "enableAutomationFilterContext",
     EnableDateFilterIdentifiersRollout = "enableDateFilterIdentifiersRollout",
     EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
-    EnableRichTooManyDatapointsErrors = "enableRichTooManyDatapointsErrors",
     EnableLineChartTrendThreshold = "enableLineChartTrendThreshold",
     EnableKDRespectLegendPosition = "enableKDRespectLegendPosition",
     EnableWorkspaceSettingsAppHeaderMenuItem = "enableWorkspaceSettingsAppHeaderMenuItem",
@@ -223,13 +221,11 @@ export type ITigerFeatureFlags = {
     enableAnalyticalDesignerCatalogSideload: (typeof FeatureFlagsValues)["enableAnalyticalDesignerCatalogSideload"][number];
     enableDashboardShareLink: (typeof FeatureFlagsValues)["enableDashboardShareLink"][number];
     enableHighchartsAccessibility: (typeof FeatureFlagsValues)["enableHighchartsAccessibility"][number];
-    enableChartAccessibilityFeatures: (typeof FeatureFlagsValues)["enableChartAccessibilityFeatures"][number];
     enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
     enableExecutionTimestamp: (typeof FeatureFlagsValues)["enableExecutionTimestamp"][number];
     enableAutomationFilterContext: (typeof FeatureFlagsValues)["enableAutomationFilterContext"][number];
     enableDateFilterIdentifiersRollout: (typeof FeatureFlagsValues)["enableDateFilterIdentifiersRollout"][number];
     enableAlertsEvaluationFrequencySetup: (typeof FeatureFlagsValues)["enableAlertsEvaluationFrequencySetup"][number];
-    enableRichTooManyDatapointsErrors: (typeof FeatureFlagsValues)["enableRichTooManyDatapointsErrors"][number];
     enableLineChartTrendThreshold: (typeof FeatureFlagsValues)["enableLineChartTrendThreshold"][number];
     enableKDRespectLegendPosition: (typeof FeatureFlagsValues)["enableKDRespectLegendPosition"][number];
     enableWorkspaceSettingsAppHeaderMenuItem: (typeof FeatureFlagsValues)["enableWorkspaceSettingsAppHeaderMenuItem"][number];
@@ -350,13 +346,11 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalDesignerCatalogSideload: false,
     enableDashboardShareLink: true,
     enableHighchartsAccessibility: true,
-    enableChartAccessibilityFeatures: true,
     enableAccessibleChartTooltip: false,
     enableExecutionTimestamp: true,
     enableAutomationFilterContext: true,
     enableDateFilterIdentifiersRollout: true,
     enableAlertsEvaluationFrequencySetup: true,
-    enableRichTooManyDatapointsErrors: false,
     enableLineChartTrendThreshold: true,
     enableKDRespectLegendPosition: true,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
@@ -473,7 +467,6 @@ export const FeatureFlagsValues = {
     enableSlideshowExports: [true, false] as const,
     enableRawExports: [true, false] as const,
     enableHighchartsAccessibility: [true, false] as const,
-    enableChartAccessibilityFeatures: [true, false] as const,
     enableAccessibleChartTooltip: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
@@ -484,7 +477,6 @@ export const FeatureFlagsValues = {
     enableAutomationFilterContext: [true, false] as const,
     enableDateFilterIdentifiersRollout: [true, false] as const,
     enableAlertsEvaluationFrequencySetup: [true, false] as const,
-    enableRichTooManyDatapointsErrors: [true, false] as const,
     enableLineChartTrendThreshold: [true, false] as const,
     enableKDRespectLegendPosition: [true, false] as const,
     enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,

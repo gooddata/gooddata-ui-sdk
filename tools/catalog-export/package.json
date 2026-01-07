@@ -81,7 +81,7 @@
         "eslint-plugin-sonarjs": "0.16.0",
         "eslint-plugin-tsdoc": "0.2.14",
         "happy-dom": "18.0.1",
-        "typescript": "5.8.3",
+        "typescript": "5.9.3",
         "vitest": "3.2.4"
     }
 }
