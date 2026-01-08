@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
@@ -17,8 +17,6 @@ import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
-const Chart = "Headline";
-
 vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreHeadline", async () => {
     const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreHeadline");
     const { withPropsExtractor } = await import("../../_infra/withProps.js");
@@ -31,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreHeadline", async () => {
     };
 });
 
-describe(Chart, () => {
+describe("Headline", () => {
     const Scenarios: Array<ScenarioAndDescription<IHeadlineProps>> = headlineScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
@@ -57,7 +55,7 @@ describe(Chart, () => {
             const promisedInteractions = mountChartAndCapture(scenario);
             const interactions = await promisedInteractions;
 
-            const insight = createInsightDefinitionForChart(Chart, _desc, interactions);
+            const insight = createInsightDefinitionForChart("Headline", _desc, interactions);
 
             const plugVizInteractions = await mountInsight(scenario, insight);
 

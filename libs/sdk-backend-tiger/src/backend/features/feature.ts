@@ -823,6 +823,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableEmptyDateValuesFilter,
+            "enableEmptyDateValuesFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableEmptyDateValuesFilter,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnablePivotTableAutoSizeReset,
             "enablePivotTableAutoSizeReset",
             "BOOLEAN",

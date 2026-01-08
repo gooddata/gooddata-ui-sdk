@@ -44,6 +44,7 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
                     arrowPlacement="left"
                     optimalPlacement
                     width={200}
+                    offset={10}
                 />
             ) : null}
         </div>

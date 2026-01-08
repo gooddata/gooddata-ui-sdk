@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, memo, useCallback, useMemo, useState } from "react";
 
@@ -176,16 +176,21 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         [trimToPrecision, fromDecimalToPercent],
     );
 
-    const [state, setState] = useState<IDropdownBodyState>(() => {
-        // If the filter has dimensionality, use it; otherwise fall back to insight dimensionality (bucket defaults)
-        const initialDimensionality =
-            (props.dimensionality?.length ?? 0) > 0 ? props.dimensionality : (insightDimensionality ?? []);
+    // If the filter has dimensionality, use it; otherwise fall back to insight dimensionality (bucket defaults)
+    const initialDimensionality = useMemo(
+        () =>
+            ((props.dimensionality?.length ?? 0) > 0
+                ? props.dimensionality
+                : (insightDimensionality ?? [])) ?? [],
+        [props.dimensionality, insightDimensionality],
+    );
 
+    const [state, setState] = useState<IDropdownBodyState>(() => {
         return {
             operator: propsOperator || "ALL",
             value: (usePercentage ? convertToPercentageValue(value, propsOperator) : value) || {},
             enabledTreatNullValuesAsZero: treatNullAsZeroValue,
-            dimensionality: initialDimensionality ?? [],
+            dimensionality: initialDimensionality,
         };
     });
 
@@ -204,22 +209,18 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         [trimToPrecision, fromPercentToDecimal],
     );
 
-    const isDimensionalityChanged = useCallback(
-        () => !areDimensionalitySetsEqual(props.dimensionality, state.dimensionality),
-        [props.dimensionality, state.dimensionality],
-    );
-
     const isChanged = useCallback(
         () =>
             state.operator !== props.operator ||
             state.enabledTreatNullValuesAsZero !== props.treatNullAsZeroValue ||
-            isDimensionalityChanged(),
+            !areDimensionalitySetsEqual(initialDimensionality, state.dimensionality),
         [
             state.operator,
             state.enabledTreatNullValuesAsZero,
             props.operator,
             props.treatNullAsZeroValue,
-            isDimensionalityChanged,
+            initialDimensionality,
+            state.dimensionality,
         ],
     );
 
@@ -262,10 +263,6 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         return from === props.value.from && to === props.value.to;
     }, [state.value, props.value, props.usePercentage, isChanged, trimToPrecision, fromPercentToDecimal]);
 
-    const isApplyButtonDisabledForAll = useCallback(() => {
-        return propsOperator === "ALL";
-    }, [propsOperator]);
-
     const isApplyButtonDisabled = useCallback(() => {
         // disable the Apply button when the filter has no currently set dimensionality but insight has it
         // (e.g., non-headline insight that can have the dimensionality) but only when supported via ff
@@ -285,7 +282,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
             return isApplyButtonDisabledForRange();
         }
 
-        return isApplyButtonDisabledForAll();
+        return !isChanged();
     }, [
         state.operator,
         state.dimensionality,
@@ -293,7 +290,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         insightDimensionality,
         isApplyButtonDisabledForComparison,
         isApplyButtonDisabledForRange,
-        isApplyButtonDisabledForAll,
+        isChanged,
     ]);
 
     const handleOperatorSelection = useCallback(
@@ -468,7 +465,6 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                         <WarningMessageComponent warningMessage={warningMessage} />
                     </div>
                 ) : null}
-
                 <div className="gd-mvf-dropdown-section" data-testid="mvf-operator-section">
                     <OperatorDropdown
                         onSelect={handleOperatorSelection}
@@ -476,7 +472,6 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                         isDisabled={!enableOperatorSelection}
                     />
                 </div>
-
                 {operator === "ALL" ? null : (
                     <div className="gd-mvf-dropdown-section">
                         {renderInputSection}{" "}

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -202,12 +202,16 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
     let latitude = getAttributeFromBucket(buckets, BucketNames.LATITUDE);
     let longitude = getAttributeFromBucket(buckets, BucketNames.LONGITUDE);
     let tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
+    const location = getAttributeFromBucket(buckets, BucketNames.LOCATION);
 
     const controls = properties?.["controls"];
 
     if (isGeoLayerControls(controls)) {
         if (!latitude && !longitude && controls.latitude && controls.longitude) {
-            latitude = createAttributeFromDisplayFormId(controls.latitude, "latitude_df");
+            // Keep localId of the original LOCATION attribute so MVF/ranking filters that reference it
+            // (via localIdRef in dimensionality) do not become dangling when LOCATION is resolved to LAT/LNG.
+            const latitudeLocalId = location ? attributeLocalId(location) : "latitude_df";
+            latitude = createAttributeFromDisplayFormId(controls.latitude, latitudeLocalId);
             longitude = createAttributeFromDisplayFormId(controls.longitude, "longitude_df");
         }
         if (!tooltipText && controls.tooltipText) {
@@ -221,6 +225,15 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
 
     if (!latitude || !longitude) {
         return null;
+    }
+
+    // If LOCATION exists, keep its localId for the effective "location" attribute (latitude).
+    // This ensures MVF dimensionality localIdRef(locationLocalId) continues to work even if the layer
+    // stores explicit LATITUDE/LONGITUDE buckets or derives them from controls.
+    if (location && attributeLocalId(latitude) !== attributeLocalId(location)) {
+        latitude = newAttribute(attributeDisplayFormRef(latitude), (builder) =>
+            builder.localId(attributeLocalId(location)),
+        );
     }
 
     return {

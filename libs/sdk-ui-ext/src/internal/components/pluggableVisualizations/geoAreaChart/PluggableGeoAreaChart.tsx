@@ -63,6 +63,7 @@ import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartU
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { createAttributeRef } from "../geoChartNext/geoAttributeHelper.js";
+import { sanitizeGeoLayerGlobalFilters } from "../geoChartNext/geoLayerFilterSanitization.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartNextInternal>[0];
 
@@ -96,6 +97,13 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
+        // IMPORTANT:
+        // GeoChartNext is multi-layer, but AD's reference point contains a single buckets model.
+        // The generic sanitizeFilters() (in PluggableBaseChart) does not know about additional layers and can
+        // incorrectly drop MVFs that are meant for non-root layers (e.g., pushpin layer MVFs).
+        // We keep the original filter bucket intact here and rely on per-layer execution sanitization instead.
+        const originalFilters = cloneDeep(referencePoint.filters);
+
         return super
             .getExtendedReferencePoint(referencePoint)
             .then((extendedReferencePoint: IExtendedReferencePoint) => {
@@ -108,7 +116,8 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                 const tooltipText = this.visualizationProperties?.controls?.["tooltipText"] as
                     | string
                     | undefined;
-                return this.applyTooltipProperty(newReferencePoint, tooltipText);
+                const withTooltip = this.applyTooltipProperty(newReferencePoint, tooltipText);
+                return { ...withTooltip, filters: originalFilters };
             });
     }
 
@@ -179,13 +188,14 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         executionFactory: IExecutionFactory,
     ) {
         const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const sanitizedFilters = sanitizeGeoLayerGlobalFilters(primaryLayer, filters);
 
         return buildLayerExecution(primaryLayer, {
             backend: this.backend,
             workspace: this.workspace,
             config,
             execConfig: options.executionConfig,
-            globalFilters: filters,
+            globalFilters: sanitizedFilters,
             executionFactory,
         });
     }
@@ -333,16 +343,17 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             return [];
         }
 
-        return layers.map((layer) =>
-            buildLayerExecution(layer, {
+        return layers.map((layer) => {
+            const sanitizedFilters = sanitizeGeoLayerGlobalFilters(layer, filters);
+            return buildLayerExecution(layer, {
                 backend: this.backend,
                 workspace: this.workspace,
                 config,
                 execConfig: options.executionConfig,
-                globalFilters: filters,
+                globalFilters: sanitizedFilters,
                 executionFactory,
-            }),
-        );
+            });
+        });
     }
 
     private shouldSkipLayer(layer: IGeoLayer): boolean {

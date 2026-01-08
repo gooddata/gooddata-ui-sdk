@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -8,9 +8,7 @@ import { executeScenarios } from "../../../scenarios/execute/base.js";
 import { type ScenarioAndDescription } from "../../../src/index.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 
-const Component = "Execute";
-
-describe(Component, () => {
+describe("Execute", () => {
     const Scenarios: Array<ScenarioAndDescription<IExecuteProps>> = [executeScenarios].flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

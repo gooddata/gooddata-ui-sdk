@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo, useCallback } from "react";
 
@@ -89,7 +89,15 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             newDimensionality?: ObjRefInScope[],
         ) => {
             if (operator === null || operator === "ALL") {
-                onApply(null);
+                onApply(
+                    newMeasureValueFilterWithOptions(
+                        { localIdentifier: measureIdentifier },
+                        {
+                            operator: "ALL",
+                            ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
+                        },
+                    ),
+                );
                 return;
             }
 

@@ -48,6 +48,7 @@ export function buildAreaVisualizationConfig({
     };
 
     return {
+        isExportMode,
         separators,
         colorPalette,
         colorMapping,

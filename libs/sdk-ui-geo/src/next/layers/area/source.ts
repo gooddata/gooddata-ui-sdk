@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoJsonFeature, geoFeatureId } from "@gooddata/sdk-model";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -133,8 +133,8 @@ function buildAreaProperties(args: {
         areaUri,
         color_fill: areaColorFill,
         locationName: {
-            title: areaNameTitle,
-            value: areaIdentifier,
+            title: tooltipTitle ?? areaNameTitle,
+            value: tooltipValue ?? areaIdentifier,
         },
         locationIndex: index,
         color: {
@@ -144,13 +144,6 @@ function buildAreaProperties(args: {
             format: colorFormat ?? "",
         },
     };
-
-    if (tooltipValue !== undefined) {
-        properties["tooltipText"] = {
-            title: tooltipTitle ?? "",
-            value: tooltipValue,
-        };
-    }
 
     // Store segment info for display (first segment value)
     if (segmentTitle !== undefined || segmentValue !== undefined) {

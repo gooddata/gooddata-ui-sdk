@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IInsightDefinition,
@@ -122,10 +122,6 @@ export function getAreaItems(buckets: IBucketOfFun[], uiConfig: IUiConfig): IBuc
 
         return {
             ...item,
-            displayForm: areaDisplayForm.ref,
-            dfRef: areaDisplayForm.ref,
-            dfIdentifier: resolvedIdentifier,
-            dfUri: refUri,
             areaDisplayFormRef: areaDisplayForm.ref,
             locationDisplayFormIdentifier: resolvedIdentifier,
             locationDisplayFormUri: refUri,

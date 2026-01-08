@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ColDef,
@@ -83,7 +83,18 @@ export type AgGridHeaderGroupParams = IHeaderGroupParams<AgGridRowData, string |
 
 /**
  * @internal
- * Checks if the column definition is a column group definition
+ * Checks if the column definition is a column group definition (raw AG Grid type)
+ *
+ * @param colDef - The column definition
+ * @returns true if the column definition is a column group definition, false otherwise
+ */
+export function isColGroupDef(colDef: ColDef | ColGroupDef): colDef is ColGroupDef {
+    return "children" in colDef && Array.isArray((colDef as ColGroupDef).children);
+}
+
+/**
+ * @internal
+ * Checks if the column definition is a column group definition (with our custom context)
  *
  * @param colDef - The column definition
  * @returns true if the column definition is a column group definition, false otherwise

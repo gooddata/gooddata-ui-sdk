@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
@@ -17,8 +17,6 @@ import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { cleanupCoreChartProps } from "../../_infra/utils.js";
 
-const Chart = "BubbleChart";
-
 vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreBubbleChart", async () => {
     const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreBubbleChart");
     const { withPropsExtractor } = await import("../../_infra/withProps.js");
@@ -31,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreBubbleChart", async () => {
     };
 });
 
-describe(Chart, () => {
+describe("BubbleChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IBubbleChartProps>> = bubbleChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );
@@ -58,7 +56,7 @@ describe(Chart, () => {
         it("should lead to same execution when rendered as insight via plug viz", async () => {
             const interactions = await promisedInteractions;
 
-            const insight = createInsightDefinitionForChart(Chart, _desc, interactions);
+            const insight = createInsightDefinitionForChart("BubbleChart", _desc, interactions);
 
             const plugVizInteractions = await mountInsight(scenario, insight);
 

@@ -11,6 +11,7 @@ import {
     type IAttribute,
     type IFilter,
     type IInsightDefinition,
+    attributeLocalId,
     bucketAttribute,
     bucketItems,
     insightBucket,
@@ -39,6 +40,7 @@ import {
     getPrimaryLayerControls,
 } from "./geoAttributeHelper.js";
 import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
+import { sanitizeGeoLayerGlobalFilters } from "./geoLayerFilterSanitization.js";
 import {
     createConfiguredBuckets,
     createSortForSegment,
@@ -103,6 +105,13 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
+        // IMPORTANT:
+        // GeoChartNext is multi-layer, but AD's reference point contains a single buckets model.
+        // The generic sanitizeFilters() (in PluggableBaseChart) does not know about additional layers and can
+        // incorrectly drop MVFs that are meant for non-root layers. We keep the original filter bucket intact
+        // and rely on per-layer execution sanitization instead.
+        const originalFilters = cloneDeep(referencePoint.filters);
+
         return super
             .getExtendedReferencePoint(referencePoint)
             .then((extendedReferencePoint: IExtendedReferencePoint) => {
@@ -113,7 +122,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 );
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
-                return this.updateSupportedProperties(newReferencePoint);
+                const updated = this.updateSupportedProperties(newReferencePoint);
+                return { ...updated, filters: originalFilters };
             });
     }
 
@@ -214,13 +224,14 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         executionFactory: IExecutionFactory,
     ) {
         const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const sanitizedFilters = sanitizeGeoLayerGlobalFilters(primaryLayer, filters);
 
         return buildLayerExecution(primaryLayer, {
             backend: this.backend,
             workspace: this.workspace,
             config,
             execConfig: options.executionConfig,
-            globalFilters: filters,
+            globalFilters: sanitizedFilters,
             executionFactory,
         });
     }
@@ -353,7 +364,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             tooltipTextId,
             "tooltipText_df",
         );
-        const latitudeAttribute = this.createAttributeFromId(latitudeFromBucket, latitudeId, "latitude_df");
+        // IMPORTANT: keep localId of the original LOCATION attribute so MVF/ranking filters that reference it
+        // (via localIdRef in dimensionality) do not become dangling when LOCATION bucket is replaced by LAT/LNG.
+        const latitudeLocalId = latitudeFromBucket ? attributeLocalId(latitudeFromBucket) : "latitude_df";
+        const latitudeAttribute = this.createAttributeFromId(latitudeFromBucket, latitudeId, latitudeLocalId);
         const longitudeAttribute = this.createAttributeFromId(
             latitudeFromBucket,
             longitudeId,
@@ -399,16 +413,17 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             return [];
         }
 
-        return layers.map((layer) =>
-            buildLayerExecution(layer, {
+        return layers.map((layer) => {
+            const sanitizedFilters = sanitizeGeoLayerGlobalFilters(layer, filters);
+            return buildLayerExecution(layer, {
                 backend: this.backend,
                 workspace: this.workspace,
                 config,
                 execConfig: options.executionConfig,
-                globalFilters: filters,
+                globalFilters: sanitizedFilters,
                 executionFactory,
-            }),
-        );
+            });
+        });
     }
 
     private createAttributeFromId(

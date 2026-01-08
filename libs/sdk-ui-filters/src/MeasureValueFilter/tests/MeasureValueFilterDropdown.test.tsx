@@ -1,9 +1,14 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
+import {
+    type IMeasureValueFilter,
+    localIdRef,
+    newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
+} from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import {
@@ -284,7 +289,10 @@ describe("Measure value filter dropdown", () => {
 
             component.openOperatorDropdown().selectOperator("ALL").clickApply();
 
-            expect(onApply).toBeCalledWith(null);
+            const expectedFilter = newMeasureValueFilterWithOptions(localIdRef("myMeasure"), {
+                operator: "ALL",
+            });
+            expect(onApply).toBeCalledWith(expectedFilter);
         });
 
         it("should be called with raw value when the measure is displayed as percentage with a comparison type measure value filter", () => {
@@ -325,7 +333,10 @@ describe("Measure value filter dropdown", () => {
 
             component.openOperatorDropdown().selectOperator("ALL").clickApply();
 
-            expect(onApply).toBeCalledWith(null);
+            const expectedFilter = newMeasureValueFilterWithOptions(localIdRef("myMeasure"), {
+                operator: "ALL",
+            });
+            expect(onApply).toBeCalledWith(expectedFilter);
         });
 
         it("should compensate for JavaScript division result precision problem for comparison filter", () => {
