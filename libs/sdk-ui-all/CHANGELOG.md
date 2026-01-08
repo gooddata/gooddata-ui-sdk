@@ -1,6 +1,33 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 18 Dec 2025 07:14:24 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Jan 2026 08:13:01 GMT and should not be manually modified.
+
+## 11.15.0
+
+Thu, 08 Jan 2026 08:13:01 GMT
+
+### Patches
+
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
+
+### Updates
+
+- sdk-ui-filters: Add testable support for fiscal calendars.
+- sdk-ui-charts: Introduce typescript strict mode.
+- sdk-ui-kit: Add new `shrink` icon.
+- sdk-ui-dashboard,sdk-ui-gen-ai: Introduce async Key Driver Analysis UX flow.
+- sdk-ui-kit: Show `UiCombobox` `creatable` option only for multiple non-exact matches.
+- Improved AI Assistant responsiveness on small screens by fixing chat overlay width, preventing mobile overflow, and restoring the mobile trigger button.
+- sdk-ui-kit: Prevent jumping when scrolling UiPagedVirtualList.
+- sdk-ui-filters: Allow dimensionality override in measure value filter.
+- sdk-ui-filters: Fix Metric Value Filter's Apply button to being disabled when operator is ALL but dimensionality has changed, and fix blue backward compatibility message showing incorrectly after explicitly setting filter to ALL
+- chore: Upgrade typescript to 5.9.3
+- Add data-testId for search bar of mvf picker
+- Changed: Feature flag enableChartAccessibilityFeatures has been removed.
+- sdk-ui-filters: Add explanation message to metric value filter body to filters that have not been migrated to use dimensionality
+- sdk-ui-loaders: Fix dashboard plugin loader to support both named and default exports from plugin entry point, restoring backward compatibility with plugins built before the 'Ban default exports' change
+- sdk-ui-geo: Add support for measure drilling
+- revert Crowdin structure to investigate blocker
 
 ## 11.14.0
 
