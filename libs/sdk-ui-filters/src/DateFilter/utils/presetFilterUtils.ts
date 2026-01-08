@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type IActiveCalendars } from "@gooddata/sdk-model";
 
 import { type DateFilterOption, type DateFilterRelativeOptionGroup } from "../interfaces/index.js";
 
@@ -56,16 +56,65 @@ export interface IFiscalTabsConfig {
 }
 
 /**
- * Get fiscal tabs configuration based on available presets.
+ * Get fiscal tabs configuration based on available presets and active calendars settings.
+ *
+ * @remarks
+ * When `activeCalendars` is provided, it controls which calendar types are enabled:
+ * - `activeCalendars.standard === true` enables standard calendar
+ * - `activeCalendars.fiscal === true` enables fiscal calendar
+ * - Both enabled → show tabs for switching between calendars
+ * - Only one enabled → no tabs, show only that calendar type
+ *
+ * When `activeCalendars` is undefined (not configured), defaults to standard only.
+ *
  * @param presets - The relative presets option group to check, or undefined
+ * @param activeCalendars - Optional active calendars configuration from workspace settings
  * @returns Configuration object with hasFiscal, hasStandard, and showTabs flags
  * @alpha
  */
-export function getFiscalTabsConfig(presets: DateFilterRelativeOptionGroup | undefined): IFiscalTabsConfig {
-    const hasFiscal = presets ? FISCAL_ONLY_GRANULARITIES.some((g) => g in presets) : false;
-    const hasStandard = presets ? STANDARD_GRANULARITIES.some((g) => g in presets) : false;
+export function getFiscalTabsConfig(
+    presets: DateFilterRelativeOptionGroup | undefined,
+    activeCalendars?: IActiveCalendars,
+): IFiscalTabsConfig {
+    // Check if presets contain the respective granularities
+    const presetsHaveFiscal = presets ? FISCAL_ONLY_GRANULARITIES.some((g) => g in presets) : false;
+    const presetsHaveStandard = presets ? STANDARD_GRANULARITIES.some((g) => g in presets) : false;
+
+    // Determine effective calendar availability based on activeCalendars settings
+    // When activeCalendars is undefined → default to standard only (no fiscal)
+    const hasFiscal = activeCalendars ? activeCalendars.fiscal && presetsHaveFiscal : false;
+    const hasStandard = activeCalendars
+        ? activeCalendars.standard && presetsHaveStandard
+        : presetsHaveStandard;
+
     const showTabs = hasFiscal && hasStandard;
     return { hasFiscal, hasStandard, showTabs };
+}
+
+/**
+ * Determine the default calendar tab based on active calendars configuration.
+ *
+ * @remarks
+ * Priority:
+ * 1. If current preset is fiscal, stay on fiscal tab (respect user's current selection)
+ * 2. Otherwise, use the default from activeCalendars settings
+ * 3. Fall back to "standard" if no configuration
+ *
+ * @param activeCalendars - Optional active calendars configuration from workspace settings
+ * @param currentPreset - The currently selected date filter option
+ * @returns The tab that should be selected by default
+ * @alpha
+ */
+export function getDefaultCalendarTab(
+    activeCalendars?: IActiveCalendars,
+    currentPreset?: DateFilterOption,
+): CalendarTabType {
+    // Respect current preset's calendar type first
+    if (currentPreset && getTabForPreset(currentPreset) === "fiscal") {
+        return "fiscal";
+    }
+    // Use default from settings, fall back to standard
+    return activeCalendars?.default === "FISCAL" ? "fiscal" : "standard";
 }
 
 /**

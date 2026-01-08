@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type ComponentType,
@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { isEmpty } from "lodash-es";
 import { MediaQuery } from "react-responsive";
 
-import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type IActiveCalendars, type WeekStart } from "@gooddata/sdk-model";
 import {
     IntlWrapper,
     ValidationContextStore,
@@ -97,6 +97,14 @@ export interface IDateFilterCoreProps {
      * @alpha
      */
     improveAccessibility?: boolean;
+
+    /**
+     * Active calendars configuration from workspace settings.
+     * Controls which calendar types (standard/fiscal) are available in the filter.
+     *
+     * @alpha
+     */
+    activeCalendars?: IActiveCalendars;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {

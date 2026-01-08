@@ -1,10 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
 import {
     type DashboardFiltersApplyMode,
+    type IActiveCalendars,
     type IColorPalette,
     type IDateFilterConfig,
     type ISeparators,
@@ -997,5 +998,43 @@ export const selectEnableDrillToUrlByDefault: DashboardSelector<boolean> = creat
     selectEnableImplicitDrillToUrl,
     (state, enableImplicitDrillToUrl) => {
         return enableImplicitDrillToUrl ? (state.settings?.enableDrillToUrlByDefault ?? false) : false;
+    },
+);
+
+/**
+ * Returns whether fiscal calendars feature flag is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableFiscalCalendars: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableFiscalCalendars ?? false;
+    },
+);
+
+/**
+ * Returns the active calendars configuration from workspace settings.
+ * Controls which calendar types (standard/fiscal) are available.
+ *
+ * @alpha
+ */
+export const selectActiveCalendars: DashboardSelector<IActiveCalendars | undefined> = createSelector(
+    selectConfig,
+    selectEnableFiscalCalendars,
+    (state, ffEnabled) => {
+        const activeCalendars = state.settings?.activeCalendars;
+        if (!ffEnabled) {
+            return activeCalendars ? { ...activeCalendars, fiscal: false } : undefined;
+        }
+        if (!activeCalendars) {
+            return undefined;
+        }
+        // If no calendar type is enabled, default to standard
+        const hasAnyCalendarEnabled = Object.entries(activeCalendars).some(([_, value]) => value === true);
+        if (!hasAnyCalendarEnabled) {
+            return { ...activeCalendars, standard: true };
+        }
+        return activeCalendars;
     },
 );

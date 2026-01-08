@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides several React components related to filters.
@@ -48,6 +48,7 @@ export {
     isUiRelativeDateFilterForm,
     getLocalizedIcuDateFormatPattern,
     getFiscalTabsConfig,
+    getDefaultCalendarTab,
     hasFiscalPresets,
     hasStandardPresets,
     filterStandardPresets,

@@ -15,6 +15,7 @@ import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlignPoint } from '@gooddata/sdk-ui-kit';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -301,7 +302,10 @@ export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOpt
 export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean, committedSelectionElements: IAttributeElement[], intl: IntlShape): string;
 
 // @alpha
-export function getFiscalTabsConfig(presets: DateFilterRelativeOptionGroup | undefined): IFiscalTabsConfig;
+export function getDefaultCalendarTab(activeCalendars?: IActiveCalendars, currentPreset?: DateFilterOption): CalendarTabType;
+
+// @alpha
+export function getFiscalTabsConfig(presets: DateFilterRelativeOptionGroup | undefined, activeCalendars?: IActiveCalendars): IFiscalTabsConfig;
 
 // @internal
 export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
@@ -821,6 +825,8 @@ export interface IDateFilterOptionsByType {
 
 // @public
 export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
+    // @alpha
+    activeCalendars?: IActiveCalendars;
     // (undocumented)
     availableGranularities: DateFilterGranularity[];
     // @alpha

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, type ReactElement, forwardRef, useEffect, useState } from "react";
 
@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 
 import {
     type DateFilterGranularity,
+    type IActiveCalendars,
     type WeekStart,
     isAbsoluteDateFilterForm,
     isRelativeDateFilterForm,
@@ -65,6 +66,12 @@ export interface IDateFilterBodyProps {
     withoutApply?: boolean;
     ariaLabel?: string;
     id?: string;
+
+    /**
+     * Active calendars configuration from workspace settings.
+     * @alpha
+     */
+    activeCalendars?: IActiveCalendars;
 }
 
 export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
@@ -125,6 +132,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         onConfigurationClick,
         onExcludeCurrentPeriodChange,
         onSelectedFilterOptionChange,
+        activeCalendars,
     } = props;
 
     const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
@@ -183,6 +191,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         weekStart={weekStart}
                         availableGranularities={availableGranularities}
                         withoutApply={withoutApply}
+                        activeCalendars={activeCalendars}
                     />
                 ) : (
                     <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
@@ -201,6 +210,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                             weekStart={weekStart}
                             availableGranularities={availableGranularities}
                             withoutApply={withoutApply}
+                            activeCalendars={activeCalendars}
                         />
                     </VisibleScrollbar>
                 )}

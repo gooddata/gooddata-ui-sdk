@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { defaultDateFilterOptions } from "./constants/config.js";
 import { granularityIntlCodes } from "./constants/i18n.js";
@@ -86,6 +86,7 @@ export type {
 } from "./utils/presetFilterUtils.js";
 export {
     getFiscalTabsConfig,
+    getDefaultCalendarTab,
     hasFiscalPresets,
     hasStandardPresets,
     filterStandardPresets,
