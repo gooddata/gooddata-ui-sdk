@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -35,7 +36,8 @@ export async function dynamicDashboardEngineLoader(
         plugins.map(async (plugin) => {
             const loadedEngineModule = await loadEngine(plugin.url, moduleFederationIntegration)();
 
-            const engineFactory = loadedEngineModule.default;
+            // Support both named export (newDashboardEngine) and default export for backward compatibility
+            const engineFactory = loadedEngineModule.newDashboardEngine ?? loadedEngineModule.default;
             return engineFactory();
         }),
     );
@@ -73,7 +75,8 @@ export async function dynamicDashboardPluginLoader(
             );
 
             const loadedModule = await loadPlugin(pluginMeta.url, moduleFederationIntegration)();
-            const pluginFactory = loadedModule.default;
+            // Support both named export (PluginFactory) and default export for backward compatibility
+            const pluginFactory = loadedModule.PluginFactory ?? loadedModule.default;
 
             let plugin: IDashboardPluginContract_V1 = pluginFactory();
 
@@ -85,7 +88,8 @@ export async function dynamicDashboardPluginLoader(
             ) {
                 const loadedEngineModule = await loadEngine(pluginMeta.url, moduleFederationIntegration)();
 
-                const engineFactory = loadedEngineModule.default;
+                // Support both named export (newDashboardEngine) and default export for backward compatibility
+                const engineFactory = loadedEngineModule.newDashboardEngine ?? loadedEngineModule.default;
                 const engine: IDashboardEngine = engineFactory();
 
                 // We can't use spread operator here, because we need to preserve
@@ -183,7 +187,9 @@ function loadEntry(
         // the `./${moduleName}_ENTRY` corresponds to exposes in the dashboard-plugin-template webpack config
         const entryFactory = await (<any>window)[moduleName].get(`./${moduleName}_ENTRY`);
 
-        return entryFactory().default;
+        const entryModule = entryFactory();
+        // Support both named export (entryPoint) and default export for backward compatibility
+        return entryModule.entryPoint ?? entryModule.default;
     };
 }
 

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -14,7 +14,7 @@ export const vitest: IConfiguration<"@vitest"> = {
     rules: {
         "@vitest/expect-expect": "off",
         "@vitest/no-commented-out-tests": "warn",
-        "@vitest/valid-title": "warn",
+        "@vitest/valid-title": "error",
         "@vitest/no-disabled-tests": "warn",
         "@vitest/no-focused-tests": "warn",
         "@vitest/no-identical-title": "warn",

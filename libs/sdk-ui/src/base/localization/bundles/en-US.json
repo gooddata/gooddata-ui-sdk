@@ -27,6 +27,10 @@
         "text": "Open AI Assistant",
         "crowdinContext": "A global open AI Assistant button label in the main menu"
     },
+    "gs.header.ai.mobile": {
+        "text": "AI Assistant",
+        "crowdinContext": "A global open AI Assistant button label in the main menu"
+    },
     "gs.header.logo.title.accessibility": {
         "text": "{organizationName} logo",
         "crowdinContext": "Accessibility text for the application logo in the header. Used by screen readers to identify the logo element."
@@ -50,6 +54,10 @@
     "gs.header.logout": {
         "text": "Logout",
         "crowdinContext": "Label for the logout button in the user menu. Clicking this signs the user out of their current session."
+    },
+    "gs.header.menu": {
+        "text": "Menu",
+        "crowdinContext": "Label for the menu title in vertical mobile menu."
     },
     "gs.header.workspaceSettings": {
         "text": "Workspace settings",

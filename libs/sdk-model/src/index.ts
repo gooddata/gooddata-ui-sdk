@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides domain models for GoodData.UI.
@@ -253,6 +253,7 @@ export type {
     IMeasureValueFilterComparisonOptions,
     IMeasureValueFilterRangeOptions,
     IMeasureValueFilterOptions,
+    IMeasureValueFilterAllOptions,
 } from "./execution/filter/factory.js";
 export {
     newAbsoluteDateFilter,

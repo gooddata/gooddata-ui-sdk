@@ -188,6 +188,7 @@ export const DATE_DATASET_ATTRIBUTE = "attr.datedataset";
 export interface IDateFilter {
     attribute: "attr.datedataset";
     overTimeComparisonType: OverTimeComparisonType;
+    emptyDateValuesFilter?: "include" | "exclude" | "only";
     interval: {
         granularity: string;
         interval: [string, string] | [number, number];

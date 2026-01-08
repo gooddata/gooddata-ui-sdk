@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { compact, intersectionWith, uniq } from "lodash-es";
 import { InvariantError } from "ts-invariant";
@@ -12,11 +12,15 @@ import {
 import {
     type CatalogItem,
     type CatalogItemType,
+    type IAttribute,
     type IAttributeOrMeasure,
     type ICatalogGroup,
+    type IFilter,
     type IInsightDefinition,
     type ObjRef,
+    type ObjRefInScope,
     areObjRefsEqual,
+    attributeLocalId,
     insightAttributes,
     insightFilters,
     insightMeasures,
@@ -26,7 +30,11 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isFilter,
+    isLocalIdRef,
     isMeasure,
+    isMeasureValueFilter,
+    isRankingFilter,
+    measureLocalId,
 } from "@gooddata/sdk-model";
 
 import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems.js";
@@ -168,7 +176,11 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const measures = relevantItems.filter(isMeasure);
         const filters = relevantItems.filter(isFilter);
 
-        const { filters: afmFilters, auxMeasures } = convertAfmFilters(measures, filters);
+        const attributeLocalIds = new Set(attributes.map((attribute) => attributeLocalId(attribute)));
+        const measureLocalIds = new Set(measures.map((measure) => measureLocalId(measure)));
+        const sanitizedFilters = sanitizeFiltersForValidObjects(filters, attributeLocalIds, measureLocalIds);
+
+        const { filters: afmFilters, auxMeasures } = convertAfmFilters(measures, sanitizedFilters);
 
         const afmValidObjectsQuery: AfmValidObjectsQuery = {
             types: compact(relevantRestrictingTypes.map(mapToTigerType)),
@@ -217,6 +229,69 @@ export function filterAvailableItems(refs: ObjRef[], items: CatalogItem[]): Cata
         return intersectionWith(refs, itemRefs, areObjRefsEqual).length > 0;
     });
 }
+
+/** @internal */
+export const sanitizeFiltersForValidObjects = (
+    filters: IFilter[],
+    attributeLocalIds: Set<string>,
+    measureLocalIds: Set<string>,
+): IFilter[] => {
+    return filters.filter((filter) => {
+        if (isMeasureValueFilter(filter)) {
+            const { measure, dimensionality } = filter.measureValueFilter;
+
+            if (referencesUnknownLocalId(measure, measureLocalIds)) {
+                return false;
+            }
+
+            if (dimensionality?.some((item) => referencesUnknownLocalId(item, attributeLocalIds))) {
+                return false;
+            }
+        } else if (isRankingFilter(filter)) {
+            const { measure, attributes = [] } = filter.rankingFilter;
+
+            if (referencesUnknownLocalId(measure, measureLocalIds)) {
+                return false;
+            }
+
+            if (attributes.some((item) => referencesUnknownLocalId(item, attributeLocalIds))) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+};
+
+const referencesUnknownLocalId = (
+    ref: ObjRefInScope | IAttribute | string | undefined,
+    knownLocalIds: Set<string>,
+): boolean => {
+    const localIdentifier = extractLocalIdentifier(ref);
+    return Boolean(localIdentifier && !knownLocalIds.has(localIdentifier));
+};
+
+const extractLocalIdentifier = (
+    value: ObjRefInScope | IAttribute | string | undefined,
+): string | undefined => {
+    if (!value) {
+        return undefined;
+    }
+
+    if (typeof value === "string") {
+        return value;
+    }
+
+    if (isLocalIdRef(value)) {
+        return value.localIdentifier;
+    }
+
+    if (isAttribute(value)) {
+        return attributeLocalId(value);
+    }
+
+    return undefined;
+};
 
 function isAfmValidObjectsQueryEmpty({ afm }: AfmValidObjectsQuery) {
     const { attributes, measures, filters, auxMeasures } = afm;

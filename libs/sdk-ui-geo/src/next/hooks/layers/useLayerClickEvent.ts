@@ -1,8 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
-import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
+import {
+    type AttributeDisplayFormType,
+    type IAttributeDescriptor,
+    type IResultAttributeHeader,
+    isAttributeDescriptor,
+    isResultAttributeHeader,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
     type IHeaderPredicate,
@@ -14,11 +21,13 @@ import {
 
 import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import {
+    COORDINATE_FORM_TYPES,
     GEO_LAYER_DRILL_ELEMENT,
     GEO_LAYER_DRILL_TYPE,
     MAPLIBRE_LAYER_TYPE_PREFIXES,
 } from "../../layers/common/constants.js";
 import type { IMapFacade, MapMouseEvent } from "../../layers/common/mapFacade.js";
+import type { IParentAttributeInfo } from "../../types/common/drilling.js";
 
 /**
  * Get the layer data by MapLibre layer ID.
@@ -39,8 +48,51 @@ function getClickedLayerByMapLibreLayerId(
 }
 
 /**
+ * Check if a display form type is a geo coordinate type.
+ */
+function isCoordinateFormType(labelType: AttributeDisplayFormType | undefined): boolean {
+    return labelType !== undefined && COORDINATE_FORM_TYPES.includes(labelType);
+}
+
+/**
+ * Extract parent attribute info from a coordinate display form descriptor.
+ * Uses primaryLabel as ref if available, otherwise falls back to the descriptor's ref.
+ */
+function getParentAttributeInfo(descriptor: IAttributeDescriptor): IParentAttributeInfo {
+    const { primaryLabel, formOf, ref } = descriptor.attributeHeader;
+    return {
+        ref: primaryLabel ?? ref,
+        name: formOf.name,
+        key: primaryLabel ? objRefToString(primaryLabel) : formOf.identifier,
+    };
+}
+
+function normalizeCoordinateAttribute(
+    descriptor: IAttributeDescriptor,
+    rowHeader: IResultAttributeHeader,
+    parentInfo: IParentAttributeInfo,
+): { descriptor: IAttributeDescriptor; rowHeader: IResultAttributeHeader } {
+    return {
+        descriptor: {
+            attributeHeader: {
+                ...descriptor.attributeHeader,
+                ref: parentInfo.ref,
+                name: parentInfo.name,
+            },
+        },
+        rowHeader: {
+            ...rowHeader,
+            attributeHeaderItem: {
+                ...rowHeader.attributeHeaderItem,
+                name: rowHeader.attributeHeaderItem.name, // Keep the value (e.g., "New York")
+            },
+        },
+    };
+}
+
+/**
  * Build drill headers for a clicked location.
- * Includes attribute headers (excluding tooltip) and measure descriptors.
+ * Includes attribute headers (excluding auxiliary geo attributes) and measure descriptors.
  */
 function getDrillHeaders(
     dataView: DataViewFacade,
@@ -53,13 +105,39 @@ function getDrillHeaders(
     const descriptors = dataView.meta().dimensionItemDescriptors(geoAttributesDimensionIndex);
     const drillHeaders: IMappingHeader[] = [];
 
+    // Track processed coordinate attributes by their parent attribute key
+    // This ensures we only include one coordinate attribute per parent (e.g., City, not City lat + City lon)
+    const processedCoordinateParents = new Set<string>();
+
     descriptors.forEach((descriptor, attrIndex) => {
         if (isAttributeDescriptor(descriptor)) {
             if (attrIndex === tooltipIndex) {
                 return; // Skip tooltip attribute
             }
+
             const rowHeader = headerItems[geoAttributesDimensionIndex]?.[attrIndex]?.[locationIndex];
-            if (rowHeader && isResultAttributeHeader(rowHeader)) {
+            if (!rowHeader || !isResultAttributeHeader(rowHeader)) {
+                return;
+            }
+
+            const labelType = descriptor.attributeHeader.labelType;
+
+            // Handle coordinate display forms (lat/lon/pin) - deduplicate by parent attribute
+            if (isCoordinateFormType(labelType)) {
+                const parentInfo = getParentAttributeInfo(descriptor);
+
+                // Skip if we already processed a coordinate attribute from this parent
+                if (processedCoordinateParents.has(parentInfo.key)) {
+                    return;
+                }
+                processedCoordinateParents.add(parentInfo.key);
+
+                // Normalize to use parent attribute's name and primary display form
+                const normalized = normalizeCoordinateAttribute(descriptor, rowHeader, parentInfo);
+                drillHeaders.push(normalized.rowHeader);
+                drillHeaders.push(normalized.descriptor);
+            } else {
+                // Regular attributes - include as-is
                 drillHeaders.push(rowHeader);
                 drillHeaders.push(descriptor);
             }

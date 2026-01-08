@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import { isEqual, uniqWith } from "lodash-es";
 
-import { type ITotal } from "@gooddata/sdk-model";
+import { type ITotal, bucketsFind, sanitizeBucketTotals } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
@@ -17,7 +17,7 @@ import { orderTotals } from "../../features/aggregations/ordering.js";
  * @internal
  */
 export function useUpdateTotals() {
-    const { pushData } = usePivotTableProps();
+    const { pushData, execution } = usePivotTableProps();
 
     const onUpdateTotals = useCallback(
         (currentTotals: ITotal[], totalDefinitions: ITotal[], isActive: boolean, isColumn: boolean) => {
@@ -34,6 +34,7 @@ export function useUpdateTotals() {
             const orderedTotals = orderTotals(updatedTotals);
 
             if (isColumn) {
+                // Column totals (COLUMNS bucket) are not affected by sorting
                 pushData({
                     properties: {
                         totals: orderedTotals,
@@ -41,15 +42,23 @@ export function useUpdateTotals() {
                     },
                 });
             } else {
+                // Row totals (ATTRIBUTE bucket) need to be sanitized based on sorting.
+                // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case.
+                const { buckets, sortBy } = execution.definition;
+                const attributeBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
+                const sanitizedTotals = attributeBucket
+                    ? sanitizeBucketTotals(attributeBucket, sortBy, orderedTotals)
+                    : orderedTotals;
+
                 pushData({
                     properties: {
-                        totals: orderedTotals,
+                        totals: sanitizedTotals,
                         bucketType: BucketNames.ATTRIBUTE,
                     },
                 });
             }
         },
-        [pushData],
+        [pushData, execution],
     );
 
     return {

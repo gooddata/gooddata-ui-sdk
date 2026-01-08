@@ -244,6 +244,106 @@ To remove granularities, delete the corresponding items in the relativeForm sect
 }
 ```
 
+### Using To Date filters
+
+To Date filters combine two concepts:
+
+1. A **relative date filter** that selects the current period (e.g., "this year")
+2. A **bounded filter** that additionally limits the end boundary to "today"
+
+To create a "To Date" preset, add a `boundedFilter` property to a relative date filter preset:
+
+```typescript
+import { IRelativeDateFilterPreset } from "@gooddata/sdk-model";
+
+const yearToDatePreset: IRelativeDateFilterPreset = {
+    from: 0,
+    to: 0,
+    granularity: "GDC.time.year",
+    localIdentifier: "year_to_date",
+    name: "Year to Date",
+    visible: true,
+    boundedFilter: {
+        to: 0,
+        granularity: "GDC.time.date"
+    }
+};
+```
+
+#### Bounded Filter Properties
+
+The `boundedFilter` object supports two variants:
+
+| Property    | Type                     | Description                                                   |
+|-------------|--------------------------|---------------------------------------------------------------|
+| granularity | DateAttributeGranularity | The granularity for the bound (typically "GDC.time.date")     |
+| to          | number                   | Upper bound - use 0 for "today" (creates "To Date" filters)   |
+| from        | number                   | Lower bound - use 0 for "today" (creates "From Date" filters) |
+
+{{% alert color="warning" %}}
+The `boundedFilter` must specify only a `from` or a `to`, not both.
+{{% /alert %}}
+
+#### Complete Examples
+
+```javascript
+// Year to Date
+  {
+      from: 0,
+      to: 0,
+      granularity: "GDC.time.year",
+      localIdentifier: "year_to_date",
+      name: "Year to Date",
+      visible: true,
+      boundedFilter: {
+          to: 0,
+          granularity: "GDC.time.date"
+      }
+  }
+
+// Quarter to Date
+  {
+      from: 0,
+      to: 0,
+      granularity: "GDC.time.quarter",
+      localIdentifier: "quarter_to_date",
+      name: "Quarter to Date",
+      visible: true,
+      boundedFilter: {
+          to: 0,
+          granularity: "GDC.time.date"
+      }
+  }
+
+// Month to Date
+  {
+      from: 0,
+      to: 0,
+      granularity: "GDC.time.month",
+      localIdentifier: "month_to_date",
+      name: "Month to Date",
+      visible: true,
+      boundedFilter: {
+          to: 0,
+          granularity: "GDC.time.date"
+      }
+  }
+
+// Week to Date
+  {
+      from: 0,
+      to: 0,
+      granularity: "GDC.time.week_us",
+      localIdentifier: "week_to_date",
+      name: "Week to Date",
+      visible: true,
+      boundedFilter: {
+          to: 0,
+          granularity: "GDC.time.date"
+      }
+  }
+```
+
 ### Deleting dateFilterConfig
 
 To delete the configuration, send a `DELETE` request to the following endpoints:

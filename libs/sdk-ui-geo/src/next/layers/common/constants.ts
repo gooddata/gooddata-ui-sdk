@@ -1,4 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
+import type { AttributeDisplayFormType } from "@gooddata/sdk-model";
 
 import type { GeoLayerType } from "../../types/layers/index.js";
 
@@ -16,3 +18,9 @@ export const GEO_LAYER_DRILL_ELEMENT = {
     pushpin: "pushpin",
     area: "pushpin",
 } as const;
+
+export const COORDINATE_FORM_TYPES: AttributeDisplayFormType[] = [
+    "GDC.geo.pin_latitude",
+    "GDC.geo.pin_longitude",
+    "GDC.geo.pin",
+];

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ReactElement } from "react";
 
@@ -7,10 +7,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     type IInsightDefinition,
+    localIdRef,
     newAttribute,
     newBucket,
     newInsightDefinition,
     newMeasure,
+    newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
 import { BucketNames, GeoLocationMissingSdkError } from "@gooddata/sdk-ui";
 import { GeoChartNextInternal, PUSHPIN_LAYER_ID } from "@gooddata/sdk-ui-geo/next";
@@ -72,7 +75,10 @@ describe("PluggableGeoPushpinChartNext", () => {
                     BucketNames.LOCATION,
                     newAttribute("attr.region", (attribute) => attribute.localId("a1")),
                 ),
-                newBucket(BucketNames.SIZE, newMeasure("m1")),
+                newBucket(
+                    BucketNames.SIZE,
+                    newMeasure("m1", (m) => m.localId("m_size")),
+                ),
             ])
             .properties({
                 controls: {
@@ -135,6 +141,7 @@ describe("PluggableGeoPushpinChartNext", () => {
             ...insightWithLocation,
             insight: {
                 ...insightWithLocation.insight,
+                filters: [newMeasureValueFilter(localIdRef("m_size"), "GREATER_THAN", 0)],
                 layers: [
                     {
                         id: "layer_pushpins",
@@ -176,7 +183,7 @@ describe("PluggableGeoPushpinChartNext", () => {
                     location?: unknown;
                 };
             };
-            executions?: unknown[];
+            executions?: Array<{ definition?: { filters?: unknown[] } }>;
         };
         const pushpinLayer = props.execution?.context;
 
@@ -186,5 +193,121 @@ describe("PluggableGeoPushpinChartNext", () => {
         expect(pushpinLayer?.location).toBeUndefined();
         expect(props.executions).toBeDefined();
         expect(props.executions).toHaveLength(1);
+
+        // Measure value filters must not be applied to layers that don't contain the referenced measure,
+        // otherwise backend normalization fails ("dangling localId reference").
+        const additionalLayerFilters = props.executions?.[0]?.definition?.filters ?? [];
+        expect(additionalLayerFilters).toEqual([]);
+    });
+
+    it("should keep MVF dimensionality referencing LOCATION localId when LOCATION is replaced by LAT/LNG", () => {
+        const { visualization } = createComponent();
+
+        const locationLocalId = "loc";
+        const measureLocalId = "m_size";
+        const insightWithDimensionalityMvf: IInsightDefinition = newInsightDefinition(
+            visualizationUrl,
+            (builder) =>
+                builder
+                    .title("with mvf dimensionality")
+                    .buckets([
+                        newBucket(
+                            BucketNames.LOCATION,
+                            newAttribute("attr.region", (attribute) => attribute.localId(locationLocalId)),
+                        ),
+                        newBucket(
+                            BucketNames.SIZE,
+                            newMeasure("m1", (m) => m.localId(measureLocalId)),
+                        ),
+                    ])
+                    .filters([
+                        newMeasureValueFilterWithOptions(localIdRef(measureLocalId), {
+                            operator: "GREATER_THAN",
+                            value: 0,
+                            dimensionality: [localIdRef(locationLocalId)],
+                        }),
+                    ])
+                    .properties({
+                        controls: {
+                            latitude: "latitude_df",
+                            longitude: "longitude_df",
+                        },
+                    }),
+        );
+
+        visualization.update({ messages }, insightWithDimensionalityMvf, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+        );
+
+        expect(chartCall).toBeDefined();
+        const element = chartCall?.[0] as ReactElement;
+        const props = element.props as { execution?: { definition?: { filters?: unknown[] } } };
+        const rootExecutionFilters = props.execution?.definition?.filters ?? [];
+
+        // MVF must not be dropped due to dimensionality localId; LATITUDE keeps LOCATION localId.
+        expect(rootExecutionFilters).toHaveLength(1);
+    });
+
+    it("should drop MVF for additional layers when dimensionality localId does not exist there", () => {
+        const { visualization } = createComponent();
+
+        const insightWithSharedMeasureAndLayer = {
+            ...insightWithLocation,
+            insight: {
+                ...insightWithLocation.insight,
+                // Dimensionality references the root LOCATION localId ("a1"). Additional layer uses different location localId.
+                filters: [
+                    newMeasureValueFilterWithOptions(localIdRef("m_size"), {
+                        operator: "GREATER_THAN",
+                        value: 0,
+                        dimensionality: [localIdRef("a1")],
+                    }),
+                ],
+                layers: [
+                    {
+                        id: "layer_pushpins",
+                        name: "Pushpin layer",
+                        type: "pushpin",
+                        buckets: [
+                            newBucket(
+                                BucketNames.LOCATION,
+                                newAttribute("customer_city.city_latitude", (attribute) =>
+                                    attribute.localId("loc"),
+                                ),
+                            ),
+                            newBucket(
+                                BucketNames.SIZE,
+                                newMeasure("m1", (m) => m.localId("m_size")),
+                            ),
+                        ],
+                        properties: {
+                            controls: {
+                                latitude: "customer_city.city_latitude",
+                                longitude: "customer_city.city_longitude",
+                            },
+                        },
+                    },
+                ],
+            },
+        } as IInsightDefinition;
+
+        visualization.update({ messages }, insightWithSharedMeasureAndLayer, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+        );
+
+        expect(chartCall).toBeDefined();
+        const element = chartCall?.[0] as ReactElement;
+        const props = element.props as {
+            executions?: Array<{ definition?: { filters?: unknown[] } }>;
+        };
+
+        // Filter must be dropped for the additional layer because its dimensionality references attribute localId
+        // not present in that layer (otherwise backend normalization would fail with dangling localId reference).
+        const additionalLayerFilters = props.executions?.[0]?.definition?.filters ?? [];
+        expect(additionalLayerFilters).toEqual([]);
     });
 });

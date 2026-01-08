@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
@@ -380,16 +380,44 @@ export interface IMeasureValueFilterRangeOptions {
 }
 
 /**
+ * Options for creating a measure value filter with ALL operator.
+ *
+ * @public
+ */
+export interface IMeasureValueFilterAllOptions {
+    operator: "ALL";
+    /**
+     * Optional array of attributes to define the dimensionality for the filter.
+     * If instance of attribute is provided, it will be referenced by its local identifier.
+     */
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+}
+
+/**
  * Options for creating a measure value filter.
  *
  * @public
  */
 export type IMeasureValueFilterOptions =
     | IMeasureValueFilterComparisonOptions
-    | IMeasureValueFilterRangeOptions;
+    | IMeasureValueFilterRangeOptions
+    | IMeasureValueFilterAllOptions;
+
+function isAllOptions(options: IMeasureValueFilterOptions): options is IMeasureValueFilterAllOptions {
+    return options.operator === "ALL";
+}
 
 function isRangeOptions(options: IMeasureValueFilterOptions): options is IMeasureValueFilterRangeOptions {
     return options.operator === "BETWEEN" || options.operator === "NOT_BETWEEN";
+}
+
+function getTreatNullValuesAsProp(options: IMeasureValueFilterOptions): Record<string, number> {
+    if (isAllOptions(options)) {
+        return {};
+    }
+    return options.treatNullValuesAs === null || options.treatNullValuesAs === undefined
+        ? {}
+        : { treatNullValuesAs: options.treatNullValuesAs };
 }
 
 /**
@@ -413,10 +441,6 @@ export function newMeasureValueFilterWithOptions(
     const dimensionalityRefs = options.dimensionality?.map(convertAttributeOrRefToObjRefInScope);
     const dimensionalityProp =
         dimensionalityRefs && dimensionalityRefs.length > 0 ? { dimensionality: dimensionalityRefs } : {};
-    const nullValuesProp =
-        options.treatNullValuesAs === null || options.treatNullValuesAs === undefined
-            ? {}
-            : { treatNullValuesAs: options.treatNullValuesAs };
 
     if (isRangeOptions(options)) {
         return {
@@ -428,9 +452,16 @@ export function newMeasureValueFilterWithOptions(
                         operator: options.operator,
                         from: options.from,
                         to: options.to,
-                        ...nullValuesProp,
+                        ...getTreatNullValuesAsProp(options),
                     },
                 },
+            },
+        };
+    } else if (isAllOptions(options)) {
+        return {
+            measureValueFilter: {
+                measure: measureRef,
+                ...dimensionalityProp,
             },
         };
     } else {
@@ -442,7 +473,7 @@ export function newMeasureValueFilterWithOptions(
                     comparison: {
                         operator: options.operator,
                         value: options.value,
-                        ...nullValuesProp,
+                        ...getTreatNullValuesAsProp(options),
                     },
                 },
             },

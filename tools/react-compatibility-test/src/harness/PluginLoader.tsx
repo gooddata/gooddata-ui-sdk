@@ -55,7 +55,9 @@ function loadEntry(
         // the `./${moduleName}_ENTRY` corresponds to exposes in the dashboard-plugin-template webpack config
         const entryFactory = await (window as any)[moduleName].get(`./${moduleName}_ENTRY`);
 
-        return entryFactory().default;
+        const entryModule = entryFactory();
+        // Support both named export (entryPoint) and default export for backward compatibility
+        return entryModule.entryPoint ?? entryModule.default;
     };
 }
 

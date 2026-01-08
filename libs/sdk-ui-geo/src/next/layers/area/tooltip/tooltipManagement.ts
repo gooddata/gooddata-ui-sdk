@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
@@ -100,16 +100,14 @@ function buildAreaTooltipHtml(
     locationName: TooltipProperty | undefined,
     color: TooltipProperty | undefined,
     segment: TooltipProperty | undefined,
-    tooltipText: TooltipProperty | undefined,
     strokeColor: string,
     separators?: ISeparators,
 ): string | null {
     const items: string[] = [];
 
     addAttributeItem(items, locationName);
-    addMeasureItem(items, color, separators);
     addAttributeItem(items, segment);
-    addAttributeItem(items, tooltipText);
+    addMeasureItem(items, color, separators);
 
     if (items.length === 0) {
         return null;
@@ -154,20 +152,12 @@ export function createAreaTooltipConfig(
             const locationName = parseProperty(properties["locationName"]);
             const segment = parseProperty(properties["segment"]);
             const color = parseProperty(properties["color"]);
-            const tooltipText = parseProperty(properties["tooltipText"]);
 
             // Build tooltip HTML
             const fallbackStroke = properties["color_fill"];
             const tooltipStroke =
                 color?.fill ?? (typeof fallbackStroke === "string" ? fallbackStroke : "#20B2E2");
-            const tooltipHtml = buildAreaTooltipHtml(
-                locationName,
-                color,
-                segment,
-                tooltipText,
-                tooltipStroke,
-                separators,
-            );
+            const tooltipHtml = buildAreaTooltipHtml(locationName, color, segment, tooltipStroke, separators);
 
             if (tooltipHtml) {
                 tooltip

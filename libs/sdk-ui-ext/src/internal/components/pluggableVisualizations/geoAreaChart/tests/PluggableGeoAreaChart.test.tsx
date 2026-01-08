@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ReactElement } from "react";
 
@@ -7,10 +7,12 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     type IInsightDefinition,
+    localIdRef,
     newAttribute,
     newBucket,
     newInsightDefinition,
     newMeasure,
+    newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { AREA_LAYER_ID, GeoChartNextInternal } from "@gooddata/sdk-ui-geo/next";
@@ -65,7 +67,10 @@ describe("PluggableGeoAreaChart", () => {
                 BucketNames.AREA,
                 newAttribute("attr.country", (attribute) => attribute.localId("area")),
             ),
-            newBucket(BucketNames.COLOR, newMeasure("m1")),
+            newBucket(
+                BucketNames.COLOR,
+                newMeasure("m1", (m) => m.localId("m_color")),
+            ),
         ]),
     );
 
@@ -130,5 +135,137 @@ describe("PluggableGeoAreaChart", () => {
         const props = element.props as { executions?: unknown[] };
         expect(props.executions).toBeDefined();
         expect(props.executions).toHaveLength(1);
+    });
+
+    it("should keep MVF on root area execution and drop it from additional layers where it would dangle", () => {
+        const visualization = createComponent();
+
+        const insightWithMvfAndLayers = {
+            ...insightWithAreaBucket,
+            insight: {
+                ...insightWithAreaBucket.insight,
+                filters: [
+                    newMeasureValueFilterWithOptions(localIdRef("m_color"), {
+                        operator: "GREATER_THAN",
+                        value: 0,
+                        dimensionality: [localIdRef("area")],
+                    }),
+                ],
+                layers: [
+                    {
+                        id: "layer_pushpins",
+                        name: "Additional pushpins",
+                        type: "pushpin",
+                        buckets: [
+                            newBucket(
+                                BucketNames.LOCATION,
+                                newAttribute("customer_city.city", (attribute) => attribute.localId("loc")),
+                            ),
+                        ],
+                        properties: {
+                            controls: {
+                                latitude: "customer_city.city_latitude",
+                                longitude: "customer_city.city_longitude",
+                            },
+                        },
+                    },
+                ],
+            },
+        } as IInsightDefinition;
+
+        visualization.update({ messages }, insightWithMvfAndLayers, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+        );
+        expect(chartCall).toBeDefined();
+
+        const element = chartCall?.[0] as ReactElement;
+        const props = element.props as {
+            execution?: { definition?: { filters?: unknown[] } };
+            executions?: Array<{ definition?: { filters?: unknown[] } }>;
+        };
+
+        expect(props.execution?.definition?.filters ?? []).toHaveLength(1);
+        expect(props.executions?.[0]?.definition?.filters ?? []).toEqual([]);
+    });
+
+    it("should apply per-layer MVFs: keep area MVF on root and pushpin MVF on pushpin layer", () => {
+        const visualization = createComponent();
+
+        const rootMeasureLocalId = "m_area";
+        const pushpinMeasureLocalId = "m_pushpin";
+        const areaLocalId = "area";
+        const pushpinLocationLocalId = "loc";
+
+        const insightWithMultipleMvfs: IInsightDefinition = newInsightDefinition(
+            visualizationUrl,
+            (builder) =>
+                builder
+                    .title("area + pushpin with mvfs")
+                    .buckets([
+                        newBucket(
+                            BucketNames.AREA,
+                            newAttribute("attr.country", (attribute) => attribute.localId(areaLocalId)),
+                        ),
+                        newBucket(
+                            BucketNames.COLOR,
+                            newMeasure("m1", (m) => m.localId(rootMeasureLocalId)),
+                        ),
+                    ])
+                    .filters([
+                        newMeasureValueFilterWithOptions(localIdRef(rootMeasureLocalId), {
+                            operator: "GREATER_THAN",
+                            value: 0,
+                            dimensionality: [localIdRef(areaLocalId)],
+                        }),
+                        newMeasureValueFilterWithOptions(localIdRef(pushpinMeasureLocalId), {
+                            operator: "GREATER_THAN",
+                            value: 0,
+                            dimensionality: [localIdRef(pushpinLocationLocalId)],
+                        }),
+                    ])
+                    .layers([
+                        {
+                            id: "layer_pushpins",
+                            name: "Additional pushpins",
+                            type: "pushpin",
+                            buckets: [
+                                newBucket(
+                                    BucketNames.LOCATION,
+                                    newAttribute("customer_city.city", (attribute) =>
+                                        attribute.localId(pushpinLocationLocalId),
+                                    ),
+                                ),
+                                newBucket(
+                                    BucketNames.SIZE,
+                                    newMeasure("m2", (m) => m.localId(pushpinMeasureLocalId)),
+                                ),
+                            ],
+                            properties: {
+                                controls: {
+                                    latitude: "customer_city.city_latitude",
+                                    longitude: "customer_city.city_longitude",
+                                },
+                            },
+                        },
+                    ]),
+        );
+
+        visualization.update({ messages }, insightWithMultipleMvfs, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+        );
+        expect(chartCall).toBeDefined();
+
+        const element = chartCall?.[0] as ReactElement;
+        const props = element.props as {
+            execution?: { definition?: { filters?: unknown[] } };
+            executions?: Array<{ definition?: { filters?: unknown[] } }>;
+        };
+
+        expect(props.execution?.definition?.filters ?? []).toHaveLength(1);
+        expect(props.executions?.[0]?.definition?.filters ?? []).toHaveLength(1);
     });
 });

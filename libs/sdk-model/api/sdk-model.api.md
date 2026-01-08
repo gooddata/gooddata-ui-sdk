@@ -2688,6 +2688,13 @@ export interface IMeasureValueFilter {
 }
 
 // @public
+export interface IMeasureValueFilterAllOptions {
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    // (undocumented)
+    operator: "ALL";
+}
+
+// @public
 export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     // (undocumented)
     condition?: MeasureValueFilterCondition;
@@ -2706,7 +2713,7 @@ export interface IMeasureValueFilterComparisonOptions {
 }
 
 // @public
-export type IMeasureValueFilterOptions = IMeasureValueFilterComparisonOptions | IMeasureValueFilterRangeOptions;
+export type IMeasureValueFilterOptions = IMeasureValueFilterComparisonOptions | IMeasureValueFilterRangeOptions | IMeasureValueFilterAllOptions;
 
 // @public
 export interface IMeasureValueFilterRangeOptions {

@@ -6,6 +6,23 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
 @use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
 
+//NOTE: Overriding default dialog styles for special
+// behavior of GenAIChatOverlay component
+.overlay.gd-dialog:not(.gd-dropdown).gd-gen-ai-chat__window {
+    &--fullscreen {
+        width: 80vw;
+        max-width: 80vw;
+    }
+
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+        &--fullscreen {
+            width: 100vw;
+            max-width: 100vw;
+            height: 100vh;
+        }
+    }
+}
+
 .gd-gen-ai-chat__window {
     width: 420px;
     height: calc(100vh - 84px);
@@ -24,7 +41,6 @@
 
     &--fullscreen {
         margin: 0;
-        width: 768px;
         height: calc(100vh - 60px);
 
         .gd-gen-ai-chat__messages__visualization__wrapper {

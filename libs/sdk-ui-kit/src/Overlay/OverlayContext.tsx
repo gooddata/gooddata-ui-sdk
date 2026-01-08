@@ -49,6 +49,8 @@ export const useOverlayController = (): OverlayController | undefined => {
     return useContext(OverlayContext);
 };
 
+const FALLBACK_OVERLAY_Z_INDEX = 5001; // Same as in OverlayController
+
 /**
  * Hook to get the css `z-index` property for given overlay.
  *
@@ -60,7 +62,7 @@ export const useOverlayController = (): OverlayController | undefined => {
  */
 export const useOverlayZIndex = (uuid: string): number | undefined => {
     const overlayController = useContext(OverlayContext);
-    return overlayController?.getZIndex(uuid);
+    return overlayController?.getZIndex(uuid) ?? FALLBACK_OVERLAY_Z_INDEX;
 };
 
 /**

@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import {
     type IInsightLayerDefinition,
     attributeDisplayFormRef,
+    attributeLocalId,
     idRef,
     newAttribute,
     newBucket,
@@ -15,6 +16,10 @@ import { insightLayerToGeoLayer, insightLayersToGeoLayers } from "../layerConver
 
 function createAttribute(localId: string) {
     return newAttribute(idRef(localId), (attribute) => attribute.localId(localId));
+}
+
+function createLocationAttribute(displayFormId: string, localId: string) {
+    return newAttribute(idRef(displayFormId, "displayForm"), (attribute) => attribute.localId(localId));
 }
 
 function createPushpinLayer(
@@ -49,7 +54,7 @@ describe("layerConversion", () => {
     });
 
     it("should derive latitude/longitude attributes from layer controls", () => {
-        const locationAttr = createAttribute("customer_city.city_latitude");
+        const locationAttr = createLocationAttribute("customer_city.city_latitude", "loc");
         const layerDef = createPushpinLayer([newBucket(BucketNames.LOCATION, locationAttr)], {
             controls: {
                 latitude: "customer_city.city_latitude",
@@ -66,9 +71,30 @@ describe("layerConversion", () => {
         expect(attributeDisplayFormRef(result.latitude)).toEqual(
             idRef("customer_city.city_latitude", "displayForm"),
         );
+        expect(attributeLocalId(result.latitude)).toBe("loc");
         expect(attributeDisplayFormRef(result.longitude)).toEqual(
             idRef("customer_city.city_longitude", "displayForm"),
         );
+    });
+
+    it("should keep LOCATION localId for latitude even if LATITUDE bucket exists", () => {
+        const locationAttr = createLocationAttribute("customer_city.city_latitude", "loc");
+        const latitudeAttr = createLocationAttribute("customer_city.city_latitude", "latitude_df");
+        const longitudeAttr = createLocationAttribute("customer_city.city_longitude", "longitude_df");
+
+        const layerDef = createPushpinLayer([
+            newBucket(BucketNames.LOCATION, locationAttr),
+            newBucket(BucketNames.LATITUDE, latitudeAttr),
+            newBucket(BucketNames.LONGITUDE, longitudeAttr),
+        ]);
+
+        const result = insightLayerToGeoLayer(layerDef);
+
+        if (!result || result.type !== "pushpin") {
+            throw new Error("Expected pushpin layer");
+        }
+
+        expect(attributeLocalId(result.latitude)).toBe("loc");
     });
 
     it("should skip pushpin layers without latitude/longitude", () => {

@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent, type ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
 import { debounce } from "lodash-es";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -44,6 +44,13 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
         .map((el) => getOuterWidth(el as HTMLDivElement))
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
 }
+
+const messages = defineMessages({
+    aiChatMobile: { id: "gs.header.ai.mobile" },
+    aiChat: { id: "gs.header.ai" },
+    search: { id: "gs.header.search" },
+    notifications: { id: "gs.header.notifications" },
+});
 
 /**
  * @internal
@@ -204,6 +211,20 @@ export const AppHeader = withTheme(function AppHeader({
         }));
     }, []);
 
+    const toggleAiChat = useCallback(
+        (e: MouseEvent) => {
+            onChatItemClick?.(e);
+            setState((prevState) => ({
+                ...prevState,
+                isOverlayMenuOpen: false,
+                isNotificationsMenuOpen: false,
+                isHelpMenuOpen: false,
+                isSearchMenuOpen: false,
+            }));
+        },
+        [onChatItemClick],
+    );
+
     const closeNotificationsMenu = useCallback(() => {
         setState((prevState) => ({
             ...prevState,
@@ -257,17 +278,28 @@ export const AppHeader = withTheme(function AppHeader({
             const additionalItems = [];
             if (search) {
                 additionalItems.push({
-                    key: "gs.header.search",
+                    key: messages.search.id,
                     className: "gd-icon-header-search",
                     onClick: toggleSearchMenu,
                 });
             }
 
-            if (notificationsPanel) {
-                const AlertIcon = Icon["Alert" as keyof typeof Icon];
+            if (showChatItem) {
+                const AiIcon = Icon["GenAI2"];
 
                 additionalItems.push({
-                    key: "gs.header.notifications",
+                    key: messages.aiChatMobile.id,
+                    className: "gd-icon-header-ai",
+                    icon: <AiIcon width={16} height={16} />,
+                    onClick: toggleAiChat,
+                });
+            }
+
+            if (notificationsPanel) {
+                const AlertIcon = Icon["Alert"];
+
+                additionalItems.push({
+                    key: messages.notifications.id,
                     className: "gd-icon-header-notifications",
                     icon: <AlertIcon width={16} height={16} />,
                     onClick: toggleNotificationsMenu,
@@ -280,7 +312,7 @@ export const AppHeader = withTheme(function AppHeader({
 
             return [...itemGroups, additionalItems];
         },
-        [search, notificationsPanel, toggleSearchMenu, toggleNotificationsMenu],
+        [search, showChatItem, notificationsPanel, toggleAiChat, toggleSearchMenu, toggleNotificationsMenu],
     );
 
     const getHelpMenu = useCallback(
@@ -455,7 +487,9 @@ export const AppHeader = withTheme(function AppHeader({
 
         return (
             <div key="overlay-menu" className="gd-header-menu-vertical-wrapper">
-                <div className="gd-header-menu-vertical-header">Menu</div>
+                <div className="gd-header-menu-vertical-header">
+                    <FormattedMessage id="gs.header.menu" />
+                </div>
                 <div className="gd-header-menu-vertical-content">
                     <HeaderMenu
                         onMenuItemClick={handleMenuItemClick as any}
@@ -574,7 +608,7 @@ export const AppHeader = withTheme(function AppHeader({
 
                 {showChatItem ? (
                     <HeaderChatButton
-                        title={intl.formatMessage({ id: "gs.header.ai" })}
+                        title={intl.formatMessage(messages.aiChat)}
                         onClick={onChatItemClick ?? (() => {})}
                     />
                 ) : null}
@@ -588,7 +622,7 @@ export const AppHeader = withTheme(function AppHeader({
 
                 {search ? (
                     <HeaderSearchProvider isOpen={state.isSearchMenuOpen} toggleOpen={toggleSearchMenu}>
-                        <HeaderSearchButton title={intl.formatMessage({ id: "gs.header.search" })}>
+                        <HeaderSearchButton title={intl.formatMessage(messages.search)}>
                             {search}
                         </HeaderSearchButton>
                     </HeaderSearchProvider>
