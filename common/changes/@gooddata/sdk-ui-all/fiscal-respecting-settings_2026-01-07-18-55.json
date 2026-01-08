@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-charts: Introduce typescript strict mode.",
+            "comment": "sdk-ui-all: Fiscal calendars in date filter respecting settings.",
             "type": "none"
         }
     ],

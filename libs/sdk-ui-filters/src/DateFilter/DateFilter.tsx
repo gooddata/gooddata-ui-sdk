@@ -1,10 +1,15 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ComponentType, PureComponent } from "react";
 
 import { isEmpty, isEqual } from "lodash-es";
 
-import { type DateFilterGranularity, type WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
+import {
+    type DateFilterGranularity,
+    type IActiveCalendars,
+    type WeekStart,
+    isAbsoluteDateFilterForm,
+} from "@gooddata/sdk-model";
 import { type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
@@ -107,6 +112,22 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     improveAccessibility?: boolean;
+
+    /**
+     * Active calendars configuration from workspace settings.
+     * Controls which calendar types (standard/fiscal) are available in the filter.
+     *
+     * @remarks
+     * When provided:
+     * - `standard: true` enables standard calendar presets
+     * - `fiscal: true` enables fiscal calendar presets
+     * - `default` determines which tab is selected by default ("STANDARD" or "FISCAL")
+     *
+     * When undefined, defaults to standard calendar only.
+     *
+     * @alpha
+     */
+    activeCalendars?: IActiveCalendars;
 }
 
 /**
@@ -280,6 +301,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             ButtonComponent,
             overlayPositionType,
             improveAccessibility,
+            activeCalendars,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -312,6 +334,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
                 ButtonComponent={ButtonComponent}
                 overlayPositionType={overlayPositionType}
                 improveAccessibility={improveAccessibility}
+                activeCalendars={activeCalendars}
             />
         );
     }

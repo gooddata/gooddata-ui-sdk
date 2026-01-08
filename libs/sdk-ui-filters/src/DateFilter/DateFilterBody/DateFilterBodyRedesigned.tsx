@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, type KeyboardEvent, forwardRef, useEffect, useRef, useState } from "react";
 
@@ -28,8 +28,8 @@ import {
     filterFiscalPresets,
     filterStandardGranularities,
     filterStandardPresets,
+    getDefaultCalendarTab,
     getFiscalTabsConfig,
-    getTabForPreset,
 } from "../utils/presetFilterUtils.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
 
@@ -49,10 +49,10 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
 
     const intl = useIntl();
 
-    const { showTabs } = getFiscalTabsConfig(props.filterOptions.relativePreset);
+    const { showTabs } = getFiscalTabsConfig(props.filterOptions.relativePreset, props.activeCalendars);
 
     const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
-        getTabForPreset(props.selectedFilterOption),
+        getDefaultCalendarTab(props.activeCalendars, props.selectedFilterOption),
     );
 
     const filteredRelativePreset = showTabs
@@ -301,6 +301,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                             availableGranularities={availableGranularities}
                             withoutApply={withoutApply}
                             isRedesigned
+                            activeCalendars={props.activeCalendars}
                         />
                     ) : (
                         <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>

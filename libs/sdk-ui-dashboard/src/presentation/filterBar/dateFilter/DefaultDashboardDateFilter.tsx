@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo, useState } from "react";
 
@@ -21,6 +21,7 @@ import { type IDashboardDateFilterProps } from "./types.js";
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import {
+    selectActiveCalendars,
     selectBackendCapabilities,
     selectCatalogDateDatasets,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
@@ -58,6 +59,7 @@ export function DefaultDashboardDateFilter({
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+    const activeCalendars = useDashboardSelector(selectActiveCalendars);
 
     const enableFilterAccessibility = settings?.enableFilterAccessibility;
 
@@ -197,6 +199,7 @@ export function DefaultDashboardDateFilter({
             ButtonComponent={ButtonComponent}
             overlayPositionType={overlayPositionType}
             improveAccessibility={enableFilterAccessibility}
+            activeCalendars={activeCalendars}
         />
     );
 }

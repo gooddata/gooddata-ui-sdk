@@ -36,6 +36,7 @@ import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDescriptorBody } from '@gooddata/sdk-model';
@@ -8941,6 +8942,9 @@ export const selectAccessibleDashboardsLoaded: DashboardSelector<boolean>;
 // @alpha
 export const selectAccessibleDashboardsMap: DashboardSelector<ObjRefMap<IListedDashboard>>;
 
+// @alpha
+export const selectActiveCalendars: DashboardSelector<IActiveCalendars | undefined>;
+
 // @internal
 export const selectActiveSection: DashboardSelector<ILayoutSectionPath | undefined>;
 
@@ -9504,6 +9508,9 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 
 // @internal
 export const selectEnableFilterViews: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableFiscalCalendars: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;

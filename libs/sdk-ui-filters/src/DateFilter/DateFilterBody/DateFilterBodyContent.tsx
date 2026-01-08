@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
 import { isEmpty } from "lodash-es";
 
-import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type IActiveCalendars, type WeekStart } from "@gooddata/sdk-model";
 
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
@@ -26,8 +26,8 @@ import {
     filterFiscalPresets,
     filterStandardGranularities,
     filterStandardPresets,
+    getDefaultCalendarTab,
     getFiscalTabsConfig,
-    getTabForPreset,
 } from "../utils/presetFilterUtils.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
@@ -47,6 +47,10 @@ interface IDateFilterBodyContentProps {
     closeDropdown: () => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
     onApplyClick: () => void;
+    /**
+     * Active calendars configuration from workspace settings.
+     */
+    activeCalendars?: IActiveCalendars;
 }
 
 export function DateFilterBodyContent({
@@ -64,11 +68,12 @@ export function DateFilterBodyContent({
     changeRoute,
     onApplyClick,
     onSelectedFilterOptionChange,
+    activeCalendars,
 }: IDateFilterBodyContentProps) {
-    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset);
+    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
 
     const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
-        getTabForPreset(selectedFilterOption),
+        getDefaultCalendarTab(activeCalendars, selectedFilterOption),
     );
 
     const filteredRelativePreset = showTabs

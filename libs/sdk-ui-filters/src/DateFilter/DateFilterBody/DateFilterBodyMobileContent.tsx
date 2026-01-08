@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type IActiveCalendars, type WeekStart } from "@gooddata/sdk-model";
 
 import { DateFilterBodyContent } from "./DateFilterBodyContent.js";
 import { DateFilterBodyContentFiltered } from "./DateFilterBodyContentFiltered.js";
@@ -24,8 +24,8 @@ import {
     type CalendarTabType,
     filterFiscalPresets,
     filterStandardPresets,
+    getDefaultCalendarTab,
     getFiscalTabsConfig,
-    getTabForPreset,
 } from "../utils/presetFilterUtils.js";
 
 interface IDateFilterBodyMobileContentProps {
@@ -44,6 +44,10 @@ interface IDateFilterBodyMobileContentProps {
     onBack: (newRoute?: DateFilterRoute) => void;
     onApplyClick: () => void;
     isRedesigned?: boolean;
+    /**
+     * Active calendars configuration from workspace settings.
+     */
+    activeCalendars?: IActiveCalendars;
 }
 
 export function DateFilterBodyMobileContent({
@@ -62,13 +66,14 @@ export function DateFilterBodyMobileContent({
     onApplyClick,
     onSelectedFilterOptionChange,
     isRedesigned = false,
+    activeCalendars,
 }: IDateFilterBodyMobileContentProps) {
     const intl = useIntl();
 
-    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset);
+    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
 
     const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
-        getTabForPreset(selectedFilterOption),
+        getDefaultCalendarTab(activeCalendars, selectedFilterOption),
     );
 
     const filteredRelativePreset = showTabs
@@ -151,6 +156,7 @@ export function DateFilterBodyMobileContent({
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
             weekStart={weekStart}
             availableGranularities={availableGranularities}
+            activeCalendars={activeCalendars}
         />
     );
 }

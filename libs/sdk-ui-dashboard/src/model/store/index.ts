@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 export type {
     DashboardDispatch,
@@ -110,6 +110,8 @@ export {
     selectExportResultPollingTimeout,
     selectEnableAnomalyDetectionAlert,
     selectEnableImplicitDrillToUrl,
+    selectEnableFiscalCalendars,
+    selectActiveCalendars,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
