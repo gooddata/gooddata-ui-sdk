@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type CSSProperties } from "react";
 
@@ -119,6 +119,7 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
             BucketNames.VIEW,
             BucketNames.TREND,
             BucketNames.LOCATION,
+            BucketNames.AREA,
         ],
         [ATTRIBUTE, DATE],
     );

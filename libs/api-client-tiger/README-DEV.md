@@ -10,6 +10,7 @@ It means the client is generated based on code on running backend api and stored
 
 The package uses a modular structure with individual API endpoint modules located in `/src/api-endpoints/`. Each endpoint module provides tree-shakeable exports for specific API functionality:
 
+- **aac** - Analytics as Code format APIs (alternatives to layout APIs)
 - **actions** - Workspace and organization management actions
 - **authActions** - Authentication and authorization actions
 - **automation** - Automation and workflow management
@@ -34,11 +35,11 @@ The package exports API endpoints via individual entry points in `package.json` 
 
 ```json
 {
-  "exports": {
-    "./execution": "./esm/api-endpoints/execution/index.js",
-    "./entitiesObjects": "./esm/api-endpoints/entitiesObjects/index.js",
-    // ... other endpoints
-  }
+    "exports": {
+        "./execution": "./esm/api-endpoints/execution/index.js",
+        "./entitiesObjects": "./esm/api-endpoints/entitiesObjects/index.js"
+        // ... other endpoints
+    }
 }
 ```
 

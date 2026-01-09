@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "11.16.0-alpha.1",
+    "version": "11.16.0-alpha.2",
     "description": "GoodData SDK - Dashboard Component",
     "repository": {
         "type": "git",
@@ -152,7 +152,7 @@
         "stylelint-config-prettier": "^9.0.5",
         "svgo": "^2.8.0",
         "typescript": "5.9.3",
-        "vitest": "3.2.4",
+        "vitest": "4.0.8",
         "vitest-dom": "0.1.1"
     },
     "peerDependencies": {

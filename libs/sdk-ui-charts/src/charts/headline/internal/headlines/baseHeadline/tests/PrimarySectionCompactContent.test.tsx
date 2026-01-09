@@ -1,7 +1,7 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { type MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
@@ -20,11 +20,12 @@ describe("PrimarySectionCompactContent", () => {
     };
 
     beforeEach(() => {
+        vi.clearAllMocks();
         MockContent = vi.spyOn(PrimarySectionContent, "PrimarySectionContent");
     });
 
-    afterAll(() => {
-        vi.clearAllMocks();
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     it("Should render primary section content with correctly properties", () => {

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -33,7 +33,7 @@ function renderToHtml(customizer: DefaultTitleCustomizer) {
 
 describe("title customizer", () => {
     let Customizer: DefaultTitleCustomizer;
-    let mockWarn: ReturnType<typeof vi.fn>;
+    let mockWarn: (message: string, ...optionalParams: unknown[]) => void;
     let mutationContext: CustomizerMutationsContext;
 
     beforeEach(() => {

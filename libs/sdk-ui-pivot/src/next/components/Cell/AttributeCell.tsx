@@ -1,18 +1,43 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ICellRendererParams } from "ag-grid-enterprise";
 import { type IntlShape } from "react-intl";
 
-import { type ITableAttributeColumnDefinition, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
+import { type AttributeDisplayFormType } from "@gooddata/sdk-model";
+import {
+    type ITableAttributeColumnDefinition,
+    type ITableAttributeHeaderValue,
+    emptyHeaderTitleFromIntl,
+} from "@gooddata/sdk-ui";
 
+import { ImageCell } from "./ImageCell.js";
 import {
     getAttributeColIds,
     isTableGrandTotalHeaderValue,
     isTableTotalHeaderValue,
     shouldGroupAttribute,
 } from "../../features/columns/shared.js";
-import { getPivotCellTestIdPropsFromCellTypes } from "../../testing/dataTestIdGenerators.js";
+import { e } from "../../features/styling/bem.js";
+import {
+    getPivotCellAttributeImageTestIdProps,
+    getPivotCellTestIdPropsFromCellTypes,
+} from "../../testing/dataTestIdGenerators.js";
 import { type CellTypes } from "../../types/cellRendering.js";
+
+const IMAGE_LABEL_TYPE: AttributeDisplayFormType = "GDC.image";
+
+/**
+ * Gets the primary label value from the cell data.
+ *
+ * The attribute header item contains:
+ * - `uri`: The primary label's value (e.g., "Product Name")
+ *
+ * @param cellData - The cell data containing the attribute header
+ * @returns The primary label value from uri, or undefined if not available
+ */
+function getPrimaryLabelValue(cellData: ITableAttributeHeaderValue | undefined): string | undefined {
+    return cellData?.value?.attributeHeaderItem?.uri ?? undefined;
+}
 
 /**
  * Cell renderer for attributes.
@@ -64,7 +89,25 @@ export function AttributeCell(
         }
     }
 
-    // 3) Grouping suppression: do not render repeating attribute values
+    // 3) Image rendering: check if attribute should be rendered as an image
+    // Images respect text wrapping configuration:
+    // - When text wrapping is OFF: images are constrained to default row height (28px)
+    // - When text wrapping is ON: AG Grid adds .ag-cell-auto-height class, allowing images to expand
+    const attributeDescriptor = columnDefinition.attributeDescriptor;
+    const labelType = attributeDescriptor?.attributeHeader.labelType;
+    const isImage = labelType === IMAGE_LABEL_TYPE;
+
+    if (isImage) {
+        const primaryLabelValue = getPrimaryLabelValue(cellData as ITableAttributeHeaderValue);
+
+        return (
+            <div className={e("cell-image-wrapper")} {...getPivotCellAttributeImageTestIdProps()}>
+                <ImageCell src={value} alt={primaryLabelValue} />
+            </div>
+        );
+    }
+
+    // 4) Grouping suppression: do not render repeating attribute values
     const rowIndex = params.node.rowIndex;
     const previousRow = rowIndex ? params.api.getDisplayedRowAtIndex(rowIndex - 1) : null;
 

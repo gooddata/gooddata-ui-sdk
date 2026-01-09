@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -18,19 +18,26 @@ function createComponent(customProps: Partial<IGeoChartRendererProps> = {}) {
     return render(<GeoChartRenderer {...chartProps} />);
 }
 
-vi.mock("mapbox-gl", async () => ({
-    default: {
-        Map: vi.fn(() => ({
-            addControl: vi.fn(),
-            on: vi.fn(),
-            off: vi.fn(),
-            remove: vi.fn(),
-        })),
-        Popup: vi.fn(),
-        AttributionControl: vi.fn(),
-        NavigationControl: vi.fn(),
-    },
-}));
+vi.mock("mapbox-gl", () => {
+    class MockMap {
+        addControl = vi.fn();
+        on = vi.fn();
+        off = vi.fn();
+        remove = vi.fn();
+    }
+    class MockPopup {}
+    class MockAttributionControl {}
+    class MockNavigationControl {}
+
+    return {
+        default: {
+            Map: MockMap,
+            Popup: MockPopup,
+            AttributionControl: MockAttributionControl,
+            NavigationControl: MockNavigationControl,
+        },
+    };
+});
 
 describe("GeoChartRenderer", () => {
     const geoData: IGeoData = { location: { data: [], name: "test", index: 0 } };

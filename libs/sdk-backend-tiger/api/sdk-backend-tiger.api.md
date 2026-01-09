@@ -4,6 +4,8 @@
 
 ```ts
 
+import { AacAnalyticsModel } from '@gooddata/api-client-tiger/aac';
+import { AacLogicalModel } from '@gooddata/api-client-tiger/aac';
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
 import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
@@ -462,6 +464,10 @@ export type TigerSpecificFunctions = {
     getWorkspaceEntitiesDatasets?: (id: string) => Promise<WorkspaceEntitiesDatasets>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
+    getWorkspaceAnalyticsModelAac?: (workspaceId: string, exclude?: Array<"ACTIVITY_INFO">) => Promise<AacAnalyticsModel>;
+    setWorkspaceAnalyticsModelAac?: (workspaceId: string, analyticsModel: AacAnalyticsModel) => Promise<void>;
+    getWorkspaceLogicalModelAac?: (workspaceId: string, includeParents?: boolean) => Promise<AacLogicalModel>;
+    setWorkspaceLogicalModelAac?: (workspaceId: string, logicalModel: AacLogicalModel) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;

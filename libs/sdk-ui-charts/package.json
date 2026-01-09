@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-charts",
-    "version": "11.16.0-alpha.1",
+    "version": "11.16.0-alpha.2",
     "description": "GoodData.UI SDK - Charts",
     "repository": {
         "type": "git",
@@ -150,7 +150,7 @@
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^9.0.5",
         "typescript": "5.9.3",
-        "vitest": "3.2.4",
+        "vitest": "4.0.8",
         "vitest-dom": "0.1.1"
     },
     "peerDependencies": {

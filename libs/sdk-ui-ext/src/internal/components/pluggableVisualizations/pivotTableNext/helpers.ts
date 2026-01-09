@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
@@ -41,6 +41,7 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
             BucketNames.VIEW,
             BucketNames.TREND,
             BucketNames.LOCATION,
+            BucketNames.AREA,
         ],
         [ATTRIBUTE, DATE],
     );

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CellTypes } from "../types/cellRendering.js";
 
@@ -80,4 +80,8 @@ export function getPivotHeaderTextTestIdProps() {
 
 export function getPivotContainerTestIdProps(isReady?: boolean) {
     return isReady ? { "data-testid": "pivot-table-next" } : {};
+}
+
+export function getPivotCellAttributeImageTestIdProps() {
+    return { "data-testid": "pivot-cell-attribute-image" };
 }

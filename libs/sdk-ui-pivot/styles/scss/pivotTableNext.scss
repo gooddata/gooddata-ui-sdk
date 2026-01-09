@@ -100,8 +100,6 @@
             --gd-table-gridColor,
             var(--gd-palette-complementary-4-from-theme, rgba(176, 190, 202, 0.5))
         );
-        // stylelint-disable-next-line declaration-no-important
-        border-top: 2px solid red !important;
     }
 
     .ag-header-group-cell-with-group {
@@ -551,6 +549,41 @@
                 pointer-events: auto;
             }
         }
+    }
+
+    &__cell-image-wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        overflow: hidden;
+
+        .ag-cell-auto-height & {
+            height: auto;
+            min-height: 28px;
+            padding: 4px 0;
+        }
+    }
+
+    &__cell-image {
+        max-height: 100%;
+        width: auto;
+        object-fit: contain;
+
+        .ag-cell-auto-height & {
+            height: auto;
+            width: auto;
+            max-width: 100%;
+        }
+    }
+
+    &__cell-image-empty {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     // First cell row

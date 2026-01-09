@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-theme-provider",
-    "version": "11.16.0-alpha.1",
+    "version": "11.16.0-alpha.2",
     "description": "GoodData SDK - Theme provider",
     "repository": {
         "type": "git",
@@ -93,7 +93,7 @@
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "typescript": "5.9.3",
-        "vitest": "3.2.4"
+        "vitest": "4.0.8"
     },
     "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",

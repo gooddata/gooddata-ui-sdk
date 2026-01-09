@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -7,6 +7,7 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type ISettings, type ISortItem } from "@gooddata/sdk-model";
 import {
+    BucketNames,
     DefaultLocale,
     type IDrillableItem,
     type ILocale,
@@ -812,6 +813,27 @@ describe("getRowAttributes", () => {
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_trend",
+                showInPercent: null,
+                type: "attribute",
+            },
+        ]);
+    });
+
+    it("should collect attributes from area bucket", () => {
+        expect(getRowAttributes([createMockBucket(BucketNames.AREA)])).toEqual([
+            {
+                attribute: "attr.datedataset",
+                filters: [],
+                granularity: "GDC.time.year",
+                localIdentifier: "date_area",
+                type: "date",
+            },
+            {
+                aggregation: null,
+                attribute: "attr.restaurantlocation.locationname",
+                filters: [],
+                granularity: "attr.restaurantlocation.locationname",
+                localIdentifier: "attribute_area",
                 showInPercent: null,
                 type: "attribute",
             },

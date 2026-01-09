@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.16.0-alpha.1",
+    "version": "11.16.0-alpha.2",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
@@ -13,6 +13,7 @@
     "type": "module",
     "exports": {
         ".": "./esm/index.js",
+        "./aac": "./esm/api-endpoints/aac/index.js",
         "./entitiesObjects": "./esm/api-endpoints/entitiesObjects/index.js",
         "./execution": "./esm/api-endpoints/execution/index.js",
         "./userManagement": "./esm/api-endpoints/userManagement/index.js",
@@ -98,6 +99,6 @@
         "mkdirp": "^1.0.4",
         "prettier": "^3.6.2",
         "typescript": "5.9.3",
-        "vitest": "3.2.4"
+        "vitest": "4.0.8"
     }
 }
