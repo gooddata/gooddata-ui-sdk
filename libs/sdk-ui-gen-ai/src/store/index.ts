@@ -2,6 +2,7 @@
 
 export { type RootState } from "./types.js";
 export { getStore } from "./store.js";
+export { getIsOpened, setIsOpened } from "./localStorage.js";
 
 export {
     loadThreadAction,

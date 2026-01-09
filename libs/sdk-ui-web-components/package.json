@@ -11,7 +11,8 @@
     "author": "GoodData Corporation",
     "sideEffects": [
         "*.css",
-        "*.svg"
+        "*.svg",
+        "**/autoAuth.*"
     ],
     "type": "module",
     "exports": "./esm/index.js",

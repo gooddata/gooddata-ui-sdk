@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
@@ -51,7 +51,7 @@ describe("Insight on dashboard", () => {
         },
     );
 
-    it("shows placeholder text during drag", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    it("shows placeholder text during drag", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         //create a new row, between 2 existing rows
         dashboard.getRow(1).dragAbove("ComboChart");
         dashboard.hasPlaceholderText("Drop to create a new section");
@@ -72,7 +72,7 @@ describe("Insight on dashboard", () => {
         dashboard.hasDropTargetBorderActive();
     });
 
-    it("can remove widgets after drap&drop", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    it("can remove widgets after drap&drop", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         dashboard.getRow(2).scrollIntoView().addLast("ComboChart");
         dashboard.hasRowsCount(4);
 

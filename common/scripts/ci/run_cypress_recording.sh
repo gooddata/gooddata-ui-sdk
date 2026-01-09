@@ -14,7 +14,7 @@ fi
 
 export TIGER_DATASOURCES_NAME=vertica_staging-goodsales
 export HOST=$TEST_BACKEND
-export CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
+export CYPRESS_TEST_TAGS=pre-merge_isolated_tiger_fe
 export FIXTURE_TYPE=goodsales
 export FILTER=${FILTER:-}
 

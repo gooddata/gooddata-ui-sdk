@@ -37,9 +37,11 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         customIcon,
         withoutApply = false,
         overlayPositionType,
+        alignPoints,
         onApply,
         onSelect,
         onError,
+        onInitLoadingChanged,
         ErrorComponent,
         LoadingComponent,
         DropdownButtonComponent,
@@ -103,6 +105,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     onApply={onApply}
                     onSelect={onSelect}
                     onError={onError}
+                    onInitLoadingChanged={onInitLoadingChanged}
                     hiddenElements={hiddenElements}
                     staticElements={staticElements}
                     fullscreenOnMobile={fullscreenOnMobile}
@@ -115,6 +118,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     }
                     withoutApply={withoutApply}
                     overlayPositionType={overlayPositionType}
+                    alignPoints={alignPoints}
                 >
                     {children}
                 </AttributeFilterContextProvider>

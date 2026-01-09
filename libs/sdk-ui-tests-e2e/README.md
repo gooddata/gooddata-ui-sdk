@@ -148,7 +148,7 @@ TIGER_API_TOKEN=<token>
 FIXTURE_TYPE=goodsales
 TIGER_DATASOURCES_NAME=vertica_staging-goodsales
 VISUAL_MODE=true
-CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
+CYPRESS_TEST_TAGS=pre-merge_isolated_tiger_fe
 FILTER=
 ```
 

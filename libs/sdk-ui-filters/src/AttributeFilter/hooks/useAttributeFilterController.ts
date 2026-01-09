@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 
@@ -13,6 +13,7 @@ import {
     type IAttributeElement,
     type IAttributeElements,
     type IAttributeFilter,
+    type IAttributeMetadataObject,
     type IRelativeDateFilter,
     type ObjRef,
     areObjRefsEqual,
@@ -97,6 +98,7 @@ export const useAttributeFilterController = (
         onApply,
         onSelect,
         onError,
+        onInitLoadingChanged,
 
         hiddenElements,
         staticElements,
@@ -171,6 +173,7 @@ export const useAttributeFilterController = (
     );
 
     useOnError(handler!, { onError });
+    useOnInitLoadingChanged(handler!, { onInitLoadingChanged });
     useInitOrReload(
         handler!,
         {
@@ -267,6 +270,40 @@ function useOnError(
             });
         };
     }, [handler, onError]);
+}
+
+//
+
+function useOnInitLoadingChanged(
+    handler: IMultiSelectAttributeFilterHandler,
+    props: {
+        onInitLoadingChanged?: (loading: boolean, attributeMetadata?: IAttributeMetadataObject) => void;
+    },
+) {
+    const { onInitLoadingChanged } = props;
+
+    useEffect(() => {
+        const callbackUnsubscribeFunctions = [
+            handler.onInitStart(() => {
+                onInitLoadingChanged?.(true);
+            }),
+            handler.onInitCancel(() => {
+                onInitLoadingChanged?.(false);
+            }),
+            handler.onInitSuccess(() => {
+                onInitLoadingChanged?.(false, handler.getAttribute());
+            }),
+            handler.onInitError(() => {
+                onInitLoadingChanged?.(false);
+            }),
+        ];
+
+        return () => {
+            callbackUnsubscribeFunctions.forEach((unsubscribe) => {
+                unsubscribe();
+            });
+        };
+    }, [handler, onInitLoadingChanged]);
 }
 
 //

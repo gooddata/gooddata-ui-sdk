@@ -530,14 +530,14 @@
         flex-direction: column;
         gap: 0;
         position: relative;
-        padding-bottom: 12px;
+        padding-bottom: 10px; // To be in line with the other messages
 
         &:last-child {
             padding-bottom: 0;
         }
     }
 
-    &__row {
+    &__headline {
         display: flex;
         gap: 0;
         align-items: flex-start;
@@ -547,7 +547,7 @@
         flex-shrink: 0;
         width: 12px;
         height: 6px;
-        margin-top: 5px; // Align with text baseline
+        align-self: center; // Align with text baseline
         position: relative;
         z-index: 1; // Ensure bullet appears above the line
 
@@ -579,7 +579,9 @@
     }
 
     &__title {
-        margin-bottom: 6px;
+        margin-bottom: 0;
+        margin-top: 0;
+
         display: inline-block;
 
         p {
@@ -588,8 +590,9 @@
     }
 
     &__thoughts {
-        margin: 8px 0 0 12px;
+        margin: 0 0 0 12px;
         padding-left: 0;
+        padding-top: 10px;
         display: flex;
         flex-direction: column;
         gap: 10px;

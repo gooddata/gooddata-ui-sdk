@@ -580,7 +580,7 @@ export const ExportDialogBase: NamedExoticComponent<IExportDialogBaseProps>;
 export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialogProps>;
 
 // @internal (undocumented)
-export function FilterGroupItem({ title, subtitle, selectedItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, }: IFilterGroupItemProps): JSX.Element;
+export function FilterGroupItem({ title, subtitle, selectedItemsCount, totalItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, }: IFilterGroupItemProps): JSX.Element;
 
 // @internal (undocumented)
 export const FilterLabel: NamedExoticComponent<IFilterLabelProps>;
@@ -2538,7 +2538,7 @@ export interface IExportTabularPdfDialogProps {
 // @internal (undocumented)
 export interface IFilterGroupItemProps {
     // @beta
-    buttonRef?: MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement | null>;
     // @beta
     dropdownId?: string;
     // @beta
@@ -2563,6 +2563,8 @@ export interface IFilterGroupItemProps {
     title?: string;
     // @alpha
     titleExtension?: ReactNode;
+    // @beta
+    totalItemsCount?: number;
 }
 
 // @internal (undocumented)
@@ -6323,11 +6325,11 @@ export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSel
 
 // @internal (undocumented)
 export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
@@ -6340,36 +6342,36 @@ export const makeKeyboardNavigation: <ActionKeysMap extends {
 
 // @internal (undocumented)
 export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: ((event: T) => void) | undefined;
     onClose?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: ((event: T) => void) | undefined;
     onClose?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
     onEnterLevel?: ((event: T) => void) | undefined;
     onLeaveLevel?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
@@ -8013,9 +8015,9 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 }): {
     onKeyboardNavigation: (event: KeyboardEvent_2<Element>) => void;
     onBlur: FocusEventHandler;
-    focusedAction: "selectItem" | Action;
+    focusedAction: Action | "selectItem";
     focusedItem: Item | undefined;
-    setFocusedAction: Dispatch<SetStateAction<"selectItem" | Action>>;
+    setFocusedAction: Dispatch<SetStateAction<Action | "selectItem">>;
     setFocusedIndex: Dispatch<SetStateAction<number | undefined>>;
 };
 

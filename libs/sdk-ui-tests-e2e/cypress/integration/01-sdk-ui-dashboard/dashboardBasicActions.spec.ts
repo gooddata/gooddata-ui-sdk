@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
@@ -10,7 +10,7 @@ const editMode = new EditMode();
 const widget = new Widget(0);
 const layout = new LayoutRow(0);
 
-describe("Basic actions on dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("Basic actions on dashboard", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/insight");
         editMode.edit().isInEditMode();

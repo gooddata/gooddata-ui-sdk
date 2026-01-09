@@ -81,3 +81,6 @@ export const initializeAutoAuth = async (scriptSrc: string) => {
 
     setContext({ backend, workspaceId });
 };
+
+// this is the sideeffect that allows calling the auth flow with the code injected to index chunk by vite plugin
+(window as any).__GD_INITIALIZE_AUTO_AUTH__ = initializeAutoAuth;

@@ -1,8 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ReactNode, memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 
-import { type IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
     type ISeparators,
@@ -11,13 +11,13 @@ import {
     isRangeConditionOperator,
 } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { Button, formatNumberWithSeparators } from "@gooddata/sdk-ui-kit";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import { ComparisonInput } from "./ComparisonInput.js";
 import { DimensionalitySection, areDimensionalitySetsEqual } from "./DimensionalitySection.js";
 import { intervalIncludesZero } from "./helpers/intervalIncludesZero.js";
-import { getOperatorWithValueTranslationKey } from "./helpers/measureValueFilterOperator.js";
 import { OperatorDropdown } from "./OperatorDropdown.js";
+import { PreviewSection } from "./PreviewSection.js";
 import { RangeInput } from "./RangeInput.js";
 import { TreatNullValuesAsZeroCheckbox } from "./TreatNullValuesAsZeroCheckbox.js";
 import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
@@ -59,69 +59,7 @@ interface IDropdownBodyState {
     dimensionality: IDimensionalityItem[];
 }
 
-const getConditionLabel = (
-    operator: MeasureValueFilterOperator,
-    value: NumberForPreview,
-    from: NumberForPreview,
-    to: NumberForPreview,
-    separators: ISeparators | undefined,
-    suffix: string,
-    intl: IntlShape,
-): string | undefined => {
-    if (isComparisonConditionOperator(operator)) {
-        const formattedValue = formatNumberForPreview(value, separators, suffix);
-        return formattedValue == undefined
-            ? undefined
-            : intl.formatMessage(
-                  { id: getOperatorWithValueTranslationKey(operator) },
-                  { value: formattedValue },
-              );
-    }
-    if (isRangeConditionOperator(operator)) {
-        const formattedFrom = formatNumberForPreview(from, separators, suffix);
-        const formattedTo = formatNumberForPreview(to, separators, suffix);
-        return formattedFrom === undefined || formattedTo === undefined
-            ? undefined
-            : intl.formatMessage(
-                  { id: getOperatorWithValueTranslationKey(operator) },
-                  {
-                      from: formattedFrom,
-                      to: formattedTo,
-                  },
-              );
-    }
-    return undefined;
-};
-
 const DefaultValuePrecision = 6;
-
-type NumberForPreview = number | null | undefined;
-
-const formatNumberForPreview = (
-    value: NumberForPreview,
-    separators: ISeparators | undefined,
-    suffix: string,
-): string | undefined => {
-    if (value === null || value === undefined || isNaN(value)) {
-        return undefined;
-    }
-    const formattedNumber = formatNumberWithSeparators(value, separators);
-    return `${formattedNumber}${suffix}`;
-};
-
-const concatDimensionalityTitles = (items: IDimensionalityItem[]): string | undefined => {
-    const titles = items.map((item) => item.title).filter(Boolean);
-    if (titles.length === 0) {
-        return undefined;
-    }
-    if (titles.length === 1) {
-        return titles[0];
-    }
-    if (titles.length === 2) {
-        return `${titles[0]} & ${titles[1]}`;
-    }
-    return `${titles.slice(0, -1).join(", ")} & ${titles[titles.length - 1]}`;
-};
 
 export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: IDropdownBodyProps) {
     const intl = useIntl();
@@ -407,39 +345,6 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection } = props;
     const { operator, enabledTreatNullValuesAsZero, dimensionality } = state;
 
-    const textPreview = useMemo(() => {
-        if (operator === "ALL") {
-            return null;
-        }
-        const suffix = props.usePercentage ? "%" : "";
-        const condition = getConditionLabel(
-            operator,
-            state.value.value,
-            state.value.from,
-            state.value.to,
-            separators,
-            suffix,
-            intl,
-        );
-        if (!condition) {
-            return null;
-        }
-        const measureTitle = props.measureTitle;
-        if (!measureTitle) {
-            return null;
-        }
-        const dimensionalityTitles = concatDimensionalityTitles(dimensionality);
-        const placeholderValues = {
-            metric: measureTitle,
-            condition,
-            dimensionality: dimensionalityTitles,
-            b: (chunk: ReactNode) => <b>{chunk}</b>,
-        };
-        return dimensionality.length > 0 && dimensionalityTitles
-            ? intl.formatMessage({ id: "mvf.preview.filterWithDimensionality" }, placeholderValues)
-            : intl.formatMessage({ id: "mvf.preview.filterWithoutDimensionality" }, placeholderValues);
-    }, [operator, dimensionality, separators, props.usePercentage, props.measureTitle, intl, state.value]);
-
     // Determine if the checkbox should be shown based on whether zero is in the filter interval
     const shouldShowTreatNullAsZeroCheckbox = useMemo(() => {
         if (!displayTreatNullAsZeroOption || operator === "ALL") {
@@ -495,13 +400,16 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                             onDimensionalityChange={handleDimensionalityChange}
                             isMigratedFilter={props.dimensionality !== undefined}
                         />
-                        {textPreview ? (
-                            <div className="gd-mvf-preview">
-                                <div className="gd-mvf-preview-content" data-testid="mvf-preview-text">
-                                    {textPreview}
-                                </div>
-                            </div>
-                        ) : null}
+                        <PreviewSection
+                            operator={operator}
+                            measureTitle={props.measureTitle}
+                            usePercentage={props.usePercentage}
+                            separators={separators}
+                            dimensionality={dimensionality}
+                            value={state.value.value}
+                            from={state.value.from}
+                            to={state.value.to}
+                        />
                     </>
                 ) : null}
             </div>

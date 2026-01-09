@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReasoningContents } from "../../../model.js";
 
@@ -12,7 +12,7 @@ export function ReasoningContentsComponent({ content }: ReasoningContentsProps) 
     return (
         <div className="gd-gen-ai-chat__reasoning">
             {groupedSteps.map((step, index) => {
-                // If no title is present, just render the thought as appended to the previous step.
+                // If no title is present, render thoughts without a headline.
                 // NOTE: Change key index to ID (needs BE change)
                 if (!step.title) {
                     return step.thoughts.length ? (
@@ -28,7 +28,7 @@ export function ReasoningContentsComponent({ content }: ReasoningContentsProps) 
 
                 return (
                     <div key={index} className="gd-gen-ai-chat__reasoning__step">
-                        <div className="gd-gen-ai-chat__reasoning__row">
+                        <div className="gd-gen-ai-chat__reasoning__headline">
                             <div className="gd-gen-ai-chat__reasoning__bullet"></div>
                             <div className="gd-gen-ai-chat__reasoning__content">
                                 <div className="gd-gen-ai-chat__reasoning__title">
@@ -62,18 +62,21 @@ function getThoughts(step: ReasoningContents["steps"][number]): string[] {
 
 function groupSteps(steps: ReasoningContents["steps"]) {
     const groups: { title: string; thoughts: string[] }[] = [];
-    steps.forEach((step) => {
+    for (const step of steps) {
         const stepThoughts = getThoughts(step);
         const lastGroup = groups[groups.length - 1];
 
-        if (lastGroup && lastGroup.title === step.title) {
+        const shouldAppendToLastGroup = Boolean(lastGroup) && (!step.title || lastGroup.title === step.title);
+
+        if (shouldAppendToLastGroup) {
             lastGroup.thoughts.push(...stepThoughts);
-        } else {
-            groups.push({
-                title: step.title,
-                thoughts: [...stepThoughts],
-            });
+            continue;
         }
-    });
+
+        groups.push({
+            title: step.title,
+            thoughts: [...stepThoughts],
+        });
+    }
     return groups;
 }

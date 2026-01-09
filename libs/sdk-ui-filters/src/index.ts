@@ -225,6 +225,8 @@ export {
     getAttributeFilterSubtitle,
 } from "./AttributeFilter/index.js";
 
+export { FilterGroup, type IFilterGroupProps } from "./FilterGroup/index.js";
+
 export type { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";
 
 export type { IDateFilterButtonProps } from "./DateFilter/DateFilterButton/DateFilterButton.js";

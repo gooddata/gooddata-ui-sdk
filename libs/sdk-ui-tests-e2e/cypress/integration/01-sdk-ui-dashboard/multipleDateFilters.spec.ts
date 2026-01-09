@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
 import { DateFilter } from "../../tools/dateFilter";
@@ -15,7 +16,7 @@ const dashboardHeader = new DashboardHeader();
 const dashboardMenu = new DashboardMenu();
 const dateFilter = new DateFilter();
 
-describe("Multitple date filters basic cases", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("Multitple date filters basic cases", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/multiple-date-filters");
         widget.waitChartLoaded();

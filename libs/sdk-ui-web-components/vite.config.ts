@@ -70,6 +70,23 @@ export default defineConfig(({ command, mode }) => {
             cssInjectedByJsPlugin({
                 jsAssetsFilterFunction: (chunk: OutputChunk) => /^index\.js$/.test(chunk.fileName),
             }),
+            {
+                name: "inject-auto-auth-init",
+                generateBundle(_options, bundle) {
+                    // append auto-auth initialization to index.js so that import.meta.url is truly
+                    // evaluated in the context of the index.js chunk and not put to a shared one
+                    const indexChunk = bundle["index.js"];
+                    if (indexChunk && indexChunk.type === "chunk") {
+                        indexChunk.code += `
+if (typeof window !== "undefined") {
+    window.__GD_INITIALIZE_AUTO_AUTH__(import.meta.url).catch((error) => {
+        console.error("Failed to configure automatic authentication flow", error);
+    });
+}
+`;
+                    }
+                },
+            },
         ],
         define: {
             NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),

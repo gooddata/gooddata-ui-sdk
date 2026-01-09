@@ -1500,8 +1500,16 @@
         "crowdinContext": "Template for preview of the measure value filter without dimensionality. Example: 'Sales is greater than 1000'. Do not translate the {metric} and {condition}. These placeholders will be replaced with the actual metric and condition at runtime. <b> is used to bold the condition."
     },
     "mvf.preview.filterWithDimensionality": {
-        "text": "{metric} is <b>{condition} for each {dimensionality}</b>",
-        "crowdinContext": "Template for preview of the measure value filter with dimensionality. Example: 'Sales is greater than 1000 for each Product & Brand'. Do not translate the {metric}, {condition}, and {dimensionality} placeholders. These placeholders will be replaced with the actual metric, condition, and dimensionality at runtime. <b> is used to bold the condition and the dimensionality."
+        "text": "{metric} is <b>{condition}</b> for each <b>{dimensionality}</b>",
+        "crowdinContext": "Template for preview of the measure value filter with dimensionality. Example: 'Sales is greater than 1000 for each Product, Brand'. Do not translate the {metric}, {condition}, and {dimensionality} placeholders. These placeholders will be replaced with the actual metric, condition, and dimensionality at runtime. <b> is used to bold the condition and the dimensionality."
+    },
+    "mvf.preview.filterWithDimensionalityShortened": {
+        "text": "{metric} is <b>{condition}</b> for each <b>{dimensionality}</b> ({count})",
+        "crowdinContext": "Template for preview of the measure value filter with shortened dimensionality list. Example: 'Sales is greater than 1000 for each Product, Brand, Region... (5)'. The {count} shows how many additional items are hidden. Do not translate the placeholders. <b> is used to bold the condition and the dimensionality."
+    },
+    "mvf.preview.title": {
+        "text": "Preview:",
+        "crowdinContext": "Section header for the measure value filter preview text that shows how the filter will be applied."
     },
     "mvf.dimensionality.backwardCompatibilityNote": {
         "text": "“For each” currently follows the visualization’s attributes. Editing the filter will stop this and let you choose which attributes it uses.",

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { DrillToModal } from "../../tools/drillToModal";
 import { EditMode } from "../../tools/editMode";
@@ -13,7 +13,7 @@ const attributeFilterDepartment = new AttributeFilter("Department");
 const firstWidget = new Widget(0);
 const secondWidget = new Widget(1);
 
-describe("Cross filtering", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("Cross filtering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/dashboard-cross-filtering");
     });

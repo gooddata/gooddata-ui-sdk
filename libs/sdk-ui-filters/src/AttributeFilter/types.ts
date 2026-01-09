@@ -7,6 +7,7 @@ import {
     type DashboardAttributeFilterSelectionMode,
     type IAttributeElement,
     type IAttributeFilter,
+    type IAttributeMetadataObject,
     type IDashboardDateFilter,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -16,7 +17,7 @@ import {
     type ILocale,
     type IPlaceholder,
 } from "@gooddata/sdk-ui";
-import { type OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { type IAttributeFilterErrorProps } from "./Components/AttributeFilterError.js";
 import { type IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading.js";
@@ -308,6 +309,14 @@ export interface IAttributeFilterCoreProps {
     onError?: (error: GoodDataSdkError) => void;
 
     /**
+     * Callback that will be triggered when initialization loading state changes.
+     *
+     * @param loading - true if loading, false if not loading
+     * @param attribute - attribute metadata object when it is a success event, undefined otherwise
+     */
+    onInitLoadingChanged?: (loading: boolean, attribute?: IAttributeMetadataObject) => void;
+
+    /**
      * Enables the migration of displayAsLabel to be immediately reported to the parent app.
      */
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
@@ -316,6 +325,12 @@ export interface IAttributeFilterCoreProps {
      * Specifies the overlay position type for the attribute filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
+
+    /**
+     * Specifies the align points for the attribute filter dropdown body.
+     * In other words where the dropdown body should be placed.
+     */
+    alignPoints?: IAlignPoint[];
 }
 
 /**

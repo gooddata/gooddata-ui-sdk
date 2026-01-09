@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
@@ -49,7 +49,7 @@ describe("Dashboard", () => {
             });
         },
     );
-    describe("TopBar rendering", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    describe("TopBar rendering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/dashboard-tiger");
         });
@@ -80,7 +80,7 @@ describe("Dashboard", () => {
         });
     });
 
-    describe("FilterBar rendering", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    describe("FilterBar rendering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/dashboard-tiger");
         });
@@ -119,7 +119,7 @@ describe("Dashboard", () => {
         });
     });
 
-    describe("Dashboard body rendering", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    describe("Dashboard body rendering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/kpis");
         });
@@ -129,7 +129,7 @@ describe("Dashboard", () => {
         });
     });
 
-    describe("Dashboard has too many data points insight", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    describe("Dashboard has too many data points insight", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/manydata");
         });

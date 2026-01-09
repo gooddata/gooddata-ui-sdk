@@ -1,6 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { type ComponentType, type RefObject, useEffect, useMemo } from "react";
+import { type ComponentType, type RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { type EnhancedStore } from "@reduxjs/toolkit";
 import { Provider as StoreProvider } from "react-redux";
@@ -16,7 +16,7 @@ import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { type ChatEventHandler } from "../store/events.js";
-import { isOpenSelector, setOpenAction } from "../store/index.js";
+import { getIsOpened, isOpenSelector, setOpenAction } from "../store/index.js";
 
 export type GenAIChatDialogProps = {
     backend?: IAnalyticalBackend;
@@ -28,6 +28,7 @@ export type GenAIChatDialogProps = {
     canFullControl?: boolean;
     objectTypes?: GenAIObjectType[];
     settings?: IUserWorkspaceSettings;
+    onOpen: () => void;
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
     colorPalette?: IColorPalette;
@@ -48,6 +49,7 @@ export function GenAIChatDialog({
     workspace,
     locale,
     isOpen,
+    onOpen,
     onClose,
     settings,
     returnFocusTo,
@@ -71,14 +73,41 @@ export function GenAIChatDialog({
         objectTypes,
     });
 
-    useEffect(() => {
-        // Save the open state into the store
-        const storeIsOpen = isOpenSelector(genAIStore.getState());
+    const open = useRef(onOpen);
+    open.current = onOpen;
+    const close = useRef(onClose);
+    close.current = onClose;
+    const isOpenRef = useRef(isOpen);
 
-        if (storeIsOpen !== isOpen) {
+    useEffect(() => {
+        if (isOpenRef.current === isOpen) {
+            return;
+        }
+        isOpenRef.current = isOpen;
+
+        const storeIsOpen = isOpenSelector(genAIStore.getState());
+        if (storeIsOpen !== isOpenRef.current) {
             genAIStore.dispatch(setOpenAction({ isOpen }));
+            if (isOpen) {
+                open.current();
+            } else {
+                close.current();
+            }
         }
     }, [genAIStore, isOpen]);
+
+    useEffect(() => {
+        const isOpen = getIsOpened();
+        if (isOpen) {
+            genAIStore.dispatch(setOpenAction({ isOpen }));
+            open.current();
+        }
+    }, [genAIStore]);
+
+    const onCloseHandler = useCallback(() => {
+        genAIStore.dispatch(setOpenAction({ isOpen: false }));
+        close.current();
+    }, [genAIStore]);
 
     useEffect(() => {
         onDispatcher?.(genAIStore.dispatch);
@@ -110,7 +139,10 @@ export function GenAIChatDialog({
                                 <CustomizationProvider
                                     landingScreenComponentProvider={LandingScreenComponentProvider}
                                 >
-                                    <GenAIChatOverlay returnFocusTo={returnFocusTo} onClose={onClose} />
+                                    <GenAIChatOverlay
+                                        returnFocusTo={returnFocusTo}
+                                        onClose={onCloseHandler}
+                                    />
                                 </CustomizationProvider>
                             </ConfigProvider>
                         </OverlayControllerProvider>

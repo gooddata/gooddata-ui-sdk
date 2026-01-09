@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
@@ -11,7 +12,7 @@ const interactiveAttributeFilter = new AttributeFilter("Activity");
 const hiddenAttributeFilter = new AttributeFilter("City");
 const lockedAttributeFilter = new AttributeFilter("Account");
 
-describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     it("Hide hidden date filter on view mode", () => {
         Navigation.visit("dashboard/dashboard-tiger-hide-filters");
         editMode.editButtonVisible(true);
