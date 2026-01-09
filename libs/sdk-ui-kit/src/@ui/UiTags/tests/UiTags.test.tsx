@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAccessibilityConfigBase } from "../../../typings/accessibility.js";
 import { UiFocusTrap } from "../../UiFocusManager/UiFocusTrap.js";
-import { type UiTagsProps } from "../types.js";
+import { type UiTagDef, type UiTagsProps } from "../types.js";
 import { UiTags } from "../UiTags.js";
 
 const shortTags: UiTagsProps["tags"] = [
@@ -15,9 +15,9 @@ const shortTags: UiTagsProps["tags"] = [
 ];
 
 describe("UiTags", () => {
-    let onTagAdd: ReturnType<typeof vi.fn>;
-    let onTagClick: ReturnType<typeof vi.fn>;
-    let onTagRemove: ReturnType<typeof vi.fn>;
+    let onTagAdd: (tag: UiTagDef) => void;
+    let onTagClick: (tag: UiTagDef) => void;
+    let onTagRemove: (tag: UiTagDef) => void;
 
     const renderTag = (tags: UiTagsProps["tags"], props: Partial<UiTagsProps> = {}) => {
         const defaultAriaAttributes: IAccessibilityConfigBase = {

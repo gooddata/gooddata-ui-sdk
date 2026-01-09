@@ -10,7 +10,7 @@ import { type ILegendListProps, LegendList } from "../LegendList.js";
 import { type ISeriesItem, LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR, isSeriesItemMetric } from "../types.js";
 
 describe("LegendList", () => {
-    let onItemClick: ReturnType<typeof vi.fn>;
+    let onItemClick: (item: ISeriesItem) => void;
 
     beforeEach(() => {
         onItemClick = vi.fn();

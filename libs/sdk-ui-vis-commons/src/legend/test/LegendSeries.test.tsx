@@ -51,7 +51,7 @@ describe("LegendSeries", () => {
         },
     ];
 
-    let onToggleItem: ReturnType<typeof vi.fn>;
+    let onToggleItem: (item: ISeriesItem) => void;
 
     beforeEach(() => {
         onToggleItem = vi.fn();

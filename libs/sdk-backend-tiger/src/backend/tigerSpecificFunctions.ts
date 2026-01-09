@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type AxiosRequestConfig } from "axios";
 import { backOff } from "exponential-backoff";
@@ -52,6 +52,14 @@ import {
     type UploadFileResponse,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import {
+    type AacAnalyticsModel,
+    AacApi_GetAnalyticsModelAac,
+    AacApi_GetLogicalModelAac,
+    AacApi_SetAnalyticsModelAac,
+    AacApi_SetLogicalModelAac,
+    type AacLogicalModel,
+} from "@gooddata/api-client-tiger/aac";
 import {
     ActionsApi_AllPlatformUsage,
     ActionsApi_CheckEntityOverrides,
@@ -450,6 +458,13 @@ export type TigerSpecificFunctions = {
     getWorkspaceEntitiesDatasets?: (id: string) => Promise<WorkspaceEntitiesDatasets>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
+    getWorkspaceAnalyticsModelAac?: (
+        workspaceId: string,
+        exclude?: Array<"ACTIVITY_INFO">,
+    ) => Promise<AacAnalyticsModel>;
+    setWorkspaceAnalyticsModelAac?: (workspaceId: string, analyticsModel: AacAnalyticsModel) => Promise<void>;
+    getWorkspaceLogicalModelAac?: (workspaceId: string, includeParents?: boolean) => Promise<AacLogicalModel>;
+    setWorkspaceLogicalModelAac?: (workspaceId: string, logicalModel: AacLogicalModel) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;
@@ -1050,6 +1065,56 @@ export const buildTigerSpecificFunctions = (
         try {
             return await authApiCall(async (sdk) => {
                 await LayoutApi_PutWorkspaceLayout(sdk.axios, sdk.basePath, requestParameters);
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+    getWorkspaceAnalyticsModelAac: async (workspaceId: string, exclude?: Array<"ACTIVITY_INFO">) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await AacApi_GetAnalyticsModelAac(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                    exclude,
+                });
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+    setWorkspaceAnalyticsModelAac: async (workspaceId: string, analyticsModel: AacAnalyticsModel) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                await AacApi_SetAnalyticsModelAac(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                    aacAnalyticsModel: analyticsModel,
+                });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+    getWorkspaceLogicalModelAac: async (workspaceId: string, includeParents?: boolean) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await AacApi_GetLogicalModelAac(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                    includeParents,
+                });
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+    setWorkspaceLogicalModelAac: async (workspaceId: string, logicalModel: AacLogicalModel) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                await AacApi_SetLogicalModelAac(sdk.axios, sdk.basePath, {
+                    workspaceId,
+                    aacLogicalModel: logicalModel,
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);

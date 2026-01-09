@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/util",
-    "version": "11.16.0-alpha.1",
+    "version": "11.16.0-alpha.2",
     "description": "GoodData Utility Functions",
     "repository": {
         "type": "git",
@@ -66,6 +66,6 @@
         "eslint-plugin-tsdoc": "0.2.14",
         "prettier": "^3.6.2",
         "typescript": "5.9.3",
-        "vitest": "3.2.4"
+        "vitest": "4.0.8"
     }
 }

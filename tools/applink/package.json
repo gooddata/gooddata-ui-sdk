@@ -75,7 +75,7 @@
         "prettier": "^3.6.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3",
-        "vitest": "3.2.4",
+        "vitest": "4.0.8",
         "watchpack": "^2.4.4"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"

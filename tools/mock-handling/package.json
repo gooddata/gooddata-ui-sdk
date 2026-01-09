@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "11.16.0-alpha.1",
+    "version": "11.16.0-alpha.2",
     "description": "GoodData SDK Mock data capture and management tool",
     "repository": {
         "type": "git",
@@ -77,6 +77,6 @@
         "eslint-plugin-sonarjs": "0.16.0",
         "eslint-plugin-tsdoc": "0.2.14",
         "typescript": "5.9.3",
-        "vitest": "3.2.4"
+        "vitest": "4.0.8"
     }
 }

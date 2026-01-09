@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-1-6
+Date generated: 2026-1-9
 
-Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
+Revision ID: 7ca0c195a40a075f3857f53187f786ee8f808d7c
 
 ================================================================================
 ================================================================================
@@ -275,13 +275,13 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - @types/whatwg-mimetype (3.0.2) [MIT]
 - @types/ws (8.18.1) [MIT]
 - @ungap/structured-clone (1.3.0) [ISC]
-- @vitest/expect (3.2.4) [MIT]
-- @vitest/mocker (3.2.4) [MIT]
-- @vitest/pretty-format (3.2.4) [MIT]
-- @vitest/runner (3.2.4) [MIT]
-- @vitest/snapshot (3.2.4) [MIT]
-- @vitest/spy (3.2.4) [MIT]
-- @vitest/utils (3.2.4) [MIT, Apache-2.0]
+- @vitest/expect (4.0.8) [MIT]
+- @vitest/mocker (4.0.8) [MIT]
+- @vitest/pretty-format (4.0.8) [MIT]
+- @vitest/runner (4.0.8) [MIT]
+- @vitest/snapshot (4.0.8) [MIT]
+- @vitest/spy (4.0.8) [MIT]
+- @vitest/utils (4.0.8) [MIT, Apache-2.0]
 - @vtaits/use-lazy-ref (0.1.4) [MIT]
 - @webassemblyjs/ast (1.14.1) [MIT]
 - @webassemblyjs/floating-point-hex-parser (1.13.2) [MIT]
@@ -327,7 +327,6 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - argparse (2.0.1) [Python-2.0]
 - array-find-index (1.0.2) [MIT]
 - array-flatten (1.1.1) [MIT]
-- assertion-error (2.0.1) [MIT]
 - asynckit (0.4.0) [MIT]
 - available-typed-arrays (1.0.7) [MIT]
 - axios (1.12.2) [MIT]
@@ -352,7 +351,6 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - buffer-from (1.1.2) [MIT]
 - bundle-name (4.1.0) [MIT]
 - bytes (3.1.2) [MIT]
-- cac (6.7.14) [MIT]
 - cache-parser (1.2.5) [MIT]
 - call-bind (1.0.8) [MIT]
 - call-bind-apply-helpers (1.0.2) [MIT]
@@ -360,7 +358,7 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - callsites (3.1.0) [MIT]
 - caniuse-lite (1.0.30001743) [CC-BY-4.0]
 - ccount (2.0.1) [MIT]
-- chai (5.3.3) [MIT]
+- chai (6.2.2) [MIT]
 - chalk (4.1.2) [MIT]
 - char-regex (1.0.2) [MIT]
 - character-entities (2.0.2) [MIT]
@@ -368,7 +366,6 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - character-entities-legacy (3.0.0) [MIT]
 - character-reference-invalid (2.0.1) [MIT]
 - chardet (2.1.0) [MIT]
-- check-error (2.1.1) [MIT]
 - chokidar (3.6.0) [MIT]
 - chownr (2.0.0) [ISC]
 - chrome-trace-event (1.0.4) [MIT]
@@ -423,7 +420,6 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - debug (4.4.3) [MIT]
 - decimal.js (10.6.0) [MIT]
 - decode-named-character-reference (1.2.0) [MIT]
-- deep-eql (5.0.2) [MIT]
 - default-browser (5.2.1) [MIT]
 - default-browser-id (5.0.0) [MIT]
 - default-import (1.1.5) [MIT]
@@ -613,7 +609,6 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - jackspeak (4.1.1) [blueoak-1.0.0]
 - jest-worker (27.5.1) [MIT]
 - js-tokens (4.0.0) [MIT]
-- js-tokens (9.0.1) [MIT]
 - js-yaml (4.1.0) [MIT]
 - jsesc (3.0.2) [MIT]
 - jsesc (3.1.0) [MIT]
@@ -642,13 +637,12 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - longest-streak (3.1.0) [MIT]
 - loose-envify (1.4.0) [MIT]
 - loud-rejection (2.2.0) [MIT]
-- loupe (3.2.1) [MIT]
 - lru-cache (11.1.0) [ISC]
 - lru-cache (10.4.3) [ISC]
 - lru-cache (5.1.1) [ISC]
 - luxon (3.7.2) [MIT]
 - lz-string (1.5.0) [MIT, WTFPL]
-- magic-string (0.30.19) [MIT]
+- magic-string (0.30.21) [MIT]
 - make-dir (2.1.0) [MIT]
 - mapbox-gl (2.15.0) [BSD-3-Clause, MIT]
 - maplibre-gl (4.7.1) [MIT, BSD-3-Clause, ISC, 0BSD]
@@ -755,7 +749,6 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - path-to-regexp (0.1.12) [MIT]
 - path-type (4.0.0) [MIT]
 - pathe (2.0.3) [MIT]
-- pathval (2.0.1) [MIT]
 - pbf (3.3.0) [BSD-3-Clause, MIT]
 - picocolors (1.1.1) [ISC]
 - picomatch (2.3.1) [MIT]
@@ -889,7 +882,7 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - stackback (0.0.2) [MIT, BSD-3-Clause]
 - statuses (1.5.0) [MIT]
 - statuses (2.0.1) [MIT]
-- std-env (3.9.0) [MIT]
+- std-env (3.10.0) [MIT]
 - string-width (4.2.3) [MIT]
 - string-width (5.1.2) [MIT]
 - string-width-cjs (5.1.1) [ISC]
@@ -900,7 +893,6 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - strip-ansi (6.0.1) [MIT]
 - strip-ansi (7.1.2) [MIT]
 - strip-ansi-cjs (8.0.0) [ISC]
-- strip-literal (3.0.0) [MIT]
 - style-mod (4.1.2) [MIT]
 - style-to-js (1.1.17) [MIT]
 - style-to-object (1.0.9) [MIT]
@@ -922,11 +914,9 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - tinycolor2 (1.6.0) [MIT]
 - tinyexec (0.3.2) [MIT]
 - tinyglobby (0.2.15) [MIT]
-- tinypool (1.1.1) [MIT]
 - tinyqueue (2.0.3) [ISC]
 - tinyqueue (3.0.0) [ISC]
-- tinyrainbow (2.0.0) [MIT]
-- tinyspy (4.0.3) [MIT]
+- tinyrainbow (3.0.3) [MIT]
 - to-regex-range (5.0.1) [MIT]
 - toggle-selection (1.0.6) [MIT]
 - toidentifier (1.0.1) [MIT]
@@ -974,8 +964,7 @@ Revision ID: 138e5d8e2a41f60c653af27d0263208a4259a1ea
 - vfile (6.0.3) [MIT]
 - vfile-message (4.0.3) [MIT]
 - vite (6.3.6) [MIT, ISC, CC0-1.0, BSD-2-Clause, Apache-2.0]
-- vite-node (3.2.4) [MIT]
-- vitest (3.2.4) [ISC, MIT, BSD-3-Clause, Apache-2.0]
+- vitest (4.0.8) [ISC, MIT, BSD-3-Clause, Apache-2.0]
 - vt-pbf (3.1.3) [MIT, BSD-3-Clause]
 - w3c-keyname (2.2.8) [MIT]
 - watchpack (2.4.4) [MIT]
@@ -4027,21 +4016,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/expect (3.2.4)
+Package Title: @vitest/expect (4.0.8)
 
-Package Locator: npm+@vitest/expect$3.2.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: @vitest/mocker (3.2.4)
-
-Package Locator: npm+@vitest/mocker$3.2.4
+Package Locator: npm+@vitest/expect$4.0.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4051,21 +4028,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/pretty-format (3.2.4)
+Package Title: @vitest/mocker (4.0.8)
 
-Package Locator: npm+@vitest/pretty-format$3.2.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: @vitest/runner (3.2.4)
-
-Package Locator: npm+@vitest/runner$3.2.4
+Package Locator: npm+@vitest/mocker$4.0.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4075,21 +4040,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/snapshot (3.2.4)
+Package Title: @vitest/pretty-format (4.0.8)
 
-Package Locator: npm+@vitest/snapshot$3.2.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: @vitest/spy (3.2.4)
-
-Package Locator: npm+@vitest/spy$3.2.4
+Package Locator: npm+@vitest/pretty-format$4.0.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4099,9 +4052,45 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/utils (3.2.4)
+Package Title: @vitest/runner (4.0.8)
 
-Package Locator: npm+@vitest/utils$3.2.4
+Package Locator: npm+@vitest/runner$4.0.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @vitest/snapshot (4.0.8)
+
+Package Locator: npm+@vitest/snapshot$4.0.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @vitest/spy (4.0.8)
+
+Package Locator: npm+@vitest/spy$4.0.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @vitest/utils (4.0.8)
+
+Package Locator: npm+@vitest/utils$4.0.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4667,18 +4656,6 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: assertion-error (2.0.1)
-
-Package Locator: npm+assertion-error$2.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
 Package Title: asynckit (0.4.0)
 
 Package Locator: npm+asynckit$0.4.0
@@ -4967,18 +4944,6 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: cac (6.7.14)
-
-Package Locator: npm+cac$6.7.14
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
 Package Title: cache-parser (1.2.5)
 
 Package Locator: npm+cache-parser$1.2.5
@@ -5063,9 +5028,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: chai (5.3.3)
+Package Title: chai (6.2.2)
 
-Package Locator: npm+chai$5.3.3
+Package Locator: npm+chai$6.2.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5150,18 +5115,6 @@ MIT
 Package Title: chardet (2.1.0)
 
 Package Locator: npm+chardet$2.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: check-error (2.1.1)
-
-Package Locator: npm+check-error$2.1.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5810,18 +5763,6 @@ MIT
 Package Title: decode-named-character-reference (1.2.0)
 
 Package Locator: npm+decode-named-character-reference$1.2.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: deep-eql (5.0.2)
-
-Package Locator: npm+deep-eql$5.0.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8111,18 +8052,6 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: js-tokens (9.0.1)
-
-Package Locator: npm+js-tokens$9.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
 Package Title: js-yaml (4.1.0)
 
 Package Locator: npm+js-yaml$4.1.0
@@ -8459,18 +8388,6 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: loupe (3.2.1)
-
-Package Locator: npm+loupe$3.2.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
 Package Title: lru-cache (11.1.0)
 
 Package Locator: npm+lru-cache$11.1.0
@@ -8535,9 +8452,9 @@ WTFPL
 
 
 --------------------------------------------------------------------------------
-Package Title: magic-string (0.30.19)
+Package Title: magic-string (0.30.21)
 
-Package Locator: npm+magic-string$0.30.19
+Package Locator: npm+magic-string$0.30.21
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -9820,18 +9737,6 @@ MIT
 Package Title: pathe (2.0.3)
 
 Package Locator: npm+pathe$2.0.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: pathval (2.0.1)
-
-Package Locator: npm+pathval$2.0.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -11481,9 +11386,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: std-env (3.9.0)
+Package Title: std-env (3.10.0)
 
-Package Locator: npm+std-env$3.9.0
+Package Locator: npm+std-env$3.10.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -11610,18 +11515,6 @@ Package Depth: Transitive
 
 * Declared Licenses *
 ISC
-
-
---------------------------------------------------------------------------------
-Package Title: strip-literal (3.0.0)
-
-Package Locator: npm+strip-literal$3.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
 
 
 --------------------------------------------------------------------------------
@@ -11877,18 +11770,6 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: tinypool (1.1.1)
-
-Package Locator: npm+tinypool$1.1.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
 Package Title: tinyqueue (2.0.3)
 
 Package Locator: npm+tinyqueue$2.0.3
@@ -11913,21 +11794,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: tinyrainbow (2.0.0)
+Package Title: tinyrainbow (3.0.3)
 
-Package Locator: npm+tinyrainbow$2.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: tinyspy (4.0.3)
-
-Package Locator: npm+tinyspy$4.0.3
+Package Locator: npm+tinyrainbow$3.0.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -12517,21 +12386,9 @@ MIT, ISC, CC0-1.0, BSD-2-Clause, Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: vite-node (3.2.4)
+Package Title: vitest (4.0.8)
 
-Package Locator: npm+vite-node$3.2.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: vitest (3.2.4)
-
-Package Locator: npm+vitest$3.2.4
+Package Locator: npm+vitest$4.0.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -21530,19 +21387,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 (The MIT License)
 
-Copyright (c) 2011-2013 Jake Luer jake@alogicalparadox.com
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-(The MIT License)
-
 Copyright (c) 2011-2017 JP Richardson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files
@@ -24236,29 +24080,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-* MIT *
-
-Copyright (c) 2013 Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.com)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
 
 * MIT *
 
@@ -28611,26 +28432,6 @@ THE SOFTWARE.
 
 MIT License
 
-Copyright (c) 2011-2013 Jake Luer jake@alogicalparadox.com
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial
-portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-MIT License
-
 Copyright (c) 2012 James Halliday
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28709,31 +28510,6 @@ SOFTWARE.
 MIT License
 
 Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-MIT License
-
-Copyright (c) 2013 Jake Luer jake@qualiancy.com (http://qualiancy.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30164,6 +29940,31 @@ SOFTWARE.
 
 MIT License
 
+Copyright (c) 2021-Present VoidZero Inc. and Vitest contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+MIT License
+
 Copyright (c) 2021-present Arthur Fiorette & Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -30212,31 +30013,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 MIT License
 
 Copyright (c) 2021-present Tanner Linsley
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-MIT License
-
-Copyright (c) 2022 Anthony Fu <https://github.com/antfu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32440,31 +32216,6 @@ THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Simon Lydell
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
 Copyright (c) 2014, 2016, 2017, 2019, 2021, 2022 Simon Lydell
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33894,34 +33645,6 @@ SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2020 James M Snell and the Piscina contributors
-
-Piscina contributors listed at https://github.com/jasnell/piscina#the-team and
-in the README file.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
 Copyright (c) 2020 Menglin "Mark" Xu <mark@remarkablemark.org>
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -34043,31 +33766,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
-Copyright (c) EGOIST <0x142857@gmail.com> (https://github.com/egoist)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
 
 
 * MIT *
@@ -35462,4 +35160,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-1-6
+Report Generated by FOSSA on 2026-1-9

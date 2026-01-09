@@ -8,12 +8,7 @@ export default defineConfig({
         setupFiles: "./vitest.setup.ts",
         fileParallelism: false,
         pool: "threads",
-        poolOptions: {
-            threads: {
-                maxThreads: 8, // Thread count for CI
-                minThreads: 4,
-            },
-        },
+        maxWorkers: 8, // Thread count for CI
         isolate: true,
         maxConcurrency: 8, // Concurrency for CI
         // Disable slow operations when not needed

@@ -9,11 +9,11 @@ describe("ContextDeferredAuthProvider", () => {
         const hostname = "https://domain.gooddata.com";
         let originalWindow: Window & typeof globalThis;
         beforeEach(() => {
-            originalWindow = global.window;
+            originalWindow = globalThis.window;
         });
 
         afterEach(() => {
-            global.window = originalWindow;
+            globalThis.window = originalWindow;
         });
 
         it.each([
@@ -21,7 +21,7 @@ describe("ContextDeferredAuthProvider", () => {
             ["https://redirect.gooddata.com", `${hostname}/logout?returnTo=https://redirect.gooddata.com`],
         ])('should set deauthenticate for returnTo="%s" to be "%s"', async (returnTo, expectedLogoutUrl) => {
             const assign = vi.fn();
-            global.window = {
+            globalThis.window = {
                 location: {
                     assign,
                 },

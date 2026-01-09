@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ChartTransformation > Legend config > should be always disabled for single series and push this info out 1`] = `
-[MockFunction spy] {
+[MockFunction] {
   "calls": [
     [
       {
@@ -42,7 +42,7 @@ exports[`ChartTransformation > Legend config > should be always disabled for sin
 `;
 
 exports[`ChartTransformation > Legend config > should be enabled & on the top by default and push this info out 1`] = `
-[MockFunction spy] {
+[MockFunction] {
   "calls": [
     [
       {

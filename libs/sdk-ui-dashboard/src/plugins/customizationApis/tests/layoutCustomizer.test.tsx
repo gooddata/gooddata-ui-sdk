@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -111,7 +111,7 @@ describe("layout customizer", () => {
 
     describe("rendering", () => {
         let Customizer: DefaultLayoutCustomizer;
-        let mockWarn: ReturnType<typeof vi.fn>;
+        let mockWarn: (message: string, ...optionalParams: unknown[]) => void;
         let mutationContext: CustomizerMutationsContext;
 
         beforeEach(() => {

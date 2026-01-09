@@ -1,7 +1,7 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { type MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
@@ -36,12 +36,13 @@ describe("CompareSection", () => {
     };
 
     beforeEach(() => {
+        vi.clearAllMocks();
         MockCompareItem = vi.spyOn(CompareSectionItem, "CompareSectionItem");
         mockUseBaseHeadline();
     });
 
-    afterAll(() => {
-        vi.clearAllMocks();
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     it("Should render only one compare item when tertiary item is empty", () => {

@@ -96,23 +96,23 @@ function processPermissions(permissions: Array<TigerPermissionType>): IWorkspace
 describe("TigerWorkspacePermissionsFactory", () => {
     const workspaceId = "workspaceId";
 
-    function getWithDefinedPermissions(
-        permissions: Array<TigerPermissionType>,
-    ): [ReturnType<typeof vi.fn>, ReturnType<typeof vi.fn>] {
-        const authCall = vi.fn();
-        const axiosRequest = vi.fn();
+    function getWithDefinedPermissions(permissions: Array<TigerPermissionType>) {
+        const axiosRequest = vi.fn(() => Promise.resolve({ data: { data: { meta: { permissions } } } }));
 
         const axiosInstance = {
             request: axiosRequest,
-        } as any;
+        };
 
-        authCall.mockImplementation((handler) => {
-            return handler({ axios: axiosInstance });
-        });
-        axiosRequest.mockImplementation(() => {
-            return Promise.resolve({ data: { data: { meta: { permissions } } } });
-        });
-        return [authCall, axiosRequest];
+        const authCall = vi.fn(
+            (
+                handler: (client: {
+                    axios: unknown;
+                    basePath: string;
+                }) => ReturnType<typeof EntitiesApi_GetEntityWorkspaces>,
+            ) => handler({ axios: axiosInstance, basePath: "" }),
+        );
+
+        return [authCall, axiosRequest] as const;
     }
 
     it("test VIEW permissions", async () => {

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -164,8 +164,8 @@ describe("dashboard event handling", () => {
      * by the tests above (and in a simpler fashion); handler creation logic is the same.
      */
     describe("after registration", () => {
-        let registerFn: ReturnType<typeof vi.fn>;
-        let unregisterFn: ReturnType<typeof vi.fn>;
+        let registerFn: (handler: DashboardEventHandler) => void;
+        let unregisterFn: (handler: DashboardEventHandler) => void;
         let Facade: DefaultDashboardEventHandling;
 
         beforeEach(() => {

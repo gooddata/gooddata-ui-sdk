@@ -8,12 +8,7 @@ export default defineConfig({
         environment: "happy-dom",
         setupFiles: "./vitest.setup.ts",
         pool: "threads",
-        poolOptions: {
-            threads: {
-                maxThreads: 8, // Thread count for CI
-                minThreads: 4,
-            },
-        },
+        maxWorkers: 8, // Thread count for CI
         // Improve performance with these options
         isolate: true,
         maxConcurrency: 8, // Concurrency for CI
