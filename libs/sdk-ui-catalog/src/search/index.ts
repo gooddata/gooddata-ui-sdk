@@ -1,7 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-export { Search } from "./Search.js";
-export { SearchProvider, useSearchState, useSearchActions } from "./SearchContext.js";
 export { FullTextSearch } from "./FullTextSearch.js";
 export {
     FullTextSearchProvider,

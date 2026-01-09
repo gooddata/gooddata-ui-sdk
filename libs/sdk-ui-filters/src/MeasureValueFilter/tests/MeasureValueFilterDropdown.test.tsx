@@ -138,7 +138,7 @@ describe("Measure value filter dropdown", () => {
 
         const preview = component.getPreview();
         expect(preview).toBeInTheDocument();
-        expect(preview!.textContent).toContain("# of Returned is greater than 300 for each Product & Brand");
+        expect(preview!.textContent).toContain("# of Returned is greater than 300 for each Product, Brand");
     });
 
     it("should render preview without dimensionality when all dimensionality titles are empty", () => {
@@ -170,6 +170,45 @@ describe("Measure value filter dropdown", () => {
 
         const preview = component.getPreview();
         expect(preview).not.toBeInTheDocument();
+    });
+
+    it("should render preview header", () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            isDimensionalityEnabled: true,
+            dimensionality: [{ identifier: localIdRef("product"), title: "Product", type: "attribute" }],
+        });
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+        component.setComparisonValue("300");
+
+        const previewHeader = document.querySelector(".gd-mvf-preview-header");
+        expect(previewHeader).toBeInTheDocument();
+        expect(previewHeader!.textContent).toBe("Preview:");
+    });
+
+    it("should shorten preview when there are more than 3 dimensionality items", () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            isDimensionalityEnabled: true,
+            dimensionality: [
+                { identifier: localIdRef("a1"), title: "Attr1", type: "attribute" },
+                { identifier: localIdRef("a2"), title: "Attr2", type: "attribute" },
+                { identifier: localIdRef("a3"), title: "Attr3", type: "attribute" },
+                { identifier: localIdRef("a4"), title: "Attr4", type: "attribute" },
+                { identifier: localIdRef("a5"), title: "Attr5", type: "attribute" },
+            ],
+        });
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+        component.setComparisonValue("300");
+
+        const preview = component.getPreview();
+        expect(preview).toBeInTheDocument();
+        // Should show first 3 attributes followed by "..."
+        expect(preview!.textContent).toContain("Attr1, Attr2, Attr3...");
+        // Should show count of additional items
+        expect(preview!.textContent).toContain("(2)");
     });
 
     describe("warning message", () => {

@@ -8,7 +8,7 @@ E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
 HOST=dummy.gooddata.com
-CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
+CYPRESS_TEST_TAGS=pre-merge_isolated_tiger_fe
 FILTER=${FILTER:-}
 EOF
 

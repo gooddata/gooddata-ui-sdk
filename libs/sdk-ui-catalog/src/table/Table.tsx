@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -19,7 +19,7 @@ import { tagsColumn } from "./columns/TagsColumn.js";
 import { titleColumn } from "./columns/TitleColumn.js";
 import type { AsyncStatus } from "../async/index.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
-import { useSearchState } from "../search/index.js";
+import { useFullTextSearchState } from "../search/index.js";
 
 const tableWidth = 1100;
 
@@ -35,7 +35,7 @@ export interface ITableProps {
 
 export function Table({ items, status, next, hasNext, totalCount, onTagClick, onItemClick }: ITableProps) {
     const intl = useIntl();
-    const { searchStatus } = useSearchState();
+    const { searchTerm } = useFullTextSearchState();
     const { ref, height, width } = useElementSize<HTMLDivElement>();
     const availableWidth = (width > 0 ? width : tableWidth) - UiAsyncTableScrollbarWidth;
 
@@ -50,6 +50,7 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
     }, [intl, onTagClick, availableWidth]);
 
     const isLoading = status === "loading" || status === "idle";
+    const isSearching = searchTerm.length > 0;
     const effectiveItems = useMemo(() => items.map((item) => ({ ...item, id: item.identifier })), [items]);
     const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
 
@@ -69,7 +70,7 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
                 onItemClick={onItemClick}
                 //renderers
                 renderEmptyState={() => {
-                    if (searchStatus !== "idle") {
+                    if (isSearching) {
                         return (
                             <UiAsyncTableEmptyState
                                 icon="search"

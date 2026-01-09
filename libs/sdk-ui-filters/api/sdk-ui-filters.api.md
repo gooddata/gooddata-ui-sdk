@@ -151,7 +151,7 @@ export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonC
 export function AttributeFilterDropdownBody({ onApplyButtonClick, onCancelButtonClick, width, }: IAttributeFilterDropdownBodyProps): JSX.Element;
 
 // @beta
-export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, dropdownId, }: IAttributeFilterDropdownButtonProps): JSX.Element;
+export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, totalItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, dropdownId, }: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
 export function AttributeFilterElementsActions(props: IAttributeFilterElementsActionsProps): JSX.Element;
@@ -237,16 +237,16 @@ export const DateFilterHelpers: {
     getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
     getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
     granularityIntlCodes: {
-        "GDC.time.year": GranularityIntlKey;
-        "GDC.time.fiscal_year": GranularityIntlKey;
+        "GDC.time.minute": GranularityIntlKey;
+        "GDC.time.hour": GranularityIntlKey;
+        "GDC.time.date": GranularityIntlKey;
         "GDC.time.week_us": GranularityIntlKey;
-        "GDC.time.quarter": GranularityIntlKey;
-        "GDC.time.fiscal_quarter": GranularityIntlKey;
         "GDC.time.month": GranularityIntlKey;
         "GDC.time.fiscal_month": GranularityIntlKey;
-        "GDC.time.date": GranularityIntlKey;
-        "GDC.time.hour": GranularityIntlKey;
-        "GDC.time.minute": GranularityIntlKey;
+        "GDC.time.quarter": GranularityIntlKey;
+        "GDC.time.fiscal_quarter": GranularityIntlKey;
+        "GDC.time.year": GranularityIntlKey;
+        "GDC.time.fiscal_year": GranularityIntlKey;
     };
     applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption | undefined, excludeCurrentPeriod: boolean) => DateFilterOption | undefined;
     defaultDateFilterOptions: IDateFilterOptionsByType;
@@ -288,6 +288,9 @@ export function filterFiscalGranularities(granularities: DateFilterGranularity[]
 
 // @alpha
 export function filterFiscalPresets(presets: DateFilterRelativeOptionGroup): DateFilterRelativeOptionGroup;
+
+// @public
+export function FilterGroup(props: IFilterGroupProps): JSX.Element;
 
 // @internal
 export function filterStandardGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[];
@@ -438,10 +441,11 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter" | "overlayPositionType">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter" | "overlayPositionType" | "alignPoints">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
+    alignPoints?: IAlignPoint[];
     backend?: IAnalyticalBackend;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     // @alpha
@@ -459,6 +463,7 @@ export interface IAttributeFilterCoreProps {
     locale?: ILocale;
     onApply?: OnApplyCallbackType;
     onError?: (error: GoodDataSdkError) => void;
+    onInitLoadingChanged?: (loading: boolean, attribute?: IAttributeMetadataObject) => void;
     onSelect?: OnSelectCallbackType;
     overlayPositionType?: OverlayPositionType;
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
@@ -562,6 +567,7 @@ export interface IAttributeFilterDropdownButtonProps {
     // @alpha
     titleExtension?: ReactNode;
     TooltipContentComponent?: ComponentType;
+    totalItemsCount?: number;
 }
 
 // @beta
@@ -936,6 +942,14 @@ export interface IFilterButtonCustomIcon {
 export interface IFilterConfigurationProps {
     onCancelButtonClick: () => void;
     onSaveButtonClick: () => void;
+}
+
+// @public (undocumented)
+export interface IFilterGroupProps {
+    // (undocumented)
+    filters: IAttributeFilterButtonProps[];
+    // (undocumented)
+    title: string;
 }
 
 // @alpha

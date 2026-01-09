@@ -22,6 +22,7 @@ export type IAttributeFilterContext = AttributeFilterController &
         | "withoutApply"
         | "workingFilter"
         | "overlayPositionType"
+        | "alignPoints"
     >;
 
 export const AttributeFilterContext = createContext<IAttributeFilterContext | null>(null);
@@ -55,6 +56,7 @@ export function AttributeFilterContextProvider(props: IAttributeFilterCoreProps 
         withoutApply,
         workingFilter,
         overlayPositionType,
+        alignPoints,
     } = props;
 
     const controller = useAttributeFilterController(props);
@@ -73,6 +75,7 @@ export function AttributeFilterContextProvider(props: IAttributeFilterCoreProps 
                 withoutApply,
                 workingFilter,
                 overlayPositionType,
+                alignPoints,
             }}
         >
             {children}

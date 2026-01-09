@@ -1,9 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
-describe("Dashboard with unknown visualization class", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("Dashboard with unknown visualization class", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     describe("Basic case", () => {
         beforeEach(() => {
             Navigation.visit("dashboard/dashboard-tiger-unknown-visualization");

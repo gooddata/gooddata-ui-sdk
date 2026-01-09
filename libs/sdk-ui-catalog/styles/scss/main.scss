@@ -33,11 +33,13 @@ $content-font-size: 14px;
             font-size: 24px;
             font-weight: 700;
             line-height: 1.25;
+            margin: 0;
         }
 
         .gd-ui-kit-tooltip__anchor {
             display: flex;
             align-items: center;
+            margin-left: -6px;
         }
 
         &__separator {

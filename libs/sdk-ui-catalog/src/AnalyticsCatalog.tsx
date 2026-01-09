@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { MouseEvent } from "react";
 
@@ -16,7 +16,7 @@ import { ObjectTypeProvider } from "./objectType/index.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
 import { PermissionsProvider, usePermissionsQuery } from "./permission/index.js";
 import { QualityProvider } from "./quality/index.js";
-import { FullTextSearchProvider, SearchProvider } from "./search/index.js";
+import { FullTextSearchProvider } from "./search/index.js";
 
 /**
  * @internal
@@ -75,25 +75,23 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
                 <OverlayProvider>
                     <PermissionsProvider permissionsState={permissionsState}>
                         <FilterProvider>
-                            <SearchProvider>
-                                <FullTextSearchProvider>
-                                    <ObjectTypeProvider>
-                                        <QualityProvider backend={backend} workspace={workspace}>
-                                            <CatalogResourceProvider backend={backend} workspace={workspace}>
-                                                <Catalog
-                                                    backend={backend}
-                                                    workspace={workspace}
-                                                    openCatalogItemRef={props.openCatalogItemRef}
-                                                    onCatalogItemOpenClick={props.onCatalogItemOpenClick}
-                                                    onCatalogDetailOpened={props.onCatalogDetailOpened}
-                                                    onCatalogDetailClosed={props.onCatalogDetailClosed}
-                                                    onCatalogItemNavigation={props.onCatalogItemNavigation}
-                                                />
-                                            </CatalogResourceProvider>
-                                        </QualityProvider>
-                                    </ObjectTypeProvider>
-                                </FullTextSearchProvider>
-                            </SearchProvider>
+                            <FullTextSearchProvider>
+                                <ObjectTypeProvider>
+                                    <QualityProvider backend={backend} workspace={workspace}>
+                                        <CatalogResourceProvider backend={backend} workspace={workspace}>
+                                            <Catalog
+                                                backend={backend}
+                                                workspace={workspace}
+                                                openCatalogItemRef={props.openCatalogItemRef}
+                                                onCatalogItemOpenClick={props.onCatalogItemOpenClick}
+                                                onCatalogDetailOpened={props.onCatalogDetailOpened}
+                                                onCatalogDetailClosed={props.onCatalogDetailClosed}
+                                                onCatalogItemNavigation={props.onCatalogItemNavigation}
+                                            />
+                                        </CatalogResourceProvider>
+                                    </QualityProvider>
+                                </ObjectTypeProvider>
+                            </FullTextSearchProvider>
                         </FilterProvider>
                     </PermissionsProvider>
                 </OverlayProvider>

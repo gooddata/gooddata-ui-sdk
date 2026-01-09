@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type ComponentType,
@@ -61,6 +61,13 @@ export interface IAttributeFilterDropdownButtonProps {
      * @beta
      */
     selectedItemsCount?: number;
+
+    /**
+     * Total items count. Shown beside the selected items count if showSelectionCount is true.
+     *
+     * @beta
+     */
+    totalItemsCount?: number;
 
     /**
      *
@@ -185,6 +192,7 @@ export function AttributeFilterDropdownButton({
     isOpen,
     title,
     selectedItemsCount,
+    totalItemsCount,
     showSelectionCount = true,
     subtitle,
     disabled,
@@ -218,6 +226,15 @@ export function AttributeFilterDropdownButton({
 
         setDisplayItemCount(displayItemCount);
     }, [subtitle]);
+
+    let itemsCountString: string | undefined;
+    if (selectedItemsCount !== undefined && totalItemsCount !== undefined) {
+        itemsCountString = `${selectedItemsCount}/${totalItemsCount}`;
+    } else if (selectedItemsCount !== undefined) {
+        itemsCountString = `${selectedItemsCount}`;
+    } else if (totalItemsCount !== undefined) {
+        itemsCountString = `${totalItemsCount}`;
+    }
 
     let buttonTitle = title;
     let buttonSubtitle = subtitle;
@@ -296,7 +313,7 @@ export function AttributeFilterDropdownButton({
                         {buttonSubtitle}
                     </span>
                     {showSelectionCount && displayItemCount && isLoaded ? (
-                        <span className="gd-attribute-filter-dropdown-button-selected-items-count__next">{`(${selectedItemsCount})`}</span>
+                        <span className="gd-attribute-filter-dropdown-button-selected-items-count__next">{`(${itemsCountString})`}</span>
                     ) : null}
                 </div>
             </div>

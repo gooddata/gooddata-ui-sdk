@@ -71,6 +71,10 @@
 
     &.error:not(.gd-is-active) {
         background-color: variables.$gd-palette-error-dimmed;
+
+        .gd-filter-group-item-icon {
+            color: variables.$gd-palette-error-base;
+        }
     }
 
     &.error.gd-is-active .gd-filter-group-item-icon {

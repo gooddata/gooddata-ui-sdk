@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
@@ -68,7 +68,7 @@ describe("Header section", () => {
 
         it(
             "Header is removed after latest insight is deleted from a section",
-            { tags: ["pre-merge_isolated_tiger"] },
+            { tags: ["pre-merge_isolated_tiger_fe"] },
             () => {
                 editMode.edit().isInEditMode();
                 insightCatalog.waitForCatalogReload();
@@ -117,7 +117,7 @@ describe("Header section", () => {
             },
         );
 
-        it("Header placeholder should be translated", { tags: ["pre-merge_isolated_tiger"] }, () => {
+        it("Header placeholder should be translated", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
             layoutRow_01
                 .getHeader()
                 .setTitle(" ")

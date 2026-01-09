@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
@@ -14,7 +14,7 @@ const header = new DashboardHeader();
 const layoutRow = new LayoutRow(0);
 const dashboardMenu = new DashboardMenu();
 
-describe("RichText - isolated", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("RichText - isolated", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/rich-text");
     });

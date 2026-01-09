@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type MutableRefObject, type ReactNode, type RefObject } from "react";
 
@@ -40,6 +40,13 @@ export interface IFilterGroupItemProps {
      * @beta
      */
     selectedItemsCount?: number;
+
+    /**
+     * Total items count. Shown beside the selected items count if showSelectionCount is true.
+     *
+     * @beta
+     */
+    totalItemsCount?: number;
 
     /**
      *
@@ -96,7 +103,7 @@ export interface IFilterGroupItemProps {
      *
      * @beta
      */
-    buttonRef?: MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement | null>;
 
     /**
      * Id to link the dropdown body. Mainly for accessibility purposes.
@@ -119,6 +126,7 @@ export function FilterGroupItem({
     title,
     subtitle,
     selectedItemsCount,
+    totalItemsCount,
     showSelectionCount,
     isOpen,
     isLoading,
@@ -139,10 +147,19 @@ export function FilterGroupItem({
     }
     const tooltipId = useIdPrefixed("filter-group-item-locked-tooltip");
 
+    let itemsCountString: string | undefined;
+    if (selectedItemsCount !== undefined && totalItemsCount !== undefined) {
+        itemsCountString = `${selectedItemsCount}/${totalItemsCount}`;
+    } else if (selectedItemsCount !== undefined) {
+        itemsCountString = `${selectedItemsCount}`;
+    } else if (totalItemsCount !== undefined) {
+        itemsCountString = `${totalItemsCount}`;
+    }
+
     return (
         <div
             className={cx("gd-filter-group-item", {
-                "gd-message error": isError,
+                error: isError,
                 "gd-is-active": isOpen,
                 "gd-is-loaded": isLoaded,
             })}
@@ -184,7 +201,7 @@ export function FilterGroupItem({
                         </span>
                         {showSelectionCount && isLoaded ? (
                             <span className="gd-filter-group-item-selected-items-count">
-                                {`(${selectedItemsCount})`}
+                                {`(${itemsCountString})`}
                             </span>
                         ) : null}
                     </div>

@@ -12,6 +12,7 @@ import {
 } from "../../model.js";
 import { copyToClipboardAction, setOpenAction } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
+import { setIsOpened } from "../localStorage.js";
 import { messagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,
@@ -40,6 +41,8 @@ export function* onEvent() {
 }
 
 function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
+    setIsOpened(isOpen);
+
     if (isOpen) {
         // Open event is handled once the chat thread is loaded, so that we have the threadId
         return;

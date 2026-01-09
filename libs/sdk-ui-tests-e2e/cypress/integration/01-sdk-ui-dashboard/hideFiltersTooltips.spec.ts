@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { BubbleTooltip } from "../../tools/bubbleTooltip";
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
@@ -10,7 +11,7 @@ const editMode = new EditMode();
 const bubbleTooltip = new BubbleTooltip();
 const interactiveAttributeFilter = new AttributeFilter("Activity");
 
-describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     it("Tooltip hide filter displays on date configuration when hover on hidden option", () => {
         Navigation.visit("dashboard/dashboard-tiger");
         editMode.edit().saveButtonEnabled(false);

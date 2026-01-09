@@ -122,7 +122,7 @@ jobs:
           if [ -n "$USER_FILTER" ]; then
             export FILTER=$USER_FILTER
           else
-            export FILTER=$(common/scripts/ci/get-tests-filter.sh sdk-ui-tests-e2e $RUNNER pre-merge_isolated_tiger $RUNNERS_COUNT)
+            export FILTER=$(common/scripts/ci/get-tests-filter.sh sdk-ui-tests-e2e $RUNNER pre-merge_isolated_tiger_fe $RUNNERS_COUNT)
           fi
           echo "Running with FILTER=$FILTER"
           ./common/scripts/ci/run_cypress_isolated_tests.sh

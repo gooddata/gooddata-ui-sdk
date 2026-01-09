@@ -1,7 +1,16 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type PropsWithChildren, type ReactNode, useCallback, useMemo, useState } from "react";
+import {
+    type HTMLAttributes,
+    type PropsWithChildren,
+    type ReactNode,
+    useCallback,
+    useId,
+    useMemo,
+    useState,
+} from "react";
 
+import cx from "classnames";
 import { isEqual } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -48,6 +57,10 @@ export function StaticFilter<T>(props: IStaticFilterProps<T>) {
     } = props;
     const intl = useIntl();
 
+    const id = useId();
+    const filterId = `filter/${id}`;
+    const popupTitleId = `${filterId}/popup-title`;
+
     const [searchString, setSearchString] = useState("");
     const [prevSelection, setPrevSelection] = useState(selection);
     const [localSelection, setLocalSelection] = useState(selection);
@@ -89,24 +102,37 @@ export function StaticFilter<T>(props: IStaticFilterProps<T>) {
     }, [options, searchString, getItemTitle]);
 
     return (
-        <div data-testid={dataTestId}>
+        <div id={filterId} data-testid={dataTestId}>
             <Dropdown
                 alignPoints={alignPoints}
                 onOpenStateChanged={(isOpen) => !isOpen && resetLocalState()}
-                renderButton={({ toggleDropdown }) => (
+                autofocusOnOpen
+                closeOnEscape
+                accessibilityConfig={{ popupRole: "dialog" }}
+                renderButton={({ toggleDropdown, buttonRef, ariaAttributes, accessibilityConfig }) => (
                     <UiButton
+                        ref={(element) => {
+                            buttonRef.current = element;
+                        }}
                         label={label}
                         onClick={toggleDropdown}
                         size="small"
                         variant="secondary"
                         iconAfter="navigateDown"
                         badgeAfter={localSelection.length > 0 ? localSelection.length : undefined}
+                        accessibilityConfig={{
+                            ...accessibilityConfig,
+                            ariaExpanded: ariaAttributes["aria-expanded"],
+                            ariaHaspopup: ariaAttributes["aria-haspopup"],
+                            ariaControls: ariaAttributes["aria-controls"],
+                            iconAriaHidden: true,
+                        }}
                     />
                 )}
-                renderBody={({ closeDropdown }) => {
+                renderBody={({ closeDropdown, ariaAttributes }) => {
                     return (
-                        <>
-                            <Header>{label}</Header>
+                        <div {...ariaAttributes} aria-labelledby={popupTitleId}>
+                            <Header id={popupTitleId}>{label}</Header>
                             <InvertableSelect
                                 className="gd-analytics-catalog__filter__select-list"
                                 width={240}
@@ -149,7 +175,7 @@ export function StaticFilter<T>(props: IStaticFilterProps<T>) {
                                     </>
                                 )}
                             </Actions>
-                        </>
+                        </div>
                     );
                 }}
             />
@@ -157,8 +183,12 @@ export function StaticFilter<T>(props: IStaticFilterProps<T>) {
     );
 }
 
-function Header({ children }: PropsWithChildren) {
-    return <header className="gd-list-title gd-analytics-catalog__filter__header">{children}</header>;
+function Header({ children, className, ...htmlProps }: HTMLAttributes<HTMLSpanElement>) {
+    return (
+        <div {...htmlProps} className={cx("gd-list-title gd-analytics-catalog__filter__header", className)}>
+            {children}
+        </div>
+    );
 }
 
 function Actions({ children }: PropsWithChildren) {

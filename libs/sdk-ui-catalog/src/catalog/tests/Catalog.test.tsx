@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { PropsWithChildren } from "react";
 
@@ -13,7 +13,6 @@ import { testIds } from "../../automation/index.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import type { PermissionsState } from "../../permission/types.js";
-import { SearchProvider } from "../../search/index.js";
 import { Catalog } from "../Catalog.js";
 
 function wrapper({
@@ -23,9 +22,7 @@ function wrapper({
     return (
         <TestIntlProvider>
             <ToastsCenterContextProvider>
-                <TestPermissionsProvider result={permissions}>
-                    <SearchProvider>{children}</SearchProvider>
-                </TestPermissionsProvider>
+                <TestPermissionsProvider result={permissions}>{children}</TestPermissionsProvider>
             </ToastsCenterContextProvider>
         </TestIntlProvider>
     );

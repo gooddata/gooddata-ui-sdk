@@ -17,7 +17,9 @@ if (window && typeof w.__GD_ASSET_PATH__ === "string") {
     __webpack_public_path__ = w.__GD_ASSET_PATH__;
 }
 
-import { initializeAutoAuth } from "./autoAuth.js";
+// eslint-disable-next-line import/no-unassigned-import
+import "./autoAuth.js";
+
 import { type CustomElementContext, getContext, setContext } from "./context.js";
 import { GenAIAssistant } from "./gen-ai/GenAiAssistant.js";
 import { Dashboard } from "./visualizations/Dashboard.js";
@@ -28,10 +30,6 @@ import { Insight } from "./visualizations/Insight.js";
 import "./visualizations/components.css";
 // eslint-disable-next-line import/no-unassigned-import
 import "./gen-ai/components.css";
-
-initializeAutoAuth(import.meta.url).catch((error) => {
-    console.error("Failed to configure automatic authentication flow", error);
-});
 
 // Register custom elements with the browser
 window.customElements.define("gd-insight", Insight);

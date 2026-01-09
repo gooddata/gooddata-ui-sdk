@@ -1,8 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { Chart } from "../../tools/chart";
 import * as Navigation from "../../tools/navigation";
 
-describe("Many data", { tags: ["pre-merge_isolated_tiger"] }, () => {
+describe("Many data", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     it(`Should render visualization component when over data points limit`, () => {
         Navigation.visit("visualizations/manydata/pie-many-data");
         const chart = new Chart(".s-pie-chart");

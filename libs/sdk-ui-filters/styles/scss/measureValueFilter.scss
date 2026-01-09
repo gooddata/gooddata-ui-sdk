@@ -287,19 +287,6 @@ $dialog_width: 250px;
         }
     }
 
-    .gd-mvf-attribute-picker-date-dataset-dropdown {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: calc(100% + 4px);
-        background: variables.$gd-color-white;
-        border: 1px solid variables.$gd-border-color;
-        border-radius: 3px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 2;
-        overflow: hidden;
-    }
-
     .gd-ui-kit-listbox {
         padding: 0;
         min-width: 0;
@@ -307,13 +294,26 @@ $dialog_width: 250px;
     }
 }
 
+.gd-mvf-attribute-picker-date-dataset-dropdown {
+    width: 230px;
+    background: variables.$gd-color-white;
+    border: 1px solid variables.$gd-border-color;
+    border-radius: 3px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
 .gd-mvf-preview {
     font-size: 12px;
     padding: 5px 10px 10px;
 
-    .gd-mvf-preview-content {
+    .gd-mvf-preview-header {
         border-top: 1px solid variables.$gd-border-color;
         padding-top: 10px;
+    }
+
+    .gd-mvf-preview-content {
+        line-height: 16px;
     }
 }
 

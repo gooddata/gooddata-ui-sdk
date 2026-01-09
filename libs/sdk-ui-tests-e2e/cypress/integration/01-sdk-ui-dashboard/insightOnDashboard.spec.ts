@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { Dashboard } from "../../tools/dashboards";
 import { DateFilter } from "../../tools/dateFilter";
@@ -25,12 +25,12 @@ describe("Insights on dashboard", () => {
     });
 
     //CL-10262: Save&Publish button is enabled right when selecting insight
-    it("should disable save button if having no change", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    it("should disable save button if having no change", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         widget.waitChartLoaded().getChart();
         editMode.saveButtonEnabled(false);
     });
 
-    it("has insight placeholder title", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    it("has insight placeholder title", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         widget
             .waitChartLoaded()
             .getTitle()
@@ -39,7 +39,7 @@ describe("Insights on dashboard", () => {
             });
     });
 
-    it("shows a message if there is no data match", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    it("shows a message if there is no data match", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         insightCatalog
             .waitForCatalogReload()
             .searchText('<a href="http://www.w3schools.com">Go!</a>')
@@ -57,12 +57,16 @@ describe("Insights on dashboard", () => {
             .tabIsActive("all", true);
     });
 
-    it("Should show no data message if insight has no data", { tags: ["pre-merge_isolated_tiger"] }, () => {
-        new DateFilter().open().selectRelativePreset("this-week").apply();
-        widget.waitChartLoaded().getChart().hasNoDataForFilter();
-    });
+    it(
+        "Should show no data message if insight has no data",
+        { tags: ["pre-merge_isolated_tiger_fe"] },
+        () => {
+            new DateFilter().open().selectRelativePreset("this-week").apply();
+            widget.waitChartLoaded().getChart().hasNoDataForFilter();
+        },
+    );
 
-    it("(SEPARATE) can rename an existing insight", { tags: ["pre-merge_isolated_tiger"] }, () => {
+    it("(SEPARATE) can rename an existing insight", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         widget.waitChartLoaded();
         cy.fixture("widgetName").then((data) => {
             data.forEach((result: { widgetName: string }) => {

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MessageDescriptor, defineMessages } from "react-intl";
 
@@ -75,4 +75,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     catalogAttributeHierarchyTooltip: { id: "catalog.attribute.tooltip.hierarchy.title" },
     visualizationConfigInteractions: { id: "visualizationConfig.interactions.section.title" },
     visualizationConfigInteractionsDrilldown: { id: "visualizationConfig.interactions.section.drilldown" },
+    mvfPreviewTitle: { id: "mvf.preview.title" },
+    mvfPreviewFilterWithoutDimensionality: { id: "mvf.preview.filterWithoutDimensionality" },
+    mvfPreviewFilterWithDimensionality: { id: "mvf.preview.filterWithDimensionality" },
+    mvfPreviewFilterWithDimensionalityShortened: { id: "mvf.preview.filterWithDimensionalityShortened" },
 });

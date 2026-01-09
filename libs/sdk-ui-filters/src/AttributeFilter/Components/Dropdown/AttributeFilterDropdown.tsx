@@ -51,6 +51,7 @@ export function AttributeFilterDropdown() {
         withoutApply,
         isSelectionInvalid,
         overlayPositionType,
+        alignPoints,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -78,7 +79,7 @@ export function AttributeFilterDropdown() {
             closeOnMouseDrag
             closeOnOutsideClick
             enableEventPropagation
-            alignPoints={ALIGN_POINTS}
+            alignPoints={alignPoints ?? ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
             autofocusOnOpen
             overlayPositionType={overlayPositionType}
