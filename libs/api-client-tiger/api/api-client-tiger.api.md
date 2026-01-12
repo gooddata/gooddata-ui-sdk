@@ -22,6 +22,79 @@ import type { RawAxiosRequestConfig } from 'axios';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @public
+export interface AacAnalyticsModel {
+    // (undocumented)
+    [key: string]: unknown;
+    // (undocumented)
+    attribute_hierarchies?: unknown[];
+    // (undocumented)
+    dashboards?: unknown[];
+    // (undocumented)
+    metrics?: unknown[];
+    // (undocumented)
+    plugins?: unknown[];
+    // (undocumented)
+    visualizations?: unknown[];
+}
+
+// @public (undocumented)
+export type AacAnalyticsModelExclude = "ACTIVITY_INFO";
+
+// @public (undocumented)
+export function AacApi_GetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel>;
+
+// @public (undocumented)
+export function AacApi_GetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
+
+// @public (undocumented)
+export function AacApi_SetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+// @public (undocumented)
+export function AacApi_SetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiSetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+// @public (undocumented)
+export interface AacApiGetAnalyticsModelAacRequest {
+    // (undocumented)
+    readonly exclude?: Array<AacAnalyticsModelExclude>;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public (undocumented)
+export interface AacApiGetLogicalModelAacRequest {
+    // (undocumented)
+    readonly includeParents?: boolean;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public (undocumented)
+export interface AacApiSetAnalyticsModelAacRequest {
+    // (undocumented)
+    readonly aacAnalyticsModel: AacAnalyticsModel;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public (undocumented)
+export interface AacApiSetLogicalModelAacRequest {
+    // (undocumented)
+    readonly aacLogicalModel: AacLogicalModel;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public
+export interface AacLogicalModel {
+    // (undocumented)
+    [key: string]: unknown;
+    // (undocumented)
+    datasets?: unknown[];
+    // (undocumented)
+    date_datasets?: unknown[];
+}
+
+// @public
 export interface AbsoluteDateFilter {
     // (undocumented)
     absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
