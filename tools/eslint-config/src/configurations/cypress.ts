@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -6,7 +6,7 @@ export const cypress: IConfiguration<"cypress"> = {
     packages: [
         {
             name: "eslint-plugin-cypress",
-            version: "2.15.2",
+            version: "3.6.0",
         },
     ],
     plugin: "cypress",

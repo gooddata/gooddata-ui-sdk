@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
@@ -618,6 +618,22 @@ export type {
 export { OrganizationUtilities } from "./organizationUtilities.js";
 
 export { ActionsUtilities } from "./actionsUtilities.js";
+
+export {
+    AacApi_GetAnalyticsModelAac,
+    AacApi_GetLogicalModelAac,
+    AacApi_SetAnalyticsModelAac,
+    AacApi_SetLogicalModelAac,
+} from "./api-endpoints/aac/index.js";
+export type {
+    AacAnalyticsModel,
+    AacAnalyticsModelExclude,
+    AacLogicalModel,
+    AacApiGetAnalyticsModelAacRequest,
+    AacApiGetLogicalModelAacRequest,
+    AacApiSetAnalyticsModelAacRequest,
+    AacApiSetLogicalModelAacRequest,
+} from "./api-endpoints/aac/index.js";
 
 export const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
 /**

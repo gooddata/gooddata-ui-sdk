@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-ext",
-    "version": "11.16.0-alpha.2",
+    "version": "11.16.0-alpha.3",
     "description": "GoodData.UI SDK - Extensions",
     "repository": {
         "type": "git",
@@ -20,7 +20,8 @@
         "./styles/scss/*": "./styles/scss/*",
         "./internal": "./esm/internal/index.js",
         "./esm/internal/assets/*": "./esm/internal/assets/*",
-        "./styles/internal/*": "./styles/internal/*"
+        "./styles/internal/*": "./styles/internal/*",
+        "./src/*": "./src/*"
     },
     "browser": "./esm/index.js",
     "types": "./esm/index.d.ts",
