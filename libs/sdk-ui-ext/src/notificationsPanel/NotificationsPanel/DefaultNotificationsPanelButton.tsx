@@ -20,7 +20,7 @@ export interface INotificationsPanelButtonComponentProps {
     /**
      * Ref to the button element - is required for proper alignment of the notification panel.
      */
-    buttonRef: RefObject<HTMLButtonElement>;
+    buttonRef: RefObject<HTMLButtonElement | null>;
 
     /**
      * Opens the notification panel.

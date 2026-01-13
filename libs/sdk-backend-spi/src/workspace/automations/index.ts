@@ -208,7 +208,7 @@ export interface IAutomationsQuery {
      * @param size - desired max number of automations per page must be a positive number
      * @returns automations query
      */
-    withSize(size: number): IAutomationsQuery;
+    withSize(size: number | undefined): IAutomationsQuery;
 
     /**
      * Sets starting page for the query. Backend WILL return no data if the page is greater than
@@ -218,7 +218,7 @@ export interface IAutomationsQuery {
      * @param page - zero indexed, must be non-negative
      * @returns automations query
      */
-    withPage(page: number): IAutomationsQuery;
+    withPage(page: number | undefined): IAutomationsQuery;
 
     /**
      * Sets filter for the query.
@@ -242,7 +242,7 @@ export interface IAutomationsQuery {
      * @param type - type of the automation, e.g. "schedule" or "trigger"
      * @returns automations query
      */
-    withType(type: AutomationType): IAutomationsQuery;
+    withType(type: AutomationType | undefined): IAutomationsQuery;
 
     /**
      * Sets author of the automation for the query.
@@ -251,7 +251,7 @@ export interface IAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withAuthor(author: string, filterType?: AutomationFilterType): IAutomationsQuery;
+    withAuthor(author: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Sets recipient of the automation for the query.
@@ -260,7 +260,7 @@ export interface IAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withRecipient(recipient: string, filterType?: AutomationFilterType): IAutomationsQuery;
+    withRecipient(recipient: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Sets external recipient of the automation for the query.
@@ -268,7 +268,7 @@ export interface IAutomationsQuery {
      * @param externalRecipient - external recipient of the automation
      * @returns automations query
      */
-    withExternalRecipient(externalRecipient: string): IAutomationsQuery;
+    withExternalRecipient(externalRecipient: string | undefined): IAutomationsQuery;
 
     /**
      * This filter gets automations if either author or recipient of the automation is the provided user.
@@ -285,7 +285,7 @@ export interface IAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withDashboard(dashboard: string, filterType?: AutomationFilterType): IAutomationsQuery;
+    withDashboard(dashboard: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Sets status of automation results for the query.
@@ -294,7 +294,7 @@ export interface IAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withStatus(status: string, filterType?: AutomationFilterType): IAutomationsQuery;
+    withStatus(status: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Starts the automations query.

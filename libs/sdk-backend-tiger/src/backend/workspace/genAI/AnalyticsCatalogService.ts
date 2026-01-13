@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { GenAiApi_CreatedBy, GenAiApi_Tags } from "@gooddata/api-client-tiger/genAI";
+import { GenAiApi_CreatedBy, GenAiApi_Tags } from "@gooddata/api-client-tiger/endpoints/genAI";
 import type {
     IAnalyticsCatalogCreatedBy,
     IAnalyticsCatalogService,

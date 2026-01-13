@@ -15,12 +15,12 @@ import { type DataSourcePermissionSubject, type IGrantedDataSource } from "../ty
 export interface IAddDataSourceProps {
     ids: string[];
     subjectType: DataSourcePermissionSubject;
-    grantedDataSources: IGrantedDataSource[];
+    grantedDataSources: IGrantedDataSource[] | undefined;
     enableBackButton?: boolean;
     onSubmit: (workspaces: IGrantedDataSource[]) => void;
     onCancel: () => void;
     onClose: () => void;
-    renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
 export function AddDataSource({

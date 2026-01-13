@@ -16,7 +16,7 @@ const pyramidViewIcon = "local:pyramid/bucket-title-view.svg";
 export function setPyramidChartUiConfig(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
 
-    Object.assign(referencePointConfigured[UICONFIG], disabledOpenAsReportConfig);
+    Object.assign(referencePointConfigured[UICONFIG]!, disabledOpenAsReportConfig);
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], pyramidMeasuresIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], pyramidViewIcon);

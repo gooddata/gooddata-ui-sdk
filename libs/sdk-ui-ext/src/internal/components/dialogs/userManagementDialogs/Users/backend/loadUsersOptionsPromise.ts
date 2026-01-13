@@ -46,8 +46,8 @@ export const loadUsersOptionsPromise =
                         options: result.items.map((item) => {
                             const userMember: IUserMember = {
                                 id: item.id,
-                                title: extractUserName(item),
-                                email: item.email,
+                                title: extractUserName(item) ?? "",
+                                email: item.email ?? "",
                             };
                             return {
                                 label: item.fullName || item.id,

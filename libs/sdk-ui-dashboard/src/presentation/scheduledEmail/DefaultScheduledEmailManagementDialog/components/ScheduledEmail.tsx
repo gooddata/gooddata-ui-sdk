@@ -62,8 +62,7 @@ export function ScheduledEmail({
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
     const canEdit =
-        canManageWorkspace ||
-        (currentUser && scheduledEmail.createdBy && currentUser.login === scheduledEmail.createdBy.login);
+        canManageWorkspace || (currentUser && currentUser.login === scheduledEmail.createdBy?.login);
 
     const { isValid } = useScheduleValidation(scheduledEmail);
     const intl = useIntl();

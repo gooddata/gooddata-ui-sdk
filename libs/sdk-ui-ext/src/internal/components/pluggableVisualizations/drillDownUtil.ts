@@ -173,10 +173,10 @@ export function sanitizeTableProperties(insight: IInsight): IInsight {
 }
 
 export function convertIntersectionToFilters(
-    intersections: IDrillEventIntersectionElement[],
+    intersections: IDrillEventIntersectionElement[] | undefined | null,
     backendSupportsElementUris: boolean = true,
 ): IFilter[] {
-    return intersections
+    return (intersections ?? [])
         .map((intersection) => intersection.header)
         .filter(isDrillIntersectionAttributeItem)
         .map((header) => {
@@ -194,8 +194,8 @@ export function convertIntersectionToFilters(
 
 export function reverseAndTrimIntersection(
     drillConfig: IDrillDownDefinition,
-    intersection?: IDrillEventIntersectionElement[],
-): IDrillEventIntersectionElement[] {
+    intersection?: IDrillEventIntersectionElement[] | null,
+): IDrillEventIntersectionElement[] | undefined | null {
     if (!intersection || intersection.length === 0) {
         return intersection;
     }
@@ -210,7 +210,7 @@ export function reverseAndTrimIntersection(
  */
 export function addIntersectionFiltersToInsight(
     source: IInsight,
-    intersection: IDrillEventIntersectionElement[],
+    intersection: IDrillEventIntersectionElement[] | undefined | null,
     backendSupportsElementUris: boolean,
 ): IInsight {
     const filters = convertIntersectionToFilters(intersection, backendSupportsElementUris);

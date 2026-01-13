@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -9,9 +9,16 @@ import { Dropdown, type IUiListboxInteractiveItem, UiIconButton, UiListbox } fro
 type Props = {
     intl: IntlShape;
     onRunCheck: () => void;
+    isLoading: boolean;
 };
 
-export function QualityScoreCardMenu({ intl, onRunCheck }: Props) {
+export function QualityScoreCardMenu({ intl, onRunCheck, isLoading }: Props) {
+    const title = intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.title" });
+    const moreActionsAriaLabel = intl.formatMessage(
+        { id: "analyticsCatalog.quality.scoreCard.menu.ariaLabel" },
+        { title },
+    );
+
     const items: IUiListboxInteractiveItem<null>[] = useMemo(
         () => [
             {
@@ -42,6 +49,8 @@ export function QualityScoreCardMenu({ intl, onRunCheck }: Props) {
                         variant="tertiary"
                         onClick={toggleDropdown}
                         ariaAttributes={ariaAttributes}
+                        accessibilityConfig={{ ariaLabel: moreActionsAriaLabel }}
+                        isDisabled={isLoading}
                         size="large"
                     />
                 );

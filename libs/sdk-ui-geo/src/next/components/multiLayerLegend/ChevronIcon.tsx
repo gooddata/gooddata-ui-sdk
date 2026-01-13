@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, memo } from "react";
 
@@ -43,7 +43,7 @@ export const ChevronIcon = memo(function ChevronIcon({
 
     return (
         <span className={iconClassName} aria-hidden="true">
-            <UiIcon type="chevronRight" size={16} color="currentColor" />
+            <UiIcon type="navigateRight" size={16} color="currentColor" />
         </span>
     );
 });

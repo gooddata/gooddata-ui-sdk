@@ -64,7 +64,7 @@ describe("NumberFormatControl", () => {
     it("Should call push-data while select an format item", () => {
         const { container } = renderNumberFormatControl();
 
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR));
+        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
         fireEvent.click(screen.getByText(TEST_DECIMAL_FORMAT_PRESET.name));
 
         const expectedProperties = createTestProperties<IComparisonControlProperties>({
@@ -72,7 +72,7 @@ describe("NumberFormatControl", () => {
                 enabled: true,
             },
         });
-        set(expectedProperties.controls, DEFAULT_PROPS.valuePath, TEST_DECIMAL_FORMAT_PRESET.format);
+        set(expectedProperties.controls!, DEFAULT_PROPS.valuePath, TEST_DECIMAL_FORMAT_PRESET.format);
 
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -83,10 +83,10 @@ describe("NumberFormatControl", () => {
 
     it("Should select provided format", () => {
         const { container } = renderNumberFormatControl({
-            format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
+            format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format!,
         });
 
-        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!.textContent).toEqual(
             TEST_PERCENT_ROUNDED_FORMAT_PRESET.name,
         );
     });

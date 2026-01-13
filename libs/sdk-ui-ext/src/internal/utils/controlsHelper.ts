@@ -71,13 +71,15 @@ export function maxInputValidateAndPushData(
             },
         });
 
-        pushData({ propertiesMeta }); // post undoApplied flag to AD
+        pushData?.({ propertiesMeta }); // post undoApplied flag to AD
         return;
     }
 
     // valid, set new value
     const { properties } = props;
-    set(properties, `controls.${basePath}.max`, maxValue);
+    if (properties) {
+        set(properties, `controls.${basePath}.max`, maxValue);
+    }
 
     // if incorrect value was set previously but now validation passed, set incorrect value as correct value
     if (isNaN(parseFloat(incorrectMinValue))) {
@@ -85,11 +87,13 @@ export function maxInputValidateAndPushData(
             maxScale: defaultState.maxScale,
         });
     } else {
-        set(properties, `controls.${basePath}.min`, incorrectMinValue);
+        if (properties) {
+            set(properties, `controls.${basePath}.min`, incorrectMinValue);
+        }
         setState(defaultState);
     }
 
-    pushData({ properties, propertiesMeta });
+    pushData?.({ properties, propertiesMeta });
 }
 
 export function minInputValidateAndPushData(
@@ -129,14 +133,16 @@ export function minInputValidateAndPushData(
             },
         });
 
-        pushData({ propertiesMeta }); // post undoApplied flag to AD
+        pushData?.({ propertiesMeta }); // post undoApplied flag to AD
         return;
     }
 
     // valid, set new value
     const { properties } = props;
 
-    set(properties, `controls.${basePath}.min`, minValue);
+    if (properties) {
+        set(properties, `controls.${basePath}.min`, minValue);
+    }
 
     // if incorrect value was set previously but now validation passed, set incorrect value as correct value
     if (isNaN(parseFloat(incorrectMaxValue))) {
@@ -144,14 +150,20 @@ export function minInputValidateAndPushData(
             minScale: defaultState.minScale,
         });
     } else {
-        set(properties, `controls.${basePath}.max`, incorrectMaxValue);
+        if (properties) {
+            set(properties, `controls.${basePath}.max`, incorrectMaxValue);
+        }
         setState(defaultState);
     }
 
-    pushData({ properties, propertiesMeta });
+    pushData?.({ properties, propertiesMeta });
 }
 
-export function isSetColumnHeadersPositionToLeftAllowed(insight: IInsightDefinition) {
+export function isSetColumnHeadersPositionToLeftAllowed(insight: IInsightDefinition | undefined) {
+    if (!insight) {
+        return false;
+    }
+
     const rowsBucket = bucketsFind(insightBuckets(insight), BucketNames.ATTRIBUTE);
     const hasRows = rowsBucket && bucketItems(rowsBucket).length > 0;
     const columnsBucket = bucketsFind(insightBuckets(insight), BucketNames.COLUMNS);

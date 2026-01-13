@@ -46,7 +46,7 @@ const getInsightViewSpecification = (
                         },
                     },
                 },
-                locale: localeForInsightView(ctx),
+                locale: localeForInsightView(ctx!),
             };
 
             if (includeConfiguration) {

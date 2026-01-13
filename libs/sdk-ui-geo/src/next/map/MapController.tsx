@@ -5,7 +5,7 @@ import { type ReactElement, type RefObject, useMemo } from "react";
 import { type ContentRect } from "react-measure";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IHeaderPredicate, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { type IHeaderPredicate, type OnFiredDrillEvent, useBackend } from "@gooddata/sdk-ui";
 
 import { MapRuntimeProvider, useMapRuntime } from "../context/MapRuntimeContext.js";
 import { useGeoAdapterContext } from "../hooks/layers/useGeoAdapterContext.js";
@@ -53,11 +53,12 @@ export function MapController({
     config,
     backend,
 }: MapControllerProps): ReactElement | null {
+    const resolvedBackend = useBackend(backend);
     const { map, tooltip, isMapReady } = useMapInitialization(
         mapContainerRef,
         config,
         initialViewport,
-        backend,
+        resolvedBackend,
     );
     const adapterContext = useGeoAdapterContext();
 

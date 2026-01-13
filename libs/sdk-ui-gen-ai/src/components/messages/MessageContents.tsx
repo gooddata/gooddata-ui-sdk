@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
@@ -54,14 +54,10 @@ export function MessageContents({
                             <ErrorContentsComponent useMarkdown={useMarkdown} content={item} key={index} />
                         );
                     case "routing":
-                        // Show routing when reasoning FF is disabled (original behavior)
-                        return (
-                            <RoutingContentsComponent
-                                useMarkdown={useMarkdown}
-                                content={item}
-                                key={index}
-                                isReasoningEnabled={isReasoningEnabled}
-                            />
+                        // When reasoning visibility is enabled, routing/use-case reasoning must not be shown.
+                        // It would overlap with the model-provided reasoning answer and create confusion.
+                        return isReasoningEnabled ? null : (
+                            <RoutingContentsComponent useMarkdown={useMarkdown} content={item} key={index} />
                         );
                     case "reasoning":
                         // Skip reasoning here - shown in dropdown when FF is enabled

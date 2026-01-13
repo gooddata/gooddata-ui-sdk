@@ -14,8 +14,8 @@ import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IGeoViewportControl {
     disabled: boolean;
-    properties: IVisualizationProperties;
-    pushData: (data: any) => any;
+    properties?: IVisualizationProperties;
+    pushData?: (data: any) => any;
     className?: string;
 }
 

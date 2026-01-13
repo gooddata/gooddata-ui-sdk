@@ -1,6 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { ActionsApi_ListWorkspaceUsers } from "@gooddata/api-client-tiger/actions";
+import { ActionsApi_ListWorkspaceUsers } from "@gooddata/api-client-tiger/endpoints/actions";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IWorkspaceUsersQuery,

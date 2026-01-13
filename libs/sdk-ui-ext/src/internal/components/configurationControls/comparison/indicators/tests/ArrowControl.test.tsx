@@ -91,7 +91,7 @@ describe("ArrowControl", () => {
 
     it("Should push data while click checkbox value", () => {
         const { container } = renderArrowControl();
-        fireEvent.click(container.querySelector(CHECKBOX_SELECTOR));
+        fireEvent.click(container.querySelector(CHECKBOX_SELECTOR)!);
         expect(mockPushData).toHaveBeenCalled();
     });
 

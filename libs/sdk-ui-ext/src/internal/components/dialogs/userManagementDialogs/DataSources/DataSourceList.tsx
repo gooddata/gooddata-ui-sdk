@@ -8,12 +8,12 @@ import { type IGrantedDataSource, type ListMode, type WorkspacePermissionSubject
 import { sortByName } from "../utils.js";
 
 export interface IDataSourceListProps {
-    dataSources: IGrantedDataSource[];
+    dataSources: IGrantedDataSource[] | undefined;
     subjectType: WorkspacePermissionSubject;
     mode: ListMode;
-    onDelete: (workspace: IGrantedDataSource) => void;
+    onDelete?: (workspace: IGrantedDataSource) => void;
     onChange?: (workspace: IGrantedDataSource) => void;
-    renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
 export function DataSourceList({

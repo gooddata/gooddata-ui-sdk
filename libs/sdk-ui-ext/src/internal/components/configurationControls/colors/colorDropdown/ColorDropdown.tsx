@@ -81,7 +81,7 @@ export const ColorDropdown = memo(function ColorDropdown({
         return dropdownVersion === DropdownVersionType.ColorPalette;
     }, [dropdownVersion]);
 
-    const getSelectedGuidFromColorItem = useCallback((): string => {
+    const getSelectedGuidFromColorItem = useCallback((): string | null => {
         if (isColorFromPalette(selectedColorItem)) {
             return selectedColorItem.value;
         }

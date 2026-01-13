@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type AriaAttributes,
@@ -29,6 +29,7 @@ import {
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
+    type ExplicitDrill,
     type GoodDataSdkError,
     type IDrillEvent,
     type IHeaderPredicate,
@@ -383,6 +384,16 @@ function VisualizationContentsComponentCore({
 
     const moreButtonDescId = useId();
 
+    const drillableItems = useMemo(() => {
+        if (enableChangeAnalysis) {
+            if (visualization.visualizationType === "TABLE") {
+                return metrics.filter(Boolean).map(headerPredicate);
+            }
+            return [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm);
+        }
+        return undefined;
+    }, [dimensions, enableChangeAnalysis, metrics, visualization.visualizationType]);
+
     return (
         <div className={className}>
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
@@ -554,6 +565,7 @@ function VisualizationContentsComponentCore({
                                                     handleSuccess,
                                                     handlerDrill,
                                                     {
+                                                        drillableItems,
                                                         enableChangeAnalysis,
                                                         enableNewPivotTable,
                                                         enableAccessibleChartTooltip,
@@ -593,6 +605,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            drillableItems,
                                                             enableChangeAnalysis,
                                                             enableAccessibleChartTooltip,
                                                         },
@@ -610,6 +623,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            drillableItems,
                                                             enableChangeAnalysis,
                                                             enableAccessibleChartTooltip,
                                                         },
@@ -627,6 +641,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            drillableItems,
                                                             enableChangeAnalysis,
                                                             enableAccessibleChartTooltip,
                                                         },
@@ -643,6 +658,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            drillableItems,
                                                             enableChangeAnalysis,
                                                             enableNewPivotTable,
                                                             enableAccessibleChartTooltip,
@@ -661,6 +677,7 @@ function VisualizationContentsComponentCore({
                                                         handleSuccess,
                                                         handlerDrill,
                                                         {
+                                                            drillableItems,
                                                             enableChangeAnalysis,
                                                         },
                                                     );
@@ -738,6 +755,7 @@ const renderBarChart = (
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
+        drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
     },
@@ -757,11 +775,7 @@ const renderBarChart = (
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={
-            props.enableChangeAnalysis
-                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
-                : undefined
-        }
+        drillableItems={props.drillableItems}
         onDrill={onDrill}
         filters={filters}
         onError={onError}
@@ -782,6 +796,7 @@ const renderColumnChart = (
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
+        drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
     },
@@ -801,11 +816,7 @@ const renderColumnChart = (
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={
-            props.enableChangeAnalysis
-                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
-                : undefined
-        }
+        drillableItems={props.drillableItems}
         onDrill={onDrill}
         filters={filters}
         onError={onError}
@@ -826,6 +837,7 @@ const renderLineChart = (
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
+        drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
     },
@@ -844,11 +856,7 @@ const renderLineChart = (
             colorPalette,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={
-            props.enableChangeAnalysis
-                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
-                : undefined
-        }
+        drillableItems={props.drillableItems}
         onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -868,6 +876,7 @@ const renderPieChart = (
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
+        drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
     },
@@ -884,11 +893,7 @@ const renderPieChart = (
             colorPalette,
             enableAccessibleTooltip: props.enableAccessibleChartTooltip,
         }}
-        drillableItems={
-            props.enableChangeAnalysis
-                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
-                : undefined
-        }
+        drillableItems={props.drillableItems}
         onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -907,6 +912,7 @@ const renderTable = (
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
+        drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableNewPivotTable?: boolean;
         enableChangeAnalysis?: boolean;
@@ -922,9 +928,7 @@ const renderTable = (
             filters={filters}
             sortBy={sortBy}
             config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
-            drillableItems={
-                props.enableChangeAnalysis ? metrics.filter(Boolean).map(headerPredicate) : undefined
-            }
+            drillableItems={props.drillableItems}
             onDrill={onDrill}
             onError={onError}
             onLoadingChanged={onLoadingChanged}
@@ -936,7 +940,7 @@ const renderTable = (
 const renderHeadline = (
     locale: string,
     metrics: IMeasure[],
-    dimensions: IAttribute[],
+    _dimensions: IAttribute[],
     filters: IFilter[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
@@ -944,6 +948,7 @@ const renderHeadline = (
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
+        drillableItems?: ExplicitDrill[];
         enableChangeAnalysis?: boolean;
     },
 ) => (
@@ -957,11 +962,7 @@ const renderHeadline = (
             ...getHeadlineComparison(metrics),
             colorPalette,
         }}
-        drillableItems={
-            props.enableChangeAnalysis
-                ? [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm)
-                : undefined
-        }
+        drillableItems={props.drillableItems}
         onDrill={onDrill}
         onError={onError}
         onLoadingChanged={onLoadingChanged}

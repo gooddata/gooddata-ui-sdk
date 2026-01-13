@@ -1,5 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
-import { ProfileApi_GetCurrent, ProfileApi_GetCurrentWithDetails } from "@gooddata/api-client-tiger/profile";
+// (C) 2020-2026 GoodData Corporation
+
+import {
+    ProfileApi_GetCurrent,
+    ProfileApi_GetCurrentWithDetails,
+} from "@gooddata/api-client-tiger/endpoints/profile";
 import { type IUserService, type IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { type IUser } from "@gooddata/sdk-model";
 

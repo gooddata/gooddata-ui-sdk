@@ -1,5 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
-import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
+// (C) 2019-2026 GoodData Corporation
+
+import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 

@@ -51,10 +51,11 @@ export function AutomationIconTooltip({
     children,
     align,
 }: IAutomationIconTooltipProps) {
+    const alignPoints = align ? [{ align }] : undefined;
     return (
         <BubbleHoverTrigger hideDelay={300} eventsOnBubble>
             {children}
-            <Bubble className="bubble-light" alignPoints={[{ align }]} arrowStyle={{ display: "none" }}>
+            <Bubble className="bubble-light" alignPoints={alignPoints} arrowStyle={{ display: "none" }}>
                 <AutomationIconTooltipCore header={header} content={content} sections={sections} />
             </Bubble>
         </BubbleHoverTrigger>

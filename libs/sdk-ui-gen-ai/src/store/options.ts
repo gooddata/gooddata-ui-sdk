@@ -11,6 +11,8 @@ export class OptionsDispatcher {
     private colorPalette: IColorPalette | undefined = undefined;
     private settings: IUserWorkspaceSettings | undefined = undefined;
     private objectTypes: GenAIObjectType[] | undefined = undefined;
+    private includeTags: string[] | undefined = undefined;
+    private excludeTags: string[] | undefined = undefined;
 
     public setColorPalette(colorPalette: IColorPalette | undefined): void {
         this.colorPalette = colorPalette;
@@ -34,5 +36,17 @@ export class OptionsDispatcher {
 
     public getObjectTypes(): GenAIObjectType[] | undefined {
         return this.objectTypes;
+    }
+
+    public setTags(includeTags: string[] | undefined, excludeTags: string[] | undefined): void {
+        this.includeTags = includeTags;
+        this.excludeTags = excludeTags;
+    }
+
+    public getTags(): { includeTags: string[] | undefined; excludeTags: string[] | undefined } {
+        return {
+            includeTags: this.includeTags,
+            excludeTags: this.excludeTags,
+        };
     }
 }

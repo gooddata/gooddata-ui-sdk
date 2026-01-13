@@ -107,6 +107,7 @@ export {
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,
     selectEnableDashboardTabs,
+    selectIsAddTabButtonHidden,
     selectExportResultPollingTimeout,
     selectEnableAnomalyDetectionAlert,
     selectEnableImplicitDrillToUrl,

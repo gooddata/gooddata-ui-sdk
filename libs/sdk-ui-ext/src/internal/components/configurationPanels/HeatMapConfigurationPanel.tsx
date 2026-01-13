@@ -29,8 +29,8 @@ export class HeatMapConfigurationPanel extends ConfigurationPanelContent {
         const { xAxisVisible, yAxisVisible } = this.getControlProperties();
 
         const controlsDisabled = this.isControlDisabled();
-        const xAxisDisabled = this.isAxisDisabled(controlsDisabled, "xaxis", this.props.insight);
-        const yAxisDisabled = this.isAxisDisabled(controlsDisabled, "yaxis", this.props.insight);
+        const xAxisDisabled = this.isAxisDisabled(controlsDisabled, "xaxis", this.props.insight!);
+        const yAxisDisabled = this.isAxisDisabled(controlsDisabled, "yaxis", this.props.insight!);
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>

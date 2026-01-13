@@ -44,7 +44,7 @@ import { type ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 import { type IDefaultControlProperties } from "./ControlProperties.js";
 import { type IAvailableSortsGroup, type ISortConfig } from "./SortConfig.js";
 
-export type RenderFunction = (component: any, target: Element) => void;
+export type RenderFunction = (component: any, target: Element | null) => void;
 
 export type UnmountFunction = (elementsOrSelectors?: (string | HTMLElement)[]) => void;
 
@@ -88,7 +88,7 @@ export interface ICustomProps {
 
 export interface IDimensions {
     width?: number; // Note: will not be optional once we start sending it
-    height: number;
+    height?: number;
 }
 
 /**
@@ -250,7 +250,7 @@ export interface IBucketItem {
     format?: string;
     granularity?: string;
     showInPercent?: boolean;
-    showOnSecondaryAxis?: boolean;
+    showOnSecondaryAxis?: boolean | null;
     isTotalMeasure?: boolean;
     isThresholdMeasure?: boolean;
     sort?: ISort;
@@ -404,7 +404,7 @@ export interface IReferences {
 }
 
 export interface IExtendedReferencePoint extends IReferencePoint {
-    uiConfig: IUiConfig;
+    uiConfig?: IUiConfig | null;
 }
 
 /**
@@ -449,7 +449,7 @@ export interface IVisualization {
         props: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ): IPreparedExecution;
+    ): IPreparedExecution | null;
 
     /**
      * Get additional visualization executions for multi-layer visualizations.

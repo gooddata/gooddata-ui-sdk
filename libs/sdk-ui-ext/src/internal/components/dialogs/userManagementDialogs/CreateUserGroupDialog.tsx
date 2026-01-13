@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
+import { type ObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialogBase, type IAlignPoint, Input, Overlay, useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -41,7 +42,7 @@ function CreateUserGroupDialogComponent({
             .users()
             .createUserGroup({
                 id: uuid(),
-                ref: undefined,
+                ref: undefined as unknown as ObjRef, //this violates api types
                 name: userGroupName,
             })
             .then(() => {

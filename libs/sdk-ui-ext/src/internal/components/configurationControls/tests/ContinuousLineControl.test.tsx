@@ -68,7 +68,7 @@ describe("ContinuousLineControl", () => {
         });
 
         await userEvent.hover(screen.getByRole("checkbox"));
-        expect(document.querySelector(".content").innerHTML).toEqual(
+        expect(document.querySelector(".content")!.innerHTML).toEqual(
             "Draw a line between points with missing values.",
         );
     });

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type AxiosResponse } from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -18,7 +18,7 @@ import {
     EntitiesApi_GetAllEntitiesThemes,
     EntitiesApi_UpdateEntityColorPalettes,
     EntitiesApi_UpdateEntityThemes,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
 import {
     type IColorPaletteDefinition,

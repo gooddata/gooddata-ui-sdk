@@ -186,7 +186,7 @@ describe("PluggableScatterPlot", () => {
                 referencePointMocks.emptyReferencePoint,
             );
 
-            expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([]);
+            expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
 
         it("should remove all derived measures and arithmetic measures created from derived measures", async () => {

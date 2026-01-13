@@ -19,7 +19,7 @@ function filterOutStylingMetric(bucketItems: IAttributeOrMeasure[], insight: IIn
     });
 }
 
-export function countBucketItems(insight: IInsightDefinition): {
+export function countBucketItems(insight: IInsightDefinition | undefined): {
     viewByItemCount: number;
     measureItemCount: number;
     secondaryMeasureItemCount: number;
@@ -48,9 +48,9 @@ export function countBucketItems(insight: IInsightDefinition): {
 }
 
 export function countItemsOnAxes(
-    type: string,
-    controls: IVisualizationProperties,
-    insight: IInsightDefinition,
+    type: string | undefined,
+    controls: IVisualizationProperties | undefined,
+    insight: IInsightDefinition | undefined,
 ): {
     xaxis: number;
     yaxis: number;

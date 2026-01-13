@@ -13,7 +13,7 @@ import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
 
 export const useUserDetails = (
-    user: IUser,
+    user: IUser | undefined,
     isAdmin: boolean,
     onSubmit: (user: IUser, isAdmin: boolean) => void,
     onCancel: () => void,
@@ -38,6 +38,9 @@ export const useUserDetails = (
     };
 
     const onSave = () => {
+        if (!updatedUser) {
+            return;
+        }
         const updateAdmin = isAdmin !== isUpdatedAdmin;
         const { firstName, lastName } = updatedUser;
         const sanitizedUser: IUser = {
@@ -97,7 +100,7 @@ export const useUserDetails = (
 };
 
 export const useUserGroupDetails = (
-    userGroup: IUserGroup,
+    userGroup: IUserGroup | undefined,
     onSubmit: (userGroup: IUserGroup) => void,
     onCancel: () => void,
 ) => {
@@ -114,6 +117,9 @@ export const useUserGroupDetails = (
     }, [userGroup]);
 
     const onSave = () => {
+        if (!updatedUserGroup) {
+            return;
+        }
         setIsProcessing(true);
         backend
             .organization(organizationId)

@@ -39,9 +39,9 @@ export interface IAttributeHierarchyDialogProviderData {
     title: string;
     isLoading: boolean;
     setLoading: SetLoadingCallback;
-    shouldDisplayDeleteConfirmation: boolean;
+    shouldDisplayDeleteConfirmation?: boolean;
     setDisplayDeleteConfirmation: (isDisplay: boolean) => void;
-    onClose: EmptyParamCallback;
+    onClose?: EmptyParamCallback;
     onUpdateTitle: (title: string) => void;
     onAddEmptyAttribute: (baseRowIndex: number) => void;
     onCompleteAttribute: (selectedItem: ICatalogAttributeData, rowIndex: number) => void;

@@ -9,7 +9,7 @@ import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { messages } from "../locales.js";
 
 export interface IDeleteConfirmDialogProps {
-    titleText: string;
+    titleText: string | undefined;
     bodyText: string | ReactNode;
     isProcessing: boolean;
     onConfirm: () => void;

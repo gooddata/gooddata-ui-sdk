@@ -36,6 +36,16 @@ export const objectTypesSelector: (state: RootState) => GenAIObjectType[] | unde
     (state) => state.objectTypes,
 );
 
+export const tagsSelector: (state: RootState) => {
+    includeTags: string[] | undefined;
+    excludeTags: string[] | undefined;
+} = createSelector(chatWindowSliceSelector, (state) => {
+    return {
+        includeTags: state.includeTags,
+        excludeTags: state.excludeTags,
+    };
+});
+
 export const keyDriverAnalysisSelector: (state: RootState) => IKdaDefinition | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.keyDriverAnalysis,

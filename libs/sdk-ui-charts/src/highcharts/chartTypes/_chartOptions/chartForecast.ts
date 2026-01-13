@@ -49,7 +49,7 @@ export function assignForecastAxes(
     const { data } = firstSeries;
 
     //if there is no data, we don't need to add forecast axis
-    if (data && data.length === 0) {
+    if (data?.length === 0) {
         return series;
     }
 

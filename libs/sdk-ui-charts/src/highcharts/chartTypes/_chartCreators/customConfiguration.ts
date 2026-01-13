@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import cx from "classnames";
 import { type OptionsLandmarkVerbosityValue, type Point } from "highcharts";
@@ -552,7 +552,7 @@ export function percentageDataLabelFormatter(this: any, config?: IChartConfig): 
     //  * left or right axis on single axis chart, or
     //  * primary axis on dual axis chart
     if (this.percentage && (isSingleAxis || isPrimaryAxis)) {
-        return percentFormatter(this.percentage, this.series?.data?.length > 0 && this.series.data[0].format);
+        return percentFormatter(this.percentage, this.series?.data?.[0]?.format);
     }
 
     return labelFormatter.call(this, config);

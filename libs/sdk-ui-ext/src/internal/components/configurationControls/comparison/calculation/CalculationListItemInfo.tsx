@@ -5,7 +5,7 @@ import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
 import { CalculationListItemInfoSection } from "./CalculationListItemInfoSection.js";
 
 interface ICalculationItemInfoProps {
-    title: string;
+    title: string | undefined;
     calculationType: CalculationType;
 }
 

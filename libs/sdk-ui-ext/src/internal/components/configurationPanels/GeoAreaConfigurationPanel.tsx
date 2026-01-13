@@ -35,9 +35,9 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
                 pushData={pushData}
             >
                 <GeoViewportControl
-                    properties={properties}
+                    properties={properties!}
                     disabled={this.isControlDisabled()}
-                    pushData={pushData}
+                    pushData={pushData!}
                 />
             </ConfigSection>
         );
@@ -82,7 +82,7 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
 
     protected override isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
-        return !hasAreaAttribute(insight) || isError || isLoading;
+        return !!(!hasAreaAttribute(insight) || isError || isLoading);
     }
 }
 

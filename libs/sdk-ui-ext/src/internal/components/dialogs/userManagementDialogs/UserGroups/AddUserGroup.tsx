@@ -13,7 +13,7 @@ import { type IGrantedUserGroup } from "../types.js";
 
 export interface IAddUserGroupProps {
     userIds: string[];
-    grantedUserGroups: IGrantedUserGroup[];
+    grantedUserGroups: IGrantedUserGroup[] | undefined;
     enableBackButton?: boolean;
     onSubmit: (userGroups: IGrantedUserGroup[]) => void;
     onCancel: () => void;

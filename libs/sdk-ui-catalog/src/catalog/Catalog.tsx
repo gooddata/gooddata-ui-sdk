@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -15,7 +15,7 @@ import { Header } from "../header/Header.js";
 import { Main } from "../main/Main.js";
 import { PermissionsGate, useFeatureFlag } from "../permission/index.js";
 import { QualityScoreCard } from "../quality/QualityScoreCard.js";
-import { FullTextSearch } from "../search/index.js";
+import { FullTextSearchInput } from "../search/index.js";
 
 type Props = {
     backend: IAnalyticalBackend;
@@ -61,7 +61,7 @@ export function Catalog({
                     />
                 }
             >
-                <Header searchNode={<FullTextSearch />} />
+                <Header searchNode={<FullTextSearchInput />} />
                 {isQualityEnabled ? <QualityScoreCard /> : null}
                 <Main
                     openCatalogItemRef={openCatalogItemRef}

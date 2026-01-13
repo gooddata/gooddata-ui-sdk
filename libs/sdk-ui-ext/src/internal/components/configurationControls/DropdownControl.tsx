@@ -21,7 +21,7 @@ import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
 export interface IDropdownControlProps {
     valuePath: string;
-    properties: IVisualizationProperties;
+    properties?: IVisualizationProperties;
     labelText?: string;
     value?: string | number;
     items?: IDropdownItem[];
@@ -31,7 +31,7 @@ export interface IDropdownControlProps {
     disabledMessageAlignPoints?: IAlignPoint[];
     customListItem?: ComponentType<ISingleSelectListItemProps>;
 
-    pushData(data: any): void;
+    pushData?(data: any): void;
 }
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
@@ -53,7 +53,7 @@ export const DropdownControl = injectIntl(
         pushData,
         intl,
     }: IDropdownControlProps & WrappedComponentProps) {
-        const getSelectedItem = (value: string | number): IDropdownItem => {
+        const getSelectedItem = (value: string | number): IDropdownItem | undefined => {
             if (items) {
                 return items.find((item) => item.value === value);
             }
@@ -65,9 +65,9 @@ export const DropdownControl = injectIntl(
             // we must not change the properties at any cost, so deep clone for now.
             // ideally we should use st. like immer with copy on write to not clone everything all the time
             const clonedProperties = cloneDeep(properties);
-            set(clonedProperties, `controls.${valuePath}`, selectedItem.value);
+            set(clonedProperties!, `controls.${valuePath}`, selectedItem.value);
 
-            pushData({ properties: clonedProperties });
+            pushData?.({ properties: clonedProperties });
         };
 
         const getDropdownButton = (

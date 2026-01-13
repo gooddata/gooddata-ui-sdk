@@ -6,7 +6,7 @@ import { type IGrantedUserGroup } from "../types.js";
 
 export interface IAddUserGroupContentProps {
     addedUserGroups: IGrantedUserGroup[];
-    grantedUserGroups: IGrantedUserGroup[];
+    grantedUserGroups: IGrantedUserGroup[] | undefined;
     onDelete: (userGroup: IGrantedUserGroup) => void;
     onSelect: (userGroup: IGrantedUserGroup) => void;
 }

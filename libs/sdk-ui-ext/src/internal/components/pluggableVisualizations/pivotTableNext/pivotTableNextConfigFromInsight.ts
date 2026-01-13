@@ -22,9 +22,12 @@ const AG_GRID_TOKEN_PLACEHOLDER: PivotTableNextConfig = {
     agGridToken: "<fill your AG Grid Enterprise license token here>",
 };
 
-export function isPivotTableNext(insightDefinition: IInsightDefinition, settings: ISettings): boolean {
+export function isPivotTableNext(
+    insightDefinition: IInsightDefinition,
+    settings: ISettings | undefined,
+): boolean {
     const uri = insightVisualizationUrl(insightDefinition);
-    return settings?.enableNewPivotTable && uri === "local:table";
+    return !!settings?.enableNewPivotTable && uri === "local:table";
 }
 
 export function pivotTableNextConfigFromInsight(

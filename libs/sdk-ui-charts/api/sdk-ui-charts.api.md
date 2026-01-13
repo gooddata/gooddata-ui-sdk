@@ -1031,7 +1031,7 @@ export const TOP = "top";
 export function Treemap(props: ITreemapProps): JSX.Element;
 
 // @internal (undocumented)
-export function updateConfigWithSettings(config: IChartConfig, settings: ISettings | undefined): IChartConfig;
+export function updateConfigWithSettings(config: IChartConfig | undefined, settings: ISettings | undefined): IChartConfig;
 
 // @internal (undocumented)
 export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {

@@ -110,7 +110,7 @@ describe("color utils", () => {
             ]);
 
             const result = getValidProperties(properties, attributeColorAssignments);
-            expect(result.controls["colorMapping"]).toEqual(null);
+            expect(result.controls!["colorMapping"]).toEqual(null);
         });
 
         it("should erase measure color mapping if items are not in color assignment", () => {
@@ -123,7 +123,7 @@ describe("color utils", () => {
             const properties = getProperties(colorMapping);
 
             const result = getValidProperties(properties, measureColorAssignments);
-            expect(result.controls["colorMapping"]).toEqual(null);
+            expect(result.controls!["colorMapping"]).toEqual(null);
         });
 
         it("should keep measure color mapping for items which are in color assignment", () => {
@@ -145,7 +145,7 @@ describe("color utils", () => {
             const properties = getProperties(richColorMapping);
 
             const result = getValidProperties(properties, measureColorAssignments);
-            expect(result.controls["colorMapping"]).toEqual(colorMapping);
+            expect(result.controls!["colorMapping"]).toEqual(colorMapping);
         });
 
         it("should keep attribute header color mapping for items which are in color assignment", () => {
@@ -170,7 +170,7 @@ describe("color utils", () => {
                 properties,
                 attributeHeaderColorAssignments as unknown as IColorAssignment[],
             );
-            expect(result.controls["colorMapping"]).toEqual(colorMapping);
+            expect(result.controls!["colorMapping"]).toEqual(colorMapping);
         });
 
         it("should keep attribute header color mapping defined by identifier (Tiger) for items which are in color assignment", () => {
@@ -195,7 +195,7 @@ describe("color utils", () => {
                 properties,
                 tigerAttributeHeaderColorAssignments as unknown as IColorAssignment[],
             );
-            expect(result.controls["colorMapping"]).toEqual(colorMapping);
+            expect(result.controls!["colorMapping"]).toEqual(colorMapping);
         });
 
         it("should keep color mapping for the waterfall color header which are in color assignment", () => {
@@ -217,7 +217,7 @@ describe("color utils", () => {
             const properties = getProperties(richColorMapping);
 
             const result = getValidProperties(properties, waterfallColorHeaderColorAssignments);
-            expect(result.controls["colorMapping"]).toEqual(colorMapping);
+            expect(result.controls!["colorMapping"]).toEqual(colorMapping);
         });
     });
 

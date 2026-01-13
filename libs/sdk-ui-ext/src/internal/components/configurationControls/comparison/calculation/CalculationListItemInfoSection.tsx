@@ -18,24 +18,24 @@ interface ICalculationItemInfoSectionProps {
 }
 
 const SECTION_TITLE_KEYS: Record<string, string> = {
-    example: comparisonMessages["calculationTooltipExampleSection"].id,
-    formula: comparisonMessages["calculationTooltipFormulaSection"].id,
-    formulaChange: comparisonMessages["calculationTooltipFormulaChangeSection"].id,
-    formulaDifference: comparisonMessages["calculationTooltipFormulaDifferenceSection"].id,
+    example: comparisonMessages["calculationTooltipExampleSection"].id!,
+    formula: comparisonMessages["calculationTooltipFormulaSection"].id!,
+    formulaChange: comparisonMessages["calculationTooltipFormulaChangeSection"].id!,
+    formulaDifference: comparisonMessages["calculationTooltipFormulaDifferenceSection"].id!,
 };
 
 const SECTION_CONTENT_KEYS: Record<string, string> = {
-    exampleChange: comparisonMessages["calculatedAsChangeTooltipExample"].id,
-    useInChange: comparisonMessages["calculatedAsChangeTooltipUseIn"].id,
-    formulaChange: comparisonMessages["calculatedAsChangeTooltipFormula"].id,
-    exampleRatio: comparisonMessages["calculatedAsRatioTooltipExample"].id,
-    useInRatio: comparisonMessages["calculatedAsRatioTooltipUseIn"].id,
-    formulaRatio: comparisonMessages["calculatedAsRatioTooltipFormula"].id,
-    exampleDifference: comparisonMessages["calculatedAsDifferenceTooltipExample"].id,
-    useInDifference: comparisonMessages["calculatedAsDifferenceTooltipUseIn"].id,
-    formulaDifference: comparisonMessages["calculatedAsDifferenceTooltipFormula"].id,
-    exampleChangeDifference: comparisonMessages["calculatedAsChangeDifferenceTooltipExample"].id,
-    useInChangeDifference: comparisonMessages["calculatedAsChangeDifferenceTooltipUseIn"].id,
+    exampleChange: comparisonMessages["calculatedAsChangeTooltipExample"].id!,
+    useInChange: comparisonMessages["calculatedAsChangeTooltipUseIn"].id!,
+    formulaChange: comparisonMessages["calculatedAsChangeTooltipFormula"].id!,
+    exampleRatio: comparisonMessages["calculatedAsRatioTooltipExample"].id!,
+    useInRatio: comparisonMessages["calculatedAsRatioTooltipUseIn"].id!,
+    formulaRatio: comparisonMessages["calculatedAsRatioTooltipFormula"].id!,
+    exampleDifference: comparisonMessages["calculatedAsDifferenceTooltipExample"].id!,
+    useInDifference: comparisonMessages["calculatedAsDifferenceTooltipUseIn"].id!,
+    formulaDifference: comparisonMessages["calculatedAsDifferenceTooltipFormula"].id!,
+    exampleChangeDifference: comparisonMessages["calculatedAsChangeDifferenceTooltipExample"].id!,
+    useInChangeDifference: comparisonMessages["calculatedAsChangeDifferenceTooltipUseIn"].id!,
 };
 
 const toPascalCase = (value: string): string => {
@@ -64,7 +64,7 @@ export function CalculationListItemInfoSection({
     shouldHideTitle,
     isSectionCombineCalculationType,
 }: ICalculationItemInfoSectionProps) {
-    const titleKey = getSectionTitleKey(section, calculationType, isSectionCombineCalculationType);
+    const titleKey = getSectionTitleKey(section, calculationType, !!isSectionCombineCalculationType);
     const contentKey = getSectionContentKey(section, calculationType);
 
     return (

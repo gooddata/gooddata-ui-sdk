@@ -72,10 +72,10 @@ describe("CalculationListItemInfo", () => {
             calculationType,
         });
 
-        const tooltip = container.querySelector(CALCULATION_INFO_SELECTOR);
-        expect(tooltip.children.length).toBe(infos.length);
+        const tooltip = container.querySelector(CALCULATION_INFO_SELECTOR)!;
+        expect(tooltip!.children.length).toBe(infos.length);
         infos.forEach((expected, index) => {
-            expect(tooltip.children[index].innerHTML).toEqual(expected);
+            expect(tooltip!.children[index].innerHTML).toEqual(expected);
         });
     });
 });

@@ -59,7 +59,7 @@ export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddi
 export function geoInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IInsightToPropConversion<TProps, TPropKey, IAttribute> {
+): IInsightToPropConversion<TProps, TPropKey, IAttribute | undefined> {
     return {
         propName,
         propType: sdkModelPropMetas.Attribute.Single,
@@ -71,19 +71,19 @@ export function geoInsightConversion<TProps extends object, TPropKey extends key
 
 function getLocationAttributeFromInsight(
     insight: IInsightDefinition,
-    ctx: IEmbeddingCodeContext,
+    ctx: IEmbeddingCodeContext | undefined,
     bucketName: string,
-): IAttribute {
+): IAttribute | undefined {
     if (
         bucketName === BucketNames.LOCATION &&
-        !ctx.backend?.capabilities.supportsSeparateLatitudeLongitudeLabels
+        !ctx?.backend?.capabilities.supportsSeparateLatitudeLongitudeLabels
     ) {
         const bucket = insightBucket(insight, bucketName);
-        return bucket && bucketAttribute(bucket);
+        return bucket ? bucketAttribute(bucket) : undefined;
     } else if (
         // dont rely on Latitude being already in bucket, take both lat and long from properties
         (bucketName === BucketNames.LATITUDE || bucketName === BucketNames.LONGITUDE) &&
-        ctx.backend?.capabilities.supportsSeparateLatitudeLongitudeLabels
+        ctx?.backend?.capabilities.supportsSeparateLatitudeLongitudeLabels
     ) {
         const properties = insightProperties(insight);
         const controls = properties?.["controls"] ?? {};

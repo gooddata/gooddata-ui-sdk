@@ -47,8 +47,8 @@ The package exports API endpoints via individual entry points in `package.json` 
 
 ```typescript
 // ✅ Tree-shakeable - only imports execution API
-import { ExecutionAPI_ComputeReport } from "@gooddata/api-client-tiger/execution";
-import { tigerExecutionClientFactory } from "@gooddata/api-client-tiger/execution";
+import { ExecutionAPI_ComputeReport } from "@gooddata/api-client-tiger/endpoints/execution";
+import { tigerExecutionClientFactory } from "@gooddata/api-client-tiger/endpoints/execution";
 ```
 
 **Obsolete usage** - Main package exports are kept for backward compatibility only:

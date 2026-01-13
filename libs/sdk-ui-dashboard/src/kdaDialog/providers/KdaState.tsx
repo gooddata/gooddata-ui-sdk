@@ -13,6 +13,7 @@ const defaultState: KdaState = {
     isMinimized: true,
     items: [],
     itemsStatus: "pending",
+    itemsError: undefined,
     //states
     attributesDropdownOpen: false,
     addFilterDropdownOpen: false,
@@ -20,6 +21,7 @@ const defaultState: KdaState = {
     selectedTrend: ["up", "down"],
     selectedItem: "summary",
     selectedStatus: "pending",
+    selectedError: undefined,
     //root data
     attributeFilters: [],
     //attributes data
@@ -27,6 +29,8 @@ const defaultState: KdaState = {
     selectedUpdated: 0,
     relevantAttributes: [],
     relevantStatus: "pending",
+    includeTags: undefined,
+    excludeTags: undefined,
 };
 
 type KdaStateContextType = {

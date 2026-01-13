@@ -82,10 +82,10 @@ export const insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier: IInsight =
         filters: [],
         sorts: [],
         properties: {},
-        identifier: undefined,
+        identifier: "test-insight-primary-secondary",
         uri: "/gdc/md/project/obj/1234",
         ref: {
-            identifier: undefined,
+            identifier: "test-insight-primary-secondary",
         },
         title: "Dummy insight with single primary and secondary measure",
     },

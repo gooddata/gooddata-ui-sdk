@@ -358,8 +358,7 @@ const isAttributeGroupedCell = (params: CommonCellParams, colId: string): boolea
 
     const currentCellData = data?.cellDataByColId?.[colId];
     if (
-        !currentCellData ||
-        currentCellData.type !== "attributeHeader" ||
+        currentCellData?.type !== "attributeHeader" ||
         currentCellData.columnDefinition.type !== "attribute"
     ) {
         return false;
@@ -416,7 +415,7 @@ const isRowFirstOfGroup = (params: CommonCellParams, attributeColId: string): bo
     }
 
     const currentCellData = data?.cellDataByColId?.[attributeColId];
-    if (!currentCellData || currentCellData.columnDefinition.type !== "attribute") {
+    if (currentCellData?.columnDefinition.type !== "attribute") {
         return false;
     }
 
@@ -429,7 +428,7 @@ const isRowFirstOfGroup = (params: CommonCellParams, attributeColId: string): bo
     }
 
     const nextCellData = nextRow.data.cellDataByColId?.[attributeColId];
-    if (!nextCellData || nextCellData.columnDefinition.type !== "attribute") {
+    if (nextCellData?.columnDefinition.type !== "attribute") {
         return false;
     }
 
@@ -452,7 +451,7 @@ const isRowFirstOfGroup = (params: CommonCellParams, attributeColId: string): bo
         }
 
         const previousCellData = previousRow.data.cellDataByColId?.[attributeColId];
-        if (!previousCellData || previousCellData.columnDefinition.type !== "attribute") {
+        if (previousCellData?.columnDefinition.type !== "attribute") {
             return true;
         }
 

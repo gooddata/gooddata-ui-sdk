@@ -14,14 +14,14 @@ export interface IAddWorkspaceSelectProps {
 export interface IAddSingleWorkspaceSelectProps {
     onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
     addedWorkspace: IGrantedWorkspace | undefined;
-    grantedWorkspaces: IGrantedWorkspace[];
+    grantedWorkspaces: IGrantedWorkspace[] | undefined;
     mode?: "VIEW" | "EDIT";
 }
 
 export interface IAddDataSourceSelectProps {
     onSelectDataSource: (dataSource: IDataSourceIdentifierDescriptor) => void;
     addedDataSources: IGrantedDataSource[];
-    grantedDataSources: IGrantedDataSource[];
+    grantedDataSources: IGrantedDataSource[] | undefined;
 }
 
 export interface ISelectOption {

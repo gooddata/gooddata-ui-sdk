@@ -100,8 +100,8 @@ describe("PluggableXirr", () => {
             xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreXirr);
-            expect(renderEl.props.config.enableCompactSize).toBe(true);
+            expect(renderEl!.type).toBe(CoreXirr);
+            expect(renderEl!.props.config!.enableCompactSize).toBe(true);
         });
 
         it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {
@@ -117,8 +117,8 @@ describe("PluggableXirr", () => {
             xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreXirr);
-            expect(renderEl.props.config.disableDrillUnderline).toBe(true);
+            expect(renderEl!.type).toBe(CoreXirr);
+            expect(renderEl!.props.config!.disableDrillUnderline).toBe(true);
         });
     });
 

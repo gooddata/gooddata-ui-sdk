@@ -37,10 +37,10 @@ export class RepeaterConfigurationPanel extends ConfigurationPanelContent {
                         properties={properties}
                         pushData={pushData}
                     >
-                        <RowHeightControl pushData={pushData} properties={properties} />
-                        <VerticalAlignControl pushData={pushData} properties={properties} />
-                        <TextWrappingControl pushData={pushData} properties={properties} />
-                        <ImageControl pushData={pushData} properties={properties} />
+                        <RowHeightControl pushData={pushData!} properties={properties!} />
+                        <VerticalAlignControl pushData={pushData!} properties={properties!} />
+                        <TextWrappingControl pushData={pushData!} properties={properties!} />
+                        <ImageControl pushData={pushData!} properties={properties!} />
                     </ConfigSection>
                     {this.renderAdvancedSection()}
                 </div>

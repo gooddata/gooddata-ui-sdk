@@ -73,7 +73,7 @@ describe("DistinctPointShapesControl", () => {
         });
 
         await userEvent.hover(screen.getByRole("checkbox"));
-        expect(document.querySelector(".content").innerHTML).toEqual(
+        expect(document.querySelector(".content")!.innerHTML).toEqual(
             "Property is not applicable for this configuration of the visualization",
         );
     });

@@ -58,12 +58,12 @@ import {
 } from "../../../interfaces/Visualization.js";
 import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";
+import { routeLocalIdRefFiltersToLayers } from "../../../utils/filters/routeLocalIdRefFiltersToLayers.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { createAttributeRef } from "../geoChartNext/geoAttributeHelper.js";
-import { sanitizeGeoLayerGlobalFilters } from "../geoChartNext/geoLayerFilterSanitization.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartNextInternal>[0];
 
@@ -188,14 +188,18 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         executionFactory: IExecutionFactory,
     ) {
         const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
-        const sanitizedFilters = sanitizeGeoLayerGlobalFilters(primaryLayer, filters);
+        const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
+            { id: primaryLayer.id, buckets: insightBuckets(insight) },
+            ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
+        ]);
+        const effectiveFilters = [...globalFilters, ...(routedByLayerId.get(primaryLayer.id) ?? [])];
 
         return buildLayerExecution(primaryLayer, {
             backend: this.backend,
             workspace: this.workspace,
             config,
             execConfig: options.executionConfig,
-            globalFilters: sanitizedFilters,
+            globalFilters: effectiveFilters,
             executionFactory,
         });
     }
@@ -205,7 +209,11 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
-        const { config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
+            { id: primaryLayer.id, buckets: insightBuckets(insight) },
+            ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
+        ]);
         const insightLayerDefs = insightLayers(insight);
         const additionalLayers = insightLayersToGeoLayers(insightLayerDefs);
         const resolvedAdditionalLayers = additionalLayers.filter((layer) => !this.shouldSkipLayer(layer));
@@ -214,7 +222,8 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             resolvedAdditionalLayers,
             options,
             config,
-            filters,
+            globalFilters,
+            routedByLayerId,
             executionFactory,
         );
     }
@@ -336,7 +345,8 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         layers: IGeoLayer[],
         options: IVisProps,
         config: IGeoAreaChartConfig,
-        filters: IFilter[],
+        globalFilters: IFilter[],
+        routedByLayerId: Map<string, IFilter[]>,
         executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
         if (!layers.length) {
@@ -344,13 +354,13 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         }
 
         return layers.map((layer) => {
-            const sanitizedFilters = sanitizeGeoLayerGlobalFilters(layer, filters);
+            const effectiveFilters = [...globalFilters, ...(routedByLayerId.get(layer.id) ?? [])];
             return buildLayerExecution(layer, {
                 backend: this.backend,
                 workspace: this.workspace,
                 config,
                 execConfig: options.executionConfig,
-                globalFilters: sanitizedFilters,
+                globalFilters: effectiveFilters,
                 executionFactory,
             });
         });

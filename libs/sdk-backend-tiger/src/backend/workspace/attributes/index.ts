@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -15,8 +15,8 @@ import {
     EntitiesApi_GetAllEntitiesAttributes,
     EntitiesApi_GetAllEntitiesLabels,
     EntitiesApi_GetEntityAttributes,
-} from "@gooddata/api-client-tiger/entitiesObjects";
-import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/validObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import {
     type IAttributeWithReferences,
     type IElementsQueryFactory,

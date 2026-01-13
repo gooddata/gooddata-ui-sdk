@@ -445,17 +445,17 @@ describe("PluggableAreaChart", () => {
                 visualizationProperties,
             );
             const measureBucket = insightBucket(testInsight, BucketNames.MEASURES);
-            const expected = stackMeasures === null ? measureBucket?.items.length > 1 : stackMeasures;
+            const expected = stackMeasures === null ? measureBucket!.items.length > 1 : stackMeasures;
             chart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<IAreaChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.props.config.stackMeasures).toBe(expected);
+            expect(renderEl!.props.config!.stackMeasures).toBe(expected);
         };
 
         it("should modify stack by default of area by config stackMeasures properties", async () => {
             const areaChart = createComponent();
 
-            verifyStackMeasuresConfig(areaChart, null);
+            verifyStackMeasuresConfig(areaChart, null as unknown as boolean);
             verifyStackMeasuresConfig(areaChart, true);
             verifyStackMeasuresConfig(areaChart, false);
         });
@@ -480,8 +480,8 @@ describe("PluggableAreaChart", () => {
             areaChart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<IAreaChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.props.config.stackMeasures).toBe(false);
-            expect(renderEl.props.config.stackMeasuresToPercent).toBe(false);
+            expect(renderEl!.props.config!.stackMeasures).toBe(false);
+            expect(renderEl!.props.config!.stackMeasuresToPercent).toBe(false);
         });
 
         it("should reset custom controls properties", async () => {
@@ -506,8 +506,8 @@ describe("PluggableAreaChart", () => {
             areaChart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<IAreaChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.props.config.stackMeasures).toBe(true);
-            expect(renderEl.props.config.stackMeasuresToPercent).toBe(true);
+            expect(renderEl!.props.config!.stackMeasures).toBe(true);
+            expect(renderEl!.props.config!.stackMeasuresToPercent).toBe(true);
         });
 
         it("should reuse one measure, only one category and one category as stack", async () => {
@@ -551,7 +551,7 @@ describe("PluggableAreaChart", () => {
             const mockRefPoint = referencePointMocks.stackMeasuresToPercentReferencePoint;
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-            expect(extendedReferencePoint.properties.controls).toEqual({
+            expect(extendedReferencePoint.properties!.controls).toEqual({
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
             });
@@ -588,7 +588,7 @@ describe("PluggableAreaChart", () => {
                 referencePointMocks.emptyReferencePoint,
             );
 
-            expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([]);
+            expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
 
         it("should remove all derived measures and arithmetic measures created from derived measures", async () => {

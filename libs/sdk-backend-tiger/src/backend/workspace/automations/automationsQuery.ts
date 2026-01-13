@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type EntitiesApiGetAllEntitiesAutomationsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesAutomations } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesAutomations } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type AutomationFilterType,
@@ -18,20 +18,21 @@ import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { buildFieldFilter, buildStatusFilter } from "./filterBuilders.js";
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../../common/automations.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class AutomationsQuery implements IAutomationsQuery {
-    private size = 100;
-    private page = 0;
-    private author: string | null = null;
+    private size = DEFAULT_PAGE_SIZE;
+    private page = DEFAULT_PAGE;
+    private author: string | null | undefined = null;
     private authorFilterType: AutomationFilterType = "exact";
-    private recipient: string | null = null;
+    private recipient: string | null | undefined = null;
     private recipientFilterType: AutomationFilterType = "exact";
-    private externalRecipient: string | null = null;
-    private user: string | null = null;
-    private dashboard: string | null = null;
+    private externalRecipient: string | null | undefined = null;
+    private user: string | null | undefined = null;
+    private dashboard: string | null | undefined = null;
     private dashboardFilterType: AutomationFilterType = "exact";
-    private status: string | null = null;
+    private status: string | null | undefined = null;
     private statusFilterType: AutomationFilterType = "exact";
     private filter: { title?: string } = {};
     private sort = {};
@@ -48,13 +49,13 @@ export class AutomationsQuery implements IAutomationsQuery {
         this.totalCount = value;
     };
 
-    withSize(size: number): IAutomationsQuery {
-        this.size = size;
+    withSize(size: number | undefined): IAutomationsQuery {
+        this.size = size ?? DEFAULT_PAGE_SIZE;
         return this;
     }
 
-    withPage(page: number): IAutomationsQuery {
-        this.page = page;
+    withPage(page: number | undefined): IAutomationsQuery {
+        this.page = page ?? DEFAULT_PAGE;
         return this;
     }
 
@@ -70,12 +71,12 @@ export class AutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withType(type: AutomationType): IAutomationsQuery {
+    withType(type: AutomationType | undefined): IAutomationsQuery {
         this.type = type;
         return this;
     }
 
-    withAuthor(author: string, filterType: AutomationFilterType = "exact"): IAutomationsQuery {
+    withAuthor(author: string | undefined, filterType: AutomationFilterType = "exact"): IAutomationsQuery {
         this.author = author;
         this.authorFilterType = filterType;
         return this;

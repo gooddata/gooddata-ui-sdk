@@ -51,22 +51,22 @@ export abstract class ConfigurationPanelContent<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
 > extends PureComponent<T> {
     public static defaultProps: IConfigurationPanelContentProps = {
-        properties: null,
-        references: null,
-        referencePoint: null,
-        propertiesMeta: null,
-        colors: null,
+        properties: undefined,
+        references: undefined,
+        referencePoint: undefined,
+        propertiesMeta: undefined,
+        colors: undefined,
         locale: DefaultLocale,
         isError: false,
         isLoading: false,
-        insight: null,
+        insight: undefined,
         pushData: () => {},
         featureFlags: {},
-        axis: null,
+        axis: undefined,
         panelConfig: {},
     };
 
-    protected supportedPropertiesList: string[];
+    protected supportedPropertiesList: string[] | undefined;
 
     constructor(props: T) {
         super(props);
@@ -91,7 +91,7 @@ export abstract class ConfigurationPanelContent<
      */
     protected isControlDisabled(_sectionName?: SectionName): boolean {
         const { insight, isError, isLoading } = this.props;
-        return !insight || !insightHasMeasures(insight) || isError || isLoading;
+        return !!(!insight || !insightHasMeasures(insight) || isError || isLoading);
     }
 
     protected renderColorSection(): ReactNode {
@@ -111,9 +111,9 @@ export abstract class ConfigurationPanelContent<
                 pushData={pushData}
                 hasMeasures={hasMeasures}
                 isLoading={isLoading}
-                supportsChartFill={panelConfig.supportsChartFill}
+                supportsChartFill={panelConfig?.supportsChartFill}
                 chartFillIgnoredMeasures={chartFillIgnoredMeasures}
-                isChartFillDisabled={panelConfig.isChartFillDisabled}
+                isChartFillDisabled={panelConfig?.isChartFillDisabled}
             />
         );
     }
@@ -143,24 +143,24 @@ export abstract class ConfigurationPanelContent<
             insight,
         } = this.props;
 
-        const isAlertingEnabled = featureFlags.enableAlerting;
-        const isScheduledExportsEnabled = featureFlags.enableScheduling;
-        const enableImplicitDrillToUrl = featureFlags.enableImplicitDrillToUrl;
+        const isAlertingEnabled = featureFlags?.enableAlerting;
+        const isScheduledExportsEnabled = featureFlags?.enableScheduling;
+        const enableImplicitDrillToUrl = featureFlags?.enableImplicitDrillToUrl;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
         const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
         const supportsScheduledExportsConfiguration =
             insightSupportsScheduledExports && isScheduledExportsEnabled;
 
-        return supportsAlertsConfiguration || panelConfig.supportsAttributeHierarchies ? (
+        return supportsAlertsConfiguration || panelConfig?.supportsAttributeHierarchies ? (
             <InteractionsSection
                 areControlsDisabledGetter={this.isControlDisabled}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
-                supportsAlertConfiguration={supportsAlertsConfiguration}
-                supportsDrillDownConfiguration={panelConfig.supportsAttributeHierarchies}
-                supportsScheduledExportsConfiguration={supportsScheduledExportsConfiguration}
+                supportsAlertConfiguration={!!supportsAlertsConfiguration}
+                supportsDrillDownConfiguration={panelConfig?.supportsAttributeHierarchies}
+                supportsScheduledExportsConfiguration={!!supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
                 enableImplicitDrillToUrl={enableImplicitDrillToUrl}
             />
@@ -171,7 +171,7 @@ export abstract class ConfigurationPanelContent<
         const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight } =
             this.props;
 
-        if (!featureFlags["enableSmartFunctions"]) {
+        if (!featureFlags?.["enableSmartFunctions"]) {
             return null;
         }
 
@@ -193,7 +193,7 @@ export abstract class ConfigurationPanelContent<
 
     protected renderAdvancedSection(): ReactNode {
         const { pushData, properties, propertiesMeta, featureFlags } = this.props;
-        return featureFlags.enableVisualizationFineTuning ? (
+        return featureFlags?.enableVisualizationFineTuning ? (
             <AdvancedSection
                 controlsDisabled={this.isControlDisabled()}
                 properties={properties}

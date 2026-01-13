@@ -156,8 +156,7 @@ export const addDefaultSort = (
         // disabling the eslint rule to maintain readability
         // eslint-disable-next-line sonarjs/prefer-single-boolean-return
         if (
-            previousFirstRow &&
-            sortItem.attributeSortItem.attributeIdentifier === previousFirstRow.localIdentifier &&
+            sortItem.attributeSortItem.attributeIdentifier === previousFirstRow?.localIdentifier &&
             sortItem.attributeSortItem.direction === "asc"
         ) {
             return false;
@@ -211,7 +210,7 @@ export const isSortItemVisible = (
         : isMeasureSortItemVisible(sortItem, filters, columnAttributes);
 
 export const getSanitizedSortItems = (
-    sortItems: ISortItem[],
+    sortItems: ISortItem[] | undefined,
     measureGroupDimension: MeasureGroupDimension,
 ): ISortItem[] => {
     // Measure sort is not supported on transposed table (metrics in rows).
@@ -232,7 +231,7 @@ export const getSanitizedSortItems = (
  * can seriously mess up the pivot table in return: the column resizing is susceptible to race conditions and timing
  * issues. Because of the flurry of calls, the table may not render or may render not resized at all.
  */
-export const getPivotTableSortItems = (insight: IInsightDefinition): ISortItem[] => {
+export const getPivotTableSortItems = (insight: IInsightDefinition): ISortItem[] | undefined => {
     const sorts = insightSorts(insight);
     const mesureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 

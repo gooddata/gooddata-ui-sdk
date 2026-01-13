@@ -86,7 +86,7 @@ export type AggregationsMenuItemData = {
 export function HeaderInteractiveItem(props: IUiMenuInteractiveItemProps<AggregationsMenuItemData>) {
     const { item } = props;
 
-    if (item.data && item.data.type === "disabledItem" && item.data.disabledTooltip) {
+    if (item.data?.type === "disabledItem" && item.data.disabledTooltip) {
         return (
             <BubbleHoverTrigger showDelay={0} hideDelay={0} eventsOnBubble>
                 <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} />

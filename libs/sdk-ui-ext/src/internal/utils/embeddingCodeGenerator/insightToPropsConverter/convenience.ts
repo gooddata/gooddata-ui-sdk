@@ -65,7 +65,7 @@ function firstBucketItem(bucket: IBucket): IAttributeOrMeasure | undefined {
 export function singleAttributeBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IInsightToPropConversion<TProps, TPropKey, IAttribute> {
+): IInsightToPropConversion<TProps, TPropKey, IAttribute | undefined> {
     return bucketConversion(propName, sdkModelPropMetas.Attribute.Single, bucketName, bucketAttribute);
 }
 
@@ -75,7 +75,7 @@ export function singleAttributeBucketConversion<TProps extends object, TPropKey 
 export function multipleAttributesBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IInsightToPropConversion<TProps, TPropKey, IAttribute[]> {
+): IInsightToPropConversion<TProps, TPropKey, IAttribute[] | undefined> {
     return bucketConversion(propName, sdkModelPropMetas.Attribute.Multiple, bucketName, bucketAttributes);
 }
 
@@ -85,7 +85,7 @@ export function multipleAttributesBucketConversion<TProps extends object, TPropK
 export function singleMeasureBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IInsightToPropConversion<TProps, TPropKey, IMeasure> {
+): IInsightToPropConversion<TProps, TPropKey, IMeasure | undefined> {
     return bucketConversion(propName, sdkModelPropMetas.Measure.Single, bucketName, bucketMeasure);
 }
 
@@ -95,7 +95,7 @@ export function singleMeasureBucketConversion<TProps extends object, TPropKey ex
 export function multipleMeasuresBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IInsightToPropConversion<TProps, TPropKey, IMeasure[]> {
+): IInsightToPropConversion<TProps, TPropKey, IMeasure[] | undefined> {
     return bucketConversion(propName, sdkModelPropMetas.Measure.Multiple, bucketName, bucketMeasures);
 }
 
@@ -105,7 +105,10 @@ export function multipleMeasuresBucketConversion<TProps extends object, TPropKey
 export function singleAttributeOrMeasureBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
->(propName: TPropKey, bucketName: string): IInsightToPropConversion<TProps, TPropKey, IAttributeOrMeasure> {
+>(
+    propName: TPropKey,
+    bucketName: string,
+): IInsightToPropConversion<TProps, TPropKey, IAttributeOrMeasure | undefined> {
     return bucketConversion(
         propName,
         sdkModelPropMetas.AttributeOrMeasure.Single,
@@ -120,7 +123,10 @@ export function singleAttributeOrMeasureBucketConversion<
 export function multipleAttributesOrMeasuresBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
->(propName: TPropKey, bucketName: string): IInsightToPropConversion<TProps, TPropKey, IAttributeOrMeasure[]> {
+>(
+    propName: TPropKey,
+    bucketName: string,
+): IInsightToPropConversion<TProps, TPropKey, IAttributeOrMeasure[] | undefined> {
     return bucketConversion(propName, sdkModelPropMetas.AttributeOrMeasure.Multiple, bucketName, bucketItems);
 }
 

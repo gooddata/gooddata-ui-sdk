@@ -68,7 +68,7 @@ describe("PluggableColumnBarCharts", () => {
 
     describe("optional stacking", () => {
         const options: IVisProps = {
-            dimensions: { height: null },
+            dimensions: { height: undefined },
             locale: "en-US",
             custom: {},
             messages,
@@ -225,7 +225,7 @@ describe("PluggableColumnBarCharts", () => {
                 referencePointMocks.oneMeasuresOneCategoryOneStackItemWithStackMeasuresToPercent;
             let extendedReferencePoint = await columnChart.getExtendedReferencePoint(initialState);
             // 'Stack to 100%' checkbox is checked
-            expect(extendedReferencePoint.properties.controls).toEqual({
+            expect(extendedReferencePoint.properties!.controls).toEqual({
                 stackMeasuresToPercent: true,
             });
 
@@ -234,14 +234,14 @@ describe("PluggableColumnBarCharts", () => {
                 referencePointMocks.oneMeasuresOneCategoryWithStackMeasuresToPercent;
             extendedReferencePoint = await columnChart.getExtendedReferencePoint(stateWithStackByItemRemoved);
             // 'Stack to 100%' and 'Stack Measures' checkboxes are hidden
-            expect(extendedReferencePoint.properties.controls).toBeFalsy();
+            expect(extendedReferencePoint.properties!.controls).toBeFalsy();
 
             // step3: add one more measure
             const stateWithNewMeasureAdded =
                 referencePointMocks.twoMeasuresOneCategoryWithStackMeasuresToPercent;
             extendedReferencePoint = await columnChart.getExtendedReferencePoint(stateWithNewMeasureAdded);
             // column chart should be stacked in percent with 'Stack to 100%' and 'Stack Measures' checkboxes are checked
-            expect(extendedReferencePoint.properties.controls).toEqual({
+            expect(extendedReferencePoint.properties!.controls).toEqual({
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
             });

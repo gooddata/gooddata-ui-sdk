@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { v4 as uuid } from "uuid";
 
@@ -8,8 +8,8 @@ import {
     EntitiesApi_DeleteEntityMemoryItems,
     EntitiesApi_PatchEntityMemoryItems,
     EntitiesApi_UpdateEntityMemoryItems,
-} from "@gooddata/api-client-tiger/entitiesObjects";
-import { GenAiApi_MemoryCreatedByUsers } from "@gooddata/api-client-tiger/genAI";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import { GenAiApi_MemoryCreatedByUsers } from "@gooddata/api-client-tiger/endpoints/genAI";
 import {
     type IMemoryCreatedByUsers,
     type IMemoryItemsQuery,

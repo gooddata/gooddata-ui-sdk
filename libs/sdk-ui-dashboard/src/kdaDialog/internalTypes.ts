@@ -62,13 +62,17 @@ export interface KdaState {
     selectedTrend: ("up" | "down")[];
     selectedItem: IUiListboxInteractiveItem<KdaItem> | "summary";
     selectedStatus: KdaAsyncStatus;
+    selectedError: Error | undefined;
     attributeFilters: IDashboardAttributeFilter[];
     items: IUiListboxInteractiveItem<KdaItem>[];
     itemsStatus: KdaAsyncStatus;
+    itemsError: Error | undefined;
     selectedAttributes: ObjRef[];
     relevantStatus: KdaAsyncStatus;
     relevantAttributes: ObjRef[];
     selectedUpdated: number;
+    includeTags: string[] | undefined;
+    excludeTags: string[] | undefined;
 }
 
 export type KdaAsyncStatus = "loading" | "success" | "error" | "pending";

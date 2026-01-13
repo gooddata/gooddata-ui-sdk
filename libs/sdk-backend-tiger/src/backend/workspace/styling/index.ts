@@ -1,9 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     EntitiesApi_GetAllEntitiesColorPalettes,
     EntitiesApi_GetAllEntitiesThemes,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import {
     type IColorPaletteItem,

@@ -1,10 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { ActionsApi_InheritedEntityPrefixes } from "@gooddata/api-client-tiger/actions";
+import { ActionsApi_InheritedEntityPrefixes } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_GetEntityWorkspaces,
     EntitiesApi_PatchEntityWorkspaces,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     type IAnalyticalWorkspace,
     type IAttributeHierarchiesService,

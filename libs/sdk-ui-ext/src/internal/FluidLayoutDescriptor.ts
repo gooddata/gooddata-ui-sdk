@@ -9,7 +9,7 @@ const GRID_ROW_HEIGHT_IN_PX = 20;
  * @alpha
  */
 export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
-    type: "fluid";
+    type = "fluid" as const;
     gridColumnsCount = DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
     gridRowHeight = GRID_ROW_HEIGHT_IN_PX;
 

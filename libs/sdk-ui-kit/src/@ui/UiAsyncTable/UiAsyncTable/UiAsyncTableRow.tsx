@@ -218,7 +218,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
             getTextContent: ((item: T) => string | ReactNode) | undefined,
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
             getTextTitle: ((item: T) => string) | undefined,
-            getTextHref: ((item: T) => string) | undefined,
+            getTextHref: ((item: T) => string | undefined) | undefined,
             renderSuffixIcon: ((item: T) => ReactNode) | undefined,
             focusedElementRef: Ref<HTMLElement>,
             isCellFocused: boolean,

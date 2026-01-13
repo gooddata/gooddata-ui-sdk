@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
@@ -14,7 +14,7 @@ import {
     GenAiApi_AiChat,
     GenAiApi_AiChatHistory,
     GenAiApi_AiChatStream,
-} from "@gooddata/api-client-tiger/genAI";
+} from "@gooddata/api-client-tiger/endpoints/genAI";
 import type {
     IChatThread,
     IChatThreadHistory,

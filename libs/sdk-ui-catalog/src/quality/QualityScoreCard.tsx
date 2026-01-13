@@ -1,9 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
+import { useId } from "react";
 
 import { useIntl } from "react-intl";
 
 import { useQualityActions, useQualityState } from "./QualityContext.js";
 import { QualityScoreCardAction } from "./QualityScoreCardAction.js";
+import { QualityScoreCardAnnouncements } from "./QualityScoreCardAnnouncements.js";
 import { QualityScoreCardDate } from "./QualityScoreCardDate.js";
 import { QualityScoreCardMenu } from "./QualityScoreCardMenu.js";
 import { QualityScoreCardScore } from "./QualityScoreCardScore.js";
@@ -12,6 +15,8 @@ import { useFilterActions } from "../filter/index.js";
 
 export function QualityScoreCard() {
     const intl = useIntl();
+    const id = useId();
+    const titleId = `quality-score-card-title/${id}`;
     const { status, issues, updatedAt } = useQualityState();
     const { createQualityIssuesCalculation } = useQualityActions();
     const { setQualityCodes } = useFilterActions();
@@ -29,11 +34,16 @@ export function QualityScoreCard() {
     };
 
     return (
-        <div className="gd-analytics-catalog__quality-score-card">
-            <span className="gd-analytics-catalog__quality-score-card__title">
+        <section
+            className="gd-analytics-catalog__quality-score-card"
+            aria-labelledby={titleId}
+            aria-busy={isLoading}
+        >
+            <h3 id={titleId} className="gd-analytics-catalog__quality-score-card__title">
                 {intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.title" })}
-            </span>
-            <QualityScoreCardMenu intl={intl} onRunCheck={handleRunCheck} />
+            </h3>
+            <QualityScoreCardAnnouncements isLoading={isLoading} />
+            <QualityScoreCardMenu intl={intl} onRunCheck={handleRunCheck} isLoading={isLoading} />
             <QualityScoreCardScore issues={issues} isLoading={isLoading} />
             <QualityScoreCardAction
                 intl={intl}
@@ -42,6 +52,6 @@ export function QualityScoreCard() {
                 onActionClick={handleActionClick}
             />
             {updatedAt ? <QualityScoreCardDate date={updatedAt} locale={intl.locale} /> : null}
-        </div>
+        </section>
     );
 }

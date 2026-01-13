@@ -14,10 +14,10 @@ import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHel
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IColumnHeadersPositionControlProps {
-    pushData: (data: any) => any;
-    properties: IVisualizationProperties;
-    isDisabled: boolean;
-    insight: IInsightDefinition;
+    pushData?: (data: any) => any;
+    properties?: IVisualizationProperties;
+    isDisabled?: boolean;
+    insight?: IInsightDefinition;
     showDisabledMessage?: boolean;
     defaultValue?: string;
     isLoading?: boolean;
@@ -52,8 +52,8 @@ export function ColumnHeadersPositionControl({
             />
             {enableNewPivotTable ? (
                 <ColumnHeaderTextWrappingControl
-                    properties={properties}
-                    pushData={pushData}
+                    properties={properties!}
+                    pushData={pushData!}
                     disabled={isLoading}
                 />
             ) : null}

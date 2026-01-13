@@ -6,9 +6,9 @@ import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 
 export interface ICellsControlProps {
-    pushData: (data: any) => any;
-    properties: IVisualizationProperties;
-    isDisabled: boolean;
+    pushData?: (data: any) => any;
+    properties?: IVisualizationProperties;
+    isDisabled?: boolean;
 }
 
 /**
@@ -20,7 +20,7 @@ export interface ICellsControlProps {
 export function CellsControl({ pushData, properties, isDisabled }: ICellsControlProps) {
     return (
         <ConfigSubsection title={messages["cellsTitle"].id}>
-            <CellTextWrappingControl properties={properties} pushData={pushData} disabled={isDisabled} />
+            <CellTextWrappingControl properties={properties!} pushData={pushData!} disabled={isDisabled} />
         </ConfigSubsection>
     );
 }

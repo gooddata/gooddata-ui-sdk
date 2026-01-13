@@ -401,6 +401,9 @@
                         "$ref": "#/components/schemas/RangeMeasureValueFilter"
                     },
                     {
+                        "$ref": "#/components/schemas/CompoundMeasureValueFilter"
+                    },
+                    {
                         "$ref": "#/components/schemas/RankingFilter"
                     }
                 ]
@@ -1087,6 +1090,35 @@
                     }
                 }
             },
+            "ComparisonCondition": {
+                "required": ["comparison"],
+                "type": "object",
+                "properties": {
+                    "comparison": {
+                        "required": ["operator", "value"],
+                        "type": "object",
+                        "properties": {
+                            "operator": {
+                                "type": "string",
+                                "example": "GREATER_THAN",
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            },
+                            "value": {
+                                "type": "number",
+                                "example": 100
+                            }
+                        }
+                    }
+                },
+                "description": "Condition that compares the metric value to a given constant value using a comparison operator."
+            },
             "ComparisonMeasureValueFilter": {
                 "required": ["comparisonMeasureValueFilter"],
                 "type": "object",
@@ -1145,6 +1177,47 @@
                         "$ref": "#/components/schemas/Comparison"
                     }
                 }
+            },
+            "CompoundMeasureValueFilter": {
+                "required": ["compoundMeasureValueFilter"],
+                "type": "object",
+                "properties": {
+                    "compoundMeasureValueFilter": {
+                        "required": ["conditions", "measure"],
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "References to the attributes to be used when filtering.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmIdentifier"
+                                }
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "description": "A value that will be substituted for null values in the metric for the comparisons.",
+                                "example": 0
+                            },
+                            "conditions": {
+                                "type": "array",
+                                "description": "List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.",
+                                "items": {
+                                    "$ref": "#/components/schemas/MeasureValueCondition"
+                                }
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "measure": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
             },
             "CustomLabel": {
                 "required": ["title"],
@@ -1530,6 +1603,9 @@
                         "$ref": "#/components/schemas/RangeMeasureValueFilter"
                     },
                     {
+                        "$ref": "#/components/schemas/CompoundMeasureValueFilter"
+                    },
+                    {
                         "$ref": "#/components/schemas/AbsoluteDateFilter"
                     },
                     {
@@ -1761,6 +1837,18 @@
                 },
                 "description": "Metric is a quantity that is calculated from the data."
             },
+            "MeasureValueCondition": {
+                "type": "object",
+                "description": "A condition for filtering by measure value. Can be either a comparison or a range condition.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ComparisonCondition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeCondition"
+                    }
+                ]
+            },
             "MeasureValueFilter": {
                 "type": "object",
                 "description": "Abstract filter definition type filtering by the value of the metric.",
@@ -1770,6 +1858,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/CompoundMeasureValueFilter"
                     }
                 ]
             },
@@ -1987,6 +2078,32 @@
                         "$ref": "#/components/schemas/Value"
                     }
                 }
+            },
+            "RangeCondition": {
+                "required": ["range"],
+                "type": "object",
+                "properties": {
+                    "range": {
+                        "required": ["from", "operator", "to"],
+                        "type": "object",
+                        "properties": {
+                            "operator": {
+                                "type": "string",
+                                "example": "BETWEEN",
+                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                            },
+                            "from": {
+                                "type": "number",
+                                "example": 100
+                            },
+                            "to": {
+                                "type": "number",
+                                "example": 999
+                            }
+                        }
+                    }
+                },
+                "description": "Condition that checks if the metric value is within a given range."
             },
             "RangeMeasureValueFilter": {
                 "required": ["rangeMeasureValueFilter"],

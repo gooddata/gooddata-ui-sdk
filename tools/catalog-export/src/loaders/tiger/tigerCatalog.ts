@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type ITigerClientBase,
     type JsonApiAttributeOutList,
@@ -11,7 +12,7 @@ import {
     EntitiesApi_GetAllEntitiesAttributes,
     EntitiesApi_GetAllEntitiesFacts,
     EntitiesApi_GetAllEntitiesMetrics,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 
 import { convertAttribute, createLabelMap } from "./tigerCommon.js";
 import { type Attribute, type Catalog, type Fact, type Metric } from "../../base/types.js";

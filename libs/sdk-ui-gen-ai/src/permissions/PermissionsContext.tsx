@@ -1,10 +1,14 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type PropsWithChildren, createContext, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { AnalyticalBackendErrorTypes, isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
+import {
+    AnalyticalBackendErrorTypes,
+    isAnalyticalBackendError,
+    isUnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
@@ -26,6 +30,9 @@ export function PermissionsProvider({ children }: PropsWithChildren) {
     const { result, loading, error } = useWorkspacePermissions(workspace);
     const value = useMemo(() => ({ permissions: result, loading }), [loading, result]);
 
+    if (isUnexpectedResponseError(error)) {
+        return <GlobalError errorDetails={error.message} errorTraceId={error.traceId} />;
+    }
     if (isAnalyticalBackendError(error) && error.abeType === AnalyticalBackendErrorTypes.UNEXPECTED) {
         return <GlobalError errorDetails={error.message} />;
     }

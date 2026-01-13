@@ -311,8 +311,7 @@ function defaultChartedAttributeDiscovery(dv: DataViewFacade): ChartedAttributes
     const dimensions = dv.meta().dimensions();
 
     const isViewByTwoAttributes =
-        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX] &&
-        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === ViewByAttributesLimit;
+        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]?.length === ViewByAttributesLimit;
 
     let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems | undefined;
 

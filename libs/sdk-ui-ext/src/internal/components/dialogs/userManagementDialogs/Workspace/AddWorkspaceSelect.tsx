@@ -42,7 +42,7 @@ export function AddWorkspaceSelect({
     const selectRef = useRef<SelectInstance<ISelectOption | ISelectErrorOption, false>>(null);
 
     useEffect(() => {
-        selectRef.current.focus();
+        selectRef.current?.focus();
     }, []);
 
     const onSelect = useCallback(

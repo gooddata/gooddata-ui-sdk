@@ -88,10 +88,10 @@ import { AbstractPluggableVisualization } from "../AbstractPluggableVisualizatio
  *
  */
 export class PluggableRepeater extends AbstractPluggableVisualization {
-    private environment: VisualizationEnvironment;
+    private environment: VisualizationEnvironment | undefined;
     private renderFun: RenderFunction;
     private unmountFun: UnmountFunction;
-    protected colors: IColorConfiguration;
+    protected colors: IColorConfiguration | undefined;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -104,7 +104,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement()!, this.getConfigPanelElement()!]);
     }
 
     public getExtendedReferencePoint = async (
@@ -135,12 +135,12 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const dimensions = this.getRepeaterDimensions(insight);
         const attributeBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
         const viewBucket = insightBucket(insight, BucketNames.VIEW);
-        const rowAttribute = attributeBucket.items[0] as IAttribute;
+        const rowAttribute = attributeBucket?.items[0] as IAttribute;
         const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
         const extendedConfig = this.getExtendedConfig(options, insight);
         const sanitizedBuckets = constructRepeaterBuckets(
             rowAttribute,
-            columnsBucket?.items,
+            columnsBucket!.items,
             viewBucket?.items?.[0] as IAttribute,
             extendedConfig?.inlineVisualizations,
         );
@@ -149,7 +149,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return executionFactory
             .forInsight(insightWithSanitizedBuckets)
             .withDimensions(...dimensions)
-            .withDateFormat(dateFormat);
+            .withDateFormat(dateFormat!);
     }
 
     public override getBucketsToUpdate(
@@ -168,7 +168,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const rowAttributeWasSwapped =
             currentRowAttribute &&
             nextRowAttribute &&
-            !currentRowAttribute.displayForms.some((currentDf) =>
+            !currentRowAttribute.displayForms?.some((currentDf) =>
                 areObjRefsEqual(currentDf.ref, nextRowAttribute.dfRef),
             );
 
@@ -193,12 +193,12 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 
     private insightHasColumns(insight: IInsightDefinition): boolean {
         const bucket = insightBucket(insight, BucketNames.COLUMNS);
-        return bucket?.items?.length > 0;
+        return (bucket?.items?.length ?? 0) > 0;
     }
 
     private insightHasRows(insight: IInsightDefinition): boolean {
         const bucket = insightBucket(insight, BucketNames.ATTRIBUTE);
-        return bucket?.items?.length > 0;
+        return (bucket?.items?.length ?? 0) > 0;
     }
 
     protected override mergeDerivedBucketItems(
@@ -295,7 +295,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return columnSizing as IRepeaterColumnSizing;
     }
 
-    private buildColorMapping(colorMapping?: IColorMappingItem[]): IColorMapping[] {
+    private buildColorMapping(colorMapping?: IColorMappingItem[]): IColorMapping[] | undefined {
         const validColorMapping = compact(colorMapping).map(
             (mapItem): IColorMapping => ({
                 predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
@@ -303,7 +303,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             }),
         );
 
-        return validColorMapping?.length > 0 ? validColorMapping : null;
+        return validColorMapping?.length > 0 ? validColorMapping : undefined;
     }
 
     private getExtendedConfig(options: IVisProps, insight: IInsightDefinition) {
@@ -325,7 +325,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         if (this.visualizationProperties) {
             resultingData.properties = getValidProperties(
                 this.visualizationProperties,
-                data.colors.colorAssignments,
+                data.colors?.colorAssignments,
             );
 
             this.visualizationProperties = resultingData.properties;

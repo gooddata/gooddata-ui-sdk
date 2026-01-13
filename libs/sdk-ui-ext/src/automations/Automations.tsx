@@ -51,9 +51,9 @@ export function Automations({
     onLoad,
 }: IAutomationsProps) {
     return (
-        <BackendProvider backend={backend}>
+        <BackendProvider backend={backend!}>
             <OrganizationProvider organization={organization}>
-                <WorkspaceProvider workspace={workspace}>
+                <WorkspaceProvider workspace={workspace!}>
                     <UserProvider scope={scope}>
                         <FilterOptionsProvider scope={scope}>
                             <InternalIntlWrapper locale={locale}>

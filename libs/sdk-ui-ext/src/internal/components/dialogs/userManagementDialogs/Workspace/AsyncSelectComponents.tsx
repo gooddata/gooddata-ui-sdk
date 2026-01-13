@@ -22,7 +22,7 @@ import {
 } from "../types.js";
 import { getWorkspaceItemTestId } from "../utils.js";
 
-export function EmptyRenderer(): ReactElement {
+export function EmptyRenderer(): ReactElement | null {
     return null;
 }
 
@@ -78,7 +78,7 @@ export function InputRendered(props: InputProps<ISelectOption | ISelectErrorOpti
 
 export function SingleValueInputRenderer(
     props: InputProps<ISelectOption | ISelectErrorOption, false>,
-): ReactElement {
+): ReactElement | null {
     if (props.hasValue) {
         return null;
     }

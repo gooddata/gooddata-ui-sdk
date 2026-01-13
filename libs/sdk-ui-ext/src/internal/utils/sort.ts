@@ -95,15 +95,18 @@ function getDefaultBarChartSort(
 }
 
 export function getDefaultTreemapSortFromBuckets(
-    viewBy: IBucket,
-    segmentBy: IBucket,
-    measures: IMeasure[],
+    viewBy: IBucket | undefined,
+    segmentBy: IBucket | undefined,
+    measures: IMeasure[] | undefined,
 ): ISortItem[] {
     const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
     const stackAttr = segmentBy ? bucketAttributes(segmentBy) : [];
 
     if (!isEmpty(viewAttr) && !isEmpty(stackAttr)) {
-        return [newAttributeSort(viewAttr[0], "asc"), ...measures.map((m) => newMeasureSort(m, "desc"))];
+        return [
+            newAttributeSort(viewAttr[0], "asc"),
+            ...(measures ?? []).map((m) => newMeasureSort(m, "desc")),
+        ];
     }
 
     return [];
@@ -117,7 +120,7 @@ function getDefaultTreemapSort(insight: IInsightDefinition): ISortItem[] {
     );
 }
 
-function getDefaultHeatmapSortFromBuckets(viewBy: IBucket): ISortItem[] {
+function getDefaultHeatmapSortFromBuckets(viewBy: IBucket | undefined): ISortItem[] {
     const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
     if (!isEmpty(viewAttr)) {
         return [newAttributeSort(viewAttr[0], "desc")];
@@ -244,11 +247,11 @@ function isValidMeasureSort(measureSort: IMeasureSortItem, availableSort: IAvail
 }
 
 function handleDifferentOrder(
-    currentSort: ISortItem[],
+    currentSort: (ISortItem | undefined)[],
     availableSortGroup: IAvailableSortsGroup,
     previousAvailableSorts: IAvailableSortsGroup[],
 ): {
-    modifiedSorts?: ISortItem[];
+    modifiedSorts?: (ISortItem | undefined)[];
     reusedItem?: ISortItem;
 } {
     const correspondingGroupIndex = previousAvailableSorts.findIndex((previousSortGroup) =>
@@ -258,7 +261,7 @@ function handleDifferentOrder(
     if (correspondingGroupIndex !== -1) {
         const reusedItem = reuseSortItemType(currentSort[correspondingGroupIndex], availableSortGroup);
 
-        const modifiedSorts = [...currentSort];
+        const modifiedSorts: (ISortItem | undefined)[] = [...currentSort];
         modifiedSorts[correspondingGroupIndex] = undefined; // clear reused item to not affect other availableGroups
         return {
             modifiedSorts,
@@ -276,7 +279,7 @@ function reuseAttributeValueSortItem(currentSortItem: ISortItem, availableSortGr
 function reuseAttributeAreaSortItem(currentSortItem: ISortItem, availableSortGroup: IAvailableSortsGroup) {
     const currentSortDirection = sortDirection(currentSortItem);
     // reuse it whole
-    if (availableSortGroup.attributeSort.areaSortEnabled) {
+    if (availableSortGroup.attributeSort?.areaSortEnabled) {
         return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
     }
     // reuse numeric sort type
@@ -300,16 +303,16 @@ function reuseMetricSortItem(currentSortItem: IMeasureSortItem, availableSortGro
         return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
     }
     // reuse numeric sort type in form of area sort
-    if (availableSortGroup.attributeSort.areaSortEnabled) {
+    if (availableSortGroup.attributeSort?.areaSortEnabled) {
         return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
     }
 
     return undefined;
 }
 
-function reuseSortItemType(currentSortItem: ISortItem, availableSortGroup: IAvailableSortsGroup) {
+function reuseSortItemType(currentSortItem: ISortItem | undefined, availableSortGroup: IAvailableSortsGroup) {
     if (currentSortItem) {
-        if (isAttributeValueSort(currentSortItem) && availableSortGroup.attributeSort.normalSortEnabled) {
+        if (isAttributeValueSort(currentSortItem) && availableSortGroup.attributeSort?.normalSortEnabled) {
             return reuseAttributeValueSortItem(currentSortItem, availableSortGroup);
         }
         if (isAttributeAreaSort(currentSortItem)) {
@@ -344,7 +347,7 @@ export function validateCurrentSort(
     if (previousSort.length === 0) {
         return [];
     }
-    let sortsToReuse = [...previousSort];
+    let sortsToReuse: (ISortItem | undefined)[] = [...previousSort];
     const completelyReused = availableSorts.map((availableSortGroup) => {
         // reuse existing sort item with only changed order
         // it may affect also items in current sort - set to undefined when item already reused
@@ -354,7 +357,7 @@ export function validateCurrentSort(
             previousAvailableSorts,
         );
         if (reusedItem) {
-            sortsToReuse = modifiedSorts;
+            sortsToReuse = modifiedSorts!;
             return reusedItem;
         }
 
@@ -376,13 +379,13 @@ export function getCustomSortDisabledExplanation(
     relevantMeasures: IBucketItem[],
     relevantAttributes: IBucketItem[],
     intl: IntlShape,
-): string {
+): string | undefined {
     if (relevantAttributes.length === 0 && relevantMeasures.length >= 2) {
-        return getTranslation(messages["explanationMeasure"].id, intl);
+        return getTranslation(messages["explanationMeasure"].id!, intl);
     }
 
     if (relevantAttributes.length === 0) {
-        return getTranslation(messages["explanationAttribute"].id, intl);
+        return getTranslation(messages["explanationAttribute"].id!, intl);
     }
 
     return undefined;

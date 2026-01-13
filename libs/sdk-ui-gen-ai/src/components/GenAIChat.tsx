@@ -81,6 +81,14 @@ export interface GenAIAssistantProps {
      * A list of object types to search for.
      */
     objectTypes?: GenAIObjectType[];
+    /**
+     * Only objects with these tags will be included
+     */
+    includeTags?: string[];
+    /**
+     * Objects with these tags will be excluded
+     */
+    excludeTags?: string[];
 
     /**
      * When provided, the function will be called with the store dispatch function
@@ -106,8 +114,18 @@ export type GenAIChatProps = GenAIAssistantProps;
  * @public
  */
 export function GenAIAssistant(props: GenAIAssistantProps) {
-    const { backend, workspace, locale, colorPalette, eventHandlers, settings, objectTypes, onDispatcher } =
-        props;
+    const {
+        backend,
+        workspace,
+        locale,
+        colorPalette,
+        eventHandlers,
+        settings,
+        objectTypes,
+        includeTags,
+        excludeTags,
+        onDispatcher,
+    } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
@@ -115,6 +133,8 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         eventHandlers,
         settings,
         objectTypes,
+        includeTags,
+        excludeTags,
     });
 
     useEffect(() => {

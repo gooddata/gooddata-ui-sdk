@@ -102,11 +102,11 @@ export function HeaderMenu({
                 return;
             }
 
-            if (item.data && item.data.type === "aggregation") {
+            if (item.data?.type === "aggregation") {
                 onAggregationsItemClick(item.data);
-            } else if (item.data && item.data.type === "textWrapping") {
+            } else if (item.data?.type === "textWrapping") {
                 onTextWrappingItemClick(item.data);
-            } else if (item.data && item.data.type === "sorting") {
+            } else if (item.data?.type === "sorting") {
                 onSortingItemClick(item.data);
             }
 

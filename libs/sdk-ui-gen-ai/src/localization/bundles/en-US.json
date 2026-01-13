@@ -8,8 +8,24 @@
         "crowdinContext": "User instruction on how to recover from a global error in the AI chatbot"
     },
     "gd.gen-ai.global-error.button-details": {
-        "text": "See details",
+        "text": "See the raw error response for details",
         "crowdinContext": "Button label to show more detailed error information"
+    },
+    "gd.gen-ai.global-error.traceId": {
+        "text": "Error trace ID",
+        "crowdinContext": "Button label to show more detailed error information"
+    },
+    "gd.gen-ai.global-error.traceId.copy": {
+        "text": "Copy to clipboard",
+        "crowdinContext": "Button label to copy error trace ID to clipboard"
+    },
+    "gd.gen-ai.global-error.details.title": {
+        "text": "Raw error response",
+        "crowdinContext": "Chatbot error details title for showing raw error response json"
+    },
+    "gd.gen-ai.global-error.details.title.tooltip": {
+        "text": "The raw error response shows back-end information about the error that has occurred. It is visible only to the administrators.",
+        "crowdinContext": "Chatbot error details title tooltip for showing raw error response json"
     },
     "gd.gen-ai.global-error.button-clear": {
         "text": "Restart chatbot",

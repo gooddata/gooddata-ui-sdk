@@ -10,9 +10,9 @@ import { type IVisualizationProperties } from "../../interfaces/Visualization.js
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IMetricsPositionControlProps {
-    pushData: (data: any) => any;
-    properties: IVisualizationProperties;
-    isDisabled: boolean;
+    pushData?: (data: any) => any;
+    properties?: IVisualizationProperties;
+    isDisabled?: boolean;
     showDisabledMessage?: boolean;
     defaultValue?: string;
 }

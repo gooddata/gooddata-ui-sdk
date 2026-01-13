@@ -17,9 +17,9 @@ import { ConfigSection } from "../ConfigSection.js";
 
 export interface IAdvancedSectionProps {
     controlsDisabled: boolean;
-    properties: IVisualizationProperties;
-    propertiesMeta: any;
-    pushData: (data: IPushData) => any;
+    properties?: IVisualizationProperties;
+    propertiesMeta?: any;
+    pushData?: (data: IPushData) => any;
 }
 
 export const AdvancedSection = memo(function AdvancedSection({
@@ -30,18 +30,18 @@ export const AdvancedSection = memo(function AdvancedSection({
 }: IAdvancedSectionProps) {
     const intl = useIntl();
     const [showDialog, setShowDialog] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLPreElement>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const contentRef = useRef<HTMLPreElement | null>(null);
     const isOverflowing = useOverflow(containerRef.current, contentRef.current);
 
     const valuePath = "chartConfigOverride";
     const configurationValue = properties?.controls?.["chartConfigOverride"];
 
-    const onChange = (value: string) => {
+    const onChange = (value: string | undefined) => {
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties, `controls.${valuePath}`, value);
+        set(clonedProperties!, `controls.${valuePath}`, value);
 
-        pushData({ properties: clonedProperties });
+        pushData?.({ properties: clonedProperties });
         setShowDialog(false);
     };
 

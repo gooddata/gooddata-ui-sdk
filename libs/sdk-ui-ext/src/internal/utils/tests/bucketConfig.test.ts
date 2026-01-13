@@ -111,7 +111,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
         it("should force-mark show in percent as not enabled in measure bucket ui config", () => {
             const referencePoint = getSingleMeasureNoFilterReferencePoint(1);
-            referencePoint.uiConfig.buckets["measures"].isShowInPercentEnabled = true;
+            referencePoint.uiConfig!.buckets["measures"].isShowInPercentEnabled = true;
 
             const newReferencePoint: IExtendedReferencePoint = configurePercent(
                 cloneDeep(referencePoint),
@@ -362,7 +362,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
         it("should keep derived measures when UI config contains used comparison type", () => {
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithSamePeriodPreviousYear);
-            referencePoint.uiConfig.supportedOverTimeComparisonTypes = [
+            referencePoint.uiConfig!.supportedOverTimeComparisonTypes = [
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
             ];
 
@@ -391,7 +391,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
         it("should remove all derived measures when UI config is empty", () => {
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithSamePeriodPreviousYear);
-            referencePoint.uiConfig.supportedOverTimeComparisonTypes = [];
+            referencePoint.uiConfig!.supportedOverTimeComparisonTypes = [];
 
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 
@@ -412,7 +412,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
         it("should remove all derived measures when UI config contains only NOTHING option", () => {
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithSamePeriodPreviousYear);
-            referencePoint.uiConfig.supportedOverTimeComparisonTypes = [OverTimeComparisonTypes.NOTHING];
+            referencePoint.uiConfig!.supportedOverTimeComparisonTypes = [OverTimeComparisonTypes.NOTHING];
 
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 

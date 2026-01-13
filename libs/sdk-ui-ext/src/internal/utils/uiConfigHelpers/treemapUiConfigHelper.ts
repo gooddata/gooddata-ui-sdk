@@ -25,6 +25,10 @@ function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
     const viewItems = getViewItems(buckets, [ATTRIBUTE, DATE]);
 
+    if (!updatedUiConfig) {
+        return updatedUiConfig;
+    }
+
     buckets.forEach((bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
         const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
@@ -34,7 +38,7 @@ function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint
             return;
         }
 
-        if (!bucketUiConfig?.canAddItems) {
+        if (!bucketUiConfig?.canAddItems && intl) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
                 warningMessage = getBucketItemsWarningMessage(messages["metricView"].id, intl, viewItems);

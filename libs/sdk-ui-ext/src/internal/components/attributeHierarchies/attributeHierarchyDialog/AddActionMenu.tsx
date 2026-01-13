@@ -9,7 +9,7 @@ import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.
 
 interface IAddActionMenuProps {
     rowIndex: number;
-    alignTo: HTMLElement;
+    alignTo: HTMLElement | null;
     onClose: () => void;
 }
 

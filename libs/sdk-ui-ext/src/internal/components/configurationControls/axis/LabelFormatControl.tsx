@@ -13,12 +13,12 @@ export interface ILabelFormatControl {
     disabled: boolean;
     configPanelDisabled: boolean;
     axis: AxisType;
-    properties: IVisualizationProperties;
-    pushData: (data: any) => any;
+    properties?: IVisualizationProperties;
+    pushData?: (data: any) => any;
 }
 
 const getControlProperties = (
-    properties: IVisualizationProperties,
+    properties: IVisualizationProperties | undefined,
     axis: AxisType,
 ): IVisualizationProperties => {
     const axisProperties = properties?.controls?.[axis];

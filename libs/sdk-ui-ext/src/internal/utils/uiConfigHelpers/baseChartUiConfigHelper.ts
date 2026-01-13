@@ -40,10 +40,14 @@ const barStackIcon = "local:bar/bucket-title-stack.svg";
 function setBaseChartBucketWarningMessages(
     referencePoint: IExtendedReferencePoint,
     intl?: IntlShape,
-): IUiConfig {
+): IUiConfig | null | undefined {
     const buckets = referencePoint?.buckets ?? [];
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
     const stackItems = getStackItems(buckets, [ATTRIBUTE, DATE]);
+
+    if (!updatedUiConfig) {
+        return updatedUiConfig;
+    }
 
     buckets.forEach((bucket: IBucketOfFun) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
@@ -56,10 +60,10 @@ function setBaseChartBucketWarningMessages(
 
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
-            if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(messages["metricStack"].id, intl, stackItems);
-            } else if (bucket.localIdentifier === BucketNames.STACK) {
-                warningMessage = getTranslation(messages["categoryStack"].id, intl);
+            if (bucket.localIdentifier === BucketNames.MEASURES && intl) {
+                warningMessage = getBucketItemsWarningMessage(messages["metricStack"].id!, intl, stackItems);
+            } else if (bucket.localIdentifier === BucketNames.STACK && intl) {
+                warningMessage = getTranslation(messages["categoryStack"].id!, intl);
             }
 
             if (warningMessage) {
@@ -173,7 +177,7 @@ function getBucketItemsIcons(bucket: IBucketItem[], intl: IntlShape): string {
 }
 
 export function getBucketItemsWarningMessage(
-    messageId: string,
+    messageId: string | undefined,
     intl: IntlShape,
     bucketItems: IBucketItem[],
 ): string {

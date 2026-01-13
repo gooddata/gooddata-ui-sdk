@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type AvailableAssignees,
@@ -8,7 +8,7 @@ import {
     ActionsApi_AvailableAssignees,
     ActionsApi_DashboardPermissions,
     ActionsApi_ManageDashboardPermissions,
-} from "@gooddata/api-client-tiger/actions";
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import { type IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import {
     type AccessGranteeDetail,

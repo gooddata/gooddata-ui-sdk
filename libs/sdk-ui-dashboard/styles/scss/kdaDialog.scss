@@ -297,6 +297,15 @@
         flex-direction: row;
         gap: 20px;
 
+        &-full {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         &-left-panel {
             flex: 0 0 250px;
             max-width: 250px;
@@ -713,6 +722,92 @@
     //attributes dropdown
     .gd-kda-attributes-dropdown {
         display: inline-flex;
+    }
+
+    //error component
+    .gd-kda-dialog-error {
+        display: flex;
+        flex-direction: column;
+        max-width: 460px;
+        gap: 0;
+
+        &-trace-id {
+            color: var(--gd-palette-complementary-6);
+            text-align: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 21px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &-name {
+                text-decoration: underline;
+                text-decoration-style: dashed;
+            }
+        }
+
+        &-details-show {
+            margin-top: 0;
+            display: flex;
+            flex-direction: column;
+
+            &-content {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                display: flex;
+                flex-direction: column;
+                height: 233px;
+                padding-top: 5px;
+                align-items: flex-start;
+                align-self: stretch;
+                border-radius: 3px;
+                border: 1px solid var(--gd-palette-complementary-3);
+            }
+
+            &-content-title {
+                display: flex;
+                padding: 0 10px;
+                align-items: center;
+                gap: 5px;
+                align-self: stretch;
+                flex-grow: 0;
+            }
+
+            &-content-title-text {
+                flex: 1 0 0;
+                color: var(--gd-palette-complementary-6);
+                font-feature-settings:
+                    "liga" off,
+                    "clig" off;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 23px; /* 164.286% */
+            }
+
+            &-content-description {
+                display: flex;
+                padding: 10px;
+                align-items: flex-start;
+                gap: 10px;
+                align-self: stretch;
+                border-radius: 0 0 3px 3px;
+                border-top: 1px solid var(--gd-palette-complementary-3);
+                background: var(--gray-100-fcfcfd-com-0, #fcfcfd);
+                margin: 0;
+                color: var(--gd-palette-complementary-7);
+                font-family: "Andale Mono", serif;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 18px;
+                overflow: auto;
+                white-space: normal;
+                word-break: break-word;
+            }
+        }
     }
 }
 

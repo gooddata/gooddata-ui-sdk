@@ -34,7 +34,7 @@ const SEARCH_INTERVAL = 400;
 export interface IAddUserGroupSelectProps {
     onSelect: (userGroup: IGrantedUserGroup) => void;
     addedUserGroups: IGrantedUserGroup[];
-    grantedUserGroups: IGrantedUserGroup[];
+    grantedUserGroups: IGrantedUserGroup[] | undefined;
 }
 
 export function AddUserGroupSelect({
@@ -48,7 +48,7 @@ export function AddUserGroupSelect({
     const organizationId = useOrganizationId();
 
     useEffect(() => {
-        selectRef.current.focus();
+        selectRef.current?.focus();
     }, []);
 
     const onChange = useCallback(

@@ -8,7 +8,7 @@ import { type IReferencePoint } from "../interfaces/Visualization.js";
 export function isForecastEnabled(
     referencePoint: IReferencePoint | undefined,
     insight: IInsightDefinition | undefined,
-    type: ChartType,
+    type: ChartType | undefined,
 ) {
     switch (type) {
         case "line": {
@@ -34,6 +34,9 @@ function lineChartBuckets(
     // Keep on mind that we are not able to check if trends item is date
     // but this method is used on dashboard where is not necessary to be so strict
     if (!referencePoint) {
+        if (!insight) {
+            return false;
+        }
         const buckets = insightBuckets(insight);
         const measures = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.MEASURES);
         const trends = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.TREND);
@@ -57,7 +60,11 @@ function lineChartBuckets(
     );
 }
 
-function lineChartNotSorts(insight: IInsightDefinition) {
+function lineChartNotSorts(insight: IInsightDefinition | undefined) {
+    //NOTE: No insight, can't be forecast
+    if (!insight) {
+        return false;
+    }
     const { sorts } = insight.insight;
 
     //NOTE: No sort, can be forecast

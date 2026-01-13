@@ -1,7 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { ActionsUtilities, type JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesDataSourceIdentifiers } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesDataSourceIdentifiers } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IDataSourcesService } from "@gooddata/sdk-backend-spi";
 import { type IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 

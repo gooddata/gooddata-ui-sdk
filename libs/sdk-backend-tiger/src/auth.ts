@@ -1,8 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import { type ITigerClient, type IUserProfile, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
     type AuthenticationFlow,
     type IAnalyticalBackend,

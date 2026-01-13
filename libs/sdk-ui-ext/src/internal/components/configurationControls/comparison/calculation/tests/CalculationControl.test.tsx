@@ -31,7 +31,7 @@ describe("CalculationControl", () => {
         disabled?: boolean;
     }) => {
         const props = {
-            disabled: params?.disabled,
+            disabled: params?.disabled ?? false,
             defaultCalculationType: params?.defaultCalculationType,
             pushData: mockPushData,
             properties: params?.properties || {},
@@ -39,7 +39,7 @@ describe("CalculationControl", () => {
 
         return render(
             <InternalIntlWrapper>
-                <CalculationControl {...props} />
+                <CalculationControl {...(props as any)} />
             </InternalIntlWrapper>,
         );
     };
@@ -57,7 +57,7 @@ describe("CalculationControl", () => {
         renderCalculationControl({ properties, disabled: true });
         expect(MockDropdownControl).toHaveBeenCalledWith(
             expect.objectContaining({
-                value: properties.controls.comparison.calculationType,
+                value: properties.controls!.comparison!.calculationType,
                 properties,
                 disabled,
                 pushData: mockPushData,
@@ -78,14 +78,14 @@ describe("CalculationControl", () => {
             }),
         });
 
-        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(RATIO_ITEM_TEXT_QUERY);
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!.textContent).toEqual(RATIO_ITEM_TEXT_QUERY);
     });
 
     it("Should select default calculation-type while calculation-type is empty", () => {
         const { container } = renderCalculationControl({
             defaultCalculationType: CalculateAs.DIFFERENCE,
         });
-        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!.textContent).toEqual(
             DIFFERENCE_ITEM_TEXT_QUERY,
         );
     });
@@ -98,7 +98,7 @@ describe("CalculationControl", () => {
     it("Should render items correctly", () => {
         const MockCalculationListItem = vi.spyOn(CalculationListItemModule, "CalculationListItem");
         const { container } = renderCalculationControl();
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR));
+        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
 
         expect(MockCalculationListItem).toHaveBeenNthCalledWith(
             1,
@@ -147,7 +147,7 @@ describe("CalculationControl", () => {
         const { container } = renderCalculationControl({
             properties: createTestProperties<IComparisonControlProperties>({ comparison: { enabled: true } }),
         });
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR));
+        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
         fireEvent.click(screen.getByText(RATIO_ITEM_TEXT_QUERY));
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -157,7 +157,7 @@ describe("CalculationControl", () => {
             }),
         );
 
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR));
+        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
         fireEvent.click(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY));
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -167,7 +167,7 @@ describe("CalculationControl", () => {
             }),
         );
 
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR));
+        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
         fireEvent.click(screen.getByText(CHANGE_ITEM_TEXT_QUERY));
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({

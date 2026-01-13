@@ -10,6 +10,7 @@ import {
     UiAsyncTableEmptyState,
     UiAsyncTableRowHeightNormal,
     UiAsyncTableScrollbarWidth,
+    UiSearchResultsAnnouncement,
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
 
@@ -53,9 +54,11 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
     const isSearching = searchTerm.length > 0;
     const effectiveItems = useMemo(() => items.map((item) => ({ ...item, id: item.identifier })), [items]);
     const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
+    const announcedTotalResults = isSearching && status === "success" ? totalCount : undefined;
 
     return (
         <div className="gd-analytics-catalog__table" ref={ref}>
+            <UiSearchResultsAnnouncement totalResults={announcedTotalResults} />
             <UiAsyncTable<ICatalogItem & { id: string }>
                 totalItemsCount={totalCount}
                 skeletonItemsCount={skeletonItemsCount}

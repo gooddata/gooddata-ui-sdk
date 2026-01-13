@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type AttributeExecutionResultHeader,
@@ -63,6 +63,9 @@ const supportedSuffixes: JsonApiAttributeOutAttributesGranularityEnum[] = [
     "WEEK_OF_YEAR",
     "MONTH_OF_YEAR",
     "QUARTER_OF_YEAR",
+    "FISCAL_MONTH",
+    "FISCAL_QUARTER",
+    "FISCAL_YEAR",
 ];
 
 function getDateFormatProps(header: IDimensionItemDescriptor): DateAttributeFormatProps | undefined {

@@ -31,6 +31,10 @@ function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoi
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
     const stackItems = getStackItems(buckets, [ATTRIBUTE, DATE]);
 
+    if (!updatedUiConfig) {
+        return updatedUiConfig;
+    }
+
     buckets.forEach((bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
         const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
@@ -42,10 +46,14 @@ function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoi
 
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
-            if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(messages["metricSegment"].id, intl, stackItems);
-            } else if (bucket.localIdentifier === BucketNames.SEGMENT) {
-                warningMessage = getTranslation(messages["categorySegment"].id, intl);
+            if (bucket.localIdentifier === BucketNames.MEASURES && intl) {
+                warningMessage = getBucketItemsWarningMessage(
+                    messages["metricSegment"].id!,
+                    intl,
+                    stackItems,
+                );
+            } else if (bucket.localIdentifier === BucketNames.SEGMENT && intl) {
+                warningMessage = getTranslation(messages["categorySegment"].id!, intl);
             }
 
             if (warningMessage) {

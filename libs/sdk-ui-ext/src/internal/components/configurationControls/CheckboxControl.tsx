@@ -11,13 +11,13 @@ import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
 export interface ICheckboxControlProps {
     valuePath: string;
-    properties: IVisualizationProperties;
+    properties?: IVisualizationProperties;
     labelText?: string;
     checked?: boolean;
     disabled?: boolean;
     showDisabledMessage?: boolean;
     disabledMessageId?: string;
-    pushData(data: any): void;
+    pushData?(data: any): void;
     isValueInverted?: boolean;
 }
 
@@ -37,12 +37,12 @@ export function CheckboxControl({
         (event: ChangeEvent<HTMLInputElement>) => {
             const clonedProperties = cloneDeep(properties);
             set(
-                clonedProperties,
+                clonedProperties!,
                 `controls.${valuePath}`,
                 isValueInverted ? !event.target.checked : event.target.checked,
             );
 
-            pushData({ properties: clonedProperties });
+            pushData?.({ properties: clonedProperties });
         },
         [properties, valuePath, isValueInverted, pushData],
     );

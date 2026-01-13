@@ -15,9 +15,9 @@ export interface IConfigSectionProps {
     canBeToggled?: boolean;
     toggleDisabled?: boolean;
     toggledOn?: boolean;
-    propertiesMeta: any;
+    propertiesMeta?: any;
     properties?: any;
-    title: string;
+    title?: string;
     subtitle?: string;
     showDisabledMessage?: boolean;
     className?: string;

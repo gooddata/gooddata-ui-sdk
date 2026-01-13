@@ -82,7 +82,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement()!, this.getConfigPanelElement()!]);
     }
 
     public getExtendedReferencePoint = async (
@@ -123,7 +123,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         return executionFactory
             .forInsight(insight)
             .withDimensions(...this.getXirrDimensions(insight))
-            .withDateFormat(dateFormat);
+            .withDateFormat(dateFormat!);
     }
 
     protected renderVisualization(
@@ -142,13 +142,13 @@ export class PluggableXirr extends AbstractPluggableVisualization {
                 drillableItems={drillableItems}
                 onDrill={this.onDrill}
                 locale={locale}
-                config={updateConfigWithSettings(config, this.settings)}
+                config={updateConfigWithSettings(config!, this.settings!)}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}
                 onError={this.onError}
-                LoadingComponent={null}
-                ErrorComponent={null}
+                LoadingComponent={undefined}
+                ErrorComponent={undefined}
             />,
             this.getElement(),
         );

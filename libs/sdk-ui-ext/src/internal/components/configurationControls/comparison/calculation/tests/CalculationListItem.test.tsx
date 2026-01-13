@@ -60,7 +60,7 @@ describe("CalculationListItem", () => {
             ...DEFAULT_ITEM,
             onClick: mockOnClick,
         });
-        fireEvent.click(container.querySelector(ITEM_SELECTOR));
+        fireEvent.click(container.querySelector(ITEM_SELECTOR)!);
         expect(mockOnClick).toHaveBeenCalled();
     });
 });

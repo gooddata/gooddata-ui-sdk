@@ -33,8 +33,8 @@ export function getSearchedItems(inputItems: IColoredItem[], searchString: strin
     });
 }
 
-export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[] {
-    let inputItems: IColoredItem[] = [];
+export function getColoredInputItems(colors: IColorConfiguration | undefined): IColoredItem[] {
+    let inputItems: (IColoredItem | undefined)[] = [];
 
     if (colors?.colorAssignments) {
         inputItems = colors.colorAssignments.map((assignmentItem: IColorAssignment, index: number) => {
@@ -56,7 +56,7 @@ export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[
         });
     }
 
-    return inputItems;
+    return inputItems.filter((item): item is IColoredItem => item !== undefined);
 }
 
 function getMeasureMappingIdentifier(item: IMeasureDescriptor): string {
@@ -104,7 +104,7 @@ export function getProperties(
 
 export function getValidProperties(
     properties: IVisualizationProperties,
-    colorAssignments: IColorAssignment[],
+    colorAssignments: IColorAssignment[] | undefined,
 ): IVisualizationProperties {
     if (!properties?.controls?.["colorMapping"]) {
         return properties;
@@ -115,11 +115,11 @@ export function getValidProperties(
             const { id } = mappingItem;
             const colorValue = mappingItem.color.value;
 
-            const assignmentValid = colorAssignments.find((colorAssignment: IColorAssignment) => {
+            const assignmentValid = colorAssignments?.find((colorAssignment: IColorAssignment) => {
                 if (isMeasureDescriptor(colorAssignment.headerItem)) {
                     return (
                         colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
-                        isEqual(colorAssignment.color.value, colorValue)
+                        isEqual(colorAssignment.color?.value, colorValue)
                     );
                 } else if (isResultAttributeHeader(colorAssignment.headerItem)) {
                     return colorAssignment.headerItem.attributeHeaderItem.uri === id;

@@ -12,13 +12,17 @@ export interface KdaProps {
     children: ReactNode;
     definition: IKdaDefinition;
     separators?: ISeparators;
+    includeTags?: string[];
+    excludeTags?: string[];
 }
 
-export function KdaProvider({ children, definition, separators }: KdaProps) {
+export function KdaProvider({ children, definition, separators, includeTags, excludeTags }: KdaProps) {
     const state = useMemo((): Partial<KdaState> => {
         return {
             separators,
             definition,
+            includeTags,
+            excludeTags,
             fromValue: { ...definition?.range[0] },
             toValue: { ...definition?.range[1] },
             definitionStatus: "success",
@@ -27,7 +31,7 @@ export function KdaProvider({ children, definition, separators }: KdaProps) {
                 (f) => !isAllValuesDashboardAttributeFilter(f),
             ),
         };
-    }, [definition, separators]);
+    }, [definition, separators, includeTags, excludeTags]);
 
     return <KdaStateProvider value={state}>{children}</KdaStateProvider>;
 }

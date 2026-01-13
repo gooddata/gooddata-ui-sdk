@@ -19,14 +19,17 @@ import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "
 import { messages } from "./messages.js";
 import { type AutomationsType } from "./types.js";
 
-export const getWorkspaceId = (automation: IAutomationMetadataObject, fallbackWorkspaceId: string) => {
+export const getWorkspaceId = (
+    automation: IAutomationMetadataObject,
+    fallbackWorkspaceId: string | undefined,
+) => {
     return automation.workspace?.id ?? fallbackWorkspaceId;
 };
 
 export const defaultEditAutomation = (
     automation: IAutomationMetadataObject,
-    workspaceId: string,
-    dashboardId: string,
+    workspaceId: string | undefined,
+    dashboardId: string | undefined,
 ) => {
     const targetWorkspaceId = getWorkspaceId(automation, workspaceId);
     navigate(buildAutomationUrl(targetWorkspaceId, dashboardId, automation.id));
@@ -34,10 +37,10 @@ export const defaultEditAutomation = (
 
 export const getRecipientName = (recipient: IAutomationRecipient): string => {
     if (recipient.name) {
-        return recipient.name;
+        return recipient.name ?? "";
     }
     if ("email" in recipient) {
-        return recipient.email;
+        return recipient.email ?? "";
     }
     return recipient.id ?? "";
 };

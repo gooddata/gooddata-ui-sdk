@@ -9,10 +9,10 @@ import { ConfigSection } from "../ConfigSection.js";
 
 export interface ILegendSection {
     controlsDisabled: boolean;
-    properties: IVisualizationProperties;
-    propertiesMeta: any;
+    properties?: IVisualizationProperties;
+    propertiesMeta?: any;
     defaultLegendEnabled?: boolean;
-    pushData: (data: any) => any;
+    pushData?: (data: any) => any;
 }
 
 export const LegendSection = memo(function LegendSection({

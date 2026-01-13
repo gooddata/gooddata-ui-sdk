@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type AxiosError, type AxiosPromise, type AxiosRequestConfig } from "axios";
 
@@ -9,7 +9,7 @@ import {
     ExportApi_GetRawExport,
     ExportApi_GetSlidesExport,
     ExportApi_GetTabularExport,
-} from "@gooddata/api-client-tiger/export";
+} from "@gooddata/api-client-tiger/endpoints/export";
 import {
     DataTooLargeError,
     type DataTooLargeResponseBody,

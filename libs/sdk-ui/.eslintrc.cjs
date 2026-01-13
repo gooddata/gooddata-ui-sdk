@@ -21,6 +21,7 @@ module.exports = {
             "@typescript-eslint/no-unsafe-return": "off",
             "@typescript-eslint/naming-convention": "off",
             "@typescript-eslint/no-unsafe-call": "off",
+            "@typescript-eslint/no-base-to-string": "off",
             "@typescript-eslint/no-unsafe-enum-comparison": "off",
             "@typescript-eslint/no-redundant-type-constituents": "off",
             "@typescript-eslint/prefer-promise-reject-errors": "off",

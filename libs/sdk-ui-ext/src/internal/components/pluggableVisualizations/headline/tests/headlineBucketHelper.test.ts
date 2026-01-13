@@ -84,7 +84,7 @@ describe("headlineBucketHelper", () => {
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
             const newReferencePoint = tryToMapForeignBuckets(referencePoint);
 
-            expect(newReferencePoint.buckets).toEqual([
+            expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.masterMeasureItems[0]],
@@ -110,7 +110,7 @@ describe("headlineBucketHelper", () => {
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
             const newReferencePoint = tryToMapForeignBuckets(referencePoint);
 
-            expect(newReferencePoint.buckets).toEqual([
+            expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.masterMeasureItems[0]],
@@ -136,7 +136,7 @@ describe("headlineBucketHelper", () => {
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
             const newReferencePoint = tryToMapForeignBuckets(referencePoint);
 
-            expect(newReferencePoint.buckets).toEqual([
+            expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.masterMeasureItems[0]],
@@ -166,7 +166,7 @@ describe("headlineBucketHelper", () => {
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
             const newReferencePoint = tryToMapForeignBuckets(referencePoint);
 
-            expect(newReferencePoint.buckets).toEqual([
+            expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.masterMeasureItems[0]],
@@ -192,7 +192,7 @@ describe("headlineBucketHelper", () => {
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
             const newReferencePoint = tryToMapForeignBuckets(referencePoint);
 
-            expect(newReferencePoint.buckets).toEqual([
+            expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.masterMeasureItems[0]],

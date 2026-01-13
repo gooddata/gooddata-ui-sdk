@@ -18,7 +18,7 @@ import { OptionalPatternFill } from "./OptionalPatternFill.js";
 
 const ITEM_MARGIN = 5;
 
-export const getIconStyle = (chartFill: ChartFillType, baseColor: string, theme: ITheme): CSSProperties => {
+export const getIconStyle = (chartFill: ChartFillType, baseColor: string, theme?: ITheme): CSSProperties => {
     if (chartFill === "outline") {
         return {
             backgroundColor: getLighterColor(baseColor, 0.9),

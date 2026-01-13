@@ -17,8 +17,8 @@ import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
 interface INumberFormatControlProps {
     disabled: boolean;
     valuePath: string;
-    labelText: string;
-    format: string;
+    labelText: string | undefined;
+    format: string | null;
     showDisabledMessage?: boolean;
     separators: ISeparators;
     properties: IVisualizationProperties<IComparisonControlProperties>;
@@ -37,9 +37,9 @@ export function NumberFormatControl({
 }: INumberFormatControlProps) {
     const intl = useIntl();
 
-    const selectFormat = (format: string) => {
+    const selectFormat = (format: string | null) => {
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties.controls, valuePath, format);
+        set(clonedProperties.controls!, valuePath, format);
 
         pushData({ properties: clonedProperties });
     };
@@ -48,7 +48,7 @@ export function NumberFormatControl({
     const templates = useMemo(() => getTemplates(intl), [intl]);
 
     return (
-        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage ?? false}>
             <div className="adi-properties-dropdown-container measure-number-format-control">
                 <span className="input-label-text">
                     <FormattedMessage id={labelText} />

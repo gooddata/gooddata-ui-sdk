@@ -15,6 +15,7 @@ import {
     bucketAttribute,
     bucketItems,
     insightBucket,
+    insightBuckets,
     insightFilters,
     insightHasDataDefined,
     insightLayers,
@@ -40,7 +41,6 @@ import {
     getPrimaryLayerControls,
 } from "./geoAttributeHelper.js";
 import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
-import { sanitizeGeoLayerGlobalFilters } from "./geoLayerFilterSanitization.js";
 import {
     createConfiguredBuckets,
     createSortForSegment,
@@ -62,6 +62,7 @@ import {
 } from "../../../interfaces/Visualization.js";
 import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";
+import { routeLocalIdRefFiltersToLayers } from "../../../utils/filters/routeLocalIdRefFiltersToLayers.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
@@ -224,14 +225,18 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         executionFactory: IExecutionFactory,
     ) {
         const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
-        const sanitizedFilters = sanitizeGeoLayerGlobalFilters(primaryLayer, filters);
+        const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
+            { id: primaryLayer.id, buckets: insightBuckets(insight) },
+            ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
+        ]);
+        const effectiveFilters = [...globalFilters, ...(routedByLayerId.get(primaryLayer.id) ?? [])];
 
         return buildLayerExecution(primaryLayer, {
             backend: this.backend,
             workspace: this.workspace,
             config,
             execConfig: options.executionConfig,
-            globalFilters: sanitizedFilters,
+            globalFilters: effectiveFilters,
             executionFactory,
         });
     }
@@ -241,7 +246,11 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
-        const { config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
+            { id: primaryLayer.id, buckets: insightBuckets(insight) },
+            ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
+        ]);
         const insightLayerDefs = insightLayers(insight);
         const additionalLayers = insightLayersToGeoLayers(insightLayerDefs);
         const resolvedAdditionalLayers = additionalLayers.filter((layer) => !this.shouldSkipLayer(layer));
@@ -250,7 +259,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             resolvedAdditionalLayers,
             options,
             config,
-            filters,
+            globalFilters,
+            routedByLayerId,
             executionFactory,
         );
     }
@@ -406,7 +416,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         layers: IGeoLayer[],
         options: IVisProps,
         config: IGeoPushpinChartNextConfig,
-        filters: IFilter[],
+        globalFilters: IFilter[],
+        routedByLayerId: Map<string, IFilter[]>,
         executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
         if (!layers.length) {
@@ -414,13 +425,13 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         }
 
         return layers.map((layer) => {
-            const sanitizedFilters = sanitizeGeoLayerGlobalFilters(layer, filters);
+            const effectiveFilters = [...globalFilters, ...(routedByLayerId.get(layer.id) ?? [])];
             return buildLayerExecution(layer, {
                 backend: this.backend,
                 workspace: this.workspace,
                 config,
                 execConfig: options.executionConfig,
-                globalFilters: sanitizedFilters,
+                globalFilters: effectiveFilters,
                 executionFactory,
             });
         });

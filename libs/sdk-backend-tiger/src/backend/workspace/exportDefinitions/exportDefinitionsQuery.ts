@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -6,7 +6,7 @@ import {
     type EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesExportDefinitions } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesExportDefinitions } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type ExportDefinitionQuerySort,

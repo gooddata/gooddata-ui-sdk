@@ -8,7 +8,7 @@ import { type IGrantedWorkspace, type ListMode, type WorkspacePermissionSubject 
 import { sortByName } from "../utils.js";
 
 export interface IWorkspaceListProps {
-    workspaces: IGrantedWorkspace[];
+    workspaces: IGrantedWorkspace[] | undefined;
     subjectType: WorkspacePermissionSubject;
     mode: ListMode;
     onDelete: (workspace: IGrantedWorkspace) => void;

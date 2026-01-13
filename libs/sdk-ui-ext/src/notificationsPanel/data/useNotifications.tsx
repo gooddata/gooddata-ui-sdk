@@ -127,7 +127,7 @@ export function useNotifications({
         async (notificationId: string) => {
             assertOrganizationReady(organizationStatus, "markAsRead");
 
-            await organizationService.notifications().markNotificationAsRead(notificationId);
+            await organizationService!.notifications().markNotificationAsRead(notificationId);
             setMarkedAsReadNotifications((prev) => [...prev, notificationId]);
         },
         [organizationStatus, organizationService, setMarkedAsReadNotifications],
@@ -137,7 +137,7 @@ export function useNotifications({
         assertOrganizationReady(organizationStatus, "markAllAsRead");
         assertNotificationsReady(notificationsStatus, "markAllAsRead");
 
-        await organizationService.notifications().markAllNotificationsAsRead();
+        await organizationService!.notifications().markAllNotificationsAsRead();
 
         notificationsReset();
         unreadNotificationsReset();

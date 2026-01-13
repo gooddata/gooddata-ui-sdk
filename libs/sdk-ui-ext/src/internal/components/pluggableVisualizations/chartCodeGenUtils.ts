@@ -1,11 +1,13 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IForecastConfig } from "@gooddata/sdk-backend-spi";
 import {
     type IInsightDefinition,
     factoryNotationFor,
     insightProperties,
+    isColorFromPalette,
     isColorMappingItem,
+    isRgbColor,
 } from "@gooddata/sdk-model";
 import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 
@@ -127,7 +129,14 @@ export function chartAdditionalFactories(options?: {
                 package: getColorMappingPredicatePackage,
             },
             transformation: (obj) => {
-                return isColorMappingItem(obj)
+                // sdk-model's isColorMappingItem is intentionally permissive (checks only `id` + `color` presence).
+                // That can collide with other objects (e.g. GeoChartNext layer objects have `id` and `color` too).
+                // Narrow down to actual IColor payloads to avoid accidental rewrites like `{ predicate, color }`
+                // on non-color-mapping objects.
+                const isActualColorMappingItem =
+                    isColorMappingItem(obj) && (isRgbColor(obj.color) || isColorFromPalette(obj.color));
+
+                return isActualColorMappingItem
                     ? `{predicate: getColorMappingPredicate("${obj.id}"), color: ${factoryNotationFor(
                           obj.color,
                       )}}`
@@ -163,6 +172,6 @@ const chartForecastConfigPropMeta: PropMeta = {
 
 export function chartForecastConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
-): IInsightToPropConversion<TProps, TPropKey, IForecastConfig> {
+): IInsightToPropConversion<TProps, TPropKey, IForecastConfig | undefined> {
     return insightConversion(propName, chartForecastConfigPropMeta, chartForecastConfigFromInsight);
 }

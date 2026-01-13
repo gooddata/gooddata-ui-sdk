@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type KeyboardEvent,
@@ -52,6 +52,24 @@ export interface IMultiLayerLegendSectionProps {
      * Defaults to true.
      */
     showToggle?: boolean;
+
+    /**
+     * Whether this section is flexible (should grow to fill available space).
+     * Set to true for sections whose content exceeds their equal share.
+     */
+    isFlexible?: boolean;
+
+    /**
+     * Ref callback to set the section's root DOM element.
+     * Used by parent for height measurements.
+     */
+    setSectionRef?: (element: HTMLDivElement | null) => void;
+
+    /**
+     * The section's root DOM element (for internal CSS reading).
+     * Provided by parent from its refs store.
+     */
+    sectionElement?: HTMLDivElement;
 
     /**
      * Callback when expand/collapse state changes.
@@ -109,6 +127,9 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
     isExpanded = true,
     isVisible = true,
     showToggle = true,
+    isFlexible = false,
+    setSectionRef,
+    sectionElement,
     onExpandedChange,
     onVisibilityChange,
     onItemClick,
@@ -116,7 +137,6 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
     const displayTitle = section.layerTitle;
     const titleId = `${sectionId}-title`;
     const toggleId = `${sectionId}-toggle`;
-    const sectionRef = useRef<HTMLDivElement | null>(null);
     const isFirstRenderRef = useRef(true);
     const expandTimeoutRef = useRef<number | undefined>(undefined);
 
@@ -148,7 +168,7 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
     }, []);
 
     const getToggleDurationMs = useCallback((): number => {
-        const element = sectionRef.current;
+        const element = sectionElement;
         if (!element || typeof window === "undefined") {
             return 200;
         }
@@ -174,7 +194,7 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
         }
 
         return 200;
-    }, []);
+    }, [sectionElement]);
 
     useEffect(() => {
         if (!isExpanded) {
@@ -249,6 +269,7 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
         "gd-geo-multi-layer-legend__section--collapsed": !isExpanded,
         "gd-geo-multi-layer-legend__section--scroll-enabled": isScrollEnabled,
         "gd-geo-multi-layer-legend__section--hidden": !isVisible,
+        "gd-geo-multi-layer-legend__section--flexible": isFlexible && isExpanded,
     });
 
     return (
@@ -258,7 +279,7 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
             aria-labelledby={titleId}
             data-testid={`gd-geo-legend-section-${section.layerId}`}
             onTransitionEnd={handleSectionTransitionEnd}
-            ref={sectionRef}
+            ref={setSectionRef}
         >
             <div
                 className="gd-geo-multi-layer-legend__section-header"

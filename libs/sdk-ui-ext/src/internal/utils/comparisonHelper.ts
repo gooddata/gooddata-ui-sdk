@@ -38,7 +38,7 @@ export function getNumberSubFormat(properties: IVisualizationProperties<ICompari
     return getComparisonFormat(properties?.controls?.comparison?.subFormat, null);
 }
 
-export function isComparisonDefaultColors(colorConfig: IColorConfig) {
+export function isComparisonDefaultColors(colorConfig: IColorConfig | undefined) {
     return !colorConfig?.positive && !colorConfig?.negative && !colorConfig?.equals;
 }
 

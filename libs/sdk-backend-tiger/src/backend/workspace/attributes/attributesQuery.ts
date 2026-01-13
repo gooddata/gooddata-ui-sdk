@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type EntitiesApiGetAllEntitiesAttributesRequest,
@@ -7,7 +7,7 @@ import {
 import {
     EntitiesApi_GetAllEntitiesAttributes,
     EntitiesApi_SearchEntitiesAttributes,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IAttributesQuery,

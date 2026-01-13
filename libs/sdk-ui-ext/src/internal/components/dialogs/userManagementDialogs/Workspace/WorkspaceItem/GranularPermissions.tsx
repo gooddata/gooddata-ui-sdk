@@ -61,7 +61,7 @@ export function GranularPermissions({
     const handleChange = useCallback(
         (permissions: WorkspacePermissions, isHierarchical: boolean) => {
             const sanitizedPermissions = removeRedundantPermissions(permissions);
-            onChange({ ...workspace, permissions: sanitizedPermissions, isHierarchical });
+            onChange({ ...workspace!, permissions: sanitizedPermissions, isHierarchical });
         },
         [onChange, workspace],
     );

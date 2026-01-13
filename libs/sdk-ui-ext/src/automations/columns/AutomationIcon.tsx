@@ -42,7 +42,7 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         const status = automation?.lastRun?.errorMessage;
 
         const onCopyTraceId = () => {
-            navigator.clipboard.writeText(traceId);
+            navigator.clipboard.writeText(traceId!);
             addSuccess(messages.messageAutomationIconTooltipTraceIdCopied);
         };
 
@@ -68,7 +68,7 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         );
     }
 
-    if (type === "automationDetails") {
+    if (type === "automationDetails" && automation) {
         const subtitle = formatCellValue(formatAutomationSubtitle(automation, intl));
         return (
             <AutomationIconTooltip
@@ -125,7 +125,7 @@ function TooltipStartsOnSection({
     timezone,
 }: {
     automation: IAutomationMetadataObject;
-    timezone: string;
+    timezone?: string;
 }) {
     const [date, time] = formatCellValue(automation.created, "date", timezone)?.split(" ") ?? [];
 

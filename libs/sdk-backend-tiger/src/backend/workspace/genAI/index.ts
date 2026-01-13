@@ -1,7 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ITigerClientBase } from "@gooddata/api-client-tiger";
-import { ActionsApi_MetadataSync, ActionsApi_ResolveLlmEndpoints } from "@gooddata/api-client-tiger/actions";
+import {
+    ActionsApi_MetadataSync,
+    ActionsApi_ResolveLlmEndpoints,
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import type {
     IAnalyticsCatalogService,
     IChatThread,

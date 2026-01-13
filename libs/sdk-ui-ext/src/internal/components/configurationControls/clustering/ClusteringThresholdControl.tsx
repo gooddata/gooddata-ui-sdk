@@ -8,8 +8,8 @@ import { InputControl } from "../InputControl.js";
 export interface IClusteringThresholdControlProps {
     valuePath: string;
     disabled: boolean;
-    properties: IVisualizationProperties;
-    pushData: (data: any) => any;
+    properties?: IVisualizationProperties;
+    pushData?: (data: any) => any;
 }
 
 export function ClusteringThresholdControl({

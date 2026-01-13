@@ -15,7 +15,18 @@ import { KdaReplaceConfirmationDialog } from "./KdaReplaceConfirmationDialog.js"
 const arbiter = KdaDialogArbiter.getInstance();
 
 export interface IKdaDialogControllerProps extends IKdaDialogProps {
+    /**
+     * Number format separators
+     */
     separators?: ISeparators;
+    /**
+     * Only objects with these tags will be included
+     */
+    includeTags?: string[];
+    /**
+     * Objects with these tags will be excluded
+     */
+    excludeTags?: string[];
     /**
      * Latest requested definition. When a dialog is already open and this differs from the active definition,
      * confirmation is shown before the active definition is replaced.
@@ -31,6 +42,8 @@ export interface IKdaDialogControllerProps extends IKdaDialogProps {
 export function KdaDialogController({
     requestedDefinition,
     separators,
+    excludeTags,
+    includeTags,
     onRequestedDefinitionChange,
     ...dialogProps
 }: IKdaDialogControllerProps) {
@@ -111,7 +124,12 @@ export function KdaDialogController({
                 onCancel={onCancelReplace}
                 onConfirm={onConfirmReplace}
             />
-            <KdaProvider definition={activeDefinition} separators={separators}>
+            <KdaProvider
+                definition={activeDefinition}
+                separators={separators}
+                includeTags={includeTags}
+                excludeTags={excludeTags}
+            >
                 <KdaDialog {...dialogProps} onClose={onCloseInternal} />
             </KdaProvider>
         </>

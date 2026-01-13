@@ -23,6 +23,10 @@ function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoin
     const buckets = referencePoint?.buckets;
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
+    if (!updatedUiConfig) {
+        return updatedUiConfig;
+    }
+
     buckets.forEach((bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
         const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
@@ -35,7 +39,7 @@ function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoin
         if (!bucketUiConfig?.canAddItems) {
             let warningMessageId;
             if (bucket.localIdentifier === BucketNames.VIEW) {
-                warningMessageId = messages["category"].id;
+                warningMessageId = messages["category"].id!;
             }
 
             if (warningMessageId) {

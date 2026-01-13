@@ -1,21 +1,21 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type FeatureContext,
-    type JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    type JsonApiDatasetOutMetaOriginOriginTypeEnum,
     type JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_WorkspaceResolveAllSettings } from "@gooddata/api-client-tiger/actions";
+import { ActionsApi_WorkspaceResolveAllSettings } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityWorkspaceSettings,
     EntitiesApi_DeleteEntityWorkspaceSettings,
     EntitiesApi_GetAllEntitiesWorkspaceSettings,
     EntitiesApi_GetEntityWorkspaces,
     EntitiesApi_UpdateEntityWorkspaceSettings,
-} from "@gooddata/api-client-tiger/entitiesObjects";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
     type IUserWorkspaceSettings,
     type IWorkspaceSettings,
@@ -100,7 +100,7 @@ export class TigerWorkspaceSettings
 
     private mapSettingsToKeysByOrigin = (
         data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+        origin: JsonApiDatasetOutMetaOriginOriginTypeEnum,
     ): ISettings => {
         return data.reduce((result: ISettings, setting) => {
             const isValueApplicable = setting.meta?.origin?.originType === origin;

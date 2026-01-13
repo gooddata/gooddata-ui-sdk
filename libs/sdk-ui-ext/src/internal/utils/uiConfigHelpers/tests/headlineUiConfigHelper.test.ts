@@ -252,7 +252,7 @@ describe("headlineUiConfigHelper", () => {
 
         it("should return a color palette with positive, negative, and equals colors when kpi.secondaryInfoColor is empty", () => {
             const themeWithoutSecondaryInfoColor = cloneDeep(theme);
-            delete themeWithoutSecondaryInfoColor.kpi.secondaryInfoColor;
+            delete themeWithoutSecondaryInfoColor.kpi!.secondaryInfoColor;
             expect(getComparisonColorPalette(themeWithoutSecondaryInfoColor)).toMatchSnapshot();
         });
 

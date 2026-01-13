@@ -58,7 +58,7 @@ function addMeasure(visualization: IInsightDefinition, index: number): IInsightD
         m.localId(`m${index}`).title(`# Users Opened AD ${index}`),
     );
 
-    const bucket = insightBucket(newVis);
+    const bucket = insightBucket(newVis)!;
     bucket.items.push(measure);
 
     return newVis;
@@ -74,7 +74,7 @@ function addAttribute(
         a.localId(`a${index}`),
     );
 
-    const bucket = getVisualizationBucket(newVis, bucketName);
+    const bucket = getVisualizationBucket(newVis, bucketName)!;
     bucket.items.push(attribute);
 
     return newVis;
@@ -87,14 +87,14 @@ function addTotals(
 ): IInsightDefinition {
     const newVis = cloneDeep(visualization);
 
-    const bucket = getVisualizationBucket(newVis, bucketName);
+    const bucket = getVisualizationBucket(newVis, bucketName)!;
 
     if (!bucket.totals) {
         bucket.totals = [];
     }
 
     newTotals.forEach((total) => {
-        bucket.totals.push(total);
+        bucket.totals!.push(total);
     });
 
     return newVis;

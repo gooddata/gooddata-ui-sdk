@@ -14,7 +14,7 @@ import { CatalogAttributeDataType, type IAttributeData, type ICatalogAttributeDa
 export const findCatalogAttributeByRef = (
     catalogAttributesMap: Map<string, ICatalogAttributeData>,
     ref: ObjRef,
-): ICatalogAttributeData => {
+): ICatalogAttributeData | undefined => {
     return catalogAttributesMap.get(getCatalogKey(ref));
 };
 
@@ -39,7 +39,7 @@ export const convertToCatalogAttributeData = (
         }));
 
     return [...attrs, ...dateAttributes].reduce((map, attribute) => {
-        map.set(getCatalogKey(attribute.ref), attribute);
+        map.set(getCatalogKey(attribute.ref!), attribute);
         return map;
     }, new Map<string, ICatalogAttributeData>());
 };
@@ -69,7 +69,7 @@ export const searchAttributes = (
 ) => {
     return attributes
         .filter((item) => item.type === selectedTab)
-        .filter((item) => item.title.toLowerCase().includes(searchString.toLowerCase()));
+        .filter((item) => item.title?.toLowerCase().includes(searchString.toLowerCase()));
 };
 
 const getCatalogKey = (ref: ObjRef) => {

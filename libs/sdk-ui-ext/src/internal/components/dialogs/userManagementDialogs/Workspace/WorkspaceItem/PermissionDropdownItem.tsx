@@ -14,7 +14,7 @@ interface IPermissionItemProps {
     selectedPermission: WorkspacePermission;
     toggleDropdown: () => void;
     onSelect: (permission: WorkspacePermission) => void;
-    bubbleTextId: string;
+    bubbleTextId: string | undefined;
 }
 
 export function PermissionDropdownItem({

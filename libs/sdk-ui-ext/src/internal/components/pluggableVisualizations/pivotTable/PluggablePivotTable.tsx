@@ -159,7 +159,7 @@ const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
  * - |Rows| ≥ 1 ⇒ [attributeSort(Rows[0])]
  */
 export class PluggablePivotTable extends AbstractPluggableVisualization {
-    private environment: VisualizationEnvironment;
+    private environment: VisualizationEnvironment | undefined;
     private renderFun: RenderFunction;
     private unmountFun: UnmountFunction;
     private readonly settings: ISettings;
@@ -181,7 +181,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement()!, this.getConfigPanelElement()!]);
     }
 
     public getExtendedReferencePoint(
@@ -207,8 +207,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const previousColumnAttributes =
             previousReferencePoint && getColumnAttributes(previousReferencePoint.buckets);
 
-        const filters: IBucketFilter[] = newReferencePoint.filters
-            ? newReferencePoint.filters.items.flatMap((item) => item.filters)
+        const filters: IBucketFilter[] = newReferencePoint?.filters?.items
+            ? newReferencePoint.filters.items.flatMap((item) => item.filters ?? [])
             : [];
 
         const rowTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
@@ -352,8 +352,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight, customVisualizationConfig))
             .withSorting(...(getPivotTableSortItems(insight) ?? []))
-            .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+            .withDateFormat(dateFormat!)
+            .withExecConfig(executionConfig!);
     }
 
     protected initializeProperties(visualizationProperties: IVisualizationProperties): void {
@@ -412,7 +412,14 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom, dimensions, config = {}, customVisualizationConfig = {}, theme } = options;
+        const {
+            locale,
+            custom = {},
+            dimensions,
+            config = {},
+            customVisualizationConfig = {},
+            theme,
+        } = options;
         const { maxHeight, maxWidth } = config;
         const height = dimensions?.height;
         const { drillableItems } = custom;
@@ -431,7 +438,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const tableConfig: IPivotTableConfig = {
             ...createPivotTableConfig(
                 config,
-                this.environment,
+                this.environment!,
                 this.settings,
                 this.backendCapabilities,
                 columnWidths,
@@ -443,7 +450,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             measureGroupDimension,
         };
 
-        const pivotTableProps: ICorePivotTableProps & { theme: ITheme } = {
+        const pivotTableProps: ICorePivotTableProps & { theme?: ITheme } = {
             ...this.createCorePivotTableProps(),
             execution,
             drillableItems,
@@ -564,7 +571,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         );
 
         if (!isEqual(columnWidths, adaptedColumnWidths)) {
-            this.visualizationProperties.controls["columnWidths"] = adaptedColumnWidths;
+            this.visualizationProperties.controls!["columnWidths"] = adaptedColumnWidths;
             this.pushData({
                 properties: {
                     controls: {
@@ -624,7 +631,7 @@ export function createPivotTableConfig(
     environment: VisualizationEnvironment,
     settings: ISettings,
     capabilities: IBackendCapabilities,
-    columnWidths: ColumnWidthItem[],
+    columnWidths?: ColumnWidthItem[],
 ): IPivotTableConfig {
     let tableConfig: IPivotTableConfig = {
         separators: config.separators,
@@ -695,7 +702,7 @@ export function createPivotTableConfig(
  * can seriously mess up the pivot table in return: the column resizing is susceptible to race conditions and timing
  * issues. Because of the flurry of calls, the table may not render or may render not resized at all.
  */
-function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
+function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] | undefined {
     const sorts = insightSorts(insight);
     const mesureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 

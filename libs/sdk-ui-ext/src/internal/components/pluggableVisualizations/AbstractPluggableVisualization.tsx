@@ -65,11 +65,11 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * Insight that is currently rendered by the pluggable visualization. This field is set during
      * every call to {@link update} and will remain the same until the next update() call.
      */
-    protected currentInsight: IInsightDefinition;
-    protected currentOptions: IVisProps;
-    protected visualizationProperties: IVisualizationProperties;
-    protected supportedPropertiesList: string[];
-    protected propertiesMeta: any;
+    protected currentInsight!: IInsightDefinition;
+    protected currentOptions!: IVisProps;
+    protected visualizationProperties!: IVisualizationProperties;
+    protected supportedPropertiesList!: string[];
+    protected propertiesMeta: any | null;
 
     /**
      * List of properties which affect content of reference point and when these changed, reference point needs to be re-generated
@@ -88,10 +88,10 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      */
     private readonly configPanelElement: string | ElementSelectorFunction;
 
-    private hasError: boolean;
-    private hasEmptyAfm: boolean;
+    private hasError!: boolean;
+    private hasEmptyAfm!: boolean;
 
-    protected isLoading: boolean;
+    protected isLoading!: boolean;
 
     protected getIsError = (): boolean => {
         return this.hasEmptyAfm || this.hasError;
@@ -110,7 +110,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     /**
      * Get an element where the visualization should be mounted
      */
-    protected getElement(): HTMLElement {
+    protected getElement(): HTMLElement | null {
         if (typeof this.element === "function") {
             return this.element();
         }
@@ -121,7 +121,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     /**
      * Get an element where the config panel should be mounted
      */
-    protected getConfigPanelElement(): HTMLElement {
+    protected getConfigPanelElement(): HTMLElement | null {
         if (typeof this.configPanelElement === "function") {
             return this.configPanelElement();
         }
@@ -199,7 +199,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ): IPreparedExecution;
+    ): IPreparedExecution | null;
 
     /**
      * Get additional visualization executions for multi-layer visualizations.

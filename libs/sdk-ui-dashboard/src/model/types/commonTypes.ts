@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IAnalyticalBackend, type IDashboardReferences } from "@gooddata/sdk-backend-spi";
 import {
@@ -323,6 +323,17 @@ export interface DashboardConfig {
     disableUserFilterReset?: boolean;
 
     /**
+     * Hide the add tab button in dashboard edit mode.
+     *
+     * @remarks
+     * If set to true, the add tab button will not be visible in edit mode,
+     * preventing users from adding new tabs to the dashboard.
+     *
+     * @alpha
+     */
+    hideAddTabButton?: boolean;
+
+    /**
      * @alpha
      *
      * Open automation on load
@@ -482,6 +493,7 @@ export type ResolvedDashboardConfig = Omit<
     | "evaluationFrequency"
     | "externalRecipient"
     | "openAutomationOnLoad"
+    | "hideAddTabButton"
 > &
     DashboardConfig;
 

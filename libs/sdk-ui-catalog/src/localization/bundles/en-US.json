@@ -451,6 +451,18 @@
         "text": "Run check",
         "crowdinContext": "Label for the button that runs the quality check."
     },
+    "analyticsCatalog.quality.scoreCard.menu.ariaLabel": {
+        "text": "More actions for {title}",
+        "crowdinContext": "ARIA label for the icon-only menu button (ellipsis) in the quality score card header. The {title} placeholder is the score card title. Example output: 'More actions for Semantic quality'."
+    },
+    "analyticsCatalog.quality.scoreCard.status.running": {
+        "text": "Semantic quality check running.",
+        "crowdinContext": "Screen reader announcement when the semantic quality check is running."
+    },
+    "analyticsCatalog.quality.scoreCard.status.finished": {
+        "text": "Semantic quality check finished.",
+        "crowdinContext": "Screen reader announcement when the semantic quality check finishes."
+    },
     "analyticsCatalog.quality.scoreCard.action.empty": {
         "text": "No findings",
         "crowdinContext": "Label for the empty state of the quality score card action."

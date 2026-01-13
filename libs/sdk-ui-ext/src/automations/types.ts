@@ -58,15 +58,18 @@ export interface IAutomationsProps {
     onLoad?: AutomationsOnLoad;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     widgetUrlBuilder?: IWidgetUrlBuilder;
-    editAutomation?: (
-        automation: IAutomationMetadataObject,
-        workspaceId: string,
-        dashboardId: string,
-    ) => void;
+    editAutomation?: IEditAutomation;
 }
 
+/**
+ * @internal
+ */
 export interface IEditAutomation {
-    (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string): void;
+    (
+        automation: IAutomationMetadataObject,
+        workspaceId: string | undefined,
+        dashboardId: string | undefined,
+    ): void;
 }
 
 /**
@@ -221,7 +224,7 @@ export interface IAutomationsState {
     scrollToIndex?: number;
     isChainedActionInProgress: boolean;
     isFiltersTooLarge: boolean;
-    pendingAction?: IAutomationsPendingAction;
+    pendingAction?: IAutomationsPendingAction | null;
 }
 
 export interface IAutomationActionsState {
@@ -307,7 +310,7 @@ export type AutomationBulkActionPromise = (automations: Array<IAutomationMetadat
 export interface IAutomationService {
     promiseGetAutomationsQuery: (params?: IAutomationsQueryParams) => Promise<IAutomationsQueryResult>;
     promiseGetCurrentUser: () => Promise<IUser>;
-    promiseCanManageWorkspace: () => Promise<IWorkspacePermissions>;
+    promiseCanManageWorkspace: () => Promise<IWorkspacePermissions | undefined>;
     promiseGetUsers: () => Promise<IWorkspaceUser[] | IOrganizationUser[]>;
     promiseGetDashboards: () => Promise<IListedDashboard[]>;
     promiseGetWorkspaces: () => Promise<IWorkspaceDescriptor[]>;
@@ -362,7 +365,7 @@ export type CellValueType = "text" | "date" | "slash-date" | "number";
 export interface IUseAutomationsSmallLayoutProps {
     searchHandler: (search: string) => void;
     search?: string;
-    availableBulkActions: UiAsyncTableBulkAction[];
+    availableBulkActions: UiAsyncTableBulkAction[] | undefined;
     columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
     tableVariant: UiAsyncTableVariant;
     automationsLength?: number;

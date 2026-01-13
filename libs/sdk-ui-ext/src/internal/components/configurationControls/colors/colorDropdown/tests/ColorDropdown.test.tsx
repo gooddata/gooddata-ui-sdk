@@ -141,7 +141,7 @@ describe("ColorDropdown", () => {
         createComponent({ onColorSelected });
 
         await userEvent.click(screen.getByText("test"));
-        await userEvent.click(screen.queryByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
+        await userEvent.click(screen.queryByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)!);
         await waitFor(() => {
             expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid }));
         });

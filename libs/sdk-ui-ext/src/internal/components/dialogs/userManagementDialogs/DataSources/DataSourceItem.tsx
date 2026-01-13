@@ -23,9 +23,9 @@ function DataSourceIcon() {
 interface IGranularGranteeUserGroupItemProps {
     dataSource: IGrantedDataSource;
     subjectType: DataSourcePermissionSubject;
-    onChange: (grantee: IGrantedDataSource) => void;
-    onDelete: (grantee: IGrantedDataSource) => void;
-    renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
+    onChange?: (grantee: IGrantedDataSource) => void;
+    onDelete?: (grantee: IGrantedDataSource) => void;
+    renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
 export function DataSourceItem({

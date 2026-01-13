@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { v4 as uuid } from "uuid";
 
@@ -14,7 +14,7 @@ import {
     EntitiesApi_GetAllEntitiesWorkspaceDataFilterSettings,
     EntitiesApi_GetAllEntitiesWorkspaceDataFilters,
     EntitiesApi_PatchEntityWorkspaceDataFilters,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IDataFiltersService } from "@gooddata/sdk-backend-spi";
 import {
     type IWorkspaceDataFilter,

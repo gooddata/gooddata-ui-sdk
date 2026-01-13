@@ -6,12 +6,12 @@ import { invariant } from "ts-invariant";
 
 import { type IAnalyticalWorkspace, type IOrganization } from "@gooddata/sdk-backend-spi";
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { useBackend, useOrganization, useWorkspace } from "@gooddata/sdk-ui";
+import { useBackendStrict, useOrganization, useWorkspace } from "@gooddata/sdk-ui";
 
 import { type AutomationsScope, type IAutomationService, type IAutomationsQueryParams } from "./types.js";
 
 export const useAutomationService = (scope: AutomationsScope): IAutomationService => {
-    const backend = useBackend();
+    const backend = useBackendStrict();
     const workspace = useWorkspace();
     const organization = useOrganization();
 
@@ -51,7 +51,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                         .withExternalRecipient(params?.externalRecipientsFilterQuery?.value)
                         .withAuthor(params?.createdByFilterQuery?.value, params?.createdByFilterQuery?.type)
                         .withStatus(params?.statusFilterQuery?.value, params?.statusFilterQuery?.type)
-                        .withSorting([`${params.sortBy},${params.sortDirection}`])
+                        .withSorting([`${params?.sortBy},${params?.sortDirection}`])
                         .withType(params?.type)
                         .query();
                 } else {
@@ -76,7 +76,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                         .withExternalRecipient(params?.externalRecipientsFilterQuery?.value)
                         .withAuthor(params?.createdByFilterQuery?.value, params?.createdByFilterQuery?.type)
                         .withStatus(params?.statusFilterQuery?.value, params?.statusFilterQuery?.type)
-                        .withSorting([`${params.sortBy},${params.sortDirection}`])
+                        .withSorting([`${params?.sortBy},${params?.sortDirection}`])
                         .withType(params?.type)
                         .query();
                 }
@@ -119,7 +119,9 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
             //actions
             promiseDeleteAutomation: (automation: IAutomationMetadataObject) => {
                 if (scope === "organization") {
-                    return service.automations().deleteAutomation(automation.id, automation.workspace?.id);
+                    return service
+                        .automations()
+                        .deleteAutomation(automation.id, automation.workspace?.id as string);
                 }
                 return (service as IAnalyticalWorkspace).automations().deleteAutomation(automation.id);
             },
@@ -128,7 +130,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                     return (service as IOrganization).automations().deleteAutomations(
                         automations.map((automation) => ({
                             id: automation.id,
-                            workspaceId: automation.workspace?.id,
+                            workspaceId: automation.workspace?.id as string,
                         })),
                     );
                 }
@@ -140,7 +142,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                 if (scope === "organization") {
                     return (service as IOrganization)
                         .automations()
-                        .unsubscribeAutomation(automation.id, automation.workspace?.id);
+                        .unsubscribeAutomation(automation.id, automation.workspace?.id as string);
                 }
                 return (service as IAnalyticalWorkspace).automations().unsubscribeAutomation(automation.id);
             },
@@ -149,7 +151,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                     return (service as IOrganization).automations().unsubscribeAutomations(
                         automations.map((automation) => ({
                             id: automation.id,
-                            workspaceId: automation.workspace?.id,
+                            workspaceId: automation.workspace?.id as string,
                         })),
                     );
                 }
@@ -161,7 +163,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                 if (scope === "organization") {
                     return (service as IOrganization)
                         .automations()
-                        .pauseAutomation(automation.id, automation.workspace?.id);
+                        .pauseAutomation(automation.id, automation.workspace?.id as string);
                 }
                 return (service as IAnalyticalWorkspace).automations().pauseAutomation(automation.id);
             },
@@ -170,7 +172,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                     return (service as IOrganization).automations().pauseAutomations(
                         automations.map((automation) => ({
                             id: automation.id,
-                            workspaceId: automation.workspace?.id,
+                            workspaceId: automation.workspace?.id as string,
                         })),
                     );
                 }
@@ -182,7 +184,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                 if (scope === "organization") {
                     return (service as IOrganization)
                         .automations()
-                        .resumeAutomation(automation.id, automation.workspace?.id);
+                        .resumeAutomation(automation.id, automation.workspace?.id as string);
                 }
                 return (service as IAnalyticalWorkspace).automations().resumeAutomation(automation.id);
             },
@@ -191,7 +193,7 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                     return (service as IOrganization).automations().resumeAutomations(
                         automations.map((automation) => ({
                             id: automation.id,
-                            workspaceId: automation.workspace?.id,
+                            workspaceId: automation.workspace?.id as string,
                         })),
                     );
                 }

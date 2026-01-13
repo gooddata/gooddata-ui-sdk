@@ -14,9 +14,9 @@ import { ColorDropdown } from "../../../colors/colorDropdown/ColorDropdown.js";
 import { ColoredItemContent } from "../../../colors/coloredItemsList/ColoredItemContent.js";
 
 interface IColorItemProps {
-    disabled: boolean;
+    disabled?: boolean;
     showDisabledMessage?: boolean;
-    color: IColor;
+    color?: IColor;
     colorType: ComparisonColorType;
     colorPalette: IColorPalette;
     labelDescriptor: MessageDescriptor;
@@ -44,13 +44,13 @@ export function ColorItem({
 
     const handleColorSelected = (color: IColor) => {
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties.controls, valuePath, color);
+        set(clonedProperties.controls!, valuePath, color);
 
         pushData({ properties: clonedProperties });
     };
 
     return (
-        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+        <DisabledBubbleMessage showDisabledMessage={!!showDisabledMessage}>
             <ColorDropdown
                 colorPalette={colorPalette}
                 onColorSelected={handleColorSelected}

@@ -79,7 +79,7 @@ export function DrillTargetType(props: IDrillTargetProps) {
                     items={enabledDrillTargetTypeItems}
                     className="gd-drill-config-panel-target s-drill-config-panel-target-type-open"
                     renderItem={({ item }) => {
-                        const isSelected = targetBySelection && targetBySelection.id === item.id;
+                        const isSelected = targetBySelection?.id === item.id;
                         const drillIconClassName = getIconClassNameBySelection(item.id);
 
                         return (

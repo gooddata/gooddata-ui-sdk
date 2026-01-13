@@ -9,18 +9,24 @@ import { type ISeparators } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 import { IntlWrapper, KdaDialogController, KdaStoreProvider } from "@gooddata/sdk-ui-dashboard/internal";
 
-import { keyDriverAnalysisSelector, settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import {
+    keyDriverAnalysisSelector,
+    settingsSelector,
+    tagsSelector,
+} from "../store/chatWindow/chatWindowSelectors.js";
 import { type RootState, setKeyDriverAnalysisAction } from "../store/index.js";
 
 interface KeyDriverAnalysisProps {
     keyDriverAnalysis?: IKdaDefinition;
     separators?: ISeparators;
     locale?: string;
+    includeTags?: string[];
+    excludeTags?: string[];
     setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
 }
 
 function KeyDriverAnalysisComponent(props: KeyDriverAnalysisProps) {
-    const { keyDriverAnalysis, separators, locale, setKeyDriverAnalysis } = props;
+    const { keyDriverAnalysis, separators, locale, includeTags, excludeTags, setKeyDriverAnalysis } = props;
     const intl = useIntl();
 
     const onRequestedDefinitionChange = useCallback(
@@ -42,6 +48,8 @@ function KeyDriverAnalysisComponent(props: KeyDriverAnalysisProps) {
                     separators={separators}
                     showCloseButton
                     locale={locale ?? intl.locale}
+                    includeTags={includeTags}
+                    excludeTags={excludeTags}
                     onRequestedDefinitionChange={onRequestedDefinitionChange}
                 />
             </KdaStoreProvider>
@@ -55,10 +63,13 @@ const mapDispatchToProps: KeyDriverAnalysisProps = {
 
 const mapStateToProps = (state: RootState): KeyDriverAnalysisProps => {
     const settings = settingsSelector(state);
+    const tags = tagsSelector(state);
     return {
         keyDriverAnalysis: keyDriverAnalysisSelector(state),
         locale: settings?.locale,
         separators: settings?.separators,
+        includeTags: tags?.includeTags,
+        excludeTags: tags?.excludeTags,
     };
 };
 

@@ -77,13 +77,13 @@ export function AddSingleWorkspaceSelect({
     }, []);
 
     const usedWorkspace = useMemo(
-        () => (addedWorkspace ? [addedWorkspace, ...grantedWorkspaces] : grantedWorkspaces),
+        () => (addedWorkspace ? [addedWorkspace, ...(grantedWorkspaces ?? [])] : grantedWorkspaces),
         [addedWorkspace, grantedWorkspaces],
     );
 
     const filterOption = (option: any) => {
         const workspace = option.value;
-        return !usedWorkspace.some((usedWorkspace) => {
+        return !usedWorkspace?.some((usedWorkspace) => {
             return usedWorkspace.id === workspace.id;
         });
     };
@@ -118,7 +118,7 @@ export function AddSingleWorkspaceSelect({
                         svg: { height: "14px" },
                     }),
                 }}
-                loadOptions={loadOptions}
+                loadOptions={loadOptions as any}
                 defaultOptions
                 placeholder={intl.formatMessage(messages.searchWorkspacePlaceholder)}
                 onKeyDown={onKeyDownCallback}

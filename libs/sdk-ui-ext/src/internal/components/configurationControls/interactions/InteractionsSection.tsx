@@ -15,9 +15,9 @@ import { ConfigSection } from "../ConfigSection.js";
 export interface IInteractionsSectionProps {
     controlsDisabled?: boolean;
     areControlsDisabledGetter?: (sectionName?: SectionName) => boolean;
-    properties: IVisualizationProperties;
-    propertiesMeta: any;
-    pushData: (data: any) => any;
+    properties?: IVisualizationProperties;
+    propertiesMeta?: any;
+    pushData?: (data: any) => any;
     InteractionsDetailRenderer?: () => ReactNode;
     supportsAlertConfiguration?: boolean;
     supportsDrillDownConfiguration?: boolean;
@@ -68,37 +68,37 @@ export const InteractionsSection = memo(function InteractionsSection({
                 <div className="gd-interactions-section__control-with-tooltip">
                     <CheckboxControl
                         valuePath="disableAlerts"
-                        labelText={messages["interactionsAlerts"].id}
+                        labelText={messages["interactionsAlerts"].id!}
                         properties={properties}
-                        disabled={areControlsDisabledGetter("interactions.alerts")}
+                        disabled={areControlsDisabledGetter?.("interactions.alerts")}
                         checked={!isAlertsDisabled}
                         pushData={pushData}
                         isValueInverted
                     />
-                    <QuestionMarkTooltip tooltipText={messages["interactionsAlertsTooltip"].id} />
+                    <QuestionMarkTooltip tooltipText={messages["interactionsAlertsTooltip"].id!} />
                 </div>
             ) : null}
             {supportsScheduledExportsConfiguration ? (
                 <div className="gd-interactions-section__control-with-tooltip">
                     <CheckboxControl
                         valuePath="disableScheduledExports"
-                        labelText={messages["interactionsScheduledExports"].id}
+                        labelText={messages["interactionsScheduledExports"].id!}
                         properties={properties}
-                        disabled={areControlsDisabledGetter("interactions.scheduled_exports")}
+                        disabled={areControlsDisabledGetter?.("interactions.scheduled_exports")}
                         checked={!isScheduledExportsDisabled}
                         pushData={pushData}
                         isValueInverted
                     />
-                    <QuestionMarkTooltip tooltipText={messages["interactionsScheduledExportsTooltip"].id} />
+                    <QuestionMarkTooltip tooltipText={messages["interactionsScheduledExportsTooltip"].id!} />
                 </div>
             ) : null}
             {isSeparatorVisible ? <SeparatorLine mT={10} mB={10} /> : null}
             {supportsDrillDownConfiguration ? (
                 <CheckboxControl
                     valuePath="disableDrillDown"
-                    labelText={messages["interactionsDrillDown"].id}
+                    labelText={messages["interactionsDrillDown"].id!}
                     properties={properties}
-                    disabled={areControlsDisabledGetter("interactions.drill_down")}
+                    disabled={areControlsDisabledGetter?.("interactions.drill_down")}
                     checked={!isDrillDownDisabled}
                     pushData={pushData}
                     isValueInverted
@@ -108,9 +108,9 @@ export const InteractionsSection = memo(function InteractionsSection({
             {enableImplicitDrillToUrl ? (
                 <CheckboxControl
                     valuePath="disableDrillIntoURL"
-                    labelText={messages["interactionsDrillIntoURL"].id}
+                    labelText={messages["interactionsDrillIntoURL"].id!}
                     properties={properties}
-                    disabled={areControlsDisabledGetter("interactions.drill_into_url")}
+                    disabled={areControlsDisabledGetter?.("interactions.drill_into_url")}
                     checked={!isDrillIntoURLDisabled}
                     pushData={pushData}
                     isValueInverted

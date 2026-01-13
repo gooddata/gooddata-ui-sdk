@@ -137,7 +137,7 @@ function UserGroupEditDialogComponent({
 
     const isOpenedInEditMode = initialView !== "VIEW";
 
-    const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace>(undefined);
+    const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace | undefined>(undefined);
 
     const handleWorkspaceEdit = (workspace: IGrantedWorkspace) => {
         setWorkspaceToEdit(workspace);

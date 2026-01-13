@@ -22,7 +22,7 @@ const EDITOR_ALIGN_POINTS: IAlignPoint[] = [
 
 export interface IConfigEditorProps {
     value?: string;
-    onSubmit: (value: string) => void;
+    onSubmit: (value: string | undefined) => void;
     onCancel: () => void;
 }
 

@@ -4,8 +4,8 @@
 
 ```ts
 
-import { AacAnalyticsModel } from '@gooddata/api-client-tiger/aac';
-import { AacLogicalModel } from '@gooddata/api-client-tiger/aac';
+import { AacAnalyticsModel } from '@gooddata/api-client-tiger/endpoints/aac';
+import { AacLogicalModel } from '@gooddata/api-client-tiger/endpoints/aac';
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
 import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
@@ -37,13 +37,13 @@ import { Invitation } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
+import { JsonApiDatasetOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceOutAttributesAuthenticationTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiNotificationChannelOut } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
-import { JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterOutDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterSettingInDocument } from '@gooddata/api-client-tiger';
@@ -354,7 +354,7 @@ export interface OriginInfoWithId {
     // (undocumented)
     originId: string;
     // (undocumented)
-    originType: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum;
+    originType: JsonApiDatasetOutMetaOriginOriginTypeEnum;
 }
 
 // @internal (undocumented)

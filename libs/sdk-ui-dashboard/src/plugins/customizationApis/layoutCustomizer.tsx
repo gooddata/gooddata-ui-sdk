@@ -230,7 +230,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
              * non-empty, non-corrupted dashboards
              */
 
-            if (!layoutToTransform || layoutToTransform.type !== "IDashboardLayout") {
+            if (layoutToTransform?.type !== "IDashboardLayout") {
                 return undefined;
             }
 
@@ -288,7 +288,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
              * layout in a dashboard and is of expected type. This condition will be always true for
              * non-empty, non-corrupted dashboards
              */
-            if (!layout || layout.type !== "IDashboardLayout") {
+            if (layout?.type !== "IDashboardLayout") {
                 return undefined;
             }
 

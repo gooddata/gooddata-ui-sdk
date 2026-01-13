@@ -59,7 +59,7 @@ import {
     AacApi_SetAnalyticsModelAac,
     AacApi_SetLogicalModelAac,
     type AacLogicalModel,
-} from "@gooddata/api-client-tiger/aac";
+} from "@gooddata/api-client-tiger/endpoints/aac";
 import {
     ActionsApi_AllPlatformUsage,
     ActionsApi_CheckEntityOverrides,
@@ -68,8 +68,8 @@ import {
     ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
     ActionsApi_RegisterUploadNotification,
     ActionsApi_ResolveAllEntitlements,
-} from "@gooddata/api-client-tiger/actions";
-import { AuthApi_ProcessInvitation } from "@gooddata/api-client-tiger/authActions";
+} from "@gooddata/api-client-tiger/endpoints/actions";
+import { AuthApi_ProcessInvitation } from "@gooddata/api-client-tiger/endpoints/authActions";
 import {
     EntitiesApi_CreateEntityApiTokens,
     EntitiesApi_CreateEntityCspDirectives,
@@ -104,14 +104,14 @@ import {
     EntitiesApi_PatchEntityWorkspaces,
     EntitiesApi_UpdateEntityCspDirectives,
     EntitiesApi_UpdateEntityDataSources,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     LayoutApi_GetLogicalModel,
     LayoutApi_GetWorkspaceDataFiltersLayout,
     LayoutApi_PutWorkspaceLayout,
     LayoutApi_SetLogicalModel,
     LayoutApi_SetWorkspaceDataFiltersLayout,
-} from "@gooddata/api-client-tiger/layout";
+} from "@gooddata/api-client-tiger/endpoints/layout";
 import {
     type ResultApiReadCsvFileManifestsRequest,
     ResultApi_AnalyzeCsv,
@@ -120,14 +120,14 @@ import {
     ResultApi_ListFiles,
     ResultApi_ReadCsvFileManifests,
     ResultApi_StagingUpload,
-} from "@gooddata/api-client-tiger/result";
+} from "@gooddata/api-client-tiger/endpoints/result";
 import {
     ScanModelApi_GetDataSourceSchemata,
     ScanModelApi_ScanDataSource,
     ScanModelApi_ScanSql,
     ScanModelApi_TestDataSource,
     ScanModelApi_TestDataSourceDefinition,
-} from "@gooddata/api-client-tiger/scanModel";
+} from "@gooddata/api-client-tiger/endpoints/scanModel";
 import { type AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import {
     type ErrorConverter,

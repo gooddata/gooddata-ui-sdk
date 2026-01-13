@@ -27,6 +27,8 @@ export type GenAIChatDialogProps = {
     canAnalyze?: boolean;
     canFullControl?: boolean;
     objectTypes?: GenAIObjectType[];
+    includeTags?: string[];
+    excludeTags?: string[];
     settings?: IUserWorkspaceSettings;
     onOpen: () => void;
     onClose: () => void;
@@ -54,6 +56,8 @@ export function GenAIChatDialog({
     settings,
     returnFocusTo,
     objectTypes,
+    includeTags,
+    excludeTags,
     canManage = false,
     canAnalyze = false,
     canFullControl = false,
@@ -71,6 +75,8 @@ export function GenAIChatDialog({
         colorPalette,
         settings,
         objectTypes,
+        includeTags,
+        excludeTags,
     });
 
     const open = useRef(onOpen);

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useSelector } from "react-redux";
 
@@ -23,8 +23,23 @@ export function ReasoningMessage({ content, messageState }: IReasoningMessagePro
     // Collect reasoning items for the dropdown
     const reasoningItems = content.filter(isReasoningContents);
 
+    // Treat dropdown as "complete" once any real (non-reasoning) answer content exists
+    const hasRenderedAnswer = content.some((item) => {
+        if (item.type === "reasoning") return false;
+        if (item.type === "routing") return false; // routing is hidden when reasoning FF is enabled
+
+        if (item.type === "text" || item.type === "error") {
+            return item.text.trim().length > 0;
+        }
+
+        // search / semanticSearch / visualization / changeAnalysis => all render meaningful output
+        return true;
+    });
+
+    const isReasoningFinished = isComplete || hasRenderedAnswer;
+
     // Show dropdown when reasoning is enabled and (response is still streaming or contains reasoning items)
-    const shouldShowDropdown = isReasoningEnabled && (!isComplete || reasoningItems.length > 0);
+    const shouldShowDropdown = isReasoningEnabled && (!isReasoningFinished || reasoningItems.length > 0);
 
     if (!shouldShowDropdown) {
         return null;
@@ -37,10 +52,13 @@ export function ReasoningMessage({ content, messageState }: IReasoningMessagePro
     const lastReasoningStepTitle = getLastReasoningStepTitle(reasoningItems);
 
     // Show placeholder when streaming and no reasoning yet
-    const showThinkingPlaceholder = !isComplete && totalReasoningSteps === 0;
+    const showThinkingPlaceholder = !isReasoningFinished && totalReasoningSteps === 0;
 
     return (
-        <ReasoningDropdown isComplete={isComplete} lastReasoningStepTitle={lastReasoningStepTitle}>
+        <ReasoningDropdown
+            isReasoningFinished={isReasoningFinished}
+            lastReasoningStepTitle={lastReasoningStepTitle}
+        >
             {/* Show placeholder while waiting for reasoning */}
             {showThinkingPlaceholder ? <div className="gd-gen-ai-chat__reasoning"></div> : null}
             {/* Show reasoning steps once available */}

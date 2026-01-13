@@ -4,9 +4,9 @@ import { type IVisualizationProperties } from "./Visualization.js";
 export interface IMinMaxControlProps {
     isDisabled: boolean;
     basePath: string;
-    pushData: (data: any) => any;
-    properties: IVisualizationProperties;
-    propertiesMeta: any;
+    pushData?: (data: any) => any;
+    properties?: IVisualizationProperties;
+    propertiesMeta?: any;
 }
 
 export interface IMinMaxScaleState {

@@ -55,9 +55,8 @@ export class PluggableUnknownChart extends AbstractPluggableVisualization {
         _options: IVisProps,
         _insight: IInsightDefinition,
         _executionFactory: IExecutionFactory,
-    ) {
-        const result: IPreparedExecution = null;
-        return result;
+    ): IPreparedExecution | null {
+        return null;
     }
 
     protected renderConfigurationPanel(_insight: IInsightDefinition): void {}
@@ -77,6 +76,6 @@ export class PluggableUnknownChart extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        this.unmountFun([this.getElement()]);
+        this.unmountFun([this.getElement()!]);
     }
 }

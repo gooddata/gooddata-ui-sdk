@@ -130,7 +130,7 @@ describe("comparisonHelper", () => {
 
         it("Should return true when color config is empty", () => {
             expect(isComparisonDefaultColors({})).toBeTruthy();
-            expect(isComparisonDefaultColors(null)).toBeTruthy();
+            expect(isComparisonDefaultColors(undefined)).toBeTruthy();
             expect(isComparisonDefaultColors(undefined)).toBeTruthy();
         });
     });

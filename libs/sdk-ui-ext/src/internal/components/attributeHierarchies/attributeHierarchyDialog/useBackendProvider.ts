@@ -20,12 +20,12 @@ import { convertToCatalogAttributeData, convertToCatalogAttributeDataByRefs } fr
 interface IUseBackendProvideDataProps {
     title: string;
     attributes: IAttributeData[];
-    editingAttributeHierarchy: ICatalogAttributeHierarchy;
+    editingAttributeHierarchy?: ICatalogAttributeHierarchy;
     setLoading: SetLoadingCallback;
     onSaveOrUpdateSuccess?: SaveOrUpdateCallback;
     onDeleteSuccess?: EmptyParamCallback;
     onCreateHierarchyClicked?: () => void;
-    onClose: EmptyParamCallback;
+    onClose?: EmptyParamCallback;
 }
 
 export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
@@ -55,7 +55,7 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
                 return backend
                     .workspace(workspace)
                     .attributeHierarchies()
-                    .getValidDescendants([attribute.ref])
+                    .getValidDescendants([attribute.ref!])
                     .then((refs) => {
                         const validAttributes = convertToCatalogAttributeDataByRefs(
                             catalogAttributesMap,
@@ -81,7 +81,7 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
                 }
                 setLoading(false);
                 addSuccess(messages["hierarchyCreateSuccessMessage"]);
-                onClose();
+                onClose?.();
             })
             .catch(() => {
                 addError(messages["hierarchyCreateFailedMessage"]);
@@ -94,9 +94,9 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
             .workspace(workspace)
             .attributeHierarchies()
             .updateAttributeHierarchy({
-                ...editingAttributeHierarchy,
+                ...editingAttributeHierarchy!,
                 attributeHierarchy: {
-                    ...editingAttributeHierarchy.attributeHierarchy,
+                    ...editingAttributeHierarchy!.attributeHierarchy,
                     title: savingTitle,
                     attributes: attributeRefs,
                 },
@@ -107,7 +107,7 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
                 }
                 setLoading(false);
                 addSuccess(messages["hierarchyUpdateSuccessMessage"]);
-                onClose();
+                onClose?.();
             })
             .catch(() => {
                 addError(messages["hierarchyUpdateFailedMessage"]);
@@ -121,7 +121,7 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
         // There maybe some attributes that are not completed, so we need to filter them out
         const attributeRefs = attributes
             .filter((attribute) => attribute.completed)
-            .map((attribute) => attribute.ref);
+            .map((attribute) => attribute.ref!);
 
         if (editingAttributeHierarchy) {
             handleUpdateAttributeHierarchy(savingTitle, attributeRefs);
@@ -138,13 +138,13 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
         backend
             .workspace(workspace)
             .attributeHierarchies()
-            .deleteAttributeHierarchy(editingAttributeHierarchy.attributeHierarchy.id)
+            .deleteAttributeHierarchy(editingAttributeHierarchy!.attributeHierarchy.id)
             .then(() => {
                 if (onDeleteSuccess) {
                     onDeleteSuccess();
                 }
                 addSuccess(messages["hierarchyDeleteSuccessMessage"]);
-                onClose();
+                onClose?.();
             })
             .catch(() => {
                 addError(messages["hierarchyDeleteFailedMessage"]);

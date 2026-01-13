@@ -46,6 +46,10 @@ function setPivotTableNextBucketWarningMessages(referencePoint: IExtendedReferen
     const buckets = referencePoint?.buckets;
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
+    if (!updatedUiConfig) {
+        return updatedUiConfig;
+    }
+
     const hasColumns = !hasNoColumns(buckets);
     buckets.forEach((bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
@@ -56,13 +60,13 @@ function setPivotTableNextBucketWarningMessages(referencePoint: IExtendedReferen
             let warningMessageValues = {};
 
             if (bucket.localIdentifier === BucketNames.COLUMNS) {
-                warningMessageId = messages["columns"].id;
+                warningMessageId = messages["columns"].id!;
                 warningMessageValues = {
                     oldLimit: MAX_METRICS_COUNT,
                     oldRowsLimit: MAX_TABLE_CATEGORIES_COUNT,
                 };
             } else if (hasColumns) {
-                warningMessageId = messages["measuresAttributes"].id;
+                warningMessageId = messages["measuresAttributes"].id!;
 
                 if (bucket.localIdentifier === BucketNames.MEASURES) {
                     warningMessageValues = {

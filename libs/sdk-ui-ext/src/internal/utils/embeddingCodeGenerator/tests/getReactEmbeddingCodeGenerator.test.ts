@@ -39,7 +39,7 @@ describe("getReactEmbeddingCodeGenerator", () => {
     describe("height test", () => {
         type Scenario = [string, number | string];
         const scenarios: Scenario[] = [
-            ["without height", undefined],
+            ["without height", undefined!],
             ["with height as number", 1000],
             ["with height as string", "20rem"],
         ];
@@ -53,7 +53,7 @@ describe("getReactEmbeddingCodeGenerator", () => {
         type Scenario = [string, string[]];
         const scenarios: Scenario[] = [
             ["no props to omit defined in empty array", []],
-            ["no props to omit defined as undefined", undefined],
+            ["no props to omit defined as undefined", undefined!],
             ["omit one prop", ["prop"]],
             ["omit all props", ["prop", "another"]],
         ];

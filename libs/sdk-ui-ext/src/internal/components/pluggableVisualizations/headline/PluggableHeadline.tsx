@@ -108,7 +108,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement()!, this.getConfigPanelElement()!]);
     }
 
     public getExtendedReferencePoint(
@@ -134,7 +134,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 !primaryMeasure || !hasDerivedBucketItems(primaryMeasure, mappedReferencePoint.buckets);
         } else {
             const numberOfSecondaryMeasure =
-                newReferencePoint.uiConfig.buckets[BucketNames.SECONDARY_MEASURES].itemsLimit;
+                newReferencePoint.uiConfig?.buckets[BucketNames.SECONDARY_MEASURES]?.itemsLimit ?? 0;
             const limitedBuckets = limitNumberOfMeasuresInBuckets(
                 newReferencePoint.buckets,
                 numberOfSecondaryMeasure + 1,
@@ -145,11 +145,11 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             let secondaryMeasures =
                 allMeasures.length > 1 ? allMeasures.slice(1, numberOfSecondaryMeasure + 1) : null;
 
-            const primaryDerivedMeasure = findDerivedBucketItem(primaryMeasure, allMeasures);
+            const primaryDerivedMeasure = findDerivedBucketItem(primaryMeasure!, allMeasures);
             if (
                 this.keepPrimaryDerivedMeasureOnly &&
                 primaryDerivedMeasure &&
-                !isArithmeticBucketItem(primaryMeasure)
+                !isArithmeticBucketItem(primaryMeasure!)
             ) {
                 secondaryMeasures = [primaryDerivedMeasure];
             }
@@ -157,8 +157,8 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
             newReferencePoint = setHeadlineRefPointBuckets(
                 newReferencePoint,
-                primaryMeasure,
-                secondaryMeasures,
+                primaryMeasure!,
+                secondaryMeasures!,
             );
         }
 
@@ -188,8 +188,8 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         return executionFactory
             .forInsight(insight)
             .withDimensions(newDimension([MeasureGroupIdentifier]))
-            .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+            .withDateFormat(dateFormat!)
+            .withExecConfig(executionConfig!);
     }
 
     protected override checkBeforeRender(insight: IInsightDefinition): boolean {
@@ -229,7 +229,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             buckets,
             filters: [...(insightFilters(insight) || [])],
             sortItems: [...(insightSorts(insight) || [])],
-            executionConfig: options.executionConfig,
+            executionConfig: options.executionConfig!,
             dateFormat: options.dateFormat,
         });
 
@@ -247,11 +247,11 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 onDataView={this.onDataView}
                 pushData={this.pushData}
                 onError={this.onError}
-                LoadingComponent={null}
-                ErrorComponent={null}
+                LoadingComponent={undefined}
+                ErrorComponent={undefined}
                 onExportReady={this.onExportReady}
             />,
-            this.getElement(),
+            this.getElement()!,
         );
     }
 
@@ -353,7 +353,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     private buildDefaultMigrationProperties(): HeadlineControlProperties {
         return {
             comparison: {
-                ...HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES.comparison,
+                ...HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES.comparison!,
                 labelConfig: {
                     unconditionalValue: this.intl.formatMessage({
                         id: "visualizations.headline.tertiary.title",

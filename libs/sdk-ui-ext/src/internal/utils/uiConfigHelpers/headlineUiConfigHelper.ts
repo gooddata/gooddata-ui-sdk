@@ -4,6 +4,7 @@ import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
+    type IColor,
     type IColorPalette,
     type IColorPaletteItem,
     type IInsightDefinition,
@@ -69,7 +70,7 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
         },
         VisualizationTypes.HEADLINE,
         intl,
-    );
+    )!;
 
     set(uiConfig, [BUCKETS, BucketNames.MEASURES, "canAddItems"], viewCanAddPrimaryItems);
     set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], viewCanAddSecondaryItems);
@@ -82,8 +83,8 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
 
     if (primaryMeasuresCount === 0 && secondaryMeasuresCount !== 0) {
         uiConfig.customError = {
-            heading: getTranslation(messages["heading"].id, intl),
-            text: getTranslation(messages["text"].id, intl),
+            heading: getTranslation(messages["heading"].id!, intl),
+            text: getTranslation(messages["text"].id!, intl),
         };
     }
 
@@ -100,7 +101,7 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
 
 export function buildHeadlineVisualizationConfig(
     visualizationProperties: IVisualizationProperties,
-    settings: ISettings,
+    settings: ISettings | undefined,
     options: IVisProps,
 ): IChartConfig {
     const { config, customVisualizationConfig } = options;
@@ -134,11 +135,14 @@ export function getHeadlineSupportedProperties(
     };
 }
 
-export function isComparisonEnabled(insight: IInsightDefinition) {
+export function isComparisonEnabled(insight: IInsightDefinition | undefined): boolean {
+    if (!insight) {
+        return false;
+    }
     const primaryMeasure = insightPrimaryMeasure(insight);
     const secondaryMeasures = insightSecondaryMeasures(insight);
 
-    return primaryMeasure && secondaryMeasures?.length === 1;
+    return !!(primaryMeasure && secondaryMeasures?.length === 1);
 }
 
 export function getComparisonDefaultCalculationType(insight: IInsightDefinition) {
@@ -149,7 +153,7 @@ export function getComparisonDefaultCalculationType(insight: IInsightDefinition)
     return secondaryIsDerivedMeasure ? CalculateAs.CHANGE : CalculateAs.RATIO;
 }
 
-export function getComparisonColorPalette(theme: ITheme): IColorPalette {
+export function getComparisonColorPalette(theme?: ITheme): IColorPalette {
     const themeKpi = theme?.kpi;
     const themePalette = theme?.palette;
 
@@ -166,7 +170,7 @@ export function getComparisonColorPalette(theme: ITheme): IColorPalette {
 
 function getComparisonColorPaletteItem(
     comparisonColorType: ComparisonColorType,
-    firstPriorityThemeColor: ThemeColor,
+    firstPriorityThemeColor?: ThemeColor,
     secondPriorityThemeColor?: ThemeColor,
 ): IColorPaletteItem {
     const firstPriorityRgbColor = firstPriorityThemeColor ? parseRGBString(firstPriorityThemeColor) : null;
@@ -174,15 +178,15 @@ function getComparisonColorPaletteItem(
     return {
         guid: comparisonColorType,
         fill:
-            firstPriorityRgbColor ||
-            secondPriorityRgbColor ||
-            getComparisonRgbColor(null, comparisonColorType),
+            firstPriorityRgbColor ??
+            secondPriorityRgbColor ??
+            getComparisonRgbColor(undefined as unknown as IColor, comparisonColorType),
     };
 }
 
-function insightPrimaryMeasure(insight: IInsightDefinition): IMeasure {
+function insightPrimaryMeasure(insight: IInsightDefinition): IMeasure | undefined {
     const primaryBucket = insightBucket(insight, BucketNames.MEASURES);
-    return primaryBucket && bucketMeasure(primaryBucket);
+    return primaryBucket ? bucketMeasure(primaryBucket) : undefined;
 }
 
 function insightSecondaryMeasures(insight: IInsightDefinition): IMeasure[] {

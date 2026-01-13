@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import type { JsonApiAutomationOutIncludes } from "@gooddata/api-client-tiger";
 import {
     type AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
     AutomationOrganizationViewControllerApi_GetAllAutomationsWorkspaceAutomations,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type AutomationFilterType,
@@ -16,6 +16,8 @@ import {
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
+    DEFAULT_PAGE,
+    DEFAULT_PAGE_SIZE,
     ERROR_HEADERS_TOO_LARGE,
     MAX_QUERY_LENGTH,
     STATUS_NEVER_RUN,
@@ -30,19 +32,19 @@ import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
  * @alpha
  */
 export class OrganizationAutomationsQuery implements IOrganizationAutomationsQuery {
-    private size = 100;
-    private page = 0;
-    private author: string | null = null;
+    private size = DEFAULT_PAGE_SIZE;
+    private page = DEFAULT_PAGE;
+    private author: string | null | undefined = null;
     private authorFilterType: AutomationFilterType = "exact";
-    private recipient: string | null = null;
+    private recipient: string | null | undefined = null;
     private recipientFilterType: AutomationFilterType = "exact";
-    private externalRecipient: string | null = null;
-    private user: string | null = null;
-    private dashboard: string | null = null;
+    private externalRecipient: string | null | undefined = null;
+    private user: string | null | undefined = null;
+    private dashboard: string | null | undefined = null;
     private dashboardFilterType: AutomationFilterType = "exact";
-    private status: string | null = null;
+    private status: string | null | undefined = null;
     private statusFilterType: AutomationFilterType = "exact";
-    private workspace: string | null = null;
+    private workspace: string | null | undefined = null;
     private workspaceFilterType: AutomationFilterType = "exact";
     private filter: { title?: string } = {};
     private sort = {};
@@ -58,13 +60,13 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
         this.totalCount = value;
     };
 
-    public withSize(size: number): IOrganizationAutomationsQuery {
-        this.size = size;
+    public withSize(size: number | undefined): IOrganizationAutomationsQuery {
+        this.size = size ?? DEFAULT_PAGE_SIZE;
         return this;
     }
 
-    public withPage(page: number): IOrganizationAutomationsQuery {
-        this.page = page;
+    public withPage(page: number | undefined): IOrganizationAutomationsQuery {
+        this.page = page ?? DEFAULT_PAGE;
         return this;
     }
 
@@ -80,7 +82,7 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
         return this;
     }
 
-    public withType(type: AutomationType): IOrganizationAutomationsQuery {
+    public withType(type: AutomationType | undefined): IOrganizationAutomationsQuery {
         this.type = type;
         return this;
     }

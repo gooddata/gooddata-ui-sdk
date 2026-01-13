@@ -1,6 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { LayoutApi_GetLogicalModel } from "@gooddata/api-client-tiger/layout";
+import { LayoutApi_GetLogicalModel } from "@gooddata/api-client-tiger/endpoints/layout";
 import { type IDateDataset, type IWorkspaceLogicalModelService } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";

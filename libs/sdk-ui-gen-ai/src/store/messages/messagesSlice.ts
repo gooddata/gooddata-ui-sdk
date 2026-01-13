@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
@@ -11,7 +11,6 @@ import {
     type Message,
     type UserMessage,
     isAssistantMessage,
-    isTextContents,
     isUserMessage,
     isVisualizationContents,
     makeErrorContents,
@@ -208,15 +207,6 @@ const messagesSlice = createSlice({
             // Update assistant message
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
             assistantMessage.id = payload.interactionId ?? assistantMessage.id;
-
-            // When streaming a visualization, we want to replace any existing text contents or previous visualization
-            // to avoid duplication (text -> visualization transition or visualization updates)
-            const hasVisualization = payload.contents.some(isVisualizationContents);
-            if (hasVisualization) {
-                assistantMessage.content = assistantMessage.content.filter(
-                    (c) => !isTextContents(c) && !isVisualizationContents(c),
-                );
-            }
 
             assistantMessage.content.push(...payload.contents);
             assistantMessage.cancelled = false;

@@ -428,18 +428,18 @@ export interface IAuthenticationProvider {
 export interface IAutomationsQuery {
     query(): Promise<IAutomationsQueryResult>;
     queryAll(): Promise<IAutomationMetadataObject[]>;
-    withAuthor(author: string, filterType?: AutomationFilterType): IAutomationsQuery;
-    withDashboard(dashboard: string, filterType?: AutomationFilterType): IAutomationsQuery;
-    withExternalRecipient(externalRecipient: string): IAutomationsQuery;
+    withAuthor(author: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
+    withDashboard(dashboard: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
+    withExternalRecipient(externalRecipient: string | undefined): IAutomationsQuery;
     withFilter(filter: {
         title?: string;
     }): IAutomationsQuery;
-    withPage(page: number): IAutomationsQuery;
-    withRecipient(recipient: string, filterType?: AutomationFilterType): IAutomationsQuery;
-    withSize(size: number): IAutomationsQuery;
+    withPage(page: number | undefined): IAutomationsQuery;
+    withRecipient(recipient: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
+    withSize(size: number | undefined): IAutomationsQuery;
     withSorting(sort: string[]): IAutomationsQuery;
-    withStatus(status: string, filterType?: AutomationFilterType): IAutomationsQuery;
-    withType(type: AutomationType): IAutomationsQuery;
+    withStatus(status: string | undefined, filterType?: AutomationFilterType): IAutomationsQuery;
+    withType(type: AutomationType | undefined): IAutomationsQuery;
     withUser(user: string): IAutomationsQuery;
 }
 
@@ -522,6 +522,12 @@ export interface IChangeAnalysisDefinition {
     auxMeasures?: IMeasure[];
     filters?: IFilter[];
     measure: IMeasure;
+}
+
+// @internal
+export interface IChangeAnalysisOptions {
+    excludeTags?: string[];
+    includeTags?: string[];
 }
 
 // @internal
@@ -1361,20 +1367,20 @@ export interface IOrganizationAutomationService {
 export interface IOrganizationAutomationsQuery {
     query(): Promise<IOrganizationAutomationsQueryResult>;
     queryAll(): Promise<IAutomationMetadataObject[]>;
-    withAuthor(author: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withAuthor(author: string | undefined, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
     withDashboard(dashboard: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
-    withExternalRecipient(externalRecipient: string): IOrganizationAutomationsQuery;
+    withExternalRecipient(externalRecipient: string | undefined): IOrganizationAutomationsQuery;
     withFilter(filter: {
         title?: string;
     }): IOrganizationAutomationsQuery;
-    withPage(page: number): IOrganizationAutomationsQuery;
-    withRecipient(recipient: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
-    withSize(size: number): IOrganizationAutomationsQuery;
+    withPage(page: number | undefined): IOrganizationAutomationsQuery;
+    withRecipient(recipient: string | undefined, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withSize(size: number | undefined): IOrganizationAutomationsQuery;
     withSorting(sort: string[]): IOrganizationAutomationsQuery;
-    withStatus(status: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
-    withType(type: AutomationType): IOrganizationAutomationsQuery;
+    withStatus(status: string | undefined, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withType(type: AutomationType | undefined): IOrganizationAutomationsQuery;
     withUser(user: string): IOrganizationAutomationsQuery;
-    withWorkspace(workspace: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withWorkspace(workspace: string | undefined, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 }
 
 // @alpha
@@ -1984,7 +1990,7 @@ export interface IWorkspaceInsightsService {
 
 // @internal
 export interface IWorkspaceKeyDriverAnalysisService {
-    computeChangeAnalysis(definition: IChangeAnalysisDefinition, period: IChangeAnalysisPeriod): Promise<IChangeAnalysisResults>;
+    computeChangeAnalysis(definition: IChangeAnalysisDefinition, period: IChangeAnalysisPeriod, options?: IChangeAnalysisOptions): Promise<IChangeAnalysisResults>;
 }
 
 // @internal

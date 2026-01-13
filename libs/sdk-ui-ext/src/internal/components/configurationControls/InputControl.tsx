@@ -21,7 +21,7 @@ import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
 export interface IInputControlProps {
     valuePath: string;
-    properties: IVisualizationProperties;
+    properties?: IVisualizationProperties;
     labelText?: string;
     value?: string;
     placeholder?: string;
@@ -146,11 +146,11 @@ export function InputControl({
         const modifiedData = modifyDataForSending(value);
 
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties, `controls.${valuePath}`, modifiedData);
+        set(clonedProperties!, `controls.${valuePath}`, modifiedData);
 
         setValue(modifiedData);
 
-        pushData({ properties: clonedProperties });
+        pushData?.({ properties: clonedProperties });
         justEmittedRef.current = true;
 
         return modifiedData;

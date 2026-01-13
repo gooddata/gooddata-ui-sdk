@@ -244,10 +244,7 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
             renderButton={({ isOpen, toggleDropdown }) => {
                 const buttonClassName = cx("s-date-dataset-button", isOpen ? "s-expanded" : "s-collapsed", {
                     "is-loading": isLoading,
-                    "is-unrelated":
-                        !isLoading &&
-                        unrelatedDateDataset &&
-                        unrelatedDateDataset.dataSet.uri === activeDateDataSetUri,
+                    "is-unrelated": !isLoading && unrelatedDateDataset?.dataSet.uri === activeDateDataSetUri,
                 });
 
                 const buttonValue = isLoading

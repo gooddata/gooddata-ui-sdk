@@ -30,14 +30,14 @@ function getCustomError(
 }
 
 export const getXirrUiConfig = (referencePoint: IReferencePoint, intl: IntlShape): IUiConfig => {
-    const uiConfig = setBucketTitles(
+    const uiConfig: IUiConfig = setBucketTitles(
         {
             ...referencePoint,
             uiConfig: getDefaultXirrUiConfig(),
         },
         VisualizationTypes.XIRR,
         intl,
-    );
+    )!;
 
     const buckets = referencePoint?.buckets ?? [];
 

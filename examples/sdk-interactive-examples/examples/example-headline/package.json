@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-headline",
-    "version": "11.16.0-alpha.3",
+    "version": "11.16.0-alpha.4",
     "private": false,
     "description": "This example shows how to use the Headline component.",
     "license": "LicenseRef-LICENSE",
@@ -45,8 +45,8 @@
         "@gooddata/eslint-config": "workspace:*",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
-        "@typescript-eslint/eslint-plugin": "8.46.0",
-        "@typescript-eslint/parser": "8.46.0",
+        "@typescript-eslint/eslint-plugin": "8.52.0",
+        "@typescript-eslint/parser": "8.52.0",
         "@vitejs/plugin-react-swc": "^3.11.0",
         "eslint": "^8.57.1",
         "eslint-plugin-eslint-comments": "3.2.0",

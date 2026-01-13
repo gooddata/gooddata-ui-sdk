@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import type { JsonApiIdentityProviderOutWithLinks } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_GetEntityOrganizations,
     EntitiesApi_PatchEntityOrganizations,
-} from "@gooddata/api-client-tiger/entitiesObjects";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
     type IOrganization,
     type IOrganizationAutomationService,

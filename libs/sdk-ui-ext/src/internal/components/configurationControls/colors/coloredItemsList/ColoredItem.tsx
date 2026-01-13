@@ -35,11 +35,11 @@ export const ColoredItem = memo(function ColoredItem(props: IColoredItemProps) {
 
     const onColorSelected = (color: IColor) => {
         if (onSelect) {
-            onSelect(item, color);
+            onSelect(item!, color);
         }
     };
 
-    const getText = (mappingHeader: IMappingHeader) => {
+    const getText = (mappingHeader: IMappingHeader | undefined) => {
         const headerText = getMappingHeaderFormattedName(mappingHeader) || "";
 
         if (headerText === null || headerText === "") {
@@ -48,13 +48,13 @@ export const ColoredItem = memo(function ColoredItem(props: IColoredItemProps) {
         return isWaterfallColorHeaderItemKey(headerText) ? getTranslation(headerText, intl) : headerText;
     };
 
-    const coloredItem: IColoredItem = item || null;
+    const coloredItem: IColoredItem | null = item || null;
 
     if (!coloredItem) {
         return renderLoadingItem();
     }
 
-    const headerItem: IMappingHeader = coloredItem.mappingHeader;
+    const headerItem = coloredItem.mappingHeader;
     const headerText = getText(headerItem);
 
     return (

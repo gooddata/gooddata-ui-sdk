@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -32,9 +32,10 @@ type Props = {
     counter: Record<ObjectType, number>;
     selectedTypes: ObjectType[];
     onSelect: (selectedTypes: ObjectType[]) => void;
+    ariaLabelledBy?: string;
 };
 
-export function ObjectTypeSelect({ selectedTypes, onSelect, counter }: Props) {
+export function ObjectTypeSelect({ selectedTypes, onSelect, counter, ariaLabelledBy }: Props) {
     const intl = useIntl();
 
     const handleSelect = (type: ObjectType) => {
@@ -46,7 +47,7 @@ export function ObjectTypeSelect({ selectedTypes, onSelect, counter }: Props) {
     };
 
     return (
-        <UiButtonSegmentedControl>
+        <UiButtonSegmentedControl role="group" aria-labelledby={ariaLabelledBy}>
             {OBJECT_TYPE_ORDER.map((type) => {
                 const isSelected = selectedTypes.includes(type);
                 const ariaLabel = intl.formatMessage(messages[type], { count: counter[type] });
@@ -65,7 +66,7 @@ export function ObjectTypeSelect({ selectedTypes, onSelect, counter }: Props) {
                                     variant="secondary"
                                     icon={icons[type]}
                                     isActive={isSelected}
-                                    accessibilityConfig={{ ariaLabel }}
+                                    accessibilityConfig={{ ariaLabel, ariaPressed: isSelected }}
                                     onClick={() => handleSelect(type)}
                                     // Since object types are stable, dynamic testing ID is acceptable.
                                     dataTestId={`${testIds.objectType}/${type}`}

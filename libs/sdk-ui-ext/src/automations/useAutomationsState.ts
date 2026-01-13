@@ -43,7 +43,7 @@ export const useAutomationsState = ({
     const filtersRefFirstRun = useRef(true);
     const previousSkeletonItemsCountRef = useRef<number>(0);
 
-    const setPendingAction = useCallback((pendingAction: IAutomationsPendingAction | undefined) => {
+    const setPendingAction = useCallback((pendingAction: IAutomationsPendingAction | undefined | null) => {
         setState((state) => ({
             ...state,
             pendingAction,
@@ -65,7 +65,7 @@ export const useAutomationsState = ({
         bulkPauseAutomations,
         bulkResumeAutomations,
     } = useAutomationActions(type, scope);
-    const availableBulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
+    const availableBulkActions: UiAsyncTableBulkAction[] | undefined = useAutomationBulkActions({
         selected: selectedAutomations,
         automationsType: type,
         enabled: enableBulkActions,

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { LRUCache } from "lru-cache";
 
@@ -10,7 +10,7 @@ import {
     type IStaticFeatures,
     type IUserProfile,
 } from "@gooddata/api-client-tiger";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 
 import { LIB_VERSION } from "../../__version.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";

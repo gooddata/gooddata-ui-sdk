@@ -22,7 +22,7 @@ export interface IOrganizationAutomationsQuery {
      * @param size - desired max number of automations per page must be a positive number
      * @returns organization automations query
      */
-    withSize(size: number): IOrganizationAutomationsQuery;
+    withSize(size: number | undefined): IOrganizationAutomationsQuery;
 
     /**
      * Sets starting page for the query. Backend WILL return no data if the page is greater than
@@ -32,7 +32,7 @@ export interface IOrganizationAutomationsQuery {
      * @param page - zero indexed, must be non-negative
      * @returns organization automations query
      */
-    withPage(page: number): IOrganizationAutomationsQuery;
+    withPage(page: number | undefined): IOrganizationAutomationsQuery;
 
     /**
      * Sets filter for the query.
@@ -56,7 +56,7 @@ export interface IOrganizationAutomationsQuery {
      * @param type - type of the automation, e.g. "schedule" or "trigger"
      * @returns organization automations query
      */
-    withType(type: AutomationType): IOrganizationAutomationsQuery;
+    withType(type: AutomationType | undefined): IOrganizationAutomationsQuery;
 
     /**
      * Sets author of the automation for the query.
@@ -65,7 +65,7 @@ export interface IOrganizationAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withAuthor(author: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withAuthor(author: string | undefined, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 
     /**
      * Sets recipient of the automation for the query.
@@ -74,7 +74,10 @@ export interface IOrganizationAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withRecipient(recipient: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withRecipient(
+        recipient: string | undefined,
+        filterType?: AutomationFilterType,
+    ): IOrganizationAutomationsQuery;
 
     /**
      * Sets external recipient of the automation for the query.
@@ -82,7 +85,7 @@ export interface IOrganizationAutomationsQuery {
      * @param externalRecipient - external recipient of the automation
      * @returns organization automations query
      */
-    withExternalRecipient(externalRecipient: string): IOrganizationAutomationsQuery;
+    withExternalRecipient(externalRecipient: string | undefined): IOrganizationAutomationsQuery;
 
     /**
      * This filter gets automations if either author or recipient of the automation is the provided user.
@@ -108,7 +111,7 @@ export interface IOrganizationAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withStatus(status: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withStatus(status: string | undefined, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 
     /**
      * Filter automations by workspace IDs for centralized management.
@@ -117,7 +120,10 @@ export interface IOrganizationAutomationsQuery {
      * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withWorkspace(workspace: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withWorkspace(
+        workspace: string | undefined,
+        filterType?: AutomationFilterType,
+    ): IOrganizationAutomationsQuery;
 
     /**
      * Starts the organization automations query.

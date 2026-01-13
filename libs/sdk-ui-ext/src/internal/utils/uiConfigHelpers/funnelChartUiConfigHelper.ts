@@ -17,7 +17,7 @@ const funnelViewIcon = "local:funnel/bucket-title-view.svg";
 export function setFunnelChartUiConfig(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
 
-    Object.assign(referencePointConfigured[UICONFIG], disabledOpenAsReportConfig);
+    Object.assign(referencePointConfigured[UICONFIG]!, disabledOpenAsReportConfig);
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], funnelMeasuresIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], funnelViewIcon);

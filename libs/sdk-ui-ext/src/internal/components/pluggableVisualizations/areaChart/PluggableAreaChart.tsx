@@ -314,7 +314,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
         const canSortStackTotal =
-            properties?.controls?.["stackMeasures"] ?? this.getUiConfig().optionalStacking.stackMeasures;
+            properties?.controls?.["stackMeasures"] ?? this.getUiConfig().optionalStacking?.stackMeasures;
 
         const defaultSort = viewBy.length > 0 ? [newAttributeSort(viewBy[0].localIdentifier, "asc")] : [];
 
@@ -383,7 +383,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         if (typeof isStackingMeasures === "undefined") {
             const measuresBuckets = insightBucket(insight, BucketNames.MEASURES);
             const stackBuckets = insightBucket(insight, BucketNames.STACK);
-            return stackBuckets?.items.length > 0 || measuresBuckets?.items?.length > 1;
+            return (stackBuckets?.items?.length ?? 0) > 0 || (measuresBuckets?.items?.length ?? 0) > 1;
         }
         return isStackingMeasures;
     }

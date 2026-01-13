@@ -16,10 +16,10 @@ import { InputControl } from "../InputControl.js";
 export interface IForecastSection {
     controlsDisabled: boolean;
     enabled: boolean;
-    properties: IVisualizationProperties;
-    propertiesMeta: any;
+    properties?: IVisualizationProperties;
+    propertiesMeta?: any;
     defaultForecastEnabled?: boolean;
-    pushData: (data: any) => any;
+    pushData?: (data: any) => any;
 }
 
 export const ForecastSection = memo(function ForecastSection({

@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -484,7 +484,7 @@ describe("BaseVisualization", () => {
         });
 
         afterEach(() => {
-            getExtendedReferencePointMock = null;
+            getExtendedReferencePointMock = undefined as unknown as Mock;
             visualizationCatalog = defaultVisualizationsCatalog;
         });
 
@@ -511,7 +511,7 @@ describe("BaseVisualization", () => {
                 async () => {
                     createComponent({
                         ...defaultProps,
-                        referencePoint: null,
+                        referencePoint: undefined,
                         visualizationCatalog,
                     });
 
@@ -530,7 +530,7 @@ describe("BaseVisualization", () => {
                     createComponent({
                         ...defaultProps,
                         visualizationCatalog,
-                        onExtendedReferencePointChanged: null,
+                        onExtendedReferencePointChanged: undefined,
                     });
 
                     await waitFor(() => {

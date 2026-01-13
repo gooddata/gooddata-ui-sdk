@@ -51,7 +51,7 @@ function parseCssDeclarationValueToVariableUsages(value: string): CssVariableUsa
     parsedValue.walk((node) => {
         if (node.type === "function" && node.value === "var") {
             const [firstNode, _comma, ...rest] = node.nodes;
-            if (firstNode && firstNode.type === "word") {
+            if (firstNode?.type === "word") {
                 const variableName = firstNode.value.startsWith("--")
                     ? firstNode.value
                     : `--${firstNode.value}`;

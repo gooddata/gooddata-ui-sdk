@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { ActionsUtilities } from "@gooddata/api-client-tiger";
 import {
@@ -9,14 +9,14 @@ import {
     EntitiesApi_GetEntityUsers,
     EntitiesApi_PatchEntityUserGroups,
     EntitiesApi_PatchEntityUsers,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     UserManagementApi_AddGroupMembers,
     UserManagementApi_ListUserGroups,
     UserManagementApi_ListUsers,
     UserManagementApi_RemoveGroupMembers,
     UserManagementApi_RemoveUsersUserGroups,
-} from "@gooddata/api-client-tiger/userManagement";
+} from "@gooddata/api-client-tiger/endpoints/userManagement";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IOrganizationUserGroupsQuery,

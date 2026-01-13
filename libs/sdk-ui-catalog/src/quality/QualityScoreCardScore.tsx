@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ISemanticQualityIssue } from "@gooddata/sdk-model";
 import { LoadingSpinner, UiIcon } from "@gooddata/sdk-ui-kit";
@@ -32,7 +32,7 @@ export function QualityScoreCardScore({ issues, isLoading }: Props) {
                     );
                 })
             ) : (
-                <div className="gd-analytics-catalog__quality-score-card__score__item">
+                <div className="gd-analytics-catalog__quality-score-card__score__item" aria-hidden="true">
                     {totalCount}
                     <UiIcon type="checkCircle" color="success" size={14} ariaHidden />
                 </div>

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
@@ -7,14 +7,14 @@ import {
     ActionsApi_UnpauseWorkspaceAutomations,
     ActionsApi_UnsubscribeAutomation,
     ActionsApi_UnsubscribeSelectedWorkspaceAutomations,
-} from "@gooddata/api-client-tiger/actions";
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityAutomations,
     EntitiesApi_DeleteEntityAutomations,
     EntitiesApi_GetAllEntitiesAutomations,
     EntitiesApi_GetEntityAutomations,
     EntitiesApi_UpdateEntityAutomations,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     type IAutomationsQuery,
     type IGetAutomationOptions,

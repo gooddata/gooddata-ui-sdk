@@ -19,7 +19,7 @@ import {
 export interface IAddWorkspaceProps {
     ids: string[];
     subjectType: WorkspacePermissionSubject;
-    grantedWorkspaces: IGrantedWorkspace[];
+    grantedWorkspaces: IGrantedWorkspace[] | undefined;
     enableBackButton?: boolean;
     onSubmit: (workspaces: IGrantedWorkspace[]) => void;
     onCancel: () => void;

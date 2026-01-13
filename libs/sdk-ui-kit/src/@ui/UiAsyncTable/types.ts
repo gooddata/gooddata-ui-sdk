@@ -113,7 +113,7 @@ export interface UiAsyncTableColumn<T> {
     getMultiLineTextContent?: (item: T) => Array<string>;
     getTextContent?: (item: T) => string | ReactNode;
     getTextTitle?: (item: T) => string;
-    getTextHref?: (item: T) => string;
+    getTextHref?: (item: T) => string | undefined;
     bold?: boolean;
     sortable?: boolean;
     align?: "left" | "center" | "right";

@@ -158,8 +158,8 @@ describe("PluggableHeadline", () => {
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
             expect(renderEl).toBeDefined();
-            expect(renderEl.type).toBe(CoreHeadline);
-            expect(renderEl.props.config.enableCompactSize).toEqual(true);
+            expect(renderEl!.type).toBe(CoreHeadline);
+            expect(renderEl!.props.config!.enableCompactSize).toEqual(true);
         });
 
         it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {
@@ -179,8 +179,8 @@ describe("PluggableHeadline", () => {
             );
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreHeadline);
-            expect(renderEl.props.config.disableDrillUnderline).toEqual(true);
+            expect(renderEl!.type).toBe(CoreHeadline);
+            expect(renderEl!.props.config!.disableDrillUnderline).toEqual(true);
         });
     });
 
@@ -270,7 +270,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
                 expect(extendedReferencePoint.buckets).toEqual(referencePoint.buckets);
-                expect(extendedReferencePoint.uiConfig.customError).toEqual({
+                expect(extendedReferencePoint.uiConfig!.customError).toEqual({
                     heading: "No primary metric in your visualization",
                     text:
                         "Add a primary metric to your visualization, or switch to table.\n" +
@@ -570,7 +570,7 @@ describe("PluggableHeadline", () => {
                     referencePointMocks.emptyReferencePoint,
                 );
 
-                expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toMatchSnapshot();
+                expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toMatchSnapshot();
             });
 
             describe("placing new derived items", () => {
@@ -917,8 +917,8 @@ describe("PluggableHeadline", () => {
             );
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreHeadline);
-            expect(renderEl.props.config.comparison).toEqual({
+            expect(renderEl!.type).toBe(CoreHeadline);
+            expect(renderEl!.props.config!.comparison).toEqual({
                 enabled: true,
             });
         });
@@ -938,9 +938,17 @@ describe("PluggableHeadline", () => {
             );
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreHeadline);
-            expect(renderEl.props.config.comparison).toEqual({
+            expect(renderEl!.type).toBe(CoreHeadline);
+            expect(renderEl!.props.config!.comparison).toEqual({
                 enabled: true,
+                calculationType: CalculateAs.CHANGE,
+                format: "#,##0%",
+                colorConfig: {
+                    disabled: true,
+                },
+                labelConfig: {
+                    unconditionalValue: "Versus",
+                },
             });
         });
 
@@ -960,8 +968,8 @@ describe("PluggableHeadline", () => {
             );
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreHeadline);
-            expect(renderEl.props.config.comparison).toEqual({
+            expect(renderEl!.type).toBe(CoreHeadline);
+            expect(renderEl!.props.config!.comparison).toEqual({
                 enabled: true,
                 calculationType: CalculateAs.CHANGE,
                 format: "#,##0%",
@@ -989,8 +997,8 @@ describe("PluggableHeadline", () => {
             );
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreHeadline);
-            expect(renderEl.props.config.comparison).toEqual({
+            expect(renderEl!.type).toBe(CoreHeadline);
+            expect(renderEl!.props.config!.comparison).toEqual({
                 enabled: true,
                 calculationType: CalculateAs.CHANGE,
                 format: "#,##0%",

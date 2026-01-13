@@ -64,7 +64,7 @@ export const isInsightAlertingConfigurationEnabled = (
     const visualizationProperties = insight ? insightProperties(insight) : {};
     const controls = visualizationProperties?.["controls"] ?? {};
 
-    return insight && !controls.disableAlerts;
+    return !!insight && !controls.disableAlerts;
 };
 
 /**
@@ -76,5 +76,5 @@ export const isInsightScheduledExportsConfigurationEnabled = (
     const visualizationProperties = insight ? insightProperties(insight) : {};
     const controls = visualizationProperties?.["controls"] ?? {};
 
-    return insight && !controls.disableScheduledExports;
+    return !!insight && !controls.disableScheduledExports;
 };

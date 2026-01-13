@@ -1,16 +1,17 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Button, Typography } from "@gooddata/sdk-ui-kit";
+import { Button, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type GlobalErrorProps = {
     errorMessage?: string;
     errorDescription?: string;
     errorDetails?: string;
+    errorTraceId?: string;
     clearing?: boolean;
     clearError?: () => void;
     buttonsBefore?: ReactNode;
@@ -20,11 +21,15 @@ export function GlobalError({
     errorMessage,
     errorDescription,
     errorDetails,
+    errorTraceId,
     buttonsBefore,
     clearing,
     clearError,
 }: GlobalErrorProps) {
     const intl = useIntl();
+    const onCopyTraceId = () => {
+        void navigator.clipboard.writeText(errorTraceId ?? "");
+    };
 
     const [showMore, setShowMore] = useState(false);
     const hasShowMoreButton = Boolean(errorDetails && !showMore);
@@ -40,14 +45,18 @@ export function GlobalError({
                 />
             </div>
             <div className="gd-gen-ai-chat__global_error__buttons">
-                {buttonsBefore}
-                {clearError ? (
-                    <Button
-                        className="gd-button-link"
-                        value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-clear" })}
-                        onClick={clearError}
-                        disabled={clearing}
-                    />
+                {buttonsBefore || clearError ? (
+                    <div className="gd-gen-ai-chat__global_error__buttons_first">
+                        {buttonsBefore}
+                        {clearError ? (
+                            <Button
+                                className="gd-button-link"
+                                value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-clear" })}
+                                onClick={clearError}
+                                disabled={clearing}
+                            />
+                        ) : null}
+                    </div>
                 ) : null}
                 {hasShowMoreButton ? (
                     <Button
@@ -59,9 +68,40 @@ export function GlobalError({
                 ) : null}
             </div>
             {showMore ? (
-                <Typography tagName="p" className="gd-gen-ai-chat__global_error__details">
-                    <pre>{errorDetails}</pre>
-                </Typography>
+                <div className="gd-gen-ai-chat__global_error__details__content">
+                    <div className="gd-gen-ai-chat__global_error__details__content-title">
+                        <div className="gd-gen-ai-chat__global_error__details__content-title-text">
+                            {intl.formatMessage({ id: "gd.gen-ai.global-error.details.title" })}
+                        </div>
+                        <UiTooltip
+                            triggerBy={["hover", "focus"]}
+                            anchor={<UiIconButton icon="question" variant="tertiary" />}
+                            content={intl.formatMessage({
+                                id: "gd.gen-ai.global-error.details.title.tooltip",
+                            })}
+                        />
+                    </div>
+                    <div className="gd-gen-ai-chat__global_error__details__content-description">
+                        {errorDetails}
+                    </div>
+                </div>
+            ) : null}
+            {errorTraceId ? (
+                <div className="gd-gen-ai-chat__global_error__trace-id">
+                    <div>
+                        <span className="gd-gen-ai-chat__global_error__trace-id-name">
+                            {intl.formatMessage({ id: "gd.gen-ai.global-error.traceId" })}:
+                        </span>{" "}
+                        {errorTraceId}
+                    </div>
+                    <UiIconButton
+                        label={intl.formatMessage({ id: "gd.gen-ai.global-error.traceId.copy" })}
+                        icon="copy"
+                        size="small"
+                        variant="tertiary"
+                        onClick={onCopyTraceId}
+                    />
+                </div>
             ) : null}
         </div>
     );

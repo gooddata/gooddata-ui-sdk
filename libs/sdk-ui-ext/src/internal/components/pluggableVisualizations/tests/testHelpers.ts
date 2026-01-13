@@ -4,6 +4,7 @@ import { type ReactElement } from "react";
 
 import { type Mock } from "vitest";
 
+import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
     type IInsight,
@@ -11,7 +12,12 @@ import {
     localIdRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { type IDrillEvent, type IDrillEventIntersectionElement, type VisType } from "@gooddata/sdk-ui";
+import {
+    type IDrillEvent,
+    type IDrillEventIntersectionElement,
+    type VisElementType,
+    type VisType,
+} from "@gooddata/sdk-ui";
 
 import { type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 
@@ -41,11 +47,11 @@ export function insightDefinitionToInsight(
 
 export function createDrillEvent(type: VisType, intersection: IDrillEventIntersectionElement[]): IDrillEvent {
     return {
-        dataView: null,
+        dataView: null as unknown as IDataView,
         drillContext: {
             type,
             intersection,
-            element: null,
+            element: null as unknown as VisElementType,
         },
     };
 }

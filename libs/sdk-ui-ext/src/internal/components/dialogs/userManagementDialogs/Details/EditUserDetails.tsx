@@ -15,7 +15,7 @@ import { extractUserName } from "../utils.js";
 export interface IEditUserDetailsProps {
     isAdmin: boolean;
     isBootstrapUser: boolean;
-    user: IUser;
+    user: IUser | undefined;
     enableBackButton?: boolean;
     changeUserMembership?: boolean;
     onSubmit: (user: IUser, isAdmin: boolean) => void;
@@ -47,7 +47,7 @@ export function EditUserDetails({
     // change user membership if dialog was opened for that reason, enable Save button, do it just once
     useEffect(() => {
         if (changeUserMembership) {
-            onChange(updatedUser, !isUpdatedAdmin);
+            onChange(updatedUser!, !isUpdatedAdmin);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

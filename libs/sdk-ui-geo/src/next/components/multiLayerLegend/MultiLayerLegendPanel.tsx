@@ -1,18 +1,111 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type ReactElement, memo, useCallback, useId, useState } from "react";
+import { type ReactElement, memo, useCallback, useId, useLayoutEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 
 import type { PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 import { MultiLayerLegendSection } from "./MultiLayerLegendSection.js";
-import type { ILegendModel } from "../../types/legend/index.js";
+import type { ILegendModel, ILegendSection } from "../../types/legend/index.js";
 
 /**
  * State for tracking which sections are expanded.
  */
 type ExpandedState = Record<string, boolean>;
+
+type SectionRefs = Record<string, HTMLDivElement>;
+
+type SectionHeights = Record<string, number>;
+
+// Section header height (matches CSS variable --gd-geo-multi-layer-legend__section-header-height)
+const COLLAPSED_SECTION_HEIGHT = 34;
+
+/**
+ * Hook to manage flexible height distribution for collapsible sections.
+ *
+ * Measures section heights and calculates which sections
+ * should flex-grow based on their content height vs fair share of container.
+ * We start from 0, calculate container height and grow to the available space to achieve equal share.
+ */
+function useFlexibleHeightSections(sections: ILegendSection[], expandedState: ExpandedState) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const sectionRefs = useRef<SectionRefs>({});
+    // Full heights (measured once on first render when all sections are expanded,
+    // we can't measure after collapse/expand due to animation time)
+    const fullContainerHeight = useRef<number | null>(null);
+    const fullSectionHeights = useRef<SectionHeights>({});
+
+    const [containerHeight, setContainerHeight] = useState<number | undefined>(undefined);
+    const [flexibleSections, setFlexibleSections] = useState<string[]>([]);
+
+    // Ref callback to store section refs by layerId
+    const setSectionRef = useCallback((layerId: string) => {
+        return (element: HTMLDivElement | null) => {
+            if (element) {
+                sectionRefs.current[layerId] = element;
+            } else {
+                delete sectionRefs.current[layerId];
+            }
+        };
+    }, []);
+
+    // Get ref object for a section by layerId
+    const getSectionRef = useCallback((layerId: string): HTMLDivElement | undefined => {
+        return sectionRefs.current?.[layerId];
+    }, []);
+
+    // Calculate which sections need flex-grow based on cached or measured heights
+    useLayoutEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        // On first render, cache container height and section heights
+        if (fullContainerHeight.current === null) {
+            fullContainerHeight.current = container.clientHeight;
+            sections.forEach((section) => {
+                const el = sectionRefs.current[section.layerId];
+                fullSectionHeights.current[section.layerId] = el?.scrollHeight ?? 0;
+            });
+        }
+
+        const availableContainerHeight = fullContainerHeight.current ?? 0;
+
+        // Calculate using cached heights for expanded sections, COLLAPSED_SECTION_HEIGHT for collapsed
+        const flexibleLayerIds: string[] = [];
+        let totalContentHeight = 0;
+        const expandedCount = sections.filter((s) => expandedState[s.layerId] ?? true).length;
+
+        // Sum of all collapsed section heights
+        const collapsedHeight = (sections.length - expandedCount) * COLLAPSED_SECTION_HEIGHT;
+        // Equal share of available space for expanded sections
+        const equalShare =
+            expandedCount > 0
+                ? (availableContainerHeight - collapsedHeight) / expandedCount
+                : availableContainerHeight;
+
+        sections.forEach((section) => {
+            const isExpanded = expandedState[section.layerId] ?? true;
+            const sectionHeight = isExpanded
+                ? (fullSectionHeights.current[section.layerId] ?? 0)
+                : COLLAPSED_SECTION_HEIGHT;
+            if (isExpanded && sectionHeight > equalShare) {
+                flexibleLayerIds.push(section.layerId);
+            }
+            totalContentHeight += sectionHeight;
+        });
+        setFlexibleSections(flexibleLayerIds);
+        setContainerHeight(Math.min(availableContainerHeight, totalContentHeight));
+    }, [expandedState, sections]);
+
+    return {
+        containerRef,
+        setSectionRef,
+        getSectionRef,
+        containerHeight,
+        flexibleSections,
+    };
+}
 
 /**
  * Props for MultiLayerLegendPanel component.
@@ -102,6 +195,10 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
     // Manage expanded/collapsed state for each section
     const [expandedState, setExpandedState] = useState<ExpandedState>(() => initializeExpandedState(model));
 
+    // Flexible height management
+    const { containerRef, getSectionRef, setSectionRef, containerHeight, flexibleSections } =
+        useFlexibleHeightSections(model.sections, expandedState);
+
     const handleExpandedChange = useCallback((layerId: string, expanded: boolean) => {
         setExpandedState((prev) => ({
             ...prev,
@@ -146,10 +243,14 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
 
     const panelClassName = cx("gd-geo-multi-layer-legend", `gd-geo-multi-layer-legend--${corner}`);
 
-    const panelStyle = maxHeightPx ? { maxHeight: maxHeightPx, overflowY: "auto" as const } : undefined;
+    const panelStyle = {
+        ...(containerHeight && { height: containerHeight }),
+        ...(maxHeightPx && { maxHeight: maxHeightPx, overflowY: "auto" as const }),
+    };
 
     return (
         <div
+            ref={containerRef}
             className={panelClassName}
             style={panelStyle}
             role="group"
@@ -159,11 +260,14 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
             {model.sections.map((section, index) => (
                 <MultiLayerLegendSection
                     key={section.layerId}
+                    setSectionRef={setSectionRef(section.layerId)}
+                    sectionElement={getSectionRef(section.layerId)}
                     section={section}
                     sectionId={`${panelId}-section-${index}`}
                     isExpanded={expandedState[section.layerId] ?? true}
                     isVisible={!hiddenLayers.has(section.layerId)}
                     showToggle={!isSingleLayer}
+                    isFlexible={flexibleSections.includes(section.layerId)}
                     onExpandedChange={handleExpandedChange}
                     onVisibilityChange={handleVisibilityChange}
                     onItemClick={onItemClick}

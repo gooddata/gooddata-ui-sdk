@@ -4,7 +4,6 @@ import { useId, useMemo } from "react";
 
 import cx from "classnames";
 
-import { ErrorComponent } from "@gooddata/sdk-ui";
 import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
@@ -25,6 +24,7 @@ import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
 import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";
 import { KdaDialogControls } from "./KdaDialogControls.js";
+import { KdaErrorComponent, KdaErrorType } from "../components/KdaErrorComponent.js";
 
 const overlayController = OverlayController.getInstance(KDA_DIALOG_OVERS_Z_INDEX);
 
@@ -96,22 +96,16 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                         }
                         content={
                             <KdaContent
+                                contentError={(err) => (
+                                    <KdaErrorComponent type={KdaErrorType.Items} error={err} />
+                                )}
                                 leftContent={<KeyDriversPanel detailsId={detailsId} />}
                                 leftLoader={<KeyDriversPanel detailsId={detailsId} loading />}
-                                leftError={
-                                    <ErrorComponent
-                                        message="Unknown error"
-                                        description="Can not load key drivers attributes list. Please try again later."
-                                    />
-                                }
                                 rightContent={<KeyDriversOverview detailsId={detailsId} />}
                                 rightLoader={<KeyDriversOverview loading />}
-                                rightError={
-                                    <ErrorComponent
-                                        message="Unknown error"
-                                        description="Can not load key driver details. Please try again later."
-                                    />
-                                }
+                                rightError={(err) => (
+                                    <KdaErrorComponent type={KdaErrorType.Details} error={err} />
+                                )}
                             />
                         }
                         footer={<KdaFooter content={<KeyDriversFooter />} onClose={onClose} />}

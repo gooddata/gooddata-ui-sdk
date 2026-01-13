@@ -43,7 +43,7 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         {
             promise: state.deletedAutomation
                 ? async () => {
-                      await promiseDeleteAutomation(state.deletedAutomation);
+                      await promiseDeleteAutomation(state.deletedAutomation!);
                   }
                 : null,
             onSuccess: () => {
@@ -84,7 +84,7 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         {
             promise: state.unsubscribedAutomation
                 ? async () => {
-                      await promiseUnsubscribeAutomation(state.unsubscribedAutomation);
+                      await promiseUnsubscribeAutomation(state.unsubscribedAutomation!);
                   }
                 : null,
             onSuccess: () => {
@@ -125,7 +125,7 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         {
             promise: state.pausedAutomation
                 ? async () => {
-                      await promisePauseAutomation(state.pausedAutomation);
+                      await promisePauseAutomation(state.pausedAutomation!);
                   }
                 : null,
             onSuccess: () => {
@@ -166,7 +166,7 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         {
             promise: state.resumedAutomation
                 ? async () => {
-                      await promiseResumeAutomation(state.resumedAutomation);
+                      await promiseResumeAutomation(state.resumedAutomation!);
                   }
                 : null,
             onSuccess: () => {
