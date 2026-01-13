@@ -1609,6 +1609,8 @@ export interface DashboardConfig {
     externalRecipient?: string;
     // @beta
     focusObject?: DashboardFocusObject;
+    // @alpha
+    hideAddTabButton?: boolean;
     // @internal
     hideSaveAsNewButton?: boolean;
     // @internal
@@ -8692,7 +8694,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -9858,6 +9860,9 @@ export const selectInvalidUrlDrillParameterWidgetRefs: DashboardSelector<ObjRef[
 
 // @internal (undocumented)
 export const selectInvalidUrlDrillParameterWidgetWarnings: DashboardSelector<ObjRef[]>;
+
+// @alpha
+export const selectIsAddTabButtonHidden: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectIsAlertingDialogOpen: DashboardSelector<boolean>;

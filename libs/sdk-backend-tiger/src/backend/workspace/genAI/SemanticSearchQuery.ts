@@ -1,6 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { GenAiApi_AiSearch } from "@gooddata/api-client-tiger/genAI";
+import { GenAiApi_AiSearch } from "@gooddata/api-client-tiger/endpoints/genAI";
 import { type ISemanticSearchQuery, type ISemanticSearchResult } from "@gooddata/sdk-backend-spi";
 import { type GenAIObjectType } from "@gooddata/sdk-model";
 

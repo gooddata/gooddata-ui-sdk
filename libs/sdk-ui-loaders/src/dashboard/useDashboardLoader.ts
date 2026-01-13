@@ -84,7 +84,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
 
     useEffect(() => {
         return () => {
-            if (!loadStatus || loadStatus.status !== "success") {
+            if (loadStatus?.status !== "success") {
                 return;
             }
 

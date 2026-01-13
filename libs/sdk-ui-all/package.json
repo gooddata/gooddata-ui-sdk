@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "11.16.0-alpha.3",
+    "version": "11.16.0-alpha.4",
     "description": "GoodData SDK - All-In-One",
     "repository": {
         "type": "git",
@@ -53,8 +53,8 @@
         "@gooddata/eslint-config": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
-        "@typescript-eslint/eslint-plugin": "8.46.0",
-        "@typescript-eslint/parser": "8.46.0",
+        "@typescript-eslint/eslint-plugin": "8.52.0",
+        "@typescript-eslint/parser": "8.52.0",
         "dependency-cruiser": "^14.1.2",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "10.1.8",

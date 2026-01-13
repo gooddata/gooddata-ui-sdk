@@ -13,9 +13,9 @@ import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 
 export interface IPagingSectionProps {
-    properties: IVisualizationProperties;
-    propertiesMeta: any;
-    pushData: (data: any) => void;
+    properties?: IVisualizationProperties;
+    propertiesMeta?: any;
+    pushData?: (data: any) => void;
     isDisabled?: boolean;
 }
 
@@ -50,20 +50,20 @@ export function PagingSection({
                 // When enabling pagination, ensure pageSize is set
                 const clonedProperties = cloneDeep(data.properties);
 
-                if (!clonedProperties.controls?.["pageSize"]) {
-                    set(clonedProperties, "controls.pageSize", DEFAULT_PAGE_SIZE);
+                if (!clonedProperties?.controls?.["pageSize"]) {
+                    set(clonedProperties!, "controls.pageSize", DEFAULT_PAGE_SIZE);
                 }
 
-                pushData({ ...data, properties: clonedProperties });
+                pushData?.({ ...data, properties: clonedProperties });
             } else if (newPaginationEnabled === false) {
                 // When disabling pagination, also reset pageSize
                 const clonedProperties = cloneDeep(data.properties);
-                set(clonedProperties, "controls.pageSize", undefined);
+                set(clonedProperties!, "controls.pageSize", undefined);
 
-                pushData({ ...data, properties: clonedProperties });
+                pushData?.({ ...data, properties: clonedProperties });
             } else {
                 // For other cases (e.g., pageSize dropdown changes), just pass through
-                pushData(data);
+                pushData?.(data);
             }
         },
         [pushData],

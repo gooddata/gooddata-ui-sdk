@@ -167,6 +167,8 @@ export interface GenAIAssistantProps {
     disableFullControl?: boolean;
     disableManage?: boolean;
     eventHandlers?: ChatEventHandler[];
+    excludeTags?: string[];
+    includeTags?: string[];
     LandingScreenComponentProvider?: () => ComponentType;
     locale?: string;
     objectTypes?: GenAIObjectType[];

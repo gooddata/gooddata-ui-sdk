@@ -1,7 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
-import { ActionsApi_WorkspaceResolveSettings } from "@gooddata/api-client-tiger/actions";
+import { ActionsApi_WorkspaceResolveSettings } from "@gooddata/api-client-tiger/endpoints/actions";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { type IDateFilterConfigsQuery, type IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 

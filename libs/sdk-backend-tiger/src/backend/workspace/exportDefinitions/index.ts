@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
@@ -11,7 +12,7 @@ import {
     EntitiesApi_GetAllEntitiesExportDefinitions,
     EntitiesApi_GetEntityExportDefinitions,
     EntitiesApi_UpdateEntityExportDefinitions,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     type IExportDefinitionsQuery,

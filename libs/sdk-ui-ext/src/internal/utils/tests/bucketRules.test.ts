@@ -80,9 +80,9 @@ describe("overTimeComparisonRecommendationEnabled", () => {
         const newMetric: IBucketItem = {
             localIdentifier: "m2",
             type: "metric",
-            aggregation: null,
+            aggregation: null as unknown as undefined,
             attribute: "aazb6kroa3iC",
-            showInPercent: null,
+            showInPercent: null as unknown as undefined,
         };
 
         set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
@@ -115,7 +115,7 @@ describe("comparisonAndTrendingRecommendationEnabled", () => {
         const newCategory: IBucketItem = {
             localIdentifier: "v1",
             type: "attribute",
-            aggregation: null,
+            aggregation: null as unknown as undefined,
             attribute: "attr.owner.department",
         };
 
@@ -143,7 +143,7 @@ describe("percentRecommendationEnabled", () => {
         const newStack: IBucketItem = {
             localIdentifier: "s1",
             type: "attribute",
-            aggregation: null,
+            aggregation: null as unknown as undefined,
             attribute: "attr.owner.department",
         };
 
@@ -185,7 +185,7 @@ describe("previousPeriodRecommendationEnabled", () => {
         const newMetric: IBucketItem = {
             localIdentifier: "m2",
             type: "attribute",
-            aggregation: null,
+            aggregation: null as unknown as undefined,
             attribute: "attr.owner.department",
         };
 
@@ -283,7 +283,7 @@ describe("partial rules", () => {
                         {
                             localIdentifier: "v1",
                             type: "attribute",
-                            aggregation: null,
+                            aggregation: null as unknown as undefined,
                             attribute: "attr.owner.department",
                         },
                     ],
@@ -303,13 +303,13 @@ describe("partial rules", () => {
                         {
                             localIdentifier: "v1",
                             type: "attribute",
-                            aggregation: null,
+                            aggregation: null as unknown as undefined,
                             attribute: "attr.owner.department",
                         },
                         {
                             localIdentifier: "v2",
                             type: "attribute",
-                            aggregation: null,
+                            aggregation: null as unknown as undefined,
                             attribute: "attr.owner.department",
                         },
                     ],

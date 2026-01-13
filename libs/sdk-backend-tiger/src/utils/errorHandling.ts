@@ -55,7 +55,7 @@ export function convertApiError(error: Error): AnalyticalBackendError {
 export function createNotAuthenticatedError(error: Error): NotAuthenticated | undefined {
     const axiosErrorResponse = (error as AxiosError).response;
 
-    if (!axiosErrorResponse || axiosErrorResponse.status !== 401) {
+    if (axiosErrorResponse?.status !== 401) {
         return;
     }
 
@@ -77,8 +77,7 @@ function createLimitReachedError(error: Error): LimitReached | undefined {
     const axiosErrorResponse = (error as AxiosError<any>).response;
 
     if (
-        !axiosErrorResponse ||
-        axiosErrorResponse.status !== 400 ||
+        axiosErrorResponse?.status !== 400 ||
         !axiosErrorResponse.data?.detail?.includes("Reached plan limits")
     ) {
         return;
@@ -91,8 +90,7 @@ function createContractExpiredError(error: Error): ContractExpired | undefined {
     const axiosErrorResponse = (error as AxiosError<any>).response;
 
     if (
-        !axiosErrorResponse ||
-        axiosErrorResponse.status !== 403 ||
+        axiosErrorResponse?.status !== 403 ||
         (!axiosErrorResponse.data?.detail?.includes("Contract expired") &&
             !axiosErrorResponse.data?.detail?.includes("Reason: EXPIRED"))
     ) {
@@ -114,7 +112,7 @@ function createDataTooLargeError(error: Error): DataTooLargeError | undefined {
         axiosErrorResponse?.data?.structuredDetail?.limitBreaks?.length ||
         axiosErrorResponse?.data?.detail?.includes("Reached limit of maximum data size");
 
-    if (!axiosErrorResponse || axiosErrorResponse.status !== 400 || !isLimit) {
+    if (axiosErrorResponse?.status !== 400 || !isLimit) {
         return;
     }
 

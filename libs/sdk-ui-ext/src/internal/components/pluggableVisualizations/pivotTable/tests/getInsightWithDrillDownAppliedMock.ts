@@ -104,11 +104,11 @@ const measureHeader: IMeasureDescriptor = {
         format: "#,##0.00",
         localIdentifier: Won.measure.localIdentifier,
         uri: "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/9203",
-        identifier: null,
+        identifier: undefined,
     },
 };
 
-const departmentDirectSalesUri = ReferenceData.Department.DirectSales.uri;
+const departmentDirectSalesUri = ReferenceData.Department.DirectSales.uri!;
 const departmentHeaderAttributeUri = "departmentHeaderAttributeUri";
 const departmentHeader: IDrillIntersectionAttributeItem = {
     attributeHeaderItem: {
@@ -122,15 +122,20 @@ const departmentHeader: IDrillIntersectionAttributeItem = {
         ref: {
             uri: departmentHeaderAttributeUri,
         },
-        identifier: null,
-        formOf: null,
+        identifier: "mock-identifier",
+        formOf: {
+            identifier: "mock-attribute",
+            name: "Mock Attribute",
+            ref: { uri: departmentHeaderAttributeUri },
+            uri: departmentHeaderAttributeUri,
+        },
         primaryLabel: {
             uri: departmentHeaderAttributeUri,
         },
     },
 };
 
-const statusLostUri = ReferenceData.Status.Lost.uri;
+const statusLostUri = ReferenceData.Status.Lost.uri!;
 const statusHeaderAttributeUri = "statusHeaderAttributeUri";
 const statusHeader: IDrillIntersectionAttributeItem = {
     attributeHeaderItem: {
@@ -144,15 +149,20 @@ const statusHeader: IDrillIntersectionAttributeItem = {
         ref: {
             uri: statusHeaderAttributeUri,
         },
-        identifier: null,
-        formOf: null,
+        identifier: "mock-identifier",
+        formOf: {
+            identifier: "mock-attribute",
+            name: "Mock Attribute",
+            ref: { uri: statusHeaderAttributeUri },
+            uri: statusHeaderAttributeUri,
+        },
         primaryLabel: {
             uri: statusHeaderAttributeUri,
         },
     },
 };
 
-const regionEastCoastUri = ReferenceData.Region.EastCoast.uri;
+const regionEastCoastUri = ReferenceData.Region.EastCoast.uri!;
 const regionHeaderAttributeUri = "regionHeaderAttributeUri";
 const regionHeader: IDrillIntersectionAttributeItem = {
     attributeHeaderItem: {
@@ -166,8 +176,13 @@ const regionHeader: IDrillIntersectionAttributeItem = {
         ref: {
             uri: regionHeaderAttributeUri,
         },
-        identifier: null,
-        formOf: null,
+        identifier: "mock-identifier",
+        formOf: {
+            identifier: "mock-attribute",
+            name: "Mock Attribute",
+            ref: { uri: regionHeaderAttributeUri },
+            uri: regionHeaderAttributeUri,
+        },
         primaryLabel: {
             uri: regionHeaderAttributeUri,
         },

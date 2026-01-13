@@ -1,12 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type FilterDefinition, type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
     ExecutionAPI_ChangeAnalysis,
     ExecutionResultAPI_ChangeAnalysisResult,
-} from "@gooddata/api-client-tiger/execution";
+} from "@gooddata/api-client-tiger/endpoints/execution";
 import {
     type IChangeAnalysisDefinition,
+    type IChangeAnalysisOptions,
     type IChangeAnalysisPeriod,
     type IChangeAnalysisResults,
     type IWorkspaceKeyDriverAnalysisService,
@@ -29,6 +30,7 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
     public async computeChangeAnalysis(
         definition: IChangeAnalysisDefinition,
         period: IChangeAnalysisPeriod,
+        options?: IChangeAnalysisOptions,
     ): Promise<IChangeAnalysisResults> {
         return this.authCall(async (client) => {
             const filters = definition.filters?.map((f) => convertFilter(f)).filter(Boolean) as
@@ -53,6 +55,9 @@ export class TigerWorkspaceKeyDriverAnalysis implements IWorkspaceKeyDriverAnaly
                         filters: filters,
                         //settings
                         useSmartAttributeSelection: true,
+                        //tags
+                        includeTags: options?.includeTags,
+                        excludeTags: options?.excludeTags,
                     },
                 },
                 {},

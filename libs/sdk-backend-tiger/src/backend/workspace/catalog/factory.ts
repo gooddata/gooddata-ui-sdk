@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { sortBy, uniqBy } from "lodash-es";
 
@@ -6,7 +6,7 @@ import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client
 import {
     EntitiesApi_GetAllEntitiesFacts,
     EntitiesApi_GetAllEntitiesMetrics,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     type IWorkspaceCatalog,
     type IWorkspaceCatalogFactory,

@@ -10,7 +10,7 @@ import { STATUS_NEVER_RUN, STATUS_NEVER_RUN_RSQL_QUERY } from "../../common/auto
  */
 export function buildFieldFilter(
     fieldPath: string,
-    value: string | null,
+    value: string | null | undefined,
     filterType: AutomationFilterType,
 ): string | null {
     if (!value) {
@@ -34,7 +34,7 @@ export function buildFieldFilter(
  * Returns null if status is null/undefined.
  */
 export function buildStatusFilter(
-    status: string | null,
+    status: string | null | undefined,
     statusFilterType: AutomationFilterType,
 ): string | null {
     if (!status) {

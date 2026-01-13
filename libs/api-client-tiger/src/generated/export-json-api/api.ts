@@ -66,6 +66,7 @@ export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
  */
 export type ExportAbstractMeasureValueFilter =
     | ExportComparisonMeasureValueFilter
+    | ExportCompoundMeasureValueFilter
     | ExportRangeMeasureValueFilter
     | ExportRankingFilter;
 
@@ -278,6 +279,26 @@ export type ExportBoundedFilterGranularityEnum =
     | "FISCAL_YEAR";
 
 /**
+ * Condition that compares the metric value to a given constant value using a comparison operator.
+ */
+export interface ExportComparisonCondition {
+    comparison: ExportComparisonConditionComparison;
+}
+
+export interface ExportComparisonConditionComparison {
+    operator: ExportComparisonConditionComparisonOperatorEnum;
+    value: number;
+}
+
+export type ExportComparisonConditionComparisonOperatorEnum =
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUAL_TO"
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUAL_TO"
+    | "EQUAL_TO"
+    | "NOT_EQUAL_TO";
+
+/**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  */
 export interface ExportComparisonMeasureValueFilter {
@@ -307,6 +328,31 @@ export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperat
     | "LESS_THAN_OR_EQUAL_TO"
     | "EQUAL_TO"
     | "NOT_EQUAL_TO";
+
+/**
+ * Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned).
+ */
+export interface ExportCompoundMeasureValueFilter {
+    compoundMeasureValueFilter: ExportCompoundMeasureValueFilterCompoundMeasureValueFilter;
+}
+
+export interface ExportCompoundMeasureValueFilterCompoundMeasureValueFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     */
+    dimensionality?: Array<ExportAfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     */
+    treatNullValuesAs?: number;
+    /**
+     * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
+     */
+    conditions: Array<ExportMeasureValueCondition>;
+    localIdentifier?: string;
+    applyOnResult?: boolean;
+    measure: ExportAfmIdentifier;
+}
 
 /**
  * Custom label object override.
@@ -507,6 +553,7 @@ export interface ExportExportResponse {
 export type ExportFilterDefinition =
     | ExportAbsoluteDateFilter
     | ExportComparisonMeasureValueFilter
+    | ExportCompoundMeasureValueFilter
     | ExportInlineFilterDefinition
     | ExportNegativeAttributeFilter
     | ExportPositiveAttributeFilter
@@ -645,10 +692,19 @@ export interface ExportMeasureItem {
 }
 
 /**
+ * @type ExportMeasureValueCondition
+ * A condition for filtering by measure value. Can be either a comparison or a range condition.
+ */
+export type ExportMeasureValueCondition = ExportComparisonCondition | ExportRangeCondition;
+
+/**
  * @type ExportMeasureValueFilter
  * Abstract filter definition type filtering by the value of the metric.
  */
-export type ExportMeasureValueFilter = ExportComparisonMeasureValueFilter | ExportRangeMeasureValueFilter;
+export type ExportMeasureValueFilter =
+    | ExportComparisonMeasureValueFilter
+    | ExportCompoundMeasureValueFilter
+    | ExportRangeMeasureValueFilter;
 
 /**
  * Filter able to limit element values by label and related selected negated elements.
@@ -766,6 +822,21 @@ export interface ExportPositiveAttributeFilterPositiveAttributeFilter {
     applyOnResult?: boolean;
     label: ExportAfmIdentifier;
 }
+
+/**
+ * Condition that checks if the metric value is within a given range.
+ */
+export interface ExportRangeCondition {
+    range: ExportRangeConditionRange;
+}
+
+export interface ExportRangeConditionRange {
+    operator: ExportRangeConditionRangeOperatorEnum;
+    from: number;
+    to: number;
+}
+
+export type ExportRangeConditionRangeOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
 
 /**
  * Filter the result by comparing specified metric to given range of values.

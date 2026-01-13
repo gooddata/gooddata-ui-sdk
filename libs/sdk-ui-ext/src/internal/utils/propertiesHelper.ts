@@ -34,7 +34,7 @@ import {
 
 export function getSupportedPropertiesControls(
     visualizationControlsProperties: IVisualizationProperties["controls"],
-    supportedPropertiesList: string[],
+    supportedPropertiesList: string[] | undefined,
 ): IVisualizationProperties {
     const clonedControls = cloneDeep(visualizationControlsProperties);
     if (supportedPropertiesList) {
@@ -47,7 +47,7 @@ export function getSupportedPropertiesControls(
     return {};
 }
 
-export function hasColorMapping(properties: IVisualizationProperties): boolean {
+export function hasColorMapping(properties: IVisualizationProperties | undefined): boolean {
     return !!properties?.controls?.["colorMapping"];
 }
 
@@ -91,8 +91,8 @@ export function isEmptyObject(obj: object): boolean {
 }
 
 export function getSupportedProperties(
-    visualizationProperties: IVisualizationProperties,
-    supportedPropertiesList: string[],
+    visualizationProperties: IVisualizationProperties | undefined,
+    supportedPropertiesList: string[] | undefined,
 ): IVisualizationProperties {
     const controls = visualizationProperties?.controls ?? {};
     const supportedControls = getSupportedPropertiesControls(controls, supportedPropertiesList);
@@ -143,7 +143,8 @@ export function getReferencePointWithSupportedProperties(
 export function getReferencePointWithTotalLabelsInitialized(
     referencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint {
-    const dataLabelVisibility = referencePoint.properties.controls?.["dataLabels"]?.visible;
+    const properties = referencePoint.properties;
+    const dataLabelVisibility = properties?.controls?.["dataLabels"]?.visible;
     const stacks = getStackItems(referencePoint.buckets);
 
     // Initialize total labels visibility with data labels visibility value.
@@ -151,19 +152,19 @@ export function getReferencePointWithTotalLabelsInitialized(
     // is not defined and if current chart configuration allows configuring total labels.
     if (
         !(dataLabelVisibility === null || dataLabelVisibility === undefined) &&
-        (referencePoint.properties.controls?.["dataLabels"]?.totalsVisible === null ||
-            referencePoint.properties.controls?.["dataLabels"]?.totalsVisible === undefined) &&
-        !isStackingToPercent(referencePoint.properties) &&
-        (stacks.length || isStackingMeasure(referencePoint.properties))
+        (properties?.controls?.["dataLabels"]?.totalsVisible === null ||
+            properties?.controls?.["dataLabels"]?.totalsVisible === undefined) &&
+        !isStackingToPercent(properties ?? {}) &&
+        (stacks.length || isStackingMeasure(properties ?? {}))
     ) {
         return {
             ...referencePoint,
             properties: {
-                ...referencePoint.properties,
+                ...properties,
                 controls: {
-                    ...referencePoint.properties.controls,
+                    ...properties?.controls,
                     dataLabels: {
-                        ...referencePoint.properties.controls["dataLabels"],
+                        ...properties?.controls?.["dataLabels"],
                         totalsVisible: dataLabelVisibility,
                     },
                 },
@@ -243,7 +244,9 @@ export function getHighchartsAxisNameConfiguration(
                 return result;
             }
 
-            axisNameConfig.position = AXIS_NAME_POSITION_MAPPING[axisNameConfig.position];
+            if (axisNameConfig.position) {
+                axisNameConfig.position = AXIS_NAME_POSITION_MAPPING[axisNameConfig.position];
+            }
             result[axis] = {
                 ...controlProperties[axis],
                 name: axisNameConfig,

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useId, useMemo } from "react";
 
@@ -32,6 +32,7 @@ export function KeyDriversFooter() {
         state.itemsStatus === "loading" ||
         state.relevantStatus === "pending" ||
         state.relevantStatus === "loading";
+    const isError = state.itemsStatus === "error";
 
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const { validAttributes, mapAttributes } = useMemo(() => {
@@ -68,6 +69,11 @@ export function KeyDriversFooter() {
     }, [state.selectedAttributes, validAttributes]);
 
     const isSearchBarVisible = validAttributes.length > 7;
+
+    //Do not show footer when kda is not loaded at all
+    if (isError) {
+        return null;
+    }
 
     return (
         <div>

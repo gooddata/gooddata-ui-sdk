@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo, useState } from "react";
 
@@ -207,7 +207,7 @@ export const useAutomationFiltersSelect = ({
     const filtersByTabForNewAutomation = getDefaultSelectedFiltersFromFiltersByTab(filtersByTab);
     const filtersByTabForExistingAutomation = useMemo((): EditedFiltersByTab | undefined => {
         if (!filtersByTab || !automationToEdit || isDashboardAutomationWithoutStoredFilters) {
-            return {};
+            return undefined;
         }
 
         const filtersByTabForExistingAutomation = getDefaultSelectedFiltersByTabForExistingAutomation(
@@ -220,7 +220,7 @@ export const useAutomationFiltersSelect = ({
             return filtersByTabForExistingAutomation;
         }
 
-        return {};
+        return undefined;
     }, [
         filtersByTab,
         automationToEdit,
@@ -257,7 +257,7 @@ export const useAutomationFiltersSelect = ({
 
 export function getDefaultSelectedFiltersFromFiltersByTab(filtersByTab: IAutomationFiltersTab[] | undefined) {
     if (!filtersByTab) {
-        return {};
+        return undefined;
     }
     return filtersByTab.reduce<EditedFiltersByTab>((acc, tab) => {
         acc[tab.tabId] = tab.defaultSelectedFilters;

@@ -5,6 +5,8 @@ import { type ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
+import { type IColorPalette } from "@gooddata/sdk-model";
+import { type ISeparators } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -35,7 +37,7 @@ export class HeadlineConfigurationPanel extends ConfigurationPanelContent<
 
         const controlDisabled = this.isControlDisabled();
         const comparisonDisabled = !isComparisonEnabled(insight);
-        const defaultCalculationType = getComparisonDefaultCalculationType(insight);
+        const defaultCalculationType = getComparisonDefaultCalculationType(insight!);
 
         const bubbleClassNames = cx("bubble-primary", { invisible: !controlDisabled });
 
@@ -46,11 +48,11 @@ export class HeadlineConfigurationPanel extends ConfigurationPanelContent<
                         controlDisabled={controlDisabled}
                         disabledByVisualization={comparisonDisabled}
                         defaultCalculationType={defaultCalculationType}
-                        separators={panelConfig.separators}
-                        colorPalette={panelConfig.comparisonColorPalette}
-                        properties={properties}
+                        separators={panelConfig?.separators as ISeparators}
+                        colorPalette={panelConfig?.comparisonColorPalette as IColorPalette}
+                        properties={properties!}
                         propertiesMeta={propertiesMeta}
-                        pushData={pushData}
+                        pushData={pushData!}
                     />
                     {this.renderInteractionsSection()}
                     {this.renderAdvancedSection()}

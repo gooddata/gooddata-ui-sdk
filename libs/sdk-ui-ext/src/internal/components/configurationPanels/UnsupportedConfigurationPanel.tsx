@@ -9,7 +9,7 @@ import { UnsupportedProperties } from "../configurationControls/UnsupportedPrope
 
 export class UnsupportedConfigurationPanel extends ConfigurationPanelContent {
     public override componentDidMount(): void {
-        this.props.pushData({
+        this.props.pushData?.({
             properties: omit(this.props.properties, "controls"),
             references: null,
             ignoreUndoRedo: true,

@@ -13,7 +13,7 @@ import { messages } from "../locales.js";
 import { extractUserGroupName } from "../utils.js";
 
 export interface IEditUserGroupDetailsProps {
-    userGroup: IUserGroup;
+    userGroup: IUserGroup | undefined;
     enableBackButton?: boolean;
     onSubmit: (userGroup: IUserGroup) => void;
     onCancel: () => void;

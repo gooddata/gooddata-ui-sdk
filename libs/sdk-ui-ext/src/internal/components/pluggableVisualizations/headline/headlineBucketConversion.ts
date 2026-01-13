@@ -16,14 +16,17 @@ import {
 export function singleSecondaryMeasureBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IInsightToPropConversion<TProps, TPropKey, IMeasure> {
+): IInsightToPropConversion<TProps, TPropKey, IMeasure | undefined> {
     return bucketConversion(propName, sdkModelPropMetas.Measure.Single, bucketName, false, bucketMeasure);
 }
 
 export function multipleSecondaryMeasuresBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
->(propName: TPropKey, bucketName: string): IInsightToPropConversion<TProps, TPropKey, IMeasure[]> {
+>(
+    propName: TPropKey,
+    bucketName: string,
+): IInsightToPropConversion<TProps, TPropKey, IMeasure[] | undefined> {
     return bucketConversion(propName, sdkModelPropMetas.Measure.Multiple, bucketName, true, bucketMeasures);
 }
 
@@ -37,13 +40,13 @@ export function bucketConversion<
     bucketName: string,
     shouldProcessBucketItem: boolean,
     bucketItemAccessor: (bucket: IBucket) => TReturnType,
-): IInsightToPropConversion<TProps, TPropKey, TReturnType> {
+): IInsightToPropConversion<TProps, TPropKey, TReturnType | undefined> {
     return {
         propName,
         propType,
         itemAccessor(insight) {
             const bucket = insightBucket(insight, bucketName);
-            return shouldProcessBucketItem && bucket && bucketItemAccessor(bucket);
+            return shouldProcessBucketItem && bucket ? bucketItemAccessor(bucket) : undefined;
         },
     };
 }

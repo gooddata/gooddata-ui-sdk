@@ -92,11 +92,11 @@ function UserEditDialogComponent({
         updateGrantedDataSource,
     } = usePermissions(userId, "user", organizationId, onSuccess);
     const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup, removeAdminGroup } =
-        useUserGroups(userId, organizationId, bootstrapUserGroupId, onSuccess, setIsAdmin);
+        useUserGroups(userId, organizationId, bootstrapUserGroupId!, onSuccess, setIsAdmin);
 
     const { tabs, selectedTabId, setSelectedTabId } = useUserDialogTabs(
         grantedWorkspaces,
-        grantedUserGroups,
+        grantedUserGroups!,
         grantedDataSources,
         isCurrentlyAdmin,
         selectedTab,
@@ -145,7 +145,7 @@ function UserEditDialogComponent({
 
     const isOpenedInEditMode = initialView !== "VIEW";
 
-    const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace>(undefined);
+    const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace | undefined>(undefined);
 
     const handleWorkspaceEdit = (workspace: IGrantedWorkspace) => {
         setWorkspaceToEdit(workspace);

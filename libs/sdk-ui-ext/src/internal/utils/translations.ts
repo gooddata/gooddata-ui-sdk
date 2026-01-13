@@ -13,10 +13,13 @@ import { translationUtils } from "@gooddata/util";
 import type { IDropdownItem } from "../interfaces/Dropdown.js";
 
 export function getTranslation(
-    translationId: string,
-    intl: IntlShape,
+    translationId: string | undefined,
+    intl?: IntlShape,
     values: { [key: string]: string } = {},
 ): string {
+    if (!translationId) {
+        return "";
+    }
     return intl ? intl.formatMessage({ id: translationId }, values) : translationId;
 }
 

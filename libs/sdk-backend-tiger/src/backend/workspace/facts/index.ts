@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -7,7 +7,7 @@ import {
     type JsonApiDatasetOutWithLinks,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetEntityFacts } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetEntityFacts } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IFactsQuery, type IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import {
     type IDataSetMetadataObject,

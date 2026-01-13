@@ -161,9 +161,9 @@ describe("drillDownUtil", () => {
             intersectionWithOuterRegionResult,
         } = reverseAndTrimIntersectionMock;
 
-        const invalidScenarios: Array<[string, IDrillEventIntersectionElement[]?]> = [
+        const invalidScenarios: Array<[string, IDrillEventIntersectionElement[] | undefined]> = [
             ["undefined", undefined],
-            ["null", null],
+            ["null", null!], // null is not valid type testing backward compatibility
             ["empty", []],
         ];
         it.each(invalidScenarios)(

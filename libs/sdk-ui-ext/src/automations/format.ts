@@ -68,7 +68,7 @@ export const formatAlertSubtitle = (intl: IntlShape, alert?: IAutomationAlert) =
     }
     if (alert?.condition.type === "anomalyDetection") {
         return getAnomalyDetectionOperatorTitle(
-            alert.condition.measure.title,
+            alert.condition.measure.title!,
             alert.condition.sensitivity,
             alert.condition.granularity,
             intl,
@@ -102,8 +102,12 @@ export const formatAutomationUser = (user?: IUser) => {
     return "";
 };
 
-export const formatDate = (date: string, timeZone: string, format = DATE_FORMAT_HYPHEN) => {
+export const formatDate = (date: string, timeZone: string | undefined, format = DATE_FORMAT_HYPHEN) => {
     if (!date) return "";
+
+    if (!timeZone) {
+        return moment.utc(date).format(format);
+    }
 
     //moment.utc respects explicit offsets but parses naive dates as UTC
     return moment.utc(date).tz(timeZone).format(format);

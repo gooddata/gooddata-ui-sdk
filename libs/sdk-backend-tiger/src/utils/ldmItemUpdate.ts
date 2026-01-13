@@ -1,11 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type DeclarativeAttribute,
     type DeclarativeFact,
     type ITigerClientBase,
 } from "@gooddata/api-client-tiger";
-import { LayoutApi_GetLogicalModel, LayoutApi_SetLogicalModel } from "@gooddata/api-client-tiger/layout";
+import {
+    LayoutApi_GetLogicalModel,
+    LayoutApi_SetLogicalModel,
+} from "@gooddata/api-client-tiger/endpoints/layout";
 import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import {
     type IMetadataObjectBase,

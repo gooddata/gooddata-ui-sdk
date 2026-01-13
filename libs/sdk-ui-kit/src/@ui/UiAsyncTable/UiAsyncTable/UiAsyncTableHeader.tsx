@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -23,12 +23,12 @@ export function UiAsyncTableHeader<T>({
     small,
     largeRow,
 }: UiAsyncTableHeaderProps<T>) {
-    const { handleKeyDown, isFocused } = useHeaderKeyboardNavigation(columns, handleColumnClick);
+    const { handleKeyDown, isFocused, isFocusable } = useHeaderKeyboardNavigation(columns, handleColumnClick);
     const intl = useIntl();
 
     return (
         <div
-            tabIndex={0}
+            tabIndex={isFocusable ? 0 : undefined}
             className={e("header", { small: small ?? false })}
             role="row"
             aria-label={intl.formatMessage(messages["headerAriaLabel"])}
@@ -92,12 +92,21 @@ function useHeaderKeyboardNavigation<T>(
         () => columns.map((_, index) => index).filter((index) => columns[index].sortable),
         [columns],
     );
+    const isFocusable = focusableIndexes.length > 0;
 
     const handleKeyDown = useMemo(() => {
+        if (!isFocusable) {
+            return undefined;
+        }
         return makeTabsKeyboardNavigation({
             onSelect: () => {
-                if (columns[focusableIndexes[focusedIndexPosition]].sortable) {
-                    handleColumnClick(columns[focusableIndexes[focusedIndexPosition]].key);
+                const focusedColumnIndex = focusableIndexes[focusedIndexPosition];
+                if (focusedColumnIndex === undefined) {
+                    return;
+                }
+                const focusedColumn = columns[focusedColumnIndex];
+                if (focusedColumn?.sortable) {
+                    handleColumnClick(focusedColumn.key);
                 }
             },
             onFocusNext: () => {
@@ -117,17 +126,28 @@ function useHeaderKeyboardNavigation<T>(
                 setFocusedIndexPosition(focusableIndexes.length - 1);
             },
         });
-    }, [handleColumnClick, focusedIndexPosition, setFocusedIndexPosition, focusableIndexes, columns]);
+    }, [
+        handleColumnClick,
+        focusedIndexPosition,
+        setFocusedIndexPosition,
+        focusableIndexes,
+        columns,
+        isFocusable,
+    ]);
 
     const isFocused = useCallback(
         (index: number) => {
+            if (!isFocusable) {
+                return false;
+            }
             return focusableIndexes[focusedIndexPosition] === index;
         },
-        [focusableIndexes, focusedIndexPosition],
+        [focusableIndexes, focusedIndexPosition, isFocusable],
     );
 
     return {
         handleKeyDown,
         isFocused,
+        isFocusable,
     };
 }

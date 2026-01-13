@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
     EntitiesApi_SearchEntitiesAnalyticalDashboards,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/entitiesObjects";
+import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import type {
     IDashboardsQuery,

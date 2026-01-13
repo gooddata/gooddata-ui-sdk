@@ -1,7 +1,7 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ITigerClientBase, MetadataUtilities } from "@gooddata/api-client-tiger";
-import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/entitiesObjects";
+import { DashboardsApi_GetAllEntitiesAnalyticalDashboards } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 
 import { type ObjectMeta } from "../../base/types.js";
 

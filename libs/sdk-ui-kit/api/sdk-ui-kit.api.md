@@ -6898,7 +6898,7 @@ export interface UiAsyncTableColumn<T> {
     // (undocumented)
     getTextContent?: (item: T) => string | ReactNode;
     // (undocumented)
-    getTextHref?: (item: T) => string;
+    getTextHref?: (item: T) => string | undefined;
     // (undocumented)
     getTextTitle?: (item: T) => string;
     // (undocumented)

@@ -32,9 +32,9 @@ export function ColorResetButton({ disabled, properties, pushData }: IColorReset
     const resetColors = () => {
         const clonedProperties = cloneDeep(properties);
 
-        set(clonedProperties.controls, COMPARISON_COLOR_CONFIG_POSITIVE, undefined);
-        set(clonedProperties.controls, COMPARISON_COLOR_CONFIG_NEGATIVE, undefined);
-        set(clonedProperties.controls, COMPARISON_COLOR_CONFIG_EQUALS, undefined);
+        set(clonedProperties.controls!, COMPARISON_COLOR_CONFIG_POSITIVE, undefined);
+        set(clonedProperties.controls!, COMPARISON_COLOR_CONFIG_NEGATIVE, undefined);
+        set(clonedProperties.controls!, COMPARISON_COLOR_CONFIG_EQUALS, undefined);
 
         pushData({ properties: clonedProperties });
     };

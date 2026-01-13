@@ -25,7 +25,7 @@ export const useAutomationBulkActions = ({
     bulkPauseAutomations,
     bulkResumeAutomations,
     setPendingAction,
-}: IUseAutomationBulkActionsProps): UiAsyncTableBulkAction[] => {
+}: IUseAutomationBulkActionsProps): UiAsyncTableBulkAction[] | undefined => {
     const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
         useUser();
     const intl = useIntl();

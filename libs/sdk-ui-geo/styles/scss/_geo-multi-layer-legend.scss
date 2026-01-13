@@ -34,7 +34,7 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
     font-family: kit-variables.$gd-font-primary;
     font-size: 12px;
     line-height: 1.4;
-    // Single source of truth for section header height (hardcoded OK per request).
+    // Section header height, matches js variable COLLAPSED_SECTION_HEIGHT.
     --gd-geo-multi-layer-legend__section-header-height: 34px;
     // Single source of truth for expand/collapse timing.
     --gd-geo-multi-layer-legend__toggle-duration: 0.2s;
@@ -71,68 +71,31 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
     // ==========================================================================
     // SECTION = One layer's legend
     // ==========================================================================
-    //
-    // NOTES - WHAT DOESN'T WORK (DO NOT REPEAT):
-    // - flex-basis: 0 on all sections → Legend not visible
-    // - Changing flex on collapse/expand → Causes flicker (instant size change before animation)
-    // - max-height on collapsed → No animation (instant snap)
-    // - position: absolute on collapsed content → No animation
-    // - visibility/opacity hidden on content → Doesn't prevent LAYOUT flicker
-    // - flex: 1 1 auto on all sections → Headers overflow (bad distribution)
-    // - transition: flex-grow → Still flickers (doesn't prevent instant size to content)
-    //
-    // WORKING: CSS Grid animation (grid-template-rows) for content expand/collapse
-    // PROBLEM: Section size comes from flex, grid only affects content inside
-    // FUNDAMENTAL ISSUE: On collapse, flex-basis:auto makes section size to content before animation
-    //
     &__section {
-        // Use CSS Grid on section itself - animate rows instead of relying on flex
         display: grid;
-        // IMPORTANT: fixed header row height prevents "header shrinking" during flex redistribution.
         grid-template-rows: var(--gd-geo-multi-layer-legend__section-header-height) 0fr; // header fixed, content 0fr (collapsed)
-        align-content: start; // Prevent centering (causes bounce)
-        // Do NOT animate flex distribution on expand (causes "bouncing"/headers slipping out).
-        // On collapse, delay flex redistribution until after the grid row collapses to 0fr, but ANIMATE that redistribution
-        // to avoid the end-of-collapse "snap/bounce".
-        transition:
-            grid-template-rows var(--gd-geo-multi-layer-legend__toggle-duration) ease-out,
-            flex-grow var(--gd-geo-multi-layer-legend__toggle-duration) ease-out
-                var(--gd-geo-multi-layer-legend__toggle-duration),
-            flex-shrink var(--gd-geo-multi-layer-legend__toggle-duration) ease-out
-                var(--gd-geo-multi-layer-legend__toggle-duration);
+        align-content: start;
+        transition: grid-template-rows var(--gd-geo-multi-layer-legend__toggle-duration) ease-out;
         overflow: hidden;
-        // Never allow the section to shrink below the header height (prevents header overflow during transitions).
         min-height: var(--gd-geo-multi-layer-legend__section-header-height);
-        // Flex item properties - collapsed sections take only header height
-        flex-grow: 0;
-        flex-shrink: 0;
-        // Use fixed basis so expanded sections share remaining space evenly without "auto" jumps.
-        flex-basis: 0%;
 
-        // Expanded: content row becomes 1fr, participate in flex distribution
+        // Flex item: by default, take natural height
+        flex: 0 0 auto;
+
+        // Expanded: show full section content
         &--expanded {
             grid-template-rows: var(--gd-geo-multi-layer-legend__section-header-height) 1fr;
-            flex-shrink: 1; // Can shrink to make room for siblings
-            flex-grow: 1; // Take available space
-            // Expand should apply flex sizing immediately (no delay), but keep the grid animation.
-            transition:
-                grid-template-rows var(--gd-geo-multi-layer-legend__toggle-duration) ease-out,
-                flex-grow 0s linear 0s,
-                flex-shrink 0s linear 0s;
+        }
+
+        // Flexible sections (exceed equal share): grow to fill available space, become scrollable
+        &--flexible {
+            flex: 1 0 0;
+            overflow-y: auto;
         }
 
         // Border between sections (not on first)
         & + & {
             border-top: 1px solid $legend-divider-color;
-        }
-
-        // Hidden layer styling (dimmed)
-        &--hidden {
-            .gd-geo-multi-layer-legend__section-title {
-                opacity: 0.5;
-            }
-            // Content styling is in &__section-content block to ensure it comes after
-            // --scroll-enabled in cascade order (so hidden state wins over scroll-enabled's opacity: 1).
         }
     }
 
@@ -149,10 +112,7 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
         user-select: none;
         // Never shrink - header must always be visible
         flex-shrink: 0;
-
-        &:hover {
-            background-color: var(--gd-palette-complementary-0-from-theme, #f8fafb);
-        }
+        min-width: 0;
 
         &:focus {
             outline: none;
@@ -352,10 +312,6 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
             border-radius: 2px;
             padding: 0 2px;
             margin: 0 -2px;
-
-            &:hover {
-                background-color: var(--gd-palette-complementary-0-from-theme, #f8fafb);
-            }
 
             &:focus {
                 outline: none;

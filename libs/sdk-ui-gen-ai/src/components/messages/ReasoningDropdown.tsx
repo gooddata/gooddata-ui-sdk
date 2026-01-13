@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, useState } from "react";
 
@@ -11,17 +11,21 @@ import { type ReasoningContents } from "../../model.js";
 
 type ReasoningDropdownProps = {
     children: ReactNode;
-    isComplete: boolean;
+    isReasoningFinished: boolean;
     lastReasoningStepTitle: string | undefined;
 };
 
-export function ReasoningDropdown({ children, isComplete, lastReasoningStepTitle }: ReasoningDropdownProps) {
+export function ReasoningDropdown({
+    children,
+    isReasoningFinished,
+    lastReasoningStepTitle,
+}: ReasoningDropdownProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const intl = useIntl();
 
     const thoughtProcessText = intl.formatMessage({ id: "gd.gen-ai.routing.thinking-process" });
     const thinkingText = intl.formatMessage({ id: "gd.gen-ai.state.thinking" });
-    const displayText = isComplete
+    const displayText = isReasoningFinished
         ? thoughtProcessText
         : lastReasoningStepTitle
           ? lastReasoningStepTitle + "..."
@@ -30,12 +34,12 @@ export function ReasoningDropdown({ children, isComplete, lastReasoningStepTitle
     // Announce reasoning intent changes to screen readers.
     // The parent log has aria-relevant="additions" which only announces new elements,
     // but we want to announce text updates (e.g., "Thinking..." → "Creating a visualization...")
-    const liveRegionText = isComplete ? undefined : displayText;
+    const liveRegionText = isReasoningFinished ? undefined : displayText;
 
     return (
         <div
             className={cx("gd-gen-ai-chat__thought-process-dropdown", {
-                "gd-gen-ai-chat__thought-process-dropdown--loading": !isComplete,
+                "gd-gen-ai-chat__thought-process-dropdown--loading": !isReasoningFinished,
             })}
         >
             {/* Visually hidden live region to announce reasoning intent changes */}

@@ -13,8 +13,8 @@ export interface ILabelSubsection {
     disabled: boolean;
     configPanelDisabled: boolean;
     axis: AxisType;
-    properties: IVisualizationProperties;
-    pushData: (data: any) => any;
+    properties?: IVisualizationProperties;
+    pushData?: (data: any) => any;
     showFormat?: boolean;
 }
 

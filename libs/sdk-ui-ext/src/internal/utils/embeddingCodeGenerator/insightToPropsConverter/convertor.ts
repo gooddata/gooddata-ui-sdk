@@ -54,19 +54,19 @@ export function bucketConversion<
     propType: PropMeta,
     bucketName: string,
     bucketItemAccessor: (bucket: IBucket) => TReturnType,
-): IInsightToPropConversion<TProps, TPropKey, TReturnType> {
+): IInsightToPropConversion<TProps, TPropKey, TReturnType | undefined> {
     return {
         propName,
         propType,
         itemAccessor(insight) {
             const bucket = insightBucket(insight, bucketName);
-            return bucket && bucketItemAccessor(bucket);
+            return bucket ? bucketItemAccessor(bucket) : undefined;
         },
     };
 }
 
 export type ConversionSpec<TProps extends object> = {
-    [K in keyof TProps]: IInsightToPropConversion<TProps, K, TProps[K]>;
+    [K in keyof TProps]: IInsightToPropConversion<TProps, K, TProps[K] | undefined>;
 };
 
 /**

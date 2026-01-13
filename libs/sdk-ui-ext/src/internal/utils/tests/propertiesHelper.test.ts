@@ -46,7 +46,7 @@ describe("propertiesHelper", () => {
         };
 
         it("should return empty object if no supported properties list is defined", () => {
-            expect(getSupportedPropertiesControls(null, null)).toEqual({});
+            expect(getSupportedPropertiesControls(undefined, undefined)).toEqual({});
         });
 
         it("should return empty object when supported properties list is empty", () => {
@@ -79,7 +79,7 @@ describe("propertiesHelper", () => {
 
     describe("getSupportedProperties", () => {
         it("should return empty object when properties are null", () => {
-            const result = getSupportedProperties(null, []);
+            const result = getSupportedProperties(undefined, []);
             expect(result).toEqual({});
         });
 

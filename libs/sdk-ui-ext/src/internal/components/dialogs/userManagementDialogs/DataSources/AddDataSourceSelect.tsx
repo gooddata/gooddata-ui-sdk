@@ -42,7 +42,7 @@ export function AddDataSourceSelect({
     const selectRef = useRef<SelectInstance<IDataSourceSelectOption | ISelectErrorOption, false>>(null);
 
     useEffect(() => {
-        selectRef.current.focus();
+        selectRef.current?.focus();
     }, []);
 
     const onSelect = useCallback(

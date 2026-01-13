@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
-import { type IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
+import { type IExtendedReferencePoint, type IFilters } from "../../../interfaces/Visualization.js";
 import { configBuckets } from "../sankeyChartUiConfigHelper.js";
 
 describe("SankeyChartUIHelper", () => {
@@ -27,7 +27,7 @@ describe("SankeyChartUIHelper", () => {
                     },
                 ],
                 uiConfig: undefined,
-                filters: undefined,
+                filters: undefined as unknown as IFilters,
             };
             const config = configBuckets(referencePoint);
             expect(config).toMatchSnapshot();
@@ -59,7 +59,7 @@ describe("SankeyChartUIHelper", () => {
                     },
                 ],
                 uiConfig: undefined,
-                filters: undefined,
+                filters: undefined as unknown as IFilters,
             };
             const config = configBuckets(referencePoint);
             expect(config).toMatchSnapshot();
@@ -81,7 +81,7 @@ describe("SankeyChartUIHelper", () => {
                     },
                 ],
                 uiConfig: undefined,
-                filters: undefined,
+                filters: undefined as unknown as IFilters,
             };
             const config = configBuckets(referencePoint);
             expect(config).toMatchSnapshot();
@@ -103,7 +103,7 @@ describe("SankeyChartUIHelper", () => {
                     },
                 ],
                 uiConfig: undefined,
-                filters: undefined,
+                filters: undefined as unknown as IFilters,
             };
             const config = configBuckets(referencePoint);
             expect(config).toMatchSnapshot();
@@ -130,7 +130,7 @@ describe("SankeyChartUIHelper", () => {
                     },
                 ],
                 uiConfig: undefined,
-                filters: undefined,
+                filters: undefined as unknown as IFilters,
             };
             const config = configBuckets(referencePoint);
             expect(config).toMatchSnapshot();
@@ -157,7 +157,7 @@ describe("SankeyChartUIHelper", () => {
                     },
                 ],
                 uiConfig: undefined,
-                filters: undefined,
+                filters: undefined as unknown as IFilters,
             };
             const config = configBuckets(referencePoint);
             expect(config).toMatchSnapshot();
@@ -180,7 +180,7 @@ describe("SankeyChartUIHelper", () => {
                     },
                 ],
                 uiConfig: undefined,
-                filters: undefined,
+                filters: undefined as unknown as IFilters,
             };
             const config = configBuckets(referencePoint);
             expect(config).toMatchSnapshot();

@@ -87,7 +87,7 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         const stackBucket = insightBucket(insight, BucketNames.STACK);
         const hasStackByAttributes = stackBucket && !bucketIsEmpty(stackBucket);
 
-        const intersection = event.drillContext.intersection;
+        const intersection = event.drillContext.intersection ?? [];
         return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;
     }
 

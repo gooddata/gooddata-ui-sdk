@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ChangeEventHandler,
@@ -40,6 +40,7 @@ import {
     repositionDashboardTab,
     selectActiveTabLocalIdentifier,
     selectEnableDashboardTabs,
+    selectIsAddTabButtonHidden,
     selectIsInEditMode,
     selectTabs,
     startRenamingDashboardTab,
@@ -219,6 +220,7 @@ export function DashboardTabs({
 }: IDashboardTabsProps): ReactElement | null {
     const intl = useIntl();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const hideAddTabButton = useDashboardSelector(selectIsAddTabButtonHidden);
     const dispatch = useDashboardDispatch();
 
     const ACCESSIBILITY_CONFIG = useMemo(
@@ -230,7 +232,7 @@ export function DashboardTabs({
         [intl],
     );
 
-    const isCreateEnabled = isEditMode;
+    const isCreateEnabled = isEditMode && !hideAddTabButton;
     const hasDefaultTab = uiTabs.some((tab) => tab.id === DEFAULT_TAB_ID);
 
     const handleCreateTab = useCallback(() => {

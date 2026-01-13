@@ -13,7 +13,7 @@ import {
 describe("utils", () => {
     describe("convertToCatalogAttributeData", () => {
         it("should return empty map when catalog is empty", () => {
-            expect(convertToCatalogAttributeData(null, null)).toMatchSnapshot();
+            expect(convertToCatalogAttributeData([], [])).toMatchSnapshot();
         });
 
         it("should return correct catalog attributes map", () => {

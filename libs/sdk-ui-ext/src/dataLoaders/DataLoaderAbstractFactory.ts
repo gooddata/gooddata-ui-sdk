@@ -4,7 +4,7 @@ import { LRUCache } from "lru-cache";
 import { LOADER_CACHE_SIZE } from "./constants.js";
 import { type IDataLoaderFactory } from "./types.js";
 
-export const dataLoaderAbstractFactory = <TLoader>(
+export const dataLoaderAbstractFactory = <TLoader extends object>(
     createLoader: (workspace: string) => TLoader,
 ): IDataLoaderFactory<TLoader> => {
     const loaders = new LRUCache<string, TLoader>({ max: LOADER_CACHE_SIZE });

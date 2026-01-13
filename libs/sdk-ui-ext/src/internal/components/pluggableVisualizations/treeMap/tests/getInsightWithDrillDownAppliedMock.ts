@@ -15,8 +15,8 @@ import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 const { Department, Region, Won } = ReferenceMd;
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";
 const departmentUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1027";
-const westCoastUri = ReferenceData.Region.WestCoast.uri;
-const directSalesUri = ReferenceData.Department.DirectSales.uri;
+const westCoastUri = ReferenceData.Region.WestCoast.uri!;
+const directSalesUri = ReferenceData.Department.DirectSales.uri!;
 
 export const targetUri = "target-uri";
 
@@ -34,8 +34,13 @@ export const intersection: IDrillEventIntersectionElement[] = [
                 ref: {
                     uri: departmentUri,
                 },
-                identifier: null,
-                formOf: null,
+                identifier: "mock-identifier",
+                formOf: {
+                    identifier: "mock-attribute",
+                    name: "Mock Attribute",
+                    ref: { uri: departmentUri },
+                    uri: departmentUri,
+                },
                 primaryLabel: {
                     uri: departmentUri,
                 },
@@ -55,8 +60,13 @@ export const intersection: IDrillEventIntersectionElement[] = [
                 ref: {
                     uri: regionUri,
                 },
-                identifier: null,
-                formOf: null,
+                identifier: "mock-identifier",
+                formOf: {
+                    identifier: "mock-attribute",
+                    name: "Mock Attribute",
+                    ref: { uri: regionUri },
+                    uri: regionUri,
+                },
                 primaryLabel: {
                     uri: regionUri,
                 },
@@ -70,7 +80,7 @@ export const intersection: IDrillEventIntersectionElement[] = [
                 format: "#,##0.00",
                 localIdentifier: Won.measure.localIdentifier,
                 uri: "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/9203",
-                identifier: null,
+                identifier: undefined,
             },
         },
     },

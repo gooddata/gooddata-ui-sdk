@@ -8,11 +8,11 @@ import { type IGrantedUserGroup, type ListMode } from "../types.js";
 import { sortByName } from "../utils.js";
 
 export interface IUserGroupsListProps {
-    userGroups: IGrantedUserGroup[];
+    userGroups: IGrantedUserGroup[] | undefined;
     mode: ListMode;
     onDelete: (userGroup: IGrantedUserGroup) => void;
     isBootstrapUser: boolean;
-    bootstrapUserGroupId: string;
+    bootstrapUserGroupId?: string;
 }
 
 export function UserGroupsList({

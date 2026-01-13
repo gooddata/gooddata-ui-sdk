@@ -16,6 +16,7 @@ export type {
     AutomationsPreselectedFilters,
     AutomationsAvailableFilters,
     AutomationsOnLoad,
+    IEditAutomation,
 } from "./types.js";
 export { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";
 export {

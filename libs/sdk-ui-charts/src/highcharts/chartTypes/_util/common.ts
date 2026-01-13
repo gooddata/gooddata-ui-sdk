@@ -229,7 +229,7 @@ export function percentFormatter(value: number | null | undefined, format?: stri
         return "";
     }
 
-    const isPercentageFormat = format && format.trim().slice(-1) === "%";
+    const isPercentageFormat = format?.trim().slice(-1) === "%";
     const numberOfDecimals = isPercentageFormat ? getNumberOfDecimalsFromDefaultFormat(format) : 2;
 
     return getNumberWithGivenDecimals(value, numberOfDecimals);

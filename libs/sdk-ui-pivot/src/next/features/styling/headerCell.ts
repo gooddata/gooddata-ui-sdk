@@ -22,7 +22,7 @@ export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, 
     const { colDef } = params;
 
     const columnDefinition = colDef.context?.columnDefinition;
-    const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
+    const isRegularValueColumn = columnDefinition?.type === "value";
     const isPartOfColumnGroup = !!params.columnGroup;
     const columnScope: ITableDataHeaderScope[] = colDef.context?.columnDefinition.columnScope ?? [];
     const isAttributeOnlyColumnScope = (columnScope ?? []).every((scope) => scope.type === "attributeScope");

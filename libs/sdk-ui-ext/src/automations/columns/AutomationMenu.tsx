@@ -296,7 +296,7 @@ function AutomationMenuItem({ menuItem, setMenuItemRef }: AutomationMenuItemProp
                     <SingleSelectListItem
                         ref={setMenuItemRef(menuItem.id)}
                         className={b({
-                            disabled: menuItem.disabled,
+                            disabled: !!menuItem.disabled,
                         })}
                         title={menuItem.label}
                         onClick={menuItem.onClick}

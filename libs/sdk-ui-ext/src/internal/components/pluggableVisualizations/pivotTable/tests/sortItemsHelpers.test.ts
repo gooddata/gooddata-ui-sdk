@@ -28,14 +28,14 @@ import {
 } from "../sortItemsHelpers.js";
 
 const createAttributeBucketItem = (localIdentifier: string, attributeName: string): IBucketItem => ({
-    aggregation: null,
-    showInPercent: null,
-    operator: null,
-    operandLocalIdentifiers: null,
-    granularity: null,
-    masterLocalIdentifier: null,
+    aggregation: null as unknown as undefined,
+    showInPercent: null as unknown as undefined,
+    operator: null as unknown as undefined,
+    operandLocalIdentifiers: null as unknown as undefined,
+    granularity: null as unknown as undefined,
+    masterLocalIdentifier: null as unknown as undefined,
     localIdentifier,
-    showOnSecondaryAxis: null,
+    showOnSecondaryAxis: null as unknown as undefined,
     type: "attribute",
     filters: [],
     attribute: attributeName,
@@ -203,8 +203,8 @@ describe("addDefaultSort", () => {
         };
 
         const allCountriesExceptGermanyFilter: IBucketFilter = {
-            attribute: countryColumn.attribute,
-            displayFormRef: countryColumn.dfRef,
+            attribute: countryColumn.attribute!,
+            displayFormRef: countryColumn.dfRef!,
             isInverted: true,
             selectedElements: [
                 {
@@ -216,8 +216,8 @@ describe("addDefaultSort", () => {
         };
 
         const onlyPolandFilter: IBucketFilter = {
-            attribute: countryColumn.attribute,
-            displayFormRef: countryColumn.dfRef,
+            attribute: countryColumn.attribute!,
+            displayFormRef: countryColumn.dfRef!,
             isInverted: false,
             selectedElements: [
                 {
@@ -333,8 +333,8 @@ describe("isSortItemVisible", () => {
             selectedElements: IBucketFilterElement[],
             isInverted: boolean,
         ): IBucketFilter => ({
-            attribute: countryColumn.attribute,
-            displayFormRef: countryColumn.dfRef,
+            attribute: countryColumn.attribute!,
+            displayFormRef: countryColumn.dfRef!,
             isInverted,
             totalElementsCount: 5,
             selectedElements,

@@ -61,7 +61,7 @@ export function UserItem({ mode, onDelete, user, isDeleteDisabled }: IUserItemPr
 
     return (
         <div className={itemClassName}>
-            <RemoveIcon mode={mode} onClick={() => onDelete(user)} isDisabled={isDeleteDisabled} />
+            <RemoveIcon mode={mode} onClick={() => onDelete(user)} isDisabled={!!isDeleteDisabled} />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{user.title}</div>
                 <div className="gd-grantee-content-label gd-grantee-content-email">{user.email}</div>

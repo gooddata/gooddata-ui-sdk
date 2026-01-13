@@ -216,7 +216,7 @@ describe("PluggableComboChart", () => {
             ["", multipleMetricsAndCategoriesReferencePoint, ["m3", "m4"]],
         ])(
             "should %s add measure identifiers into properties",
-            async (_desc: string, refPoint: IReferencePoint, expectedMeasures: string[]) => {
+            async (_desc: string, refPoint: IReferencePoint, expectedMeasures: string[] | undefined) => {
                 const chart = createComponent(defaultProps);
                 const extendedReferencePoint = await chart.getExtendedReferencePoint(refPoint);
                 const measures = extendedReferencePoint?.properties?.controls?.["secondary_yaxis"]?.measures;
@@ -258,7 +258,7 @@ describe("PluggableComboChart", () => {
                 referencePointMocks.emptyReferencePoint,
             );
 
-            expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([
+            expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
                 OverTimeComparisonTypes.PREVIOUS_PERIOD,
             ]);

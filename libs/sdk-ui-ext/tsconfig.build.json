@@ -6,7 +6,6 @@
         "noCheck": true,
         "baseUrl": ".",
         "rootDir": "./src",
-        "outDir": "./esm",
-        "strictNullChecks": false
+        "outDir": "./esm"
     }
 }

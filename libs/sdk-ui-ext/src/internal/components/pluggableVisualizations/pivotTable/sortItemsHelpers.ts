@@ -144,7 +144,7 @@ export function addDefaultSort(
     sortItems: ISortItem[],
     filters: IBucketFilter[],
     rowAttributes: IBucketItem[],
-    previousRowAttributes: IBucketItem[],
+    previousRowAttributes: IBucketItem[] | undefined,
     columnAttributes: IBucketItem[] = [],
     tableSortingCheckDisabled?: boolean,
 ): ISortItem[] {
@@ -175,8 +175,7 @@ export function addDefaultSort(
         // disabling the eslint rule to maintain readability
         // eslint-disable-next-line sonarjs/prefer-single-boolean-return
         if (
-            previousFirstRow &&
-            sortItem.attributeSortItem.attributeIdentifier === previousFirstRow.localIdentifier &&
+            sortItem.attributeSortItem.attributeIdentifier === previousFirstRow?.localIdentifier &&
             sortItem.attributeSortItem.direction === "asc"
         ) {
             return false;
@@ -234,7 +233,7 @@ export function isSortItemVisible(
 }
 
 export function getSanitizedSortItems(
-    sortItems: ISortItem[],
+    sortItems: ISortItem[] | undefined,
     measureGroupDimension: MeasureGroupDimension,
 ): ISortItem[] {
     // Measure sort is not supported on transposed table (metrics in rows).

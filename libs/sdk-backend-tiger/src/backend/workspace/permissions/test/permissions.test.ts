@@ -1,8 +1,8 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
-import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import type { IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../../constants.js";

@@ -27,13 +27,13 @@ export function ColorCheckbox({ disabled, showDisabledMessage, properties, pushD
 
     const handleChange = (value: boolean) => {
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties.controls, COMPARISON_COLOR_CONFIG_DISABLED, !value);
+        set(clonedProperties.controls!, COMPARISON_COLOR_CONFIG_DISABLED, !value);
 
         pushData({ properties: clonedProperties });
     };
 
     return (
-        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
+        <DisabledBubbleMessage showDisabledMessage={!!showDisabledMessage}>
             <Checkbox text={label} value={checked} disabled={disabled} onChange={handleChange} />
         </DisabledBubbleMessage>
     );

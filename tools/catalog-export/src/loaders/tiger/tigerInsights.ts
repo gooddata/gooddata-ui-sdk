@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type ITigerClientBase,
     MetadataUtilities,
     ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesVisualizationObjects } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesVisualizationObjects } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 
 import { type ObjectMeta } from "../../base/types.js";
 

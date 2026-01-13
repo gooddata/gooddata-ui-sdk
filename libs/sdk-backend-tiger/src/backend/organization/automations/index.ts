@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     ActionsApi_DeleteOrganizationAutomations,
     ActionsApi_PauseOrganizationAutomations,
     ActionsApi_UnpauseOrganizationAutomations,
     ActionsApi_UnsubscribeOrganizationAutomations,
-} from "@gooddata/api-client-tiger/actions";
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     type IGetAutomationsQueryOptions,
     type IOrganizationAutomationService,

@@ -65,9 +65,9 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
                 pushData={pushData}
             >
                 <PushpinViewportControl
-                    properties={properties}
+                    properties={properties!}
                     disabled={this.isControlDisabled()}
-                    pushData={pushData}
+                    pushData={pushData!}
                 />
             </ConfigSection>
         );
@@ -79,8 +79,8 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
         const { properties, propertiesMeta, pushData, insight } = this.props;
         const isControlDisabled = this.isControlDisabled();
         const isClusteringDisabled =
-            isControlDisabled || insightHasMeasures(insight) || hasSegmentAttribute(insight);
-        const isPushpinSizeControlDisabled = isControlDisabled || !hasSizeMeasure(insight);
+            isControlDisabled || insightHasMeasures(insight!) || hasSegmentAttribute(insight);
+        const isPushpinSizeControlDisabled = isControlDisabled || !hasSizeMeasure(insight!);
         return (
             <ConfigSection
                 id="points_section"
@@ -99,9 +99,9 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
                     pushData={pushData}
                 />
                 <PushpinSizeControl
-                    properties={properties}
+                    properties={properties!}
                     disabled={isPushpinSizeControlDisabled}
-                    pushData={pushData}
+                    pushData={pushData!}
                 />
             </ConfigSection>
         );
@@ -109,7 +109,7 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
 
     protected override isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
-        return !hasLocationAttribute(insight) || isError || isLoading;
+        return !!(!hasLocationAttribute(insight) || isError || isLoading);
     }
 
     protected getBubbleClassNames(): string {
@@ -159,25 +159,37 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     }
 }
 
-function hasColorMeasure(insight: IInsightDefinition): boolean {
+function hasColorMeasure(insight: IInsightDefinition | undefined): boolean {
+    if (!insight) {
+        return false;
+    }
     const bucket = insightBucket(insight, BucketNames.COLOR);
 
     return bucket !== undefined && !bucketIsEmpty(bucket);
 }
 
-function hasSizeMeasure(insight: IInsightDefinition): boolean {
+function hasSizeMeasure(insight: IInsightDefinition | undefined): boolean {
+    if (!insight) {
+        return false;
+    }
     const bucket = insightBucket(insight, BucketNames.SIZE);
 
     return bucket !== undefined && !bucketIsEmpty(bucket);
 }
 
-function hasLocationAttribute(insight: IInsightDefinition): boolean {
+function hasLocationAttribute(insight: IInsightDefinition | undefined): boolean {
+    if (!insight) {
+        return false;
+    }
     const bucket = insightBucket(insight, BucketNames.LOCATION);
 
     return bucket !== undefined && !bucketIsEmpty(bucket);
 }
 
-function hasSegmentAttribute(insight: IInsightDefinition): boolean {
+function hasSegmentAttribute(insight: IInsightDefinition | undefined): boolean {
+    if (!insight) {
+        return false;
+    }
     const bucket = insightBucket(insight, BucketNames.SEGMENT);
 
     return bucket !== undefined && !bucketIsEmpty(bucket);

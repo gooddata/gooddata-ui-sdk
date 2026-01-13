@@ -29,7 +29,7 @@ import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIn
 export class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { propertiesMeta, properties, pushData, type, insight } = this.props;
-        const controls: IChartConfig = properties?.controls;
+        const controls: IChartConfig | undefined = properties?.controls;
 
         const xAxisVisible = controls?.xaxis?.visible ?? true;
         const yAxisVisible = controls?.yaxis?.visible ?? true;
@@ -170,6 +170,9 @@ export class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     }
 }
 
-function hasTertiaryMeasures(insight: IInsightDefinition): boolean {
+function hasTertiaryMeasures(insight: IInsightDefinition | undefined): boolean {
+    if (!insight) {
+        return false;
+    }
     return !bucketsIsEmpty(insightBuckets(insight, BucketNames.TERTIARY_MEASURES));
 }

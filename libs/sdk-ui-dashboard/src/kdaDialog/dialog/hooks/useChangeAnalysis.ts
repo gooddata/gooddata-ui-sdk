@@ -19,6 +19,7 @@ import {
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
+import { useTags } from "./useTags.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
@@ -71,6 +72,8 @@ function useChangeAnalysisResults(
     const dateAttribute = dateAttributeFinder(definition?.dateAttribute);
     const shouldComputeChangeAnalysis = !!definition && !!dateAttribute && !loading;
 
+    const { includeTags, excludeTags } = useTags();
+
     return useCancelablePromise<IChangeAnalysisResults | undefined>(
         {
             promise: shouldComputeChangeAnalysis
@@ -102,6 +105,10 @@ function useChangeAnalysisResults(
                                   to: to ?? "",
                                   granularity,
                               },
+                              {
+                                  includeTags,
+                                  excludeTags,
+                              },
                           );
                   }
                 : undefined,
@@ -116,12 +123,14 @@ function useChangeAnalysisResults(
             loading,
             dateAttribute,
             attributeFiltersFingerprint,
+            includeTags,
+            excludeTags,
         ],
     );
 }
 
 function useKdaStateWithList(
-    { result, status }: ReturnType<typeof useChangeAnalysisResults>,
+    { result, status, error }: ReturnType<typeof useChangeAnalysisResults>,
     definition: DeepReadonly<IKdaDefinition> | null,
 ): Partial<KdaState> {
     const { state } = useKdaState();
@@ -199,7 +208,9 @@ function useKdaStateWithList(
             ...updatedState,
             selectedItem: "summary",
             itemsStatus: loadingStatus,
+            itemsError: error,
             selectedStatus: loadingStatus,
+            selectedError: error,
             selectedAttributes: attributes.map((a) => a.defaultDisplayForm.ref),
         };
     }, [
@@ -211,6 +222,7 @@ function useKdaStateWithList(
         items,
         loadingStatus,
         attributes,
+        error,
     ]);
 }
 

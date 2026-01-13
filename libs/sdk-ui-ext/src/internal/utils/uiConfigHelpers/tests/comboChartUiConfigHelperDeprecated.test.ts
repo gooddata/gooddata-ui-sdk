@@ -29,9 +29,9 @@ describe("comboChartUiConfigHelper", () => {
             const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.["secondary_measures"];
             const viewBucket = referencePoint?.uiConfig?.buckets?.["view"];
 
-            expect(primaryMeasureBucket.title).toEqual("Metrics");
-            expect(secondaryMeasureBucket.title).toEqual("Metrics");
-            expect(viewBucket.title).toEqual("View by");
+            expect(primaryMeasureBucket!.title).toEqual("Metrics");
+            expect(secondaryMeasureBucket!.title).toEqual("Metrics");
+            expect(viewBucket!.title).toEqual("View by");
         });
 
         it("should set bucket subtitles & icons", () => {
@@ -43,10 +43,10 @@ describe("comboChartUiConfigHelper", () => {
             const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.["measures"];
             const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.["secondary_measures"];
 
-            expect(primaryMeasureBucket.icon).toBeDefined();
-            expect(secondaryMeasureBucket.icon).toBeDefined();
-            expect(primaryMeasureBucket.subtitle).toEqual("Column");
-            expect(secondaryMeasureBucket.subtitle).toEqual("Line");
+            expect(primaryMeasureBucket!.icon).toBeDefined();
+            expect(secondaryMeasureBucket!.icon).toBeDefined();
+            expect(primaryMeasureBucket!.subtitle).toEqual("Column");
+            expect(secondaryMeasureBucket!.subtitle).toEqual("Line");
         });
     });
 });

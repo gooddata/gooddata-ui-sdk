@@ -98,8 +98,7 @@ export function Alert({
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
-    const canEdit =
-        canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
+    const canEdit = canManageWorkspace || (currentUser && currentUser.login === alert.createdBy?.login);
 
     const items = useMemo<IUiListboxItem<IDropdownAction>[]>(() => {
         const deleteItem = {

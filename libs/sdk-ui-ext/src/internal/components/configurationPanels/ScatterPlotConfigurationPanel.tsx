@@ -32,7 +32,7 @@ export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected override isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
         const measures = getMeasuresFromMdObject(insight);
-        return !measures || measures.length < 1 || isError || isLoading;
+        return !!(!measures || measures.length < 1 || isError || isLoading);
     }
 
     protected renderConfigurationPanel(): ReactNode {
@@ -44,7 +44,7 @@ export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
-        const showClusteringSection: boolean = featureFlags.enableScatterPlotClustering as boolean;
+        const showClusteringSection: boolean = !!featureFlags?.enableScatterPlotClustering;
         const isScatterPlotClusteringDisabled = this.isClusteringDisabled();
         const showingPartialClusters = propertiesMeta?.showingPartialClusters;
 
@@ -199,12 +199,12 @@ export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
 
     private areDataLabelsDisabled() {
         const isDisabled = super.isControlDisabled();
-        return isDisabled || !insightHasAttributes(this.props.insight);
+        return isDisabled || !insightHasAttributes(this.props.insight!);
     }
 
     private isDataLabelsWarningShown() {
         const isDisabled = super.isControlDisabled();
-        return !isDisabled && !insightHasAttributes(this.props.insight);
+        return !isDisabled && !insightHasAttributes(this.props.insight!);
     }
 
     private isClusteringDisabled() {

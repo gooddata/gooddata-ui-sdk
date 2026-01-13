@@ -104,7 +104,7 @@ export function isAttributeColumnWidthItem(obj: any): obj is IRepeaterAttributeC
 }
 
 export function isMeasureColumnWidthItem(obj: any): obj is IRepeaterMeasureColumnWidthItem {
-    return obj?.measureColumnWidthItem && obj?.measureColumnWidthItem.locators !== undefined;
+    return obj?.measureColumnWidthItem?.locators !== undefined;
 }
 
 export function isAttributeColumnLocator(obj: any): obj is IRepeaterAttributeColumnLocator {
@@ -116,7 +116,7 @@ export function isMeasureColumnLocator(obj: any): obj is IRepeaterMeasureColumnL
 }
 
 export function isWeakMeasureColumnWidthItem(obj: any): obj is IRepeaterWeakMeasureColumnWidthItem {
-    return obj?.measureColumnWidthItem && obj?.measureColumnWidthItem.locator !== undefined;
+    return obj?.measureColumnWidthItem?.locator !== undefined;
 }
 
 export function getManualResizedColumn(resizingState: MutableRefObject<ResizingState>, column: Column) {

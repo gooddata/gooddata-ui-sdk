@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 
@@ -7,7 +7,7 @@ import {
     type EntitiesApiGetAllEntitiesWorkspacesRequest,
     type JsonApiWorkspaceOutList,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IAnalyticalWorkspace,

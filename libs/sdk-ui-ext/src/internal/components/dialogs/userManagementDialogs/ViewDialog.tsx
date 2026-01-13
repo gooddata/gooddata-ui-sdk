@@ -12,7 +12,7 @@ import { messages } from "./locales.js";
 
 export interface IViewDialogProps {
     children: ReactNode;
-    dialogTitle: string;
+    dialogTitle: string | undefined;
     isAdmin: boolean;
     isDeleteLinkEnabled: boolean;
     deleteLinkDisabledTooltipTextId?: string;

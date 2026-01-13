@@ -87,7 +87,7 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
         const stackBucket = insightBucket(source, BucketNames.STACK);
         const hasStackByAttributes = stackBucket && !bucketIsEmpty(stackBucket);
 
-        const intersection = event.drillContext.intersection;
+        const intersection = event.drillContext.intersection ?? [];
         return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;
     }
 

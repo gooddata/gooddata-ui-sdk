@@ -196,7 +196,9 @@ export const extractUserName = (user?: IOrganizationUser | IUser): string | unde
     return user.fullName || user.email || user.login; // do not use ?? as for example empty email is set to ""
 };
 
-export const extractUserGroupName = (userGroup: IOrganizationUserGroup | IUserGroup): string | undefined => {
+export const extractUserGroupName = (
+    userGroup: IOrganizationUserGroup | IUserGroup | undefined,
+): string | undefined => {
     return userGroup?.name || userGroup?.id;
 };
 
@@ -233,7 +235,7 @@ export const workspacePermissionsAssignmentToGrantedWorkspace = (
         assignment.hierarchyPermissions.length > 0 ? assignment.hierarchyPermissions : assignment.permissions;
     return {
         id: workspace.id,
-        title: workspace.name,
+        title: workspace.name ?? "",
         permissions: assignedPermissions,
         isHierarchical: assignment.hierarchyPermissions.length > 0,
     };
@@ -246,7 +248,7 @@ export const dataSourcePermissionsAssignmentToGrantedDataSource = (
     const permission = asDataSourcePermission(assignment.permissions);
     return {
         id: dataSource.id,
-        title: dataSource.name,
+        title: dataSource.name ?? "",
         permission,
     };
 };

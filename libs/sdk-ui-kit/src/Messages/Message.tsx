@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -29,18 +29,11 @@ export function Message({
         intensive,
     });
 
-    const accesibilityRole = type === "error" ? "alert" : "status";
-
     const accessibilityAriaLabel = intl.formatMessage({
         id: "message.accessibility.dismiss.notification",
     });
     return (
-        <div
-            role={accesibilityRole}
-            aria-live={type === "error" ? undefined : "polite"}
-            className={classes}
-            data-testid={dataTestId}
-        >
+        <div className={classes} data-testid={dataTestId}>
             <div className="gd-message-text">
                 {children}
                 {onClose ? (

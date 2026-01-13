@@ -118,7 +118,7 @@ describe("PluggableBaseChart", () => {
 
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dimensions: { height: null },
+            dimensions: { height: undefined },
             locale: dummyLocale,
             custom: {},
             messages,
@@ -144,7 +144,7 @@ describe("PluggableBaseChart", () => {
 
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dimensions: { height: null },
+            dimensions: { height: undefined },
             locale: dummyLocale,
             custom: {},
             messages,
@@ -189,7 +189,7 @@ describe("PluggableBaseChart", () => {
         const renderEl = getLastRenderEl<IBaseChartProps>(mockRenderFun, mockElement);
         expect(renderEl).toBeDefined();
 
-        expect(renderEl.props.config.legend.position).toEqual("right");
+        expect(renderEl!.props.config!.legend!.position).toEqual("right");
     });
 
     it("should render configuration panel with correct properties", () => {
@@ -214,7 +214,7 @@ describe("PluggableBaseChart", () => {
 
         // compare without intl and pushData, filtering out undefined values and nested undefined values for React 19 compatibility
         const actualProps = {
-            ...renderEl.props,
+            ...renderEl!.props,
             pushData: noop, // cannot be inline otherwise comparison fails, see above comment
         };
 
@@ -266,7 +266,7 @@ describe("PluggableBaseChart", () => {
         const renderEl = getLastRenderEl<IBaseChartProps>(mockRenderFun, mockElement);
         expect(renderEl).toBeDefined();
 
-        expect(renderEl.props.height).toBeUndefined();
+        expect(renderEl!.props.height).toBeUndefined();
     });
 
     it(
@@ -503,7 +503,7 @@ describe("PluggableBaseChart", () => {
                 referencePointMocks.emptyReferencePoint,
             );
 
-            expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([]);
+            expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
     });
 
@@ -547,7 +547,7 @@ describe("PluggableBaseChart", () => {
                 const renderEl = getLastRenderEl(mockRenderFun, mockElement);
 
                 expect(renderEl).toBeDefined();
-                expect(renderEl.props.config.legend.position).toEqual(expectedPosition);
+                expect(renderEl!.props.config!.legend!.position).toEqual(expectedPosition);
             },
         );
     });

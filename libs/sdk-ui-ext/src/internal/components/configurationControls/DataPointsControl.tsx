@@ -9,8 +9,8 @@ import { type IVisualizationProperties } from "../../interfaces/Visualization.js
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IDataPointsControlProps {
-    pushData: (data: any) => any;
-    properties: IVisualizationProperties;
+    pushData?: (data: any) => any;
+    properties?: IVisualizationProperties;
     isDisabled: boolean;
     showDisabledMessage?: boolean;
     defaultValue?: string | boolean;

@@ -107,8 +107,8 @@ export const IntlInsightView = withAgGridToken(
                         const ref = typeof insight === "string" ? idRef(insight, "insight") : insight;
 
                         const insightData = await insightDataLoaderFactory
-                            .forWorkspace(workspace)
-                            .getInsight(backend, ref);
+                            .forWorkspace(workspace!)
+                            .getInsight(backend!, ref);
 
                         if (
                             !lastReportedRef.current ||
@@ -150,7 +150,9 @@ export const IntlInsightView = withAgGridToken(
             } = useCancelablePromise(
                 {
                     promise: () => {
-                        return colorPaletteDataLoaderFactory.forWorkspace(workspace).getColorPalette(backend);
+                        return colorPaletteDataLoaderFactory
+                            .forWorkspace(workspace!)
+                            .getColorPalette(backend!);
                     },
                 },
                 [backend, workspace],
@@ -164,8 +166,8 @@ export const IntlInsightView = withAgGridToken(
                 {
                     promise: () => {
                         return userWorkspaceSettingsDataLoaderFactory
-                            .forWorkspace(workspace)
-                            .getUserWorkspaceSettings(backend);
+                            .forWorkspace(workspace!)
+                            .getUserWorkspaceSettings(backend!);
                     },
                 },
                 [backend, workspace],
@@ -183,7 +185,7 @@ export const IntlInsightView = withAgGridToken(
                     telemetryProps[key] = true;
                 }
 
-                return backend.withTelemetry("InsightView", telemetryProps);
+                return backend!.withTelemetry("InsightView", telemetryProps);
                 // eslint-disable-next-line react-hooks/exhaustive-deps
             }, [currentInsightVisualizationUrl, backend]);
 
@@ -230,7 +232,7 @@ export const IntlInsightView = withAgGridToken(
                     case "boolean":
                         return !isDataLoading && showTitle && insight ? insightTitle(insight) : undefined;
                     case "function":
-                        return !isDataLoading && insight && showTitle(insight);
+                        return !isDataLoading && insight ? showTitle(insight) : undefined;
                     default:
                         return undefined;
                 }
@@ -313,5 +315,5 @@ function useBackendWithVisualizationCorrelation({ backend, insight }: IInsightVi
         visualizationId = insight.uri;
     }
 
-    return useBackendWithCorrelation(backend, { visualizationId });
+    return useBackendWithCorrelation(backend!, { visualizationId: visualizationId! });
 }

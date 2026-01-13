@@ -31,6 +31,14 @@ type ChatWindowSliceState = {
      * Object types to use for the chat UI.
      */
     objectTypes?: GenAIObjectType[];
+    /**
+     * Only objects with these tags will be included
+     */
+    includeTags?: string[];
+    /**
+     * Objects with these tags will be excluded
+     */
+    excludeTags?: string[];
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -41,6 +49,8 @@ const initialState: ChatWindowSliceState = {
     colorPalette: undefined,
     settings: undefined,
     objectTypes: undefined,
+    includeTags: undefined,
+    excludeTags: undefined,
 };
 
 const chatWindowSlice = createSlice({
@@ -80,6 +90,15 @@ const chatWindowSlice = createSlice({
         ) => {
             state.objectTypes = objectTypes;
         },
+        setTagsAction: (
+            state,
+            {
+                payload: { includeTags, excludeTags },
+            }: PayloadAction<{ includeTags?: string[]; excludeTags?: string[] }>,
+        ) => {
+            state.includeTags = includeTags;
+            state.excludeTags = excludeTags;
+        },
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
@@ -93,4 +112,5 @@ export const {
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
     setObjectTypesAction,
+    setTagsAction,
 } = chatWindowSlice.actions;

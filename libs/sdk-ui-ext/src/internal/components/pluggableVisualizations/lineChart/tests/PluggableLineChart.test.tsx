@@ -249,7 +249,7 @@ describe("PluggableLineChart", () => {
                 referencePointMocks.emptyReferencePoint,
             );
 
-            expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([
+            expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
                 OverTimeComparisonTypes.PREVIOUS_PERIOD,
             ]);

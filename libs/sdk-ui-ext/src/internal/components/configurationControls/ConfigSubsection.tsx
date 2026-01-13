@@ -11,7 +11,7 @@ import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
 
 export interface IConfigSubsectionOwnProps {
     valuePath?: string;
-    title: string;
+    title?: string;
     canBeToggled?: boolean;
     toggleDisabled?: boolean;
     toggledOn?: boolean;
@@ -76,7 +76,7 @@ export function ConfigSubsection({
     };
 
     const getTestClassName = (): string => {
-        return `s-configuration-subsection-${title.replace(/\./g, "-")}`;
+        return `s-configuration-subsection-${title === undefined ? "empty-title" : title.replace(/\./g, "-")}`;
     };
 
     const className = `configuration-subsection ${getTestClassName()}`;

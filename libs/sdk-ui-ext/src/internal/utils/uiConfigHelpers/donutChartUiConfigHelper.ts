@@ -16,7 +16,7 @@ const donutViewIcon = "local:donut/bucket-title-view.svg";
 export function setDonutChartUiConfig(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
 
-    Object.assign(referencePointConfigured[UICONFIG], disabledOpenAsReportConfig);
+    Object.assign(referencePointConfigured[UICONFIG]!, disabledOpenAsReportConfig);
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], donutMeasuresIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], donutViewIcon);

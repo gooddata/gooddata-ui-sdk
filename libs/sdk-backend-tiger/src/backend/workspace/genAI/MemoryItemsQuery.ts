@@ -1,7 +1,7 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type EntitiesApiGetAllEntitiesMemoryItemsRequest } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesMemoryItems } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesMemoryItems } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IMemoryItemsFilterOptions,

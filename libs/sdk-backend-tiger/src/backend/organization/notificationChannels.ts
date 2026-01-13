@@ -1,17 +1,17 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
     AutomationApi_TestExistingNotificationChannel,
     AutomationApi_TestNotificationChannel,
-} from "@gooddata/api-client-tiger/automation";
+} from "@gooddata/api-client-tiger/endpoints/automation";
 import {
     EntitiesApi_CreateEntityNotificationChannels,
     EntitiesApi_DeleteEntityNotificationChannels,
     EntitiesApi_GetEntityNotificationChannels,
     EntitiesApi_PatchEntityNotificationChannels,
     EntitiesApi_UpdateEntityNotificationChannels,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     type INotificationChannelsQuery,
     type IOrganizationNotificationChannelService,

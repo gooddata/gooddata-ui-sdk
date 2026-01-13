@@ -20,14 +20,14 @@ import { DropdownControl } from "../DropdownControl.js";
 
 export interface IColorsSectionProps {
     controlsDisabled: boolean;
-    properties: IVisualizationProperties;
-    propertiesMeta: any;
-    references: IReferences;
-    pushData: (data: any) => void;
+    properties?: IVisualizationProperties;
+    propertiesMeta?: any;
+    references?: IReferences;
+    pushData?: (data: any) => void;
     hasMeasures: boolean;
-    colors: IColorConfiguration;
-    isLoading: boolean;
-    supportsChartFill: boolean;
+    colors?: IColorConfiguration;
+    isLoading?: boolean;
+    supportsChartFill?: boolean;
     chartFillIgnoredMeasures?: string[];
     isChartFillDisabled?: boolean;
 }
@@ -49,14 +49,14 @@ export function ColorsSection({
     const intl = useIntl();
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
-        const result = getProperties(properties, mappingHeader, color);
+        const result = getProperties(properties!, mappingHeader!, color);
 
         const message = {
             messageId: COLOR_MAPPING_CHANGED,
             properties: result,
         };
 
-        pushData(message);
+        pushData?.(message);
     };
 
     const isColoredListVisible = () => {
@@ -72,13 +72,13 @@ export function ColorsSection({
         if (isDefaultColorMapping()) {
             return;
         }
-        const propertiesWithoutColorMapping = set(cloneDeep(properties), "controls.colorMapping", undefined);
+        const propertiesWithoutColorMapping = set(cloneDeep(properties!), "controls.colorMapping", undefined);
         const message: any = {
             messageId: COLOR_MAPPING_CHANGED,
             properties: propertiesWithoutColorMapping,
             references: {},
         };
-        pushData(message);
+        pushData?.(message);
     };
 
     const renderResetButton = () => {

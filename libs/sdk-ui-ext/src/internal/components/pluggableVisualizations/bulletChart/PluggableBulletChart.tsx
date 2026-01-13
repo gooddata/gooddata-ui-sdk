@@ -142,7 +142,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
     ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
-        const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection, clicked);
+        const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection ?? [], clicked);
         return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 

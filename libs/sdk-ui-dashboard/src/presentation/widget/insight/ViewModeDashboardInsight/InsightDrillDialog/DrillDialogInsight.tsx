@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -16,7 +16,6 @@ import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { type IExecutionConfig, insightSetFilters } from "@gooddata/sdk-model";
 import {
     type GoodDataSdkError,
-    type IPushData,
     type OnError,
     type OnLoadingChanged,
     useBackendStrict,
@@ -24,6 +23,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
+import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
 import {
     selectAgGridToken,
     selectColorPalette,
@@ -123,27 +123,24 @@ export function DrillDialogInsight({
         widget,
     });
 
-    // Convert insight to table format if needed for drill dialog
-    const finalInsight = useMemo(
-        () =>
-            isWidgetAsTable
-                ? convertInsightToTableDefinition(insightWithAddedWidgetProperties)
-                : insightWithAddedWidgetProperties,
-        [isWidgetAsTable, insightWithAddedWidgetProperties],
-    );
-
     const { drillableItems, onDrill, onPushData } = useDrillDialogInsightDrills({
         widget,
         insight: insightWithAddedFilters ?? insight,
         onDrill: onDrillFn,
     });
 
-    const handlePushData = useCallback(
-        (data: IPushData) => {
-            onPushData(data);
-            pushData?.(data);
-        },
-        [onPushData, pushData],
+    const { syncedInsight, handlePushData } = useDrillDialogSyncInsightProperties({
+        insight: insightWithAddedWidgetProperties,
+        drillStepInsightId: drillStep?.insight.insight.identifier,
+        onPushData,
+        pushData,
+        isWidgetAsTable,
+    });
+
+    // Convert insight to table format if needed for drill dialog
+    const finalInsight = useMemo(
+        () => (isWidgetAsTable ? convertInsightToTableDefinition(syncedInsight) : syncedInsight),
+        [isWidgetAsTable, syncedInsight],
     );
 
     // CSS

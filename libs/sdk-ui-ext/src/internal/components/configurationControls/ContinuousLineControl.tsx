@@ -12,11 +12,11 @@ import { type IVisualizationProperties } from "../../interfaces/Visualization.js
 import { getTranslation } from "../../utils/translations.js";
 
 export interface IContinuousLineControlProps {
-    properties: IVisualizationProperties;
+    properties?: IVisualizationProperties;
     valuePath?: string;
     checked?: boolean;
     disabled?: boolean;
-    pushData(data: any): void;
+    pushData?(data: any): void;
 }
 
 export function ContinuousLineControl({
@@ -30,9 +30,9 @@ export function ContinuousLineControl({
 
     const onValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
         const clonedProperties = cloneDeep(properties);
-        set(clonedProperties, `controls.${valuePath}`, event.target.checked);
+        set(clonedProperties!, `controls.${valuePath}`, event.target.checked);
 
-        pushData({ properties: clonedProperties });
+        pushData?.({ properties: clonedProperties });
     };
 
     return (

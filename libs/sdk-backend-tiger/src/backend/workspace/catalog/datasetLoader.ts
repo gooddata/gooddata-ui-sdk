@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type EntitiesApiGetAllEntitiesAttributesRequest,
@@ -13,7 +13,7 @@ import {
     type JsonApiLabelOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     type CatalogItem,
     type ICatalogAttribute,

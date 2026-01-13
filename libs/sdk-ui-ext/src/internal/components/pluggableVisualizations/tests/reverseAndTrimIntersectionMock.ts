@@ -15,8 +15,8 @@ const drillConfigRegion: IDrillDownDefinition = {
 
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";
 const departmentUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1027";
-const westCoastUri = ReferenceData.Region.WestCoast.uri;
-const directSalesUri = ReferenceData.Department.DirectSales.uri;
+const westCoastUri = ReferenceData.Region.WestCoast.uri!;
+const directSalesUri = ReferenceData.Department.DirectSales.uri!;
 
 const directSalesHeader: IDrillEventIntersectionElement = {
     header: {
@@ -31,8 +31,14 @@ const directSalesHeader: IDrillEventIntersectionElement = {
             ref: {
                 uri: departmentUri,
             },
-            identifier: null,
-            formOf: null,
+            identifier: "mock-identifier",
+            formOf: {
+                identifier: "mock-attribute",
+                name: "Mock Attribute",
+                ref: { uri: departmentUri },
+                uri: departmentUri,
+            },
+            primaryLabel: { uri: departmentUri },
         } as IAttributeDescriptorBody,
     },
 };
@@ -50,8 +56,14 @@ const westCoastHeader: IDrillEventIntersectionElement = {
             ref: {
                 uri: regionUri,
             },
-            identifier: null,
-            formOf: null,
+            identifier: "mock-identifier",
+            formOf: {
+                identifier: "mock-attribute",
+                name: "Mock Attribute",
+                ref: { uri: regionUri },
+                uri: regionUri,
+            },
+            primaryLabel: { uri: regionUri },
         } as IAttributeDescriptorBody,
     },
 };
@@ -59,11 +71,11 @@ const westCoastHeader: IDrillEventIntersectionElement = {
 const measureHeader: IDrillEventIntersectionElement = {
     header: {
         measureHeaderItem: {
-            name: Won.measure.title,
+            name: Won.measure.title!,
             format: "#,##0.00",
             localIdentifier: Won.measure.localIdentifier,
             uri: "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/9203",
-            identifier: null,
+            identifier: undefined,
         },
     },
 };

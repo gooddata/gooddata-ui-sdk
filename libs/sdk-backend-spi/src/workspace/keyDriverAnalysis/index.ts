@@ -98,6 +98,22 @@ export interface IChangeAnalysisPeriod {
 /**
  * @internal
  *
+ * Change analysis options
+ */
+export interface IChangeAnalysisOptions {
+    /**
+     * Only objects with these tags will be included
+     */
+    includeTags?: string[];
+    /**
+     * Only objects without these tags will be included
+     */
+    excludeTags?: string[];
+}
+
+/**
+ * @internal
+ *
  * Change analysis period definition
  */
 export interface IChangeAnalysisDefinition {
@@ -131,5 +147,6 @@ export interface IWorkspaceKeyDriverAnalysisService {
     computeChangeAnalysis(
         definition: IChangeAnalysisDefinition,
         period: IChangeAnalysisPeriod,
+        options?: IChangeAnalysisOptions,
     ): Promise<IChangeAnalysisResults>;
 }

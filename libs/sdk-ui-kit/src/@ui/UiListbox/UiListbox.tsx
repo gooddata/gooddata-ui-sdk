@@ -51,7 +51,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
 }: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode {
     const isItemFocusable = useCallback(
         (item?: IUiListboxItem<InteractiveItemData, StaticItemData>) => {
-            if (!item || item.type !== "interactive") {
+            if (item?.type !== "interactive") {
                 return false;
             }
 
@@ -157,7 +157,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                         setFocusedIndex(undefined);
                     },
                     onSelect: (e) => {
-                        if (focusedItem && focusedItem.type === "interactive") {
+                        if (focusedItem?.type === "interactive") {
                             handleSelectItem(focusedItem, {
                                 type: "keyboard",
                                 newTab: e.ctrlKey || e.metaKey,
@@ -243,4 +243,4 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
 }
 
 const makeItemId = (listboxId: string, item?: IUiListboxItem<unknown, unknown>) =>
-    item && item.type === "interactive" ? `item-${listboxId}-${item.id}` : undefined;
+    item?.type === "interactive" ? `item-${listboxId}-${item.id}` : undefined;

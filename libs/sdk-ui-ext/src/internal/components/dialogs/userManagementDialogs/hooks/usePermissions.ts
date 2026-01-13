@@ -27,8 +27,8 @@ export const usePermissions = (
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
-    const [grantedWorkspaces, setGrantedWorkspaces] = useState<IGrantedWorkspace[]>(undefined);
-    const [grantedDataSources, setGrantedDataSources] = useState<IGrantedDataSource[]>(undefined);
+    const [grantedWorkspaces, setGrantedWorkspaces] = useState<IGrantedWorkspace[] | undefined>(undefined);
+    const [grantedDataSources, setGrantedDataSources] = useState<IGrantedDataSource[] | undefined>(undefined);
     // setup API factories based on the subject we are working with
     const { getPermissions } = useMemo(() => {
         if (subjectType === "user") {
@@ -65,7 +65,7 @@ export const usePermissions = (
             })
             .then(() => {
                 addSuccess(messages.workspaceRemovedSuccess);
-                setGrantedWorkspaces(grantedWorkspaces.filter((item) => item.id !== removedWorkspace.id));
+                setGrantedWorkspaces(grantedWorkspaces?.filter((item) => item.id !== removedWorkspace.id));
                 onSuccess();
             })
             .catch((error) => {
@@ -84,7 +84,7 @@ export const usePermissions = (
             })
             .then(() => {
                 addSuccess(messages.dataSourceRemovedSuccess);
-                setGrantedDataSources(grantedDataSources.filter((item) => item.id !== removedDataSource.id));
+                setGrantedDataSources(grantedDataSources?.filter((item) => item.id !== removedDataSource.id));
                 onSuccess();
             })
             .catch((error) => {
@@ -94,9 +94,9 @@ export const usePermissions = (
     };
 
     const updateGrantedWorkspace = (workspace: IGrantedWorkspace) => {
-        const updatedWorkspace = grantedWorkspaces.find((item) => item.id === workspace.id);
+        const updatedWorkspace = grantedWorkspaces?.find((item) => item.id === workspace.id);
         const updatedWorkspaces = [
-            ...grantedWorkspaces.filter((item) => item !== updatedWorkspace),
+            ...(grantedWorkspaces ?? []).filter((item) => item !== updatedWorkspace),
             workspace,
         ].sort(sortByName);
 
@@ -110,7 +110,7 @@ export const usePermissions = (
             .then(() => {
                 addSuccess(messages.workspaceChangeSuccess);
                 setGrantedWorkspaces(updatedWorkspaces);
-                if (updatedWorkspace.isHierarchical !== workspace.isHierarchical) {
+                if (updatedWorkspace?.isHierarchical !== workspace.isHierarchical) {
                     onSuccess();
                 }
             })
@@ -122,7 +122,7 @@ export const usePermissions = (
 
     const updateGrantedDataSource = (dataSource: IGrantedDataSource) => {
         const updatedDataSources = [
-            ...grantedDataSources.filter((item) => item.id !== dataSource.id),
+            ...(grantedDataSources ?? []).filter((item) => item.id !== dataSource.id),
             dataSource,
         ].sort(sortByName);
 
@@ -146,19 +146,19 @@ export const usePermissions = (
 
     // update internal array with workspaces after applied changed in workspaces edit mode
     const onWorkspacesChanged = (workspaces: IGrantedWorkspace[]) => {
-        const unchangedWorkspaces = grantedWorkspaces.filter(
+        const unchangedWorkspaces = grantedWorkspaces?.filter(
             (item) => !workspaces.some((w) => w.id === item.id),
         );
-        setGrantedWorkspaces([...unchangedWorkspaces, ...workspaces].sort(sortByName));
+        setGrantedWorkspaces([...(unchangedWorkspaces ?? []), ...workspaces].sort(sortByName));
         onSuccess();
     };
 
     // update internal array with data sources after applied changed in data sources edit mode
     const onDataSourcesChanged = (dataSources: IGrantedDataSource[]) => {
-        const unchangedDataSources = grantedDataSources.filter(
+        const unchangedDataSources = grantedDataSources?.filter(
             (item) => !dataSources.some((w) => w.id === item.id),
         );
-        setGrantedDataSources([...unchangedDataSources, ...dataSources].sort(sortByName));
+        setGrantedDataSources([...(unchangedDataSources ?? []), ...dataSources].sort(sortByName));
         onSuccess();
     };
 

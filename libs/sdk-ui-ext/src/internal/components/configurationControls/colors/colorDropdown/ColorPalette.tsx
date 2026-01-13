@@ -12,7 +12,7 @@ import { ColorPaletteItem } from "./ColorPaletteItem.js";
 const MAX_SMALL_PALETTE_SIZE = 20;
 
 export interface IColorPaletteProps {
-    selectedColorGuid?: string;
+    selectedColorGuid?: string | null;
     colorPalette: IColorPalette;
     onColorSelected: (color: IColor) => void;
     chartFill?: ChartFillConfig;

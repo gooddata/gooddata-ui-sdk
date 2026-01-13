@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -11,24 +11,8 @@ export type RoutingContentsProps = {
     isReasoningEnabled?: boolean;
 };
 
-export function RoutingContentsComponent({
-    content,
-    useMarkdown = true,
-    isReasoningEnabled = false,
-}: RoutingContentsProps) {
-    if (isReasoningEnabled) {
-        return (
-            <div className="gd-gen-ai-chat__reasoning">
-                <div className="gd-gen-ai-chat__reasoning__step">
-                    <div className="gd-gen-ai-chat__reasoning__bullet"></div>
-                    <div className="gd-gen-ai-chat__reasoning__content">
-                        <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
+// TODO: Remove this component when reasoning is in GA
+export function RoutingContentsComponent({ content, useMarkdown = true }: RoutingContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--routing");
 
     return (

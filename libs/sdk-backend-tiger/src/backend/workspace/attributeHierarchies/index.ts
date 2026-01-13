@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { uniqBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
@@ -8,8 +8,8 @@ import {
     EntitiesApi_CreateEntityAttributeHierarchies,
     EntitiesApi_DeleteEntityAttributeHierarchies,
     EntitiesApi_UpdateEntityAttributeHierarchies,
-} from "@gooddata/api-client-tiger/entitiesObjects";
-import { ValidDescendantsApi_ComputeValidDescendants } from "@gooddata/api-client-tiger/validDescendants";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import { ValidDescendantsApi_ComputeValidDescendants } from "@gooddata/api-client-tiger/endpoints/validDescendants";
 import { type IAttributeHierarchiesService } from "@gooddata/sdk-backend-spi";
 import {
     type ICatalogAttributeHierarchy,

@@ -140,7 +140,7 @@ const columnWidthLocatorsAndMeasuresHaveSameValues = (
 
 function transformToWeakMeasureColumnWidthItem(
     columnWidth: IMeasureColumnWidthItem,
-): IWeakMeasureColumnWidthItem {
+): IWeakMeasureColumnWidthItem | undefined {
     if (
         isAbsoluteColumnWidth(columnWidth.measureColumnWidthItem.width) &&
         columnWidth.measureColumnWidthItem.locators.length === 1 &&
@@ -169,7 +169,7 @@ function adaptWidthItemsToPivotTable(
     columnAttributes: IBucketItem[],
     isAdaptPropertiesToInsight?: boolean,
     measureGroupDimension?: MeasureGroupDimension,
-): ColumnWidthItem[] {
+): ColumnWidthItem[] | undefined {
     if (!originalColumnWidths) {
         return originalColumnWidths;
     }
@@ -284,7 +284,7 @@ export function adaptReferencePointWidthItemsToPivotTable(
     previousColumnAttributes: IBucketItem[],
     filters: IBucketFilter[],
     measureGroupDimension: MeasureGroupDimension,
-): ColumnWidthItem[] {
+): ColumnWidthItem[] | undefined {
     const measureLocalIdentifiers = measures.map((measure) => measure.localIdentifier);
     const rowAttributeLocalIdentifiers = rowAttributes.map((rowAttribute) => rowAttribute.localIdentifier);
     const columnAttributeLocalIdentifiers = columnAttributes.map(
@@ -323,7 +323,7 @@ export function adaptMdObjectWidthItemsToPivotTable(
     originalColumnWidths: ColumnWidthItem[],
     insight: IInsightDefinition,
     measureGroupDimension?: MeasureGroupDimension,
-): ColumnWidthItem[] {
+): ColumnWidthItem[] | undefined {
     const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
     const columnBucket = insightBucket(insight, BucketNames.COLUMNS);
 

@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type EntitiesApiGetAllEntitiesMetricsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_GetAllEntitiesMetrics,
     EntitiesApi_SearchEntitiesMetrics,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IFilterBaseOptions,

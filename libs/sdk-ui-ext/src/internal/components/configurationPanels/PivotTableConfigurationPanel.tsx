@@ -81,6 +81,10 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     private isPositionControlDisabled() {
         const { insight, isLoading } = this.props;
 
+        if (!insight) {
+            return true;
+        }
+
         const measures = insightMeasures(insight);
 
         return measures.length === 0 || isLoading;

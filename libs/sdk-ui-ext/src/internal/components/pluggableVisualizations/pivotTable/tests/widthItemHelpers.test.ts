@@ -52,7 +52,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             previousRowAttributes,
             previousColumnAttributes,
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validAttributeColumnWidthItem, validMeasureColumnWidthItem]);
@@ -74,7 +74,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             previousRowAttributes,
             previousColumnAttributes,
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([
@@ -95,7 +95,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validAllMeasureColumnWidthItem]);
@@ -112,7 +112,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([]);
@@ -129,7 +129,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validWeakMeasureColumnWidthItem]);
@@ -148,7 +148,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validWeakMeasureColumnWidthItem]);
@@ -168,7 +168,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validWeakMeasureColumnWidthItem]);
@@ -198,7 +198,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [filter],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([]);
@@ -228,7 +228,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
             [],
             [],
             [filter],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validMeasureColumnWidthItem]);
@@ -258,7 +258,7 @@ describe("adaptReferencePointWidthItemsToPivotTable transposed", () => {
             [],
             [],
             [],
-            undefined as MeasureGroupDimension,
+            undefined as unknown as MeasureGroupDimension,
         );
 
         expect(result).toEqual([validSliceMeasureColumnWidthItem, validMixedValuesColumnWidthItem]);

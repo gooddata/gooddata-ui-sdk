@@ -4,7 +4,7 @@ import { compact, intersectionWith, uniq } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { type AfmValidObjectsQuery, type AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
-import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/validObjects";
+import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import {
     type IWorkspaceCatalogAvailableItemsFactory,
     type IWorkspaceCatalogWithAvailableItemsFactoryOptions,

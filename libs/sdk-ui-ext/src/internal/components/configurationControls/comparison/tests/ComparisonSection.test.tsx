@@ -67,7 +67,7 @@ describe("ComparisonSection", () => {
                 properties,
                 pushData,
                 toggleDisabled: DEFAULT_DISABLED_BY_VISUALIZATION,
-                toggledOn: properties.controls.comparison.enabled,
+                toggledOn: properties.controls!.comparison!.enabled,
             }),
             undefined,
         );
@@ -127,7 +127,7 @@ describe("ComparisonSection", () => {
             comparison: { enabled },
         });
         const { container } = renderComparisonSection({ properties });
-        const switcher = container.querySelector(COMPARISON_TOGGLE_SELECTOR);
+        const switcher = container.querySelector(COMPARISON_TOGGLE_SELECTOR)!;
         fireEvent.click(switcher);
         expect(pushData).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -142,7 +142,7 @@ describe("ComparisonSection", () => {
         const enabled: boolean = false;
         const properties = createTestProperties<IComparisonControlProperties>({ comparison: { enabled } });
         const { container } = renderComparisonSection({ properties });
-        const switcher = container.querySelector(COMPARISON_TOGGLE_SELECTOR);
+        const switcher = container.querySelector(COMPARISON_TOGGLE_SELECTOR)!;
         fireEvent.click(switcher);
         expect(pushData).toHaveBeenCalledWith(
             expect.objectContaining({

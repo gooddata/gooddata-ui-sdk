@@ -38,7 +38,7 @@ export function convertXYNamePosition(namePosition: { position: string }) {
     return { position: xAxisPosition[currentPosition] };
 }
 
-export function getAxesByChartOrientation(properties: IVisualizationProperties) {
+export function getAxesByChartOrientation(properties: IVisualizationProperties | undefined) {
     const { xaxis, yaxis } = properties?.controls || {};
 
     if (!xaxis && !yaxis) {
@@ -81,7 +81,7 @@ export const OrientationDropdownControl = memo(function OrientationDropdownContr
                 const cloneProperties = {
                     ...dataProperties,
                     controls: {
-                        ...dataProperties.controls,
+                        ...dataProperties?.controls,
                         ...(xaxis ? { xaxis } : {}),
                         ...(yaxis ? { yaxis } : {}),
                     },

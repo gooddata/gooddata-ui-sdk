@@ -233,7 +233,7 @@ class ResultMetaMethods implements IResultMetaMethods {
     }
 
     public hasNoHeadersInDim(dim: number): boolean {
-        return this.dataView.headerItems[dim] && this.dataView.headerItems[dim].length === 0;
+        return this.dataView.headerItems[dim]?.length === 0;
     }
 
     public allHeaders(): IResultHeader[][][] {

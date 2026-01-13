@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -8,7 +8,7 @@ import {
     type ElementsRequest,
     type ElementsResponseGranularityEnum,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_ComputeLabelElementsPost } from "@gooddata/api-client-tiger/labelElements";
+import { ActionsApi_ComputeLabelElementsPost } from "@gooddata/api-client-tiger/endpoints/labelElements";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type FilterWithResolvableElements,

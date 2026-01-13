@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import open from "open";
 import ora from "ora";
 
 import { type ITigerClient, type JsonApiWorkspaceOutList, jsonApiHeaders } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/entitiesObjects";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 
 import { createTigerClient } from "./tigerClient.js";
 import { tigerLoad } from "./tigerLoad.js";

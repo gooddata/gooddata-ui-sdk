@@ -88,7 +88,7 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
     ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
-        const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection, clicked);
+        const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection ?? [], clicked);
         return addIntersectionFiltersToInsight(insight, cutIntersection, backendSupportsElementUris);
     }
 }

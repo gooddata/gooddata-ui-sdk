@@ -71,7 +71,7 @@ function getDisabledMessageId(
     showDisabledMessage: boolean,
     isPositionOnTop: boolean,
     isCalculateAsRatio: boolean,
-): string {
+): string | undefined {
     if (showDisabledMessage) {
         return messages["notApplicable"].id;
     }
@@ -101,7 +101,11 @@ export function LabelSubSection({
 
     const conditionalDisabled = disabled || isCalculateAsRatio;
     const shouldShowConditionalDisabledMessage = shouldShowDisabledMessage || isCalculateAsRatio;
-    const disabledMessageId = getDisabledMessageId(showDisabledMessage, isPositionOnTop, isCalculateAsRatio);
+    const disabledMessageId = getDisabledMessageId(
+        !!showDisabledMessage,
+        isPositionOnTop,
+        isCalculateAsRatio,
+    );
 
     const conditionalEnabled =
         !!properties?.controls?.comparison?.labelConfig?.isConditional &&

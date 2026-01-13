@@ -20,8 +20,8 @@ import { messages } from "./messages.js";
 import { type IAutomationsPendingAction } from "./types.js";
 
 interface IAutomationConfirmDialogProps {
-    pendingAction: IAutomationsPendingAction | null;
-    setPendingAction: (action: IAutomationsPendingAction | null) => void;
+    pendingAction: IAutomationsPendingAction | null | undefined;
+    setPendingAction: (action: IAutomationsPendingAction | null | undefined) => void;
 }
 
 export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAutomationConfirmDialogProps) {

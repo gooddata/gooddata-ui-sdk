@@ -98,7 +98,7 @@ describe("ColorResetButton", () => {
                 },
             }),
         });
-        fireEvent.click(container.querySelector(BUTTON_SELECTOR));
+        fireEvent.click(container.querySelector(BUTTON_SELECTOR)!);
         expect(mockPushData).toHaveBeenCalled();
     });
 });

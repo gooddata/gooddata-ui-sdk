@@ -54,28 +54,28 @@ import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 // @internal (undocumented)
 export const AddDataSourceToSubjects: {
     (props: IAddDataSourceToSubjectsProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
-export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean): IInsight;
+export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[] | undefined | null, backendSupportsElementUris: boolean): IInsight;
 
 // @internal (undocumented)
 export const AddUserGroupsToUsersDialog: {
     (props: IAddUserGroupsToUsersDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
 export const AddUsersToUserGroupsDialog: {
     (props: IAddUsersToUserGroupsDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
 export const AddWorkspaceToSubjects: {
     (props: IAddWorkspaceToSubjectsProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
@@ -163,7 +163,7 @@ export const COMPARISON_OPERATORS: {
 // @internal (undocumented)
 export const CreateUserGroupDialog: {
     (props: ICreateUserGroupDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
@@ -205,25 +205,25 @@ export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, 
 // @internal (undocumented)
 export const DeleteUserDialog: {
     (props: IDeleteUserDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
 export const DeleteUserGroupDialog: {
     (props: IDeleteUserGroupDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
 export const DeleteUserGroupsDialog: {
     (props: IDeleteUserGroupsDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
 export const DeleteUsersDialog: {
     (props: IDeleteUsersDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
@@ -381,7 +381,7 @@ export interface IAutomationsProps {
     // (undocumented)
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     // (undocumented)
-    editAutomation?: (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string) => void;
+    editAutomation?: IEditAutomation;
     // (undocumented)
     enableBulkActions?: boolean;
     externalInvalidationId?: number;
@@ -481,6 +481,12 @@ export interface IDrillDownDefinition {
     target: ObjRef;
     // (undocumented)
     type: "drillDown";
+}
+
+// @internal (undocumented)
+export interface IEditAutomation {
+    // (undocumented)
+    (automation: IAutomationMetadataObject, workspaceId: string | undefined, dashboardId: string | undefined): void;
 }
 
 // @internal (undocumented)
@@ -646,7 +652,7 @@ export interface INotificationsListErrorStateComponentProps {
 
 // @public
 export interface INotificationsPanelButtonComponentProps {
-    buttonRef: RefObject<HTMLButtonElement>;
+    buttonRef: RefObject<HTMLButtonElement | null>;
     closeNotificationPanel: () => void;
     hasUnreadNotifications: boolean;
     isNotificationPanelOpen: boolean;
@@ -736,7 +742,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo
 export function InsightError({ error, ErrorComponent, height, clientHeight, }: IInsightErrorProps): JSX.Element;
 
 // @internal
-export function InsightRenderer(props: IInsightRendererProps): JSX.Element;
+export function InsightRenderer(props: IInsightRendererProps): JSX.Element | null;
 
 // @public
 export function InsightView(props: IInsightViewProps): JSX.Element;
@@ -906,7 +912,7 @@ export type TrackEventCallback = (event: TelemetryEvent) => void;
 // @internal (undocumented)
 export const UserEditDialog: {
     (props: IUserEditDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)
@@ -915,7 +921,7 @@ export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DATA_SO
 // @internal (undocumented)
 export const UserGroupEditDialog: {
     (props: IUserGroupEditDialogProps): JSX.Element;
-    displayName: string;
+    displayName: string | undefined;
 };
 
 // @internal (undocumented)

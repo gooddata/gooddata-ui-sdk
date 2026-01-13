@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "11.16.0-alpha.3",
+    "version": "11.16.0-alpha.4",
     "description": "GoodData SDK - UI Building Components",
     "repository": {
         "type": "git",
@@ -130,8 +130,8 @@
         "@types/react-measure": "^2.0.12",
         "@types/react-portal": "^4.0.7",
         "@types/tinycolor2": "^1.4.2",
-        "@typescript-eslint/eslint-plugin": "8.46.0",
-        "@typescript-eslint/parser": "8.46.0",
+        "@typescript-eslint/eslint-plugin": "8.52.0",
+        "@typescript-eslint/parser": "8.52.0",
         "@vitest/eslint-plugin": "1.3.5",
         "dependency-cruiser": "^14.1.2",
         "eslint": "^8.57.1",

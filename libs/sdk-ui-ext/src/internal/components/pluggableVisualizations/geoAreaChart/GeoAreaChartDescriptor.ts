@@ -1,8 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
-import { type IGeoAreaChartProps } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoChartNextProps } from "@gooddata/sdk-ui-geo/next";
 
 import { PluggableGeoAreaChart } from "./PluggableGeoAreaChart.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
@@ -14,18 +13,19 @@ import {
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,
-    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
-    singleAttributeBucketConversion,
-    singleAttributeOrMeasureBucketConversion,
-    sortsInsightConversion,
+    sdkModelPropMetas,
 } from "../../../utils/embeddingCodeGenerator/index.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
-import { geoConfigFromInsight, geoInsightConversion } from "../geoChartNext/geoConfigBuilder.js";
+import { geoConfigFromInsight } from "../geoChartNext/geoConfigBuilder.js";
+import {
+    buildGeoChartNextGlobalFilters,
+    buildGeoChartNextLayers,
+} from "../geoChartNext/geoEmbeddingLayers.js";
 
 /**
  * @alpha
@@ -62,18 +62,31 @@ export class GeoAreaChartDescriptor extends BaseChartDescriptor implements IVisu
         return MAX_VISUALIZATION_HEIGHT;
     }
 
-    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+    private readonly geoChartEmbeddingCodeGenerator = getReactEmbeddingCodeGenerator({
         component: {
             importType: "named",
-            name: "GeoAreaChart",
+            name: "GeoChartNext",
             package: "@gooddata/sdk-ui-geo/next",
         },
-        insightToProps: getInsightToPropsConverter<IGeoAreaChartProps>({
-            area: geoInsightConversion("area", BucketNames.AREA),
-            color: singleAttributeOrMeasureBucketConversion("color", BucketNames.COLOR),
-            segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
-            filters: filtersInsightConversion("filters"),
-            sortBy: sortsInsightConversion("sortBy"),
+        insightToProps: getInsightToPropsConverter<IGeoChartNextProps>({
+            type: insightConversion("type", { cardinality: "scalar" }, () => "area"),
+            layers: insightConversion(
+                "layers",
+                {
+                    typeImport: {
+                        importType: "named",
+                        name: "IGeoLayer",
+                        package: "@gooddata/sdk-ui-geo/next",
+                    },
+                    cardinality: "array",
+                },
+                (insight) => buildGeoChartNextLayers(insight, "area"),
+            ),
+            filters: insightConversion(
+                "filters",
+                sdkModelPropMetas.Filter.Multiple,
+                buildGeoChartNextGlobalFilters,
+            ),
             config: insightConversion(
                 "config",
                 {
@@ -92,6 +105,15 @@ export class GeoAreaChartDescriptor extends BaseChartDescriptor implements IVisu
             getColorMappingPredicatePackage: "@gooddata/sdk-ui-geo",
         }),
     });
+
+    public getEmbeddingCode: ReturnType<typeof getReactEmbeddingCodeGenerator> = (insight, config) => {
+        const layers = buildGeoChartNextLayers(insight, "area");
+        if (!layers.length) {
+            return "";
+        }
+
+        return this.geoChartEmbeddingCodeGenerator(insight, config);
+    };
 
     public getMeta(): IVisualizationMeta {
         return {

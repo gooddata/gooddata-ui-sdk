@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type AfmValidObjectsQuery,
@@ -19,12 +19,12 @@ import {
     EntitiesApi_GetEntityMetrics,
     EntitiesApi_PatchEntityMetrics,
     EntitiesApi_UpdateEntityMetrics,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     SmartFunctionsApi_KeyDriverAnalysis,
     SmartFunctionsApi_KeyDriverAnalysisResult,
-} from "@gooddata/api-client-tiger/smartFunctions";
-import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/validObjects";
+} from "@gooddata/api-client-tiger/endpoints/smartFunctions";
+import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import type {
     IGetMeasureOptions,
     IMeasureExpressionToken,

@@ -39,7 +39,7 @@ export class BaseChartConfigurationPanel<
 
         const { properties, propertiesMeta, pushData, insight } = this.props;
         const controlsDisabled = this.isControlDisabled();
-        const { buckets } = insight.insight;
+        const { buckets } = insight!.insight;
 
         const stackBy = bucketsById(buckets, BucketNames.STACK);
         const isNotStacked = isEmpty(stackBy);
@@ -106,7 +106,7 @@ export class BaseChartConfigurationPanel<
     protected getControlProperties(): { gridEnabled: boolean; axes: IAxisProperties[] } {
         const props = this.props;
         const gridEnabled = props.properties?.controls?.["grid"]?.enabled ?? true;
-        const axisType = DUAL_AXES_SUPPORTED_CHARTS.includes(props.type)
+        const axisType = DUAL_AXES_SUPPORTED_CHARTS.includes(props.type!)
             ? (props.axis ?? AXIS.PRIMARY)
             : AXIS.PRIMARY;
         const configurations = this.getAxesConfiguration(axisType);
@@ -131,7 +131,9 @@ export class BaseChartConfigurationPanel<
 
     protected isViewedBy(): boolean {
         const { insight } = this.props;
-
+        if (!insight) {
+            return false;
+        }
         return !bucketsIsEmpty(insightBuckets(insight, BucketNames.VIEW, BucketNames.TREND));
     }
 
@@ -144,7 +146,7 @@ export class BaseChartConfigurationPanel<
 
         return axes.map((axis: IAxisProperties) => {
             const disabled = controlsDisabled || (!axis.primary && !isViewedBy);
-            const nameSubsectionDisabled: boolean = axis.primary && itemsOnAxes[axis.name] > 1;
+            const nameSubsectionDisabled: boolean = axis.primary && itemsOnAxes[axis.name]! > 1;
             const { name, title, subtitle, visible } = axis;
 
             return (

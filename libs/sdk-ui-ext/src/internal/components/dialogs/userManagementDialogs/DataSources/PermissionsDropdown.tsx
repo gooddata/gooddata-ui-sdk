@@ -35,8 +35,8 @@ interface IGranularPermissionsDropdownProps {
     isDropdownDisabled?: boolean;
     isDropdownOpen: boolean;
     toggleDropdown: () => void;
-    onChange: (dataSource: IGrantedDataSource) => void;
-    onDelete: (dataSource: IGrantedDataSource) => void;
+    onChange?: (dataSource: IGrantedDataSource) => void;
+    onDelete?: (dataSource: IGrantedDataSource) => void;
     className: string;
 }
 
@@ -78,13 +78,13 @@ function Dropdown({
     const trackEvent = useTelemetry();
 
     const handleOnSelect = (permission: DataSourcePermission) => {
-        onChange({ ...dataSource, permission });
+        onChange?.({ ...dataSource, permission });
         trackPermissionChange(trackEvent, subjectType, permission);
         setSelectedPermission(permission);
     };
 
     const handleOnDelete = () => {
-        onDelete(dataSource);
+        onDelete?.(dataSource);
     };
 
     const handleClick = useCallback(() => {

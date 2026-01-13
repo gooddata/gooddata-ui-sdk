@@ -40,7 +40,7 @@ const defaultProps: IColorsSectionProps = {
             collapsed: false,
         },
     },
-    references: null,
+    references: undefined,
     pushData: () => {},
     hasMeasures: true,
     colors,

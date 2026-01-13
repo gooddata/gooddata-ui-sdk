@@ -80,6 +80,6 @@ describe("ComparisonPositionControl", () => {
             }),
         });
 
-        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR).textContent).toEqual(TOP_ITEM_TEXT_QUERY);
+        expect(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!.textContent).toEqual(TOP_ITEM_TEXT_QUERY);
     });
 });

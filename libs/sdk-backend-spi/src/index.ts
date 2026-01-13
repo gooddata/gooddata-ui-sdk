@@ -326,6 +326,7 @@ export type {
     IChangeAnalysisResults,
     IKeyDriver,
     IChangeAnalysisPeriod,
+    IChangeAnalysisOptions,
     IChangeAnalysisDefinition,
 } from "./workspace/keyDriverAnalysis/index.js";
 

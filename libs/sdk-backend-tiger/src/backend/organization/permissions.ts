@@ -1,14 +1,14 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ITigerClientBase, type PermissionsAssignment } from "@gooddata/api-client-tiger";
-import { ActionsApi_ManageOrganizationPermissions } from "@gooddata/api-client-tiger/actions";
-import { LayoutApi_GetOrganizationPermissions } from "@gooddata/api-client-tiger/layout";
+import { ActionsApi_ManageOrganizationPermissions } from "@gooddata/api-client-tiger/endpoints/actions";
+import { LayoutApi_GetOrganizationPermissions } from "@gooddata/api-client-tiger/endpoints/layout";
 import {
     UserManagementApi_AssignPermissions,
     UserManagementApi_ListPermissionsForUser,
     UserManagementApi_ListPermissionsForUserGroup,
     UserManagementApi_RevokePermissions,
-} from "@gooddata/api-client-tiger/userManagement";
+} from "@gooddata/api-client-tiger/endpoints/userManagement";
 import { type IOrganizationPermissionService, type IPermissionsAssignment } from "@gooddata/sdk-backend-spi";
 import {
     type IDataSourcePermissionAssignment,

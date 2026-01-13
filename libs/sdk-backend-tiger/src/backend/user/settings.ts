@@ -1,13 +1,13 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
-import { ActionsApi_ResolveAllSettingsWithoutWorkspace } from "@gooddata/api-client-tiger/actions";
+import { ActionsApi_ResolveAllSettingsWithoutWorkspace } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityUserSettings,
     EntitiesApi_DeleteEntityUserSettings,
     EntitiesApi_GetAllEntitiesUserSettings,
     EntitiesApi_UpdateEntityUserSettings,
-} from "@gooddata/api-client-tiger/entitiesObjects";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import { type IUserSettings, type IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { type ISettings } from "@gooddata/sdk-model";
 

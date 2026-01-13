@@ -131,7 +131,7 @@ function CoreHeaderWorkspacePicker({
                     renderItem={({ item }) => {
                         const title = item?.title;
                         const isDemo = item?.isDemo;
-                        const isSelected = selectedWorkspace && item && selectedWorkspace.id === item.id;
+                        const isSelected = selectedWorkspace?.id === item?.id;
                         return (
                             <HeaderWorkspacePickerItem
                                 title={title}

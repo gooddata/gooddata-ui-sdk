@@ -177,7 +177,7 @@ describe("sanitizeFilters", () => {
 
     it("should handle reference point without filters", () => {
         const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
-        delete newReferencePoint.filters;
+        delete (newReferencePoint as Partial<typeof newReferencePoint>).filters;
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
@@ -495,8 +495,8 @@ describe("getBucketItemsWithExcludeByType", () => {
 
 describe("isDateBucketItem", () => {
     it("should not fail when passed null or undefined", () => {
-        expect(isDateBucketItem(null)).toBe(false);
-        expect(isDateBucketItem(undefined)).toBe(false);
+        expect(isDateBucketItem(null as unknown as IBucketItem)).toBe(false);
+        expect(isDateBucketItem(undefined as unknown as IBucketItem)).toBe(false);
     });
 
     it("should not fail when passed incomplete bucket item", () => {
@@ -526,7 +526,7 @@ describe("isDateBucketItem", () => {
 
 describe("getDateFilter", () => {
     it("should handle empty filter bucket", () => {
-        expect(getDateFilter(undefined)).toBeNull();
+        expect(getDateFilter(undefined as unknown as IFilters)).toBeNull();
     });
 
     it("should get date filter from filter bucket", () => {

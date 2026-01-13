@@ -155,7 +155,7 @@ describe("PluggableWaterfallChart", () => {
                 referencePointMocks.emptyReferencePoint,
             );
 
-            expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([]);
+            expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
     });
 
@@ -196,7 +196,7 @@ describe("PluggableWaterfallChart", () => {
                 },
             });
 
-            expect(extendedReferencePoint.properties.controls["total"].measures).toEqual([
+            expect(extendedReferencePoint.properties!.controls!["total"].measures).toEqual([
                 referencePointMocks.masterMeasureItems[1].localIdentifier,
             ]);
         });
@@ -222,7 +222,7 @@ describe("PluggableWaterfallChart", () => {
                 },
             });
 
-            expect(extendedReferencePoint.properties.controls["total"].measures).toEqual([]);
+            expect(extendedReferencePoint.properties!.controls!["total"].measures).toEqual([]);
         });
     });
 });

@@ -14,7 +14,7 @@ interface IAttributeItemCellProps {
 export function AttributeItemActions({ rowIndex }: IAttributeItemCellProps) {
     const [shouldDisplayAddActions, setDisplayAddActions] = useState<boolean>(false);
     const { onDeleteAttribute } = useAttributeHierarchyDialog();
-    const addAttributeRef = useRef(undefined);
+    const addAttributeRef = useRef<HTMLDivElement>(null);
 
     const handleAddAttribute = () => {
         setDisplayAddActions(true);

@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type EntitiesApiGetAllEntitiesDatasetsRequest,
     EntitiesApi_SearchEntitiesDatasets,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesDatasets } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesDatasets } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import type {
     IDatasetsQuery,

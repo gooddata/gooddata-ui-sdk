@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type ITigerClientBase,
@@ -7,7 +7,7 @@ import {
     type JsonApiDatasetOut,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/entitiesObjects";
+import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 
 import {
     type DatasetMap,

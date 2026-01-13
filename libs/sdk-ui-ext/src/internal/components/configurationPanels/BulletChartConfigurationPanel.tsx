@@ -29,12 +29,12 @@ export class BulletChartConfigurationPanel extends ConfigurationPanelContent {
         const controls = properties?.controls || {};
 
         const { xaxis, yaxis, grid } = controls;
-        const xAxisVisible = xaxis && typeof xaxis.visible !== "undefined" ? xaxis.visible : true;
-        const yAxisVisible = yaxis && typeof yaxis.visible !== "undefined" ? yaxis.visible : true;
-        const gridEnabled = grid && typeof grid.enabled !== "undefined" ? grid.enabled : true;
+        const xAxisVisible = typeof xaxis?.visible === "undefined" ? true : xaxis.visible;
+        const yAxisVisible = typeof yaxis?.visible === "undefined" ? true : yaxis.visible;
+        const gridEnabled = typeof grid?.enabled === "undefined" ? true : grid.enabled;
 
         const controlsDisabled = this.isControlDisabled();
-        const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
+        const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type!, controls, insight!);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const yAxisNameSubsectionDisabled = controlsDisabled || itemsOnYAxis === 0;
 
@@ -107,7 +107,7 @@ export class BulletChartConfigurationPanel extends ConfigurationPanelContent {
                     >
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText={messages["canvasGridLine"].id}
+                            labelText={messages["canvasGridLine"].id!}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}

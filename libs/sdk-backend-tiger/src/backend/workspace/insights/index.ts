@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
@@ -16,7 +16,7 @@ import {
     isMetricItem,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_GetDependentEntitiesGraphFromEntryPoints } from "@gooddata/api-client-tiger/actions";
+import { ActionsApi_GetDependentEntitiesGraphFromEntryPoints } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityVisualizationObjects,
     EntitiesApi_DeleteEntityVisualizationObjects,
@@ -25,7 +25,7 @@ import {
     EntitiesApi_GetEntityVisualizationObjects,
     EntitiesApi_PatchEntityVisualizationObjects,
     EntitiesApi_UpdateEntityVisualizationObjects,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IGetInsightOptions,

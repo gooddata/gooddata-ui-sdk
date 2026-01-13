@@ -73,7 +73,7 @@ export function setComboChartUiConfig(
         referencePointConfigured?.properties?.controls?.["secondaryChartType"] ?? LINE,
     ];
 
-    const updatedUiConfig: IUiConfig = setBucketTitles(referencePointConfigured, visualizationType, intl);
+    const updatedUiConfig: IUiConfig = setBucketTitles(referencePointConfigured, visualizationType, intl)!;
 
     const isDualAxis = referencePointConfigured?.properties?.controls?.["dualAxis"] ?? true;
     setCanStackInPercent(updatedUiConfig, chartTypes[1], isDualAxis);

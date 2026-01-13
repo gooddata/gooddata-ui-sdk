@@ -143,7 +143,7 @@ export class PluggableComboChart extends PluggableBaseChart {
          * if there is more than one metric
          */
         const isMoreThanOneMeasure =
-            findBucket(referencePoint.buckets, BucketNames.MEASURES)?.items.length > 1;
+            (findBucket(referencePoint.buckets, BucketNames.MEASURES)?.items?.length ?? 0) > 1;
         this.defaultControlsProperties = {
             stackMeasures: this.isStackMeasuresByDefault() && isMoreThanOneMeasure,
         };
@@ -266,7 +266,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         return baseVisualizationConfig;
     }
 
-    private configureChartTypes(referencePoint: IReferencePoint): IVisualizationProperties {
+    private configureChartTypes(referencePoint: IReferencePoint): IVisualizationProperties | undefined {
         const buckets = referencePoint?.buckets ?? [];
         const controls = referencePoint?.properties?.controls ?? {};
         const primaryChartType =
@@ -324,7 +324,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         const isStackingMeasures = this.visualizationProperties?.controls?.["stackMeasures"];
         if (typeof isStackingMeasures === "undefined") {
             const buckets = insightBucket(insight, BucketNames.MEASURES);
-            return isAreaChart(this.primaryChartType) && buckets?.items.length > 1;
+            return isAreaChart(this.primaryChartType) && (buckets?.items?.length ?? 0) > 1;
         }
         return isStackingMeasures;
     }
@@ -394,7 +394,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         availableSorts: ISortConfig["availableSorts"],
     ): {
         disabled: boolean;
-        disabledExplanation: string;
+        disabledExplanation: string | undefined;
     } {
         const { buckets } = referencePoint;
         const measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);

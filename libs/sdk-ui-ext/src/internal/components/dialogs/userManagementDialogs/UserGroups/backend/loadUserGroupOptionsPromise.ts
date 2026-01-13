@@ -30,7 +30,7 @@ export const loadUserGroupOptionsPromise =
                     userGroups.filter(
                         (userGroup) =>
                             inputValue === "" ||
-                            extractUserGroupName(userGroup).toLowerCase().includes(inputValue.toLowerCase()),
+                            extractUserGroupName(userGroup)?.toLowerCase().includes(inputValue.toLowerCase()),
                     ),
                 )
                 .then((userGroups) =>
@@ -38,7 +38,7 @@ export const loadUserGroupOptionsPromise =
                         .map(
                             (userGroup): IGrantedUserGroup => ({
                                 id: userGroup.id,
-                                title: extractUserGroupName(userGroup),
+                                title: extractUserGroupName(userGroup) ?? "",
                             }),
                         )
                         .sort(sortByName),

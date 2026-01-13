@@ -12,7 +12,7 @@ export interface IUsersListProps {
     mode: ListMode;
     onDelete: (user: IUserMember) => void;
     isBootstrapUserGroup: boolean;
-    bootstrapUserId: string;
+    bootstrapUserId?: string;
 }
 
 export function UsersList({ users, mode, onDelete, isBootstrapUserGroup, bootstrapUserId }: IUsersListProps) {

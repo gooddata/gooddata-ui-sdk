@@ -25,7 +25,7 @@ export function getBulletChartUiConfig(
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
 
-    referencePointConfigured[UICONFIG] = setBucketTitles(referencePointConfigured, visualizationType, intl);
+    referencePointConfigured[UICONFIG] = setBucketTitles(referencePointConfigured, visualizationType, intl)!;
 
     const buckets = referencePoint?.buckets ?? [];
 
@@ -58,8 +58,8 @@ export function getBulletChartUiConfig(
 
     if (primaryMeasuresCount === 0 && (secondaryMeasuresCount !== 0 || tertiaryMeasuresCount !== 0)) {
         referencePointConfigured[UICONFIG].customError = {
-            heading: getTranslation(messages["heading"].id, intl),
-            text: getTranslation(messages["text"].id, intl),
+            heading: getTranslation(messages["heading"].id!, intl),
+            text: getTranslation(messages["text"].id!, intl),
         };
     }
 

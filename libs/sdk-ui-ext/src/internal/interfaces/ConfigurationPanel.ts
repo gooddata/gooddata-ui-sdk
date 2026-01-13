@@ -9,12 +9,12 @@ export interface IConfigItemSubsection {
     disabled: boolean;
     configPanelDisabled: boolean;
     axis: AxisType;
-    properties: IVisualizationProperties;
-    pushData(data: IPushData): void;
+    properties?: IVisualizationProperties;
+    pushData?(data: IPushData): void;
 }
 
 export interface IHeadlinePanelConfig {
-    separators: ISeparators;
+    separators?: ISeparators;
     comparisonColorPalette: IColorPalette;
     supportsAttributeHierarchies: boolean;
 }

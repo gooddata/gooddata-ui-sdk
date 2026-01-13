@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { LocationStyleApi_GetDefaultStyle } from "@gooddata/api-client-tiger/locationStyle";
+import { LocationStyleApi_GetDefaultStyle } from "@gooddata/api-client-tiger/endpoints/locationStyle";
 import { type IGeoService, type IGeoStyleSpecification } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";

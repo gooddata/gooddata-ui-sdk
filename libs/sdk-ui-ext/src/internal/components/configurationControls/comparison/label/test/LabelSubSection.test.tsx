@@ -179,7 +179,7 @@ describe("LabelSubSection", () => {
             }),
         });
 
-        expect(container.querySelector(".gd-input-field").getAttribute("value")).toEqual("test");
+        expect(container.querySelector(".gd-input-field")!.getAttribute("value")).toEqual("test");
     });
 
     it("Should disabled label input when position on top", () => {

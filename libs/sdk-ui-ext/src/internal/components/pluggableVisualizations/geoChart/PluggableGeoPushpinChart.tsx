@@ -165,7 +165,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             .forBuckets(buckets, insightFilters(insight))
             .withDimensions(getGeoChartDimensions)
             .withSorting(...this.createSort(insight))
-            .withExecConfig(executionConfig);
+            .withExecConfig(executionConfig!);
     }
 
     protected override getSupportedPropertiesList(): string[] {
@@ -322,9 +322,9 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             onExportReady: this.onExportReady,
             onLoadingChanged: this.onLoadingChanged,
             onDataView: this.onDataView,
-            LoadingComponent: null,
-            ErrorComponent: null,
-            theme,
+            LoadingComponent: undefined,
+            ErrorComponent: undefined,
+            theme: theme!,
             enableExecutionCancelling: fullConfig.enableExecutionCancelling ?? false,
         };
 
@@ -405,7 +405,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
     private getPreferredBucketItemLimit(preferredBucket: string): number {
         const { buckets: bucketsUiConfig } = this.getUiConfig();
-        return bucketsUiConfig[preferredBucket].itemsLimit;
+        return bucketsUiConfig[preferredBucket].itemsLimit!;
     }
 
     private updateSupportedProperties(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {

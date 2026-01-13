@@ -74,6 +74,7 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
  */
 export type AutomationAbstractMeasureValueFilter =
     | AutomationComparisonMeasureValueFilter
+    | AutomationCompoundMeasureValueFilter
     | AutomationRangeMeasureValueFilter
     | AutomationRankingFilter;
 
@@ -494,6 +495,26 @@ export type AutomationComparisonOperatorEnum =
     | "NOT_EQUAL_TO";
 
 /**
+ * Condition that compares the metric value to a given constant value using a comparison operator.
+ */
+export interface AutomationComparisonCondition {
+    comparison: AutomationComparisonConditionComparison;
+}
+
+export interface AutomationComparisonConditionComparison {
+    operator: AutomationComparisonConditionComparisonOperatorEnum;
+    value: number;
+}
+
+export type AutomationComparisonConditionComparisonOperatorEnum =
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUAL_TO"
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUAL_TO"
+    | "EQUAL_TO"
+    | "NOT_EQUAL_TO";
+
+/**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  */
 export interface AutomationComparisonMeasureValueFilter {
@@ -526,6 +547,31 @@ export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOp
 
 export interface AutomationComparisonWrapper {
     comparison: AutomationComparison;
+}
+
+/**
+ * Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned).
+ */
+export interface AutomationCompoundMeasureValueFilter {
+    compoundMeasureValueFilter: AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter;
+}
+
+export interface AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     */
+    dimensionality?: Array<AutomationAfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     */
+    treatNullValuesAs?: number;
+    /**
+     * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
+     */
+    conditions: Array<AutomationMeasureValueCondition>;
+    localIdentifier?: string;
+    applyOnResult?: boolean;
+    measure: AutomationAfmIdentifier;
 }
 
 /**
@@ -809,6 +855,7 @@ export type AutomationExportResultStatusEnum = "SUCCESS" | "ERROR" | "INTERNAL_E
 export type AutomationFilterDefinition =
     | AutomationAbsoluteDateFilter
     | AutomationComparisonMeasureValueFilter
+    | AutomationCompoundMeasureValueFilter
     | AutomationInlineFilterDefinition
     | AutomationNegativeAttributeFilter
     | AutomationPositiveAttributeFilter
@@ -974,11 +1021,18 @@ export type AutomationMeasureItemDefinition =
     | AutomationSimpleMeasureDefinition;
 
 /**
+ * @type AutomationMeasureValueCondition
+ * A condition for filtering by measure value. Can be either a comparison or a range condition.
+ */
+export type AutomationMeasureValueCondition = AutomationComparisonCondition | AutomationRangeCondition;
+
+/**
  * @type AutomationMeasureValueFilter
  * Abstract filter definition type filtering by the value of the metric.
  */
 export type AutomationMeasureValueFilter =
     | AutomationComparisonMeasureValueFilter
+    | AutomationCompoundMeasureValueFilter
     | AutomationRangeMeasureValueFilter;
 
 export interface AutomationMetricRecord {
@@ -1159,6 +1213,21 @@ export interface AutomationRange {
 }
 
 export type AutomationRangeOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
+
+/**
+ * Condition that checks if the metric value is within a given range.
+ */
+export interface AutomationRangeCondition {
+    range: AutomationRangeConditionRange;
+}
+
+export interface AutomationRangeConditionRange {
+    operator: AutomationRangeConditionRangeOperatorEnum;
+    from: number;
+    to: number;
+}
+
+export type AutomationRangeConditionRangeOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
 
 /**
  * Filter the result by comparing specified metric to given range of values.

@@ -40,7 +40,7 @@ export const useAutomationColumns = ({
 }: IUseAutomationColumnsProps): {
     columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
     includeAutomationResult: boolean;
-    containerRef: RefObject<HTMLDivElement>;
+    containerRef: RefObject<HTMLDivElement | null>;
 } => {
     const workspace = useWorkspace();
     const intl = useIntl();
@@ -178,7 +178,7 @@ export const useAutomationColumns = ({
                             pauseAutomation={pauseAutomation}
                             resumeAutomation={resumeAutomation}
                             setPendingAction={setPendingAction}
-                            workspace={workspace}
+                            workspace={workspace!}
                             canManage={canManage}
                             isSubscribed={isSubscribed}
                             canPause={canPause}
@@ -220,7 +220,7 @@ export const useAutomationColumns = ({
             const selectedColumn = allColumns[columnDef.name];
             return {
                 ...selectedColumn,
-                width: columnDef.width ?? selectedColumn.width,
+                width: columnDef.width ?? selectedColumn?.width,
                 minWidth: columnDef.minWidth,
             };
         });

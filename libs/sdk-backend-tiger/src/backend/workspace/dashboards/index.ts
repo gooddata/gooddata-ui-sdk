@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -20,11 +20,8 @@ import {
     isVisualizationObjectsItem,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_GetDependentEntitiesGraph } from "@gooddata/api-client-tiger/actions";
+import { ActionsApi_GetDependentEntitiesGraph } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
-    ContextFiltersApi_CreateEntityFilterContexts,
-    ContextFiltersApi_GetEntityFilterContexts,
-    ContextFiltersApi_UpdateEntityFilterContexts,
     DashboardsApi_CreateEntityAnalyticalDashboards,
     DashboardsApi_DeleteEntityAnalyticalDashboards,
     DashboardsApi_GetAllEntitiesAnalyticalDashboards,
@@ -36,12 +33,15 @@ import {
     EntitiesApi_GetAllEntitiesDashboardPlugins,
     EntitiesApi_GetEntityDashboardPlugins,
     EntitiesApi_GetEntityWorkspaces,
+    FilterContextApi_CreateEntityFilterContexts,
+    FilterContextApi_GetEntityFilterContexts,
+    FilterContextApi_UpdateEntityFilterContexts,
     FilterViewsApi_CreateEntityFilterViews,
     FilterViewsApi_DeleteEntityFilterViews,
     FilterViewsApi_GetAllEntitiesFilterViews,
     FilterViewsApi_GetEntityFilterViews,
     FilterViewsApi_PatchEntityFilterViews,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     ExportApi_CreateDashboardExportRequest,
     ExportApi_CreateImageExport,
@@ -50,8 +50,8 @@ import {
     ExportApi_CreateSlidesExport,
     ExportApi_GetMetadata,
     ExportApi_GetSlidesExportMetadata,
-} from "@gooddata/api-client-tiger/export";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+} from "@gooddata/api-client-tiger/endpoints/export";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
     type IDashboardExportImageOptions,
     type IDashboardExportPdfOptions,
@@ -1312,7 +1312,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         const result = await this.authCall((client) => {
-            return ContextFiltersApi_CreateEntityFilterContexts(
+            return FilterContextApi_CreateEntityFilterContexts(
                 client.axios,
                 client.basePath,
                 {
@@ -1447,7 +1447,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const objectId = await objRefToIdentifier(filterContext.ref, this.authCall);
 
         const result = await this.authCall((client) => {
-            return ContextFiltersApi_UpdateEntityFilterContexts(
+            return FilterContextApi_UpdateEntityFilterContexts(
                 client.axios,
                 client.basePath,
                 {
@@ -1477,7 +1477,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private getFilterContext = async (filterContextRef: ObjRef) => {
         const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
         const result = await this.authCall((client) => {
-            return ContextFiltersApi_GetEntityFilterContexts(
+            return FilterContextApi_GetEntityFilterContexts(
                 client.axios,
                 client.basePath,
                 {

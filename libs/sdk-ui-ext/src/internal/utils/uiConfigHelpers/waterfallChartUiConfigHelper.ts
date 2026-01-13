@@ -23,6 +23,10 @@ function setWaterfallChartBucketWarningMessages(referencePoint: IExtendedReferen
     const buckets = referencePoint?.buckets;
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
+    if (!updatedUiConfig) {
+        return updatedUiConfig;
+    }
+
     buckets.forEach((bucket) => {
         const localIdentifier = bucket?.localIdentifier ?? "";
         const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
@@ -33,7 +37,7 @@ function setWaterfallChartBucketWarningMessages(referencePoint: IExtendedReferen
         }
 
         if (!bucketUiConfig?.canAddItems && bucket.localIdentifier === BucketNames.VIEW) {
-            const warningMessage = getTranslation(messages["category"].id, intl);
+            const warningMessage = getTranslation(messages["category"].id!, intl);
             set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
         }
     });

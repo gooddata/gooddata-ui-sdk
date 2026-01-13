@@ -57,7 +57,7 @@ export function UserProvider({ children, scope }: UserProviderProps) {
     // Compare by login since current user doesn't have id property,
     // login is the only property that is guaranteed to be unique for current user
     const isCurrentUserByLogin = useCallback(
-        (userLogin: string): boolean => {
+        (userLogin?: string): boolean => {
             if (!currentUser?.login) {
                 return false;
             }
@@ -70,7 +70,7 @@ export function UserProvider({ children, scope }: UserProviderProps) {
     // some recipients are only identified by email,
     // so current user and recipients can only be matched by email
     const isCurrentUserByEmail = useCallback(
-        (userEmail?: string): boolean => {
+        (userEmail: string | null | undefined): boolean => {
             if (!currentUser?.email) {
                 return false;
             }
@@ -92,7 +92,7 @@ export function UserProvider({ children, scope }: UserProviderProps) {
 
     const isSubscribedToAutomation = useCallback(
         (automation: IAutomationMetadataObject): boolean => {
-            return automation.recipients.some((user) => {
+            return (automation.recipients ?? []).some((user) => {
                 const email = isAutomationUserGroupRecipient(user) ? null : user.email;
                 return isCurrentUserByEmail(email);
             });

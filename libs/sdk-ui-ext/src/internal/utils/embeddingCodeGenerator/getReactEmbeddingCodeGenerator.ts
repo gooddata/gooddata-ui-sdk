@@ -142,8 +142,7 @@ function walkProps<TProps>(
 
         const rhsValue = extendedFactoryNotationFor(value, additionalFactories ?? []);
 
-        const needsType = language === "ts" && meta.typeImport;
-        if (needsType) {
+        if (language === "ts" && meta.typeImport) {
             const typeDeclaration =
                 meta.cardinality === "array" ? `${meta.typeImport.name}[]` : meta.typeImport.name;
             importsUsed.push(meta.typeImport);

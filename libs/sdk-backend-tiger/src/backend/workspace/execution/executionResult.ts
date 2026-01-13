@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import SparkMD5 from "spark-md5";
 
@@ -9,9 +9,9 @@ import {
     type TabularExportRequest,
     type TabularExportRequestFormatEnum,
 } from "@gooddata/api-client-tiger";
-import { ExecutionResultAPI_RetrieveResult } from "@gooddata/api-client-tiger/execution";
-import { ExportApi_CreateTabularExport } from "@gooddata/api-client-tiger/export";
-import { ResultApi_GetCollectionItems } from "@gooddata/api-client-tiger/result";
+import { ExecutionResultAPI_RetrieveResult } from "@gooddata/api-client-tiger/endpoints/execution";
+import { ExportApi_CreateTabularExport } from "@gooddata/api-client-tiger/endpoints/export";
+import { ResultApi_GetCollectionItems } from "@gooddata/api-client-tiger/endpoints/result";
 import {
     SmartFunctionsApi_AnomalyDetection,
     SmartFunctionsApi_AnomalyDetectionResult,
@@ -19,7 +19,7 @@ import {
     SmartFunctionsApi_ClusteringResult,
     SmartFunctionsApi_Forecast,
     SmartFunctionsApi_ForecastResult,
-} from "@gooddata/api-client-tiger/smartFunctions";
+} from "@gooddata/api-client-tiger/endpoints/smartFunctions";
 import {
     type IAnomalyDetectionConfig,
     type IAnomalyDetectionResult,

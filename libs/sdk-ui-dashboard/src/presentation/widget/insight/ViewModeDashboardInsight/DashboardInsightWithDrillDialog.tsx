@@ -12,6 +12,7 @@ import {
     selectCatalogAttributeDisplayFormsById,
     selectEnableDrilledTooltip,
     selectLocale,
+    selectObjectAvailabilityConfig,
     selectSeparators,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -64,6 +65,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     );
 
     const locale = useDashboardSelector(selectLocale);
+    const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
 
     const setNextDrillStep = useCallback((drillStep: DrillStep) => {
         setDrillSteps((s) => [...s, drillStep]);
@@ -179,6 +181,8 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                 requestedDefinition={keyDriveInfo?.keyDriveDefinition}
                 separators={separators}
                 showCloseButton
+                includeTags={objectAvailability?.includeObjectsWithTags}
+                excludeTags={objectAvailability?.excludeObjectsWithTags}
                 onRequestedDefinitionChange={onRequestedDefinitionChange}
                 onClose={onCloseKeyDriverAnalysis}
             />

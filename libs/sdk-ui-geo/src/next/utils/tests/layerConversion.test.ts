@@ -45,7 +45,7 @@ describe("layerConversion", () => {
 
         const result = insightLayerToGeoLayer(layerDef);
 
-        if (!result || result.type !== "pushpin") {
+        if (result?.type !== "pushpin") {
             throw new Error("Expected pushpin layer");
         }
 
@@ -64,7 +64,7 @@ describe("layerConversion", () => {
 
         const result = insightLayerToGeoLayer(layerDef);
 
-        if (!result || result.type !== "pushpin") {
+        if (result?.type !== "pushpin") {
             throw new Error("Expected pushpin layer");
         }
 
@@ -90,7 +90,7 @@ describe("layerConversion", () => {
 
         const result = insightLayerToGeoLayer(layerDef);
 
-        if (!result || result.type !== "pushpin") {
+        if (result?.type !== "pushpin") {
             throw new Error("Expected pushpin layer");
         }
 
@@ -118,7 +118,7 @@ describe("layerConversion", () => {
         const layers = insightLayersToGeoLayers([invalidLayer, locationOnlyLayer, validLayer]);
         expect(layers).toHaveLength(1);
         const firstLayer = layers[0];
-        if (!firstLayer || firstLayer.type !== "pushpin") {
+        if (firstLayer?.type !== "pushpin") {
             throw new Error("Expected pushpin layer");
         }
         expect(firstLayer.id).toBe(validLayer.id);

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
@@ -8,11 +8,11 @@ import {
     EntitiesApi_GetEntityLlmEndpoints,
     EntitiesApi_PatchEntityLlmEndpoints,
     EntitiesApi_UpdateEntityLlmEndpoints,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     GenAiApi_ValidateLLMEndpoint,
     GenAiApi_ValidateLLMEndpointById,
-} from "@gooddata/api-client-tiger/genAI";
+} from "@gooddata/api-client-tiger/endpoints/genAI";
 import { type IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
 import {
     type ILlmEndpointOpenAI,

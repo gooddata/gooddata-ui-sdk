@@ -66,6 +66,7 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
  */
 export type AbstractMeasureValueFilter =
     | ComparisonMeasureValueFilter
+    | CompoundMeasureValueFilter
     | RangeMeasureValueFilter
     | RankingFilter;
 
@@ -541,6 +542,14 @@ export interface ChangeAnalysisRequest {
      * Whether to use smart attribute selection (LLM-based) instead of discovering all valid attributes. If true, GenAI will intelligently select the most relevant attributes for change analysis. If false or not set, all valid attributes will be discovered using Calcique. Smart attribute selection applies only when no attributes are provided.
      */
     useSmartAttributeSelection?: boolean;
+    /**
+     * Only include attributes with at least one of these tags. If empty, no inclusion filter is applied. This filter applies to both auto-discovered and explicitly provided attributes.
+     */
+    includeTags?: Array<string>;
+    /**
+     * Exclude attributes with any of these tags. This filter applies to both auto-discovered and explicitly provided attributes.
+     */
+    excludeTags?: Array<string>;
 }
 
 /**
@@ -766,6 +775,26 @@ export interface ClusteringResult {
 }
 
 /**
+ * Condition that compares the metric value to a given constant value using a comparison operator.
+ */
+export interface ComparisonCondition {
+    comparison: ComparisonConditionComparison;
+}
+
+export interface ComparisonConditionComparison {
+    operator: ComparisonConditionComparisonOperatorEnum;
+    value: number;
+}
+
+export type ComparisonConditionComparisonOperatorEnum =
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUAL_TO"
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUAL_TO"
+    | "EQUAL_TO"
+    | "NOT_EQUAL_TO";
+
+/**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  */
 export interface ComparisonMeasureValueFilter {
@@ -795,6 +824,31 @@ export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum
     | "LESS_THAN_OR_EQUAL_TO"
     | "EQUAL_TO"
     | "NOT_EQUAL_TO";
+
+/**
+ * Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned).
+ */
+export interface CompoundMeasureValueFilter {
+    compoundMeasureValueFilter: CompoundMeasureValueFilterCompoundMeasureValueFilter;
+}
+
+export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     */
+    treatNullValuesAs?: number;
+    /**
+     * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
+     */
+    conditions: Array<MeasureValueCondition>;
+    localIdentifier?: string;
+    applyOnResult?: boolean;
+    measure: AfmIdentifier;
+}
 
 /**
  * List of created visualization objects
@@ -1259,6 +1313,7 @@ export type FilterByLabelTypeEnum = "PRIMARY" | "REQUESTED";
 export type FilterDefinition =
     | AbsoluteDateFilter
     | ComparisonMeasureValueFilter
+    | CompoundMeasureValueFilter
     | InlineFilterDefinition
     | NegativeAttributeFilter
     | PositiveAttributeFilter
@@ -1313,15 +1368,21 @@ export interface FoundObjects {
  * Configuration specific to geo area labels.
  */
 export interface GeoAreaConfig {
-    collection: GeoCollection;
+    collection: GeoCollectionIdentifier;
 }
 
-export interface GeoCollection {
+export interface GeoCollectionIdentifier {
     /**
      * Geo collection identifier.
      */
     id: string;
+    /**
+     * Type of geo collection.
+     */
+    kind?: GeoCollectionIdentifierKindEnum;
 }
+
+export type GeoCollectionIdentifierKindEnum = "STATIC" | "CUSTOM";
 
 export interface GetQualityIssuesResponse {
     /**
@@ -1505,10 +1566,19 @@ export interface MeasureResultHeader {
 }
 
 /**
+ * @type MeasureValueCondition
+ * A condition for filtering by measure value. Can be either a comparison or a range condition.
+ */
+export type MeasureValueCondition = ComparisonCondition | RangeCondition;
+
+/**
  * @type MeasureValueFilter
  * Abstract filter definition type filtering by the value of the metric.
  */
-export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
+export type MeasureValueFilter =
+    | ComparisonMeasureValueFilter
+    | CompoundMeasureValueFilter
+    | RangeMeasureValueFilter;
 
 export interface MemoryItemCreatedByUsers {
     /**
@@ -1842,6 +1912,21 @@ export type QualityIssuesCalculationStatusResponseStatusEnum =
     | "FAILED"
     | "NOT_FOUND"
     | "DISABLED";
+
+/**
+ * Condition that checks if the metric value is within a given range.
+ */
+export interface RangeCondition {
+    range: RangeConditionRange;
+}
+
+export interface RangeConditionRange {
+    operator: RangeConditionRangeOperatorEnum;
+    from: number;
+    to: number;
+}
+
+export type RangeConditionRangeOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
 
 /**
  * Filter the result by comparing specified metric to given range of values.

@@ -8,8 +8,8 @@ import { InputControl } from "../InputControl.js";
 export interface INumberOfClustersControlProps {
     valuePath: string;
     disabled: boolean;
-    properties: IVisualizationProperties;
-    pushData: (data: any) => any;
+    properties?: IVisualizationProperties;
+    pushData?: (data: any) => any;
 }
 
 const validPositiveNumberHigherThanZero = /^[1-9][0-9]*$/;

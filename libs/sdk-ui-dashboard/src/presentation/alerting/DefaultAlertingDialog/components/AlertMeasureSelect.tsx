@@ -77,9 +77,7 @@ export function AlertMeasureSelect({
                     data: measure,
                 }));
 
-                const selectedIndex = measures.findIndex(
-                    (m) => selectedMeasure && m.measure === selectedMeasure.measure,
-                );
+                const selectedIndex = measures.findIndex((m) => m.measure === selectedMeasure?.measure);
                 const selectedId = selectedIndex === -1 ? undefined : `measure-${selectedIndex}`;
 
                 return (

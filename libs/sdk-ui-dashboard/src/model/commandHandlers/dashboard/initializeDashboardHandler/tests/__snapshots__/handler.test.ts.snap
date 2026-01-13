@@ -354,6 +354,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
   "disableUserFilterReset": false,
   "enableFilterValuesResolutionInDrillEvents": false,
   "externalRecipient": undefined,
+  "hideAddTabButton": false,
   "hideSaveAsNewButton": false,
   "hideShareButton": false,
   "initialRenderMode": "view",

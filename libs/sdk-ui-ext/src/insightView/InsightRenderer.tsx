@@ -204,14 +204,14 @@ class InsightRendererCore extends PureComponent<
         ).getFactory();
 
         this.visualization = visualizationFactory({
-            backend: this.props.backend,
+            backend: this.props.backend!,
             callbacks: {
                 onError: (error) => {
                     this.props.onError?.(error);
                     this.props.onLoadingChanged?.({ isLoading: false });
                 },
                 onLoadingChanged: this.props.onLoadingChanged,
-                pushData: this.props.pushData,
+                pushData: this.props.pushData!,
                 onDrill: this.props.onDrill,
                 onDataView: this.props.onDataView,
                 onExportReady: this.onExportReadyDecorator,
@@ -233,7 +233,7 @@ class InsightRendererCore extends PureComponent<
             environment: "dashboards", // TODO get rid of this
             locale: this.props.locale,
             messages: this.props.messages,
-            projectId: this.props.workspace,
+            projectId: this.props.workspace!,
             visualizationProperties: insightProperties(this.props.insight),
             featureFlags: this.props.settings,
             renderFun: this.getReactRenderFunction(),
@@ -242,12 +242,15 @@ class InsightRendererCore extends PureComponent<
     };
 
     private getReactRenderFunction = () => {
-        return (children: any, element: Element) => {
+        return (children: any, element: Element | null) => {
+            if (!element) {
+                return;
+            }
             const htmlElement = element as HTMLElement;
             if (!this.reactRootsMap.get(htmlElement)) {
                 this.reactRootsMap.set(htmlElement, createRoot(htmlElement));
             }
-            this.reactRootsMap.get(htmlElement).render(children);
+            this.reactRootsMap.get(htmlElement)!.render(children);
         };
     };
 
@@ -275,7 +278,7 @@ class InsightRendererCore extends PureComponent<
     };
 
     private getExecutionFactory = (): IExecutionFactory => {
-        const factory = this.props.backend.workspace(this.props.workspace).execution();
+        const factory = this.props.backend!.workspace(this.props.workspace!).execution();
 
         if (this.props.executeByReference) {
             /*
@@ -393,12 +396,12 @@ export function InsightRenderer(props: IInsightRendererProps) {
         ...resProps
     } = props;
 
-    const onPushData = useUpdatableCallback(pushData);
-    const onDrill = useUpdatableCallback(onDrillCallBack);
-    const onError = useUpdatableCallback(onErrorCallBack);
-    const onExportReady = useUpdatableCallback(onExportReadyCallback);
-    const onLoadingChanged = useUpdatableCallback(onLoadingChangedCallback);
-    const onDataView = useUpdatableCallback(onDataViewCallback);
+    const onPushData = useUpdatableCallback(pushData!);
+    const onDrill = useUpdatableCallback(onDrillCallBack!);
+    const onError = useUpdatableCallback(onErrorCallBack!);
+    const onExportReady = useUpdatableCallback(onExportReadyCallback!);
+    const onLoadingChanged = useUpdatableCallback(onLoadingChangedCallback!);
+    const onDataView = useUpdatableCallback(onDataViewCallback!);
 
     const messages = useResolveMessages(locale, resolveMessages, DEFAULT_MESSAGES);
     if (!messages[locale]) {

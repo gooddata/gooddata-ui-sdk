@@ -395,6 +395,18 @@ export const selectIsShareButtonHidden: DashboardSelector<boolean> = createSelec
 });
 
 /**
+ * Returns whether the add tab button should be hidden in edit mode.
+ *
+ * @alpha
+ */
+export const selectIsAddTabButtonHidden: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.hideAddTabButton ?? false;
+    },
+);
+
+/**
  * Returns whether cross filtering is disabled by config
  *
  * @internal

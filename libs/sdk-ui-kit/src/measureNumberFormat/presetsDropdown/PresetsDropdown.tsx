@@ -39,8 +39,7 @@ export const PresetsDropdown = memo(function PresetsDropdown(props: IMeasureNumb
 
     const renderPresetOption = useCallback(
         (preset: IFormatPreset, index?: number) => {
-            const isPresetItemSelected =
-                selectedPreset && preset.localIdentifier === selectedPreset.localIdentifier;
+            const isPresetItemSelected = preset.localIdentifier === selectedPreset?.localIdentifier;
 
             return (
                 <PresetsDropdownItem

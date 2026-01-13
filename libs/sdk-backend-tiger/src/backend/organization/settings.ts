@@ -1,11 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     EntitiesApi_CreateEntityOrganizationSettings,
     EntitiesApi_DeleteEntityOrganizationSettings,
     EntitiesApi_GetAllEntitiesOrganizationSettings,
     EntitiesApi_UpdateEntityOrganizationSettings,
-} from "@gooddata/api-client-tiger/entitiesObjects";
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,

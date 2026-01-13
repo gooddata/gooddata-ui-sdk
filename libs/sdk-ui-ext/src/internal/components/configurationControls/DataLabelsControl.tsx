@@ -10,8 +10,8 @@ import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 
 export interface IDataLabelsControlProps {
-    pushData: (data: any) => any;
-    properties: IVisualizationProperties;
+    pushData?: (data: any) => any;
+    properties?: IVisualizationProperties;
     isDisabled: boolean;
     isTotalsDisabled?: boolean;
     showDisabledMessage?: boolean;

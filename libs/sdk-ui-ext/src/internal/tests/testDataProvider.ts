@@ -40,7 +40,7 @@ export const createTestProperties = <T extends IDefaultControlProperties>(
     };
 };
 
-export const newInsight = <ControlProperties = IDefaultControlProperties>(
+export const newInsight = <ControlProperties extends IDefaultControlProperties = IDefaultControlProperties>(
     buckets: IBucket[],
     options?: {
         title?: string;

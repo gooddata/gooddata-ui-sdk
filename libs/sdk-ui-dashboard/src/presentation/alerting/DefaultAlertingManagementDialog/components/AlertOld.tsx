@@ -69,8 +69,7 @@ export function AlertOld({ alert, onDelete, onEdit, onPause }: IAlertProps) {
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
-    const canEdit =
-        canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
+    const canEdit = canManageWorkspace || (currentUser && currentUser.login === alert.createdBy?.login);
 
     const openDropdown = () => {
         toggleDropdownOpened(true);

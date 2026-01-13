@@ -1,10 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type AxiosRequestConfig } from "axios";
 import { isEqual } from "lodash-es";
 
-import { ExecutionAPI_ComputeReport } from "@gooddata/api-client-tiger/execution";
-import { ExplainApi_ExplainAFM } from "@gooddata/api-client-tiger/explain";
+import { ExecutionAPI_ComputeReport } from "@gooddata/api-client-tiger/endpoints/execution";
+import { ExplainApi_ExplainAFM } from "@gooddata/api-client-tiger/endpoints/explain";
 import {
     type ExplainConfig,
     type ExplainType,

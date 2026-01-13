@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo } from "react";
 
@@ -73,6 +73,11 @@ export function GeoChartNextLegendOverlay({
     );
 
     const enabled = useMemo(() => legendConfig.enabled, [legendConfig.enabled]);
+
+    // Don't render until container is measured (needed for height calculations)
+    if (!chartContainerRect?.client?.height) {
+        return null;
+    }
 
     return (
         <MultiLayerLegendPanel

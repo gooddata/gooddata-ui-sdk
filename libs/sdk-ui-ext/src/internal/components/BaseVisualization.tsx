@@ -101,7 +101,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
     > = {
         visualizationCatalog: FullVisualizationCatalog,
         newDerivedBucketItems: [],
-        referencePoint: null,
+        referencePoint: undefined,
         onExtendedReferencePointChanged: () => {},
         onNewDerivedBucketItemsPlaced: () => {},
         isMdObjectValid: true,
@@ -110,9 +110,9 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
     };
 
     private visElementId: string;
-    private visualization: IVisualization;
+    private visualization: IVisualization | undefined;
     private executionFactory: IExecutionFactory;
-    private containerRef: RefObject<HTMLDivElement>;
+    private containerRef: RefObject<HTMLDivElement | null>;
 
     /**
      * The component may render both visualization and config panel. In React18 we therefore need two
@@ -160,9 +160,9 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         }
 
         // buckets changed from within inner visualization logic
-        const bucketsToUpdate = this.visualization.getBucketsToUpdate(
-            this.props.referencePoint,
-            nextProps.referencePoint,
+        const bucketsToUpdate = this.visualization?.getBucketsToUpdate(
+            this.props.referencePoint!,
+            nextProps.referencePoint!,
         );
 
         if (bucketsToUpdate) {
@@ -176,13 +176,13 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             this.props.visualizationClass,
         );
         const referencePointChanged = BaseVisualization.bucketReferencePointHasChanged(
-            this.props.referencePoint,
-            nextProps.referencePoint,
+            this.props.referencePoint!,
+            nextProps.referencePoint!,
         );
 
         const relevantPropertiesChanged = this.somePropertiesRelevantForReferencePointChanged(
-            this.props.referencePoint,
-            nextProps.referencePoint,
+            this.props.referencePoint!,
+            nextProps.referencePoint!,
         );
 
         const labelsChanged = !isEqual(
@@ -191,8 +191,8 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         );
 
         const propertiesControlsChanged = BaseVisualization.propertiesControlsHasChanged(
-            this.props.referencePoint,
-            nextProps.referencePoint,
+            this.props.referencePoint!,
+            nextProps.referencePoint!,
         );
 
         if (visualizationClassChanged) {
@@ -269,8 +269,8 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         let visFactory: PluggableVisualizationFactory | undefined;
 
         try {
-            visFactory = this.props.visualizationCatalog
-                .forUri(
+            visFactory = this.props
+                .visualizationCatalog!.forUri(
                     visUri,
                     featureFlags?.enableNewPivotTable ?? true,
                     featureFlags?.enableNewGeoPushpin ?? false,
@@ -317,7 +317,10 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
                 },
                 featureFlags,
                 visualizationProperties: insightProperties(props.insight),
-                renderFun: renderer ?? this.getReactRenderFunction(),
+                renderFun: (renderer ?? this.getReactRenderFunction()) as (
+                    component: any,
+                    target: Element | null,
+                ) => void,
                 unmountFun: unmount ?? this.getReactUnmountFunction(),
             };
 
@@ -326,11 +329,14 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
     }
 
     private getReactRenderFunction = () => {
-        return (children: any, element: HTMLElement) => {
+        return (children: any, element: HTMLElement | null) => {
+            if (!element) {
+                return;
+            }
             if (!this.reactRootsMap.get(element)) {
                 this.reactRootsMap.set(element, createRoot(element));
             }
-            this.reactRootsMap.get(element).render(children);
+            this.reactRootsMap.get(element)!.render(children);
         };
     };
 
@@ -380,7 +386,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             this.visualization
                 .getExtendedReferencePoint(newReferencePoint, currentProps?.referencePoint)
                 .then(async (extendedReferencePoint) => {
-                    const sortConfig = await this.visualization.getSortConfig(extendedReferencePoint);
+                    const sortConfig = await this.visualization!.getSortConfig(extendedReferencePoint);
                     // new sort config needs to be sent together with new reference point to avoid double executions with old invalid sort until new one arrives by its own handler
                     onExtendedReferencePointChanged(extendedReferencePoint, sortConfig);
                 });
@@ -397,7 +403,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             this.visualization
                 .getExtendedReferencePoint(newReferencePoint, currentProps?.referencePoint)
                 .then((extendedRefPoint) => {
-                    this.visualization.getSortConfig(extendedRefPoint).then(onSortingChanged);
+                    this.visualization!.getSortConfig(extendedRefPoint).then(onSortingChanged);
                 });
         }
     }
@@ -462,7 +468,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         sourceVisualization: IInsight,
         drillDownContext: IDrillDownContext,
     ): IInsight {
-        return this.visualization.getInsightWithDrillDownApplied(
+        return this.visualization!.getInsightWithDrillDownApplied(
             sourceVisualization,
             drillDownContext,
             this.props.backend.capabilities.supportsElementUris ?? true,
@@ -474,7 +480,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             this.setupVisualization(this.props);
         }
 
-        return this.visualization.getExecution(
+        return this.visualization!.getExecution(
             this.getVisualizationProps(),
             this.props.insight,
             this.executionFactory,
@@ -486,7 +492,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             this.setupVisualization(this.props);
         }
 
-        return this.visualization.getExecutions?.(
+        return this.visualization?.getExecutions?.(
             this.getVisualizationProps(),
             this.props.insight,
             this.executionFactory,

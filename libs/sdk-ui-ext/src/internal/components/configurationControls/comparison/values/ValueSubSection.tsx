@@ -15,7 +15,7 @@ import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "
 interface IValueSubSectionProps {
     sectionDisabled: boolean;
     showDisabledMessage?: boolean;
-    defaultFormat: string;
+    defaultFormat: string | null;
     separators: ISeparators;
     properties: IVisualizationProperties<IComparisonControlProperties>;
     pushData: PushDataCallback;
@@ -29,7 +29,7 @@ export function ValueSubSection({
     properties,
     pushData,
 }: IValueSubSectionProps) {
-    const format = getNumberFormat(properties, defaultFormat);
+    const format = getNumberFormat(properties, defaultFormat!);
     const subFormat = getNumberSubFormat(properties);
     const shouldDisplaySubFormatControl =
         properties.controls?.comparison?.calculationType === CalculateAs.CHANGE_DIFFERENCE;

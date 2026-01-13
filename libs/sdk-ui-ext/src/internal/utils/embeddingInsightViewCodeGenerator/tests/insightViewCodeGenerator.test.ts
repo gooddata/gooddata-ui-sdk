@@ -14,7 +14,7 @@ describe("insightViewCodeGenerator tests", () => {
     it("should generate code for insight", () => {
         const insight = recordedInsights(ReferenceRecordings.Recordings).find(
             (insight) => insightUri(insight) === INSIGHT_URI,
-        );
+        )!;
         expect(
             insightViewCodeGenerator(insight, {
                 context: {
@@ -62,7 +62,7 @@ describe("insightViewCodeGenerator tests", () => {
     it("should generate code for insight with non default locale", () => {
         const insight = recordedInsights(ReferenceRecordings.Recordings).find(
             (insight) => insightUri(insight) === INSIGHT_URI,
-        );
+        )!;
         expect(
             insightViewCodeGenerator(insight, {
                 context: {
@@ -81,7 +81,7 @@ describe("insightViewCodeGenerator tests", () => {
     it("should generate code without the insight configuration", () => {
         const insight = recordedInsights(ReferenceRecordings.Recordings).find(
             (insight) => insightUri(insight) === INSIGHT_URI,
-        );
+        )!;
         expect(
             insightViewEmbeddedCodeGenerator(insight, {
                 context: {

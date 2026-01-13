@@ -68,7 +68,7 @@ export function filteredByDerivedMeasure(buckets: IBucketOfFun[], filters: IFilt
     return allBucketFilters
         .filter(isMeasureValueFilter)
         .some((measureValueFilter) =>
-            derivedMeasuresLocalIdentifiers.includes(measureValueFilter.measureLocalIdentifier),
+            derivedMeasuresLocalIdentifiers.includes(measureValueFilter.measureLocalIdentifier!),
         );
 }
 
@@ -204,9 +204,9 @@ export function hasNonAllTimeFilter(filters: IFilters): boolean {
     return !isEmpty(filterInterval);
 }
 
-function hasNoRankingFilter(_: IBucketOfFun[], filters: IFilters): boolean {
-    const allBucketFilters = filters.items.flatMap((filterItem) => filterItem.filters);
-    return !allBucketFilters.some(isRankingFilter);
+function hasNoRankingFilter(_: IBucketOfFun[], filters?: IFilters): boolean {
+    const allBucketFilters = filters?.items.flatMap((filterItem) => filterItem.filters);
+    return !allBucketFilters?.some(isRankingFilter);
 }
 
 export function isShowInPercentAllowed(

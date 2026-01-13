@@ -3007,6 +3007,26 @@
         "text": "Change Significance Threshold",
         "crowdinContext": "Key driver chart standard deviation title in key driver analysis chart"
     },
+    "kdaDialog.dialog.keyDrives.error.general.title": {
+        "text": "Sorry, we can't display the key drivers",
+        "crowdinContext": "Key driver analysis error general title"
+    },
+    "kdaDialog.dialog.keyDrives.error.general.description": {
+        "text": "We couldn’t compute the key drivers for this metric. If the issue continues, contact your administrator.",
+        "crowdinContext": "Key driver analysis error general description"
+    },
+    "kdaDialog.dialog.keyDrives.error.traceId": {
+        "text": "Error trace ID",
+        "crowdinContext": "Key driver analysis error trace ID"
+    },
+    "kdaDialog.dialog.keyDrives.error.details.title": {
+        "text": "Raw error response",
+        "crowdinContext": "Key driver analysis error details title for showing raw error response json"
+    },
+    "kdaDialog.dialog.keyDrives.error.details.title.tooltip": {
+        "text": "The raw error response shows back-end information about the error that has occurred. It is visible only to the administrators.",
+        "crowdinContext": "Key driver analysis error details title tooltip for showing raw error response json"
+    },
     "menu.back": {
         "text": "Back to the parent menu",
         "crowdinContext": "Button label for navigating back to the parent menu in a nested menu structure. Used in hierarchical navigation."

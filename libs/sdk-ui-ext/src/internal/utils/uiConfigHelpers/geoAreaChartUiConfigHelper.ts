@@ -13,7 +13,7 @@ const geoAreaBucketAreaIcon = "local:geoPushpin/bucket-title-location-icon.svg";
 const geoAreaBucketColorIcon = "local:geoPushpin/bucket-title-color-icon.svg";
 const geoAreaBucketSegmentIcon = "local:geoPushpin/bucket-title-segment-icon.svg";
 
-function setBucketIcon(uiConfig: IUiConfig, bucketName: string, icon: string) {
+function setBucketIcon(uiConfig: IUiConfig | null | undefined, bucketName: string, icon: string) {
     if (!uiConfig) {
         return;
     }

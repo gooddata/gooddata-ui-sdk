@@ -25,7 +25,7 @@ export function configForInsightView(
     insight: IInsightDefinition,
     settings?: ISettings,
 ): PropWithMeta<IGeoConfig | IChartConfig | PivotTableNextConfig> | undefined {
-    if (isGeoChart(insight) && !settings.enableNewGeoPushpin) {
+    if (isGeoChart(insight) && !settings?.enableNewGeoPushpin) {
         return geoConfigForInsightViewComponent();
     }
     if (isPivotTableNext(insight, settings)) {
@@ -44,7 +44,9 @@ export function configForInsightView(
     };
 }
 
-export function localeForInsightView(ctx: IEmbeddingCodeContext): PropWithMeta<ILocale> | undefined {
+export function localeForInsightView(
+    ctx: IEmbeddingCodeContext,
+): PropWithMeta<ILocale | undefined> | undefined {
     const val = resolveLocale(ctx?.settings?.locale);
 
     return {

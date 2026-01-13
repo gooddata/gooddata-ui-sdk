@@ -624,7 +624,7 @@ export {
     AacApi_GetLogicalModelAac,
     AacApi_SetAnalyticsModelAac,
     AacApi_SetLogicalModelAac,
-} from "./api-endpoints/aac/index.js";
+} from "./endpoints/aac/index.js";
 export type {
     AacAnalyticsModel,
     AacAnalyticsModelExclude,
@@ -633,7 +633,7 @@ export type {
     AacApiGetLogicalModelAacRequest,
     AacApiSetAnalyticsModelAacRequest,
     AacApiSetLogicalModelAacRequest,
-} from "./api-endpoints/aac/index.js";
+} from "./endpoints/aac/index.js";
 
 export const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
 /**

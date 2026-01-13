@@ -182,7 +182,7 @@ export const useUserGroups = (
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
-    const [grantedUserGroups, setGrantedUserGroups] = useState<IGrantedUserGroup[]>(undefined);
+    const [grantedUserGroups, setGrantedUserGroups] = useState<IGrantedUserGroup[] | undefined>(undefined);
 
     // load initial user groups
     useEffect(() => {
@@ -194,7 +194,7 @@ export const useUserGroups = (
                 setGrantedUserGroups(
                     userGroups.map((userGroup) => ({
                         id: userGroup.id,
-                        title: extractUserGroupName(userGroup),
+                        title: extractUserGroupName(userGroup)!,
                     })),
                 );
             });
@@ -207,7 +207,7 @@ export const useUserGroups = (
             .removeUsersFromUserGroups([userId], [grantedUserGroup.id])
             .then(() => {
                 addSuccess(messages.userGroupRemovedSuccess);
-                setGrantedUserGroups(grantedUserGroups.filter((item) => item.id !== grantedUserGroup.id));
+                setGrantedUserGroups(grantedUserGroups?.filter((item) => item.id !== grantedUserGroup.id));
                 onSuccess();
             })
             .catch((error) => {
@@ -216,8 +216,8 @@ export const useUserGroups = (
             });
     };
 
-    const hasBootstrapUserGroup = (userGroups: IGrantedUserGroup[]) =>
-        userGroups.some((group) => group.id === bootstrapUserGroupId);
+    const hasBootstrapUserGroup = (userGroups: IGrantedUserGroup[] | undefined) =>
+        userGroups?.some((group) => group.id === bootstrapUserGroupId);
 
     // removes admin group from the user if he is its member, update internal array of groups
     const removeAdminGroup = () => {
@@ -228,7 +228,7 @@ export const useUserGroups = (
                 .removeUsersFromUserGroups([userId], [bootstrapUserGroupId])
                 .then(() =>
                     setGrantedUserGroups(
-                        grantedUserGroups.filter((item) => item.id !== bootstrapUserGroupId),
+                        grantedUserGroups?.filter((item) => item.id !== bootstrapUserGroupId),
                     ),
                 );
         } else {
@@ -238,10 +238,10 @@ export const useUserGroups = (
 
     // update internal array with user groups after applied changed in groups edit mode
     const onUserGroupsChanged = (userGroups: IGrantedUserGroup[]) => {
-        const unchangedUserGroups = grantedUserGroups.filter(
+        const unchangedUserGroups = grantedUserGroups?.filter(
             (item) => !userGroups.some((userGroup) => userGroup.id === item.id),
         );
-        const newUserGroups = [...unchangedUserGroups, ...userGroups].sort(sortByName);
+        const newUserGroups = [...(unchangedUserGroups ?? []), ...userGroups].sort(sortByName);
         setGrantedUserGroups(newUserGroups);
         if (hasBootstrapUserGroup(newUserGroups)) {
             setIsAdmin(true);
@@ -260,7 +260,7 @@ export const useUserGroups = (
 export const useUsers = (userGroupId: string, organizationId: string, onSuccess: () => void) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
-    const [grantedUsers, setGrantedUsers] = useState<IUserMember[]>(undefined);
+    const [grantedUsers, setGrantedUsers] = useState<IUserMember[]>([]);
 
     // load initial users
     useEffect(() => {
@@ -272,8 +272,8 @@ export const useUsers = (userGroupId: string, organizationId: string, onSuccess:
                 setGrantedUsers(
                     users.map((user) => ({
                         id: user.login,
-                        title: extractUserName(user),
-                        email: user.email,
+                        title: extractUserName(user)!,
+                        email: user.email!,
                     })),
                 );
             });
@@ -323,9 +323,9 @@ const getTabMessageKey = (tabId: UserTabId) => {
 };
 
 export const useUserDialogTabs = (
-    grantedWorkspaces: IGrantedWorkspace[],
-    grantedUserGroups: IGrantedUserGroup[],
-    grantedDataSources: IGrantedDataSource[],
+    grantedWorkspaces: IGrantedWorkspace[] | undefined,
+    grantedUserGroups: IGrantedUserGroup[] | undefined,
+    grantedDataSources: IGrantedDataSource[] | undefined,
     isAdmin: boolean,
     selectedTab?: UserTabId,
 ) => {
@@ -365,9 +365,9 @@ export const useUserDialogTabs = (
 };
 
 export const useUserGroupDialogTabs = (
-    grantedWorkspaces: IGrantedWorkspace[],
+    grantedWorkspaces: IGrantedWorkspace[] | undefined,
     grantedUsers: IUserMember[],
-    grantedDataSources: IGrantedDataSource[],
+    grantedDataSources: IGrantedDataSource[] | undefined,
     isAdmin: boolean,
 ) => {
     const [selectedTabId, setSelectedTabId] = useState(userGroupDialogTabsMessages.users);
@@ -440,8 +440,9 @@ const useOrganization = (organizationId: string) => {
 export const useOrganizationDetails = (organizationId: string) => {
     const { bootstrapUser, bootstrapUserGroup } = useOrganization(organizationId);
     return {
-        isBootstrapUser: (user: IUser) => areObjRefsEqual(bootstrapUser, user?.ref),
-        isBootstrapUserGroup: (userGroup: IUserGroup) => areObjRefsEqual(bootstrapUserGroup, userGroup?.ref),
+        isBootstrapUser: (user: IUser | undefined) => areObjRefsEqual(bootstrapUser, user?.ref),
+        isBootstrapUserGroup: (userGroup: IUserGroup | undefined) =>
+            areObjRefsEqual(bootstrapUserGroup, userGroup?.ref),
         bootstrapUserId: bootstrapUser ? objRefToString(bootstrapUser) : undefined,
         bootstrapUserGroupId: bootstrapUserGroup ? objRefToString(bootstrapUserGroup) : undefined,
     };

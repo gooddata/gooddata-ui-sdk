@@ -22,7 +22,7 @@ import {
 } from "../types.js";
 import { getUserItemTestId } from "../utils.js";
 
-export function EmptyRenderer(): ReactElement {
+export function EmptyRenderer(): ReactElement | null {
     return null;
 }
 

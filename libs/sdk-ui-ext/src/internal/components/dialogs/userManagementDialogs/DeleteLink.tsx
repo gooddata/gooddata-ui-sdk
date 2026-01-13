@@ -7,7 +7,7 @@ const alignPoints: IAlignPoint[] = [{ align: "bc tc" }];
 export interface IDeleteLinkProps {
     isDeleteLinkEnabled: boolean;
     deleteLinkText: string;
-    disabledLinkTooltipTextId: string;
+    disabledLinkTooltipTextId?: string;
     onOpenDeleteDialog: () => void;
 }
 

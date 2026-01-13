@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
@@ -240,6 +240,7 @@ const CONFIG_DEFAULTS: Required<
         | "disableCrossFiltering"
         | "disableUserFilterReset"
         | "widgetsOverlay"
+        | "hideAddTabButton"
     >
 > &
     Pick<DashboardConfig, "externalRecipient"> = {
@@ -260,6 +261,7 @@ const CONFIG_DEFAULTS: Required<
     disableUserFilterReset: false,
     widgetsOverlay: {},
     externalRecipient: undefined,
+    hideAddTabButton: false,
 };
 
 function applyConfigDefaults<T extends DashboardConfig>(config: T) {

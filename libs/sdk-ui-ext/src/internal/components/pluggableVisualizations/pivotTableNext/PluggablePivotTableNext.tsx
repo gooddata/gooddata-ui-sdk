@@ -129,7 +129,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     private unmountFun: UnmountFunction;
     private readonly settings: ISettings;
     private backendCapabilities: IBackendCapabilities;
-    private environment: VisualizationEnvironment;
+    private environment: VisualizationEnvironment | undefined;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -147,7 +147,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        this.unmountFun([this.getElement(), this.getConfigPanelElement()]);
+        this.unmountFun([this.getElement()!, this.getConfigPanelElement()!]);
     }
 
     public getExtendedReferencePoint(
@@ -174,7 +174,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             previousReferencePoint && getColumnAttributes(previousReferencePoint.buckets);
 
         const filters: IBucketFilter[] = newReferencePoint.filters
-            ? newReferencePoint.filters.items.flatMap((item) => item.filters)
+            ? newReferencePoint.filters.items.flatMap((item) => item.filters ?? [])
             : [];
 
         const rowTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
@@ -303,8 +303,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight, sanitizedConfig))
             .withSorting(...sortItems)
-            .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+            .withDateFormat(dateFormat!)
+            .withExecConfig(executionConfig!);
     }
 
     protected initializeProperties(visualizationProperties: IVisualizationProperties): void {
@@ -359,7 +359,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         if (!insightHasDataDefined(insight)) {
             // Unmount the visualization to clear stale data when buckets become empty.
             // Without this, the old data would remain rendered even after removing all metrics/attributes.
-            this.unmountFun([this.getElement()]);
+            this.unmountFun([this.getElement()] as HTMLElement[]);
         }
         return super.checkBeforeRender(insight);
     }
@@ -375,7 +375,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             return;
         }
 
-        const { customVisualizationConfig = {}, theme, custom, config } = options;
+        const { customVisualizationConfig = {}, theme, custom = {}, config = {} } = options;
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
 
@@ -403,10 +403,10 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const columnHeadersPosition: ColumnHeadersPosition =
             customVisualizationConfig?.columnHeadersPosition ?? columnHeadersPositionFromInsight;
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
-        const { isInEditMode } = config;
+        const isInEditMode = config?.isInEditMode;
         const pagination = getPaginationFromProperties(insightProperties(insight));
         const tableConfig: PivotTableNextConfig = {
-            ...createPivotTableNextConfig(config, this.environment, this.settings),
+            ...createPivotTableNextConfig(config!, this.environment!, this.settings),
             ...customVisualizationConfig,
             measureGroupDimension,
             columnHeadersPosition,
@@ -501,7 +501,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             measureGroupDimension,
         );
 
-        if (!isEqual(columnWidths, adaptedColumnWidths)) {
+        if (!isEqual(columnWidths, adaptedColumnWidths) && this.visualizationProperties) {
+            this.visualizationProperties.controls = this.visualizationProperties.controls ?? {};
             this.visualizationProperties.controls["columnWidths"] = adaptedColumnWidths;
             this.pushData({
                 properties: {

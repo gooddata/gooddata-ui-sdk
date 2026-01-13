@@ -22,7 +22,7 @@ import {
 } from "../interfaces/Visualization.js";
 
 function getTypeOfDerivedToKeep(
-    supportedTypes: OverTimeComparisonType[],
+    supportedTypes: OverTimeComparisonType[] | undefined,
     appliedType: OverTimeComparisonType,
 ) {
     return isEmpty(supportedTypes) || isEqual(supportedTypes, [OverTimeComparisonTypes.NOTHING])
@@ -36,11 +36,11 @@ export function configureOverTimeComparison(
     let newExtendedReferencePoint = cloneDeep(extendedReferencePoint);
 
     const { buckets, filters, uiConfig } = newExtendedReferencePoint;
-    const { supportedOverTimeComparisonTypes } = uiConfig;
+    const { supportedOverTimeComparisonTypes } = uiConfig ?? {};
 
     const appliedComparisonType = getComparisonTypeFromFilters(filters);
     const isSelectedComparisonSupportedByVis =
-        supportedOverTimeComparisonTypes.includes(appliedComparisonType);
+        !!supportedOverTimeComparisonTypes?.includes(appliedComparisonType);
     const derivedOfTypeToKeep = getTypeOfDerivedToKeep(
         supportedOverTimeComparisonTypes,
         appliedComparisonType,
@@ -100,9 +100,10 @@ export function configurePercent(
             });
         }
 
-        const bucketUiConfig: IBucketUiConfig =
-            extendedReferencePoint.uiConfig.buckets[bucket.localIdentifier];
-        if (bucketUiConfig.accepts.indexOf(METRIC) >= 0) {
+        const bucketUiConfig: IBucketUiConfig | undefined =
+            extendedReferencePoint?.uiConfig?.buckets?.[bucket.localIdentifier];
+
+        if (bucketUiConfig && (bucketUiConfig?.accepts?.indexOf(METRIC) ?? -1) >= 0) {
             bucketUiConfig.isShowInPercentEnabled = showInPercentEnabled;
         }
     });

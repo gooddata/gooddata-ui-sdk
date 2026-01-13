@@ -68,7 +68,7 @@ export function EmbedInsightDialog(props: IEmbedInsightDialogProps) {
         <IntlWrapper locale={locale}>
             <ModalOverlay>
                 <EmbedInsightDialogBase
-                    code={code}
+                    code={code ?? ""}
                     propertiesLink={documentationLink}
                     showWebComponentsTab={showWebComponentsTab}
                     integrationDocLink={integrationDocLink}
@@ -180,11 +180,11 @@ const getLinkToPropertiesDocumentation = (
 interface ICodeGenInput<TOptions extends EmbedOptionsType> {
     codeOption: TOptions;
     insight: IInsight;
-    settings: IUserWorkspaceSettings;
-    backend: IAnalyticalBackend;
-    colorPalette: IColorPalette;
-    theme: ITheme;
-    executionConfig: IExecutionConfig | undefined;
+    settings?: IUserWorkspaceSettings;
+    backend?: IAnalyticalBackend;
+    colorPalette?: IColorPalette;
+    theme?: ITheme;
+    executionConfig?: IExecutionConfig;
     workspaceId?: string;
 }
 
@@ -218,7 +218,7 @@ const generateCodeByReact = (input: ICodeGenInput<IReactOptions>) => {
 const generateCodeByWebComponents = (input: ICodeGenInput<IWebComponentsOptions>) => {
     const { codeOption, insight, workspaceId } = input;
     const height = getHeightWithUnitsForEmbedCode(codeOption) as string;
-    return getWebComponentsCodeGenerator(workspaceId, insight, { ...codeOption, height });
+    return getWebComponentsCodeGenerator(workspaceId!, insight, { ...codeOption, height });
 };
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "cc cc" }];

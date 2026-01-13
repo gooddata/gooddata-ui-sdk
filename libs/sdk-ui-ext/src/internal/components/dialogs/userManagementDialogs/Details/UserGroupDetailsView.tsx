@@ -9,7 +9,7 @@ import { messages } from "../locales.js";
 import { type ListMode } from "../types.js";
 
 export interface IUserGroupDetailsViewProps {
-    userGroup: IUserGroup;
+    userGroup: IUserGroup | undefined;
     mode: ListMode;
     onChange?: (user: IUserGroup) => void;
 }
@@ -27,7 +27,7 @@ export function UserGroupDetailsView({ userGroup, mode, onChange }: IUserGroupDe
                 labelText={intl.formatMessage(messages.userGroupName)}
                 value={userGroup.name}
                 mode={mode}
-                onChange={(name) => onChange({ ...userGroup, name: String(name) })}
+                onChange={(name) => onChange?.({ ...userGroup, name: String(name) })}
             />
             <DetailRow
                 labelText={intl.formatMessage(messages.userGroupId)}

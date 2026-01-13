@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useState } from "react";
 
@@ -13,6 +13,7 @@ import {
     type IAlignPoint,
     type IDialogBaseProps,
     ShortenedText,
+    Typography,
     UiAutofocus,
     UiButton,
     useId,
@@ -162,15 +163,14 @@ export function DrillDialog({
                             </Bubble>
                         </BubbleHoverTrigger>
                     ) : null}
-                    <div className="gd-drill-title s-drill-title" id={titleElementId}>
+                    <Typography tagName="h3" className="gd-drill-title s-drill-title" id={titleElementId}>
                         <ShortenedText
-                            tagName="div"
                             tooltipAlignPoints={tooltipAlignPoints}
                             tooltipVisibleOnMouseOver={false}
                         >
                             {titleWithBreadcrumbs}
                         </ShortenedText>
-                    </div>
+                    </Typography>
                 </div>
                 <div
                     className={cx("gd-drill-modal-dialog-content visualization", {

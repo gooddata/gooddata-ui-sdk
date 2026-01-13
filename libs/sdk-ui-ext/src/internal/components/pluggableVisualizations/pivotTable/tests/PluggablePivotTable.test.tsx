@@ -163,9 +163,9 @@ describe("PluggablePivotTable", () => {
 
             const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
             expect(renderEl).toBeDefined();
-            expect(renderEl.type).toBe(CorePivotTable);
+            expect(renderEl!.type).toBe(CorePivotTable);
 
-            expect(renderEl.props.onColumnResized).toBeInstanceOf(Function);
+            expect(renderEl!.props.onColumnResized).toBeInstanceOf(Function);
         });
 
         it("should render PivotTable passing down all the necessary properties", () => {
@@ -176,7 +176,7 @@ describe("PluggablePivotTable", () => {
 
             const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
             expect(renderEl).toBeDefined();
-            expect(renderEl.type).toBe(CorePivotTable);
+            expect(renderEl!.type).toBe(CorePivotTable);
 
             // TODO should verify props ideally
         });
@@ -280,16 +280,16 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties.sortItems;
-                    expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
+                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties!.sortItems!;
+                    expect(extendedReferencePoint.properties!.sortItems).toEqual(expectedSortItems);
                 });
             });
 
             it("should return a new reference point with columnWidths", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedColumnWidths: ColumnWidthItem[] =
-                        sourceReferencePoint.properties.controls["columnWidths"];
-                    expect(extendedReferencePoint.properties.controls["columnWidths"]).toEqual(
+                        sourceReferencePoint.properties!.controls!["columnWidths"];
+                    expect(extendedReferencePoint.properties!.controls!["columnWidths"]).toEqual(
                         expectedColumnWidths,
                     );
                 });
@@ -299,13 +299,13 @@ describe("PluggablePivotTable", () => {
                 const emptyControlsReferencePoint: IReferencePoint = {
                     ...sourceReferencePoint,
                     properties: {
-                        sortItems: sourceReferencePoint.properties.sortItems,
+                        sortItems: sourceReferencePoint.properties!.sortItems,
                     },
                 };
                 const promise: Promise<IExtendedReferencePoint> =
                     pivotTable.getExtendedReferencePoint(emptyControlsReferencePoint);
                 return promise.then((extendedReferencePoint) => {
-                    expect(extendedReferencePoint.properties.controls).toBeUndefined();
+                    expect(extendedReferencePoint.properties!.controls).toBeUndefined();
                 });
             });
         });
@@ -344,8 +344,8 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties.sortItems;
-                    expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
+                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties!.sortItems!;
+                    expect(extendedReferencePoint.properties!.sortItems).toEqual(expectedSortItems);
                 });
             });
         });
@@ -373,7 +373,7 @@ describe("PluggablePivotTable", () => {
             const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
                 pivotTable.getExtendedReferencePoint(mockPivotTableReferencePoint);
             return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
+                expect(extendedReferencePoint.properties!.sortItems).toEqual(expectedSortItems);
             });
         });
 
@@ -406,7 +406,7 @@ describe("PluggablePivotTable", () => {
             const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
                 pivotTable.getExtendedReferencePoint(mockPivotTableReferencePoint);
             return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                expect(extendedReferencePoint.properties.controls["columnWidths"]).toEqual(
+                expect(extendedReferencePoint.properties!.controls!["columnWidths"]).toEqual(
                     expectedColumnWidthItems,
                 );
             });
@@ -464,7 +464,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point without sortItems (default)", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                    expect(extendedReferencePoint.properties.sortItems).toBeUndefined();
+                    expect(extendedReferencePoint.properties!.sortItems).toBeUndefined();
                 });
             });
         });
@@ -635,7 +635,7 @@ const measureReferenceBucketItem: IBucketItem = {
     type: "metric",
     localIdentifier: "measure",
     attribute: "aa5JBkFDa7sJ",
-    granularity: null,
+    granularity: undefined,
     filters: [],
 };
 
@@ -648,8 +648,8 @@ const dateReferenceBucketItem: IBucketItem = {
 };
 
 const attributeReferenceBucketItem: IBucketItem = {
-    aggregation: null,
-    showInPercent: null,
+    aggregation: undefined,
+    showInPercent: undefined,
     granularity: "attr.restaurantlocation.locationname",
     localIdentifier: "attribute",
     type: "attribute",
@@ -705,12 +705,12 @@ describe("getColumnAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_columns",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
             {
@@ -721,12 +721,12 @@ describe("getColumnAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_stack",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
             {
@@ -737,12 +737,12 @@ describe("getColumnAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_segment",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
         ]);
@@ -760,12 +760,12 @@ describe("getRowAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_attribute",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
             {
@@ -776,12 +776,12 @@ describe("getRowAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_attributes",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
             {
@@ -792,12 +792,12 @@ describe("getRowAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_view",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
             {
@@ -808,12 +808,12 @@ describe("getRowAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_trend",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
         ]);
@@ -829,12 +829,12 @@ describe("getRowAttributes", () => {
                 type: "date",
             },
             {
-                aggregation: null,
+                aggregation: undefined,
                 attribute: "attr.restaurantlocation.locationname",
                 filters: [],
                 granularity: "attr.restaurantlocation.locationname",
                 localIdentifier: "attribute_area",
-                showInPercent: null,
+                showInPercent: undefined,
                 type: "attribute",
             },
         ]);
@@ -852,7 +852,7 @@ describe("createPivotTableConfig", () => {
     ];
 
     const Scenarios: Array<
-        [string, IGdcConfig, VisualizationEnvironment | undefined, ISettings, ColumnWidthItem[]]
+        [string, IGdcConfig, VisualizationEnvironment | undefined, ISettings, ColumnWidthItem[] | undefined]
     > = [
         ["config without menus for dashboard env", {}, "dashboards", {}, undefined],
         ["config with menus for non-dashboard env", {}, "none", {}, undefined],
@@ -920,7 +920,7 @@ describe("createPivotTableConfig", () => {
     };
     it.each(Scenarios)("should create valid %s", (_desc, config, env, settings, columnWidths) => {
         expect(
-            createPivotTableConfig(config, env, settings, AllTotalCapabilities, columnWidths),
+            createPivotTableConfig(config, env!, settings, AllTotalCapabilities, columnWidths),
         ).toMatchSnapshot();
     });
 });

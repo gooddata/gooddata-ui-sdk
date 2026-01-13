@@ -86,13 +86,13 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
     protected type: ChartType;
     protected defaultControlsProperties: IVisualizationProperties;
-    protected customControlsProperties: IVisualizationProperties;
-    protected colors: IColorConfiguration;
-    protected references: IReferences;
+    protected customControlsProperties!: IVisualizationProperties;
+    protected colors!: IColorConfiguration;
+    protected references!: IReferences;
     protected referencePoint: IReferencePoint | undefined;
     protected ignoreUndoRedo: boolean;
-    protected axis: string;
-    protected secondaryAxis: AxisType;
+    protected axis!: string;
+    protected secondaryAxis!: AxisType;
     protected environment: string;
     protected readonly renderFun: RenderFunction;
     protected readonly unmountFun: UnmountFunction;
@@ -101,8 +101,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     constructor(props: IVisConstruct) {
         super(props);
 
-        this.projectId = props.projectId;
-        this.environment = props.environment;
+        this.projectId = props.projectId ?? "";
+        this.environment = props.environment ?? "";
         this.type = VisualizationTypes.COLUMN;
         this.ignoreUndoRedo = false;
         this.defaultControlsProperties = {};
@@ -114,7 +114,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        this.unmountFun([this.getElement(), this.getConfigPanelElement()].filter(Boolean));
+        this.unmountFun([this.getElement()!, this.getConfigPanelElement()!].filter(Boolean));
     }
 
     /**
@@ -192,8 +192,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
             .withSorting(...createSorts(this.type, insight, supportedControls))
-            .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+            .withDateFormat(dateFormat!)
+            .withExecConfig(executionConfig!);
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
@@ -266,7 +266,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
         const supportedControls: IVisualizationProperties = this.getSupportedControls(insight, options);
-        const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
+        const configSupportedControls = isEmpty(supportedControls) ? undefined : supportedControls;
         const fullConfig = this.buildVisualizationConfig(options, configSupportedControls);
         const execution = this.getExecution(options, insight, executionFactory);
 
@@ -295,8 +295,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     isForecastEnabled(this.referencePoint, insight, this.type),
                 )}
                 config={updateConfigWithSettings(fullConfig, this.featureFlags)}
-                LoadingComponent={null}
-                ErrorComponent={null}
+                LoadingComponent={undefined}
+                ErrorComponent={undefined}
                 theme={theme}
                 {...enhanceBaseChartWithClusteringConfiguration(fullConfig)}
             />,
@@ -401,7 +401,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     protected buildVisualizationConfig(
         options: IVisProps,
-        supportedControls: IVisualizationProperties,
+        supportedControls?: IVisualizationProperties,
     ): IChartConfig {
         const { config = {}, customVisualizationConfig = {}, a11yTitle, a11yDescription } = options;
         const colorMapping: IColorMappingItem[] = supportedControls?.["colorMapping"];
@@ -464,9 +464,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected reuseCurrentSort(
-        previousAvailableSorts: IAvailableSortsGroup[],
-        properties: IVisualizationProperties,
-        availableSorts: IAvailableSortsGroup[],
+        previousAvailableSorts: IAvailableSortsGroup[] | undefined,
+        properties: IVisualizationProperties | undefined,
+        availableSorts: IAvailableSortsGroup[] | undefined,
         defaultSort: ISortItem[],
     ) {
         const previousSort = properties?.sortItems;

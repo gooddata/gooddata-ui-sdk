@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export const useOverflow = (container: HTMLDivElement, content: HTMLPreElement) => {
+export const useOverflow = (container: HTMLDivElement | null, content: HTMLPreElement | null) => {
     const [isOverflowing, setIsOverflowing] = useState(true);
 
     useEffect(() => {

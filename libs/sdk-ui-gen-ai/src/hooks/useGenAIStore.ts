@@ -11,6 +11,7 @@ import {
     setColorPaletteAction,
     setObjectTypesAction,
     setSettingsAction,
+    setTagsAction,
 } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler, EventDispatcher } from "../store/events.js";
 import { getStore } from "../store/index.js";
@@ -24,9 +25,11 @@ export const useGenAIStore = (
         colorPalette?: IColorPalette;
         settings?: IUserWorkspaceSettings;
         objectTypes?: GenAIObjectType[];
+        includeTags?: string[];
+        excludeTags?: string[];
     },
 ): EnhancedStore => {
-    const { eventHandlers, colorPalette, settings, objectTypes } = opts;
+    const { eventHandlers, colorPalette, settings, objectTypes, includeTags, excludeTags } = opts;
 
     // Instantiate EventDispatcher. It's a designed to hold a reference to the handlers, so that
     // we don't update the context every time a new array of handlers is passed.
@@ -73,6 +76,18 @@ export const useGenAIStore = (
             );
         }
     }, [objectTypes, optionsDispatcher, store]);
+
+    useEffect(() => {
+        if (includeTags || excludeTags) {
+            optionsDispatcher.setTags(includeTags, excludeTags);
+            store.dispatch(
+                setTagsAction({
+                    includeTags,
+                    excludeTags,
+                }),
+            );
+        }
+    }, [includeTags, excludeTags, optionsDispatcher, store]);
 
     useEffect(() => {
         if (eventHandlers) {

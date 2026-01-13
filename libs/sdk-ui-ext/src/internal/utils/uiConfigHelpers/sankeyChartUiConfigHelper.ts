@@ -42,11 +42,11 @@ const getBucketItems = (extendedReferencePoint: IReferencePoint) => {
     );
 
     if (!attributeFrom) {
-        attributeFrom = attributesWithoutAttributeFromTo.shift();
+        attributeFrom = attributesWithoutAttributeFromTo.shift()!;
     }
 
     if (!attributeTo) {
-        attributeTo = attributesWithoutAttributeFromTo.shift();
+        attributeTo = attributesWithoutAttributeFromTo.shift()!;
     }
 
     return {

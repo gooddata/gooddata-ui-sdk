@@ -262,9 +262,7 @@ export function attributeItemNameMatch(name: string): IHeaderPredicate {
     }
 
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
-        return isResultAttributeHeader(header)
-            ? header.attributeHeaderItem && header.attributeHeaderItem.name === name
-            : false;
+        return isResultAttributeHeader(header) ? header.attributeHeaderItem?.name === name : false;
     };
 }
 

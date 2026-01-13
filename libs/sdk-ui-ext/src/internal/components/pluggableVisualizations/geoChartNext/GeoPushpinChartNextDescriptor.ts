@@ -1,8 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
-import { type IGeoPushpinChartNextProps } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoChartNextProps } from "@gooddata/sdk-ui-geo/next";
 
 import { PluggableGeoPushpinChartNext } from "./PluggableGeoPushpinChartNext.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
@@ -14,18 +13,16 @@ import {
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,
-    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
-    singleAttributeBucketConversion,
-    singleAttributeOrMeasureBucketConversion,
-    sortsInsightConversion,
+    sdkModelPropMetas,
 } from "../../../utils/embeddingCodeGenerator/index.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
-import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigBuilder.js";
+import { geoConfigFromInsight } from "./geoConfigBuilder.js";
+import { buildGeoChartNextGlobalFilters, buildGeoChartNextLayers } from "./geoEmbeddingLayers.js";
 
 /**
  * @alpha
@@ -62,20 +59,31 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
         return MAX_VISUALIZATION_HEIGHT;
     }
 
-    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+    private readonly geoChartEmbeddingCodeGenerator = getReactEmbeddingCodeGenerator({
         component: {
             importType: "named",
-            name: "GeoPushpinChartNext",
+            name: "GeoChartNext",
             package: "@gooddata/sdk-ui-geo/next",
         },
-        insightToProps: getInsightToPropsConverter<IGeoPushpinChartNextProps>({
-            latitude: geoInsightConversion("latitude", BucketNames.LATITUDE),
-            longitude: geoInsightConversion("longitude", BucketNames.LONGITUDE),
-            size: singleAttributeOrMeasureBucketConversion("size", BucketNames.SIZE),
-            color: singleAttributeOrMeasureBucketConversion("color", BucketNames.COLOR),
-            segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
-            filters: filtersInsightConversion("filters"),
-            sortBy: sortsInsightConversion("sortBy"),
+        insightToProps: getInsightToPropsConverter<IGeoChartNextProps>({
+            type: insightConversion("type", { cardinality: "scalar" }, () => "pushpin"),
+            layers: insightConversion(
+                "layers",
+                {
+                    typeImport: {
+                        importType: "named",
+                        name: "IGeoLayer",
+                        package: "@gooddata/sdk-ui-geo/next",
+                    },
+                    cardinality: "array",
+                },
+                (insight) => buildGeoChartNextLayers(insight, "pushpin"),
+            ),
+            filters: insightConversion(
+                "filters",
+                sdkModelPropMetas.Filter.Multiple,
+                buildGeoChartNextGlobalFilters,
+            ),
             config: insightConversion(
                 "config",
                 {
@@ -94,6 +102,15 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
             getColorMappingPredicatePackage: "@gooddata/sdk-ui-geo",
         }),
     });
+
+    public getEmbeddingCode: ReturnType<typeof getReactEmbeddingCodeGenerator> = (insight, config) => {
+        const layers = buildGeoChartNextLayers(insight, "pushpin");
+        if (!layers.length) {
+            return "";
+        }
+
+        return this.geoChartEmbeddingCodeGenerator(insight, config);
+    };
 
     public getMeta(): IVisualizationMeta {
         return {

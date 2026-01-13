@@ -26,7 +26,7 @@ function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
  * @internal
  */
 export function updateConfigWithSettings(
-    config: IChartConfig,
+    config: IChartConfig | undefined,
     settings: ISettings | undefined,
 ): IChartConfig {
     if (!settings) {

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import type { IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
 import type { IGenAIChatInteraction } from "@gooddata/sdk-model";
@@ -98,20 +98,24 @@ export const processContents = (
     } else if (item.textResponse) {
         contents.push(makeTextContents(item.textResponse, []));
     }
-
+    const reasoningText = primaryText ?? "";
     if (item.semanticSearch) {
-        const semanticSearch =
-            showReasoning && primaryText
-                ? { ...item.semanticSearch, reasoning: primaryText }
-                : item.semanticSearch;
+        const semanticSearch = showReasoning
+            ? {
+                  ...item.semanticSearch,
+                  // When reasoning is enabled, always prefer the model-provided answer (or textResponse fallback)
+                  // and do not temporarily show legacy/use-case reasoning while streaming.
+                  reasoning: reasoningText,
+              }
+            : item.semanticSearch;
         contents.push(makeSemanticSearchContents(semanticSearch));
     } else if (item.foundObjects?.reasoning) {
-        const reasoning = showReasoning && primaryText ? primaryText : item.foundObjects.reasoning;
+        const reasoning = showReasoning ? reasoningText : item.foundObjects.reasoning;
         contents.push(makeSearchContents(reasoning, item.foundObjects.objects));
     }
 
     if (item.createdVisualizations?.reasoning) {
-        const reasoning = showReasoning && primaryText ? primaryText : item.createdVisualizations.reasoning;
+        const reasoning = showReasoning ? reasoningText : item.createdVisualizations.reasoning;
         contents.push(
             makeVisualizationContents(
                 reasoning,

@@ -122,7 +122,7 @@ describe("DataLabelsControl", () => {
                 enableSeparateTotalLabels: true,
             });
 
-            fireEvent.mouseEnter(screen.queryByText(TOTAL_LABELS_TEXT));
+            fireEvent.mouseEnter(screen.queryByText(TOTAL_LABELS_TEXT)!);
 
             await waitFor(() => {
                 expect(screen.getByText(DISABLED_TOOLTIP)).toBeInTheDocument();

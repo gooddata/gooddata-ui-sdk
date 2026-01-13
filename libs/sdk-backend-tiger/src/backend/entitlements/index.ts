@@ -1,7 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { ActionsApi_ResolveAllEntitlements } from "@gooddata/api-client-tiger/actions";
-import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/profile";
+import { ActionsApi_ResolveAllEntitlements } from "@gooddata/api-client-tiger/endpoints/actions";
+import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import { type IEntitlements } from "@gooddata/sdk-backend-spi";
 import { type IEntitlementDescriptor } from "@gooddata/sdk-model";
 

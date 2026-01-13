@@ -12,14 +12,14 @@ import {
     isDerivedBucketItem,
 } from "../../../utils/bucketHelper.js";
 
-export function findSecondMasterMeasure(allMeasures: IBucketItem[]): IBucketItem {
+export function findSecondMasterMeasure(allMeasures: IBucketItem[]): IBucketItem | null {
     const masterBucketItems = findMasterBucketItems(allMeasures);
     return masterBucketItems.length > 1 ? masterBucketItems[1] : null;
 }
 
 export function tryToMapForeignBuckets(
     extendedReferencePoint: Readonly<IExtendedReferencePoint>,
-): IExtendedReferencePoint {
+): IExtendedReferencePoint | null {
     const newReferencePoint = setHeadlineRefPointBuckets(extendedReferencePoint);
     const totalBuckets = extendedReferencePoint.buckets.length;
     let allMeasuresCompatible = true;
@@ -35,13 +35,13 @@ export function tryToMapForeignBuckets(
             continue;
         }
 
-        const targetBucketUiConfig = newReferencePoint.uiConfig.buckets[targetBucket.localIdentifier];
+        const targetBucketUiConfig = newReferencePoint.uiConfig?.buckets[targetBucket.localIdentifier];
         if (!targetBucketUiConfig?.enabled) {
             allMeasuresCompatible = false;
             continue;
         }
 
-        const measuresFitToLimit = sourceBucket.items.length <= targetBucketUiConfig.itemsLimit;
+        const measuresFitToLimit = sourceBucket.items.length <= targetBucketUiConfig.itemsLimit!;
         if (!measuresFitToLimit) {
             allMeasuresCompatible = false;
             continue;
@@ -81,15 +81,15 @@ export function setHeadlineRefPointBuckets(
 }
 
 export function findComplementaryOverTimeComparisonMeasure(
-    primaryMeasure: IBucketItem,
+    primaryMeasure: IBucketItem | null,
     allMeasures: IBucketItem[],
-): IBucketItem {
+): IBucketItem | null {
     if (!primaryMeasure) {
         return null;
     }
 
     if (isDerivedBucketItem(primaryMeasure)) {
-        return findMasterBucketItem(primaryMeasure, allMeasures) || null;
+        return findMasterBucketItem(primaryMeasure, allMeasures) ?? null;
     }
 
     const derivedOfPrimaryMeasure = findDerivedBucketItems(primaryMeasure, allMeasures);

@@ -1,9 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type AutomationApiGetNotificationsRequest,
     AutomationApi_GetNotifications,
-} from "@gooddata/api-client-tiger/automation";
+} from "@gooddata/api-client-tiger/endpoints/automation";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { type INotificationsQuery, type INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
 import { type INotification } from "@gooddata/sdk-model";
