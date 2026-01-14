@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import * as path from "path";
 
 import { type IRecording, isNonNullRecording } from "./common.js";
@@ -21,7 +22,7 @@ function loadRecording(recordingDefinition: string): IRecording | null {
     }
 }
 
-export async function discoverExecutionRecordings(recordingDir: string): Promise<IRecording[]> {
+export function discoverExecutionRecordings(recordingDir: string): IRecording[] {
     return findFiles(recordingDir, RecordingFiles.Execution.Definition)
         .map(loadRecording)
         .filter(isNonNullRecording);

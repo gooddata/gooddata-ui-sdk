@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type AriaAttributes, type KeyboardEvent, forwardRef, useMemo } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { DateInput } from "./DateInput.js";
 import { TimeInput } from "./TimeInput.js";
-import { type IDateTimePickerErrors, type ITime, type InputErrorMessageTexts } from "./types.js";
+import { type IDateTimePickerErrors, type IInputErrorMessageTexts, type ITime } from "./types.js";
 
 export interface IDateTimePickerAccessibilityConfig {
     dateAriaLabel?: AriaAttributes["aria-label"];
@@ -15,7 +15,7 @@ export interface IDateTimePickerAccessibilityConfig {
     timeInputHintId?: string;
 }
 
-interface DateTimePickerProps {
+interface IDateTimePickerProps {
     date?: Date;
     time?: ITime;
     dateInputLabel: string;
@@ -31,12 +31,12 @@ interface DateTimePickerProps {
     className: string;
     defaultTime?: string;
     accessibilityConfig: IDateTimePickerAccessibilityConfig;
-    inputErrorMessageTexts: InputErrorMessageTexts;
+    inputErrorMessageTexts: IInputErrorMessageTexts;
     errors?: IDateTimePickerErrors;
     withoutApply?: boolean;
 }
 
-export const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
+export const DateTimePicker = forwardRef<HTMLInputElement, IDateTimePickerProps>(
     (
         {
             date,
@@ -56,7 +56,7 @@ export const DateTimePicker = forwardRef<HTMLInputElement, DateTimePickerProps>(
             inputErrorMessageTexts,
             errors,
             withoutApply,
-        }: DateTimePickerProps,
+        }: IDateTimePickerProps,
         ref,
     ) => {
         const { dateAriaLabel, timeAriaLabel, dateInputHintId, timeInputHintId } = accessibilityConfig;

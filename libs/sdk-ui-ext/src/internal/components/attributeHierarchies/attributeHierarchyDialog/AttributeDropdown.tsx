@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useEffect, useState } from "react";
 
@@ -27,7 +27,7 @@ export function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
     };
 
     useEffect(() => {
-        getValidAttributes(rowIndex).then((attributes) => {
+        void getValidAttributes(rowIndex).then((attributes) => {
             setItems(attributes);
             setLoading(false);
         });

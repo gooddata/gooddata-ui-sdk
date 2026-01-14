@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -244,7 +244,7 @@ describe("PluggableBaseChart", () => {
         expect(filteredActualProps).toEqual(expectedConfigPanelElement.props);
     });
 
-    it("should render chart with undefined height", async () => {
+    it("should render chart with undefined height", () => {
         const props = { ...defaultProps, environment: noneEnvironment };
 
         const visualization = createComponent(props);

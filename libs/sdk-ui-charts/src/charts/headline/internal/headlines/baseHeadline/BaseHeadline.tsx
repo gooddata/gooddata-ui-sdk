@@ -1,11 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef } from "react";
 
 import { defaultImport } from "default-import";
 import ReactMeasure, { type MeasuredComponentProps } from "react-measure";
 
-import { type HeadlineElementType } from "@gooddata/sdk-ui";
+import { type HeadlineElementType, type IChartCoordinates } from "@gooddata/sdk-ui";
 
 import { BaseHeadlineContext } from "./BaseHeadlineContext.js";
 import { CompareSection } from "./CompareSection.js";
@@ -31,7 +31,12 @@ export function BaseHeadline({ data, config, onDrill, onAfterRender }: IHeadline
     const afterRenderCalled = useRef(false);
 
     const fireDrillEvent = useCallback(
-        (item: IHeadlineDataItem, elementType: HeadlineElementType, elementTarget: EventTarget) => {
+        (
+            item: IHeadlineDataItem,
+            elementType: HeadlineElementType,
+            elementTarget: EventTarget,
+            chartCoordinates?: IChartCoordinates,
+        ) => {
             if (onDrill) {
                 const itemContext = {
                     localIdentifier: item.localIdentifier,
@@ -39,7 +44,7 @@ export function BaseHeadline({ data, config, onDrill, onAfterRender }: IHeadline
                     element: elementType,
                 };
 
-                onDrill(itemContext, elementTarget);
+                onDrill(itemContext, elementTarget, chartCoordinates);
             }
         },
         [onDrill],

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -82,7 +82,7 @@ export function convertDashboard(
     analyticalDashboard: JsonApiAnalyticalDashboardOutDocument,
     filterContext?: IFilterContext,
 ): IDashboard {
-    const content = analyticalDashboard.data.attributes!.content;
+    const content = analyticalDashboard.data.attributes.content;
 
     if (AnalyticalDashboardModelV1.isAnalyticalDashboard(content)) {
         return convertDashboardV1(analyticalDashboard, filterContext);
@@ -98,7 +98,7 @@ export function convertDashboard(
 export function convertFilterContextFromBackend(
     filterContext: JsonApiFilterContextOutDocument,
 ): IFilterContext {
-    const content = filterContext.data.attributes!.content;
+    const content = filterContext.data.attributes.content;
 
     if (AnalyticalDashboardModelV1.isFilterContext(content)) {
         return convertFilterContextFromBackendV1(filterContext);

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -18,7 +18,7 @@ const Config: DashboardConfig = {
 };
 const DashboardRef = idRef(process.env.DASHBOARD_ID!, "analyticalDashboard");
 
-export const PluginLoader = () => {
+export function PluginLoader() {
     const { loaderStatus, reloadPlugins, setExtraPlugins, extraPlugins, hidePluginOverlays } =
         useDashboardLoaderWithPluginManipulation({
             dashboard: DashboardRef,
@@ -46,10 +46,10 @@ export const PluginLoader = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPluginEnabled, setExtraPlugins]);
 
-    const { status, error, result } = loaderStatus;
+    const { status, error, result } = loaderStatus as Omit<DashboardLoadStatus, "error"> & { error?: Error };
 
     const ToolbarComponent = useMemo<CustomToolbarComponent>(() => {
-        return function CustomToolbar() {
+        function CustomToolbar() {
             return (
                 <PluginToolbar
                     isPluginEnabled={isPluginEnabled}
@@ -59,7 +59,9 @@ export const PluginLoader = () => {
                     hideOverlays={hidePluginsOverlaysCallbacks}
                 />
             );
-        };
+        }
+
+        return CustomToolbar;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPluginEnabled, reloadPlugins, togglePlugin]);
 
@@ -68,8 +70,8 @@ export const PluginLoader = () => {
     }
 
     if (status === "error" || result === undefined) {
-        return <ErrorComponent message={error?.message ?? ""} />;
+        return <ErrorComponent message={(error as Error)?.message ?? ""} />;
     }
 
     return <result.DashboardComponent {...result.props} ToolbarComponent={ToolbarComponent} />;
-};
+}

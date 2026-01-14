@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -84,7 +84,7 @@ describe("adaptReferencePointSortItemsToPivotTable", () => {
     const rowAttributes: IBucketItem[] = mockPivotTableReferencePoint.buckets[1].items;
     const columnAttributes: IBucketItem[] = mockPivotTableReferencePoint.buckets[2].items;
 
-    it("should remove invalid sort items", async () => {
+    it("should remove invalid sort items", () => {
         const expectedSortItems: ISortItem[] = [validAttributeSort, validMeasureSort];
 
         expect(

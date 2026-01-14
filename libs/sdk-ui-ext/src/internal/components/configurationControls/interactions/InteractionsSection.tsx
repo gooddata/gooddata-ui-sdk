@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode, memo } from "react";
 
@@ -68,7 +68,7 @@ export const InteractionsSection = memo(function InteractionsSection({
                 <div className="gd-interactions-section__control-with-tooltip">
                     <CheckboxControl
                         valuePath="disableAlerts"
-                        labelText={messages["interactionsAlerts"].id!}
+                        labelText={messages["interactionsAlerts"].id}
                         properties={properties}
                         disabled={areControlsDisabledGetter?.("interactions.alerts")}
                         checked={!isAlertsDisabled}
@@ -82,7 +82,7 @@ export const InteractionsSection = memo(function InteractionsSection({
                 <div className="gd-interactions-section__control-with-tooltip">
                     <CheckboxControl
                         valuePath="disableScheduledExports"
-                        labelText={messages["interactionsScheduledExports"].id!}
+                        labelText={messages["interactionsScheduledExports"].id}
                         properties={properties}
                         disabled={areControlsDisabledGetter?.("interactions.scheduled_exports")}
                         checked={!isScheduledExportsDisabled}
@@ -96,7 +96,7 @@ export const InteractionsSection = memo(function InteractionsSection({
             {supportsDrillDownConfiguration ? (
                 <CheckboxControl
                     valuePath="disableDrillDown"
-                    labelText={messages["interactionsDrillDown"].id!}
+                    labelText={messages["interactionsDrillDown"].id}
                     properties={properties}
                     disabled={areControlsDisabledGetter?.("interactions.drill_down")}
                     checked={!isDrillDownDisabled}
@@ -108,7 +108,7 @@ export const InteractionsSection = memo(function InteractionsSection({
             {enableImplicitDrillToUrl ? (
                 <CheckboxControl
                     valuePath="disableDrillIntoURL"
-                    labelText={messages["interactionsDrillIntoURL"].id!}
+                    labelText={messages["interactionsDrillIntoURL"].id}
                     properties={properties}
                     disabled={areControlsDisabledGetter?.("interactions.drill_into_url")}
                     checked={!isDrillIntoURLDisabled}

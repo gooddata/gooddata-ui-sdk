@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode } from "react";
 
@@ -14,7 +14,7 @@ import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const attributeTitle = "Product";
 
-interface AttributeFilterDropdownButtonExamplesProps {
+interface IAttributeFilterDropdownButtonExamplesProps {
     isDraggable?: boolean;
     icon?: ReactNode;
 }
@@ -56,7 +56,7 @@ const titleExtension = (
 function AttributeFilterDropdownButtonExamples({
     isDraggable,
     icon,
-}: AttributeFilterDropdownButtonExamplesProps): ReactElement {
+}: IAttributeFilterDropdownButtonExamplesProps): ReactElement {
     return (
         <IntlWrapper>
             <div style={{ width: 500 }}>

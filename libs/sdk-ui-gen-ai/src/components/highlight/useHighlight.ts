@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MutableRefObject, useMemo, useRef } from "react";
 
@@ -28,7 +28,7 @@ const HIGHLIGHT_CLASS = "cm-highlight-phrase";
 const WIDGET_CLASS = "cm-icon-widget";
 
 type Matches = Array<{ from: number; to: number; item: CatalogItem | ICatalogDateAttribute }>;
-interface HighlightState {
+interface IHighlightState {
     decorations: DecorationSet;
     matches: Matches;
 }
@@ -36,7 +36,7 @@ interface HighlightState {
 export function useHighlight(
     catalogItems: MutableRefObject<(CatalogItem | ICatalogDateAttribute)[] | undefined>,
 ) {
-    const ref = useRef<HighlightState>({
+    const ref = useRef<IHighlightState>({
         decorations: Decoration.none,
         matches: [],
     });

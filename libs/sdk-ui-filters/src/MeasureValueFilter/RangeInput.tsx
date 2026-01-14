@@ -1,6 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
+
+import { useIntl } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
@@ -26,6 +28,8 @@ export function RangeInput({
     onEnterKeyPress,
     separators,
 }: IRangeInputProps): ReactElement {
+    const intl = useIntl();
+
     return (
         <div className={"gd-mvf-range-input"} data-testid="mvf-range-input">
             <InputWithNumberFormat
@@ -37,6 +41,13 @@ export function RangeInput({
                 isSmall
                 autofocus={!disableAutofocus}
                 suffix={usePercentage ? "%" : ""}
+                accessibilityConfig={{
+                    suffixAriaLabel: usePercentage
+                        ? intl.formatMessage({
+                              id: "input.unit.percent",
+                          })
+                        : undefined,
+                }}
                 separators={separators}
             />
             <InputWithNumberFormat
@@ -47,6 +58,13 @@ export function RangeInput({
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall
                 suffix={usePercentage ? "%" : ""}
+                accessibilityConfig={{
+                    suffixAriaLabel: usePercentage
+                        ? intl.formatMessage({
+                              id: "input.unit.percent",
+                          })
+                        : undefined,
+                }}
                 separators={separators}
             />
         </div>

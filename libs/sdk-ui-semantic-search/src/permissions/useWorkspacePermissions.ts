@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type AnalyticalBackendError, type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -21,7 +22,10 @@ export function useWorkspacePermissions(
             ? backend.workspace(workspaceId).permissions().getPermissionsForCurrentUser()
             : Promise.resolve<undefined>(undefined);
 
-    const { result, status, error } = useCancelablePromise({ promise }, [backend, workspaceId]);
+    const { result, status, error } = useCancelablePromise<
+        IWorkspacePermissions | undefined,
+        AnalyticalBackendError | undefined
+    >({ promise }, [backend, workspaceId]);
 
     return {
         error,

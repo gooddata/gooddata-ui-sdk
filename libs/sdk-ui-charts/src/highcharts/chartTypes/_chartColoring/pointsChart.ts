@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type IColor,
@@ -45,7 +45,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
     ): string[] {
         const length = viewByAttribute ? viewByAttribute.items.length : 1;
         const color = isColorFromPalette(colorAssignment[0].color)
-            ? getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0)
+            ? getColorByGuid(colorPalette, colorAssignment[0].color.value, 0)
             : (colorAssignment[0].color?.value as IRgbColorValue);
         const colorString = getRgbStringFromRGB(color);
         return Array(length).fill(colorString);

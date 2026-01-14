@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -45,7 +45,7 @@ export function getFilterContextFromIncluded(
 
 function convertFilterContextFromIncluded(filterContext: JsonApiFilterContextOutWithLinks): IFilterContext {
     const { id, type, attributes } = filterContext;
-    const { title = "", description = "", content } = attributes!;
+    const { title = "", description = "", content } = attributes;
 
     return {
         ref: idRef(id, type as ObjectType),

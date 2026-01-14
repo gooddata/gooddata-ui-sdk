@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
@@ -301,23 +301,33 @@ export function EditAlert({
                             onRelativeOperatorChange={changeRelativeOperator}
                             overlayPositionType={overlayPositionType}
                         />
-                        {!isAnomalyDetection(updatedAlert?.alert) && (
-                            <Input
-                                className="gd-edit-alert__value-input s-alert-value-input"
-                                isSmall
-                                autofocus
-                                value={value}
-                                onChange={onChange}
-                                onBlur={onBlur}
-                                type="number"
-                                suffix={getValueSuffix(updatedAlert.alert)}
-                                accessibilityConfig={{
-                                    ariaLabel: intl.formatMessage({
-                                        id: "insightAlert.config.accessbility.input",
-                                    }),
-                                }}
-                            />
-                        )}
+                        {!isAnomalyDetection(updatedAlert?.alert) &&
+                            (() => {
+                                const valueSuffix = getValueSuffix(updatedAlert.alert);
+                                const suffixAriaLabel =
+                                    valueSuffix === "%"
+                                        ? intl.formatMessage({ id: "input.unit.percent" })
+                                        : valueSuffix;
+
+                                return (
+                                    <Input
+                                        className="gd-edit-alert__value-input s-alert-value-input"
+                                        isSmall
+                                        autofocus
+                                        value={value}
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        type="number"
+                                        suffix={valueSuffix}
+                                        accessibilityConfig={{
+                                            ariaLabel: intl.formatMessage({
+                                                id: "insightAlert.config.accessbility.input",
+                                            }),
+                                            suffixAriaLabel,
+                                        }}
+                                    />
+                                );
+                            })()}
                         {!updatedAlert || !isChangeOrDifferenceOperator(updatedAlert.alert) ? null : (
                             <div style={{ marginTop: "1rem" }}>
                                 <label htmlFor="alert.comparison">

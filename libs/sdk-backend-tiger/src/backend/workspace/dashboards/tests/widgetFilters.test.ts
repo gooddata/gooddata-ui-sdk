@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -15,31 +16,29 @@ import { resolveWidgetFilters } from "../widgetFilters.js";
 
 describe("resolveWidgetFilters", () => {
     const objRefsToIdentifiersMock: Parameters<typeof resolveWidgetFilters>[3] = (refs) =>
-        Promise.resolve(
-            refs.map((ref) => {
-                if (isUriRef(ref)) {
-                    const regex = /\/([^/]+)\/?$/;
-                    const matches = regex.exec(ref.uri);
-                    if (!matches) {
-                        throw new Error(`Unexpected URI: "${ref.uri}"`);
-                    }
-                    return matches[1];
+        refs.map((ref) => {
+            if (isUriRef(ref)) {
+                const regex = /\/([^/]+)\/?$/;
+                const matches = regex.exec(ref.uri);
+                if (!matches) {
+                    throw new Error(`Unexpected URI: "${ref.uri}"`);
                 }
-                return ref.identifier;
-            }),
-        );
+                return matches[1];
+            }
+            return ref.identifier;
+        });
 
-    it("should return all attribute filters if ignoredFilters are empty", async () => {
+    it("should return all attribute filters if ignoredFilters are empty", () => {
         const filterToKeep = newPositiveAttributeFilter(idRef("to-keep"), ["foo"]);
 
         const filters = [filterToKeep];
 
-        const actual = await resolveWidgetFilters(filters, [], undefined, objRefsToIdentifiersMock);
+        const actual = resolveWidgetFilters(filters, [], undefined, objRefsToIdentifiersMock);
 
         expect(actual).toEqual([filterToKeep]);
     });
 
-    it("should remove ignored attribute filters", async () => {
+    it("should remove ignored attribute filters", () => {
         const filterToKeep = newPositiveAttributeFilter(idRef("to-keep"), ["foo"]);
 
         const filters = [
@@ -48,7 +47,7 @@ describe("resolveWidgetFilters", () => {
             newNegativeAttributeFilter(idRef("to-ignore"), ["bar"]),
         ];
 
-        const actual = await resolveWidgetFilters(
+        const actual = resolveWidgetFilters(
             filters,
             [{ type: "attributeFilterReference", displayForm: uriRef("/gdc/md/to-ignore") }],
             undefined,
@@ -58,7 +57,7 @@ describe("resolveWidgetFilters", () => {
         expect(actual).toEqual([filterToKeep]);
     });
 
-    it("should remove date filters with different dimension", async () => {
+    it("should remove date filters with different dimension", () => {
         const filterToKeep = newRelativeDateFilter(idRef("dimension"), "GDC.time.date", 1, 1);
 
         const filters = [
@@ -67,7 +66,7 @@ describe("resolveWidgetFilters", () => {
             newRelativeDateFilter(idRef("other2"), "GDC.time.date", 3, 3),
         ];
 
-        const actual = await resolveWidgetFilters(
+        const actual = resolveWidgetFilters(
             filters,
             [],
             uriRef("/gdc/md/dimension"),
@@ -77,13 +76,13 @@ describe("resolveWidgetFilters", () => {
         expect(actual).toEqual([filterToKeep]);
     });
 
-    it("should remove all date filters if the last one with the correct dimension is all time", async () => {
+    it("should remove all date filters if the last one with the correct dimension is all time", () => {
         const filters = [
             newRelativeDateFilter(idRef("dimension"), "GDC.time.date", 1, 1),
             newAllTimeFilter(idRef("dimension")),
         ];
 
-        const actual = await resolveWidgetFilters(
+        const actual = resolveWidgetFilters(
             filters,
             [],
             uriRef("/gdc/md/dimension"),
@@ -93,11 +92,11 @@ describe("resolveWidgetFilters", () => {
         expect(actual).toEqual([]);
     });
 
-    it("should keep the last date filter if the last one with the correct dimension is NOT all time", async () => {
+    it("should keep the last date filter if the last one with the correct dimension is NOT all time", () => {
         const filterToKeep = newRelativeDateFilter(idRef("dimension"), "GDC.time.date", 1, 1);
         const filters = [newAllTimeFilter(idRef("dimension")), filterToKeep];
 
-        const actual = await resolveWidgetFilters(
+        const actual = resolveWidgetFilters(
             filters,
             [],
             uriRef("/gdc/md/dimension"),

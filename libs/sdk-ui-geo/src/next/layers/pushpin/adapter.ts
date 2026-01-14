@@ -144,7 +144,7 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         });
         const initialViewport = computeInitialViewport(geoData);
 
-        return { source, legend, geoData, colorStrategy, initialViewport };
+        return Promise.resolve({ source, legend, geoData, colorStrategy, initialViewport });
     },
 
     syncToMap(layer, map, output, context): void {

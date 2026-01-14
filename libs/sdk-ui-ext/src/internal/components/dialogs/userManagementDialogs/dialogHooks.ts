@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -186,7 +186,7 @@ export const useUserGroups = (
 
     // load initial user groups
     useEffect(() => {
-        backend
+        void backend
             .organization(organizationId)
             .users()
             .getUserGroupsOfUser(userId)
@@ -222,7 +222,7 @@ export const useUserGroups = (
     // removes admin group from the user if he is its member, update internal array of groups
     const removeAdminGroup = () => {
         if (hasBootstrapUserGroup(grantedUserGroups)) {
-            backend
+            void backend
                 .organization(organizationId)
                 .users()
                 .removeUsersFromUserGroups([userId], [bootstrapUserGroupId])
@@ -232,7 +232,7 @@ export const useUserGroups = (
                     ),
                 );
         } else {
-            Promise.resolve();
+            void Promise.resolve();
         }
     };
 
@@ -264,7 +264,7 @@ export const useUsers = (userGroupId: string, organizationId: string, onSuccess:
 
     // load initial users
     useEffect(() => {
-        backend
+        void backend
             .organization(organizationId)
             .users()
             .getUsersOfUserGroup(userGroupId)
@@ -423,7 +423,7 @@ const useOrganization = (organizationId: string) => {
 
     // initial load of organization details
     useEffect(() => {
-        backend
+        void backend
             .organization(organizationId)
             .getDescriptor(true)
             .then((organization) => {

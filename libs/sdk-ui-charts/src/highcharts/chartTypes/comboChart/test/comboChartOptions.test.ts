@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -87,7 +87,7 @@ describe("getComboChartStackingConfig", () => {
                         type: LINE,
                     },
                 ],
-                stackValue as StackingType,
+                stackValue,
             ),
         ).toBe(stackValue);
     });

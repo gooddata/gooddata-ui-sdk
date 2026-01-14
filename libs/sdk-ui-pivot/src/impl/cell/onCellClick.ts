@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type AgEventType, type CellEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
@@ -7,6 +8,7 @@ import {
     type IDrillEventContextTable,
     VisualizationTypes,
     convertDrillableItemsToPredicates,
+    getChartClickCoordinates,
 } from "@gooddata/sdk-ui";
 
 import { type ICorePivotTableProps } from "../../publicTypes.js";
@@ -87,9 +89,19 @@ export function onCellClickedFactory(
             row: createDrilledRow(data as IGridRow, table.tableDescriptor),
             intersection: createDrillIntersection(cellEvent, table.tableDescriptor, rowNodes),
         };
+
+        const enableDrillMenuPositioningAtCursor = props.config?.enableDrillMenuPositioningAtCursor ?? false;
+
+        // Calculate chart coordinates for drill popover positioning (only when enabled)
+        const chartCoordinates = enableDrillMenuPositioningAtCursor
+            ? getChartClickCoordinates(cellEvent.event?.target, ".ag-root-wrapper")
+            : {};
+
         const drillEvent: IDrillEvent = {
             dataView: dv.dataView,
             drillContext,
+            ...chartCoordinates,
+            enableDrillMenuPositioningAtCursor: enableDrillMenuPositioningAtCursor ? true : undefined,
         };
 
         if (onDrill?.(drillEvent)) {

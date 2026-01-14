@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import * as path from "path";
 import * as process from "process";
@@ -162,12 +162,12 @@ async function run() {
 
     const absoluteRecordingDir = path.resolve(recordingDir);
     const recordings = [
-        ...(await discoverExecutionRecordings(absoluteRecordingDir)),
-        ...(await discoverDisplayFormRecordings(absoluteRecordingDir)),
-        ...(await discoverInsightRecordings(absoluteRecordingDir)),
-        ...(await discoverCatalogRecordings(absoluteRecordingDir)),
-        ...(await discoverVisClassesRecordings(absoluteRecordingDir)),
-        ...(await discoverDashboardRecordings(absoluteRecordingDir)),
+        ...discoverExecutionRecordings(absoluteRecordingDir),
+        ...discoverDisplayFormRecordings(absoluteRecordingDir),
+        ...discoverInsightRecordings(absoluteRecordingDir),
+        ...discoverCatalogRecordings(absoluteRecordingDir),
+        ...discoverVisClassesRecordings(absoluteRecordingDir),
+        ...discoverDashboardRecordings(absoluteRecordingDir),
     ];
 
     const incompleteRecordings = recordings.filter((e) => !e.isComplete() || e.alwaysRefresh());
@@ -198,7 +198,7 @@ async function run() {
 
     logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);
 
-    await generateAllFiles(recordingsToIndex, absoluteRecordingDir);
+    generateAllFiles(recordingsToIndex, absoluteRecordingDir);
 
     logSuccess("Done");
 

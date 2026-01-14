@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -206,28 +206,28 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
     // Action methods
     const actions = useMemo(
         () => ({
-            deleteAutomation: async (automation: IAutomationMetadataObject) => {
+            deleteAutomation: (automation: IAutomationMetadataObject) => {
                 setState((prev) => ({ ...prev, deletedAutomation: automation }));
             },
-            bulkDeleteAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+            bulkDeleteAutomations: (automations: Array<IAutomationMetadataObject>) => {
                 setState((prev) => ({ ...prev, bulkDeletedAutomations: automations }));
             },
-            unsubscribeFromAutomation: async (automation: IAutomationMetadataObject) => {
+            unsubscribeFromAutomation: (automation: IAutomationMetadataObject) => {
                 setState((prev) => ({ ...prev, unsubscribedAutomation: automation }));
             },
-            bulkUnsubscribeFromAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+            bulkUnsubscribeFromAutomations: (automations: Array<IAutomationMetadataObject>) => {
                 setState((prev) => ({ ...prev, bulkUnsubscribedAutomations: automations }));
             },
-            pauseAutomation: async (automation: IAutomationMetadataObject) => {
+            pauseAutomation: (automation: IAutomationMetadataObject) => {
                 setState((prev) => ({ ...prev, pausedAutomation: automation }));
             },
-            bulkPauseAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+            bulkPauseAutomations: (automations: Array<IAutomationMetadataObject>) => {
                 setState((prev) => ({ ...prev, bulkPausedAutomations: automations }));
             },
-            resumeAutomation: async (automation: IAutomationMetadataObject) => {
+            resumeAutomation: (automation: IAutomationMetadataObject) => {
                 setState((prev) => ({ ...prev, resumedAutomation: automation }));
             },
-            bulkResumeAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+            bulkResumeAutomations: (automations: Array<IAutomationMetadataObject>) => {
                 setState((prev) => ({ ...prev, bulkResumedAutomations: automations }));
             },
         }),

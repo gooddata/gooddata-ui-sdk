@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { updateWith } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
@@ -115,7 +115,7 @@ export function convertFilterContextFromBackend(
     filterContext: JsonApiFilterContextOutDocument,
 ): IFilterContext {
     const { id, type, attributes } = filterContext.data;
-    const { title = "", description = "", content } = attributes!;
+    const { title = "", description = "", content } = attributes;
 
     return {
         ref: idRef(id, type as ObjectType),

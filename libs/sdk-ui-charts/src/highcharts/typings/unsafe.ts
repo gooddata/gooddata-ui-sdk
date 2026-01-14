@@ -1,8 +1,8 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IColorAssignment } from "@gooddata/sdk-ui";
-import { type ChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { type ChartAlignTypes, type IAxisConfig, type IGridConfig } from "../../interfaces/index.js";
 import { type StackingType } from "../constants/stacking.js";
@@ -182,7 +182,7 @@ export interface IChartOptions {
     forceDisableDrillOnAxes?: boolean;
     verticalAlign?: ChartAlignTypes;
     legendLabel?: string;
-    chartFill?: ChartFillConfig;
+    chartFill?: IChartFillConfig;
 }
 
 export interface IPatternOptionsObject {

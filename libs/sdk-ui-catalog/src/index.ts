@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /*
  * Analytics Catalog public API.
@@ -7,9 +7,9 @@
 export { AnalyticsCatalog, type IAnalyticsCatalogProps } from "./AnalyticsCatalog.js";
 export {
     AnalyticsCatalogDetail,
-    type AnalyticsCatalogDetailProps,
+    type IAnalyticsCatalogDetailProps,
     AnalyticsCatalogDetailContent,
-    type AnalyticsCatalogDetailContentProps,
+    type IAnalyticsCatalogDetailContentProps,
 } from "./AnalyticsCatalogDetail.js";
 export { AnalyticsCatalogFilter, type IAnalyticsCatalogFilterProps } from "./AnalyticsCatalogFilter.js";
 
@@ -17,9 +17,9 @@ export { AnalyticsCatalogFilter, type IAnalyticsCatalogFilterProps } from "./Ana
  * Supplementary API.
  */
 
-export { type CatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
+export { type ICatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 export {
-    type CatalogDetailContentProps,
+    type ICatalogDetailContentProps,
     type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
 

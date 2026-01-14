@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent, useCallback, useMemo } from "react";
 
@@ -6,6 +6,7 @@ import {
     type IDrillEvent,
     type IDrillEventContextTable,
     VisualizationTypes,
+    getChartClickCoordinates,
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
@@ -74,10 +75,19 @@ export function useHeaderDrilling(params: AgGridHeaderParams | AgGridHeaderGroup
                 intersection: createHeaderDrillIntersection(colDef),
             };
 
+            // Calculate chart coordinates for drill popover positioning
+            const chartCoordinates = config?.enableDrillMenuPositioningAtCursor
+                ? getChartClickCoordinates(event.target, "[grid-id]")
+                : {};
+
             // Create drill event
             const drillEvent: IDrillEvent = {
                 dataView: currentDataView.dataView,
                 drillContext,
+                ...chartCoordinates,
+                enableDrillMenuPositioningAtCursor: config?.enableDrillMenuPositioningAtCursor
+                    ? true
+                    : undefined,
             };
 
             if (onDrill(drillEvent)) {
@@ -88,7 +98,14 @@ export function useHeaderDrilling(params: AgGridHeaderParams | AgGridHeaderGroup
 
             return false;
         },
-        [isRegularHeader, onDrill, isDrillable, params, currentDataView],
+        [
+            isRegularHeader,
+            onDrill,
+            isDrillable,
+            params,
+            currentDataView,
+            config?.enableDrillMenuPositioningAtCursor,
+        ],
     );
 
     return {

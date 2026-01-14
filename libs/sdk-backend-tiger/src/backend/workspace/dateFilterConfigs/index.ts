@@ -36,7 +36,7 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
     }
 
     public async query(): Promise<IDateFilterConfigsQueryResult> {
-        return new InMemoryPaging([DefaultDateFilterConfig], this.limit, this.offset);
+        return Promise.resolve(new InMemoryPaging([DefaultDateFilterConfig], this.limit, this.offset));
     }
 
     public async queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult> {

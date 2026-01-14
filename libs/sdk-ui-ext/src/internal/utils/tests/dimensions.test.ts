@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
@@ -74,7 +75,7 @@ function addAttribute(
         a.localId(`a${index}`),
     );
 
-    const bucket = getVisualizationBucket(newVis, bucketName)!;
+    const bucket = getVisualizationBucket(newVis, bucketName);
     bucket.items.push(attribute);
 
     return newVis;
@@ -87,7 +88,7 @@ function addTotals(
 ): IInsightDefinition {
     const newVis = cloneDeep(visualization);
 
-    const bucket = getVisualizationBucket(newVis, bucketName)!;
+    const bucket = getVisualizationBucket(newVis, bucketName);
 
     if (!bucket.totals) {
         bucket.totals = [];

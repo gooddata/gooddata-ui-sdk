@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type KeyboardEvent, type UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -25,7 +25,7 @@ import {
     isKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
 
 import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
 import { type DrillSelectContext, type DrillSelectItem, DrillType } from "./types.js";
@@ -190,6 +190,13 @@ export function DrillSelectDropdown({
         }
     }, [isOpen, menuItems.length, onCloseReturnFocus]);
 
+    const alignPoints = useMemo<IAlignPoint[] | undefined>(() => {
+        if (!drillEvent.enableDrillMenuPositioningAtCursor) {
+            return undefined;
+        }
+        return calculateAlignPoints(dropDownAnchorClass, drillEvent);
+    }, [dropDownAnchorClass, drillEvent]);
+
     if (!isOpen) {
         return null;
     }
@@ -203,6 +210,7 @@ export function DrillSelectDropdown({
                 closeOnOutsideClick
                 closeOnEscape
                 alignTo={`.${dropDownAnchorClass}`}
+                alignPoints={alignPoints}
                 onClose={onCloseReturnFocus}
             >
                 <UiFocusManager enableFocusTrap enableAutofocus>
@@ -239,6 +247,82 @@ const getDashboardTitle = (dashboardRef: ObjRef, dashboardList: IListedDashboard
     );
     return dashboard ? dashboard.title : null;
 };
+
+/**
+ * Calculate the relative offset between a child element and an ancestor element.
+ */
+function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLElement | null) {
+    if (!child || !ancestor) {
+        return { x: 0, y: 0 };
+    }
+    const childRect = child.getBoundingClientRect();
+    const ancestorRect = ancestor.getBoundingClientRect();
+    return {
+        x: childRect.left - ancestorRect.left,
+        y: childRect.top - ancestorRect.top,
+    };
+}
+
+/**
+ * Calculate the offset for the drill select dropdown based on the drill event coordinates.
+ * This positions the dropdown near the clicked element rather than the center of the visualization.
+ */
+function calculateDrillEventOffset(anchorSelector: string, drillEvent?: IDrillEvent) {
+    const anchorElement = document.querySelector(anchorSelector) as HTMLElement | null;
+    // Get the relative offset between the drill target element (e.g., chart container) and the anchor element
+    const relativeOffset = getRelativeOffset(drillEvent?.target, anchorElement);
+    return {
+        x: relativeOffset.x + (drillEvent?.chartX ?? 0),
+        y: relativeOffset.y + (drillEvent?.chartY ?? 0),
+    };
+}
+
+// Small offset to position the menu slightly away from the click point for better UX
+const MENU_OFFSET_PX = 10;
+
+/**
+ * Calculate align points for the Overlay component based on the drill event coordinates.
+ * Align format is "anchor_point overlay_point" - we keep anchor at tl (using offset for click position)
+ * and vary the overlay point to allow the menu to flip when near viewport edges.
+ */
+function calculateAlignPoints(anchorClass: string, drillEvent?: IDrillEvent): IAlignPoint[] {
+    const drillOffset = calculateDrillEventOffset(`.${anchorClass}`, drillEvent);
+
+    return [
+        {
+            // Menu's top-left at click point → opens to bottom-right
+            align: "tl tl",
+            offset: {
+                x: drillOffset.x + MENU_OFFSET_PX,
+                y: drillOffset.y + MENU_OFFSET_PX,
+            },
+        },
+        {
+            // Menu's top-right at click point → opens to bottom-left
+            align: "tl tr",
+            offset: {
+                x: drillOffset.x - MENU_OFFSET_PX,
+                y: drillOffset.y + MENU_OFFSET_PX,
+            },
+        },
+        {
+            // Menu's bottom-left at click point → opens to top-right
+            align: "tl bl",
+            offset: {
+                x: drillOffset.x + MENU_OFFSET_PX,
+                y: drillOffset.y - MENU_OFFSET_PX,
+            },
+        },
+        {
+            // Menu's bottom-right at click point → opens to top-left
+            align: "tl br",
+            offset: {
+                x: drillOffset.x - MENU_OFFSET_PX,
+                y: drillOffset.y - MENU_OFFSET_PX,
+            },
+        },
+    ];
+}
 
 export const createDrillSelectItems = ({
     drillDefinitions,

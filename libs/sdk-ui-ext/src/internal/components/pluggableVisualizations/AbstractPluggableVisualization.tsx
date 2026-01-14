@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -69,7 +69,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected currentOptions!: IVisProps;
     protected visualizationProperties!: IVisualizationProperties;
     protected supportedPropertiesList!: string[];
-    protected propertiesMeta: any | null;
+    protected propertiesMeta: any;
 
     /**
      * List of properties which affect content of reference point and when these changed, reference point needs to be re-generated

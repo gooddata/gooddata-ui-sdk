@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ import type { ICatalogItem, ICatalogItemRef } from "../../catalogItem/types.js";
 import { useMounted } from "../../hooks/useMounted.js";
 import type { ObjectType } from "../../objectType/index.js";
 
-export interface UseCatalogItemUpdate {
+export interface IUseCatalogItemUpdate {
     currentUser: IUser | null | undefined;
     objectId?: string | null;
     objectType?: ObjectType | null;
@@ -36,7 +36,7 @@ export function useCatalogItemUpdate({
     objectDefinition,
     onUpdate,
     onError,
-}: UseCatalogItemUpdate) {
+}: IUseCatalogItemUpdate) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -144,6 +144,8 @@ describe("EditableLabel", () => {
                 expect(onCancel).toHaveBeenCalledWith("aaa");
                 expect(screen.queryByTestId("editable-label")).not.toHaveClass("is-editing");
             });
+
+            expect(screen.getByTestId("editable-label")).toHaveFocus();
         });
 
         it("should trim value when user enters only spaces", async () => {
@@ -172,6 +174,42 @@ describe("EditableLabel", () => {
             await userEvent.paste(value);
             expect(onChange).toHaveBeenCalledTimes(2); //clear & paste
             expect(onChange).toHaveBeenCalledWith(expect.stringContaining(value));
+        });
+    });
+
+    describe("keyboard", () => {
+        it("should be focusable and start editing when user presses enter", async () => {
+            render(<EditableLabel value="aaa" onSubmit={vi.fn()} />);
+
+            const editableLabel = screen.getByTestId("editable-label");
+            expect(editableLabel).toHaveAttribute("tabindex", "0");
+
+            await userEvent.tab();
+            expect(editableLabel).toHaveFocus();
+
+            await userEvent.keyboard("{Enter}");
+
+            const textbox = await screen.findByRole("textbox");
+            expect(textbox).toBeInTheDocument();
+            expect(editableLabel).toHaveAttribute("tabindex", "-1");
+            expect(editableLabel).not.toHaveAttribute("role", "button");
+        });
+
+        it("should be focusable and start editing when user presses space", async () => {
+            render(<EditableLabel value="aaa" onSubmit={vi.fn()} />);
+
+            const editableLabel = screen.getByTestId("editable-label");
+            expect(editableLabel).toHaveAttribute("tabindex", "0");
+
+            await userEvent.tab();
+            expect(editableLabel).toHaveFocus();
+
+            await userEvent.keyboard(" ");
+
+            const textbox = await screen.findByRole("textbox");
+            expect(textbox).toBeInTheDocument();
+            expect(editableLabel).toHaveAttribute("tabindex", "-1");
+            expect(editableLabel).not.toHaveAttribute("role", "button");
         });
     });
 });

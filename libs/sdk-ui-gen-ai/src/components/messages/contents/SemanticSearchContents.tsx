@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { Suspense, lazy } from "react";
 
@@ -39,7 +39,7 @@ export function SemanticSearchContentsComponent({ content, useMarkdown }: Props)
             )}
         >
             <MarkdownComponent allowMarkdown={useMarkdown}>{text}</MarkdownComponent>
-            <header>
+            <div className="gd-gen-ai-chat__messages__semantic-search-header">
                 <UiIcon
                     type="search"
                     size={14}
@@ -49,7 +49,7 @@ export function SemanticSearchContentsComponent({ content, useMarkdown }: Props)
                     ariaHidden
                 />
                 <FormattedMessage id="gd.gen-ai.semantic-search.title" />
-            </header>
+            </div>
             <Suspense fallback={<SemanticSearchTreeViewFallback />}>
                 <SemanticSearchTreeView
                     workspace={workspace}

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, type RefObject, useImperativeHandle, useRef } from "react";
 
@@ -9,18 +9,18 @@ import { EditableLabel, UiCard } from "@gooddata/sdk-ui-kit";
 import { CatalogItemLockMemo, type ICatalogItem } from "../catalogItem/index.js";
 import { ObjectTypeIconMemo, ObjectTypeTooltip } from "../objectType/index.js";
 
-export interface CatalogDetailHeaderRef {
+export interface ICatalogDetailHeaderRef {
     focusTitle: () => void;
     focusDescription: () => void;
 }
 
-interface Props {
+interface IProps {
     item: ICatalogItem;
     canEdit: boolean;
     actions: ReactNode;
     updateItemTitle: (title: string) => void;
     updateItemDescription: (description: string) => void;
-    headerRef: RefObject<CatalogDetailHeaderRef | null>;
+    headerRef: RefObject<ICatalogDetailHeaderRef | null>;
 }
 
 export function CatalogDetailHeader({
@@ -30,7 +30,7 @@ export function CatalogDetailHeader({
     updateItemTitle,
     updateItemDescription,
     headerRef,
-}: Props) {
+}: IProps) {
     const intl = useIntl();
 
     const type = item.type ?? "analyticalDashboard";
@@ -63,6 +63,7 @@ export function CatalogDetailHeader({
                             visualizationType={visualizationType}
                             anchor={
                                 <ObjectTypeIconMemo
+                                    intl={intl}
                                     type={type}
                                     visualizationType={visualizationType}
                                     backgroundSize={32}
@@ -75,6 +76,9 @@ export function CatalogDetailHeader({
                                 <EditableLabel
                                     ref={titleRef}
                                     isEditableLabelWidthBasedOnText
+                                    ariaLabel={intl.formatMessage({
+                                        id: "analyticsCatalog.column.title.label",
+                                    })}
                                     placeholder={intl.formatMessage({
                                         id: "analyticsCatalog.catalogItem.title.add",
                                     })}
@@ -102,6 +106,9 @@ export function CatalogDetailHeader({
                                 <EditableLabel
                                     ref={descriptionRef}
                                     maxRows={9999}
+                                    ariaLabel={intl.formatMessage({
+                                        id: "analyticsCatalog.catalogItem.description",
+                                    })}
                                     placeholder={intl.formatMessage({
                                         id: "analyticsCatalog.catalogItem.description.add",
                                     })}

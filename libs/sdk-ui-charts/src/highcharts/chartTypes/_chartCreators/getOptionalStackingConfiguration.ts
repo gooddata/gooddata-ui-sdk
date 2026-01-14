@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { merge, partial, set } from "lodash-es";
 
@@ -331,7 +331,7 @@ export function convertMinMaxFromPercentToNumber(
         yAxes = [yAxes];
     }
     const yAxis = (yAxes as (YAxisOptions | undefined)[]).map((axis, _, axes) => {
-        const { min, max } = axis! as YAxisOptions;
+        const { min, max } = axis!;
         const newAxis = {};
 
         if (!(min === null || min === undefined) && typeof min === "number") {
@@ -347,7 +347,7 @@ export function convertMinMaxFromPercentToNumber(
             return newAxis;
         }
 
-        const { opposite = false } = axis! as YAxisOptions;
+        const { opposite = false } = axis!;
         return opposite ? {} : newAxis;
     });
 

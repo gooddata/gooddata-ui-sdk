@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type IColor,
@@ -79,7 +79,7 @@ export class BulletChartColorStrategy extends ColorStrategy {
                 if (isRgbColor(colorAssignment.color)) {
                     return colorAssignment.color.value;
                 } else if (isColorFromPalette(colorAssignment.color)) {
-                    return getColorByGuid(colorPalette, colorAssignment.color.value as string, index);
+                    return getColorByGuid(colorPalette, colorAssignment.color.value, index);
                 }
                 return undefined;
             })
@@ -96,7 +96,7 @@ export class BulletChartColorStrategy extends ColorStrategy {
     ): IColor {
         const mappedColor = getColorFromMapping(headerItem, colorMapping, dv)!;
         if (isValidMappedColor(mappedColor, colorPalette)) {
-            return mappedColor!;
+            return mappedColor;
         }
 
         const defaultColorAssignment = defaultColorsAssignment.find(

@@ -37,12 +37,6 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
     fontSize: number | undefined;
 };
 
-// @internal
-export interface ChartFillConfig {
-    measureToPatternName?: Record<string, PatternFillName>;
-    type?: ChartFillType;
-}
-
 // @public (undocumented)
 export type ChartFillType = "solid" | "pattern" | "outline";
 
@@ -154,6 +148,12 @@ export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, ac
 
 // @internal (undocumented)
 export const HeatmapLegend: NamedExoticComponent<IHeatmapLegendProps>;
+
+// @internal
+export interface IChartFillConfig {
+    measureToPatternName?: Record<string, PatternFillName>;
+    type?: ChartFillType;
+}
 
 // @internal (undocumented)
 export interface IColorLegendItem {

@@ -1,11 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { getContext, select, takeEvery } from "redux-saga/effects";
 
 import {
     type Message,
     type RoutingContents,
-    type TextContents,
     isRoutingContents,
     isTextContents,
     isUserMessage,
@@ -81,7 +80,7 @@ function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>
         return;
     }
 
-    const messageContent = message.content.find((c) => isTextContents(c)) as TextContents | undefined;
+    const messageContent = message.content.find((c) => isTextContents(c));
 
     if (!messageContent?.text) {
         return;

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 // eslint-disable-next-line no-restricted-imports
 import { cloneDeep, get, has, isEmpty, set } from "lodash-es";
@@ -391,7 +391,7 @@ function getMaxWidthForCollapsedLegend(legendPosition: string): number {
 }
 
 export function getPivotTableProperties(settings: ISettings, properties: IVisualizationProperties) {
-    const { enableNewPivotTable } = settings;
+    const enableNewPivotTable = settings.enableNewPivotTable ?? true;
     const textWrapping = enableNewPivotTable ? getTextWrappingFromProperties(properties) : undefined;
 
     return {

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,7 +11,7 @@ import { convertApiError } from "../../utils/errorHandling.js";
 export class TigerSettingsService<T> {
     constructor() {}
 
-    public async getSettings(): Promise<T> {
+    public getSettings(): Promise<T> {
         throw new UnexpectedError("This method needs to be implemented.");
     }
 
@@ -64,19 +64,19 @@ export class TigerSettingsService<T> {
         }
     }
 
-    protected async getSettingByType(_type: TigerSettingsType): Promise<any> {
+    protected getSettingByType(_type: TigerSettingsType): any {
         throw new UnexpectedError("This method needs to be implemented.");
     }
 
-    protected async deleteSettingByType(_type: TigerSettingsType): Promise<any> {
+    protected deleteSettingByType(_type: TigerSettingsType): any {
         throw new UnexpectedError("This method needs to be implemented.");
     }
 
-    protected async updateSetting(_type: TigerSettingsType, _id: string, _content: any): Promise<any> {
+    protected updateSetting(_type: TigerSettingsType, _id: string, _content: any): any {
         throw new UnexpectedError("This method needs to be implemented.");
     }
 
-    protected async createSetting(_type: TigerSettingsType, _id: string, _content: any): Promise<any> {
+    protected createSetting(_type: TigerSettingsType, _id: string, _content: any): any {
         throw new UnexpectedError("This method needs to be implemented.");
     }
 }

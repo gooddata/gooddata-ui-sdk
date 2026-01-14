@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -29,7 +29,7 @@ const sankeyChartDefinition: IChartDefinition<ISankeyChartBucketProps, ISankeyCh
     bucketPropsKeys: ["measure", "attributeFrom", "attributeTo", "filters", "sortBy"],
     bucketsFactory: (props) => {
         return [
-            newBucket(BucketNames.MEASURES, props.measure as IAttributeOrMeasure),
+            newBucket(BucketNames.MEASURES, props.measure),
             newBucket(BucketNames.ATTRIBUTE_FROM, props.attributeFrom as IAttribute),
             newBucket(BucketNames.ATTRIBUTE_TO, props.attributeTo as IAttribute),
         ];

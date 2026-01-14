@@ -1,6 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
-
-import { type ReactNode } from "react";
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 
@@ -160,7 +158,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
-    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): ReactNode {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): null {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

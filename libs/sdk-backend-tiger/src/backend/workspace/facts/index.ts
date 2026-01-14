@@ -44,7 +44,7 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     }
 
     public async getFact(ref: ObjRef, opts: { include?: ["dataset"] } = {}): Promise<IFactMetadataObject> {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) =>
             EntitiesApi_GetEntityFacts(
                 client.axios,

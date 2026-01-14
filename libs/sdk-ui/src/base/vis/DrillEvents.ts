@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -246,6 +246,13 @@ export interface IDrillEvent {
     chartX?: number;
     chartY?: number;
     target?: HTMLElement;
+    /**
+     * Feature flag that enables drill menu positioning at the cursor click point.
+     *
+     * @remarks
+     * Default: false.
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 }
 
 /**

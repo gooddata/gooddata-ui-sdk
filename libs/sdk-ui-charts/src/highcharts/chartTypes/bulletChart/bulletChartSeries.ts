@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -11,7 +11,7 @@ import {
     bucketIsEmpty,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
-import { type ChartFillConfig, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
@@ -90,7 +90,7 @@ const getPrimarySeries = (seriesItemConfig: IPointData, onlyPrimaryMeasure: bool
     bulletChartMeasureType: "primary",
 });
 
-const getTargetSeries = (seriesItemConfig: IPointData, chartFill: ChartFillConfig | undefined): any => {
+const getTargetSeries = (seriesItemConfig: IPointData, chartFill: IChartFillConfig | undefined): any => {
     const { color, borderColor, ...rest } = seriesItemConfig;
     const colorProperties = isSolidFill(chartFill) ? { color } : { color: borderColor };
     return {
@@ -127,7 +127,7 @@ const getSeries = (
     seriesIndex: number,
     seriesItemConfig: IPointData,
     measureBucketsLocalIdentifiers: Identifier[],
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
 ) => {
     if (isTargetSeries(seriesIndex, measureBucketsLocalIdentifiers)) {
         return getTargetSeries(seriesItemConfig, chartFill);
@@ -145,7 +145,7 @@ export function getBulletChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     colorStrategy: IColorStrategy,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
 ) {
     const occupiedMeasureBucketsLocalIdentifiers = getOccupiedMeasureBucketsLocalIdentifiers(dv);

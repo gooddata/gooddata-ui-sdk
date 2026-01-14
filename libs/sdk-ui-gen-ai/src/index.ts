@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 /**
  * This package provides React components for GoodData's GenAI features.
@@ -70,9 +70,9 @@ export { DefaultLandingScreen, type LandingScreenProps } from "./components/cust
 export {
     DefaultLandingTitle,
     DefaultLandingTitleAscent,
-    type LandingTitleProps,
+    type ILandingTitleProps,
 } from "./components/customized/LandingTitle.js";
 export {
     DefaultLandingQuestion,
-    type LandingQuestionProps,
+    type ILandingQuestionProps,
 } from "./components/customized/LandingQuestion.js";

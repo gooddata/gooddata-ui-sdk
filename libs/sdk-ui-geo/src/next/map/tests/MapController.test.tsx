@@ -163,6 +163,8 @@ describe("MapController", () => {
         });
         expect(syncMock).toHaveBeenCalledWith({
             drillablePredicates,
+            enableDrillMenuPositioningAtCursor: false,
+            onDrill: undefined,
         });
         expect(afterRenderMock).toHaveBeenCalledWith(mapFacadeStub, afterRender, layerExecutions);
     });

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -23,6 +23,27 @@ describe("MultiLayerLegendPanel", () => {
         const { queryByTestId } = render(<MultiLayerLegendPanel enabled={false} model={mockModel} />);
 
         expect(queryByTestId("gd-geo-multi-layer-legend")).toBeNull();
+    });
+
+    it("renders legend sections in reverse order (first layer on top)", () => {
+        const model: ILegendModel = {
+            title: "Legend",
+            sections: [
+                { layerId: "layer-1", layerTitle: "Layer 1", layerKind: "pushpin", groups: [] },
+                { layerId: "layer-2", layerTitle: "Layer 2", layerKind: "pushpin", groups: [] },
+                { layerId: "layer-3", layerTitle: "Layer 3", layerKind: "pushpin", groups: [] },
+            ],
+        };
+
+        const { getByTestId } = render(<MultiLayerLegendPanel model={model} />);
+
+        const legend = getByTestId("gd-geo-multi-layer-legend");
+        const sectionNodes = Array.from(legend.querySelectorAll('[data-testid^="gd-geo-legend-section-"]'));
+
+        expect(sectionNodes).toHaveLength(3);
+        expect(sectionNodes[0]).toHaveAttribute("data-testid", "gd-geo-legend-section-layer-3");
+        expect(sectionNodes[1]).toHaveAttribute("data-testid", "gd-geo-legend-section-layer-2");
+        expect(sectionNodes[2]).toHaveAttribute("data-testid", "gd-geo-legend-section-layer-1");
     });
 
     it("does not expose clickable legend items when the layer is hidden", () => {

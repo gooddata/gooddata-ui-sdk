@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty, isEqual, omitBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -381,11 +381,11 @@ export function getCustomSortDisabledExplanation(
     intl: IntlShape,
 ): string | undefined {
     if (relevantAttributes.length === 0 && relevantMeasures.length >= 2) {
-        return getTranslation(messages["explanationMeasure"].id!, intl);
+        return getTranslation(messages["explanationMeasure"].id, intl);
     }
 
     if (relevantAttributes.length === 0) {
-        return getTranslation(messages["explanationAttribute"].id!, intl);
+        return getTranslation(messages["explanationAttribute"].id, intl);
     }
 
     return undefined;

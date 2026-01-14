@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { cleanup } from "@testing-library/react";
 import { afterEach, expect, vi } from "vitest";
@@ -10,9 +10,9 @@ import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
  */
 declare module "vitest" {
     // @ts-expect-error This is correct
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type,@typescript-eslint/naming-convention
     interface Assertion<T = unknown> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type,@typescript-eslint/naming-convention
     interface AsymmetricMatchersContaining extends TestingLibraryMatchers<unknown, unknown> {}
 }
 

@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -27,7 +28,7 @@ import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 import { InMemoryPaging } from "./InMemoryPaging.js";
 import { type IHiddenElementsInfo } from "./types.js";
 import { type ILoadElementsOptions } from "../../../types/index.js";
-import { type AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { type IAttributeFilterHandlerStoreContext } from "../store/types.js";
 
 async function loadElementsAsExecution(
     backend: IAnalyticalBackend,
@@ -70,7 +71,7 @@ async function loadElementsAsExecution(
  * @internal
  */
 export async function loadElementsFromBackend(
-    context: AttributeFilterHandlerStoreContext,
+    context: IAttributeFilterHandlerStoreContext,
     options: ILoadElementsOptions & CancelableOptions & { displayFormRef: ObjRef },
     hiddenElementsInfo: IHiddenElementsInfo,
     cacheId?: string,

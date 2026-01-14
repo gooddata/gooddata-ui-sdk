@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { type IAttributeDescriptorBody, localIdRef } from "@gooddata/sdk-model";
@@ -16,7 +16,7 @@ const drillConfigRegion: IDrillDownDefinition = {
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";
 const departmentUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1027";
 const westCoastUri = ReferenceData.Region.WestCoast.uri!;
-const directSalesUri = ReferenceData.Department.DirectSales.uri!;
+const directSalesUri = ReferenceData.Department.DirectSales.uri;
 
 const directSalesHeader: IDrillEventIntersectionElement = {
     header: {
@@ -25,7 +25,7 @@ const directSalesHeader: IDrillEventIntersectionElement = {
             uri: directSalesUri,
         },
         attributeHeader: {
-            name: Department.Default.attribute.alias!,
+            name: Department.Default.attribute.alias,
             localIdentifier: Department.Default.attribute.localIdentifier,
             uri: departmentUri,
             ref: {
@@ -50,7 +50,7 @@ const westCoastHeader: IDrillEventIntersectionElement = {
             uri: westCoastUri,
         },
         attributeHeader: {
-            name: Region.Default.attribute.alias!,
+            name: Region.Default.attribute.alias,
             localIdentifier: Region.Default.attribute.localIdentifier,
             uri: regionUri,
             ref: {

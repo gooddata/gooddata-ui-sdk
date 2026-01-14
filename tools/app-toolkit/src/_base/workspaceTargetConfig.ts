@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ActionOptions } from "./types.js";
 import { readPackageJsonIfExists } from "./utils.js";
@@ -17,7 +17,7 @@ export type WorkspaceTargetConfig = {
 /**
  * Creates common config for commands that target a workspace.
  */
-export async function createWorkspaceTargetConfig(_options: ActionOptions): Promise<WorkspaceTargetConfig> {
+export function createWorkspaceTargetConfig(_options: ActionOptions): WorkspaceTargetConfig {
     const packageJson = readPackageJsonIfExists();
 
     return {

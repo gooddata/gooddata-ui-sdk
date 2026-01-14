@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { type Identifier, type ObjRef, type Uri, isIdentifierRef, isUriRef } from "@gooddata/sdk-model";
 
@@ -17,7 +18,9 @@ export const objRefToUri = async (
     workspace: string,
     authCall: TigerAuthenticatedCallGuard,
 ): Promise<Uri> => {
-    return isUriRef(ref) ? ref.uri : authCall(async () => `/${workspace}/${ref.type}/${ref.identifier}`);
+    return isUriRef(ref)
+        ? ref.uri
+        : authCall(() => Promise.resolve(`/${workspace}/${ref.type}/${ref.identifier}`));
 };
 
 /**
@@ -28,10 +31,7 @@ export const objRefToUri = async (
  *
  * @internal
  */
-export const objRefToIdentifier = async (
-    ref: ObjRef,
-    _authCall: TigerAuthenticatedCallGuard,
-): Promise<Identifier> => {
+export const objRefToIdentifier = (ref: ObjRef, _authCall: TigerAuthenticatedCallGuard): Identifier => {
     if (isIdentifierRef(ref)) {
         return ref.identifier;
     }
@@ -55,10 +55,7 @@ export const objRefToIdentifier = async (
  *
  * @internal
  */
-export const objRefsToIdentifiers = (
-    refs: ObjRef[],
-    authCall: TigerAuthenticatedCallGuard,
-): Promise<Identifier[]> => {
+export const objRefsToIdentifiers = (refs: ObjRef[], authCall: TigerAuthenticatedCallGuard): Identifier[] => {
     // there is no bulk api yet, so do it one by one
-    return Promise.all(refs.map((ref) => objRefToIdentifier(ref, authCall)));
+    return refs.map((ref) => objRefToIdentifier(ref, authCall));
 };

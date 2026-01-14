@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -91,7 +91,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
             const { ctx, plugins } = loadStatus.result;
 
             plugins.forEach((plugin) => {
-                plugin.onPluginUnload?.(ctx);
+                void plugin.onPluginUnload?.(ctx);
             });
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps

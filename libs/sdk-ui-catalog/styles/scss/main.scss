@@ -61,7 +61,7 @@ $content-font-size: 14px;
         overflow: hidden;
         flex-direction: column;
 
-        header {
+        &__filters {
             display: flex;
             flex-wrap: wrap;
             align-items: center;

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -88,7 +88,7 @@ function combineHeaders(
     return combinedHeaderItems;
 }
 
-interface GrandTotal {
+interface IGrandTotal {
     dimensionIdx: number;
     data: DataValue[];
 }
@@ -108,7 +108,7 @@ function transformGrandTotal(
     headerItems: Readonly<IResultHeader[][][]>,
     totalDimensions: number[],
     definition: IExecutionDefinition,
-): GrandTotal[] {
+): IGrandTotal[] {
     if (totalDimensions.length !== 1) {
         // If the grand total belongs to multiple or zero dimensions it is either
         // a grand total from a >2D result or it is a total of totals,

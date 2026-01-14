@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -228,7 +228,7 @@ export type ChatEvent =
  * An event handler for the Chat component.
  * @public
  */
-export interface ChatEventHandler<TEvent extends ChatEvent = any> {
+export type ChatEventHandler<TEvent extends ChatEvent = any> = {
     /**
      * A guard for a specific event type.
      */
@@ -237,7 +237,7 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
      * Event handler.
      */
     handler: (event: TEvent) => void;
-}
+};
 
 /**
  * A dispatcher for chat events.

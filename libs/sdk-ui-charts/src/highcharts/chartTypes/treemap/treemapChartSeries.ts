@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 
@@ -9,7 +9,7 @@ import {
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
 import {
-    type ChartFillConfig,
+    type IChartFillConfig,
     type IColorStrategy,
     getLighterColor,
     valueWithEmptyHandling,
@@ -137,7 +137,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
 ): any[] {
     let data = measureGroup.items.map((measureGroupItem, index): IPointData => {
@@ -198,7 +198,7 @@ export function getTreemapStackedSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
 ) {
     let data = [];

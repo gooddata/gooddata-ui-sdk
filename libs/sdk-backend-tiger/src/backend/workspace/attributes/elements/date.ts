@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { addDays, addMonths, addYears, format, getMonth, setDate, setMonth } from "date-fns";
 
@@ -31,7 +31,7 @@ export const getRelativeDateFilterShiftedValues = (
 
     let startDate = currentDate;
     switch (granularity) {
-        case DATE_GRANULARITY.YEAR: {
+        case DATE_GRANULARITY.YEAR as string: {
             startDate = addYears(startDate, from);
             startDate = setMonth(startDate, 0);
             startDate = setDate(startDate, 1);
@@ -44,7 +44,7 @@ export const getRelativeDateFilterShiftedValues = (
             return iterateDates(startDate, endDate);
         }
 
-        case DATE_GRANULARITY.MONTH: {
+        case DATE_GRANULARITY.MONTH as string: {
             startDate = currentDate;
             startDate = addMonths(startDate, from);
             startDate = setDate(startDate, 1);
@@ -56,7 +56,7 @@ export const getRelativeDateFilterShiftedValues = (
             return iterateDates(startDate, endDate);
         }
 
-        case DATE_GRANULARITY.DATE: {
+        case DATE_GRANULARITY.DATE as string: {
             startDate = addDays(startDate, from);
 
             let endDate = currentDate;
@@ -65,7 +65,7 @@ export const getRelativeDateFilterShiftedValues = (
             return iterateDates(startDate, endDate);
         }
 
-        case DATE_GRANULARITY.QUARTER: {
+        case DATE_GRANULARITY.QUARTER as string: {
             startDate = getFirstDayQuarter(currentDate, from);
             const endDate = getLastDayQuarter(currentDate, to);
 

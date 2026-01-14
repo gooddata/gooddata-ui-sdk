@@ -35,7 +35,7 @@ const DEFAULT_SEPARATORS = {
     decimal: ".",
 };
 
-export interface CatalogDetailMetricSettingsProps {
+export interface ICatalogDetailMetricSettingsProps {
     metricType?: MetricType;
     format?: string | null;
     canEdit: boolean;
@@ -55,7 +55,7 @@ export const CatalogDetailMetricSettings = memo(function CatalogDetailMetricSett
     onMetricTypeChange,
     onFormatChange,
     enableMetricFormatOverrides,
-}: CatalogDetailMetricSettingsProps) {
+}: ICatalogDetailMetricSettingsProps) {
     const intl = useIntl();
     const formatMessage = useCallback((descriptor: { id: string }) => intl.formatMessage(descriptor), [intl]);
     const normalizedFormat = normalizeFormatValue(format);
@@ -126,7 +126,7 @@ export const CatalogDetailMetricSettings = memo(function CatalogDetailMetricSett
     );
 });
 
-interface MetricTypeDropdownProps {
+interface IMetricTypeDropdownProps {
     canEdit: boolean;
     metricType?: MetricType;
     onMetricTypeChange?: (metricType: MetricType | undefined) => void;
@@ -136,7 +136,7 @@ const MetricTypeDropdown = memo(function MetricTypeDropdown({
     canEdit,
     metricType,
     onMetricTypeChange,
-}: MetricTypeDropdownProps) {
+}: IMetricTypeDropdownProps) {
     const intl = useIntl();
     const selectedOption =
         METRIC_TYPE_OPTIONS.find((option) => option.value === metricType) ?? DEFAULT_METRIC_TYPE_OPTION;

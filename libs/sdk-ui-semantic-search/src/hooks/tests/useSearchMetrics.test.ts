@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -37,7 +37,7 @@ describe("useSearchMetrics hook", () => {
         tags: [],
     };
 
-    it("should report open -> close transaction", async () => {
+    it("should report open -> close transaction", () => {
         const callback = vi.fn();
         const { result } = renderHook(() => useSearchMetrics(callback));
 
@@ -57,7 +57,7 @@ describe("useSearchMetrics hook", () => {
         });
     });
 
-    it("should report open -> type -> close transaction", async () => {
+    it("should report open -> type -> close transaction", () => {
         const callback = vi.fn();
         const { result } = renderHook(() => useSearchMetrics(callback));
 
@@ -78,7 +78,7 @@ describe("useSearchMetrics hook", () => {
         });
     });
 
-    it("should report open -> type -> select transaction", async () => {
+    it("should report open -> type -> select transaction", () => {
         const callback = vi.fn();
         const { result } = renderHook(() => useSearchMetrics(callback));
 
@@ -99,7 +99,7 @@ describe("useSearchMetrics hook", () => {
         });
     });
 
-    it("should report open -> type -> select -> select transactions", async () => {
+    it("should report open -> type -> select -> select transactions", () => {
         const callback = vi.fn();
         const { result } = renderHook(() => useSearchMetrics(callback));
 
@@ -130,7 +130,7 @@ describe("useSearchMetrics hook", () => {
         });
     });
 
-    it("should not report close transaction if item was selected", async () => {
+    it("should not report close transaction if item was selected", () => {
         const callback = vi.fn();
         const { result } = renderHook(() => useSearchMetrics(callback));
 

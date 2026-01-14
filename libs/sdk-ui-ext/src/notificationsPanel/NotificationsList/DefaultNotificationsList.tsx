@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -175,7 +175,9 @@ export function DefaultNotificationsList({
                     {(notification) => (
                         <Notification
                             notification={notification}
-                            markNotificationAsRead={markNotificationAsRead}
+                            markNotificationAsRead={(id) => {
+                                void markNotificationAsRead(id);
+                            }}
                             onNotificationClick={onNotificationClick}
                             closeNotificationsPanel={closeNotificationsPanel}
                         />

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -173,7 +173,7 @@ describe("BaseChartConfigurationPanel", () => {
             expect(screen.queryByTestId("xaxis")).not.toBeInTheDocument();
         });
 
-        it("should not render interactions section in configuration panel", async () => {
+        it("should not render interactions section in configuration panel", () => {
             createComponent({
                 ...defaultProps,
                 insight: insightWithSingleAttribute,
@@ -182,7 +182,7 @@ describe("BaseChartConfigurationPanel", () => {
             expect(screen.queryByText("Interactions")).not.toBeInTheDocument();
         });
 
-        it("should render interactions section in configuration panel", async () => {
+        it("should render interactions section in configuration panel", () => {
             createComponent({
                 ...defaultProps,
                 insight: insightWithSingleAttribute,

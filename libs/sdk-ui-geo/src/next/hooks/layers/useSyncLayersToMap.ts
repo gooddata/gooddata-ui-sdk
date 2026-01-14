@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -27,6 +27,11 @@ interface IUseLayerSyncParams {
      * Callback fired when user triggers a drill.
      */
     onDrill?: OnFiredDrillEvent;
+
+    /**
+     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 }
 
 /**
@@ -67,7 +72,11 @@ function syncLayerToMap(
  *
  * @internal
  */
-export function useSyncLayersToMap({ drillablePredicates, onDrill }: IUseLayerSyncParams): void {
+export function useSyncLayersToMap({
+    drillablePredicates,
+    onDrill,
+    enableDrillMenuPositioningAtCursor = false,
+}: IUseLayerSyncParams): void {
     const { map, isMapReady, tooltip, adapterContext } = useMapRuntime();
     const { layers, layerExecutions } = useGeoLayers();
     const { hiddenLayers, enabledItemsByLayer } = useGeoLegend();
@@ -215,5 +224,12 @@ export function useSyncLayersToMap({ drillablePredicates, onDrill }: IUseLayerSy
         adapterContext,
     });
 
-    useLayerClickEvent(map, isMapReady, layers, drillablePredicates, onDrill);
+    useLayerClickEvent(
+        map,
+        isMapReady,
+        layers,
+        drillablePredicates,
+        enableDrillMenuPositioningAtCursor,
+        onDrill,
+    );
 }

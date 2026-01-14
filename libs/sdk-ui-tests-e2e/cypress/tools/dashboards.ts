@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type WidgetDropZone } from "./enum/DropZone";
 import { LayoutRow } from "./layoutRow";
@@ -202,7 +202,9 @@ export class FilterBar {
     }
 
     dateFilterHasElements(elements: string[]): this {
-        elements.forEach((element) => this.getElement(element).should("exist"));
+        elements.forEach((element) => {
+            this.getElement(element).should("exist");
+        });
         return this;
     }
 

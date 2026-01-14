@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 export { PivotTableNext } from "./PivotTableNext.js";
 export {
@@ -11,6 +11,7 @@ export {
 export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.js";
 export type { PivotTableNextAccessibilityConfig } from "./types/accessibility.js";
 export type { PivotTableNextCellSelectionConfig } from "./types/cellSelection.js";
+export type { PivotTableNextDrillMenuPositioningConfig } from "./types/drillMenuPositioning.js";
 export type { PivotTableNextExecutionCancellingConfig } from "./types/executionCancelling.js";
 export type { PivotTableNextFormattingConfig } from "./types/formatting.js";
 export type {

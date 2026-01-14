@@ -1563,6 +1563,10 @@
         "text": "No items available.",
         "crowdinContext": "Message shown in the measure value filter dimensionality picker when there are no items to select and no search term is entered."
     },
+    "input.unit.percent": {
+        "text": "Value in percent",
+        "crowdinContext": "Aria label for input suffix when the value is expressed in percent (%)"
+    },
     "measureNumberFormat.custom.optionLabel": {
         "text": "Custom",
         "crowdinContext": "An item in list of presets. Denotes a custom preset"

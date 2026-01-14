@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type Completion } from "@codemirror/autocomplete";
 import { type IntlShape } from "react-intl";
@@ -15,7 +15,7 @@ import {
 
 import { getInfo } from "./InfoComponent.js";
 
-export interface CompletionItem extends Completion {
+export interface ICompletionItem extends Completion {
     item: CatalogItem | ICatalogDateAttribute;
 }
 
@@ -47,12 +47,12 @@ export function getOptions(
         search?: string;
         canManage?: boolean;
         canAnalyze?: boolean;
-        onCompletionSelected?: (completion: CompletionItem) => void;
+        onCompletionSelected?: (completion: ICompletionItem) => void;
     },
-): CompletionItem[] {
+): ICompletionItem[] {
     const options = items
         .filter((item) => !isCatalogItemHidden(item))
-        .map((item): CompletionItem[] => {
+        .map((item): ICompletionItem[] => {
             return getItems(intl, item, { canManage, canAnalyze, onCompletionSelected });
         })
         .flat();
@@ -85,9 +85,9 @@ export function getItems(
     }: {
         canManage?: boolean;
         canAnalyze?: boolean;
-        onCompletionSelected?: (completion: CompletionItem) => void;
+        onCompletionSelected?: (completion: ICompletionItem) => void;
     },
-): CompletionItem[] {
+): ICompletionItem[] {
     if (isCatalogAttribute(item)) {
         return [
             {
@@ -102,7 +102,7 @@ export function getItems(
                 apply: (view, completion, from, to) => {
                     const type = "attribute" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.attribute.id}}`;
-                    onCompletionSelected?.(completion as CompletionItem);
+                    onCompletionSelected?.(completion as ICompletionItem);
                     view.dispatch({
                         changes: { from, to, insert },
                         selection: { anchor: from + insert.length },
@@ -125,7 +125,7 @@ export function getItems(
                 apply: (view, completion, from, to) => {
                     const type = "fact" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.fact.id}}`;
-                    onCompletionSelected?.(completion as CompletionItem);
+                    onCompletionSelected?.(completion as ICompletionItem);
                     view.dispatch({
                         changes: { from, to, insert },
                         selection: { anchor: from + insert.length },
@@ -147,7 +147,7 @@ export function getItems(
                 apply: (view, completion, from, to) => {
                     const type = "metric" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.measure.id}}`;
-                    onCompletionSelected?.(completion as CompletionItem);
+                    onCompletionSelected?.(completion as ICompletionItem);
                     view.dispatch({
                         changes: { from, to, insert },
                         selection: { anchor: from + insert.length },
@@ -157,7 +157,7 @@ export function getItems(
         ];
     }
     if (isCatalogDateDataset(item)) {
-        const dateItems = item.dateAttributes.map((attr): CompletionItem => {
+        const dateItems = item.dateAttributes.map((attr): ICompletionItem => {
             return {
                 type: "date",
                 label: attr.attribute.title,
@@ -170,7 +170,7 @@ export function getItems(
                 apply: (view, completion, from, to) => {
                     const type = "attribute" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${attr.attribute.id}}`;
-                    onCompletionSelected?.(completion as CompletionItem);
+                    onCompletionSelected?.(completion as ICompletionItem);
                     view.dispatch({
                         changes: { from, to, insert },
                         selection: { anchor: from + insert.length },
@@ -192,7 +192,7 @@ export function getItems(
                 apply: (view, completion, from, to) => {
                     const type = "date" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.dataSet.id}}`;
-                    onCompletionSelected?.(completion as CompletionItem);
+                    onCompletionSelected?.(completion as ICompletionItem);
                     view.dispatch({
                         changes: { from, to, insert },
                         selection: { anchor: from + insert.length },
@@ -206,7 +206,7 @@ export function getItems(
 }
 
 // Utility: Get completion item ID
-export function getCompletionItemId(data: CompletionItem) {
+export function getCompletionItemId(data: ICompletionItem) {
     return getCatalogItemId(data.item);
 }
 

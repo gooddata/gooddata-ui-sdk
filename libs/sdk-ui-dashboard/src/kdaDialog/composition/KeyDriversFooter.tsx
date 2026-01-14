@@ -5,13 +5,7 @@ import { type RefObject, useId, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { type ICatalogAttribute, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import {
-    DropdownInvertableSelect,
-    InvertableSelectAllCheckbox,
-    InvertableSelectItem,
-    UiButton,
-    UiSkeleton,
-} from "@gooddata/sdk-ui-kit";
+import { DropdownInvertableSelect, InvertableSelectItem, UiButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { selectCatalogAttributes, selectCatalogIsLoaded, useDashboardSelector } from "../../model/index.js";
 import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
@@ -171,18 +165,9 @@ export function KeyDriversFooter() {
                                             onClick={toggleDropdown}
                                         />
                                     )}
-                                    renderListActions={(props) => {
+                                    renderListActions={() => {
                                         return (
                                             <>
-                                                <InvertableSelectAllCheckbox
-                                                    isVisible={props.isVisible}
-                                                    checked={props.checked}
-                                                    onChange={props.onChange}
-                                                    onToggle={props.onToggle}
-                                                    isFiltered={props.isFiltered}
-                                                    totalItemsCount={props.totalItemsCount}
-                                                    isPartialSelection={props.isPartialSelection}
-                                                />
                                                 <div className="gd-kda-attributes-dropdown__subheader">
                                                     <div
                                                         className="gd-kda-attributes-dropdown__subheader__attribute"

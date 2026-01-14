@@ -1,8 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 export * from "highcharts";
 
 declare module "highcharts" {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Point {
         /**
          * UNDOCUMENTED, but real HCH API.
@@ -11,6 +12,7 @@ declare module "highcharts" {
         highlight(): void;
     }
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Chart {
         /**
          * Custom property we add to be able to distinguish different charts

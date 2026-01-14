@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo, useMemo } from "react";
 
@@ -24,14 +24,14 @@ export const tagsColumn: (
     };
 };
 
-interface TagsManagerProps {
+interface ITagsManagerProps {
     intl: IntlShape;
     item: ICatalogItem;
     width: number;
     onTagClick?: (tag: string) => void;
 }
 
-const TagsManagerMemo = memo(function TagsManager({ intl, item, width, onTagClick }: TagsManagerProps) {
+const TagsManagerMemo = memo(function TagsManager({ intl, item, width, onTagClick }: ITagsManagerProps) {
     const tags = useMemo(() => {
         return item.tags.map((tag, i) => {
             return {

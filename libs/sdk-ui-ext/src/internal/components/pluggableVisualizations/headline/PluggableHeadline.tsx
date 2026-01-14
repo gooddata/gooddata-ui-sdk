@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 
@@ -251,7 +251,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 ErrorComponent={undefined}
                 onExportReady={this.onExportReady}
             />,
-            this.getElement()!,
+            this.getElement(),
         );
     }
 

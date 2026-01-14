@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
 
@@ -9,13 +9,11 @@ module.exports = {
     },
     overrides: [
         tsOverride(__dirname, {
-            "@typescript-eslint/require-await": "off",
-            "@typescript-eslint/restrict-template-expressions": "off",
-            "@typescript-eslint/no-unsafe-argument": "off",
-            "@typescript-eslint/no-unsafe-member-access": "off",
-            "@typescript-eslint/no-unsafe-assignment": "off",
-            "@typescript-eslint/no-redundant-type-constituents": "off",
-            "@typescript-eslint/no-unsafe-return": "off",
+            "@typescript-eslint/restrict-template-expressions": "warn",
+            "@typescript-eslint/no-unsafe-argument": "warn",
+            "@typescript-eslint/no-unsafe-member-access": "warn",
+            "@typescript-eslint/no-unsafe-assignment": "warn",
+            "@typescript-eslint/no-unsafe-return": "warn",
         }),
     ],
 };

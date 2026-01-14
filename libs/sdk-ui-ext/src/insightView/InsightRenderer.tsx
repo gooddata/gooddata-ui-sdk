@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type CSSProperties, PureComponent, createRef, useCallback, useEffect, useRef } from "react";
 
@@ -188,7 +188,7 @@ class InsightRendererCore extends PureComponent<
         this.visualization?.update(visProps, insight, {}, this.getExecutionFactory());
     };
 
-    private setupVisualization = async () => {
+    private setupVisualization = () => {
         // if there is no insight, bail early
         if (!this.props.insight) {
             return;
@@ -298,8 +298,8 @@ class InsightRendererCore extends PureComponent<
         return factory;
     };
 
-    private componentDidMountInner = async () => {
-        await this.setupVisualization();
+    private componentDidMountInner = () => {
+        this.setupVisualization();
         return this.updateVisualization();
     };
 
@@ -307,7 +307,7 @@ class InsightRendererCore extends PureComponent<
         this.componentDidMountInner();
     }
 
-    private componentDidUpdateInner = async (prevProps: IInsightRendererProps) => {
+    private componentDidUpdateInner = (prevProps: IInsightRendererProps) => {
         /**
          * Ignore properties when comparing insights to determine if a new setup is needed: changes to properties
          * only will be handled using the updateVisualization without unnecessary new setup just fine.
@@ -322,7 +322,7 @@ class InsightRendererCore extends PureComponent<
             this.props.workspace !== prevProps.workspace;
 
         if (needsNewSetup) {
-            await this.setupVisualization();
+            this.setupVisualization();
         }
 
         return this.updateVisualization();

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -65,7 +65,7 @@ export function Main({
 
     return (
         <section className="gd-analytics-catalog__main">
-            <header>
+            <div className="gd-analytics-catalog__main__filters">
                 <FilterObjectTypeMemo />
                 <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.title" />}>
                     <FilterCreatedByMemo backend={backend} workspace={workspace} />
@@ -77,7 +77,7 @@ export function Main({
                     <FilterVisibilityMemo />
                     <FilterResetButtonMemo />
                 </FilterGroupLayout>
-            </header>
+            </div>
             <CatalogItemFeed backend={backend} workspace={workspace}>
                 {({ items, next, hasNext, totalCount, status, updateItem }) => (
                     <>

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -43,7 +43,7 @@ export const usePermissions = (
 
     // load initial permissions
     useEffect(() => {
-        getPermissions(id).then((assignments) => {
+        void getPermissions(id).then((assignments) => {
             const workspaces = assignments.workspacePermissions.map((w) =>
                 workspacePermissionsAssignmentToGrantedWorkspace(w),
             );

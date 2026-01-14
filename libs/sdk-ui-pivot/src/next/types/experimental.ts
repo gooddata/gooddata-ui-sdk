@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * Configuration for pivot table experimental features.
@@ -17,7 +17,7 @@ export interface PivotTableNextExperimentalConfig {
     /**
      * Enable pagination for the pivot table.
      *
-     * Default: false
+     * Default: true
      */
     enablePivotTablePagination?: boolean;
 }

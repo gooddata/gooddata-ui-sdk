@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -32,8 +33,8 @@ export const convertUser = (user: IUserProfile): IUser => {
     } = user;
 
     return {
-        ref: uriRef(links!.user!),
-        login: userId!,
+        ref: uriRef(links.user),
+        login: userId,
         fullName: name,
         email: email,
         firstName: firstName,

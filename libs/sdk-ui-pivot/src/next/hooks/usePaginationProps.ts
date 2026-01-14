@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -10,7 +10,7 @@ import { type AgGridProps } from "../types/agGrid.js";
  * Returns ag-grid props for pagination configuration.
  *
  * @remarks
- * Pagination is only enabled if both config.pagination.enabled AND config.enablePivotTablePagination are true.
+ * Pagination is only enabled if config.pagination.enabled is true and config.enablePivotTablePagination is not false.
  *
  * @internal
  */

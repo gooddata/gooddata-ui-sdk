@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -29,7 +29,7 @@ describe("AreaChart", () => {
         vi.clearAllMocks();
     });
 
-    it("should render with custom SDK", async () => {
+    it("should render with custom SDK", () => {
         renderChart([ReferenceMd.Amount]);
         expect(CoreAreaChart).toHaveBeenCalled();
     });

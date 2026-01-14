@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef } from "react";
 
@@ -227,8 +227,8 @@ export function GeoChartRenderer({
 
         const { selectedSegmentItems = [] } = config;
 
-        if (chartInstance.current!.getLayer(DEFAULT_LAYER_NAME)) {
-            chartInstance.current!.setFilter(DEFAULT_LAYER_NAME, createPushpinFilter(selectedSegmentItems));
+        if (chartInstance.current.getLayer(DEFAULT_LAYER_NAME)) {
+            chartInstance.current.setFilter(DEFAULT_LAYER_NAME, createPushpinFilter(selectedSegmentItems));
         }
     }, [config]);
 
@@ -237,7 +237,7 @@ export function GeoChartRenderer({
 
         const isViewportFrozenValue = isViewportFrozen();
 
-        chartInstance.current!.addControl(
+        chartInstance.current.addControl(
             new mapboxgl.AttributionControl({
                 compact: true,
             }),
@@ -276,6 +276,8 @@ export function GeoChartRenderer({
                 properties,
                 coordinates,
                 originalEvent.target,
+                originalEvent,
+                config.enableDrillMenuPositioningAtCursor ?? false,
             );
         },
         [config, drillableItems, drillConfig, dataView, geoData],

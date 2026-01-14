@@ -1,24 +1,24 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ReactNode } from "react";
 
-export interface CatalogDetailContentRowProps {
+export interface ICatalogDetailContentRowProps {
     title: ReactNode;
     content?: ReactNode;
 }
 
-export function CatalogDetailContentRow({ title, content }: CatalogDetailContentRowProps) {
+export function CatalogDetailContentRow({ title, content }: ICatalogDetailContentRowProps) {
     if (!content) {
         return null;
     }
     return (
         <>
-            <div className="gd-analytics-catalog-detail__tab-content__cell gd-analytics-catalog-detail__title-cell">
+            <dt className="gd-analytics-catalog-detail__tab-content__cell gd-analytics-catalog-detail__title-cell">
                 {title}
-            </div>
-            <div className="gd-analytics-catalog-detail__tab-content__cell gd-analytics-catalog-detail__detail-cell">
+            </dt>
+            <dd className="gd-analytics-catalog-detail__tab-content__cell gd-analytics-catalog-detail__detail-cell">
                 {content}
-            </div>
+            </dd>
         </>
     );
 }

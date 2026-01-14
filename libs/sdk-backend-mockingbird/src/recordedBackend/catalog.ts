@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IWorkspaceCatalog,
@@ -105,7 +105,9 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
         const typeFilteredItems = catalog.items.filter((item) => this.options.types.includes(item.type));
         const catalogItems = typeFilteredItems.map(this.convertToCatalogItem.bind(this));
 
-        return new RecordedCatalog(this.workspace, this.config, catalog.groups, catalogItems);
+        return Promise.resolve(
+            new RecordedCatalog(this.workspace, this.config, catalog.groups, catalogItems),
+        );
     };
 
     private convertToCatalogItem(catalogItem: CatalogItem) {
@@ -264,7 +266,9 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
     }
 
     public load = async (): Promise<IWorkspaceCatalogWithAvailableItems> => {
-        return new RecordedAvailableCatalog(this.workspace, this.config, this.groups, this.items);
+        return Promise.resolve(
+            new RecordedAvailableCatalog(this.workspace, this.config, this.groups, this.items),
+        );
     };
 }
 

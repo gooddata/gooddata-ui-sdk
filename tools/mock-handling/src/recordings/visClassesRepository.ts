@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import * as path from "path";
 
@@ -10,7 +10,7 @@ import { logWarn } from "../cli/loggers.js";
 function createRecording(directory: string): IRecording | null {
     try {
         return new VisClassesRecording(directory);
-    } catch (e) {
+    } catch (e: Error) {
         logWarn(
             `An error has occurred while loading visClasses recording from directory ${directory}: ${e} - the recording will not be included in further processing.`,
         );
@@ -25,6 +25,6 @@ function loadRecordings(recordingDefinition: string): IRecording[] {
     return [createRecording(directory)].filter(isNonNullRecording);
 }
 
-export async function discoverVisClassesRecordings(recordingDir: string): Promise<IRecording[]> {
+export function discoverVisClassesRecordings(recordingDir: string): IRecording[] {
     return findFiles(recordingDir, VisClassesDefinition).flatMap(loadRecordings);
 }

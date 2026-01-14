@@ -1,8 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { type ISemanticQualityIssueObject } from "@gooddata/sdk-model";
 import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
@@ -17,13 +18,14 @@ type Props = {
 };
 
 export function QualityIssueObjects({ objects, onObjectClick }: Props) {
+    const intl = useIntl();
     return (
         <ul className="gd-analytics-catalog__quality-issue__objects">
             {objects.map((obj) => {
                 const type = obj.type ? mapObjectType(obj.type) : undefined;
                 return (
                     <li key={obj.identifier} className="gd-analytics-catalog__quality-issue__object">
-                        {type ? <ObjectTypeIconMemo type={type} size={14} /> : null}
+                        {type ? <ObjectTypeIconMemo intl={intl} type={type} size={14} /> : null}
                         <span
                             className={cx(
                                 "gd-analytics-catalog__object-type",

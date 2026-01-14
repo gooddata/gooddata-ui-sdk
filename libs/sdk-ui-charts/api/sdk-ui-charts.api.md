@@ -8,7 +8,6 @@ import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
-import { ChartFillConfig } from '@gooddata/sdk-ui-vis-commons';
 import { ChartFillType } from '@gooddata/sdk-ui-vis-commons';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
@@ -23,6 +22,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { IChartFillConfig } from '@gooddata/sdk-ui-vis-commons';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
@@ -97,8 +97,6 @@ export type ChartCellTextWrapping = "clip" | "wrap";
 
 // @beta
 export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
-
-export { ChartFillConfig }
 
 export { ChartFillType }
 
@@ -321,7 +319,7 @@ export interface IChartConfig {
     chart?: any;
     // @internal
     chartConfigOverride?: string;
-    chartFill?: ChartFillConfig;
+    chartFill?: IChartFillConfig;
     // @beta
     clustering?: IChartClusteringConfig;
     colorMapping?: IColorMapping[];
@@ -342,6 +340,7 @@ export interface IChartConfig {
     enableAliasAttributeLabel?: boolean;
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
+    enableDrillMenuPositioningAtCursor?: boolean;
     // @internal
     enableExecutionCancelling?: boolean;
     // @internal
@@ -402,6 +401,8 @@ export interface IChartConfig {
     yLabel?: string;
     zoomInsight?: boolean;
 }
+
+export { IChartFillConfig }
 
 // @public (undocumented)
 export interface IChartLimits {

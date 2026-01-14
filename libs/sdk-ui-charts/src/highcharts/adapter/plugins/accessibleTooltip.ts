@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /*
  Accessible tooltip behavior:
@@ -12,8 +12,8 @@
 
 type StickyState = {
     isFrozen: boolean;
-    currentPoint?: any | null;
-    pendingPoint?: any | null;
+    currentPoint?: any;
+    pendingPoint?: any;
     activationTimer?: number | null;
     hideTimer?: number | null;
     activationDelayMs: number;

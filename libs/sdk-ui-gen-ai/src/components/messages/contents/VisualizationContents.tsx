@@ -385,14 +385,14 @@ function VisualizationContentsComponentCore({
     const moreButtonDescId = useId();
 
     const drillableItems = useMemo(() => {
-        if (enableChangeAnalysis) {
+        if (visualization && enableChangeAnalysis) {
             if (visualization.visualizationType === "TABLE") {
                 return metrics.filter(Boolean).map(headerPredicate);
             }
             return [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm);
         }
         return undefined;
-    }, [dimensions, enableChangeAnalysis, metrics, visualization.visualizationType]);
+    }, [dimensions, enableChangeAnalysis, metrics, visualization]);
 
     return (
         <div className={className}>
@@ -728,7 +728,7 @@ function VisualizationContentsComponentCore({
 }
 
 const assertNever = (value: never): never => {
-    throw new Error("Unknown visualization type: " + value);
+    throw new Error("Unknown visualization type:", value);
 };
 
 const visualizationTooltipOptions = {

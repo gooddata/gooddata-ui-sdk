@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -61,9 +61,9 @@ function setBaseChartBucketWarningMessages(
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES && intl) {
-                warningMessage = getBucketItemsWarningMessage(messages["metricStack"].id!, intl, stackItems);
+                warningMessage = getBucketItemsWarningMessage(messages["metricStack"].id, intl, stackItems);
             } else if (bucket.localIdentifier === BucketNames.STACK && intl) {
-                warningMessage = getTranslation(messages["categoryStack"].id!, intl);
+                warningMessage = getTranslation(messages["categoryStack"].id, intl);
             }
 
             if (warningMessage) {

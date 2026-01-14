@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -34,7 +34,7 @@ export class BulletChartConfigurationPanel extends ConfigurationPanelContent {
         const gridEnabled = typeof grid?.enabled === "undefined" ? true : grid.enabled;
 
         const controlsDisabled = this.isControlDisabled();
-        const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type!, controls, insight!);
+        const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const yAxisNameSubsectionDisabled = controlsDisabled || itemsOnYAxis === 0;
 
@@ -107,7 +107,7 @@ export class BulletChartConfigurationPanel extends ConfigurationPanelContent {
                     >
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText={messages["canvasGridLine"].id!}
+                            labelText={messages["canvasGridLine"].id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}

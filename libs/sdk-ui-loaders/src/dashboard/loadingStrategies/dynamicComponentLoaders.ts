@@ -15,7 +15,7 @@ import {
 import { determineDashboardEngine } from "./determineDashboardEngine.js";
 import { type LoadedPlugin, type ModuleFederationIntegration } from "../types.js";
 
-interface EntryPoint {
+interface IEntryPoint {
     pluginKey: string;
     engineKey: string;
     version: string;
@@ -177,7 +177,7 @@ function loadEntry(
     moduleName: string,
     { __webpack_init_sharing__, __webpack_share_scopes__ }: ModuleFederationIntegration,
 ) {
-    return async (): Promise<EntryPoint> => {
+    return async (): Promise<IEntryPoint> => {
         // Initializes the share scope. This fills it with known provided modules from this build and all remotes
         await __webpack_init_sharing__("default");
 
@@ -275,7 +275,7 @@ function initializeWindowPluginCacheIfNotFound(moduleName: string) {
 function getWindowPluginCache(moduleName: string): {
     plugin?: any;
     engine?: any;
-    entry?: EntryPoint;
+    entry?: IEntryPoint;
     pluginUrl?: string;
 } {
     initializeWindowPluginCacheIfNotFound(moduleName);
@@ -283,14 +283,14 @@ function getWindowPluginCache(moduleName: string): {
     return (<any>window)[cacheKey];
 }
 
-function cacheEngine(moduleName: string, url: string, entry: EntryPoint, engine: any) {
+function cacheEngine(moduleName: string, url: string, entry: IEntryPoint, engine: any) {
     const cache = getWindowPluginCache(moduleName);
     cache.engine = engine;
     cache.pluginUrl = url;
     cache.entry = entry;
 }
 
-function cachePlugin(moduleName: string, url: string, entry: EntryPoint, plugin: any) {
+function cachePlugin(moduleName: string, url: string, entry: IEntryPoint, plugin: any) {
     const cache = getWindowPluginCache(moduleName);
     cache.plugin = plugin;
     cache.pluginUrl = url;

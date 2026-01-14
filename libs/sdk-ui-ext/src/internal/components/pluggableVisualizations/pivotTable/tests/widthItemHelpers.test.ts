@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
@@ -40,7 +41,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
     const rowAttributes: IBucketItem[] = sourceReferencePoint.buckets[1].items;
     const columnAttributes: IBucketItem[] = sourceReferencePoint.buckets[2].items;
 
-    it("should remove invalid width items", async () => {
+    it("should remove invalid width items", () => {
         const previousRowAttributes: IBucketItem[] = sourceReferencePoint.buckets[1].items;
         const previousColumnAttributes: IBucketItem[] = sourceReferencePoint.buckets[2].items;
 
@@ -236,7 +237,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
 });
 
 describe("adaptReferencePointWidthItemsToPivotTable transposed", () => {
-    it("should remove invalid width items", async () => {
+    it("should remove invalid width items", () => {
         const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
 
         const sourceColumnWidths: ColumnWidthItem[] = [

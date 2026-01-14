@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -20,6 +20,7 @@ import { entryPoint } from "../plugin_entry/index.js";
  * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,
  * then that data will be available in
  */
+
 function MyCustomWidget(_props: IDashboardWidgetProps): ReactElement {
     return <div>Hello from custom widget</div>;
 }

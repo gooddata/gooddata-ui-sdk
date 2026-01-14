@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -21,12 +21,12 @@ const getOperatorItemTranslation = (operator: RankingFilterOperator) => {
     return operatorItems.find(({ value }) => value === operator)?.translationId ?? "";
 };
 
-interface OperatorDropdownComponentProps {
+interface IOperatorDropdownComponentProps {
     selectedValue: RankingFilterOperator;
     onSelect: (value: RankingFilterOperator) => void;
 }
 
-export function OperatorDropdown({ selectedValue, onSelect }: OperatorDropdownComponentProps) {
+export function OperatorDropdown({ selectedValue, onSelect }: IOperatorDropdownComponentProps) {
     const intl = useIntl();
 
     const [isOpen, setIsOpen] = useState(false);

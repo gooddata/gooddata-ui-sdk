@@ -16,10 +16,9 @@ import { ReactNode } from 'react';
 export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps): JSX.Element;
 
 // @public (undocumented)
-export interface FooterButtonAiAssistantProps {
-    // (undocumented)
+export type FooterButtonAiAssistantProps = {
     onClick?: (e: MouseEvent_2) => void;
-}
+};
 
 // @beta
 export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps): JSX.Element;

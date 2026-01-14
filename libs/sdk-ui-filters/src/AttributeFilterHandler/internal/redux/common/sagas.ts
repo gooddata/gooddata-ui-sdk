@@ -1,8 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type SagaIterator } from "redux-saga";
 import { getContext } from "redux-saga/effects";
 
-import { type AttributeFilterHandlerStoreContext } from "../store/types.js";
+import { type IAttributeFilterHandlerStoreContext } from "../store/types.js";
 
 /**
  * @internal
@@ -17,6 +18,6 @@ export type PromiseFnReturnType<T extends (...args: any) => any> = PromiseReturn
 /**
  * @internal
  */
-export function* getAttributeFilterContext(): SagaIterator<AttributeFilterHandlerStoreContext> {
+export function* getAttributeFilterContext(): SagaIterator<IAttributeFilterHandlerStoreContext> {
     return yield getContext("attributeFilterContext");
 }

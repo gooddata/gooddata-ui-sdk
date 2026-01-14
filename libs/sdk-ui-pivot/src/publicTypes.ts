@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type WrappedComponentProps } from "react-intl";
 
@@ -173,6 +173,14 @@ export interface IPivotTableConfig {
      * Default: false
      */
     enableExecutionCancelling?: boolean;
+
+    /**
+     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
+     *
+     * @remarks
+     * Feature flag. Default: false.
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 
     /**
      * Customize position of grand totals rows in the table.

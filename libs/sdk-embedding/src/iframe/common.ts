@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 /**
  * List of products using post events
@@ -166,7 +166,11 @@ export type CommandFailedData<Product> = IGdcMessageEnvelope<
  * @public
  */
 export function isCommandFailedData<Product>(obj: unknown): obj is CommandFailedData<Product> {
-    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcEventType.AppCommandFailed;
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === (GdcEventType.AppCommandFailed as string)
+    );
 }
 
 /**

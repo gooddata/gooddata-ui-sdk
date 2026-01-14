@@ -298,7 +298,7 @@ export function newMeasureValueFilter(
                     range: {
                         operator,
                         from: val1,
-                        to: val2OrTreatNullValuesAsInComparison!,
+                        to: val2OrTreatNullValuesAsInComparison,
                         ...nullValuesProp,
                     },
                 },

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -72,6 +72,7 @@ const ObjectTypeRoleIconMemo = memo(function ObjectTypeRoleIcon(props: ObjectTyp
             anchor={
                 <ObjectTypeIconMemo
                     className="gd-analytics-catalog__table__column-icon"
+                    intl={intl}
                     type={type}
                     visualizationType={visualizationType}
                     backgroundSize={26}

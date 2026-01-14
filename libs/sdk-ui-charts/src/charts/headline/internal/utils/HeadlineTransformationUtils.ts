@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -9,6 +9,7 @@ import { type DataValue, type IMeasureDescriptor, type Identifier } from "@goodd
 import {
     DataViewFacade,
     type HeadlineElementType,
+    type IChartCoordinates,
     type IDrillEvent,
     type IDrillEventContextHeadline,
     type IDrillEventIntersectionElement,
@@ -159,10 +160,13 @@ export function applyDrillableItems(
  *
  * @param itemContext - data received from the click on the {@link Headline} component.
  * @param dataView - data visualized by the headline
+ * @param chartCoordinates - optional click coordinates for drill popover positioning
  */
 export function buildDrillEventData(
     itemContext: IHeadlineDrillItemContext,
     dataView: IDataView,
+    elementTarget?: EventTarget,
+    chartCoordinates?: IChartCoordinates,
 ): IDrillEvent {
     const dv = DataViewFacade.for(dataView);
     const measureHeaderItem = dv.meta().measureDescriptor(itemContext.localIdentifier);
@@ -183,5 +187,13 @@ export function buildDrillEventData(
     return {
         dataView,
         drillContext,
+        ...(chartCoordinates
+            ? {
+                  target: elementTarget as HTMLElement | undefined,
+                  chartX: chartCoordinates?.chartX,
+                  chartY: chartCoordinates?.chartY,
+                  enableDrillMenuPositioningAtCursor: true,
+              }
+            : {}),
     };
 }

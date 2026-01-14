@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
@@ -37,7 +38,7 @@ function setWaterfallChartBucketWarningMessages(referencePoint: IExtendedReferen
         }
 
         if (!bucketUiConfig?.canAddItems && bucket.localIdentifier === BucketNames.VIEW) {
-            const warningMessage = getTranslation(messages["category"].id!, intl);
+            const warningMessage = getTranslation(messages["category"].id, intl);
             set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
         }
     });

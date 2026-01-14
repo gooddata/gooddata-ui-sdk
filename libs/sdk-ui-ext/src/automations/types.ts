@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type Dispatch, type ReactNode, type SetStateAction } from "react";
 
@@ -192,7 +192,7 @@ export interface IAutomationsCoreProps {
     onLoad?: AutomationsOnLoad;
 }
 
-export interface FilterOptionsContextValue {
+export interface IFilterOptionsContextValue {
     workspaceUsers: IWorkspaceUser[] | IOrganizationUser[];
     dashboards: IListedDashboard[];
     workspaces: IWorkspaceDescriptor[];
@@ -201,7 +201,7 @@ export interface FilterOptionsContextValue {
     workspacesLoading: boolean;
 }
 
-export interface UserContextValue {
+export interface IUserContextValue {
     canManageAutomation: (automation: IAutomationMetadataObject) => boolean;
     isSubscribedToAutomation: (automation: IAutomationMetadataObject) => boolean;
     isCurrentUserByLogin: (userLogin: string) => boolean;

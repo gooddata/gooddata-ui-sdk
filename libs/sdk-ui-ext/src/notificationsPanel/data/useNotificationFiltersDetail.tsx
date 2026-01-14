@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -82,9 +82,7 @@ export function useNotificationsFilterDetail(notification: IAlertNotification) {
                         const ref = filterObjRef(filter);
                         if (!ref) {
                             const attribute = automationAlert.execution.attributes.find(
-                                (a) =>
-                                    a.attribute.localIdentifier ===
-                                    getObjRefInScopeLocalId(filter as IAttributeFilter),
+                                (a) => a.attribute.localIdentifier === getObjRefInScopeLocalId(filter),
                             );
 
                             if (!attribute) {

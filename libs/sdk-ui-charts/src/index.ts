@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 /**
  * This package provides a set of React-based chart visualizations that you can use to visualize your data.
  *
@@ -50,6 +51,6 @@ export type {
     IPatternOptionsObject,
     IPatternFill,
     PatternFillName,
-    ChartFillConfig,
+    IChartFillConfig,
     ChartFillType,
 } from "@gooddata/sdk-ui-vis-commons";

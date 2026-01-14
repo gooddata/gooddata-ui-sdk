@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -27,7 +27,7 @@ describe("Paging", () => {
         expect(screen.getByText("of 2")).toBeInTheDocument();
     });
 
-    it("should call showNextPage", async () => {
+    it("should call showNextPage", () => {
         const showNextPage = vi.fn();
         renderComponent({ showNextPage });
         fireEvent.click(screen.getAllByRole("button")[1]);

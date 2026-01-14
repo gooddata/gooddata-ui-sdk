@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { findLastIndex } from "lodash-es";
 
@@ -11,7 +11,7 @@ import {
     isRgbColor,
 } from "@gooddata/sdk-model";
 import { type IColorAssignment } from "@gooddata/sdk-ui";
-import { type ChartFillConfig, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
 import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
 import { type IChartConfig, type ITotalConfig } from "../../../interfaces/index.js";
@@ -63,7 +63,7 @@ function buildTotalMetricsSeries(
     chartConfig: IChartConfig,
     colorAssignment: IColorAssignment,
     colorPalette: IColorPalette,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
 ) {
     const data = (series[0]?.data ?? []).reduce(
@@ -118,7 +118,7 @@ export function buildWaterfallChartSeries(
     colorAssignment: IColorAssignment,
     colorPalette: IColorPalette,
     emptyHeaderTitle: string,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
 ): ISeriesItem[] {
     const isTotalSeriesEnabled = isTotalColumnEnabled(chartConfig);

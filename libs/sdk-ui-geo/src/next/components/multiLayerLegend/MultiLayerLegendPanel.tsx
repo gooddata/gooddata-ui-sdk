@@ -1,6 +1,15 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type ReactElement, memo, useCallback, useId, useLayoutEffect, useRef, useState } from "react";
+import {
+    type ReactElement,
+    memo,
+    useCallback,
+    useId,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 
@@ -20,6 +29,9 @@ type SectionHeights = Record<string, number>;
 
 // Section header height (matches CSS variable --gd-geo-multi-layer-legend__section-header-height)
 const COLLAPSED_SECTION_HEIGHT = 34;
+// Matches the 10px top + 10px bottom spacing from `_geo-multi-layer-legend.scss`
+// and the `max-height: calc(100% - 20px)` rule.
+const LEGEND_VERTICAL_MARGIN_PX = 20;
 
 /**
  * Hook to manage flexible height distribution for collapsible sections.
@@ -62,7 +74,14 @@ function useFlexibleHeightSections(sections: ILegendSection[], expandedState: Ex
 
         // On first render, cache container height and section heights
         if (fullContainerHeight.current === null) {
-            fullContainerHeight.current = container.clientHeight;
+            // Use the map container height as the available space, not the legend's initial content height.
+            // Otherwise, expanding one section can incorrectly force other sections into "flexible/scrollable"
+            // mode even when there is still plenty of vertical space.
+            const parentHeight = container.parentElement?.clientHeight;
+            fullContainerHeight.current =
+                typeof parentHeight === "number" && parentHeight > 0
+                    ? Math.max(0, parentHeight - LEGEND_VERTICAL_MARGIN_PX)
+                    : container.clientHeight;
             sections.forEach((section) => {
                 const el = sectionRefs.current[section.layerId];
                 fullSectionHeights.current[section.layerId] = el?.scrollHeight ?? 0;
@@ -192,12 +211,16 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
 }: IMultiLayerLegendPanelProps): ReactElement | null {
     const panelId = useId();
 
+    // Render legend sections in reverse order so the first defined layer appears on top.
+    // This is purely a presentation concern - underlying layer order stays unchanged.
+    const sections = useMemo(() => [...model.sections].reverse(), [model.sections]);
+
     // Manage expanded/collapsed state for each section
     const [expandedState, setExpandedState] = useState<ExpandedState>(() => initializeExpandedState(model));
 
     // Flexible height management
     const { containerRef, getSectionRef, setSectionRef, containerHeight, flexibleSections } =
-        useFlexibleHeightSections(model.sections, expandedState);
+        useFlexibleHeightSections(sections, expandedState);
 
     const handleExpandedChange = useCallback((layerId: string, expanded: boolean) => {
         setExpandedState((prev) => ({
@@ -223,12 +246,12 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
         [hiddenLayers, onLayerVisibilityChange],
     );
 
-    if (!enabled || model.sections.length === 0) {
+    if (!enabled || sections.length === 0) {
         return null;
     }
 
     // For single-layer legends, hide the layer visibility toggle
-    const isSingleLayer = model.sections.length === 1;
+    const isSingleLayer = sections.length === 1;
 
     // Map position to overlay corner
     // Multi-layer legend overlays the map, so we default to top-right to not obscure the map
@@ -257,7 +280,7 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
             aria-label={model.title ?? "Map legend"}
             data-testid="gd-geo-multi-layer-legend"
         >
-            {model.sections.map((section, index) => (
+            {sections.map((section, index) => (
                 <MultiLayerLegendSection
                     key={section.layerId}
                     setSectionRef={setSectionRef(section.layerId)}

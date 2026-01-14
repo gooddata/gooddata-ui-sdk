@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { cloneDeep, compact, omit } from "lodash-es";
 
@@ -123,7 +123,9 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 
         newReferencePoint = configRepeaterBuckets(newReferencePoint);
         newReferencePoint = setRepeaterUiConfig(newReferencePoint, this.intl);
-        return sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters);
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     };
 
     public getExecution(

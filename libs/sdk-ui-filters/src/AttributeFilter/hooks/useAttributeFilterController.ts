@@ -202,7 +202,7 @@ export const useAttributeFilterController = (
         {
             onApply: onApply!,
             onSelect: onSelect!,
-            setConnectedPlaceholderValue: setConnectedPlaceholderValue!,
+            setConnectedPlaceholderValue: setConnectedPlaceholderValue,
             selectionMode,
             shouldReloadElements,
             setShouldReloadElements,
@@ -221,8 +221,8 @@ export const useAttributeFilterController = (
 
     useSingleSelectModeHandler(handler!, {
         selectFirst,
-        onApply: callbacks.onApply!,
-        onSelect: callbacks.onSelect!,
+        onApply: callbacks.onApply,
+        onSelect: callbacks.onSelect,
         selectionMode,
         withoutApply: withoutApply ?? false,
     });
@@ -1105,7 +1105,7 @@ const useReportMigratedFilter = (
             "AttributeFilter: Filter label migration reported to filter's parent app. Original filter label:",
             filterObjRef(handler.getOriginalFilter()!),
             "new filter label:",
-            filterObjRef(handler.getFilter()!),
+            filterObjRef(handler.getFilter()),
             "new filter displayAsLabel:",
             handler.getDisplayAsLabel(),
         );

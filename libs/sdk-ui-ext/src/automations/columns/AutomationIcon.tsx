@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -42,7 +42,7 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         const status = automation?.lastRun?.errorMessage;
 
         const onCopyTraceId = () => {
-            navigator.clipboard.writeText(traceId!);
+            void navigator.clipboard.writeText(traceId!);
             addSuccess(messages.messageAutomationIconTooltipTraceIdCopied);
         };
 

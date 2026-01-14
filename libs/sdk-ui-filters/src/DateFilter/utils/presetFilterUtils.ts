@@ -96,9 +96,10 @@ export function getFiscalTabsConfig(
  *
  * @remarks
  * Priority:
- * 1. If current preset is fiscal, stay on fiscal tab (respect user's current selection)
- * 2. Otherwise, use the default from activeCalendars settings
- * 3. Fall back to "standard" if no configuration
+ * 1. If current preset uses fiscal-only granularity → fiscal tab
+ * 2. If current preset uses standard-only granularity → standard tab
+ * 3. If current preset uses shared granularity (week, day, etc.) → use settings default
+ * 4. Fall back to "standard" if no configuration
  *
  * @param activeCalendars - Optional active calendars configuration from workspace settings
  * @param currentPreset - The currently selected date filter option
@@ -109,11 +110,22 @@ export function getDefaultCalendarTab(
     activeCalendars?: IActiveCalendars,
     currentPreset?: DateFilterOption,
 ): CalendarTabType {
-    // Respect current preset's calendar type first
-    if (currentPreset && getTabForPreset(currentPreset) === "fiscal") {
-        return "fiscal";
+    if (currentPreset) {
+        const granularity = "granularity" in currentPreset ? currentPreset.granularity : undefined;
+
+        if (granularity) {
+            // Fiscal-only granularities → always fiscal tab
+            if (FISCAL_ONLY_GRANULARITIES.some((g) => g === granularity)) {
+                return "fiscal";
+            }
+            // Standard-only granularities → always standard tab
+            if (STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT.includes(granularity)) {
+                return "standard";
+            }
+        }
     }
-    // Use default from settings, fall back to standard
+
+    // Shared granularities or no preset → use settings default
     return activeCalendars?.default === "FISCAL" ? "fiscal" : "standard";
 }
 

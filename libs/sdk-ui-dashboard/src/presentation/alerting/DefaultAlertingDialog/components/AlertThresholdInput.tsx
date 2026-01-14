@@ -1,6 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type FocusEvent } from "react";
+
+import { useIntl } from "react-intl";
 
 import { Input } from "@gooddata/sdk-ui-kit";
 
@@ -21,7 +23,9 @@ export function AlertThresholdInput({
     suffix,
     errorMessage,
 }: IAlertThresholdInputProps) {
+    const intl = useIntl();
     const hasError = !!errorMessage;
+    const errorId = `${id}-error`;
 
     return (
         <div>
@@ -35,11 +39,19 @@ export function AlertThresholdInput({
                 type="number"
                 suffix={suffix}
                 hasError={hasError}
-                aria-describedby={hasError ? "gd-threshold-field-error" : undefined}
-                aria-invalid={hasError}
+                accessibilityConfig={{
+                    ariaDescribedBy: hasError ? errorId : undefined,
+                    ariaInvalid: hasError,
+                    suffixAriaLabel:
+                        suffix === "%"
+                            ? intl.formatMessage({
+                                  id: "input.unit.percent",
+                              })
+                            : suffix,
+                }}
             />
             {errorMessage ? (
-                <div id="gd-threshold-field-error" className="gd-threshold-field-error">
+                <div id={errorId} className="gd-threshold-field-error">
                     {errorMessage}
                 </div>
             ) : null}

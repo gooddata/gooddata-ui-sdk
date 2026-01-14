@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IMeasureGroupDescriptor, type ITheme } from "@gooddata/sdk-model";
 import { GD_COLOR_WHITE } from "@gooddata/sdk-ui-kit";
 import {
-    type ChartFillConfig,
+    type IChartFillConfig,
     type PatternFillName,
     getLighterColor,
     getPatternFill,
@@ -46,7 +46,7 @@ const OUTLINE_FILL_PERCENT = 0.9;
 
 export function getChartFillProperties(
     theme: ITheme | undefined,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     color: string,
     patternFillIndex: number | PatternFillName,
     isTransparent = true,
@@ -74,7 +74,7 @@ export function getChartFillProperties(
 // determine what pattern fill to use for a given measure, either the explicitly set by the user for
 // the measure, or automatic one based on the color index
 export function getColorOrPatternFillIndex(
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     measureIndex: number,
     colorIndex: number,
@@ -87,6 +87,6 @@ export function getColorOrPatternFillIndex(
 }
 
 // handle config or the type being undefined, returning the default value (solid)
-export function isSolidFill(chartFill: ChartFillConfig | undefined): boolean {
+export function isSolidFill(chartFill: IChartFillConfig | undefined): boolean {
     return chartFill?.type === undefined || chartFill?.type === "solid";
 }

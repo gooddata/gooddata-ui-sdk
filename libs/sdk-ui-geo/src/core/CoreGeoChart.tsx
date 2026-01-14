@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import type { ComponentType } from "react";
+import type { ComponentClass, ComponentType } from "react";
 
 import { type WrappedComponentProps } from "react-intl";
 
@@ -13,7 +13,11 @@ import { geoValidatorHOC } from "./geoChart/GeoValidatorHOC.js";
 import { withMapboxToken } from "./MapboxTokenProvider.js";
 
 const WrappedCoreGeoChart = withTheme(
-    withMapboxToken(geoValidatorHOC(withEntireDataView(GeoChartOptionsWrapper) as any)),
+    withMapboxToken(
+        geoValidatorHOC(
+            withEntireDataView(GeoChartOptionsWrapper) as unknown as ComponentClass<unknown, any>,
+        ),
+    ),
 ) as ComponentType<any>;
 
 /**

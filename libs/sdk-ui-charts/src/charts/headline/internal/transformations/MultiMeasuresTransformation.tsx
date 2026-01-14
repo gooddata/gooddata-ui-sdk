@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -19,7 +19,7 @@ export function MultiMeasuresTransformation({
     onAfterRender,
     onDrill,
 }: IHeadlineTransformationProps) {
-    const { handleFiredDrillEvent } = useFireDrillEvent(dataView, onDrill!);
+    const { handleFiredDrillEvent } = useFireDrillEvent(dataView, onDrill);
 
     const data = useMemo(() => getBaseHeadlineData(dataView, drillableItems), [dataView, drillableItems]);
 

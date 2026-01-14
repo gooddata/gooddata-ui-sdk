@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type AriaAttributes, type KeyboardEvent } from "react";
 
@@ -46,7 +46,7 @@ export interface ITimeInputErrorMessageTexts {
     startTimeAfterEndTime: string;
 }
 
-export interface InputErrorMessageTexts {
+export interface IInputErrorMessageTexts {
     dateInput: IDateInputErrorMessageTexts;
     timeInput: ITimeInputErrorMessageTexts;
 }

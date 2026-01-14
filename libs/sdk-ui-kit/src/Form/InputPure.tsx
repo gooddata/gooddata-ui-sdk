@@ -1,6 +1,7 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
+    type AriaAttributes,
     type ChangeEvent,
     type FocusEvent,
     type KeyboardEvent,
@@ -10,6 +11,7 @@ import {
 } from "react";
 
 import cx from "classnames";
+import { v4 as uuid } from "uuid";
 
 import { runAutofocus } from "./focus.js";
 import { type IconType } from "../@ui/@types/icon.js";
@@ -17,6 +19,15 @@ import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { type IDomNative, type IDomNativeProps } from "../typings/domNative.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
+
+/**
+ * @internal
+ */
+export interface IInputPureAccessibilityConfig extends IAccessibilityConfigBase {
+    prefixAriaLabel?: string;
+    suffixAriaLabel?: string;
+    ariaInvalid?: AriaAttributes["aria-invalid"];
+}
 
 /**
  * @internal
@@ -49,7 +60,7 @@ export interface InputPureProps extends IDomNativeProps {
     type?: string;
     required?: boolean;
     accessibilityType?: string;
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IInputPureAccessibilityConfig;
     autocomplete?: string;
     iconButton?: IconType;
     onIconButtonClick?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -62,6 +73,7 @@ export interface InputPureProps extends IDomNativeProps {
 export class InputPure extends PureComponent<InputPureProps> implements IDomNative {
     public inputNodeRef: HTMLInputElement | null = null;
     private autofocusDispatcher: () => void = () => {};
+    private readonly a11yIdBase = uuid();
 
     static defaultProps = {
         autofocus: false,
@@ -73,11 +85,11 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         isSearch: false,
         isSmall: false,
         maxlength: 255,
-        onChange: (..._: any[]) => {},
-        onEscKeyPress: (..._: any[]) => {},
-        onEnterKeyPress: (..._: any[]) => {},
-        onBlur: (..._: any[]) => {},
-        onFocus: (..._: any[]) => {},
+        onChange: (..._args: unknown[]) => {},
+        onEscKeyPress: (..._args: unknown[]) => {},
+        onEnterKeyPress: (..._args: unknown[]) => {},
+        onBlur: (..._args: unknown[]) => {},
+        onFocus: (..._args: unknown[]) => {},
         placeholder: "",
         prefix: "",
         readonly: false,
@@ -155,21 +167,47 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         });
     }
 
-    renderPrefix(prefix: string): ReactNode {
+    private getA11yIdBase(): string {
+        return this.props.id ?? this.a11yIdBase;
+    }
+
+    private getPrefixA11yId(): string {
+        return `${this.getA11yIdBase()}-a11y-prefix`;
+    }
+
+    private getSuffixA11yId(): string {
+        return `${this.getA11yIdBase()}-a11y-suffix`;
+    }
+
+    renderPrefix(prefix: string, ariaLabel?: string): ReactNode {
         return prefix ? (
-            <span className="gd-input-prefix" aria-label="Input prefix">
-                {prefix}
-            </span>
+            <>
+                <span className="gd-input-prefix" aria-hidden="true">
+                    {prefix}
+                </span>
+                {ariaLabel ? (
+                    <span className="sr-only" id={this.getPrefixA11yId()}>
+                        {ariaLabel}
+                    </span>
+                ) : null}
+            </>
         ) : (
             false
         );
     }
 
-    renderSuffix(suffix: string): ReactNode {
+    renderSuffix(suffix: string, ariaLabel?: string): ReactNode {
         return suffix ? (
-            <span className="gd-input-suffix" aria-label="Input suffix">
-                {suffix}
-            </span>
+            <>
+                <span className="gd-input-suffix" aria-hidden="true">
+                    {suffix}
+                </span>
+                {ariaLabel ? (
+                    <span className="sr-only" id={this.getSuffixA11yId()}>
+                        {ariaLabel}
+                    </span>
+                ) : null}
+            </>
         ) : (
             false
         );
@@ -224,6 +262,21 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         );
     }
 
+    getAriaDescribedBy(): string | undefined {
+        const { prefix, suffix, accessibilityConfig } = this.props;
+
+        const describedBy = [
+            prefix && accessibilityConfig?.prefixAriaLabel ? this.getPrefixA11yId() : undefined,
+            suffix && accessibilityConfig?.suffixAriaLabel ? this.getSuffixA11yId() : undefined,
+            accessibilityConfig?.ariaDescribedBy,
+        ]
+            .filter(Boolean)
+            .join(" ")
+            .trim();
+
+        return describedBy.length ? describedBy : undefined;
+    }
+
     renderInput() {
         const {
             clearOnEsc,
@@ -270,20 +323,21 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
                     value={value}
                     role={accessibilityConfig?.role}
                     aria-label={accessibilityConfig?.ariaLabel ?? undefined}
-                    aria-describedby={accessibilityConfig?.ariaDescribedBy}
+                    aria-describedby={this.getAriaDescribedBy()}
                     aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                     aria-expanded={accessibilityConfig?.ariaExpanded}
                     aria-controls={accessibilityConfig?.ariaControls}
                     aria-activedescendant={accessibilityConfig?.ariaActiveDescendant}
                     aria-readonly={readonly || undefined}
                     aria-autocomplete={accessibilityConfig?.ariaAutocomplete}
+                    aria-invalid={accessibilityConfig?.ariaInvalid}
                     autoComplete={isSearch ? "off" : autocomplete}
                     data-testid={dataTestId}
                 />
                 {this.renderSearch(isSearch ?? false)}
                 {this.renderClearIcon(clearOnEsc ?? false)}
-                {this.renderPrefix(prefix ?? "")}
-                {this.renderSuffix(suffix ?? "")}
+                {this.renderPrefix(prefix ?? "", accessibilityConfig?.prefixAriaLabel)}
+                {this.renderSuffix(suffix ?? "", accessibilityConfig?.suffixAriaLabel)}
                 {this.renderIconButton(iconButton!, iconButtonLabel ?? "", onIconButtonClick!)}
             </div>
         );

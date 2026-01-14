@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type MutableRefObject } from "react";
 
@@ -96,7 +96,7 @@ function createMeasureLocator(measure: IMeasure): IRepeaterMeasureColumnLocator 
 //check
 
 export function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
-    return columnEvent?.source === ColumnEventSourceType.UI_RESIZED && !!columnEvent.columns;
+    return columnEvent?.source === (ColumnEventSourceType.UI_RESIZED as string) && !!columnEvent.columns;
 }
 
 export function isAttributeColumnWidthItem(obj: any): obj is IRepeaterAttributeColumnWidthItem {

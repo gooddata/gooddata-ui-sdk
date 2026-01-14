@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -133,7 +134,7 @@ describe("AttributeFilterHandler", () => {
         expect(onLoadNextElementsPageCancel.mock.calls[0]).toMatchSnapshot("with parameters");
     });
 
-    it("loadNextElementsPage() should throw error if it's called before the initialization", async () => {
+    it("loadNextElementsPage() should throw error if it's called before the initialization", () => {
         const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
             positiveAttributeFilterDefaultDF,
         );

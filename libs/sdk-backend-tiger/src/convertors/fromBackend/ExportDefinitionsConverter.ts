@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { v4 as uuid } from "uuid";
@@ -134,7 +134,7 @@ export const convertVisualExportRequest = (
         enableAutomationFilterContext && metadata?.filtersByTab
             ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
                   (acc, [tabId, tabFilters]) => {
-                      acc[tabId] = (tabFilters as FilterContextItem[]).map(cloneWithSanitizedIds);
+                      acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
                       return acc;
                   },
                   {},
@@ -229,7 +229,7 @@ export const convertSlidesExportRequest = (
     const filtersByTab = metadataObj?.filtersByTab
         ? Object.entries(metadataObj.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
               (acc, [tabId, tabFilters]) => {
-                  acc[tabId] = (tabFilters as FilterContextItem[]).map(cloneWithSanitizedIds);
+                  acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
                   return acc;
               },
               {},
@@ -385,7 +385,7 @@ const convertExportDefinitionRequestPayload = (
             enableAutomationFilterContext && metadata?.filtersByTab
                 ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
                       (acc, [tabId, tabFilters]) => {
-                          acc[tabId] = (tabFilters as FilterContextItem[]).map(cloneWithSanitizedIds);
+                          acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
                           return acc;
                       },
                       {},

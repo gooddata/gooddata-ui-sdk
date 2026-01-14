@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IAttributeElement } from "@gooddata/sdk-model";
 
 import { type AttributeElementKey } from "../../../types/index.js";
-import { type AttributeFilterState } from "../store/state.js";
+import { type IAttributeFilterState } from "../store/state.js";
 
 /**
  * Special key used to represent null values in the cache.
@@ -14,7 +14,7 @@ export const NULL_KEY = "**__null__**";
 /**
  * @internal
  */
-export const selectState = (state: AttributeFilterState) => state;
+export const selectState = (state: IAttributeFilterState) => state;
 
 /**
  * Converts an element key to a cache key. Null keys are converted to the NULL_KEY.
@@ -43,9 +43,9 @@ export const getElementCacheKey = (element: IAttributeElement): string => toCach
 /**
  * @internal
  */
-export const selectElementsForm = (state: AttributeFilterState) => state.elementsForm;
+export const selectElementsForm = (state: IAttributeFilterState) => state.elementsForm;
 
 /**
  * @internal
  */
-export const selectWithoutApply = (state: AttributeFilterState) => state.config.withoutApply;
+export const selectWithoutApply = (state: IAttributeFilterState) => state.config.withoutApply;

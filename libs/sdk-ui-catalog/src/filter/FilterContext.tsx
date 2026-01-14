@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type PropsWithChildren, createContext, useContext, useMemo, useReducer } from "react";
 
@@ -20,7 +20,7 @@ interface IFilterParams<T> {
     isInverted: boolean;
 }
 
-interface IFilterState {
+interface IFilterStateBase {
     types: ObjectType[];
     origin: ObjectOrigin;
     createdBy: IFilterParams<string[]>;
@@ -29,7 +29,7 @@ interface IFilterState {
     isHidden: boolean | undefined;
 }
 
-interface FilterState extends IFilterState {
+interface IFilterState extends IFilterStateBase {
     // Derived state
     isModified: boolean;
 }
@@ -57,7 +57,7 @@ type FilterReducerAction =
     | { type: "reset" }
     | { type: "toggleTag"; payload: string };
 
-const initialState: IFilterState = {
+const initialState: IFilterStateBase = {
     types: [],
     origin: "ALL",
     createdBy: { values: [], isInverted: true },
@@ -66,7 +66,7 @@ const initialState: IFilterState = {
     isHidden: undefined,
 };
 
-const initialFullState: FilterState = {
+const initialFullState: IFilterState = {
     ...initialState,
     // Derived state
     isModified: false,
@@ -85,13 +85,13 @@ const initialActions: IFilterActions = {
     toggleTag: () => {},
 };
 
-const FilterStateContext = createContext<FilterState>(initialFullState);
+const FilterStateContext = createContext<IFilterState>(initialFullState);
 const FilterActionsContext = createContext<IFilterActions>(initialActions);
 
 export function FilterProvider({ children }: PropsWithChildren) {
     const [filters, dispatch] = useReducer(filterReducer, initialState);
 
-    const state: FilterState = useMemo(
+    const state: IFilterState = useMemo(
         () => ({
             ...filters,
             // Derived state
@@ -121,7 +121,7 @@ export function FilterProvider({ children }: PropsWithChildren) {
     );
 }
 
-function filterReducer(state: IFilterState, action: FilterReducerAction): IFilterState {
+function filterReducer(state: IFilterStateBase, action: FilterReducerAction): IFilterStateBase {
     switch (action.type) {
         // Setters
         case "setTypes": {

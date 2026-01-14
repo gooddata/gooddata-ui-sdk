@@ -1,4 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 export interface IMeasureHeaderItem {
@@ -76,7 +77,7 @@ export type IResultHeaderItem =
     | IResultMeasureHeaderItem
     | IResultTotalHeaderItem;
 
-export interface Warning {
+export interface IWarning {
     warningCode: string;
     message: string;
     parameters?: any[];
@@ -92,7 +93,7 @@ export interface IExecutionResult {
         offset: number[];
         total: number[];
     };
-    warnings?: Warning[];
+    warnings?: IWarning[];
 }
 
 export interface IExecutionResponse {

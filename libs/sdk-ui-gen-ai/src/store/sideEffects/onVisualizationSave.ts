@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    type IAttribute,
     type IAttributeOrMeasure,
     type IBucket,
     type IGenAIVisualization,
@@ -116,11 +116,11 @@ const buildBarChart = (
 
     const buckets: IBucket[] = [
         newBucket(BucketNames.MEASURES, ...metrics),
-        newBucket(BucketNames.VIEW, ...(viewBy as IAttribute[])),
+        newBucket(BucketNames.VIEW, ...viewBy),
     ];
 
     if (stackBy) {
-        newBucket(BucketNames.STACK, stackBy as IAttribute);
+        newBucket(BucketNames.STACK, stackBy);
     }
 
     return {
@@ -166,10 +166,7 @@ const buildPieChart = (
         insight: {
             title: visualizationTitle,
             visualizationUrl: "local:pie",
-            buckets: [
-                newBucket(BucketNames.MEASURES, ...metrics),
-                newBucket(BucketNames.VIEW, ...(viewBy as IAttribute[])),
-            ],
+            buckets: [newBucket(BucketNames.MEASURES, ...metrics), newBucket(BucketNames.VIEW, ...viewBy)],
             filters: exec.filters,
             sorts: [],
             properties: {},
@@ -189,11 +186,11 @@ const buildLineChart = (
 
     const buckets: IBucket[] = [
         newBucket(BucketNames.MEASURES, ...metrics),
-        newBucket(BucketNames.TREND, viewBy as IAttribute),
+        newBucket(BucketNames.TREND, viewBy),
     ];
 
     if (segmentBy && metrics.length <= 1) {
-        newBucket(BucketNames.SEGMENT, segmentBy as IAttribute);
+        newBucket(BucketNames.SEGMENT, segmentBy);
     }
 
     return {
@@ -220,7 +217,7 @@ const buildTableChart = (
 
     const buckets: IBucket[] = [
         newBucket(BucketNames.MEASURES, ...applyRatioRule(exec.metrics as IAttributeOrMeasure[])),
-        newBucket(BucketNames.ATTRIBUTE, ...(exec.dimensions as IAttribute[])),
+        newBucket(BucketNames.ATTRIBUTE, ...exec.dimensions),
     ];
 
     return {

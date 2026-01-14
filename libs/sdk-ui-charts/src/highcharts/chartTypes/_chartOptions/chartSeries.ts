@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type DataValue, type IMeasureGroupDescriptor, type ITheme } from "@gooddata/sdk-model";
 import { type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import {
-    type ChartFillConfig,
+    type IChartFillConfig,
     type IColorStrategy,
     valueWithEmptyHandling,
 } from "@gooddata/sdk-ui-vis-commons";
@@ -43,7 +43,7 @@ export function getSeriesItemData(
     type: string | undefined,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
 ): IPointData[] {
     return seriesItem.map((pointValue: DataValue, pointIndex: number) => {
@@ -137,7 +137,7 @@ function getDefaultSeries(
     type: string | undefined,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
 ): ISeriesItemConfig[] {
     return dv
@@ -219,7 +219,7 @@ export function getSeries(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     theme: ITheme | undefined,
-    chartFill: ChartFillConfig | undefined,
+    chartFill: IChartFillConfig | undefined,
     chartConfig?: IChartConfig,
 ): any {
     if (isHeatmap(type)) {

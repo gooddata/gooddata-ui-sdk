@@ -70,7 +70,7 @@ async function loadFeatures(
     }
 
     if (featuresAreStatic(features)) {
-        return await getStaticFeatures(features.static);
+        return getStaticFeatures(features.static);
     }
     return Promise.resolve({});
 }

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, act } from "react";
 
@@ -19,8 +19,8 @@ import { type ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
 const renderComponent = async (component: ReactElement): Promise<RenderResult> => {
     let wrappedComponent: RenderResult | undefined;
     await suppressConsole(
-        async () =>
-            act(async () => {
+        () =>
+            act(() => {
                 wrappedComponent = render(component);
             }),
         "error",

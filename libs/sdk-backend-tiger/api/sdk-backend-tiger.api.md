@@ -106,16 +106,6 @@ export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
 // @internal (undocumented)
 export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
-// @internal (undocumented)
-export interface Entitlement {
-    // (undocumented)
-    expiry?: string;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    value?: string;
-}
-
 export { GdStorageFile }
 
 export { GenerateLdmRequest }
@@ -124,7 +114,7 @@ export { GenerateLdmRequest }
 export type GenerateLogicalModelRequest = GenerateLdmRequest;
 
 // @internal
-export function getIdOrigin(id: string): OriginInfoWithId;
+export function getIdOrigin(id: string): IOriginInfoWithId;
 
 // @internal (undocumented)
 export interface IApiToken {
@@ -310,6 +300,16 @@ export interface IDataSourceUpsertRequest {
 }
 
 // @internal (undocumented)
+export interface IEntitlement {
+    // (undocumented)
+    expiry?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    value?: string;
+}
+
+// @internal (undocumented)
 export interface IInvitationUserResponse {
     // (undocumented)
     errorMessage?: string;
@@ -326,10 +326,36 @@ export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
 export { Invitation }
 
+// @internal (undocumented)
+export interface IOriginInfoWithId {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    originId: string;
+    // (undocumented)
+    originType: JsonApiDatasetOutMetaOriginOriginTypeEnum;
+}
+
 // @public
 export interface IRedirectToTigerAuthenticationParams {
     // (undocumented)
     externalProviderId: string;
+}
+
+// @internal (undocumented)
+export interface IScanRequest {
+    // (undocumented)
+    scanTables: boolean;
+    // (undocumented)
+    scanViews: boolean;
+    // (undocumented)
+    schemata: string[];
+    // (undocumented)
+    separator: string;
+    // (undocumented)
+    tablePrefix: string;
+    // (undocumented)
+    viewPrefix: string;
 }
 
 // @alpha (undocumented)
@@ -348,16 +374,6 @@ export const objectTypeToTigerIdType: { [objectType in TigerCompatibleObjectType
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 // @internal (undocumented)
-export interface OriginInfoWithId {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    originId: string;
-    // (undocumented)
-    originType: JsonApiDatasetOutMetaOriginOriginTypeEnum;
-}
-
-// @internal (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 export { ReadCsvFileManifestsResponse }
@@ -367,22 +383,6 @@ export function redirectToTigerAuthentication(context: IAuthenticationContext, e
 
 // @public
 export type RedirectToTigerAuthenticationHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
-
-// @internal (undocumented)
-export interface ScanRequest {
-    // (undocumented)
-    scanTables: boolean;
-    // (undocumented)
-    scanViews: boolean;
-    // (undocumented)
-    schemata: string[];
-    // (undocumented)
-    separator: string;
-    // (undocumented)
-    tablePrefix: string;
-    // (undocumented)
-    viewPrefix: string;
-}
 
 // @internal (undocumented)
 export type ScanResult = ScanResultPdm;
@@ -453,7 +453,7 @@ export type TigerSpecificFunctions = {
     deleteApiToken?: (userId: string, tokenId: string) => Promise<void>;
     someDataSourcesExists?: (filter?: string) => Promise<boolean>;
     generateLogicalModel?: (dataSourceId: string, generateLogicalModelRequest: GenerateLogicalModelRequest) => Promise<DeclarativeLogicalModel>;
-    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
+    scanDataSource?: (dataSourceId: string, scanRequest: IScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     createWorkspace?: (id: string, name: string, parentId?: string) => Promise<string>;
@@ -462,7 +462,7 @@ export type TigerSpecificFunctions = {
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
     getWorkspaceLogicalModel?: (id: string, includeParents?: boolean) => Promise<DeclarativeLogicalModel>;
     getWorkspaceEntitiesDatasets?: (id: string) => Promise<WorkspaceEntitiesDatasets>;
-    getEntitlements?: () => Promise<Array<Entitlement>>;
+    getEntitlements?: () => Promise<Array<IEntitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getWorkspaceAnalyticsModelAac?: (workspaceId: string, exclude?: Array<"ACTIVITY_INFO">) => Promise<AacAnalyticsModel>;
     setWorkspaceAnalyticsModelAac?: (workspaceId: string, analyticsModel: AacAnalyticsModel) => Promise<void>;

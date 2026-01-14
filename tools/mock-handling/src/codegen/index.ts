@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { writeFileSync } from "fs";
 import { join } from "path";
@@ -48,7 +48,7 @@ function generateIndexConst(input: IndexGeneratorInput): string {
     return `export const ${MainIndexConstName}: RecordingIndex = { ${executionsInit}, ${metadataInit} } as unknown as RecordingIndex;`;
 }
 
-async function transformToTypescript(input: IndexGeneratorInput, targetDir: string, fileName: string) {
+function transformToTypescript(input: IndexGeneratorInput, targetDir: string, fileName: string) {
     const fileContents = [`// (C) ${new Date().getFullYear()} GoodData Corporation`, "", FILE_HEADER, ""];
 
     if (fileName === "dataSample.ts") {
@@ -204,9 +204,9 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
  * @param targetDir - absolute path to directory where the index should be created
  */
 
-export async function generateAllFiles(recordings: IRecording[], targetDir: string): Promise<void> {
+export function generateAllFiles(recordings: IRecording[], targetDir: string): void {
     const input = createGeneratorInput(recordings);
 
-    await transformToTypescript(input, targetDir, "index.ts");
-    await transformToTypescript(input, targetDir, "dataSample.ts");
+    transformToTypescript(input, targetDir, "index.ts");
+    transformToTypescript(input, targetDir, "dataSample.ts");
 }

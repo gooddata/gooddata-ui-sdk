@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { type MutableRefObject, useCallback, useRef, useState } from "react";
 
 import {
@@ -12,7 +13,7 @@ import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import { type CatalogItem, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { type CompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
+import { type ICompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
 
 const WORD_REGEX = /\p{L}[\p{L}\p{N}_]*/u;
 
@@ -41,7 +42,7 @@ export function useCompletion(
         promise: Promise<IWorkspaceCatalog>;
     } | null>(null);
 
-    const onCompletionSelected = useCallback((completion: CompletionItem) => {
+    const onCompletionSelected = useCallback((completion: ICompletionItem) => {
         usedItems.current = [
             ...usedItems.current.filter((item) => {
                 return getCompletionItemId(completion) !== getCatalogItemId(item);

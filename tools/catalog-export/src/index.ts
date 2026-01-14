@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import fs from "fs";
 import * as path from "path";
 
@@ -46,7 +47,7 @@ async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Prom
     return loadWorkspaceMetadataFromTiger(config);
 }
 
-async function checkFolderExists(filePath: string) {
+function checkFolderExists(filePath: string) {
     const directory = path.dirname(filePath);
     if (!fs.existsSync(directory)) {
         fs.mkdirSync(directory);
@@ -63,16 +64,15 @@ async function run() {
     }
 
     try {
-        const configFilePath = options.config || DEFAULT_CONFIG_FILE_NAME;
+        const configFilePath = (options.config || DEFAULT_CONFIG_FILE_NAME) as string;
 
         const mergedConfig = mergeConfigs(
+            ...[DEFAULT_CONFIG],
             ...(await Promise.all([
-                DEFAULT_CONFIG,
                 getConfigFromPackage(process.cwd()),
                 getConfigFromConfigFile(configFilePath),
-                getConfigFromEnv(process.env),
-                getConfigFromOptions(options),
             ])),
+            ...[getConfigFromEnv(process.env), getConfigFromOptions(options)],
         );
         const { catalogOutput, hostname } = mergedConfig;
 
@@ -86,7 +86,7 @@ async function run() {
 
         const projectMetadata = await loadProjectMetadataFromBackend(mergedConfig);
 
-        await checkFolderExists(filePath);
+        checkFolderExists(filePath);
 
         if (filePath.endsWith(".js")) {
             await exportMetadataToJavascript(projectMetadata, filePath);
@@ -115,4 +115,4 @@ async function run() {
     }
 }
 
-run();
+void run();

@@ -84,7 +84,13 @@ function TraceId({ traceId }: TraceIdProps) {
                 </span>{" "}
                 {traceId}
             </div>
-            <UiIconButton icon="copy" size="small" variant="tertiary" onClick={onCopyTraceId} />
+            <UiIconButton
+                label={intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.error.traceId.copy" })}
+                icon="copy"
+                size="small"
+                variant="tertiary"
+                onClick={onCopyTraceId}
+            />
         </div>
     );
 }

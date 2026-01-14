@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides functions commonly used when building visualizations.
@@ -114,6 +114,6 @@ export {
     getPatternFillByName,
     getPatternFill,
 } from "./coloring/patternFills.js";
-export type { IPatternFill, PatternFillName, ChartFillConfig } from "./coloring/patternFills.js";
+export type { IPatternFill, PatternFillName, IChartFillConfig } from "./coloring/patternFills.js";
 export { PatternFill } from "./coloring/PatternFill.js";
 export type { IPatternFillProps } from "./coloring/PatternFill.js";

@@ -172,7 +172,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: IGetDashboardOptions,
     ): Promise<IDashboard> => {
         const includeUser = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
             return DashboardsApi_GetEntityAnalyticalDashboards(
                 client.axios,
@@ -353,7 +353,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             include.push("dashboardPlugins");
         }
 
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
 
         return this.authCall((client) =>
             DashboardsApi_GetEntityAnalyticalDashboards(
@@ -468,7 +468,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             };
         }
 
-        const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
+        const objectId = objRefToIdentifier(originalDashboard.ref, this.authCall);
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
         const enableDashboardSectionHeadersDateDataSet =
@@ -518,7 +518,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public updateDashboardMeta = async (
         updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>,
     ): Promise<IDashboard> => {
-        const objectId = await objRefToIdentifier(updatedDashboard.ref, this.authCall);
+        const objectId = objRefToIdentifier(updatedDashboard.ref, this.authCall);
 
         const result = await this.authCall((client) => {
             return DashboardsApi_PatchEntityAnalyticalDashboards(
@@ -561,7 +561,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public deleteDashboard = async (ref: ObjRef): Promise<void> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
             DashboardsApi_DeleteEntityAnalyticalDashboards(
@@ -584,7 +584,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filtersByTab?: FiltersByTab,
         options?: IDashboardExportPdfOptions,
     ): Promise<IExportResult> => {
-        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+        const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
         // skip all time date filter from stored filters, when missing, it's correctly
         // restored to All time during the load later
@@ -643,7 +643,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filtersByTab?: FiltersByTab,
         options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult> => {
-        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+        const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
         // skip all time date filter from stored filters, when missing, it's correctly
         // restored to All time during the load later
@@ -707,7 +707,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboardRef: ObjRef,
         options?: IDashboardExportTabularOptions,
     ): Promise<IExportResult> => {
-        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+        const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
         return this.authCall(async (client) => {
             let title: string;
@@ -834,7 +834,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: IDashboardExportImageOptions,
     ): Promise<IExportResult> => {
         return this.authCall(async (client) => {
-            const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+            const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
             // skip all time date filter from stored filters, when missing, it's correctly
             // restored to All time during the load later
@@ -885,58 +885,58 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    public createScheduledMail = async () => {
+    public createScheduledMail = () => {
         throw new NotSupported("Tiger backend does not support scheduled emails.");
     };
 
-    public updateScheduledMail = async () => {
+    public updateScheduledMail = () => {
         throw new NotSupported("Tiger backend does not support scheduled emails.");
     };
 
-    public deleteScheduledMail = async () => {
+    public deleteScheduledMail = () => {
         throw new NotSupported("Tiger backend does not support scheduled emails.");
     };
 
-    public getScheduledMailsForDashboard = async () => {
+    public getScheduledMailsForDashboard = () => {
         throw new NotSupported("Tiger backend does not support scheduled emails.");
     };
 
-    public getScheduledMailsCountForDashboard = async () => {
+    public getScheduledMailsCountForDashboard = () => {
         // FIXME Not supported
-        return 0;
+        return Promise.resolve(0);
     };
 
-    public getAllWidgetAlertsForCurrentUser = async () => {
+    public getAllWidgetAlertsForCurrentUser = () => {
         // FIXME Not supported
-        return [];
+        return Promise.resolve([]);
     };
 
-    public getDashboardWidgetAlertsForCurrentUser = async () => {
+    public getDashboardWidgetAlertsForCurrentUser = () => {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
-    public getWidgetAlertsCountForWidgets = async () => {
+    public getWidgetAlertsCountForWidgets = () => {
         // FIXME Not supported
-        return [];
+        return Promise.resolve([]);
     };
 
-    public createWidgetAlert = async () => {
+    public createWidgetAlert = () => {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
-    public updateWidgetAlert = async () => {
+    public updateWidgetAlert = () => {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
-    public deleteWidgetAlert = async () => {
+    public deleteWidgetAlert = () => {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
-    public deleteWidgetAlerts = async () => {
+    public deleteWidgetAlerts = () => {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
-    public getWidgetReferencedObjects = async () => {
+    public getWidgetReferencedObjects = () => {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
@@ -945,12 +945,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filters: IFilter[],
         attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]> => {
-        return resolveWidgetFilters(
-            filters,
-            widget.ignoreDashboardFilters,
-            widget.dateDataSet,
-            (refs) => objRefsToIdentifiers(refs, this.authCall),
-            attributeFilterConfigs,
+        return Promise.resolve(
+            resolveWidgetFilters(
+                filters,
+                widget.ignoreDashboardFilters,
+                widget.dateDataSet,
+                (refs) => objRefsToIdentifiers(refs, this.authCall),
+                attributeFilterConfigs,
+            ),
         );
     };
 
@@ -960,13 +962,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         otherFilters: IFilter[],
         attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]> => {
-        return resolveWidgetFiltersWithMultipleDateFilters(
-            commonDateFilters,
-            otherFilters,
-            widget.ignoreDashboardFilters,
-            widget.dateDataSet,
-            (refs) => objRefsToIdentifiers(refs, this.authCall),
-            attributeFilterConfigs,
+        return Promise.resolve(
+            resolveWidgetFiltersWithMultipleDateFilters(
+                commonDateFilters,
+                otherFilters,
+                widget.ignoreDashboardFilters,
+                widget.dateDataSet,
+                (refs) => objRefsToIdentifiers(refs, this.authCall),
+                attributeFilterConfigs,
+            ),
         );
     };
 
@@ -1000,7 +1004,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public deleteDashboardPlugin = async (ref: ObjRef): Promise<void> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
             EntitiesApi_DeleteEntityDashboardPlugins(
@@ -1024,7 +1028,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const includeUser = options?.loadUserData
             ? { include: ["createdBy" as const, "modifiedBy" as const] }
             : {};
-        const objectId = await objRefToIdentifier(ref, this.authCall);
+        const objectId = objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
             return EntitiesApi_GetEntityDashboardPlugins(
                 client.axios,
@@ -1090,7 +1094,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public getFilterViewsForCurrentUser = async (dashboard: ObjRef): Promise<IDashboardFilterView[]> => {
         try {
-            const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
+            const dashboardId = objRefToIdentifier(dashboard, this.authCall);
             const result = await this.authCall(async (client) => {
                 const profile = await ProfileApi_GetCurrent(client.axios);
                 return FilterViewsApi_GetAllEntitiesFilterViews(client.axios, client.basePath, {
@@ -1117,7 +1121,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         try {
             const { name, dashboard, isDefault, filterContext, tabLocalIdentifier } = filterView;
 
-            const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
+            const dashboardId = objRefToIdentifier(dashboard, this.authCall);
             const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
             const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? true;
             const enableDashboardTabs = userSettings.enableDashboardTabs ?? false;
@@ -1193,7 +1197,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public deleteFilterView = async (ref: ObjRef): Promise<void> => {
         try {
-            const id = await objRefToIdentifier(ref, this.authCall);
+            const id = objRefToIdentifier(ref, this.authCall);
             await this.authCall((client) =>
                 FilterViewsApi_DeleteEntityFilterViews(client.axios, client.basePath, {
                     workspaceId: this.workspace,
@@ -1206,7 +1210,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public setFilterViewAsDefault = async (ref: ObjRef, isDefault: boolean): Promise<void> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const enableDashboardTabs = userSettings.enableDashboardTabs ?? false;
 
@@ -1353,7 +1357,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 return buildDashboardPermissions(["EDIT"]);
             }
 
-            const dashboardObjectId = await objRefToIdentifier(ref, this.authCall);
+            const dashboardObjectId = objRefToIdentifier(ref, this.authCall);
             const dashboardWithPermissionsResponse = await this.authCall((client) => {
                 return DashboardsApi_GetEntityAnalyticalDashboards(client.axios, client.basePath, {
                     workspaceId: this.workspace,
@@ -1444,7 +1448,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             filterContext,
             useDateFilterLocalIdentifiers,
         );
-        const objectId = await objRefToIdentifier(filterContext.ref, this.authCall);
+        const objectId = objRefToIdentifier(filterContext.ref, this.authCall);
 
         const result = await this.authCall((client) => {
             return FilterContextApi_UpdateEntityFilterContexts(
@@ -1475,7 +1479,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private getFilterContext = async (filterContextRef: ObjRef) => {
-        const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
+        const filterContextId = objRefToIdentifier(filterContextRef, this.authCall);
         const result = await this.authCall((client) => {
             return FilterContextApi_GetEntityFilterContexts(
                 client.axios,

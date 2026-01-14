@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     DummyGenAIChatThread,
@@ -208,9 +208,9 @@ function recordedWorkspace(
     return {
         workspace,
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
-            return recordedDescriptor(this.workspace, implConfig);
+            return Promise.resolve(recordedDescriptor(this.workspace, implConfig));
         },
-        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
+        updateDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -240,19 +240,19 @@ function recordedWorkspace(
         settings(): IWorkspaceSettingsService {
             return {
                 async getSettings(): Promise<IWorkspaceSettings> {
-                    return {
+                    return Promise.resolve({
                         workspace,
                         ...(implConfig.globalSettings ?? {}),
-                    };
+                    });
                 },
                 async getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
-                    return {
+                    return Promise.resolve({
                         userId: USER_ID,
                         workspace,
                         locale,
                         separators,
                         ...(implConfig.globalSettings ?? {}),
-                    };
+                    });
                 },
                 async setAlertDefault(): Promise<void> {
                     return Promise.resolve();
@@ -319,10 +319,10 @@ function recordedWorkspace(
         styling(): IWorkspaceStylingService {
             return {
                 async getColorPalette(): Promise<IColorPalette> {
-                    return implConfig.globalPalette ?? [];
+                    return Promise.resolve(implConfig.globalPalette ?? []);
                 },
                 async getTheme(): Promise<ITheme> {
-                    return implConfig.theme ?? {};
+                    return Promise.resolve(implConfig.theme ?? {});
                 },
                 async getActiveTheme(): Promise<ObjRef | undefined> {
                     return Promise.resolve(undefined);
@@ -657,7 +657,7 @@ function recordedOrganizations(implConfig: RecordedBackendConfig): IOrganization
 function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
     return {
         async getUser(): Promise<IUser> {
-            return (
+            return Promise.resolve(
                 implConfig.userManagement?.user ?? {
                     login: USER_ID,
                     ref: idRef(USER_ID),
@@ -665,11 +665,11 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                     fullName: "",
                     firstName: "",
                     lastName: "",
-                }
+                },
             );
         },
         async getUserWithDetails(): Promise<IUser> {
-            return (
+            return Promise.resolve(
                 implConfig.userManagement?.user ?? {
                     login: USER_ID,
                     ref: idRef(USER_ID),
@@ -677,17 +677,18 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                     fullName: "",
                     firstName: "",
                     lastName: "",
-                }
+                },
             );
         },
         settings(): IUserSettingsService {
             return {
-                getSettings: async () => ({
-                    userId: USER_ID,
-                    locale,
-                    separators,
-                    ...(implConfig.globalSettings ?? {}),
-                }),
+                getSettings: async () =>
+                    Promise.resolve({
+                        userId: USER_ID,
+                        locale,
+                        separators,
+                        ...(implConfig.globalSettings ?? {}),
+                    }),
                 setLocale: () => Promise.resolve(),
                 setMetadataLocale: () => Promise.resolve(),
                 setFormatLocale: () => Promise.resolve(),
@@ -700,32 +701,33 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
 // return true for all
 function recordedPermissionsFactory(): IWorkspacePermissionsService {
     return {
-        getPermissionsForCurrentUser: async (): Promise<IWorkspacePermissions> => ({
-            canAccessWorkbench: true,
-            canCreateAnalyticalDashboard: true,
-            canCreateReport: true,
-            canCreateVisualization: true,
-            canExecuteRaw: true,
-            canExportReport: true,
-            canExportTabular: true,
-            canExportPdf: true,
-            canInitData: true,
-            canManageAnalyticalDashboard: true,
-            canManageMetric: true,
-            canManageProject: true,
-            canManageReport: true,
-            canUploadNonProductionCSV: true,
-            canCreateScheduledMail: true,
-            canListUsersInProject: true,
-            canManageDomain: true,
-            canInviteUserToProject: true,
-            canRefreshData: true,
-            canManageACL: true,
-            canManageScheduledMail: true,
-            canCreateFilterView: true,
-            canCreateAutomation: true,
-            canUseAiAssistant: true,
-        }),
+        getPermissionsForCurrentUser: async (): Promise<IWorkspacePermissions> =>
+            Promise.resolve({
+                canAccessWorkbench: true,
+                canCreateAnalyticalDashboard: true,
+                canCreateReport: true,
+                canCreateVisualization: true,
+                canExecuteRaw: true,
+                canExportReport: true,
+                canExportTabular: true,
+                canExportPdf: true,
+                canInitData: true,
+                canManageAnalyticalDashboard: true,
+                canManageMetric: true,
+                canManageProject: true,
+                canManageReport: true,
+                canUploadNonProductionCSV: true,
+                canCreateScheduledMail: true,
+                canListUsersInProject: true,
+                canManageDomain: true,
+                canInviteUserToProject: true,
+                canRefreshData: true,
+                canManageACL: true,
+                canManageScheduledMail: true,
+                canCreateFilterView: true,
+                canCreateAutomation: true,
+                canUseAiAssistant: true,
+            }),
     };
 }
 

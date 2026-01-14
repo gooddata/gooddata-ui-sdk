@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type AnyAction, type CaseReducer } from "@reduxjs/toolkit";
 
@@ -19,7 +19,7 @@ import {
 /**
  * @internal
  */
-export interface AttributeFilterState {
+export interface IAttributeFilterState {
     localIdentifier?: string;
     displayFormRef: ObjRef; // primary label used for execution
     displayAsLabelRef?: ObjRef; // optional secondary label used for display elements in filter component
@@ -78,7 +78,7 @@ export interface AttributeFilterState {
 /**
  * @internal
  */
-export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elementsForm"> = {
+export const initialState: Omit<IAttributeFilterState, "displayFormRef" | "elementsForm"> = {
     initialization: {
         status: "pending",
     },
@@ -118,4 +118,4 @@ export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elemen
 /**
  * @internal
  */
-export type AttributeFilterReducer<A extends AnyAction = AnyAction> = CaseReducer<AttributeFilterState, A>;
+export type AttributeFilterReducer<A extends AnyAction = AnyAction> = CaseReducer<IAttributeFilterState, A>;

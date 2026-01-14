@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -27,7 +27,7 @@ describe("FilterButtonCustomIcon", () => {
         expect(icon).toBeInTheDocument();
 
         fireEvent.mouseOver(document.querySelector(`.${customIcon.icon}`)!);
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(screen.queryByText(customIcon.tooltip)).toBeInTheDocument();
         });
     });

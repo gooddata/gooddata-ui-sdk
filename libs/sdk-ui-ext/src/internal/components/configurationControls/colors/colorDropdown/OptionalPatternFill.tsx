@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ChartFillType,
@@ -7,12 +7,12 @@ import {
     getPatternFill,
 } from "@gooddata/sdk-ui-vis-commons";
 
-export interface OptionalPatternFillProps {
+export interface IOptionalPatternFillProps {
     chartFill: ChartFillType;
     patternFillIndex?: number | PatternFillName;
 }
 
-export function OptionalPatternFill({ chartFill, patternFillIndex }: OptionalPatternFillProps) {
+export function OptionalPatternFill({ chartFill, patternFillIndex }: IOptionalPatternFillProps) {
     if (chartFill !== "pattern" || patternFillIndex === undefined) {
         return null;
     }

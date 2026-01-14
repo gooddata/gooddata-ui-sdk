@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
@@ -62,7 +62,7 @@ describe("withDrillable", () => {
         const drillLink = container.querySelector(HEADLINE_ITEM_LINK_SELECTOR)!;
         fireEvent.click(drillLink);
 
-        expect(fireDrillEvent).toHaveBeenCalledWith(dataItem, elementType, expect.anything());
+        expect(fireDrillEvent).toHaveBeenCalledWith(dataItem, elementType, expect.anything(), undefined);
     });
 
     it("should not produce any event upon click when fire handler but data item is not drillable", () => {

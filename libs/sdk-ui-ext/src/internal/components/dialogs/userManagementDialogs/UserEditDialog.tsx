@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactElement, useMemo, useState } from "react";
 
@@ -96,7 +96,7 @@ function UserEditDialogComponent({
 
     const { tabs, selectedTabId, setSelectedTabId } = useUserDialogTabs(
         grantedWorkspaces,
-        grantedUserGroups!,
+        grantedUserGroups,
         grantedDataSources,
         isCurrentlyAdmin,
         selectedTab,

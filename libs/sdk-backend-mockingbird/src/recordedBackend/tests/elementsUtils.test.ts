@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -163,7 +164,7 @@ describe("elementsUtils", () => {
         });
 
         it("should limit the elements if a string filter is provided", () => {
-            const actual = resolveStringFilter(elements[0].title!)(elements);
+            const actual = resolveStringFilter(elements[0].title)(elements);
             expect(actual).toEqual([elements[0]]);
         });
     });

@@ -1,10 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import {
-    type IDimensionItemDescriptor,
-    type IResultHeader,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isMeasureGroupDescriptor,
@@ -16,7 +15,7 @@ import {
 
 describe("result type guards", () => {
     describe("isAttributeDescriptor", () => {
-        const Scenarios: Array<[boolean, string, IDimensionItemDescriptor | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [true, "attribute descriptor", { attributeHeader: { name: "my attribute" } }],
             [false, "measure group descriptor", { measureGroupHeader: { items: [] } }],
@@ -68,7 +67,7 @@ describe("result type guards", () => {
         });
     });
     describe("isResultAttributeHeader", () => {
-        const Scenarios: Array<[boolean, string, IResultHeader | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [
                 true,

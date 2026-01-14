@@ -1106,14 +1106,11 @@ export function intervalIncludesZero(operator: MeasureValueFilterOperator, value
 export type InvertableAttributeElementSelection = InvertableSelection<AttributeElementKey>;
 
 // @public (undocumented)
-export interface InvertableSelection<T> {
-    // (undocumented)
-    irrelevantKeys?: T[];
-    // (undocumented)
-    isInverted: boolean;
-    // (undocumented)
+export type InvertableSelection<T> = {
     keys: T[];
-}
+    isInverted: boolean;
+    irrelevantKeys?: T[];
+};
 
 // @beta (undocumented)
 export interface IRankingFilterDropdownProps {

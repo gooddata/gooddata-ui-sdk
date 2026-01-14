@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
@@ -68,19 +68,19 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     private validateStaticElementsLoad = () => {
         invariant(
-            !(this.config.staticElements?.length && this.getLimitingAttributeFilters()?.length),
+            !(this.config["staticElements"]?.length && this.getLimitingAttributeFilters()?.length),
             "Using limitingAttributeFilters is not supported when using static attribute elements",
         );
         invariant(
-            !(this.config.staticElements?.length && this.getLimitingDateFilters()?.length),
+            !(this.config["staticElements"]?.length && this.getLimitingDateFilters()?.length),
             "Using limitingDateFilters is not supported when using static attribute elements",
         );
         invariant(
-            !(this.config.staticElements?.length && this.getLimitingMeasures()?.length),
+            !(this.config["staticElements"]?.length && this.getLimitingMeasures()?.length),
             "Using limitingMeasures is not supported when using static attribute elements",
         );
         invariant(
-            !(this.config.staticElements?.length && this.getLimitingValidationItems()?.length),
+            !(this.config["staticElements"]?.length && this.getLimitingValidationItems()?.length),
             "Using limitingValidationItems is not supported when using static attribute elements",
         );
     };

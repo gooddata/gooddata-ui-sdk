@@ -1,11 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import moment from "moment-timezone";
 import { type IntlShape } from "react-intl";
 
 import {
-    type IAlertRelativeArithmeticOperator,
-    type IAlertRelativeOperator,
     type IAutomationAlert,
     type IAutomationMetadataObject,
     type IExportDefinitionMetadataObject,
@@ -45,8 +43,8 @@ export const formatAutomationSubtitle = (automation: IAutomationMetadataObject, 
 export const formatAlertSubtitle = (intl: IntlShape, alert?: IAutomationAlert) => {
     if (alert?.condition.type === "relative") {
         const relativeOperatorTitle = getRelativeOperatorTitle(
-            alert.condition.operator as IAlertRelativeOperator,
-            alert.condition.measure.operator as IAlertRelativeArithmeticOperator,
+            alert.condition.operator,
+            alert.condition.measure.operator,
             intl,
         )?.toLowerCase();
 

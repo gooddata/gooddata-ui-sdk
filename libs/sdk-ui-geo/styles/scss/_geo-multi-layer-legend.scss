@@ -31,6 +31,9 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    // Smoothly animate container resizing when sections collapse/expand.
+    // Section transition duration is the single source of truth.
+    transition: height var(--gd-geo-multi-layer-legend__toggle-duration) ease-out;
     font-family: kit-variables.$gd-font-primary;
     font-size: 12px;
     line-height: 1.4;

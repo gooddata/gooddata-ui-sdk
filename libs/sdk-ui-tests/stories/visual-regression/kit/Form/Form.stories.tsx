@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useEffect, useState } from "react";
 
@@ -75,11 +75,28 @@ const FormExamples = memo(function FormExamples() {
             <h4>Text field with prefix and/or suffix</h4>
             <p>Just a simple textfield with prefix and/or suffix</p>
 
-            <Input prefix="+420" />
+            <Input
+                prefix="+420"
+                accessibilityConfig={{
+                    prefixAriaLabel: "Czech Republic phone code +420",
+                }}
+            />
 
-            <Input suffix="@gooddata.com" />
+            <Input
+                suffix="@gooddata.com"
+                accessibilityConfig={{
+                    suffixAriaLabel: "GoodData email domain @gooddata.com",
+                }}
+            />
 
-            <Input prefix="$" suffix="M" />
+            <Input
+                prefix="$"
+                suffix="M"
+                accessibilityConfig={{
+                    prefixAriaLabel: "Dollar currency symbol",
+                    suffixAriaLabel: "Million",
+                }}
+            />
 
             <h4>Input with number formating</h4>
             <div>value: {inputWithNumberFormat}</div>

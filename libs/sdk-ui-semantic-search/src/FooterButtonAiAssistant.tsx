@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -9,9 +9,9 @@ import { UiButton } from "@gooddata/sdk-ui-kit";
 /**
  * @public
  */
-export interface FooterButtonAiAssistantProps {
+export type FooterButtonAiAssistantProps = {
     onClick?: (e: MouseEvent) => void;
-}
+};
 
 /**
  * @public

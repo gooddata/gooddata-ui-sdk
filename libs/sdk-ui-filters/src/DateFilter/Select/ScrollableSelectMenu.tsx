@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type CSSProperties, Component, createRef } from "react";
 
@@ -116,7 +116,7 @@ export class ScrollableSelectMenu<V extends object> extends Component<ISelectMen
 
         const Option = optionGetter<V>({
             items,
-            selectedItem: selectedItem as ISelectItemOption<V>,
+            selectedItem: selectedItem,
             highlightedIndex,
             getItemProps,
             optionClassName,

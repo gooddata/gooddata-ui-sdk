@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -14,13 +14,13 @@ import {
 import type { ICatalogItem } from "../../catalogItem/index.js";
 import type { ObjectType } from "../../objectType/index.js";
 
-export interface UseCatalogItemLoad {
+export interface IUseCatalogItemLoad {
     objectId?: string | null;
     objectType?: ObjectType | null;
     objectDefinition?: Partial<ICatalogItem> | null;
 }
 
-export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: UseCatalogItemLoad): {
+export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: IUseCatalogItemLoad): {
     status: "loading" | "success" | "error" | "pending";
     item?: ICatalogItem | null;
     error?: Error;

@@ -96,7 +96,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getVisualizationClasses = async (): Promise<IVisualizationClass[]> => {
-        return this.authCall(async () => visualizationClassesMocks);
+        return this.authCall(() => Promise.resolve(visualizationClassesMocks));
     };
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
@@ -141,7 +141,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const usesOrderingByUpdated = !orderBy || orderBy === "updated";
         const sortConfiguration = usesOrderingByUpdated
             ? { sort: ["modifiedAt,createdAt,title,desc"] }
-            : { sort: [orderBy!] };
+            : { sort: [orderBy] };
         const includeUser =
             options?.loadUserData || options?.author
                 ? { include: ["createdBy" as const, "modifiedBy" as const] }
@@ -181,26 +181,22 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             ).then((res: any) => res.data);
         });
 
-        const attributes: ICatalogAttribute[] = (response as any).data.map(
-            (item: JsonApiAttributeOutWithLinks) => {
-                const includedItems = (response as any).included || [];
-                const labels = (item.relationships?.labels?.data ?? []).map((label) => label.id);
-                const dataset = item.relationships?.dataset?.data?.id;
+        const attributes: ICatalogAttribute[] = response.data.map((item: JsonApiAttributeOutWithLinks) => {
+            const includedItems = response.included || [];
+            const labels = (item.relationships?.labels?.data ?? []).map((label) => label.id);
+            const dataset = item.relationships?.dataset?.data?.id;
 
-                const relatedLabels = includedItems
-                    .filter((item: any) => labels.includes(item.id))
-                    .filter(isLabelItem);
-                const relatedDataset = includedItems
-                    .filter((item: any) => item.id === dataset)
-                    .filter(isDataSetItem);
-                const primaryRelatedLabel = relatedLabels.find((label: any) => label.attributes?.primary);
-                const geoLabels = relatedLabels.filter((label: any) =>
-                    label.attributes?.valueType?.match(/GEO/),
-                );
-                const defaultLabel = primaryRelatedLabel ?? relatedLabels[0];
-                return convertAttribute(item, defaultLabel, geoLabels, relatedLabels, relatedDataset[0]);
-            },
-        );
+            const relatedLabels = includedItems
+                .filter((item: any) => labels.includes(item.id))
+                .filter(isLabelItem);
+            const relatedDataset = includedItems
+                .filter((item: any) => item.id === dataset)
+                .filter(isDataSetItem);
+            const primaryRelatedLabel = relatedLabels.find((label: any) => label.attributes?.primary);
+            const geoLabels = relatedLabels.filter((label: any) => label.attributes?.valueType?.match(/GEO/));
+            const defaultLabel = primaryRelatedLabel ?? relatedLabels[0];
+            return convertAttribute(item, defaultLabel, geoLabels, relatedLabels, relatedDataset[0]);
+        });
 
         return attributes;
     };
@@ -243,7 +239,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         insight: IInsight;
         included: JsonApiMetricOutIncludes[] | undefined;
     }> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
         const includeObj = references.length ? { include: references } : {};
         const response = await this.authCall((client) =>
             EntitiesApi_GetEntityVisualizationObjects(
@@ -340,7 +336,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     public updateInsightMeta = async (
         insightMeta: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IInsight> => {
-        const objectId = await objRefToIdentifier(insightMeta.ref, this.authCall);
+        const objectId = objRefToIdentifier(insightMeta.ref, this.authCall);
         const response = await this.authCall((client) => {
             return EntitiesApi_PatchEntityVisualizationObjects(
                 client.axios,
@@ -376,7 +372,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public deleteInsight = async (ref: ObjRef): Promise<void> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
             EntitiesApi_DeleteEntityVisualizationObjects(client.axios, client.basePath, {
@@ -394,8 +390,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
-        const entitiesGraph = (await this.authCall((client) =>
+        const id = objRefToIdentifier(ref, this.authCall);
+        const entitiesGraph = await this.authCall((client) =>
             ActionsApi_GetDependentEntitiesGraphFromEntryPoints(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 dependentEntitiesRequest: {
@@ -407,7 +403,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     ],
                 },
             }).then((res: any) => res.data.graph),
-        )) as any;
+        );
         const analyticalDashboards = entitiesGraph.nodes
             .filter(({ type }: { type: string }) => type === "analyticalDashboard")
             .map(convertGraphEntityNodeToAnalyticalDashboard);
@@ -426,7 +422,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         // we assume that all the filters in tiger already use idRefs exclusively
         const mergedFilters = mergeFilters(insightFilters(insight), filters);
 
-        return insightSetFilters(insight, mergedFilters);
+        return Promise.resolve(insightSetFilters(insight, mergedFilters));
     };
 }
 
@@ -437,16 +433,16 @@ function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument, r
 
     const insight = insightFromInsightDefinition(
         convertVisualizationObject(
-            visualizationObject.attributes!.content! as
+            visualizationObject.attributes.content as
                 | VisualizationObjectModelV1.IVisualizationObject
                 | VisualizationObjectModelV2.IVisualizationObject,
-            visualizationObject.attributes!.title!,
-            visualizationObject.attributes!.description!,
-            visualizationObject.attributes!.tags,
+            visualizationObject.attributes.title!,
+            visualizationObject.attributes.description!,
+            visualizationObject.attributes.tags,
         ),
         visualizationObject.id,
         links!.self,
-        visualizationObject.attributes!.tags,
+        visualizationObject.attributes.tags,
         isInheritedObject(visualizationObject),
         visualizationObject.attributes?.isHidden,
         visualizationObject.attributes?.createdAt,
