@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     filterAttributeElements,
@@ -28,7 +28,7 @@ export class SingleSelectAttributeFilterHandler
     implements ISingleSelectAttributeFilterHandler
 {
     private static sanitizeConfig(config: AttributeFilterHandlerConfig): AttributeFilterHandlerConfig {
-        const elements = filterAttributeElements(config.attributeFilter);
+        const elements = filterAttributeElements(config["attributeFilter"]);
         const keys = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
         const firstItem = keys[0];
         const sanitizedItems = isAttributeElementsByRef(elements)
@@ -36,16 +36,16 @@ export class SingleSelectAttributeFilterHandler
             : { values: [firstItem] };
         return {
             ...config,
-            attributeFilter: isPositiveAttributeFilter(config.attributeFilter)
+            attributeFilter: isPositiveAttributeFilter(config["attributeFilter"])
                 ? newPositiveAttributeFilter(
-                      filterObjRef(config.attributeFilter),
+                      filterObjRef(config["attributeFilter"]),
                       sanitizedItems,
-                      filterLocalIdentifier(config.attributeFilter),
+                      filterLocalIdentifier(config["attributeFilter"]),
                   )
                 : newNegativeAttributeFilter(
-                      filterObjRef(config.attributeFilter),
+                      filterObjRef(config["attributeFilter"]),
                       sanitizedItems,
-                      filterLocalIdentifier(config.attributeFilter),
+                      filterLocalIdentifier(config["attributeFilter"]),
                   ),
         };
     }

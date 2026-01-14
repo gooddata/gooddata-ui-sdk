@@ -66,7 +66,9 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
                 columns={columns}
                 //paging
                 hasNextPage={hasNext}
-                loadNextPage={next}
+                loadNextPage={() => {
+                    void next();
+                }}
                 maxHeight={height - UiAsyncTableRowHeightNormal}
                 isLoading={isLoading}
                 //events

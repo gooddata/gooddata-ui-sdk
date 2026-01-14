@@ -1,6 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
+
+import { useIntl } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
@@ -22,6 +24,8 @@ export function ComparisonInput({
     onEnterKeyPress,
     separators,
 }: IComparisonInputProps): ReactElement {
+    const intl = useIntl();
+
     return (
         <InputWithNumberFormat
             className="s-mvf-comparison-value-input"
@@ -32,6 +36,13 @@ export function ComparisonInput({
             isSmall
             autofocus={!disableAutofocus}
             suffix={usePercentage ? "%" : ""}
+            accessibilityConfig={{
+                suffixAriaLabel: usePercentage
+                    ? intl.formatMessage({
+                          id: "input.unit.percent",
+                      })
+                    : undefined,
+            }}
             separators={separators}
         />
     );

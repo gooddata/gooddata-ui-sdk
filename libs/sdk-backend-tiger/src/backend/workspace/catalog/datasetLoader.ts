@@ -3,13 +3,11 @@
 import {
     type EntitiesApiGetAllEntitiesAttributesRequest,
     type ITigerClientBase,
-    type JsonApiAttributeHierarchyOutWithLinks,
     type JsonApiAttributeOutIncludes,
     type JsonApiAttributeOutList,
     type JsonApiAttributeOutWithLinks,
     type JsonApiDatasetLinkage,
     type JsonApiDatasetOutWithLinks,
-    type JsonApiLabelLinkage,
     type JsonApiLabelOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
@@ -44,7 +42,7 @@ function getAttributeLabels(
     if (!included) {
         return [];
     }
-    const labelsRefs = (attribute.relationships?.labels?.data ?? []) as JsonApiLabelLinkage[];
+    const labelsRefs = attribute.relationships?.labels?.data ?? [];
     return labelsRefs
         .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
@@ -144,9 +142,7 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
 
 function createAttributeHierarchies(attributes: JsonApiAttributeOutList): ICatalogAttributeHierarchy[] {
     const included = attributes.included ?? [];
-    const outAttributeHierarchies = included.filter(
-        (item) => item.type === "attributeHierarchy",
-    ) as JsonApiAttributeHierarchyOutWithLinks[];
+    const outAttributeHierarchies = included.filter((item) => item.type === "attributeHierarchy");
     return outAttributeHierarchies.map(convertAttributeHierarchy);
 }
 

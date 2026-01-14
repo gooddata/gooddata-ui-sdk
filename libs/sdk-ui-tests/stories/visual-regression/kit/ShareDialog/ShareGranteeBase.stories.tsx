@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { action } from "storybook/actions";
 
@@ -19,7 +19,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
-interface BasicExampleProps {
+interface IBasicExampleProps {
     isDirty: boolean;
     grantees: GranteeItem[];
     owner: IGranteeUser | IGranteeInactiveOwner;
@@ -40,7 +40,7 @@ function BasicExample({
     isLockingSupported = true,
     isLeniencyControlSupported = true,
     isMetadataObjectLockingSupported = true,
-}: BasicExampleProps) {
+}: IBasicExampleProps) {
     return (
         <ComponentLabelsProvider labels={LabelsMock}>
             <div id="Share-Grantee-base-basic-example">

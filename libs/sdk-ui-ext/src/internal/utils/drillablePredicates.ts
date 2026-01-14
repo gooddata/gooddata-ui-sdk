@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { uniq } from "lodash-es";
 
 import { type IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
@@ -12,11 +13,11 @@ import { HeaderPredicates, type IHeaderPredicate } from "@gooddata/sdk-ui";
  * @param postMessageData - input received via post message
  * @internal
  */
-export async function convertPostMessageToDrillablePredicates({
+export function convertPostMessageToDrillablePredicates({
     uris,
     identifiers,
     composedFrom,
-}: IDrillableItemsCommandBody): Promise<IHeaderPredicate[]> {
+}: IDrillableItemsCommandBody): IHeaderPredicate[] {
     const simpleUris = Array.isArray(uris) ? uniq(uris) : [];
     const simpleIdentifiers = Array.isArray(identifiers) ? uniq(identifiers) : [];
 

@@ -123,7 +123,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
         updatedDataFilter: IWorkspaceDataFilter,
     ): Promise<IWorkspaceDataFilter> => {
         return this.authCall(async (client) => {
-            const objectId = await objRefToIdentifier(updatedDataFilter.ref, this.authCall);
+            const objectId = objRefToIdentifier(updatedDataFilter.ref, this.authCall);
             await EntitiesApi_PatchEntityWorkspaceDataFilters(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,
@@ -144,7 +144,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
 
     public updateDataFilterValue = async (dataFilter: ObjRef, values: string[]): Promise<void> => {
         return this.authCall(async (client) => {
-            const dataFilterId = await objRefToIdentifier(dataFilter, this.authCall);
+            const dataFilterId = objRefToIdentifier(dataFilter, this.authCall);
             await this.deleteExistingSettings(client, dataFilterId);
 
             await EntitiesApi_CreateEntityWorkspaceDataFilterSettings(client.axios, client.basePath, {
@@ -194,7 +194,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
 
     public deleteDataFilter = async (ref: ObjRef): Promise<void> => {
         return this.authCall(async (client) => {
-            const objectId = await objRefToIdentifier(ref, this.authCall);
+            const objectId = objRefToIdentifier(ref, this.authCall);
             await EntitiesApi_DeleteEntityWorkspaceDataFilters(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,

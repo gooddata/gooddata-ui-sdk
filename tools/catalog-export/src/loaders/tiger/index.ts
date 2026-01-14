@@ -105,7 +105,7 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
         }
 
         return client;
-    } catch (err) {
+    } catch (err: Error) {
         if (askedForLogin) {
             throw err;
         }
@@ -166,8 +166,8 @@ export async function loadWorkspaceMetadataFromTiger(
     const workspaceSpinner = ora();
     try {
         // await is important here, otherwise errors thrown from the load would not be handled by this catch block
-        return await tigerLoad(client, workspaceId!);
-    } catch (err) {
+        return await tigerLoad(client, workspaceId);
+    } catch (err: Error) {
         workspaceSpinner.stop();
 
         throw new CatalogExportError(`Unable to obtain workspace metadata. The error was: ${err}`, 1);

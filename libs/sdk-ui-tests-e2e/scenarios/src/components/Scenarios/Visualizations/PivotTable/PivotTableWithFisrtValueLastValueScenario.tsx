@@ -1,14 +1,16 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
+    type IAbsoluteDateFilter,
     type IAttribute,
     type IMeasure,
     type IMeasureDefinition,
+    type IPositiveAttributeFilter,
     newAbsoluteDateFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { type IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
@@ -94,10 +96,9 @@ const filtersOfCreatedYearAndSaleRep2Values = [
 ];
 
 export interface IPivotTableFirstValueLastValueCoreProps {
-    measure?: IMeasure<IMeasureDefinition>[] | undefined;
-    row?: IAttribute[] | undefined;
-    column?: IAttribute[] | undefined;
-    config: IPivotTableConfig;
+    measures?: IMeasure<IMeasureDefinition>[] | undefined;
+    rows?: IAttribute[] | undefined;
+    filters?: (IPositiveAttributeFilter | IAbsoluteDateFilter)[] | undefined;
 }
 
 function PivotTableFirstValueLastValue({ measures, rows, filters }: IPivotTableFirstValueLastValueCoreProps) {

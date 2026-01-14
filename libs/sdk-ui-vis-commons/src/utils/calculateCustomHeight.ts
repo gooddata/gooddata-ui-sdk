@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 //Obtained from subtracting the widget title and paddings/margins of visualization.
 const MINIMUM_HEIGHT_FOR_PAGINATION = 160;
@@ -43,10 +43,10 @@ export function calculateHeadlineHeightFontSize(
     }
 
     if (secondaryItem) {
-        if (clientHeight <= HEIGHT.MEDIUM) {
+        if (clientHeight <= (HEIGHT.MEDIUM as number)) {
             height = HEIGHT.SMALLEST;
             fontSize = FONT_SIZE.SMALLEST;
-        } else if (clientHeight <= HEIGHT.LARGE) {
+        } else if (clientHeight <= (HEIGHT.LARGE as number)) {
             height = HEIGHT.SMALL;
             fontSize = FONT_SIZE.MEDIUM;
         } else {
@@ -54,10 +54,10 @@ export function calculateHeadlineHeightFontSize(
             fontSize = FONT_SIZE.LARGE;
         }
     } else {
-        if (clientHeight <= HEIGHT.SMALLEST) {
+        if (clientHeight <= (HEIGHT.SMALLEST as number)) {
             height = HEIGHT.SMALLEST;
             fontSize = FONT_SIZE.SMALLEST;
-        } else if (clientHeight <= HEIGHT.EXTRA_SMALL) {
+        } else if (clientHeight <= (HEIGHT.EXTRA_SMALL as number)) {
             height = HEIGHT.EXTRA_SMALL;
             fontSize = FONT_SIZE.SMALL;
         } else {

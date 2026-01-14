@@ -1,8 +1,8 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type IColorPalette, type ISeparators, type Identifier } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, type VisType } from "@gooddata/sdk-ui";
-import { type ChartFillConfig, type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig, type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IComparison } from "./comparison.js";
 
@@ -195,6 +195,14 @@ export interface IChartConfig {
      * or labels on the axes. This setting an be used to disable clicks on the drillable labels on axes.
      */
     forceDisableDrillOnAxes?: boolean;
+
+    /**
+     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
+     *
+     * @remarks
+     * Feature flag. Default: false.
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 
     /**
      * Disable underlining of drillable items.
@@ -436,7 +444,7 @@ export interface IChartConfig {
     /**
      * Configuration of the chart fill.
      */
-    chartFill?: ChartFillConfig;
+    chartFill?: IChartFillConfig;
 
     /**
      * Whether the chart supports configurable chart fill.

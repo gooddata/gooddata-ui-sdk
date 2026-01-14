@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import Highcharts from "highcharts/esm/highcharts.js";
 import { invoke, isEmpty, set } from "lodash-es";
@@ -207,13 +207,25 @@ function getThemedConfiguration(theme: ITheme | undefined, config?: IChartConfig
     };
 }
 
-function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
+function registerDrilldownHandler(
+    configuration: any,
+    chartOptions: any,
+    drillConfig: IDrillConfig,
+    config?: IChartConfig,
+) {
     set(
         configuration,
         "chart.events.drilldown",
         function chartDrilldownHandler(this: any, event: DrilldownEventObject) {
             this.tooltip?.hide();
-            chartClick(drillConfig, event, this.container, this.id, chartOptions.type);
+            chartClick(
+                drillConfig,
+                event,
+                this.container,
+                this.id,
+                chartOptions.type,
+                Boolean(config?.enableDrillMenuPositioningAtCursor),
+            );
         },
     );
 
@@ -250,7 +262,7 @@ export function getCommonConfiguration(
     const handlers = [registerDrilldownHandler, registerRenderHandler];
 
     return handlers.reduce(
-        (configuration, handler) => handler(configuration, chartOptions, drillConfig),
+        (configuration, handler) => handler(configuration, chartOptions, drillConfig, config),
         commonConfiguration,
     );
 }

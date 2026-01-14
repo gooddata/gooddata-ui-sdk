@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { type ChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { ColoredItemContent } from "./ColoredItemContent.js";
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
@@ -21,7 +21,7 @@ export interface IColoredItemProps {
     onSelect?: (source: IColoredItem, color: IColor) => void;
     isSelected?: boolean;
     disabled?: boolean;
-    chartFill?: ChartFillConfig;
+    chartFill?: IChartFillConfig;
     patternFillIndex?: number | PatternFillName;
 }
 

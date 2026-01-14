@@ -1,15 +1,18 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ComponentProps, memo } from "react";
 
 import cx from "classnames";
+import type { IntlShape } from "react-intl";
 
 import { type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 
+import { getObjectTypeLabel } from "./labels.js";
 import type { ObjectType } from "./types.js";
 import type { VisualizationType } from "../catalogItem/types.js";
 
-type Props = ComponentProps<"div"> & {
+export type ObjectTypeIconProps = ComponentProps<"div"> & {
+    intl: IntlShape;
     type: ObjectType;
     visualizationType?: VisualizationType;
     size?: 14 | 18;
@@ -17,28 +20,31 @@ type Props = ComponentProps<"div"> & {
 };
 
 export function ObjectTypeIcon({
+    intl,
     type,
     size = 14,
     backgroundSize,
     visualizationType,
     className,
     ...htmlProps
-}: Props) {
+}: ObjectTypeIconProps) {
     const sizes = { size, backgroundSize };
+    const label = getObjectTypeLabel(intl, type, visualizationType);
     return (
         <span
             {...htmlProps}
             className={cx("gd-analytics-catalog__object-type", className)}
             data-object-type={type}
         >
-            {type === "attribute" ? <UiIcon type="ldmAttribute" {...sizes} /> : null}
-            {type === "fact" ? <UiIcon type="fact" {...sizes} /> : null}
-            {type === "measure" ? <UiIcon type="metric" {...sizes} /> : null}
-            {type === "analyticalDashboard" ? <UiIcon type="dashboard" {...sizes} /> : null}
-            {type === "dataSet" ? <UiIcon type="date" {...sizes} /> : null}
+            {type === "attribute" ? <UiIcon type="ldmAttribute" label={label} {...sizes} /> : null}
+            {type === "fact" ? <UiIcon type="fact" label={label} {...sizes} /> : null}
+            {type === "measure" ? <UiIcon type="metric" label={label} {...sizes} /> : null}
+            {type === "analyticalDashboard" ? <UiIcon type="dashboard" label={label} {...sizes} /> : null}
+            {type === "dataSet" ? <UiIcon type="date" label={label} {...sizes} /> : null}
             {type === "insight" ? (
                 <UiIcon
                     type={(visualizationType && visualizationIconMap[visualizationType]) ?? "visualization"}
+                    label={label}
                     {...sizes}
                 />
             ) : null}

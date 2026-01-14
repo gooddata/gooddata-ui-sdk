@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     DefaultDashboardToolbar,
@@ -16,7 +16,7 @@ interface IPluginToolbarProps {
     isHideOverlaysEnabled: boolean;
 }
 
-export const PluginToolbar = (props: IPluginToolbarProps) => {
+export function PluginToolbar(props: IPluginToolbarProps) {
     const { isPluginEnabled, isHideOverlaysEnabled, reloadPlugins, togglePlugin, hideOverlays } = props;
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -42,4 +42,4 @@ export const PluginToolbar = (props: IPluginToolbarProps) => {
             </DefaultDashboardToolbarGroup>
         </DefaultDashboardToolbar>
     );
-};
+}

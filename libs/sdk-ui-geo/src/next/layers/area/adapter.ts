@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IAttribute, type IGeoJsonFeature, newBucket } from "@gooddata/sdk-model";
@@ -70,9 +70,7 @@ function createExecution(layer: IGeoLayerArea, context: IGeoAdapterContext): IPr
     return execution;
 }
 
-async function resolveCollectionMetadata(
-    dataView: DataViewFacade,
-): Promise<IGeoCollectionMetadata | undefined> {
+function resolveCollectionMetadata(dataView: DataViewFacade): IGeoCollectionMetadata | undefined {
     // First try to get metadata from execution result
     const metadataFromExecution = getLocationCollectionMetadata(dataView);
     if (metadataFromExecution) {
@@ -121,7 +119,7 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         const colorStrategy = getAreaColorStrategy(colorPalette, colorMapping, geoData, dataView);
 
         // Resolve collection metadata
-        const metadata = await resolveCollectionMetadata(dataView);
+        const metadata = resolveCollectionMetadata(dataView);
 
         // Fetch boundary features if we have metadata
         let boundaryFeatures: IGeoJsonFeature[] = [];

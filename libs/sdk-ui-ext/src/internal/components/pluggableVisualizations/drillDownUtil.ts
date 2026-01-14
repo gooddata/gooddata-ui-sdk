@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -129,10 +129,10 @@ function buildPreservedControlProperties(
 
     return {
         ...(hasColumnWidths ? { columnWidths: columns } : {}),
-        ...(hasTextWrapping ? { textWrapping: value!["textWrapping"] } : {}),
-        ...(hasGrandTotalsPosition ? { grandTotalsPosition: value!["grandTotalsPosition"] } : {}),
-        ...(hasPagination ? { pagination: value!["pagination"] } : {}),
-        ...(hasPageSize ? { pageSize: value!["pageSize"] } : {}),
+        ...(hasTextWrapping ? { textWrapping: value["textWrapping"] } : {}),
+        ...(hasGrandTotalsPosition ? { grandTotalsPosition: value["grandTotalsPosition"] } : {}),
+        ...(hasPagination ? { pagination: value["pagination"] } : {}),
+        ...(hasPageSize ? { pageSize: value["pageSize"] } : {}),
     };
 }
 
@@ -149,7 +149,7 @@ function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
 
     const result = Object.entries(properties).reduce(
         (acc, [key, value]) => {
-            if (key !== ENUM_PROPERTIES_TYPE.CONTROLS) {
+            if (key !== (ENUM_PROPERTIES_TYPE.CONTROLS as string)) {
                 return acc;
             }
 

@@ -175,6 +175,7 @@ export interface IGeoConfig {
     colors?: string[];
     // (undocumented)
     cooperativeGestures?: boolean;
+    enableDrillMenuPositioningAtCursor?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
     // (undocumented)

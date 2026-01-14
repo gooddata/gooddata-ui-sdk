@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 
@@ -68,7 +68,7 @@ export const searchAttributes = (
     searchString: string,
 ) => {
     return attributes
-        .filter((item) => item.type === selectedTab)
+        .filter((item) => (item.type as string) === selectedTab)
         .filter((item) => item.title?.toLowerCase().includes(searchString.toLowerCase()));
 };
 

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 
@@ -70,8 +70,8 @@ export function getComboChartSeries(
 
     [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES].forEach((name: string, index: number) => {
         (measureBuckets[name] || []).forEach((measureIndex: number) => {
-            const chartType: string = CHART_ORDER[types[index!]!]
-                ? types[index!]!
+            const chartType: string = CHART_ORDER[types[index]!]
+                ? types[index]!
                 : DEFAULT_COMBO_CHART_TYPES[index];
 
             set(updatedSeries, [measureIndex, "type"], chartType);

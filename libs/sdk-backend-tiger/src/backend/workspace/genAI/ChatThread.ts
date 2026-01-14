@@ -355,7 +355,7 @@ function convertChatHistoryInteraction(
             : {}),
         ...(data.semanticSearch
             ? {
-                  semanticSearch: convertSemanticSearch(data.semanticSearch as SearchResult),
+                  semanticSearch: convertSemanticSearch(data.semanticSearch),
               }
             : {}),
         ...(data.createdVisualizations
@@ -410,7 +410,7 @@ function convertChatEvaluation(
             : {}),
         ...(data.semanticSearch
             ? {
-                  semanticSearch: convertSemanticSearch(data.semanticSearch as SearchResult),
+                  semanticSearch: convertSemanticSearch(data.semanticSearch),
               }
             : {}),
         ...(data.createdVisualizations

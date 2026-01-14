@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { throttle } from "lodash-es";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -64,7 +65,7 @@ export const initializeAutoAuth = async (scriptSrc: string) => {
 
     if (!getBackend || !hostname) {
         // No auto-auth. Give a developer a margin of 5sec to define programmatic flow
-        Promise.race([timeout(5000), getContext()]).then((res) => {
+        void Promise.race([timeout(5000), getContext()]).then((res) => {
             if (!res) {
                 // Resolved without a value === timeout
                 console.warn(

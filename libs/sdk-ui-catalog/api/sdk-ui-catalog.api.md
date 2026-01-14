@@ -17,13 +17,16 @@ import { ReactNode } from 'react';
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetail({ backend, workspace, locale, ...restProps }: AnalyticsCatalogDetailProps): JSX.Element;
+export function AnalyticsCatalogDetail({ backend, workspace, locale, ...restProps }: IAnalyticsCatalogDetailProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetailContent({ backend, workspace, locale, ...restProps }: AnalyticsCatalogDetailContentProps): JSX.Element;
+export function AnalyticsCatalogDetailContent({ backend, workspace, locale, ...restProps }: IAnalyticsCatalogDetailContentProps): JSX.Element;
+
+// @internal
+export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export interface AnalyticsCatalogDetailContentProps extends Omit<CatalogDetailContentProps, "objectId" | "objectType"> {
+export interface IAnalyticsCatalogDetailContentProps extends Omit<ICatalogDetailContentProps, "objectId" | "objectType"> {
     backend?: IAnalyticalBackend;
     locale?: string;
     objectId: string;
@@ -33,36 +36,12 @@ export interface AnalyticsCatalogDetailContentProps extends Omit<CatalogDetailCo
 }
 
 // @internal (undocumented)
-export interface AnalyticsCatalogDetailProps extends Omit<CatalogDetailProps, "objectId" | "objectType"> {
+export interface IAnalyticsCatalogDetailProps extends Omit<ICatalogDetailProps, "objectId" | "objectType"> {
     backend?: IAnalyticalBackend;
     locale?: string;
     objectId: string;
     objectType: ObjectType;
     workspace?: string;
-}
-
-// @internal
-export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
-
-// @internal (undocumented)
-export interface CatalogDetailContentProps {
-    objectDefinition?: Partial<ICatalogItem> | null;
-    objectId?: string | null;
-    objectType?: ObjectType | null;
-    onCatalogItemNavigation?: (event: MouseEvent_2, ref: ICatalogItemRef) => void;
-    onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
-    onCatalogItemUpdateError?: (error: Error) => void;
-    onOpenClick?: (event: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
-    onTagClick?: (tag: string) => void;
-}
-
-// @internal (undocumented)
-export interface CatalogDetailProps extends CatalogDetailContentProps {
-    dataTestId?: string;
-    node?: HTMLElement;
-    onClose: () => void;
-    open: boolean;
-    zIndex?: number;
 }
 
 // @internal
@@ -90,6 +69,27 @@ export interface IAnalyticsCatalogProps {
     onCatalogItemOpenClick?: (e: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     openCatalogItemRef?: ICatalogItemRef;
     workspace?: string;
+}
+
+// @internal (undocumented)
+export interface ICatalogDetailContentProps {
+    objectDefinition?: Partial<ICatalogItem> | null;
+    objectId?: string | null;
+    objectType?: ObjectType | null;
+    onCatalogItemNavigation?: (event: MouseEvent_2, ref: ICatalogItemRef) => void;
+    onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
+    onCatalogItemUpdateError?: (error: Error) => void;
+    onOpenClick?: (event: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
+    onTagClick?: (tag: string) => void;
+}
+
+// @internal (undocumented)
+export interface ICatalogDetailProps extends ICatalogDetailContentProps {
+    dataTestId?: string;
+    node?: HTMLElement;
+    onClose: () => void;
+    open: boolean;
+    zIndex?: number;
 }
 
 // @internal

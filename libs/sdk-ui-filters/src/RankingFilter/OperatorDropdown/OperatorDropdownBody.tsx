@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -8,7 +8,7 @@ import { Overlay } from "@gooddata/sdk-ui-kit";
 import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 import { type IOperatorDropdownItem } from "../types.js";
 
-interface OperatorDropdownBodyComponentProps {
+interface IOperatorDropdownBodyComponentProps {
     items: IOperatorDropdownItem[];
     selectedValue: RankingFilterOperator;
     onSelect: (value: RankingFilterOperator) => void;
@@ -20,7 +20,7 @@ export function OperatorDropdownBody({
     selectedValue,
     onSelect,
     onClose,
-}: OperatorDropdownBodyComponentProps) {
+}: IOperatorDropdownBodyComponentProps) {
     const intl = useIntl();
 
     return (

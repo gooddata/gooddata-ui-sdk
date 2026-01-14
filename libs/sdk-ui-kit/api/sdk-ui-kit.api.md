@@ -2969,6 +2969,16 @@ export interface IIconProps {
 }
 
 // @internal (undocumented)
+export interface IInputPureAccessibilityConfig extends IAccessibilityConfigBase {
+    // (undocumented)
+    ariaInvalid?: AriaAttributes["aria-invalid"];
+    // (undocumented)
+    prefixAriaLabel?: string;
+    // (undocumented)
+    suffixAriaLabel?: string;
+}
+
+// @internal (undocumented)
 export interface IInsightIconProps {
     // (undocumented)
     iconProps?: IIconProps;
@@ -4024,11 +4034,11 @@ export class Input extends PureComponent<InputPureProps, InputState> {
         isSearch: boolean;
         isSmall: boolean;
         maxlength: number;
-        onChange: (..._: any[]) => void;
-        onEscKeyPress: (..._: any[]) => void;
-        onEnterKeyPress: (..._: any[]) => void;
-        onBlur: (..._: any[]) => void;
-        onFocus: (..._: any[]) => void;
+        onChange: (..._args: unknown[]) => void;
+        onEscKeyPress: (..._args: unknown[]) => void;
+        onEnterKeyPress: (..._args: unknown[]) => void;
+        onBlur: (..._args: unknown[]) => void;
+        onFocus: (..._args: unknown[]) => void;
         placeholder: string;
         prefix: string;
         readonly: boolean;
@@ -4068,11 +4078,11 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         isSearch: boolean;
         isSmall: boolean;
         maxlength: number;
-        onChange: (..._: any[]) => void;
-        onEscKeyPress: (..._: any[]) => void;
-        onEnterKeyPress: (..._: any[]) => void;
-        onBlur: (..._: any[]) => void;
-        onFocus: (..._: any[]) => void;
+        onChange: (..._args: unknown[]) => void;
+        onEscKeyPress: (..._args: unknown[]) => void;
+        onEnterKeyPress: (..._args: unknown[]) => void;
+        onBlur: (..._args: unknown[]) => void;
+        onFocus: (..._args: unknown[]) => void;
         placeholder: string;
         prefix: string;
         readonly: boolean;
@@ -4085,6 +4095,8 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
     focus(options?: {
         preventScroll?: boolean;
     }): void;
+    // (undocumented)
+    getAriaDescribedBy(): string | undefined;
     // (undocumented)
     getInputClassNames(): string;
     // (undocumented)
@@ -4108,17 +4120,17 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
     // (undocumented)
     renderLabel(label: ReactNode): ReactNode;
     // (undocumented)
-    renderPrefix(prefix: string): ReactNode;
+    renderPrefix(prefix: string, ariaLabel?: string): ReactNode;
     // (undocumented)
     renderSearch(isSearch: boolean): ReactNode;
     // (undocumented)
-    renderSuffix(suffix: string): ReactNode;
+    renderSuffix(suffix: string, ariaLabel?: string): ReactNode;
 }
 
 // @internal (undocumented)
 export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IInputPureAccessibilityConfig;
     // (undocumented)
     accessibilityType?: string;
     // (undocumented)
@@ -7293,7 +7305,7 @@ export interface UiDateProps {
 }
 
 // @internal (undocumented)
-export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, accessibilityConfig, }: UiDrawerProps): JSX.Element | null;
+export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig, }: UiDrawerProps): JSX.Element | null;
 
 // @internal (undocumented)
 export interface UiDrawerProps extends IUiAutofocusOptions {
@@ -7319,6 +7331,8 @@ export interface UiDrawerProps extends IUiAutofocusOptions {
     onEscapeKey?: (e: KeyboardEvent_2) => void;
     // (undocumented)
     open?: boolean;
+    // (undocumented)
+    returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
     // (undocumented)
     showCloseButton?: boolean;
     // (undocumented)

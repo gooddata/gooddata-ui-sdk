@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { omit, without } from "lodash-es";
 
 import { type IAttributeDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
@@ -98,6 +99,8 @@ export function handleGeoPushpinDrillEvent(
     pinProperties: GeoJSON.GeoJsonProperties,
     pinCoordinates: number[],
     target: EventTarget,
+    clickEvent?: MouseEvent,
+    enableDrillMenuPositioningAtCursor = false,
 ): void {
     const { locationIndex } = pinProperties || {};
     const drillIntersection: IDrillEventIntersectionElement[] | undefined = getDrillIntersectionForGeoChart(
@@ -133,6 +136,14 @@ export function handleGeoPushpinDrillEvent(
     const drillEventExtended: IDrillEvent = {
         dataView: dv.dataView,
         drillContext,
+        ...(enableDrillMenuPositioningAtCursor
+            ? {
+                  // Chart coordinates for drill popover positioning (relative to the map container)
+                  chartX: clickEvent?.offsetX,
+                  chartY: clickEvent?.offsetY,
+                  enableDrillMenuPositioningAtCursor: true,
+              }
+            : {}),
     };
 
     if (onDrill) {

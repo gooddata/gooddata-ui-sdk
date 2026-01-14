@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { PureComponent, type RefObject, createRef } from "react";
 
@@ -370,7 +370,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             newDerivedBucketItemsToPlace &&
             onNewDerivedBucketItemsPlaced
         ) {
-            this.visualization
+            void this.visualization
                 .addNewDerivedBucketItems(referencePoint, newDerivedBucketItemsToPlace)
                 .then(onNewDerivedBucketItemsPlaced);
         }
@@ -383,7 +383,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         const { referencePoint: newReferencePoint, onExtendedReferencePointChanged } = newProps;
 
         if (this.visualization && newReferencePoint && onExtendedReferencePointChanged) {
-            this.visualization
+            void this.visualization
                 .getExtendedReferencePoint(newReferencePoint, currentProps?.referencePoint)
                 .then(async (extendedReferencePoint) => {
                     const sortConfig = await this.visualization!.getSortConfig(extendedReferencePoint);
@@ -400,10 +400,10 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
         const { referencePoint: newReferencePoint, onSortingChanged } = newProps;
         // Some of the properties eg. stacking of measures, dual axes influence sorting
         if (this.visualization && newReferencePoint && onSortingChanged) {
-            this.visualization
+            void this.visualization
                 .getExtendedReferencePoint(newReferencePoint, currentProps?.referencePoint)
                 .then((extendedRefPoint) => {
-                    this.visualization!.getSortConfig(extendedRefPoint).then(onSortingChanged);
+                    void this.visualization!.getSortConfig(extendedRefPoint).then(onSortingChanged);
                 });
         }
     }

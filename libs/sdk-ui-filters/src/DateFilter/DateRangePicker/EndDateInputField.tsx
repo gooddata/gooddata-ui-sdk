@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { forwardRef, useMemo } from "react";
 
@@ -8,7 +8,7 @@ import { DateTimePicker, type IDateTimePickerAccessibilityConfig } from "./DateT
 import {
     DATE_INPUT_HINT_ID,
     type IDateRangeInputFieldProps,
-    type InputErrorMessageTexts,
+    type IInputErrorMessageTexts,
     TIME_INPUT_HINT_ID,
 } from "./types.js";
 import { DAY_END_TIME } from "../constants/Platform.js";
@@ -40,7 +40,7 @@ export const EndDateInputField = forwardRef<HTMLInputElement, IDateRangeInputFie
             }),
             [intl],
         );
-        const inputErrorMessageTexts = useMemo<InputErrorMessageTexts>(
+        const inputErrorMessageTexts = useMemo<IInputErrorMessageTexts>(
             () => ({
                 dateInput: {
                     emptyDate: intl.formatMessage({ id: "filters.staticPeriod.errors.emptyEndDate" }),

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { PureComponent, type ReactElement, Suspense, lazy } from "react";
 
@@ -221,7 +221,7 @@ export class GeoChartInner extends PureComponent<IGeoChartInnerProps, IGeoChartI
     ): IGeoChartInnerOptions {
         invariant(geoChartOptions, "illegal state - trying to sync legend with no geo options");
 
-        const { categoryItems } = geoChartOptions!;
+        const { categoryItems } = geoChartOptions;
         const { enabledLegendItems } = this.state;
 
         const withLegendItemStates = categoryItems.map(
@@ -454,7 +454,7 @@ export class GeoChartInner extends PureComponent<IGeoChartInnerProps, IGeoChartI
         invariant(geoChartOptions, "illegal state - updating config with no geo options");
 
         const { pushData } = this.props;
-        const { categoryItems, geoData, colorStrategy, colorPalette } = geoChartOptions!;
+        const { categoryItems, geoData, colorStrategy, colorPalette } = geoChartOptions;
         const { hasCategoryLegend, hasColorLegend, hasSizeLegend } = getAvailableLegends(
             categoryItems,
             geoData,

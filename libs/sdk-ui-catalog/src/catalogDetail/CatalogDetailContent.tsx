@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent, type RefObject, useCallback, useMemo, useRef } from "react";
+import { type MouseEvent, useCallback, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -8,7 +8,7 @@ import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IUiTab, UiButton, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
-import { CatalogDetailHeader, type CatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
+import { CatalogDetailHeader, type ICatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
@@ -48,7 +48,7 @@ export type OpenHandlerEvent = {
 /**
  * @internal
  */
-export interface CatalogDetailContentProps {
+export interface ICatalogDetailContentProps {
     /**
      * An object id of the catalog item.
      */
@@ -83,10 +83,6 @@ export interface CatalogDetailContentProps {
     onCatalogItemUpdateError?: (error: Error) => void;
 }
 
-type Props = CatalogDetailContentProps & {
-    focusRef?: RefObject<HTMLButtonElement | null>;
-};
-
 /**
  * @internal
  */
@@ -94,13 +90,12 @@ export function CatalogDetailContent({
     objectId,
     objectType,
     objectDefinition,
-    focusRef,
     onOpenClick,
     onTagClick,
     onCatalogItemUpdate,
     onCatalogItemUpdateError,
     onCatalogItemNavigation,
-}: Props) {
+}: ICatalogDetailContentProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
 
@@ -140,7 +135,7 @@ export function CatalogDetailContent({
     const issues = useQualityIssuesById(item?.identifier ?? "") ?? [];
     const issueCount = issues.length > 0 ? `(${issues.length})` : "";
 
-    const headerRef = useRef<CatalogDetailHeaderRef>(null);
+    const headerRef = useRef<ICatalogDetailHeaderRef>(null);
 
     const handleEditClick = useCallback((attributeName: SemanticQualityIssueAttributeName) => {
         if (attributeName === "TITLE") {
@@ -188,7 +183,6 @@ export function CatalogDetailContent({
                                 <UiButton
                                     label={intl.formatMessage({ id: "analyticsCatalog.catalogItem.open" })}
                                     variant="primary"
-                                    ref={focusRef}
                                     onClick={(event) => {
                                         onOpenClick?.(event, {
                                             item,

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { zip } from "lodash-es";
 
@@ -17,7 +17,7 @@ import {
     isDateFilter,
 } from "@gooddata/sdk-model";
 
-type NormalizeIds = (refs: ObjRef[]) => Promise<string[]>;
+type NormalizeIds = (refs: ObjRef[]) => string[];
 
 /**
  * Performs widget filter resolution:
@@ -32,13 +32,13 @@ type NormalizeIds = (refs: ObjRef[]) => Promise<string[]>;
  * @param normalizeIds - function providing normalization of any ObjRef to identifier
  * @internal
  */
-export async function resolveWidgetFilters(
+export function resolveWidgetFilters(
     filters: IFilter[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     dateDataSet: IWidget["dateDataSet"],
     normalizeIds: NormalizeIds,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
-): Promise<IFilter[]> {
+): IFilter[] {
     const dateFilters = filters.filter(isDateFilter);
     const attributeFilters = filters.filter(isAttributeFilter);
 
@@ -49,15 +49,13 @@ export async function resolveWidgetFilters(
         return filters;
     }
 
-    const [dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
-        getRelevantDateFiltersForWidget(dateFilters, dateDataSet, normalizeIds),
-        getRelevantAttributeFiltersForWidget(
-            attributeFilters,
-            ignoreDashboardFilters,
-            normalizeIds,
-            attributeFilterConfigs,
-        ),
-    ]);
+    const dateFiltersToKeep = getRelevantDateFiltersForWidget(dateFilters, dateDataSet, normalizeIds);
+    const attributeFiltersToKeep = getRelevantAttributeFiltersForWidget(
+        attributeFilters,
+        ignoreDashboardFilters,
+        normalizeIds,
+        attributeFilterConfigs,
+    );
 
     const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
 
@@ -78,14 +76,14 @@ export async function resolveWidgetFilters(
  * @param normalizeIds - function providing normalization of any ObjRef to identifier
  * @internal
  */
-export async function resolveWidgetFiltersWithMultipleDateFilters(
+export function resolveWidgetFiltersWithMultipleDateFilters(
     commonDateFilters: IDateFilter[],
     otherFilters: IFilter[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     dateDataSet: IWidget["dateDataSet"],
     normalizeIds: NormalizeIds,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
-): Promise<IFilter[]> {
+): IFilter[] {
     const dateFilters = otherFilters.filter(isDateFilter);
     const attributeFilters = otherFilters.filter(isAttributeFilter);
 
@@ -96,16 +94,22 @@ export async function resolveWidgetFiltersWithMultipleDateFilters(
         return otherFilters;
     }
 
-    const [commonDateFiltersToKeep, dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
-        getRelevantDateFiltersForWidget(commonDateFilters, dateDataSet, normalizeIds),
-        getRelevantDateFiltersWithDimensionForWidget(dateFilters, ignoreDashboardFilters, normalizeIds),
-        getRelevantAttributeFiltersForWidget(
-            attributeFilters,
-            ignoreDashboardFilters,
-            normalizeIds,
-            attributeFilterConfigs,
-        ),
-    ]);
+    const commonDateFiltersToKeep = getRelevantDateFiltersForWidget(
+        commonDateFilters,
+        dateDataSet,
+        normalizeIds,
+    );
+    const dateFiltersToKeep = getRelevantDateFiltersWithDimensionForWidget(
+        dateFilters,
+        ignoreDashboardFilters,
+        normalizeIds,
+    );
+    const attributeFiltersToKeep = getRelevantAttributeFiltersForWidget(
+        attributeFilters,
+        ignoreDashboardFilters,
+        normalizeIds,
+        attributeFilterConfigs,
+    );
 
     const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
     // filter the original filter arrays to maintain order of the items
@@ -120,18 +124,18 @@ export async function resolveWidgetFiltersWithMultipleDateFilters(
     return [...keptCommonDateFilters, ...keptOtherFilters];
 }
 
-async function getRelevantDateFiltersForWidget(
+function getRelevantDateFiltersForWidget(
     filters: IDateFilter[],
     dateDataSet: IWidget["dateDataSet"],
     normalizeIds: NormalizeIds,
-): Promise<IDateFilter[]> {
+): IDateFilter[] {
     if (!dateDataSet || !filters.length || filters.every(isAllTimeDateFilter)) {
         return [];
     }
 
-    const [dateDatasetId, ...filterIds] = await normalizeIds([
+    const [dateDatasetId, ...filterIds] = normalizeIds([
         dateDataSet,
-        ...filters.map((filter) => filterObjRef(filter)!),
+        ...filters.map((filter) => filterObjRef(filter)),
     ]);
 
     const withRelevantDimension = zip(filters, filterIds)
@@ -142,11 +146,11 @@ async function getRelevantDateFiltersForWidget(
     return !candidate || isAllTimeDateFilter(candidate) ? [] : [candidate];
 }
 
-async function getRelevantDateFiltersWithDimensionForWidget(
+function getRelevantDateFiltersWithDimensionForWidget(
     filters: IDateFilter[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     normalizeIds: NormalizeIds,
-): Promise<IDateFilter[]> {
+): IDateFilter[] {
     if (!ignoreDashboardFilters.length) {
         return filters;
     }
@@ -156,9 +160,9 @@ async function getRelevantDateFiltersWithDimensionForWidget(
     }
 
     // get all the necessary uris in one call by concatenating both arrays
-    const ids = await normalizeIds([
+    const ids = normalizeIds([
         ...ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
-        ...filters.map((filter) => filterObjRef(filter)!),
+        ...filters.map((filter) => filterObjRef(filter)),
     ]);
 
     // re-split the uris array to the two parts corresponding to the original arrays
@@ -172,12 +176,12 @@ async function getRelevantDateFiltersWithDimensionForWidget(
         .filter((f) => !isAllTimeDateFilter(f));
 }
 
-async function getRelevantAttributeFiltersForWidget(
+function getRelevantAttributeFiltersForWidget(
     filters: IAttributeFilter[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     normalizeIds: NormalizeIds,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
-): Promise<IAttributeFilter[]> {
+): IAttributeFilter[] {
     if (!ignoreDashboardFilters.length) {
         return filters;
     }
@@ -187,9 +191,9 @@ async function getRelevantAttributeFiltersForWidget(
     }
 
     // get all the necessary uris in one call by concatenating both arrays
-    const ids = await normalizeIds([
+    const ids = normalizeIds([
         ...ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
-        ...filters.map((filter) => filterObjRef(filter)!),
+        ...filters.map((filter) => filterObjRef(filter)),
         ...attributeFilterConfigs
             .filter((config) => !!config.displayAsLabel)
             .map((config) => config.displayAsLabel!),
@@ -215,7 +219,7 @@ async function getRelevantAttributeFiltersForWidget(
             );
             return (
                 !ignoredIds.includes(id!) &&
-                (!config || !ignoredIds.includes(config.normalizedDisplayAsLabel!))
+                (!config || !ignoredIds.includes(config.normalizedDisplayAsLabel))
             );
         })
         .map(([filter]) => filter!);

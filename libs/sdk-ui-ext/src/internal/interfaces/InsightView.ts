@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -69,6 +69,7 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
      * When embedding insight rendered by a chart, you can specify extra options to merge with existing
      * options saved for the insight.
      */
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     config?: IChartConfig | IGeoConfig | IPivotTableConfig | PivotTableNextConfig | any;
 
     /**

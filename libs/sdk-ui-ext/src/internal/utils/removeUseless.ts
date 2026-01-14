@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { compact, isEmpty } from "lodash-es";
 
@@ -13,7 +13,7 @@ function isUseless(obj: unknown): boolean {
  * @param obj - object to handle
  * @returns always a new instance if obj is not scalar
  */
-export function removeUseless(obj: any): any | undefined {
+export function removeUseless(obj: any): any {
     let res = obj;
 
     if (Array.isArray(obj)) {

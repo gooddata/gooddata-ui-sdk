@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
@@ -142,7 +142,7 @@ export function ScopedThemeProvider({
             }
         };
 
-        fetchData();
+        void fetchData();
     }, [themeParam, workspace, backend, modifier, enableComplementaryPalette, scope, scopeId]);
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import * as process from "process";
 
@@ -20,7 +20,7 @@ program
     )
     .action(autoBuild);
 
-async function run() {
+function run() {
     program.parse(process.argv);
 
     if (program.args.length === 0) {
@@ -28,9 +28,11 @@ async function run() {
     }
 }
 
-run().catch((err) => {
+try {
+    run();
+} catch (err: Error) {
     console.error(`An unexpected error has occurred: ${err}`);
     console.error(err);
 
     process.exit(1);
-});
+}

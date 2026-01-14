@@ -131,7 +131,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             ),
         );
         const metric = metricMetadata.data;
-        const maql = metric.data.attributes!.content!.maql || "";
+        const maql = metric.data.attributes.content.maql || "";
 
         const regexTokens = tokenizeExpression(maql);
         return regexTokens.map((regexToken) => this.resolveToken(regexToken, metric));
@@ -221,7 +221,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     }
 
     async updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
-        const objectId = await objRefToIdentifier(measure.ref, this.authCall);
+        const objectId = objRefToIdentifier(measure.ref, this.authCall);
         const metricAttributes = convertMetricToBackend(measure);
         const result = await this.authCall((client) => {
             return EntitiesApi_UpdateEntityMetrics(
@@ -250,7 +250,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     async updateMeasureMeta(
         measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IMeasureMetadataObject> {
-        const objectId = await objRefToIdentifier(measure.ref, this.authCall);
+        const objectId = objRefToIdentifier(measure.ref, this.authCall);
         const result = await this.authCall((client) => {
             return EntitiesApi_PatchEntityMetrics(
                 client.axios,
@@ -283,7 +283,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     }
 
     async deleteMeasure(measureRef: ObjRef): Promise<void> {
-        const objectId = await objRefToIdentifier(measureRef, this.authCall);
+        const objectId = objRefToIdentifier(measureRef, this.authCall);
 
         await this.authCall((client) => {
             return EntitiesApi_DeleteEntityMetrics(client.axios, client.basePath, {
@@ -294,7 +294,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     }
 
     public getMeasureReferencingObjects = async (ref: ObjRef): Promise<IMeasureReferencing> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
 
         const insights = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesVisualizationObjects, {
@@ -337,7 +337,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     }
 
     public async getMeasure(ref: ObjRef, options: IGetMeasureOptions = {}): Promise<IMeasureMetadataObject> {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) =>
             EntitiesApi_GetEntityMetrics(
                 client.axios,

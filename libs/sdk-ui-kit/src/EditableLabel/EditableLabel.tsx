@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type ChangeEvent,
@@ -50,6 +50,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         autocomplete,
     } = props;
 
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const rootRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const focusTimeoutRef = useRef<number | null>(null);
@@ -58,9 +59,22 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     const [value, setValue] = useState(props.value);
     const [isEditing, setIsEditing] = useState(false);
     const [doFocus, setDoFocus] = useState(false);
+    const [shouldRestoreFocus, setShouldRestoreFocus] = useState(false);
     const [rootWidth, setRootWidth] = useState(0);
     const [textareaWidth, setTextareaWidth] = useState(100);
     const [textareaFontSize, setTextareaFontSize] = useState<number | undefined>(undefined);
+
+    const setWrapperRefs = useCallback(
+        (node: HTMLDivElement | null): void => {
+            wrapperRef.current = node;
+            if (typeof ref === "function") {
+                ref(node);
+            } else if (ref) {
+                ref.current = node;
+            }
+        },
+        [ref],
+    );
 
     useEffect(() => {
         setValue(props.value);
@@ -131,6 +145,19 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         [isEditing, onEditingStart, onDocumentClick],
     );
 
+    const onWrapperKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>): void => {
+            const isEnter = event.key === "Enter";
+            const isSpace = event.key === " ";
+            if (isEnter || isSpace) {
+                event.preventDefault();
+                event.stopPropagation();
+                edit();
+            }
+        },
+        [edit],
+    );
+
     useEffect(() => {
         const rootNode = rootRef.current;
         const focusTimeoutId = focusTimeoutRef.current;
@@ -178,6 +205,13 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         }
     }, [doFocus, isEditing, selectAndFocus]);
 
+    useEffect(() => {
+        if (shouldRestoreFocus && !isEditing) {
+            wrapperRef.current?.focus();
+            setShouldRestoreFocus(false);
+        }
+    }, [shouldRestoreFocus, isEditing]);
+
     const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
         const isSubmit = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER;
         const isCancel = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE;
@@ -218,6 +252,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         onCancel(props.value);
         setValue(props.value);
         setIsEditing(false);
+        setShouldRestoreFocus(true);
         removeListeners();
     };
 
@@ -297,7 +332,16 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     const displayValue = children || value || placeholder;
 
     return (
-        <div data-testid="editable-label" ref={ref} className={editableLabelClasses} onClick={edit}>
+        <div
+            data-testid="editable-label"
+            ref={setWrapperRefs}
+            className={editableLabelClasses}
+            onClick={edit}
+            tabIndex={isEditing ? -1 : 0}
+            role={isEditing ? undefined : "button"}
+            aria-label={isEditing ? undefined : ariaLabel}
+            onKeyDown={isEditing ? undefined : onWrapperKeyDown}
+        >
             <div className="gd-editable-label-inner" ref={rootRef}>
                 {isEditing ? renderEditableLabelEdit() : displayValue}
             </div>

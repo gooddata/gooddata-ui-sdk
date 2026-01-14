@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty, isEqual } from "lodash-es";
 
@@ -186,7 +186,7 @@ export function getColorPaletteFromColors(colors: string[]): IColorPalette {
         return colors.map((color: string, index: number) => {
             const { R, G, B } = parseRGBColorCode(normalizeColorToRGB(color));
             if (isNaN(R) || isNaN(G) || isNaN(B)) {
-                throw Error;
+                throw new Error();
             }
             return {
                 guid: String(index),

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { type MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
@@ -16,7 +16,7 @@ describe("BaseHeadline", () => {
     let MockPrimarySection: MockInstance;
     let MockCompareSection: MockInstance;
 
-    const primaryItem = TEST_BASE_HEADLINE_ITEM as IBaseHeadlineItem<IHeadlineDataItem>;
+    const primaryItem = TEST_BASE_HEADLINE_ITEM;
     const secondaryItem = {
         ...TEST_BASE_HEADLINE_ITEM,
         elementType: "secondaryValue" as const,

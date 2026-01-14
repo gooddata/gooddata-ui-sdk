@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     EntitiesApi_GetAllEntitiesDatasets,
@@ -28,12 +28,12 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
         public readonly workspace: string,
     ) {}
 
-    public async getDatasets(): Promise<IDataset[]> {
-        return this.authCall(async () => []);
+    public getDatasets(): Promise<IDataset[]> {
+        return this.authCall(async () => Promise.resolve([]));
     }
 
     public async getAllDatasetsMeta(): Promise<IMetadataObject[]> {
-        return this.authCall(async () => []);
+        return this.authCall(async () => Promise.resolve([]));
     }
 
     public getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]> {
@@ -56,7 +56,7 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
     }
 
     public async getDataset(ref: ObjRef): Promise<IDataSetMetadataObject> {
-        const objectId = await objRefToIdentifier(ref, this.authCall);
+        const objectId = objRefToIdentifier(ref, this.authCall);
 
         return this.authCall(async (client) => {
             const result = await EntitiesApi_GetEntityDatasets(
@@ -79,7 +79,7 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
     public async updateDatasetMeta(
         dataSet: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IDataSetMetadataObject> {
-        const objectId = await objRefToIdentifier(dataSet.ref, this.authCall);
+        const objectId = objRefToIdentifier(dataSet.ref, this.authCall);
 
         return this.authCall(async (client) => {
             const result = await EntitiesApi_PatchEntityDatasets(

@@ -1,11 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Action, type AnyAction } from "@reduxjs/toolkit";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IAttributeElement, type IAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
-import { type AttributeFilterState } from "./state.js";
+import { type IAttributeFilterState } from "./state.js";
 
 /**
  * Event listener that can be used to listen dispatched AttributeFilterHandlerStore actions.
@@ -14,7 +14,7 @@ import { type AttributeFilterState } from "./state.js";
  */
 export type AttributeFilterHandlerEventListener = (
     action: Action,
-    selectFromNextState: <T>(selector: (state: AttributeFilterState) => T) => T,
+    selectFromNextState: <T>(selector: (state: IAttributeFilterState) => T) => T,
 ) => void;
 
 /**
@@ -23,11 +23,11 @@ export type AttributeFilterHandlerEventListener = (
  *
  * @internal
  */
-export interface AttributeFilterHandlerStore {
-    context: AttributeFilterHandlerStoreContext;
+export interface IAttributeFilterHandlerStore {
+    context: IAttributeFilterHandlerStoreContext;
     cancelRootSaga: () => void;
     dispatch: (action: AnyAction) => void;
-    select: <T>(selector: (state: AttributeFilterState) => T) => T;
+    select: <T>(selector: (state: IAttributeFilterState) => T) => T;
 }
 
 /**
@@ -35,7 +35,7 @@ export interface AttributeFilterHandlerStore {
  *
  * @internal
  */
-export interface AttributeFilterHandlerStoreContext {
+export interface IAttributeFilterHandlerStoreContext {
     backend: IAnalyticalBackend;
     workspace: string;
     attributeFilter: IAttributeFilter;

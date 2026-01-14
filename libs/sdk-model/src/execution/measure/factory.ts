@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
@@ -84,7 +84,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * @param localId - local identifier to set; if not specified, the builder will ensure local id will
      * be generated
      */
-    public localId = (localId?: Identifier | undefined): this => {
+    public localId = (localId?: Identifier): this => {
         if (!localId || localId.trim().length === 0) {
             return this.defaultLocalId();
         }
@@ -115,7 +115,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      *
      * @param alias - alias to use instead of measure title; undefined to use the title instead
      */
-    public alias = (alias?: string | undefined): this => {
+    public alias = (alias?: string): this => {
         if (!alias) {
             return this.noAlias();
         }
@@ -143,7 +143,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      *
      * @param title - alternative title to use instead of server-defined value; undefined to use server-defined value
      */
-    public title = (title?: string | undefined): this => {
+    public title = (title?: string): this => {
         if (!title) {
             return this.noTitle();
         }
@@ -173,7 +173,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      *
      * @param format - measure format string; or undefined if you want to fall back to server-defined value
      */
-    public format = (format?: string | undefined): this => {
+    public format = (format?: string): this => {
         if (!format) {
             return this.defaultFormat();
         }
@@ -244,7 +244,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      */
     private getOrGenerateLocalId(): string {
         if (this.customLocalId && !isEmpty(this.measure.localIdentifier)) {
-            return this.measure.localIdentifier!;
+            return this.measure.localIdentifier;
         }
 
         return sanitizeLocalId(
@@ -314,7 +314,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
      *
      * @param aggregation - aggregation to use; if undefined will reset to default
      */
-    public aggregation = (aggregation?: MeasureAggregation | undefined): this => {
+    public aggregation = (aggregation?: MeasureAggregation): this => {
         if (!aggregation) {
             return this.defaultAggregation();
         }

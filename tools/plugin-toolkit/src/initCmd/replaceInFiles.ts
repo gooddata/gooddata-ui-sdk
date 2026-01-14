@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import path from "path";
 
@@ -49,11 +49,11 @@ export type RegexReplacement = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FileReplacementSpec extends Record<string, RegexReplacement[] | FileReplacementSpec> {}
+export interface IFileReplacementSpec extends Record<string, RegexReplacement[] | IFileReplacementSpec> {}
 
 export async function replaceInFiles(
     initialPath: string,
-    spec: FileReplacementSpec,
+    spec: IFileReplacementSpec,
     readFile: ReadFileFn = fse.readFile,
     writeFile: WriteFileFn = fse.writeFile,
 ): Promise<void> {

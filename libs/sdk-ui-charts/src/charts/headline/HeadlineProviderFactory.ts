@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -36,7 +36,7 @@ const getHeadlineType = (buckets: IBucket[], config: IChartConfig | undefined): 
     const primaryMeasure = measureBucket ? bucketMeasure(measureBucket) : undefined;
 
     const secondaryBucket = bucketsFind(buckets, BucketNames.SECONDARY_MEASURES);
-    const secondaryMeasures = isEmpty(secondaryBucket) ? [] : bucketMeasures(secondaryBucket!);
+    const secondaryMeasures = isEmpty(secondaryBucket) ? [] : bucketMeasures(secondaryBucket);
 
     if (isComparisonType(primaryMeasure, secondaryMeasures, config?.comparison)) {
         return HeadlineType.COMPARISON;

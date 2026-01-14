@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { newInsight } from "../../../__mocks__/insights.js";
@@ -520,7 +521,7 @@ describe("insightModifyItems", () => {
         if (isMeasure(bucketItem)) {
             (bucketItem as IMeasure).measure.title = "Modified measure title";
         } else {
-            (bucketItem as IAttribute).attribute.alias = "Modified attribute alias";
+            bucketItem.attribute.alias = "Modified attribute alias";
         }
         return bucketItem;
     };

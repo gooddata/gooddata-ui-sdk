@@ -38,7 +38,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
      *
      * @returns boolean
      */
-    private async isStylizable(activeStyleId: string): Promise<boolean> {
+    private isStylizable(activeStyleId: string): boolean {
         return activeStyleId !== "";
     }
 
@@ -47,7 +47,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
         const activeColorPaletteId =
             (userSettings["activeColorPalette"] as IColorPaletteMetadataObject)?.id ?? "";
 
-        return (await this.isStylizable(activeColorPaletteId))
+        return this.isStylizable(activeColorPaletteId)
             ? this.authCall(async (client) =>
                   EntitiesApi_GetAllEntitiesColorPalettes(client.axios, client.basePath, {
                       filter: `id=="${activeColorPaletteId}"`,
@@ -70,7 +70,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const activeThemeId = (userSettings["activeTheme"] as IThemeMetadataObject)?.id ?? "";
 
-        return (await this.isStylizable(activeThemeId))
+        return this.isStylizable(activeThemeId)
             ? this.authCall(async (client) =>
                   EntitiesApi_GetAllEntitiesThemes(client.axios, client.basePath, {
                       filter: `id=="${activeThemeId}"`,
@@ -98,14 +98,14 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     public getActiveTheme = () => this.getActiveSetting("activeTheme");
 
     public async setActiveTheme(themeRef: ObjRef): Promise<void> {
-        const themeId = await objRefToIdentifier(themeRef, this.authCall);
+        const themeId = objRefToIdentifier(themeRef, this.authCall);
         await this.settingsService.setTheme(themeId);
     }
 
     public getActiveColorPalette = () => this.getActiveSetting("activeColorPalette");
 
     public async setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void> {
-        const colorPaletteId = await objRefToIdentifier(colorPaletteRef, this.authCall);
+        const colorPaletteId = objRefToIdentifier(colorPaletteRef, this.authCall);
         await this.settingsService.setColorPalette(colorPaletteId);
     }
 

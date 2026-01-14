@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
@@ -32,20 +33,20 @@ function getWarningMessageForMeasuresBucket(
     viewItems: IBucketItem[],
 ) {
     return categoriesCount > 1
-        ? getBucketItemsWarningMessage(messages["metricView"].id!, intl, viewItems)
-        : getBucketItemsWarningMessage(messages["metricStack"].id!, intl, stackItems);
+        ? getBucketItemsWarningMessage(messages["metricView"].id, intl, viewItems)
+        : getBucketItemsWarningMessage(messages["metricStack"].id, intl, stackItems);
 }
 
 function getWarningMessageForViewByBucket(intl: IntlShape, measuresCount: number, stackItems: IBucketItem[]) {
     return measuresCount > 1
-        ? getTranslation(messages["categoryView"].id!, intl)
-        : getBucketItemsWarningMessage(messages["viewStack"].id!, intl, stackItems);
+        ? getTranslation(messages["categoryView"].id, intl)
+        : getBucketItemsWarningMessage(messages["viewStack"].id, intl, stackItems);
 }
 
 function getWarningMessageForStackByBucket(intl: IntlShape, categoriesCount: number) {
     return categoriesCount > 1
-        ? getTranslation(messages["stackView"].id!, intl)
-        : getTranslation(messages["measureStack"].id!, intl);
+        ? getTranslation(messages["stackView"].id, intl)
+        : getTranslation(messages["measureStack"].id, intl);
 }
 
 function setAreaChartBucketWarningMessages(

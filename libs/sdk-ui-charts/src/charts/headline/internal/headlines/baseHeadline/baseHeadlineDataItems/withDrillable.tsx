@@ -1,41 +1,76 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ComponentType, type KeyboardEvent, type MouseEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { wrapDisplayName } from "@gooddata/sdk-ui";
+import { type IChartCoordinates, wrapDisplayName } from "@gooddata/sdk-ui";
 import { isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { type IWithDrillableItemProps } from "../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
+type IDrillMenuPositioningConfig = { enableDrillMenuPositioningAtCursor?: boolean } | undefined;
+
+function isDrillMenuPositioningAtCursorEnabled(config: IDrillMenuPositioningConfig): boolean {
+    return config?.enableDrillMenuPositioningAtCursor ?? false;
+}
+
+function getCursorCoordinatesFromMouseEvent(event: MouseEvent<EventTarget>): IChartCoordinates {
+    const element = event.target as HTMLElement | null;
+    if (!element) {
+        return { chartX: undefined, chartY: undefined };
+    }
+    const rect = element.getBoundingClientRect();
+    return {
+        chartX: event.clientX - rect.left,
+        chartY: event.clientY - rect.top,
+    };
+}
+
+function getCenterCoordinatesFromTarget(target: EventTarget): IChartCoordinates {
+    const element = target as HTMLElement | null;
+    if (!element) {
+        return { chartX: undefined, chartY: undefined };
+    }
+    const rect = element.getBoundingClientRect();
+    return {
+        chartX: rect.width / 2,
+        chartY: rect.height / 2,
+    };
+}
+
 export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataItem>>(
     BaseHeadlineValueItem: ComponentType<T>,
 ): ComponentType<T> => {
     function WithDrillable(props: T) {
         const { dataItem, elementType } = props;
-        const { fireDrillEvent } = useBaseHeadline();
-
+        const { fireDrillEvent, config } = useBaseHeadline();
         const drillId = useIdPrefixed("drill-hint");
 
         const handleDrillable = useCallback(
             (event: MouseEvent<EventTarget>) => {
                 if (dataItem?.isDrillable) {
-                    fireDrillEvent(dataItem, elementType!, event.target);
+                    const chartCoordinates = isDrillMenuPositioningAtCursorEnabled(config)
+                        ? getCursorCoordinatesFromMouseEvent(event)
+                        : undefined;
+                    fireDrillEvent(dataItem, elementType!, event.target, chartCoordinates);
                 }
             },
-            [dataItem, elementType, fireDrillEvent],
+            [dataItem, elementType, fireDrillEvent, config],
         );
 
         const handleKeyDown = useCallback(
             (event: KeyboardEvent<HTMLDivElement>) => {
                 if (dataItem?.isDrillable && isActionKey(event)) {
-                    fireDrillEvent(dataItem, elementType!, event.target);
+                    const chartCoordinates = isDrillMenuPositioningAtCursorEnabled(config)
+                        ? getCenterCoordinatesFromTarget(event.target)
+                        : undefined;
+                    fireDrillEvent(dataItem, elementType!, event.target, chartCoordinates);
                 }
             },
-            [dataItem, elementType, fireDrillEvent],
+            [dataItem, elementType, fireDrillEvent, config],
         );
 
         return dataItem?.isDrillable ? (

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useCallback, useContext, useState } from "react";
 
@@ -11,17 +11,17 @@ import {
 } from "@gooddata/sdk-model";
 import { useBackend, useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { type AutomationsScope, type UserContextValue } from "./types.js";
+import { type AutomationsScope, type IUserContextValue } from "./types.js";
 import { useAutomationService } from "./useAutomationService.js";
 
-const UserContext = createContext<UserContextValue | null>(null);
+const UserContext = createContext<IUserContextValue | null>(null);
 
-interface UserProviderProps {
+interface IUserProviderProps {
     children: ReactNode;
     scope: AutomationsScope;
 }
 
-export function UserProvider({ children, scope }: UserProviderProps) {
+export function UserProvider({ children, scope }: IUserProviderProps) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
     const [canManageWorkspace, setCanManageWorkspace] = useState<boolean>(false);
 
@@ -114,7 +114,7 @@ export function UserProvider({ children, scope }: UserProviderProps) {
         [canManageAutomation],
     );
 
-    const contextValue: UserContextValue = {
+    const contextValue: IUserContextValue = {
         canManageAutomation,
         isCurrentUserByLogin,
         isSubscribedToAutomation,
@@ -125,7 +125,7 @@ export function UserProvider({ children, scope }: UserProviderProps) {
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 }
 
-export const useUser = (): UserContextValue => {
+export const useUser = (): IUserContextValue => {
     const context = useContext(UserContext);
 
     invariant(context, "UserContext not found");

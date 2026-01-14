@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
@@ -208,7 +208,7 @@ const CoreRepeaterWithIntl = withTheme(CoreRepeaterImpl);
  */
 export function CoreRepeater(props: ICoreRepeaterChartProps) {
     return (
-        <ThemeContextProvider theme={props.theme!} themeIsLoading={false}>
+        <ThemeContextProvider theme={props.theme} themeIsLoading={false}>
             <IntlWrapper locale={props.locale}>
                 <CoreRepeaterWithIntl {...props} />
             </IntlWrapper>

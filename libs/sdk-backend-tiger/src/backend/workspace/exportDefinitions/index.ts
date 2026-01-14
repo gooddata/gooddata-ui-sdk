@@ -115,7 +115,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
     ): EntitiesApiGetAllEntitiesExportDefinitionsRequest => {
         const orderBy = options?.orderBy;
         const usesOrderingByUpdated = !orderBy || orderBy === "updated";
-        const sortConfiguration = usesOrderingByUpdated ? {} : { sort: [orderBy!] }; // sort: ["modifiedAt", "createdAt"]
+        const sortConfiguration = usesOrderingByUpdated ? {} : { sort: [orderBy] }; // sort: ["modifiedAt", "createdAt"]
         const includeUser =
             options?.loadUserData || options?.author
                 ? { include: ["createdBy" as const, "modifiedBy" as const] }
@@ -129,7 +129,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         ref: ObjRef,
         options: IGetExportDefinitionOptions = {},
     ): Promise<IExportDefinitionMetadataObject> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const includeUser = options?.loadUserData
@@ -195,7 +195,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         ref: ObjRef,
         exportDefinition: IExportDefinitionMetadataObjectDefinition,
     ): Promise<IExportDefinitionMetadataObject> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const updateResponse = await this.authCall((client) => {
@@ -225,7 +225,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
     };
 
     public deleteExportDefinition = async (ref: ObjRef): Promise<void> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        const id = objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
             EntitiesApi_DeleteEntityExportDefinitions(client.axios, client.basePath, {

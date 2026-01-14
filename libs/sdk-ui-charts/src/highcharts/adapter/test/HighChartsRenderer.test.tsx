@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -38,7 +38,7 @@ const mockChartRef = {
 vi.mock("../HighChartsRenderer.js", () => {
     const FLUID_LEGEND_THRESHOLD = 768;
 
-    interface MockHighChartsRendererProps {
+    interface IMockHighChartsRendererProps {
         onLegendReady?: (data: {
             legendItems: Array<{ name: string; color: string; onClick: () => void }>;
         }) => void;
@@ -66,7 +66,7 @@ vi.mock("../HighChartsRenderer.js", () => {
         width,
         afterRender,
         zoomable,
-    }: MockHighChartsRendererProps) {
+    }: IMockHighChartsRendererProps) {
         // Call callbacks to simulate component lifecycle
         if (onLegendReady) {
             onLegendReady({

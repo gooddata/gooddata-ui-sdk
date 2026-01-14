@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -669,6 +669,11 @@ export interface ISettings {
      * This feature flag enables automatic drill to url setting feature.
      */
     enableImplicitDrillToUrl?: boolean;
+
+    /**
+     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 
     /**
      * Enable anomaly detection alert

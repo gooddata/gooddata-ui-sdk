@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { newTestAttributeFilterHandler } from "./fixtures.js";
@@ -16,21 +17,21 @@ const changedSelectionWithIrrelevantElements = {
 };
 
 describe("MultiSelectAttributeFilterHandler", () => {
-    it("should initialize selection for positive attribute filter", async () => {
+    it("should initialize selection for positive attribute filter", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         expect(attributeFilterHandler.getCommittedSelection()).toMatchSnapshot("committed selection");
         expect(attributeFilterHandler.getWorkingSelection()).toMatchSnapshot("working selection");
     });
 
-    it("should initialize selection for negative attribute filter", async () => {
+    it("should initialize selection for negative attribute filter", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("negative");
 
         expect(attributeFilterHandler.getCommittedSelection()).toMatchSnapshot("committed selection");
         expect(attributeFilterHandler.getWorkingSelection()).toMatchSnapshot("working selection");
     });
 
-    it("changeSelection() should trigger onSelectionChanged() callback", async () => {
+    it("changeSelection() should trigger onSelectionChanged() callback", () => {
         const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
@@ -41,7 +42,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(onSelectionChanged.mock.calls[0]).toMatchSnapshot("parameters");
     });
 
-    it("changeSelection() should change the selection", async () => {
+    it("changeSelection() should change the selection", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.changeSelection(changedSelectionWithIrrelevantElements);
@@ -49,7 +50,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(attributeFilterHandler.getWorkingSelection()).toEqual(changedSelectionWithIrrelevantElements);
     });
 
-    it("revertSelection() should trigger onSelectionChanged() callback", async () => {
+    it("revertSelection() should trigger onSelectionChanged() callback", () => {
         const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
@@ -62,7 +63,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(onSelectionChanged.mock.calls[0]).toMatchSnapshot("parameters");
     });
 
-    it("revertSelection() should revert the selection", async () => {
+    it("revertSelection() should revert the selection", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         const selectionBeforeTheChange = attributeFilterHandler.getCommittedSelection();
@@ -73,7 +74,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(attributeFilterHandler.getWorkingSelection()).toEqual(selectionBeforeTheChange);
     });
 
-    it("invertSelection() should trigger onSelectionChanged() callback", async () => {
+    it("invertSelection() should trigger onSelectionChanged() callback", () => {
         const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
@@ -84,7 +85,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(onSelectionChanged.mock.calls[0]).toMatchSnapshot("parameters");
     });
 
-    it("invertSelection() should invert the selection", async () => {
+    it("invertSelection() should invert the selection", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         const selectionBeforeTheChange = attributeFilterHandler.getWorkingSelection();
@@ -96,7 +97,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         );
     });
 
-    it("commitSelection() should trigger onSelectionCommitted() callback", async () => {
+    it("commitSelection() should trigger onSelectionCommitted() callback", () => {
         const onSelectionCommitted = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
@@ -108,7 +109,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(onSelectionCommitted.mock.calls[0]).toMatchSnapshot("parameters");
     });
 
-    it("commitSelection() should commit the selection", async () => {
+    it("commitSelection() should commit the selection", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.changeSelection(changedSelection);
@@ -117,7 +118,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(attributeFilterHandler.getCommittedSelection()).toEqual(changedSelection);
     });
 
-    it("clearSelection() should trigger onSelectionChanged() callback", async () => {
+    it("clearSelection() should trigger onSelectionChanged() callback", () => {
         const onSelectionChanged = vi.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
@@ -128,7 +129,7 @@ describe("MultiSelectAttributeFilterHandler", () => {
         expect(onSelectionChanged.mock.calls[0]).toMatchSnapshot("parameters");
     });
 
-    it("clearSelection() should clear the selection", async () => {
+    it("clearSelection() should clear the selection", () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
         attributeFilterHandler.changeSelection(changedSelection);

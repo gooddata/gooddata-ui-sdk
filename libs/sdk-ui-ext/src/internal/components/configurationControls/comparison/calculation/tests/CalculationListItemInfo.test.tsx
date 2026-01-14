@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -73,9 +73,9 @@ describe("CalculationListItemInfo", () => {
         });
 
         const tooltip = container.querySelector(CALCULATION_INFO_SELECTOR)!;
-        expect(tooltip!.children.length).toBe(infos.length);
+        expect(tooltip.children.length).toBe(infos.length);
         infos.forEach((expected, index) => {
-            expect(tooltip!.children[index].innerHTML).toEqual(expected);
+            expect(tooltip.children[index].innerHTML).toEqual(expected);
         });
     });
 });

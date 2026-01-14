@@ -525,6 +525,9 @@ export class GeoTokenMissingSdkError extends GoodDataSdkError {
 // @internal
 export function getAttributeHeaderItemName(attributeHeaderItem: IResultAttributeHeaderItem | undefined): string | null | undefined;
 
+// @internal
+export function getChartClickCoordinates(targetElement: HTMLElement | EventTarget | null | undefined, containerSelector: string): IChartCoordinates;
+
 // @internal (undocumented)
 export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[];
 
@@ -683,6 +686,14 @@ export interface ICancelablePromise<T> {
     getHasFulfilled: () => boolean;
     // (undocumented)
     promise: Promise<T>;
+}
+
+// @internal
+export interface IChartCoordinates {
+    // (undocumented)
+    chartX?: number;
+    // (undocumented)
+    chartY?: number;
 }
 
 // @alpha
@@ -873,6 +884,7 @@ export interface IDrillEvent {
     dataView: IDataView;
     // (undocumented)
     drillContext: IDrillEventContext;
+    enableDrillMenuPositioningAtCursor?: boolean;
     // (undocumented)
     target?: HTMLElement;
 }

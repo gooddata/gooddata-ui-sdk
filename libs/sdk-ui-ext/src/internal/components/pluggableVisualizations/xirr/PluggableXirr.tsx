@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 
@@ -110,7 +110,9 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
 
-        return sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters);
+        return Promise.resolve(
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+        );
     };
 
     public getExecution(
@@ -142,7 +144,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
                 drillableItems={drillableItems}
                 onDrill={this.onDrill}
                 locale={locale}
-                config={updateConfigWithSettings(config!, this.settings!)}
+                config={updateConfigWithSettings(config, this.settings)}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}

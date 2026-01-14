@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -43,7 +44,7 @@ describe("AttributeFilterHandler", () => {
         expect(attributeFilterHandler.getAllElements()).toMatchSnapshot();
     });
 
-    it("staticElements option with setLimitingAttributeFilters() option should throw error on init() call", async () => {
+    it("staticElements option with setLimitingAttributeFilters() option should throw error on init() call", () => {
         const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
             emptyPositiveAttributeFilterDefaultDF,
             { staticElements },
@@ -53,7 +54,7 @@ describe("AttributeFilterHandler", () => {
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
-    it("staticElements option with setLimitingMeasures() option should throw error on init() call", async () => {
+    it("staticElements option with setLimitingMeasures() option should throw error on init() call", () => {
         const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
             emptyPositiveAttributeFilterDefaultDF,
             { staticElements },
@@ -63,7 +64,7 @@ describe("AttributeFilterHandler", () => {
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
-    it("staticElements option with setLimitingValidationItems() option should throw error on init() call", async () => {
+    it("staticElements option with setLimitingValidationItems() option should throw error on init() call", () => {
         const metricRefs = [ReferenceMd.Amount.measure.definition.measureDefinition.item];
         const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
             emptyPositiveAttributeFilterDefaultDF,
@@ -74,7 +75,7 @@ describe("AttributeFilterHandler", () => {
         expect(attributeFilterHandler.init).toThrowErrorMatchingSnapshot();
     });
 
-    it("staticElements option with setLimitingDateFilters() option should throw error on init() call", async () => {
+    it("staticElements option with setLimitingDateFilters() option should throw error on init() call", () => {
         const attributeFilterHandler = newTestAttributeFilterHandlerWithAttributeFilter(
             emptyPositiveAttributeFilterDefaultDF,
             { staticElements },

@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import { type IElementsQueryResult } from "@gooddata/sdk-backend-spi";
@@ -34,7 +35,9 @@ export class InMemoryPaging implements IElementsQueryResult {
             return this;
         }
 
-        return new InMemoryPaging(this.allItems, this.limit, this.offset + this.items.length);
+        return Promise.resolve(
+            new InMemoryPaging(this.allItems, this.limit, this.offset + this.items.length),
+        );
     }
 
     public async goTo(pageIndex: number): Promise<IElementsQueryResult> {
@@ -42,16 +45,16 @@ export class InMemoryPaging implements IElementsQueryResult {
             return this;
         }
 
-        return new InMemoryPaging(this.allItems, this.limit, pageIndex * this.items.length);
+        return Promise.resolve(new InMemoryPaging(this.allItems, this.limit, pageIndex * this.items.length));
     }
 
     public async all(): Promise<IAttributeElement[]> {
-        return [...this.allItems];
+        return Promise.resolve([...this.allItems]);
     }
 
     public async allSorted(
         compareFn: (a: IAttributeElement, b: IAttributeElement) => number,
     ): Promise<IAttributeElement[]> {
-        return [...this.allItems].sort(compareFn);
+        return Promise.resolve([...this.allItems].sort(compareFn));
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type FC, type ReactNode } from "react";
 
@@ -10,14 +10,14 @@ import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../../m
 import { setMessagesAction } from "../../store/index.js";
 import { escapeMarkdown } from "../utils/markdownUtils.js";
 
-interface LandingQuestionActionsProps {
+interface ILandingQuestionActionsProps {
     setMessagesAction: typeof setMessagesAction;
 }
 
 /**
  * @beta
  */
-export interface LandingQuestionProps {
+export interface ILandingQuestionProps {
     question: string;
     answer: string;
     icon?: ReactNode;
@@ -33,7 +33,7 @@ function LandingQuestionComponent({
     question,
     answer,
     title = question,
-}: LandingQuestionProps & LandingQuestionActionsProps) {
+}: ILandingQuestionProps & ILandingQuestionActionsProps) {
     return (
         <Button
             onClick={() =>
@@ -56,14 +56,14 @@ function LandingQuestionComponent({
     );
 }
 
-const mapDispatchToProps: LandingQuestionActionsProps = {
+const mapDispatchToProps: ILandingQuestionActionsProps = {
     setMessagesAction,
 };
 
 /**
  * @beta
  */
-export const DefaultLandingQuestion: FC<LandingQuestionProps> = connect(
+export const DefaultLandingQuestion: FC<ILandingQuestionProps> = connect(
     null,
     mapDispatchToProps,
 )(LandingQuestionComponent);

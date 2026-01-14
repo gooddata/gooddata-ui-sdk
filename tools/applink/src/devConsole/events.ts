@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type SourceDescriptor, type TargetDescriptor } from "../base/types.js";
 
@@ -19,7 +19,7 @@ export type DcEventType =
     | "autobuildToggled"
     | "somethingHappened";
 
-interface BaseDcEvent {
+interface IBaseDcEvent {
     type: DcEventType;
 }
 
@@ -30,14 +30,14 @@ interface BaseDcEvent {
 /**
  * This event is emitted once the app discovers all necessary information about the source packages.
  */
-export interface SourceInitialized extends BaseDcEvent {
+export interface ISourceInitialized extends IBaseDcEvent {
     type: "sourceInitialized";
     body: {
         sourceDescriptor: SourceDescriptor;
     };
 }
 
-export function sourceInitialized(sourceDescriptor: SourceDescriptor): SourceInitialized {
+export function sourceInitialized(sourceDescriptor: SourceDescriptor): ISourceInitialized {
     return {
         type: "sourceInitialized",
         body: {
@@ -54,14 +54,14 @@ export function sourceInitialized(sourceDescriptor: SourceDescriptor): SourceIni
  * This event is emitted once the app discovers all the necessary information about the target to which
  * it will be publishing updated builds.
  */
-export interface TargetSelected extends BaseDcEvent {
+export interface ITargetSelected extends IBaseDcEvent {
     type: "targetSelected";
     body: {
         targetDescriptor: TargetDescriptor;
     };
 }
 
-export function targetSelected(targetDescriptor: TargetDescriptor): TargetSelected {
+export function targetSelected(targetDescriptor: TargetDescriptor): ITargetSelected {
     return {
         type: "targetSelected",
         body: {
@@ -94,7 +94,7 @@ export type PackageChange = {
 /**
  * This event is emitted when the app discovers that source code in one or more packages has changed.
  */
-export interface PackagesChanged extends BaseDcEvent {
+export interface IPackagesChanged extends IBaseDcEvent {
     type: "packagesChanged";
     body: {
         /**
@@ -104,7 +104,7 @@ export interface PackagesChanged extends BaseDcEvent {
     };
 }
 
-export function packagesChanged(changes: PackageChange[]): PackagesChanged {
+export function packagesChanged(changes: PackageChange[]): IPackagesChanged {
     return {
         type: "packagesChanged",
         body: {
@@ -120,7 +120,7 @@ export function packagesChanged(changes: PackageChange[]): PackagesChanged {
 /**
  * This event is emitted after builds of changed & impacted packages are scheduled.
  */
-export interface BuildScheduled extends BaseDcEvent {
+export interface IBuildScheduled extends IBaseDcEvent {
     type: "buildScheduled";
     body: {
         changes: PackageChange[];
@@ -128,7 +128,7 @@ export interface BuildScheduled extends BaseDcEvent {
     };
 }
 
-export function buildScheduled(changes: PackageChange[], depending: string[][]): BuildScheduled {
+export function buildScheduled(changes: PackageChange[], depending: string[][]): IBuildScheduled {
     return {
         type: "buildScheduled",
         body: {
@@ -145,14 +145,14 @@ export function buildScheduled(changes: PackageChange[], depending: string[][]):
 /**
  * This event is emitted when the app requests that a particular package must be rebuilt.
  */
-export interface BuildRequested extends BaseDcEvent {
+export interface IBuildRequested extends IBaseDcEvent {
     type: "buildRequested";
     body: {
         packageName: string;
     };
 }
 
-export function buildRequested(packageName: string): BuildRequested {
+export function buildRequested(packageName: string): IBuildRequested {
     return {
         type: "buildRequested",
         body: {
@@ -168,14 +168,14 @@ export function buildRequested(packageName: string): BuildRequested {
 /**
  * This event is emitted when the app starts building a package.
  */
-export interface BuildStarted extends BaseDcEvent {
+export interface IBuildStarted extends IBaseDcEvent {
     type: "buildStarted";
     body: {
         packageName: string;
     };
 }
 
-export function buildStarted(packageName: string): BuildStarted {
+export function buildStarted(packageName: string): IBuildStarted {
     return {
         type: "buildStarted",
         body: {
@@ -199,12 +199,12 @@ export type BuildResult = {
 /**
  * This event is emitted when app finished building a package.
  */
-export interface BuildFinished extends BaseDcEvent {
+export interface IBuildFinished extends IBaseDcEvent {
     type: "buildFinished";
     body: BuildResult;
 }
 
-export function buildFinished(result: BuildResult): BuildFinished {
+export function buildFinished(result: BuildResult): IBuildFinished {
     return {
         type: "buildFinished",
         body: result,
@@ -218,14 +218,14 @@ export function buildFinished(result: BuildResult): BuildFinished {
 /**
  * This event is emitted once the app rebuilds all packages impacted by changes described in {@link PackagesChanged}
  */
-export interface PackagesRebuilt extends BaseDcEvent {
+export interface IPackagesRebuilt extends IBaseDcEvent {
     type: "packagesRebuilt";
     body: {
         packages: string[];
     };
 }
 
-export function packagesRebuilt(packages: string[]): PackagesRebuilt {
+export function packagesRebuilt(packages: string[]): IPackagesRebuilt {
     return {
         type: "packagesRebuilt",
         body: {
@@ -241,7 +241,7 @@ export function packagesRebuilt(packages: string[]): PackagesRebuilt {
 /*
  * This event is emitted once the app publishes build from source to target.
  */
-export interface PublishFinished extends BaseDcEvent {
+export interface IPublishFinished extends IBaseDcEvent {
     type: "publishFinished";
     body: {
         packageName: string;
@@ -249,7 +249,7 @@ export interface PublishFinished extends BaseDcEvent {
     };
 }
 
-export function publishFinished(packageName: string, exitCode: number): PublishFinished {
+export function publishFinished(packageName: string, exitCode: number): IPublishFinished {
     return {
         type: "publishFinished",
         body: {
@@ -266,14 +266,14 @@ export function publishFinished(packageName: string, exitCode: number): PublishF
 /**
  * This event is emitted once the user of the app selects one or more packages to target for commands.
  */
-export interface PackagesSelected extends BaseDcEvent {
+export interface IPackagesSelected extends IBaseDcEvent {
     type: "packagesSelected";
     body: {
         packages: string[];
     };
 }
 
-export function packagesSelected(packages: string | string[]): PackagesSelected {
+export function packagesSelected(packages: string | string[]): IPackagesSelected {
     return {
         type: "packagesSelected",
         body: {
@@ -289,14 +289,14 @@ export function packagesSelected(packages: string | string[]): PackagesSelected 
 /**
  * This event is emitted once the user of the app wants to see build output for particular package.
  */
-export interface BuildOutputRequested extends BaseDcEvent {
+export interface IBuildOutputRequested extends IBaseDcEvent {
     type: "buildOutputRequested";
     body: {
         packageName: string;
     };
 }
 
-export function buildOutputRequested(packageName: string): BuildOutputRequested {
+export function buildOutputRequested(packageName: string): IBuildOutputRequested {
     return {
         type: "buildOutputRequested",
         body: {
@@ -313,11 +313,11 @@ export function buildOutputRequested(packageName: string): BuildOutputRequested 
  * This event is emitted once the user of the app exits the build output browser and wants to navigate within
  * the list of packages again.
  */
-export interface BuildOutputExited extends BaseDcEvent {
+export interface IBuildOutputExited extends IBaseDcEvent {
     type: "buildOutputExited";
 }
 
-export function buildOutputExited(): BuildOutputExited {
+export function buildOutputExited(): IBuildOutputExited {
     return {
         type: "buildOutputExited",
     };
@@ -327,14 +327,14 @@ export function buildOutputExited(): BuildOutputExited {
 //
 //
 
-export interface AutobuildToggled extends BaseDcEvent {
+export interface IAutobuildToggled extends IBaseDcEvent {
     type: "autobuildToggled";
     body: {
         value: boolean;
     };
 }
 
-export function autobuildToggled(value: boolean): AutobuildToggled {
+export function autobuildToggled(value: boolean): IAutobuildToggled {
     return {
         type: "autobuildToggled",
         body: {
@@ -352,7 +352,7 @@ export type Severity = "info" | "important" | "warn" | "error" | "fatal";
 /**
  * This event is emitted when something note-worthy happens.
  */
-export interface SomethingHappened extends BaseDcEvent {
+export interface ISomethingHappened extends IBaseDcEvent {
     type: "somethingHappened";
     body: {
         severity: Severity;
@@ -360,7 +360,7 @@ export interface SomethingHappened extends BaseDcEvent {
     };
 }
 
-export function somethingHappened(severity: Severity, message: string): SomethingHappened {
+export function somethingHappened(severity: Severity, message: string): ISomethingHappened {
     return {
         type: "somethingHappened",
         body: {
@@ -374,20 +374,20 @@ export function somethingHappened(severity: Severity, message: string): Somethin
  * All recognized events.
  */
 export type DcEvent =
-    | SourceInitialized
-    | TargetSelected
-    | PackagesChanged
-    | BuildScheduled
-    | BuildRequested
-    | BuildStarted
-    | BuildFinished
-    | PackagesRebuilt
-    | PublishFinished
-    | PackagesSelected
-    | BuildOutputRequested
-    | BuildOutputExited
-    | AutobuildToggled
-    | SomethingHappened;
+    | ISourceInitialized
+    | ITargetSelected
+    | IPackagesChanged
+    | IBuildScheduled
+    | IBuildRequested
+    | IBuildStarted
+    | IBuildFinished
+    | IPackagesRebuilt
+    | IPublishFinished
+    | IPackagesSelected
+    | IBuildOutputRequested
+    | IBuildOutputExited
+    | IAutobuildToggled
+    | ISomethingHappened;
 
 //
 //

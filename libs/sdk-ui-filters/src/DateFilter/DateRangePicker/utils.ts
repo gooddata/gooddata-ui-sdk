@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { format, isValid, parse } from "date-fns";
 import moment from "moment";
@@ -77,7 +77,7 @@ export const setTimeToDate = (baseDate: Date | undefined, time: ITime | undefine
     }
 
     const result = new Date(baseDate!);
-    result.setHours(time.hours!, time.minutes!);
+    result.setHours(time.hours!, time.minutes);
 
     return result;
 };

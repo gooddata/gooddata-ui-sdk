@@ -14,7 +14,7 @@ export function Header({ searchNode }: Props) {
     const intl = useIntl();
 
     return (
-        <header className="gd-analytics-catalog__header">
+        <div className="gd-analytics-catalog__header">
             <h1 className="gd-analytics-catalog__header__title">
                 <FormattedMessage id="analyticsCatalog.title" />
             </h1>
@@ -37,6 +37,6 @@ export function Header({ searchNode }: Props) {
             />
             <div className="gd-analytics-catalog__header__separator" />
             {searchNode}
-        </header>
+        </div>
     );
 }

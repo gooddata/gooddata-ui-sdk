@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import type mapboxgl from "mapbox-gl";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -187,6 +188,14 @@ export interface IGeoConfig {
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
     respectLegendPosition?: boolean;
+
+    /**
+     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
+     *
+     * @remarks
+     * Feature flag. Default: false.
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 }
 
 /**

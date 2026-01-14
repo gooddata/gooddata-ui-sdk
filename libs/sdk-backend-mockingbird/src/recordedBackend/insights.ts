@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty } from "lodash-es";
 
@@ -72,7 +72,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
 
         this.insights[recordingId] = { obj: newInsight };
 
-        return newInsight;
+        return Promise.resolve(newInsight);
     }
 
     public async getInsight(ref: ObjRef): Promise<IInsight> {
@@ -92,7 +92,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
             throw new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {});
         }
 
-        return this.createInsightWithRef(recording.obj);
+        return Promise.resolve(this.createInsightWithRef(recording.obj));
     }
 
     public async getInsights(query?: IInsightsQueryOptions): Promise<IInsightsQueryResult> {
@@ -108,7 +108,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
             insights.sort(comparator(orderBy));
         }
 
-        return new InMemoryPaging<IInsight>(insights, limit, offset);
+        return Promise.resolve(new InMemoryPaging<IInsight>(insights, limit, offset));
     }
 
     public getInsightsQuery(): IInsightsQuery {
@@ -126,7 +126,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
 
         existingRecording.obj = cloneDeep(insight);
 
-        return existingRecording.obj;
+        return Promise.resolve(existingRecording.obj);
     }
 
     public updateInsightMeta(_: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight> {
@@ -142,27 +142,29 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         }
 
         delete this.insights[recordingId];
+
+        return Promise.resolve();
     }
 
     public async getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass> {
         return isUriRef(ref)
-            ? this.getVisualizationClassByUri(ref.uri)
-            : this.getVisualizationClassById(ref.identifier);
+            ? Promise.resolve(this.getVisualizationClassByUri(ref.uri))
+            : Promise.resolve(this.getVisualizationClassById(ref.identifier));
     }
 
     public async getVisualizationClasses(): Promise<IVisualizationClass[]> {
-        return this.visClasses;
+        return Promise.resolve(this.visClasses);
     }
 
     public getInsightReferencedObjects = async (
         _insight: IInsight,
         _types?: SupportedInsightReferenceTypes[],
     ): Promise<IInsightReferences> => {
-        return {};
+        return Promise.resolve({});
     };
 
     public getInsightReferencingObjects = async (_ref: ObjRef): Promise<IInsightReferencing> => {
-        return {};
+        return Promise.resolve({});
     };
 
     public getInsightWithAddedFilters = async <T extends IInsightDefinition>(
@@ -176,7 +178,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         // we assume that all the filters already use idRefs exclusively
         const mergedFilters = mergeFilters(insightFilters(insight), filters);
 
-        return insightSetFilters(insight, mergedFilters);
+        return Promise.resolve(insightSetFilters(insight, mergedFilters));
     };
 
     async getInsightWithCatalogItems(ref: ObjRef): Promise<{
@@ -205,7 +207,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         return this.insightRefType === "uri" ? uriRef(uri) : idRef(id, "insight");
     }
 
-    private async getVisualizationClassByUri(uri: string): Promise<IVisualizationClass> {
+    private getVisualizationClassByUri(uri: string): IVisualizationClass {
         const result = this.visClasses.find((visClass) => visClassUri(visClass) === uri);
 
         if (!result) {
@@ -215,7 +217,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         return result;
     }
 
-    private async getVisualizationClassById(id: string): Promise<IVisualizationClass> {
+    private getVisualizationClassById(id: string): IVisualizationClass {
         const result = this.visClasses.find((visClass) => visClassId(visClass) === id);
 
         if (!result) {

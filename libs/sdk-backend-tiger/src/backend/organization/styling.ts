@@ -72,7 +72,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     public getActiveTheme = () => this.getActiveSetting("activeTheme");
 
     public async setActiveTheme(themeRef: ObjRef): Promise<void> {
-        const themeId = await objRefToIdentifier(themeRef, this.authCall);
+        const themeId = objRefToIdentifier(themeRef, this.authCall);
         await this.settingsService.setTheme(themeId);
     }
 
@@ -101,7 +101,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         if (!theme.ref) {
             return this.createTheme(theme);
         }
-        const id = await objRefToIdentifier(theme.ref, this.authCall);
+        const id = objRefToIdentifier(theme.ref, this.authCall);
         return await this.authCall((client) =>
             EntitiesApi_UpdateEntityThemes(
                 client.axios,
@@ -124,7 +124,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     }
 
     public async deleteTheme(themeRef: ObjRef): Promise<void> {
-        const id = await objRefToIdentifier(themeRef, this.authCall);
+        const id = objRefToIdentifier(themeRef, this.authCall);
         await this.authCall((client) =>
             EntitiesApi_DeleteEntityThemes(client.axios, client.basePath, {
                 id,
@@ -151,7 +151,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     public getActiveColorPalette = () => this.getActiveSetting("activeColorPalette");
 
     public async setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void> {
-        const colorPaletteId = await objRefToIdentifier(colorPaletteRef, this.authCall);
+        const colorPaletteId = objRefToIdentifier(colorPaletteRef, this.authCall);
         await this.settingsService.setColorPalette(colorPaletteId);
     }
 
@@ -188,7 +188,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
             return this.createColorPalette(colorPalette);
         }
         if (isValidColorPalette(colorPalette.colorPalette)) {
-            const id = await objRefToIdentifier(colorPalette.ref, this.authCall);
+            const id = objRefToIdentifier(colorPalette.ref, this.authCall);
             return await this.authCall((client) =>
                 EntitiesApi_UpdateEntityColorPalettes(
                     client.axios,
@@ -209,7 +209,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     }
 
     public async deleteColorPalette(colorPaletteRef: ObjRef): Promise<void> {
-        const id = await objRefToIdentifier(colorPaletteRef, this.authCall);
+        const id = objRefToIdentifier(colorPaletteRef, this.authCall);
         await this.authCall((client) =>
             EntitiesApi_DeleteEntityColorPalettes(client.axios, client.basePath, { id }),
         );

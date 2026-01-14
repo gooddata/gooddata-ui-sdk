@@ -133,6 +133,7 @@ export enum TigerFeaturesNames {
     EnableFiscalCalendars = "enableFiscalCalendars",
     EnablePivotTablePagination = "enablePivotTablePagination",
     EnableImplicitDrillToUrl = "enableImplicitDrillToUrl",
+    EnableDrillMenuPositioningAtCursor = "enableDrillMenuPositioningAtCursor",
 }
 
 export type ITigerFeatureFlags = {
@@ -259,6 +260,7 @@ export type ITigerFeatureFlags = {
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
     enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
     enableImplicitDrillToUrl: (typeof FeatureFlagsValues)["enableImplicitDrillToUrl"][number];
+    enableDrillMenuPositioningAtCursor: (typeof FeatureFlagsValues)["enableDrillMenuPositioningAtCursor"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -383,8 +385,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
     enableFiscalCalendars: false,
-    enablePivotTablePagination: false,
+    enablePivotTablePagination: true,
     enableImplicitDrillToUrl: false,
+    enableDrillMenuPositioningAtCursor: false,
 };
 
 export const FeatureFlagsValues = {
@@ -512,4 +515,5 @@ export const FeatureFlagsValues = {
     enableFiscalCalendars: [true, false] as const,
     enablePivotTablePagination: [true, false] as const,
     enableImplicitDrillToUrl: [true, false] as const,
+    enableDrillMenuPositioningAtCursor: [true, false] as const,
 };

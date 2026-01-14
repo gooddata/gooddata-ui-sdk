@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /* eslint-disable no-console */
 
@@ -141,7 +141,7 @@ function table(data: string[][]) {
             });
             return prev;
         },
-        data[0].map(() => 0) as number[],
+        data[0].map(() => 0),
     );
 
     const padded = data.map((row) => {

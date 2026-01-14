@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { fireEvent, screen } from "@testing-library/react";
 
 import { stringUtils } from "@gooddata/util";
@@ -45,7 +46,7 @@ export class RankingFilterDropdownFragment {
         return this;
     };
 
-    public getOperator = (): string => document.querySelector(OPERATOR_DROPDOWN_BUTTON)!.textContent!;
+    public getOperator = (): string => document.querySelector(OPERATOR_DROPDOWN_BUTTON)!.textContent;
 
     public getValueDropdown = () => document.querySelector(".gd-dynamic-select-menu");
 
@@ -94,7 +95,7 @@ export class RankingFilterDropdownFragment {
         return this;
     };
 
-    public getMeasure = (): string => document.querySelector(MEASURE_DROPDOWN_BUTTON)!.textContent!;
+    public getMeasure = (): string => document.querySelector(MEASURE_DROPDOWN_BUTTON)!.textContent;
 
     public isAttributeButtonDisabled = (): boolean =>
         this.getAttributeDropdownButton()!.classList.contains("disabled");
@@ -128,7 +129,7 @@ export class RankingFilterDropdownFragment {
 
     public getAttributeDropdownButton = () => document.querySelector(ATTRIBUTE_DROPDOWN_BUTTON);
 
-    public getAttribute = (): string => this.getAttributeDropdownButton()!.textContent!;
+    public getAttribute = (): string => this.getAttributeDropdownButton()!.textContent;
 
-    public getPreview = (): string => document.querySelector(PREVIEW_TEXT)!.textContent!;
+    public getPreview = (): string => document.querySelector(PREVIEW_TEXT)!.textContent;
 }

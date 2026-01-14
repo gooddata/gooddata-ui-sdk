@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type ElementsQueryOptionsElementsSpecification,
@@ -57,11 +57,11 @@ const resolveStringFilter =
 /**
  * @internal
  */
-export async function loadElementsFromStaticElements(
+export function loadElementsFromStaticElements(
     options: ILoadElementsOptions,
     hiddenElementsInfo: IHiddenElementsInfo,
     staticElements: IAttributeElement[],
-): Promise<IElementsQueryResult> {
+): IElementsQueryResult {
     let resolvedElements = resolveStringFilter(options.search)(
         resolveSelectedElements(options.elements)(
             resolveHiddenElements(hiddenElementsInfo.hiddenElements)(staticElements),

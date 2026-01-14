@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -53,7 +53,7 @@ export function RawChart(props: IRawChartProps) {
     const renderChartTransformation = useCallback(() => {
         const colorPalette = getValidColorPalette(config);
         const fullConfig = { ...config, type, colorPalette };
-        const sanitizedConfig = getSanitizedStackingConfig(dataView!.definition, fullConfig);
+        const sanitizedConfig = getSanitizedStackingConfig(dataView.definition, fullConfig);
 
         return (
             // theme can be undefined for pluggable charts in AD that should not respect theming
@@ -68,7 +68,7 @@ export function RawChart(props: IRawChartProps) {
                                     config={sanitizedConfig}
                                     drillableItems={drillableItems}
                                     locale={locale}
-                                    dataView={dataView!}
+                                    dataView={dataView}
                                     afterRender={afterRender}
                                     onDrill={onDrill}
                                     onDataTooLarge={onDataTooLarge}

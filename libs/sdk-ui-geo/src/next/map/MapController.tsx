@@ -126,6 +126,7 @@ function MapLifecycleEffects({
     useSyncLayersToMap({
         drillablePredicates,
         onDrill,
+        enableDrillMenuPositioningAtCursor: config?.enableDrillMenuPositioningAtCursor ?? false,
     });
 
     useAfterRender(map, afterRender, layerExecutions);

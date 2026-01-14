@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import path from "path";
 
@@ -181,7 +181,7 @@ export function determinePackageBuildOrder(
             const pkg = possibleGroup.pop()!;
             const packageDependencies =
                 graph.outgoing[pkg]?.filter((d) => depTypes.includes(d.type)).map((d) => d.to) ?? [];
-            const shavedForThisPackage = allShavedOffDependencies[pkg]!;
+            const shavedForThisPackage = allShavedOffDependencies[pkg];
             const leftToShaveOff = difference(packageDependencies, shavedForThisPackage);
 
             if (leftToShaveOff.length) {

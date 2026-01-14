@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -77,8 +77,8 @@ describe("ExtendedDateFilterBody", () => {
 
     describe("calculateHeight", () => {
         const resizeWindow = (x: number, y: number) => {
-            (window.innerWidth as number) = x;
-            (window.innerHeight as number) = y;
+            window.innerWidth = x;
+            window.innerHeight = y;
         };
 
         const getBodyWrapper = () => {

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -17,7 +17,7 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import {
-    type AttributeFilterHandlerStore,
+    type IAttributeFilterHandlerStore,
     actions,
     createAttributeFilterHandlerStore,
     getElementsByKeys,
@@ -101,7 +101,7 @@ import {
  * @internal
  */
 export class AttributeFilterReduxBridge {
-    private redux!: AttributeFilterHandlerStore;
+    private redux!: IAttributeFilterHandlerStore;
     private config: AttributeFilterHandlerConfig;
 
     private callbacks!: ReturnType<typeof newAttributeFilterCallbacks>;

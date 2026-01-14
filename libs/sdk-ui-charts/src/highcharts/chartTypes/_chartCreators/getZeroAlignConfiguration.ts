@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 /**
  * Calculate new min/max to make Y axes aligned, and insert them to Highcharts config
@@ -83,7 +83,7 @@ function calculateMin(
     minmaxLookup: IMinMaxLookup,
     axisIndex: number,
 ): number {
-    const fraction = minmax[idx].max ? minmax[idx].min! / minmax[idx].max! : minmax[idx].min!;
+    const fraction = minmax[idx].max ? minmax[idx].min! / minmax[idx].max : minmax[idx].min!;
     return fraction * minmaxLookup[axisIndex].max!;
 }
 
@@ -93,7 +93,7 @@ function calculateMax(
     minmaxLookup: IMinMaxLookup,
     axisIndex: number,
 ): number {
-    const fraction = minmax[idx].min ? minmax[idx].max! / minmax[idx].min! : minmax[idx].max!;
+    const fraction = minmax[idx].min ? minmax[idx].max! / minmax[idx].min : minmax[idx].max!;
     return fraction * minmaxLookup[axisIndex].min!;
 }
 
@@ -132,39 +132,39 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
     const { isSetMin, isSetMax } = minmaxLookup[axisIndex];
 
     if (
-        axesCanon[0]!.min! <= 0 &&
-        axesCanon[0]!.max! <= 0 &&
-        axesCanon[1]!.min! <= 0 &&
-        axesCanon[1]!.max! <= 0
+        axesCanon[0].min! <= 0 &&
+        axesCanon[0].max! <= 0 &&
+        axesCanon[1].min! <= 0 &&
+        axesCanon[1].max! <= 0
     ) {
         // set 0 at top of chart
         // ['----', '-0--', '---0']
         newMax = Math.min(0, max);
     } else if (
-        axesCanon[0]!.min! >= 0 &&
-        axesCanon[0]!.max! >= 0 &&
-        axesCanon[1]!.min! >= 0 &&
-        axesCanon[1]!.max! >= 0
+        axesCanon[0].min! >= 0 &&
+        axesCanon[0].max! >= 0 &&
+        axesCanon[1].min! >= 0 &&
+        axesCanon[1].max! >= 0
     ) {
         // set 0 at bottom of chart
         // ['++++', '0+++', '++0+']
         newMin = Math.max(0, min);
-    } else if (axesCanon[0]!.max! === axesCanon[1]!.max!) {
+    } else if (axesCanon[0].max! === axesCanon[1].max!) {
         newMin = getLimitPartial(
-            (minmax: IMinMaxInfo[]) => (minmax[0]!.min! <= minmax[1]!.min! ? 0 : 1),
+            (minmax: IMinMaxInfo[]) => (minmax[0].min! <= minmax[1].min! ? 0 : 1),
             calculateMin,
             (minOnAxes: number[]) => Math.min(minOnAxes[0], minOnAxes[1]),
         );
     } else if (axesCanon[0].min === axesCanon[1].min) {
         newMax = getLimitPartial(
-            (minmax: IMinMaxInfo[]) => (minmax[0]!.max! > minmax[1]!.max! ? 0 : 1),
+            (minmax: IMinMaxInfo[]) => (minmax[0].max! > minmax[1].max! ? 0 : 1),
             calculateMax,
             (maxOnAxes: number[]) => Math.max(maxOnAxes[0], maxOnAxes[1]),
         );
     } else {
         // set 0 at center of chart
         // ['--++', '-0++', '--0+', '-00+', '++--', '++-0', '0+--', '0+-0']
-        if (minmaxLookup[axisIndex]!.min! < 0) {
+        if (minmaxLookup[axisIndex].min! < 0) {
             newMax = Math.abs(newMin!);
         } else {
             newMin = 0 - newMax!;

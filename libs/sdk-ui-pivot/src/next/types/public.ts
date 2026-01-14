@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IExecutionConfig } from "@gooddata/sdk-model";
@@ -15,6 +15,7 @@ import {
 
 import { type PivotTableNextAccessibilityConfig } from "./accessibility.js";
 import { type PivotTableNextCellSelectionConfig } from "./cellSelection.js";
+import { type PivotTableNextDrillMenuPositioningConfig } from "./drillMenuPositioning.js";
 import { type PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
 import { type PivotTableNextExperimentalConfig } from "./experimental.js";
 import { type PivotTableNextFormattingConfig } from "./formatting.js";
@@ -38,6 +39,7 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextMenuConfig &
     PivotTableNextFormattingConfig &
     PivotTableNextExecutionCancellingConfig &
+    PivotTableNextDrillMenuPositioningConfig &
     PivotTableNextLayoutConfig &
     PivotTableNextGrandTotalsPositionConfig &
     PivotTableNextCellSelectionConfig &

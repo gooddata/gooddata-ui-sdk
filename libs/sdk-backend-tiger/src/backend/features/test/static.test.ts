@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -21,13 +21,13 @@ describe("static features", () => {
         };
     }
 
-    it("empty definition", async () => {
-        const results = await getStaticFeatures(createFeatures());
+    it("empty definition", () => {
+        const results = getStaticFeatures(createFeatures());
         expect(results).toEqual({});
     });
 
-    it("full definition", async () => {
-        const results = await getStaticFeatures(
+    it("full definition", () => {
+        const results = getStaticFeatures(
             createFeatures({
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
@@ -43,8 +43,8 @@ describe("static features", () => {
         });
     });
 
-    it("full definition with earlyAccess set - in static features has no sense", async () => {
-        const results = await getStaticFeatures(
+    it("full definition with earlyAccess set - in static features has no sense", () => {
+        const results = getStaticFeatures(
             createFeatures(
                 {
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",

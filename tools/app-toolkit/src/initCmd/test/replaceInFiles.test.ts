@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import path from "path";
 
 import { describe, expect, it, vi } from "vitest";
@@ -7,7 +8,7 @@ import { replaceInFiles } from "../replaceInFiles.js";
 
 describe("replaceInFiles", () => {
     it("should replace values according to the spec", async () => {
-        const readFileMock = async () => "foo bar baz buz";
+        const readFileMock = () => "foo bar baz buz";
         const writeFileMock = vi.fn();
 
         const spec = {
@@ -20,7 +21,7 @@ describe("replaceInFiles", () => {
             },
         };
 
-        await replaceInFiles(".", spec, readFileMock as any, writeFileMock);
+        await replaceInFiles(".", spec, readFileMock, writeFileMock);
 
         expect(writeFileMock).toHaveBeenLastCalledWith(
             path.join(".", "directory", "b.js"),

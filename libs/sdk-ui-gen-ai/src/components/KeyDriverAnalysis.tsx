@@ -16,7 +16,7 @@ import {
 } from "../store/chatWindow/chatWindowSelectors.js";
 import { type RootState, setKeyDriverAnalysisAction } from "../store/index.js";
 
-interface KeyDriverAnalysisProps {
+interface IKeyDriverAnalysisProps {
     keyDriverAnalysis?: IKdaDefinition;
     separators?: ISeparators;
     locale?: string;
@@ -25,7 +25,7 @@ interface KeyDriverAnalysisProps {
     setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
 }
 
-function KeyDriverAnalysisComponent(props: KeyDriverAnalysisProps) {
+function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
     const { keyDriverAnalysis, separators, locale, includeTags, excludeTags, setKeyDriverAnalysis } = props;
     const intl = useIntl();
 
@@ -57,11 +57,11 @@ function KeyDriverAnalysisComponent(props: KeyDriverAnalysisProps) {
     );
 }
 
-const mapDispatchToProps: KeyDriverAnalysisProps = {
+const mapDispatchToProps: IKeyDriverAnalysisProps = {
     setKeyDriverAnalysis: setKeyDriverAnalysisAction,
 };
 
-const mapStateToProps = (state: RootState): KeyDriverAnalysisProps => {
+const mapStateToProps = (state: RootState): IKeyDriverAnalysisProps => {
     const settings = settingsSelector(state);
     const tags = tagsSelector(state);
     return {

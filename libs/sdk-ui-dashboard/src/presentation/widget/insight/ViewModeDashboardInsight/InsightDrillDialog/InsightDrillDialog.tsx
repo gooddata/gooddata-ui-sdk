@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ComponentType, type ReactElement, useCallback, useState } from "react";
 
@@ -248,14 +248,6 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                             {({ onDrill }) => {
                                 return description && enableDrillDescription ? (
                                     <div className="drill-dialog-insight-container">
-                                        <InsightDrillDialogDescriptionContent
-                                            id={descriptionId}
-                                            isOpen={isOpen}
-                                            isMobileDevice={isMobileDevice}
-                                            description={description}
-                                            widgetFilters={widgetFilters}
-                                            LoadingComponent={LoadingComponent}
-                                        />
                                         <div className="drill-dialog-insight-container-insight">
                                             <InsightDrillDialogDescriptionButton
                                                 isOpen={isOpen}
@@ -276,6 +268,14 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                                                 isWidgetAsTable={drillDialogIsAsTable}
                                             />
                                         </div>
+                                        <InsightDrillDialogDescriptionContent
+                                            id={descriptionId}
+                                            isOpen={isOpen}
+                                            isMobileDevice={isMobileDevice}
+                                            description={description}
+                                            widgetFilters={widgetFilters}
+                                            LoadingComponent={LoadingComponent}
+                                        />
                                     </div>
                                 ) : (
                                     <DrillDialogInsight

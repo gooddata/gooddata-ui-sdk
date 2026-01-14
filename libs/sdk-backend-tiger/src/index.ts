@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides the Analytical Backend implementation for GoodData Cloud and GoodData.CN.
@@ -84,7 +84,7 @@ export type {
     TigerSpecificFunctions,
     IApiToken,
     IApiTokenExtended,
-    Entitlement,
+    IEntitlement,
     IDataSourceApiResult,
     IDataSourceUpsertRequest,
     IDataSourceTestConnectionRequest,
@@ -113,7 +113,7 @@ export type {
     ICustomApplicationSetting,
     ScanSqlResult,
     WorkspaceEntitiesDatasets,
-    ScanRequest,
+    IScanRequest,
     ScanResult,
     IDataSourceCacheStrategy,
     INotificationChannel,
@@ -127,7 +127,7 @@ export {
     tigerIdTypeToObjectType,
     objectTypeToTigerIdType,
 } from "./types/refTypeMapping.js";
-export type { OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
+export type { IOriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
 export { getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
 export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";
 

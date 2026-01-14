@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 
@@ -98,9 +98,10 @@ export function createPivotTableNextConfig(
     let tableConfig: PivotTableNextConfig = {
         separators: config.separators,
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
+        ...(settings.enableDrillMenuPositioningAtCursor ? { enableDrillMenuPositioningAtCursor: true } : {}),
         agGridToken: config.agGridToken,
         enablePivotTableAutoSizeReset: settings.enablePivotTableAutoSizeReset ?? true,
-        enablePivotTablePagination: settings.enablePivotTablePagination ?? false,
+        enablePivotTablePagination: settings.enablePivotTablePagination ?? true,
         enableAccessibility: settings.enableAccessibilityMode ?? false,
     };
 
@@ -406,7 +407,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const isInEditMode = config?.isInEditMode;
         const pagination = getPaginationFromProperties(insightProperties(insight));
         const tableConfig: PivotTableNextConfig = {
-            ...createPivotTableNextConfig(config!, this.environment!, this.settings),
+            ...createPivotTableNextConfig(config, this.environment!, this.settings),
             ...customVisualizationConfig,
             measureGroupDimension,
             columnHeadersPosition,

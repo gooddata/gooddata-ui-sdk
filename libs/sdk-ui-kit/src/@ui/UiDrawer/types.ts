@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, type RefObject } from "react";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type IUiAutofocusOptions } from "../UiFocusManager/UiAutofocus.js";
@@ -31,5 +31,6 @@ export interface UiDrawerProps extends IUiAutofocusOptions {
     closeLabel?: string;
     showCloseButton?: boolean;
     onClickClose?: () => void;
+    returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
     accessibilityConfig?: IAccessibilityConfigBase;
 }

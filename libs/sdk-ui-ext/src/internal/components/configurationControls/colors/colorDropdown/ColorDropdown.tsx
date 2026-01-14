@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     Fragment,
@@ -21,7 +21,7 @@ import {
     isRgbColor,
 } from "@gooddata/sdk-model";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
-import { type ChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { ColorOverlay, DropdownVersionType } from "./ColorOverlay.js";
 import { ColorPalette } from "./ColorPalette.js";
@@ -44,7 +44,7 @@ export interface IColorDropdownOwnProps {
     onColorSelected: (color: IColor) => void;
     disabled?: boolean;
     children?: ReactNode;
-    chartFill?: ChartFillConfig;
+    chartFill?: IChartFillConfig;
     patternFillIndex?: number | PatternFillName;
 }
 

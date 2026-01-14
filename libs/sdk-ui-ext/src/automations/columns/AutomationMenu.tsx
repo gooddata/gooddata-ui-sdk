@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo, useRef } from "react";
 
@@ -141,7 +141,7 @@ export function AutomationMenu({
 
     const onCopyId = useCallback(() => {
         closeDropdown();
-        navigator.clipboard.writeText(item.id);
+        void navigator.clipboard.writeText(item.id);
         addSuccess(messages.messageCopyIdSuccess);
     }, [item.id, addSuccess, closeDropdown]);
 
@@ -271,12 +271,12 @@ export function AutomationMenu({
     );
 }
 
-interface AutomationMenuItemProps {
+interface IAutomationMenuItemProps {
     menuItem: IAutomationMenuItem;
     setMenuItemRef: (itemId: string) => (element: HTMLDivElement | HTMLButtonElement | null) => void;
 }
 
-function AutomationMenuItem({ menuItem, setMenuItemRef }: AutomationMenuItemProps) {
+function AutomationMenuItem({ menuItem, setMenuItemRef }: IAutomationMenuItemProps) {
     return (
         <>
             {menuItem.withSeparator ? (

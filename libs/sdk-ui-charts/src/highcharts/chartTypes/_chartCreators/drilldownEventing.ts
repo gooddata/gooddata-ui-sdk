@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep, debounce } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -162,6 +162,7 @@ const chartClickDebounced = debounce(
         target: EventTarget,
         chartId: string,
         chartType: ChartType,
+        enableDrillMenuPositioningAtCursor: boolean,
     ) => {
         const originalEvent = event.originalEvent as PointerEvent | undefined;
         const { dataView, onDrill } = drillConfig;
@@ -191,9 +192,14 @@ const chartClickDebounced = debounce(
         const data: IDrillEvent = {
             dataView,
             drillContext,
-            chartX: originalEvent?.offsetX,
-            chartY: originalEvent?.offsetY,
-            target: event.target?.container,
+            ...(enableDrillMenuPositioningAtCursor
+                ? {
+                      chartX: originalEvent?.offsetX,
+                      chartY: originalEvent?.offsetY,
+                      target: event.target?.container,
+                      enableDrillMenuPositioningAtCursor: true,
+                  }
+                : {}),
         };
 
         fireEvent(onDrill, data, target);
@@ -206,8 +212,9 @@ export function chartClick(
     target: EventTarget,
     chartId: string,
     chartType: ChartType,
+    enableDrillMenuPositioningAtCursor: boolean,
 ): void {
-    chartClickDebounced(drillConfig, event, target, chartId, chartType);
+    chartClickDebounced(drillConfig, event, target, chartId, chartType, enableDrillMenuPositioningAtCursor);
 }
 
 const tickLabelClickDebounce = debounce(

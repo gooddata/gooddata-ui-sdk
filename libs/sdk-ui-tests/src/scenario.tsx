@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -54,7 +54,7 @@ export type SignificantTags =
     | "mock-no-scenario-meta"
     | "mock-no-insight"
     | "no-plug-viz-tests";
-export type ScenarioTag = SignificantTags | string;
+export type ScenarioTag = string;
 
 export type WorkspaceType = "reference-workspace";
 

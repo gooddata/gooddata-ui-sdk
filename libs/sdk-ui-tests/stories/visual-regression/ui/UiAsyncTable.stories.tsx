@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -24,7 +24,7 @@ export default {
     title: "15 Ui/UiAsyncTable",
 };
 
-interface ScheduleItem {
+interface IScheduleItem {
     id: string;
     title: string;
     state: string;
@@ -34,7 +34,7 @@ interface ScheduleItem {
 }
 
 // Generate 50 mock schedule items
-const generateMockScheduleItems = (): ScheduleItem[] => {
+const generateMockScheduleItems = (): IScheduleItem[] => {
     const states = ["active", "inactive", "draft", "paused"];
     const workspaces = ["Sales", "Marketing", "Finance", "HR", "Engineering"];
     const dashboards = [
@@ -77,7 +77,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     const items = useMemo(() => generateMockScheduleItems(), []);
 
     const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
-    const [sortBy, setSortBy] = useState<keyof ScheduleItem>("title");
+    const [sortBy, setSortBy] = useState<keyof IScheduleItem>("title");
     const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
     const [search, setSearch] = useState("");
     const [workspaceFilter, setWorkspaceFilter] = useState("all");
@@ -108,7 +108,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     }, [items, search, sortBy, sortDirection, workspaceFilter]);
 
     // Column definitions
-    const columns: UiAsyncTableColumn<ScheduleItem>[] = useMemo(
+    const columns: UiAsyncTableColumn<IScheduleItem>[] = useMemo(
         () => [
             {
                 key: "title",
@@ -167,7 +167,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     );
 
     // Simple Column definitions
-    const simpleColumns: UiAsyncTableColumn<ScheduleItem>[] = useMemo(
+    const simpleColumns: UiAsyncTableColumn<IScheduleItem>[] = useMemo(
         () => [
             {
                 key: "title",
@@ -216,7 +216,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     );
 
     const handleSort = useCallback(
-        (key: keyof ScheduleItem) => {
+        (key: keyof IScheduleItem) => {
             if (sortBy === key) {
                 setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
             } else {
@@ -232,7 +232,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
             <h1 style={{ marginBottom: "20px" }} className={"gd-typography gd-typography--h1"}>
                 Schedule Table
             </h1>
-            <UiAsyncTable<ScheduleItem>
+            <UiAsyncTable<IScheduleItem>
                 items={filteredAndSortedItems}
                 totalItemsCount={filteredAndSortedItems.length}
                 columns={columns}
@@ -252,7 +252,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
             >
                 Simple Table
             </h1>
-            <UiAsyncTable<ScheduleItem>
+            <UiAsyncTable<IScheduleItem>
                 variant="small"
                 items={filteredAndSortedItems}
                 totalItemsCount={filteredAndSortedItems.length}

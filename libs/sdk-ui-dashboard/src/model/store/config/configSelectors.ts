@@ -784,6 +784,18 @@ export const selectEnableExecutionCancelling: DashboardSelector<boolean> = creat
 );
 
 /**
+ * Selector for drill menu positioning at cursor feature flag.
+ *
+ * @internal
+ */
+export const selectEnableDrillMenuPositioningAtCursor: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrillMenuPositioningAtCursor ?? false;
+    },
+);
+
+/**
  * Selector for the dashboard share link feature flag
  *
  * @internal

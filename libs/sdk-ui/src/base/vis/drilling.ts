@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type IResultAttributeHeader,
@@ -153,5 +153,51 @@ function convertToEmpty(attributeItem: IResultAttributeHeader) {
             // Send empty string for not, need to be updated for NULL in future
             name: isEmpty ? "" : (attributeHeaderItem.name ?? ""),
         },
+    };
+}
+
+/**
+ * Chart coordinates for positioning drill popovers near the clicked element.
+ * @internal
+ */
+export interface IChartCoordinates {
+    chartX?: number;
+    chartY?: number;
+}
+
+/**
+ * Calculate chart coordinates relative to a container element for drill popover positioning.
+ * This function finds the closest ancestor matching the container selector and calculates
+ * the position of the target element's center relative to that container.
+ *
+ * @param targetElement - The element that was clicked/focused (e.g., table cell, chart point)
+ * @param containerSelector - CSS selector to find the container element (e.g., ".ag-root-wrapper", "[grid-id]")
+ * @returns Object with chartX and chartY coordinates, or undefined values if elements are not found
+ * @internal
+ */
+export function getChartClickCoordinates(
+    targetElement: HTMLElement | EventTarget | null | undefined,
+    containerSelector: string,
+): IChartCoordinates {
+    const target = targetElement as HTMLElement | undefined;
+    const container = target?.closest(containerSelector) as HTMLElement | undefined;
+
+    if (!target || !container) {
+        return {
+            chartX: undefined,
+            chartY: undefined,
+        };
+    }
+
+    const targetRect = target.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    // Position at the center of the clicked/focused element, relative to the container
+    const chartX = targetRect.left + targetRect.width / 2 - containerRect.left;
+    const chartY = targetRect.top + targetRect.height / 2 - containerRect.top;
+
+    return {
+        chartX,
+        chartY,
     };
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useMemo, useRef, useState } from "react";
 
@@ -315,5 +315,6 @@ function useBackendWithVisualizationCorrelation({ backend, insight }: IInsightVi
         visualizationId = insight.uri;
     }
 
-    return useBackendWithCorrelation(backend!, { visualizationId: visualizationId! });
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return useBackendWithCorrelation(backend, { visualizationId: visualizationId! });
 }

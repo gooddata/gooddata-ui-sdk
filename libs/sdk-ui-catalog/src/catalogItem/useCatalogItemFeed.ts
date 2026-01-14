@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
@@ -238,7 +238,7 @@ function useFirstLoad(
         setError(null);
 
         let mounted = true;
-        (async () => {
+        void (async () => {
             try {
                 const firstPages = await Promise.all(endpoints.map((ep) => ep.query()));
 

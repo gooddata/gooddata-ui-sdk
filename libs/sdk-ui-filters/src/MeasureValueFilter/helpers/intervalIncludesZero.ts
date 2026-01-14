@@ -1,6 +1,4 @@
-// (C) 2025 GoodData Corporation
-
-import { type ComparisonConditionOperator, type RangeConditionOperator } from "@gooddata/sdk-model";
+// (C) 2025-2026 GoodData Corporation
 
 import { type MeasureValueFilterOperator } from "../types.js";
 
@@ -50,27 +48,27 @@ export function intervalIncludesZero(
         return true;
     }
 
-    switch (operator as ComparisonConditionOperator | RangeConditionOperator) {
+    switch (operator) {
         // Comparison operators
         case "GREATER_THAN":
             // Interval: (value, ∞)
             // Zero is included if value < 0
-            return value! < 0;
+            return value < 0;
 
         case "GREATER_THAN_OR_EQUAL_TO":
             // Interval: [value, ∞)
             // Zero is included if value <= 0
-            return value! <= 0;
+            return value <= 0;
 
         case "LESS_THAN":
             // Interval: (-∞, value)
             // Zero is included if value > 0
-            return value! > 0;
+            return value > 0;
 
         case "LESS_THAN_OR_EQUAL_TO":
             // Interval: (-∞, value]
             // Zero is included if value >= 0
-            return value! >= 0;
+            return value >= 0;
 
         case "EQUAL_TO":
             // Interval: {value}
@@ -93,7 +91,7 @@ export function intervalIncludesZero(
             if (value === undefined) {
                 return true;
             }
-            return value! <= 0 && to >= 0;
+            return value <= 0 && to >= 0;
 
         case "NOT_BETWEEN":
             // Interval: (-∞, from) ∪ (to, ∞)
@@ -105,7 +103,7 @@ export function intervalIncludesZero(
             if (value === undefined) {
                 return true;
             }
-            return value! > 0 || to < 0;
+            return value > 0 || to < 0;
 
         default:
             return false;

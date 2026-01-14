@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -6,14 +6,14 @@ import { describe, expect, it } from "vitest";
 
 import { DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
-import { FluidLegend } from "../FluidLegend.js";
-import { type ISeriesItem } from "../types.js";
+import { FluidLegend, type IFluidLegendProps } from "../FluidLegend.js";
+import { type IPushpinCategoryLegendItem, type ISeriesItem } from "../types.js";
 
 describe("FluidLegend", () => {
     const DefaultLocale = "en-US";
     const messages = DEFAULT_MESSAGES[DefaultLocale];
 
-    function renderComponent(customProps: any = {}) {
+    function renderComponent(customProps: Partial<IFluidLegendProps> = {}) {
         const props = {
             enableBorderRadius: false,
             series: [],
@@ -29,7 +29,7 @@ describe("FluidLegend", () => {
     }
 
     it("should render items", () => {
-        const series = [
+        const series: ISeriesItem[] = [
             {
                 type: "line",
                 legendIndex: 0,
@@ -51,9 +51,9 @@ describe("FluidLegend", () => {
                 color: "#333",
                 isVisible: true,
             },
-        ] satisfies ISeriesItem[];
+        ];
 
-        renderComponent({ series });
+        renderComponent({ series: series as unknown as IPushpinCategoryLegendItem[] });
         expect(screen.getAllByTestId("legend-item")).toHaveLength(3);
     });
 });

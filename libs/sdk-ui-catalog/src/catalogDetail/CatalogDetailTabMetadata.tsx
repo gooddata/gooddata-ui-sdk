@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -48,7 +48,7 @@ export function CatalogDetailTabMetadata({
     const granularities = item.dataSet?.attributes ?? [];
 
     return (
-        <div className="gd-analytics-catalog-detail__tab-content">
+        <dl className="gd-analytics-catalog-detail__tab-content">
             {item.dataSet && !isDataSet ? (
                 <CatalogDetailContentRow
                     title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}
@@ -89,7 +89,9 @@ export function CatalogDetailTabMetadata({
                         <>
                             <FormattedMessage id="analyticsCatalog.column.title.isHidden" />
                             <UiTooltip
-                                anchor={<UiIcon type="question" size={12} color="complementary-6" />}
+                                anchor={
+                                    <UiIcon type="question" size={12} color="complementary-6" ariaHidden />
+                                }
                                 content={
                                     <FormattedMessage id="analyticsCatalog.column.isHidden.field.tooltip" />
                                 }
@@ -107,6 +109,9 @@ export function CatalogDetailTabMetadata({
                                 type="checkbox"
                                 checked={item.isHidden !== true}
                                 disabled={!canEdit}
+                                aria-label={intl.formatMessage({
+                                    id: "analyticsCatalog.column.title.isHidden",
+                                })}
                                 onChange={(event) => {
                                     onIsHiddenChange(!event.target.checked);
                                 }}
@@ -141,6 +146,6 @@ export function CatalogDetailTabMetadata({
                     />
                 }
             />
-        </div>
+        </dl>
     );
 }

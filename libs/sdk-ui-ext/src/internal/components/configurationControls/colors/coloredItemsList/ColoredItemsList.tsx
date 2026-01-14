@@ -1,9 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo, useRef, useState } from "react";
 
 import { type IColor, type IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
-import { type ChartFillConfig } from "@gooddata/sdk-ui-charts";
+import { type IChartFillConfig } from "@gooddata/sdk-ui-charts";
 import { DropdownList, GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
 
 import { ColoredItem } from "./ColoredItem.js";
@@ -20,7 +20,7 @@ export interface IColoredItemsListProps {
     onSelect: (selectedColorItem: IColoredItem, color: IColor) => void;
     disabled?: boolean;
     isLoading?: boolean;
-    chartFill?: ChartFillConfig;
+    chartFill?: IChartFillConfig;
     chartFillIgnoredMeasures: string[];
 }
 

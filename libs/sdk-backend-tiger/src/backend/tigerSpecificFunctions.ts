@@ -156,7 +156,7 @@ export interface IApiTokenExtended extends IApiToken {
 /**
  * @internal
  */
-export interface ScanRequest {
+export interface IScanRequest {
     scanTables: boolean;
     scanViews: boolean;
     separator: string;
@@ -173,7 +173,7 @@ export type ScanResult = ScanResultPdm;
 /**
  * @internal
  */
-export interface Entitlement {
+export interface IEntitlement {
     id: string;
     value?: string;
     expiry?: string;
@@ -444,7 +444,7 @@ export type TigerSpecificFunctions = {
         dataSourceId: string,
         generateLogicalModelRequest: GenerateLogicalModelRequest,
     ) => Promise<DeclarativeLogicalModel>;
-    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
+    scanDataSource?: (dataSourceId: string, scanRequest: IScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     createWorkspace?: (id: string, name: string, parentId?: string) => Promise<string>;
@@ -456,7 +456,7 @@ export type TigerSpecificFunctions = {
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
     getWorkspaceLogicalModel?: (id: string, includeParents?: boolean) => Promise<DeclarativeLogicalModel>;
     getWorkspaceEntitiesDatasets?: (id: string) => Promise<WorkspaceEntitiesDatasets>;
-    getEntitlements?: () => Promise<Array<Entitlement>>;
+    getEntitlements?: () => Promise<Array<IEntitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getWorkspaceAnalyticsModelAac?: (
         workspaceId: string,
@@ -924,7 +924,7 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
+    scanDataSource: async (dataSourceId: string, scanRequest: IScanRequest) => {
         try {
             return await authApiCall(async (sdk) => {
                 return await ScanModelApi_ScanDataSource(sdk.axios, sdk.basePath, {
@@ -1703,7 +1703,7 @@ export const buildTigerSpecificFunctions = (
                     dataSourceId,
                     scanSqlRequest: { sql },
                 }).then((response) => {
-                    return response.data as ScanSqlResult;
+                    return response.data;
                 });
             });
         } catch (error: any) {
@@ -1721,7 +1721,7 @@ export const buildTigerSpecificFunctions = (
                     workspaceId,
                     hierarchyObjectIdentification,
                 }).then((response) => {
-                    return response.data as Array<IdentifierDuplications>;
+                    return response.data;
                 });
             });
         } catch (error: any) {

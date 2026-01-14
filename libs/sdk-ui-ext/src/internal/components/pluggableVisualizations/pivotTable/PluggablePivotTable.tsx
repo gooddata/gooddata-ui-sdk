@@ -636,6 +636,7 @@ export function createPivotTableConfig(
     let tableConfig: IPivotTableConfig = {
         separators: config.separators,
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
+        ...(settings.enableDrillMenuPositioningAtCursor ? { enableDrillMenuPositioningAtCursor: true } : {}),
     };
 
     const enableTableTotalRows = settings["enableTableTotalRows"];

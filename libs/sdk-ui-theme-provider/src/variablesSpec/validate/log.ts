@@ -1,10 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import chalk from "chalk";
 
 /**
  * @internal
  */
-export function logError(message: string | unknown) {
+export function logError(message: unknown) {
     console.error(chalk.red(message));
 }
 

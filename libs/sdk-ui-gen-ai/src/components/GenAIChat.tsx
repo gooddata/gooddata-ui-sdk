@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ComponentType, useEffect } from "react";
 
@@ -20,7 +20,7 @@ import { type ChatEventHandler } from "../store/events.js";
  * Properties for the GenAIAssistant component.
  * @public
  */
-export interface GenAIAssistantProps {
+export type GenAIAssistantProps = {
     /**
      * Analytical backend to use for server communication.
      */
@@ -100,7 +100,7 @@ export interface GenAIAssistantProps {
      * Custom React node rendered when no conversation exists yet.
      */
     LandingScreenComponentProvider?: () => ComponentType;
-}
+};
 
 /**
  * Properties for the GenAIChat component.

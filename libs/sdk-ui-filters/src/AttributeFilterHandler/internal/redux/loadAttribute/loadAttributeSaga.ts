@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
@@ -28,7 +28,7 @@ export function* loadAttributeWorker(): SagaIterator<void> {
  * @internal
  */
 export function* loadAttributeSaga(
-    action: ReturnType<typeof actions.loadAttributeRequest> | ReturnType<typeof actions.loadAttributeRequest>,
+    action: ReturnType<typeof actions.loadAttributeRequest>,
 ): SagaIterator<IAttributeMetadataObject | void> {
     if (actions.loadAttributeCancelRequest.match(action)) {
         // Saga was triggered by loadAttributeCancelRequest - do nothing, finally statement was already called, because takeLatest can run only one saga at a time === the previous one was canceled

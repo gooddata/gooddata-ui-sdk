@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import ora from "ora";
 
 import { type ITigerClient } from "@gooddata/api-client-tiger";
@@ -37,7 +38,7 @@ export async function tigerLoad(client: ITigerClient, workspaceId: string): Prom
             insights,
             analyticalDashboards,
         };
-    } catch (err: any) {
+    } catch (err) {
         spinner.fail();
         if (err?.response?.status === 404) {
             // handle known error more gracefully to avoid general-type error messages

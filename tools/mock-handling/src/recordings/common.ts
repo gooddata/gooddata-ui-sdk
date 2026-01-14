@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import fs from "fs";
 
 import stringify from "json-stable-stringify";
@@ -104,6 +105,6 @@ export function readJsonSync(file: string): any {
     return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
 }
 
-export function isNonNullRecording(rec: any | null): rec is IRecording {
+export function isNonNullRecording(rec: any): rec is IRecording {
     return !isEmpty(rec) && (rec as IRecording).directory !== undefined;
 }

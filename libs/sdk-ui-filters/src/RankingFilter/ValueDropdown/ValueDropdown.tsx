@@ -1,16 +1,16 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { sanitizeCustomInput, sanitizeInput } from "./utils.js";
 import { DynamicSelect } from "../../DateFilter/DynamicSelect/DynamicSelect.js";
 
-interface ValueDropdownProps {
+interface IValueDropdownProps {
     selectedValue: number;
     onSelect: (value: number) => void;
 }
 
-export function ValueDropdown({ selectedValue, onSelect }: ValueDropdownProps) {
+export function ValueDropdown({ selectedValue, onSelect }: IValueDropdownProps) {
     const intl = useIntl();
 
     const getDropdownItems = (value: string) => sanitizeInput(value, intl);

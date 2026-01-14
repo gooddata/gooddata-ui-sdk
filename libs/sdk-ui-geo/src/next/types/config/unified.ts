@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IAttribute, type IColorPalette } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
@@ -116,4 +116,12 @@ export interface IGeoChartNextConfig {
      * Keeps the requested legend position even when responsive heuristics disagree.
      */
     respectLegendPosition?: boolean;
+
+    /**
+     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
+     *
+     * @remarks
+     * Feature flag. Default: false.
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 }

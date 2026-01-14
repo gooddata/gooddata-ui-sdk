@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoService, type IGeoStyleSpecification } from "@gooddata/sdk-backend-spi";
 
@@ -13,6 +13,6 @@ export function createMockGeoService(style?: IGeoStyleSpecification): IGeoServic
     const resolvedStyle = style ?? DEFAULT_GEO_STYLE;
 
     return {
-        getDefaultStyle: async () => resolvedStyle,
+        getDefaultStyle: async () => Promise.resolve(resolvedStyle),
     };
 }

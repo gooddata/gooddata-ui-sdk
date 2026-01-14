@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { PAGE_SIZE } from "../../constants/internal.js";
 import { type PivotTableNextConfig } from "../../types/public.js";
@@ -29,7 +29,7 @@ export function isAutoPageSize(pageSize: number): boolean {
 
 /**
  * Checks if pagination is enabled based on the config.
- * Pagination requires both `config.pagination.enabled` and `config.enablePivotTablePagination` to be true,
+ * Pagination requires `config.pagination.enabled` to be true and `config.enablePivotTablePagination` to not be false,
  * OR accessibility mode to be enabled (which enforces pagination).
  *
  * @param config - The pivot table configuration
@@ -45,6 +45,6 @@ export function isPaginationEnabled(config: PivotTableNextConfig): boolean {
     }
 
     const paginationConfigEnabled = config.pagination?.enabled ?? false;
-    const paginationFeatureEnabled = config.enablePivotTablePagination === true;
+    const paginationFeatureEnabled = config.enablePivotTablePagination ?? true;
     return paginationConfigEnabled && paginationFeatureEnabled;
 }

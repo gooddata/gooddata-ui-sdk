@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { escape, isEmpty } from "lodash-es";
 import type mapboxgl from "mapbox-gl";
@@ -57,7 +57,7 @@ export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | und
         return false;
     }
 
-    const { locationName, color, size, segment } = geoProperties!;
+    const { locationName, color, size, segment } = geoProperties;
     return (
         isTooltipItemValid(locationName) ||
         isTooltipItemValid(size) ||

@@ -1,4 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type CallbackRegistration } from "./common.js";
 
 /**
@@ -83,11 +84,11 @@ export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionH
 /**
  * @public
  */
-export interface InvertableSelection<T> {
+export type InvertableSelection<T> = {
     keys: T[];
     isInverted: boolean;
     irrelevantKeys?: T[];
-}
+};
 
 /**
  * Handles the selection that can be inverted.

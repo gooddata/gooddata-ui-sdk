@@ -1,13 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type IStaticFeatures } from "@gooddata/api-client-tiger";
 
 import { type FeatureDef, type FeaturesMap, mapFeatures } from "./feature.js";
 import { type ITigerFeatureFlags } from "../uiFeatures.js";
 
-export async function getStaticFeatures({
-    items,
-}: IStaticFeatures["static"]): Promise<Partial<ITigerFeatureFlags>> {
+export function getStaticFeatures({ items }: IStaticFeatures["static"]): Partial<ITigerFeatureFlags> {
     return mapFeatures(remapStaticFeatures(items));
 }
 

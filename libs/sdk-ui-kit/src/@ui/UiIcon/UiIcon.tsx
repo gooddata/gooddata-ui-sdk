@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { b } from "./iconBem.js";
 import { iconPaths } from "./icons.js";
@@ -58,6 +58,7 @@ export function UiIcon({
                 height={size}
                 viewBox="0 0 20 20"
                 aria-hidden={ariaHidden}
+                role="img"
             >
                 {label ? <title>{label}</title> : null}
                 {iconPaths[type]}

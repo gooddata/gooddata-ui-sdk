@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ComponentType, useCallback, useMemo } from "react";
 
@@ -48,7 +48,7 @@ function validateGeoData(geoData: IGeoData, props: IGeoChartInnerProps): IValida
     }
     const { dataView } = props;
     const limit = props.config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
-    const dv = DataViewFacade.for(dataView!);
+    const dv = DataViewFacade.for(dataView);
 
     return {
         isDataTooLarge: !isDataOfReasonableSize(dv, geoData, limit),

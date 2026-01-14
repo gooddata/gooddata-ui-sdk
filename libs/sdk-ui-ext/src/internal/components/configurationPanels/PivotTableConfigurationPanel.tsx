@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -48,8 +48,8 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
 
     protected renderConfigurationPanel(): ReactNode {
         const { featureFlags } = this.props;
-        const enableNewPivotTable = !!featureFlags?.enableNewPivotTable;
-        const enablePivotTablePagination = !!featureFlags?.enablePivotTablePagination;
+        const enableNewPivotTable = featureFlags?.enableNewPivotTable ?? true;
+        const enablePivotTablePagination = featureFlags?.enablePivotTablePagination ?? true;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -105,7 +105,7 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
             this.props;
         const metricPositionControlsDisabled = this.isPositionControlDisabled();
         const columnHeadersControlsDisabled = this.isColumnHeadersPositionControlDisabled();
-        const enableNewPivotTable = !!featureFlags?.enableNewPivotTable;
+        const enableNewPivotTable = featureFlags?.enableNewPivotTable ?? true;
         const canvasSection = (
             <ConfigDummySection id="metric_col_header_position_section">
                 <MetricsPositionControl

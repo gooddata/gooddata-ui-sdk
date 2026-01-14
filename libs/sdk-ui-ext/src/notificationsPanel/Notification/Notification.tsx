@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { Fragment, type KeyboardEvent, type ReactNode, useCallback } from "react";
 
@@ -54,7 +54,7 @@ function handleScheduleNotificationClick(
     }
     const downloadableExports = compact(exports.map(mapToDownloadableFile));
     if (downloadableExports.length > 0) {
-        downloadFiles(downloadableExports);
+        void downloadFiles(downloadableExports);
     }
 }
 

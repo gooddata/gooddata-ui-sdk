@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { keyBy } from "lodash-es";
 
@@ -13,7 +13,6 @@ import {
     type JsonApiFactOutDocument,
     type JsonApiFactOutList,
     type JsonApiFactOutWithLinks,
-    type JsonApiLabelLinkage,
     type JsonApiLabelOutWithLinks,
     type JsonApiMetricOutList,
     type JsonApiMetricOutWithLinks,
@@ -94,7 +93,7 @@ export function convertAttributeLabels(
     attribute: JsonApiAttributeOut | JsonApiAttributeOutWithLinks,
     labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {
-    const labelsRefs = (attribute.relationships?.labels?.data ?? []) as JsonApiLabelLinkage[];
+    const labelsRefs = attribute.relationships?.labels?.data ?? [];
     const defaultView = attribute.relationships?.defaultView?.data;
 
     return labelsRefs
@@ -285,9 +284,7 @@ export function convertDatasetWithLinks(dataset: JsonApiDatasetOutWithLinks): ID
 
 type DatasetRelationships =
     | JsonApiAttributeOut["relationships"]
-    | JsonApiAttributeOutWithLinks["relationships"]
     | JsonApiFactOut["relationships"]
-    | JsonApiFactOutWithLinks["relationships"]
     | undefined;
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import {
@@ -16,7 +16,7 @@ const { Department, Region, Won } = ReferenceMd;
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";
 const departmentUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1027";
 const westCoastUri = ReferenceData.Region.WestCoast.uri!;
-const directSalesUri = ReferenceData.Department.DirectSales.uri!;
+const directSalesUri = ReferenceData.Department.DirectSales.uri;
 
 export const targetUri = "target-uri";
 

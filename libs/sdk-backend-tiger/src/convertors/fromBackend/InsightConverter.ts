@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type JsonApiAnalyticalDashboardOutIncludes,
@@ -50,12 +50,12 @@ export const visualizationObjectsItemToInsight = (
 ): IInsight => {
     const { id, attributes, relationships = {} } = visualizationObject;
     const { createdBy, modifiedBy } = relationships;
-    const { content, title, description, tags, isHidden, createdAt, modifiedAt } = attributes!;
+    const { content, title, description, tags, isHidden, createdAt, modifiedAt } = attributes;
     const links = "links" in visualizationObject ? visualizationObject.links : undefined;
 
     return insightFromInsightDefinition(
         convertVisualizationObject(
-            content! as
+            content as
                 | VisualizationObjectModelV1.IVisualizationObject
                 | VisualizationObjectModelV2.IVisualizationObject,
             title!,

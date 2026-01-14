@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
@@ -61,5 +62,6 @@ export function updateConfigWithSettings(config: IGeoConfig, settings: ISettings
     return {
         ...config,
         ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
+        ...(settings.enableDrillMenuPositioningAtCursor ? { enableDrillMenuPositioningAtCursor: true } : {}),
     };
 }

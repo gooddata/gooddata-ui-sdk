@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -114,7 +114,7 @@ describe("cssProperties", () => {
             expect(handleUnits("15.5%")).toBe("15.5%");
         });
         it("should work with undefined", () => {
-            expect(handleUnits(undefined as any)).toBeUndefined();
+            expect(handleUnits(undefined as unknown as string)).toBeUndefined();
         });
         it("should work with non numeric value", () => {
             expect(handleUnits("right")).toBe("right");

@@ -1,6 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
-
-import { type ReactNode } from "react";
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, set, without } from "lodash-es";
 
@@ -101,7 +99,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         );
     }
 
-    protected override renderConfigurationPanel(): ReactNode {
+    protected override renderConfigurationPanel(): null {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ChartFillType, type IPatternOptionsObject } from "./types.js";
 
@@ -300,7 +300,7 @@ export const PATTERN_FILLS: { name: string; pattern: IPatternOptionsObject }[] =
  *
  * @internal
  */
-export interface ChartFillConfig {
+export interface IChartFillConfig {
     /**
      * Type of the chart fill.
      */

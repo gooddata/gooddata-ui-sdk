@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import axios, { type AxiosResponse } from "axios";
 
@@ -28,7 +28,7 @@ export async function getFeatureHubFeatures(
         const featuresMap = data.reduce((prev, item) => ({ ...prev, [item.key]: item }), {} as FeaturesMap);
         return mapFeatures(featuresMap);
     } catch (err) {
-        console.error("Loading features from FeatureHub was not successful. Err: " + err);
+        console.error("Loading features from FeatureHub was not successful. Err:", err);
     }
 
     return DefaultFeatureFlags;
@@ -50,7 +50,7 @@ async function loadHubFeatures(
         }
 
         const promise = getFeatureHubData(host, key, context, state[key]);
-        promise.then(({ data, headers, status }) => {
+        void promise.then(({ data, headers, status }) => {
             if (status === 304) {
                 loadFeatures(state[key].data, resolve, callFailed);
                 return;

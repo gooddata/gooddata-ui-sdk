@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import path from "path";
 
@@ -43,7 +43,7 @@ export class ChangeDetector implements IEventListener {
      */
     private watcher: Watchpack | undefined;
 
-    private timeoutId: any | undefined;
+    private timeoutId: any;
     private accumulatedFileChanges: string[] = [];
     private active: boolean = true;
 
@@ -216,7 +216,7 @@ export class ChangeDetector implements IEventListener {
             const existingRequest = changes[packageName];
 
             if (existingRequest) {
-                existingRequest.files!.push(...change.files!);
+                existingRequest.files.push(...change.files);
             } else {
                 changes[packageName] = change;
             }

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent as ReactKeyboardEvent, useCallback, useRef } from "react";
 
@@ -70,7 +70,7 @@ const tableKeyboardNavigation = makeKeyboardNavigation({
  * @alpha
  */
 export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGridProps {
-    const { drillableItems, onDrill } = usePivotTableProps();
+    const { drillableItems, onDrill, config } = usePivotTableProps();
     const { currentDataView } = useCurrentDataView();
     const isDraggingRef = useRef<boolean>(false);
     const clickedCellRef = useRef<{ rowIndex: number; colId: string | undefined } | null>(null);
@@ -127,7 +127,10 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
             const drillEvent: IDrillEvent = {
                 dataView: currentDataView.dataView,
                 drillContext,
-                ...cord,
+                ...(config?.enableDrillMenuPositioningAtCursor ? cord : {}),
+                enableDrillMenuPositioningAtCursor: config?.enableDrillMenuPositioningAtCursor
+                    ? true
+                    : undefined,
             };
 
             if (onDrill(drillEvent)) {
@@ -135,7 +138,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 event.event?.target?.dispatchEvent(customEvent);
             }
         },
-        [onDrill, drillableItems, currentDataView],
+        [onDrill, drillableItems, currentDataView, config?.enableDrillMenuPositioningAtCursor],
     );
 
     const onCellMouseDown = useCallback((event: CellMouseDownEvent<AgGridRowData, string | null>) => {

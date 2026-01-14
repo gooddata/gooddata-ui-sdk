@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import * as path from "path";
 
@@ -25,6 +25,6 @@ function loadRecordings(recordingDefinition: string): IRecording[] {
     return [createRecording(directory)].filter(isNonNullRecording);
 }
 
-export async function discoverCatalogRecordings(recordingDir: string): Promise<IRecording[]> {
+export function discoverCatalogRecordings(recordingDir: string): IRecording[] {
     return findFiles(recordingDir, CatalogDefinition).flatMap(loadRecordings);
 }

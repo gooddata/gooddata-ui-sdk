@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import source from "./source.json" with { type: "json" };
 import target from "./target.json" with { type: "json" };
@@ -75,7 +75,7 @@ export class EventCollector implements IEventListener {
     private waitingFor: DcEventType | undefined;
     private waitingForStartIdx: number = 0;
 
-    private timeoutId: any | undefined;
+    private timeoutId: any;
     private resolveWait: ((event: DcEvent) => void) | undefined;
     private rejectWait: ((e: Error) => void) | undefined;
 

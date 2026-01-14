@@ -2467,6 +2467,10 @@
         "text": "Change{spacer}Calculates the relative change between primary (current time period) and secondary (previous time period) metric values.{spacer}FORMULA{spacer}(Primary - Secondary) / Secondary",
         "crowdinContext": "Description and formula for the percentage change calculation in alert configuration. {spacer} is a placeholder for line breaks."
     },
+    "input.unit.percent": {
+        "text": "Value in percent",
+        "crowdinContext": "Aria label for input suffix when the value is expressed in percent (%)"
+    },
     "insightAlert.config.differenceOperator.header": {
         "text": "DIFFERENCE #",
         "crowdinContext": "Header label for the numeric difference operator in alert configuration"
@@ -3018,6 +3022,10 @@
     "kdaDialog.dialog.keyDrives.error.traceId": {
         "text": "Error trace ID",
         "crowdinContext": "Key driver analysis error trace ID"
+    },
+    "kdaDialog.dialog.keyDrives.error.traceId.copy": {
+        "text": "Copy to clipboard",
+        "crowdinContext": "Key driver analysis error trace ID copy to clipboard"
     },
     "kdaDialog.dialog.keyDrives.error.details.title": {
         "text": "Raw error response",

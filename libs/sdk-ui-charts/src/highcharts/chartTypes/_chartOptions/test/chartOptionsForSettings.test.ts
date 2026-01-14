@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -9,7 +9,7 @@ import { updateConfigWithSettings } from "../chartOptionsForSettings.js";
 
 describe("updateConfigWithSettings", () => {
     describe("enableCompactSize", () => {
-        it("should return correct config with enableCompactSize always true", async () => {
+        it("should return correct config with enableCompactSize always true", () => {
             const config: IChartConfig = {};
             const settings: ISettings = {};
             const expectedConfig = {
@@ -23,7 +23,7 @@ describe("updateConfigWithSettings", () => {
         });
     });
 
-    it("should return correct config from undefined feature flags", async () => {
+    it("should return correct config from undefined feature flags", () => {
         const config: IChartConfig = {};
         const featureFlags: ISettings | undefined = undefined;
         const expectedConfig = {
@@ -33,7 +33,7 @@ describe("updateConfigWithSettings", () => {
     });
 
     describe("enableKDCrossFiltering", () => {
-        it("should return correct config from feature flags", async () => {
+        it("should return correct config from feature flags", () => {
             const config: IChartConfig = {};
             const settings: ISettings = {
                 enableKDCrossFiltering: true,

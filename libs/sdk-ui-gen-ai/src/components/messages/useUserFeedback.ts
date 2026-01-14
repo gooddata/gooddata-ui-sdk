@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IFeedbackData } from "./FeedbackPopup.js";
 import { type AssistantMessage } from "../../model.js";
@@ -7,7 +7,7 @@ import { type setUserFeedback } from "../../store/index.js";
 /**
  * @internal
  */
-export interface UseUserFeedbackProps {
+export interface IUseUserFeedbackProps {
     message: AssistantMessage;
     setUserFeedback: typeof setUserFeedback;
 }
@@ -15,7 +15,7 @@ export interface UseUserFeedbackProps {
 /**
  * @internal
  */
-export interface UseUserFeedbackReturn {
+export interface IUseUserFeedbackReturn {
     handlePositiveFeedbackClick: () => void;
     handleNegativeFeedbackClick: () => void;
     handleFeedbackSubmit: (feedbackData: IFeedbackData) => void;
@@ -27,7 +27,7 @@ export interface UseUserFeedbackReturn {
  *
  * @internal
  */
-export function useUserFeedback({ message, setUserFeedback }: UseUserFeedbackProps): UseUserFeedbackReturn {
+export function useUserFeedback({ message, setUserFeedback }: IUseUserFeedbackProps): IUseUserFeedbackReturn {
     const handlePositiveFeedbackClick = () => {
         if (message.feedback === "POSITIVE") {
             // If already positive, toggle back to none

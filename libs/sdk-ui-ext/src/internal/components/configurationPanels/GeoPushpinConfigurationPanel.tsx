@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode } from "react";
 
@@ -65,9 +65,9 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
                 pushData={pushData}
             >
                 <PushpinViewportControl
-                    properties={properties!}
+                    properties={properties}
                     disabled={this.isControlDisabled()}
-                    pushData={pushData!}
+                    pushData={pushData}
                 />
             </ConfigSection>
         );
@@ -80,7 +80,7 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
         const isControlDisabled = this.isControlDisabled();
         const isClusteringDisabled =
             isControlDisabled || insightHasMeasures(insight!) || hasSegmentAttribute(insight);
-        const isPushpinSizeControlDisabled = isControlDisabled || !hasSizeMeasure(insight!);
+        const isPushpinSizeControlDisabled = isControlDisabled || !hasSizeMeasure(insight);
         return (
             <ConfigSection
                 id="points_section"

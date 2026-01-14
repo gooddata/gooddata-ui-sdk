@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 /**
  * This package provides the PivotTable component that you can use to visualize your data in a table-based manner.
@@ -22,6 +22,7 @@ export type {
     PivotTableNextMenuConfig,
     PivotTableNextFormattingConfig,
     PivotTableNextExecutionCancellingConfig,
+    PivotTableNextDrillMenuPositioningConfig,
     PivotTableNextLayoutConfig,
     PivotTableNextGrandTotalsPositionConfig,
     PivotTableNextCellSelectionConfig,

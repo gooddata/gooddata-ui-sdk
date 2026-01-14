@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { suppressConsole } from "@gooddata/util";
@@ -604,21 +605,21 @@ describe("DateFilter", () => {
             expect(isRelativeFormVisible()).toBe(false);
         });
 
-        it("should have select menu closed by default", async () => {
+        it("should have select menu closed by default", () => {
             createDateFilter();
             clickDateFilterButton();
             clickRelativeFormFilter();
             expect(isRelativeFormSelectMenuVisible()).toBe(false);
         });
 
-        it("should have default granularity months", async () => {
+        it("should have default granularity months", () => {
             createDateFilter();
             clickDateFilterButton();
             clickRelativeFormFilter();
             expect(isRelativeFormGranularitySelected("month")).toBe(true);
         });
 
-        it("should clear the form when Granularity changed", async () => {
+        it("should clear the form when Granularity changed", () => {
             createDateFilter();
             clickDateFilterButton();
             clickRelativeFormFilter();

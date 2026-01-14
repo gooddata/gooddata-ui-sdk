@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -312,7 +312,7 @@ export const getAllStaticItemsLabels = (): string[] => {
     const labels: string[] = [];
     document
         .querySelectorAll("[class*='s-relative-preset-']")
-        .forEach((item) => labels.push(item.textContent!));
+        .forEach((item) => labels.push(item.textContent));
     return labels;
 };
 

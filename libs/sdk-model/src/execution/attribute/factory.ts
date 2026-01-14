@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
@@ -51,7 +51,7 @@ export class AttributeBuilder {
      *
      * @param alias - alias to use instead of attribute title; undefined to use server-defined value
      */
-    public alias = (alias?: string | undefined): this => {
+    public alias = (alias?: string): this => {
         if (!alias) {
             return this.noAlias();
         }
@@ -83,7 +83,7 @@ export class AttributeBuilder {
      *
      * @param showAllValues - flag defining whether to return all attribute values for given attribute; undefined to use backend default behavior(false)
      */
-    public showAllValues = (showAllValues?: boolean | undefined): this => {
+    public showAllValues = (showAllValues?: boolean): this => {
         if (showAllValues === undefined) {
             delete this.attribute.showAllValues;
         } else {
@@ -118,7 +118,7 @@ export class AttributeBuilder {
      * @param localId - local identifier to set; if not specified, the builder will ensure local id will
      * be generated
      */
-    public localId = (localId?: Identifier | undefined): this => {
+    public localId = (localId?: Identifier): this => {
         if (!localId || localId.trim().length === 0) {
             return this.defaultLocalId();
         }

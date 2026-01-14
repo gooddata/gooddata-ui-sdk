@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -142,8 +142,7 @@ export function getPrimaryLayerControls(insight: IInsightDefinition): {
     const controls =
         (pushpinLayer?.properties?.["controls"] as Record<string, unknown> | undefined) ?? undefined;
 
-    const readControl = (key: string) =>
-        typeof controls?.[key] === "string" ? (controls[key] as string) : undefined;
+    const readControl = (key: string) => (typeof controls?.[key] === "string" ? controls[key] : undefined);
 
     return {
         latitude: readControl("latitude"),

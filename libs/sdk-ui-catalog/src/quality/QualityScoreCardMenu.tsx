@@ -32,7 +32,7 @@ export function QualityScoreCardMenu({ intl, onRunCheck, isLoading }: Props) {
         [intl],
     );
 
-    const handleAction = async (item: IUiListboxInteractiveItem<null>) => {
+    const handleAction = (item: IUiListboxInteractiveItem<null>) => {
         if (item.id === "runCheck") {
             onRunCheck();
         }

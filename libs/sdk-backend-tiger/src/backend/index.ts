@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosResponse } from "axios";
 import { inRange, isEmpty, isError, omit } from "lodash-es";
@@ -319,7 +319,7 @@ export class TigerBackend implements IAnalyticalBackend {
     ): Promise<T> => {
         try {
             // the return await is crucial here so that we also catch the async errors
-            return await call(this.client, await this.getAsyncCallContext());
+            return await call(this.client, this.getAsyncCallContext());
         } catch (err) {
             invariant(isError(err)); // if this bombs, the code in the try block threw something strange
 
@@ -334,7 +334,7 @@ export class TigerBackend implements IAnalyticalBackend {
             try {
                 await this.triggerAuthentication();
                 // the return await is crucial here so that we also catch the async errors
-                return await call(this.client, await this.getAsyncCallContext());
+                return await call(this.client, this.getAsyncCallContext());
             } catch (err2) {
                 invariant(isError(err2)); // if this bombs, the code in the try block threw something strange
                 throw this.handleAnalyticalBackendError(errorConverter(err2));
@@ -363,7 +363,7 @@ export class TigerBackend implements IAnalyticalBackend {
         return { client: this.client, backend: this };
     };
 
-    private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
+    private getAsyncCallContext = (): IAuthenticatedAsyncCallContext => {
         const getPrincipal = async (): Promise<IAuthenticatedPrincipal> => {
             if (!this.authProvider) {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");

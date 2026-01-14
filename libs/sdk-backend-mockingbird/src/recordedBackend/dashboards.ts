@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
@@ -208,7 +208,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         _type: "visual" | "slides" | undefined,
         _tabId?: string,
     ): Promise<IFilterContext | null> => {
-        return null;
+        return Promise.resolve(null);
     };
 
     public getDashboardReferencedObjects = (
@@ -240,7 +240,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         if (!areObjRefsEqual(dashboard.ref, updatedDashboard.ref)) {
             throw new Error("Cannot update dashboard with different refs!");
         } else if (isEqual(dashboard, updatedDashboard)) {
-            return dashboard;
+            return Promise.resolve(dashboard);
         }
 
         let savedDashboard: Partial<IDashboard> = cloneDeep(updatedDashboard) as Partial<IDashboard>;
@@ -323,7 +323,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
         this.addOrUpdateLocalDashboard(savedDashboard as IDashboard);
 
-        return savedDashboard as IDashboard;
+        return Promise.resolve(savedDashboard as IDashboard);
     };
 
     updateDashboardMeta(_: IDashboardObjectIdentity & Partial<IDashboardBase>): Promise<IDashboard> {

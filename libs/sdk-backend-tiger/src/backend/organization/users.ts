@@ -119,7 +119,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                 jsonApiUserGroupInDocument: {
                     data: {
                         type: "userGroup",
-                        id: id!,
+                        id: id,
                         attributes: {
                             name,
                         },
@@ -133,11 +133,11 @@ export class OrganizationUsersService implements IOrganizationUserService {
         return this.authCall(async (client) => {
             const { id, name } = group;
             await EntitiesApi_PatchEntityUserGroups(client.axios, client.basePath, {
-                id: id!,
+                id: id,
                 jsonApiUserGroupPatchDocument: {
                     data: {
                         type: "userGroup",
-                        id: id!,
+                        id: id,
                         attributes: {
                             name,
                         },

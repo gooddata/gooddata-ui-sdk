@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -38,7 +38,7 @@ const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilt
     return operatorNotChanged && valueNotChanged && attributesNotChanged && measureNotChanged;
 };
 
-interface RankingFilterDropdownBodyComponentProps {
+interface IRankingFilterDropdownBodyComponentProps {
     measureItems: IMeasureDropdownItem[];
     attributeItems: IAttributeDropdownItem[];
     filter: IRankingFilter;
@@ -58,7 +58,7 @@ export function RankingFilterDropdownBody({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-}: RankingFilterDropdownBodyComponentProps) {
+}: IRankingFilterDropdownBodyComponentProps) {
     const intl = useIntl();
 
     const rankingFilter = filter.rankingFilter;

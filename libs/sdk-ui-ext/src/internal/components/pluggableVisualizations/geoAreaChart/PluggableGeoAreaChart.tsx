@@ -421,7 +421,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         }
 
         const updated = cloneDeep(referencePoint);
-        const properties = (updated.properties as IVisualizationProperties | undefined) ?? {};
+        const properties = updated.properties ?? {};
         const controls = properties.controls ?? {};
 
         set(updated, "properties.controls", {

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type JsonApiDatasetOutMeta,
@@ -26,7 +26,7 @@ export function getObjectOrigin<T = unknown>(obj: JsonApiMetadataLikeObject<T>):
 /**
  * @internal
  */
-export interface OriginInfoWithId {
+export interface IOriginInfoWithId {
     originType: JsonApiDatasetOutMetaOriginOriginTypeEnum;
     originId: string;
     id: string;
@@ -43,7 +43,7 @@ export interface OriginInfoWithId {
  * @param id - string that represent id with or without prefix
  * @internal
  */
-export function getIdOrigin(id: string): OriginInfoWithId {
+export function getIdOrigin(id: string): IOriginInfoWithId {
     const data = id.split(PrefixSeparator);
 
     //prefix + id

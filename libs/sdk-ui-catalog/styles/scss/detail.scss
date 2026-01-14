@@ -140,6 +140,18 @@ $content-font-size: 14px;
         display: grid;
         grid-template-columns: minmax(120px, auto) 1fr;
         gap: 10px 20px;
+        margin: 0;
+        padding: 0;
+
+        dt,
+        dd {
+            margin: 0;
+            font-weight: inherit;
+        }
+
+        dd {
+            margin-inline-start: 0;
+        }
 
         &__cell {
             padding: 4px 0;
@@ -171,6 +183,7 @@ $content-font-size: 14px;
 
         .gd-ui-kit-tooltip__anchor {
             display: flex;
+            align-items: center;
         }
     }
 

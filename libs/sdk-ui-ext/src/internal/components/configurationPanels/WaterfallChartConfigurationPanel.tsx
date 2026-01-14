@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -82,7 +82,7 @@ export class WaterfallChartConfigurationPanel extends BaseChartConfigurationPane
 
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText={messages["canvasGridLine"].id!}
+                            labelText={messages["canvasGridLine"].id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}
@@ -122,7 +122,7 @@ export class WaterfallChartConfigurationPanel extends BaseChartConfigurationPane
         const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
         const isViewedBy = this.isViewedBy();
-        const itemsOnAxes = countItemsOnAxes(type!, controls ?? {}, insight!);
+        const itemsOnAxes = countItemsOnAxes(type, controls ?? {}, insight);
 
         return axes.map((axis: IAxisProperties) => {
             const isPrimaryAxis =

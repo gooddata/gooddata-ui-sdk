@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { useCallback, useEffect, useState } from "react";
 
 import { isEmpty } from "lodash-es";
@@ -155,7 +156,7 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
     // Prepare all catalog attributes
     useEffect(() => {
         if (isEmpty(catalogAttributesMap)) {
-            backend
+            void backend
                 .workspace(workspace)
                 .catalog()
                 .forTypes(["attribute", "dateDataset"])

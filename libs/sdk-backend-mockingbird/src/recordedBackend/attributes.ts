@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { compact } from "lodash-es";
 
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
@@ -52,7 +53,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             throw new UnexpectedResponseError(`No element recordings for df ${objRefToString(ref)}`, 404, {});
         }
 
-        return recording.obj;
+        return Promise.resolve(recording.obj);
     };
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
@@ -70,7 +71,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             throw new UnexpectedResponseError(`No attribute recording ${objRefToString(ref)}`, 404, {});
         }
 
-        return this.sanitizeAttribute(recording.attribute);
+        return Promise.resolve(this.sanitizeAttribute(recording.attribute));
     };
 
     public getAttributeByDisplayForm = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
@@ -88,7 +89,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             throw new UnexpectedResponseError(`No attribute recording ${objRefToString(ref)}`, 404, {});
         }
 
-        return this.sanitizeAttribute(recording.attribute);
+        return Promise.resolve(this.sanitizeAttribute(recording.attribute));
     };
 
     public async getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
@@ -99,7 +100,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             throw new UnexpectedResponseError(`No common attributes response set for key ${key}`, 404, {});
         }
 
-        return response;
+        return Promise.resolve(response);
     }
 
     public getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {

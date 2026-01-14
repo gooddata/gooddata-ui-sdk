@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { MouseEvent, PropsWithChildren } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { CatalogDetail, type CatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
+import { CatalogDetail, type ICatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 import {
     CatalogDetailContent,
-    type CatalogDetailContentProps,
+    type ICatalogDetailContentProps,
     type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
 import { CatalogResourceProvider } from "./catalogResource/index.js";
@@ -22,7 +22,7 @@ import { QualityProvider } from "./quality/QualityContext.js";
 /**
  * @internal
  */
-export interface AnalyticsCatalogDetailProps extends Omit<CatalogDetailProps, "objectId" | "objectType"> {
+export interface IAnalyticsCatalogDetailProps extends Omit<ICatalogDetailProps, "objectId" | "objectType"> {
     /**
      * An object id of the catalog item.
      */
@@ -53,7 +53,7 @@ export function AnalyticsCatalogDetail({
     workspace,
     locale,
     ...restProps
-}: AnalyticsCatalogDetailProps) {
+}: IAnalyticsCatalogDetailProps) {
     return (
         <Providers backend={backend} workspace={workspace} locale={locale}>
             <CatalogDetail {...restProps} />
@@ -64,8 +64,8 @@ export function AnalyticsCatalogDetail({
 /**
  * @internal
  */
-export interface AnalyticsCatalogDetailContentProps
-    extends Omit<CatalogDetailContentProps, "objectId" | "objectType"> {
+export interface IAnalyticsCatalogDetailContentProps
+    extends Omit<ICatalogDetailContentProps, "objectId" | "objectType"> {
     /**
      * An object id of the catalog item.
      */
@@ -100,7 +100,7 @@ export function AnalyticsCatalogDetailContent({
     workspace,
     locale,
     ...restProps
-}: AnalyticsCatalogDetailContentProps) {
+}: IAnalyticsCatalogDetailContentProps) {
     return (
         <Providers backend={backend} workspace={workspace} locale={locale}>
             <CatalogDetailContent {...restProps} />

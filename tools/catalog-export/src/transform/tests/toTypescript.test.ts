@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type WorkspaceMetadata } from "../../base/types.js";
@@ -52,8 +53,8 @@ const projectMeta: WorkspaceMetadata = {
 };
 
 describe("transformToTypescript", () => {
-    it("creates new catalog", async () => {
-        const transformResult = transformToTypescript(await projectMeta, "testOutput.ts");
+    it("creates new catalog", () => {
+        const transformResult = transformToTypescript(projectMeta, "testOutput.ts");
 
         /*
          * NOTE: source.getFullText() should not be used here as it includes the leading comments that

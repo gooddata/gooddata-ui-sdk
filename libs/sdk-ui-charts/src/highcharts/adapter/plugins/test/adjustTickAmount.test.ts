@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -36,6 +37,7 @@ const mockAxis = ({
     options,
     userOptions,
     hasData,
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 }: Partial<Highcharts.Axis | UnsafeInternals>): Highcharts.Axis | UnsafeInternals => ({
     tickInterval,
     tickAmount,

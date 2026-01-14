@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -22,7 +22,7 @@ const getItemIcon = (selectedItem: IAttributeDropdownItem | undefined): string |
     }
 };
 
-interface AttributeDropdownProps {
+interface IAttributeDropdownProps {
     items: IAttributeDropdownItem[];
     selectedItemRef?: ObjRefInScope;
     onSelect: (ref?: ObjRefInScope) => void;
@@ -38,7 +38,7 @@ export function AttributeDropdown({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-}: AttributeDropdownProps) {
+}: IAttributeDropdownProps) {
     const intl = useIntl();
 
     const [isOpen, setIsOpen] = useState(false);

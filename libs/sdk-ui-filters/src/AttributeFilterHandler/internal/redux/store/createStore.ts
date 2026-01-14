@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Action, type AnyAction, type Middleware, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
@@ -15,8 +15,8 @@ import {
 
 import { rootSaga } from "./rootSaga.js";
 import { actions, sliceReducer } from "./slice.js";
-import { type AttributeFilterState, initialState } from "./state.js";
-import { type AttributeFilterHandlerStore, type AttributeFilterHandlerStoreContext } from "./types.js";
+import { type IAttributeFilterState, initialState } from "./state.js";
+import { type IAttributeFilterHandlerStore, type IAttributeFilterHandlerStoreContext } from "./types.js";
 
 const nonSerializableActions = [
     actions.loadAttributeError.type,
@@ -38,7 +38,7 @@ const eventListeningMiddleware =
     (
         eventListener: (
             action: Action,
-            selectFromNextState: <T>(selector: (state: AttributeFilterState) => T) => T,
+            selectFromNextState: <T>(selector: (state: IAttributeFilterState) => T) => T,
         ) => void,
     ): Middleware =>
     (store) =>
@@ -54,8 +54,8 @@ const eventListeningMiddleware =
  * @internal
  */
 export function createAttributeFilterHandlerStore(
-    context: AttributeFilterHandlerStoreContext,
-): AttributeFilterHandlerStore {
+    context: IAttributeFilterHandlerStoreContext,
+): IAttributeFilterHandlerStore {
     const sagaMiddleware = createSagaMiddleware({
         context: {
             attributeFilterContext: context,
@@ -132,7 +132,7 @@ export function createAttributeFilterHandlerStore(
             store.dispatch(action);
         },
         select: (selector) => {
-            return selector(store.getState() as AttributeFilterState);
+            return selector(store.getState() as IAttributeFilterState);
         },
     };
 }

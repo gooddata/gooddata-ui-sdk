@@ -1,17 +1,15 @@
-// (C) 2025 GoodData Corporation
-
-import { useRef } from "react";
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { UiDrawer } from "@gooddata/sdk-ui-kit";
 
-import { CatalogDetailContent, type CatalogDetailContentProps } from "./CatalogDetailContent.js";
+import { CatalogDetailContent, type ICatalogDetailContentProps } from "./CatalogDetailContent.js";
 
 /**
  * @internal
  */
-export interface CatalogDetailProps extends CatalogDetailContentProps {
+export interface ICatalogDetailProps extends ICatalogDetailContentProps {
     /**
      * Whether the overlay is open or not.
      */
@@ -38,15 +36,19 @@ export interface CatalogDetailProps extends CatalogDetailContentProps {
 /**
  * @internal
  */
-export function CatalogDetail({ open, onClose, dataTestId, zIndex, node, ...restProps }: CatalogDetailProps) {
+export function CatalogDetail({
+    open,
+    onClose,
+    dataTestId,
+    zIndex,
+    node,
+    ...restProps
+}: ICatalogDetailProps) {
     const intl = useIntl();
-    const focusRef = useRef<HTMLButtonElement>(null);
-
     return (
         <UiDrawer
             open={open}
             node={node}
-            initialFocus={focusRef}
             closeLabel={intl.formatMessage({ id: "analyticsCatalog.catalogItem.closeButtonLabel" })}
             accessibilityConfig={{
                 ariaLabel: intl.formatMessage({ id: "analyticsCatalog.catalogItem.overlayLabel" }),
@@ -59,7 +61,7 @@ export function CatalogDetail({ open, onClose, dataTestId, zIndex, node, ...rest
             onEscapeKey={onClose}
             onClickOutside={onClose}
         >
-            <CatalogDetailContent {...restProps} focusRef={focusRef} />
+            <CatalogDetailContent {...restProps} />
         </UiDrawer>
     );
 }

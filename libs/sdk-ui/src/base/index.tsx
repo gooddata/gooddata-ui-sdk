@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /*
  *
@@ -367,7 +367,9 @@ export {
     getDrillIntersection,
     getIntersectionPartAfter,
     fireDrillEvent,
+    getChartClickCoordinates,
 } from "./vis/drilling.js";
+export type { IChartCoordinates } from "./vis/drilling.js";
 export { createExportFunction, createExportErrorFunction } from "./vis/export.js";
 export type {
     VisualizationEnvironment,

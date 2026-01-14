@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 type NamedImport = string | { name: string; alias: string };
 
-interface Import {
+interface IImport {
     source?: string;
     namedImports?: NamedImport[];
     defaultImport?: string;
@@ -10,7 +10,7 @@ interface Import {
 
 export const header = `// (C) ${new Date().getFullYear()} GoodData Corporation`;
 
-export function generateImports(imports: Import[]): string {
+export function generateImports(imports: IImport[]): string {
     return imports
         .map((i) => {
             const { source, namedImports, defaultImport } = i;

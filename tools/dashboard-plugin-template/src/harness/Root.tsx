@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { App } from "./App.js";
 import { backend, hasCredentialsSetup, needsAuthentication } from "./backend.js";
 
-export const Root = () => {
+export function Root() {
     if (!hasCredentialsSetup() && needsAuthentication()) {
         return (
             <div>
@@ -28,9 +28,9 @@ export const Root = () => {
 
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={process.env.WORKSPACE!}>
+            <WorkspaceProvider workspace={process.env.WORKSPACE}>
                 <App />
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}

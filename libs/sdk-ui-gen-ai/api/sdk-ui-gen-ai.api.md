@@ -73,10 +73,10 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
 
 // @public
-export interface ChatEventHandler<TEvent extends ChatEvent = any> {
+export type ChatEventHandler<TEvent extends ChatEvent = any> = {
     eval: (event: ChatEvent) => event is TEvent;
     handler: (event: TEvent) => void;
-}
+};
 
 // @public
 export type ChatFeedbackErrorEvent = BaseEvent & {
@@ -137,16 +137,16 @@ export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThrea
 export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
 // @beta (undocumented)
-export const DefaultLandingQuestion: FC<LandingQuestionProps>;
+export const DefaultLandingQuestion: FC<ILandingQuestionProps>;
 
 // @beta (undocumented)
 export const DefaultLandingScreen: FC<LandingScreenProps>;
 
 // @beta (undocumented)
-export function DefaultLandingTitle({ children }: LandingTitleProps): JSX.Element;
+export function DefaultLandingTitle({ children }: ILandingTitleProps): JSX.Element;
 
 // @beta (undocumented)
-export function DefaultLandingTitleAscent({ children }: LandingTitleProps): JSX.Element;
+export function DefaultLandingTitleAscent({ children }: ILandingTitleProps): JSX.Element;
 
 // @public (undocumented)
 export type ErrorContents = {
@@ -158,31 +158,49 @@ export type ErrorContents = {
 export function GenAIAssistant(props: GenAIAssistantProps): JSX.Element;
 
 // @public
-export interface GenAIAssistantProps {
-    allowNativeLinks?: boolean;
+export type GenAIAssistantProps = {
     backend?: IAnalyticalBackend;
-    catalogItems?: CatalogItem[];
+    workspace?: string;
+    locale?: string;
     colorPalette?: IColorPalette;
+    catalogItems?: CatalogItem[];
+    settings?: IUserWorkspaceSettings;
+    eventHandlers?: ChatEventHandler[];
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    allowNativeLinks?: boolean;
+    disableManage?: boolean;
     disableAnalyze?: boolean;
     disableFullControl?: boolean;
-    disableManage?: boolean;
-    eventHandlers?: ChatEventHandler[];
-    excludeTags?: string[];
-    includeTags?: string[];
-    LandingScreenComponentProvider?: () => ComponentType;
-    locale?: string;
     objectTypes?: GenAIObjectType[];
+    includeTags?: string[];
+    excludeTags?: string[];
     onDispatcher?: (dispatch: (action: unknown) => void) => void;
-    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
-    settings?: IUserWorkspaceSettings;
-    workspace?: string;
-}
+    LandingScreenComponentProvider?: () => ComponentType;
+};
 
 // @public @deprecated
 export const GenAIChat: typeof GenAIAssistant;
 
 // @public @deprecated
 export type GenAIChatProps = GenAIAssistantProps;
+
+// @beta (undocumented)
+export interface ILandingQuestionProps {
+    // (undocumented)
+    answer: string;
+    // (undocumented)
+    icon?: ReactNode;
+    // (undocumented)
+    question: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @beta (undocumented)
+export interface ILandingTitleProps {
+    // (undocumented)
+    children: ReactNode;
+}
 
 // @public
 export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAssistantMessageEvent;
@@ -218,27 +236,9 @@ export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMess
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
 
 // @beta (undocumented)
-export interface LandingQuestionProps {
-    // (undocumented)
-    answer: string;
-    // (undocumented)
-    icon?: ReactNode;
-    // (undocumented)
-    question: string;
-    // (undocumented)
-    title?: string;
-}
-
-// @beta (undocumented)
 export type LandingScreenProps = {
     LandingScreen?: ComponentType;
 };
-
-// @beta (undocumented)
-export interface LandingTitleProps {
-    // (undocumented)
-    children: ReactNode;
-}
 
 // @public (undocumented)
 export type LinkHandlerEvent = {

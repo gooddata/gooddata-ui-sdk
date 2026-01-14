@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -58,7 +58,7 @@ const customColorPalette = [
  * This mock enables us to test props as parameters of the called chart function
  */
 vi.mock("../adapter/HighChartsRenderer", async () => ({
-    ...((await vi.importActual("../adapter/HighChartsRenderer")) as object),
+    ...(await vi.importActual("../adapter/HighChartsRenderer")),
     HighChartsRenderer: vi.fn(() => null),
 }));
 

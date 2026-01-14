@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
@@ -58,8 +59,8 @@ export function getBulletChartUiConfig(
 
     if (primaryMeasuresCount === 0 && (secondaryMeasuresCount !== 0 || tertiaryMeasuresCount !== 0)) {
         referencePointConfigured[UICONFIG].customError = {
-            heading: getTranslation(messages["heading"].id!, intl),
-            text: getTranslation(messages["text"].id!, intl),
+            heading: getTranslation(messages["heading"].id, intl),
+            text: getTranslation(messages["text"].id, intl),
         };
     }
 

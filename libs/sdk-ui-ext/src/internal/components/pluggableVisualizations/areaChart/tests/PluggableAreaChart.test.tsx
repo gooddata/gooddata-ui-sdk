@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -452,7 +452,7 @@ describe("PluggableAreaChart", () => {
             expect(renderEl!.props.config!.stackMeasures).toBe(expected);
         };
 
-        it("should modify stack by default of area by config stackMeasures properties", async () => {
+        it("should modify stack by default of area by config stackMeasures properties", () => {
             const areaChart = createComponent();
 
             verifyStackMeasuresConfig(areaChart, null as unknown as boolean);
@@ -460,7 +460,7 @@ describe("PluggableAreaChart", () => {
             verifyStackMeasuresConfig(areaChart, false);
         });
 
-        it("should modify stackMeasures and stackMeasuresToPercent properties from true to false", async () => {
+        it("should modify stackMeasures and stackMeasuresToPercent properties from true to false", () => {
             const areaChart = createComponent();
 
             const visualizationProperties = {
@@ -484,7 +484,7 @@ describe("PluggableAreaChart", () => {
             expect(renderEl!.props.config!.stackMeasuresToPercent).toBe(false);
         });
 
-        it("should reset custom controls properties", async () => {
+        it("should reset custom controls properties", () => {
             const areaChart = createComponent();
 
             const visualizationProperties = {

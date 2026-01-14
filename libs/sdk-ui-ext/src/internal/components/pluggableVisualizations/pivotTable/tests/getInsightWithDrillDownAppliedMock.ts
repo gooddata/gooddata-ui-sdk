@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import {
@@ -108,7 +108,7 @@ const measureHeader: IMeasureDescriptor = {
     },
 };
 
-const departmentDirectSalesUri = ReferenceData.Department.DirectSales.uri!;
+const departmentDirectSalesUri = ReferenceData.Department.DirectSales.uri;
 const departmentHeaderAttributeUri = "departmentHeaderAttributeUri";
 const departmentHeader: IDrillIntersectionAttributeItem = {
     attributeHeaderItem: {
@@ -135,7 +135,7 @@ const departmentHeader: IDrillIntersectionAttributeItem = {
     },
 };
 
-const statusLostUri = ReferenceData.Status.Lost.uri!;
+const statusLostUri = ReferenceData.Status.Lost.uri;
 const statusHeaderAttributeUri = "statusHeaderAttributeUri";
 const statusHeader: IDrillIntersectionAttributeItem = {
     attributeHeaderItem: {

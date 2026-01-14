@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -117,24 +117,24 @@ async function onManualColumnResize(
     resizingState: MutableRefObject<ResizingState>,
     resizingConfig: ColumnResizingConfig,
     columns: Column[],
-): Promise<void> {
+) {
     resizingState.current.clicks++;
     await sleep(COLUMN_RESIZE_TIMEOUT);
 
-    if (resizingState.current.clicks === UIClick.DOUBLE_CLICK) {
+    if (resizingState.current.clicks === (UIClick.DOUBLE_CLICK as number)) {
         resizingState.current.clicks = 0;
-        await onColumnsManualReset(resizingState, resizingConfig, columns);
-    } else if (resizingState.current.clicks === UIClick.CLICK) {
+        onColumnsManualReset(resizingState, resizingConfig, columns);
+    } else if (resizingState.current.clicks === (UIClick.CLICK as number)) {
         resizingState.current.clicks = 0;
-        void onColumnsManualResized(resizingState, resizingConfig, columns);
+        onColumnsManualResized(resizingState, resizingConfig, columns);
     }
 }
 
-async function onColumnsManualReset(
+function onColumnsManualReset(
     resizingState: MutableRefObject<ResizingState>,
     resizingConfig: ColumnResizingConfig,
     columns: Column[],
-): Promise<void> {
+) {
     const columnApi = resizingState.current.columnApi;
 
     for (const column of columns) {
@@ -159,11 +159,11 @@ async function onColumnsManualReset(
     afterOnResizeColumns(resizingState, resizingConfig);
 }
 
-async function onColumnsManualResized(
+function onColumnsManualResized(
     resizingState: MutableRefObject<ResizingState>,
     resizingConfig: ColumnResizingConfig,
     columns: Column[],
-): Promise<void> {
+) {
     columns.forEach((column) => {
         if (!getManualResizedColumn(resizingState, column)) {
             resizingState.current.manuallyResizedColumns.push(column);

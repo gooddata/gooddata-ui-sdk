@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type {
     AfmGetQualityIssuesResponse,
@@ -11,7 +11,6 @@ import {
     type ISemanticQualityIssue,
     type ISemanticQualityIssuesCalculation,
     type ISemanticQualityReport,
-    type Identifier,
     type SemanticQualityIssueAttributeName,
     type SemanticQualityIssueCode,
     type SemanticQualityIssueSeverity,
@@ -48,7 +47,7 @@ export function convertQualityIssue(issue: AfmQualityIssue): ISemanticQualityIss
         severity: convertQualityIssueSeverity(issue.severity),
         objects: issue.objects.map((obj) => ({
             type: obj.type as GenAIObjectType,
-            identifier: obj.id as Identifier,
+            identifier: obj.id,
             title: obj.title,
         })),
         detail: {

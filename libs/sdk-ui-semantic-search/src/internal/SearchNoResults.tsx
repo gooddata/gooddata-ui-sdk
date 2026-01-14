@@ -1,15 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
 import { testIds } from "../automation/index.js";
 
-export interface SearchNoResults {
+export interface ISearchNoResults {
     searchTerm: string;
     searchMessage?: string;
 }
 
-export function SearchNoResults({ searchMessage, searchTerm }: SearchNoResults) {
+export function SearchNoResults({ searchMessage, searchTerm }: ISearchNoResults) {
     return (
         <div className="gd-semantic-search__overlay-no-results" data-testid={testIds.semanticSearchNoResults}>
             {searchMessage || (

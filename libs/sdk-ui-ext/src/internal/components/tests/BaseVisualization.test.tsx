@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -451,7 +451,7 @@ describe("BaseVisualization", () => {
 
     it("should render message in case visualization type is unknown", () => {
         const onLoadingChanged = vi.fn();
-        suppressConsole(
+        void suppressConsole(
             () =>
                 createComponent({
                     ...defaultProps,
@@ -543,7 +543,7 @@ describe("BaseVisualization", () => {
         });
     });
 
-    it("should call onExportReady", async () => {
+    it("should call onExportReady", () => {
         const { onExportReady } = getDummyComponent();
         expect(onExportReady).toHaveBeenCalledTimes(1);
     });

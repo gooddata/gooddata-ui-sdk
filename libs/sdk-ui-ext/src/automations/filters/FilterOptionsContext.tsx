@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext, useState } from "react";
 
@@ -8,17 +8,17 @@ import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { type IListedDashboard, type IOrganizationUser, type IWorkspaceUser } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { type AutomationsScope, type FilterOptionsContextValue } from "../types.js";
+import { type AutomationsScope, type IFilterOptionsContextValue } from "../types.js";
 import { useAutomationService } from "../useAutomationService.js";
 
-const FilterOptionsContext = createContext<FilterOptionsContextValue | null>(null);
+const FilterOptionsContext = createContext<IFilterOptionsContextValue | null>(null);
 
-interface FilterOptionsProviderProps {
+interface IFilterOptionsProviderProps {
     children: ReactNode;
     scope: AutomationsScope;
 }
 
-export function FilterOptionsProvider({ children, scope }: FilterOptionsProviderProps) {
+export function FilterOptionsProvider({ children, scope }: IFilterOptionsProviderProps) {
     const [workspaceUsers, setWorkspaceUsers] = useState<IWorkspaceUser[] | IOrganizationUser[]>([]);
     const [dashboards, setDashboards] = useState<IListedDashboard[]>([]);
     const [workspaces, setWorkspaces] = useState<IWorkspaceDescriptor[]>([]);
@@ -74,7 +74,7 @@ export function FilterOptionsProvider({ children, scope }: FilterOptionsProvider
     const dashboardsLoading = dashboardsStatus === "loading";
     const workspacesLoading = workspacesStatus === "loading";
 
-    const contextValue: FilterOptionsContextValue = {
+    const contextValue: IFilterOptionsContextValue = {
         workspaceUsers,
         dashboards,
         wokspaceUsersLoading,
@@ -86,7 +86,7 @@ export function FilterOptionsProvider({ children, scope }: FilterOptionsProvider
     return <FilterOptionsContext.Provider value={contextValue}>{children}</FilterOptionsContext.Provider>;
 }
 
-export const useFilterOptions = (): FilterOptionsContextValue => {
+export const useFilterOptions = (): IFilterOptionsContextValue => {
     const context = useContext(FilterOptionsContext);
 
     invariant(context, "FilterOptionsContext not found");

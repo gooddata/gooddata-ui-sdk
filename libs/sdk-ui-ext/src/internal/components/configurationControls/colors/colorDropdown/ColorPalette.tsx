@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, memo } from "react";
 
 import cx from "classnames";
 
 import { type IColor, type IColorPalette, type IColorPaletteItem } from "@gooddata/sdk-model";
-import { type ChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { ColorPaletteItem } from "./ColorPaletteItem.js";
 
@@ -15,7 +15,7 @@ export interface IColorPaletteProps {
     selectedColorGuid?: string | null;
     colorPalette: IColorPalette;
     onColorSelected: (color: IColor) => void;
-    chartFill?: ChartFillConfig;
+    chartFill?: IChartFillConfig;
     patternFillIndex?: number | PatternFillName;
 }
 

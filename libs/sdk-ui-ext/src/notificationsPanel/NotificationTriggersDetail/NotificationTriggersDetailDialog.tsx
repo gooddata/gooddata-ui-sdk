@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { defineMessages, useIntl } from "react-intl";
 
@@ -46,7 +46,7 @@ export function NotificationTriggersDetailDialog({
             content={
                 <div className={b()}>
                     <div className={e("header")}>
-                        <div className={e("header-title")}>{notification.details.data.alert!.metric}</div>
+                        <div className={e("header-title")}>{notification.details.data.alert.metric}</div>
                         <div className={e("header-title")}>{intl.formatMessage(messages.newValue)}</div>
                     </div>
                     <div className={e("table")}>

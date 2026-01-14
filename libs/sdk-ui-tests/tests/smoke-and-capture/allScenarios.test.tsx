@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import * as fs from "fs";
 import * as path from "path";
@@ -185,7 +185,7 @@ async function scenarioSave(
     const { triggeredExecution: plugVizExecution } = plugVizInteractions ?? {};
     const recordingDir = await scenarioSaveDefinition(scenario, storeDir, interactions);
 
-    if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution!)) {
+    if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution)) {
         /*
          * As-is, react components and plug viz for the same bucket MAY lead to different executions
          * due to plug viz auto-magically adding sorts (desired UX). different sorts in exec means different

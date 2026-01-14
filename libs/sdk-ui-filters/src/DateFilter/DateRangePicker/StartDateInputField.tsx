@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { forwardRef, useMemo } from "react";
 
@@ -8,7 +8,7 @@ import { DateTimePicker, type IDateTimePickerAccessibilityConfig } from "./DateT
 import {
     DATE_INPUT_HINT_ID,
     type IDateRangeInputFieldProps,
-    type InputErrorMessageTexts,
+    type IInputErrorMessageTexts,
     TIME_INPUT_HINT_ID,
 } from "./types.js";
 import { DAY_START_TIME } from "../constants/Platform.js";
@@ -41,7 +41,7 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
             }),
             [intl],
         );
-        const inputErrorMessageTexts = useMemo<InputErrorMessageTexts>(
+        const inputErrorMessageTexts = useMemo<IInputErrorMessageTexts>(
             () => ({
                 dateInput: {
                     emptyDate: intl.formatMessage({ id: "filters.staticPeriod.errors.emptyStartDate" }),

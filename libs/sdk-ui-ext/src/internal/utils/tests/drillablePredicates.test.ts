@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
@@ -33,13 +34,13 @@ describe("convertPostMessageToDrillablePredicates", () => {
         composedFromIdentifierSpy.mockRestore();
     });
 
-    it("should return predicates for combination of uris and identifiers", async () => {
+    it("should return predicates for combination of uris and identifiers", () => {
         const data: IDrillableItemsCommandBody = {
             uris: ["/foo", "/measure"],
             identifiers: ["bar", "baz"],
         };
 
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 4);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(2);
@@ -51,12 +52,12 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(identifierMatchSpy).toBeCalledWith("baz");
     });
 
-    it("should return deduplicated predicates", async () => {
+    it("should return deduplicated predicates", () => {
         const data: IDrillableItemsCommandBody = {
             uris: ["/common", "/common"],
             identifiers: ["common", "common"],
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 2);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(1);
@@ -65,39 +66,39 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(identifierMatchSpy).toBeCalledWith("common");
     });
 
-    it("should return no predicates when no identifiers and uris provided", async () => {
+    it("should return no predicates when no identifiers and uris provided", () => {
         const data: IDrillableItemsCommandBody = {
             uris: [],
             identifiers: [],
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
 
         assertPredicates(result, 0);
     });
 
-    it("should return uriMatch predicate when only uris list provided", async () => {
+    it("should return uriMatch predicate when only uris list provided", () => {
         const data = {
             uris: ["/foo"],
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 1);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(1);
         expect(uriMatchSpy).toBeCalledWith("/foo");
     });
 
-    it("should return identifierMatch predicate when only identifiers list provided", async () => {
+    it("should return identifierMatch predicate when only identifiers list provided", () => {
         const data = {
             identifiers: ["bar"],
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 1);
 
         expect(identifierMatchSpy).toHaveBeenCalledTimes(1);
         expect(identifierMatchSpy).toBeCalledWith("bar");
     });
 
-    it("should return composedFromUri predicates when composed uri provided", async () => {
+    it("should return composedFromUri predicates when composed uri provided", () => {
         const data: IDrillableItemsCommandBody = {
             identifiers: [],
             uris: [],
@@ -105,7 +106,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 uris: ["/foo", "/bar"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 2);
 
         expect(composedFromUriSpy).toHaveBeenCalledTimes(2);
@@ -113,7 +114,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromUriSpy).toBeCalledWith("/bar");
     });
 
-    it("should return composedFromUri predicate even when composed unresolvable uri provided", async () => {
+    it("should return composedFromUri predicate even when composed unresolvable uri provided", () => {
         const data: IDrillableItemsCommandBody = {
             identifiers: [],
             uris: [],
@@ -121,7 +122,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 uris: ["/undefinedUri"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 1);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(0);
@@ -130,7 +131,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromUriSpy).toBeCalledWith("/undefinedUri");
     });
 
-    it("should return composedFromIdentifier predicates when composed identifiers provided", async () => {
+    it("should return composedFromIdentifier predicates when composed identifiers provided", () => {
         const data: IDrillableItemsCommandBody = {
             identifiers: [],
             uris: [],
@@ -138,7 +139,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 identifiers: ["bar", "baz"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 2);
 
         expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(2);
@@ -146,7 +147,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromIdentifierSpy).toBeCalledWith("baz");
     });
 
-    it("should return predicates when composed uri and identifiers provided", async () => {
+    it("should return predicates when composed uri and identifiers provided", () => {
         const data: IDrillableItemsCommandBody = {
             identifiers: [],
             uris: [],
@@ -155,7 +156,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 identifiers: ["bar"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 2);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(0);
@@ -166,7 +167,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromIdentifierSpy).toBeCalledWith("bar");
     });
 
-    it("should return deduplicated predicates when composed uris and identifiers provided", async () => {
+    it("should return deduplicated predicates when composed uris and identifiers provided", () => {
         const data: IDrillableItemsCommandBody = {
             identifiers: [],
             uris: [],
@@ -175,7 +176,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 identifiers: ["bar", "common", "common"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 4);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(0);
@@ -188,7 +189,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromIdentifierSpy).toBeCalledWith("common");
     });
 
-    it("should return deduplicated predicates when all input uris and identifiers provided", async () => {
+    it("should return deduplicated predicates when all input uris and identifiers provided", () => {
         const data: IDrillableItemsCommandBody = {
             uris: ["/foo", "/common", "/common"],
             identifiers: ["bar", "baz", "common", "common"],
@@ -197,7 +198,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 identifiers: ["bar", "baz", "common", "common"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates(data);
+        const result = convertPostMessageToDrillablePredicates(data);
         assertPredicates(result, 10);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(2);

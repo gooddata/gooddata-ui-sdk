@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -66,6 +66,7 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
      * Subtype of the display form
      * (e.g. GDC.geo.pin, or GDC.link, see constants above).
      */
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     displayFormType?: AttributeDisplayFormType | string;
 
     /**

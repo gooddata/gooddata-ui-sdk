@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type IResultAttributeHeader } from "@gooddata/sdk-model";
 import { type IMappingHeader } from "@gooddata/sdk-ui";
@@ -28,7 +29,7 @@ export const COLOR_MAPPINGS: IColorMapping[] = [
     },
 ];
 
-export const RECORDS: Array<string | any>[] = [
+export const RECORDS: Array<any>[] = [
     [
         "1 measure and 2 attributes",
         ReferenceRecordings.Scenarios.SankeyChart.MeasureAttributeFromAndAttributeTo,
@@ -38,4 +39,4 @@ export const RECORDS: Array<string | any>[] = [
     ["1 measure and 0 attribute", ReferenceRecordings.Scenarios.SankeyChart.MeasureOnly],
 ];
 
-export const RECORDS_WITHOUT_EMPTY_ATTRIBUTE: Array<string | any>[] = RECORDS.slice(0, 3);
+export const RECORDS_WITHOUT_EMPTY_ATTRIBUTE: Array<any>[] = RECORDS.slice(0, 3);

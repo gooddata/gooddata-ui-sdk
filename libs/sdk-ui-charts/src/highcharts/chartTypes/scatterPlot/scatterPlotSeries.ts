@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { debounce } from "lodash-es";
 
@@ -93,8 +93,8 @@ export function getScatterPlotSeries(
             if (stackByAttribute) {
                 colorAssignment = colorAssignments.find(
                     (a) =>
-                        (stackByAttribute.items as IResultAttributeHeader[])[seriesIndex].attributeHeaderItem
-                            .uri === (a.headerItem as IResultAttributeHeader).attributeHeaderItem.uri,
+                        stackByAttribute.items[seriesIndex].attributeHeaderItem.uri ===
+                        (a.headerItem as IResultAttributeHeader).attributeHeaderItem.uri,
                 );
             } else if (isClusteringLoaded) {
                 const clusterIndex = dv?.dataView?.clusteringResult?.clusters?.[seriesIndex];

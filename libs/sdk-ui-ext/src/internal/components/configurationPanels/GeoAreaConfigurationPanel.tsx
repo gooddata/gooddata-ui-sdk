@@ -35,9 +35,9 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
                 pushData={pushData}
             >
                 <GeoViewportControl
-                    properties={properties!}
+                    properties={properties}
                     disabled={this.isControlDisabled()}
-                    pushData={pushData!}
+                    pushData={pushData}
                 />
             </ConfigSection>
         );
