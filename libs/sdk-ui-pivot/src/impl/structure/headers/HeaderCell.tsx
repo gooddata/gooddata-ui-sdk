@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -66,7 +66,7 @@ export function HeaderCell({
     const [currentSortDirection, setCurrentSortDirection] = useState<SortDirection | null>(null);
 
     const resetSortDirection = useCallback(() => {
-        setCurrentSortDirection(sortDirection!);
+        setCurrentSortDirection(sortDirection);
     }, [sortDirection]);
 
     // This effect replaces UNSAFE_componentWillReceiveProps
@@ -177,7 +177,7 @@ export function HeaderCell({
             return;
         }
 
-        onSortClick!();
+        onSortClick();
     }, [enableSorting, onSortClick]);
 
     const renderSorting = useCallback(() => {

@@ -1,6 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-export type { ChartSortingOwnProps, ChartSortingProps } from "./ChartSorting.js";
+export type { IChartSortingOwnProps, IChartSortingProps } from "./ChartSorting.js";
 export { ChartSortingDialog, ChartSortingWithIntl } from "./ChartSorting.js";
 
 export type {

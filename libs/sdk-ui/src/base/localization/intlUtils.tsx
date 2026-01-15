@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type ComponentClass,
@@ -31,7 +31,7 @@ export function useResolveMessages(
             return;
         }
 
-        resolveMessages(locale).then((messages) => {
+        void resolveMessages(locale).then((messages) => {
             setMessages((current) => ({ ...current, [locale]: messages }));
         });
         // we don't want to re-run this effect when the messages change its used as guard

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MouseEvent, forwardRef } from "react";
 
@@ -29,7 +29,7 @@ export type UiPaginationButtonDirection = "previous" | "next";
  *
  * @internal
  */
-export interface UiPaginationButtonProps {
+export interface IUiPaginationButtonProps {
     /**
      * Direction of the arrow icon.
      * - "previous" shows left arrow (paginationLeft)
@@ -112,7 +112,7 @@ const ICON_MAP: Record<UiPaginationButtonDirection, IconType> = {
  *
  * @internal
  */
-export const UiPaginationButton = forwardRef<HTMLButtonElement, UiPaginationButtonProps>(
+export const UiPaginationButton = forwardRef<HTMLButtonElement, IUiPaginationButtonProps>(
     (
         {
             direction,
@@ -149,7 +149,7 @@ export const UiPaginationButton = forwardRef<HTMLButtonElement, UiPaginationButt
                 type="button"
                 {...accessibilityConfigToAttributes(accessibilityConfig)}
             >
-                <UiIcon type={icon} size={18} ariaHidden />
+                <UiIcon type={icon} size={18} />
             </button>
         );
     },

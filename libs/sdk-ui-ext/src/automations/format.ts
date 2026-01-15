@@ -13,7 +13,7 @@ import {
     isIOrganizationUser,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
-import { type UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
 import {
     ARITHMETIC_OPERATORS,
@@ -172,7 +172,7 @@ export const formatWorkspaceUserFilterOptions = (
     users: IWorkspaceUser[] | IOrganizationUser[],
     isCurrentUser: (login: string) => boolean,
     intl: IntlShape,
-): UiAsyncTableFilterOption[] => {
+): IUiAsyncTableFilterOption[] => {
     return users.map((item) => {
         const login = isIOrganizationUser(item) ? item.email : item.login;
         const current = login ? isCurrentUser(login) : false;

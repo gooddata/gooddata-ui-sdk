@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IExecutionConfig,
@@ -66,6 +66,7 @@ export function useEvaluatedMetricsAndAttributes(
         error: loadError,
     } = useCancelablePromise(
         {
+            // eslint-disable-next-line @typescript-eslint/require-await
             promise: async () => {
                 if (!executionResult) {
                     return [];

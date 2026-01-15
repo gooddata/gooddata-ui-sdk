@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
@@ -16,6 +16,7 @@ const BASE_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
 ];
 
@@ -220,6 +221,7 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
 ];
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
@@ -249,6 +251,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "clustering.enabled",
     "clustering.numberOfClusters",
     "clustering.threshold",
@@ -264,6 +267,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -278,6 +282,7 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -291,6 +296,7 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -315,6 +321,7 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
 ];
 
@@ -341,6 +348,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -357,6 +365,7 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
 ];
 
@@ -367,6 +376,7 @@ export const GEOAREA_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
 ];
 
@@ -377,6 +387,7 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
 ];
 
@@ -387,6 +398,7 @@ export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
     "textWrapping",
     "pagination",
@@ -401,6 +413,7 @@ export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
     "chartConfigOverride",
 ];
 
@@ -432,9 +445,15 @@ export const REPEATER_SUPPORTER_PROPERTIES_LIST = [
     "cellImageSizing",
     "disableAlerts",
     "disableScheduledExports",
+    "disableKeyDriveAnalysis",
 ];
 
-export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison", "disableAlerts", "disableScheduledExports"];
+export const HEADLINE_SUPPORTED_PROPERTIES = [
+    "comparison",
+    "disableAlerts",
+    "disableScheduledExports",
+    "disableKeyDriveAnalysis",
+];
 
 export const HEADLINE_DEFAULT_CONTROL_PROPERTIES: HeadlineControlProperties = {
     comparison: {

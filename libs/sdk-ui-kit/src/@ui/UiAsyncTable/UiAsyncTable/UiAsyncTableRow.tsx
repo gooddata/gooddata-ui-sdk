@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent, type ReactNode, type Ref, useCallback } from "react";
 
@@ -10,10 +10,10 @@ import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { e } from "../asyncTableBem.js";
 import {
-    type UiAsyncTableColumn,
-    type UiAsyncTableColumnAccessibilityConfig,
+    type IUiAsyncTableColumn,
+    type IUiAsyncTableColumnAccessibilityConfig,
+    type IUiAsyncTableRowProps,
     type UiAsyncTableMenuRenderer,
-    type UiAsyncTableRowProps,
 } from "../types.js";
 
 export function UiAsyncTableRow<T extends { id: string }>({
@@ -29,7 +29,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
     focusedColumnIndex,
     focusedElementRef,
     accessibilityConfig,
-}: UiAsyncTableRowProps<T>) {
+}: IUiAsyncTableRowProps<T>) {
     const { renderCellContent } = useRenderCellContent<T>({ isLarge: isLarge ?? false });
     const isRowFocused = isFocused && focusedColumnIndex === undefined;
 
@@ -137,7 +137,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
     const renderMenuIcon = useCallback(
         (
             renderMenu: UiAsyncTableMenuRenderer<T>,
-            accessibilityConfig: UiAsyncTableColumnAccessibilityConfig,
+            accessibilityConfig: IUiAsyncTableColumnAccessibilityConfig,
             item: T,
             focusedElementRef: Ref<HTMLElement>,
             isCellFocused: boolean,
@@ -270,7 +270,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                 getTextHref,
                 getAccessibilityConfig,
                 key,
-            }: UiAsyncTableColumn<T>,
+            }: IUiAsyncTableColumn<T>,
             labelId: string | undefined,
             item: T,
             focusedElementRef: Ref<HTMLElement>,

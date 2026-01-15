@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -15,7 +15,7 @@ const INHERIT_MESSAGE_ID = "measureNumberFormat.numberFormat.preset.inherit";
  * Configuration for the useMetricTypePresets hook.
  * @internal
  */
-export interface UseMetricTypePresetsConfig {
+export type UseMetricTypePresetsConfig = {
     /**
      * The metric type. When "CURRENCY", currency-specific presets are shown.
      * When undefined, standard numeric presets are shown.
@@ -32,13 +32,13 @@ export interface UseMetricTypePresetsConfig {
      * Function to format localized messages (e.g., from react-intl).
      */
     formatMessage: (descriptor: { id: string }) => string;
-}
+};
 
 /**
  * Result from the useMetricTypePresets hook.
  * @internal
  */
-export interface UseMetricTypePresetsResult {
+export type UseMetricTypePresetsResult = {
     /**
      * Format presets based on metric type.
      * For CURRENCY: currency presets with optional inherit preset.
@@ -57,7 +57,7 @@ export interface UseMetricTypePresetsResult {
      * The inherit preset if available (only for CURRENCY with override).
      */
     inheritPreset: IFormatPreset | null;
-}
+};
 
 /**
  * Hook that creates format presets and templates based on metric type.

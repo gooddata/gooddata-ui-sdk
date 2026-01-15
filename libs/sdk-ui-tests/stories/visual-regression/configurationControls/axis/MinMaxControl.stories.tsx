@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { action } from "storybook/actions";
 
@@ -24,7 +24,7 @@ const screenshotWithClicks = {
         { selector: ".gd-input-field" },
     ],
     delay: {
-        postOperation: 100,
+        postOperation: 200, // 100 was flaky
     },
 };
 

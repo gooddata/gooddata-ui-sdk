@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     ComponentTable,
+    type IUiPaginationButtonProps,
     UiPaginationButton,
-    type UiPaginationButtonProps,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 
@@ -17,7 +17,7 @@ export default {
 
 const propCombination = propCombinationsFor({
     label: "Pagination Button",
-} as UiPaginationButtonProps);
+} as IUiPaginationButtonProps);
 
 const directions = propCombination("direction", ["previous", "next"]);
 const sizes = propCombination("size", ["large", "small"]);

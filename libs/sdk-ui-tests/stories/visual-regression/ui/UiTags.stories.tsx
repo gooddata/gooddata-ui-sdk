@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, useState } from "react";
 
@@ -7,16 +7,16 @@ import { action } from "storybook/actions";
 
 import {
     type IAccessibilityConfigBase,
+    type IUiTagDef,
+    type IUiTagsProps,
     UiCheckbox,
-    type UiTagDef,
     UiTags,
-    type UiTagsProps,
 } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-const smallTags: UiTagDef[] = [
+const smallTags: IUiTagDef[] = [
     { id: "tag1", label: "Tag 1" },
     { id: "tag2", label: "Tag 2" },
     { id: "tag3", label: "Tag 3" },
@@ -31,7 +31,7 @@ const smallTags: UiTagDef[] = [
     { id: "tag12", label: "Tag 12" },
     { id: "tag13", label: "Tag 13" },
 ];
-const smallTags1: UiTagDef[] = [
+const smallTags1: IUiTagDef[] = [
     { id: "tag1", label: "Tag 1", isDeletable: false },
     { id: "tag2", label: "Tag 2" },
     { id: "tag3", label: "Tag 3" },
@@ -46,13 +46,13 @@ const smallTags1: UiTagDef[] = [
     { id: "tag12", label: "Tag 12" },
     { id: "tag13", label: "Tag 13", isDeletable: false },
 ];
-const longTags: UiTagDef[] = [
+const longTags: IUiTagDef[] = [
     { id: "tag1", label: "ThisIsReallyLongTagNameThatShouldBeTruncatedAndCanNotBeLongerThanOneLine1" },
     { id: "tag2", label: "ThisIsReallyLongTagNameThatShouldBeTruncatedAndCanNotBeLongerThanOneLine2" },
     { id: "tag3", label: "ThisIsReallyLongTagNameThatShouldBeTruncatedAndCanNotBeLongerThanOneLine3" },
     { id: "tag4", label: "ThisIsReallyLongTagNameThatShouldBeTruncatedAndCanNotBeLongerThanOneLine3" },
 ];
-const fruitsTags: UiTagDef[] = [
+const fruitsTags: IUiTagDef[] = [
     { id: "fig", label: "Fig" },
     { id: "date", label: "Date" },
     { id: "apple", label: "Apple" },
@@ -225,12 +225,12 @@ function UiTagsExamples() {
 }
 
 function InteractiveUiTagsTest() {
-    const [tags, setTags] = useState<UiTagDef[]>(fruitsTags);
+    const [tags, setTags] = useState<IUiTagDef[]>(fruitsTags);
     const [canCreateTag, setCanCreateTag] = useState(true);
     const [canRemoveTag, setCanRemoveTag] = useState(true);
     const [readOnly, setReadOnly] = useState(false);
-    const [mode, setMode] = useState<UiTagsProps["mode"]>("single-line");
-    const [lastClickedTag, setLastClickedTag] = useState<UiTagDef | undefined>();
+    const [mode, setMode] = useState<IUiTagsProps["mode"]>("single-line");
+    const [lastClickedTag, setLastClickedTag] = useState<IUiTagDef | undefined>();
 
     return (
         <IntlProvider locale="en-US" messages={{}}>
@@ -241,10 +241,10 @@ function InteractiveUiTagsTest() {
                     mode={mode}
                     canCreateTag={canCreateTag}
                     canDeleteTags={canRemoveTag}
-                    onTagAdd={(tag: UiTagDef) => {
+                    onTagAdd={(tag: IUiTagDef) => {
                         setTags([...tags, tag]);
                     }}
-                    onTagRemove={(tag: UiTagDef) => {
+                    onTagRemove={(tag: IUiTagDef) => {
                         setTags(tags.filter((t) => t.id !== tag.id));
                     }}
                     onTagClick={setLastClickedTag}
@@ -266,7 +266,7 @@ function InteractiveUiTagsTest() {
                     <div>Read only</div>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, padding: 5 }}>
-                    <select value={mode} onChange={(e) => setMode(e.target.value as UiTagsProps["mode"])}>
+                    <select value={mode} onChange={(e) => setMode(e.target.value as IUiTagsProps["mode"])}>
                         <option value="single-line" selected>
                             Single line
                         </option>

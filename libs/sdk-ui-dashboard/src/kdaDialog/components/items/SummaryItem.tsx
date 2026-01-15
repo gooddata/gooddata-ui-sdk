@@ -1,17 +1,17 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { UiIcon, type UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxInteractiveItemProps, UiIcon } from "@gooddata/sdk-ui-kit";
 
 export function SummaryItem({
     onSelect,
     isSelected,
     detailsId,
-}: Omit<UiListboxInteractiveItemProps<undefined>, "item" | "isCompact" | "isFocused"> & {
+}: Omit<IUiListboxInteractiveItemProps<undefined>, "item" | "isCompact" | "isFocused"> & {
     detailsId: string;
 }): ReactNode {
     const intl = useIntl();

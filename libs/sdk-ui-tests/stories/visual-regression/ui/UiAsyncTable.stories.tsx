@@ -4,10 +4,10 @@ import { useCallback, useMemo, useState } from "react";
 
 import { type SortDirection } from "@gooddata/sdk-model";
 import {
+    type IUiAsyncTableColumn,
+    type IUiAsyncTableFilter,
+    type IUiAsyncTableFilterOption,
     UiAsyncTable,
-    type UiAsyncTableColumn,
-    type UiAsyncTableFilter,
-    type UiAsyncTableFilterOption,
     UiBadge,
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
@@ -70,7 +70,7 @@ const mockFilterOptions = {
         { value: "Finance", label: "Finance" },
         { value: "HR", label: "HR" },
         { value: "Engineering", label: "Engineering" },
-    ] as UiAsyncTableFilterOption[],
+    ] as IUiAsyncTableFilterOption[],
 };
 
 function UiAsyncTableExample(_props: { showCode?: boolean }) {
@@ -108,7 +108,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     }, [items, search, sortBy, sortDirection, workspaceFilter]);
 
     // Column definitions
-    const columns: UiAsyncTableColumn<IScheduleItem>[] = useMemo(
+    const columns: IUiAsyncTableColumn<IScheduleItem>[] = useMemo(
         () => [
             {
                 key: "title",
@@ -167,7 +167,7 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
     );
 
     // Simple Column definitions
-    const simpleColumns: UiAsyncTableColumn<IScheduleItem>[] = useMemo(
+    const simpleColumns: IUiAsyncTableColumn<IScheduleItem>[] = useMemo(
         () => [
             {
                 key: "title",
@@ -194,8 +194,8 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
                 label: "Workspace",
                 options: mockFilterOptions.workspace,
                 selected: [mockFilterOptions.workspace.find((opt) => opt.value === workspaceFilter)],
-                onItemsSelect: (options: UiAsyncTableFilterOption[]) => setWorkspaceFilter(options[0].value),
-            } as UiAsyncTableFilter,
+                onItemsSelect: (options: IUiAsyncTableFilterOption[]) => setWorkspaceFilter(options[0].value),
+            } as IUiAsyncTableFilter,
         ],
         [workspaceFilter],
     );

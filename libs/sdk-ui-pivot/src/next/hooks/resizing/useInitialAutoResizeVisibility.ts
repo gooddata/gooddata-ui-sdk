@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useRef, useState } from "react";
 
@@ -8,7 +8,7 @@ import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { useCurrentDataView } from "../../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 
-interface UseInitialAutoResizeVisibilityOptions {
+interface IUseInitialAutoResizeVisibilityOptions {
     /**
      * Callback called once when visibility becomes ready.
      * Called directly from the effect, not during render.
@@ -22,7 +22,7 @@ interface UseInitialAutoResizeVisibilityOptions {
  *
  * @internal
  */
-export function useInitialAutoResizeVisibility(options?: UseInitialAutoResizeVisibilityOptions): boolean {
+export function useInitialAutoResizeVisibility(options?: IUseInitialAutoResizeVisibilityOptions): boolean {
     const { agGridApi } = useAgGridApi();
     const { config, rows, columns } = usePivotTableProps();
     const { currentDataView } = useCurrentDataView();

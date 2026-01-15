@@ -593,7 +593,7 @@ export abstract class GoodDataSdkError extends Error {
     protected constructor(seType: SdkErrorType, message?: string, cause?: any | undefined);
     // (undocumented)
     readonly cause?: any | undefined;
-    getCause(): any | undefined;
+    getCause(): any;
     getErrorCode(): string;
     getMessage(): string;
     // (undocumented)
@@ -2220,7 +2220,7 @@ export const RawExecute: ComponentType<IRawExecuteProps>;
 export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifiers): JSX.Element;
 
 // @alpha
-export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProduct, workspace }: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
+export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProduct, workspace }: IClientWorkspaceIdentifiers): IClientWorkspaceIdentifiers;
 
 // @internal
 export const resolveLocale: (locale: unknown) => ILocale;

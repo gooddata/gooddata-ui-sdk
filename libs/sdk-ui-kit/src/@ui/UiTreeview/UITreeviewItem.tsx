@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ComponentType,
@@ -22,7 +22,7 @@ import { convertPathToKey, type itemsState, makeItemId } from "./utils.js";
 /**
  * @internal
  */
-interface UITreeviewItemProps<Levels extends [], Level> {
+interface IUITreeviewItemProps<Levels extends [], Level> {
     treeViewId: string;
     path: number[];
     item: UiStaticTreeView<Level | LevelTypesUnion<Levels>>;
@@ -45,7 +45,7 @@ interface UITreeviewItemProps<Levels extends [], Level> {
 /**
  * @internal
  */
-export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemProps<Levels, Level>) {
+export function UITreeviewItem<Levels extends [], Level>(props: IUITreeviewItemProps<Levels, Level>) {
     const {
         getState,
         focusedItem,

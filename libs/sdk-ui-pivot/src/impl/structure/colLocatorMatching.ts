@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { isResultTotalHeader } from "@gooddata/sdk-model";
@@ -6,9 +7,9 @@ import { isResultTotalHeader } from "@gooddata/sdk-model";
 import { colMeasureLocalId } from "./colAccessors.js";
 import {
     type DataCol,
+    type IScopeCol,
+    type ISeriesCol,
     type LeafDataCol,
-    type ScopeCol,
-    type SeriesCol,
     type TransposedMeasureDataCol,
     isRootCol,
     isScopeCol,
@@ -32,7 +33,7 @@ import {
 export function searchForLocatorMatch(
     cols: DataCol[],
     locators: ColumnLocator[],
-): SeriesCol | ScopeCol | undefined {
+): ISeriesCol | IScopeCol | undefined {
     let found: LeafDataCol | undefined = undefined;
 
     for (const col of cols) {

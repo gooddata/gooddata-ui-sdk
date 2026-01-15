@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
@@ -24,7 +25,7 @@ import {
 
 describe("result type guards", () => {
     describe("isAnalyticalBackendError", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [true, "no data error", new NoDataError("fail")],
             [true, "data too large error", new DataTooLargeError("fail")],
@@ -42,7 +43,7 @@ describe("result type guards", () => {
     });
 
     describe("isNoDataError", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [true, "no data error", new NoDataError("fail")],
             [false, "data too large error", new DataTooLargeError("fail")],
@@ -60,7 +61,7 @@ describe("result type guards", () => {
     });
 
     describe("isDataTooLargeError", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "no data error", new NoDataError("fail")],
             [true, "data too large error", new DataTooLargeError("fail")],
@@ -78,7 +79,7 @@ describe("result type guards", () => {
     });
 
     describe("isProtectedDataError", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "no data error", new NoDataError("fail")],
             [false, "data too large error", new DataTooLargeError("fail")],
@@ -96,7 +97,7 @@ describe("result type guards", () => {
     });
 
     describe("isUnexpectedHttpError", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "no data error", new NoDataError("fail")],
             [false, "data too large error", new DataTooLargeError("fail")],
@@ -114,7 +115,7 @@ describe("result type guards", () => {
     });
 
     describe("isUnexpectedError", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "no data error", new NoDataError("fail")],
             [false, "data too large error", new DataTooLargeError("fail")],
@@ -132,7 +133,7 @@ describe("result type guards", () => {
     });
 
     describe("isNotSupported", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "no data error", new NoDataError("fail")],
             [false, "data too large error", new DataTooLargeError("fail")],
@@ -150,7 +151,7 @@ describe("result type guards", () => {
     });
 
     describe("isNotImplemented", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "no data error", new NoDataError("fail")],
             [false, "data too large error", new DataTooLargeError("fail")],
@@ -168,7 +169,7 @@ describe("result type guards", () => {
     });
 
     describe("isNotAuthenticated", () => {
-        const Scenarios: Array<[boolean, string, Error | any]> = [
+        const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "no data error", new NoDataError("fail")],
             [false, "data too large error", new DataTooLargeError("fail")],

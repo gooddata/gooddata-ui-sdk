@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -9,7 +9,7 @@ import { type ISortItem } from "@gooddata/sdk-model";
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";
 import { type IAvailableSortsGroup, type IBucketItemDescriptors } from "./types.js";
 
-interface ChartSortingProps {
+interface IChartSortingProps {
     currentSort: ISortItem[];
     availableSorts: IAvailableSortsGroup[];
     bucketItems: IBucketItemDescriptors;
@@ -26,7 +26,7 @@ export function ChartSortingDropdown({
     bucketItems,
     intl,
     onSelect,
-}: ChartSortingProps) {
+}: IChartSortingProps) {
     const onSortChanged = useCallback(
         (newSort: ISortItem, index: number) => {
             const newSortItems = [...currentSort];

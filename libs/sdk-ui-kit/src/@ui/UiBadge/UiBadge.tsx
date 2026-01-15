@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { bem } from "../@utils/bem.js";
 
@@ -7,13 +7,13 @@ const { b } = bem("gd-ui-kit-badge");
 /**
  * @internal
  */
-export interface UiBadgeProps {
+export interface IUiBadgeProps {
     label: string;
 }
 
 /**
  * @internal
  */
-export function UiBadge({ label }: UiBadgeProps) {
+export function UiBadge({ label }: IUiBadgeProps) {
     return <span className={b()}>{label}</span>;
 }

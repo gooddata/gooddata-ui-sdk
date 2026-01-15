@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -349,7 +349,7 @@ export function getDefaultInsightMenuItems(
             tooltip: defaultWidgetTooltip,
             icon: canCreateAutomation ? (
                 <span className="gd-ui-icon-wrapper">
-                    <UiIcon type="list" size={16} color="complementary-5" ariaHidden />
+                    <UiIcon type="list" size={16} color="complementary-5" />
                 </span>
             ) : (
                 "gd-icon-clock"

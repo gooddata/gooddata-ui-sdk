@@ -128,7 +128,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         );
 
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
         );
     }
 

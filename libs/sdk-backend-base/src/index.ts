@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides foundational reusable code useful for building new or decorating existing Analytical Backend implementations.
@@ -50,7 +50,7 @@ export { withEventing } from "./eventingBackend/index.js";
 export type { CachingConfiguration, CacheControl } from "./cachingBackend/index.js";
 export { withCaching, RecommendedCachingConfiguration } from "./cachingBackend/index.js";
 export type {
-    WorkspaceSettingsConfiguration,
+    IWorkspaceSettingsConfiguration,
     SettingsWrapper,
     CurrentUserSettingsWrapper,
     CommonSettingsWrapper,

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -13,7 +14,7 @@ import {
 } from "./table.fixture.js";
 import { newWidthForAttributeColumn } from "../../../columnWidths.js";
 import { TableDescriptor } from "../tableDescriptor.js";
-import { type ScopeCol, type SeriesCol } from "../tableDescriptorTypes.js";
+import { type IScopeCol, type ISeriesCol } from "../tableDescriptorTypes.js";
 
 describe("TableDescriptor", () => {
     describe("isFirstCol", () => {
@@ -72,7 +73,7 @@ describe("TableDescriptor", () => {
     describe("getAbsoluteLeafColIndex", () => {
         it("should return correct indexes in table with just measures", () => {
             const table = TableDescriptor.for(TwoMeasures, "empty value");
-            const [firstCol, secondCol]: SeriesCol[] = table.headers.leafDataCols as any;
+            const [firstCol, secondCol]: ISeriesCol[] = table.headers.leafDataCols as any;
 
             expect(table.getAbsoluteLeafColIndex(firstCol)).toEqual(0);
             expect(table.getAbsoluteLeafColIndex(secondCol)).toEqual(1);
@@ -80,7 +81,7 @@ describe("TableDescriptor", () => {
 
         it("should return correct indexes in table with measure and row", () => {
             const table = TableDescriptor.for(SingleMeasureWithRowAttribute, "empty value");
-            const [firstCol]: SeriesCol[] = table.headers.leafDataCols as any;
+            const [firstCol]: ISeriesCol[] = table.headers.leafDataCols as any;
 
             expect(table.getAbsoluteLeafColIndex(table.headers.sliceCols[0])).toEqual(0);
             expect(table.getAbsoluteLeafColIndex(firstCol)).toEqual(firstCol.index + 1);
@@ -88,7 +89,7 @@ describe("TableDescriptor", () => {
 
         it("should return correct indexes in table with just columns", () => {
             const table = TableDescriptor.for(SingleColumn, "empty value");
-            const [firstCol, secondCol]: ScopeCol[] = table.headers.leafDataCols as any;
+            const [firstCol, secondCol]: IScopeCol[] = table.headers.leafDataCols as any;
 
             expect(table.getAbsoluteLeafColIndex(firstCol)).toEqual(0);
             expect(table.getAbsoluteLeafColIndex(secondCol)).toEqual(1);

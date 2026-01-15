@@ -50,10 +50,10 @@ export function KdaDialogFloatingStatusBar({ onClose, titleElementId }: IKdaDial
 
 function StatusIndicator({ status }: { status: KdaFloatingStatus }) {
     if (status === "error") {
-        return <UiIcon type="crossCircle" color="error" size={16} layout="block" ariaHidden />;
+        return <UiIcon type="crossCircle" color="error" size={16} layout="block" />;
     }
     if (status === "done") {
-        return <UiIcon type="checkCircle" color="success" size={16} layout="block" ariaHidden />;
+        return <UiIcon type="checkCircle" color="success" size={16} layout="block" />;
     }
     return <LoadingSpinner className="small gd-kda-floating-status-bar__spinner" color="#6d7680" />;
 }

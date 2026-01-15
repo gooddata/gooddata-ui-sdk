@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -29,12 +29,9 @@ export function EmbedInsightContent({
 }: IEmbedInsightContentProps) {
     const renderEmbedOptions = useMemo(() => {
         return embedTypeOptions.type === "react" ? (
-            <ReactOptions option={embedTypeOptions as IReactOptions} onChange={onOptionsChange} />
+            <ReactOptions option={embedTypeOptions} onChange={onOptionsChange} />
         ) : (
-            <WebComponentsOptions
-                option={embedTypeOptions as IWebComponentsOptions}
-                onChange={onOptionsChange}
-            />
+            <WebComponentsOptions option={embedTypeOptions} onChange={onOptionsChange} />
         );
     }, [embedTypeOptions, onOptionsChange]);
 

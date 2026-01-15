@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { act, fireEvent, renderHook } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
@@ -17,7 +18,7 @@ describe("useLocalStorage hook", () => {
         window.localStorage.removeItem(KEY);
     });
 
-    it("should save the value to local storage", async () => {
+    it("should save the value to local storage", () => {
         const { result } = renderHook(() => useLocalStorage(KEY, VALUE));
 
         expect(result.current[0]).toBe(VALUE);
@@ -29,7 +30,7 @@ describe("useLocalStorage hook", () => {
         expect(window.localStorage.getItem(KEY)).toBe(`"${NEW_VALUE}"`);
     });
 
-    it("should recover the value from local storage", async () => {
+    it("should recover the value from local storage", () => {
         window.localStorage.setItem(KEY, `"${VALUE}"`);
 
         const { result } = renderHook(() => useLocalStorage(KEY, VALUE));
@@ -37,7 +38,7 @@ describe("useLocalStorage hook", () => {
         expect(result.current[0]).toBe(VALUE);
     });
 
-    it("should update the value when localStorage changes", async () => {
+    it("should update the value when localStorage changes", () => {
         const { result } = renderHook(() => useLocalStorage(KEY, VALUE));
 
         expect(result.current[0]).toBe(VALUE);

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type AgGridEvent,
@@ -93,10 +93,10 @@ export type TableAgGridCallbacks = {
     onBodyScroll: (event: BodyScrollEvent) => void;
     onModelUpdated: (event: AgGridEvent) => void;
     onGridColumnsChanged: () => void;
-    onGridColumnResized: (columnEvent: ColumnResizedEvent) => Promise<void>;
+    onGridColumnResized: (columnEvent: ColumnResizedEvent) => void;
     onSortChanged: (event: SortChangedEvent) => void;
     onGridSizeChanged: (event: any) => void;
-    onPinnedRowDataChanged: (event: PinnedRowDataChangedEvent) => void;
+    onPinnedRowDataChanged: (event: PinnedRowDataChangedEvent) => Promise<void>;
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ReactNode, memo, useCallback, useId, useMemo, useState } from "react";
 
@@ -7,13 +7,13 @@ import { useIntl } from "react-intl";
 import { isIdentifierRef, isLocalIdRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
 import {
     type IUiListboxInteractiveItem,
+    type IUiListboxInteractiveItemProps,
     Input,
     Overlay,
     UiButtonSegmentedControl,
     UiIcon,
     UiIconButton,
     UiListbox,
-    type UiListboxInteractiveItemProps,
 } from "@gooddata/sdk-ui-kit";
 
 import { type IDateDatasetOption, type IDimensionalityItem } from "./typings.js";
@@ -28,7 +28,7 @@ function AttributePickerItemComponent({
     isFocused,
     isCompact,
     onSelect,
-}: UiListboxInteractiveItemProps<IAttributePickerItemData>): ReactNode {
+}: IUiListboxInteractiveItemProps<IAttributePickerItemData>): ReactNode {
     const { dimensionalityItem } = item.data;
     const isDateItem =
         dimensionalityItem.type === "chronologicalDate" || dimensionalityItem.type === "genericDate";
@@ -41,7 +41,7 @@ function AttributePickerItemComponent({
             onClick={onSelect}
             data-object-type={dimensionalityItem.type ?? "attribute"}
         >
-            <UiIcon type={iconType} size={18} color={iconColor} ariaHidden />
+            <UiIcon type={iconType} size={18} color={iconColor} />
             <span className="gd-ui-kit-listbox__item-title">{dimensionalityItem.title}</span>
         </div>
     );

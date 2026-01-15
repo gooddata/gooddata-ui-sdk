@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     ComponentTable,
+    type IUiTooltipProps,
     UiButton,
     UiTooltip,
-    type UiTooltipProps,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 import { ScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
@@ -14,7 +14,7 @@ import { wrapWithTheme } from "../themeWrapper.js";
 import tooltipImage from "./assets/tooltip-image.png";
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 
-const propCombination = propCombinationsFor({} as UiTooltipProps);
+const propCombination = propCombinationsFor({} as IUiTooltipProps);
 
 const allPositions = propCombination("arrowPlacement", [
     "top-start",
@@ -32,7 +32,7 @@ const allPositions = propCombination("arrowPlacement", [
 ]);
 const allVariants = propCombination("variant", ["default", "error"]);
 
-function UiTooltipPosition({ arrowPlacement, variant }: UiTooltipProps) {
+function UiTooltipPosition({ arrowPlacement, variant }: IUiTooltipProps) {
     return (
         <UiTooltip
             arrowPlacement={arrowPlacement}
@@ -72,7 +72,7 @@ function UiTooltipTest({ showCode }: { showCode?: boolean }) {
     );
 }
 
-function UiTooltipExample({ label, ...props }: Partial<UiTooltipProps> & { label: string }) {
+function UiTooltipExample({ label, ...props }: Partial<IUiTooltipProps> & { label: string }) {
     return (
         <UiTooltip
             {...props}

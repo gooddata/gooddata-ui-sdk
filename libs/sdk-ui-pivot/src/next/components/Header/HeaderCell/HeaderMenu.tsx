@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -55,7 +55,7 @@ function MenuToggler({ onClick }: { onClick: MouseEventHandler<HTMLButtonElement
             aria-label={intl.formatMessage(messages["openHeaderMenuAria"])}
             {...getPivotHeaderMenuButtonTestIdProps()}
         >
-            <UiIcon type="ellipsisVertical" ariaHidden />
+            <UiIcon type="ellipsisVertical" />
             <span className={e("header-cell-menu-clickable-area")}></span>
         </button>
     );

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type RefObject } from "react";
 
@@ -71,7 +71,7 @@ export function DefaultNotificationsPanelButton({
         >
             <span className={e("icon")}>
                 {hasUnreadNotifications ? <span className={e("unread-status")} /> : null}
-                <UiIcon type="alert" size={14} ariaHidden />
+                <UiIcon type="alert" size={14} />
             </span>
         </button>
     );

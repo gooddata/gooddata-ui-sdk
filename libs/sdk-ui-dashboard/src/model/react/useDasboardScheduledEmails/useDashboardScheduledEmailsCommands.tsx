@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -12,7 +12,6 @@ import {
 import { switchDashboardTab } from "../../commands/index.js";
 import {
     selectActiveTabLocalIdentifier,
-    selectEnableDashboardTabs,
     selectEnableScheduling,
     selectInsights,
     selectWidgets,
@@ -38,7 +37,6 @@ export const useDashboardScheduledEmailsCommands = () => {
     const { automationInteraction } = useDashboardUserInteraction();
     const widgets = useDashboardSelector(selectWidgets);
     const insights = useDashboardSelector(selectInsights);
-    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
 
     // Feature Flags
@@ -51,7 +49,7 @@ export const useDashboardScheduledEmailsCommands = () => {
 
             if (isScheduledEmailingEnabled) {
                 const targetTabIdentifier = schedule?.metadata?.targetTabIdentifier;
-                if (enableDashboardTabs && targetTabIdentifier && targetTabIdentifier !== activeTabId) {
+                if (targetTabIdentifier && targetTabIdentifier !== activeTabId) {
                     dispatch(switchDashboardTab(targetTabIdentifier));
                 }
 
@@ -72,15 +70,7 @@ export const useDashboardScheduledEmailsCommands = () => {
                 });
             }
         },
-        [
-            activeTabId,
-            automationInteraction,
-            dispatch,
-            enableDashboardTabs,
-            insights,
-            isScheduledEmailingEnabled,
-            widgets,
-        ],
+        [activeTabId, automationInteraction, dispatch, insights, isScheduledEmailingEnabled, widgets],
     );
 
     const closeScheduleEmailingDialog = useCallback(

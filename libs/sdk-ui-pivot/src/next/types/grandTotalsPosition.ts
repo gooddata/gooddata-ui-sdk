@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * Position of grand totals rows in the table.
@@ -17,7 +17,7 @@ export type GrandTotalsPosition = "pinnedBottom" | "pinnedTop" | "bottom" | "top
  *
  * @public
  */
-export interface PivotTableNextGrandTotalsPositionConfig {
+export type PivotTableNextGrandTotalsPositionConfig = {
     /**
      * Position of grand totals rows in the table.
      *
@@ -29,4 +29,4 @@ export interface PivotTableNextGrandTotalsPositionConfig {
      * Default value: "pinnedBottom"
      */
     grandTotalsPosition?: GrandTotalsPosition;
-}
+};

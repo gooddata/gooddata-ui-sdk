@@ -1,13 +1,13 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { forwardRef } from "react";
 
-import { type UiIconButtonPublicProps, UiIconButtonRenderer } from "./UiIconButtonRenderer.js";
+import { type IUiIconButtonPublicProps, UiIconButtonRenderer } from "./UiIconButtonRenderer.js";
 
 /**
  * @internal
  */
-export type UiIconButtonProps = UiIconButtonPublicProps;
+export type UiIconButtonProps = IUiIconButtonPublicProps;
 
 /**
  * @internal

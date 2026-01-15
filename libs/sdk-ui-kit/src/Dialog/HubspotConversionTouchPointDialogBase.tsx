@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useEffect, useState } from "react";
 
@@ -11,6 +11,7 @@ import { Button } from "../Button/index.js";
 import { Typography } from "../Typography/index.js";
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Window {
         jQuery: object;
         hbspt: undefined | { isSuccessMessageShow: boolean };
@@ -29,7 +30,7 @@ export interface IHubspotFormField {
     /**
      * Form Field Value
      */
-    value: string | any;
+    value: any;
 
     /**
      * Click action

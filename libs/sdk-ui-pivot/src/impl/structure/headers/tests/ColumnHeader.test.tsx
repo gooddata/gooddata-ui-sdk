@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -65,7 +65,7 @@ const getColumnHeader = (
  * This mock enables us to test props as parameters of the called chart function
  */
 vi.mock("../HeaderCell", async () => ({
-    ...((await vi.importActual("../HeaderCell")) as object),
+    ...(await vi.importActual("../HeaderCell")),
     HeaderCell: vi.fn(() => null),
 }));
 

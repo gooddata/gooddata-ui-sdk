@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -53,14 +53,14 @@ interface IDropdownItem {
     title: string;
 }
 
-interface UnitSelectProps {
+interface IUnitSelectProps {
     selectedUnit: UnitsType;
     onSelectUnit: (unit: UnitsType) => void;
 }
 
 const items: IDropdownItem[] = UNITS.map((u) => ({ id: u, title: u }));
 
-function UnitSelect({ selectedUnit, onSelectUnit }: UnitSelectProps) {
+function UnitSelect({ selectedUnit, onSelectUnit }: IUnitSelectProps) {
     return (
         <Dropdown
             renderBody={({ closeDropdown }) => (

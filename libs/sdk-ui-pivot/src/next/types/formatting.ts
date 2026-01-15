@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ISeparators } from "@gooddata/sdk-model";
 
@@ -7,9 +7,9 @@ import { type ISeparators } from "@gooddata/sdk-model";
  *
  * @public
  */
-export interface PivotTableNextFormattingConfig {
+export type PivotTableNextFormattingConfig = {
     /**
      * Customize number segment separators (thousands, decimals)
      */
     separators?: ISeparators;
-}
+};

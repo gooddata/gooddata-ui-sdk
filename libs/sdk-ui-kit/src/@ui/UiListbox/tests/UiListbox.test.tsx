@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -9,9 +9,9 @@ import { describe, expect, it, vi } from "vitest";
 import { separatorStaticItem } from "../defaults/DefaultUiListboxStaticItemComponent.js";
 import { b, e } from "../listboxBem.js";
 import {
+    type IUiListboxInteractiveItemProps,
     type IUiListboxItem,
-    type UiListboxInteractiveItemProps,
-    type UiListboxStaticItemProps,
+    type IUiListboxStaticItemProps,
 } from "../types.js";
 import { UiListbox } from "../UiListbox.js";
 
@@ -227,7 +227,7 @@ describe("UiListbox", () => {
             isSelected,
             isFocused,
             onSelect,
-        }: UiListboxInteractiveItemProps<string>) {
+        }: IUiListboxInteractiveItemProps<string>) {
             return (
                 <div
                     className={cx("custom-item", {
@@ -257,7 +257,7 @@ describe("UiListbox", () => {
     });
 
     it("should render with custom StaticItemComponent", () => {
-        function CustomStaticItemComponent({ item }: UiListboxStaticItemProps<string>) {
+        function CustomStaticItemComponent({ item }: IUiListboxStaticItemProps<string>) {
             return (
                 <div className="custom-static-item" data-testid="custom-static-item">
                     Static: {item.data}

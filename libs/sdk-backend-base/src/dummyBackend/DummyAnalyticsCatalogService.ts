@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type {
     IAnalyticsCatalogCreatedBy,
@@ -12,13 +12,13 @@ import type {
  */
 export class DummyAnalyticsCatalogService implements IAnalyticsCatalogService {
     async getTags(): Promise<IAnalyticsCatalogTags> {
-        return { tags: ["Test"] };
+        return Promise.resolve({ tags: ["Test"] });
     }
 
     async getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy> {
-        return {
+        return Promise.resolve({
             reasoning: "",
             users: [],
-        };
+        });
     }
 }

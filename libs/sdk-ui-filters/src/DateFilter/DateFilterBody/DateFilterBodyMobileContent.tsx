@@ -22,9 +22,8 @@ import {
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 import {
     type CalendarTabType,
-    filterFiscalPresets,
-    filterStandardPresets,
     getDefaultCalendarTab,
+    getFilteredPresets,
     getFiscalTabsConfig,
 } from "../utils/presetFilterUtils.js";
 
@@ -70,17 +69,17 @@ export function DateFilterBodyMobileContent({
 }: IDateFilterBodyMobileContentProps) {
     const intl = useIntl();
 
-    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
+    const fiscalTabsConfig = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
 
     const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
         getDefaultCalendarTab(activeCalendars, selectedFilterOption),
     );
 
-    const filteredRelativePreset = showTabs
-        ? selectedTab === "standard"
-            ? filterStandardPresets(filterOptions.relativePreset!)
-            : filterFiscalPresets(filterOptions.relativePreset!)
-        : filterOptions.relativePreset;
+    const filteredRelativePreset = getFilteredPresets(
+        filterOptions.relativePreset,
+        fiscalTabsConfig,
+        selectedTab,
+    );
 
     if (!isRedesigned && route === "absoluteForm") {
         const title = intl.formatMessage({ id: "filters.staticPeriod" });
@@ -134,7 +133,7 @@ export function DateFilterBodyMobileContent({
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                 isMobile={isMobile}
                 dateFormat={dateFormat}
-                showTabs={showTabs}
+                showTabs={fiscalTabsConfig.showTabs}
                 selectedTab={selectedTab}
                 onTabSelect={setSelectedTab}
                 filteredRelativePreset={filteredRelativePreset}

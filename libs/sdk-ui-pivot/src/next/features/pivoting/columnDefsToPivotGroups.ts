@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
@@ -77,23 +77,19 @@ export function columnDefsToPivotGroups(
                 });
 
                 if (!existingNode) {
-                    const siblingIndex = currentLevel.length;
-                    item.columnDef.context.indexWithinGroup = siblingIndex;
+                    item.columnDef.context.indexWithinGroup = currentLevel.length;
 
                     // Stamp measure index for standard value leaves (exclude totals)
                     if (isStandardValueColumnDefinition(item.columnDef.context.columnDefinition)) {
-                        const siblingsMeasureCount = currentLevel.reduce((acc, node) => {
+                        item.columnDef.context.measureIndex = currentLevel.reduce((acc, node) => {
                             if ("field" in node) {
-                                const def = node as AgGridColumnDef;
-                                const cd = def.context?.columnDefinition;
+                                const cd = node.context?.columnDefinition;
                                 if (isStandardValueColumnDefinition(cd)) {
                                     return acc + 1;
                                 }
                             }
                             return acc;
                         }, 0);
-
-                        item.columnDef.context.measureIndex = siblingsMeasureCount;
                     }
 
                     currentLevel.push(item.columnDef);

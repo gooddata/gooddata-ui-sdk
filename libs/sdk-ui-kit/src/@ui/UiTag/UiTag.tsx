@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MouseEvent, forwardRef, useLayoutEffect, useState } from "react";
 
@@ -90,7 +90,7 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
         >
             {iconBefore ? (
                 <span className={e("icon-before")}>
-                    <UiIcon type={iconBefore} size={iconSize} color={iconColor} ariaHidden />
+                    <UiIcon type={iconBefore} size={iconSize} color={iconColor} />
                 </span>
             ) : null}
             <span className={e("label")} ref={setLabelRef}>
@@ -124,7 +124,6 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
                         <UiIcon
                             size={14}
                             type="cross"
-                            ariaHidden
                             color={variant === "decorated" ? "complementary-0" : "complementary-6"}
                         />
                     </span>

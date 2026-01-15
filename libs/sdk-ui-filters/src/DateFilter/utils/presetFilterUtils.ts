@@ -257,6 +257,56 @@ export function filterFiscalGranularities(granularities: DateFilterGranularity[]
 }
 
 /**
+ * Get the effective calendar type based on tabs config and selected tab.
+ * @internal
+ */
+function getEffectiveCalendarType(config: IFiscalTabsConfig, selectedTab: CalendarTabType): CalendarTabType {
+    return config.showTabs ? selectedTab : config.hasFiscal ? "fiscal" : "standard";
+}
+
+/**
+ * Filter relative presets based on fiscal tabs configuration.
+ * When only one calendar type is enabled, filters to that type.
+ * When both are enabled, filters based on selected tab.
+ * @internal
+ */
+export function getFilteredPresets(
+    presets: DateFilterRelativeOptionGroup | undefined,
+    config: IFiscalTabsConfig,
+    selectedTab: CalendarTabType,
+): DateFilterRelativeOptionGroup | undefined {
+    if (!presets) {
+        return presets;
+    }
+    if (!config.hasFiscal && !config.hasStandard) {
+        return filterStandardPresets(presets);
+    }
+    const activeType = getEffectiveCalendarType(config, selectedTab);
+    return activeType === "standard" ? filterStandardPresets(presets) : filterFiscalPresets(presets);
+}
+
+/**
+ * Filter available granularities based on fiscal tabs configuration.
+ * @internal
+ */
+export function getFilteredGranularities(
+    granularities: DateFilterGranularity[] | undefined,
+    config: IFiscalTabsConfig,
+    selectedTab: CalendarTabType,
+): DateFilterGranularity[] {
+    if (!granularities) {
+        return [];
+    }
+    if (!config.hasFiscal && !config.hasStandard) {
+        return filterStandardGranularities(granularities);
+    }
+    const activeType = getEffectiveCalendarType(config, selectedTab);
+    return activeType === "standard"
+        ? filterStandardGranularities(granularities)
+        : filterFiscalGranularities(granularities);
+}
+
+/**
  * @internal
  */
 export interface IUiRelativeDateFilterFormLike {

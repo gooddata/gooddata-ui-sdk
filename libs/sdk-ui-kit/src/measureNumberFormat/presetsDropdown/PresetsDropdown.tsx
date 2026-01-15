@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useCallback, useMemo } from "react";
 
@@ -64,7 +64,7 @@ export const PresetsDropdown = memo(function PresetsDropdown(props: IMeasureNumb
             closeOnParentScroll
             closeOnMouseDrag
             alignTo={anchorEl}
-            alignPoints={useMemo(() => positioningToAlignPoints(positioning!), [positioning])} // positioning is declared in defaultProps so it is always defined
+            alignPoints={useMemo(() => positioningToAlignPoints(positioning), [positioning])} // positioning is declared in defaultProps so it is always defined
             onClose={onClose}
         >
             <div className="gd-dropdown overlay">

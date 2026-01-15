@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ChangeEvent, Fragment, memo, useCallback, useMemo } from "react";
 
@@ -10,7 +10,7 @@ import { type LabelSize } from "./typings.js";
  * @internal
  */
 
-export interface CheckboxProps {
+export interface ICheckboxProps {
     id?: string;
     disabled?: boolean;
     name?: string;
@@ -34,7 +34,7 @@ export const Checkbox = memo(function Checkbox({
     labelSize = "small",
     onChange = () => {},
     id,
-}: CheckboxProps) {
+}: ICheckboxProps) {
     const handleChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>): void => {
             onChange(e.target.checked);

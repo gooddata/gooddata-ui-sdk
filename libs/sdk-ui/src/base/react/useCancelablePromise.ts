@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type DependencyList, useEffect, useState } from "react";
 
@@ -151,13 +151,13 @@ Incoming: ${safeSerialize(deps)}`,
  *
  * @remarks
  * You can:
- * - watch it's status (pending/loading/success/error)
- * - get it's result/error when the Promise is resolved/rejected,
+ * - watch its status (pending/loading/success/error)
+ * - get its result/error when the Promise is resolved/rejected,
  * - attach convenient callbacks to it
  * - be sure, that when the dependency list changes, result will be still relevant (if previous Promise is still running, it's "canceled").
  *
  * Note that it's not recommended to use this hook for storing data on the backend
- * as it does not cancel requests wrapped in these promises
+ * as it does not cancel requests wrapped in these promises,
  * and you have no guarantee about the resolution order of the fired requests.
  *
  * @public

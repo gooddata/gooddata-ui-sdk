@@ -89,6 +89,19 @@
                 color: var(--gd-palette-complementary-9-from-theme);
             }
         }
+
+        &.is-disabled {
+            cursor: default;
+
+            p {
+                color: var(--gd-palette-complementary-5);
+            }
+
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background: none !important;
+            }
+        }
     }
 }
 

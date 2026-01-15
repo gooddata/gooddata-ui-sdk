@@ -111,7 +111,11 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         );
 
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(
+                newReferencePoint,
+                this.featureFlags?.enableImprovedAdFilters,
+                referencePointCloned,
+            ),
         );
     };
 

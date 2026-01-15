@@ -518,14 +518,14 @@ export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities
 export function PivotTableNext(props: IPivotTableNextProps): JSX.Element;
 
 // @public
-export interface PivotTableNextAccessibilityConfig {
+export type PivotTableNextAccessibilityConfig = {
     enableAccessibility?: boolean;
-}
+};
 
 // @public
-export interface PivotTableNextAgGridLicenseConfig {
+export type PivotTableNextAgGridLicenseConfig = {
     agGridToken?: string;
-}
+};
 
 // @public (undocumented)
 export type PivotTableNextCellSelectionConfig = {
@@ -541,35 +541,35 @@ export type PivotTableNextColumnsSizingConfig = {
 export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextDrillMenuPositioningConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextPaginationConfig & PivotTableNextAccessibilityConfig & PivotTableNextExperimentalConfig;
 
 // @public
-export interface PivotTableNextDrillMenuPositioningConfig {
+export type PivotTableNextDrillMenuPositioningConfig = {
     enableDrillMenuPositioningAtCursor?: boolean;
-}
+};
 
 // @public
-export interface PivotTableNextExecutionCancellingConfig {
+export type PivotTableNextExecutionCancellingConfig = {
     enableExecutionCancelling?: boolean;
-}
+};
 
 // @public
-export interface PivotTableNextExperimentalConfig {
+export type PivotTableNextExperimentalConfig = {
     enablePivotTableAutoSizeReset?: boolean;
     enablePivotTablePagination?: boolean;
-}
+};
 
 // @public
-export interface PivotTableNextFormattingConfig {
+export type PivotTableNextFormattingConfig = {
     separators?: ISeparators;
-}
+};
 
 // @public
-export interface PivotTableNextGrandTotalsPositionConfig {
+export type PivotTableNextGrandTotalsPositionConfig = {
     grandTotalsPosition?: GrandTotalsPositionNext;
-}
+};
 
 // @public
-export interface PivotTableNextLayoutConfig {
+export type PivotTableNextLayoutConfig = {
     maxHeight?: number;
-}
+};
 
 // @public (undocumented)
 export type PivotTableNextMenuConfig = {
@@ -577,9 +577,9 @@ export type PivotTableNextMenuConfig = {
 };
 
 // @public
-export interface PivotTableNextPaginationConfig {
+export type PivotTableNextPaginationConfig = {
     pagination?: IPagination;
-}
+};
 
 // @public (undocumented)
 export type PivotTableNextTextWrappingConfig = {

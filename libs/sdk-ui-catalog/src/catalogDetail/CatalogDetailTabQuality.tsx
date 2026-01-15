@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -40,7 +40,7 @@ export function CatalogDetailTabQuality({
                 ))
             ) : (
                 <div className="gd-analytics-catalog-detail__tab-quality__empty">
-                    <UiIcon type="checkCircle" size={26} ariaHidden color="currentColor" />
+                    <UiIcon type="checkCircle" size={26} color="currentColor" />
                     <FormattedMessage id="analyticsCatalog.catalogItem.tab.quality.empty" />
                 </div>
             )}

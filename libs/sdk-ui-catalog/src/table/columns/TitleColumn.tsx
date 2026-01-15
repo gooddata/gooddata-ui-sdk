@@ -4,7 +4,7 @@ import { memo } from "react";
 
 import type { IntlShape } from "react-intl";
 
-import { type UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
 import {
     CatalogItemLockMemo,
@@ -14,7 +14,7 @@ import {
 import { ObjectTypeIconMemo, ObjectTypeTooltip } from "../../objectType/index.js";
 import { QualityIconMemo } from "../../quality/index.js";
 
-export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn<ICatalogItem> = (
+export const titleColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<ICatalogItem> = (
     intl,
     width,
 ) => {

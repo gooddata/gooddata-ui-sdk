@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type SortChangedEvent } from "ag-grid-community";
 
 import { type IExecutionDefinition } from "@gooddata/sdk-model";
@@ -25,7 +26,7 @@ export class SortingEventHandlers {
             return;
         }
 
-        const sortItems = internal.table.createSortItems(event.api.getAllGridColumns()!);
+        const sortItems = internal.table.createSortItems(event.api.getAllGridColumns());
 
         // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
         // This applies only to totals in ATTRIBUTE bucket, column totals are not affected by sorting

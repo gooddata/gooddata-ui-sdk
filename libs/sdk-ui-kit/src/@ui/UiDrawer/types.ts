@@ -17,7 +17,7 @@ export type UiDrawerTransitionProps = {
 /**
  * @internal
  */
-export interface UiDrawerProps extends IUiAutofocusOptions {
+export interface IUiDrawerProps extends IUiAutofocusOptions {
     open?: boolean;
     mode?: "absolute" | "fixed";
     node?: HTMLElement;

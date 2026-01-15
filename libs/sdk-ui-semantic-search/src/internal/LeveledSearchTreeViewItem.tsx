@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -43,7 +43,7 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
             resultCounter={<GroupResultCounter count={childCount ?? 0} isExpanded={isExpanded ?? false} />}
         >
             <span className="gd-semantic-search__results-item__text__row">
-                {item.isDisabled ? <UiIcon type="lock" color="complementary-7" size={16} ariaHidden /> : null}
+                {item.isDisabled ? <UiIcon type="lock" color="complementary-7" size={16} /> : null}
                 <span
                     className="gd-semantic-search__results-item__text__ellipsis"
                     data-testid={testIds.semanticSearchItemTitle}

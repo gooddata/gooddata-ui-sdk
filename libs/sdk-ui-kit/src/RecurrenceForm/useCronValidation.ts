@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -24,7 +24,7 @@ interface IUseCronValidationProps {
     onCronValueChange: (cronValue: string, isValid: boolean) => void;
 }
 
-interface UseCronValidationResult {
+interface IUseCronValidationResult {
     cronError: string | null;
     handleOnBlur: (value: string) => void;
     handleChange: (expression: string) => void;
@@ -43,7 +43,7 @@ const getErrorMessage = (errorType: RecurrenceFormCronErrorTypes): string => {
     }
 };
 
-export const useCronValidation = (props: IUseCronValidationProps): UseCronValidationResult => {
+export const useCronValidation = (props: IUseCronValidationProps): IUseCronValidationResult => {
     const { allowHourlyRecurrence, onCronValueChange } = props;
     const [cronError, setCronError] = useState<string | null>(null);
 

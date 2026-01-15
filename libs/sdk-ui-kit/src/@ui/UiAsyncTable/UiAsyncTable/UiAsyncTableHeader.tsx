@@ -9,9 +9,9 @@ import { makeTabsKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { type UiAsyncTableColumn, type UiAsyncTableHeaderProps } from "../types.js";
+import { type IUiAsyncTableColumn, type IUiAsyncTableHeaderProps } from "../types.js";
 
-const arrowIcon = <UiIcon ariaHidden type="dropDown" size={11} color="complementary-6" />;
+const arrowIcon = <UiIcon type="dropDown" size={11} color="complementary-6" />;
 
 export function UiAsyncTableHeader<T>({
     columns,
@@ -22,7 +22,7 @@ export function UiAsyncTableHeader<T>({
     width,
     small,
     largeRow,
-}: UiAsyncTableHeaderProps<T>) {
+}: IUiAsyncTableHeaderProps<T>) {
     const { handleKeyDown, isFocused, isFocusable } = useHeaderKeyboardNavigation(columns, handleColumnClick);
     const intl = useIntl();
 
@@ -79,7 +79,7 @@ export function UiAsyncTableHeader<T>({
 }
 
 function useHeaderKeyboardNavigation<T>(
-    columns: Array<UiAsyncTableColumn<T>>,
+    columns: Array<IUiAsyncTableColumn<T>>,
     handleColumnClick: (key?: keyof T) => void,
 ) {
     const [focusedIndexPosition, setFocusedIndexPosition] = useState(0);

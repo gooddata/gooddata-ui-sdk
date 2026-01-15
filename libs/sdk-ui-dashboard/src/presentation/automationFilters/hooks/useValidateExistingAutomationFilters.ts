@@ -36,7 +36,6 @@ import {
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
-    selectEnableDashboardTabs,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { type IDashboardFilter } from "../../../types.js";
@@ -76,14 +75,12 @@ function shouldSkipValidation(
 
 function hasMatchingPerTabFormat(
     widget: ExtendedDashboardWidget | undefined,
-    enableDashboardTabs: boolean,
     dashboardFiltersByTab: IAutomationFiltersPerTabData[],
     savedAutomationVisibleFiltersByTab: Record<string, IAutomationVisibleFilter[]> | undefined,
     savedDashboardFiltersByTab: Record<string, FilterContextItem[]> | undefined,
 ): boolean {
     return (
         !widget &&
-        enableDashboardTabs &&
         dashboardFiltersByTab.length > 1 &&
         Boolean(savedAutomationVisibleFiltersByTab) &&
         Boolean(savedDashboardFiltersByTab)
@@ -92,7 +89,6 @@ function hasMatchingPerTabFormat(
 
 function hasFormatMismatch(
     widget: ExtendedDashboardWidget | undefined,
-    enableDashboardTabs: boolean,
     dashboardFiltersByTab: IAutomationFiltersPerTabData[],
     savedAutomationVisibleFiltersByTab: Record<string, IAutomationVisibleFilter[]> | undefined,
     savedDashboardFiltersByTab: Record<string, FilterContextItem[]> | undefined,
@@ -100,7 +96,7 @@ function hasFormatMismatch(
     const automationHasPerTabFilters = Boolean(
         savedAutomationVisibleFiltersByTab || savedDashboardFiltersByTab,
     );
-    const dashboardHasPerTabFilters = !widget && enableDashboardTabs && dashboardFiltersByTab.length > 1;
+    const dashboardHasPerTabFilters = !widget && dashboardFiltersByTab.length > 1;
     return automationHasPerTabFilters !== dashboardHasPerTabFilters;
 }
 
@@ -145,7 +141,6 @@ export function useValidateExistingAutomationFilters({
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const dashboardFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
-    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const dashboardFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
 
     const savedAutomationVisibleFilters = automationToEdit?.metadata?.visibleFilters;
@@ -170,7 +165,6 @@ export function useValidateExistingAutomationFilters({
     if (
         hasMatchingPerTabFormat(
             widget,
-            enableDashboardTabs,
             dashboardFiltersByTab,
             savedAutomationVisibleFiltersByTab,
             savedDashboardFiltersByTab,
@@ -190,7 +184,6 @@ export function useValidateExistingAutomationFilters({
     if (
         hasFormatMismatch(
             widget,
-            enableDashboardTabs,
             dashboardFiltersByTab,
             savedAutomationVisibleFiltersByTab,
             savedDashboardFiltersByTab,

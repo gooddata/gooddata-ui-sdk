@@ -4,7 +4,7 @@ import { memo, useMemo } from "react";
 
 import type { IntlShape } from "react-intl";
 
-import { type UiAsyncTableColumn, UiTags } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableColumn, UiTags } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem } from "../../catalogItem/types.js";
 
@@ -12,7 +12,7 @@ export const tagsColumn: (
     intl: IntlShape,
     width: number,
     onTagClick?: (tag: string) => void,
-) => UiAsyncTableColumn<ICatalogItem> = (intl, width, onTagClick) => {
+) => IUiAsyncTableColumn<ICatalogItem> = (intl, width, onTagClick) => {
     return {
         width,
         key: "tags",

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CSSProperties, type ReactNode } from "react";
 
@@ -24,7 +24,7 @@ export type TooltipArrowPlacement =
 /**
  * @internal
  */
-export interface UiTooltipProps {
+export interface IUiTooltipProps {
     /** Tooltip content id */
     id?: string;
     /** Position of the tooltip arrow relative to the tooltip, controls also the position of the tooltip */

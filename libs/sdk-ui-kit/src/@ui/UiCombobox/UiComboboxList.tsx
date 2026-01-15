@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { Fragment, type HTMLAttributes, type ReactNode } from "react";
 
@@ -10,7 +10,7 @@ import { useComboboxState } from "./UiComboboxContext.js";
 import { UiComboboxListItem } from "./UiComboboxListItem.js";
 
 /** @internal */
-export interface UiComboboxListProps extends Omit<HTMLAttributes<HTMLUListElement>, "children"> {
+export interface IUiComboboxListProps extends Omit<HTMLAttributes<HTMLUListElement>, "children"> {
     /**
      * The children to render for each option. Renders a `UiComboboxListItem` when not provided.
      */
@@ -18,7 +18,7 @@ export interface UiComboboxListProps extends Omit<HTMLAttributes<HTMLUListElemen
 }
 
 /** @internal */
-export function UiComboboxList({ children, className, ...htmlProps }: UiComboboxListProps) {
+export function UiComboboxList({ children, className, ...htmlProps }: IUiComboboxListProps) {
     const { availableOptions } = useComboboxState();
 
     return (

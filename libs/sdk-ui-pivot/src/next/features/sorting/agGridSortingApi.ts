@@ -25,7 +25,7 @@ export function getSortModel(gridApi: AgGridApi): SortModelItem[] {
     }
 
     return sortedColumns.map((col) => ({
-        colId: col.colId!,
+        colId: col.colId,
         sort: col.sort!,
     }));
 }

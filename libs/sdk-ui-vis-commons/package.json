@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "11.16.0-alpha.5",
+    "version": "11.16.0-alpha.6",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "repository": {
         "type": "git",

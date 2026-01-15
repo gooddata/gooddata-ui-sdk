@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -16,7 +16,7 @@ export function CatalogItemLock({ intl }: Props) {
             arrowPlacement="top"
             optimalPlacement
             triggerBy={["hover"]}
-            anchor={<UiIcon type="lock" color="complementary-7" size={16} ariaHidden />}
+            anchor={<UiIcon type="lock" color="complementary-7" size={16} />}
             content={intl.formatMessage({ id: "analyticsCatalog.catalogItem.lock" })}
             width={255}
         />

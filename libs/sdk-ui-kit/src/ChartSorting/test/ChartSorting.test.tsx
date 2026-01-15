@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -10,7 +10,7 @@ import {
     singleAreaAttributeSortConfig,
     singleNormalAttributeSortConfig,
 } from "./mock.js";
-import { type ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting.js";
+import { ChartSortingWithIntl, type IChartSortingOwnProps } from "../ChartSorting.js";
 import { type IBucketItemDescriptors } from "../types.js";
 
 const bucketItems: IBucketItemDescriptors = {
@@ -41,8 +41,8 @@ const bucketItems: IBucketItemDescriptors = {
 
 const DefaultLocale = "en-US";
 
-const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
-    const defaultProps: ChartSortingOwnProps = {
+const renderComponent = (props?: Partial<IChartSortingOwnProps>) => {
+    const defaultProps: IChartSortingOwnProps = {
         ...singleNormalAttributeSortConfig,
         bucketItems: bucketItems,
         onApply: () => {},

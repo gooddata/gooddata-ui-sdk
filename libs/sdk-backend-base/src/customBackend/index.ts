@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAnalyticalBackend,
@@ -153,7 +153,7 @@ export class CustomBackend implements IAnalyticalBackend {
         const client = this.config.clientProvider(this.config);
 
         try {
-            result = await call(client, await this.getAsyncCallContext(client));
+            result = await call(client, this.getAsyncCallContext(client));
         } catch (err) {
             if (!isNotAuthenticated(err)) {
                 throw err;
@@ -162,7 +162,7 @@ export class CustomBackend implements IAnalyticalBackend {
             // in case there was a NotAuthenticated error, trigger auth and try once again
             try {
                 await this.triggerAuthentication(true, client);
-                result = await call(client, await this.getAsyncCallContext(client));
+                result = await call(client, this.getAsyncCallContext(client));
             } catch (err) {
                 if (!isNotAuthenticated(err)) {
                     throw err;
@@ -189,7 +189,7 @@ export class CustomBackend implements IAnalyticalBackend {
         return this.authProvider.authenticate(this.getAuthenticationContext(useClient));
     };
 
-    private getAsyncCallContext = async (client: any): Promise<IAuthenticatedAsyncCallContext> => {
+    private getAsyncCallContext = (client: any): IAuthenticatedAsyncCallContext => {
         const getPrincipal = async (): Promise<IAuthenticatedPrincipal> => {
             if (!this.authProvider) {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");

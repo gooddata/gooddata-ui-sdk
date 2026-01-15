@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IUiComboboxOption } from "../types.js";
-import { UiCombobox, type UiComboboxProps } from "../UiCombobox.js";
+import { type IUiComboboxProps, UiCombobox } from "../UiCombobox.js";
 import { UiComboboxInput } from "../UiComboboxInput.js";
 import { UiComboboxList } from "../UiComboboxList.js";
 import { UiComboboxListItem } from "../UiComboboxListItem.js";
@@ -18,13 +18,15 @@ const options: IUiComboboxOption[] = [
     { id: "apricot", label: "Apricot" },
 ];
 
-function TestCombobox(props: UiComboboxProps) {
+function TestCombobox(props: IUiComboboxProps) {
     return (
         <UiCombobox {...props}>
             <UiComboboxInput placeholder="Search..." />
             <UiComboboxPopup>
                 <UiComboboxList>
-                    {(option, index) => <UiComboboxListItem option={option} index={index} key={option.id} />}
+                    {(option: IUiComboboxOption, index: number) => (
+                        <UiComboboxListItem option={option} index={index} key={option.id} />
+                    )}
                 </UiComboboxList>
             </UiComboboxPopup>
         </UiCombobox>
@@ -32,7 +34,7 @@ function TestCombobox(props: UiComboboxProps) {
 }
 
 describe("UiCombobox", () => {
-    it("filters options by input value using default filter", async () => {
+    it("filters options by input value using default filter", () => {
         render(<TestCombobox options={options} />);
 
         const input: HTMLInputElement = screen.getByRole("combobox");

@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-1-12
+Date generated: 2026-1-14
 
-Revision ID: fdcfe739a4314b887ac7ece4172abc11aa387bba
+Revision ID: beffb63215ccdd2dc10b8326cf1f4996fc74749b
 
 ================================================================================
 ================================================================================
@@ -121,14 +121,14 @@ Revision ID: fdcfe739a4314b887ac7ece4172abc11aa387bba
 - @babel/traverse (7.28.4) [MIT]
 - @babel/types (7.28.4) [MIT]
 - @braintree/sanitize-url (6.0.4) [MIT]
-- @codemirror/autocomplete (6.19.0) [MIT]
+- @codemirror/autocomplete (6.20.0) [MIT]
 - @codemirror/autocomplete (6.18.7) [MIT]
-- @codemirror/commands (6.9.0) [MIT]
+- @codemirror/commands (6.10.1) [MIT]
 - @codemirror/lang-yaml (6.1.2) [MIT]
-- @codemirror/language (6.11.3) [MIT]
-- @codemirror/lint (6.9.0) [MIT]
-- @codemirror/state (6.5.2) [MIT]
-- @codemirror/view (6.38.5) [MIT]
+- @codemirror/language (6.12.1) [MIT]
+- @codemirror/lint (6.9.2) [MIT]
+- @codemirror/state (6.5.3) [MIT]
+- @codemirror/view (6.39.10) [MIT]
 - @date-fns/tz (1.4.1) [MIT]
 - @discoveryjs/json-ext (0.5.7) [MIT]
 - @discoveryjs/json-ext (0.6.3) [MIT]
@@ -183,7 +183,8 @@ Revision ID: fdcfe739a4314b887ac7ece4172abc11aa387bba
 - @jsonjoy.com/util (1.9.0) [Apache-2.0]
 - @leichtgewicht/ip-codec (2.0.5) [MIT]
 - @lezer/common (1.2.3) [MIT]
-- @lezer/highlight (1.2.1) [MIT]
+- @lezer/common (1.5.0) [MIT]
+- @lezer/highlight (1.2.3) [MIT]
 - @lezer/lr (1.4.2) [MIT]
 - @lezer/yaml (1.0.3) [MIT]
 - @mapbox/geojson-rewind (0.5.2) [ISC]
@@ -2164,9 +2165,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/autocomplete (6.19.0)
+Package Title: @codemirror/autocomplete (6.20.0)
 
-Package Locator: npm+@codemirror/autocomplete$6.19.0
+Package Locator: npm+@codemirror/autocomplete$6.20.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -2188,9 +2189,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/commands (6.9.0)
+Package Title: @codemirror/commands (6.10.1)
 
-Package Locator: npm+@codemirror/commands$6.9.0
+Package Locator: npm+@codemirror/commands$6.10.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -2212,21 +2213,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/language (6.11.3)
+Package Title: @codemirror/language (6.12.1)
 
-Package Locator: npm+@codemirror/language$6.11.3
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: @codemirror/lint (6.9.0)
-
-Package Locator: npm+@codemirror/lint$6.9.0
+Package Locator: npm+@codemirror/language$6.12.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -2236,9 +2225,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/state (6.5.2)
+Package Title: @codemirror/lint (6.9.2)
 
-Package Locator: npm+@codemirror/state$6.5.2
+Package Locator: npm+@codemirror/lint$6.9.2
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -2248,9 +2237,21 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @codemirror/view (6.38.5)
+Package Title: @codemirror/state (6.5.3)
 
-Package Locator: npm+@codemirror/view$6.38.5
+Package Locator: npm+@codemirror/state$6.5.3
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @codemirror/view (6.39.10)
+
+Package Locator: npm+@codemirror/view$6.39.10
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -2908,9 +2909,21 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @lezer/highlight (1.2.1)
+Package Title: @lezer/common (1.5.0)
 
-Package Locator: npm+@lezer/highlight$1.2.1
+Package Locator: npm+@lezer/common$1.5.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @lezer/highlight (1.2.3)
+
+Package Locator: npm+@lezer/highlight$1.2.3
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -35160,4 +35173,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-1-12
+Report Generated by FOSSA on 2026-1-14

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type FocusEventHandler, type MutableRefObject, useCallback, useState } from "react";
 
@@ -121,7 +121,7 @@ function DeleteButton({
                         id={id}
                         tabIndex={isFocused ? 0 : -1}
                     >
-                        <UiIcon type={"trash"} size={12} ariaHidden layout={"block"} color={"currentColor"} />
+                        <UiIcon type={"trash"} size={12} layout={"block"} color={"currentColor"} />
                     </div>
                 }
             />

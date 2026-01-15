@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CSSProperties, type ReactNode } from "react";
 
 import cx from "classnames";
 
-import { UiIcon, type UiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxInteractiveItemProps, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { type KdaItem } from "../../internalTypes.js";
 
@@ -14,7 +14,7 @@ export function KeyDriverItem({
     onSelect,
     isSelected,
     isFocused,
-}: UiListboxInteractiveItemProps<KdaItem> & { maximum: number }): ReactNode {
+}: IUiListboxInteractiveItemProps<KdaItem> & { maximum: number }): ReactNode {
     const trend = item.data.from.value < item.data.to.value ? "up" : "down";
     const width = `${(Math.abs(item.data.to.value - item.data.from.value) / maximum) * 100}%`;
 

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type MutableRefObject,
@@ -18,7 +18,7 @@ import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
 import { UiFocusManager } from "../UiFocusManager/UiFocusManager.js";
 import { defaultFocusCheckFn } from "../UiFocusManager/utils.js";
-import { type UiTooltipProps } from "../UiTooltip/types.js";
+import { type IUiTooltipProps } from "../UiTooltip/types.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
 const { b, e } = bem("gd-ui-kit-popover");
@@ -28,7 +28,7 @@ const defaultAccessibilityConfig: IAccessibilityConfigBase = {};
 /**
  * @internal
  */
-export interface UiPopoverProps {
+export interface IUiPopoverProps {
     anchor: ReactElement<any>;
     width?: "default" | number;
     disabled?: boolean;
@@ -37,7 +37,7 @@ export interface UiPopoverProps {
     title?: string | ReactNode;
     content?: ReactNode | ((args: { onClose: () => void }) => ReactNode);
     footer?: ReactNode | ((args: { onClose: () => void }) => ReactNode);
-    triggerBy?: UiTooltipProps["triggerBy"];
+    triggerBy?: IUiTooltipProps["triggerBy"];
     closeText?: string;
     closeVisible?: boolean;
     initialFocus?: RefObject<HTMLElement> | string;
@@ -79,7 +79,7 @@ export function UiPopover({
     enableFocusTrap = false,
     onOpen,
     onClose,
-}: UiPopoverProps) {
+}: IUiPopoverProps) {
     const ref = useRef<HTMLElement | null>(null);
     const returnFocus = useMemo(() => {
         return returnFocusTo ?? ref;

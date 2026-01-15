@@ -1,5 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { type AriaAttributes } from "react";
+
 import { b } from "./iconBem.js";
 import { iconPaths } from "./icons.js";
 import { UiIconBackground } from "./UiIconBackground.js";
@@ -10,12 +12,10 @@ import { type ThemeColor } from "../@types/themeColors.js";
 /**
  * @internal
  */
-export interface UiIconProps {
+export interface IUiIconProps {
     type: IconType;
     color?: ThemeColor | "currentColor";
-    label?: string;
     size?: number;
-    ariaHidden?: boolean;
     disableAnimation?: boolean;
     //background
     backgroundSize?: number;
@@ -27,6 +27,10 @@ export interface UiIconProps {
      * @defaultValue "inline"
      */
     layout?: "block" | "inline";
+    accessibilityConfig?: {
+        ariaLabel?: AriaAttributes["aria-label"];
+        ariaHidden?: boolean;
+    };
 }
 
 /**
@@ -34,17 +38,19 @@ export interface UiIconProps {
  */
 export function UiIcon({
     type,
-    label,
     color,
     layout = "inline",
     disableAnimation,
-    ariaHidden,
+    accessibilityConfig,
     size = 20,
     backgroundSize,
     backgroundColor,
     backgroundType,
     backgroundShape,
-}: UiIconProps) {
+}: IUiIconProps) {
+    // If ariaHidden is explicitly set, use it. Otherwise, use ariaLabel to determine if the icon is hidden.
+    const effectiveAriaHidden = accessibilityConfig?.ariaHidden ?? !accessibilityConfig?.ariaLabel;
+
     return (
         <UiIconBackground
             size={backgroundSize}
@@ -57,10 +63,10 @@ export function UiIcon({
                 width={size}
                 height={size}
                 viewBox="0 0 20 20"
-                aria-hidden={ariaHidden}
+                aria-hidden={effectiveAriaHidden}
+                aria-label={accessibilityConfig?.ariaLabel}
                 role="img"
             >
-                {label ? <title>{label}</title> : null}
                 {iconPaths[type]}
             </svg>
         </UiIconBackground>

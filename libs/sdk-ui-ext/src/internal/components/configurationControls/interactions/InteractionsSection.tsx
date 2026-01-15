@@ -22,6 +22,7 @@ export interface IInteractionsSectionProps {
     supportsAlertConfiguration?: boolean;
     supportsDrillDownConfiguration?: boolean;
     supportsScheduledExportsConfiguration?: boolean;
+    supportsKeyDriveAnalysis?: boolean;
     enableImplicitDrillToUrl?: boolean;
 }
 
@@ -46,12 +47,14 @@ export const InteractionsSection = memo(function InteractionsSection({
     supportsAlertConfiguration,
     supportsDrillDownConfiguration,
     supportsScheduledExportsConfiguration,
+    supportsKeyDriveAnalysis,
     enableImplicitDrillToUrl,
 }: IInteractionsSectionProps) {
     const isDrillDownDisabled = properties?.controls?.["disableDrillDown"] ?? false;
     const isDrillIntoURLDisabled = properties?.controls?.["disableDrillIntoURL"] ?? true;
     const isAlertsDisabled = properties?.controls?.["disableAlerts"] ?? false;
     const isScheduledExportsDisabled = properties?.controls?.["disableScheduledExports"] ?? false;
+    const isKdaDisabled = properties?.controls?.["disableKeyDriveAnalysis"] ?? false;
     const isSeparatorVisible =
         supportsDrillDownConfiguration &&
         (supportsAlertConfiguration || supportsScheduledExportsConfiguration);
@@ -90,6 +93,20 @@ export const InteractionsSection = memo(function InteractionsSection({
                         isValueInverted
                     />
                     <QuestionMarkTooltip tooltipText={messages["interactionsScheduledExportsTooltip"].id!} />
+                </div>
+            ) : null}
+            {supportsKeyDriveAnalysis ? (
+                <div className="gd-interactions-section__control-with-tooltip">
+                    <CheckboxControl
+                        valuePath="disableKeyDriveAnalysis"
+                        labelText={messages["interactionsKda"].id}
+                        properties={properties}
+                        disabled={areControlsDisabledGetter?.("interactions.kda")}
+                        checked={!isKdaDisabled}
+                        pushData={pushData}
+                        isValueInverted
+                    />
+                    <QuestionMarkTooltip tooltipText={messages["interactionsKdaTooltip"].id!} />
                 </div>
             ) : null}
             {isSeparatorVisible ? <SeparatorLine mT={10} mB={10} /> : null}

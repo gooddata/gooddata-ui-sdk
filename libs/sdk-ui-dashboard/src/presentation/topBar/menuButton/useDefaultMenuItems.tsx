@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useMemo } from "react";
 
@@ -58,7 +58,7 @@ const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[]
         .flatMap((visibleSection) => visibleSection);
 
 function MenuIcon({ type }: { type: IconType }) {
-    return <UiIcon type={type} size={16} color="complementary-5" ariaHidden />;
+    return <UiIcon type={type} size={16} color="complementary-5" />;
 }
 
 /**

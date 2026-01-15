@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ModifierKey } from "react";
 
@@ -10,7 +10,7 @@ export interface IHandleActionOptions {
     shouldStopPropagation?: boolean;
 }
 
-const handleAction = <T extends KeyboardEvent | KeyboardEvent = KeyboardEvent>(
+const handleAction = <T extends KeyboardEvent = KeyboardEvent>(
     event: T,
     action?: (e: T) => void,
     { shouldPreventDefault = true, shouldStopPropagation = true }: IHandleActionOptions = {},
@@ -45,7 +45,7 @@ export const makeKeyboardNavigation =
     <ActionKeysMap extends { [action: string]: Array<{ code: string | string[]; modifiers?: IModifier[] }> }>(
         actionKeysMap: ActionKeysMap,
     ) =>
-    <T extends KeyboardEvent | KeyboardEvent = KeyboardEvent>(
+    <T extends KeyboardEvent = KeyboardEvent>(
         handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void },
         options: IHandleActionOptions = {},
     ) => {

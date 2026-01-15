@@ -36,15 +36,25 @@ export function ObjectTypeIcon({
             className={cx("gd-analytics-catalog__object-type", className)}
             data-object-type={type}
         >
-            {type === "attribute" ? <UiIcon type="ldmAttribute" label={label} {...sizes} /> : null}
-            {type === "fact" ? <UiIcon type="fact" label={label} {...sizes} /> : null}
-            {type === "measure" ? <UiIcon type="metric" label={label} {...sizes} /> : null}
-            {type === "analyticalDashboard" ? <UiIcon type="dashboard" label={label} {...sizes} /> : null}
-            {type === "dataSet" ? <UiIcon type="date" label={label} {...sizes} /> : null}
+            {type === "attribute" ? (
+                <UiIcon type="ldmAttribute" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
+            ) : null}
+            {type === "fact" ? (
+                <UiIcon type="fact" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
+            ) : null}
+            {type === "measure" ? (
+                <UiIcon type="metric" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
+            ) : null}
+            {type === "analyticalDashboard" ? (
+                <UiIcon type="dashboard" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
+            ) : null}
+            {type === "dataSet" ? (
+                <UiIcon type="date" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
+            ) : null}
             {type === "insight" ? (
                 <UiIcon
                     type={(visualizationType && visualizationIconMap[visualizationType]) ?? "visualization"}
-                    label={label}
+                    accessibilityConfig={{ ariaLabel: label }}
                     {...sizes}
                 />
             ) : null}

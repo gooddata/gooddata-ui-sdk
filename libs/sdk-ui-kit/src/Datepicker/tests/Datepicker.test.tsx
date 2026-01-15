@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -136,8 +136,8 @@ describe("DatePicker", () => {
                 expect(screen.getByRole("combobox")).toHaveValue("01/01/2015");
             });
 
-            it("should show date in provided format", () => {
-                suppressConsole(
+            it("should show date in provided format", async () => {
+                await suppressConsole(
                     () =>
                         createComponent({
                             intl: createIntlMock({}, "en-US"),

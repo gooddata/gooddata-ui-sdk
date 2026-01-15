@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
@@ -29,12 +29,11 @@ function MockedRenderChildrenInPortal({ targetElement }: IRenderChildrenInPortal
 }
 
 const renderMockedPortal = () => {
-    // eslint-disable-next-line react/no-children-prop
     return render(<MockedRenderChildrenInPortal targetElement={document.body} children={null} />);
 };
 
 describe("RenderChildrenInPortal", () => {
-    it("should render children in targetElement", async () => {
+    it("should render children in targetElement", () => {
         renderMockedPortal();
 
         expect(screen.getByText("Child Element")).toBeInTheDocument();

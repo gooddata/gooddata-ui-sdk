@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -12,7 +12,7 @@ import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 /**
  * @internal
  */
-export interface UiSubmenuHeaderProps {
+export interface IUiSubmenuHeaderProps {
     title?: string;
     onBack?: (e: MouseEvent<HTMLButtonElement>) => void;
     onClose?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -41,7 +41,7 @@ export function UiSubmenuHeader({
     backgroundColor,
     height = "medium",
     titleId,
-}: UiSubmenuHeaderProps) {
+}: IUiSubmenuHeaderProps) {
     const heightClass = cx({
         "gd-ui-kit-submenu-header--large": height === "large",
         "gd-ui-kit-submenu-header--medium": height === "medium",

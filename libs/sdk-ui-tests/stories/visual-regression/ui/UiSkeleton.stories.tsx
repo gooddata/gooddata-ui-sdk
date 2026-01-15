@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { ComponentTable, UiSkeleton, type UiSkeletonProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, type IUiSkeletonProps, UiSkeleton, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -15,7 +15,7 @@ const propCombination = propCombinationsFor({
     direction: "row",
     itemHeight: 15,
     itemsCount: 1,
-} as UiSkeletonProps);
+} as IUiSkeletonProps);
 
 const itemWidth = propCombination("itemWidth", [100], { itemsCount: 3 });
 const differentItemWidths = propCombination("itemWidth", [[50, 100, 150]], { itemsCount: 3 });

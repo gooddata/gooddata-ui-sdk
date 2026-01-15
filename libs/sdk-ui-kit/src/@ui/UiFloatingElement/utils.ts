@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type OffsetOptions, type Placement, type VirtualElement } from "@floating-ui/react";
 
@@ -97,7 +97,7 @@ export function resolveAnchor(anchor: IFloatingAnchor): HTMLElement | VirtualEle
     if ("current" in anchor) {
         return anchor.current;
     }
-    return anchor as HTMLElement | VirtualElement;
+    return anchor;
 }
 
 /**
@@ -123,7 +123,7 @@ export function getDimensionsFromRef(ref: HTMLElement | VirtualElement | null): 
                 bottom: rect.bottom,
             };
         }
-        return elementRegion(ref as HTMLElement);
+        return elementRegion(ref);
     }
     return { width: 0, height: 0, left: 0, top: 0, right: 0, bottom: 0 };
 }

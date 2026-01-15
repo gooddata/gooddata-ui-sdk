@@ -757,6 +757,9 @@ export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
 export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
+export const isInsightKeyDriverAnalysisEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
+
+// @internal (undocumented)
 export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)

@@ -1,6 +1,7 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Window {
         _gd_uuid: number;
     }

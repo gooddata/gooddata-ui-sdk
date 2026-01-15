@@ -338,7 +338,7 @@ function InsightDrillDialogDescriptionButton({
                         ariaControls: descriptionId,
                         ariaExpanded: isOpen,
                     }}
-                    value={<UiIcon type="question" size={18} ariaHidden />}
+                    value={<UiIcon type="question" size={18} />}
                 />
             }
         />

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, Component, type MouseEvent as ReactMouseEvent } from "react";
 
@@ -274,7 +274,7 @@ export class CorePivotTableAgImpl extends Component<ICorePivotTableProps, ICoreP
             this.executionAbortManager.getCurrentController(),
         );
 
-        initializer.initialize().then((result) => {
+        void initializer.initialize().then((result) => {
             if (!result || this.internal.initializer !== result.initializer) {
                 /*
                  * This particular initialization was abandoned.
@@ -575,8 +575,8 @@ export class CorePivotTableAgImpl extends Component<ICorePivotTableProps, ICoreP
         this.resizeEventHandlers.onGridSizeChanged(gridSizeChangedEvent);
     };
 
-    private onGridColumnResized = async (columnEvent: ColumnResizedEvent) => {
-        await this.resizeEventHandlers.onGridColumnResized(columnEvent);
+    private onGridColumnResized = (columnEvent: ColumnResizedEvent) => {
+        this.resizeEventHandlers.onGridColumnResized(columnEvent);
     };
 
     private onSortChanged = (event: SortChangedEvent): void => {
@@ -698,7 +698,7 @@ export class CorePivotTableAgImpl extends Component<ICorePivotTableProps, ICoreP
             !this.internal.table.isResizing();
 
         if (this.shouldAutoResizeColumns() && shouldCallAutoresizeColumns) {
-            this.autoresizeColumns();
+            void this.autoresizeColumns();
         }
 
         if (missingContainerRef || isTableRendered) {

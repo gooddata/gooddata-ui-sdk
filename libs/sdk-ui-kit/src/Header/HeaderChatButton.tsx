@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -30,7 +30,7 @@ export function HeaderChatButton({ title, onClick }: HeaderChatButtonProps) {
                 ariaLabel: title,
             }}
         >
-            <UiIcon type="genai" size={16} ariaHidden />
+            <UiIcon type="genai" size={16} />
         </Button>
     );
 }

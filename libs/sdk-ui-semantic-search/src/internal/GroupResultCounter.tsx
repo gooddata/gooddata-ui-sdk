@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -23,7 +23,7 @@ export function GroupResultCounter({ count, isExpanded }: Props) {
                     isExpanded && "gd-semantic-search__results-item__counter__icon--expanded",
                 )}
             >
-                <UiIcon type="navigateRight" size={16} color="complementary-6" ariaHidden />
+                <UiIcon type="navigateRight" size={16} color="complementary-6" />
             </div>
         </div>
     );

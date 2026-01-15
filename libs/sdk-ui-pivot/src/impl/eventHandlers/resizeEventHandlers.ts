@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type ColumnResizedEvent, type PinnedRowDataChangedEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
@@ -50,11 +51,11 @@ export class ResizeEventHandlers {
                 gridSizeChangedEvent.clientHeight,
             )
         ) {
-            this.context.autoresizeColumns(true);
+            void this.context.autoresizeColumns(true);
         }
     };
 
-    public onGridColumnResized = async (columnEvent: ColumnResizedEvent): Promise<void> => {
+    public onGridColumnResized = (columnEvent: ColumnResizedEvent): void => {
         const { internal, updateDesiredHeight, getResizingConfig } = this.context;
         invariant(internal.table);
 
@@ -65,7 +66,7 @@ export class ResizeEventHandlers {
         updateDesiredHeight();
 
         if (isManualResizing(columnEvent)) {
-            internal.table.onManualColumnResize(getResizingConfig(), columnEvent.columns!);
+            void internal.table.onManualColumnResize(getResizingConfig(), columnEvent.columns!);
         }
     };
 

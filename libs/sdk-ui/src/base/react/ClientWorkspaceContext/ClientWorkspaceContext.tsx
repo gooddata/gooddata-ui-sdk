@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext } from "react";
 
@@ -122,7 +122,8 @@ export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps) {
 
     const lcmIdentifiers = useCancelablePromise(
         {
-            promise: () => resolveLCMWorkspaceIdentifiers(backend, { client, dataProduct, workspace }),
+            promise: () =>
+                Promise.resolve(resolveLCMWorkspaceIdentifiers(backend, { client, dataProduct, workspace })),
         },
         [client, dataProduct, workspace, backend],
     );

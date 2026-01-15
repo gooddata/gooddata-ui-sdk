@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type CellClassParams } from "ag-grid-community";
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
@@ -47,7 +48,7 @@ export function cellClassFactory(
 
         const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";
         const isTransposed = table.tableDescriptor.isTransposed();
-        const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
+        const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems);
         const isRowTotal = row.type === ROW_TOTAL;
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
         const { isColumnTotal, isColumnSubtotal } = getColumnTotalOrSubTotalInfo(

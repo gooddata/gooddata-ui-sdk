@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
@@ -244,7 +244,7 @@ class ResultMetaMethods implements IResultMetaMethods {
             ) ?? []) as IResultAttributeHeader[][];
             return dimension.map((normalHeader, idx) => {
                 return [...normalHeader, ...(forecastHeaders[idx] ?? [])];
-            }) as IResultHeader[][];
+            });
         });
     }
 
@@ -261,7 +261,7 @@ class ResultMetaMethods implements IResultMetaMethods {
 
             return normalHeaders.map((normalHeader, idx) => {
                 return [...normalHeader, ...(forecastHeaders[idx] ?? [])];
-            }) as IResultAttributeHeader[][];
+            });
         });
     }
 
@@ -281,7 +281,7 @@ class ResultMetaMethods implements IResultMetaMethods {
 
         return normalHeaders.map((normalHeader, idx) => {
             return [...normalHeader, ...(forecastHeaders[idx] ?? [])];
-        }) as IResultAttributeHeader[][];
+        });
     }
 
     public isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean {

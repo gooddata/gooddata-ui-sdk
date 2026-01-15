@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ChangeEvent, type FocusEvent, memo, useEffect, useRef, useState } from "react";
 
 import { memoize } from "lodash-es";
 
-import { InputPure, type InputPureProps } from "./InputPure.js";
+import { type IInputPureProps, InputPure } from "./InputPure.js";
 import { DEFAULT_SEPARATORS, formatNumberWithSeparators } from "./numberFormat.js";
 import { type Separators } from "./typings.js";
 
@@ -46,7 +46,7 @@ const convertFormattedStringToStandard = (formattedString: string, { thousand, d
     return withStandardDecimalPoint.length > 0 ? withStandardDecimalPoint : null;
 };
 
-const parse = (value: any | string, separators: Separators = DEFAULT_SEPARATORS) => {
+const parse = (value: any, separators: Separators = DEFAULT_SEPARATORS) => {
     if (value === null || value === "" || value === "-") {
         return null;
     }
@@ -68,7 +68,7 @@ const isValid = (value: any, separators: Separators = DEFAULT_SEPARATORS) => {
 /**
  * @internal
  */
-export interface InputWithNumberFormatOwnProps {
+export interface IInputWithNumberFormatOwnProps {
     separators?: Separators;
 }
 
@@ -76,7 +76,7 @@ export interface InputWithNumberFormatOwnProps {
  * @internal
  */
 
-export interface InputWithNumberFormatState {
+export interface IInputWithNumberFormatState {
     value: number;
     isFocused: boolean;
 }
@@ -85,7 +85,7 @@ export interface InputWithNumberFormatState {
  * @internal
  */
 
-export type InputWithNumberFormatProps = InputWithNumberFormatOwnProps & InputPureProps;
+export interface IInputWithNumberFormatProps extends IInputWithNumberFormatOwnProps, IInputPureProps {}
 
 // Coerces input value to number for formatting (handles string/number/null/undefined)
 const toNumberValue = (value: string | number | null | undefined): number | null | undefined => {
@@ -105,7 +105,7 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
     onFocus,
     onBlur,
     ...restProps
-}: InputWithNumberFormatProps) {
+}: IInputWithNumberFormatProps) {
     const inputRef = useRef<InputPure | null>(null);
     const [value, setValue] = useState(() =>
         formatNumberWithSeparators(toNumberValue(propValue), separators),
@@ -127,7 +127,6 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
         }, 0);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- InputPure onChange passes string, but types it loosely
     const handleChange = (newValue: any, e: ChangeEvent<HTMLInputElement>): void => {
         if (value === newValue) {
             return;
@@ -161,7 +160,7 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
                 inputRef.current = ref;
             }}
             onFocus={handleFocus}
-            onChange={handleChange as InputPureProps["onChange"]}
+            onChange={handleChange as IInputPureProps["onChange"]}
             onBlur={handleBlur}
             value={value}
         />

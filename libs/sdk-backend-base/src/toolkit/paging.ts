@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { range } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -38,26 +38,28 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 
     public async next(): Promise<IPagedResource<T>> {
         if (this.items.length === 0) {
-            return this;
+            return Promise.resolve(this);
         }
 
-        return new InMemoryPaging(this.allItems, this.limit, this.offset + this.items.length);
+        return Promise.resolve(
+            new InMemoryPaging(this.allItems, this.limit, this.offset + this.items.length),
+        );
     }
 
     public async goTo(pageIndex: number): Promise<IPagedResource<T>> {
         if (this.items.length === 0) {
-            return this;
+            return Promise.resolve(this);
         }
 
-        return new InMemoryPaging(this.allItems, this.limit, pageIndex * this.items.length);
+        return Promise.resolve(new InMemoryPaging(this.allItems, this.limit, pageIndex * this.items.length));
     }
 
     public async all(): Promise<T[]> {
-        return [...this.allItems];
+        return Promise.resolve([...this.allItems]);
     }
 
     public async allSorted(compareFn: (a: T, b: T) => number): Promise<T[]> {
-        return [...this.allItems].sort(compareFn);
+        return Promise.resolve([...this.allItems].sort(compareFn));
     }
 }
 

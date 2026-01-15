@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { Component, type ComponentClass, type ComponentType } from "react";
 
@@ -129,7 +129,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         public override componentDidMount() {
-            this.initDataLoading(
+            void this.initDataLoading(
                 this.props.execution,
                 this.props.forecastConfig,
                 this.props.clusteringConfig,
@@ -165,7 +165,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 !isEqual(this.props.clusteringConfig, nextProps.clusteringConfig)
             ) {
                 this.refreshAbortController();
-                this.initDataLoading(
+                void this.initDataLoading(
                     nextProps.execution,
                     nextProps.forecastConfig,
                     nextProps.clusteringConfig,

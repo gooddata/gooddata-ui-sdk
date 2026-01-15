@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type HTMLProps, type KeyboardEventHandler, type RefObject, forwardRef, useCallback } from "react";
 
 import { isElementTextInput } from "../utils/domUtilities.js";
 
 type IDropdownButtonKeyboardWrapperProps = {
-    onToggle: (desiredState?: boolean | unknown) => void;
+    onToggle: (desiredState?: unknown) => void;
     closeOnEscape?: boolean;
     isOpen: boolean;
 } & HTMLProps<HTMLDivElement>;

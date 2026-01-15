@@ -1,25 +1,25 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAccessibilityConfigBase } from "../../../typings/accessibility.js";
 import { UiFocusTrap } from "../../UiFocusManager/UiFocusTrap.js";
-import { type UiTagDef, type UiTagsProps } from "../types.js";
+import { type IUiTagDef, type IUiTagsProps } from "../types.js";
 import { UiTags } from "../UiTags.js";
 
-const shortTags: UiTagsProps["tags"] = [
+const shortTags: IUiTagsProps["tags"] = [
     { label: "Tag 1", id: "tag1" },
     { label: "Tag 2", id: "tag2", isDeletable: false },
     { label: "Tag 3", id: "tag3" },
 ];
 
 describe("UiTags", () => {
-    let onTagAdd: (tag: UiTagDef) => void;
-    let onTagClick: (tag: UiTagDef) => void;
-    let onTagRemove: (tag: UiTagDef) => void;
+    let onTagAdd: (tag: IUiTagDef) => void;
+    let onTagClick: (tag: IUiTagDef) => void;
+    let onTagRemove: (tag: IUiTagDef) => void;
 
-    const renderTag = (tags: UiTagsProps["tags"], props: Partial<UiTagsProps> = {}) => {
+    const renderTag = (tags: IUiTagsProps["tags"], props: Partial<IUiTagsProps> = {}) => {
         const defaultAriaAttributes: IAccessibilityConfigBase = {
             ariaLabel: "Tags",
         };
@@ -142,7 +142,7 @@ describe("UiTags", () => {
         expect(onTagAdd).toHaveBeenCalled();
     });
 
-    it("should allow tabbing to Cancel/Save in add tag popover even when wrapped in parent focus trap", async () => {
+    it("should allow tabbing to Cancel/Save in add tag popover even when wrapped in parent focus trap", () => {
         render(
             <UiFocusTrap root={<div />}>
                 <div style={{ width: 300 }}>

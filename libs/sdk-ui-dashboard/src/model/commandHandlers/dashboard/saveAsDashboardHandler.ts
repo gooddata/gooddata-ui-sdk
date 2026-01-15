@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type AnyAction } from "@reduxjs/toolkit";
 import { type BatchAction, batchActions } from "redux-batched-actions";
@@ -32,10 +32,7 @@ import { changeRenderMode } from "../../commands/index.js";
 import { type DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectEnableDashboardTabs,
-    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-} from "../../store/config/configSelectors.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
@@ -196,19 +193,15 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     );
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
-        yield select(selectEnableDashboardTabs);
 
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
     const { isUnderStrictControl: _unusedProp, ...dashboardDescriptorRest } = dashboardDescriptor;
 
-    // Process tabs if tabs feature is enabled and tabs exist
+    // Process tabs if tabs exist
     const processedTabs: IDashboardTab[] | undefined =
-        enableDashboardTabs && tabs && tabs.length > 0
-            ? processExistingTabsForSaveAs(tabs, useOriginalFilterContext)
-            : undefined;
+        tabs && tabs.length > 0 ? processExistingTabsForSaveAs(tabs, useOriginalFilterContext) : undefined;
 
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
@@ -220,7 +213,7 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
-        ...(enableDashboardTabs && processedTabs ? { tabs: processedTabs } : {}),
+        ...(processedTabs ? { tabs: processedTabs } : {}),
     };
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
@@ -279,12 +272,9 @@ function* saveAs(
      * For dashboards with tabs, we need to update identities for ALL tabs, not just the active one.
      * Each tab has its own layout that may contain widgets that need identity updates.
      */
-    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
-        yield select(selectEnableDashboardTabs);
-
     const actions: AnyAction[] = [metaActions.setMeta({ dashboard: dashboardWithUser })];
 
-    if (enableDashboardTabs && dashboardWithUser.tabs && dashboardWithUser.tabs.length > 0) {
+    if (dashboardWithUser.tabs && dashboardWithUser.tabs.length > 0) {
         const stateTabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
 
         // For each tab in the saved dashboard, update its widget identities and filter context identity

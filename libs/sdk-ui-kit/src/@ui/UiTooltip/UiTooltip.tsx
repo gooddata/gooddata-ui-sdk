@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 
@@ -17,7 +17,7 @@ import {
 import { ConditionalScopedThemeProvider, useIsScopeThemed, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
-import { type Dimensions, type UiTooltipProps } from "./types.js";
+import { type Dimensions, type IUiTooltipProps } from "./types.js";
 import {
     computeArrowOffset,
     computeTooltipShift,
@@ -54,7 +54,7 @@ export function UiTooltip({
     onOpen,
     onClose,
     anchorWrapperStyles,
-}: UiTooltipProps) {
+}: IUiTooltipProps) {
     const [isOpenInternal, setIsOpen] = useState(false);
     const isOpen =
         !disabled && (isOpenProp === undefined ? isOpenInternal || triggerBy.length === 0 : isOpenProp);

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { PureComponent, type ReactNode } from "react";
 
@@ -146,6 +146,7 @@ export abstract class ConfigurationPanelContent<
         const isAlertingEnabled = featureFlags?.enableAlerting;
         const isScheduledExportsEnabled = featureFlags?.enableScheduling;
         const enableImplicitDrillToUrl = featureFlags?.enableImplicitDrillToUrl;
+        const supportsKeyDriveAnalysis = featureFlags?.enableChangeAnalysis;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
         const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
@@ -163,6 +164,7 @@ export abstract class ConfigurationPanelContent<
                 supportsScheduledExportsConfiguration={!!supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
                 enableImplicitDrillToUrl={enableImplicitDrillToUrl}
+                supportsKeyDriveAnalysis={supportsKeyDriveAnalysis}
             />
         ) : null;
     }

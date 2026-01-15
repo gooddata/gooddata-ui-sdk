@@ -356,7 +356,7 @@ export const AppHeader = withTheme(function AppHeader({
     const getClassNames = useCallback(() => {
         return cx({
             "gd-header": true,
-            [state.guid as string]: true,
+            [state.guid]: true,
             [className as string]: !!className,
         });
     }, [state.guid, className]);

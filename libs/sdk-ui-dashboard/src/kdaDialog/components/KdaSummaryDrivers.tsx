@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useCallback, useMemo } from "react";
 
@@ -6,8 +6,8 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
+    type IUiAsyncTableColumn,
     UiAsyncTable,
-    type UiAsyncTableColumn,
     UiAsyncTableScrollbarWidth,
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
@@ -42,7 +42,7 @@ export function KdaSummaryDrivers() {
             titleColumn(intl, columnWidth[0]),
             driverColumn(intl, columnWidth[1]),
             driversCountColumn(intl, columnWidth[2]),
-        ] as UiAsyncTableColumn<KdaItemGroup>[];
+        ] as IUiAsyncTableColumn<KdaItemGroup>[];
     }, [intl, width, list]);
 
     return (

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -13,10 +13,10 @@ import { UiSearchResultsAnnouncement } from "../../UiSearchResultsAnnouncement/U
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { type UiAsyncTableToolbarProps } from "../types.js";
+import { type IUiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
-export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
+export function UiAsyncTableToolbar<T extends { id: string }>(props: IUiAsyncTableToolbarProps<T>) {
     const { hasContent, renderBulkActions, renderFilters, renderSearchSection } = useAsyncTableToolbar(props);
 
     const { isMobileView, variant } = props;
@@ -48,7 +48,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     onSearch,
     renderToolbarCustomElement,
     accessibilityConfig,
-}: UiAsyncTableToolbarProps<T>) => {
+}: IUiAsyncTableToolbarProps<T>) => {
     const intl = useIntl();
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);
 

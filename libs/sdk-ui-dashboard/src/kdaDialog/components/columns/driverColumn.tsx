@@ -1,13 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
-import { type UiAsyncTableColumn, UiButton } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableColumn, UiButton } from "@gooddata/sdk-ui-kit";
 
 import { type KdaItemGroup } from "../../internalTypes.js";
 import { getSortedSignificantDriver } from "../../tools/sortedKeyDrivers.js";
 
-export const driverColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn<KdaItemGroup> = (
+export const driverColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<KdaItemGroup> = (
     intl,
     width,
 ) => {

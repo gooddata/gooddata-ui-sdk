@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -68,7 +68,7 @@ export abstract class GoodDataSdkError extends Error {
     /**
      * Underlying cause of this error (if any).
      */
-    public getCause(): any | undefined {
+    public getCause(): any {
         return this.cause;
     }
 

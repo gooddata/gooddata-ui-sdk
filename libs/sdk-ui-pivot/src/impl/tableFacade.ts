@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type Column, type GridApi } from "ag-grid-community";
 import { type IntlShape } from "react-intl";
@@ -430,7 +430,7 @@ export class TableFacade {
                 isColumnAutoresizeEnabled(resizingConfig.columnAutoresizeOption) &&
                 this.shouldPerformAutoresize()
             ) {
-                const columns = this.columnApi!.getAllGridColumns();
+                const columns = this.columnApi.getAllGridColumns();
                 invariant(columns);
                 this.resetColumnsWidthToDefault(resizingConfig, columns);
             }
@@ -552,7 +552,7 @@ export class TableFacade {
         return isColumnAutoResized(this.autoResizedColumns, resizedColumnId);
     };
 
-    public resetResizedColumn = async (column: Column): Promise<void> => {
+    public resetResizedColumn = (column: Column): void => {
         if (!this.tableDescriptor) {
             return;
         }
@@ -582,10 +582,7 @@ export class TableFacade {
         setColumnMaxWidth(columnApi, columnIds, MANUALLY_SIZED_MAX_WIDTH);
     };
 
-    public onColumnsManualReset = async (
-        resizingConfig: ColumnResizingConfig,
-        columns: Column[],
-    ): Promise<void> => {
+    public onColumnsManualReset = (resizingConfig: ColumnResizingConfig, columns: Column[]): void => {
         const gridApi = this.gridApiGuard();
 
         if (!gridApi) {
@@ -610,7 +607,7 @@ export class TableFacade {
         }
 
         for (const column of columnsToReset) {
-            await this.resetResizedColumn(column);
+            this.resetResizedColumn(column);
         }
 
         this.afterOnResizeColumns(resizingConfig);
@@ -704,14 +701,14 @@ export class TableFacade {
                 for (let i = colsToSpread.length - 1; i >= 0; i--) {
                     const column = colsToSpread[i];
                     const newWidth = Math.round(column.getActualWidth() * scale);
-                    if (newWidth < column.getMinWidth()!) {
+                    if (newWidth < column.getMinWidth()) {
                         const min = column.getMinWidth();
                         columnWidthItems.push({ key: column, newWidth: min });
 
                         moveToNotSpread(column);
                         finishedResizing = false;
                     } else if (column.isGreaterThanMax(newWidth)) {
-                        columnWidthItems.push({ key: column, newWidth: column.getMaxWidth()! });
+                        columnWidthItems.push({ key: column, newWidth: column.getMaxWidth() });
                         moveToNotSpread(column);
                         finishedResizing = false;
                     } else {
@@ -742,7 +739,7 @@ export class TableFacade {
             resizeAllMeasuresColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
         } else if (this.isWeakMeasureResizeOperation(resizingConfig, columns)) {
             resizeWeakMeasureColumns(
-                this.tableDescriptor!,
+                this.tableDescriptor,
                 this.columnApi!,
                 this.resizedColumnsStore,
                 columns[0],
@@ -763,10 +760,10 @@ export class TableFacade {
         this.numberOfColumnResizedCalls++;
         await sleep(COLUMN_RESIZE_TIMEOUT);
 
-        if (this.numberOfColumnResizedCalls === UIClick.DOUBLE_CLICK) {
+        if (this.numberOfColumnResizedCalls === (UIClick.DOUBLE_CLICK as number)) {
             this.numberOfColumnResizedCalls = 0;
-            await this.onColumnsManualReset(resizingConfig, columns);
-        } else if (this.numberOfColumnResizedCalls === UIClick.CLICK) {
+            this.onColumnsManualReset(resizingConfig, columns);
+        } else if (this.numberOfColumnResizedCalls === (UIClick.CLICK as number)) {
             this.numberOfColumnResizedCalls = 0;
             this.onColumnsManualResized(resizingConfig, columns);
         }

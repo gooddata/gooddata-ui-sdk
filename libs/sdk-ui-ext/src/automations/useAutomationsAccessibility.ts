@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { type UiAsyncTableAccessibilityConfig } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableAccessibilityConfig } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./messages.js";
 import { type AutomationsType } from "./types.js";
@@ -13,7 +13,7 @@ import { type AutomationsType } from "./types.js";
 export function useAutomationsAccessibility(type: AutomationsType) {
     const intl = useIntl();
 
-    const accessibilityConfig: UiAsyncTableAccessibilityConfig<IAutomationMetadataObject> = useMemo(() => {
+    const accessibilityConfig: IUiAsyncTableAccessibilityConfig<IAutomationMetadataObject> = useMemo(() => {
         const isAlert = type === "alert";
 
         return {

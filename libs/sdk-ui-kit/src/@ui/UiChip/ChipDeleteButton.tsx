@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type ChipDeleteButtonProps } from "./types.js";
+import { type IChipDeleteButtonProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 
@@ -11,7 +11,7 @@ export function ChipDeleteButton({
     onDeleteKeyDown,
     deleteAriaLabel,
     dataTestId,
-}: ChipDeleteButtonProps) {
+}: IChipDeleteButtonProps) {
     return (
         <button
             data-testid={dataTestId ? `${dataTestId}-delete-button` : undefined}
@@ -21,7 +21,7 @@ export function ChipDeleteButton({
             onKeyDown={onDeleteKeyDown}
         >
             <span className={e("icon-delete")}>
-                <UiIcon type="cross" color="complementary-6" size={14} ariaHidden />
+                <UiIcon type="cross" color="complementary-6" size={14} />
             </span>
         </button>
     );

@@ -105,7 +105,7 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         );
     }
 
-    return <UiIcon {...props} ariaHidden />;
+    return <UiIcon {...props} />;
 }
 
 function TooltipRecipientsList({ automation }: { automation: IAutomationMetadataObject }) {

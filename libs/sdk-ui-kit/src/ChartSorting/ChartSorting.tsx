@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -16,7 +16,7 @@ import { Button } from "../Button/index.js";
 /**
  * @internal
  */
-export interface ChartSortingOwnProps {
+export interface IChartSortingOwnProps {
     currentSort: ISortItem[];
     availableSorts: IAvailableSortsGroup[];
     bucketItems: IBucketItemDescriptors;
@@ -29,7 +29,7 @@ export interface ChartSortingOwnProps {
 /**
  * @internal
  */
-export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
+export interface IChartSortingProps extends IChartSortingOwnProps, WrappedComponentProps {}
 
 function ChartSorting({
     currentSort,
@@ -39,7 +39,7 @@ function ChartSorting({
     buttonNode,
     onCancel,
     onApply,
-}: ChartSortingProps) {
+}: IChartSortingProps) {
     const [currentSelectedSort, setCurrentSort] = useState<ISortItem[]>(currentSort);
 
     const handleApply = useCallback(() => {
@@ -92,7 +92,7 @@ export const ChartSortingWithIntl = injectIntl(ChartSorting);
 /**
  * @internal
  */
-export function ChartSortingDialog(props: ChartSortingOwnProps) {
+export function ChartSortingDialog(props: IChartSortingOwnProps) {
     return (
         <IntlWrapper locale={props.locale}>
             <ChartSortingWithIntl {...props} />

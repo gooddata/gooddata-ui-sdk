@@ -5,8 +5,8 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
+    type IUiAsyncTableColumn,
     UiAsyncTable,
-    type UiAsyncTableColumn,
     UiAsyncTableEmptyState,
     UiAsyncTableRowHeightNormal,
     UiAsyncTableScrollbarWidth,
@@ -41,7 +41,7 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
     const availableWidth = (width > 0 ? width : tableWidth) - UiAsyncTableScrollbarWidth;
 
     // NOTE: UiAsyncTable is using its own react-intl provider, so we need to pass the intl to the columns directly
-    const columns: UiAsyncTableColumn<ICatalogItem>[] = useMemo(() => {
+    const columns: IUiAsyncTableColumn<ICatalogItem>[] = useMemo(() => {
         return [
             titleColumn(intl, getColumnWidth(availableWidth, 400)),
             createdByColumn(intl, getColumnWidth(availableWidth, 200)),

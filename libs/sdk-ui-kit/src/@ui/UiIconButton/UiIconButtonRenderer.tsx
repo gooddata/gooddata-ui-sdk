@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MouseEvent, forwardRef } from "react";
 
@@ -32,7 +32,7 @@ import { UiIcon } from "../UiIcon/UiIcon.js";
 /**
  * @internal
  */
-export interface UiIconButtonPublicProps {
+export interface IUiIconButtonPublicProps {
     icon: IconType;
     iconColor?: ThemeColor;
     label?: string;
@@ -61,12 +61,12 @@ export interface UiIconButtonPublicProps {
     id?: string;
 }
 
-export interface UiIconButtonInternalProps {
+export interface IUiIconButtonInternalProps {
     iconAfter?: IconType;
     iconAfterSize?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge;
 }
 
-export type UiIconButtonRendererProps = UiIconButtonPublicProps & UiIconButtonInternalProps;
+export type UiIconButtonRendererProps = IUiIconButtonPublicProps & IUiIconButtonInternalProps;
 
 const { b } = bem("gd-ui-kit-icon-button");
 
@@ -117,16 +117,8 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                 {...accessibilityConfigToAttributes(accessibilityConfig)}
                 {...ariaAttributes}
             >
-                <UiIcon
-                    type={icon}
-                    size={iconSize}
-                    color={iconColor}
-                    ariaHidden
-                    disableAnimation={disableAnimation}
-                />
-                {iconAfter ? (
-                    <UiIcon type={iconAfter} size={getButtonIconSize(iconAfterSize)} ariaHidden />
-                ) : null}
+                <UiIcon type={icon} size={iconSize} color={iconColor} disableAnimation={disableAnimation} />
+                {iconAfter ? <UiIcon type={iconAfter} size={getButtonIconSize(iconAfterSize)} /> : null}
             </button>
         );
     },

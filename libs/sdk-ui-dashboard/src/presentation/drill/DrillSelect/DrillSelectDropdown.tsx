@@ -18,6 +18,7 @@ import {
     isAttributeDescriptor,
     isCrossFiltering,
     isDrillFromAttribute,
+    isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
@@ -35,7 +36,6 @@ import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
     selectDashboardTitle,
-    selectEnableDashboardTabs,
     selectEnableImplicitDrillToUrl,
     selectInsightsMap,
     selectWidgetByRef,
@@ -50,6 +50,7 @@ import {
     getDrillOriginAttributeElementTitle,
     getTotalDrillToUrlCount,
 } from "../utils/drillDownUtils.js";
+import { getDrillToCustomUrlMissingAttributes } from "../utils/drillToCustomUrlUtils.js";
 import { getKdaKeyDriverCombinations, getKeyDriverCombinationItemTitle } from "../utils/kdaUtils.js";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
@@ -76,7 +77,6 @@ export function DrillSelectDropdown({
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
-    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
@@ -144,7 +144,6 @@ export function DrillSelectDropdown({
                 attributeDisplayForms,
                 intl,
                 widget: widget as IWidget,
-                enableDashboardTabs,
             }),
         [
             drillDefinitions,
@@ -155,7 +154,6 @@ export function DrillSelectDropdown({
             intl,
             widget,
             attributeDisplayForms,
-            enableDashboardTabs,
         ],
     );
 
@@ -333,7 +331,6 @@ export const createDrillSelectItems = ({
     intl,
     widget,
     attributeDisplayForms,
-    enableDashboardTabs,
 }: {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
@@ -343,7 +340,6 @@ export const createDrillSelectItems = ({
     intl: IntlShape;
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
-    enableDashboardTabs: boolean;
 }): DrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
@@ -392,7 +388,7 @@ export const createDrillSelectItems = ({
 
             // If targetTab is specified, append tab name to the title
             let fullTitle = title;
-            if (drillDefinition.targetTabLocalIdentifier && enableDashboardTabs) {
+            if (drillDefinition.targetTabLocalIdentifier) {
                 const dashboard = dashboardList.find((d) => areObjRefsEqual(d.ref, drillDefinition.target));
                 const tabTitle =
                     dashboard?.tabs?.find(
@@ -419,12 +415,28 @@ export const createDrillSelectItems = ({
                     ? getDrillOriginAttributeElementTitle(drillToUrlOrigin, drillEvent)
                     : undefined;
 
+            // Check if drill to custom URL has unavailable attribute placeholders
+            // e.g. multilayer geo charts with different attributes on same measure
+            const missingAttributes = isDrillToCustomUrl(drillDefinition)
+                ? getDrillToCustomUrlMissingAttributes(drillDefinition, drillEvent, attributeDisplayForms)
+                : [];
+
+            const isDisabled = missingAttributes.length > 0;
+            const tooltipText = isDisabled
+                ? intl.formatMessage(
+                      { id: "drill_modal_picker.drill_to_url.disabled.missing_attributes" },
+                      { attributes: missingAttributes.join(", ") },
+                  )
+                : undefined;
+
             return {
                 type: DrillType.DRILL_TO_URL,
                 name: intl.formatMessage({ id: "drill_modal_picker.more.details" }),
                 drillDefinition,
                 attributeValue,
                 id: stringify(drillDefinition) || "undefined",
+                isDisabled,
+                tooltipText,
             };
         }
 

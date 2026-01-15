@@ -62,7 +62,7 @@ export function onCellClickedFactory(
 
         const { onDrill } = props;
         const dv = table.getDrillDataContext();
-        const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
+        const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems);
 
         const isTransposed = table.tableDescriptor.isTransposed();
         const columnHeadersPosition = props.config?.columnHeadersPosition ?? "top";

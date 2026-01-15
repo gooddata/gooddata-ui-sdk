@@ -1,16 +1,20 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { type UiAsyncTableEmptyStateProps } from "../types.js";
+import { type IUiAsyncTableEmptyStateProps } from "../types.js";
 
 /**
  * @internal
  */
-export function UiAsyncTableEmptyState({ title, description, icon = "search" }: UiAsyncTableEmptyStateProps) {
+export function UiAsyncTableEmptyState({
+    title,
+    description,
+    icon = "search",
+}: IUiAsyncTableEmptyStateProps) {
     const intl = useIntl();
 
     return (

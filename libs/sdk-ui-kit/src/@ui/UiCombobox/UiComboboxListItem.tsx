@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type HTMLAttributes, type MouseEvent, memo } from "react";
 
@@ -9,13 +9,13 @@ import type { IUiComboboxOption, IUiComboboxState } from "./types.js";
 import { useComboboxState } from "./UiComboboxContext.js";
 
 /** @internal */
-export interface UiComboboxListItemProps extends HTMLAttributes<HTMLLIElement> {
+export interface IUiComboboxListItemProps extends HTMLAttributes<HTMLLIElement> {
     option: IUiComboboxOption;
     index: number;
 }
 
 /** @internal */
-export function UiComboboxListItem(props: UiComboboxListItemProps) {
+export function UiComboboxListItem(props: IUiComboboxListItemProps) {
     const { option } = props;
     const { registerItemRef, getItemProps, selectOption, activeOption, selectedOption } = useComboboxState();
 
@@ -36,7 +36,7 @@ export function UiComboboxListItem(props: UiComboboxListItemProps) {
     );
 }
 
-type UiComboboxListItemImplProps = UiComboboxListItemProps & {
+type UiComboboxListItemImplProps = IUiComboboxListItemProps & {
     isActive: boolean;
     isSelected: boolean;
     isDisabled: boolean;

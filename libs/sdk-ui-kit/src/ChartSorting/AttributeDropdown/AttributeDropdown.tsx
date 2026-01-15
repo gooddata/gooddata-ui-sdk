@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -25,7 +25,7 @@ import {
     SORT_TARGET_TYPE,
 } from "../types.js";
 
-interface AttributeDropdownProps {
+interface IAttributeDropdownProps {
     currentSortItem: ISortItem;
     availableSorts: IAvailableSortsGroup;
     bucketItems: IBucketItemDescriptors;
@@ -179,7 +179,7 @@ export function AttributeDropdown({
     intl,
     index,
     onSelect,
-}: AttributeDropdownProps) {
+}: IAttributeDropdownProps) {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>(null);
 

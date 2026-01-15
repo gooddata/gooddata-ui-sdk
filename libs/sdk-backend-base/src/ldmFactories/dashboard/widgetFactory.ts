@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 // import { invariant } from "ts-invariant";
 import { type IDashboardFilterReference, type IWidget, type ObjRef } from "@gooddata/sdk-model";
 
@@ -39,6 +40,7 @@ export class WidgetBaseBuilder<T extends IWidget> extends Builder<T> implements 
     ): this => {
         this.setWidget((w) => ({
             ...w,
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             [prop]: resolveValueOrUpdateCallback(valueOrUpdateCallback, w[prop]!),
         }));
         return this;

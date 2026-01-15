@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     ComponentTable,
+    type IUiDropdownIconButtonProps,
     UiDropdownIconButton,
-    type UiDropdownIconButtonProps,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 
@@ -12,7 +12,7 @@ import { wrapWithTheme } from "../themeWrapper.js";
 
 const propCombination = propCombinationsFor({
     icon: "directionRow",
-} as UiDropdownIconButtonProps);
+} as IUiDropdownIconButtonProps);
 
 const variants = propCombination("variant", ["primary", "secondary", "tertiary"]);
 const sizes = propCombination("size", ["small", "medium", "large"]);

@@ -36,6 +36,7 @@ import {
     type IAvailableDrillTargets,
     type IHeaderPredicate,
 } from "@gooddata/sdk-ui";
+import { isInsightKeyDriverAnalysisEnabled } from "@gooddata/sdk-ui-ext";
 
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
@@ -532,6 +533,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
             selectIsDisabledKda,
             selectDrillableItems,
             selectCatalogDateAttributes,
+            selectInsightByWidgetRef(ref),
             (
                 isKdaEnabled,
                 availableDrillTargets,
@@ -539,6 +541,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                 disableKdaByConfig,
                 drillableItems,
                 dateAttributes,
+                widgetInsight,
             ) => {
                 if (
                     !isKdaEnabled ||
@@ -548,6 +551,10 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                     // kda so that drill events are still possible to do.
                     drillableItems.length > 0
                 ) {
+                    return undefined;
+                }
+
+                if (!isInsightKeyDriverAnalysisEnabled(widgetInsight)) {
                     return undefined;
                 }
 

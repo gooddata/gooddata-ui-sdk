@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { InvariantError, invariant } from "ts-invariant";
 
 import { type IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
@@ -8,17 +9,17 @@ import { type ColumnHeadersPosition } from "../../publicTypes.js";
 import { type IGridRow } from "../data/resultTypes.js";
 import {
     type AnyCol,
-    type MixedValuesCol,
-    type ScopeCol,
-    type SeriesCol,
-    type SliceCol,
+    type IMixedValuesCol,
+    type IScopeCol,
+    type ISeriesCol,
+    type ISliceCol,
     isMixedValuesCol,
     isScopeCol,
     isSeriesCol,
     isSliceCol,
 } from "../structure/tableDescriptorTypes.js";
 
-export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
+export function createDataColLeafHeaders(col: ISeriesCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if (col.seriesDescriptor.attributeDescriptors) {
@@ -39,7 +40,7 @@ export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
  * For transposed table add metric descriptor from row
  */
 export function createScopeColWithMetricHeaders(
-    col: ScopeCol,
+    col: IScopeCol,
     includeColGroupHeaders: boolean,
     row?: IGridRow,
 ): IMappingHeader[] {
@@ -52,7 +53,7 @@ export function createScopeColWithMetricHeaders(
     return mappingHeaders;
 }
 
-export function createMixedValuesColHeaders(col: MixedValuesCol, row: IGridRow): IMappingHeader[] {
+export function createMixedValuesColHeaders(col: IMixedValuesCol, row: IGridRow): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if (row.measureDescriptor) {
@@ -69,7 +70,7 @@ export function createMixedValuesColHeaders(col: MixedValuesCol, row: IGridRow):
     return mappingHeaders;
 }
 
-export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHeader[] {
+export function createSliceColHeaders(col: ISliceCol, row: IGridRow): IMappingHeader[] {
     const result: IMappingHeader[] = [];
 
     if (!row.headerItemMap) {
@@ -89,7 +90,7 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
     return result;
 }
 
-function createDataColGroupHeaders(col: ScopeCol): IMappingHeader[] {
+function createDataColGroupHeaders(col: IScopeCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     col.descriptorsToHere.forEach((descriptor, index) => {

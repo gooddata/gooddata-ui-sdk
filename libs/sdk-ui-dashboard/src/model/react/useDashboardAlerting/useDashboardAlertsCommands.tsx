@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -13,7 +13,6 @@ import { switchDashboardTab } from "../../commands/index.js";
 import {
     selectActiveTabLocalIdentifier,
     selectEnableAlerting,
-    selectEnableDashboardTabs,
     selectInsights,
     selectWidgetLocalIdToTabIdMap,
     selectWidgets,
@@ -31,7 +30,6 @@ export const useDashboardAlertsCommands = () => {
     const widgets = useDashboardSelector(selectWidgets);
     const insights = useDashboardSelector(selectInsights);
     const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
-    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
 
     // Feature Flags
@@ -42,7 +40,7 @@ export const useDashboardAlertsCommands = () => {
         (widget?: IWidget, alert?: IAutomationMetadataObject) => {
             if (isAlertingEnabled) {
                 const widgetLocalId = widget?.localIdentifier ?? alert?.metadata?.widget;
-                if (enableDashboardTabs && widgetLocalId) {
+                if (widgetLocalId) {
                     const targetTabId = widgetTabMap[widgetLocalId];
                     if (targetTabId && targetTabId !== activeTabId) {
                         dispatch(switchDashboardTab(targetTabId));
@@ -65,16 +63,7 @@ export const useDashboardAlertsCommands = () => {
                 });
             }
         },
-        [
-            activeTabId,
-            automationInteraction,
-            dispatch,
-            enableDashboardTabs,
-            insights,
-            isAlertingEnabled,
-            widgetTabMap,
-            widgets,
-        ],
+        [activeTabId, automationInteraction, dispatch, insights, isAlertingEnabled, widgetTabMap, widgets],
     );
     const closeAlertDialog = useCallback(
         () => isAlertingEnabled && dispatch(uiActions.closeAlertingDialog()),
@@ -88,7 +77,7 @@ export const useDashboardAlertsCommands = () => {
                 return;
             }
 
-            if (enableDashboardTabs && widget?.localIdentifier) {
+            if (widget?.localIdentifier) {
                 const targetTabId = widgetTabMap[widget.localIdentifier];
                 if (targetTabId && targetTabId !== activeTabId) {
                     dispatch(switchDashboardTab(targetTabId));
@@ -101,7 +90,7 @@ export const useDashboardAlertsCommands = () => {
                 }),
             );
         },
-        [activeTabId, dispatch, enableDashboardTabs, isAlertingEnabled, widgetTabMap],
+        [activeTabId, dispatch, isAlertingEnabled, widgetTabMap],
     );
     const closeAlertsManagementDialog = useCallback(
         () => isAlertingEnabled && dispatch(uiActions.closeAlertingManagementDialog()),

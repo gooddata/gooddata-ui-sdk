@@ -46,7 +46,6 @@ export function SemanticSearchContentsComponent({ content, useMarkdown }: Props)
                     color="complementary-6"
                     backgroundSize={26}
                     backgroundColor="complementary-2"
-                    ariaHidden
                 />
                 <FormattedMessage id="gd.gen-ai.semantic-search.title" />
             </div>

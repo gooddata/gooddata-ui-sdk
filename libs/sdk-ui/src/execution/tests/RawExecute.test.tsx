@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { type Mock, describe, expect, it, vi } from "vitest";
@@ -75,7 +75,7 @@ describe("RawExecute", () => {
         });
     });
 
-    it("should start loading after invoking injected reload function", async () => {
+    it("should start loading after invoking injected reload function", () => {
         const child = vi.fn(({ reload }) => <button onClick={reload}>Reload</button>);
         renderDummyExecutor(child, { loadOnMount: false });
         fireEvent.click(screen.getByText("Reload"));
@@ -165,7 +165,7 @@ describe("RawExecute", () => {
         expect(onLoadingFinish).toBeCalledTimes(1);
     });
 
-    it("should render LoadingComponent", async () => {
+    it("should render LoadingComponent", () => {
         const child = makeChild();
         renderDummyExecutor(child, {
             LoadingComponent: () => <div>CUSTOM_LOADING</div>,

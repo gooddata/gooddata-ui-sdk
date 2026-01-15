@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty, isEqual } from "lodash-es";
 
@@ -399,9 +399,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
     return {
         workspace,
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
-            return dummyDescriptor(this.workspace);
+            return Promise.resolve(dummyDescriptor(this.workspace));
         },
-        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
+        updateDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -478,10 +478,10 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 getSemanticSearchQuery(): ISemanticSearchQuery {
                     return new DummySemanticSearchQueryBuilder(workspace);
                 },
-                async semanticSearchIndex(): Promise<void> {
+                semanticSearchIndex(): Promise<void> {
                     throw new NotSupported("not supported");
                 },
-                async getLlmEndpoints(): Promise<ILlmEndpointBase[]> {
+                getLlmEndpoints(): Promise<ILlmEndpointBase[]> {
                     throw new NotSupported("not supported");
                 },
                 getMemoryItems() {
@@ -1264,7 +1264,7 @@ class DummyElementsQuery implements IElementsQuery {
     }
 
     query = async (): Promise<IElementsQueryResult> => {
-        return new DummyElementsQueryResult([], this.limit, this.offset, 0);
+        return Promise.resolve(new DummyElementsQueryResult([], this.limit, this.offset, 0));
     };
 
     withDateFilters(_filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
@@ -1283,10 +1283,7 @@ class DummyElementsQueryFactory implements IElementsQueryFactory {
         return new DummyElementsQuery(this.workspace, ref);
     }
 
-    forFilter(
-        _filter: FilterWithResolvableElements,
-        _dateFilterDisplayForm?: ObjRef | undefined,
-    ): IFilterElementsQuery {
+    forFilter(_filter: FilterWithResolvableElements, _dateFilterDisplayForm?: ObjRef): IFilterElementsQuery {
         throw new NotSupported("not supported");
     }
 }
@@ -1299,7 +1296,7 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     }
 
     async getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
-        return {
+        return Promise.resolve({
             attribute: idRef("dummyAttribute"),
             deprecated: false,
             description: "Dummy attribute",
@@ -1310,7 +1307,7 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
             type: "displayForm",
             unlisted: false,
             uri: isUriRef(ref) ? ref.uri : `/gdc/md/${ref.identifier}`,
-        };
+        });
     }
 
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
@@ -1328,7 +1325,7 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     }
 
     async getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {
-        return {
+        return Promise.resolve({
             deprecated: false,
             description: "Dummy attribute",
             displayForms: [
@@ -1352,7 +1349,7 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
             type: "attribute",
             unlisted: false,
             uri: "/gdc/md/dummyAttribute",
-        };
+        });
     }
 
     getAttributes(_refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
@@ -1387,7 +1384,7 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
 class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     constructor(public readonly workspace: string) {}
 
-    async computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+    computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
         throw new NotSupported("not supported");
     }
 
@@ -1458,11 +1455,11 @@ class DummyWorkspaceDatasetsService implements IWorkspaceDatasetsService {
     constructor(public readonly workspace: string) {}
 
     public async getDatasets(): Promise<IDataset[]> {
-        return [];
+        return Promise.resolve([]);
     }
 
     public async getAllDatasetsMeta(): Promise<IMetadataObject[]> {
-        return [];
+        return Promise.resolve([]);
     }
 
     public getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]> {
@@ -1472,7 +1469,7 @@ class DummyWorkspaceDatasetsService implements IWorkspaceDatasetsService {
     public async getDataset(ref: ObjRef): Promise<IDataSetMetadataObject> {
         const id = isIdentifierRef(ref) ? ref.identifier : "dummyDataset";
 
-        return {
+        return Promise.resolve({
             id,
             uri: isUriRef(ref) ? ref.uri : `/gdc/md/${id}`,
             ref,
@@ -1483,7 +1480,7 @@ class DummyWorkspaceDatasetsService implements IWorkspaceDatasetsService {
             unlisted: false,
             type: "dataSet",
             isLocked: false,
-        };
+        });
     }
 
     public async updateDatasetMeta(
@@ -1506,7 +1503,7 @@ class DummyWorkspaceDatasetsService implements IWorkspaceDatasetsService {
 class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
     constructor(public readonly workspace: string) {}
 
-    async computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+    computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
         throw new NotSupported("not supported");
     }
 
@@ -1760,16 +1757,16 @@ function createEmptyPagedResource<T>(): IPagedResource<T> {
         offset: 0,
         totalCount: 0,
         async next() {
-            return emptyPage;
+            return Promise.resolve(emptyPage);
         },
         async goTo() {
-            return emptyPage;
+            return Promise.resolve(emptyPage);
         },
         async all() {
-            return [];
+            return Promise.resolve([]);
         },
         async allSorted() {
-            return [];
+            return Promise.resolve([]);
         },
     };
     return emptyPage;

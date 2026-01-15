@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IExecutionResult, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -27,18 +27,19 @@ import { type IPivotTableNextProps } from "./public.js";
  *
  * @internal
  */
-export interface AgGridRowData {
+export type AgGridRowData = {
     cellDataByColId: { [colId: string]: ITableDataValue };
     allRowData: DataValue[];
-}
+};
 
 /**
  * @internal
  */
-export interface ICorePivotTableNextProps extends IPivotTableNextResolvedProps, IVisualizationCallbacks {
-    execution: IPreparedExecution;
-    theme?: ITheme;
-}
+export type ICorePivotTableNextProps = IPivotTableNextResolvedProps &
+    IVisualizationCallbacks & {
+        execution: IPreparedExecution;
+        theme?: ITheme;
+    };
 
 /**
  * @internal

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -6,7 +6,7 @@ import { ShortenedText } from "../../../ShortenedText/index.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../listboxBem.js";
-import { type UiListboxInteractiveItemProps } from "../types.js";
+import { type IUiListboxInteractiveItemProps } from "../types.js";
 
 /**
  * @internal
@@ -17,7 +17,7 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
     isSelected,
     isCompact,
     onSelect,
-}: UiListboxInteractiveItemProps<T>): ReactNode {
+}: IUiListboxInteractiveItemProps<T>): ReactNode {
     return (
         <div
             className={e("item", {

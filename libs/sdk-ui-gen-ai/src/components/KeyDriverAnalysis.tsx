@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -29,6 +29,16 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
     const { keyDriverAnalysis, separators, locale, includeTags, excludeTags, setKeyDriverAnalysis } = props;
     const intl = useIntl();
 
+    const config = useMemo(
+        () => ({
+            objectAvailability: {
+                excludeObjectsWithTags: excludeTags,
+                includeObjectsWithTags: includeTags,
+            },
+        }),
+        [excludeTags, includeTags],
+    );
+
     const onRequestedDefinitionChange = useCallback(
         (definition?: IKdaDefinition) => {
             setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
@@ -42,7 +52,7 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
 
     return (
         <IntlWrapper locale={locale ?? intl.locale}>
-            <KdaStoreProvider>
+            <KdaStoreProvider config={config}>
                 <KdaDialogController
                     requestedDefinition={keyDriverAnalysis}
                     separators={separators}

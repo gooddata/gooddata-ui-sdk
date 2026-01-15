@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type AgGridEvent, type GridReadyEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
@@ -35,7 +36,7 @@ export class GridEventHandlers {
         // when table contains only headers, the onFirstDataRendered
         // is not triggered; trigger it manually
         if (internal.table.isEmpty()) {
-            this.context.onFirstDataRendered();
+            void this.context.onFirstDataRendered();
         }
     };
 

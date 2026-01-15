@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ReactNode, type RefObject, useEffect, useMemo, useRef } from "react";
 
@@ -8,7 +8,7 @@ import { typedUiMenuContextStore } from "./context.js";
 import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
 import { getContentItem, getSiblingItems } from "./itemUtils.js";
 import { b, e } from "./menuBem.js";
-import { type IUiMenuItemData, type UiMenuProps } from "./types.js";
+import { type IUiMenuItemData, type IUiMenuProps } from "./types.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 
 function ContentWrapper(props: {
@@ -31,7 +31,7 @@ function ContentWrapper(props: {
  * @internal
  */
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(
-    props: UiMenuProps<T, M>,
+    props: IUiMenuProps<T, M>,
 ): ReactNode {
     const {
         size = "medium",

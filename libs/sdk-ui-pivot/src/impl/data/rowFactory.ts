@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -32,10 +33,10 @@ import { messages } from "../../locales.js";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
 import { type TableDescriptor } from "../structure/tableDescriptor.js";
 import {
-    type MixedHeadersCol,
-    type MixedValuesCol,
-    type SliceCol,
-    type SliceMeasureCol,
+    type IMixedHeadersCol,
+    type IMixedValuesCol,
+    type ISliceCol,
+    type ISliceMeasureCol,
     isSeriesCol,
 } from "../structure/tableDescriptorTypes.js";
 
@@ -70,7 +71,7 @@ function getTotalLinkValue(measureHeaders: IResultMeasureHeader[] | undefined, t
 function getCell(
     rowHeaderData: IResultHeader[][],
     rowIndex: number,
-    rowHeader: SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol,
+    rowHeader: ISliceCol | ISliceMeasureCol | IMixedHeadersCol | IMixedValuesCol,
     rowHeaderIndex: number,
     tableDescriptor: TableDescriptor,
     intl: IntlShape,
@@ -348,7 +349,7 @@ export function createAgGridPage(
         const mergedColumnTotalsData: DataValue[][] = minimalRowData;
         const rowData: IGridRow[] = [];
         if (columnTotalsData) {
-            columnTotalsData!.forEach((_m, index) => {
+            columnTotalsData.forEach((_m, index) => {
                 mergedColumnTotalsData[index].push(...columnTotalsData[index]);
             });
         }

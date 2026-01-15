@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { StatusCodes as HttpStatusCodes } from "http-status-codes";
 import { type IntlShape } from "react-intl";
@@ -113,11 +113,11 @@ export function convertError(error: unknown): GoodDataSdkError {
     } else if (isAnalyticalBackendError(error)) {
         if (isUnexpectedResponseError(error)) {
             switch (error.httpStatus) {
-                case HttpStatusCodes.NOT_FOUND:
+                case HttpStatusCodes.NOT_FOUND as number:
                     return new NotFoundSdkError(ErrorCodes.NOT_FOUND, error);
-                case HttpStatusCodes.BAD_REQUEST:
+                case HttpStatusCodes.BAD_REQUEST as number:
                     return new BadRequestSdkError(ErrorCodes.BAD_REQUEST, error);
-                case HttpStatusCodes.REQUEST_HEADER_FIELDS_TOO_LARGE:
+                case HttpStatusCodes.REQUEST_HEADER_FIELDS_TOO_LARGE as number:
                     return new BadRequestSdkError(ErrorCodes.HEADERS_TOO_LARGE, error);
                 default:
                     return new UnexpectedSdkError(ErrorCodes.UNKNOWN_ERROR, error);

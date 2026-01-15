@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import cx from "classnames";
@@ -13,8 +13,8 @@ import {
     type IUiMenuGroupItemProps,
     type IUiMenuInteractiveItemProps,
     type IUiMenuItem,
+    type IUiMenuProps,
     type IUiMenuStaticItemProps,
-    type UiMenuProps,
 } from "../types.js";
 import { UiMenu } from "../UiMenu.js";
 
@@ -51,7 +51,7 @@ describe("UiMenu", () => {
 
     const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
 
-    const renderMenu = (props: Partial<UiMenuProps> = {}) => {
+    const renderMenu = (props: Partial<IUiMenuProps> = {}) => {
         const defaultAriaAttributes = {
             id: "test-dropdown-menu",
             "aria-labelledby": "test-dropdown-button",

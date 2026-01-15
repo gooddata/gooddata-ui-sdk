@@ -174,7 +174,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
         );
     }
 

@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { ComponentTable, UiBadge, type UiBadgeProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, type IUiBadgeProps, UiBadge, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -10,7 +10,7 @@ export default {
     title: "15 Ui/UiBadge",
 };
 
-const propCombination = propCombinationsFor({} as UiBadgeProps);
+const propCombination = propCombinationsFor({} as IUiBadgeProps);
 
 const label = propCombination("label", ["badge"]);
 

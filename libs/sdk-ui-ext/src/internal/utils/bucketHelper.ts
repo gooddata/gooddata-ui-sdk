@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, compact, isEmpty, negate, set, uniqBy, without } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -13,6 +13,7 @@ import {
     bucketItems,
     bucketsFind,
     bucketsMeasures,
+    idRef,
     insightBuckets,
     insightVisualizationType,
     isObjRef,
@@ -88,20 +89,222 @@ export function isRankingFilter(filter: IBucketFilter | undefined): filter is IR
     );
 }
 
+function getDimensionalityRef(
+    localIdentifier: string,
+    oldAttributeBucketItems: IBucketItem[],
+): ObjRef | undefined {
+    const fromOld = oldAttributeBucketItems.find((item) => item.localIdentifier === localIdentifier);
+
+    // Resolve using old reference point snapshot (the moment when attribute was still in buckets).
+    const bucketItem = fromOld;
+
+    // MVF dimensionality should be expressed using ObjRefs.
+    // - For attribute bucket items, display form ref is stored on dfRef
+    // - For date bucket items, the date dataset ref is stored on dateDatasetRef
+    return bucketItem?.dfRef ?? bucketItem?.dateDatasetRef;
+}
+
+function transformMeasureValueFilterMeasureToRef(
+    filter: IMeasureValueFilter,
+    measureBucketItems: IBucketItem[],
+    oldMeasureBucketItems: IBucketItem[],
+): IMeasureValueFilter {
+    // Transform measure value filter: if measure is referenced by localId but not in current buckets,
+    // check previous buckets and transform to ref for simple measures
+    if (!filter.measureLocalIdentifier || filter.measureRef) {
+        return filter;
+    }
+
+    const measureLocalId = filter.measureLocalIdentifier;
+
+    // Check if measure exists in current buckets
+    const currentMeasure = measureBucketItems.find((item) => item.localIdentifier === measureLocalId);
+
+    if (currentMeasure) {
+        return filter;
+    }
+
+    // Measure not in current buckets, check previous buckets
+    const previousMeasure = oldMeasureBucketItems.find((item) => item.localIdentifier === measureLocalId);
+
+    if (!previousMeasure) {
+        return filter;
+    }
+
+    // Check if it's a simple measure (has attribute, no aggregation, no master local identifier)
+    const isNotSimpleMeasure =
+        !previousMeasure.attribute ||
+        !!previousMeasure.aggregation ||
+        !!previousMeasure.masterLocalIdentifier;
+
+    if (isNotSimpleMeasure) {
+        return filter;
+    }
+
+    // Transform to use measureRef instead of measureLocalIdentifier
+    const { measureLocalIdentifier: _measureLocalIdentifier, ...restFilter } = filter;
+    return {
+        ...restFilter,
+        measureRef: idRef(previousMeasure.attribute!, "measure"),
+    };
+}
+
+function transformMeasureValueFilterDimensionalityToRefs(
+    filter: IMeasureValueFilter,
+    oldAttributeBucketItems: IBucketItem[],
+    dimensionalityLocalIdsToTransform: Set<string>,
+): IMeasureValueFilter {
+    if (dimensionalityLocalIdsToTransform.size === 0) {
+        return filter;
+    }
+    if (!filter.dimensionality || filter.dimensionality.length === 0) {
+        return filter;
+    }
+
+    const resolvedDimensionality = filter.dimensionality.map((dimensionalityItem) => {
+        if (isObjRef(dimensionalityItem)) {
+            return dimensionalityItem;
+        }
+
+        if (!dimensionalityLocalIdsToTransform.has(dimensionalityItem)) {
+            return dimensionalityItem;
+        }
+
+        const resolved = getDimensionalityRef(dimensionalityItem, oldAttributeBucketItems);
+        // If we cannot resolve, keep the original local identifier. The subsequent sanitization pass
+        // will drop such filter if the local identifier is not valid in the current reference point.
+        return resolved ?? dimensionalityItem;
+    });
+
+    return {
+        ...filter,
+        dimensionality: resolvedDimensionality,
+    };
+}
+
+function getMeasureValueFilterDimensionalityLocalIdsToTransform(
+    filter: IMeasureValueFilter,
+    attributeBucketItems: IBucketItem[],
+): Set<string> {
+    const localIdsToTransform = new Set<string>();
+
+    if (!filter.dimensionality || filter.dimensionality.length === 0) {
+        return localIdsToTransform;
+    }
+
+    for (const item of filter.dimensionality) {
+        if (isObjRef(item)) {
+            continue;
+        }
+        const existsInCurrentBuckets = attributeBucketItems.some(
+            (attributeBucketItem) => attributeBucketItem.localIdentifier === item,
+        );
+        if (!existsInCurrentBuckets) {
+            localIdsToTransform.add(item);
+        }
+    }
+
+    return localIdsToTransform;
+}
+
+function sanitizeMeasureValueFilter(
+    filter: IMeasureValueFilter,
+    attributeBucketItems: IBucketItem[],
+    measureBucketItems: IBucketItem[],
+    enableImprovedAdFilters: boolean,
+): boolean {
+    if (attributeBucketItems.length === 0 && !enableImprovedAdFilters) {
+        return false;
+    }
+    // Validate dimensionality - each item based on its type
+    const hasValidDimensionality =
+        !filter.dimensionality ||
+        filter.dimensionality.every((item) => {
+            if (isObjRef(item)) {
+                // ObjRef (catalog attribute) - valid only when the feature flag is enabled
+                return enableImprovedAdFilters;
+            } else {
+                // Local identifier - must exist in attribute bucket items
+                return attributeBucketItems.some(
+                    (attributeBucketItem) => attributeBucketItem.localIdentifier === item,
+                );
+            }
+        });
+
+    if (!hasValidDimensionality) {
+        return false;
+    }
+
+    // When enableImprovedAdFilters is true, allow measure filters even if measure is not in buckets
+    if (enableImprovedAdFilters && filter.measureRef !== undefined) {
+        return true;
+    }
+    return measureBucketItems.some(
+        (measureBucketItem: IBucketItem) =>
+            measureBucketItem.localIdentifier === filter.measureLocalIdentifier,
+    );
+}
+
 export function sanitizeFilters(
     newReferencePoint: IExtendedReferencePoint,
     enableImprovedAdFilters = false,
+    oldReferencePoint: Pick<IExtendedReferencePoint, "buckets">,
 ): IExtendedReferencePoint {
     const attributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);
+    const oldAttributeBucketItems = getAllAttributeItems(oldReferencePoint.buckets);
     const measureBucketItems = getAllMeasureItems(newReferencePoint.buckets);
+    const oldMeasureBucketItems = getAllMeasureItems(oldReferencePoint.buckets);
 
     newReferencePoint.filters = newReferencePoint.filters || {
         localIdentifier: "filters",
         items: [],
     };
 
-    const filteredFilters = newReferencePoint.filters.items.filter((filterBucketItem: IFiltersBucketItem) => {
+    // transformation
+    const transformedFilterItems = newReferencePoint.filters.items.map(
+        (filterBucketItem: IFiltersBucketItem) => {
+            const filter = filterBucketItem.filters?.[0];
+
+            if (isMeasureValueFilter(filter) && enableImprovedAdFilters) {
+                // Transform measure ref: migrate from localId to ref when measure is removed from buckets
+                const filterWithTransformedMeasure = transformMeasureValueFilterMeasureToRef(
+                    filter,
+                    measureBucketItems,
+                    oldMeasureBucketItems,
+                );
+
+                // Transform dimensionality
+                const dimensionalityLocalIdsToTransform =
+                    getMeasureValueFilterDimensionalityLocalIdsToTransform(
+                        filterWithTransformedMeasure,
+                        attributeBucketItems,
+                    );
+
+                const filterWithTransformedDimensionality = transformMeasureValueFilterDimensionalityToRefs(
+                    filterWithTransformedMeasure,
+                    oldAttributeBucketItems,
+                    dimensionalityLocalIdsToTransform,
+                );
+
+                if (filterWithTransformedDimensionality !== filter) {
+                    return {
+                        ...filterBucketItem,
+                        filters: [filterWithTransformedDimensionality],
+                    };
+                }
+            }
+
+            return filterBucketItem;
+        },
+    );
+
+    //sanitization
+    const filteredFilters = transformedFilterItems.filter((filterBucketItem: IFiltersBucketItem) => {
         const filter = filterBucketItem.filters?.[0];
+
+        if (!filter) {
+            return false;
+        }
 
         if (isAttributeFilter(filter) || isDateFilter(filter)) {
             if (filterBucketItem.autoCreated === false) {
@@ -111,36 +314,11 @@ export function sanitizeFilters(
                 (attributeBucketItem: IBucketItem) => attributeBucketItem.attribute === filter.attribute,
             );
         } else if (isMeasureValueFilter(filter)) {
-            if (attributeBucketItems.length === 0) {
-                return false;
-            }
-
-            // Validate dimensionality - each item based on its type
-            const hasValidDimensionality =
-                !filter.dimensionality ||
-                filter.dimensionality.every((item) => {
-                    if (isObjRef(item)) {
-                        // ObjRef (catalog attribute) - valid only when the feature flag is enabled
-                        return enableImprovedAdFilters;
-                    } else {
-                        // Local identifier - must exist in attribute bucket items
-                        return attributeBucketItems.some(
-                            (attributeBucketItem) => attributeBucketItem.localIdentifier === item,
-                        );
-                    }
-                });
-
-            if (!hasValidDimensionality) {
-                return false;
-            }
-
-            // When enableImprovedAdFilters is true, allow measure filters even if measure is not in buckets
-            if (enableImprovedAdFilters && filter.measureRef !== undefined) {
-                return true;
-            }
-            return measureBucketItems.some(
-                (measureBucketItem: IBucketItem) =>
-                    measureBucketItem.localIdentifier === filter.measureLocalIdentifier,
+            return sanitizeMeasureValueFilter(
+                filter,
+                attributeBucketItems,
+                measureBucketItems,
+                enableImprovedAdFilters,
             );
         } else if (isRankingFilter(filter)) {
             if (attributeBucketItems.length === 0) {

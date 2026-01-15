@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep, cloneDeepWith, keyBy } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -109,7 +109,7 @@ export class Denormalizer {
         return cloneDeepWith(normalizedDims, (value) => {
             if (isAttributeDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.attributeHeader.localIdentifier);
-                const attribute = this.originalAttributes[localIdentifier]!;
+                const attribute = this.originalAttributes[localIdentifier];
                 const name = attributeAlias(attribute) || value.attributeHeader.formOf.name;
 
                 return {
@@ -124,7 +124,7 @@ export class Denormalizer {
                 };
             } else if (isMeasureDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.measureHeaderItem.localIdentifier);
-                const measure = this.originalMeasures[localIdentifier]!;
+                const measure = this.originalMeasures[localIdentifier];
                 const masterMeasureId = measureMasterIdentifier(measure);
                 const masterMeasureInheritFormat =
                     isMeasureGroupDescriptor(measureGroup) &&
@@ -190,7 +190,7 @@ export class Denormalizer {
 
         invariant(value, `mapping from normalized to real localId does not exist. Normalized: ${normalized}`);
 
-        return value!;
+        return value;
     };
 
     private fillOriginalMeasureTitle = (name: string): string => {
@@ -321,7 +321,7 @@ export class Normalizer {
 
         invariant(value, `dangling localId reference. Target: ${original}`);
 
-        return value!;
+        return value;
     };
 
     private maybeNormalizedLocalId = (original: string): string | undefined => {
@@ -455,7 +455,7 @@ export class Normalizer {
 
         invariant(measure, `measure with localId ${localId} could not be found`);
 
-        return this.normalizeMeasure(measure!, path);
+        return this.normalizeMeasure(measure, path);
     };
 
     private normalizeMeasures = () => {

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -42,7 +42,7 @@ const renderEnhancedComponent = <T, E>(
         ...hocConfig,
         promiseFactory,
         exportTitle: "TestComponent",
-    })(CoreComponent as any);
+    })(CoreComponent);
 
     return render(<Component />);
 };

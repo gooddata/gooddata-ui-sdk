@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
@@ -96,7 +96,7 @@ function doGetAttributeElements(backend: IAnalyticalBackend, ref: ObjRef): Promi
     return backend.workspace("test").attributes().elements().forDisplayForm(ref).query();
 }
 
-type CollectionItemsProvider = (config: ICollectionItemsConfig) => Promise<ICollectionItemsResult>;
+type CollectionItemsProvider = (config: ICollectionItemsConfig) => ICollectionItemsResult;
 
 function createGeoCollectionBackend(provider: CollectionItemsProvider): IAnalyticalBackend {
     const backend = dummyBackendEmptyData();
@@ -197,7 +197,7 @@ describe("withCaching", () => {
         const backend = withCachingForTests();
 
         const first = doExecution(backend, [ReferenceMd.Won]);
-        doExecution(backend, [ReferenceMd.Amount]);
+        void doExecution(backend, [ReferenceMd.Amount]);
         const second = doExecution(backend, [ReferenceMd.Won]);
 
         expect(second).not.toBe(first);
@@ -236,7 +236,7 @@ describe("withCaching", () => {
         vi.useRealTimers();
     });
 
-    it("uses count-based eviction when maxExecutions is set (takes precedence over maxExecutionsAge)", async () => {
+    it("uses count-based eviction when maxExecutions is set (takes precedence over maxExecutionsAge)", () => {
         const backend = withCaching(defaultBackend, {
             maxExecutions: 1, // This takes precedence over maxExecutionsAge
             maxExecutionsAge: 900_000,
@@ -257,7 +257,7 @@ describe("withCaching", () => {
 
         // With maxExecutions: 1, this should evict the first execution when the second one is cached
         const first = doExecution(backend, [ReferenceMd.Won]);
-        doExecution(backend, [ReferenceMd.Amount]);
+        void doExecution(backend, [ReferenceMd.Amount]);
         const third = doExecution(backend, [ReferenceMd.Won]);
 
         // Should NOT be the same cached result (evicted by count-based LRU)
@@ -279,7 +279,7 @@ describe("withCaching", () => {
 
         const result = await doExecution(backend, [ReferenceMd.Won]);
         const first = result.readWindow([0, 0], [1, 1]);
-        result.readWindow([0, 0], [2, 2]);
+        void result.readWindow([0, 0], [2, 2]);
         const second = result.readWindow([0, 0], [1, 1]);
 
         expect(second).not.toBe(first);
@@ -325,7 +325,7 @@ describe("withCaching", () => {
         const backend = withCachingForTests();
 
         const first = backend.workspace("test").catalog().load();
-        backend.workspace("someOtherWorkspace").catalog().load();
+        void backend.workspace("someOtherWorkspace").catalog().load();
         const second = backend.workspace("test").catalog().load();
 
         expect(second).not.toBe(first);
@@ -338,7 +338,7 @@ describe("withCaching", () => {
         const first = backend.workspace("test").catalog().load();
 
         // second call done explicitly with different options => evict previous entry
-        backend.workspace("test").catalog().forTypes(["attribute"]).load();
+        void backend.workspace("test").catalog().forTypes(["attribute"]).load();
 
         // now back to default options, will be new promise
         const second = backend.workspace("test").catalog().load();
@@ -423,7 +423,7 @@ describe("withCaching", () => {
         expect(effectiveExecutions).toEqual(2);
     });
 
-    it("resets catalog cache", async () => {
+    it("resets catalog cache", () => {
         let cacheControl: CacheControl | undefined;
 
         const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
@@ -440,7 +440,7 @@ describe("withCaching", () => {
         };
 
         it("reuses cached geo collection values for overlapping requests", async () => {
-            const provider = vi.fn(async (config: ICollectionItemsConfig) => {
+            const provider = vi.fn((config: ICollectionItemsConfig) => {
                 const features = config.values?.map((value) => createGeoFeature(value)) ?? [];
 
                 return {
@@ -480,7 +480,7 @@ describe("withCaching", () => {
         });
 
         it("remembers empty geo collection responses per value", async () => {
-            const provider = vi.fn(async (config: ICollectionItemsConfig) => {
+            const provider = vi.fn((config: ICollectionItemsConfig) => {
                 const features =
                     config.values
                         ?.filter((value) => value === "alpha")
@@ -537,7 +537,7 @@ describe("withCaching", () => {
                 .organization(ORGANIZATION_ID)
                 .securitySettings()
                 .isUrlValid(URL, "UI_EVENT");
-            backend.organization("someOtherOrg").securitySettings().isUrlValid(URL, "UI_EVENT");
+            void backend.organization("someOtherOrg").securitySettings().isUrlValid(URL, "UI_EVENT");
             const second = backend
                 .organization(ORGANIZATION_ID)
                 .securitySettings()
@@ -556,7 +556,7 @@ describe("withCaching", () => {
                 .isUrlValid(URL, "UI_EVENT");
 
             // second call done explicitly with different options => evict previous entry
-            backend
+            void backend
                 .organization(ORGANIZATION_ID)
                 .securitySettings()
                 .isUrlValid("https://example.com", "UI_EVENT");
@@ -570,7 +570,7 @@ describe("withCaching", () => {
             expect(second).not.toBe(first);
         });
 
-        it("resets security settings cache", async () => {
+        it("resets security settings cache", () => {
             let cacheControl: CacheControl | undefined;
 
             const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
@@ -602,7 +602,7 @@ describe("withCaching", () => {
             const backend = withCachingForTests();
 
             const first = backend.workspace("test").settings().getSettings();
-            backend.workspace("other").settings().getSettings();
+            void backend.workspace("other").settings().getSettings();
             const second = backend.workspace("test").settings().getSettings();
 
             expect(second).not.toBe(first);
@@ -621,13 +621,13 @@ describe("withCaching", () => {
             const backend = withCachingForTests();
 
             const first = backend.workspace("test").settings().getSettingsForCurrentUser();
-            backend.workspace("other").settings().getSettingsForCurrentUser();
+            void backend.workspace("other").settings().getSettingsForCurrentUser();
             const second = backend.workspace("test").settings().getSettingsForCurrentUser();
 
             expect(second).not.toBe(first);
         });
 
-        it("resets workspace settings cache", async () => {
+        it("resets workspace settings cache", () => {
             let cacheControl: CacheControl | undefined;
 
             const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
@@ -641,7 +641,7 @@ describe("withCaching", () => {
 
     describe("attributes", () => {
         describe("getAttributeDisplayForm and getAttributeDisplayForms", () => {
-            it("should cache the scalar calls", async () => {
+            it("should cache the scalar calls", () => {
                 const backend = withCachingForTests();
 
                 const first = doGetAttributeDisplayForm(
@@ -698,7 +698,7 @@ describe("withCaching", () => {
                 expect(scalar).toBe(vector[0]);
             });
 
-            it("should evict cache items when the limit is hit", async () => {
+            it("should evict cache items when the limit is hit", () => {
                 const backend = withCachingForTests();
 
                 const first = doGetAttributeDisplayForm(
@@ -708,9 +708,9 @@ describe("withCaching", () => {
 
                 // other 3 calls with different display form to replace the first one
                 // the LRU we use starts evicting at maxSize * 2
-                doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
-                doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
-                doGetAttributeDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
+                void doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+                void doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
+                void doGetAttributeDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
 
                 const second = doGetAttributeDisplayForm(
                     backend,
@@ -720,7 +720,7 @@ describe("withCaching", () => {
                 expect(second).not.toBe(first);
             });
 
-            it("should reset attributes cache with resetAttributes", async () => {
+            it("should reset attributes cache with resetAttributes", () => {
                 let cacheControl: CacheControl | undefined;
 
                 const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
@@ -740,7 +740,7 @@ describe("withCaching", () => {
                 expect(second).not.toBe(first);
             });
 
-            it("should reset attributes cache with resetAll", async () => {
+            it("should reset attributes cache with resetAll", () => {
                 let cacheControl: CacheControl | undefined;
 
                 const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
@@ -777,7 +777,7 @@ describe("withCaching", () => {
                 expect(second).toBe(first);
             });
 
-            it("should evict cache items when the limit is hit", async () => {
+            it("should evict cache items when the limit is hit", () => {
                 const backend = withCachingForTests();
 
                 const first = doGetAttributeByDisplayForm(
@@ -787,9 +787,9 @@ describe("withCaching", () => {
 
                 // other 3 calls with different display form to replace the first one
                 // the LRU we use starts evicting at maxSize * 2
-                doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
-                doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
-                doGetAttributeByDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
+                void doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+                void doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
+                void doGetAttributeByDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
 
                 const second = doGetAttributeByDisplayForm(
                     backend,
@@ -799,7 +799,7 @@ describe("withCaching", () => {
                 expect(second).not.toBe(first);
             });
 
-            it("should reset attributes cache with resetAttributes", async () => {
+            it("should reset attributes cache with resetAttributes", () => {
                 let cacheControl: CacheControl | undefined;
 
                 const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
@@ -819,7 +819,7 @@ describe("withCaching", () => {
                 expect(second).not.toBe(first);
             });
 
-            it("should reset attributes cache with resetAll", async () => {
+            it("should reset attributes cache with resetAll", () => {
                 let cacheControl: CacheControl | undefined;
 
                 const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
@@ -864,7 +864,7 @@ describe("withCaching", () => {
                     ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
-                doGetAttributeElements(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+                void doGetAttributeElements(backend, ReferenceMd.Activity.Default.attribute.displayForm);
 
                 const second = await doGetAttributeElements(
                     backend,
@@ -967,6 +967,6 @@ class GeoDataView extends DecoratedDataView {
     }
 
     public override readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
-        return this.provider(config);
+        return Promise.resolve(this.provider(config));
     }
 }

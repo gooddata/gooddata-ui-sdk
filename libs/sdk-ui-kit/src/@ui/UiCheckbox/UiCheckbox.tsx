@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ChangeEvent, useEffect, useRef } from "react";
 
@@ -9,7 +9,7 @@ import { bem } from "../@utils/bem.js";
 /**
  * @internal
  */
-export interface UiCheckboxProps {
+export interface IUiCheckboxProps {
     checked: boolean;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     preventDefault?: boolean;
@@ -34,7 +34,7 @@ export function UiCheckbox({
     accessibilityConfig,
     tabIndex,
     label,
-}: UiCheckboxProps) {
+}: IUiCheckboxProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {

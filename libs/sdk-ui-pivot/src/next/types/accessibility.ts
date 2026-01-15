@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * Accessibility-related configuration for the PivotTableNext component.
  *
  * @public
  */
-export interface PivotTableNextAccessibilityConfig {
+export type PivotTableNextAccessibilityConfig = {
     /**
      * Enable accessibility mode optimizations.
      *
@@ -18,4 +18,4 @@ export interface PivotTableNextAccessibilityConfig {
      * Default: false
      */
     enableAccessibility?: boolean;
-}
+};
