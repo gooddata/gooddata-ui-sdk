@@ -3,7 +3,6 @@
     "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/test/helper.ts"],
     "include": ["src/**/*"],
     "compilerOptions": {
-        "noCheck": true,
         "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm"

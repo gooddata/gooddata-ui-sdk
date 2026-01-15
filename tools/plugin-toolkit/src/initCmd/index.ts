@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import * as path from "path";
 import url from "url";
@@ -8,7 +8,7 @@ import fse from "fs-extra";
 import tar from "tar";
 
 import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
-import { type FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
+import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions, type TargetAppLanguage } from "../_base/types.js";
 import {
@@ -105,7 +105,7 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
     const { hostname, workspace, dashboard, pluginIdentifier, language, packageManager } = config;
 
     const { protocol } = url.parse(hostname);
-    const replacements: FileReplacementSpec = {
+    const replacements: IFileReplacementSpec = {
         ".env": [
             {
                 regex: /BACKEND_URL=/g,

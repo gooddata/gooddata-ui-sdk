@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import fs from "fs";
 import path from "path";
@@ -8,12 +8,12 @@ import { intersection, isEmpty } from "lodash-es";
 
 import { type PackageDescriptor, type SourceDescriptor } from "../../base/types.js";
 import {
-    type BuildRequested,
     type DcEvent,
     type EventBus,
     GlobalEventBus,
+    type IBuildRequested,
     type IEventListener,
-    type SourceInitialized,
+    type ISourceInitialized,
     buildFinished,
     buildStarted,
 } from "../events.js";
@@ -54,7 +54,7 @@ export class PackageBuilder implements IEventListener {
         }
     };
 
-    private onSourceInitialized = (event: SourceInitialized): void => {
+    private onSourceInitialized = (event: ISourceInitialized): void => {
         this.sourceDescriptor = event.body.sourceDescriptor;
         this.packageBuildScripts = {};
 
@@ -72,7 +72,7 @@ export class PackageBuilder implements IEventListener {
         });
     };
 
-    private onBuildRequested = (event: BuildRequested): void => {
+    private onBuildRequested = (event: IBuildRequested): void => {
         const packageDescriptor = this.sourceDescriptor!.packages[event.body.packageName];
 
         this.doBuild(packageDescriptor);

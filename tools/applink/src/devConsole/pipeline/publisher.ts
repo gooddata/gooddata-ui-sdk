@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import path from "path";
 
@@ -11,7 +11,7 @@ import {
     type EventBus,
     GlobalEventBus,
     type IEventListener,
-    type PackagesRebuilt,
+    type IPackagesRebuilt,
     publishFinished,
 } from "../events.js";
 import { appLogError, appLogInfo, appLogWarn } from "../ui/utils.js";
@@ -55,7 +55,7 @@ export class PackagePublisher implements IEventListener {
         }
     };
 
-    private onPackagesRebuilt = (event: PackagesRebuilt): void => {
+    private onPackagesRebuilt = (event: IPackagesRebuilt): void => {
         const { packages } = event.body;
 
         for (const packageName of packages) {

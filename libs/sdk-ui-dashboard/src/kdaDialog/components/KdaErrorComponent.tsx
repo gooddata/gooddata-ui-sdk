@@ -73,7 +73,7 @@ function TraceId({ traceId }: TraceIdProps) {
         void navigator.clipboard.writeText(traceId ?? "");
     };
 
-    if (traceId) {
+    if (!traceId) {
         return null;
     }
 

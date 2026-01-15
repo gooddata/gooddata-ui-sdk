@@ -30,7 +30,7 @@ function run() {
 
 try {
     run();
-} catch (err: Error) {
+} catch (err: any) {
     console.error(`An unexpected error has occurred: ${err}`);
     console.error(err);
 

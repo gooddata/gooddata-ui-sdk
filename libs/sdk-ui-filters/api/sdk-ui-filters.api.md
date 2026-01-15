@@ -237,16 +237,16 @@ export const DateFilterHelpers: {
     getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
     getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
     granularityIntlCodes: {
-        "GDC.time.minute": GranularityIntlKey;
-        "GDC.time.hour": GranularityIntlKey;
-        "GDC.time.date": GranularityIntlKey;
-        "GDC.time.week_us": GranularityIntlKey;
-        "GDC.time.month": GranularityIntlKey;
-        "GDC.time.fiscal_month": GranularityIntlKey;
-        "GDC.time.quarter": GranularityIntlKey;
-        "GDC.time.fiscal_quarter": GranularityIntlKey;
         "GDC.time.year": GranularityIntlKey;
         "GDC.time.fiscal_year": GranularityIntlKey;
+        "GDC.time.week_us": GranularityIntlKey;
+        "GDC.time.quarter": GranularityIntlKey;
+        "GDC.time.fiscal_quarter": GranularityIntlKey;
+        "GDC.time.month": GranularityIntlKey;
+        "GDC.time.fiscal_month": GranularityIntlKey;
+        "GDC.time.date": GranularityIntlKey;
+        "GDC.time.hour": GranularityIntlKey;
+        "GDC.time.minute": GranularityIntlKey;
     };
     applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption | undefined, excludeCurrentPeriod: boolean) => DateFilterOption | undefined;
     defaultDateFilterOptions: IDateFilterOptionsByType;

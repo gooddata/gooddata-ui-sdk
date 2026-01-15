@@ -1,6 +1,50 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 08 Jan 2026 08:13:01 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Jan 2026 09:13:41 GMT and should not be manually modified.
+
+## 11.16.0
+
+Thu, 15 Jan 2026 09:13:41 GMT
+
+### Patches
+
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
+
+### Updates
+
+-   - sdk-ui-ext: Introduce TypeScript strict mode.
+- sdk-ui-kit: Fix `UiAsyncTable` tab stop when there are no sortable columns in the header.
+- sdk-ui-kit: Make `EditableLabel` accessible by keyboard.
+- sdk-ui-kit: Restore focus on `UiDrawer` close and add `returnFocusTo` option.
+- sdk-ui-catalog: Enhance Analytics catalog and AI memory accessibility.
+- AI assistant chat dialog status is stored in localStorage and use it to restore the dialog state when user render it in another app.
+- Improved error state in Key Driver Analysis dialog with trace id and details
+- sdk-ui-all: Upgrade CodeMirror to support ai assistant autocomplete hints accessibility
+- sdk-ui-ext: add support for key driver analysis visibility to be configurable per visualization
+- KDA respects tiering (includeObjectsWithTags, excludeObjectsWithTags)
+- sdk-ui-gen-ai: Memoize drillable items to avoid unnecessary re-renders
+- sdk-ui-gen-ai: Align chatbot error messaging design with other apps
+- sdk-ui-dashboard: Remove the “Select all” checkbox from the attribute picker
+- sdk-ui-kit: Setting testid on each UIListbox item is now supported.
+- Add Analytics as Code (AAC) API support
+- Expose AAC APIs via top-level api-client exports
+- sdk-backend-tiger: Add support for fiscal granularity patterns
+- sdk-ui-all: Fiscal calendars in date filter respecting settings.
+- Keep measure value filters in more scenarios.
+- Change handling of mesure value filter when switching vizualization type.
+- sdk-ui-pivot: Enable image rendering in pivot table cells.
+- sdk-ui-dashboard: Fix insight properties sync in drill dialog.
+- sdk-ui-kit: Enhance Input component accessibility by providing proper prefix and suffix aria labels.
+- sdk-ui-kit: Extend accessibility props in UiIcon component.
+- sdk-ui-dashboards: Introduce disabled drill option e.g. for cases when drill to url attributes are missing
+- Changed: Feature flag enableDashboardTabs has been removed
+- sdk-ui-dashboard: Allow to hide 'Add Tab' button in dashboard edit mode
+- Add FilterGroup component to sdk-ui-filters
+- sdk-ui-filters: Shorten the long preview text in metric filter, align the preview with UX designs.
+- sdk-ui-filters: Fixed date dataset dropdown clipping issue in mvf attribute picker (use overlay instead of absolutely positioned div)
+- sdk-ui-charts, sdk-ui-dashboards: Open dashboard drilldown menu at the position of the click, not in the center of the insight
+- sdk-ui-dashboard: Fix insight elements DOM order according to a11y findings. Visually unchanged.
+- sdk-ui-gen-ai: Updating the logic for reasoning completion.
 
 ## 11.15.0
 

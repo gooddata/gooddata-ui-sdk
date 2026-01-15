@@ -2,6 +2,119 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.16.0",
+            "tag": "@gooddata/sdk-ui-all_v11.16.0",
+            "date": "Thu, 15 Jan 2026 09:13:41 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "- sdk-ui-ext: Introduce TypeScript strict mode."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix `UiAsyncTable` tab stop when there are no sortable columns in the header."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Make `EditableLabel` accessible by keyboard."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Restore focus on `UiDrawer` close and add `returnFocusTo` option."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Enhance Analytics catalog and AI memory accessibility."
+                    },
+                    {
+                        "comment": "AI assistant chat dialog status is stored in localStorage and use it to restore the dialog state when user render it in another app."
+                    },
+                    {
+                        "comment": "Improved error state in Key Driver Analysis dialog with trace id and details"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Upgrade CodeMirror to support ai assistant autocomplete hints accessibility"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: add support for key driver analysis visibility to be configurable per visualization"
+                    },
+                    {
+                        "comment": "KDA respects tiering (includeObjectsWithTags, excludeObjectsWithTags)"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Memoize drillable items to avoid unnecessary re-renders"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Align chatbot error messaging design with other apps"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Remove the “Select all” checkbox from the attribute picker"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Setting testid on each UIListbox item is now supported."
+                    },
+                    {
+                        "comment": "Add Analytics as Code (AAC) API support"
+                    },
+                    {
+                        "comment": "Expose AAC APIs via top-level api-client exports"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Add support for fiscal granularity patterns"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Fiscal calendars in date filter respecting settings."
+                    },
+                    {
+                        "comment": "Keep measure value filters in more scenarios."
+                    },
+                    {
+                        "comment": "Change handling of mesure value filter when switching vizualization type."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Enable image rendering in pivot table cells."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix insight properties sync in drill dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Enhance Input component accessibility by providing proper prefix and suffix aria labels."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Extend accessibility props in UiIcon component."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboards: Introduce disabled drill option e.g. for cases when drill to url attributes are missing"
+                    },
+                    {
+                        "comment": "Changed: Feature flag enableDashboardTabs has been removed"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Allow to hide 'Add Tab' button in dashboard edit mode "
+                    },
+                    {
+                        "comment": "Add FilterGroup component to sdk-ui-filters"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Shorten the long preview text in metric filter, align the preview with UX designs."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Fixed date dataset dropdown clipping issue in mvf attribute picker (use overlay instead of absolutely positioned div)"
+                    },
+                    {
+                        "comment": "sdk-ui-charts, sdk-ui-dashboards: Open dashboard drilldown menu at the position of the click, not in the center of the insight"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix insight elements DOM order according to a11y findings. Visually unchanged."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Updating the logic for reasoning completion."
+                    }
+                ],
+                "patch": [
+                    {
+                        "comment": "Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.15.0",
             "tag": "@gooddata/sdk-ui-all_v11.15.0",
             "date": "Thu, 08 Jan 2026 08:13:01 GMT",

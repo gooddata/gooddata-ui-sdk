@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "11.16.0-alpha.6",
+    "version": "11.17.0-alpha.0",
     "description": "GoodData SDK Runtime Component Loaders",
     "repository": {
         "type": "git",
