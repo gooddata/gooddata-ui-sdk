@@ -11745,11 +11745,11 @@ export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallba
 export const useDashboardAlerts: () => {
     alertToEdit: IAutomationMetadataObject | undefined;
     isInitialized: boolean;
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    notificationChannels: INotificationChannelMetadataObject[] | INotificationChannelIdentifier[];
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;
-    widget: ICustomWidget | IWidget | undefined;
+    widget: IWidget | ICustomWidget | undefined;
     insight: IInsight | undefined;
     automationsLoading: boolean;
     automationsError: GoodDataSdkError | undefined;
@@ -11870,7 +11870,7 @@ export const useDashboardScheduledEmails: () => {
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;
-    widget: ICustomWidget | IWidget | undefined;
+    widget: IWidget | ICustomWidget | undefined;
     insight: IInsight | undefined;
     automationsLoading: boolean;
     automationsError: GoodDataSdkError | undefined;

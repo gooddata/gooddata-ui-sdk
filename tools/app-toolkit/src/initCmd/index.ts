@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import * as path from "path";
 
 import { sync as spawnSync } from "cross-spawn";
@@ -6,7 +7,7 @@ import fse from "fs-extra";
 import tar from "tar";
 
 import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
-import { type FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
+import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions, type AppTemplate, type TargetAppLanguage } from "../_base/types.js";
 import {
@@ -52,7 +53,7 @@ function modifyPackageJson(target: string, config: InitCmdActionConfig) {
 function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
     const { language, packageManager } = config;
 
-    const replacements: FileReplacementSpec = {
+    const replacements: IFileReplacementSpec = {
         "README.md": [
             {
                 regex: /\{\{packageManager\}\}/g,

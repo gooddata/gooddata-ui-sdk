@@ -5,7 +5,11 @@ import { useCallback, useMemo, useState } from "react";
 import { idRef } from "@gooddata/sdk-model";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 import { type CustomToolbarComponent, type DashboardConfig } from "@gooddata/sdk-ui-dashboard";
-import { type IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
+import {
+    type DashboardLoadStatus,
+    type IEmbeddedPlugin,
+    useDashboardLoaderWithPluginManipulation,
+} from "@gooddata/sdk-ui-loaders";
 
 // this import will be renamed in plugin-toolkit
 import { PluginToolbar } from "./PluginToolbar.js";

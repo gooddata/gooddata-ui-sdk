@@ -10,7 +10,7 @@ import { logWarn } from "../cli/loggers.js";
 function createRecording(directory: string): IRecording | null {
     try {
         return new VisClassesRecording(directory);
-    } catch (e: Error) {
+    } catch (e: any) {
         logWarn(
             `An error has occurred while loading visClasses recording from directory ${directory}: ${e} - the recording will not be included in further processing.`,
         );

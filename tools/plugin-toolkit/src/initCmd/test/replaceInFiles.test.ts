@@ -8,7 +8,7 @@ import { replaceInFiles } from "../replaceInFiles.js";
 
 describe("replaceInFiles", () => {
     it("should replace values according to the spec", async () => {
-        const readFileMock = () => "foo bar baz buz";
+        const readFileMock = vi.fn().mockResolvedValue("foo bar baz buz");
         const writeFileMock = vi.fn();
 
         const spec = {

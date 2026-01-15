@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { readFileSync } from "fs";
 
@@ -6,11 +6,11 @@ import blessed from "blessed";
 
 import { AppPanel, type AppPanelOptions } from "./appPanel.js";
 import {
-    type BuildFinished,
-    type BuildOutputRequested,
     type DcEvent,
     type EventBus,
     GlobalEventBus,
+    type IBuildFinished,
+    type IBuildOutputRequested,
     type IEventListener,
     buildOutputExited,
 } from "../events.js";
@@ -66,7 +66,7 @@ export class BuildOutput extends AppPanel implements IEventListener {
         this.log.focus();
     };
 
-    private onBuildOutputRequested = (event: BuildOutputRequested): void => {
+    private onBuildOutputRequested = (event: IBuildOutputRequested): void => {
         const { packageName } = event.body;
 
         this.changeTitle(`Build Output: ${packageName}`);
@@ -84,7 +84,7 @@ export class BuildOutput extends AppPanel implements IEventListener {
         this.focus();
     };
 
-    private onBuildFinished = (event: BuildFinished): void => {
+    private onBuildFinished = (event: IBuildFinished): void => {
         const { packageName, stdoutPath } = event.body;
         const content = readFileSync(stdoutPath, { encoding: "utf-8" });
         const lines = content.split("\n");

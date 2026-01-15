@@ -2,7 +2,6 @@
     "exclude": ["**/tests", "**/test"],
     "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "noCheck": true,
         "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm",

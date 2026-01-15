@@ -1,18 +1,18 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { uniq } from "lodash-es";
 
 import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph.js";
 import { type DependencyGraph, type SourceDescriptor } from "../../base/types.js";
 import {
-    type BuildFinished,
-    type BuildStarted,
     type DcEvent,
     type EventBus,
     GlobalEventBus,
+    type IBuildFinished,
+    type IBuildStarted,
     type IEventListener,
-    type PackagesChanged,
-    type TargetSelected,
+    type IPackagesChanged,
+    type ITargetSelected,
     buildRequested,
     buildScheduled,
     packagesRebuilt,
@@ -122,17 +122,17 @@ export class BuildScheduler implements IEventListener {
      * Initializes dependency graph and package states so that only those packages that are used in the target will
      * be effectively used by the scheduler.
      */
-    private onTargetSelected = (event: TargetSelected): void => {
+    private onTargetSelected = (event: ITargetSelected): void => {
         // TODO once tool allows switching targets, it is essential that this changes. reconciliaton will
         //  be needed
-        const packageScope = event.body.targetDescriptor.dependencies.map((dep) => dep.pkg.packageName);
+        const packageScope = event.body.targetDescriptor.dependencies.map((dep: any) => dep.pkg.packageName);
 
         this.dependencyGraph = naiveFilterDependencyGraph(
             this.sourceDescriptor!.dependencyGraph,
             packageScope,
         );
         packageScope.forEach(
-            (pkg) =>
+            (pkg: string) =>
                 (this.packageStates[pkg] = {
                     buildDirty: false,
                     buildRequested: false,
@@ -147,7 +147,7 @@ export class BuildScheduler implements IEventListener {
      * When package change occurs, the scheduler determines all the impacted packages, marks them dirty and triggers
      * build of dirty leaves.
      */
-    private onPackagesChanged = (event: PackagesChanged): void => {
+    private onPackagesChanged = (event: IPackagesChanged): void => {
         this.processPackageChanges(event);
 
         this.triggerBuilds();
@@ -157,14 +157,14 @@ export class BuildScheduler implements IEventListener {
      * When build starts for a package, this handler will modify package state to indicate that the build is
      * running.
      */
-    private onBuildStarted = (event: BuildStarted): void => {
+    private onBuildStarted = (event: IBuildStarted): void => {
         const packageState = this.packageStates[event.body.packageName];
 
         packageState.buildRequested = false;
         packageState.buildRunning = true;
     };
 
-    private onBuildFinished = (event: BuildFinished): void => {
+    private onBuildFinished = (event: IBuildFinished): void => {
         this.processBuildFinished(event);
         this.triggerBuilds();
 
@@ -190,7 +190,7 @@ export class BuildScheduler implements IEventListener {
      * it is uncertain whether the change will be picked up or not. Mark the running build of that package as
      * dirty.
      */
-    private processPackageChanges = (packagesChanged: PackagesChanged): void => {
+    private processPackageChanges = (packagesChanged: IPackagesChanged): void => {
         const { changes } = packagesChanged.body;
         const changedPackages = changes.map((p) => p.packageName);
         const dependenciesToRebuild = changes.map((change) => {
@@ -225,7 +225,7 @@ export class BuildScheduler implements IEventListener {
      *
      * Note that packages that stay dirty because of dirty build will be rebuild on next triggerBuilds().
      */
-    private processBuildFinished = (event: BuildFinished): void => {
+    private processBuildFinished = (event: IBuildFinished): void => {
         const { exitCode, packageName } = event.body;
         const packageState = this.packageStates[packageName];
 
