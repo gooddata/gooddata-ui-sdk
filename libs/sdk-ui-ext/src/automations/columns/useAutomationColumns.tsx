@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useMemo } from "react";
 
@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { type UiAsyncTableColumn, useAsyncTableResponsiveColumns } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableColumn, useAsyncTableResponsiveColumns } from "@gooddata/sdk-ui-kit";
 
 import { AutomationIcon } from "./AutomationIcon.js";
 import { AutomationMenu } from "./AutomationMenu.js";
@@ -38,7 +38,7 @@ export const useAutomationColumns = ({
     editAutomation,
     setPendingAction,
 }: IUseAutomationColumnsProps): {
-    columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
+    columnDefinitions: IUiAsyncTableColumn<IAutomationMetadataObject>[];
     includeAutomationResult: boolean;
     containerRef: RefObject<HTMLDivElement | null>;
 } => {
@@ -49,7 +49,7 @@ export const useAutomationColumns = ({
     const isSmall = tableVariant === "small";
 
     const allColumns = useMemo(
-        (): Partial<Record<AutomationsColumnName, UiAsyncTableColumn<IAutomationMetadataObject>>> => ({
+        (): Partial<Record<AutomationsColumnName, IUiAsyncTableColumn<IAutomationMetadataObject>>> => ({
             ["id"]: {
                 key: "id",
                 label: intl.formatMessage(messages.columnId),

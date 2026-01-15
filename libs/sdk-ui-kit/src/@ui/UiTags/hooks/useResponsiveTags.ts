@@ -1,15 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type DependencyList, useLayoutEffect, useState } from "react";
 
 import { useTagsElements } from "./useTagsElements.js";
-import { type UiTagDef } from "../types.js";
+import { type IUiTagDef } from "../types.js";
 
 const PADDING = 5;
 const MIN_WIDTH = 10;
 
 export function useResponsiveTags(
-    tags: UiTagDef[],
+    tags: IUiTagDef[],
     mode: "single-line" | "multi-line",
     deps?: DependencyList,
 ) {
@@ -25,8 +25,8 @@ export function useResponsiveTags(
         setTooltipContainer,
     } = useTagsElements();
 
-    const [showedTags, setShowedTags] = useState<UiTagDef[]>(tags);
-    const [hiddenTags, setHiddenTags] = useState<UiTagDef[]>([]);
+    const [showedTags, setShowedTags] = useState<IUiTagDef[]>(tags);
+    const [hiddenTags, setHiddenTags] = useState<IUiTagDef[]>([]);
     const [availableWidth, setAvailableWidth] = useState<number | "none">("none");
     const [lastAvailableWidth, setLastAvailableWidth] = useState<number | "none">("none");
     const [tooltipWidth, setTooltipWidth] = useState<number | "none">("none");
@@ -101,7 +101,7 @@ export function useResponsiveTags(
 }
 
 function recalculateSingleLineTags(
-    tags: UiTagDef[],
+    tags: IUiTagDef[],
     container: HTMLDivElement,
     tagsContainerWidth: number,
     hiddenContainer?: HTMLButtonElement,
@@ -144,7 +144,7 @@ function recalculateSingleLineTags(
     };
 }
 
-function recalculateMultiLineTags(tags: UiTagDef[], tagsContainerWidth: number, addButton?: HTMLDivElement) {
+function recalculateMultiLineTags(tags: IUiTagDef[], tagsContainerWidth: number, addButton?: HTMLDivElement) {
     const availableWidth = tagsContainerWidth;
     const lastAvailableWidth =
         availableWidth - (addButton?.offsetWidth ? addButton.offsetWidth + PADDING : 0);

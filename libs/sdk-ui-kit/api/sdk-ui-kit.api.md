@@ -232,56 +232,15 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends PureComponent<
 export const Button: ForwardRefExoticComponent<IButtonProps & RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
-export function ChartSortingDialog(props: ChartSortingOwnProps): JSX.Element;
+export function ChartSortingDialog(props: IChartSortingOwnProps): JSX.Element;
 
 // @internal (undocumented)
-export interface ChartSortingOwnProps {
-    // (undocumented)
-    availableSorts: IAvailableSortsGroup[];
-    // (undocumented)
-    bucketItems: IBucketItemDescriptors;
-    // (undocumented)
-    buttonNode?: HTMLElement | string;
-    // (undocumented)
-    currentSort: ISortItem[];
-    // (undocumented)
-    locale?: string;
-    // (undocumented)
-    onApply: (sortItems: ISortItem[]) => void;
-    // (undocumented)
-    onCancel: () => void;
-}
-
-// @internal (undocumented)
-export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
-
-// @internal (undocumented)
-export const ChartSortingWithIntl: FC<WithIntlProps<ChartSortingProps>> & {
-    WrappedComponent: ComponentType<ChartSortingProps>;
+export const ChartSortingWithIntl: FC<WithIntlProps<IChartSortingProps>> & {
+    WrappedComponent: ComponentType<IChartSortingProps>;
 };
 
 // @internal (undocumented)
-export const Checkbox: NamedExoticComponent<CheckboxProps>;
-
-// @internal (undocumented)
-export interface CheckboxProps {
-    // (undocumented)
-    disabled?: boolean;
-    // (undocumented)
-    id?: string;
-    // (undocumented)
-    labelSize?: LabelSize;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    onChange?: (e: boolean) => void;
-    // (undocumented)
-    text?: string;
-    // (undocumented)
-    title?: string;
-    // (undocumented)
-    value?: boolean;
-}
+export const Checkbox: NamedExoticComponent<ICheckboxProps>;
 
 // @internal (undocumented)
 export function CodeArea({ code, onCopyCode }: ICodeAreaProps): JSX.Element;
@@ -409,10 +368,10 @@ export const defaultFocusCheckFn: (element: HTMLElement) => boolean;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
-export function DefaultUiListboxInteractiveItemComponent<T>({ item, isFocused, isSelected, isCompact, onSelect, }: UiListboxInteractiveItemProps<T>): ReactNode;
+export function DefaultUiListboxInteractiveItemComponent<T>({ item, isFocused, isSelected, isCompact, onSelect, }: IUiListboxInteractiveItemProps<T>): ReactNode;
 
 // @internal
-export function DefaultUiListboxStaticItemComponent<T>({ item }: UiListboxStaticItemProps<T>): ReactNode;
+export function DefaultUiListboxStaticItemComponent<T>({ item }: IUiListboxStaticItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuContent: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item, }: {
@@ -1290,6 +1249,48 @@ export interface IButtonProps {
     value?: ReactNode;
     // (undocumented)
     variant?: "primary" | "secondary";
+}
+
+// @internal (undocumented)
+export interface IChartSortingOwnProps {
+    // (undocumented)
+    availableSorts: IAvailableSortsGroup[];
+    // (undocumented)
+    bucketItems: IBucketItemDescriptors;
+    // (undocumented)
+    buttonNode?: HTMLElement | string;
+    // (undocumented)
+    currentSort: ISortItem[];
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onApply: (sortItems: ISortItem[]) => void;
+    // (undocumented)
+    onCancel: () => void;
+}
+
+// @internal (undocumented)
+export interface IChartSortingProps extends IChartSortingOwnProps, WrappedComponentProps {
+}
+
+// @internal (undocumented)
+export interface ICheckboxProps {
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    labelSize?: LabelSize;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    onChange?: (e: boolean) => void;
+    // (undocumented)
+    text?: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    value?: boolean;
 }
 
 // @internal (undocumented)
@@ -2214,7 +2215,7 @@ export interface IDropdownButtonRenderProps {
     // (undocumented)
     openDropdown: () => void;
     // (undocumented)
-    toggleDropdown: (desiredState?: boolean | unknown) => void;
+    toggleDropdown: (desiredState?: unknown) => void;
 }
 
 // @internal (undocumented)
@@ -2976,6 +2977,98 @@ export interface IInputPureAccessibilityConfig extends IAccessibilityConfigBase 
     prefixAriaLabel?: string;
     // (undocumented)
     suffixAriaLabel?: string;
+}
+
+// @internal (undocumented)
+export interface IInputPureProps extends IDomNativeProps {
+    // (undocumented)
+    accessibilityConfig?: IInputPureAccessibilityConfig;
+    // (undocumented)
+    accessibilityType?: string;
+    // (undocumented)
+    autocomplete?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    clearOnEsc?: boolean;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    hasError?: boolean;
+    // (undocumented)
+    hasWarning?: boolean;
+    // (undocumented)
+    iconButton?: IconType;
+    // (undocumented)
+    iconButtonLabel?: string;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    isSearch?: boolean;
+    // (undocumented)
+    isSmall?: boolean;
+    // (undocumented)
+    label?: ReactNode;
+    // (undocumented)
+    labelPositionTop?: boolean;
+    // (undocumented)
+    maxlength?: number;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    onBlur?: (e: FocusEvent_2<HTMLInputElement>) => void;
+    // (undocumented)
+    onChange?: (value: string | number, e?: ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    onEnterKeyPress?: () => void;
+    // (undocumented)
+    onEscKeyPress?: (e: KeyboardEvent_2) => void;
+    // (undocumented)
+    onFocus?: (e: FocusEvent_2<HTMLInputElement>) => void;
+    // (undocumented)
+    onIconButtonClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (e: KeyboardEvent_2) => void;
+    // (undocumented)
+    placeholder?: string;
+    // (undocumented)
+    prefix?: string;
+    // (undocumented)
+    readonly?: boolean;
+    // (undocumented)
+    required?: boolean;
+    // (undocumented)
+    suffix?: string;
+    // (undocumented)
+    type?: string;
+    // (undocumented)
+    value?: string | number;
+}
+
+// @internal (undocumented)
+export interface IInputState {
+    // (undocumented)
+    value: string | number;
+}
+
+// @internal (undocumented)
+export interface IInputWithNumberFormatOwnProps {
+    // (undocumented)
+    separators?: Separators;
+}
+
+// @internal (undocumented)
+export interface IInputWithNumberFormatProps extends IInputWithNumberFormatOwnProps, IInputPureProps {
+}
+
+// @internal (undocumented)
+export interface IInputWithNumberFormatState {
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    value: number;
 }
 
 // @internal (undocumented)
@@ -4021,8 +4114,8 @@ export interface INoDataProps {
 }
 
 // @internal (undocumented)
-export class Input extends PureComponent<InputPureProps, InputState> {
-    constructor(props: InputPureProps);
+export class Input extends PureComponent<IInputPureProps, IInputState> {
+    constructor(props: IInputPureProps);
     // (undocumented)
     static defaultProps: {
         autofocus: boolean;
@@ -4054,17 +4147,17 @@ export class Input extends PureComponent<InputPureProps, InputState> {
     // (undocumented)
     render(): JSX.Element;
     // (undocumented)
-    UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void;
+    UNSAFE_componentWillReceiveProps(nextProps: IInputPureProps): void;
     // (undocumented)
     valueChanged(value: string | number, e?: ChangeEvent<HTMLInputElement>): void;
 }
 
 // @internal (undocumented)
-export class InputPure extends PureComponent<InputPureProps> implements IDomNative {
+export class InputPure extends PureComponent<IInputPureProps> implements IDomNative {
     // (undocumented)
     componentDidMount(): void;
     // (undocumented)
-    componentDidUpdate(prevProps: Readonly<InputPureProps>): void;
+    componentDidUpdate(prevProps: Readonly<IInputPureProps>): void;
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
@@ -4128,98 +4221,7 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
 }
 
 // @internal (undocumented)
-export interface InputPureProps extends IDomNativeProps {
-    // (undocumented)
-    accessibilityConfig?: IInputPureAccessibilityConfig;
-    // (undocumented)
-    accessibilityType?: string;
-    // (undocumented)
-    autocomplete?: string;
-    // (undocumented)
-    className?: string;
-    // (undocumented)
-    clearOnEsc?: boolean;
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    disabled?: boolean;
-    // (undocumented)
-    hasError?: boolean;
-    // (undocumented)
-    hasWarning?: boolean;
-    // (undocumented)
-    iconButton?: IconType;
-    // (undocumented)
-    iconButtonLabel?: string;
-    // (undocumented)
-    id?: string;
-    // (undocumented)
-    isSearch?: boolean;
-    // (undocumented)
-    isSmall?: boolean;
-    // (undocumented)
-    label?: ReactNode;
-    // (undocumented)
-    labelPositionTop?: boolean;
-    // (undocumented)
-    maxlength?: number;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    onBlur?: (e: FocusEvent_2<HTMLInputElement>) => void;
-    // (undocumented)
-    onChange?: (value: string | number, e?: ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    onEnterKeyPress?: () => void;
-    // (undocumented)
-    onEscKeyPress?: (e: KeyboardEvent_2) => void;
-    // (undocumented)
-    onFocus?: (e: FocusEvent_2<HTMLInputElement>) => void;
-    // (undocumented)
-    onIconButtonClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
-    // (undocumented)
-    onKeyDown?: (e: KeyboardEvent_2) => void;
-    // (undocumented)
-    placeholder?: string;
-    // (undocumented)
-    prefix?: string;
-    // (undocumented)
-    readonly?: boolean;
-    // (undocumented)
-    required?: boolean;
-    // (undocumented)
-    suffix?: string;
-    // (undocumented)
-    type?: string;
-    // (undocumented)
-    value?: string | number;
-}
-
-// @internal (undocumented)
-export interface InputState {
-    // (undocumented)
-    value: string | number;
-}
-
-// @internal (undocumented)
-export const InputWithNumberFormat: NamedExoticComponent<InputWithNumberFormatProps>;
-
-// @internal (undocumented)
-export interface InputWithNumberFormatOwnProps {
-    // (undocumented)
-    separators?: Separators;
-}
-
-// @internal (undocumented)
-export type InputWithNumberFormatProps = InputWithNumberFormatOwnProps & InputPureProps;
-
-// @internal (undocumented)
-export interface InputWithNumberFormatState {
-    // (undocumented)
-    isFocused: boolean;
-    // (undocumented)
-    value: number;
-}
+export const InputWithNumberFormat: NamedExoticComponent<IInputWithNumberFormatProps>;
 
 // @internal (undocumented)
 export type InsightCodeType = "definition" | "reference";
@@ -5413,6 +5415,194 @@ export interface ITypographyProps {
 }
 
 // @internal (undocumented)
+export interface IUiAsyncTableAccessibilityConfig<T> {
+    // (undocumented)
+    checkboxAllAriaLabel?: string;
+    // (undocumented)
+    getCheckboxItemAriaLabel?: (item: T) => string;
+    // (undocumented)
+    gridAriaLabel?: string;
+    // (undocumented)
+    searchAriaLabel?: string;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableBulkAction {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableColumn<T> {
+    // (undocumented)
+    align?: "left" | "center" | "right";
+    // (undocumented)
+    bold?: boolean;
+    // (undocumented)
+    getAccessibilityConfig?: (item: T) => IUiAsyncTableColumnAccessibilityConfig;
+    // (undocumented)
+    getMultiLineTextContent?: (item: T) => Array<string>;
+    // (undocumented)
+    getTextContent?: (item: T) => string | ReactNode;
+    // (undocumented)
+    getTextHref?: (item: T) => string | undefined;
+    // (undocumented)
+    getTextTitle?: (item: T) => string;
+    // (undocumented)
+    key?: keyof T;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    renderBadge?: (item: T) => ReactNode;
+    // (undocumented)
+    renderButton?: (item: T) => ReactNode;
+    // (undocumented)
+    renderMenu?: UiAsyncTableMenuRenderer<T>;
+    // (undocumented)
+    renderPrefixIcon?: (item: T) => ReactNode;
+    // (undocumented)
+    renderRoleIcon?: (item: T) => ReactNode;
+    // (undocumented)
+    renderSuffixIcon?: (item: T) => ReactNode;
+    // (undocumented)
+    sortable?: boolean;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableColumnAccessibilityConfig {
+    // (undocumented)
+    ariaLabel?: string;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableColumnDefinitionResponsive<T> extends IUiAsyncTableColumn<T> {
+    // (undocumented)
+    minWidth?: number;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableEmptyStateProps {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    icon?: IconType;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableFilter {
+    // (undocumented)
+    isMultiSelect?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onItemsSelect: (options: Array<IUiAsyncTableFilterOption>) => void;
+    // (undocumented)
+    options: Array<IUiAsyncTableFilterOption>;
+    // (undocumented)
+    selected?: Array<IUiAsyncTableFilterOption>;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableFilterOption {
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    secondaryLabel?: string;
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableProps<T extends {
+    id: string;
+}> {
+    // (undocumented)
+    accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;
+    // (undocumented)
+    bulkActions?: Array<IUiAsyncTableBulkAction>;
+    // (undocumented)
+    columns: Array<IUiAsyncTableColumn<T>>;
+    // (undocumented)
+    filters?: Array<IUiAsyncTableFilter>;
+    // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
+    isFiltersTooLarge?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isMobileView?: boolean;
+    // (undocumented)
+    items: T[];
+    // (undocumented)
+    loadNextPage?: () => void;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
+    onItemClick?: (item: T) => void;
+    // (undocumented)
+    onSearch?: (search: string) => void;
+    // (undocumented)
+    onSort?: (key: keyof T) => void;
+    // (undocumented)
+    renderEmptyState?: () => ReactNode;
+    // (undocumented)
+    renderHeader?: () => ReactNode;
+    // (undocumented)
+    renderItem?: (item: T) => ReactNode;
+    // (undocumented)
+    renderToolbarCustomElement?: () => ReactNode;
+    // (undocumented)
+    scrollToIndex?: number;
+    // (undocumented)
+    selectedItemIds?: Array<string>;
+    // (undocumented)
+    setSelectedItemIds?: (items: Array<string>) => void;
+    // (undocumented)
+    skeletonItemsCount?: number;
+    // (undocumented)
+    sortBy?: keyof T;
+    // (undocumented)
+    sortDirection?: SortDirection;
+    // (undocumented)
+    totalItemsCount?: number;
+    // (undocumented)
+    variant?: UiAsyncTableVariant;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableTitleAction {
+    // (undocumented)
+    renderAction: () => ReactNode;
+}
+
+// @internal (undocumented)
+export interface IUiAsyncTableTitleProps {
+    // (undocumented)
+    actions: Array<IUiAsyncTableTitleAction>;
+    // (undocumented)
+    onSearch?: (search: string) => void;
+    // (undocumented)
+    renderIcon?: () => ReactNode;
+    // (undocumented)
+    scrollToStart: () => void;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
 export interface IUiAutofocusOptions {
     // (undocumented)
     active?: boolean;
@@ -5423,9 +5613,91 @@ export interface IUiAutofocusOptions {
 }
 
 // @internal (undocumented)
+export interface IUiBadgeProps {
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
 export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
     // (undocumented)
     iconAriaHidden?: boolean;
+}
+
+// @internal (undocumented)
+export interface IUiButtonProps {
+    // (undocumented)
+    accessibilityConfig?: IUiButtonAccessibilityConfig;
+    // (undocumented)
+    badgeAfter?: number;
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    disableIconAnimation?: boolean;
+    // (undocumented)
+    iconAfter?: IconType;
+    // (undocumented)
+    iconAfterSize?: number;
+    // (undocumented)
+    iconBefore?: IconType;
+    // (undocumented)
+    iconBeforeSize?: number;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isSelected?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    onClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
+    tooltip?: ReactNode;
+    // (undocumented)
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink;
+}
+
+// @internal (undocumented)
+export interface IUiCardProps {
+    // (undocumented)
+    children?: ReactNode;
+    // (undocumented)
+    elevation?: "1" | "2";
+    // (undocumented)
+    tabIndex?: number;
+}
+
+// @internal (undocumented)
+export interface IUiCheckboxProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    checked: boolean;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    indeterminate?: boolean;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    preventDefault?: boolean;
+    // (undocumented)
+    tabIndex?: number;
 }
 
 // @internal (undocumented)
@@ -5434,6 +5706,59 @@ export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, ID
     deleteAriaDescribedBy?: string;
     // (undocumented)
     deleteAriaLabel?: string;
+}
+
+// @internal (undocumented)
+export interface IUiChipProps {
+    // (undocumented)
+    accessibilityConfig?: IUiChipAccessibilityConfig;
+    // (undocumented)
+    buttonRef?: MutableRefObject<HTMLButtonElement>;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    iconBefore?: IconType;
+    // (undocumented)
+    isActive?: boolean;
+    // (undocumented)
+    isDeletable?: boolean;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    isExpandable?: boolean;
+    // (undocumented)
+    isLocked?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    onDelete?: () => void;
+    // (undocumented)
+    onDeleteKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
+    // (undocumented)
+    onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
+    // (undocumented)
+    renderChipContent?: (content: ReactNode) => ReactNode;
+    // (undocumented)
+    renderDeleteButton?: (button: ReactNode) => ReactNode;
+    // (undocumented)
+    tag?: string;
+}
+
+// @internal (undocumented)
+export interface IUiComboboxListItemProps extends HTMLAttributes<HTMLLIElement> {
+    // (undocumented)
+    index: number;
+    // (undocumented)
+    option: IUiComboboxOption;
+}
+
+// @internal (undocumented)
+export interface IUiComboboxListProps extends Omit<HTMLAttributes<HTMLUListElement>, "children"> {
+    children?: (option: IUiComboboxOption, index: number) => ReactNode;
 }
 
 // @internal (undocumented)
@@ -5455,6 +5780,12 @@ export interface IUiComboboxParams {
     onValueChange?: (value: string) => void;
     options: IUiComboboxOption[];
     value?: string;
+}
+
+// @internal (undocumented)
+export interface IUiComboboxProps extends IUiComboboxParams {
+    // (undocumented)
+    children?: ReactNode;
 }
 
 // @internal (undocumented)
@@ -5501,6 +5832,54 @@ export interface IUiComboboxState {
     setReferenceRef: (node: ReferenceType | null) => void;
 }
 
+// @internal (undocumented)
+export interface IUiDateProps {
+    // (undocumented)
+    absoluteOptions?: Intl.DateTimeFormatOptions;
+    // (undocumented)
+    allowRelative?: boolean;
+    // (undocumented)
+    date: Date | string | number;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    relativeThresholdMs?: number;
+}
+
+// @internal (undocumented)
+export interface IUiDrawerProps extends IUiAutofocusOptions {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    anchor?: "left" | "right";
+    // (undocumented)
+    children?: ReactNode;
+    // (undocumented)
+    closeLabel?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    mode?: "absolute" | "fixed";
+    // (undocumented)
+    node?: HTMLElement;
+    // (undocumented)
+    onClickClose?: () => void;
+    // (undocumented)
+    onClickOutside?: (e: MouseEvent_2) => void;
+    // (undocumented)
+    onEscapeKey?: (e: KeyboardEvent_2) => void;
+    // (undocumented)
+    open?: boolean;
+    // (undocumented)
+    returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
+    // (undocumented)
+    showCloseButton?: boolean;
+    // (undocumented)
+    transition?: UiDrawerTransitionProps;
+    // (undocumented)
+    zIndex?: number;
+}
+
 // @internal
 export interface IUiDropdownBodyRenderProps {
     ariaAttributes: {
@@ -5523,6 +5902,12 @@ export interface IUiDropdownButtonRenderProps {
     openDropdown: () => void;
     ref: RefObject<HTMLElement>;
     toggleDropdown: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiDropdownIconButtonProps extends IUiIconButtonPublicProps {
+    // (undocumented)
+    isDropdownOpen: boolean;
 }
 
 // @internal
@@ -5625,6 +6010,68 @@ export type IUiFocusManagerProps = {
 };
 
 // @internal (undocumented)
+export interface IUiIconButtonPublicProps {
+    // (undocumented)
+    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
+    // (undocumented)
+    ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    disableAnimation?: boolean;
+    // (undocumented)
+    icon: IconType;
+    // (undocumented)
+    iconColor?: ThemeColor;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    isActive?: boolean;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    onClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
+    // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTable | VariantBare;
+}
+
+// @internal (undocumented)
+export interface IUiIconProps {
+    // (undocumented)
+    accessibilityConfig?: {
+        ariaLabel?: AriaAttributes["aria-label"];
+        ariaHidden?: boolean;
+    };
+    // (undocumented)
+    backgroundColor?: ThemeColor;
+    // (undocumented)
+    backgroundShape?: BackgroundShape;
+    // (undocumented)
+    backgroundSize?: number;
+    // (undocumented)
+    backgroundType?: BackgroundType;
+    // (undocumented)
+    color?: ThemeColor | "currentColor";
+    // (undocumented)
+    disableAnimation?: boolean;
+    layout?: "block" | "inline";
+    // (undocumented)
+    size?: number;
+    // (undocumented)
+    type: IconType;
+}
+
+// @internal (undocumented)
 export interface IUiLeveledTreeViewProps<Levels extends any[]> extends IUiTreeViewProps<Levels, undefined> {
     // (undocumented)
     ItemComponent?: ComponentType<IUiTreeviewItemProps<LevelTypesUnion<Levels>>>;
@@ -5688,7 +6135,66 @@ export interface IUiListboxInteractiveItem<T> {
 }
 
 // @internal (undocumented)
+export interface IUiListboxInteractiveItemProps<T> {
+    // (undocumented)
+    isCompact: boolean;
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: IUiListboxInteractiveItem<T>;
+    // (undocumented)
+    onSelect: (e: MouseEvent_2) => void;
+}
+
+// @internal (undocumented)
 export type IUiListboxItem<InteractiveItemData, StaticItemData = ReactNode> = IUiListboxStaticItem<StaticItemData> | IUiListboxInteractiveItem<InteractiveItemData>;
+
+// @internal (undocumented)
+export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode> {
+    // (undocumented)
+    ariaAttributes: UiListboxAriaAttributes;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    InteractiveItemComponent?: ComponentType<IUiListboxInteractiveItemProps<InteractiveItemData>>;
+    // (undocumented)
+    isCompact?: boolean;
+    // (undocumented)
+    isDisabledFocusable?: boolean;
+    // (undocumented)
+    itemDataTestId?: string | ((item: IUiListboxItem<InteractiveItemData, StaticItemData>) => string | undefined);
+    // (undocumented)
+    items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
+    // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>, mods: {
+        type?: "mouse" | "keyboard";
+        newTab?: boolean;
+    }) => void;
+    // (undocumented)
+    onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiListboxContext<InteractiveItemData, StaticItemData>) => void;
+    // (undocumented)
+    reference?: RefObject<HTMLUListElement | null>;
+    // (undocumented)
+    selectedItemId?: string;
+    // (undocumented)
+    shouldCloseOnSelect?: boolean;
+    // (undocumented)
+    shouldKeyboardActionPreventDefault?: boolean;
+    // (undocumented)
+    shouldKeyboardActionStopPropagation?: boolean;
+    // (undocumented)
+    StaticItemComponent?: ComponentType<IUiListboxStaticItemProps<StaticItemData>>;
+    // (undocumented)
+    width?: number;
+}
 
 // @internal (undocumented)
 export interface IUiListboxStaticItem<T> {
@@ -5698,6 +6204,12 @@ export interface IUiListboxStaticItem<T> {
     id?: string;
     // (undocumented)
     type: "static";
+}
+
+// @internal (undocumented)
+export interface IUiListboxStaticItemProps<T> {
+    // (undocumented)
+    item: IUiListboxStaticItem<T>;
 }
 
 // @internal (undocumented)
@@ -5864,6 +6376,46 @@ export interface IUiMenuPluggableComponents<T extends IUiMenuItemData = object> 
 }
 
 // @internal (undocumented)
+export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object> extends Partial<IUiMenuPluggableComponents<T>> {
+    // (undocumented)
+    ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+    // (undocumented)
+    containerBottomPadding?: "none" | "small" | "medium";
+    // (undocumented)
+    containerTopPadding?: "none" | "small" | "medium";
+    // (undocumented)
+    dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
+    // (undocumented)
+    isDisabledFocusable?: boolean;
+    // (undocumented)
+    itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
+    // (undocumented)
+    items: IUiMenuItem<T>[];
+    // (undocumented)
+    maxHeight?: ((context: IUiMenuContext<T>) => number | undefined) | number;
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    menuCtxData?: M;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
+    // (undocumented)
+    onSelect?: (item: IUiMenuInteractiveItem<T>, event: MouseEvent_2 | KeyboardEvent_2) => void;
+    // (undocumented)
+    onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiMenuContext<T>) => void;
+    // (undocumented)
+    shouldCloseOnSelect?: boolean;
+    // (undocumented)
+    shouldKeyboardActionPreventDefault?: boolean;
+    // (undocumented)
+    shouldKeyboardActionStopPropagation?: boolean;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium;
+}
+
+// @internal (undocumented)
 export type IUiMenuStaticItem<T extends IUiMenuItemData = object> = {
     type: "static";
     id?: string;
@@ -5907,6 +6459,126 @@ export interface IUiPagedVirtualListImperativeHandle<T> {
 }
 
 // @internal (undocumented)
+export interface IUiPagedVirtualListProps<T> {
+    // (undocumented)
+    children: (item: T, focusedIndex?: number) => ReactNode;
+    // (undocumented)
+    closeDropdown?: () => void;
+    // (undocumented)
+    containerPadding?: number;
+    // (undocumented)
+    customKeyboardNavigationHandler?: (event: KeyboardEvent_2<Element>) => void;
+    // (undocumented)
+    focusedAction?: string;
+    // (undocumented)
+    focusedItem?: T;
+    // (undocumented)
+    getIsItemSelected?: (item: T) => boolean;
+    // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    itemPadding: number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsGap: number;
+    // (undocumented)
+    listboxProps?: Record<string, any>;
+    // (undocumented)
+    loadNextPage?: () => void;
+    // (undocumented)
+    maxHeight: number;
+    // (undocumented)
+    onKeyDownConfirm?: (item: T) => void;
+    // (undocumented)
+    onKeyDownSelect?: (item: T) => void;
+    // (undocumented)
+    representAs?: "grid" | "listbox";
+    // (undocumented)
+    scrollbarHoverEffect?: boolean;
+    // (undocumented)
+    scrollToIndex?: number;
+    scrollToItem?: T;
+    scrollToItemKeyExtractor?: (item: T) => string | number;
+    // (undocumented)
+    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
+    // (undocumented)
+    SkeletonItem?: ComponentType<IUiPagedVirtualListSkeletonItemProps>;
+    // (undocumented)
+    skeletonItemsCount: number;
+    // (undocumented)
+    tabIndex?: number;
+}
+
+// @internal (undocumented)
+export interface IUiPagedVirtualListSkeletonItemProps {
+    // (undocumented)
+    itemHeight: number;
+}
+
+// @internal
+export interface IUiPaginationButtonProps {
+    accessibilityConfig?: IAccessibilityConfigBase;
+    dataId?: string;
+    dataTestId?: string;
+    direction: UiPaginationButtonDirection;
+    id?: string;
+    isActive?: boolean;
+    isDisabled?: boolean;
+    label: string;
+    onClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
+    size?: UiPaginationButtonSize;
+    tabIndex?: number;
+}
+
+// @internal (undocumented)
+export interface IUiPopoverProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    anchor: ReactElement<any>;
+    // (undocumented)
+    closeText?: string;
+    // (undocumented)
+    closeVisible?: boolean;
+    // (undocumented)
+    content?: ReactNode | ((args: {
+        onClose: () => void;
+    }) => ReactNode);
+    // (undocumented)
+    disabled?: boolean;
+    enableFocusTrap?: boolean;
+    focusCheckFn?: (element: HTMLElement) => boolean;
+    // (undocumented)
+    footer?: ReactNode | ((args: {
+        onClose: () => void;
+    }) => ReactNode);
+    // (undocumented)
+    initialFocus?: RefObject<HTMLElement> | string;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onOpen?: () => void;
+    // (undocumented)
+    returnFocusAfterClose?: boolean;
+    // (undocumented)
+    returnFocusTo?: RefObject<HTMLElement> | string;
+    // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
+    title?: string | ReactNode;
+    // (undocumented)
+    triggerBy?: IUiTooltipProps["triggerBy"];
+    // (undocumented)
+    width?: "default" | number;
+}
+
+// @internal (undocumented)
 export interface IUiReturnFocusOnUnmountOptions {
     // (undocumented)
     returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
@@ -5919,6 +6591,17 @@ export interface IUiSettings {
 }
 
 // @internal (undocumented)
+export interface IUiSkeletonProps {
+    direction?: "row" | "column";
+    itemBorderRadius?: number;
+    itemHeight?: (number | string) | (number | string)[];
+    itemPadding?: number | number[];
+    itemsCount?: number;
+    itemsGap?: number;
+    itemWidth?: (number | string) | (number | string)[];
+}
+
+// @internal (undocumented)
 export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[], Level> {
     // (undocumented)
     ItemComponent?: ComponentType<IUiTreeviewItemProps<Level>>;
@@ -5926,6 +6609,30 @@ export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[
     items: UiStaticTreeView<Level>[];
     // (undocumented)
     onSelect?: OnStaticSelectFn<Level>;
+}
+
+// @internal (undocumented)
+export interface IUiSubmenuHeaderProps {
+    // (undocumented)
+    backAriaLabel?: string;
+    // (undocumented)
+    backgroundColor?: string;
+    // (undocumented)
+    closeAriaLabel?: string;
+    // (undocumented)
+    height?: SizeMedium | SizeLarge;
+    // (undocumented)
+    onBack?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    onClose?: (e: MouseEvent_2<HTMLButtonElement>) => void;
+    // (undocumented)
+    textColor?: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    titleId?: string;
+    // (undocumented)
+    useShortenedTitle?: boolean;
 }
 
 // @internal (undocumented)
@@ -6032,6 +6739,84 @@ export type IUiTabsProps<TTabProps extends Record<any, any> = EmptyObject, TTabA
 export interface IUiTagAccessibilityConfig extends IAccessibilityConfigBase {
     // (undocumented)
     deleteAriaLabel?: string;
+}
+
+// @internal (undocumented)
+export interface IUiTagDef {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDeletable?: boolean;
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
+export interface IUiTagsProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    addLabel?: string;
+    // (undocumented)
+    cancelLabel?: string;
+    // (undocumented)
+    canCreateTag?: boolean;
+    // (undocumented)
+    canDeleteTags?: boolean;
+    // (undocumented)
+    closeLabel?: string;
+    // (undocumented)
+    creatableLabel?: string;
+    // (undocumented)
+    mode?: "single-line" | "multi-line";
+    // (undocumented)
+    moreLabel?: string;
+    // (undocumented)
+    nameLabel?: string;
+    // (undocumented)
+    noTagsLabel?: string;
+    // (undocumented)
+    onTagAdd?: (tag: IUiTagDef) => void;
+    // (undocumented)
+    onTagClick?: (tag: IUiTagDef) => void;
+    // (undocumented)
+    onTagRemove?: (tag: IUiTagDef) => void;
+    // (undocumented)
+    readOnly?: boolean;
+    // (undocumented)
+    removeLabel?: string;
+    // (undocumented)
+    saveLabel?: string;
+    // (undocumented)
+    tagOptions?: Array<IUiTagDef>;
+    // (undocumented)
+    tags: Array<IUiTagDef>;
+}
+
+// @internal (undocumented)
+export interface IUiTooltipProps {
+    accessibilityConfig?: IAccessibilityConfigBase;
+    anchor: ReactNode;
+    anchorWrapperStyles?: CSSProperties;
+    arrowPlacement?: TooltipArrowPlacement;
+    behaviour?: "tooltip" | "popover";
+    content: ReactNode | ((args: {
+        onClose: () => void;
+        type: "screen-reader" | "live";
+    }) => ReactNode);
+    disabled?: boolean;
+    hoverCloseDelay?: number;
+    hoverOpenDelay?: number;
+    id?: string;
+    isOpen?: boolean;
+    offset?: number;
+    onClose?: () => void;
+    onOpen?: () => void;
+    optimalPlacement?: boolean;
+    showArrow?: boolean;
+    triggerBy?: Array<"hover" | "focus" | "click">;
+    variant?: "default" | "error" | "none";
+    width?: number | "same-as-anchor";
 }
 
 // @internal (undocumented)
@@ -6237,6 +7022,22 @@ export interface IUserIconProps extends IIconProps {
 }
 
 // @internal (undocumented)
+export interface IUseToastMessageType {
+    // (undocumented)
+    addError: AddMessageType;
+    // (undocumented)
+    addProgress: AddMessageType;
+    // (undocumented)
+    addSuccess: AddMessageType;
+    // (undocumented)
+    addWarning: AddMessageType;
+    // (undocumented)
+    removeAllMessages: () => void;
+    // (undocumented)
+    removeMessage: (id: string) => void;
+}
+
+// @internal (undocumented)
 export interface IWebComponentsOptions {
     // (undocumented)
     allowLocale: boolean;
@@ -6336,7 +7137,7 @@ export function LoadingSpinner({ className, color }: ILoadingSpinner): JSX.Eleme
 export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSelected, }: ILocaleSettingProps): JSX.Element;
 
 // @internal (undocumented)
-export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
@@ -6350,10 +7151,10 @@ export const makeKeyboardNavigation: <ActionKeysMap extends {
         code: string | string[];
         modifiers?: IModifier[];
     }>;
-}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2>(handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void; }, options?: IHandleActionOptions) => (event: T) => void;
+}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent_2 = KeyboardEvent_2>(handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void; }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onClose?: ((event: T) => void) | undefined;
     onSelect?: ((event: T) => void) | undefined;
     onUnhandledKeyDown?: ((event: T) => void) | undefined;
@@ -6364,7 +7165,7 @@ export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 | Keyboard
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onClose?: ((event: T) => void) | undefined;
     onSelect?: ((event: T) => void) | undefined;
     onUnhandledKeyDown?: ((event: T) => void) | undefined;
@@ -6377,7 +7178,7 @@ export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEv
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 | KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onSelect?: ((event: T) => void) | undefined;
     onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
@@ -6870,184 +7671,16 @@ export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 // @internal (undocumented)
 export function UiAsyncTable<T extends {
     id: string;
-}>(props: UiAsyncTableProps<T>): JSX.Element;
-
-// @internal (undocumented)
-export interface UiAsyncTableAccessibilityConfig<T> {
-    // (undocumented)
-    checkboxAllAriaLabel?: string;
-    // (undocumented)
-    getCheckboxItemAriaLabel?: (item: T) => string;
-    // (undocumented)
-    gridAriaLabel?: string;
-    // (undocumented)
-    searchAriaLabel?: string;
-}
-
-// @internal (undocumented)
-export interface UiAsyncTableBulkAction {
-    // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
-    // (undocumented)
-    label: string;
-    // (undocumented)
-    onClick: () => void;
-}
+}>(props: IUiAsyncTableProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export const UiAsyncTableCheckboxColumnWidth = 34;
 
 // @internal (undocumented)
-export interface UiAsyncTableColumn<T> {
-    // (undocumented)
-    align?: "left" | "center" | "right";
-    // (undocumented)
-    bold?: boolean;
-    // (undocumented)
-    getAccessibilityConfig?: (item: T) => UiAsyncTableColumnAccessibilityConfig;
-    // (undocumented)
-    getMultiLineTextContent?: (item: T) => Array<string>;
-    // (undocumented)
-    getTextContent?: (item: T) => string | ReactNode;
-    // (undocumented)
-    getTextHref?: (item: T) => string | undefined;
-    // (undocumented)
-    getTextTitle?: (item: T) => string;
-    // (undocumented)
-    key?: keyof T;
-    // (undocumented)
-    label?: string;
-    // (undocumented)
-    renderBadge?: (item: T) => ReactNode;
-    // (undocumented)
-    renderButton?: (item: T) => ReactNode;
-    // (undocumented)
-    renderMenu?: UiAsyncTableMenuRenderer<T>;
-    // (undocumented)
-    renderPrefixIcon?: (item: T) => ReactNode;
-    // (undocumented)
-    renderRoleIcon?: (item: T) => ReactNode;
-    // (undocumented)
-    renderSuffixIcon?: (item: T) => ReactNode;
-    // (undocumented)
-    sortable?: boolean;
-    // (undocumented)
-    width?: number;
-}
-
-// @internal (undocumented)
-export interface UiAsyncTableColumnAccessibilityConfig {
-    // (undocumented)
-    ariaLabel?: string;
-}
-
-// @internal (undocumented)
-export interface UiAsyncTableColumnDefinitionResponsive<T> extends UiAsyncTableColumn<T> {
-    // (undocumented)
-    minWidth?: number;
-}
-
-// @internal (undocumented)
-export function UiAsyncTableEmptyState({ title, description, icon }: UiAsyncTableEmptyStateProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiAsyncTableEmptyStateProps {
-    // (undocumented)
-    description?: string;
-    // (undocumented)
-    icon?: IconType;
-    // (undocumented)
-    title?: string;
-}
-
-// @internal (undocumented)
-export interface UiAsyncTableFilter {
-    // (undocumented)
-    isMultiSelect?: boolean;
-    // (undocumented)
-    label: string;
-    // (undocumented)
-    onItemsSelect: (options: Array<UiAsyncTableFilterOption>) => void;
-    // (undocumented)
-    options: Array<UiAsyncTableFilterOption>;
-    // (undocumented)
-    selected?: Array<UiAsyncTableFilterOption>;
-}
-
-// @internal (undocumented)
-export interface UiAsyncTableFilterOption {
-    // (undocumented)
-    label?: string;
-    // (undocumented)
-    secondaryLabel?: string;
-    // (undocumented)
-    value: string;
-}
+export function UiAsyncTableEmptyState({ title, description, icon, }: IUiAsyncTableEmptyStateProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) => ReactNode;
-
-// @internal (undocumented)
-export interface UiAsyncTableProps<T extends {
-    id: string;
-}> {
-    // (undocumented)
-    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
-    // (undocumented)
-    bulkActions?: Array<UiAsyncTableBulkAction>;
-    // (undocumented)
-    columns: Array<UiAsyncTableColumn<T>>;
-    // (undocumented)
-    filters?: Array<UiAsyncTableFilter>;
-    // (undocumented)
-    hasNextPage?: boolean;
-    // (undocumented)
-    isFiltersTooLarge?: boolean;
-    // (undocumented)
-    isLoading?: boolean;
-    // (undocumented)
-    isMobileView?: boolean;
-    // (undocumented)
-    items: T[];
-    // (undocumented)
-    loadNextPage?: () => void;
-    // (undocumented)
-    locale?: string;
-    // (undocumented)
-    maxHeight?: number;
-    // (undocumented)
-    onItemClick?: (item: T) => void;
-    // (undocumented)
-    onSearch?: (search: string) => void;
-    // (undocumented)
-    onSort?: (key: keyof T) => void;
-    // (undocumented)
-    renderEmptyState?: () => ReactNode;
-    // (undocumented)
-    renderHeader?: () => ReactNode;
-    // (undocumented)
-    renderItem?: (item: T) => ReactNode;
-    // (undocumented)
-    renderToolbarCustomElement?: () => ReactNode;
-    // (undocumented)
-    scrollToIndex?: number;
-    // (undocumented)
-    selectedItemIds?: Array<string>;
-    // (undocumented)
-    setSelectedItemIds?: (items: Array<string>) => void;
-    // (undocumented)
-    skeletonItemsCount?: number;
-    // (undocumented)
-    sortBy?: keyof T;
-    // (undocumented)
-    sortDirection?: SortDirection;
-    // (undocumented)
-    totalItemsCount?: number;
-    // (undocumented)
-    variant?: UiAsyncTableVariant;
-    // (undocumented)
-    width?: number;
-}
 
 // @internal (undocumented)
 export const UiAsyncTableRowHeightLarge = 55;
@@ -7059,27 +7692,7 @@ export const UiAsyncTableRowHeightNormal = 45;
 export const UiAsyncTableScrollbarWidth = 10;
 
 // @internal (undocumented)
-export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiAsyncTableTitleAction {
-    // (undocumented)
-    renderAction: () => ReactNode;
-}
-
-// @internal (undocumented)
-export interface UiAsyncTableTitleProps {
-    // (undocumented)
-    actions: Array<UiAsyncTableTitleAction>;
-    // (undocumented)
-    onSearch?: (search: string) => void;
-    // (undocumented)
-    renderIcon?: () => ReactNode;
-    // (undocumented)
-    scrollToStart: () => void;
-    // (undocumented)
-    title: string;
-}
+export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: IUiAsyncTableTitleProps): JSX.Element;
 
 // @internal
 export type UiAsyncTableVariant = "regular" | "small";
@@ -7091,62 +7704,10 @@ export function UiAutofocus({ root, children, ...options }: {
 } & IUiAutofocusOptions): FunctionComponentElement<any>;
 
 // @internal (undocumented)
-export function UiBadge({ label }: UiBadgeProps): JSX.Element;
+export function UiBadge({ label }: IUiBadgeProps): JSX.Element;
 
 // @internal (undocumented)
-export interface UiBadgeProps {
-    // (undocumented)
-    label: string;
-}
-
-// @internal (undocumented)
-export const UiButton: ForwardRefExoticComponent<UiButtonProps & RefAttributes<HTMLButtonElement>>;
-
-// @internal (undocumented)
-export interface UiButtonProps {
-    // (undocumented)
-    accessibilityConfig?: IUiButtonAccessibilityConfig;
-    // (undocumented)
-    badgeAfter?: number;
-    // (undocumented)
-    dataId?: string;
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    disableIconAnimation?: boolean;
-    // (undocumented)
-    iconAfter?: IconType;
-    // (undocumented)
-    iconAfterSize?: number;
-    // (undocumented)
-    iconBefore?: IconType;
-    // (undocumented)
-    iconBeforeSize?: number;
-    // (undocumented)
-    id?: string;
-    // (undocumented)
-    isDisabled?: boolean;
-    // (undocumented)
-    isLoading?: boolean;
-    // (undocumented)
-    isSelected?: boolean;
-    // (undocumented)
-    label: string;
-    // (undocumented)
-    maxWidth?: number;
-    // (undocumented)
-    onClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
-    // (undocumented)
-    onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
-    // (undocumented)
-    size?: SizeSmall | SizeMedium | SizeLarge;
-    // (undocumented)
-    tabIndex?: number;
-    // (undocumented)
-    tooltip?: ReactNode;
-    // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink;
-}
+export const UiButton: ForwardRefExoticComponent<IUiButtonProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
 export const UiButtonSegmentedControl: ForwardRefExoticComponent<Omit<UiButtonSegmentedControlProps, "ref"> & RefAttributes<HTMLDivElement>>;
@@ -7157,86 +7718,16 @@ export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "
 };
 
 // @internal (undocumented)
-export const UiCard: ForwardRefExoticComponent<UiCardProps & RefAttributes<HTMLDivElement>>;
+export const UiCard: ForwardRefExoticComponent<IUiCardProps & RefAttributes<HTMLDivElement>>;
 
 // @internal (undocumented)
-export interface UiCardProps {
-    // (undocumented)
-    children?: ReactNode;
-    // (undocumented)
-    elevation?: "1" | "2";
-    // (undocumented)
-    tabIndex?: number;
-}
+export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label, }: IUiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label, }: UiCheckboxProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiCheckboxProps {
-    // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
-    // (undocumented)
-    checked: boolean;
-    // (undocumented)
-    disabled?: boolean;
-    // (undocumented)
-    indeterminate?: boolean;
-    // (undocumented)
-    label?: string;
-    // (undocumented)
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-    // (undocumented)
-    preventDefault?: boolean;
-    // (undocumented)
-    tabIndex?: number;
-}
-
-// @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: UiChipProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiChipProps {
-    // (undocumented)
-    accessibilityConfig?: IUiChipAccessibilityConfig;
-    // (undocumented)
-    buttonRef?: MutableRefObject<HTMLButtonElement>;
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    iconBefore?: IconType;
-    // (undocumented)
-    isActive?: boolean;
-    // (undocumented)
-    isDeletable?: boolean;
-    // (undocumented)
-    isDisabled?: boolean;
-    // (undocumented)
-    isExpandable?: boolean;
-    // (undocumented)
-    isLocked?: boolean;
-    // (undocumented)
-    label: string;
-    // (undocumented)
-    maxWidth?: number;
-    // (undocumented)
-    onClick?: () => void;
-    // (undocumented)
-    onDelete?: () => void;
-    // (undocumented)
-    onDeleteKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
-    // (undocumented)
-    onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
-    // (undocumented)
-    renderChipContent?: (content: ReactNode) => ReactNode;
-    // (undocumented)
-    renderDeleteButton?: (button: ReactNode) => ReactNode;
-    // (undocumented)
-    tag?: string;
-}
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: IUiChipProps): JSX.Element;
 
 // @internal
-export function UiCombobox({ children, ...props }: UiComboboxProps): JSX.Element;
+export function UiCombobox({ children, ...props }: IUiComboboxProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiComboboxInput: ForwardRefExoticComponent<UiComboboxInputProps & RefAttributes<HTMLInputElement>>;
@@ -7245,10 +7736,10 @@ export const UiComboboxInput: ForwardRefExoticComponent<UiComboboxInputProps & R
 export type UiComboboxInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 // @internal (undocumented)
-export function UiComboboxList({ children, className, ...htmlProps }: UiComboboxListProps): JSX.Element;
+export function UiComboboxList({ children, className, ...htmlProps }: IUiComboboxListProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiComboboxListItem(props: UiComboboxListItemProps): JSX.Element;
+export function UiComboboxListItem(props: IUiComboboxListItemProps): JSX.Element;
 
 // @internal
 export function UiComboboxListItemCreatableLabel(props: UiComboboxListItemCreatableLabelProps): JSX.Element;
@@ -7263,83 +7754,16 @@ export function UiComboboxListItemLabel(props: UiComboboxListItemLabelProps): JS
 export type UiComboboxListItemLabelProps = HTMLAttributes<HTMLSpanElement>;
 
 // @internal (undocumented)
-export interface UiComboboxListItemProps extends HTMLAttributes<HTMLLIElement> {
-    // (undocumented)
-    index: number;
-    // (undocumented)
-    option: IUiComboboxOption;
-}
-
-// @internal (undocumented)
-export interface UiComboboxListProps extends Omit<HTMLAttributes<HTMLUListElement>, "children"> {
-    children?: (option: IUiComboboxOption, index: number) => ReactNode;
-}
-
-// @internal (undocumented)
 export function UiComboboxPopup({ style, className, children, ...htmlProps }: UiComboboxPopupProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 
 // @internal (undocumented)
-export interface UiComboboxProps extends IUiComboboxParams {
-    // (undocumented)
-    children?: ReactNode;
-}
+export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative, }: IUiDateProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative, }: UiDateProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiDateProps {
-    // (undocumented)
-    absoluteOptions?: Intl.DateTimeFormatOptions;
-    // (undocumented)
-    allowRelative?: boolean;
-    // (undocumented)
-    date: Date | string | number;
-    // (undocumented)
-    locale?: string;
-    // (undocumented)
-    relativeThresholdMs?: number;
-}
-
-// @internal (undocumented)
-export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig, }: UiDrawerProps): JSX.Element | null;
-
-// @internal (undocumented)
-export interface UiDrawerProps extends IUiAutofocusOptions {
-    // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
-    // (undocumented)
-    anchor?: "left" | "right";
-    // (undocumented)
-    children?: ReactNode;
-    // (undocumented)
-    closeLabel?: string;
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    mode?: "absolute" | "fixed";
-    // (undocumented)
-    node?: HTMLElement;
-    // (undocumented)
-    onClickClose?: () => void;
-    // (undocumented)
-    onClickOutside?: (e: MouseEvent_2) => void;
-    // (undocumented)
-    onEscapeKey?: (e: KeyboardEvent_2) => void;
-    // (undocumented)
-    open?: boolean;
-    // (undocumented)
-    returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
-    // (undocumented)
-    showCloseButton?: boolean;
-    // (undocumented)
-    transition?: UiDrawerTransitionProps;
-    // (undocumented)
-    zIndex?: number;
-}
+export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig, }: IUiDrawerProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type UiDrawerTransitionProps = {
@@ -7352,13 +7776,7 @@ export type UiDrawerTransitionProps = {
 export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpenChange, openOnInit, placement, offset, alignPoints, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOnByClass, zIndex, width, enableFocusTrap, autofocusOnOpen, initialFocus, returnFocusTo, onOpen, onClose, accessibilityConfig, }: IUiDropdownProps): JSX.Element;
 
 // @internal (undocumented)
-export const UiDropdownIconButton: ForwardRefExoticComponent<UiDropdownIconButtonProps & RefAttributes<HTMLButtonElement>>;
-
-// @internal (undocumented)
-export interface UiDropdownIconButtonProps extends UiIconButtonPublicProps {
-    // (undocumented)
-    isDropdownOpen: boolean;
-}
+export const UiDropdownIconButton: ForwardRefExoticComponent<IUiDropdownIconButtonProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
 export function UiFloatingElement({ children, anchor, isOpen, onClose, placement, alignPoints, strategy, offset, autoFlip, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOn, shouldCloseOnClick, zIndex: zIndexProp, className, contentClassName, style, width, maxWidth, maxHeight, accessibilityConfig, onPlacementChange, }: IUiFloatingElementProps): JSX.Element | null;
@@ -7374,74 +7792,13 @@ export function UiFocusTrap({ root, children, focusCheckFn, }: {
 }): FunctionComponentElement<any>;
 
 // @internal (undocumented)
-export function UiIcon({ type, label, color, layout, disableAnimation, ariaHidden, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: UiIconProps): JSX.Element;
+export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: IUiIconProps): JSX.Element;
 
 // @internal (undocumented)
-export const UiIconButton: ForwardRefExoticComponent<UiIconButtonPublicProps & RefAttributes<HTMLButtonElement>>;
+export const UiIconButton: ForwardRefExoticComponent<IUiIconButtonPublicProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal (undocumented)
-export type UiIconButtonProps = UiIconButtonPublicProps;
-
-// @internal (undocumented)
-export interface UiIconButtonPublicProps {
-    // (undocumented)
-    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
-    // (undocumented)
-    ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
-    // (undocumented)
-    dataId?: string;
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    disableAnimation?: boolean;
-    // (undocumented)
-    icon: IconType;
-    // (undocumented)
-    iconColor?: ThemeColor;
-    // (undocumented)
-    id?: string;
-    // (undocumented)
-    isActive?: boolean;
-    // (undocumented)
-    isDisabled?: boolean;
-    // (undocumented)
-    label?: string;
-    // (undocumented)
-    onClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
-    // (undocumented)
-    onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
-    // (undocumented)
-    size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
-    // (undocumented)
-    tabIndex?: number;
-    // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTable | VariantBare;
-}
-
-// @internal (undocumented)
-export interface UiIconProps {
-    // (undocumented)
-    ariaHidden?: boolean;
-    // (undocumented)
-    backgroundColor?: ThemeColor;
-    // (undocumented)
-    backgroundShape?: BackgroundShape;
-    // (undocumented)
-    backgroundSize?: number;
-    // (undocumented)
-    backgroundType?: BackgroundType;
-    // (undocumented)
-    color?: ThemeColor | "currentColor";
-    // (undocumented)
-    disableAnimation?: boolean;
-    // (undocumented)
-    label?: string;
-    layout?: "block" | "inline";
-    // (undocumented)
-    size?: number;
-    // (undocumented)
-    type: IconType;
-}
+export type UiIconButtonProps = IUiIconButtonPublicProps;
 
 // @internal (undocumented)
 export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>;
@@ -7453,258 +7810,33 @@ export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTre
 export function UiLink({ variant, flipUnderline, fullWidth, dataTestId, ...anchorProps }: IUiLinkProps): JSX.Element;
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, reference, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, reference, ariaAttributes, }: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
 
 // @internal (undocumented)
 export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role"> & {
     "aria-controls"?: string;
 };
 
-// @internal (undocumented)
-export interface UiListboxInteractiveItemProps<T> {
-    // (undocumented)
-    isCompact: boolean;
-    // (undocumented)
-    isFocused: boolean;
-    // (undocumented)
-    isSelected: boolean;
-    // (undocumented)
-    item: IUiListboxInteractiveItem<T>;
-    // (undocumented)
-    onSelect: (e: MouseEvent_2) => void;
-}
-
-// @internal (undocumented)
-export interface UiListboxProps<InteractiveItemData, StaticItemData = ReactNode> {
-    // (undocumented)
-    ariaAttributes: UiListboxAriaAttributes;
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    InteractiveItemComponent?: ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
-    // (undocumented)
-    isCompact?: boolean;
-    // (undocumented)
-    isDisabledFocusable?: boolean;
-    // (undocumented)
-    itemDataTestId?: string;
-    // (undocumented)
-    items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
-    // (undocumented)
-    maxHeight?: number;
-    // (undocumented)
-    maxWidth?: number;
-    // (undocumented)
-    onClose?: () => void;
-    // (undocumented)
-    onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>, mods: {
-        type?: "mouse" | "keyboard";
-        newTab?: boolean;
-    }) => void;
-    // (undocumented)
-    onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiListboxContext<InteractiveItemData, StaticItemData>) => void;
-    // (undocumented)
-    reference?: RefObject<HTMLUListElement | null>;
-    // (undocumented)
-    selectedItemId?: string;
-    // (undocumented)
-    shouldCloseOnSelect?: boolean;
-    // (undocumented)
-    shouldKeyboardActionPreventDefault?: boolean;
-    // (undocumented)
-    shouldKeyboardActionStopPropagation?: boolean;
-    // (undocumented)
-    StaticItemComponent?: ComponentType<UiListboxStaticItemProps<StaticItemData>>;
-    // (undocumented)
-    width?: number;
-}
-
-// @internal (undocumented)
-export interface UiListboxStaticItemProps<T> {
-    // (undocumented)
-    item: IUiListboxStaticItem<T>;
-}
-
 // @internal
-export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(props: UiMenuProps<T, M>): ReactNode;
-
-// @internal (undocumented)
-export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> extends Partial<IUiMenuPluggableComponents<T>> {
-    // (undocumented)
-    ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
-    // (undocumented)
-    containerBottomPadding?: "none" | "small" | "medium";
-    // (undocumented)
-    containerTopPadding?: "none" | "small" | "medium";
-    // (undocumented)
-    dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
-    // (undocumented)
-    isDisabledFocusable?: boolean;
-    // (undocumented)
-    itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
-    // (undocumented)
-    items: IUiMenuItem<T>[];
-    // (undocumented)
-    maxHeight?: ((context: IUiMenuContext<T>) => number | undefined) | number;
-    // (undocumented)
-    maxWidth?: number;
-    // (undocumented)
-    menuCtxData?: M;
-    // (undocumented)
-    onClose?: () => void;
-    // (undocumented)
-    onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
-    // (undocumented)
-    onSelect?: (item: IUiMenuInteractiveItem<T>, event: MouseEvent_2 | KeyboardEvent_2) => void;
-    // (undocumented)
-    onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiMenuContext<T>) => void;
-    // (undocumented)
-    shouldCloseOnSelect?: boolean;
-    // (undocumented)
-    shouldKeyboardActionPreventDefault?: boolean;
-    // (undocumented)
-    shouldKeyboardActionStopPropagation?: boolean;
-    // (undocumented)
-    size?: SizeSmall | SizeMedium;
-}
+export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(props: IUiMenuProps<T, M>): ReactNode;
 
 // @internal (undocumented)
 export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavigationBypassProps): JSX.Element;
 
 // @internal (undocumented)
-export const UiPagedVirtualList: <T>(props: UiPagedVirtualListProps<T> & RefAttributes<IUiPagedVirtualListImperativeHandle<T>>) => ReactNode;
-
-// @internal (undocumented)
-export interface UiPagedVirtualListProps<T> {
-    // (undocumented)
-    children: (item: T, focusedIndex?: number) => ReactNode;
-    // (undocumented)
-    closeDropdown?: () => void;
-    // (undocumented)
-    containerPadding?: number;
-    // (undocumented)
-    customKeyboardNavigationHandler?: (event: KeyboardEvent_2<Element>) => void;
-    // (undocumented)
-    focusedAction?: string;
-    // (undocumented)
-    focusedItem?: T;
-    // (undocumented)
-    getIsItemSelected?: (item: T) => boolean;
-    // (undocumented)
-    hasNextPage?: boolean;
-    // (undocumented)
-    isLoading?: boolean;
-    // (undocumented)
-    itemHeight: number;
-    // (undocumented)
-    itemPadding: number;
-    // (undocumented)
-    items?: T[];
-    // (undocumented)
-    itemsGap: number;
-    // (undocumented)
-    listboxProps?: Record<string, any>;
-    // (undocumented)
-    loadNextPage?: () => void;
-    // (undocumented)
-    maxHeight: number;
-    // (undocumented)
-    onKeyDownConfirm?: (item: T) => void;
-    // (undocumented)
-    onKeyDownSelect?: (item: T) => void;
-    // (undocumented)
-    representAs?: "grid" | "listbox";
-    // (undocumented)
-    scrollbarHoverEffect?: boolean;
-    // (undocumented)
-    scrollToIndex?: number;
-    scrollToItem?: T;
-    scrollToItemKeyExtractor?: (item: T) => string | number;
-    // (undocumented)
-    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
-    // (undocumented)
-    SkeletonItem?: ComponentType<UiPagedVirtualListSkeletonItemProps>;
-    // (undocumented)
-    skeletonItemsCount: number;
-    // (undocumented)
-    tabIndex?: number;
-}
-
-// @internal (undocumented)
-export interface UiPagedVirtualListSkeletonItemProps {
-    // (undocumented)
-    itemHeight: number;
-}
+export const UiPagedVirtualList: <T>(props: IUiPagedVirtualListProps<T> & RefAttributes<IUiPagedVirtualListImperativeHandle<T>>) => ReactNode;
 
 // @internal
-export const UiPaginationButton: ForwardRefExoticComponent<UiPaginationButtonProps & RefAttributes<HTMLButtonElement>>;
+export const UiPaginationButton: ForwardRefExoticComponent<IUiPaginationButtonProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
 export type UiPaginationButtonDirection = "previous" | "next";
 
 // @internal
-export interface UiPaginationButtonProps {
-    accessibilityConfig?: IAccessibilityConfigBase;
-    dataId?: string;
-    dataTestId?: string;
-    direction: UiPaginationButtonDirection;
-    id?: string;
-    isActive?: boolean;
-    isDisabled?: boolean;
-    label: string;
-    onClick?: (e: MouseEvent_2<HTMLButtonElement>) => void;
-    onKeyDown?: (e: KeyboardEvent_2<HTMLButtonElement>) => void;
-    size?: UiPaginationButtonSize;
-    tabIndex?: number;
-}
-
-// @internal
 export type UiPaginationButtonSize = "small" | "large";
 
 // @internal (undocumented)
-export function UiPopover({ accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose, }: UiPopoverProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiPopoverProps {
-    // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
-    // (undocumented)
-    anchor: ReactElement<any>;
-    // (undocumented)
-    closeText?: string;
-    // (undocumented)
-    closeVisible?: boolean;
-    // (undocumented)
-    content?: ReactNode | ((args: {
-        onClose: () => void;
-    }) => ReactNode);
-    // (undocumented)
-    disabled?: boolean;
-    enableFocusTrap?: boolean;
-    focusCheckFn?: (element: HTMLElement) => boolean;
-    // (undocumented)
-    footer?: ReactNode | ((args: {
-        onClose: () => void;
-    }) => ReactNode);
-    // (undocumented)
-    initialFocus?: RefObject<HTMLElement> | string;
-    // (undocumented)
-    onClose?: () => void;
-    // (undocumented)
-    onOpen?: () => void;
-    // (undocumented)
-    returnFocusAfterClose?: boolean;
-    // (undocumented)
-    returnFocusTo?: RefObject<HTMLElement> | string;
-    // (undocumented)
-    tabIndex?: number;
-    // (undocumented)
-    title?: string | ReactNode;
-    // (undocumented)
-    triggerBy?: UiTooltipProps["triggerBy"];
-    // (undocumented)
-    width?: "default" | number;
-}
+export function UiPopover({ accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose, }: IUiPopoverProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
@@ -7718,18 +7850,7 @@ export function UiReturnFocusOnUnmount({ children, ...options }: IUiReturnFocusO
 export function UiSearchResultsAnnouncement({ totalResults, resultValues, announcementDelay, }: ISearchResultsAnnouncementProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius, }: UiSkeletonProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiSkeletonProps {
-    direction?: "row" | "column";
-    itemBorderRadius?: number;
-    itemHeight?: (number | string) | (number | string)[];
-    itemPadding?: number | number[];
-    itemsCount?: number;
-    itemsGap?: number;
-    itemWidth?: (number | string) | (number | string)[];
-}
+export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius, }: IUiSkeletonProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiStateTreeItem = {
@@ -7743,31 +7864,7 @@ export type UiStaticTreeView<Level> = UiTreeViewTree<Level>;
 export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>): JSX.Element;
 
 // @internal
-export function UiSubmenuHeader({ title, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId, }: UiSubmenuHeaderProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiSubmenuHeaderProps {
-    // (undocumented)
-    backAriaLabel?: string;
-    // (undocumented)
-    backgroundColor?: string;
-    // (undocumented)
-    closeAriaLabel?: string;
-    // (undocumented)
-    height?: SizeMedium | SizeLarge;
-    // (undocumented)
-    onBack?: (e: MouseEvent_2<HTMLButtonElement>) => void;
-    // (undocumented)
-    onClose?: (e: MouseEvent_2<HTMLButtonElement>) => void;
-    // (undocumented)
-    textColor?: string;
-    // (undocumented)
-    title?: string;
-    // (undocumented)
-    titleId?: string;
-    // (undocumented)
-    useShortenedTitle?: boolean;
-}
+export function UiSubmenuHeader({ title, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId, }: IUiSubmenuHeaderProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiTabOutHandler({ onTabOut, children }: {
@@ -7780,16 +7877,6 @@ export function UiTabs<TTabProps extends Record<any, any> = EmptyObject, TTabAct
 
 // @internal (undocumented)
 export const UiTag: ForwardRefExoticComponent<UiTagProps & RefAttributes<HTMLButtonElement>>;
-
-// @internal (undocumented)
-export interface UiTagDef {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    isDeletable?: boolean;
-    // (undocumented)
-    label: string;
-}
 
 // @internal (undocumented)
 export type UiTagProps = {
@@ -7810,78 +7897,10 @@ export type UiTagProps = {
 };
 
 // @internal (undocumented)
-export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, creatableLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig, }: UiTagsProps): JSX.Element;
+export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, creatableLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig, }: IUiTagsProps): JSX.Element;
 
 // @internal (undocumented)
-export interface UiTagsProps {
-    // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
-    // (undocumented)
-    addLabel?: string;
-    // (undocumented)
-    cancelLabel?: string;
-    // (undocumented)
-    canCreateTag?: boolean;
-    // (undocumented)
-    canDeleteTags?: boolean;
-    // (undocumented)
-    closeLabel?: string;
-    // (undocumented)
-    creatableLabel?: string;
-    // (undocumented)
-    mode?: "single-line" | "multi-line";
-    // (undocumented)
-    moreLabel?: string;
-    // (undocumented)
-    nameLabel?: string;
-    // (undocumented)
-    noTagsLabel?: string;
-    // (undocumented)
-    onTagAdd?: (tag: UiTagDef) => void;
-    // (undocumented)
-    onTagClick?: (tag: UiTagDef) => void;
-    // (undocumented)
-    onTagRemove?: (tag: UiTagDef) => void;
-    // (undocumented)
-    readOnly?: boolean;
-    // (undocumented)
-    removeLabel?: string;
-    // (undocumented)
-    saveLabel?: string;
-    // (undocumented)
-    tagOptions?: Array<UiTagDef>;
-    // (undocumented)
-    tags: Array<UiTagDef>;
-}
-
-// @internal (undocumented)
-export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles, }: UiTooltipProps): JSX.Element;
-
-// @internal (undocumented)
-export interface UiTooltipProps {
-    accessibilityConfig?: IAccessibilityConfigBase;
-    anchor: ReactNode;
-    anchorWrapperStyles?: CSSProperties;
-    arrowPlacement?: TooltipArrowPlacement;
-    behaviour?: "tooltip" | "popover";
-    content: ReactNode | ((args: {
-        onClose: () => void;
-        type: "screen-reader" | "live";
-    }) => ReactNode);
-    disabled?: boolean;
-    hoverCloseDelay?: number;
-    hoverOpenDelay?: number;
-    id?: string;
-    isOpen?: boolean;
-    offset?: number;
-    onClose?: () => void;
-    onOpen?: () => void;
-    optimalPlacement?: boolean;
-    showArrow?: boolean;
-    triggerBy?: Array<"hover" | "focus" | "click">;
-    variant?: "default" | "error" | "none";
-    width?: number | "same-as-anchor";
-}
+export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles, }: IUiTooltipProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["length"];
@@ -7934,9 +7953,9 @@ export const unrelatedHeader: IDateDatasetHeader;
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
 
 // @internal
-export function useAsyncTableResponsiveColumns<T>(columns: Array<UiAsyncTableColumnDefinitionResponsive<T>>, hasCheckbox?: boolean): {
+export function useAsyncTableResponsiveColumns<T>(columns: Array<IUiAsyncTableColumnDefinitionResponsive<T>>, hasCheckbox?: boolean): {
     ref: RefObject<HTMLDivElement | null>;
-    columns: UiAsyncTableColumnDefinitionResponsive<T>[];
+    columns: IUiAsyncTableColumnDefinitionResponsive<T>[];
 };
 
 // @internal
@@ -7958,18 +7977,13 @@ export function useComboboxState(): IUiComboboxState;
 export function useCurrencyFormatDefaults({ metricType, currencyFormatOverride, onFormatChange, shouldBootstrap, fallbackFormat, }: UseCurrencyFormatDefaultsConfig): void;
 
 // @internal (undocumented)
-export interface UseCurrencyFormatDefaultsConfig {
-    // (undocumented)
-    currencyFormatOverride?: string | null;
-    // (undocumented)
-    fallbackFormat?: string;
-    // (undocumented)
+export type UseCurrencyFormatDefaultsConfig = {
     metricType?: MetricType;
-    // (undocumented)
+    currencyFormatOverride?: string | null;
     onFormatChange: (format: string | null) => void;
-    // (undocumented)
     shouldBootstrap: boolean;
-}
+    fallbackFormat?: string;
+};
 
 // @internal (undocumented)
 export function useElementSize<T extends HTMLElement>(): {
@@ -8042,20 +8056,20 @@ export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 export function useMetricTypePresets({ metricType, currencyFormatOverride, formatMessage, }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
 
 // @internal
-export interface UseMetricTypePresetsConfig {
+export type UseMetricTypePresetsConfig = {
+    metricType?: MetricType;
     currencyFormatOverride?: string | null;
     formatMessage: (descriptor: {
         id: string;
     }) => string;
-    metricType?: MetricType;
-}
+};
 
 // @internal
-export interface UseMetricTypePresetsResult {
-    inheritPreset: IFormatPreset | null;
+export type UseMetricTypePresetsResult = {
     presets: IFormatPreset[];
     templates: IFormatTemplate[];
-}
+    inheritPreset: IFormatPreset | null;
+};
 
 // @internal
 export const useOverlayController: () => OverlayController | undefined;
@@ -8095,23 +8109,7 @@ export function useStandardPresets(formatMessage: (descriptor: {
 }) => string): IFormatPreset[];
 
 // @internal (undocumented)
-export const useToastMessage: () => UseToastMessageType;
-
-// @internal (undocumented)
-export interface UseToastMessageType {
-    // (undocumented)
-    addError: AddMessageType;
-    // (undocumented)
-    addProgress: AddMessageType;
-    // (undocumented)
-    addSuccess: AddMessageType;
-    // (undocumented)
-    addWarning: AddMessageType;
-    // (undocumented)
-    removeAllMessages: () => void;
-    // (undocumented)
-    removeMessage: (id: string) => void;
-}
+export const useToastMessage: () => IUseToastMessageType;
 
 // @internal (undocumented)
 export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
@@ -8195,9 +8193,8 @@ export const ZoomContext: Context<IZoomContextState>;
 export function ZoomProvider({ children }: ZoomProviderProps): JSX.Element;
 
 // @internal
-export interface ZoomProviderProps {
-    // (undocumented)
+export type ZoomProviderProps = {
     children: ReactNode;
-}
+};
 
 ```

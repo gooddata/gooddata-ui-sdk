@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type ChipContentProps } from "./types.js";
+import { type IChipContentProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 
@@ -21,7 +21,7 @@ export function ChipContent({
     dataTestId,
     buttonRef,
     styleObj,
-}: ChipContentProps) {
+}: IChipContentProps) {
     const { isExpanded, popupId, ariaLabel, ariaLabelledBy, ariaControls } = accessibilityConfig ?? {};
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
@@ -47,7 +47,7 @@ export function ChipContent({
         >
             {iconBefore ? (
                 <span className={e("icon-before")}>
-                    <UiIcon type={iconBefore} color="primary" size={15} ariaHidden />
+                    <UiIcon type={iconBefore} color="primary" size={15} />
                 </span>
             ) : null}
             <span className={e("label")}>{label}</span>
@@ -56,7 +56,7 @@ export function ChipContent({
                 <>
                     {isLocked ? (
                         <span className={e("icon-lock")}>
-                            <UiIcon type="lock" color="complementary-6" size={14} ariaHidden />
+                            <UiIcon type="lock" color="complementary-6" size={14} />
                         </span>
                     ) : isExpandable ? (
                         <span className={e("icon-chevron", { isActive })}>
@@ -64,7 +64,6 @@ export function ChipContent({
                                 type={isActive ? "chevronUp" : "chevronDown"}
                                 color="complementary-7"
                                 size={8}
-                                ariaHidden
                             />
                         </span>
                     ) : null}

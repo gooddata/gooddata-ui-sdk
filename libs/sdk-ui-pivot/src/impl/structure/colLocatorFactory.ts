@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { zip } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -117,9 +117,7 @@ export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
  *
  * @param col - col definition to get locators for
  */
-export function createTransposedColumnLocator(
-    col: TransposedMeasureDataCol | TransposedMeasureDataCol,
-): IMeasureColumnLocator[] {
+export function createTransposedColumnLocator(col: TransposedMeasureDataCol): IMeasureColumnLocator[] {
     const result: IMeasureColumnLocator[] = [];
 
     if (col.seriesDescriptor) {

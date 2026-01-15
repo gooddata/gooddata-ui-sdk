@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type AriaAttributes,
@@ -201,7 +201,7 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
 /**
  * @internal
  */
-export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
+export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object>
     extends Partial<IUiMenuPluggableComponents<T>> {
     items: IUiMenuItem<T>[];
 

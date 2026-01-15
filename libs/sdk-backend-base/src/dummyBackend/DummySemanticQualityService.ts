@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ISemanticQualityService } from "@gooddata/sdk-backend-spi";
 import type { ISemanticQualityIssuesCalculation, ISemanticQualityReport } from "@gooddata/sdk-model";
@@ -9,16 +9,16 @@ import type { ISemanticQualityIssuesCalculation, ISemanticQualityReport } from "
  */
 export class DummySemanticQualityService implements ISemanticQualityService {
     async getQualityReport(): Promise<ISemanticQualityReport> {
-        return {
+        return Promise.resolve({
             issues: [],
             updatedAt: undefined,
             status: "COMPLETED",
-        };
+        });
     }
     async triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation> {
-        return {
+        return Promise.resolve({
             status: "COMPLETED",
             processId: "",
-        };
+        });
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ColDef, type ColGroupDef, type Column } from "ag-grid-community";
 import { keyBy } from "lodash-es";
@@ -20,11 +20,11 @@ import { type SortIndicator, createSortIndicators } from "./tableDescriptorSorti
 import {
     type AnyCol,
     type AnySliceCol,
+    type IMixedHeadersCol,
+    type IMixedValuesCol,
+    type ISliceCol,
+    type ISliceMeasureCol,
     type LeafDataCol,
-    type MixedHeadersCol,
-    type MixedValuesCol,
-    type SliceCol,
-    type SliceMeasureCol,
     type TableColDefs,
     type TableCols,
     type TransposedMeasureDataCol,
@@ -72,7 +72,7 @@ export class TableDescriptor {
      * This field contains slice column descriptors zipped with their respective ColDef that should
      * be used for ag-grid.
      */
-    public readonly zippedSliceCols: Array<[SliceCol | SliceMeasureCol | MixedValuesCol, ColDef]> = [];
+    public readonly zippedSliceCols: Array<[ISliceCol | ISliceMeasureCol | IMixedValuesCol, ColDef]> = [];
 
     /**
      * This field contains descriptors of leaf columns zipped with their respective ColDef that should
@@ -352,7 +352,7 @@ export class TableDescriptor {
      * @param col - column to get absolute index of
      */
     public getAbsoluteLeafColIndex(
-        col: SliceCol | SliceMeasureCol | LeafDataCol | MixedHeadersCol | MixedValuesCol,
+        col: ISliceCol | ISliceMeasureCol | LeafDataCol | IMixedHeadersCol | IMixedValuesCol,
     ): number {
         if (isSliceCol(col) || isSliceMeasureCol(col) || isMixedHeadersCol(col)) {
             return col.index;
@@ -376,7 +376,7 @@ export class TableDescriptor {
      *
      * @param columnWidthItem - item to match
      */
-    public matchAttributeWidthItem(columnWidthItem: IAttributeColumnWidthItem): SliceCol | undefined {
+    public matchAttributeWidthItem(columnWidthItem: IAttributeColumnWidthItem): ISliceCol | undefined {
         const matcher = attributeDescriptorLocalIdMatch(
             columnWidthItem.attributeColumnWidthItem.attributeIdentifier,
         );
@@ -457,7 +457,7 @@ export class TableDescriptor {
      *
      * @remarks see {@link TableDescriptor.canTableHaveTotals}
      */
-    public getGrandTotalCol(): SliceCol {
+    public getGrandTotalCol(): ISliceCol {
         const result = this.headers.sliceCols[0];
 
         invariant(result);
@@ -473,7 +473,7 @@ export class TableDescriptor {
      * effective. if col is a slice col, then slice cols from start up to and including the provided col
      * are returned.
      */
-    public getSliceColsUpToIncludingCol(col: AnyCol): SliceCol[] {
+    public getSliceColsUpToIncludingCol(col: AnyCol): ISliceCol[] {
         const allSliceCols = this.headers.sliceCols;
 
         if (!isSliceCol(col)) {
@@ -539,7 +539,7 @@ function attributeDescriptorLocalIdMatch(localId: string): (b: IAttributeDescrip
     };
 }
 
-function updateEffectiveTotals(col: SliceCol, newDescriptors: Record<string, IAttributeDescriptor>) {
+function updateEffectiveTotals(col: ISliceCol, newDescriptors: Record<string, IAttributeDescriptor>) {
     const attributeLocalId = col.attributeDescriptor.attributeHeader.localIdentifier;
     const newDescriptor = newDescriptors[attributeLocalId];
 

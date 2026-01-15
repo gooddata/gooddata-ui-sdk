@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -73,7 +73,7 @@ describe("usePlaceholder", () => {
         expect(screen.queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
     });
 
-    it("should update placeholder value", async () => {
+    it("should update placeholder value", () => {
         const measure = newMeasure("updated-measure");
         const singleValuePlaceholder = newPlaceholder();
         createComponent({

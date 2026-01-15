@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     ComponentTable,
+    type IUiIconProps,
     UiIcon,
-    type UiIconProps,
     iconPaths,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
@@ -11,14 +11,17 @@ import {
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-const iconCombinations = propCombinationsFor({ label: "icon", size: 20 } as UiIconProps);
+const iconCombinations = propCombinationsFor({
+    accessibilityConfig: { ariaLabel: "icon" },
+    size: 20,
+} as IUiIconProps);
 const iconWithBackgroundCombinations = propCombinationsFor({
-    label: "icon with background",
+    accessibilityConfig: { ariaLabel: "icon with background" },
     size: 14,
     backgroundSize: 27,
     color: "complementary-9",
     type: "check",
-} as UiIconProps);
+} as IUiIconProps);
 const types = Object.keys(iconPaths) as Array<keyof typeof iconPaths>;
 const iconSizes = iconCombinations("size", [12, 20]);
 const iconColors = iconCombinations(
@@ -41,7 +44,10 @@ const iconColors = iconCombinations(
     ],
     { type: "check" },
 );
-const iconHidden = iconCombinations("ariaHidden", [true, false]);
+const iconHidden = iconCombinations("accessibilityConfig", [
+    { ariaLabel: "icon", ariaHidden: true },
+    { ariaLabel: "icon", ariaHidden: false },
+]);
 const iconSingleRow = iconCombinations("type", ["alert"]);
 
 const backgroundColors = iconWithBackgroundCombinations("backgroundColor", [

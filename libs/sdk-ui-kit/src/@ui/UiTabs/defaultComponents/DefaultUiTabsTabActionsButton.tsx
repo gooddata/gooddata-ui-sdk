@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -46,7 +46,6 @@ export function DefaultUiTabsTabActionsButton<
                 type={"ellipsisVertical"}
                 size={size === "large" ? 18 : 14}
                 layout={"block"}
-                ariaHidden
                 color={"complementary-5"}
             />
         </UiLink>

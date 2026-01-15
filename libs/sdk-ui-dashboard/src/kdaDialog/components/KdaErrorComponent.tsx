@@ -29,11 +29,12 @@ export function KdaErrorComponent({ error }: KdaErrorComponentProps) {
     const detailShow = permissions.canManageProject ?? false;
 
     if (isUnexpectedResponseError(error)) {
+        const body = error.responseBody as any;
         return (
             <div className="gd-kda-dialog-error">
                 <GeneralError />
-                <DetailsShow detailShow={detailShow} rawError={error.responseBody as object} />
-                <TraceId traceId={error.traceId} />
+                <DetailsShow detailShow={detailShow} rawError={body} />
+                <TraceId traceId={error.traceId ?? body?.traceId} />
             </div>
         );
     }

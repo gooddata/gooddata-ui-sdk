@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ComponentType, useEffect, useMemo, useState } from "react";
 
@@ -6,13 +6,13 @@ import { isEqual } from "lodash-es";
 
 import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
 import { getColumnWidths } from "./utils.js";
-import { type UiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
+import { type IUiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
-import { type UiAsyncTableBulkAction, type UiAsyncTableColumn } from "../types.js";
+import { type IUiAsyncTableBulkAction, type IUiAsyncTableColumn } from "../types.js";
 
 export function skeletonItemFactory(
     columnWidths: Array<number>,
-): ComponentType<UiPagedVirtualListSkeletonItemProps> {
+): ComponentType<IUiPagedVirtualListSkeletonItemProps> {
     function SkeletonItem() {
         return (
             <UiSkeleton
@@ -30,8 +30,8 @@ export function skeletonItemFactory(
 }
 
 export const useSkeletonItem = <T extends { id: string }>(
-    columns: UiAsyncTableColumn<T>[],
-    bulkActions: UiAsyncTableBulkAction[] | undefined,
+    columns: IUiAsyncTableColumn<T>[],
+    bulkActions: IUiAsyncTableBulkAction[] | undefined,
     isLargeRow: boolean,
 ) => {
     const hasCheckbox = !!bulkActions;

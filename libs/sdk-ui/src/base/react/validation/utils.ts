@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { v4 as uuid } from "uuid";
 
 import {
@@ -46,8 +47,8 @@ export const getInvalidNodeAtPath = <T extends IInvalidNode<any>, P extends IInv
 export const getInvalidDatapointsInTree = <T extends IInvalidNode<any>>(rootNode: T): IInvalidDatapoint[] => {
     return [
         ...rootNode.invalidDatapoints,
-        ...(Object.values(rootNode.children ?? {}) as IInvalidNode[]).flatMap((subNode) =>
-            getInvalidDatapointsInTree(subNode),
+        ...Object.values(rootNode.children ?? {}).flatMap((subNode) =>
+            getInvalidDatapointsInTree(subNode as IInvalidNode),
         ),
     ];
 };

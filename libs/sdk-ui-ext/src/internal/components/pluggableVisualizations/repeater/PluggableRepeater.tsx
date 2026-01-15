@@ -124,7 +124,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         newReferencePoint = configRepeaterBuckets(newReferencePoint);
         newReferencePoint = setRepeaterUiConfig(newReferencePoint, this.intl);
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(
+                newReferencePoint,
+                this.featureFlags?.enableImprovedAdFilters,
+                referencePointCloned,
+            ),
         );
     };
 

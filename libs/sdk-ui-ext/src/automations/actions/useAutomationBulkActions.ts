@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import {
     BULK_DELETE_CONFIRM_DIALOG_ID,
@@ -25,7 +25,7 @@ export const useAutomationBulkActions = ({
     bulkPauseAutomations,
     bulkResumeAutomations,
     setPendingAction,
-}: IUseAutomationBulkActionsProps): UiAsyncTableBulkAction[] | undefined => {
+}: IUseAutomationBulkActionsProps): IUiAsyncTableBulkAction[] | undefined => {
     const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
         useUser();
     const intl = useIntl();

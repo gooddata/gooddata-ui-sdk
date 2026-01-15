@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -12,7 +12,7 @@ import {
     type IUiListboxContext,
     type IUiListboxInteractiveItem,
     type IUiListboxItem,
-    type UiListboxProps,
+    type IUiListboxProps,
 } from "./types.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
@@ -48,7 +48,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
 
     reference,
     ariaAttributes,
-}: UiListboxProps<InteractiveItemData, StaticItemData>): ReactNode {
+}: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode {
     const isItemFocusable = useCallback(
         (item?: IUiListboxItem<InteractiveItemData, StaticItemData>) => {
             if (item?.type !== "interactive") {
@@ -198,8 +198,11 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                 {...ariaAttributes}
                 role="listbox"
             >
-                {items.map((item, index) =>
-                    item.type === "interactive" ? (
+                {items.map((item, index) => {
+                    const testId =
+                        typeof itemDataTestId === "function" ? itemDataTestId(item) : itemDataTestId;
+
+                    return item.type === "interactive" ? (
                         <li
                             key={item.id}
                             ref={(el) => {
@@ -209,7 +212,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             role="option"
                             aria-selected={item.id === selectedItemId}
                             aria-disabled={item.isDisabled}
-                            data-testid={itemDataTestId}
+                            data-testid={testId}
                             aria-controls={ariaAttributes["aria-controls"]}
                         >
                             <InteractiveItemComponent
@@ -231,12 +234,12 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             ref={(el) => {
                                 itemRefs.current[index] = el;
                             }}
-                            data-testid={itemDataTestId}
+                            data-testid={testId}
                         >
                             <StaticItemComponent item={item} />
                         </li>
-                    ),
-                )}
+                    );
+                })}
             </ul>
         </div>
     );

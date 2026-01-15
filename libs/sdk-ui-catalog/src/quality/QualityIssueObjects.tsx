@@ -44,7 +44,7 @@ export function QualityIssueObjects({ objects, onObjectClick }: Props) {
                         <UiTooltip
                             triggerBy={["hover", "click"]}
                             showArrow
-                            anchor={<UiIcon type="question" size={14} color="complementary-7" ariaHidden />}
+                            anchor={<UiIcon type="question" size={14} color="complementary-7" />}
                             content={<QualityIssueObjectDetail object={obj} />}
                             variant="none"
                         />

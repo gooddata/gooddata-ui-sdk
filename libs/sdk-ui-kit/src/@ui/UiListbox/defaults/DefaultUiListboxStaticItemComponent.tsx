@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
 import { Separator } from "../../../List/index.js";
-import { type UiListboxStaticItemProps } from "../types.js";
+import { type IUiListboxStaticItemProps } from "../types.js";
 
 /**
  * @internal
@@ -24,6 +24,6 @@ export function isSeparator(item: unknown): item is typeof separatorStaticItem {
  * By default just renders the data.
  * @internal
  */
-export function DefaultUiListboxStaticItemComponent<T>({ item }: UiListboxStaticItemProps<T>): ReactNode {
+export function DefaultUiListboxStaticItemComponent<T>({ item }: IUiListboxStaticItemProps<T>): ReactNode {
     return item.data as ReactNode;
 }

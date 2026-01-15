@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useMemo, useRef } from "react";
 
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
-import { type UiTagDef, type UiTagsProps } from "./types.js";
+import { type IUiTagDef, type IUiTagsProps } from "./types.js";
 import { UiTag } from "./UiTag.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
@@ -48,7 +48,7 @@ export function UiTags({
     onTagAdd = () => {},
     onTagRemove = () => {},
     accessibilityConfig = defaultAccessibilityConfig,
-}: UiTagsProps) {
+}: IUiTagsProps) {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const expanded = mode === "multi-line";
@@ -168,9 +168,7 @@ export function UiTags({
                                                 onKeyDown={handleKeyDown}
                                                 className={e("tags-more-tooltip")}
                                                 ref={(ref) => {
-                                                    (
-                                                        tooltipTagsContainerRef as RefObject<HTMLDivElement | null>
-                                                    ).current = ref;
+                                                    tooltipTagsContainerRef.current = ref;
                                                     setTooltipContainer(ref);
                                                 }}
                                                 tabIndex={0}
@@ -345,6 +343,6 @@ export function UiTags({
     );
 }
 
-function getKey(tag: UiTagDef, isDeletable: boolean, readOnly: boolean) {
+function getKey(tag: IUiTagDef, isDeletable: boolean, readOnly: boolean) {
     return [tag.id, tag.isDeletable, isDeletable, readOnly].filter(Boolean).join("-");
 }

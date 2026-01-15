@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo } from "react";
 
 import type { IntlShape } from "react-intl";
 
-import { type UiAsyncTableColumn, UiDate } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableColumn, UiDate } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem } from "../../catalogItem/types.js";
 
@@ -14,7 +14,7 @@ const formatOptions: Intl.DateTimeFormatOptions = {
     dateStyle: "medium",
 };
 
-export const updatedAtColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn<ICatalogItem> = (
+export const updatedAtColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<ICatalogItem> = (
     intl,
     width,
 ) => {

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useState } from "react";
 
@@ -22,7 +22,7 @@ export const DEFAULT_ABSOLUTE_OPTIONS: Intl.DateTimeFormatOptions = {
 /**
  * @internal
  */
-export interface UiDateProps {
+export interface IUiDateProps {
     date: Date | string | number;
     locale?: string;
     relativeThresholdMs?: number;
@@ -39,7 +39,7 @@ export function UiDate({
     relativeThresholdMs = DAY,
     absoluteOptions = DEFAULT_ABSOLUTE_OPTIONS,
     allowRelative = true,
-}: UiDateProps) {
+}: IUiDateProps) {
     const targetDate = new Date(date);
     const [now, setNow] = useState<Date>(new Date());
 

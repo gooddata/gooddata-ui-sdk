@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type Ref, useState } from "react";
 
@@ -85,7 +85,7 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                                         id: "dialogs.schedule.management.attachments.xlsx.settings",
                                     })}
                                 >
-                                    <UiIcon type="settings" size={14} color="complementary-8" ariaHidden />
+                                    <UiIcon type="settings" size={14} color="complementary-8" />
                                 </button>
                             )}
                             renderBody={({ closeDropdown }) => (

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ColDef, type ColGroupDef, type SortDirection } from "ag-grid-community";
 import { type IntlShape } from "react-intl";
@@ -12,11 +12,11 @@ import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
 import {
     ColumnGroupingDescriptorId,
     type DataCol,
-    type MixedHeadersCol,
-    type MixedValuesCol,
-    type ScopeCol,
-    type SliceCol,
-    type SliceMeasureCol,
+    type IMixedHeadersCol,
+    type IMixedValuesCol,
+    type IScopeCol,
+    type ISliceCol,
+    type ISliceMeasureCol,
     type TableColDefs,
     type TableCols,
     agColId,
@@ -63,7 +63,7 @@ function getSortProp(
 const DESC_FIRST = ["desc", "asc"] as SortDirection[];
 const ASC_FIRST = ["asc", "desc"] as SortDirection[];
 
-function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol[], state: TransformState) {
+function createAndAddSliceColDefs(rows: ISliceCol[], measureCols: ISliceMeasureCol[], state: TransformState) {
     for (const row of rows) {
         const sortProp = getSortProp(state.initialSorts, (s) => attributeSortMatcher(row, s));
         const headerName = row.attributeDescriptor.attributeHeader.formOf.name;
@@ -96,7 +96,7 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
     }
 }
 
-function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state: TransformState) {
+function createAndAddMixedValuesColDefs(mixedValuesCol: IMixedValuesCol[], state: TransformState) {
     for (const col of mixedValuesCol) {
         const colDef: ColDef = {
             type: MIXED_VALUES_COLUMN,
@@ -112,7 +112,7 @@ function createAndAddMixedValuesColDefs(mixedValuesCol: MixedValuesCol[], state:
 }
 
 function createAndAddMixedHeadersColDefs(
-    mixedHeadersCol: MixedHeadersCol[],
+    mixedHeadersCol: IMixedHeadersCol[],
     state: TransformState,
     isTransposed: boolean,
 ) {
@@ -132,13 +132,13 @@ function createAndAddMixedHeadersColDefs(
     }
 }
 
-function getTotalHeaderName(col: ScopeCol, intl: IntlShape | undefined, headerName: string) {
+function getTotalHeaderName(col: IScopeCol, intl: IntlShape | undefined, headerName: string) {
     const isTotalSubGroup = col.headersToHere.some((header) => isResultTotalHeader(header));
     return isTotalSubGroup ? "" : intl?.formatMessage(messages[headerName]);
 }
 
 function createColumnGroupColDef(
-    col: ScopeCol,
+    col: IScopeCol,
     state: TransformState,
     intl?: IntlShape,
 ): ColDef | ColGroupDef {

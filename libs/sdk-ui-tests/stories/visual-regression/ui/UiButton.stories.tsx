@@ -1,11 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
-import { ComponentTable, UiButton, type UiButtonProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, type IUiButtonProps, UiButton, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-const propCombination = propCombinationsFor({ label: "Apply" } as UiButtonProps);
+const propCombination = propCombinationsFor({ label: "Apply" } as IUiButtonProps);
 
 const allSizes = propCombination("size", ["small", "medium", "large"]);
 const allVariants = propCombination("variant", [

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -11,7 +11,7 @@ const { b, e } = bem("gd-ui-kit-skeleton");
 /**
  * @internal
  */
-export interface UiSkeletonProps {
+export interface IUiSkeletonProps {
     /**
      * Number of items to render.
      */
@@ -59,7 +59,7 @@ export function UiSkeleton({
     itemsGap = 10,
     direction = "column",
     itemBorderRadius,
-}: UiSkeletonProps) {
+}: IUiSkeletonProps) {
     const items = Array.from({ length: itemsCount }, (_, idx) => (
         <div
             className={e("item")}

@@ -1,4 +1,5 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 /**
@@ -27,7 +28,7 @@ export class LazyInitArray<T> implements Iterable<T> {
             this.data[idx] = this.initializer(idx);
         }
 
-        return this.data[idx]!;
+        return this.data[idx];
     };
 
     public [Symbol.iterator] = (): Iterator<T> => {

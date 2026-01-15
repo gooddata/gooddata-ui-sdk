@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type AriaAttributes,
@@ -65,7 +65,7 @@ export interface IDropdownButtonRenderProps {
     buttonRef: MutableRefObject<HTMLElement | null>;
     openDropdown: () => void;
     closeDropdown: () => void;
-    toggleDropdown: (desiredState?: boolean | unknown) => void;
+    toggleDropdown: (desiredState?: unknown) => void;
     /**
      * Props supporting accessibility that can be just passed through to the rendered element
      */
@@ -215,7 +215,7 @@ export function Dropdown({
     );
 
     const toggleDropdown = useCallback(
-        (desiredState?: boolean | unknown): void => {
+        (desiredState?: unknown): void => {
             if (typeof desiredState === "boolean") {
                 if (onToggle) {
                     onToggle(desiredState);

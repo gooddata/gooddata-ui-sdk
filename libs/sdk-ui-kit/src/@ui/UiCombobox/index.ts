@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-export { UiCombobox, type UiComboboxProps } from "./UiCombobox.js";
+export { UiCombobox, type IUiComboboxProps } from "./UiCombobox.js";
 export { UiComboboxInput, type UiComboboxInputProps } from "./UiComboboxInput.js";
 export { UiComboboxPopup, type UiComboboxPopupProps } from "./UiComboboxPopup.js";
-export { UiComboboxList, type UiComboboxListProps } from "./UiComboboxList.js";
+export { UiComboboxList, type IUiComboboxListProps } from "./UiComboboxList.js";
 export {
     UiComboboxListItem,
     UiComboboxListItemLabel,
     UiComboboxListItemCreatableLabel,
-    type UiComboboxListItemProps,
+    type IUiComboboxListItemProps,
     type UiComboboxListItemLabelProps,
     type UiComboboxListItemCreatableLabelProps,
 } from "./UiComboboxListItem.js";

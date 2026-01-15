@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -13,9 +13,9 @@ import {
     sortMeasureLocators,
 } from "@gooddata/sdk-model";
 
-import { type SeriesCol, type SliceCol } from "./tableDescriptorTypes.js";
+import { type ISeriesCol, type ISliceCol } from "./tableDescriptorTypes.js";
 
-function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): boolean {
+function attributeLocatorMatch(col: ISeriesCol, locator: IAttributeLocatorItem): boolean {
     const { attributeDescriptors, attributeHeaders } = col.seriesDescriptor;
     const { attributeIdentifier, element } = locator.attributeLocatorItem;
 
@@ -38,14 +38,14 @@ function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): 
     return attributeHeaders[attributeIdx]?.attributeHeaderItem?.uri === element;
 }
 
-function measureLocatorMatch(col: SeriesCol, locator: IMeasureLocatorItem): boolean {
+function measureLocatorMatch(col: ISeriesCol, locator: IMeasureLocatorItem): boolean {
     const { measureDescriptor } = col.seriesDescriptor;
     const { measureIdentifier } = locator.measureLocatorItem;
 
     return measureDescriptor.measureHeaderItem.localIdentifier === measureIdentifier;
 }
 
-export function measureSortMatcher(col: SeriesCol, sortItem: ISortItem): boolean {
+export function measureSortMatcher(col: ISeriesCol, sortItem: ISortItem): boolean {
     return (
         isMeasureSort(sortItem) &&
         sortMeasureLocators(sortItem).every((locator) => {
@@ -60,7 +60,7 @@ export function measureSortMatcher(col: SeriesCol, sortItem: ISortItem): boolean
     );
 }
 
-export function attributeSortMatcher(col: SliceCol, sortItem: ISortItem): boolean {
+export function attributeSortMatcher(col: ISliceCol, sortItem: ISortItem): boolean {
     return (
         isAttributeSort(sortItem) &&
         col.attributeDescriptor.attributeHeader.localIdentifier ===

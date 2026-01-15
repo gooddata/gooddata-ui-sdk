@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 /* eslint-disable no-console */
 
 /**
@@ -87,8 +88,11 @@ function suppressConsoleBase<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunc
     }
 
     const result = fn();
-    if (result instanceof Promise) {
-        return result.finally(() => {
+    // Check for thenable (Promise-like) instead of instanceof Promise
+    // This handles React's act() which returns a thenable, not a native Promise
+    // Wrap in Promise.resolve() to ensure .finally() is available
+    if (result && typeof (result as Promise<T>).then === "function") {
+        return Promise.resolve(result).finally(() => {
             if (!used) originals["log"](`Suppression is redundant at ${new Error().stack}`);
 
             for (const type of types) {

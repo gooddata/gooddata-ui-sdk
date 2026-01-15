@@ -1,19 +1,19 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type UiTagDef, UiTags } from "@gooddata/sdk-ui-kit";
+import { type IUiTagDef, UiTags } from "@gooddata/sdk-ui-kit";
 
 import { useCatalogTags } from "../catalogResource/index.js";
 
 type Props = {
     tags: string[];
     canEdit: boolean;
-    onTagClick: (tag: UiTagDef) => void;
-    onTagAdd: (tag: UiTagDef) => void;
-    onTagRemove: (tag: UiTagDef) => void;
+    onTagClick: (tag: IUiTagDef) => void;
+    onTagAdd: (tag: IUiTagDef) => void;
+    onTagRemove: (tag: IUiTagDef) => void;
 };
 
 export function CatalogDetailTags({ tags, canEdit, onTagClick, onTagAdd, onTagRemove }: Props) {

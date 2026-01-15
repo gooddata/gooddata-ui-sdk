@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type KeyboardEvent,
@@ -41,7 +41,7 @@ import {
     type IUiMenuFocusableItem,
     type IUiMenuItem,
     type IUiMenuItemData,
-    type UiMenuProps,
+    type IUiMenuProps,
 } from "./types.js";
 import { isElementTextInput } from "../../utils/domUtilities.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
@@ -50,7 +50,7 @@ import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
  * @internal
  */
 export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = object>(
-    props: UiMenuProps<T, M>,
+    props: IUiMenuProps<T, M>,
     menuComponentRef: RefObject<HTMLElement>,
     itemsContainerRef: RefObject<HTMLElement>,
 ): IUiMenuContext<T, M> {
@@ -221,8 +221,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         isItemFocusable,
         makeItemId,
         scrollToView,
-        menuComponentRef: menuComponentRef as RefObject<HTMLElement>,
-        itemsContainerRef: itemsContainerRef as RefObject<HTMLElement>,
+        menuComponentRef: menuComponentRef,
+        itemsContainerRef: itemsContainerRef,
 
         InteractiveItemWrapper: InteractiveItemWrapperComponent,
         InteractiveItem: InteractiveItemComponent,
@@ -248,7 +248,7 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
     onUnhandledKeyDown,
 }: {
     menuContextValue: IUiMenuContext<T, M>;
-    onUnhandledKeyDown: UiMenuProps<T, M>["onUnhandledKeyDown"];
+    onUnhandledKeyDown: IUiMenuProps<T, M>["onUnhandledKeyDown"];
     shouldKeyboardActionPreventDefault?: boolean;
     shouldKeyboardActionStopPropagation?: boolean;
 }) {
@@ -355,7 +355,7 @@ export function useCustomContentKeyNavigation<T extends IUiMenuItemData = object
     onUnhandledKeyDown,
 }: {
     menuContextValue: IUiMenuContext<T, M>;
-    onUnhandledKeyDown: UiMenuProps<T, M>["onUnhandledKeyDown"];
+    onUnhandledKeyDown: IUiMenuProps<T, M>["onUnhandledKeyDown"];
     shouldKeyboardActionPreventDefault?: boolean;
     shouldKeyboardActionStopPropagation?: boolean;
 }) {

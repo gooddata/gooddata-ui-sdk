@@ -735,7 +735,6 @@ export interface IDashboardBaseProps {
      * @remarks
      * This prop takes precedence over the dashboard's persisted activeTabId.
      * If the specified tab ID doesn't exist, the first tab will be used.
-     * Only effective when the enableDashboardTabs feature flag is enabled.
      *
      * @alpha
      */

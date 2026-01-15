@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IAnalyticalBackend,
@@ -59,7 +59,7 @@ class WithModifiedWorkspaceSettingsService extends DecoratedWorkspaceSettingsSer
     }
 }
 
-function customWorkspaceSettings(config: WorkspaceSettingsConfiguration): WorkspaceSettingsDecoratorFactory {
+function customWorkspaceSettings(config: IWorkspaceSettingsConfiguration): WorkspaceSettingsDecoratorFactory {
     const emptySettingsSetter = () => ({});
     return (original: IWorkspaceSettingsService) =>
         new WithModifiedWorkspaceSettingsService(
@@ -75,7 +75,7 @@ function customWorkspaceSettings(config: WorkspaceSettingsConfiguration): Worksp
  *
  * @beta
  */
-export interface WorkspaceSettingsConfiguration {
+export interface IWorkspaceSettingsConfiguration {
     /**
      * Transforms both workspace settings and user settings obtained from the real backend. Can add,
      * remove or alter settings or provide a completely new settings.
@@ -97,7 +97,7 @@ export interface WorkspaceSettingsConfiguration {
 /**
  * Adjusts workspace configs and current user configs from the real backend.
  *
- * @remarks see {@link WorkspaceSettingsConfiguration} properties for more information.
+ * @remarks see {@link IWorkspaceSettingsConfiguration} properties for more information.
  * @param realBackend - real backend to decorate with custom workspace settings
  * @param config - workspace configs configuration
  * @beta
@@ -105,7 +105,7 @@ export interface WorkspaceSettingsConfiguration {
 
 export function withCustomWorkspaceSettings(
     realBackend: IAnalyticalBackend,
-    config: WorkspaceSettingsConfiguration,
+    config: IWorkspaceSettingsConfiguration,
 ): IAnalyticalBackend {
     const workspaceSettings = customWorkspaceSettings(config);
     return decoratedBackend(realBackend, { workspaceSettings });

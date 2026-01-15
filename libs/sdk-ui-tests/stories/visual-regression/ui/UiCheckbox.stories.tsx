@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { ComponentTable, UiCheckbox, type UiCheckboxProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, type IUiCheckboxProps, UiCheckbox, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -10,7 +10,7 @@ export default {
     title: "15 Ui/UiCheckbox",
 };
 
-const propCombination = propCombinationsFor({} as UiCheckboxProps);
+const propCombination = propCombinationsFor({} as IUiCheckboxProps);
 
 const checked = propCombination("checked", [false, true]);
 const indeterminate = propCombination("indeterminate", [true, false], { checked: true });

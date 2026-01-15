@@ -12,7 +12,7 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/export";
 import {
     DataTooLargeError,
-    type DataTooLargeResponseBody,
+    type IDataTooLargeResponseBody,
     type IExportResult,
     TimeoutError,
 } from "@gooddata/sdk-backend-spi";
@@ -122,7 +122,7 @@ async function tryParseError(error: any): Promise<never> {
         throw error;
     }
     if (error.status === 400) {
-        let parsed: DataTooLargeResponseBody;
+        let parsed: IDataTooLargeResponseBody;
         // In case of any parsing errors, throw the original error:
         // it has unexpected shape and the parsing error is useless.
         try {

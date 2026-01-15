@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ComponentType,
@@ -46,7 +46,7 @@ export type IUiListboxItem<InteractiveItemData, StaticItemData = ReactNode> =
 /**
  * @internal
  */
-export interface UiListboxInteractiveItemProps<T> {
+export interface IUiListboxInteractiveItemProps<T> {
     item: IUiListboxInteractiveItem<T>;
 
     isFocused: boolean;
@@ -59,7 +59,7 @@ export interface UiListboxInteractiveItemProps<T> {
 /**
  * @internal
  */
-export interface UiListboxStaticItemProps<T> {
+export interface IUiListboxStaticItemProps<T> {
     item: IUiListboxStaticItem<T>;
 }
 
@@ -90,11 +90,13 @@ export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttribu
 /**
  * @internal
  */
-export interface UiListboxProps<InteractiveItemData, StaticItemData = ReactNode> {
+export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode> {
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
 
     dataTestId?: string;
-    itemDataTestId?: string;
+    itemDataTestId?:
+        | string
+        | ((item: IUiListboxItem<InteractiveItemData, StaticItemData>) => string | undefined);
 
     width?: number;
     maxWidth?: number;
@@ -115,8 +117,8 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = ReactNode>
 
     selectedItemId?: string;
 
-    InteractiveItemComponent?: ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
-    StaticItemComponent?: ComponentType<UiListboxStaticItemProps<StaticItemData>>;
+    InteractiveItemComponent?: ComponentType<IUiListboxInteractiveItemProps<InteractiveItemData>>;
+    StaticItemComponent?: ComponentType<IUiListboxStaticItemProps<StaticItemData>>;
 
     shouldKeyboardActionPreventDefault?: boolean;
     shouldKeyboardActionStopPropagation?: boolean;

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode, useCallback } from "react";
 
@@ -56,7 +56,7 @@ export function LocaleSetting({
     );
 }
 
-interface LocaleSelectProps {
+interface ILocaleSelectProps {
     selectedLocale: ILocale;
     onSelectLocale: (locale: ILocale) => void;
 }
@@ -68,7 +68,7 @@ interface ILocaleDropdownItem {
 
 const localeItems: ILocaleDropdownItem[] = LOCALES.map((u) => ({ id: u as ILocale, title: u }));
 
-function LocaleSelect({ selectedLocale, onSelectLocale }: LocaleSelectProps) {
+function LocaleSelect({ selectedLocale, onSelectLocale }: ILocaleSelectProps) {
     const renderDropdownBody = useCallback(
         ({ closeDropdown }: { closeDropdown: () => void }) => {
             return (

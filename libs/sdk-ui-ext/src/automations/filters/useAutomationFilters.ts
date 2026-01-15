@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { type AutomationFilterType } from "@gooddata/sdk-backend-spi";
-import { type UiAsyncTableFilter, type UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableFilter, type IUiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
 import { useFilterOptions } from "./FilterOptionsContext.js";
 import { AUTOMATION_FILTER_EXCLUDE_THRESHOLD } from "../constants.js";
@@ -24,7 +24,7 @@ import { useUser } from "../UserContext.js";
 //generic filter hook
 
 const useAutomationFilter = (
-    filterOptions: UiAsyncTableFilterOption[],
+    filterOptions: IUiAsyncTableFilterOption[],
     filterLabel: string,
     preselectedValues: Array<AutomationsFilterPreselectValue> | undefined,
 ): IAutomationFilter => {
@@ -38,11 +38,11 @@ const useAutomationFilter = (
         }
     }, [filterOptions, preselectedFilterOptions]);
 
-    const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<UiAsyncTableFilterOption>>(
+    const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<IUiAsyncTableFilterOption>>(
         preselectedFilterOptions ?? filterOptions,
     );
 
-    const filter: UiAsyncTableFilter = useMemo(() => {
+    const filter: IUiAsyncTableFilter = useMemo(() => {
         return {
             label: filterLabel,
             options: filterOptions,
@@ -51,7 +51,7 @@ const useAutomationFilter = (
             },
             isMultiSelect: true,
             selected: selectedFilterOptions,
-        } as UiAsyncTableFilter;
+        } as IUiAsyncTableFilter;
     }, [filterOptions, selectedFilterOptions, filterLabel]);
 
     const query = useMemo(() => {
@@ -202,7 +202,7 @@ export const useAutomationFilters = (
     } as IAutomationFilterQuery;
 
     const filters = useMemo(() => {
-        const filterMapping: Record<AutomationsFilterName, UiAsyncTableFilter> = {
+        const filterMapping: Record<AutomationsFilterName, IUiAsyncTableFilter> = {
             dashboard: dashboardFilter,
             createdBy: createdByFilter,
             recipients: recipientsFilter,

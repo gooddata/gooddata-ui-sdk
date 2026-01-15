@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
 import { compact } from "lodash-es";
 
-import { type IUiMenuInteractiveItemProps, type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
+import { type IUiMenuInteractiveItemProps, type IconType, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { DrillType } from "./types.js";
 import { type IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDropdownMenuItems.js";
@@ -18,10 +18,11 @@ const DRILL_ICON_NAME: Record<DrillType, IconType> = {
 };
 
 export function DrillSelectDropdownMenuItem({
-    item: {
-        data: { type, name, attributeValue },
-    },
+    item,
 }: IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>) {
+    const { type, name, attributeValue } = item.data;
+    const { isDisabled, tooltip } = item;
+
     const renderLoading = () => {
         return (
             <div className="gd-drill-to-url-modal-picker s-drill-to-url-modal-picker">
@@ -30,20 +31,17 @@ export function DrillSelectDropdownMenuItem({
         );
     };
 
-    const itemClassName = cx(
-        "gd-drill-modal-picker-list-item",
-        "s-gd-drill-modal-picker-item",
-        `s-${type}`,
-        {},
-    );
+    const itemClassName = cx("gd-drill-modal-picker-list-item", "s-gd-drill-modal-picker-item", `s-${type}`, {
+        "is-disabled": isDisabled,
+    });
 
     // make sure there is no trailing space in case attributeLabel is empty
     const title = compact([name, attributeValue]).join(" ");
 
-    return (
+    const content = (
         <div className={itemClassName} title={title}>
             <div className="gd-drill-modal-picker-icon-wrapper">
-                <UiIcon type={DRILL_ICON_NAME[type]} size={16} color="complementary-5" ariaHidden />
+                <UiIcon type={DRILL_ICON_NAME[type]} size={16} color="complementary-5" />
             </div>
             {name ? (
                 <p>
@@ -55,4 +53,18 @@ export function DrillSelectDropdownMenuItem({
             )}
         </div>
     );
+
+    if (tooltip) {
+        return (
+            <UiTooltip
+                anchor={content}
+                content={tooltip}
+                optimalPlacement
+                triggerBy={["hover"]}
+                arrowPlacement="left"
+            />
+        );
+    }
+
+    return content;
 }

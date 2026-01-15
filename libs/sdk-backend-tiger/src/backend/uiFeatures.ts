@@ -124,7 +124,6 @@ export enum TigerFeaturesNames {
     EnableGenAIMemory = "enableGenAIMemory",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     AIChatSearchLimit = "aiChatSearchLimit",
-    EnableDashboardTabs = "enableDashboardTabs",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
     EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
@@ -251,7 +250,6 @@ export type ITigerFeatureFlags = {
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
-    enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
     enableEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableEmptyDateValuesFilter"][number];
     enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
@@ -378,7 +376,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIMemory: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
-    enableDashboardTabs: true,
     enableEmptyDateValuesFilter: true,
     enablePivotTableAutoSizeReset: true,
     enableRichTextWidgetFilterConfiguration: false,
@@ -506,7 +503,6 @@ export const FeatureFlagsValues = {
     enableGenAIMemory: [false, true] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
-    enableDashboardTabs: [true, false] as const,
     enableEmptyDateValuesFilter: [true, false] as const,
     enablePivotTableAutoSizeReset: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,

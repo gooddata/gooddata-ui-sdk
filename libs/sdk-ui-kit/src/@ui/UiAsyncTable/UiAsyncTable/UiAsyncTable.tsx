@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type Ref, useCallback, useContext, useMemo } from "react";
 
@@ -14,9 +14,9 @@ import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
 import { UiAsyncTableToolbar } from "./UiAsyncTableToolbar.js";
 import { getColumnWidth } from "./utils.js";
 import { b } from "../asyncTableBem.js";
-import { type UiAsyncTableProps } from "../types.js";
+import { type IUiAsyncTableProps } from "../types.js";
 
-function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
+function AsyncTableCore<T extends { id: string }>(props: IUiAsyncTableProps<T>) {
     const { width, itemHeight, isLargeRow, renderHeader, renderItem, renderEmptyState, shouldLoadNextPage } =
         useAsyncTable<T>(props);
 
@@ -105,7 +105,7 @@ const useAsyncTable = <T extends { id: string }>({
     variant,
     onItemClick,
     accessibilityConfig,
-}: UiAsyncTableProps<T>) => {
+}: IUiAsyncTableProps<T>) => {
     const isSmall = variant === "small";
     const handleColumnClick = useCallback(
         (key?: keyof T) => {
@@ -244,7 +244,7 @@ const useAsyncTable = <T extends { id: string }>({
 /**
  * @internal
  */
-export function UiAsyncTable<T extends { id: string }>(props: UiAsyncTableProps<T>) {
+export function UiAsyncTable<T extends { id: string }>(props: IUiAsyncTableProps<T>) {
     const intlContext = useContext(IntlContext);
     if (!intlContext) {
         return (

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * Pagination settings for the PivotTableNext component.
@@ -23,9 +23,9 @@ export interface IPagination {
  *
  * @public
  */
-export interface PivotTableNextPaginationConfig {
+export type PivotTableNextPaginationConfig = {
     /**
      * Pagination settings.
      */
     pagination?: IPagination;
-}
+};

@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
-import { type UiTagDef, type UiTagsProps } from "./types.js";
+import { type IUiTagDef, type IUiTagsProps } from "./types.js";
 import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 type InteractionState = {
@@ -19,11 +19,11 @@ type InteractionState = {
 export function useTagsInteractions(
     rootRef: MutableRefObject<HTMLDivElement | null>,
     hiddenTagsRef: MutableRefObject<HTMLDivElement | null>,
-    showedTags: UiTagDef[],
-    hiddenTags: UiTagDef[],
-    onTagClick: UiTagsProps["onTagClick"],
-    onTagAdd: UiTagsProps["onTagAdd"],
-    onTagRemove: UiTagsProps["onTagRemove"],
+    showedTags: IUiTagDef[],
+    hiddenTags: IUiTagDef[],
+    onTagClick: IUiTagsProps["onTagClick"],
+    onTagAdd: IUiTagsProps["onTagAdd"],
+    onTagRemove: IUiTagsProps["onTagRemove"],
 ) {
     const [tag, setTag] = useState<string>("");
     const [showedFocusedIndex, setShowedFocusedIndex] = useState(0);
@@ -71,7 +71,7 @@ export function useTagsInteractions(
     }, [tag, onTagAdd]);
 
     const onTagRemoveHandler = useCallback(
-        (tag: UiTagDef) => {
+        (tag: IUiTagDef) => {
             const deletedShowedTag = showedTags.findIndex((t) => t === tag);
             const deletedHiddenTag = hiddenTags.findIndex((t) => t === tag);
             if (deletedShowedTag !== -1) {
@@ -85,7 +85,7 @@ export function useTagsInteractions(
         [hiddenTags, onTagRemove, showedTags],
     );
     const onTagClickHandler = useCallback(
-        (tag: UiTagDef) => {
+        (tag: IUiTagDef) => {
             const showedTag = showedTags.findIndex((t) => t === tag);
             if (showedTag !== -1) {
                 setShowedFocusedIndex(showedTag);
@@ -313,7 +313,7 @@ export function useTagsInteractions(
 
 function loadActiveTag(
     interactionState: MutableRefObject<InteractionState>,
-    tags: UiTagDef[],
+    tags: IUiTagDef[],
     index: number,
     allowMore: boolean,
 ) {

@@ -22,11 +22,9 @@ import {
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 import {
     type CalendarTabType,
-    filterFiscalGranularities,
-    filterFiscalPresets,
-    filterStandardGranularities,
-    filterStandardPresets,
     getDefaultCalendarTab,
+    getFilteredGranularities,
+    getFilteredPresets,
     getFiscalTabsConfig,
 } from "../utils/presetFilterUtils.js";
 
@@ -70,27 +68,28 @@ export function DateFilterBodyContent({
     onSelectedFilterOptionChange,
     activeCalendars,
 }: IDateFilterBodyContentProps) {
-    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
+    const fiscalTabsConfig = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
 
     const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
         getDefaultCalendarTab(activeCalendars, selectedFilterOption),
     );
 
-    const filteredRelativePreset = showTabs
-        ? selectedTab === "standard"
-            ? filterStandardPresets(filterOptions.relativePreset!)
-            : filterFiscalPresets(filterOptions.relativePreset!)
-        : filterOptions.relativePreset;
-
-    const filteredAvailableGranularities = showTabs
-        ? selectedTab === "standard"
-            ? filterStandardGranularities(availableGranularities)
-            : filterFiscalGranularities(availableGranularities)
-        : availableGranularities;
+    const filteredRelativePreset = getFilteredPresets(
+        filterOptions.relativePreset,
+        fiscalTabsConfig,
+        selectedTab,
+    );
+    const filteredAvailableGranularities = getFilteredGranularities(
+        availableGranularities,
+        fiscalTabsConfig,
+        selectedTab,
+    );
 
     return (
         <>
-            {showTabs ? <CalendarTypeTabs selectedTab={selectedTab} onTabSelect={setSelectedTab} /> : null}
+            {fiscalTabsConfig.showTabs ? (
+                <CalendarTypeTabs selectedTab={selectedTab} onTabSelect={setSelectedTab} />
+            ) : null}
             <AllTimeFilterSection
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}

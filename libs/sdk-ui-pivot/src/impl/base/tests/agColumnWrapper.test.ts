@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type Column, type GridApi } from "ag-grid-community";
 import { describe, expect, it } from "vitest";
@@ -26,7 +26,7 @@ describe("agColumnWrapper", () => {
     }
 
     describe("setColumnMaxWidth", () => {
-        it("should set internal property maxWidth of column and column.getColDef().maxWidth", async () => {
+        it("should set internal property maxWidth of column and column.getColDef().maxWidth", () => {
             const maxWidth = 500;
             const columnDef1 = { maxWidth: undefined as unknown as number };
             const columnDef2 = { maxWidth: undefined as unknown as number };
@@ -47,7 +47,7 @@ describe("agColumnWrapper", () => {
     });
 
     describe("setColumnMaxWidthIf", () => {
-        it("should set internal property maxWidth of column and column.getColDef().maxWidth when condition is true", async () => {
+        it("should set internal property maxWidth of column and column.getColDef().maxWidth when condition is true", () => {
             const maxWidth = 500;
             const columnDef1 = { maxWidth: undefined as unknown as number };
             const columnDef2 = { maxWidth: undefined as unknown as number };
@@ -66,7 +66,7 @@ describe("agColumnWrapper", () => {
             expect((columnsMaps.colId2 as any).maxWidth).toEqual(maxWidth);
         });
 
-        it("should not set internal property maxWidth of column and column.getColDef().maxWidth when condition is false", async () => {
+        it("should not set internal property maxWidth of column and column.getColDef().maxWidth when condition is false", () => {
             const maxWidth = 500;
             const columnDef1 = { maxWidth: undefined as unknown as number };
             const columnDef2 = { maxWidth: undefined as unknown as number };

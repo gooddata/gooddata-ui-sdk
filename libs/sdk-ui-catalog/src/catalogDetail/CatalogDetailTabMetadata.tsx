@@ -4,7 +4,7 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import type { ISeparators, MetricType } from "@gooddata/sdk-model";
-import { UiDate, UiIcon, type UiTagDef, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { type IUiTagDef, UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
@@ -18,9 +18,9 @@ const TYPES_SUPPORTING_IS_HIDDEN: ObjectType[] = ["insight", "measure", "attribu
 type Props = {
     item: ICatalogItem;
     canEdit: boolean;
-    onTagClick: (tag: UiTagDef) => void;
-    onTagAdd: (tag: UiTagDef) => void;
-    onTagRemove: (tag: UiTagDef) => void;
+    onTagClick: (tag: IUiTagDef) => void;
+    onTagAdd: (tag: IUiTagDef) => void;
+    onTagRemove: (tag: IUiTagDef) => void;
     onIsHiddenChange: (isHidden: boolean) => void;
     onMetricTypeChange?: (metricType: MetricType | undefined) => void;
     onFormatChange?: (format: string | null) => void;
@@ -89,9 +89,7 @@ export function CatalogDetailTabMetadata({
                         <>
                             <FormattedMessage id="analyticsCatalog.column.title.isHidden" />
                             <UiTooltip
-                                anchor={
-                                    <UiIcon type="question" size={12} color="complementary-6" ariaHidden />
-                                }
+                                anchor={<UiIcon type="question" size={12} color="complementary-6" />}
                                 content={
                                     <FormattedMessage id="analyticsCatalog.column.isHidden.field.tooltip" />
                                 }

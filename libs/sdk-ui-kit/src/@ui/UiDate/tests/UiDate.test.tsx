@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_ABSOLUTE_OPTIONS, UiDate, type UiDateProps } from "../UiDate.js";
+import { DEFAULT_ABSOLUTE_OPTIONS, type IUiDateProps, UiDate } from "../UiDate.js";
 
 describe("UiDate", () => {
     const renderDate = (
         date: Date,
-        props: Partial<UiDateProps> = {
+        props: Partial<IUiDateProps> = {
             locale: "en-US",
         },
     ) => {

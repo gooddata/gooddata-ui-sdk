@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type FC } from "react";
 
@@ -30,7 +30,6 @@ import "vitest-dom/extend-expect";
 
 const getButtonComponent =
     (): FC<IToggleButtonProps> =>
-    // eslint-disable-next-line react/display-name
     ({ isOpened, text, toggleDropdown }) => {
         return (
             <div
@@ -230,7 +229,7 @@ describe("Measure number format", () => {
                 },
             ];
 
-            it("should not render templates button if no templates were provided", async () => {
+            it("should not render templates button if no templates were provided", () => {
                 renderComponent();
                 expect(screen.queryByText("Templates")).not.toBeInTheDocument();
             });

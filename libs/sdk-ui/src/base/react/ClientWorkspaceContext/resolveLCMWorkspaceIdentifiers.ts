@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { partial } from "lodash-es";
 
@@ -18,11 +18,11 @@ import { type IClientWorkspaceIdentifiers } from "./interfaces.js";
  * @returns resolved IClientWorkspaceIdentifiers or an empty object if resolution is not possible
  * @alpha
  */
-export async function resolveLCMWorkspaceIdentifiers(
+export function resolveLCMWorkspaceIdentifiers(
     backend: any,
     { client, dataProduct, workspace }: IClientWorkspaceIdentifiers,
-): Promise<IClientWorkspaceIdentifiers> {
-    const projectLcmIdentifiers = await getProjectLcmIdentifiers(backend, workspace, dataProduct, client);
+): IClientWorkspaceIdentifiers {
+    const projectLcmIdentifiers = getProjectLcmIdentifiers(backend, workspace, dataProduct, client);
 
     if (!projectLcmIdentifiers) {
         return {};
@@ -70,12 +70,12 @@ async function getBearClientProjectLcmIdentifiersMethod(
 
 type GetProjectLcmIdentifiers = (projectId?: string, productId?: string, clientId?: string) => Promise<any>;
 
-async function getProjectLcmIdentifiers(
+function getProjectLcmIdentifiers(
     backend: any,
     projectId?: string,
     productId?: string,
     clientId?: string,
-): Promise<any> {
+): () => Promise<void> {
     const unwrappedBackend = unwrapDecoratedBackend(backend);
     const authApiCall = getBackendAuthApiCallPrivateMethod(unwrappedBackend);
 

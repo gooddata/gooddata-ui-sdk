@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 /**
  * This package provides various UI components used to build GoodData applications (such as buttons, icons, and so on).
@@ -106,33 +106,33 @@ export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";
 export type { IconType } from "./@ui/@types/icon.js";
 export { UiButton } from "./@ui/UiButton/UiButton.js";
-export type { UiButtonProps, IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
+export type { IUiButtonProps, IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
 export { UiButtonSegmentedControl } from "./@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
 export type { UiButtonSegmentedControlProps } from "./@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
 export { UiIconButton } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
-export type { UiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";
+export type { IUiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";
 export { UiPaginationButton } from "./@ui/UiPaginationButton/UiPaginationButton.js";
 export type {
-    UiPaginationButtonProps,
+    IUiPaginationButtonProps,
     UiPaginationButtonSize,
     UiPaginationButtonDirection,
 } from "./@ui/UiPaginationButton/UiPaginationButton.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";
-export type { UiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/types.js";
+export type { IUiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/types.js";
 export { UiCheckbox } from "./@ui/UiCheckbox/UiCheckbox.js";
-export type { UiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
+export type { IUiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
-export type { UiIconProps } from "./@ui/UiIcon/UiIcon.js";
+export type { IUiIconProps } from "./@ui/UiIcon/UiIcon.js";
 export type { BackgroundType, BackgroundShape } from "./@ui/@types/background.js";
 export { iconPaths } from "./@ui/UiIcon/icons.js";
 export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";
-export type { UiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
+export type { IUiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
 export { UiPagedVirtualList } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 export type { IUiPagedVirtualListImperativeHandle } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 export type {
-    UiPagedVirtualListProps,
-    UiPagedVirtualListSkeletonItemProps,
+    IUiPagedVirtualListProps,
+    IUiPagedVirtualListSkeletonItemProps,
 } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 export { UiFocusManager, useUiFocusManagerConnectors } from "./@ui/UiFocusManager/UiFocusManager.js";
 export type { IUiFocusManagerProps } from "./@ui/UiFocusManager/UiFocusManager.js";
@@ -170,13 +170,13 @@ export {
     isSeparator,
 } from "./@ui/UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 export type {
-    UiListboxProps,
+    IUiListboxProps,
     IUiListboxContext,
     IUiListboxItem,
     IUiListboxStaticItem,
-    UiListboxStaticItemProps,
+    IUiListboxStaticItemProps,
     IUiListboxInteractiveItem,
-    UiListboxInteractiveItemProps,
+    IUiListboxInteractiveItemProps,
     UiListboxAriaAttributes,
 } from "./@ui/UiListbox/types.js";
 export { UiLeveledTreeview, UiStaticTreeview } from "./@ui/UiTreeview/UiTreeview.js";
@@ -238,7 +238,7 @@ export {
     getItemsByInteractiveParent,
 } from "./@ui/UiMenu/itemUtils.js";
 export type {
-    UiMenuProps,
+    IUiMenuProps,
     IUiMenuContext,
     IUiMenuItem,
     IUiMenuFocusableItem,
@@ -273,11 +273,11 @@ export * from "./@ui/UiTabs/defaultComponents/index.js";
 export { getTypedUiTabsContextStore } from "./@ui/UiTabs/context.js";
 export { useUiTabsContextStoreValue } from "./@ui/UiTabs/useUiTabsContextStoreValue.js";
 export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
-export type { UiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
+export type { IUiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
 export { UiDropdownIconButton } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
-export type { UiDropdownIconButtonProps } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
+export type { IUiDropdownIconButtonProps } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
 export { UiBadge } from "./@ui/UiBadge/UiBadge.js";
-export type { UiBadgeProps } from "./@ui/UiBadge/UiBadge.js";
+export type { IUiBadgeProps } from "./@ui/UiBadge/UiBadge.js";
 
 export {
     makeMenuKeyboardNavigation,
@@ -311,18 +311,18 @@ export type {
 } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
 
 export type {
-    UiAsyncTableProps,
-    UiAsyncTableColumn,
-    UiAsyncTableFilter,
-    UiAsyncTableFilterOption,
-    UiAsyncTableBulkAction,
+    IUiAsyncTableProps,
+    IUiAsyncTableColumn,
+    IUiAsyncTableFilter,
+    IUiAsyncTableFilterOption,
+    IUiAsyncTableBulkAction,
     UiAsyncTableMenuRenderer,
-    UiAsyncTableTitleProps,
-    UiAsyncTableTitleAction,
-    UiAsyncTableEmptyStateProps,
-    UiAsyncTableAccessibilityConfig,
-    UiAsyncTableColumnAccessibilityConfig,
-    UiAsyncTableColumnDefinitionResponsive,
+    IUiAsyncTableTitleProps,
+    IUiAsyncTableTitleAction,
+    IUiAsyncTableEmptyStateProps,
+    IUiAsyncTableAccessibilityConfig,
+    IUiAsyncTableColumnAccessibilityConfig,
+    IUiAsyncTableColumnDefinitionResponsive,
     UiAsyncTableVariant,
 } from "./@ui/UiAsyncTable/types.js";
 
@@ -338,13 +338,13 @@ export { UiAsyncTableEmptyState } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncT
 export { useAsyncTableResponsiveColumns } from "./@ui/UiAsyncTable/UiAsyncTable/useAsyncTableResponsiveColumns.js";
 
 export { UiTags } from "./@ui/UiTags/UiTags.js";
-export type { UiTagsProps, UiTagDef } from "./@ui/UiTags/types.js";
+export type { IUiTagsProps, IUiTagDef } from "./@ui/UiTags/types.js";
 
 export { UiTag } from "./@ui/UiTag/UiTag.js";
 export type { UiTagProps, IUiTagAccessibilityConfig } from "./@ui/UiTag/UiTag.js";
 
 export { UiPopover } from "./@ui/UiPopover/UiPopover.js";
-export type { UiPopoverProps } from "./@ui/UiPopover/UiPopover.js";
+export type { IUiPopoverProps } from "./@ui/UiPopover/UiPopover.js";
 
 export { UiFloatingElement } from "./@ui/UiFloatingElement/UiFloatingElement.js";
 export { useFloatingPosition } from "./@ui/UiFloatingElement/useFloatingPosition.js";
@@ -382,28 +382,28 @@ export {
 export type { ISearchResultsAnnouncementProps } from "./@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 
 export { UiDate } from "./@ui/UiDate/UiDate.js";
-export type { UiDateProps } from "./@ui/UiDate/UiDate.js";
+export type { IUiDateProps } from "./@ui/UiDate/UiDate.js";
 
 export { UiDrawer } from "./@ui/UiDrawer/UiDrawer.js";
-export type { UiDrawerProps, UiDrawerTransitionProps } from "./@ui/UiDrawer/types.js";
+export type { IUiDrawerProps, UiDrawerTransitionProps } from "./@ui/UiDrawer/types.js";
 
 export { UiCard } from "./@ui/UiCard/UiCard.js";
-export type { UiCardProps } from "./@ui/UiCard/UiCard.js";
+export type { IUiCardProps } from "./@ui/UiCard/UiCard.js";
 
 export { UiSubmenuHeader } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
-export type { UiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
+export type { IUiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
 
 export {
     UiCombobox,
-    type UiComboboxProps,
+    type IUiComboboxProps,
     UiComboboxInput,
     type UiComboboxInputProps,
     UiComboboxPopup,
     type UiComboboxPopupProps,
     UiComboboxList,
-    type UiComboboxListProps,
+    type IUiComboboxListProps,
     UiComboboxListItem,
-    type UiComboboxListItemProps,
+    type IUiComboboxListItemProps,
     UiComboboxListItemLabel,
     type UiComboboxListItemLabelProps,
     UiComboboxListItemCreatableLabel,

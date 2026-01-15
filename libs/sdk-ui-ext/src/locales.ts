@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type MessageDescriptor, defineMessages } from "react-intl";
 
@@ -247,6 +247,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     interactionsAlertsTooltip: { id: "properties.interactions.alerts.tooltip" },
     interactionsScheduledExports: { id: "properties.interactions.scheduledExports" },
     interactionsScheduledExportsTooltip: { id: "properties.interactions.scheduledExports.tooltip" },
+    interactionsKda: { id: "properties.interactions.kda" },
+    interactionsKdaTooltip: { id: "properties.interactions.kda.tooltip" },
     rowHeight: { id: "properties.canvas.rowHeight" },
     rowHeightSmall: { id: "properties.canvas.rowHeight.small" },
     rowHeightMedium: { id: "properties.canvas.rowHeight.medium" },

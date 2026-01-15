@@ -1,7 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useElementSize } from "../../hooks/useElementSize.js";
-import { type UiAsyncTableColumnDefinitionResponsive } from "../types.js";
+import { type IUiAsyncTableColumnDefinitionResponsive } from "../types.js";
 import { CHECKBOX_COLUMN_WIDTH, SCROLLBAR_WIDTH } from "./constants.js";
 import { computeProportionalWidth, getColumnWidth } from "./utils.js";
 
@@ -13,7 +13,7 @@ import { computeProportionalWidth, getColumnWidth } from "./utils.js";
  * @internal
  */
 export function useAsyncTableResponsiveColumns<T>(
-    columns: Array<UiAsyncTableColumnDefinitionResponsive<T>>,
+    columns: Array<IUiAsyncTableColumnDefinitionResponsive<T>>,
     hasCheckbox = false,
 ) {
     const { ref, width: containerWidth } = useElementSize<HTMLDivElement>();

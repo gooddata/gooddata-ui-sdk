@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -38,7 +38,7 @@ export function DrillSelectDropdownMenu({ drillState, onClose, onSelect }: Drill
                 stringTitle,
                 type: "interactive" as const,
                 id: `key-${i}`,
-                iconLeft: <UiIcon type="explainai" size={16} color="complementary-5" ariaHidden />,
+                iconLeft: <UiIcon type="explainai" size={16} color="complementary-5" />,
                 data: {
                     name: stringTitle,
                     context: key,

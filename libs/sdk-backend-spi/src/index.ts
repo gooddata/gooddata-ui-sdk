@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides definitions of the Service Provider Interface (SPI) for the Analytical Backend.
@@ -125,9 +125,9 @@ export type {
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
 export type {
     AuthenticationFlow,
-    DataTooLargeResponseBody,
-    DataTooLargeResponseBodyLimitBreak,
-    DataTooLargeResponseBodyStructuredDetail,
+    IDataTooLargeResponseBody,
+    IDataTooLargeResponseBodyLimitBreak,
+    IDataTooLargeResponseBodyStructuredDetail,
     ErrorConverter,
     NotAuthenticatedReason,
 } from "./errors/index.js";

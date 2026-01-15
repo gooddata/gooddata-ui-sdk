@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { Fragment, type ReactNode, useCallback } from "react";
 
@@ -8,13 +8,13 @@ import { Input } from "../../../Form/Input.js";
 import { SeparatorLine } from "../../../SeparatorLine/SeparatorLine.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { type UiAsyncTableTitleAction, type UiAsyncTableTitleProps } from "../types.js";
+import { type IUiAsyncTableTitleAction, type IUiAsyncTableTitleProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
 /**
  * @internal
  */
-export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) {
+export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: IUiAsyncTableTitleProps) {
     const { renderIconWithWrapper, renderSearchWithWrapper, renderActionsWithWrapper } = useAsyncTableTitle(
         renderIcon,
         onSearch,
@@ -37,7 +37,7 @@ export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAs
 const useAsyncTableTitle = (
     renderIcon?: () => ReactNode,
     onSearch?: (search: string) => void,
-    actions?: Array<UiAsyncTableTitleAction>,
+    actions?: Array<IUiAsyncTableTitleAction>,
 ) => {
     const intl = useIntl();
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);

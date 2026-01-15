@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject, type ISeparators } from "@gooddata/sdk-model";
-import { Input, type InputPureProps } from "@gooddata/sdk-ui-kit";
+import { type IInputPureProps, Input } from "@gooddata/sdk-ui-kit";
 
 import { getDescription } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import { type AlertMetric } from "../../../../alerting/types.js";
@@ -13,7 +13,7 @@ export interface AlertTitleProps {
     measures: AlertMetric[];
     alert: IAutomationMetadataObject | undefined;
     separators?: ISeparators;
-    onChange: InputPureProps["onChange"];
+    onChange: IInputPureProps["onChange"];
 }
 
 export function AlertTitle({ id, alert, measures, separators, onChange }: AlertTitleProps) {

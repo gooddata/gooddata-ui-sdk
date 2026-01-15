@@ -152,9 +152,9 @@ export function Notification({
                 <div className={e("icon")}>
                     {!notification.isRead && <div className={e("unread-status")} />}
                     {isAlertNotification ? (
-                        <UiIcon type="alert" size={14} color="complementary-6" ariaHidden />
+                        <UiIcon type="alert" size={14} color="complementary-6" />
                     ) : (
-                        <UiIcon type="download" size={14} color="complementary-6" ariaHidden />
+                        <UiIcon type="download" size={14} color="complementary-6" />
                     )}
                 </div>
                 <div className={e("details")}>

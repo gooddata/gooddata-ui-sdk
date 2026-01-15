@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -28,7 +28,7 @@ import {
     type MeasureSortSuggestion,
 } from "../types.js";
 
-interface MeasureDropdownProps {
+interface IMeasureDropdownProps {
     currentItem: ISortItem;
     bucketItems: IBucketItemDescriptors;
     availableSorts: IAvailableSortsGroup;
@@ -123,7 +123,7 @@ export function MeasureDropdown({
     onSelect,
     index,
     disabledExplanationTooltip,
-}: MeasureDropdownProps) {
+}: IMeasureDropdownProps) {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>(null);
     const measures: MeasureSortSuggestion[] = availableSorts.metricSorts ?? [];

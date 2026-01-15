@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
@@ -364,7 +364,7 @@ export function withExecutionLoading<TProps>({
 
                 if (_loadOnMount) {
                     // fetch will use latest props via latestPropsRef
-                    fetch();
+                    void fetch();
                 }
                 // eslint-disable-next-line react-hooks/exhaustive-deps
             }, []); // Empty dependency array for mount only
@@ -374,7 +374,7 @@ export function withExecutionLoading<TProps>({
             useEffect(() => {
                 const currentProps = latestPropsRef.current;
                 if (prevPropsRef.current && shouldRefetch(prevPropsRef.current, currentProps)) {
-                    fetch();
+                    void fetch();
                 }
                 prevPropsRef.current = currentProps;
             });

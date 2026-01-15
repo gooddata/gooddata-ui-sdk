@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -25,7 +25,7 @@ export interface IUiChipAccessibilityConfig
 /**
  * @internal
  */
-export interface UiChipProps {
+export interface IUiChipProps {
     label: string;
     tag?: string;
     isDeletable?: boolean;
@@ -46,7 +46,7 @@ export interface UiChipProps {
     renderDeleteButton?: (button: ReactNode) => ReactNode;
 }
 
-export interface ChipContentProps {
+export interface IChipContentProps {
     label: string;
     tag?: string;
     iconBefore?: IconType;
@@ -64,7 +64,7 @@ export interface ChipContentProps {
     styleObj?: CSSProperties;
 }
 
-export interface ChipDeleteButtonProps {
+export interface IChipDeleteButtonProps {
     onDelete?: () => void;
     onDeleteKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
     deleteAriaLabel?: string;

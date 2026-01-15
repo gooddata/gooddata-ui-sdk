@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { createDummyPromise } from "./toolkit.js";
@@ -37,7 +38,7 @@ describe("CancelablePromise", () => {
         expect(result).toBe(RESULT);
     });
 
-    it("getHasFulfilled should return false before promise resolution", async () => {
+    it("getHasFulfilled should return false before promise resolution", () => {
         const RESULT = "RESULT";
         const dummyPromise = createDummyPromise({
             result: RESULT,

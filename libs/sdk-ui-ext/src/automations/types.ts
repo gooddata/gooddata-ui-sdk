@@ -22,10 +22,10 @@ import {
 } from "@gooddata/sdk-model";
 import { type IDashboardUrlBuilder, type IWidgetUrlBuilder } from "@gooddata/sdk-ui";
 import {
+    type IUiAsyncTableBulkAction,
+    type IUiAsyncTableColumn,
+    type IUiAsyncTableFilter,
     type IconType,
-    type UiAsyncTableBulkAction,
-    type UiAsyncTableColumn,
-    type UiAsyncTableFilter,
     type UiAsyncTableVariant,
 } from "@gooddata/sdk-ui-kit";
 
@@ -346,7 +346,7 @@ export interface IAutomationFilterQuery {
 }
 
 export interface IAutomationFilter {
-    filter: UiAsyncTableFilter;
+    filter: IUiAsyncTableFilter;
     query: IAutomationFilterQuery;
 }
 
@@ -365,8 +365,8 @@ export type CellValueType = "text" | "date" | "slash-date" | "number";
 export interface IUseAutomationsSmallLayoutProps {
     searchHandler: (search: string) => void;
     search?: string;
-    availableBulkActions: UiAsyncTableBulkAction[] | undefined;
-    columnDefinitions: UiAsyncTableColumn<IAutomationMetadataObject>[];
+    availableBulkActions: IUiAsyncTableBulkAction[] | undefined;
+    columnDefinitions: IUiAsyncTableColumn<IAutomationMetadataObject>[];
     tableVariant: UiAsyncTableVariant;
     automationsLength?: number;
 }

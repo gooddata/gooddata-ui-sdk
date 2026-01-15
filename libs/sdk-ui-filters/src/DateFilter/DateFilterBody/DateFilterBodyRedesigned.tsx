@@ -24,11 +24,9 @@ import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
 import {
     type CalendarTabType,
     ensureCompatibleGranularity,
-    filterFiscalGranularities,
-    filterFiscalPresets,
-    filterStandardGranularities,
-    filterStandardPresets,
     getDefaultCalendarTab,
+    getFilteredGranularities,
+    getFilteredPresets,
     getFiscalTabsConfig,
 } from "../utils/presetFilterUtils.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
@@ -49,23 +47,22 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
 
     const intl = useIntl();
 
-    const { showTabs } = getFiscalTabsConfig(props.filterOptions.relativePreset, props.activeCalendars);
+    const fiscalTabsConfig = getFiscalTabsConfig(props.filterOptions.relativePreset, props.activeCalendars);
 
     const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
         getDefaultCalendarTab(props.activeCalendars, props.selectedFilterOption),
     );
 
-    const filteredRelativePreset = showTabs
-        ? selectedTab === "standard"
-            ? filterStandardPresets(props.filterOptions.relativePreset!)
-            : filterFiscalPresets(props.filterOptions.relativePreset!)
-        : props.filterOptions.relativePreset;
-
-    const filteredAvailableGranularities = showTabs
-        ? selectedTab === "standard"
-            ? filterStandardGranularities(props.availableGranularities)
-            : filterFiscalGranularities(props.availableGranularities)
-        : props.availableGranularities;
+    const filteredRelativePreset = getFilteredPresets(
+        props.filterOptions.relativePreset,
+        fiscalTabsConfig,
+        selectedTab,
+    );
+    const filteredAvailableGranularities = getFilteredGranularities(
+        props.availableGranularities,
+        fiscalTabsConfig,
+        selectedTab,
+    );
 
     const changeRoute = (newRoute: DateFilterRoute = null): void => {
         setRoute(newRoute);
@@ -89,7 +86,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         setRoute(newForm);
 
         if (newForm === "relativeForm" && filterOptions.relativeForm) {
-            const isFiscal = showTabs && selectedTab === "fiscal";
+            const isFiscal = fiscalTabsConfig.showTabs && selectedTab === "fiscal";
 
             // Determine which filter option to use as base
             const baseOption =
@@ -311,7 +308,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                                 isMobile={isMobile}
                                 dateFormat={dateFormat}
-                                showTabs={showTabs}
+                                showTabs={fiscalTabsConfig.showTabs}
                                 selectedTab={selectedTab}
                                 onTabSelect={setSelectedTab}
                                 filteredRelativePreset={filteredRelativePreset}

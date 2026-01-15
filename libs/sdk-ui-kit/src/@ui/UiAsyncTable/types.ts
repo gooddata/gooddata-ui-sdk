@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, type Ref } from "react";
 
@@ -19,7 +19,7 @@ export type UiAsyncTableVariant = "regular" | "small";
 /**
  * @internal
  */
-export interface UiAsyncTableAccessibilityConfig<T> {
+export interface IUiAsyncTableAccessibilityConfig<T> {
     getCheckboxItemAriaLabel?: (item: T) => string;
     checkboxAllAriaLabel?: string;
     searchAriaLabel?: string;
@@ -29,17 +29,17 @@ export interface UiAsyncTableAccessibilityConfig<T> {
 /**
  * @internal
  */
-export interface UiAsyncTableColumnAccessibilityConfig {
+export interface IUiAsyncTableColumnAccessibilityConfig {
     ariaLabel?: string;
 }
 
 /**
  * @internal
  */
-export interface UiAsyncTableProps<T extends { id: string }> {
+export interface IUiAsyncTableProps<T extends { id: string }> {
     items: T[];
     totalItemsCount?: number;
-    columns: Array<UiAsyncTableColumn<T>>;
+    columns: Array<IUiAsyncTableColumn<T>>;
     onItemClick?: (item: T) => void;
     scrollToIndex?: number;
 
@@ -60,7 +60,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     loadNextPage?: () => void;
 
     //filters
-    filters?: Array<UiAsyncTableFilter>;
+    filters?: Array<IUiAsyncTableFilter>;
     isFiltersTooLarge?: boolean;
 
     //sorting
@@ -75,7 +75,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     renderToolbarCustomElement?: () => ReactNode;
 
     //bulk actions
-    bulkActions?: Array<UiAsyncTableBulkAction>;
+    bulkActions?: Array<IUiAsyncTableBulkAction>;
     selectedItemIds?: Array<string>;
     setSelectedItemIds?: (items: Array<string>) => void;
 
@@ -88,7 +88,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     locale?: string;
 
     //accessibility
-    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
+    accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;
 }
 
 /**
@@ -99,7 +99,7 @@ export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) =
 /**
  * @internal
  */
-export interface UiAsyncTableColumn<T> {
+export interface IUiAsyncTableColumn<T> {
     key?: keyof T;
     label?: string;
     width?: number;
@@ -117,31 +117,31 @@ export interface UiAsyncTableColumn<T> {
     bold?: boolean;
     sortable?: boolean;
     align?: "left" | "center" | "right";
-    getAccessibilityConfig?: (item: T) => UiAsyncTableColumnAccessibilityConfig;
+    getAccessibilityConfig?: (item: T) => IUiAsyncTableColumnAccessibilityConfig;
 }
 
 /**
  * @internal
  */
-export interface UiAsyncTableColumnDefinitionResponsive<T> extends UiAsyncTableColumn<T> {
+export interface IUiAsyncTableColumnDefinitionResponsive<T> extends IUiAsyncTableColumn<T> {
     minWidth?: number;
 }
 
 /**
  * @internal
  */
-export interface UiAsyncTableFilter {
+export interface IUiAsyncTableFilter {
     label: string;
-    options: Array<UiAsyncTableFilterOption>;
-    onItemsSelect: (options: Array<UiAsyncTableFilterOption>) => void;
-    selected?: Array<UiAsyncTableFilterOption>;
+    options: Array<IUiAsyncTableFilterOption>;
+    onItemsSelect: (options: Array<IUiAsyncTableFilterOption>) => void;
+    selected?: Array<IUiAsyncTableFilterOption>;
     isMultiSelect?: boolean;
 }
 
 /**
  * @internal
  */
-export interface UiAsyncTableFilterOption {
+export interface IUiAsyncTableFilterOption {
     value: string;
     label?: string;
     secondaryLabel?: string;
@@ -150,7 +150,7 @@ export interface UiAsyncTableFilterOption {
 /**
  * @internal
  */
-export interface UiAsyncTableBulkAction {
+export interface IUiAsyncTableBulkAction {
     label: string;
     onClick: () => void;
     accessibilityConfig?: IAccessibilityConfigBase;
@@ -159,25 +159,25 @@ export interface UiAsyncTableBulkAction {
 /**
  * @internal
  */
-export interface UiAsyncTableTitleProps {
+export interface IUiAsyncTableTitleProps {
     title: string;
     renderIcon?: () => ReactNode;
     onSearch?: (search: string) => void;
-    actions: Array<UiAsyncTableTitleAction>;
+    actions: Array<IUiAsyncTableTitleAction>;
     scrollToStart: () => void;
 }
 
 /**
  * @internal
  */
-export interface UiAsyncTableTitleAction {
+export interface IUiAsyncTableTitleAction {
     renderAction: () => ReactNode;
 }
 
 //subcomponent props
 
-export interface UiAsyncTableHeaderProps<T> {
-    columns: Array<UiAsyncTableColumn<T>>;
+export interface IUiAsyncTableHeaderProps<T> {
+    columns: Array<IUiAsyncTableColumn<T>>;
     handleColumnClick: (key?: keyof T) => void;
     sortBy?: keyof T;
     sortDirection?: SortDirection;
@@ -187,17 +187,17 @@ export interface UiAsyncTableHeaderProps<T> {
     largeRow?: boolean;
 }
 
-export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
+export interface IUiAsyncTableFilterProps extends IUiAsyncTableFilter {
     isFiltersTooLarge?: boolean;
     variant?: UiAsyncTableVariant;
     isMobileView?: boolean;
     width?: number;
 }
 
-export interface UiAsyncTableRowProps<T extends { id: string }> {
+export interface IUiAsyncTableRowProps<T extends { id: string }> {
     item?: T;
     itemIndex: number;
-    columns: Array<UiAsyncTableColumn<T>>;
+    columns: Array<IUiAsyncTableColumn<T>>;
     onSelect?: (item: T) => void;
     onClick?: (item: T) => void;
     hasCheckbox?: boolean;
@@ -206,7 +206,7 @@ export interface UiAsyncTableRowProps<T extends { id: string }> {
     isFocused?: boolean;
     focusedColumnIndex?: number;
     focusedElementRef?: Ref<HTMLElement>;
-    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
+    accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;
 }
 
 export type UiAsyncTableCheckboxProps = {
@@ -220,10 +220,10 @@ export type UiAsyncTableCheckboxProps = {
     cellRef?: Ref<HTMLElement>;
 };
 
-export interface UiAsyncTableToolbarProps<T extends { id: string }> {
-    filters?: Array<UiAsyncTableFilter>;
+export interface IUiAsyncTableToolbarProps<T extends { id: string }> {
+    filters?: Array<IUiAsyncTableFilter>;
     isFiltersTooLarge?: boolean;
-    bulkActions?: Array<UiAsyncTableBulkAction>;
+    bulkActions?: Array<IUiAsyncTableBulkAction>;
     selectedItemIds?: Array<string>;
     setSelectedItemIds: (items: Array<string>) => void;
     totalItemsCount: number;
@@ -233,7 +233,7 @@ export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     width?: number;
     onSearch?: (search: string) => void;
     renderToolbarCustomElement?: () => ReactNode;
-    accessibilityConfig?: UiAsyncTableAccessibilityConfig<T>;
+    accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;
 }
 
 export type UiAsyncTableDropdownItemProps = {
@@ -246,8 +246,8 @@ export type UiAsyncTableDropdownItemProps = {
     accessibilityConfig?: IAccessibilityConfigBase;
 };
 
-export interface UiAsyncTableBulkActionsProps {
-    bulkActions: Array<UiAsyncTableBulkAction>;
+export interface IUiAsyncTableBulkActionsProps {
+    bulkActions: Array<IUiAsyncTableBulkAction>;
 }
 
 export interface IUiAsyncTableIconRendererProps<T> {
@@ -256,7 +256,7 @@ export interface IUiAsyncTableIconRendererProps<T> {
     item: T;
 }
 
-export interface UiAsyncTableBodyProps<T extends { id: string }> {
+export interface IUiAsyncTableBodyProps<T extends { id: string }> {
     items: T[];
     maxHeight: number;
     itemHeight: number;
@@ -265,8 +265,8 @@ export interface UiAsyncTableBodyProps<T extends { id: string }> {
     isLoading?: boolean;
     onItemClick?: (item: T) => void;
     loadNextPage?: () => void;
-    columns: Array<UiAsyncTableColumn<T>>;
-    bulkActions?: Array<UiAsyncTableBulkAction>;
+    columns: Array<IUiAsyncTableColumn<T>>;
+    bulkActions?: Array<IUiAsyncTableBulkAction>;
     scrollToIndex?: number;
     isLargeRow?: boolean;
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number) => boolean;
@@ -282,7 +282,7 @@ export interface UiAsyncTableBodyProps<T extends { id: string }> {
 /**
  * @internal
  */
-export interface UiAsyncTableEmptyStateProps {
+export interface IUiAsyncTableEmptyStateProps {
     title?: string;
     description?: string;
     icon?: IconType;

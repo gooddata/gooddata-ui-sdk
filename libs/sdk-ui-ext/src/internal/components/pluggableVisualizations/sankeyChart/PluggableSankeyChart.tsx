@@ -78,7 +78,11 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         extendedReferencePoint = configSankeyUiConfig(extendedReferencePoint, this.intl, this.type);
 
         return Promise.resolve(
-            sanitizeFilters(extendedReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(
+                extendedReferencePoint,
+                this.featureFlags?.enableImprovedAdFilters,
+                referencePoint,
+            ),
         );
     }
 

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -7,7 +7,7 @@ import { UiComboboxContextProvider } from "./UiComboboxContext.js";
 import { useCombobox } from "./useCombobox.js";
 
 /** @internal */
-export interface UiComboboxProps extends IUiComboboxParams {
+export interface IUiComboboxProps extends IUiComboboxParams {
     children?: ReactNode;
 }
 
@@ -35,7 +35,7 @@ export interface UiComboboxProps extends IUiComboboxParams {
  * </UiCombobox>
  * ```
  */
-export function UiCombobox({ children, ...props }: UiComboboxProps) {
+export function UiCombobox({ children, ...props }: IUiComboboxProps) {
     const state = useCombobox(props);
 
     return <UiComboboxContextProvider state={state}>{children}</UiComboboxContextProvider>;

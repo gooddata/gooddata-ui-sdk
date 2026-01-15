@@ -1,20 +1,20 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { forwardRef } from "react";
 
-import { type UiIconButtonPublicProps, UiIconButtonRenderer } from "../UiIconButton/UiIconButtonRenderer.js";
+import { type IUiIconButtonPublicProps, UiIconButtonRenderer } from "../UiIconButton/UiIconButtonRenderer.js";
 
 /**
  * @internal
  */
-export interface UiDropdownIconButtonProps extends UiIconButtonPublicProps {
+export interface IUiDropdownIconButtonProps extends IUiIconButtonPublicProps {
     isDropdownOpen: boolean;
 }
 
 /**
  * @internal
  */
-export const UiDropdownIconButton = forwardRef<HTMLButtonElement, UiDropdownIconButtonProps>(
+export const UiDropdownIconButton = forwardRef<HTMLButtonElement, IUiDropdownIconButtonProps>(
     ({ isDropdownOpen, ...props }, ref) => {
         return (
             <UiIconButtonRenderer

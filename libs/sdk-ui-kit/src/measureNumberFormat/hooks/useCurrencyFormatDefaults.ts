@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
@@ -7,13 +7,13 @@ import type { MetricType } from "@gooddata/sdk-model";
 const DEFAULT_CURRENCY_FORMAT = "$#,##0.00";
 
 /** @internal */
-export interface UseCurrencyFormatDefaultsConfig {
+export type UseCurrencyFormatDefaultsConfig = {
     metricType?: MetricType;
     currencyFormatOverride?: string | null;
     onFormatChange: (format: string | null) => void;
     shouldBootstrap: boolean;
     fallbackFormat?: string;
-}
+};
 
 /**
  * @internal

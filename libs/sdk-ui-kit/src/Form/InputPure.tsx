@@ -33,7 +33,7 @@ export interface IInputPureAccessibilityConfig extends IAccessibilityConfigBase 
  * @internal
  */
 
-export interface InputPureProps extends IDomNativeProps {
+export interface IInputPureProps extends IDomNativeProps {
     className?: string;
     clearOnEsc?: boolean;
     disabled?: boolean;
@@ -70,7 +70,7 @@ export interface InputPureProps extends IDomNativeProps {
 /**
  * @internal
  */
-export class InputPure extends PureComponent<InputPureProps> implements IDomNative {
+export class InputPure extends PureComponent<IInputPureProps> implements IDomNative {
     public inputNodeRef: HTMLInputElement | null = null;
     private autofocusDispatcher: () => void = () => {};
     private readonly a11yIdBase = uuid();
@@ -108,7 +108,7 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
         this.autofocusDispatcher();
     }
 
-    override componentDidUpdate(prevProps: Readonly<InputPureProps>) {
+    override componentDidUpdate(prevProps: Readonly<IInputPureProps>) {
         if (prevProps.autofocus !== this.props.autofocus) {
             this.autofocusDispatcher();
             this.autofocusDispatcher = runAutofocus(this.inputNodeRef, this.props.autofocus ?? false);
@@ -121,14 +121,14 @@ export class InputPure extends PureComponent<InputPureProps> implements IDomNati
 
     onKeyPress = (e: KeyboardEvent): void => {
         switch (e.keyCode) {
-            case ENUM_KEY_CODE.KEY_CODE_ESCAPE:
+            case ENUM_KEY_CODE.KEY_CODE_ESCAPE as number:
                 if (this.props.clearOnEsc) {
                     e.stopPropagation();
                     this.onClear();
                 }
                 this.props.onEscKeyPress?.(e);
                 break;
-            case ENUM_KEY_CODE.KEY_CODE_ENTER:
+            case ENUM_KEY_CODE.KEY_CODE_ENTER as number:
                 this.props.onEnterKeyPress?.();
                 break;
             default:

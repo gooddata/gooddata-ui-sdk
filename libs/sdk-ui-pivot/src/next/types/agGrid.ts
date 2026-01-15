@@ -89,7 +89,7 @@ export type AgGridHeaderGroupParams = IHeaderGroupParams<AgGridRowData, string |
  * @returns true if the column definition is a column group definition, false otherwise
  */
 export function isColGroupDef(colDef: ColDef | ColGroupDef): colDef is ColGroupDef {
-    return "children" in colDef && Array.isArray((colDef as ColGroupDef).children);
+    return "children" in colDef && Array.isArray(colDef.children);
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     Fragment,
@@ -256,9 +256,7 @@ export function DropdownList<T>({
                 />
             ) : null}
             {hasNoData ? (
-                <div style={{ width: isMobile ? "auto" : width }}>
-                    {renderNoData({ hasNoMatchingData }) as ReactNode}
-                </div>
+                <div style={{ width: isMobile ? "auto" : width }}>{renderNoData({ hasNoMatchingData })}</div>
             ) : null}
             {isLoading ? <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} /> : null}
             {!isLoading && itemsCount > 0 ? (

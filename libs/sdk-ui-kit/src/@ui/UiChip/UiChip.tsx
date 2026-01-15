@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
 
 import { ChipContent } from "./ChipContent.js";
 import { ChipDeleteButton } from "./ChipDeleteButton.js";
-import { type UiChipProps } from "./types.js";
+import { type IUiChipProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 
 const { b } = bem("gd-ui-kit-chip");
@@ -31,7 +31,7 @@ export function UiChip({
     buttonRef,
     renderChipContent,
     renderDeleteButton,
-}: UiChipProps) {
+}: IUiChipProps) {
     const [styleObj, setStyleObj] = useState<CSSProperties>();
     const defaultButtonRef = useRef<HTMLButtonElement>(null);
     const effectiveButtonRef = buttonRef || defaultButtonRef;

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { action } from "storybook/actions";
 
@@ -32,6 +32,9 @@ const defaultScenarios: INeobackstopConfig = {
             { selector: ".s-colored-items-list-item" },
             { selector: ".s-custom-section-button" },
         ],
+        delay: {
+            postOperation: 100,
+        },
     },
 };
 

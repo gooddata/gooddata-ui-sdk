@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -543,7 +543,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         if (
             this.isComponentMounted &&
             this.props.closeOnEscape &&
-            e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE
+            e.keyCode === (ENUM_KEY_CODE.KEY_CODE_ESCAPE as number)
         ) {
             this.props.onClose?.();
         }

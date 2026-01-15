@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IntlShape } from "react-intl";
 
-import { type UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem } from "../../catalogItem/types.js";
 
-export const createdByColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn<ICatalogItem> = (
+export const createdByColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<ICatalogItem> = (
     intl,
     width,
 ) => {

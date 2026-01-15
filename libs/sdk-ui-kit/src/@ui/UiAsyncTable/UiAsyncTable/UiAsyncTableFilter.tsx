@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -23,12 +23,12 @@ import { UiChip } from "../../UiChip/UiChip.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { type UiAsyncTableFilterOption, type UiAsyncTableFilterProps } from "../types.js";
+import { type IUiAsyncTableFilterOption, type IUiAsyncTableFilterProps } from "../types.js";
 
 /**
  * @internal
  */
-export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
+export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
     const intl = useIntl();
     const {
         filteredOptions,
@@ -71,7 +71,7 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                 renderBody={({ closeDropdown }) => (
                     <UiAutofocus>
                         <>
-                            <DropdownList<UiAsyncTableFilterOption>
+                            <DropdownList<IUiAsyncTableFilterOption>
                                 id={getFilterDropdownId(label)}
                                 items={filteredOptions}
                                 renderItem={({ item, isFirst }) => (
@@ -141,9 +141,9 @@ function useAsyncTableFilterState({
     onItemsSelect,
     isMultiSelect,
     label,
-}: UiAsyncTableFilterProps) {
+}: IUiAsyncTableFilterProps) {
     const intl = useIntl();
-    const [checkedItems, setCheckedItems] = useState<Map<string, UiAsyncTableFilterOption>>(
+    const [checkedItems, setCheckedItems] = useState<Map<string, IUiAsyncTableFilterOption>>(
         getFilterOptionsMap(selected ?? []),
     );
     const [searchValue, setSearchValue, debouncedSearchValue] = useDebouncedState("", 300);
@@ -183,7 +183,7 @@ function useAsyncTableFilterState({
     }, [options, isAllSelected]);
 
     const onItemClick = useCallback(
-        (item: UiAsyncTableFilterOption, closeDropdown: () => void) => {
+        (item: IUiAsyncTableFilterOption, closeDropdown: () => void) => {
             if (isMultiSelect) {
                 if (item.value === FILTER_OPTION_ALL_VALUE) {
                     onSelectAll();
@@ -207,7 +207,7 @@ function useAsyncTableFilterState({
     );
 
     const isItemSelected = useCallback(
-        (item: UiAsyncTableFilterOption) => {
+        (item: IUiAsyncTableFilterOption) => {
             if (isMultiSelect) {
                 if (item.value === FILTER_OPTION_ALL_VALUE) {
                     return isAllSelected;

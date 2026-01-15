@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -72,7 +72,7 @@ describe("withExecution", () => {
         expect(screen.queryByText("Result")).toBeInTheDocument();
     });
 
-    it("should start loading again after invoking injected fetch function", async () => {
+    it("should start loading again after invoking injected fetch function", () => {
         renderEnhancedComponent();
 
         fireEvent.click(screen.getByText("Refetch"));

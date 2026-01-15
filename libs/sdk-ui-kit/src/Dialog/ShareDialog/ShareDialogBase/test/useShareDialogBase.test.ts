@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -29,7 +29,7 @@ const recordedBackendConfig: RecordedBackendConfig = {
 const mockBackend = recordedBackend(ReferenceRecordings.Recordings, recordedBackendConfig);
 
 vi.mock("@gooddata/sdk-ui", async () => ({
-    ...((await vi.importActual("@gooddata/sdk-ui")) as object),
+    ...(await vi.importActual("@gooddata/sdk-ui")),
     useBackendStrict: () => mockBackend,
     useWorkspaceStrict: () => "workspace",
 }));

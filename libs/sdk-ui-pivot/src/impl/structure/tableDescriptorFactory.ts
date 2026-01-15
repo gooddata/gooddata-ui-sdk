@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { range } from "lodash-es";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -16,14 +17,14 @@ import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 import {
     type AnyCol,
     type DataCol,
+    type IMixedHeadersCol,
+    type IMixedValuesCol,
+    type IRootCol,
+    type IScopeCol,
+    type ISeriesCol,
+    type ISliceCol,
+    type ISliceMeasureCol,
     type LeafDataCol,
-    type MixedHeadersCol,
-    type MixedValuesCol,
-    type RootCol,
-    type ScopeCol,
-    type SeriesCol,
-    type SliceCol,
-    type SliceMeasureCol,
     type TableColDefs,
     type TableCols,
     isSeriesCol,
@@ -32,18 +33,18 @@ import { type IPivotTableConfig } from "../../publicTypes.js";
 import { getDataViewSeriesDescriptors } from "../utils.js";
 
 type ColumnGroupLevel = {
-    pkToGroup: Record<string, ScopeCol>;
-    groups: ScopeCol[];
+    pkToGroup: Record<string, IScopeCol>;
+    groups: IScopeCol[];
 };
 
 type GroupingOperationResult = {
     groupingAttributes: IAttributeDescriptor[];
     rootColumns: DataCol[];
-    leafColumns: SeriesCol[] | ScopeCol[];
+    leafColumns: ISeriesCol[] | IScopeCol[];
     allColumns: DataCol[];
 };
 
-function createDataColRootGroup(scopingAttributes: IAttributeDescriptor[]): RootCol {
+function createDataColRootGroup(scopingAttributes: IAttributeDescriptor[]): IRootCol {
     return {
         type: "rootCol",
         id: "root",
@@ -86,7 +87,7 @@ function colDescriptorAndHeaders(col: LeafDataCol): {
  * remembers that group as parentGroup for the next iteration.
  */
 function groupColumns(
-    bottomColumns: SeriesCol[] | ScopeCol[],
+    bottomColumns: ISeriesCol[] | IScopeCol[],
     scopingAttributes: IAttributeDescriptor[],
     limitLevels?: number,
 ): GroupingOperationResult {
@@ -130,7 +131,7 @@ function groupColumns(
             pathToGroup += currentId;
 
             const groupLevel = columnGroupLevels[level];
-            let currentGroup: ScopeCol | undefined = groupLevel.pkToGroup[pathToGroup];
+            let currentGroup: IScopeCol | undefined = groupLevel.pkToGroup[pathToGroup];
 
             const { isTotal, isSubtotal } = getTotalInfo(attributeHeaders);
 
@@ -142,7 +143,7 @@ function groupColumns(
                 currentGroup = {
                     type: "scopeCol",
                     id: `g_${groupId++}`,
-                    attributeDescriptor: attributeDescriptors![level],
+                    attributeDescriptor: attributeDescriptors[level],
                     // NOTE: group of totals gets the measure index stored in the first total
                     header: attributeHeaders[level],
                     descriptorsToHere: attributeDescriptors.slice(0, level),
@@ -183,7 +184,7 @@ function groupColumns(
 
 /**
  * This function creates bottom-most column descriptors from column attributes. It essentially creates the bottom-most
- * {@link ScopeCol} which would normally host the measure columns.
+ * {@link IScopeCol} which would normally host the measure columns.
  */
 function createColumnDescriptorsWhenNoMeasuresInColumns(
     dv: DataViewFacade,
@@ -206,7 +207,7 @@ function createColumnDescriptorsWhenNoMeasuresInColumns(
     // for each attribute descriptor, there must be one array in the headers.
     invariant(descriptors.length === headers.length);
 
-    const bottom: ScopeCol[] = [];
+    const bottom: IScopeCol[] = [];
 
     const seriesDescriptor = getDataViewSeriesDescriptors(dv);
     for (let colIdx = 0; colIdx < numberOfColumns; colIdx++) {
@@ -240,7 +241,7 @@ function createColumnDescriptorsWhenNoMeasuresInColumns(
 }
 
 function createColumnDescriptorsFromDataSeries(dv: DataViewFacade): GroupingOperationResult {
-    const leafColumns: SeriesCol[] = dv
+    const leafColumns: ISeriesCol[] = dv
         .data()
         .series()
         .toArray()
@@ -270,7 +271,7 @@ function createColumnDescriptorsFromDataSeries(dv: DataViewFacade): GroupingOper
     return groupColumns(leafColumns, scopingAttributes);
 }
 
-function createRowDescriptor(attributeDescriptor: IAttributeDescriptor, index: number): SliceCol {
+function createRowDescriptor(attributeDescriptor: IAttributeDescriptor, index: number): ISliceCol {
     return {
         type: "sliceCol",
         id: `r_${index}`,
@@ -281,7 +282,7 @@ function createRowDescriptor(attributeDescriptor: IAttributeDescriptor, index: n
     };
 }
 
-function createRowDescriptors(dv: DataViewFacade): SliceCol[] {
+function createRowDescriptors(dv: DataViewFacade): ISliceCol[] {
     if (getMeasureGroupDimensionIndex(dv) === 0) {
         return dv.meta().attributeDescriptorsForDim(0).map(createRowDescriptor);
     } else {
@@ -318,7 +319,7 @@ function getMeasureGroupDimensionIndex(dv: DataViewFacade) {
     );
 }
 
-function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): SliceMeasureCol[] {
+function createMeasureColumnDescriptors(dv: DataViewFacade, rows: ISliceCol[]): ISliceMeasureCol[] {
     if (getMeasureGroupDimensionIndex(dv) !== 0) {
         return [];
     }
@@ -335,7 +336,7 @@ function createMeasureColumnDescriptors(dv: DataViewFacade, rows: SliceCol[]): S
     ];
 }
 
-function createMixedHeadersColumnDescriptors(): MixedHeadersCol[] {
+function createMixedHeadersColumnDescriptors(): IMixedHeadersCol[] {
     const idx = 0;
     // always just one column with mixed attribute and measure headers
     return [
@@ -348,7 +349,7 @@ function createMixedHeadersColumnDescriptors(): MixedHeadersCol[] {
     ];
 }
 
-function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[] {
+function createMixedValuesColumnDescriptors(dv: DataViewFacade): IMixedValuesCol[] {
     return dv
         .data()
         .slices()
@@ -368,7 +369,7 @@ function createMixedValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[
         });
 }
 
-function createMeasureValuesColumnDescriptors(dv: DataViewFacade): MixedValuesCol[] {
+function createMeasureValuesColumnDescriptors(dv: DataViewFacade): IMixedValuesCol[] {
     const idx = 0;
     // always just one column with mixed attribute and measure headers
     return [
@@ -409,9 +410,9 @@ function createTableHeaders(
             scopingAttributes: scopingAttributes.filter(isAttributeDescriptor),
         };
     } else {
-        const rows: SliceCol[] = createRowDescriptors(dv);
+        const rows: ISliceCol[] = createRowDescriptors(dv);
         const measureColumns = createMeasureColumnDescriptors(dv, rows);
-        let mixedHeadersCols: MixedHeadersCol[] = [];
+        let mixedHeadersCols: IMixedHeadersCol[] = [];
         if (config?.columnHeadersPosition === "left") {
             mixedHeadersCols = createMixedHeadersColumnDescriptors();
         }

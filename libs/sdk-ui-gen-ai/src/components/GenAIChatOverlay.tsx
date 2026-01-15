@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type FC, type RefObject } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { Dialog } from "@gooddata/sdk-ui-kit";
+import { Dialog, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { HeaderIcon } from "./HeaderIcon.js";
@@ -42,10 +42,13 @@ function GenAIChatOverlayComponent({
     returnFocusTo,
     hasMessages,
     clearThread,
-    isFullscreen,
     setFullscreen,
+    isFullscreen: isFullscreenCurrent,
 }: GenAIChatOverlayProps) {
     const intl = useIntl();
+
+    const isSmallScreen = useMediaQuery("mobileDevice");
+    const isFullscreen = isSmallScreen || isFullscreenCurrent;
 
     const classNames = cx("gd-gen-ai-chat__window", {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
@@ -76,16 +79,20 @@ function GenAIChatOverlayComponent({
                     disabled={!hasMessages}
                 />
                 <div className="gd-gen-ai-chat__window__header__gap"></div>
-                <HeaderIcon
-                    icon={isFullscreen ? "minimize" : "expand"}
-                    tooltip={
-                        isFullscreen
-                            ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
-                            : intl.formatMessage({ id: "gd.gen-ai.header.expand-tooltip" })
-                    }
-                    onClick={() => setFullscreen({ isFullscreen: !isFullscreen })}
-                />
-                <div className="gd-gen-ai-chat__window__header__divider"></div>
+                {isSmallScreen ? null : (
+                    <>
+                        <HeaderIcon
+                            icon={isFullscreen ? "minimize" : "expand"}
+                            tooltip={
+                                isFullscreen
+                                    ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
+                                    : intl.formatMessage({ id: "gd.gen-ai.header.expand-tooltip" })
+                            }
+                            onClick={() => setFullscreen({ isFullscreen: !isFullscreen })}
+                        />
+                        <div className="gd-gen-ai-chat__window__header__divider"></div>
+                    </>
+                )}
                 <HeaderIcon icon="cross" onClick={onClose} />
             </div>
             <GenAIChatWrapper autofocus />

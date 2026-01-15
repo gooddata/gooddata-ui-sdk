@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type MessageDescriptor, useIntl } from "react-intl";
 
@@ -21,7 +21,7 @@ export type AddMessageType = (message: MessageDescriptor, options?: MessageParam
 /**
  * @internal
  */
-export interface UseToastMessageType {
+export interface IUseToastMessageType {
     addSuccess: AddMessageType;
     addProgress: AddMessageType;
     addWarning: AddMessageType;
@@ -33,7 +33,7 @@ export interface UseToastMessageType {
 /**
  * @internal
  */
-export const useToastMessage = (): UseToastMessageType => {
+export const useToastMessage = (): IUseToastMessageType => {
     const { addMessage, removeMessage, removeAllMessages } = ToastsCenterContext.useContextStoreValues([
         "addMessage",
         "removeMessage",

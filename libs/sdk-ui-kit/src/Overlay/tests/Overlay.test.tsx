@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type RefObject, createRef, forwardRef } from "react";
 
@@ -13,7 +13,7 @@ import { Overlay } from "../Overlay.js";
  * @internal
  */
 
-interface FixedComponentProps {
+interface IFixedComponentProps {
     className?: string;
     height?: number;
     left?: number;
@@ -29,7 +29,7 @@ function FixedComponent({
     position = "static",
     top = 0,
     width = 0,
-}: FixedComponentProps) {
+}: IFixedComponentProps) {
     const getStyle = (): any => {
         return {
             height,

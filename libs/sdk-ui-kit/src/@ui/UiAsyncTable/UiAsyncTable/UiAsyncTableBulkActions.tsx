@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useRef } from "react";
 
@@ -11,10 +11,10 @@ import { UiButton } from "../../UiButton/UiButton.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { type UiAsyncTableBulkActionsProps } from "../types.js";
+import { type IUiAsyncTableBulkActionsProps } from "../types.js";
 import { ASYNC_TABLE_BULK_ACTIONS_BUTTON_ID, ASYNC_TABLE_BULK_ACTIONS_MENU_ID } from "./constants.js";
 
-export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActionsProps) {
+export function UiAsyncTableBulkActions({ bulkActions }: IUiAsyncTableBulkActionsProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const intl = useIntl();
 

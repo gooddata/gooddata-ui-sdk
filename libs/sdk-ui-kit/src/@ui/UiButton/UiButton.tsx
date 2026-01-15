@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MouseEvent, type ReactNode, forwardRef } from "react";
 
@@ -29,7 +29,7 @@ export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
 /**
  * @internal
  */
-export interface UiButtonProps {
+export interface IUiButtonProps {
     id?: string;
     size?: SizeSmall | SizeMedium | SizeLarge;
     variant?:
@@ -69,7 +69,7 @@ const getGeneratedTestId = (label: string, ariaLabel: string) => {
 /**
  * @internal
  */
-export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
+export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
     (
         {
             id,
@@ -133,7 +133,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                     <UiIcon
                         type={iconBefore}
                         size={iconBeforeSize}
-                        ariaHidden={accessibilityConfig?.iconAriaHidden}
+                        accessibilityConfig={{ ariaHidden: accessibilityConfig?.iconAriaHidden }}
                         disableAnimation={disableIconAnimation}
                     />
                 ) : null}
@@ -145,7 +145,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                     <UiIcon
                         type={iconAfter}
                         size={iconAfterSize}
-                        ariaHidden={accessibilityConfig?.iconAriaHidden}
+                        accessibilityConfig={{ ariaHidden: accessibilityConfig?.iconAriaHidden }}
                         disableAnimation={disableIconAnimation}
                     />
                 ) : null}

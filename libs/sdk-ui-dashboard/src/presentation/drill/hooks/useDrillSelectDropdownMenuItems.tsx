@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -63,6 +63,8 @@ export const useDrillSelectDropdownMenuItems = ({
                 type: "interactive" as const,
                 id: `${groupId}-${index}`,
                 stringTitle: item.name,
+                isDisabled: item.isDisabled,
+                tooltip: item.tooltipText,
                 ariaAttributes: {
                     "aria-haspopup":
                         item.type === DrillType.DRILL_TO_INSIGHT || item.type === DrillType.DRILL_DOWN

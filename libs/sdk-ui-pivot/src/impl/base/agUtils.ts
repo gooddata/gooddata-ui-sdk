@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type ColDef, type Column, type ColumnResizedEvent } from "ag-grid-community";
 
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL, MEASURE_COLUMN } from "./constants.js";
@@ -39,7 +40,7 @@ export function isHeaderResizer(target: HTMLElement): boolean {
 }
 
 export function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
-    return columnEvent?.source === ColumnEventSourceType.UI_RESIZED && !!columnEvent.columns;
+    return columnEvent?.source === (ColumnEventSourceType.UI_RESIZED as string) && !!columnEvent.columns;
 }
 
 export function scrollBarExists(target: HTMLDivElement): boolean {

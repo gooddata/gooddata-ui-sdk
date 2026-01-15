@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -61,7 +61,7 @@ function prepareExecution(props: IPivotTableProps): IPreparedExecution {
         .withDimensions((def: IExecutionDefinition) =>
             getPivotTableDimensions(def.buckets, isTransposed(config)),
         )
-        .withSorting(...(sanitizedSortBy as ISortItem[]))
+        .withSorting(...sanitizedSortBy)
         .withExecConfig(execConfig);
 }
 

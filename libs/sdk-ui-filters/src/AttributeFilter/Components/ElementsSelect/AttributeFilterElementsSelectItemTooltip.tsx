@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -58,13 +58,7 @@ export function AttributeFilterElementsSelectItemTooltip({
                             )
                         }
                     >
-                        <UiIcon
-                            color="currentColor"
-                            layout={"block"}
-                            size={13}
-                            type={"question"}
-                            ariaHidden
-                        />
+                        <UiIcon color="currentColor" layout={"block"} size={13} type={"question"} />
                     </div>
                 }
                 content={

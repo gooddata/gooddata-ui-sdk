@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type Ref, useEffect, useMemo, useRef, useState } from "react";
 
@@ -6,7 +6,7 @@ import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { isEnterKey } from "../../../utils/events.js";
 import { makeGridKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
-import { type UiAsyncTableBodyProps } from "../types.js";
+import { type IUiAsyncTableBodyProps } from "../types.js";
 
 export function UiAsyncTableBody<T extends { id: string }>({
     items,
@@ -23,7 +23,7 @@ export function UiAsyncTableBody<T extends { id: string }>({
     isLargeRow,
     shouldLoadNextPage,
     renderItem,
-}: UiAsyncTableBodyProps<T>) {
+}: IUiAsyncTableBodyProps<T>) {
     const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow ?? false);
 
     const { handleKeyDown, focusedRowIndex, focusedColumnIndex, focusedItemRef } =

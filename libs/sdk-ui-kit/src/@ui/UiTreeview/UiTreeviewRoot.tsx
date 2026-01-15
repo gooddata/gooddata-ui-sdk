@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 
@@ -9,7 +9,7 @@ import { makeItemId } from "./utils.js";
 /**
  * @internal
  */
-interface UiTreeviewRootProps {
+interface IUiTreeviewRootProps {
     children?: ReactNode;
     path: number[];
     handleKeyDown: (event: KeyboardEvent) => void;
@@ -28,7 +28,7 @@ export function UiTreeviewRoot({
     path,
     style,
     dataTestId,
-}: UiTreeviewRootProps) {
+}: IUiTreeviewRootProps) {
     const activeDescendant = path.length > 0 ? makeItemId(ariaAttributes.id, path) : undefined;
     return (
         <div

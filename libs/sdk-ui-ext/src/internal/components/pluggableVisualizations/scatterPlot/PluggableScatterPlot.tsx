@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 
@@ -91,7 +91,11 @@ export class PluggableScatterPlot extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = removeSort(newReferencePoint);
-        newReferencePoint = sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters);
+        newReferencePoint = sanitizeFilters(
+            newReferencePoint,
+            this.featureFlags?.enableImprovedAdFilters,
+            clonedReferencePoint,
+        );
         newReferencePoint = disableClusteringForMissingViewBy(newReferencePoint);
         newReferencePoint = disableClusteringIfFewerThanTwoMeasures(newReferencePoint);
 

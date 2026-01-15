@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext, useEffect, useState } from "react";
 
@@ -52,9 +52,9 @@ export const ZoomContext = createContext<IZoomContextState>(defaultZoomState);
  * @internal
  * Props for the ZoomProvider component
  */
-export interface ZoomProviderProps {
+export type ZoomProviderProps = {
     children: ReactNode;
-}
+};
 
 /**
  * @internal

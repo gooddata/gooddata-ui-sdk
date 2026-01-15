@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ReactElement, useCallback, useState } from "react";
 
@@ -79,7 +79,7 @@ export function ShowAsTableButton({
                         aria-label={title}
                     >
                         <div className={asTableIconClasses}>
-                            <UiIcon ariaHidden size={18} type={iconType} color="complementary-7" />
+                            <UiIcon size={18} type={iconType} color="complementary-7" />
                         </div>
                     </div>
                 }

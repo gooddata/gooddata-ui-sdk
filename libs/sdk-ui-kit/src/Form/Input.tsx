@@ -1,8 +1,8 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ChangeEvent, PureComponent } from "react";
 
-import { InputPure, type InputPureProps } from "./InputPure.js";
+import { type IInputPureProps, InputPure } from "./InputPure.js";
 
 const isValidNumber = (value: string | number) => typeof value === "number" && !Number.isNaN(value);
 const isNumberOrString = (value: string | number) =>
@@ -12,20 +12,20 @@ const toValidValue = (value: string | number) => (isNumberOrString(value) ? valu
 /**
  * @internal
  */
-export interface InputState {
+export interface IInputState {
     value: string | number;
 }
 
 /**
  * @internal
  */
-export class Input extends PureComponent<InputPureProps, InputState> {
+export class Input extends PureComponent<IInputPureProps, IInputState> {
     static defaultProps = {
         ...InputPure.defaultProps,
     };
     public inputNodeRef: InputPure | null = null;
 
-    constructor(props: InputPureProps) {
+    constructor(props: IInputPureProps) {
         super(props);
         const { value } = props;
 
@@ -34,7 +34,7 @@ export class Input extends PureComponent<InputPureProps, InputState> {
         };
     }
 
-    override UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void {
+    override UNSAFE_componentWillReceiveProps(nextProps: IInputPureProps): void {
         const validValue = toValidValue(nextProps.value ?? "");
         if (this.props.value !== validValue) {
             this.valueChanged(validValue);

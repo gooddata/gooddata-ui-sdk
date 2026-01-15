@@ -1,13 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IAccessibilityConfigBase } from "../../../typings/accessibility.js";
-import { UiPopover, type UiPopoverProps } from "../UiPopover.js";
+import { type IUiPopoverProps, UiPopover } from "../UiPopover.js";
 
 describe("UiPopover", () => {
-    const renderPopover = (props: Partial<UiPopoverProps> = {}) => {
+    const renderPopover = (props: Partial<IUiPopoverProps> = {}) => {
         const defaultAriaAttributes: IAccessibilityConfigBase = {};
 
         return render(

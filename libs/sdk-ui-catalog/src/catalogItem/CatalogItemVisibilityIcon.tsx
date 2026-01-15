@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ComponentProps, memo } from "react";
 
@@ -24,15 +24,7 @@ export function CatalogItemVisibilityIcon({ intl, item, ...htmlProps }: Props) {
                 arrowPlacement="top"
                 optimalPlacement
                 triggerBy={["hover", "focus"]}
-                anchor={
-                    <UiIcon
-                        type="hiddenForAi"
-                        color="complementary-6"
-                        size={14}
-                        backgroundSize={26}
-                        ariaHidden
-                    />
-                }
+                anchor={<UiIcon type="hiddenForAi" color="complementary-6" size={14} backgroundSize={26} />}
                 content={intl.formatMessage({ id: "analyticsCatalog.column.isHidden.icon.tooltip" })}
                 width={255}
             />

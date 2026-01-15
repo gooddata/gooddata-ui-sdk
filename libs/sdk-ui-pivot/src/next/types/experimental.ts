@@ -5,7 +5,7 @@
  *
  * @public
  */
-export interface PivotTableNextExperimentalConfig {
+export type PivotTableNextExperimentalConfig = {
     /**
      * Enable automatic reset of column sizing when container width changes or column structure changes.
      * This fixes issues where tables with growToFit don't expand to full width after tab switching.
@@ -20,4 +20,4 @@ export interface PivotTableNextExperimentalConfig {
      * Default: true
      */
     enablePivotTablePagination?: boolean;
-}
+};

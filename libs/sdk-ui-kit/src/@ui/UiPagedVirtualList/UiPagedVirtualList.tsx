@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -28,14 +28,14 @@ const { b, e } = bem("gd-ui-kit-paged-virtual-list");
 /**
  * @internal
  */
-export interface UiPagedVirtualListSkeletonItemProps {
+export interface IUiPagedVirtualListSkeletonItemProps {
     itemHeight: number;
 }
 
 /**
  * @internal
  */
-export interface UiPagedVirtualListProps<T> {
+export interface IUiPagedVirtualListProps<T> {
     maxHeight: number;
     items?: T[];
     itemHeight: number;
@@ -66,7 +66,7 @@ export interface UiPagedVirtualListProps<T> {
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
     children: (item: T, focusedIndex?: number) => ReactNode;
     scrollbarHoverEffect?: boolean;
-    SkeletonItem?: ComponentType<UiPagedVirtualListSkeletonItemProps>;
+    SkeletonItem?: ComponentType<IUiPagedVirtualListSkeletonItemProps>;
     representAs?: "grid" | "listbox";
     listboxProps?: Record<string, any>;
     // keyboard and focus management
@@ -84,7 +84,7 @@ export interface IUiPagedVirtualListImperativeHandle<T> {
 }
 
 function UiPagedVirtualListNotWrapped<T>(
-    props: UiPagedVirtualListProps<T>,
+    props: IUiPagedVirtualListProps<T>,
     ref: Ref<IUiPagedVirtualListImperativeHandle<T>>,
 ) {
     const {
@@ -235,7 +235,7 @@ function useVirtualList<T>({
     scrollToItemKeyExtractor,
     scrollToIndex,
     shouldLoadNextPage: shouldLoadNextPageProps,
-}: UiPagedVirtualListProps<T>) {
+}: IUiPagedVirtualListProps<T>) {
     const defaultShouldLoadNextPage = useCallback(
         (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) =>
             lastItemIndex >= itemsCount - 1 - skeletonItemsCount,

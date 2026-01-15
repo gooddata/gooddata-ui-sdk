@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -9,7 +9,7 @@ import { type IAlignPoint } from "../typings/positioning.js";
 
 const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "br tr" }];
 
-interface ChartSortingDropdownBodyProps {
+interface IChartSortingDropdownBodyProps {
     buttonNode?: HTMLElement | string;
     onClose?: () => void;
     children?: ReactNode;
@@ -18,7 +18,7 @@ interface ChartSortingDropdownBodyProps {
 /**
  * @internal
  */
-export function ChartSortingDropdownBody({ children, buttonNode, onClose }: ChartSortingDropdownBodyProps) {
+export function ChartSortingDropdownBody({ children, buttonNode, onClose }: IChartSortingDropdownBodyProps) {
     const getDialogClasses = () => {
         return cx([
             "overlay",

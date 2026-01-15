@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { type UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
+import { type IUiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import { useAutomationActions } from "./actions/useAutomationActions.js";
 import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js";
@@ -65,7 +65,7 @@ export const useAutomationsState = ({
         bulkPauseAutomations,
         bulkResumeAutomations,
     } = useAutomationActions(type, scope);
-    const availableBulkActions: UiAsyncTableBulkAction[] | undefined = useAutomationBulkActions({
+    const availableBulkActions: IUiAsyncTableBulkAction[] | undefined = useAutomationBulkActions({
         selected: selectedAutomations,
         automationsType: type,
         enabled: enableBulkActions,

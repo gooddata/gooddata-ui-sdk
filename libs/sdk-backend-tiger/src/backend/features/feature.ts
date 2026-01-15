@@ -816,13 +816,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDashboardTabs,
-            "enableDashboardTabs",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDashboardTabs,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableEmptyDateValuesFilter,
             "enableEmptyDateValuesFilter",
             "BOOLEAN",

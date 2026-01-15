@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -89,7 +89,7 @@ describe("Styling editor dialog", () => {
         expect(saveButton).toHaveClass("disabled");
     });
 
-    it("should disable save if no Name or Definition is provided", async () => {
+    it("should disable save if no Name or Definition is provided", () => {
         renderEditor({ stylingItem: undefined });
         const textarea = screen.getByLabelText("Styling item definition");
         const saveButton = screen.getByText("Save").closest("button");

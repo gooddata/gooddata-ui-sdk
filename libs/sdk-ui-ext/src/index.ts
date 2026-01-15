@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 /**
  * This package contains various extensions on top of the stable components included in GoodData.UI.
@@ -121,6 +121,7 @@ export * from "./internal/components/dialogs/userManagementDialogs/index.js";
 export * from "./internal/components/attributeHierarchies/index.js";
 
 export * from "./internal/components/pluggableVisualizations/alerts.js";
+export * from "./internal/components/pluggableVisualizations/keyDriverAnalysis.js";
 
 export { NotificationsPanel } from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
 export type {

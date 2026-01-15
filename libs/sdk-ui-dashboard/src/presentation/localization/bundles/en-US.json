@@ -395,6 +395,10 @@
         "text": "More details",
         "crowdinContext": "Label for viewing more details about drill interactions"
     },
+    "drill_modal_picker.drill_to_url.disabled.missing_attributes": {
+        "text": "Drill action unavailable. Missing attributes: {attributes}",
+        "crowdinContext": "Tooltip text shown when a drill to URL action is disabled because required attribute values are not present in the clicked data point. The {attributes} placeholder contains a comma-separated list of missing attribute names. Example output: 'Drill unavailable. Missing attributes: City, Region'"
+    },
     "drill_modal_picker.label": {
         "text": "Choose drill action",
         "crowdinContext": "Instruction text in the drill modal for selecting a drill action"
@@ -494,6 +498,14 @@
     "dialogs.alert.title.placeholder": {
         "text": "Alert name",
         "crowdinContext": "Placeholder for alert title input"
+    },
+    "dialogs.automation.icon.ariaLabel.sourceVisualization": {
+        "text": "Source visualization",
+        "crowdinContext": "Accessible name for the icon representing the source visualization in scheduling/alerting dialog headers"
+    },
+    "dialogs.automation.icon.ariaLabel.sourceDashboard": {
+        "text": "Source dashboard",
+        "crowdinContext": "Accessible name for the icon representing the source dashboard in scheduling dialog headers"
     },
     "dialogs.alert.accessibility.label.title": {
         "text": "Alert name",

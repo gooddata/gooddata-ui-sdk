@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IClusteringConfig,
@@ -119,6 +119,7 @@ export class DataViewFacade {
      * @returns context metadata attached to the underlying execution
      * @public
      */
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     public context(): IExecutionContext | undefined {
         return this.dataView.context;
     }

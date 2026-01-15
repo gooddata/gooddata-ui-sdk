@@ -30,8 +30,8 @@
         "validate": "npm run eslint && npm run prettier-check"
     },
     "devDependencies": {
-        "@codemirror/state": "~6.5.2",
-        "@codemirror/view": "~6.38.5",
+        "@codemirror/state": "~6.5.3",
+        "@codemirror/view": "~6.39.10",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/sdk-backend-base": "workspace:*",

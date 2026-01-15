@@ -997,6 +997,13 @@ export interface IWidgetBaseBuilder<T extends IWidget> extends IBuilder<T> {
     uri(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
 }
 
+// @beta
+export interface IWorkspaceSettingsConfiguration {
+    commonSettingsWrapper?: CommonSettingsWrapper;
+    currentUserSettingsWrapper?: CurrentUserSettingsWrapper;
+    settingsWrapper?: SettingsWrapper;
+}
+
 // @alpha (undocumented)
 export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements IKpiWidgetBuilder {
     constructor(item: IKpiWidget, validator?: ((item: Partial<IKpiWidget>) => void) | undefined);
@@ -1259,7 +1266,7 @@ export class WidgetBaseBuilder<T extends IWidget> extends Builder<T> implements 
 export function withCaching(realBackend: IAnalyticalBackend, config: CachingConfiguration): IAnalyticalBackend;
 
 // @beta
-export function withCustomWorkspaceSettings(realBackend: IAnalyticalBackend, config: WorkspaceSettingsConfiguration): IAnalyticalBackend;
+export function withCustomWorkspaceSettings(realBackend: IAnalyticalBackend, config: IWorkspaceSettingsConfiguration): IAnalyticalBackend;
 
 // @beta
 export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
@@ -1269,13 +1276,6 @@ export function withNormalization(realBackend: IAnalyticalBackend, config?: Norm
 
 // @alpha (undocumented)
 export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
-
-// @beta
-export interface WorkspaceSettingsConfiguration {
-    commonSettingsWrapper?: CommonSettingsWrapper;
-    currentUserSettingsWrapper?: CurrentUserSettingsWrapper;
-    settingsWrapper?: SettingsWrapper;
-}
 
 // @alpha (undocumented)
 export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService, workspace: string) => IWorkspaceSettingsService;

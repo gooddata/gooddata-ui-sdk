@@ -5,7 +5,7 @@
  *
  * @public
  */
-export interface PivotTableNextDrillMenuPositioningConfig {
+export type PivotTableNextDrillMenuPositioningConfig = {
     /**
      * Enables positioning of drill menu at the cursor click point (instead of default positioning).
      *
@@ -13,4 +13,4 @@ export interface PivotTableNextDrillMenuPositioningConfig {
      * Feature flag. Default: false.
      */
     enableDrillMenuPositioningAtCursor?: boolean;
-}
+};

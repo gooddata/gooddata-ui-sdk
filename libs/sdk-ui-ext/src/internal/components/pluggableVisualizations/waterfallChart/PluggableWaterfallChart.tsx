@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty, isEqual, set } from "lodash-es";
 
@@ -177,7 +177,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         newReferencePoint = setWaterfallChartUiConfig(newReferencePoint, this.intl, this.type);
 
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
         );
     }
 

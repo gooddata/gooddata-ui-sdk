@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, compact, isEmpty, omitBy, set, tail } from "lodash-es";
 
@@ -158,7 +158,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.referencePoint = newReferencePoint;
 
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(
+                newReferencePoint,
+                this.featureFlags?.enableImprovedAdFilters,
+                clonedReferencePoint,
+            ),
         );
     }
 

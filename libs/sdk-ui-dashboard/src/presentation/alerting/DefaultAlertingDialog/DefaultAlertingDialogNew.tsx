@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
@@ -254,9 +254,20 @@ export function AlertingDialogRenderer({
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
         return {
             secondaryTitle: getWidgetTitle(widget),
-            secondaryTitleIcon: <UiIcon type="visualization" size={16} color="complementary-6" />,
+            secondaryTitleIcon: (
+                <UiIcon
+                    type="visualization"
+                    size={16}
+                    color="complementary-6"
+                    accessibilityConfig={{
+                        ariaLabel: intl.formatMessage({
+                            id: "dialogs.automation.icon.ariaLabel.sourceVisualization",
+                        }),
+                    }}
+                />
+            ),
         };
-    }, [widget]);
+    }, [widget, intl]);
 
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
         return (

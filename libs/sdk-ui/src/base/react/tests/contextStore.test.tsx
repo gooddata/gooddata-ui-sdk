@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -8,7 +8,7 @@ import { describe, expect, it, vi } from "vitest";
 import { createContextStore } from "../contextStore.js";
 
 describe("contextStore", () => {
-    interface TestState {
+    interface ITestState {
         count: number;
         name: string;
         callback: () => void;
@@ -18,7 +18,7 @@ describe("contextStore", () => {
         };
     }
 
-    const initialState: TestState = {
+    const initialState: ITestState = {
         count: 0,
         name: "test",
         callback: vi.fn(),
@@ -29,7 +29,7 @@ describe("contextStore", () => {
     };
 
     it("should create a context store with Provider and hooks", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         expect(TestStore).toBeDefined();
         expect(typeof TestStore).toBe("function"); // Provider is a function component
@@ -39,7 +39,7 @@ describe("contextStore", () => {
     });
 
     it("should provide state through Provider and useContextStore", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
@@ -51,7 +51,7 @@ describe("contextStore", () => {
     });
 
     it("should throw error when useContextStore is used outside Provider", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         // supress errors during this test
         const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
@@ -64,7 +64,7 @@ describe("contextStore", () => {
     });
 
     it("should return undefined when useContextStoreOptional is used outside Provider", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const { result } = renderHook(() => TestStore.useContextStoreOptional());
 
@@ -72,7 +72,7 @@ describe("contextStore", () => {
     });
 
     it("should select slice of state with selector", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
@@ -84,7 +84,7 @@ describe("contextStore", () => {
     });
 
     it("should select function from state with selector", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
@@ -99,7 +99,7 @@ describe("contextStore", () => {
     });
 
     it("should select nested function from state with selector", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
@@ -115,14 +115,14 @@ describe("contextStore", () => {
     });
 
     it("should update state when Provider value changes", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         function Consumer() {
             const count = TestStore.useContextStore((s) => s.count);
             return <div data-testid="consumer">{count}</div>;
         }
 
-        function TestComponent({ state }: { state: TestState }) {
+        function TestComponent({ state }: { state: ITestState }) {
             return (
                 <TestStore value={state}>
                     <Consumer />
@@ -141,7 +141,7 @@ describe("contextStore", () => {
     });
 
     it("should only rerender when selected slice changes", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
         const renderSpy = vi.fn();
 
         function TestComponent() {
@@ -150,7 +150,7 @@ describe("contextStore", () => {
             return <div data-testid="count">{count}</div>;
         }
 
-        function Wrapper({ state }: { state: TestState }) {
+        function Wrapper({ state }: { state: ITestState }) {
             return (
                 <TestStore value={state}>
                     <TestComponent />
@@ -178,7 +178,7 @@ describe("contextStore", () => {
     });
 
     it("should work with custom equality function", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
@@ -195,7 +195,7 @@ describe("contextStore", () => {
     });
 
     it("should handle function selector with equality comparison", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
         const renderSpy = vi.fn();
 
         function TestComponent() {
@@ -204,7 +204,7 @@ describe("contextStore", () => {
             return <div data-testid="callback">{typeof callback}</div>;
         }
 
-        function Wrapper({ state }: { state: TestState }) {
+        function Wrapper({ state }: { state: ITestState }) {
             return (
                 <TestStore value={state}>
                     <TestComponent />
@@ -226,7 +226,7 @@ describe("contextStore", () => {
     });
 
     it("should work with createSelector", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const countSelector = TestStore.createSelector((state) => state.count);
         const callbackSelector = TestStore.createSelector((state) => state.callback);
@@ -249,7 +249,7 @@ describe("contextStore", () => {
     });
 
     it("should handle complex function selector scenarios", () => {
-        interface ComplexState {
+        interface IComplexState {
             handlers: {
                 onClick: (id: string) => void;
                 onSubmit: (data: any) => Promise<void>;
@@ -260,7 +260,7 @@ describe("contextStore", () => {
             };
         }
 
-        const complexState: ComplexState = {
+        const complexState: IComplexState = {
             handlers: {
                 onClick: vi.fn(),
                 onSubmit: vi.fn().mockResolvedValue(undefined),
@@ -271,7 +271,7 @@ describe("contextStore", () => {
             },
         };
 
-        const ComplexStore = createContextStore<ComplexState>("ComplexStore");
+        const ComplexStore = createContextStore<IComplexState>("ComplexStore");
 
         const wrapper = ({ children }: { children: ReactNode }) => (
             <ComplexStore value={complexState}>{children}</ComplexStore>
@@ -311,7 +311,7 @@ describe("contextStore", () => {
     });
 
     it("should select multiple values using useContextStoreValues", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
@@ -325,7 +325,7 @@ describe("contextStore", () => {
     });
 
     it("should return undefined outside provider when using useContextStoreValuesOptional", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
 
         const { result } = renderHook(() => TestStore.useContextStoreValuesOptional(["count", "name"]));
 
@@ -333,7 +333,7 @@ describe("contextStore", () => {
     });
 
     it("should only rerender when any of selected keys changes (useContextStoreValues)", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
         const renderSpy = vi.fn();
 
         function TestComponent() {
@@ -342,7 +342,7 @@ describe("contextStore", () => {
             return <div data-testid="values">{`${slice.count}-${slice.name}`}</div>;
         }
 
-        function Wrapper({ state }: { state: TestState }) {
+        function Wrapper({ state }: { state: ITestState }) {
             return (
                 <TestStore value={state}>
                     <TestComponent />
@@ -368,7 +368,7 @@ describe("contextStore", () => {
     });
 
     it("should respect custom equality function in useContextStoreValues", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
         const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
         );
@@ -382,7 +382,7 @@ describe("contextStore", () => {
     });
 
     it("should update when a selected function reference changes", () => {
-        const TestStore = createContextStore<TestState>("TestStore");
+        const TestStore = createContextStore<ITestState>("TestStore");
         const renderSpy = vi.fn();
 
         function TestComponent() {
@@ -391,7 +391,7 @@ describe("contextStore", () => {
             return <div data-testid="cb">{typeof callback}</div>;
         }
 
-        function Wrapper({ state }: { state: TestState }) {
+        function Wrapper({ state }: { state: ITestState }) {
             return (
                 <TestStore value={state}>
                     <TestComponent />

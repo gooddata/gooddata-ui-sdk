@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type IAttributeOrMeasure,
     type IInsightDefinition,
@@ -101,8 +102,8 @@ function buildArithmeticMeasureTitle(
     if (isArithmeticMeasure(measure)) {
         const alias = measureAlias(measure);
         const localIdentifier = measureLocalId(measure);
-        const measureIdentifiers = measureArithmeticOperands(measure)!;
-        const operator = measureArithmeticOperator(measure)!;
+        const measureIdentifiers = measureArithmeticOperands(measure);
+        const operator = measureArithmeticOperator(measure);
 
         if (containsMeasureTitleItems(measureTitleProps, measureIdentifiers)) {
             const fullLengthTitle = titleFactory.getTitle(
@@ -141,7 +142,7 @@ function buildDerivedMeasureTitle(
         const alias = measureAlias(measure);
         const localIdentifier = measureLocalId(measure);
 
-        const masterMeasureIdentifier = measureMasterIdentifier(measure)!;
+        const masterMeasureIdentifier = measureMasterIdentifier(measure);
         if (containsMeasureTitleItem(measureTitleProps, masterMeasureIdentifier)) {
             return {
                 localIdentifier,

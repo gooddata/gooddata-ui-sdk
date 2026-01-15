@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type UiIconProps } from "@gooddata/sdk-ui-kit";
+import { type IUiIconProps } from "@gooddata/sdk-ui-kit";
 
 import {
     type AutomationColumnDefinitions,
@@ -182,7 +182,7 @@ const titleIconProps = {
     backgroundType: "fill",
 } as const;
 
-export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
+export const AUTOMATION_ICON_CONFIGS: Record<string, IUiIconProps> = {
     schedule: {
         type: "clock",
         ...titleIconProps,

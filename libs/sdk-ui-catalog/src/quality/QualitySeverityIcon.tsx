@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { SemanticQualityIssueSeverity } from "@gooddata/sdk-model";
 import { type ThemeColor, UiIcon } from "@gooddata/sdk-ui-kit";
@@ -19,7 +19,6 @@ export function QualitySeverityIcon({ severity, size, backgroundSize, background
                 size={size}
                 backgroundSize={backgroundSize}
                 backgroundColor={backgroundColor}
-                ariaHidden
             />
         );
     }
@@ -30,7 +29,6 @@ export function QualitySeverityIcon({ severity, size, backgroundSize, background
             size={size}
             backgroundSize={backgroundSize}
             backgroundColor={backgroundColor}
-            ariaHidden
         />
     );
 }

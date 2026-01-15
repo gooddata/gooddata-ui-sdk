@@ -1,13 +1,13 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Input } from "../Input.js";
-import { type InputPureProps } from "../InputPure.js";
+import { type IInputPureProps } from "../InputPure.js";
 
 describe("Input", () => {
-    function renderInput(options: Partial<InputPureProps> = {}) {
+    function renderInput(options: Partial<IInputPureProps> = {}) {
         const props = {
             onChange: vi.fn(),
             ...options,

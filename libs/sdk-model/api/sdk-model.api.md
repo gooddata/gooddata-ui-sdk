@@ -3790,7 +3790,6 @@ export interface ISettings {
     enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
-    enableDashboardTabs?: boolean;
     enableDashboardTabularExport?: boolean;
     // (undocumented)
     enableDataSection?: boolean;

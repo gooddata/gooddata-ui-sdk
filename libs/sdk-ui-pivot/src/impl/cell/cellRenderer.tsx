@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -67,7 +67,6 @@ function shouldShowAggregationsMenu(params: ICellRendererParams) {
 export function createCellRenderer(
     tableDescriptor: TableDescriptor,
 ): (params: ICellRendererParams) => ReactElement {
-    // eslint-disable-next-line react/display-name
     return (params: ICellRendererParams): ReactElement => {
         const loadingDone = params.node.id !== undefined || params.node.rowPinned === "bottom";
 

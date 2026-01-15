@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type ColDef, type Column, type GridApi } from "ag-grid-community";
 import { chunk, isEmpty, omit, omitBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
@@ -48,13 +49,13 @@ import { createColumnLocator, createTransposedColumnLocator } from "../structure
 import { type TableDescriptor } from "../structure/tableDescriptor.js";
 import {
     type AnyCol,
+    type IMixedHeadersCol,
+    type IMixedValuesCol,
+    type IScopeCol,
+    type ISeriesCol,
+    type ISliceCol,
+    type ISliceMeasureCol,
     type LeafDataCol,
-    type MixedHeadersCol,
-    type MixedValuesCol,
-    type ScopeCol,
-    type SeriesCol,
-    type SliceCol,
-    type SliceMeasureCol,
     type TransposedMeasureDataCol,
     agColId,
     isMixedValuesCol,
@@ -511,7 +512,7 @@ function getMeasureColumnWidthItemFieldAndWidth(
         return undefined;
     }
 
-    return [col as LeafDataCol, columnWidthItem.measureColumnWidthItem.width];
+    return [col, columnWidthItem.measureColumnWidthItem.width];
 }
 
 function getSliceMeasureOrMixedValuesColumnWidthItemFieldAndWidth(
@@ -531,7 +532,7 @@ function getSliceMeasureOrMixedValuesColumnWidthItemFieldAndWidth(
         ? columnWidthItem.sliceMeasureColumnWidthItem.width
         : columnWidthItem.mixedValuesColumnWidthItem.width;
 
-    return [col as TransposedMeasureDataCol, width];
+    return [col, width];
 }
 
 function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
@@ -618,7 +619,7 @@ export function updateColumnDefinitionsWithWidths(
     const leaves = tableDescriptor.zippedLeaves;
 
     const allSizableCols: Array<
-        [SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol | SeriesCol | ScopeCol, ColDef]
+        [ISliceCol | ISliceMeasureCol | IMixedHeadersCol | IMixedValuesCol | ISeriesCol | IScopeCol, ColDef]
     > = [];
     allSizableCols.push(...sliceCols);
     allSizableCols.push(...leaves);
@@ -756,7 +757,7 @@ function getAllowGrowToFitProp(allowGrowToFit: boolean | undefined): { allowGrow
     return allowGrowToFit ? { allowGrowToFit } : {};
 }
 
-interface CalculateColumnWidthsConfig {
+interface ICalculateColumnWidthsConfig {
     tableDescriptor: TableDescriptor;
     context: CanvasRenderingContext2D | null;
     columns: Column[];
@@ -821,14 +822,14 @@ export function getMaxWidthCached(
     return maxWidth === undefined || width > maxWidth ? width : undefined;
 }
 
-const shouldApplyFormatting = (col: AnyCol, config: CalculateColumnWidthsConfig) => {
+const shouldApplyFormatting = (col: AnyCol, config: ICalculateColumnWidthsConfig) => {
     const transposed = config.tableDescriptor.isTransposed();
 
     return isSeriesCol(col) || (transposed && isScopeCol(col)) || isMixedValuesCol(col);
 };
 
 function collectWidths(
-    config: CalculateColumnWidthsConfig,
+    config: ICalculateColumnWidthsConfig,
     row: IGridRow,
     column: Column,
     maxWidths: Map<string, number>,
@@ -910,13 +911,13 @@ export function getUpdatedColumnDefs(
     }, []);
 }
 
-const shouldStopCalculation = (config: CalculateColumnWidthsConfig, calculatedColumnsTotalWidth: number) =>
+const shouldStopCalculation = (config: ICalculateColumnWidthsConfig, calculatedColumnsTotalWidth: number) =>
     config.columnAutoresizeOption === "viewport" &&
     config.clientWidth &&
     calculatedColumnsTotalWidth > config.clientWidth;
 
 function calculateColumnWidths(
-    config: CalculateColumnWidthsConfig,
+    config: ICalculateColumnWidthsConfig,
     resizedColumnsStore: ResizedColumnsStore,
 ) {
     const { context, tableDescriptor } = config;
@@ -1024,7 +1025,7 @@ function getTableFonts(containerRef: HTMLDivElement): {
     return { headerFont, rowFont, subtotalFont, totalFont, subtotalColumnFont, totalColumnFont };
 }
 
-function getMeasureHeadersFont(colDef: ColDef, config: CalculateColumnWidthsConfig): string {
+function getMeasureHeadersFont(colDef: ColDef, config: ICalculateColumnWidthsConfig): string {
     if (isColumnTotal(colDef)) {
         return config.totalColumnFont;
     } else if (isColumnSubtotal(colDef)) {
@@ -1037,7 +1038,7 @@ function getMeasureHeadersFont(colDef: ColDef, config: CalculateColumnWidthsConf
 function getRowDataFont(
     colDef: ColDef,
     row: IGridRow,
-    config: CalculateColumnWidthsConfig,
+    config: ICalculateColumnWidthsConfig,
     colDesc: AnyCol,
 ): string {
     const isScopeOrMixedValuesCol = isScopeCol(colDesc) || isMixedValuesCol(colDesc);

@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -19,7 +20,7 @@ describe("withEventing backend", () => {
         const beforeExecute = vi.fn();
         const backend = withEventing(dummyBackend(), { beforeExecute });
 
-        prepareExecution(backend).execute();
+        void prepareExecution(backend).execute();
 
         expect(beforeExecute).toHaveBeenCalled();
     });

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
 import { compact, partition } from "lodash-es";
@@ -565,10 +565,13 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
                 .then((catalog) => {
                     catalog.attributes().forEach((catalogAttribute) => {
                         catalogAttribute.displayForms.forEach((displayForm) => {
-                            this.cacheAttributeByDisplayForm(displayForm.ref, catalogAttribute.attribute);
+                            void this.cacheAttributeByDisplayForm(
+                                displayForm.ref,
+                                catalogAttribute.attribute,
+                            );
                         });
                         if (catalogAttribute.dataSet) {
-                            this.cacheAttributeDataSetMeta(
+                            void this.cacheAttributeDataSetMeta(
                                 catalogAttribute.attribute.ref,
                                 catalogAttribute.dataSet,
                             );
@@ -1062,15 +1065,15 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             });
 
             if (idCacheKey) {
-                cache.set(idCacheKey, cacheItem as Promise<IAttributeDisplayFormMetadataObject>);
+                cache.set(idCacheKey, cacheItem);
             }
 
             if (uriCacheKey) {
-                cache.set(uriCacheKey, cacheItem as Promise<IAttributeDisplayFormMetadataObject>);
+                cache.set(uriCacheKey, cacheItem);
             }
         }
 
-        return cacheItem as Promise<IAttributeDisplayFormMetadataObject>;
+        return cacheItem;
     };
 
     public override getAttributeDisplayForms = async (
@@ -1152,15 +1155,15 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             });
 
             if (idCacheKey) {
-                cache.set(idCacheKey, cacheItem as Promise<IAttributeMetadataObject>);
+                cache.set(idCacheKey, cacheItem);
             }
 
             if (uriCacheKey) {
-                cache.set(uriCacheKey, cacheItem as Promise<IAttributeMetadataObject>);
+                cache.set(uriCacheKey, cacheItem);
             }
         }
 
-        return cacheItem as Promise<IAttributeMetadataObject>;
+        return cacheItem;
     };
 
     override getAttributeDatasetMeta = async (ref: ObjRef): Promise<IMetadataObject> => {
@@ -1179,11 +1182,11 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             });
 
             if (idCacheKey) {
-                cache.set(idCacheKey, cacheItem as Promise<IMetadataObject>);
+                cache.set(idCacheKey, cacheItem);
             }
         }
 
-        return cacheItem as Promise<IMetadataObject>;
+        return cacheItem;
     };
 
     override updateAttributeMeta(
@@ -1251,12 +1254,12 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         loadedFromServer.forEach((loaded) => {
             // Cache attribute by display form refs
             loaded.attribute.displayForms.forEach((displayForm) => {
-                this.cacheAttributeByDisplayForm(displayForm.ref, loaded.attribute);
+                void this.cacheAttributeByDisplayForm(displayForm.ref, loaded.attribute);
             });
 
             // Cache dataSet by attribute ref
             if (loaded.dataSet) {
-                this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet);
+                void this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet);
             }
         });
 

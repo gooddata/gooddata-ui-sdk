@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType, type FC } from "react";
 
@@ -199,14 +199,14 @@ export class DashboardLoader implements IDashboardLoader {
         return this;
     };
 
-    private resolveWorkspace = async (
+    private resolveWorkspace = (
         backend: IAnalyticalBackend,
-    ): Promise<[string | undefined, IClientWorkspaceIdentifiers | undefined]> => {
+    ): [string | undefined, IClientWorkspaceIdentifiers | undefined] => {
         if (!this.clientWorkspace) {
             return [this.baseProps.workspace, undefined];
         }
 
-        const resolvedClientWorkspace = await resolveLCMWorkspaceIdentifiers(backend, this.clientWorkspace);
+        const resolvedClientWorkspace = resolveLCMWorkspaceIdentifiers(backend, this.clientWorkspace);
         invariant(
             !isEmpty(resolvedClientWorkspace),
             "DashboardLoader was not able to resolve LCM client workspace to actual workspace.",
@@ -286,7 +286,7 @@ export class DashboardLoader implements IDashboardLoader {
 
         invariant(backend, "DashboardLoader is not configured with an instance of Analytical Backend.");
 
-        const [workspace, clientWorkspace] = await this.resolveWorkspace(backend);
+        const [workspace, clientWorkspace] = this.resolveWorkspace(backend);
         invariant(workspace, "DashboardLoader is not configured with workspace to use and loader.");
 
         // eslint-disable-next-line no-console

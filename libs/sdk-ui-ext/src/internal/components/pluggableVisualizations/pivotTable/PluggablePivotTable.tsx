@@ -320,7 +320,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         );
 
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
         );
     }
 

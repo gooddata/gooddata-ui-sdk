@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -75,7 +75,7 @@ export class DataTooLargeError extends AnalyticalBackendError {
          *
          * @alpha
          */
-        public readonly responseBody: DataTooLargeResponseBody | undefined = undefined,
+        public readonly responseBody: IDataTooLargeResponseBody | undefined = undefined,
     ) {
         super(message, AnalyticalBackendErrorTypes.DATA_TOO_LARGE, cause);
     }
@@ -86,11 +86,11 @@ export class DataTooLargeError extends AnalyticalBackendError {
  *
  * @alpha
  */
-export interface DataTooLargeResponseBody {
+export interface IDataTooLargeResponseBody {
     /**
      * Additional details about the error in a structured form.
      */
-    structuredDetail?: DataTooLargeResponseBodyStructuredDetail;
+    structuredDetail?: IDataTooLargeResponseBodyStructuredDetail;
 }
 
 /**
@@ -98,11 +98,11 @@ export interface DataTooLargeResponseBody {
  *
  * @alpha
  */
-export interface DataTooLargeResponseBodyStructuredDetail {
+export interface IDataTooLargeResponseBodyStructuredDetail {
     /**
      * Structured information about which limits were broken.
      */
-    limitBreaks?: DataTooLargeResponseBodyLimitBreak[];
+    limitBreaks?: IDataTooLargeResponseBodyLimitBreak[];
 }
 
 /**
@@ -111,7 +111,7 @@ export interface DataTooLargeResponseBodyStructuredDetail {
  * @alpha
  * @privateRemarks The generic type of the limitType property is useful when filtering the items per type.
  */
-export interface DataTooLargeResponseBodyLimitBreak<TLimitBreakType extends string = string> {
+export interface IDataTooLargeResponseBodyLimitBreak<TLimitBreakType extends string = string> {
     /**
      * Type of the limit broken.
      */

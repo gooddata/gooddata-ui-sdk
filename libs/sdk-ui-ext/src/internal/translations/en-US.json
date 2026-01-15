@@ -1131,6 +1131,14 @@
         "text": "Enable users to create scheduled exports for this visualization on dashboards.",
         "crowdinContext": "Tooltip for the checkbox that enables/disables scheduled exports configuration for particular visualization."
     },
+    "properties.interactions.kda": {
+        "text": "Key driver analysis",
+        "crowdinContext": "Label of the checkbox that enables/disables key driver analysis configuration for particular visualization."
+    },
+    "properties.interactions.kda.tooltip": {
+        "text": " Analyze what factors drive changes in a selected metric. The system identifies and ranks the key drivers by impact, helping you understand performance shifts without manual effort.",
+        "crowdinContext": "Tooltip for the checkbox that enables/disables key driver analysis configuration for particular visualization."
+    },
     "properties.comparison.title": {
         "text": "Comparison",
         "crowdinContext": "The title of comparison section"

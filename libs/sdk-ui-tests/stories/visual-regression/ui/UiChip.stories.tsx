@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { ComponentTable, UiChip, type UiChipProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, type IUiChipProps, UiChip, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -8,7 +8,7 @@ import { wrapWithTheme } from "../themeWrapper.js";
 const propCombination = propCombinationsFor({
     label: "State name: Canada, Iceland, Spain, Mexico",
     tag: "(3)",
-} as UiChipProps);
+} as IUiChipProps);
 
 const basic = propCombination("isActive", [false]);
 

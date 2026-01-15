@@ -213,8 +213,8 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     }, [shouldRestoreFocus, isEditing]);
 
     const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
-        const isSubmit = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER;
-        const isCancel = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE;
+        const isSubmit = e.keyCode === (ENUM_KEY_CODE.KEY_CODE_ENTER as number);
+        const isCancel = e.keyCode === (ENUM_KEY_CODE.KEY_CODE_ESCAPE as number);
 
         if (isSubmit || isCancel) {
             e.preventDefault();

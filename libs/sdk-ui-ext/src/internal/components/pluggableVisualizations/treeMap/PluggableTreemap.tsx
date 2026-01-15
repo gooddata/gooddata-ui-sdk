@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty, set, tail } from "lodash-es";
 
@@ -169,7 +169,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters),
+            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
         );
     }
 

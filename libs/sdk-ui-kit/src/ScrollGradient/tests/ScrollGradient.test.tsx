@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -110,7 +110,7 @@ describe("ScrollGradient", () => {
             expect(document.querySelector(".gd-gradient-wrapper")).toBeInTheDocument();
         });
 
-        it("propagate scroll handler", async () => {
+        it("propagate scroll handler", () => {
             renderScrollGradient(800, { onScroll });
             expect(onScroll).not.toHaveBeenCalled();
             fireEvent.scroll(document.querySelector(".gd-gradient-content")!, { target: { scrollY: 100 } });

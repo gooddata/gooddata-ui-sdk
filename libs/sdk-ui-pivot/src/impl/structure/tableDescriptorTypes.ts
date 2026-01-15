@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type ColDef, type ColGroupDef, type Column } from "ag-grid-community";
 
 import {
@@ -14,10 +15,10 @@ export const ColumnGroupingDescriptorId = "root";
 /**
  * Recognized col types. See the respective interfaces for addition information.
  *
- * @remarks see {@link SliceCol}
- * @remarks see {@link SeriesCol}
- * @remarks see {@link ScopeCol}
- * @remarks see {@link RootCol}
+ * @remarks see {@link ISliceCol}
+ * @remarks see {@link ISeriesCol}
+ * @remarks see {@link IScopeCol}
+ * @remarks see {@link IRootCol}
  */
 export type TableColType =
     | "sliceCol"
@@ -31,7 +32,7 @@ export type TableColType =
 /**
  * Base interface for all col types.
  */
-export interface TableCol {
+export interface ITableCol {
     readonly type: TableColType;
     readonly id: string;
 }
@@ -51,7 +52,7 @@ export interface TableCol {
  * element of attribute A1.
  *
  */
-export interface SliceCol extends TableCol {
+export interface ISliceCol extends ITableCol {
     readonly type: "sliceCol";
 
     /**
@@ -81,8 +82,8 @@ export interface SliceCol extends TableCol {
     readonly fullIndexPathToHere: number[];
 }
 
-export function isSliceCol(obj: unknown): obj is SliceCol {
-    return (obj as SliceCol)?.type === "sliceCol";
+export function isSliceCol(obj: unknown): obj is ISliceCol {
+    return (obj as ISliceCol)?.type === "sliceCol";
 }
 
 /**
@@ -100,7 +101,7 @@ export function isSliceCol(obj: unknown): obj is SliceCol {
  * element of attribute A1.
  *
  */
-export interface SliceMeasureCol extends TableCol {
+export interface ISliceMeasureCol extends ITableCol {
     readonly type: "sliceMeasureCol";
 
     /**
@@ -116,7 +117,7 @@ export interface SliceMeasureCol extends TableCol {
     readonly seriesDescriptor: DataSeriesDescriptor[];
 }
 
-export interface MixedHeadersCol extends TableCol {
+export interface IMixedHeadersCol extends ITableCol {
     readonly type: "mixedHeadersCol";
 
     /**
@@ -131,7 +132,7 @@ export interface MixedHeadersCol extends TableCol {
 }
 // TODO pivot operates with slices and series. Better name should be used than the introduction of attr/measures.
 
-export interface MixedValuesCol extends TableCol {
+export interface IMixedValuesCol extends ITableCol {
     readonly type: "mixedValuesCol";
 
     /**
@@ -157,16 +158,16 @@ export interface MixedValuesCol extends TableCol {
     readonly isSubtotal?: boolean;
 }
 
-export function isSliceMeasureCol(obj: unknown): obj is SliceMeasureCol {
-    return (obj as SliceMeasureCol)?.type === "sliceMeasureCol";
+export function isSliceMeasureCol(obj: unknown): obj is ISliceMeasureCol {
+    return (obj as ISliceMeasureCol)?.type === "sliceMeasureCol";
 }
 
-export function isMixedHeadersCol(obj: unknown): obj is MixedHeadersCol {
-    return (obj as MixedHeadersCol)?.type === "mixedHeadersCol";
+export function isMixedHeadersCol(obj: unknown): obj is IMixedHeadersCol {
+    return (obj as IMixedHeadersCol)?.type === "mixedHeadersCol";
 }
 
-export function isMixedValuesCol(obj: unknown): obj is MixedValuesCol {
-    return (obj as MixedValuesCol)?.type === "mixedValuesCol";
+export function isMixedValuesCol(obj: unknown): obj is IMixedValuesCol {
+    return (obj as IMixedValuesCol)?.type === "mixedValuesCol";
 }
 
 /**
@@ -187,7 +188,7 @@ export function isMixedValuesCol(obj: unknown): obj is MixedValuesCol {
  * If you are familiar with the DataViewFacade's data access infrastructure, then the analogy is simple: there
  * is one series col of each data series.
  */
-export interface SeriesCol extends TableCol {
+export interface ISeriesCol extends ITableCol {
     readonly type: "seriesCol";
 
     /**
@@ -206,8 +207,8 @@ export interface SeriesCol extends TableCol {
     readonly seriesDescriptor: DataSeriesDescriptor;
 }
 
-export function isSeriesCol(obj: unknown): obj is SeriesCol {
-    return (obj as SeriesCol)?.type == "seriesCol";
+export function isSeriesCol(obj: unknown): obj is ISeriesCol {
+    return (obj as ISeriesCol)?.type == "seriesCol";
 }
 
 /**
@@ -234,7 +235,7 @@ export function isSeriesCol(obj: unknown): obj is SeriesCol {
  * such tree there are there are further subtrees - one for each unique value of A2. And then in each subtree there
  * are the leaves - one for each measure.
  */
-export interface ScopeCol extends TableCol {
+export interface IScopeCol extends ITableCol {
     readonly type: "scopeCol";
 
     readonly children: DataCol[];
@@ -282,12 +283,12 @@ export interface ScopeCol extends TableCol {
     readonly measureDescriptors?: IMeasureDescriptor[];
 }
 
-export function isScopeCol(obj: unknown): obj is ScopeCol {
-    return (obj as ScopeCol)?.type === "scopeCol";
+export function isScopeCol(obj: unknown): obj is IScopeCol {
+    return (obj as IScopeCol)?.type === "scopeCol";
 }
 
 /**
- * Tests whether the provided col is a {@link ScopeCol} with no children - which implies that it is the bottom
+ * Tests whether the provided col is a {@link IScopeCol} with no children - which implies that it is the bottom
  * most group that is not linked to any measure columns, which in turn means the table is not defined with any measures.
  *
  * @param col - col to test
@@ -300,7 +301,7 @@ export function isEmptyScopeCol(col: AnyCol): boolean {
  * Appears in a table with grouped data columns. This is the root header that has all first-level
  * group headers as children.
  */
-export interface RootCol extends TableCol {
+export interface IRootCol extends ITableCol {
     readonly type: "rootCol";
     readonly id: "root";
 
@@ -309,35 +310,35 @@ export interface RootCol extends TableCol {
     readonly fullIndexPathToHere: [0];
 }
 
-export function isRootCol(obj: unknown): obj is RootCol {
-    return (obj as RootCol)?.type === "rootCol";
+export function isRootCol(obj: unknown): obj is IRootCol {
+    return (obj as IRootCol)?.type === "rootCol";
 }
 
 /**
  * Leaf data cols appear as leaf / bottom-most columns in the data part of the table. This is typically a series col,
  * however in cases of table without measures it can also be a scope col.
  */
-export type LeafDataCol = SeriesCol | ScopeCol;
+export type LeafDataCol = ISeriesCol | IScopeCol;
 
 /**
  * Represents table columns which displays names and values of metrics when is transposed to rows.
  */
-export type TransposedMeasureDataCol = SliceMeasureCol | MixedValuesCol;
+export type TransposedMeasureDataCol = ISliceMeasureCol | IMixedValuesCol;
 
 /**
  * Data col is a composite structure describing the data part of the table.
  */
-export type DataCol = RootCol | LeafDataCol;
+export type DataCol = IRootCol | LeafDataCol;
 
 /**
  * All types of slice cols.
  */
-export type AnySliceCol = SliceCol | SliceMeasureCol | MixedValuesCol;
+export type AnySliceCol = ISliceCol | ISliceMeasureCol | IMixedValuesCol;
 
 /**
  * Any table col. May be either the col describing the table slicing or col describing the data part of the table.
  */
-export type AnyCol = SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol | DataCol | ScopeCol;
+export type AnyCol = ISliceCol | ISliceMeasureCol | IMixedHeadersCol | IMixedValuesCol | DataCol | IScopeCol;
 
 /**
  * Descriptors of all table columns. The table columns are divided into two groups:
@@ -367,19 +368,19 @@ export type TableCols = {
     /**
      * All table row headers - these are derived from slicing attributes
      */
-    readonly sliceCols: SliceCol[];
+    readonly sliceCols: ISliceCol[];
 
     /**
      * Column used for metric names when table is transposed (metrics are in rows)
      */
-    readonly sliceMeasureCols: SliceMeasureCol[];
+    readonly sliceMeasureCols: ISliceMeasureCol[];
 
-    readonly mixedHeadersCols: MixedHeadersCol[];
+    readonly mixedHeadersCols: IMixedHeadersCol[];
 
     /**
      * Column with values of either elements or metrics or both mixed together
      */
-    readonly mixedValuesCols: MixedValuesCol[];
+    readonly mixedValuesCols: IMixedValuesCol[];
 
     /**
      * Root table cols.

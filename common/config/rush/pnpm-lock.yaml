@@ -11,11 +11,11 @@ importers:
   ../../examples/playground:
     devDependencies:
       '@codemirror/state':
-        specifier: ~6.5.2
-        version: 6.5.2
+        specifier: ~6.5.3
+        version: 6.5.3
       '@codemirror/view':
-        specifier: ~6.38.5
-        version: 6.38.5
+        specifier: ~6.39.10
+        version: 6.39.10
       '@gooddata/catalog-export':
         specifier: workspace:*
         version: link:../../tools/catalog-export
@@ -3210,8 +3210,8 @@ importers:
   ../../libs/sdk-ui-dashboard:
     dependencies:
       '@codemirror/language':
-        specifier: ~6.11.3
-        version: 6.11.3
+        specifier: ~6.12.1
+        version: 6.12.1
       '@evil-internetmann/react-dnd':
         specifier: 16.2.1
         version: 16.2.1(@types/node@22.18.5)(@types/react@19.1.11)(react@19.1.1)
@@ -3258,8 +3258,8 @@ importers:
         specifier: workspace:*
         version: link:../util
       '@lezer/highlight':
-        specifier: ~1.2.1
-        version: 1.2.1
+        specifier: ~1.2.3
+        version: 1.2.3
       '@react-aria/interactions':
         specifier: ^3
         version: 3.25.5(react-dom@19.1.1)(react@19.1.1)
@@ -3472,23 +3472,23 @@ importers:
   ../../libs/sdk-ui-ext:
     dependencies:
       '@codemirror/commands':
-        specifier: ~6.9.0
-        version: 6.9.0
+        specifier: ~6.10.1
+        version: 6.10.1
       '@codemirror/lang-yaml':
         specifier: ~6.1.2
         version: 6.1.2
       '@codemirror/language':
-        specifier: ~6.11.3
-        version: 6.11.3
+        specifier: ~6.12.1
+        version: 6.12.1
       '@codemirror/lint':
-        specifier: ~6.9.0
-        version: 6.9.0
+        specifier: ~6.9.2
+        version: 6.9.2
       '@codemirror/state':
-        specifier: ~6.5.2
-        version: 6.5.2
+        specifier: ~6.5.3
+        version: 6.5.3
       '@codemirror/view':
-        specifier: ~6.38.5
-        version: 6.38.5
+        specifier: ~6.39.10
+        version: 6.39.10
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../sdk-backend-base
@@ -3529,8 +3529,8 @@ importers:
         specifier: workspace:*
         version: link:../util
       '@lezer/highlight':
-        specifier: ~1.2.1
-        version: 1.2.1
+        specifier: ~1.2.3
+        version: 1.2.3
       classnames:
         specifier: ^2.3.1
         version: 2.5.1
@@ -3948,17 +3948,17 @@ importers:
   ../../libs/sdk-ui-gen-ai:
     dependencies:
       '@codemirror/autocomplete':
-        specifier: ^6.19.0
-        version: 6.19.0
+        specifier: ^6.20.0
+        version: 6.20.0
       '@codemirror/language':
-        specifier: ~6.11.3
-        version: 6.11.3
+        specifier: ~6.12.1
+        version: 6.12.1
       '@codemirror/state':
-        specifier: ~6.5.2
-        version: 6.5.2
+        specifier: ~6.5.3
+        version: 6.5.3
       '@codemirror/view':
-        specifier: ~6.38.5
-        version: 6.38.5
+        specifier: ~6.39.10
+        version: 6.39.10
       '@gooddata/api-client-tiger':
         specifier: workspace:*
         version: link:../api-client-tiger
@@ -4373,20 +4373,20 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2(react-dom@19.1.1)(react@19.1.1)
       '@codemirror/autocomplete':
-        specifier: ^6.19.0
-        version: 6.19.0
+        specifier: ^6.20.0
+        version: 6.20.0
       '@codemirror/commands':
-        specifier: ~6.9.0
-        version: 6.9.0
+        specifier: ~6.10.1
+        version: 6.10.1
       '@codemirror/language':
-        specifier: ~6.11.3
-        version: 6.11.3
+        specifier: ~6.12.1
+        version: 6.12.1
       '@codemirror/state':
-        specifier: ~6.5.2
-        version: 6.5.2
+        specifier: ~6.5.3
+        version: 6.5.3
       '@codemirror/view':
-        specifier: ~6.38.5
-        version: 6.38.5
+        specifier: ~6.39.10
+        version: 6.39.10
       '@floating-ui/dom':
         specifier: 1.6.13
         version: 1.6.13
@@ -4415,8 +4415,8 @@ importers:
         specifier: workspace:*
         version: link:../util
       '@lezer/highlight':
-        specifier: ~1.2.1
-        version: 1.2.1
+        specifier: ~1.2.3
+        version: 1.2.3
       '@tanstack/react-virtual':
         specifier: ^3.11.1
         version: 3.13.12(react-dom@19.1.1)(react@19.1.1)
@@ -7347,11 +7347,11 @@ importers:
   ../../tools/react-app-template:
     dependencies:
       '@codemirror/state':
-        specifier: ~6.5.2
-        version: 6.5.2
+        specifier: ~6.5.3
+        version: 6.5.3
       '@codemirror/view':
-        specifier: ~6.38.5
-        version: 6.38.5
+        specifier: ~6.39.10
+        version: 6.39.10
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-base
@@ -8864,64 +8864,64 @@ packages:
     resolution: {integrity: sha512-s3jaWicZd0pkP0jf5ysyHUI/RE7MHos6qlToFcGWXVp+ykHOy77OUMrfbgJ9it2C5bow7OIQwYYaHjk9XlBQ2A==}
     dev: false
 
-  /@codemirror/autocomplete@6.19.0:
-    resolution: {integrity: sha512-61Hfv3cF07XvUxNeC3E7jhG8XNi1Yom1G0lRC936oLnlF+jrbrv8rc/J98XlYzcsAoTVupfsf5fLej1aI8kyIg==}
+  /@codemirror/autocomplete@6.20.0:
+    resolution: {integrity: sha512-bOwvTOIJcG5FVo5gUUupiwYh8MioPLQ4UcqbcRf7UQ98X90tCa9E1kZ3Z7tqwpZxYyOvh1YTYbmZE9RTfTp5hg==}
     dependencies:
-      '@codemirror/language': 6.11.3
-      '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.38.5
-      '@lezer/common': 1.2.3
+      '@codemirror/language': 6.12.1
+      '@codemirror/state': 6.5.3
+      '@codemirror/view': 6.39.10
+      '@lezer/common': 1.5.0
     dev: false
 
-  /@codemirror/commands@6.9.0:
-    resolution: {integrity: sha512-454TVgjhO6cMufsyyGN70rGIfJxJEjcqjBG2x2Y03Y/+Fm99d3O/Kv1QDYWuG6hvxsgmjXmBuATikIIYvERX+w==}
+  /@codemirror/commands@6.10.1:
+    resolution: {integrity: sha512-uWDWFypNdQmz2y1LaNJzK7fL7TYKLeUAU0npEC685OKTF3KcQ2Vu3klIM78D7I6wGhktme0lh3CuQLv0ZCrD9Q==}
     dependencies:
-      '@codemirror/language': 6.11.3
-      '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.38.5
-      '@lezer/common': 1.2.3
+      '@codemirror/language': 6.12.1
+      '@codemirror/state': 6.5.3
+      '@codemirror/view': 6.39.10
+      '@lezer/common': 1.5.0
     dev: false
 
   /@codemirror/lang-yaml@6.1.2:
     resolution: {integrity: sha512-dxrfG8w5Ce/QbT7YID7mWZFKhdhsaTNOYjOkSIMt1qmC4VQnXSDSYVHHHn8k6kJUfIhtLo8t1JJgltlxWdsITw==}
     dependencies:
-      '@codemirror/autocomplete': 6.19.0
-      '@codemirror/language': 6.11.3
-      '@codemirror/state': 6.5.2
-      '@lezer/common': 1.2.3
-      '@lezer/highlight': 1.2.1
+      '@codemirror/autocomplete': 6.20.0
+      '@codemirror/language': 6.12.1
+      '@codemirror/state': 6.5.3
+      '@lezer/common': 1.5.0
+      '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.2
       '@lezer/yaml': 1.0.3
     dev: false
 
-  /@codemirror/language@6.11.3:
-    resolution: {integrity: sha512-9HBM2XnwDj7fnu0551HkGdrUrrqmYq/WC5iv6nbY2WdicXdGbhR/gfbZOH73Aqj4351alY1+aoG9rCNfiwS1RA==}
+  /@codemirror/language@6.12.1:
+    resolution: {integrity: sha512-Fa6xkSiuGKc8XC8Cn96T+TQHYj4ZZ7RdFmXA3i9xe/3hLHfwPZdM+dqfX0Cp0zQklBKhVD8Yzc8LS45rkqcwpQ==}
     dependencies:
-      '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.38.5
-      '@lezer/common': 1.2.3
-      '@lezer/highlight': 1.2.1
+      '@codemirror/state': 6.5.3
+      '@codemirror/view': 6.39.10
+      '@lezer/common': 1.5.0
+      '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.2
       style-mod: 4.1.2
     dev: false
 
-  /@codemirror/lint@6.9.0:
-    resolution: {integrity: sha512-wZxW+9XDytH3SKvS8cQzMyQCaaazH8XL1EMHleHe00wVzsv7NBQKVW2yzEHrRhmM7ZOhVdItPbvlRBvMp9ej7A==}
+  /@codemirror/lint@6.9.2:
+    resolution: {integrity: sha512-sv3DylBiIyi+xKwRCJAAsBZZZWo82shJ/RTMymLabAdtbkV5cSKwWDeCgtUq3v8flTaXS2y1kKkICuRYtUswyQ==}
     dependencies:
-      '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.38.5
+      '@codemirror/state': 6.5.3
+      '@codemirror/view': 6.39.10
       crelt: 1.0.6
     dev: false
 
-  /@codemirror/state@6.5.2:
-    resolution: {integrity: sha512-FVqsPqtPWKVVL3dPSxy8wEF/ymIEuVzF1PK3VbUgrxXpJUSHQWWZz4JMToquRxnkw+36LTamCZG2iua2Ptq0fA==}
+  /@codemirror/state@6.5.3:
+    resolution: {integrity: sha512-MerMzJzlXogk2fxWFU1nKp36bY5orBG59HnPiz0G9nLRebWa0zXuv2siH6PLIHBvv5TH8CkQRqjBs0MlxCZu+A==}
     dependencies:
       '@marijn/find-cluster-break': 1.0.2
 
-  /@codemirror/view@6.38.5:
-    resolution: {integrity: sha512-SFVsNAgsAoou+BjRewMqN+m9jaztB9wCWN9RSRgePqUbq8UVlvJfku5zB2KVhLPgH/h0RLk38tvd4tGeAhygnw==}
+  /@codemirror/view@6.39.10:
+    resolution: {integrity: sha512-QfT/PXhiiP76PxMnX0RQVPDQrqfRt9wr9QhInNHnEUu4PWoNS8QwwcIDEneXFChJv22y+Yu/Cz5lFMTPz+h16w==}
     dependencies:
-      '@codemirror/state': 6.5.2
+      '@codemirror/state': 6.5.3
       crelt: 1.0.6
       style-mod: 4.1.2
       w3c-keyname: 2.2.8
@@ -10121,27 +10121,27 @@ packages:
   /@leichtgewicht/ip-codec@2.0.5:
     resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
 
-  /@lezer/common@1.2.3:
-    resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
+  /@lezer/common@1.5.0:
+    resolution: {integrity: sha512-PNGcolp9hr4PJdXR4ix7XtixDrClScvtSCYW3rQG106oVMOOI+jFb+0+J3mbeL/53g1Zd6s0kJzaw6Ri68GmAA==}
     dev: false
 
-  /@lezer/highlight@1.2.1:
-    resolution: {integrity: sha512-Z5duk4RN/3zuVO7Jq0pGLJ3qynpxUVsh7IbUbGj88+uV2ApSAn6kWg2au3iJb+0Zi7kKtqffIESgNcRXWZWmSA==}
+  /@lezer/highlight@1.2.3:
+    resolution: {integrity: sha512-qXdH7UqTvGfdVBINrgKhDsVTJTxactNNxLk7+UMwZhU13lMHaOBlJe9Vqp907ya56Y3+ed2tlqzys7jDkTmW0g==}
     dependencies:
-      '@lezer/common': 1.2.3
+      '@lezer/common': 1.5.0
     dev: false
 
   /@lezer/lr@1.4.2:
     resolution: {integrity: sha512-pu0K1jCIdnQ12aWNaAVU5bzi7Bd1w54J3ECgANPmYLtQKP0HBj2cE/5coBD66MT10xbtIuUr7tg0Shbsvk0mDA==}
     dependencies:
-      '@lezer/common': 1.2.3
+      '@lezer/common': 1.5.0
     dev: false
 
   /@lezer/yaml@1.0.3:
     resolution: {integrity: sha512-GuBLekbw9jDBDhGur82nuwkxKQ+a3W5H0GfaAthDXcAu+XdpS43VlnxA9E9hllkpSP5ellRDKjLLj7Lu9Wr6xA==}
     dependencies:
-      '@lezer/common': 1.2.3
-      '@lezer/highlight': 1.2.1
+      '@lezer/common': 1.5.0
+      '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.2
     dev: false
 

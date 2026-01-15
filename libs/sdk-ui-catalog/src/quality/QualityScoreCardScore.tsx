@@ -34,7 +34,7 @@ export function QualityScoreCardScore({ issues, isLoading }: Props) {
             ) : (
                 <div className="gd-analytics-catalog__quality-score-card__score__item" aria-hidden="true">
                     {totalCount}
-                    <UiIcon type="checkCircle" color="success" size={14} ariaHidden />
+                    <UiIcon type="checkCircle" color="success" size={14} />
                 </div>
             )}
         </div>
