@@ -1,11 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture.js";
 import {
     EventBus,
-    type PackagesRebuilt,
+    type IPackagesRebuilt,
     packagesChanged,
     sourceInitialized,
     targetSelected,
@@ -32,7 +32,7 @@ describe("BuildScheduler", () => {
             packagesChanged([{ packageName: "@gooddata/sdk-ui-ext", files: [], independent: false }]),
         );
 
-        const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as PackagesRebuilt;
+        const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as IPackagesRebuilt;
 
         expect(packagesBuilt.body.packages).toMatchSnapshot();
     });
@@ -42,7 +42,7 @@ describe("BuildScheduler", () => {
             packagesChanged([{ packageName: "@gooddata/sdk-model", files: [], independent: false }]),
         );
 
-        const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as PackagesRebuilt;
+        const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as IPackagesRebuilt;
 
         expect(packagesBuilt.body.packages).toMatchSnapshot();
     });
@@ -52,7 +52,7 @@ describe("BuildScheduler", () => {
             packagesChanged([{ packageName: "@gooddata/sdk-model", files: [], independent: true }]),
         );
 
-        const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as PackagesRebuilt;
+        const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as IPackagesRebuilt;
 
         expect(packagesBuilt.body.packages).toMatchSnapshot();
     });

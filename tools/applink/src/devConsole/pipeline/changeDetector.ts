@@ -7,10 +7,10 @@ import Watchpack from "watchpack";
 
 import { type PackageDescriptor, type SourceDescriptor, type TargetDescriptor } from "../../base/types.js";
 import {
-    type AutobuildToggled,
     type DcEvent,
     type EventBus,
     GlobalEventBus,
+    type IAutobuildToggled,
     type IEventListener,
     type PackageChange,
     packagesChanged,
@@ -79,7 +79,7 @@ export class ChangeDetector implements IEventListener {
         }
     };
 
-    private onAutobuildToggled = (event: AutobuildToggled): void => {
+    private onAutobuildToggled = (event: IAutobuildToggled): void => {
         const { value } = event.body;
 
         this.active = value;

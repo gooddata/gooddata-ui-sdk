@@ -105,7 +105,7 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
         }
 
         return client;
-    } catch (err: Error) {
+    } catch (err: any) {
         if (askedForLogin) {
             throw err;
         }
@@ -167,7 +167,7 @@ export async function loadWorkspaceMetadataFromTiger(
     try {
         // await is important here, otherwise errors thrown from the load would not be handled by this catch block
         return await tigerLoad(client, workspaceId);
-    } catch (err: Error) {
+    } catch (err: any) {
         workspaceSpinner.stop();
 
         throw new CatalogExportError(`Unable to obtain workspace metadata. The error was: ${err}`, 1);

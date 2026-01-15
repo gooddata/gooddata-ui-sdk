@@ -38,7 +38,7 @@ export async function tigerLoad(client: ITigerClient, workspaceId: string): Prom
             insights,
             analyticalDashboards,
         };
-    } catch (err) {
+    } catch (err: any) {
         spinner.fail();
         if (err?.response?.status === 404) {
             // handle known error more gracefully to avoid general-type error messages

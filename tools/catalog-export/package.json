@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "11.16.0-alpha.6",
+    "version": "11.16.0",
     "description": "GoodData SDK Catalog Export tooling",
     "repository": {
         "type": "git",
@@ -39,7 +39,7 @@
         "test": "vitest watch",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
         "test-once": "vitest run",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check"
+        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
     "dependencies": {
         "@babel/core": "^7.23.5",

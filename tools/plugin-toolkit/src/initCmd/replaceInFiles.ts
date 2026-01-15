@@ -14,7 +14,7 @@ type FileReplacements = {
 
 type FileReplacementProcessor = (rep: FileReplacements) => Promise<void>;
 
-function collectFileReplacements(currentPath: string, spec: FileReplacementSpec): FileReplacements[] {
+function collectFileReplacements(currentPath: string, spec: IFileReplacementSpec): FileReplacements[] {
     return Object.entries(spec).flatMap(([key, value]) => {
         const nextPath = path.join(currentPath, key);
 

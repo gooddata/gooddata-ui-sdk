@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import blessed from "blessed";
 import { intersection, max } from "lodash-es";
@@ -12,18 +12,18 @@ import {
 } from "../../base/dependencyGraph.js";
 import { type DependencyGraph, type SourceDescriptor, type TargetDescriptor } from "../../base/types.js";
 import {
-    type BuildFinished,
-    type BuildRequested,
-    type BuildScheduled,
-    type BuildStarted,
     type DcEvent,
     type EventBus,
     GlobalEventBus,
+    type IBuildFinished,
+    type IBuildRequested,
+    type IBuildScheduled,
+    type IBuildStarted,
     type IEventListener,
-    type PackagesChanged,
-    type PublishFinished,
-    type SourceInitialized,
-    type TargetSelected,
+    type IPackagesChanged,
+    type IPublishFinished,
+    type ISourceInitialized,
+    type ITargetSelected,
     buildOutputRequested,
     packagesSelected,
 } from "../events.js";
@@ -171,12 +171,12 @@ export class PackageList extends AppPanel implements IEventListener {
     // Event handlers
     //
 
-    private onSourceInitialized = (event: SourceInitialized): void => {
+    private onSourceInitialized = (event: ISourceInitialized): void => {
         this.sourceDescriptor = event.body.sourceDescriptor;
         this.dependencyGraph = this.sourceDescriptor.dependencyGraph;
     };
 
-    private onTargetSelected = (event: TargetSelected): void => {
+    private onTargetSelected = (event: ITargetSelected): void => {
         this.targetDescriptor = event.body.targetDescriptor;
 
         const packageScope = this.targetDescriptor.dependencies.map((pkg) => pkg.pkg.packageName);
@@ -189,7 +189,7 @@ export class PackageList extends AppPanel implements IEventListener {
     /*
      * Update all package items with 'change' build indicator.
      */
-    private onPackageChanged = (event: PackagesChanged): void => {
+    private onPackageChanged = (event: IPackagesChanged): void => {
         for (const change of event.body.changes) {
             const result = this.updateItem(change.packageName, (item) => {
                 item.buildStateIndicator = IndicatorChange;
@@ -204,7 +204,7 @@ export class PackageList extends AppPanel implements IEventListener {
     /*
      * Update all depending package items with 'dependency change' build indicator.
      */
-    private onBuildScheduled = (event: BuildScheduled): void => {
+    private onBuildScheduled = (event: IBuildScheduled): void => {
         const dependingPackages = event.body.depending.flat();
 
         for (const packageName of dependingPackages) {
@@ -220,7 +220,7 @@ export class PackageList extends AppPanel implements IEventListener {
         }
     };
 
-    private onBuildRequested = (event: BuildRequested): void => {
+    private onBuildRequested = (event: IBuildRequested): void => {
         const { packageName } = event.body;
 
         const result = this.updateItem(packageName, (item) => {
@@ -232,7 +232,7 @@ export class PackageList extends AppPanel implements IEventListener {
         }
     };
 
-    private onBuildStarted = (event: BuildStarted): void => {
+    private onBuildStarted = (event: IBuildStarted): void => {
         const { packageName } = event.body;
 
         const result = this.updateItem(packageName, (item) => {
@@ -244,7 +244,7 @@ export class PackageList extends AppPanel implements IEventListener {
         }
     };
 
-    private onBuildFinished = (event: BuildFinished): void => {
+    private onBuildFinished = (event: IBuildFinished): void => {
         const { packageName, exitCode } = event.body;
 
         const result = this.updateItem(packageName, (item) => {
@@ -261,7 +261,7 @@ export class PackageList extends AppPanel implements IEventListener {
         }
     };
 
-    private onPublishFinished = (event: PublishFinished): void => {
+    private onPublishFinished = (event: IPublishFinished): void => {
         const { packageName, exitCode } = event.body;
 
         const result = this.updateItem(packageName, (item) => {
