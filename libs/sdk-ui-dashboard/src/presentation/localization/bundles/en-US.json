@@ -396,8 +396,8 @@
         "crowdinContext": "Label for viewing more details about drill interactions"
     },
     "drill_modal_picker.drill_to_url.disabled.missing_attributes": {
-        "text": "Drill action unavailable. Missing attributes: {attributes}",
-        "crowdinContext": "Tooltip text shown when a drill to URL action is disabled because required attribute values are not present in the clicked data point. The {attributes} placeholder contains a comma-separated list of missing attribute names. Example output: 'Drill unavailable. Missing attributes: City, Region'"
+        "text": "Error: Drill unavailable. Select an item that includes: {attributes}.",
+        "crowdinContext": "Tooltip text shown when a drill to URL action is disabled because required attribute values are not present in the clicked data point. The {attributes} placeholder contains a comma-separated list of missing attribute names."
     },
     "drill_modal_picker.label": {
         "text": "Choose drill action",

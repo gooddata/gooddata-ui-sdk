@@ -11,7 +11,7 @@ export type AacAnalyticsModelExclude = "ACTIVITY_INFO";
  * permissive so we can expose the endpoint without requiring a full regenerated
  * OpenAPI client.
  */
-export interface AacAnalyticsModel {
+export interface IAacAnalyticsModel {
     metrics?: unknown[];
     visualizations?: unknown[];
     dashboards?: unknown[];
@@ -27,30 +27,30 @@ export interface AacAnalyticsModel {
  * permissive so we can expose the endpoint without requiring a full regenerated
  * OpenAPI client.
  */
-export interface AacLogicalModel {
+export interface IAacLogicalModel {
     datasets?: unknown[];
     date_datasets?: unknown[];
     [key: string]: unknown;
 }
 
-export interface AacApiGetAnalyticsModelAacRequest {
+export interface IAacApiGetAnalyticsModelAacRequest {
     readonly workspaceId: string;
     readonly exclude?: Array<AacAnalyticsModelExclude>;
 }
 
-export interface AacApiSetAnalyticsModelAacRequest {
+export interface IAacApiSetAnalyticsModelAacRequest {
     readonly workspaceId: string;
-    readonly aacAnalyticsModel: AacAnalyticsModel;
+    readonly aacAnalyticsModel: IAacAnalyticsModel;
 }
 
-export interface AacApiGetLogicalModelAacRequest {
+export interface IAacApiGetLogicalModelAacRequest {
     readonly workspaceId: string;
     readonly includeParents?: boolean;
 }
 
-export interface AacApiSetLogicalModelAacRequest {
+export interface IAacApiSetLogicalModelAacRequest {
     readonly workspaceId: string;
-    readonly aacLogicalModel: AacLogicalModel;
+    readonly aacLogicalModel: IAacLogicalModel;
 }
 
 const toPathString = (url: URL): string => `${url.pathname}${url.search}${url.hash}`;
@@ -84,18 +84,18 @@ const buildUrlWithParams = (
 export function AacApi_GetAnalyticsModelAac(
     axios: AxiosInstance,
     basePath: string,
-    requestParameters: AacApiGetAnalyticsModelAacRequest,
+    requestParameters: IAacApiGetAnalyticsModelAacRequest,
     options: AxiosRequestConfig = {},
-): AxiosPromise<AacAnalyticsModel> {
+): AxiosPromise<IAacAnalyticsModel> {
     const path = `/api/v1/aac/workspaces/${encodeURIComponent(requestParameters.workspaceId)}/analyticsModel`;
     const url = `${basePath}${buildUrlWithParams(path, { exclude: requestParameters.exclude })}`;
-    return axios.request<AacAnalyticsModel>({ ...options, method: "GET", url });
+    return axios.request<IAacAnalyticsModel>({ ...options, method: "GET", url });
 }
 
 export function AacApi_SetAnalyticsModelAac(
     axios: AxiosInstance,
     basePath: string,
-    requestParameters: AacApiSetAnalyticsModelAacRequest,
+    requestParameters: IAacApiSetAnalyticsModelAacRequest,
     options: AxiosRequestConfig = {},
 ): AxiosPromise<void> {
     const path = `/api/v1/aac/workspaces/${encodeURIComponent(requestParameters.workspaceId)}/analyticsModel`;
@@ -115,18 +115,18 @@ export function AacApi_SetAnalyticsModelAac(
 export function AacApi_GetLogicalModelAac(
     axios: AxiosInstance,
     basePath: string,
-    requestParameters: AacApiGetLogicalModelAacRequest,
+    requestParameters: IAacApiGetLogicalModelAacRequest,
     options: AxiosRequestConfig = {},
-): AxiosPromise<AacLogicalModel> {
+): AxiosPromise<IAacLogicalModel> {
     const path = `/api/v1/aac/workspaces/${encodeURIComponent(requestParameters.workspaceId)}/logicalModel`;
     const url = `${basePath}${buildUrlWithParams(path, { includeParents: requestParameters.includeParents })}`;
-    return axios.request<AacLogicalModel>({ ...options, method: "GET", url });
+    return axios.request<IAacLogicalModel>({ ...options, method: "GET", url });
 }
 
 export function AacApi_SetLogicalModelAac(
     axios: AxiosInstance,
     basePath: string,
-    requestParameters: AacApiSetLogicalModelAacRequest,
+    requestParameters: IAacApiSetLogicalModelAacRequest,
     options: AxiosRequestConfig = {},
 ): AxiosPromise<void> {
     const path = `/api/v1/aac/workspaces/${encodeURIComponent(requestParameters.workspaceId)}/logicalModel`;

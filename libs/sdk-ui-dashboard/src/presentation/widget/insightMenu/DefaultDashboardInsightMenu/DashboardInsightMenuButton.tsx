@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ReactElement, useCallback } from "react";
 
@@ -40,6 +40,7 @@ export function DashboardInsightMenuButton({
     }
 
     const widgetRefAsString = objRefToString(widgetRef(widget));
+    const menuId = `insight-menu-${widgetRefAsString}`;
 
     const optionsIconClasses = cx(
         "dash-item-action-options",
@@ -68,6 +69,9 @@ export function DashboardInsightMenuButton({
                     role="button"
                     tabIndex={0}
                     aria-label={intl.formatMessage({ id: "controlButtons.options.tooltip" })}
+                    aria-expanded={isOpen}
+                    aria-haspopup="menu"
+                    aria-controls={isOpen ? menuId : undefined}
                 >
                     <div className={optionsIconClasses} />
                 </div>

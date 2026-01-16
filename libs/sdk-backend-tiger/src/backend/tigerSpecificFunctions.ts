@@ -53,12 +53,12 @@ import {
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
-    type AacAnalyticsModel,
     AacApi_GetAnalyticsModelAac,
     AacApi_GetLogicalModelAac,
     AacApi_SetAnalyticsModelAac,
     AacApi_SetLogicalModelAac,
-    type AacLogicalModel,
+    type IAacAnalyticsModel,
+    type IAacLogicalModel,
 } from "@gooddata/api-client-tiger/endpoints/aac";
 import {
     ActionsApi_AllPlatformUsage,
@@ -461,10 +461,16 @@ export type TigerSpecificFunctions = {
     getWorkspaceAnalyticsModelAac?: (
         workspaceId: string,
         exclude?: Array<"ACTIVITY_INFO">,
-    ) => Promise<AacAnalyticsModel>;
-    setWorkspaceAnalyticsModelAac?: (workspaceId: string, analyticsModel: AacAnalyticsModel) => Promise<void>;
-    getWorkspaceLogicalModelAac?: (workspaceId: string, includeParents?: boolean) => Promise<AacLogicalModel>;
-    setWorkspaceLogicalModelAac?: (workspaceId: string, logicalModel: AacLogicalModel) => Promise<void>;
+    ) => Promise<IAacAnalyticsModel>;
+    setWorkspaceAnalyticsModelAac?: (
+        workspaceId: string,
+        analyticsModel: IAacAnalyticsModel,
+    ) => Promise<void>;
+    getWorkspaceLogicalModelAac?: (
+        workspaceId: string,
+        includeParents?: boolean,
+    ) => Promise<IAacLogicalModel>;
+    setWorkspaceLogicalModelAac?: (workspaceId: string, logicalModel: IAacLogicalModel) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;
@@ -1083,7 +1089,7 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    setWorkspaceAnalyticsModelAac: async (workspaceId: string, analyticsModel: AacAnalyticsModel) => {
+    setWorkspaceAnalyticsModelAac: async (workspaceId: string, analyticsModel: IAacAnalyticsModel) => {
         try {
             return await authApiCall(async (sdk) => {
                 await AacApi_SetAnalyticsModelAac(sdk.axios, sdk.basePath, {
@@ -1108,7 +1114,7 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    setWorkspaceLogicalModelAac: async (workspaceId: string, logicalModel: AacLogicalModel) => {
+    setWorkspaceLogicalModelAac: async (workspaceId: string, logicalModel: IAacLogicalModel) => {
         try {
             return await authApiCall(async (sdk) => {
                 await AacApi_SetLogicalModelAac(sdk.axios, sdk.basePath, {

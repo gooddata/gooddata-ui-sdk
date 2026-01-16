@@ -1974,6 +1974,8 @@ export interface IDialogBaseProps {
     CloseButton?: ComponentType<IDialogCloseButtonProps>;
     containerClassName?: string;
     // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
     displayCloseButton?: boolean;
     focusCheckFn?: (element: HTMLElement) => boolean;
     // (undocumented)

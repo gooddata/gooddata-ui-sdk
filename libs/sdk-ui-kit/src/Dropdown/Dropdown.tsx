@@ -273,6 +273,9 @@ export function Dropdown({
                 role,
                 popupId: dropdownId,
                 isExpanded: isOpen,
+                ariaExpanded: isOpen,
+                ariaHaspopup: accessibilityConfig?.popupRole ?? true,
+                ariaControls: isOpen ? dropdownId : undefined,
             },
         };
     }, [

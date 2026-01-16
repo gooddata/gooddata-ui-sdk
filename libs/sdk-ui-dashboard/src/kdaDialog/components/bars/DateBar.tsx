@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useMemo, useRef, useState } from "react";
 
@@ -21,6 +21,7 @@ export function DateBar(props: IDateBarProps) {
     const intl = useIntl();
     const ref = useRef<HTMLUListElement>(null);
     const [isActive, setIsActive] = useState(false);
+    const listboxId = "kda-dialog-date-bar";
 
     const splitter = intl.formatMessage({ id: "kdaDialog.dialog.bars.date.splitter" });
     const label = intl.formatMessage(
@@ -59,7 +60,19 @@ export function DateBar(props: IDateBarProps) {
                 anchor={
                     <UiPopover
                         disabled={!props.isAvailable}
-                        anchor={<UiChip label={label} iconBefore="date" isExpandable isActive={isActive} />}
+                        anchor={
+                            <UiChip
+                                label={label}
+                                iconBefore="date"
+                                isExpandable
+                                isActive={isActive}
+                                accessibilityConfig={{
+                                    isExpanded: isActive,
+                                    ariaHaspopup: "listbox",
+                                    popupId: listboxId,
+                                }}
+                            />
+                        }
                         title={intl.formatMessage({ id: "kdaDialog.dialog.bars.date.period.title" })}
                         initialFocus={ref as RefObject<HTMLElement>}
                         content={({ onClose }) => (
@@ -69,7 +82,7 @@ export function DateBar(props: IDateBarProps) {
                                     selectedItemId={props.options.period}
                                     items={items}
                                     ariaAttributes={{
-                                        id: "kda-dialog-date-bar",
+                                        id: listboxId,
                                     }}
                                     onClose={onClose}
                                     onSelect={(item) => {

@@ -626,13 +626,13 @@ export {
     AacApi_SetLogicalModelAac,
 } from "./endpoints/aac/index.js";
 export type {
-    AacAnalyticsModel,
+    IAacAnalyticsModel,
     AacAnalyticsModelExclude,
-    AacLogicalModel,
-    AacApiGetAnalyticsModelAacRequest,
-    AacApiGetLogicalModelAacRequest,
-    AacApiSetAnalyticsModelAacRequest,
-    AacApiSetLogicalModelAacRequest,
+    IAacLogicalModel,
+    IAacApiGetAnalyticsModelAacRequest,
+    IAacApiGetLogicalModelAacRequest,
+    IAacApiSetAnalyticsModelAacRequest,
+    IAacApiSetLogicalModelAacRequest,
 } from "./endpoints/aac/index.js";
 
 export const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);

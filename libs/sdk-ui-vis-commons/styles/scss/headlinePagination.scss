@@ -117,7 +117,7 @@ $legend-paging-background: #eee;
     &.gd-small,
     &.gd-shortened-label {
         display: flex;
-        flex-flow: column-reverse wrap;
+        flex-flow: column wrap;
 
         .headline-compare-section-item {
             width: 100%;
@@ -155,12 +155,6 @@ $legend-paging-background: #eee;
 
         .headline-tertiary-item,
         .headline-compare-item:nth-child(1) {
-            padding: 10px 0 0;
-            text-align: center;
-        }
-
-        .headline-secondary-item,
-        .headline-compare-item:nth-child(2) {
             border-left: 0;
             border-bottom: 1px dashed
                 var(
@@ -172,6 +166,13 @@ $legend-paging-background: #eee;
                 );
             padding: 0 0 10px;
             text-align: center;
+        }
+
+        .headline-secondary-item,
+        .headline-compare-item:nth-child(2) {
+            padding: 10px 0 0;
+            text-align: center;
+            border-left: none;
         }
     }
 

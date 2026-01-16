@@ -2726,26 +2726,19 @@ export interface IMeasureValueFilterRangeOptions {
 
 // @public
 export interface IMemoryItemDefinition {
-    // (undocumented)
     description: string;
-    // (undocumented)
     instruction: string;
-    // (undocumented)
     isDisabled: boolean;
-    // (undocumented)
     keywords?: string[];
-    // (undocumented)
     strategy: MemoryItemStrategy;
-    // (undocumented)
     tags?: string[];
-    // (undocumented)
     title: string;
 }
 
 // @public
 export interface IMemoryItemMetadataObject extends IMetadataObject, IMemoryItemDefinition {
-    // (undocumented)
     createdBy: IUser | undefined;
+    isLocked?: boolean;
     // (undocumented)
     type: "memoryItem";
 }

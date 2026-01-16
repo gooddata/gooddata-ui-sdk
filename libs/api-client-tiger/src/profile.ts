@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type AxiosInstance } from "axios";
 
 import { type ApiEntitlement, EntitiesApi_GetEntityUsers } from "./generated/metadata-json-api/index.js";
@@ -64,10 +65,10 @@ export interface IUserProfile {
     deployment?: string;
 }
 
-export interface ProfileApiInterface {
+export type ProfileApiInterface = {
     getCurrent: () => Promise<IUserProfile>;
     getCurrentWithDetails: () => Promise<IUserProfile>;
-}
+};
 
 export const tigerProfileClientFactory = (axios: AxiosInstance): ProfileApiInterface => {
     return {

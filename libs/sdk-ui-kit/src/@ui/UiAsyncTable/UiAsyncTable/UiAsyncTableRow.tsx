@@ -59,6 +59,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
             })}
             ref={isRowFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined}
             role="row"
+            aria-rowindex={itemIndex + 1}
             aria-labelledby={getRowLabelId(itemIndex)}
         >
             {hasCheckbox && item ? (

@@ -103,6 +103,7 @@ $content-font-size: 14px;
         display: flex;
         gap: 10px;
         align-items: center;
+        flex-wrap: wrap;
 
         &__title {
             font-size: 11px;
@@ -196,7 +197,9 @@ $content-font-size: 14px;
     }
 
     &__quality-score-card {
-        width: 280px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 280px;
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
