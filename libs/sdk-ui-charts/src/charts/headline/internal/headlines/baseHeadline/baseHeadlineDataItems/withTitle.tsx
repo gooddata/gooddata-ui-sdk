@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -12,9 +12,10 @@ export const withTitle = <T, H extends IBaseHeadlineTitle>(
     function WithTitle(props: T & IWithTitleProps<H>) {
         const { shouldHideTitle, titleRef, dataItem } = props;
         return (
-            <>
-                <BaseHeadlineDataItem {...props} />
-                {shouldHideTitle ? null : (
+            <div className="headline-item-with-title">
+                {shouldHideTitle ? (
+                    <div className="sr-only">{dataItem?.title}</div>
+                ) : (
                     <div
                         className="headline-title-wrapper s-headline-title-wrapper"
                         title={dataItem?.title}
@@ -23,7 +24,8 @@ export const withTitle = <T, H extends IBaseHeadlineTitle>(
                         {dataItem?.title}
                     </div>
                 )}
-            </>
+                <BaseHeadlineDataItem {...props} />
+            </div>
         );
     }
     return wrapDisplayName("withTitle", BaseHeadlineDataItem)(WithTitle);

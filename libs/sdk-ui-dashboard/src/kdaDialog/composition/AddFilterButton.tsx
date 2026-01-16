@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useCallback, useId, useMemo } from "react";
 
@@ -45,7 +45,7 @@ export function AddFilterButton() {
                         ref={buttonRef as RefObject<HTMLButtonElement>}
                         accessibilityConfig={{
                             ariaLabel: tooltipText,
-                            ariaControls: attributesDropdownId,
+                            ariaControls: isOpen ? attributesDropdownId : undefined,
                             ariaExpanded: isOpen,
                             ariaHaspopup: "dialog",
                         }}

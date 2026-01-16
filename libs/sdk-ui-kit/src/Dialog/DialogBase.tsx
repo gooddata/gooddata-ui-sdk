@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type KeyboardEvent, type KeyboardEventHandler, memo, useCallback } from "react";
 
@@ -33,6 +33,7 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
     onClose,
     accessibilityConfig,
     className,
+    dataTestId,
     autofocusOnOpen = true,
     refocusKey,
     children,
@@ -74,6 +75,7 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
             <div
                 id={accessibilityConfig?.dialogId}
                 onKeyDown={handleKeyDown}
+                data-testid={dataTestId}
                 role={"dialog"}
                 aria-modal={accessibilityConfig?.isModal}
                 aria-label={accessibilityConfig?.title}

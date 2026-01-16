@@ -27,7 +27,7 @@ export function QualityScoreCardScore({ issues, isLoading }: Props) {
                     return (
                         <div key={severity} className="gd-analytics-catalog__quality-score-card__score__item">
                             {issues.length}
-                            <QualitySeverityIcon severity={severity} size={14} />
+                            <QualitySeverityIcon severity={severity} count={issues.length} size={14} />
                         </div>
                     );
                 })

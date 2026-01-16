@@ -14,6 +14,7 @@ import {
     UiIcon,
     UiIconButton,
     UiListbox,
+    UiSubmenuHeader,
 } from "@gooddata/sdk-ui-kit";
 
 import { type IDateDatasetOption, type IDimensionalityItem } from "./typings.js";
@@ -244,21 +245,11 @@ export const AttributePicker = memo(function AttributePicker({
                     className="gd-mvf-attribute-picker-body s-mvf-attribute-picker"
                     data-testid="mvf-attribute-picker"
                 >
-                    <div className="gd-mvf-attribute-picker-header">
-                        <div className="gd-mvf-attribute-picker-header-title">
-                            {intl.formatMessage({ id: "mvf.attributePicker.title" })}
-                        </div>
-                        <UiIconButton
-                            icon="close"
-                            variant="bare"
-                            size="small"
-                            onClick={onCancel}
-                            accessibilityConfig={{
-                                ariaLabel: intl.formatMessage({ id: "cancel" }),
-                            }}
-                            dataTestId="s-mvf-attribute-picker-close"
-                        />
-                    </div>
+                    <UiSubmenuHeader
+                        title={intl.formatMessage({ id: "mvf.attributePicker.title" })}
+                        closeAriaLabel={intl.formatMessage({ id: "cancel" })}
+                        onClose={onCancel}
+                    />
                     <div
                         className="gd-mvf-attribute-picker-search-bar"
                         data-testid="s-mvf-attribute-picker-search-bar"

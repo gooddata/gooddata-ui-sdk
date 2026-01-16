@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ReactElement, type ReactNode, useState } from "react";
 
@@ -419,7 +419,9 @@ export function AutomationFiltersSelect({
                                                                     }}
                                                                     accessibilityConfig={{
                                                                         ariaLabel: tabTooltipText,
-                                                                        ariaControls: `${AUTOMATION_FILTERS_DIALOG_ID}-${tab.tabId}`,
+                                                                        ariaControls: isOpen
+                                                                            ? `${AUTOMATION_FILTERS_DIALOG_ID}-${tab.tabId}`
+                                                                            : undefined,
                                                                         ariaExpanded: isOpen,
                                                                         ariaHaspopup: "dialog",
                                                                     }}
@@ -534,7 +536,9 @@ export function AutomationFiltersSelect({
                                                         }}
                                                         accessibilityConfig={{
                                                             ariaLabel: tooltipText,
-                                                            ariaControls: AUTOMATION_FILTERS_DIALOG_ID,
+                                                            ariaControls: isOpen
+                                                                ? AUTOMATION_FILTERS_DIALOG_ID
+                                                                : undefined,
                                                             ariaExpanded: isOpen,
                                                             ariaHaspopup: "dialog",
                                                         }}

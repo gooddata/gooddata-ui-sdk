@@ -105,13 +105,20 @@ const getMessageExists = (state: MessagesSliceState, assistantMessageId: string)
     return !!state.messages[assistantMessageId];
 };
 
-const getUserMessageBeforeStrict = (state: MessagesSliceState, assistantMessageId: string): UserMessage => {
+/**
+ * Get the user message before the assistant message, or undefined if there isn't one.
+ * This is useful for dynamically created assistant messages that don't have a preceding user message.
+ */
+const getUserMessageBeforeSafe = (
+    state: MessagesSliceState,
+    assistantMessageId: string,
+): UserMessage | undefined => {
     const messageIndex = state.messageOrder.indexOf(assistantMessageId);
-    const message = state.messages[state.messageOrder[messageIndex - 1]];
-    if (!isUserMessage(message)) {
-        throw new Error(`Unexpected error during message evaluation.`);
+    if (messageIndex <= 0) {
+        return undefined;
     }
-    return message;
+    const message = state.messages[state.messageOrder[messageIndex - 1]];
+    return isUserMessage(message) ? message : undefined;
 };
 
 const messagesSlice = createSlice({
@@ -211,9 +218,13 @@ const messagesSlice = createSlice({
             assistantMessage.content.push(...payload.contents);
             assistantMessage.cancelled = false;
 
-            // Also update the interaction id in the relevant user message
-            const userMessage = getUserMessageBeforeStrict(state, payload.assistantMessageId);
-            userMessage.id = payload.interactionId ?? userMessage.id;
+            // Also update the interaction id in the relevant user message (if one exists)
+            // Note: dynamically created assistant messages (for multi-interaction streams)
+            // may not have a preceding user message
+            const userMessage = getUserMessageBeforeSafe(state, payload.assistantMessageId);
+            if (userMessage) {
+                userMessage.id = payload.interactionId ?? userMessage.id;
+            }
         },
         evaluateMessageCompleteAction: (
             state,

@@ -28,6 +28,9 @@ import { KdaErrorComponent, KdaErrorType } from "../components/KdaErrorComponent
 
 const overlayController = OverlayController.getInstance(KDA_DIALOG_OVERS_Z_INDEX);
 
+const KDA_DIALOG_MINIMIZED_DATA_TEST_ID = "kda-dialog-minimized";
+const KDA_DIALOG_EXPANDED_DATA_TEST_ID = "kda-dialog-expanded";
+
 /**
  * @internal
  */
@@ -65,6 +68,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                     displayCloseButton={displayCloseButton}
                     onClose={onClose}
                     CloseButton={KdaDialogControls}
+                    dataTestId={KDA_DIALOG_MINIMIZED_DATA_TEST_ID}
                 >
                     <KdaDialogFloatingStatusBar
                         titleElementId={accessibilityConfig.titleElementId}
@@ -80,6 +84,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                     displayCloseButton={displayCloseButton}
                     onClose={onClose}
                     CloseButton={KdaDialogControls}
+                    dataTestId={KDA_DIALOG_EXPANDED_DATA_TEST_ID}
                 >
                     <KdaDialogSections
                         header={

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Fix `AppHeader` responsive measurement.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.svager@gooddata.com"
+}

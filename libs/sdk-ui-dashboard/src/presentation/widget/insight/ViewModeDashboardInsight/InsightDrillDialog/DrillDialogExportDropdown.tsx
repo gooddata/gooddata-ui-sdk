@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -204,7 +204,10 @@ function DropdownTriggerButton({
             label={formatMessage({ id: "dialogs.export.submit" })}
             variant="tertiary"
             isDisabled={isDisabled}
-            accessibilityConfig={accessibilityConfig}
+            accessibilityConfig={{
+                ...accessibilityConfig,
+                ariaHaspopup: "menu",
+            }}
         />
     );
 }

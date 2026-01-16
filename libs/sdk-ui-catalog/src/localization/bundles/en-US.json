@@ -479,6 +479,14 @@
         "text": "Last checked: {date}",
         "crowdinContext": "Text that is prepended to the date of the last check of the quality score card."
     },
+    "analyticsCatalog.quality.severity.warning": {
+        "text": "{count, plural, one {warning} other {warnings}}",
+        "crowdinContext": "Semantic quality score card: Accessibility label for the warning severity icon. The number is displayed next to the icon; this label provides only the severity word. Example output: if count is 1, output is 'warning'; if count is 3, output is 'warnings'."
+    },
+    "analyticsCatalog.quality.severity.suggestion": {
+        "text": "{count, plural, one {suggestion} other {suggestions}}",
+        "crowdinContext": "Semantic quality score card: Accessibility label for the suggestion severity icon. The number is displayed next to the icon; this label provides only the severity word. Example output: if count is 1, output is 'suggestion'; if count is 3, output is 'suggestions'."
+    },
     "metricComponent.metricType.label": {
         "text": "Metric type",
         "crowdinContext": "Analytics Catalog detail drawer: Label for the dropdown that selects whether a measure is treated as currency or left unspecified."

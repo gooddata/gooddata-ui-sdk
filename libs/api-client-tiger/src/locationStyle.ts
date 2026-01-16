@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type AxiosInstance } from "axios";
 
@@ -10,12 +10,12 @@ export type LocationStyleDocument = Record<string, unknown>;
 /**
  * Interface describing available operations for location service style endpoint.
  */
-export interface LocationStyleApiInterface {
+export type LocationStyleApiInterface = {
     /**
      * Loads the default MapLibre style document configured for the organization.
      */
     getDefaultStyle(): Promise<LocationStyleDocument>;
-}
+};
 
 /**
  * Factory producing a typed client for interacting with the location style endpoint.

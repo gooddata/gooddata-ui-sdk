@@ -170,6 +170,7 @@ $dialog_width: 250px;
     width: 250px;
     height: inherit;
     font-size: 12px;
+    padding-bottom: 10px;
 
     // Prevent the item icon from shrinking when the item label is long.
     // Let the title take the truncation instead of compressing the icon.
@@ -183,26 +184,6 @@ $dialog_width: 250px;
             min-width: 0; // required for text-overflow to work in flex layouts
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-    }
-
-    .gd-mvf-attribute-picker-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex: 0 0 auto;
-        padding: 6px 6px 6px 12px;
-        background-color: variables.$is-focused-background;
-        border-bottom: 1px solid variables.$gd-border-color;
-
-        .gd-mvf-attribute-picker-header-title {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: variables.$gd-color-state-blank;
-            text-transform: uppercase;
-            font-size: 11px;
-            font-weight: bold;
         }
     }
 
@@ -261,7 +242,8 @@ $dialog_width: 250px;
     }
 
     .gd-mvf-attribute-picker-no-results {
-        padding: 10px;
+        padding: 20px 10px;
+        font-size: 14px;
         color: variables.$gd-color-state-blank;
         text-align: center;
     }

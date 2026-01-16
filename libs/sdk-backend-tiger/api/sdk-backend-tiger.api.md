@@ -4,8 +4,6 @@
 
 ```ts
 
-import { AacAnalyticsModel } from '@gooddata/api-client-tiger/endpoints/aac';
-import { AacLogicalModel } from '@gooddata/api-client-tiger/endpoints/aac';
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
 import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
@@ -24,6 +22,8 @@ import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
 import { GdStorageFile } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
+import { IAacAnalyticsModel } from '@gooddata/api-client-tiger/endpoints/aac';
+import { IAacLogicalModel } from '@gooddata/api-client-tiger/endpoints/aac';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
@@ -464,10 +464,10 @@ export type TigerSpecificFunctions = {
     getWorkspaceEntitiesDatasets?: (id: string) => Promise<WorkspaceEntitiesDatasets>;
     getEntitlements?: () => Promise<Array<IEntitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
-    getWorkspaceAnalyticsModelAac?: (workspaceId: string, exclude?: Array<"ACTIVITY_INFO">) => Promise<AacAnalyticsModel>;
-    setWorkspaceAnalyticsModelAac?: (workspaceId: string, analyticsModel: AacAnalyticsModel) => Promise<void>;
-    getWorkspaceLogicalModelAac?: (workspaceId: string, includeParents?: boolean) => Promise<AacLogicalModel>;
-    setWorkspaceLogicalModelAac?: (workspaceId: string, logicalModel: AacLogicalModel) => Promise<void>;
+    getWorkspaceAnalyticsModelAac?: (workspaceId: string, exclude?: Array<"ACTIVITY_INFO">) => Promise<IAacAnalyticsModel>;
+    setWorkspaceAnalyticsModelAac?: (workspaceId: string, analyticsModel: IAacAnalyticsModel) => Promise<void>;
+    getWorkspaceLogicalModelAac?: (workspaceId: string, includeParents?: boolean) => Promise<IAacLogicalModel>;
+    setWorkspaceLogicalModelAac?: (workspaceId: string, logicalModel: IAacLogicalModel) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;

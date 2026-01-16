@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosPromise, type GenericAbortSignal } from "axios";
 import { merge, uniqBy } from "lodash-es";
@@ -261,7 +261,7 @@ export class MetadataUtilities {
             data: pages.flatMap((page: any) => page.data) as any,
             included: uniqBy(
                 // we need the as any because the JsonApiDashboardPluginOutList does not have the "included" property
-                pages.flatMap((page: any) => (page as any).included ?? []),
+                pages.flatMap((page: any) => page.included ?? []),
                 (item: any) => `${item.id}_${item.type}`,
             ) as any,
         } as T;

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { all, call, put, select } from "redux-saga/effects";
@@ -56,18 +56,49 @@ function findMatchingVirtualFilter(
     });
 }
 
+/**
+ * Check if a virtual filter has a matching attribute in drill intersection.
+ */
+function virtualFilterHasMatchInIntersection(
+    virtualFilter: IDashboardAttributeFilter,
+    drillIntersectionFilters: ReturnType<typeof convertIntersectionToAttributeFilters>,
+    attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
+): boolean {
+    return drillIntersectionFilters.some(({ attributeFilter, primaryLabel }) => {
+        const displayForm = attributeFilter.attributeFilter.displayForm;
+        return (
+            findMatchingVirtualFilter(
+                [virtualFilter],
+                attributeFilterDisplayAsLabelMap,
+                displayForm,
+                primaryLabel,
+            ) !== undefined
+        );
+    });
+}
+
 function shouldUpdateExistingFiltering(
     crossFilteringItemByWidget: { filterLocalIdentifiers: string[] } | undefined,
-    drillIntersectionFiltersLength: number,
+    drillIntersectionFilters: ReturnType<typeof convertIntersectionToAttributeFilters>,
+    currentVirtualFilters: IDashboardAttributeFilter[],
+    attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
 ): boolean {
-    /**
-     * Intersection may have multiple lengths in pivot table so we need to make sure that when we are updating existing
-     * cross-filtering, the intersection length has to be larger or the same than the current virtual filters length.
-     * Otherwise we would want the cross-filtering to be reset together with all virtual filters.
-     */
-    return (
-        !isEmpty(crossFilteringItemByWidget) &&
-        crossFilteringItemByWidget!.filterLocalIdentifiers.length <= drillIntersectionFiltersLength
+    if (isEmpty(crossFilteringItemByWidget)) {
+        return false;
+    }
+
+    // Intersection may have multiple lengths in pivot table so we need to make sure that when we are updating existing
+    // cross-filtering, the intersection length has to be larger or the same than the current virtual filters length.
+    // Otherwise we would want the cross-filtering to be reset together with all virtual filters.
+    if (crossFilteringItemByWidget!.filterLocalIdentifiers.length > drillIntersectionFilters.length) {
+        return false;
+    }
+
+    // Only update if every existing filter has a matching attribute in the new intersection.
+    // This prevents filter accumulation when clicking on different structures (e.g., different geo chart layers
+    // with different attributes) while still allowing updates when clicking on the same structure with different values.
+    return currentVirtualFilters.every((vf) =>
+        virtualFilterHasMatchInIntersection(vf, drillIntersectionFilters, attributeFilterDisplayAsLabelMap),
     );
 }
 
@@ -134,7 +165,9 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
 
     const shouldUpdateExisting = shouldUpdateExistingFiltering(
         crossFilteringItemByWidget,
-        drillIntersectionFilters.length,
+        drillIntersectionFilters,
+        currentVirtualFilters,
+        attributeFilterDisplayAsLabelMap,
     );
 
     const virtualFilters = drillIntersectionFilters.map((drillFilterData, i) => {

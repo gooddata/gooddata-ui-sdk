@@ -158,6 +158,7 @@ function UiPagedVirtualListNotWrapped<T>(
                     onKeyDown={
                         tabIndex < 0 ? undefined : (customKeyboardNavigationHandler ?? onKeyboardNavigation)
                     }
+                    role={representAs === "grid" ? "rowgroup" : undefined}
                     {...listboxProps}
                 >
                     {virtualItems.map((virtualRow) => {

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type AriaAttributes, type MouseEvent, type MutableRefObject, type ReactNode } from "react";
 
@@ -55,6 +55,7 @@ export function DropdownButton({
 }: IDropdownButtonProps) {
     const { ariaLabel, ariaLabelledBy, ariaDescribedBy, popupType, role, ariaExpanded, ariaControls } =
         accessibilityConfig ?? {};
+    const effectiveAriaExpanded = ariaExpanded ?? isOpen ?? false;
 
     const buttonClasses = cx(
         "gd-button-primary",
@@ -76,17 +77,16 @@ export function DropdownButton({
                   popupId: dropdownId,
                   ariaLabel,
                   ariaLabelledBy,
-                  ariaExpanded,
+                  ariaExpanded: effectiveAriaExpanded,
                   ariaDescribedBy,
-                  ariaControls: ariaControls ?? dropdownId,
+                  ariaControls: ariaControls ?? (isOpen ? dropdownId : undefined),
                   role: role ?? "combobox",
                   popupType,
               }
             : {
                   ariaLabel,
                   ariaLabelledBy,
-                  ariaExpanded,
-                  ariaControls,
+                  ariaDescribedBy,
                   role: role ?? "combobox",
               }
     ) satisfies IButtonAccessibilityConfig;

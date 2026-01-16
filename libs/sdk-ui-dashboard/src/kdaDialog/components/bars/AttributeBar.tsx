@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MutableRefObject, useCallback, useId } from "react";
 
@@ -166,6 +166,8 @@ function KdaAttributeFilterDropdownButtonComponent(
                     }}
                     accessibilityConfig={{
                         isExpanded: props.isOpen,
+                        popupId: props.dropdownId,
+                        popupType: "dialog",
                         deleteAriaLabel: props.deleteAriaLabel,
                         ariaDescribedBy: attributeFilterTooltipId,
                     }}

@@ -183,6 +183,7 @@ export function CatalogDetailContent({
                                 <UiButton
                                     label={intl.formatMessage({ id: "analyticsCatalog.catalogItem.open" })}
                                     variant="primary"
+                                    accessibilityConfig={{ role: "link" }}
                                     onClick={(event) => {
                                         onOpenClick?.(event, {
                                             item,

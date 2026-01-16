@@ -23,29 +23,21 @@ import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @public
 export interface AacAnalyticsModel {
-    // (undocumented)
-    [key: string]: unknown;
-    // (undocumented)
-    attribute_hierarchies?: unknown[];
-    // (undocumented)
-    dashboards?: unknown[];
-    // (undocumented)
-    metrics?: unknown[];
-    // (undocumented)
-    plugins?: unknown[];
-    // (undocumented)
-    visualizations?: unknown[];
+    attribute_hierarchies?: Array<AacAttributeHierarchy>;
+    dashboards?: Array<AacDashboard>;
+    metrics?: Array<AacMetric>;
+    plugins?: Array<AacPlugin>;
+    visualizations?: Array<AacVisualization>;
 }
 
 // @public
 export class AACAnalyticsModelApi extends MetadataBaseApi implements AACAnalyticsModelApiInterface {
-    // Warning: (ae-forgotten-export) The symbol "AacAnalyticsModel_2" needs to be exported by the entry point index.d.ts
-    getAnalyticsModelAac(requestParameters: AACAnalyticsModelApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel_2>;
+    getAnalyticsModelAac(requestParameters: AACAnalyticsModelApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel>;
     setAnalyticsModelAac(requestParameters: AACAnalyticsModelApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
-export function AACAnalyticsModelApi_GetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: AACAnalyticsModelApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacAnalyticsModel_2>;
+export function AACAnalyticsModelApi_GetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: AACAnalyticsModelApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacAnalyticsModel>;
 
 // @public
 export function AACAnalyticsModelApi_SetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: AACAnalyticsModelApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
@@ -54,7 +46,7 @@ export function AACAnalyticsModelApi_SetAnalyticsModelAac(axios: AxiosInstance, 
 export function AACAnalyticsModelApiAxiosParamCreator_GetAnalyticsModelAac(workspaceId: string, exclude?: Array<"ACTIVITY_INFO">, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AACAnalyticsModelApiAxiosParamCreator_SetAnalyticsModelAac(workspaceId: string, aacAnalyticsModel: AacAnalyticsModel_2, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AACAnalyticsModelApiAxiosParamCreator_SetAnalyticsModelAac(workspaceId: string, aacAnalyticsModel: AacAnalyticsModel, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export interface AACAnalyticsModelApiGetAnalyticsModelAacRequest {
@@ -64,13 +56,13 @@ export interface AACAnalyticsModelApiGetAnalyticsModelAacRequest {
 
 // @public
 export interface AACAnalyticsModelApiInterface {
-    getAnalyticsModelAac(requestParameters: AACAnalyticsModelApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel_2>;
+    getAnalyticsModelAac(requestParameters: AACAnalyticsModelApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel>;
     setAnalyticsModelAac(requestParameters: AACAnalyticsModelApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
 export interface AACAnalyticsModelApiSetAnalyticsModelAacRequest {
-    readonly aacAnalyticsModel: AacAnalyticsModel_2;
+    readonly aacAnalyticsModel: AacAnalyticsModel;
     readonly workspaceId: string;
 }
 
@@ -79,28 +71,23 @@ export type AacAnalyticsModelExclude = "ACTIVITY_INFO";
 
 // @public
 export class AacApi extends MetadataBaseApi implements AacApiInterface {
-    // Warning: (ae-forgotten-export) The symbol "AacApiGetAnalyticsModelAacRequest_2" needs to be exported by the entry point index.d.ts
-    getAnalyticsModelAac(requestParameters: AacApiGetAnalyticsModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel_2>;
-    // Warning: (ae-forgotten-export) The symbol "AacApiGetLogicalModelAacRequest_2" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "AacLogicalModel_2" needs to be exported by the entry point index.d.ts
-    getLogicalModelAac(requestParameters: AacApiGetLogicalModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
-    // Warning: (ae-forgotten-export) The symbol "AacApiSetAnalyticsModelAacRequest_2" needs to be exported by the entry point index.d.ts
-    setAnalyticsModelAac(requestParameters: AacApiSetAnalyticsModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<void>;
-    // Warning: (ae-forgotten-export) The symbol "AacApiSetLogicalModelAacRequest_2" needs to be exported by the entry point index.d.ts
-    setLogicalModelAac(requestParameters: AacApiSetLogicalModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAnalyticsModelAac(requestParameters: AacApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel>;
+    getLogicalModelAac(requestParameters: AacApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
+    setAnalyticsModelAac(requestParameters: AacApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setLogicalModelAac(requestParameters: AacApiSetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public (undocumented)
-export function AacApi_GetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel>;
+export function AacApi_GetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: IAacApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<IAacAnalyticsModel>;
 
 // @public (undocumented)
-export function AacApi_GetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
+export function AacApi_GetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: IAacApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<IAacLogicalModel>;
 
 // @public (undocumented)
-export function AacApi_SetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+export function AacApi_SetAnalyticsModelAac(axios: AxiosInstance, basePath: string, requestParameters: IAacApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
 // @public (undocumented)
-export function AacApi_SetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: AacApiSetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+export function AacApi_SetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: IAacApiSetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
 // @public
 export function AacApiAxiosParamCreator_GetAnalyticsModelAac(workspaceId: string, exclude?: Array<"ACTIVITY_INFO">, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -109,48 +96,40 @@ export function AacApiAxiosParamCreator_GetAnalyticsModelAac(workspaceId: string
 export function AacApiAxiosParamCreator_GetLogicalModelAac(workspaceId: string, includeParents?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AacApiAxiosParamCreator_SetAnalyticsModelAac(workspaceId: string, aacAnalyticsModel: AacAnalyticsModel_2, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AacApiAxiosParamCreator_SetAnalyticsModelAac(workspaceId: string, aacAnalyticsModel: AacAnalyticsModel, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AacApiAxiosParamCreator_SetLogicalModelAac(workspaceId: string, aacLogicalModel: AacLogicalModel_2, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AacApiAxiosParamCreator_SetLogicalModelAac(workspaceId: string, aacLogicalModel: AacLogicalModel, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
-// @public (undocumented)
+// @public
 export interface AacApiGetAnalyticsModelAacRequest {
-    // (undocumented)
-    readonly exclude?: Array<AacAnalyticsModelExclude>;
-    // (undocumented)
+    readonly exclude?: Array<"ACTIVITY_INFO">;
     readonly workspaceId: string;
 }
 
-// @public (undocumented)
+// @public
 export interface AacApiGetLogicalModelAacRequest {
-    // (undocumented)
     readonly includeParents?: boolean;
-    // (undocumented)
     readonly workspaceId: string;
 }
 
 // @public
 export interface AacApiInterface {
-    getAnalyticsModelAac(requestParameters: AacApiGetAnalyticsModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel_2>;
-    getLogicalModelAac(requestParameters: AacApiGetLogicalModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
-    setAnalyticsModelAac(requestParameters: AacApiSetAnalyticsModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<void>;
-    setLogicalModelAac(requestParameters: AacApiSetLogicalModelAacRequest_2, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAnalyticsModelAac(requestParameters: AacApiGetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacAnalyticsModel>;
+    getLogicalModelAac(requestParameters: AacApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
+    setAnalyticsModelAac(requestParameters: AacApiSetAnalyticsModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setLogicalModelAac(requestParameters: AacApiSetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
-// @public (undocumented)
+// @public
 export interface AacApiSetAnalyticsModelAacRequest {
-    // (undocumented)
     readonly aacAnalyticsModel: AacAnalyticsModel;
-    // (undocumented)
     readonly workspaceId: string;
 }
 
-// @public (undocumented)
+// @public
 export interface AacApiSetLogicalModelAacRequest {
-    // (undocumented)
     readonly aacLogicalModel: AacLogicalModel;
-    // (undocumented)
     readonly workspaceId: string;
 }
 
@@ -344,12 +323,12 @@ export interface AacLabelTranslation {
 
 // @public
 export class AACLogicalDataModelApi extends MetadataBaseApi implements AACLogicalDataModelApiInterface {
-    getLogicalModelAac(requestParameters: AACLogicalDataModelApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
+    getLogicalModelAac(requestParameters: AACLogicalDataModelApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
     setLogicalModelAac(requestParameters: AACLogicalDataModelApiSetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
-export function AACLogicalDataModelApi_GetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: AACLogicalDataModelApiGetLogicalModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacLogicalModel_2>;
+export function AACLogicalDataModelApi_GetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: AACLogicalDataModelApiGetLogicalModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacLogicalModel>;
 
 // @public
 export function AACLogicalDataModelApi_SetLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: AACLogicalDataModelApiSetLogicalModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
@@ -358,7 +337,7 @@ export function AACLogicalDataModelApi_SetLogicalModelAac(axios: AxiosInstance, 
 export function AACLogicalDataModelApiAxiosParamCreator_GetLogicalModelAac(workspaceId: string, includeParents?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AACLogicalDataModelApiAxiosParamCreator_SetLogicalModelAac(workspaceId: string, aacLogicalModel: AacLogicalModel_2, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AACLogicalDataModelApiAxiosParamCreator_SetLogicalModelAac(workspaceId: string, aacLogicalModel: AacLogicalModel, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export interface AACLogicalDataModelApiGetLogicalModelAacRequest {
@@ -368,24 +347,20 @@ export interface AACLogicalDataModelApiGetLogicalModelAacRequest {
 
 // @public
 export interface AACLogicalDataModelApiInterface {
-    getLogicalModelAac(requestParameters: AACLogicalDataModelApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
+    getLogicalModelAac(requestParameters: AACLogicalDataModelApiGetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
     setLogicalModelAac(requestParameters: AACLogicalDataModelApiSetLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
 export interface AACLogicalDataModelApiSetLogicalModelAacRequest {
-    readonly aacLogicalModel: AacLogicalModel_2;
+    readonly aacLogicalModel: AacLogicalModel;
     readonly workspaceId: string;
 }
 
 // @public
 export interface AacLogicalModel {
-    // (undocumented)
-    [key: string]: unknown;
-    // (undocumented)
-    datasets?: unknown[];
-    // (undocumented)
-    date_datasets?: unknown[];
+    datasets?: Array<AacDataset>;
+    date_datasets?: Array<AacDateDataset>;
 }
 
 // @public
@@ -611,7 +586,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
-    generateLogicalModelAac(requestParameters: ActionsApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
+    generateLogicalModelAac(requestParameters: ActionsApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
     getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getTranslationTags(requestParameters: ActionsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): AxiosPromise<string[]>;
@@ -676,7 +651,7 @@ export function ActionsApi_DeleteWorkspaceAutomations(axios: AxiosInstance, base
 export function ActionsApi_GenerateLogicalModel(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<DeclarativeModel>;
 
 // @public
-export function ActionsApi_GenerateLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacLogicalModel_2>;
+export function ActionsApi_GenerateLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacLogicalModel>;
 
 // @public
 export function ActionsApi_GetDependentEntitiesGraph(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<DependentEntitiesResponse>;
@@ -1145,7 +1120,7 @@ export interface ActionsApiInterface {
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     generateLogicalModel(requestParameters: ActionsApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
-    generateLogicalModelAac(requestParameters: ActionsApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
+    generateLogicalModelAac(requestParameters: ActionsApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
     getDependentEntitiesGraph(requestParameters: ActionsApiGetDependentEntitiesGraphRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getDependentEntitiesGraphFromEntryPoints(requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest, options?: AxiosRequestConfig): AxiosPromise<DependentEntitiesResponse>;
     getTranslationTags(requestParameters: ActionsApiGetTranslationTagsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<string>>;
@@ -13358,14 +13333,14 @@ export interface GenerateLdmRequest {
 // @public
 export class GenerateLogicalDataModelApi extends MetadataBaseApi implements GenerateLogicalDataModelApiInterface {
     generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
-    generateLogicalModelAac(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
+    generateLogicalModelAac(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
 }
 
 // @public
 export function GenerateLogicalDataModelApi_GenerateLogicalModel(axios: AxiosInstance, basePath: string, requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<DeclarativeModel>;
 
 // @public
-export function GenerateLogicalDataModelApi_GenerateLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacLogicalModel_2>;
+export function GenerateLogicalDataModelApi_GenerateLogicalModelAac(axios: AxiosInstance, basePath: string, requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AacLogicalModel>;
 
 // @public
 export function GenerateLogicalDataModelApiAxiosParamCreator_GenerateLogicalModel(dataSourceId: string, generateLdmRequest: GenerateLdmRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -13388,7 +13363,7 @@ export interface GenerateLogicalDataModelApiGenerateLogicalModelRequest {
 // @public
 export interface GenerateLogicalDataModelApiInterface {
     generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
-    generateLogicalModelAac(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel_2>;
+    generateLogicalModelAac(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelAacRequest, options?: AxiosRequestConfig): AxiosPromise<AacLogicalModel>;
 }
 
 // @public
@@ -13524,6 +13499,64 @@ export interface HistogramBucket {
 export interface HistogramProperties {
     // (undocumented)
     bucketCount: number;
+}
+
+// @public
+export interface IAacAnalyticsModel {
+    // (undocumented)
+    [key: string]: unknown;
+    // (undocumented)
+    attribute_hierarchies?: unknown[];
+    // (undocumented)
+    dashboards?: unknown[];
+    // (undocumented)
+    metrics?: unknown[];
+    // (undocumented)
+    plugins?: unknown[];
+    // (undocumented)
+    visualizations?: unknown[];
+}
+
+// @public (undocumented)
+export interface IAacApiGetAnalyticsModelAacRequest {
+    // (undocumented)
+    readonly exclude?: Array<AacAnalyticsModelExclude>;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public (undocumented)
+export interface IAacApiGetLogicalModelAacRequest {
+    // (undocumented)
+    readonly includeParents?: boolean;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public (undocumented)
+export interface IAacApiSetAnalyticsModelAacRequest {
+    // (undocumented)
+    readonly aacAnalyticsModel: IAacAnalyticsModel;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public (undocumented)
+export interface IAacApiSetLogicalModelAacRequest {
+    // (undocumented)
+    readonly aacLogicalModel: IAacLogicalModel;
+    // (undocumented)
+    readonly workspaceId: string;
+}
+
+// @public
+export interface IAacLogicalModel {
+    // (undocumented)
+    [key: string]: unknown;
+    // (undocumented)
+    datasets?: unknown[];
+    // (undocumented)
+    date_datasets?: unknown[];
 }
 
 // @public @deprecated (undocumented)
@@ -20864,9 +20897,9 @@ export interface LocalIdentifier {
 }
 
 // @public
-export interface LocationStyleApiInterface {
+export type LocationStyleApiInterface = {
     getDefaultStyle(): Promise<LocationStyleDocument>;
-}
+};
 
 // @public
 export type LocationStyleDocument = Record<string, unknown>;
@@ -23842,12 +23875,10 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
 }
 
 // @public (undocumented)
-export interface ProfileApiInterface {
-    // (undocumented)
+export type ProfileApiInterface = {
     getCurrent: () => Promise<IUserProfile>;
-    // (undocumented)
     getCurrentWithDetails: () => Promise<IUserProfile>;
-}
+};
 
 // @public (undocumented)
 interface Range_2 {

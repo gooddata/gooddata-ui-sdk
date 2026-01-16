@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -11,6 +11,7 @@ import {
 import { type IMemoryCreatedByUsers } from "@gooddata/sdk-backend-spi";
 import { type IMemoryItemMetadataObject, type IUser, idRef } from "@gooddata/sdk-model";
 
+import { isInheritedObject } from "./ObjectInheritance.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 
 /**
@@ -25,6 +26,7 @@ export function convertMemoryItem(
     return {
         id: memoryItem.id,
         type: "memoryItem",
+        isLocked: isInheritedObject(memoryItem),
         title: memoryItem.attributes?.title ?? "",
         description: memoryItem.attributes?.description ?? "",
         tags: memoryItem.attributes?.tags,

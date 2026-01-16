@@ -11,6 +11,17 @@
     width: 100%;
     height: 100%;
 
+    // Wrapper for items with title and value
+    .headline-item-with-title {
+        display: contents; // Don't interfere with parent layout
+    }
+
+    // In compare section, apply flex layout and reverse visual order
+    .headline-compare-section-item .headline-item-with-title {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
     .primary-section {
         &.gd-flex-container {
             justify-content: center;
