@@ -56,6 +56,18 @@ export const confidenceDropdownItems: IDropdownItem[] = [
     { title: messages["forecastConfidence95"].id, value: 0.95 },
 ];
 
+export const sensitivityDropdownItems: IDropdownItem[] = [
+    { title: messages["anomalySensitivityLow"].id, value: "low" },
+    { title: messages["anomalySensitivityMedium"].id, value: "medium" },
+    { title: messages["anomalySensitivityHigh"].id, value: "high" },
+];
+
+export const pointSizeDropdownItems: IDropdownItem[] = [
+    { title: messages["anomalyPointSizeSmall"].id, value: "small" },
+    { title: messages["anomalyPointSizeMedium"].id, value: "medium" },
+    { title: messages["anomalyPointSizeBig"].id, value: "big" },
+];
+
 export const legendPositionDropdownItems: IDropdownItem[] = [
     { title: messages["autoDefault"].id, value: "auto" },
     { type: "separator" },

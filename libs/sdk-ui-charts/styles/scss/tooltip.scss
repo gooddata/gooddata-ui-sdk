@@ -197,6 +197,36 @@
     }
 }
 
+.gd-viz-tooltip-anomaly {
+    white-space: normal;
+    color: kit-variables.$gd-color-state-blank;
+    text-align: left;
+    border-bottom: 1px solid kit-variables.$gd-border-color;
+    padding-bottom: 9px;
+    margin-bottom: 9px;
+
+    .gd-viz-tooltip-anomaly-title {
+        min-width: 170px;
+        white-space: nowrap;
+        color: var(
+            --gd-chart-tooltip-labelColor-from-theme,
+            var(--gd-chart-tooltipLabelColor-from-theme, kit-variables.$gd-color-label)
+        );
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .gd-viz-tooltip-anomaly-description {
+        color: var(--gd-palette-complementary-7, kit-variables.$default-gd-color-link);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+}
+
 .gd-viz-tooltip-drilling-point {
     cursor: pointer;
 }

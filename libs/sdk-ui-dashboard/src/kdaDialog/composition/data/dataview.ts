@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IDataView, type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
@@ -127,6 +127,12 @@ export function createDataView(
             xcoord: [],
             ycoord: [],
         }),
+        outliers: () => ({
+            headerItems: [],
+            anomalies: [],
+            loading: false,
+        }),
+        withOutliers: () => view,
         withForecast: () => view,
         withClustering: () => view,
         readCollectionItems: () =>
@@ -178,6 +184,11 @@ function createExecutionResults(
                 prediction: [],
                 lowerBound: [],
                 upperBound: [],
+            }),
+        readOutliersAll: () =>
+            Promise.resolve({
+                attributes: [],
+                metrics: [],
             }),
         readAnomalyDetectionAll: () =>
             Promise.resolve({

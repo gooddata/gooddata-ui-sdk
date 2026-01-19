@@ -124,11 +124,13 @@ export enum TigerFeaturesNames {
     EnableGenAIMemory = "enableGenAIMemory",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     AIChatSearchLimit = "aiChatSearchLimit",
+    EnableDashboardTabs = "enableDashboardTabs",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
     EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
     EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
+    EnableAnomalyDetectionVisualization = "enableAnomalyDetectionVisualization",
     EnableFiscalCalendars = "enableFiscalCalendars",
     EnablePivotTablePagination = "enablePivotTablePagination",
     EnableImplicitDrillToUrl = "enableImplicitDrillToUrl",
@@ -250,11 +252,13 @@ export type ITigerFeatureFlags = {
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
+    enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
     enableEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableEmptyDateValuesFilter"][number];
     enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
     enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
+    enableAnomalyDetectionVisualization: (typeof FeatureFlagsValues)["enableAnomalyDetectionVisualization"][number];
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
     enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
     enableImplicitDrillToUrl: (typeof FeatureFlagsValues)["enableImplicitDrillToUrl"][number];
@@ -333,7 +337,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDestinationTesting: true,
     enableInPlatformNotifications: true,
     enableVisualizationFineTuning: false,
-    enableImprovedAdFilters: false,
+    enableImprovedAdFilters: true,
     enableExternalRecipients: true,
     enableDashboardTabularExport: false,
     enableOrchestratedTabularExports: false,
@@ -376,11 +380,13 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIMemory: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
+    enableDashboardTabs: true,
     enableEmptyDateValuesFilter: true,
     enablePivotTableAutoSizeReset: true,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
+    enableAnomalyDetectionVisualization: false,
     enableFiscalCalendars: false,
     enablePivotTablePagination: true,
     enableImplicitDrillToUrl: false,
@@ -503,11 +509,13 @@ export const FeatureFlagsValues = {
     enableGenAIMemory: [false, true] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
+    enableDashboardTabs: [true, false] as const,
     enableEmptyDateValuesFilter: [true, false] as const,
     enablePivotTableAutoSizeReset: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
     enableAnomalyDetectionAlert: [true, false] as const,
+    enableAnomalyDetectionVisualization: [true, false] as const,
     enableFiscalCalendars: [true, false] as const,
     enablePivotTablePagination: [true, false] as const,
     enableImplicitDrillToUrl: [true, false] as const,

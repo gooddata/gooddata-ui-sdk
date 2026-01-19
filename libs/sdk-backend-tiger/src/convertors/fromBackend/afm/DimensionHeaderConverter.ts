@@ -3,6 +3,7 @@
 import {
     type AttributeExecutionResultHeader,
     type DimensionHeader,
+    type ExecutionResult,
     type ExecutionResultGrandTotal,
     type ExecutionResultHeader,
     type JsonApiAttributeOutAttributesGranularityEnum,
@@ -12,9 +13,10 @@ import {
     isResultMeasureHeader,
     isResultTotalHeader,
 } from "@gooddata/api-client-tiger";
-import { type IForecastConfig, type IForecastResult } from "@gooddata/sdk-backend-spi";
+import { type IForecastConfig, type IForecastResult, type IOutliersConfig } from "@gooddata/sdk-backend-spi";
 import {
     type DateAttributeGranularity,
+    type IAttributeDescriptor,
     type IDimensionDescriptor,
     type IDimensionItemDescriptor,
     type IMeasureDescriptor,
@@ -362,4 +364,123 @@ function fillData(items: string[] | undefined, period: number): (string | null)[
         return emptyData;
     }
     return items.slice(items.length - period, items.length);
+}
+
+export function getTransformAnomalyDetectionHeader(
+    dimensionDescriptors: IDimensionDescriptor[],
+    outliersConfig?: IOutliersConfig,
+): (dimensionHeaders: DimensionHeader[]) => (IResultMeasureHeader & IMeasureDescriptor)[] {
+    if (!outliersConfig) {
+        return () => [];
+    }
+
+    return (dimensionHeaders: DimensionHeader[]) => {
+        const headers: (IResultMeasureHeader & IMeasureDescriptor)[] = [];
+
+        dimensionHeaders.forEach((header, hi) => {
+            header.headerGroups.forEach((headerGroup, gi) => {
+                headerGroup.headers.forEach((header, chi) => {
+                    const dimHeader = dimensionDescriptors[hi].headers[gi];
+                    if (isMeasureGroupDescriptor(dimHeader)) {
+                        const desc = dimHeader.measureGroupHeader.items[chi];
+                        if (isResultMeasureHeader(header) && desc) {
+                            headers.push(measureHeaderAndDescriptorItem(header, desc));
+                        }
+                    }
+                });
+            });
+        });
+
+        return headers;
+    };
+}
+
+export function getAnomalyDetectionDateAttributes(
+    dimensionDescriptors: IDimensionDescriptor[],
+    executionResults: ExecutionResult,
+    outliersConfig?: IOutliersConfig,
+) {
+    if (!outliersConfig) {
+        return undefined;
+    }
+
+    const attributes: (IAttributeDescriptor & AttributeExecutionResultHeader)[][] = [];
+    const granularity = outliersConfig.granularity;
+
+    dimensionDescriptors.forEach((dimensionDescriptor, di) => {
+        dimensionDescriptor.headers.forEach((header, hi) => {
+            if (isAttributeDescriptor(header) && header.attributeHeader.granularity) {
+                const l = executionResults.dimensionHeaders[di].headerGroups[hi]
+                    .headers as AttributeExecutionResultHeader[];
+                const items = l.map(
+                    (h) =>
+                        ({
+                            attributeHeader: {
+                                ...h.attributeHeader,
+                                ...header.attributeHeader,
+                            },
+                        }) as IAttributeDescriptor & AttributeExecutionResultHeader,
+                );
+                attributes.push(items);
+            }
+        });
+    });
+
+    const found = attributes.find((a) => {
+        if (granularity && a[0]?.attributeHeader.granularity) {
+            return a[0].attributeHeader.granularity.toUpperCase() === granularity.toUpperCase();
+        }
+        return false;
+    });
+
+    return found ?? attributes[0];
+}
+
+export type AnomalyDetectionGranularity = "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
+
+export function getAnomalyDetectionGranularity(
+    dimensionDescriptors: IDimensionDescriptor[],
+    outliersConfig?: IOutliersConfig,
+): AnomalyDetectionGranularity {
+    if (!outliersConfig) {
+        return "WEEK";
+    }
+
+    const attributes: IAttributeDescriptor[] = [];
+    const granularity = outliersConfig.granularity;
+
+    dimensionDescriptors.forEach((dimensionDescriptor) => {
+        dimensionDescriptor.headers.forEach((header) => {
+            if (isAttributeDescriptor(header) && header.attributeHeader.granularity) {
+                attributes.push(header);
+            }
+        });
+    });
+
+    const found = attributes.find((a) => {
+        if (granularity && a.attributeHeader.granularity) {
+            return a.attributeHeader.granularity.toUpperCase() === granularity.toUpperCase();
+        }
+        return false;
+    });
+
+    return (found?.attributeHeader.granularity ??
+        attributes[0]?.attributeHeader.granularity ??
+        "WEEK") as AnomalyDetectionGranularity;
+}
+
+function measureHeaderAndDescriptorItem(
+    header: MeasureExecutionResultHeader,
+    desc: IMeasureDescriptor,
+): IResultMeasureHeader & IMeasureDescriptor {
+    const measureIndex = header.measureHeader.measureIndex;
+    const headerDesc = desc.measureHeaderItem;
+
+    return {
+        measureHeaderItem: {
+            ...headerDesc,
+            name: headerDesc.name,
+            order: measureIndex,
+        },
+    };
 }

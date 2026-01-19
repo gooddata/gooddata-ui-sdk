@@ -19,6 +19,8 @@ import {
     SmartFunctionsApi_ClusteringResult,
     SmartFunctionsApi_Forecast,
     SmartFunctionsApi_ForecastResult,
+    SmartFunctionsApi_OutlierDetection,
+    SmartFunctionsApi_OutlierDetectionResult,
 } from "@gooddata/api-client-tiger/endpoints/smartFunctions";
 import {
     type IAnomalyDetectionConfig,
@@ -37,6 +39,9 @@ import {
     type IForecastConfig,
     type IForecastResult,
     type IForecastView,
+    type IOutliersConfig,
+    type IOutliersResult,
+    type IOutliersView,
     type IPreparedExecution,
     NoDataError,
     UnexpectedError,
@@ -49,9 +54,12 @@ import {
     type IResultHeader,
 } from "@gooddata/sdk-model";
 
-import { resolveCustomOverride } from "./utils.js";
+import { augmentCustomOverrideWithNormalizedKeys, resolveCustomOverride } from "./utils.js";
 import { TigerCancellationConverter } from "../../../cancelation/index.js";
 import {
+    getAnomalyDetectionDateAttributes,
+    getAnomalyDetectionGranularity,
+    getTransformAnomalyDetectionHeader,
     getTransformDimensionHeaders,
     getTransformForecastHeaders,
 } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter.js";
@@ -59,8 +67,10 @@ import { transformResultDimensions } from "../../../convertors/fromBackend/afm/d
 import { transformForecastResult } from "../../../convertors/fromBackend/afm/forecast.js";
 import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter.js";
 import { convertExecutionResultMetadata } from "../../../convertors/fromBackend/afm/MetadataConverter.js";
+import { transformOutliersResult } from "../../../convertors/fromBackend/afm/outliers.js";
 import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result.js";
 import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 
@@ -169,6 +179,53 @@ export class TigerExecutionResult implements IExecutionResult {
                 this.enrichClientWithCancelOptions(),
             ).then(({ data }) => data),
         );
+    }
+
+    public async readOutliersAll(outliersConfig: IOutliersConfig): Promise<IOutliersResult> {
+        const workspace = this.workspace;
+        const res = this.dimensions;
+
+        const afmExecution = toAfmExecution(this.definition);
+        const granularity = getAnomalyDetectionGranularity(res, outliersConfig);
+
+        const forecast = await this.authCall((client) =>
+            SmartFunctionsApi_OutlierDetection(
+                client.axios,
+                client.basePath,
+                {
+                    outlierDetectionRequest: {
+                        sensitivity: outliersConfig.sensitivity.toUpperCase() as "LOW" | "MEDIUM" | "HIGH",
+                        granularity: granularity,
+                        filters: afmExecution.execution.filters,
+                        attributes: afmExecution.execution.attributes,
+                        measures: afmExecution.execution.measures,
+                        auxMeasures: afmExecution.execution.auxMeasures,
+                    },
+                    workspaceId: workspace,
+                },
+                this.enrichClientWithCancelOptions(),
+            ).then(({ data }) => data),
+        );
+
+        const data = await this.authCall((client) =>
+            SmartFunctionsApi_OutlierDetectionResult(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: workspace,
+                    resultId: forecast.links.executionResult,
+                },
+                this.enrichClientWithCancelOptions(),
+            ).then(({ data }) => data),
+        );
+
+        return {
+            attributes: (data.attribute ?? []).slice(),
+            metrics: Object.entries(data.values ?? {}).map(([localIdentifier, values]) => ({
+                localIdentifier,
+                values: values ?? [],
+            })),
+        };
     }
 
     public async readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
@@ -302,12 +359,15 @@ export class TigerExecutionResult implements IExecutionResult {
                 : {}),
         };
 
+        const customOverride = resolveCustomOverride(this.dimensions, this.definition);
+        const augmented = augmentCustomOverrideWithNormalizedKeys(customOverride, this.definition);
+
         const payload: TabularExportRequest = {
             format,
             executionResult: options.visualizationObjectId ? undefined : this.resultId, // use the visualizationObject for the export instead of the execution when provided
             fileName: options.title ?? "default",
             settings,
-            customOverride: resolveCustomOverride(this.dimensions, this.definition),
+            customOverride: augmented,
             visualizationObject: options.visualizationObjectId,
             visualizationObjectCustomFilters: options.visualizationObjectCustomFilters,
         };
@@ -385,6 +445,8 @@ class TigerDataView implements IDataView {
     public readonly totals?: DataValue[][][];
     public readonly forecastConfig?: IForecastConfig;
     public readonly forecastResult?: IForecastResult;
+    public readonly outliersConfig?: IOutliersConfig;
+    public readonly outliersResult?: IOutliersResult;
     public readonly clusteringConfig?: IClusteringConfig;
     public readonly clusteringResult?: IClusteringResult;
     public readonly totalTotals?: DataValue[][][];
@@ -402,6 +464,8 @@ class TigerDataView implements IDataView {
         authCall: TigerAuthenticatedCallGuard,
         forecastConfig?: IForecastConfig,
         forecastResult?: IForecastResult,
+        outliersConfig?: IOutliersConfig,
+        outliersResult?: IOutliersResult,
         clusteringConfig?: IClusteringConfig,
         clusteringResult?: IClusteringResult,
     ) {
@@ -409,6 +473,8 @@ class TigerDataView implements IDataView {
         this.definition = result.definition;
         this.forecastConfig = forecastConfig;
         this.forecastResult = forecastResult;
+        this.outliersConfig = outliersConfig;
+        this.outliersResult = outliersResult;
         this.clusteringConfig = clusteringConfig;
         this.clusteringResult = clusteringResult;
 
@@ -483,6 +549,26 @@ class TigerDataView implements IDataView {
         );
     }
 
+    public outliers(): IOutliersView {
+        const transformOutliersHeaders = getTransformAnomalyDetectionHeader(
+            this.result.dimensions,
+            this.outliersConfig,
+        );
+        const dateAttributes = getAnomalyDetectionDateAttributes(
+            this.result.dimensions,
+            this._execResult,
+            this.outliersConfig,
+        );
+
+        return transformOutliersResult(
+            this._execResult,
+            this.outliersResult,
+            this.outliersConfig,
+            dateAttributes,
+            transformOutliersHeaders,
+        );
+    }
+
     public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
         const normalizedConfig = config
             ? {
@@ -498,6 +584,23 @@ class TigerDataView implements IDataView {
             this._authCall,
             normalizedConfig,
             result,
+            this.outliersConfig,
+            this.outliersResult,
+            this.clusteringConfig,
+            this.clusteringResult,
+        );
+    }
+
+    public withOutliers(config?: IOutliersConfig, result?: IOutliersResult): IDataView {
+        return new TigerDataView(
+            this.result,
+            this._execResult,
+            this._dateFormatter,
+            this._authCall,
+            this.forecastConfig,
+            this.forecastResult,
+            config,
+            result,
             this.clusteringConfig,
             this.clusteringResult,
         );
@@ -511,6 +614,8 @@ class TigerDataView implements IDataView {
             this._authCall,
             this.forecastConfig,
             this.forecastResult,
+            this.outliersConfig,
+            this.outliersResult,
             config,
             result,
         );

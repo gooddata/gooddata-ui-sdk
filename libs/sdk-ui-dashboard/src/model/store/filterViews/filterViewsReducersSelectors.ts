@@ -1,10 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
 import { type IDashboardFilterView, areObjRefsEqual } from "@gooddata/sdk-model";
 
+import { selectEnableDashboardTabs } from "../config/configSelectors.js";
 import { selectDashboardRef } from "../meta/metaSelectors.js";
 import { selectActiveTabLocalIdentifier, selectFirstTabLocalIdentifier } from "../tabs/tabsSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
@@ -19,13 +20,14 @@ const selectSelf = createSelector(
  */
 export const selectFilterViews: DashboardSelector<IDashboardFilterView[]> = createSelector(
     selectSelf,
+    selectEnableDashboardTabs,
     selectActiveTabLocalIdentifier,
     selectFirstTabLocalIdentifier,
     selectDashboardRef,
-    (state, activeTabLocalIdentifier, firstTabLocalIdentifier, dashboardRef) => {
+    (state, enableDashboardTabs, activeTabLocalIdentifier, firstTabLocalIdentifier, dashboardRef) => {
         invariant(state.filterViews, "attempting to access uninitialized filterViews state");
 
-        if (activeTabLocalIdentifier) {
+        if (enableDashboardTabs && activeTabLocalIdentifier) {
             const isFirstTab = activeTabLocalIdentifier === firstTabLocalIdentifier;
 
             return (

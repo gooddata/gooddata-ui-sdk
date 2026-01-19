@@ -39,6 +39,7 @@ import {
     renameDashboardTab,
     repositionDashboardTab,
     selectActiveTabLocalIdentifier,
+    selectEnableDashboardTabs,
     selectIsAddTabButtonHidden,
     selectIsInEditMode,
     selectTabs,
@@ -148,6 +149,7 @@ function buildTabActions(params: TabActionsParams, isOnlyOneTab: boolean) {
 export function useDashboardTabsProps(): IDashboardTabsProps {
     const intl = useIntl();
 
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const tabs = useDashboardSelector(selectTabs) ?? EMPTY_TABS;
     const activeTabLocalIdentifier = useDashboardSelector(selectActiveTabLocalIdentifier);
@@ -185,13 +187,14 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
 
     // Use the default tab ID as activeTabLocalIdentifier if we created a default tab and no activeTabLocalIdentifier is set
     const effectiveActiveTabLocalIdentifier = useMemo(() => {
-        if (isEditMode && tabs.length === 0 && !activeTabLocalIdentifier) {
+        if (isEditMode && enableDashboardTabs && tabs.length === 0 && !activeTabLocalIdentifier) {
             return defaultTabIdRef.current;
         }
         return activeTabLocalIdentifier;
-    }, [isEditMode, tabs, activeTabLocalIdentifier]);
+    }, [isEditMode, enableDashboardTabs, tabs, activeTabLocalIdentifier]);
 
     return {
+        enableDashboardTabs,
         activeTabLocalIdentifier: effectiveActiveTabLocalIdentifier,
         uiTabs,
         handleTabSelect,
@@ -201,6 +204,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
 const tabsBem = bemFactory("gd-dash-tabs");
 
 interface IDashboardTabsProps {
+    enableDashboardTabs: boolean;
     activeTabLocalIdentifier?: string;
     uiTabs: IDashboardUiTab[];
     handleTabSelect: (tab: IDashboardUiTab) => void;
@@ -209,6 +213,7 @@ interface IDashboardTabsProps {
  * @internal
  */
 export function DashboardTabs({
+    enableDashboardTabs,
     activeTabLocalIdentifier,
     uiTabs,
     handleTabSelect,
@@ -238,11 +243,11 @@ export function DashboardTabs({
     }, [dispatch, hasDefaultTab]);
 
     const shouldHideTabs = useMemo(() => {
-        if (!uiTabs || activeTabLocalIdentifier === undefined) {
+        if (!enableDashboardTabs || !uiTabs || activeTabLocalIdentifier === undefined) {
             return true;
         }
         return isEditMode ? uiTabs.length < 1 : uiTabs.length <= 1;
-    }, [isEditMode, uiTabs, activeTabLocalIdentifier]);
+    }, [isEditMode, enableDashboardTabs, uiTabs, activeTabLocalIdentifier]);
 
     if (shouldHideTabs) {
         return null;

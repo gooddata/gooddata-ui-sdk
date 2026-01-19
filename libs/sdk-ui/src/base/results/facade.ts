@@ -11,6 +11,9 @@ import {
     type IForecastConfig,
     type IForecastResult,
     type IForecastView,
+    type IOutliersConfig,
+    type IOutliersResult,
+    type IOutliersView,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
@@ -247,6 +250,10 @@ export class DataViewFacade {
  * @param result - execution result
  * @param forecastConfig - forecast configuration
  * @param forecastResult - forecast result
+ * @param outliersConfig - outliers configuration
+ * @param outliersResult - outliers result
+ * @param clusteringConfig - clustering configuration
+ * @param clusteringResult - clustering result
  * @returns data view
  * @public
  */
@@ -254,6 +261,8 @@ export function emptyDataViewForResult(
     result: IExecutionResult,
     forecastConfig?: IForecastConfig,
     forecastResult?: IForecastResult,
+    outliersConfig?: IOutliersConfig,
+    outliersResult?: IOutliersResult,
     clusteringConfig?: IClusteringConfig,
     clusteringResult?: IClusteringResult,
 ): IDataView {
@@ -285,6 +294,8 @@ export function emptyDataViewForResult(
                 result,
                 forecastConfig,
                 forecastResult,
+                outliersConfig,
+                outliersResult,
                 clusteringConfig,
                 clusteringResult,
             );
@@ -314,6 +325,26 @@ export function emptyDataViewForResult(
                 result,
                 forecastConfig,
                 forecastResult,
+                outliersConfig,
+                outliersResult,
+                clusteringConfig,
+                clusteringResult,
+            );
+        },
+        outliers(): IOutliersView {
+            return {
+                headerItems: [],
+                anomalies: [],
+                loading: false,
+            };
+        },
+        withOutliers(outliersConfig?: IOutliersConfig, outliersResult?: IOutliersResult): IDataView {
+            return emptyDataViewForResult(
+                result,
+                forecastConfig,
+                forecastResult,
+                outliersConfig,
+                outliersResult,
                 clusteringConfig,
                 clusteringResult,
             );

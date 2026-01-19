@@ -268,6 +268,8 @@ export interface IHeadlinePaginationProps {
 // @internal (undocumented)
 export interface IHeatmapLegendItem {
     // (undocumented)
+    anomaly?: boolean;
+    // (undocumented)
     color: string;
     // (undocumented)
     isVisible?: boolean;
@@ -486,6 +488,7 @@ export type ISeriesItemMetric = {
     legendIndex: number;
     pointShape?: string;
     yAxis?: number;
+    anomaly?: boolean;
 };
 
 // @internal (undocumented)

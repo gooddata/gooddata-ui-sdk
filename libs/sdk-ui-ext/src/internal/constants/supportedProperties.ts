@@ -21,6 +21,7 @@ const BASE_PROPERTIES = [
 ];
 
 const FORECAST_PROPERTIES = ["forecast"];
+const ANOMALIES_PROPERTIES = ["anomalies"];
 
 const BASE_X_AXIS_PROPERTIES = [
     "xaxis.rotation",
@@ -73,6 +74,7 @@ const CHART_TYPE_PROPERTIES = ["primaryChartType", "secondaryChartType", "dualAx
 export const BASE_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_PROPERTIES,
     ...FORECAST_PROPERTIES,
+    ...ANOMALIES_PROPERTIES,
     ...BASE_X_AXIS_PROPERTIES,
     ...BASE_PRIMARY_AXIS_PROPERTIES,
 ];
@@ -117,6 +119,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_X_AXIS_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         ...FORECAST_PROPERTIES,
+        ...ANOMALIES_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
         "distinctPointShapes",

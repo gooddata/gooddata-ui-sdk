@@ -12,6 +12,7 @@ import {
 import { switchDashboardTab } from "../../commands/index.js";
 import {
     selectActiveTabLocalIdentifier,
+    selectEnableDashboardTabs,
     selectEnableScheduling,
     selectInsights,
     selectWidgets,
@@ -37,6 +38,7 @@ export const useDashboardScheduledEmailsCommands = () => {
     const { automationInteraction } = useDashboardUserInteraction();
     const widgets = useDashboardSelector(selectWidgets);
     const insights = useDashboardSelector(selectInsights);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
 
     // Feature Flags
@@ -49,7 +51,7 @@ export const useDashboardScheduledEmailsCommands = () => {
 
             if (isScheduledEmailingEnabled) {
                 const targetTabIdentifier = schedule?.metadata?.targetTabIdentifier;
-                if (targetTabIdentifier && targetTabIdentifier !== activeTabId) {
+                if (enableDashboardTabs && targetTabIdentifier && targetTabIdentifier !== activeTabId) {
                     dispatch(switchDashboardTab(targetTabIdentifier));
                 }
 
@@ -70,7 +72,15 @@ export const useDashboardScheduledEmailsCommands = () => {
                 });
             }
         },
-        [activeTabId, automationInteraction, dispatch, insights, isScheduledEmailingEnabled, widgets],
+        [
+            activeTabId,
+            automationInteraction,
+            dispatch,
+            enableDashboardTabs,
+            insights,
+            isScheduledEmailingEnabled,
+            widgets,
+        ],
     );
 
     const closeScheduleEmailingDialog = useCallback(

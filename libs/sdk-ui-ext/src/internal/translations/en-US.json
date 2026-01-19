@@ -615,6 +615,54 @@
         "text": "The available data point don`t cover the entire selected period.",
         "crowdinContext": "Message description that is shown when measure/metric trend forecast is not available for the entire selected period"
     },
+    "properties.anomalies.title": {
+        "text": "Anomaly detection",
+        "crowdinContext": "Title of the anomalies detection configuration section."
+    },
+    "properties.anomaliesDisabled.title": {
+        "text": "Anomalies Detection is not available for this combination of buckets.",
+        "crowdinContext": "Tooltip text shown when anomalies detection is not available for the current chart configuration."
+    },
+    "properties.anomalySensitivity.low": {
+        "text": "low",
+        "crowdinContext": "Sensitivity level option for anomalies detection."
+    },
+    "properties.anomalySensitivity.medium": {
+        "text": "medium (default)",
+        "crowdinContext": "Sensitivity level option for anomalies detection."
+    },
+    "properties.anomalySensitivity.high": {
+        "text": "high",
+        "crowdinContext": "Sensitivity level option for anomalies detection."
+    },
+    "properties.anomalySensitivity.title": {
+        "text": "Sensitivity",
+        "crowdinContext": "Title for sensitivity level selector."
+    },
+    "properties.anomalyPointSize.small": {
+        "text": "1.5x (default)",
+        "crowdinContext": "Point size for anomaly detection."
+    },
+    "properties.anomalyPointSize.medium": {
+        "text": "2x",
+        "crowdinContext": "Point size for anomaly detection."
+    },
+    "properties.anomalyPointSize.big": {
+        "text": "3x",
+        "crowdinContext": "Point size for anomaly detection."
+    },
+    "properties.anomalyPointSize.title": {
+        "text": "Size",
+        "crowdinContext": "Point size for anomaly detection."
+    },
+    "properties.anomalyIndicator.title": {
+        "text": "Indicator",
+        "crowdinContext": "Title indicator for anomaly detection."
+    },
+    "properties.anomalyColor.color": {
+        "text": "Color",
+        "crowdinContext": "Color for anomaly detection."
+    },
     "properties.clustering.title": {
         "text": "Cluster",
         "crowdinContext": "Title of the clustering configuration section."

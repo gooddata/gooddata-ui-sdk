@@ -454,7 +454,7 @@ function getColorFromHighchartsPointColor(color: Point["color"]): string {
 }
 
 function formatTooltip(
-    this: IExtendedPoint,
+    this: IExtendedPoint & { anomaly?: boolean },
     tooltipCallback: ITooltipFactory,
     chartConfig?: IChartConfig,
     intl?: IntlShape,
@@ -485,16 +485,29 @@ function formatTooltip(
         this.percentage,
     );
     const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
+    const anomalyMessage = getAnomalyMessage(this.anomaly, intl);
 
     return tooltipContent === null
         ? null
         : `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
             <span class="gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
             <div class="gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
+                ${anomalyMessage}
                 ${tooltipContent}
                 ${interactionMessage}
             </div>
         </div>`;
+}
+
+function getAnomalyMessage(isAnomaly: boolean | undefined, intl?: IntlShape) {
+    if (!isAnomaly) {
+        return "";
+    }
+
+    return `<div class="gd-viz-tooltip-anomaly">
+<div class="gd-viz-tooltip-anomaly-title">${intl?.formatMessage({ id: "visualization.tooltip.anomalyDetection.title" })}</div>
+<div class="gd-viz-tooltip-anomaly-description">${intl?.formatMessage({ id: "visualization.tooltip.anomalyDetection.description" })}</div>
+</div>`;
 }
 
 function getInteractionMessage(

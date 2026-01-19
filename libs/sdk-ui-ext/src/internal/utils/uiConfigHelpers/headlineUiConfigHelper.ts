@@ -32,7 +32,7 @@ import { parseRGBString } from "@gooddata/sdk-ui-vis-commons";
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
 import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../constants/supportedProperties.js";
-import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig.js";
+import { DEFAULT_HEADLINE_UICONFIG, defaultImprovedFilters } from "../../constants/uiConfig.js";
 import { type HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
 import {
     type IReferencePoint,
@@ -50,14 +50,21 @@ import { getTranslation } from "../translations.js";
 const headlineMeasuresIcon = "local:headline/bucket-title-measures.svg";
 const headlineSecondaryMeasuresIcon = "local:headline/bucket-title-secondary-measures.svg";
 
-export function getDefaultHeadlineUiConfig(): IUiConfig {
+export function getDefaultHeadlineUiConfig(featureFlags: ISettings | undefined): IUiConfig {
     const uiConfig = cloneDeep(DEFAULT_HEADLINE_UICONFIG);
     set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
+    if (featureFlags?.enableImprovedAdFilters && uiConfig.buckets?.["filters"]) {
+        uiConfig.buckets["filters"] = defaultImprovedFilters.filters;
+    }
     return uiConfig;
 }
 
-export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlShape): IUiConfig {
-    let uiConfig = getDefaultHeadlineUiConfig();
+export function getHeadlineUiConfig(
+    referencePoint: IReferencePoint,
+    featureFlags: ISettings | undefined,
+    intl: IntlShape,
+): IUiConfig {
+    let uiConfig = getDefaultHeadlineUiConfig(featureFlags);
 
     const buckets = referencePoint?.buckets ?? [];
     const viewCanAddPrimaryItems = hasNoMeasures(buckets);

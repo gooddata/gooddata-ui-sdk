@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type IPatternObject } from "../coloring/types.js";
 
@@ -46,6 +46,7 @@ export interface IHeatmapLegendItem {
     isVisible?: boolean;
     color: string;
     legendIndex: number;
+    anomaly?: boolean;
 }
 
 /**
@@ -163,6 +164,7 @@ export type ISeriesItemMetric = {
     legendIndex: number;
     pointShape?: string;
     yAxis?: number;
+    anomaly?: boolean;
 };
 
 /**

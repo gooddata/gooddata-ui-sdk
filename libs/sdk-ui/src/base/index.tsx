@@ -249,6 +249,7 @@ export {
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
     clusterTitleFromIntl,
+    anomaliesTitleFromIntl,
     resolveLocaleDefaultMessages,
     useResolveMessages,
 } from "./localization/intlUtils.js";

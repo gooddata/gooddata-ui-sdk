@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, memo, useEffect } from "react";
 
@@ -13,6 +13,7 @@ import { type ITheme } from "@gooddata/sdk-model";
 import {
     type ExplicitDrill,
     type OnFiredDrillEvent,
+    anomaliesTitleFromIntl,
     clusterTitleFromIntl,
     convertDrillableItemsToPredicates,
     emptyHeaderTitleFromIntl,
@@ -103,6 +104,7 @@ function ChartTransformationImpl({
         theme,
         totalColumnTitleFromIntl(intl),
         clusterTitleFromIntl(intl),
+        anomaliesTitleFromIntl(intl),
     );
 
     const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, theme, intl);

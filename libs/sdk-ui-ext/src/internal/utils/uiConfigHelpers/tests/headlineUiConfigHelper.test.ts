@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
@@ -37,6 +37,7 @@ describe("headlineUiConfigHelper", () => {
         describe("'canAddItems' property", () => {
             const uiConfig = getHeadlineUiConfig(
                 referencePointMocks.headlineWithMeasureInPrimaryBucket,
+                undefined,
                 intl,
             );
 
@@ -53,6 +54,7 @@ describe("headlineUiConfigHelper", () => {
             it("should set 'icon' property in both 'measures' and 'secondary_measures' buckets", () => {
                 const uiConfig = getHeadlineUiConfig(
                     referencePointMocks.headlineWithMeasureInPrimaryBucket,
+                    undefined,
                     intl,
                 );
                 expect(uiConfig.buckets["measures"].icon).toBeDefined();
@@ -64,6 +66,7 @@ describe("headlineUiConfigHelper", () => {
             it("should set 'customError' property if there is a measure in 'secondary_measures' bucket, but 'measures' bucket is empty", () => {
                 const uiConfig = getHeadlineUiConfig(
                     referencePointMocks.headlineWithMeasureInSecondaryBucket,
+                    undefined,
                     intl,
                 );
                 expect(uiConfig.customError).toHaveProperty("heading");
@@ -73,6 +76,7 @@ describe("headlineUiConfigHelper", () => {
             it("should keep 'customError' property empty if one of buckets contains a measure", () => {
                 const uiConfig = getHeadlineUiConfig(
                     referencePointMocks.headlineWithMeasureInPrimaryBucket,
+                    undefined,
                     intl,
                 );
                 expect(uiConfig.customError).toBeUndefined();
@@ -83,6 +87,7 @@ describe("headlineUiConfigHelper", () => {
             it("should set bucket titles", () => {
                 const uiConfig = getHeadlineUiConfig(
                     referencePointMocks.headlineWithMeasureInPrimaryBucket,
+                    undefined,
                     intl,
                 );
                 expect(uiConfig.buckets["measures"].title).toEqual("Metric");

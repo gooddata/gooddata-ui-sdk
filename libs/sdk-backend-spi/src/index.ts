@@ -50,6 +50,9 @@ export type {
     ICollectionItemsResult,
     IExecutionResultMetadata,
     IExecutionResultDataSourceMessage,
+    IOutliersView,
+    IOutliersConfig,
+    IOutliersResult,
 } from "./workspace/execution/index.js";
 
 export type { IWorkspaceSettingsService } from "./workspace/settings/index.js";

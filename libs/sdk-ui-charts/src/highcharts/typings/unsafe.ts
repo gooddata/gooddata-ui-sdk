@@ -91,6 +91,8 @@ export interface ISeriesDataItem {
     format?: string;
     borderColor?: string;
     loading?: boolean;
+    marker?: ISeriesMarker;
+    anomaly?: boolean;
 }
 
 export interface ISeriesNodeItem {
@@ -106,7 +108,8 @@ export interface IStackItem {
 export interface IZone {
     value?: number;
     dashStyle?: "solid" | "shortDash";
-    color?: IPatternObject;
+    color?: IPatternObject | string;
+    marker?: ISeriesMarker;
 }
 
 export interface ISeriesItem {
@@ -135,11 +138,20 @@ export interface ISeriesItem {
     nodes?: ISeriesNodeItem[];
     dashStyle?: "dash";
     showInLegend?: boolean;
-    marker?: {
-        enabled?: boolean;
-    };
+    marker?: ISeriesMarker;
     zoneAxis?: "x" | "y";
     zones?: IZone[];
+    anomaly?: boolean;
+    pointShape?: string;
+}
+
+export interface ISeriesMarker {
+    enabled?: boolean;
+    radius?: number;
+    fillColor?: string;
+    lineWidth?: number;
+    lineColor?: string;
+    symbol?: string;
 }
 
 export interface IChartOptionsData {

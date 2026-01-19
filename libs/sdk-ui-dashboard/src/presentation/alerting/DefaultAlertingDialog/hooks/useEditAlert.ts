@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -46,6 +46,7 @@ import {
     selectDashboardId,
     selectEnableAlertAttributes,
     selectEnableComparisonInAlerting,
+    selectEnableDashboardTabs,
     selectEnableExternalRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
     selectExecutionResultByRef,
@@ -145,10 +146,12 @@ export function useEditAlert({
     const allowHourlyRecurrence =
         parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
 
-    // Determine target tab ID if widget is present
-    const targetTabIdentifier = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
+    // Determine target tab ID if tabs are enabled and widget is present
+    const targetTabIdentifier =
+        enableDashboardTabs && widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
     // Computed values
     const isNewAlert = !alertToEdit;

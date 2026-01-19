@@ -1124,14 +1124,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const dashboardId = objRefToIdentifier(dashboard, this.authCall);
             const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
             const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? true;
+            const enableDashboardTabs = userSettings.enableDashboardTabs ?? false;
 
             return this.authCall(async (client) => {
                 if (isDefault) {
                     // this should ideally be handled by the POST call below so all these calls are just
                     // a single transaction and the action itself is more performant on UI
-                    if (tabLocalIdentifier) {
+                    if (enableDashboardTabs && tabLocalIdentifier) {
                         await this.unsetDashboardDefaultFilterView(client, dashboardId, tabLocalIdentifier);
-                    } else {
+                    } else if (!enableDashboardTabs) {
                         await this.unsetDashboardDefaultFilterView(client, dashboardId);
                     }
                 }
@@ -1210,6 +1211,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public setFilterViewAsDefault = async (ref: ObjRef, isDefault: boolean): Promise<void> => {
         const id = objRefToIdentifier(ref, this.authCall);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const enableDashboardTabs = userSettings.enableDashboardTabs ?? false;
 
         await this.authCall(async (client) => {
             if (isDefault) {
@@ -1219,12 +1222,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 const dashboardId = filterView.data.relationships?.analyticalDashboard?.data?.id;
                 invariant(dashboardId, "Dashboard could not be determined for the filter view.");
 
-                // Extract tabLocalIdentifier from filter view content
-                const content = filterView.data.attributes?.content;
-                const tabLocalIdentifier = AnalyticalDashboardModelV2.isFilterContextWithTab(content)
-                    ? content.tabLocalIdentifier
-                    : undefined;
-                await this.unsetDashboardDefaultFilterView(client, dashboardId, tabLocalIdentifier);
+                if (enableDashboardTabs) {
+                    // Extract tabLocalIdentifier from filter view content
+                    const content = filterView.data.attributes?.content;
+                    const tabLocalIdentifier = AnalyticalDashboardModelV2.isFilterContextWithTab(content)
+                        ? content.tabLocalIdentifier
+                        : undefined;
+                    await this.unsetDashboardDefaultFilterView(client, dashboardId, tabLocalIdentifier);
+                } else {
+                    await this.unsetDashboardDefaultFilterView(client, dashboardId);
+                }
             }
             await this.updateFilterViewDefaultStatus(client, id, isDefault);
         });

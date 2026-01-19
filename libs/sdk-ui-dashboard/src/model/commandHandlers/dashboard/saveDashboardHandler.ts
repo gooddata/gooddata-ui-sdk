@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type AnyAction } from "@reduxjs/toolkit";
 import { type BatchAction, batchActions } from "redux-batched-actions";
@@ -30,6 +30,7 @@ import { type DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
@@ -200,6 +201,7 @@ function createDefaultTab(
 }
 
 function resolveProcessedTabs(
+    enableDashboardTabs: boolean,
     tabs: TabState[] | undefined,
     rootFilterContext: IFilterContext | ITempFilterContext | undefined,
     layout: IDashboardLayout<ExtendedDashboardWidget> | undefined,
@@ -207,8 +209,8 @@ function resolveProcessedTabs(
     attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
     dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
 ): IDashboardTab[] | undefined {
-    // If no tabs exist, create a default tab with root-level properties
-    const shouldCreateDefaultTab = !tabs || tabs.length === 0;
+    // If tabs feature is enabled but no tabs exist, create a default tab with root-level properties
+    const shouldCreateDefaultTab = enableDashboardTabs && (!tabs || tabs.length === 0);
 
     if (shouldCreateDefaultTab && rootFilterContext) {
         return createDefaultTab(
@@ -260,6 +262,9 @@ function* createDashboardSaveContext(
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
+    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+        yield select(selectEnableDashboardTabs);
+
     /*
      * When updating an existing dashboard, the services expect that the dashboard definition to use for
      * updating contains the identity of the existing dashboard.
@@ -282,6 +287,7 @@ function* createDashboardSaveContext(
         : undefined;
 
     const processedTabs = resolveProcessedTabs(
+        enableDashboardTabs,
         tabs,
         rootFilterContext,
         layout,
@@ -304,7 +310,7 @@ function* createDashboardSaveContext(
         layout,
         dateFilterConfig,
         ...buildOptionalFilterConfigsProps(attributeFilterConfigs, dateFilterConfigs),
-        ...(processedTabs ? { tabs: processedTabs } : {}),
+        ...(enableDashboardTabs && processedTabs ? { tabs: processedTabs } : {}),
         ...pluginsProp,
     };
 
@@ -346,9 +352,12 @@ function* save(
      *
      * For dashboards with tabs, we need to update identities for ALL tabs, not just the active one.
      */
+    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+        yield select(selectEnableDashboardTabs);
+
     const actions: AnyAction[] = [metaActions.setMeta({ dashboard })];
 
-    if (dashboard.tabs && dashboard.tabs.length > 0) {
+    if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
         const stateTabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
 
         // For each tab in the saved dashboard, update its widget identities and filter context identity
@@ -432,6 +441,8 @@ export function* saveDashboardHandler(
 
         const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
             yield select(selectPersistedDashboard);
+        const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
+            yield select(selectEnableDashboardTabs);
 
         const isNewDashboard = persistedDashboard === undefined;
 
@@ -468,7 +479,7 @@ export function* saveDashboardHandler(
         // After save, reset to first tab - activeTabLocalIdentifier is not persisted in dashboard MD
         const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
         const firstTabId = tabs?.[0]?.localIdentifier;
-        if (firstTabId) {
+        if (enableDashboardTabs && firstTabId) {
             const switchTabCmd = switchDashboardTab(firstTabId);
             const switchedEvent = yield call(switchDashboardTabHandler, ctx, switchTabCmd);
             yield dispatchDashboardEvent(switchedEvent);

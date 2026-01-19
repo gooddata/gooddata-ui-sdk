@@ -11,23 +11,10 @@ export function ReasoningContentsComponent({ content }: ReasoningContentsProps) 
 
     return (
         <div className="gd-gen-ai-chat__reasoning">
-            {groupedSteps.map((step, index) => {
-                // If no title is present, render thoughts without a headline.
+            {groupedSteps.map((step, index) => (
                 // NOTE: Change key index to ID (needs BE change)
-                if (!step.title) {
-                    return step.thoughts.length ? (
-                        <div key={index} className="gd-gen-ai-chat__reasoning__thoughts">
-                            {step.thoughts.map((thought, thoughtIndex) => (
-                                <div key={thoughtIndex} className="gd-gen-ai-chat__reasoning__thought">
-                                    <p>{thought}</p>
-                                </div>
-                            ))}
-                        </div>
-                    ) : null;
-                }
-
-                return (
-                    <div key={index} className="gd-gen-ai-chat__reasoning__step">
+                <div key={index} className="gd-gen-ai-chat__reasoning__step">
+                    {step.title ? (
                         <div className="gd-gen-ai-chat__reasoning__headline">
                             <div className="gd-gen-ai-chat__reasoning__bullet"></div>
                             <div className="gd-gen-ai-chat__reasoning__content">
@@ -36,18 +23,18 @@ export function ReasoningContentsComponent({ content }: ReasoningContentsProps) 
                                 </div>
                             </div>
                         </div>
-                        {step.thoughts.length ? (
-                            <div className="gd-gen-ai-chat__reasoning__thoughts">
-                                {step.thoughts.map((thought, thoughtIndex) => (
-                                    <div key={thoughtIndex} className="gd-gen-ai-chat__reasoning__thought">
-                                        <p>{thought}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : null}
-                    </div>
-                );
-            })}
+                    ) : null}
+                    {step.thoughts.length ? (
+                        <div className="gd-gen-ai-chat__reasoning__thoughts">
+                            {step.thoughts.map((thought, thoughtIndex) => (
+                                <div key={thoughtIndex} className="gd-gen-ai-chat__reasoning__thought">
+                                    <p>{thought}</p>
+                                </div>
+                            ))}
+                        </div>
+                    ) : null}
+                </div>
+            ))}
         </div>
     );
 }
@@ -61,21 +48,36 @@ function getThoughts(step: ReasoningContents["steps"][number]): string[] {
 }
 
 function groupSteps(steps: ReasoningContents["steps"]) {
-    const groups: { title: string; thoughts: string[] }[] = [];
+    const groups: { title?: string; thoughts: string[] }[] = [];
+    let pendingThoughts: string[] = [];
     for (const step of steps) {
         const stepThoughts = getThoughts(step);
+        const stepTitle = step.title?.trim() || undefined;
         const lastGroup = groups[groups.length - 1];
 
-        const shouldAppendToLastGroup = Boolean(lastGroup) && (!step.title || lastGroup.title === step.title);
+        if (stepTitle === undefined) {
+            if (lastGroup) {
+                lastGroup.thoughts.push(...stepThoughts);
+            } else {
+                pendingThoughts.push(...stepThoughts);
+            }
+            continue;
+        }
 
-        if (shouldAppendToLastGroup) {
+        if (lastGroup?.title === stepTitle) {
             lastGroup.thoughts.push(...stepThoughts);
             continue;
         }
 
         groups.push({
-            title: step.title,
-            thoughts: [...stepThoughts],
+            title: stepTitle,
+            thoughts: pendingThoughts.length ? [...pendingThoughts, ...stepThoughts] : [...stepThoughts],
+        });
+        pendingThoughts = [];
+    }
+    if (groups.length === 0 && pendingThoughts.length) {
+        groups.push({
+            thoughts: pendingThoughts,
         });
     }
     return groups;

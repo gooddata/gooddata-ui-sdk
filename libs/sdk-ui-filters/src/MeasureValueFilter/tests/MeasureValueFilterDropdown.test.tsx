@@ -31,6 +31,7 @@ const renderComponent = (props?: Partial<IMeasureValueFilterDropdownProps>) => {
         onCancel: () => {},
         measureIdentifier: "myMeasure",
         filter: emptyFilter,
+        isDimensionalityEnabled: false,
     };
     const Wrapped = withIntl(MeasureValueFilterDropdown);
     return render(<Wrapped {...defaultProps} {...props} />);

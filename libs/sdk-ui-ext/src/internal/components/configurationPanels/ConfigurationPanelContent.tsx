@@ -20,6 +20,7 @@ import {
 import { isForecastEnabled } from "../../utils/forecastHelper.js";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { AdvancedSection } from "../configurationControls/advanced/AdvancedSection.js";
+import { AnomaliesSection } from "../configurationControls/anomalies/AnomaliesSection.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ForecastSection } from "../configurationControls/forecast/ForecastSection.js";
 import { InteractionsSection } from "../configurationControls/interactions/InteractionsSection.js";
@@ -184,6 +185,33 @@ export abstract class ConfigurationPanelContent<
 
         return (
             <ForecastSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                enabled={enabled}
+                pushData={pushData}
+            />
+        );
+    }
+
+    protected renderAnomaliesSection(): ReactNode {
+        const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight, colors } =
+            this.props;
+
+        if (!featureFlags?.["enableAnomalyDetectionVisualization"]) {
+            return null;
+        }
+
+        //NOTE: For now we keep it the same as forecast, but it should be different
+        // in the future
+        const { enabled, visible } = isForecastEnabled(referencePoint, insight, type);
+        if (!visible || !colors) {
+            return null;
+        }
+
+        return (
+            <AnomaliesSection
+                colors={colors}
                 controlsDisabled={this.isControlDisabled()}
                 properties={properties}
                 propertiesMeta={propertiesMeta}

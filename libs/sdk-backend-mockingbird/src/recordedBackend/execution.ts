@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -22,6 +22,9 @@ import {
     type IForecastConfig,
     type IForecastResult,
     type IForecastView,
+    type IOutliersConfig,
+    type IOutliersResult,
+    type IOutliersView,
     type IPreparedExecution,
     NoDataError,
     NotSupported,
@@ -304,6 +307,10 @@ class RecordedExecutionResult implements IExecutionResult {
         throw new NotSupported("Forecasting is not supported by the recorded backend.");
     }
 
+    public readOutliersAll(): Promise<IOutliersResult> {
+        throw new NotSupported("Outliers detection is not supported by the recorded backend.");
+    }
+
     public readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
         throw new NotSupported("Anomaly detection is not supported by the recorded backend.");
     }
@@ -348,6 +355,8 @@ class RecordedDataView implements IDataView {
         private readonly denormalizer?: Denormalizer,
         public readonly forecastConfig?: IForecastConfig,
         public readonly forecastResult?: IForecastResult,
+        public readonly outliersConfig?: IOutliersConfig,
+        public readonly outliersResult?: IOutliersResult,
         public readonly clusteringConfig?: IClusteringConfig,
         public readonly clusteringResult?: IClusteringResult,
     ) {
@@ -384,6 +393,8 @@ class RecordedDataView implements IDataView {
             this.denormalizer,
             config,
             result,
+            this.outliersConfig,
+            this.outliersResult,
             this.clusteringConfig,
             this.clusteringResult,
         );
@@ -419,8 +430,33 @@ class RecordedDataView implements IDataView {
             this.denormalizer,
             this.forecastConfig,
             this.forecastResult,
+            this.outliersConfig,
+            this.outliersResult,
             config,
             result,
+        );
+    }
+
+    outliers(): IOutliersView {
+        return {
+            headerItems: [],
+            anomalies: [],
+            loading: false,
+        };
+    }
+
+    withOutliers(config?: IOutliersConfig, result?: IOutliersResult): IDataView {
+        return new RecordedDataView(
+            this.result,
+            this.definition,
+            this.recordedDataView,
+            this.denormalizer,
+            this.forecastConfig,
+            this.forecastResult,
+            config,
+            result,
+            this.clusteringConfig,
+            this.clusteringResult,
         );
     }
 

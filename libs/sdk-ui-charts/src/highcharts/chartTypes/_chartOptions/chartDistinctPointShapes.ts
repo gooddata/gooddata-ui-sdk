@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
@@ -35,12 +35,13 @@ function setupDistinctPointShapes(
     series: ISeriesItem[],
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     distinctPointShapes?: IDistinctPointShapes,
+    anomaliesEnabled?: boolean,
 ) {
     if (!series || !Array.isArray(series)) {
         return series;
     }
 
-    return series.map((seriesItem: ISeriesItem, index: number) => {
+    const updatedSeries = series.map((seriesItem: ISeriesItem, index: number) => {
         // Only apply to line-based series (line, area, or combo with line parts)
         if (!seriesItem.type || seriesItem.type === "line") {
             let symbol: string | undefined;
@@ -69,6 +70,30 @@ function setupDistinctPointShapes(
 
         return seriesItem;
     });
+
+    //NOTE: If anomalies are enabled, we need to change the point shape of the anomaly to be the same as
+    // the virtual anomaly series
+    if (anomaliesEnabled) {
+        const anomalySeries = updatedSeries.find((s) => s.anomaly);
+        if (anomalySeries) {
+            return updatedSeries.map((s) => ({
+                ...s,
+                data: s.data?.map((d) =>
+                    d.anomaly
+                        ? {
+                              ...d,
+                              marker: {
+                                  ...d.marker,
+                                  symbol: anomalySeries.marker?.symbol,
+                              },
+                          }
+                        : d,
+                ),
+            }));
+        }
+    }
+
+    return updatedSeries;
 }
 
 /**
@@ -89,5 +114,10 @@ export function setupDistinctPointShapesToSeries(
         return series;
     }
 
-    return setupDistinctPointShapes(series, measureGroup, distinctPointShapes);
+    return setupDistinctPointShapes(
+        series,
+        measureGroup,
+        distinctPointShapes,
+        chartConfig?.anomalies?.enabled,
+    );
 }

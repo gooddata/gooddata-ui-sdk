@@ -2,7 +2,7 @@
 
 import { useSelector } from "react-redux";
 
-import { type Contents, isReasoningContents } from "../../model.js";
+import { type Contents, type ReasoningContents, isReasoningContents } from "../../model.js";
 import { ReasoningContentsComponent } from "./contents/ReasoningContents.js";
 import { type AssistantMessageState } from "./messageState.js";
 import { ReasoningDropdown, getLastReasoningStepTitle } from "./ReasoningDropdown.js";
@@ -22,6 +22,12 @@ export function ReasoningMessage({ content, messageState }: IReasoningMessagePro
 
     // Collect reasoning items for the dropdown
     const reasoningItems = content.filter(isReasoningContents);
+    const mergedReasoningSteps = reasoningItems.flatMap((item) => item.steps ?? []);
+    const hasReasoningSteps = mergedReasoningSteps.length > 0;
+    const mergedReasoningContent: ReasoningContents = {
+        type: "reasoning",
+        steps: mergedReasoningSteps,
+    };
 
     // Treat dropdown as "complete" once any real (non-reasoning) answer content exists
     const hasRenderedAnswer = content.some((item) => {
@@ -62,9 +68,7 @@ export function ReasoningMessage({ content, messageState }: IReasoningMessagePro
             {/* Show placeholder while waiting for reasoning */}
             {showThinkingPlaceholder ? <div className="gd-gen-ai-chat__reasoning"></div> : null}
             {/* Show reasoning steps once available */}
-            {reasoningItems.map((item, index) => (
-                <ReasoningContentsComponent key={`reasoning-${index}`} content={item} />
-            ))}
+            {hasReasoningSteps ? <ReasoningContentsComponent content={mergedReasoningContent} /> : null}
         </ReasoningDropdown>
     );
 }

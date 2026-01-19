@@ -247,7 +247,7 @@ function sanitizeMeasureValueFilter(
 
 export function sanitizeFilters(
     newReferencePoint: IExtendedReferencePoint,
-    enableImprovedAdFilters = false,
+    enableImprovedAdFilters = true,
     oldReferencePoint: Pick<IExtendedReferencePoint, "buckets">,
 ): IExtendedReferencePoint {
     const attributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);

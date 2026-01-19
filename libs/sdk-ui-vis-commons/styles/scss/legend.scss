@@ -74,6 +74,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         font-family: kit-variables.$gd-font-primary;
         cursor: pointer;
 
+        &.passive {
+            cursor: default;
+        }
+
         .series-icon {
             flex: 0 0 auto;
             width: 9px;

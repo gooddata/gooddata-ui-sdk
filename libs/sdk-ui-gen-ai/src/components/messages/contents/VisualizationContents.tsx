@@ -26,6 +26,7 @@ import {
     type IKeyDriveAnalysis,
     type IMeasure,
     type ISortItem,
+    type ITheme,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
@@ -61,6 +62,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableNext, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
+import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { MarkdownComponent } from "./Markdown.js";
 import { useExecution } from "./useExecution.js";
@@ -139,6 +141,20 @@ function VisualizationContentsComponentCore({
     const [isTable, setIsTable] = useState(false);
 
     const intl = useIntl();
+    const theme = useTheme();
+    const kpiTheme = useMemo(
+        () => ({
+            ...theme,
+            kpi: {
+                ...theme?.kpi,
+                primaryMeasureColor:
+                    theme?.dashboards?.content?.widget?.title?.color ?? theme?.palette?.complementary?.c8,
+                secondaryInfoColor:
+                    theme?.dashboards?.content?.widget?.title?.color ?? theme?.palette?.complementary?.c8,
+            },
+        }),
+        [theme],
+    );
     const moreButtonTooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.menu" });
     const toggleButtonTableTooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.table" });
     const toggleButtonOriginalTooltipText = intl.formatMessage({
@@ -668,6 +684,7 @@ function VisualizationContentsComponentCore({
                                                 case "HEADLINE":
                                                     return renderHeadline(
                                                         intl.locale,
+                                                        kpiTheme,
                                                         metrics,
                                                         dimensions,
                                                         filters,
@@ -939,6 +956,7 @@ const renderTable = (
 
 const renderHeadline = (
     locale: string,
+    theme: ITheme | undefined,
     metrics: IMeasure[],
     _dimensions: IAttribute[],
     filters: IFilter[],
@@ -951,24 +969,28 @@ const renderHeadline = (
         drillableItems?: ExplicitDrill[];
         enableChangeAnalysis?: boolean;
     },
-) => (
-    <Headline
-        locale={locale}
-        primaryMeasure={metrics[0]}
-        secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
-        filters={filters}
-        config={{
-            ...visualizationTooltipOptions,
-            ...getHeadlineComparison(metrics),
-            colorPalette,
-        }}
-        drillableItems={props.drillableItems}
-        onDrill={onDrill}
-        onError={onError}
-        onLoadingChanged={onLoadingChanged}
-        onExportReady={onSuccess}
-    />
-);
+) => {
+    return (
+        <ScopedThemeProvider theme={theme}>
+            <Headline
+                locale={locale}
+                primaryMeasure={metrics[0]}
+                secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
+                filters={filters}
+                config={{
+                    ...visualizationTooltipOptions,
+                    ...getHeadlineComparison(metrics),
+                    colorPalette,
+                }}
+                drillableItems={props.drillableItems}
+                onDrill={onDrill}
+                onError={onError}
+                onLoadingChanged={onLoadingChanged}
+                onExportReady={onSuccess}
+            />
+        </ScopedThemeProvider>
+    );
+};
 
 function calculateOffset(container?: HTMLDivElement | null, drillEvent?: IDrillEvent) {
     const offest = getRelativeOffset(drillEvent?.target, container);

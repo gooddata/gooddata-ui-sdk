@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty, without } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -23,6 +23,7 @@ import {
 import { setupDistinctPointShapesToSeries } from "./chartDistinctPointShapes.js";
 import { getDrillableSeries } from "./chartDrilling.js";
 import { assignForecastAxes } from "./chartForecast.js";
+import { assignOutliersAxes } from "./chartOutliers.js";
 import { getSeries } from "./chartSeries.js";
 import {
     filterThresholdZonesCategories,
@@ -390,6 +391,7 @@ export function getChartOptions(
     theme?: ITheme,
     totalColumnTitle?: string,
     clusterTitle?: string,
+    anomaliesTitle?: string,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
     const dimensions = dv.meta().dimensions();
@@ -492,6 +494,15 @@ export function getChartOptions(
 
     // Forecast
     initialSeries = assignForecastAxes(type, initialSeries, dv.rawData().forecastTwoDimData());
+    // Outliers
+    initialSeries = assignOutliersAxes(
+        config.colorPalette,
+        config.anomalies,
+        type,
+        initialSeries,
+        dv.rawData().outliersTwoDimData(),
+        anomaliesTitle,
+    );
 
     // Remove threshold metric series and define zones based upon its data
     const { series, plotLines } = setupThresholdZones(type, initialSeries, dv, config);

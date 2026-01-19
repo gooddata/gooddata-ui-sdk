@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 
@@ -18,6 +18,9 @@ import {
     type IForecastConfig,
     type IForecastResult,
     type IForecastView,
+    type IOutliersConfig,
+    type IOutliersResult,
+    type IOutliersView,
     type IPreparedExecution,
     type IPreparedExecutionOptions,
     NoDataError,
@@ -215,6 +218,8 @@ class DenormalizedDataView implements IDataView {
     public readonly forecastResult?: IForecastResult;
     public readonly clusteringConfig?: IClusteringConfig;
     public readonly clusteringResult?: IClusteringResult;
+    public readonly outliersConfig?: IOutliersConfig;
+    public readonly outliersResult?: IOutliersResult;
     public readonly context?: IExecutionContext;
 
     public readonly data: DataValue[][] | DataValue[];
@@ -235,6 +240,8 @@ class DenormalizedDataView implements IDataView {
         denormalizer: Denormalizer,
         forecastConfig?: IForecastConfig,
         forecastResult?: IForecastResult,
+        outliersConfig?: IOutliersConfig,
+        outliersResult?: IOutliersResult,
         clusteringConfig?: IClusteringConfig,
         clusteringResult?: IClusteringResult,
     ) {
@@ -243,6 +250,8 @@ class DenormalizedDataView implements IDataView {
         this.result = result;
         this.forecastConfig = forecastConfig;
         this.forecastResult = forecastResult;
+        this.outliersConfig = outliersConfig;
+        this.outliersResult = outliersResult;
         this.clusteringConfig = clusteringConfig;
         this.clusteringResult = clusteringResult;
         this.context = cloneDeep(normalizedDataView.context);
@@ -289,6 +298,32 @@ class DenormalizedDataView implements IDataView {
             this._denormalizer,
             normalizedDataView.forecastConfig,
             normalizedDataView.forecastResult,
+            normalizedDataView.outliersConfig,
+            normalizedDataView.outliersResult,
+            normalizedDataView.clusteringConfig,
+            normalizedDataView.clusteringResult,
+        );
+    }
+
+    public outliers(): IOutliersView {
+        const data = this.normalizedDataView.outliers();
+
+        return {
+            ...data,
+            headerItems: this._denormalizer.denormalizeHeaders([[data.headerItems]])[0][0],
+        };
+    }
+
+    public withOutliers(config?: IOutliersConfig, result?: IOutliersResult): IDataView {
+        const normalizedDataView = this.normalizedDataView.withOutliers(config, result);
+        return new DenormalizedDataView(
+            this.result,
+            normalizedDataView,
+            this._denormalizer,
+            normalizedDataView.forecastConfig,
+            normalizedDataView.forecastResult,
+            normalizedDataView.outliersConfig,
+            normalizedDataView.outliersResult,
             normalizedDataView.clusteringConfig,
             normalizedDataView.clusteringResult,
         );
@@ -302,6 +337,8 @@ class DenormalizedDataView implements IDataView {
             this._denormalizer,
             normalizedDataView.forecastConfig,
             normalizedDataView.forecastResult,
+            normalizedDataView.outliersConfig,
+            normalizedDataView.outliersResult,
             normalizedDataView.clusteringConfig,
             normalizedDataView.clusteringResult,
         );

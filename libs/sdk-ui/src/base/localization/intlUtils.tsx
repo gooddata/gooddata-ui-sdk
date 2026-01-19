@@ -219,3 +219,12 @@ export function totalColumnTitleFromIntl(intl: IntlShape): string {
 export function clusterTitleFromIntl(intl: IntlShape): string {
     return intl.formatMessage({ id: "visualization.cluster" });
 }
+
+/**
+ * Returns a string meant to represent a anomalies group.
+ * @param intl - the source of i18n strings
+ * @internal
+ */
+export function anomaliesTitleFromIntl(intl: IntlShape): string {
+    return intl.formatMessage({ id: "visualization.anomalies" });
+}
