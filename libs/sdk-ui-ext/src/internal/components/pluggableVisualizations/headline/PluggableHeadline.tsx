@@ -117,7 +117,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const referencePointCloned = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
-            uiConfig: getDefaultHeadlineUiConfig(),
+            uiConfig: getDefaultHeadlineUiConfig(this.featureFlags),
         };
 
         if (!hasGlobalDateFilter(referencePoint.filters)) {
@@ -166,7 +166,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         configureOverTimeComparison(newReferencePoint);
 
-        newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.intl);
+        newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.featureFlags, this.intl);
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

@@ -82,6 +82,9 @@ import {
     type IOrganizationStylingService,
     type IOrganizationUserService,
     type IOrganizations,
+    type IOutliersConfig,
+    type IOutliersResult,
+    type IOutliersView,
     type IPagedResource,
     type IPreparedExecution,
     type IPreparedExecutionOptions,
@@ -385,6 +388,16 @@ export function dummyDataView(
         withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
             throw new NotSupported("clustering is not supported in this dummy backend");
         },
+        outliers(): IOutliersView {
+            return {
+                headerItems: [],
+                anomalies: [],
+                loading: false,
+            };
+        },
+        withOutliers(_config?: IOutliersConfig, _result?: IOutliersResult): IDataView {
+            throw new NotSupported("outliers is not supported in this dummy backend");
+        },
         readCollectionItems(_config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
             throw new NotSupported("readCollectionItems is not supported in this dummy backend");
         },
@@ -555,6 +568,9 @@ function dummyExecutionResult(
         },
         readForecastAll(): Promise<IForecastResult> {
             throw new NotSupported("Forecasting is not supported in dummy backend.");
+        },
+        readOutliersAll(): Promise<IOutliersResult> {
+            throw new NotSupported("Outliers detection is not supported in dummy backend.");
         },
         readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
             throw new NotSupported("Anomaly detection is not supported in dummy backend.");

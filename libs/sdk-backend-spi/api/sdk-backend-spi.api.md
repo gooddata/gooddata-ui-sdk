@@ -87,6 +87,7 @@ import type { IListedDashboard } from '@gooddata/sdk-model';
 import type { ILlmEndpointBase } from '@gooddata/sdk-model';
 import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import type { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import type { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import type { IMemoryItemDefinition } from '@gooddata/sdk-model';
@@ -761,6 +762,12 @@ export interface IDataView {
     readonly metadata: IExecutionResultMetadata;
     readonly offset: number[];
     // @alpha
+    outliers(): IOutliersView;
+    // @alpha
+    readonly outliersConfig?: IOutliersConfig;
+    // @alpha
+    readonly outliersResult?: IOutliersResult;
+    // @alpha
     readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult>;
     readonly result: IExecutionResult;
     readonly totalCount: number[];
@@ -771,6 +778,8 @@ export interface IDataView {
     withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView;
     // @beta
     withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
+    // @alpha
+    withOutliers(config?: IOutliersConfig, result?: IOutliersResult): IDataView;
 }
 
 // @internal
@@ -882,6 +891,8 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
     readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
     // @beta
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
+    // @alpha
+    readOutliersAll(config: IOutliersConfig): Promise<IOutliersResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     readonly signal?: AbortSignal;
     transform(): IPreparedExecution;
@@ -1540,6 +1551,33 @@ export interface IOrganizationUsersQuery {
 
 // @public
 export type IOrganizationUsersQueryResult = IPagedResource<IOrganizationUser>;
+
+// @beta (undocumented)
+export interface IOutliersConfig {
+    granularity?: "hour" | "day" | "week" | "month" | "quarter" | "year";
+    sensitivity: "low" | "medium" | "high";
+}
+
+// @beta (undocumented)
+export interface IOutliersResult {
+    // (undocumented)
+    attributes: string[];
+    // (undocumented)
+    metrics: {
+        localIdentifier: string;
+        values: Array<number | null>;
+    }[];
+}
+
+// @beta
+export interface IOutliersView {
+    // (undocumented)
+    anomalies: DataValue[][];
+    // (undocumented)
+    headerItems: (IResultHeader & IMeasureDescriptor)[];
+    // (undocumented)
+    loading: boolean;
+}
 
 // @public
 export interface IPagedResource<TItem> {

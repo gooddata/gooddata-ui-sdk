@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 import { type MessageDescriptor, useIntl } from "react-intl";
@@ -15,6 +15,7 @@ import { ColoredItemContent } from "../../../colors/coloredItemsList/ColoredItem
 
 interface IColorItemProps {
     disabled?: boolean;
+    align?: "left" | "right";
     showDisabledMessage?: boolean;
     color?: IColor;
     colorType: ComparisonColorType;
@@ -27,6 +28,7 @@ interface IColorItemProps {
 
 export function ColorItem({
     disabled,
+    align,
     showDisabledMessage,
     color,
     colorType,
@@ -57,7 +59,7 @@ export function ColorItem({
                 selectedColorItem={color}
                 disabled={disabled}
             >
-                <ColoredItemContent text={label} color={rgbColor} chartFill={chartFill} />
+                <ColoredItemContent text={label} align={align} color={rgbColor} chartFill={chartFill} />
             </ColorDropdown>
         </DisabledBubbleMessage>
     );

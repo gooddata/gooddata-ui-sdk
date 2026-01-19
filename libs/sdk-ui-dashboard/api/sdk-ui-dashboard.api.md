@@ -9481,6 +9481,9 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean>;
 // @internal
 export const selectEnableDashboardShareLink: DashboardSelector<boolean>;
 
+// @alpha
+export const selectEnableDashboardTabs: DashboardSelector<boolean>;
+
 // @internal (undocumented)
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
 

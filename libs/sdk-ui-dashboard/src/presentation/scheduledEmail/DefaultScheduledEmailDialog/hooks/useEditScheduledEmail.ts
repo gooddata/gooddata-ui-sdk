@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -52,6 +52,7 @@ import {
     selectDashboardId,
     selectDashboardTitle,
     selectEnableAutomationEvaluationMode,
+    selectEnableDashboardTabs,
     selectEnableExternalRecipients,
     selectTimezone,
     selectUsers,
@@ -157,10 +158,12 @@ export function useEditScheduledEmail({
 
     const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
 
-    // Determine target tab ID if widget is present
-    const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
+    // Determine target tab ID if tabs are enabled and widget is present
+    const targetTabId =
+        enableDashboardTabs && widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
     const effectiveWidgetFilters = enableAutomationFilterContext
         ? getAppliedWidgetFilters(

@@ -38,6 +38,7 @@ export {
     isWaterfall,
     updateConfigWithSettings,
     updateForecastWithSettings,
+    updateOutliersWithSettings,
 } from "./highcharts/index.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons

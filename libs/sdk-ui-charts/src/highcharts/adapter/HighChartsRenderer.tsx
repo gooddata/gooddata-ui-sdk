@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -187,6 +187,9 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
     }, []);
 
     const onLegendItemClick = useCallback((item: any): void => {
+        if (item.anomaly) {
+            return;
+        }
         setLegendItemsEnabled((prev) => set<boolean[]>([...prev], item.legendIndex, !prev[item.legendIndex]));
     }, []);
 

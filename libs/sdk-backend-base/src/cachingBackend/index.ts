@@ -31,6 +31,8 @@ import {
     type IGetAutomationOptions,
     type IGetAutomationsOptions,
     type IGetAutomationsQueryOptions,
+    type IOutliersConfig,
+    type IOutliersResult,
     type IPreparedExecution,
     type IRawExportCustomOverrides,
     type ISecuritySettingsService,
@@ -412,6 +414,8 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         private allData: Promise<IDataView> | undefined = undefined,
         private allForecastConfig: IForecastConfig | undefined = undefined,
         private allForecastData: Promise<IForecastResult> | undefined = undefined,
+        private allOutliersConfig: IOutliersConfig | undefined = undefined,
+        private allOutliersData: Promise<IOutliersResult> | undefined = undefined,
         private windows: LRUCache<string, Promise<IDataView>> | undefined = undefined,
         private collectionItemsCache: CollectionItemsCache | undefined = undefined,
     ) {
@@ -470,6 +474,19 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         return this.allForecastData;
     };
 
+    public override readOutliersAll = (config: IOutliersConfig): Promise<IOutliersResult> => {
+        // TODO: enable outliers caching size configuration
+        if (!this.allOutliersData || this.allOutliersConfig !== config) {
+            this.allOutliersConfig = config;
+            this.allOutliersData = super.readOutliersAll(config).catch((e) => {
+                this.allOutliersData = undefined;
+                throw e;
+            });
+        }
+
+        return this.allOutliersData;
+    };
+
     public override readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
         if (!this.windows) {
             return super.readWindow(offset, size).then((dataView) => this.wrapDataView(dataView));
@@ -516,6 +533,8 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
             this.allData,
             this.allForecastConfig,
             this.allForecastData,
+            this.allOutliersConfig,
+            this.allOutliersData,
             this.windows,
             this.collectionItemsCache,
         );

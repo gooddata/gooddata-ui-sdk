@@ -106,6 +106,7 @@ export {
     selectEnableExportToPdfTabular,
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,
+    selectEnableDashboardTabs,
     selectIsAddTabButtonHidden,
     selectExportResultPollingTimeout,
     selectEnableAnomalyDetectionAlert,

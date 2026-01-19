@@ -19,6 +19,7 @@ import {
     type IColorMapping,
     updateConfigWithSettings,
     updateForecastWithSettings,
+    updateOutliersWithSettings,
 } from "@gooddata/sdk-ui-charts";
 
 import { messages } from "../../../../locales.js";
@@ -293,6 +294,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 height={resultingHeight}
                 type={this.type}
                 locale={locale}
+                outliersConfig={updateOutliersWithSettings(
+                    fullConfig,
+                    this.featureFlags,
+                    isForecastEnabled(this.referencePoint, insight, this.type),
+                )}
                 forecastConfig={updateForecastWithSettings(
                     fullConfig,
                     this.featureFlags,

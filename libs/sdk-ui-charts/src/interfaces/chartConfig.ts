@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type IColorPalette, type ISeparators, type Identifier } from "@gooddata/sdk-model";
+import { type IColor, type IColorPalette, type ISeparators, type Identifier } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, type VisType } from "@gooddata/sdk-ui";
 import { type IChartFillConfig, type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
@@ -366,6 +366,12 @@ export interface IChartConfig {
     forecast?: IForecast;
 
     /**
+     * Configuration of the anomalies.
+     * @beta
+     */
+    anomalies?: IAnomalies;
+
+    /**
      * Configuration of the clustering.
      * @beta
      */
@@ -516,6 +522,38 @@ export interface IForecast {
      * Indicates whether the forecast is seasonal or not.
      */
     seasonal: boolean;
+}
+
+/**
+ * @beta
+ * Anomalies configuration
+ */
+export interface IAnomalies {
+    /**
+     * @beta
+     * Indicates whether the forecast is enabled or not.
+     */
+    enabled: boolean;
+
+    /**
+     * @beta
+     * Sensitivity of anomalies detection.
+     */
+    sensitivity: "low" | "medium" | "high";
+
+    /**
+     * @beta
+     * Size if point
+     */
+    size: "small" | "medium" | "big";
+
+    /**
+     * @beta
+     * Color of point
+     *
+     * @defaultValue rgb(255, 0, 0)
+     */
+    color: IColor;
 }
 
 /**

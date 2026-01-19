@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { type IForecastConfig } from "@gooddata/sdk-backend-spi";
+import { type IForecastConfig, type IOutliersConfig } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
     type IAttributeOrMeasure,
@@ -112,6 +112,12 @@ export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProp
      * @beta
      */
     forecastConfig?: IForecastConfig;
+
+    /**
+     * Enter the outliers configuration to apply to the chart data.
+     * @beta
+     */
+    outliersConfig?: IOutliersConfig;
 }
 
 const WrappedLineChart = withChart(lineChartDefinition)(CoreLineChart);

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { Fragment, memo, useCallback, useRef, useState } from "react";
 
@@ -38,6 +38,12 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     displayTreatNullAsZeroOption,
     treatNullAsZeroDefaultValue,
     enableOperatorSelection,
+    dimensionality,
+    insightDimensionality,
+    isDimensionalityEnabled,
+    catalogDimensionality,
+    onDimensionalityChange,
+    isLoadingCatalogDimensionality,
     onApply,
 }: IMeasureValueFilterProps) {
     const [displayDropdown, setDisplayDropdown] = useState(false);
@@ -82,6 +88,12 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                     treatNullAsZeroDefaultValue={treatNullAsZeroDefaultValue}
                     enableOperatorSelection={enableOperatorSelection}
+                    dimensionality={dimensionality}
+                    insightDimensionality={insightDimensionality}
+                    isDimensionalityEnabled={isDimensionalityEnabled}
+                    catalogDimensionality={catalogDimensionality}
+                    onDimensionalityChange={onDimensionalityChange}
+                    isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                     anchorEl={buttonRef.current ?? undefined}
                 />
             ) : null}

@@ -18,4 +18,8 @@ export {
     type ActionsApiKeyDriverAnalysisRequest as SmartFunctionsApiKeyDriverAnalysisRequest,
     ActionsApi_KeyDriverAnalysisResult as SmartFunctionsApi_KeyDriverAnalysisResult,
     type ActionsApiKeyDriverAnalysisResultRequest as SmartFunctionsApiKeyDriverAnalysisResultRequest,
+    ActionsApi_OutlierDetection as SmartFunctionsApi_OutlierDetection,
+    type ActionsApiOutlierDetectionRequest as SmartFunctionsApiOutlierDetectionRequest,
+    ActionsApi_OutlierDetectionResult as SmartFunctionsApi_OutlierDetectionResult,
+    type ActionsApiOutlierDetectionResultRequest as SmartFunctionsApiOutlierDetectionResultRequest,
 } from "../../generated/afm-rest-api/api.js";

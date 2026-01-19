@@ -106,6 +106,8 @@ import { IMetadataObject } from '@gooddata/sdk-model';
 import { IMetricFormatOverrideSetting } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOutliersConfig } from '@gooddata/sdk-backend-spi';
+import { IOutliersResult } from '@gooddata/sdk-backend-spi';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
@@ -177,6 +179,8 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadWindow?: (offset: number[], size: number[], error: any, executionId: string) => void;
     successfulForecastResultReadAll?: (forecastResult: IForecastResult, executionId: string) => void;
     failedForecastResultReadAll?: (error: any, executionId: string) => void;
+    successfulOutliersResultReadAll?: (outliersResult: IOutliersResult, executionId: string) => void;
+    failedOutliersResultReadAll?: (error: any, executionId: string) => void;
 };
 
 // @public
@@ -470,6 +474,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     // (undocumented)
+    readOutliersAll(config: IOutliersConfig): Promise<IOutliersResult>;
+    // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     // (undocumented)
     signal: AbortSignal | undefined;
@@ -734,7 +740,7 @@ export type DecoratorFactories = {
 // @internal (undocumented)
 export class Denormalizer {
     denormalizeDimDescriptors: (normalizedDims: IDimensionDescriptor[]) => IDimensionDescriptor[];
-    denormalizeHeaders: (headerItems: IResultHeader[][][]) => IResultHeader[][][];
+    denormalizeHeaders: <T extends IResultHeader>(headerItems: T[][][]) => T[][][];
     // (undocumented)
     static from(state: NormalizationState): Denormalizer;
     // (undocumented)

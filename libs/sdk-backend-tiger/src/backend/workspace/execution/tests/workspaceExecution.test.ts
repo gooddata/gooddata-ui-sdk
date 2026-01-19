@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { describe, expect, test } from "vitest";
 
 import { type IDimensionDescriptor, type IExecutionDefinition, type ObjRef } from "@gooddata/sdk-model";

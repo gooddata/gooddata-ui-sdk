@@ -52,6 +52,7 @@ import {
     selectDateFormat,
     selectEnableAutomationFilterContext,
     selectEnableAutomationManagement,
+    selectEnableDashboardTabs,
     selectEnableNewScheduledExport,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
@@ -163,6 +164,7 @@ export function ScheduledMailDialogRenderer({
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
     const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -353,8 +355,8 @@ export function ScheduledMailDialogRenderer({
             },
         ];
 
-        // Only show Filters tab when automation filter context is enabled
-        if (enableAutomationFilterContext) {
+        // Only show Filters tab when both automation filter context and dashboard tabs are enabled
+        if (enableAutomationFilterContext && enableDashboardTabs) {
             tabsList.push({
                 id: "filters",
                 label: intl.formatMessage({ id: "dialogs.schedule.email.tabs.filters" }),
@@ -362,7 +364,7 @@ export function ScheduledMailDialogRenderer({
         }
 
         return tabsList;
-    }, [intl, enableAutomationFilterContext]);
+    }, [intl, enableAutomationFilterContext, enableDashboardTabs]);
 
     const handleTabSelect = useCallback((tab: IUiTab) => {
         setSelectedTabId(tab.id as "filters" | "general");
@@ -370,14 +372,19 @@ export function ScheduledMailDialogRenderer({
 
     // Reset to General tab if Filters tab is not available
     useEffect(() => {
-        if (!enableAutomationFilterContext && selectedTabId === "filters") {
+        if (!(enableAutomationFilterContext && enableDashboardTabs) && selectedTabId === "filters") {
             setSelectedTabId("general");
         }
-    }, [enableAutomationFilterContext, selectedTabId]);
+    }, [enableAutomationFilterContext, enableDashboardTabs, selectedTabId]);
 
     // Measure General tab content height to maintain consistent dialog size
     useEffect(() => {
-        if (enableAutomationFilterContext && generalTabContentRef.current && selectedTabId === "general") {
+        if (
+            enableDashboardTabs &&
+            enableAutomationFilterContext &&
+            generalTabContentRef.current &&
+            selectedTabId === "general"
+        ) {
             // Use requestAnimationFrame to ensure DOM is fully rendered
             requestAnimationFrame(() => {
                 if (generalTabContentRef.current) {
@@ -386,7 +393,7 @@ export function ScheduledMailDialogRenderer({
                 }
             });
         }
-    }, [enableAutomationFilterContext, selectedTabId]);
+    }, [enableDashboardTabs, enableAutomationFilterContext, selectedTabId]);
 
     // This should be visible only when enableAutomationFilterContext is true
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
@@ -486,7 +493,7 @@ export function ScheduledMailDialogRenderer({
                             <h2 className={"sr-only"} id={titleElementId}>
                                 {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
                             </h2>
-                            {tabs.length > 1 ? (
+                            {tabs.length > 1 && enableDashboardTabs ? (
                                 <UiTabs
                                     tabs={tabs}
                                     selectedTabId={selectedTabId}
@@ -506,11 +513,14 @@ export function ScheduledMailDialogRenderer({
                                 className={cx("gd-notifications-channel-dialog-content-wrapper", {
                                     "gd-notification-channel-dialog-with-automation-filters":
                                         enableAutomationFilterContext,
-                                    "gd-notification-channel-dialog-with-tabs": tabs.length > 1,
+                                    "gd-notification-channel-dialog-with-tabs":
+                                        tabs.length > 1 && enableDashboardTabs,
                                 })}
                             >
                                 <div className="gd-divider-with-margin" />
-                                {enableAutomationFilterContext && selectedTabId === "filters" ? (
+                                {enableDashboardTabs &&
+                                enableAutomationFilterContext &&
+                                selectedTabId === "filters" ? (
                                     <div
                                         ref={filtersTabContentRef}
                                         className="gd-schedule-dialog-tab-content"
@@ -540,7 +550,7 @@ export function ScheduledMailDialogRenderer({
                                         ref={generalTabContentRef}
                                         className="gd-schedule-dialog-tab-content"
                                     >
-                                        {enableAutomationFilterContext ? (
+                                        {enableAutomationFilterContext && enableDashboardTabs ? (
                                             <Message
                                                 type="progress"
                                                 className="gd-schedule-dialog-tab-content-info"
@@ -549,6 +559,22 @@ export function ScheduledMailDialogRenderer({
                                                     id: "dialogs.schedule.email.tabs.info",
                                                 })}
                                             </Message>
+                                        ) : enableAutomationFilterContext && !enableDashboardTabs ? (
+                                            <>
+                                                <AutomationFiltersSelect
+                                                    availableFilters={availableFilters}
+                                                    selectedFilters={editedAutomationFilters}
+                                                    onFiltersChange={onFiltersChange}
+                                                    storeFilters={storeFilters}
+                                                    onStoreFiltersChange={onStoreFiltersChange}
+                                                    isDashboardAutomation={isDashboardExportSelected}
+                                                    overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                    filtersByTab={filtersByTab}
+                                                    editedFiltersByTab={editedAutomationFiltersByTab}
+                                                    onFiltersByTabChange={onFiltersByTabChange}
+                                                />
+                                                <ContentDivider className="gd-divider-with-margin" />
+                                            </>
                                         ) : null}
                                         <RecurrenceForm
                                             startDate={startDate}
@@ -683,7 +709,7 @@ export function ScheduledMailDialogRenderer({
                                                 {errorMessage}
                                             </Message>
                                         ) : null}
-                                        {getInvalidDatapoints({ recursive: true })
+                                        {getInvalidDatapoints()
                                             .filter(
                                                 (invalidDatapoint) => invalidDatapoint.severity === "error",
                                             )

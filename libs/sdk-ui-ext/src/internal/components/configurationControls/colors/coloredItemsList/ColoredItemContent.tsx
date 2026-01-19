@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type CSSProperties, memo } from "react";
 
@@ -16,12 +16,14 @@ export interface IColoredItemContentProps extends ISelectableChild {
     color: IRgbColorValue;
     chartFill?: ChartFillType;
     patternFillIndex?: number | PatternFillName;
+    align?: "right" | "left";
     text: string;
 }
 
 export const ColoredItemContent = memo(function ColoredItemContent({
     color,
     position,
+    align = "right",
     chartFill = "solid",
     patternFillIndex = 0,
     text,
@@ -55,10 +57,11 @@ export const ColoredItemContent = memo(function ColoredItemContent({
 
     return (
         <div className={getItemClassNames()}>
+            {align === "left" ? <span>{text}</span> : null}
             <div className={getPreviewBoxClassNames()} style={getColorSampleStyle()}>
                 <OptionalPatternFill chartFill={chartFill} patternFillIndex={patternFillIndex} />
             </div>
-            <span>{text}</span>
+            {align === "right" ? <span>{text}</span> : null}
         </div>
     );
 });

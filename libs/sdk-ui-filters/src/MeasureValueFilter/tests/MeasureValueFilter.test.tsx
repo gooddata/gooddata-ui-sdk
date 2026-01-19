@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { type IMeasureValueFilter, localIdRef, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { type IMeasureValueFilterProps, MeasureValueFilter } from "../MeasureValueFilter.js";
@@ -60,10 +60,29 @@ describe("Measure value filter", () => {
 
     it("should call onApply when Apply button clicked", () => {
         const onApply = vi.fn();
-        const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
-        const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 123);
+        const filter = newMeasureValueFilterWithOptions(localIdRef("myMeasure"), {
+            operator: "LESS_THAN",
+            value: 100,
+            dimensionality: [{ localIdentifier: "product" }],
+        });
+        const expectedFilter = newMeasureValueFilterWithOptions(localIdRef("myMeasure"), {
+            operator: "LESS_THAN",
+            value: 123,
+            dimensionality: [{ localIdentifier: "product" }],
+        });
 
-        renderComponent({ onApply, filter });
+        renderComponent({
+            onApply,
+            filter,
+            isDimensionalityEnabled: true,
+            dimensionality: [
+                {
+                    identifier: { localIdentifier: "product" },
+                    title: "Product",
+                    type: "attribute",
+                },
+            ],
+        });
 
         fireEvent.click(screen.getByText("My measure"));
         fireEvent.change(screen.getByDisplayValue(100), {

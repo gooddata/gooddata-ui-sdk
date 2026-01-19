@@ -3767,6 +3767,7 @@ export interface ISettings {
     enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
     enableAnomalyDetectionAlert?: boolean;
+    enableAnomalyDetectionVisualization?: boolean;
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
@@ -3783,6 +3784,7 @@ export interface ISettings {
     enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
+    enableDashboardTabs?: boolean;
     enableDashboardTabularExport?: boolean;
     // (undocumented)
     enableDataSection?: boolean;

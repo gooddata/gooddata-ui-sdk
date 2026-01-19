@@ -70,13 +70,29 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         usePercentage,
         treatNullAsZeroValue,
         valuePrecision = DefaultValuePrecision,
-        isDimensionalityEnabled = false,
+        isDimensionalityEnabled = true,
         insightDimensionality,
         separators,
         catalogDimensionality,
         onDimensionalityChange,
         isLoadingCatalogDimensionality,
     } = props;
+
+    // This flag determines if the message, which explains different filter behavior, is shown for the filters
+    // created before the dimensionality feature was introduced. The new filters or re-saved filters are
+    // considered as "migrated" and the message is not shown.
+    // We detect the old filters by checking that they have a dimensionality set. The new filters can't be
+    // applied unless some dimensionality is set (some attribute is in the filter). The old filters did not
+    // use the prop. However, if the new filter is created for Headline or Pivot without rows and columns
+    // (i.e., insight without dimensionality), the message would be shown even when it should not. Because
+    // filters for these insights could not be created before the dimensionality feature was introduced,
+    // we can safely consider these filters as migrated.
+    // Any change to the filter dimensionality will set the filter as migrated and will hide the message
+    // until a user reopens the filter if he did not apply the change. If he did, the first part of the
+    // condition will be true and the message will not be shown.
+    const [isMigratedFilter, setIsMigratedFilter] = useState<boolean>(
+        (props.dimensionality?.length ?? 0) > 0 || (insightDimensionality?.length ?? 0) === 0,
+    );
 
     const trimToPrecision = useCallback(
         (n: number | undefined): number | undefined => {
@@ -204,11 +220,8 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     const isApplyButtonDisabled = useCallback(() => {
         // disable the Apply button when the filter has no currently set dimensionality but insight has it
         // (e.g., non-headline insight that can have the dimensionality) but only when supported via ff
-        if (
-            isDimensionalityEnabled &&
-            state.dimensionality.length === 0 &&
-            (insightDimensionality?.length ?? 0) !== 0
-        ) {
+
+        if (isDimensionalityEnabled && state.dimensionality.length === 0) {
             return true;
         }
 
@@ -225,7 +238,6 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         state.operator,
         state.dimensionality,
         isDimensionalityEnabled,
-        insightDimensionality,
         isApplyButtonDisabledForComparison,
         isApplyButtonDisabledForRange,
         isChanged,
@@ -256,6 +268,9 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         (dimensionality: IDimensionalityItem[]) => {
             setState((prev) => ({ ...prev, dimensionality }));
             onDimensionalityChange?.(dimensionality.map((item) => item.identifier));
+            // dismiss a message shown for non-migrated filters (filters without dimensionality info)
+            // once dimensionality has been changed
+            setIsMigratedFilter(true);
         },
         [onDimensionalityChange],
     );
@@ -398,7 +413,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                             catalogDimensionality={catalogDimensionality}
                             isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                             onDimensionalityChange={handleDimensionalityChange}
-                            isMigratedFilter={props.dimensionality !== undefined}
+                            isMigratedFilter={isMigratedFilter}
                         />
                         <PreviewSection
                             operator={operator}

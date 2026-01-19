@@ -3989,6 +3989,9 @@ importers:
       '@gooddata/sdk-ui-semantic-search':
         specifier: workspace:*
         version: link:../sdk-ui-semantic-search
+      '@gooddata/sdk-ui-theme-provider':
+        specifier: workspace:*
+        version: link:../sdk-ui-theme-provider
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
@@ -4059,9 +4062,6 @@ importers:
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
-      '@gooddata/sdk-ui-theme-provider':
-        specifier: workspace:*
-        version: link:../sdk-ui-theme-provider
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.18.5)
@@ -20774,6 +20774,7 @@ packages:
   /tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
     dependencies:
       chownr: 2.0.0
       fs-minipass: 2.1.0

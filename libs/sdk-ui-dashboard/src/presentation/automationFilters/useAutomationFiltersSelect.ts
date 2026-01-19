@@ -25,6 +25,7 @@ import {
     selectAutomationCommonDateFilterId,
     selectAutomationFiltersByTab,
     selectDashboardFiltersWithoutCrossFiltering,
+    selectEnableDashboardTabs,
     useDashboardSelector,
 } from "../../model/index.js";
 
@@ -170,6 +171,7 @@ export const useAutomationFiltersSelect = ({
     );
 
     // Get filters per tab - only applicable for whole dashboard automations (no widget)
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const allFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
     const availableFiltersByTab = allFiltersByTab.reduce<Record<string, FilterContextItem[]>>((acc, tab) => {
         acc[tab.tabId] = tab.availableFilters;
@@ -180,10 +182,11 @@ export const useAutomationFiltersSelect = ({
     // Safe to get from active tab selector as it's a consistent identifier
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
 
-    // Only provide filtersPerTab for whole dashboard automations when there are multiple tabs
+    // Only provide filtersPerTab for whole dashboard automations when tabs are enabled and there are multiple tabs
     const isDashboardAutomation = !widget;
     const hasMultipleTabs = allFiltersByTab.length > 1;
-    const filtersByTab = isDashboardAutomation && hasMultipleTabs ? allFiltersByTab : undefined;
+    const filtersByTab =
+        isDashboardAutomation && enableDashboardTabs && hasMultipleTabs ? allFiltersByTab : undefined;
 
     const areFiltersStored = useMemo(() => checkAreFiltersStored(automationToEdit), [automationToEdit]);
 

@@ -649,6 +649,11 @@ export interface ISettings {
     registeredPluggableApplications?: string;
 
     /**
+     * Enable dashboard tabs feature
+     */
+    enableDashboardTabs?: boolean;
+
+    /**
      * Enable automatic reset of column sizing in pivot table when container width changes or column structure changes.
      * This fixes issues where tables with growToFit don't expand to full width after tab switching.
      */
@@ -674,6 +679,11 @@ export interface ISettings {
      * Enable anomaly detection alert
      */
     enableAnomalyDetectionAlert?: boolean;
+
+    /**
+     * Enable anomaly detection in visualization
+     */
+    enableAnomalyDetectionVisualization?: boolean;
 
     /**
      * Enable fiscal calendars configuration.

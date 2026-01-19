@@ -291,6 +291,10 @@
         "text": "Cluster",
         "crowdinContext": "The default title for the cluster group"
     },
+    "visualization.anomalies": {
+        "text": "Anomalies",
+        "crowdinContext": "The default title for the anomalies group"
+    },
     "visualization.ErrorMessageGeneric": {
         "text": "Sorry, we can't display this visualization",
         "crowdinContext": "Generic error message shown when a visualization cannot be displayed due to an unspecified technical issue."
@@ -358,6 +362,14 @@
     "visualization.tooltip.generic.interaction": {
         "text": "Click to drill or filter",
         "crowdinContext": "Informational tooltip that appears over interactive visualization elements, indicating users can click for drilling or filtering actions."
+    },
+    "visualization.tooltip.anomalyDetection.title": {
+        "text": "Anomaly detected",
+        "crowdinContext": "Anomaly detection tooltip text in visualisation"
+    },
+    "visualization.tooltip.anomalyDetection.description": {
+        "text": "This value significantly deviates from recent historical behavior.",
+        "crowdinContext": "Anomaly detection tooltip description text in visualisation"
     },
     "gs.filterLabel.all": {
         "text": "All",

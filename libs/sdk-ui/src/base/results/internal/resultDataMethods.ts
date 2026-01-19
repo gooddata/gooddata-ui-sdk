@@ -69,6 +69,15 @@ export interface IResultDataMethods {
     forecastTwoDimData(): ForecastDataValue[][];
 
     /**
+     * This is a convenience method that determines whether the data in the data view is two dimension; if it
+     * is then data is returned as-is. If the data is single dimension, this method will up-cast the data to
+     * two dimensions.
+     *
+     * @returns two dimensional data; if data is empty, returns array with single empty array in
+     */
+    outliersTwoDimData(): DataValue[][];
+
+    /**
      * @returns grand totals in the data view, undefined if there are no grand totals
      */
     totals(): DataValue[][][] | undefined;
@@ -187,6 +196,12 @@ class ResultDataMethods implements IResultDataMethods {
                 loading,
             })),
         );
+    }
+
+    public outliersTwoDimData(): DataValue[][] {
+        const { anomalies } = this.dataView.outliers();
+
+        return anomalies;
     }
 
     public totals(): DataValue[][][] | undefined {

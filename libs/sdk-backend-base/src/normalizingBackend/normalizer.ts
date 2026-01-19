@@ -169,11 +169,12 @@ export class Denormalizer {
      * @param headerItems - headers to denormalize, copy will be done
      * @returns new headers
      */
-    public denormalizeHeaders = (headerItems: IResultHeader[][][]): IResultHeader[][][] => {
+    public denormalizeHeaders = <T extends IResultHeader>(headerItems: T[][][]): T[][][] => {
         return cloneDeepWith(headerItems, (value): IResultMeasureHeader | undefined => {
             if (isResultMeasureHeader(value)) {
                 return {
                     measureHeaderItem: {
+                        ...value.measureHeaderItem,
                         name: this.fillOriginalMeasureTitle(value.measureHeaderItem.name),
                         order: value.measureHeaderItem.order,
                     },

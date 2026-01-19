@@ -3,6 +3,7 @@ import {
     type IAnalyticalBackend,
     type IClusteringConfig,
     type IForecastConfig,
+    type IOutliersConfig,
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { type IExecutionConfig } from "@gooddata/sdk-model";
@@ -131,4 +132,10 @@ export interface ICoreChartProps extends ICommonChartProps {
      * Clustering configuration to apply to the chart data.
      */
     clusteringConfig?: IClusteringConfig;
+
+    /**
+     * Outliers configuration to apply to the chart data.
+     * @beta
+     */
+    outliersConfig?: IOutliersConfig;
 }

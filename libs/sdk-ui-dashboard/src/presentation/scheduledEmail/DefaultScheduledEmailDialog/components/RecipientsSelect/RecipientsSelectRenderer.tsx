@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type KeyboardEvent,
@@ -331,7 +331,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         const invalidUnknownError = !!invalidUnknownRecipients.length;
 
         const invalidRecipientsValues = [...invalidExternalRecipients, ...invalidUnknownRecipients]
-            .map((v) => v.name ?? v.id)
+            .map((v) => v.name || v.id)
             .join(", ");
 
         const authorOnlyError =
@@ -339,7 +339,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
             ((value.length === 1 && value[0].id !== loggedUser?.id) || value.length > 1);
 
         const missingEmailRecipients = value.filter((v) => !getHasEmail(v));
-        const missingEmailRecipientsValues = missingEmailRecipients.map((v) => v.name ?? v.id).join(", ");
+        const missingEmailRecipientsValues = missingEmailRecipients.map((v) => v.name || v.id).join(", ");
         const missingEmailError = !!missingEmailRecipients.length;
 
         return {
@@ -556,7 +556,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
             // MultiValueRemove component from react-select
             const removeIcon: ReactElement | null = (children as any)![1];
-            const name = data.name ?? data.id;
+            const name = data.name || data.id;
             const hasEmail = getHasEmail(data);
             const noExternal = data.type === "externalUser" && !allowExternalRecipients;
             const invalidExternal = data.type === "unknownUser";
@@ -603,7 +603,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
     const renderOptionLabel = useCallback(
         (recipient: IAutomationRecipient): ReactElement | null => {
-            const displayName = recipient.name ?? recipient.id;
+            const displayName = recipient.name || recipient.id;
             const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
 
             const renderValue = renderRecipientValue(recipient);
@@ -1003,7 +1003,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                         onBlur={onBlur}
                         value={value}
                         getOptionValue={(o) => o.id}
-                        getOptionLabel={(o) => o.name ?? o.id}
+                        getOptionLabel={(o) => o.name || o.id}
                         aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
                         aria-invalid={!isValid}
                     />

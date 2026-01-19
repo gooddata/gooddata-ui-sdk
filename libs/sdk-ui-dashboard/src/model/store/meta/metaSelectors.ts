@@ -35,6 +35,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type DashboardDescriptor } from "./metaState.js";
+import { selectEnableDashboardTabs } from "../config/configSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -108,41 +109,46 @@ const toFilterContextDefinition = (
     return definition;
 };
 
-export const selectPersistedDashboardTabs = createSelector(selectSelf, (state): IDashboardTab[] => {
-    const persistedDashboard = state.persistedDashboard;
+export const selectPersistedDashboardTabs = createSelector(
+    selectSelf,
+    selectEnableDashboardTabs,
+    (state, enableDashboardTabs): IDashboardTab[] => {
+        const persistedDashboard = state.persistedDashboard;
 
-    if (!persistedDashboard) {
-        return [];
-    }
+        if (!persistedDashboard) {
+            return [];
+        }
 
-    if (persistedDashboard.tabs && persistedDashboard.tabs.length > 0) {
-        return persistedDashboard.tabs;
-    }
+        if (enableDashboardTabs && persistedDashboard.tabs && persistedDashboard.tabs.length > 0) {
+            return persistedDashboard.tabs;
+        }
 
-    return [
-        {
-            localIdentifier: DEFAULT_TAB_ID,
-            title: "",
-            filterContext: persistedDashboard.filterContext,
-            attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
-            dateFilterConfig: persistedDashboard.dateFilterConfig,
-            dateFilterConfigs: persistedDashboard.dateFilterConfigs,
-            layout: persistedDashboard.layout,
-        },
-    ];
-});
+        return [
+            {
+                localIdentifier: DEFAULT_TAB_ID,
+                title: "",
+                filterContext: persistedDashboard.filterContext,
+                attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
+                dateFilterConfig: persistedDashboard.dateFilterConfig,
+                dateFilterConfigs: persistedDashboard.dateFilterConfigs,
+                layout: persistedDashboard.layout,
+            },
+        ];
+    },
+);
 
 const selectPersistedDashboardActiveTabId = createSelector(
     selectSelf,
     selectPersistedDashboardTabs,
     selectActiveTabLocalIdentifier,
-    (state, tabs, activeTabId) => {
+    selectEnableDashboardTabs,
+    (state, tabs, activeTabId, enableDashboardTabs) => {
         const persistedDashboard = state.persistedDashboard;
         if (!persistedDashboard) {
             return undefined;
         }
 
-        if (tabs && tabs.length > 0) {
+        if (enableDashboardTabs && tabs && tabs.length > 0) {
             const activeTab = activeTabId ? tabs.find((tab) => tab.localIdentifier === activeTabId) : tabs[0];
             return activeTab?.localIdentifier ?? DEFAULT_TAB_ID;
         }

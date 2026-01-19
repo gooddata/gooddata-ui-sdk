@@ -104,6 +104,7 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
                         />
                     </ConfigSection>
                     {this.renderForecastSection()}
+                    {this.renderAnomaliesSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

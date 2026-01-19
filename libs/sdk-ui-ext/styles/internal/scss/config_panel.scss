@@ -191,6 +191,27 @@ $color-picker-spacing: 5px;
     }
 }
 
+.gd-anomalies-section {
+    .gd-anomalies-section-control {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .gd-anomalies-color-control {
+        margin-left: -10px;
+    }
+
+    .gd-color-config-list-item {
+        justify-content: flex-start;
+
+        & > span {
+            flex-grow: 0;
+            width: 60px;
+        }
+    }
+}
+
 .gd-advanced-section.adi-bucket-configuration {
     display: flex;
     flex-direction: column;

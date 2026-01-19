@@ -5,6 +5,7 @@ import { type ComponentType } from "react";
 import {
     type IClusteringConfig,
     type IForecastConfig,
+    type IOutliersConfig,
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 
@@ -136,6 +137,12 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
      * @beta
      */
     forecastConfig?: IForecastConfig;
+
+    /**
+     * Outliers configuration.
+     * @beta
+     */
+    outliersConfig?: IOutliersConfig;
 
     /**
      * Configuration for clustering.

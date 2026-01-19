@@ -48,6 +48,7 @@ import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOutliersConfig } from '@gooddata/sdk-backend-spi';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
@@ -80,6 +81,9 @@ import { TotalType } from '@gooddata/sdk-model';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
+
+// @internal
+export function anomaliesTitleFromIntl(intl: IntlShape): string;
 
 // @public
 export type AnyArrayOf<T> = T[] | ArrayOf<T>;
@@ -846,6 +850,8 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
     executions?: IPreparedExecution[];
     // @beta
     forecastConfig?: IForecastConfig;
+    // @beta
+    outliersConfig?: IOutliersConfig;
 }
 
 // @public
@@ -1389,6 +1395,7 @@ export interface IResultDataMethods {
     hasTotals(): boolean;
     // (undocumented)
     isEmpty(): boolean;
+    outliersTwoDimData(): DataValue[][];
     // (undocumented)
     rowTotals(): DataValue[][] | undefined;
     // (undocumented)

@@ -1,0 +1,75 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`augmentCustomOverrideWithNormalizedKeys > should augment both labels and metrics with normalized keys 1`] = `
+{
+  "labels": {
+    "a1": {
+      "title": "Custom Label",
+    },
+    "a_attr1": {
+      "title": "Custom Label",
+    },
+  },
+  "metrics": {
+    "m1": {
+      "format": "#,##0.00",
+      "title": "Custom Metric",
+    },
+    "m_fact1_sum": {
+      "format": "#,##0.00",
+      "title": "Custom Metric",
+    },
+  },
+}
+`;
+
+exports[`augmentCustomOverrideWithNormalizedKeys > should augment labels with normalized keys 1`] = `
+{
+  "labels": {
+    "a1": {
+      "title": "Custom Label",
+    },
+    "a_attr1": {
+      "title": "Custom Label",
+    },
+  },
+}
+`;
+
+exports[`augmentCustomOverrideWithNormalizedKeys > should augment metrics with normalized keys 1`] = `
+{
+  "metrics": {
+    "m1": {
+      "format": "#,##0.00",
+      "title": "Custom Metric",
+    },
+    "m_fact1_sum": {
+      "format": "#,##0.00",
+      "title": "Custom Metric",
+    },
+  },
+}
+`;
+
+exports[`augmentCustomOverrideWithNormalizedKeys > should handle empty customOverride 1`] = `{}`;
+
+exports[`augmentCustomOverrideWithNormalizedKeys > should preserve all original keys and add normalized ones 1`] = `
+{
+  "labels": {
+    "original_key_1": {
+      "title": "Label 1",
+    },
+    "original_key_2": {
+      "title": "Label 2",
+    },
+  },
+  "metrics": {
+    "original_metric_1": {
+      "format": "#,##0",
+      "title": "Metric 1",
+    },
+  },
+}
+`;
+
+exports[`augmentCustomOverrideWithNormalizedKeys > should return undefined when customOverride is undefined 1`] = `undefined`;

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -10,6 +10,7 @@ import { DrillTargetDashboardTabSelector } from "./DrillTargetDashboardTabSelect
 import {
     type IInaccessibleDashboard,
     selectAccessibleDashboards,
+    selectEnableDashboardTabs,
     selectInaccessibleDashboards,
     useDashboardSelector,
 } from "../../../../../model/index.js";
@@ -60,6 +61,7 @@ export function DrillTargetDashboardItem({
     const intl = useIntl();
     const dashboards = useDashboardSelector(selectAccessibleDashboards);
     const inaccessibleDashboards = useDashboardSelector(selectInaccessibleDashboards);
+    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
 
     const dashboardItems = useMemo(() => {
         return buildDashboardItems(dashboards, inaccessibleDashboards, intl, selected);
@@ -98,7 +100,7 @@ export function DrillTargetDashboardItem({
     return (
         <>
             <DashboardList onSelect={handleDashboardSelect} dashboards={dashboardItems} selected={selected} />
-            {selected && dashboardTabs.length > 1 ? (
+            {selected && dashboardTabs.length > 1 && enableDashboardTabs ? (
                 <DrillTargetDashboardTabSelector
                     tabs={dashboardTabs}
                     selectedTabId={effectiveSelectedTab}

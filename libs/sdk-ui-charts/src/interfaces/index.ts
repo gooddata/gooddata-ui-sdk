@@ -2,6 +2,7 @@
 
 export type {
     IForecast,
+    IAnomalies,
     IChartConfig,
     PositionType,
     ILegendConfig,

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty, isEqual } from "lodash-es";
 
@@ -33,6 +33,9 @@ import {
     type IGeoService,
     type IOrganization,
     type IOrganizations,
+    type IOutliersConfig,
+    type IOutliersResult,
+    type IOutliersView,
     type IPreparedExecution,
     type IUserService,
     type IWorkspaceAccessControlService,
@@ -359,6 +362,16 @@ function recordedDataView(
         withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
             throw new NotSupported("Clustering is not supported by the legacy recorded backend.");
         },
+        outliers(): IOutliersView {
+            return {
+                headerItems: [],
+                anomalies: [],
+                loading: false,
+            };
+        },
+        withOutliers(_config?: IOutliersConfig, _result?: IOutliersResult): IDataView {
+            throw new NotSupported("Outliers are not supported by the legacy recorded backend.");
+        },
         readCollectionItems(_config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
             throw new NotSupported("readCollectionItems is not supported by the legacy recorded backend.");
         },
@@ -421,6 +434,9 @@ function recordedExecutionResult(
         },
         readForecastAll(): Promise<IForecastResult> {
             throw new NotSupported("Forecasting is not supported by the recorded backend.");
+        },
+        readOutliersAll(): Promise<IOutliersResult> {
+            throw new NotSupported("Outliers detection is not supported by the recorded backend.");
         },
         readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
             throw new NotSupported("Anomaly detection is not supported by the recorded backend.");

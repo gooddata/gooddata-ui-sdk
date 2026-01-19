@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { pick, set, sortBy, uniqBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -147,7 +147,7 @@ export function getLegendItems(
         ? chartOptions.data?.series?.[0]?.data
         : chartOptions.data?.series;
 
-    let pickedProps = ["name", "color", "legendIndex", "type"];
+    let pickedProps = ["name", "color", "legendIndex", "type", "anomaly"];
     if (isOneOfTypes(type, supportedDualAxesChartTypes)) {
         // 'yAxis' helps to distinguish primary and secondary axes
         pickedProps = [...pickedProps, "yAxis"];
@@ -177,6 +177,7 @@ export function getLegendItems(
                 name: it.clusterName || it.segmentName,
                 color: it.color as ISeriesItemMetric["color"],
                 legendIndex: index,
+                anomaly: it.anomaly,
             };
         });
     }

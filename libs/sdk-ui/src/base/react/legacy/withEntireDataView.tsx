@@ -10,6 +10,7 @@ import {
     type IDataView,
     type IExecutionResult,
     type IForecastConfig,
+    type IOutliersConfig,
     type IPreparedExecution,
     isNoDataError,
     isUnexpectedResponseError,
@@ -132,6 +133,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             void this.initDataLoading(
                 this.props.execution,
                 this.props.forecastConfig,
+                this.props.outliersConfig,
                 this.props.clusteringConfig,
             );
         }
@@ -162,12 +164,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             if (
                 !this.props.execution.equals(nextProps.execution) ||
                 !isEqual(this.props.forecastConfig, nextProps.forecastConfig) ||
-                !isEqual(this.props.clusteringConfig, nextProps.clusteringConfig)
+                !isEqual(this.props.clusteringConfig, nextProps.clusteringConfig) ||
+                !isEqual(this.props.outliersConfig, nextProps.outliersConfig)
             ) {
                 this.refreshAbortController();
                 void this.initDataLoading(
                     nextProps.execution,
                     nextProps.forecastConfig,
+                    nextProps.outliersConfig,
                     nextProps.clusteringConfig,
                 );
             }
@@ -270,7 +274,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             dataView: IDataView,
             executionResult: IExecutionResult,
             forecastConfig: IForecastConfig,
-        ): Promise<void> {
+        ): Promise<IDataView> {
             const { pushData } = this.props;
             try {
                 const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig!);
@@ -285,6 +289,38 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         },
                     });
                 }
+                return updatedDataView;
+            } catch (e) {
+                const updatedDataView = dataView.withForecast(undefined);
+                this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                if (pushData) {
+                    pushData({ dataView: updatedDataView });
+                }
+
+                const err = e as any;
+                throw new ForecastNotReceivedSdkError(
+                    err.responseBody?.reason || err.message || "Unknown error",
+                    err,
+                );
+            }
+        }
+
+        private async loadOutliersData(
+            dataView: IDataView,
+            executionResult: IExecutionResult,
+            _outliersConfig: IOutliersConfig,
+        ): Promise<IDataView> {
+            const { pushData } = this.props;
+            try {
+                const outliersResult = await executionResult.readOutliersAll(dataView.outliersConfig!);
+                const updatedDataView = dataView.withOutliers(dataView.outliersConfig, outliersResult);
+                this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                if (pushData) {
+                    pushData({
+                        dataView: updatedDataView,
+                    });
+                }
+                return updatedDataView;
             } catch (e) {
                 const updatedDataView = dataView.withForecast(undefined);
                 this.setState((s) => ({ ...s, dataView: updatedDataView }));
@@ -338,6 +374,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         private async initDataLoading(
             originalExecution: IPreparedExecution,
             forecastConfig?: IForecastConfig,
+            outliersConfig?: IOutliersConfig,
             clusteringConfig?: IClusteringConfig,
         ) {
             let execution = originalExecution;
@@ -385,6 +422,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 if (forecastConfig) {
                     dataView = originalDataView.withForecast(forecastConfig);
                 }
+                if (outliersConfig) {
+                    dataView = dataView.withOutliers(outliersConfig);
+                }
 
                 if (clusteringConfig) {
                     dataView = await this.loadClusteringData(
@@ -395,6 +435,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     if (forecastConfig) {
                         dataView = dataView.withForecast(forecastConfig);
                     }
+                    if (outliersConfig) {
+                        dataView = dataView.withOutliers(outliersConfig);
+                    }
                 }
 
                 this.handleLoadingSuccess(dataView, executionResult);
@@ -404,7 +447,10 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 }
 
                 if (dataView.forecastConfig && forecastConfig) {
-                    await this.loadForecastData(dataView, executionResult, forecastConfig);
+                    dataView = await this.loadForecastData(dataView, executionResult, forecastConfig);
+                }
+                if (dataView.outliersConfig && outliersConfig) {
+                    await this.loadOutliersData(dataView, executionResult, outliersConfig);
                 }
             } catch (error) {
                 this.handleLoadingError(error, fingerprint);

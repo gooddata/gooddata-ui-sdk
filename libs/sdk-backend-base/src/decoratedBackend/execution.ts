@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type ExplainConfig,
@@ -20,6 +20,9 @@ import {
     type IForecastConfig,
     type IForecastResult,
     type IForecastView,
+    type IOutliersConfig,
+    type IOutliersResult,
+    type IOutliersView,
     type IPreparedExecution,
     type IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
@@ -219,6 +222,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
         return this.decorated.readForecastAll(config);
     }
 
+    public readOutliersAll(config: IOutliersConfig): Promise<IOutliersResult> {
+        return this.decorated.readOutliersAll(config);
+    }
+
     public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
         return this.decorated.readAnomalyDetectionAll(config);
     }
@@ -316,12 +323,20 @@ export abstract class DecoratedDataView implements IDataView {
         return this.decorated.forecast();
     }
 
-    clustering(): IClusteringResult {
+    public clustering(): IClusteringResult {
         return this.decorated.clustering();
     }
 
-    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+    public withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
         return this.decorated.withClustering(config, result);
+    }
+
+    public outliers(): IOutliersView {
+        return this.decorated.outliers();
+    }
+
+    public withOutliers(config?: IOutliersConfig, result?: IOutliersResult): IDataView {
+        return this.decorated.withOutliers(config, result);
     }
 
     public readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {

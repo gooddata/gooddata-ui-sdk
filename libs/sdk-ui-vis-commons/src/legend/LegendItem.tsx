@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, useCallback } from "react";
 
@@ -214,6 +214,28 @@ export const LegendItem = withTheme(function LegendItem({
     );
 
     const legendItemId = useIdPrefixed("legend-item");
+
+    if (item.anomaly) {
+        return (
+            <div
+                data-testid={"legend-item"}
+                id={id}
+                style={style}
+                className={cx("series-item", "passive", { "series-item--isFocused": isFocused })}
+                aria-labelledby={legendItemId}
+                title={unescape(item.name)}
+            >
+                <div className="series-icon" style={iconStyle}>
+                    {item.isVisible && isPatternFill && isPatternObject(item.color) ? (
+                        <PatternFill patternFill={item.color?.pattern} />
+                    ) : null}
+                </div>
+                <div id={legendItemId} className="series-name" style={nameStyle}>
+                    {item.name}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <button

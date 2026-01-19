@@ -976,6 +976,15 @@ export const selectEnableAccessibilityMode: DashboardSelector<boolean> = createS
 );
 
 /**
+ * Returns whether dashboard tabs feature is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableDashboardTabs: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableDashboardTabs ?? true;
+});
+
+/**
  * Returns whether implicit drill to url feature is enabled.
  *
  * @alpha

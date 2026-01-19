@@ -36,6 +36,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
+import { IOutliersConfig } from '@gooddata/sdk-backend-spi';
 import { IPatternFill } from '@gooddata/sdk-ui-vis-commons';
 import { IPatternOptionsObject } from '@gooddata/sdk-ui-vis-commons';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
@@ -189,6 +190,14 @@ export function Headline(props: IHeadlineProps): JSX.Element;
 // @public
 export function Heatmap(props: IHeatmapProps): JSX.Element;
 
+// @beta
+export interface IAnomalies {
+    color: IColor;
+    enabled: boolean;
+    sensitivity: "low" | "medium" | "high";
+    size: "small" | "medium" | "big";
+}
+
 // @public (undocumented)
 export interface IAreaChartBucketProps {
     filters?: NullableFiltersOrPlaceholders;
@@ -309,6 +318,8 @@ export interface IChartConfig {
     a11yDescription?: string;
     // @internal
     a11yTitle?: string;
+    // @beta
+    anomalies?: IAnomalies;
     // @beta
     cellImageSizing?: ChartCellImageSizing;
     // @beta
@@ -485,6 +496,8 @@ export interface ICoreChartProps extends ICommonChartProps {
     enableExecutionCancelling?: boolean;
     execution: IPreparedExecution;
     forecastConfig?: IForecastConfig;
+    // @beta
+    outliersConfig?: IOutliersConfig;
 }
 
 // @internal (undocumented)
@@ -716,6 +729,8 @@ export interface ILineChartBucketProps {
 export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
     // @beta
     forecastConfig?: IForecastConfig;
+    // @beta
+    outliersConfig?: IOutliersConfig;
 }
 
 // @public
@@ -1038,6 +1053,11 @@ export function updateConfigWithSettings(config: IChartConfig | undefined, setti
 export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {
     enabled: boolean;
 }): IForecastConfig | undefined;
+
+// @internal (undocumented)
+export function updateOutliersWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {
+    enabled: boolean;
+}): IOutliersConfig | undefined;
 
 // @public
 export const ViewByAttributesLimit = 2;

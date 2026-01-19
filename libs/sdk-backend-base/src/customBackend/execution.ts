@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 
@@ -13,6 +13,7 @@ import {
     type IExportConfig,
     type IExportResult,
     type IForecastResult,
+    type IOutliersResult,
     type IPreparedExecution,
     NotImplemented,
     NotSupported,
@@ -179,6 +180,10 @@ class CustomExecutionResult implements IExecutionResult {
 
     public readForecastAll(): Promise<IForecastResult> {
         throw new NotSupported("Forecasting is not supported by the custom backend.");
+    }
+
+    public readOutliersAll(): Promise<IOutliersResult> {
+        throw new NotSupported("Outliers detection is not supported by the custom backend.");
     }
 
     public readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {

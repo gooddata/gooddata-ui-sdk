@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type DataValue,
@@ -12,6 +12,7 @@ import {
     type IGeoJsonFeature,
     type IInsight,
     type IInsightDefinition,
+    type IMeasureDescriptor,
     type INullableFilter,
     type IResultHeader,
     type IResultWarning,
@@ -48,6 +49,32 @@ export interface IForecastResult {
     prediction: Array<number | null>;
     lowerBound: Array<number | null>;
     upperBound: Array<number | null>;
+}
+
+/**
+ * @beta
+ */
+export interface IOutliersConfig {
+    /**
+     * Sensitivity of the outliers detection - e.g. "low"
+     */
+    sensitivity: "low" | "medium" | "high";
+    /**
+     * Granularity of the outlier detection, can be omitted, will be
+     * determined automatically
+     */
+    granularity?: "hour" | "day" | "week" | "month" | "quarter" | "year";
+}
+
+/**
+ * @beta
+ */
+export interface IOutliersResult {
+    attributes: string[];
+    metrics: {
+        localIdentifier: string;
+        values: Array<number | null>;
+    }[];
 }
 
 /**
@@ -548,6 +575,12 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
 
     /**
+     * Reads outliers for the execution result.
+     * @alpha
+     */
+    readOutliersAll(config: IOutliersConfig): Promise<IOutliersResult>;
+
+    /**
      * Reads anomaly detection for the execution result.
      * @alpha
      */
@@ -717,6 +750,18 @@ export interface IDataView {
     readonly forecastResult?: IForecastResult;
 
     /**
+     * Configuration for the outliers, if available.
+     * @alpha
+     */
+    readonly outliersConfig?: IOutliersConfig;
+
+    /**
+     * Outliers result, if available.
+     * @alpha
+     */
+    readonly outliersResult?: IOutliersResult;
+
+    /**
      * Configuration for the clustering, if available.
      * @beta
      */
@@ -773,6 +818,13 @@ export interface IDataView {
     clustering(): IClusteringResult;
 
     /**
+     * Return outliers data view. This object is empty if not `withOutliers` was called
+     * @see IDataView.withOutliers
+     * @alpha
+     */
+    outliers(): IOutliersView;
+
+    /**
      * Adds forecast for this data view.
      *
      * @beta
@@ -790,6 +842,15 @@ export interface IDataView {
      * @returns new data view with clustering enabled
      */
     withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView;
+
+    /**
+     * Adds outliers for this data view.
+     * @alpha
+     * @param config - outliers configuration
+     * @param result - outliers result
+     * @returns new data view with outliers enabled
+     */
+    withOutliers(config?: IOutliersConfig, result?: IOutliersResult): IDataView;
 
     /**
      * Retrieves collection items (geospatial features) using provided configuration.
@@ -811,5 +872,15 @@ export interface IForecastView {
     prediction: DataValue[][];
     low: DataValue[][];
     high: DataValue[][];
+    loading: boolean;
+}
+
+/**
+ * Represents a outliers detection on current graph
+ * @beta
+ */
+export interface IOutliersView {
+    headerItems: (IResultHeader & IMeasureDescriptor)[];
+    anomalies: DataValue[][];
     loading: boolean;
 }

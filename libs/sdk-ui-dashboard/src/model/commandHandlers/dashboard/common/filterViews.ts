@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { isEqual, omit } from "lodash-es";
 
@@ -143,13 +143,14 @@ export function applyDefaultFilterView(
     settings: ISettings,
 ): IDashboard {
     const areFilterViewsEnabled = settings.enableDashboardFilterViews;
+    const enableDashboardTabs = settings.enableDashboardTabs ?? false;
 
     if (!areFilterViewsEnabled) {
         return dashboard;
     }
 
-    // If dashboard has tabs, apply default views per tab
-    if (dashboard.tabs && dashboard.tabs.length > 0) {
+    // If tabs are enabled and dashboard has tabs, apply default views per tab
+    if (enableDashboardTabs && dashboard.tabs && dashboard.tabs.length > 0) {
         // Find legacy global default view (without tabLocalIdentifier) as fallback for first tab
         const legacyDefaultView = filterViews.find((view) => view.isDefault && !view.tabLocalIdentifier);
 

@@ -12,6 +12,8 @@ import {
     type IExecutionResult,
     type IForecastConfig,
     type IForecastResult,
+    type IOutliersConfig,
+    type IOutliersResult,
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { type IExecutionDefinition } from "@gooddata/sdk-model";
@@ -98,6 +100,24 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
             })
             .catch((e) => {
                 failedForecastResultReadAll?.(e, this.executionId);
+
+                throw e;
+            });
+    }
+
+    public override readOutliersAll(config: IOutliersConfig): Promise<IOutliersResult> {
+        const { successfulOutliersResultReadAll, failedOutliersResultReadAll } = this.callbacks;
+
+        const promisedDataView = super.readOutliersAll(config);
+
+        return promisedDataView
+            .then((res) => {
+                successfulOutliersResultReadAll?.(res, this.executionId);
+
+                return res;
+            })
+            .catch((e) => {
+                failedOutliersResultReadAll?.(e, this.executionId);
 
                 throw e;
             });
@@ -224,6 +244,17 @@ export type AnalyticalBackendCallbacks = {
      * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
     failedForecastResultReadAll?: (error: any, executionId: string) => void;
+
+    /**
+     * Called success when outlier results read
+     */
+    successfulOutliersResultReadAll?: (outliersResult: IOutliersResult, executionId: string) => void;
+
+    /**
+     * Called when outlier results read failed
+     *
+     */
+    failedOutliersResultReadAll?: (error: any, executionId: string) => void;
 };
 
 /**

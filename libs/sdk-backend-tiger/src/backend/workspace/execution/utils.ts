@@ -1,7 +1,16 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
-import { type CustomLabel, type CustomMetric, type CustomOverride } from "@gooddata/api-client-tiger";
+import {
+    type CustomLabel,
+    type CustomMetric,
+    type CustomOverride,
+    type ExportCustomLabel,
+    type ExportCustomMetric,
+    type ExportCustomOverride,
+} from "@gooddata/api-client-tiger";
+import { Normalizer } from "@gooddata/sdk-backend-base";
 import {
     type IDimensionDescriptor,
     type IExecutionDefinition,
@@ -138,3 +147,65 @@ export const setCustomLabels = (definition: IExecutionDefinition, labels: Export
             },
         };
     }, labels);
+
+/**
+ * Augments custom override with normalized keys to ensure compatibility with backend caching.
+ *
+ * For every (denormalized) key in the custom override, this function adds its value again under the
+ * corresponding normalized key. This ensures that regardless of how the localIds are specified in
+ * the cached result on the backend, the override will match either the denormalized or the normalized one.
+ *
+ * @remarks
+ * The backend may cache execution results using either normalized or denormalized local identifiers.
+ * By augmenting the custom override with both versions of the keys, we ensure the export will work
+ * correctly regardless of which format the backend uses.
+ *
+ * @param customOverride - The custom override to augment, may be undefined.
+ * @param definition - The execution definition used to determine normalization mapping
+ * @returns The augmented custom override with both normalized and denormalized keys, or undefined if input was undefined
+ *
+ * @internal
+ */
+export const augmentCustomOverrideWithNormalizedKeys = (
+    customOverride: CustomOverride | ExportCustomOverride | undefined,
+    definition: IExecutionDefinition,
+): ExportCustomOverride | undefined => {
+    if (!customOverride) {
+        return undefined;
+    }
+
+    // Create a mapping from normalized keys to original (denormalized) keys
+    const normalizationState = Normalizer.normalize(definition, undefined);
+    const transposed: Record<string, string> = {};
+    for (const [key, value] of Object.entries(normalizationState.n2oMap)) {
+        transposed[value] = key;
+    }
+
+    const augmented: ExportCustomOverride = {};
+
+    // Augment labels with normalized keys
+    if (customOverride.labels) {
+        augmented.labels = {} as { [key: string]: ExportCustomLabel };
+        for (const [key, value] of Object.entries(customOverride.labels)) {
+            augmented.labels[key] = value;
+            // Add the same value under the normalized key if it exists
+            if (transposed[key]) {
+                augmented.labels[transposed[key]] = value;
+            }
+        }
+    }
+
+    // Augment metrics with normalized keys
+    if (customOverride.metrics) {
+        augmented.metrics = {} as { [key: string]: ExportCustomMetric };
+        for (const [key, value] of Object.entries(customOverride.metrics)) {
+            augmented.metrics[key] = value;
+            // Add the same value under the normalized key if it exists
+            if (transposed[key]) {
+                augmented.metrics[transposed[key]] = value;
+            }
+        }
+    }
+
+    return augmented;
+};
