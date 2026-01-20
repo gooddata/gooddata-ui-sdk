@@ -4,10 +4,10 @@ import { type IntlShape } from "react-intl";
 
 import { type IUiAsyncTableColumn, UiButton } from "@gooddata/sdk-ui-kit";
 
-import { type KdaItemGroup } from "../../internalTypes.js";
+import { type IKdaItemGroup } from "../../internalTypes.js";
 import { getSortedSignificantDriver } from "../../tools/sortedKeyDrivers.js";
 
-export const driverColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<KdaItemGroup> = (
+export const driverColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<IKdaItemGroup> = (
     intl,
     width,
 ) => {

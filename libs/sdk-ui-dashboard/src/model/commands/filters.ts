@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type DashboardAttributeFilterConfigMode,
@@ -33,7 +33,7 @@ import { type IDashboardFilter } from "../../types.js";
  *
  * @public
  */
-export interface DateFilterSelection {
+export type DateFilterSelection = {
     /**
      * The reference to date data set to which date filter belongs.
      * If not defined it refers to so. called common date filter which data set is defined per widget
@@ -105,7 +105,7 @@ export interface DateFilterSelection {
      * @alpha
      */
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
-}
+};
 
 /**
  * Command for date filter selection change.
@@ -116,10 +116,10 @@ export interface DateFilterSelection {
  *
  * @public
  */
-export interface ChangeDateFilterSelection extends IDashboardCommand {
+export type ChangeDateFilterSelection = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION";
     readonly payload: DateFilterSelection;
-}
+};
 
 /**
  * Creates the ChangeDateFilterSelection command.
@@ -136,6 +136,9 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  * @param localIdentifier - localId of the date filter
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param dataSet -
+ * @param isWorkingSelectionChange -
+ * @param boundedFilter -
  * @see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
  * @public
@@ -230,6 +233,9 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
  *
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param dataSet -
+ * @param isWorkingSelectionChange -
+ * @param localIdentifier -
  *
  * @public
  */
@@ -257,10 +263,10 @@ export function clearDateFilterSelection(
 //
 
 /**
- * Payload of the {@link AddAttributeFilter} command.
+ * Payload of the {@link IAddAttributeFilter} command.
  * @beta
  */
-export interface AddAttributeFilterPayload {
+export type AddAttributeFilterPayload = {
     readonly displayForm: ObjRef;
 
     readonly index: number;
@@ -318,12 +324,12 @@ export interface AddAttributeFilterPayload {
      * Specify custom title of attribute filter
      */
     readonly title?: string;
-}
+};
 
 /**
  * @beta
  */
-export interface AddAttributeFilter extends IDashboardCommand {
+export interface IAddAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD";
     readonly payload: AddAttributeFilterPayload;
 }
@@ -361,7 +367,7 @@ export function addAttributeFilter(
     localIdentifier?: string,
     primaryDisplayForm?: ObjRef,
     title?: string,
-): AddAttributeFilter {
+): IAddAttributeFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
         correlationId,
@@ -384,10 +390,10 @@ export function addAttributeFilter(
 //
 
 /**
- * Payload of the {@link RemoveAttributeFilters} command.
+ * Payload of the {@link IRemoveAttributeFilters} command.
  * @beta
  */
-export interface RemoveAttributeFiltersPayload {
+export interface IRemoveAttributeFiltersPayload {
     /**
      * XXX: we do not necessarily need to remove multiple filters atm, but this should
      *  be very easy to do and adds some extra flexibility.
@@ -398,9 +404,9 @@ export interface RemoveAttributeFiltersPayload {
 /**
  * @beta
  */
-export interface RemoveAttributeFilters extends IDashboardCommand {
+export interface IRemoveAttributeFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
-    readonly payload: RemoveAttributeFiltersPayload;
+    readonly payload: IRemoveAttributeFiltersPayload;
 }
 
 /**
@@ -412,7 +418,10 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
  *  events that will be emitted during the command processing
  * @beta
  */
-export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters {
+export function removeAttributeFilter(
+    filterLocalId: string,
+    correlationId?: string,
+): IRemoveAttributeFilters {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
         correlationId,
@@ -434,7 +443,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
 export function removeAttributeFilters(
     filterLocalIds: string[],
     correlationId?: string,
-): RemoveAttributeFilters {
+): IRemoveAttributeFilters {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
         correlationId,
@@ -449,10 +458,10 @@ export function removeAttributeFilters(
 //
 
 /**
- * Payload of the {@link MoveAttributeFilter} command.
+ * Payload of the {@link IMoveAttributeFilter} command.
  * @beta
  */
-export interface MoveAttributeFilterPayload {
+export type MoveAttributeFilterPayload = {
     /**
      * Local identifier of the filter to move.
      */
@@ -461,12 +470,12 @@ export interface MoveAttributeFilterPayload {
      * Index to move the filter to.
      */
     readonly index: number;
-}
+};
 
 /**
  * @beta
  */
-export interface MoveAttributeFilter extends IDashboardCommand {
+export interface IMoveAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE";
     readonly payload: MoveAttributeFilterPayload;
 }
@@ -488,7 +497,7 @@ export function moveAttributeFilter(
     filterLocalId: string,
     index: number,
     correlationId?: string,
-): MoveAttributeFilter {
+): IMoveAttributeFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE",
         correlationId,
@@ -515,7 +524,7 @@ export type AttributeFilterSelectionType = "IN" | "NOT_IN";
  *
  * @public
  */
-export interface ChangeAttributeFilterSelectionPayload {
+export type ChangeAttributeFilterSelectionPayload = {
     /**
      * Dashboard attribute filter's local identifier.
      */
@@ -546,7 +555,7 @@ export interface ChangeAttributeFilterSelectionPayload {
      * When false, the filter's localId should be removed from filtersWithInvalidSelection array.
      */
     readonly isSelectionInvalid?: boolean;
-}
+};
 
 /**
  * Command for attribute filter selection change.
@@ -557,10 +566,10 @@ export interface ChangeAttributeFilterSelectionPayload {
  *
  * @public
  */
-export interface ChangeAttributeFilterSelection extends IDashboardCommand {
+export type ChangeAttributeFilterSelection = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
     readonly payload: ChangeAttributeFilterSelectionPayload;
-}
+};
 
 /**
  * Creates the ChangeAttributeFilterSelection command for applied filters.
@@ -593,6 +602,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  * @param selectionType - selection type. either 'IN' or 'NOT_IN'
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param isSelectionInvalid -
  *
  * @public
  */
@@ -695,6 +705,7 @@ export function changeMigratedAttributeFilterSelection(
  * @param selectionType - selection type. either 'IN' or 'NOT_IN'
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param isSelectionInvalid -
  *
  * @public
  */
@@ -784,18 +795,18 @@ export function resetAttributeFilterSelection(
 //
 
 /**
- * Payload of the {@link SetAttributeFilterDependentDateFilters} command.
+ * Payload of the {@link ISetAttributeFilterDependentDateFilters} command.
  * @beta
  */
-export interface SetAttributeFilterDependentDateFiltersPayload {
+export type SetAttributeFilterDependentDateFiltersPayload = {
     readonly filterLocalId: string;
     readonly dependentDateFilters: ReadonlyArray<IDashboardAttributeFilterByDate>;
-}
+};
 
 /**
  * @beta
  */
-export interface SetAttributeFilterDependentDateFilters extends IDashboardCommand {
+export interface ISetAttributeFilterDependentDateFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS";
     readonly payload: SetAttributeFilterDependentDateFiltersPayload;
 }
@@ -810,7 +821,7 @@ export interface SetAttributeFilterDependentDateFilters extends IDashboardComman
  *
  *
  * @param filterLocalId - local id of filter that will be a child in the relationship
- * @param dateParentFilters - definition of the dependent date filter this contains local id of the date filter
+ * @param dependentDateFilters -
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -820,7 +831,7 @@ export function setAttributeFilterDependentDateFilters(
     filterLocalId: string,
     dependentDateFilters: IDashboardAttributeFilterByDate[],
     correlationId?: string,
-): SetAttributeFilterDependentDateFilters {
+): ISetAttributeFilterDependentDateFilters {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS",
         correlationId,
@@ -832,18 +843,18 @@ export function setAttributeFilterDependentDateFilters(
 }
 
 /**
- * Payload of the {@link SetAttributeFilterParents} command.
+ * Payload of the {@link ISetAttributeFilterParents} command.
  * @beta
  */
-export interface SetAttributeFilterParentsPayload {
+export type SetAttributeFilterParentsPayload = {
     readonly filterLocalId: string;
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
-}
+};
 
 /**
  * @beta
  */
-export interface SetAttributeFilterParents extends IDashboardCommand {
+export interface ISetAttributeFilterParents extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS";
     readonly payload: SetAttributeFilterParentsPayload;
 }
@@ -873,7 +884,7 @@ export function setAttributeFilterParents(
     filterLocalId: string,
     parentFilters: IDashboardAttributeFilterParent[],
     correlationId?: string,
-): SetAttributeFilterParents {
+): ISetAttributeFilterParents {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS",
         correlationId,
@@ -892,7 +903,7 @@ export function setAttributeFilterParents(
  * Payload of the {@link ChangeFilterContextSelection} command.
  * @public
  */
-export interface ChangeFilterContextSelectionPayload {
+export type ChangeFilterContextSelectionPayload = {
     /**
      * Filters to apply to the current dashboard filter context.
      */
@@ -904,7 +915,7 @@ export interface ChangeFilterContextSelectionPayload {
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 
     /**
-     * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
+     * For filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
      */
     resetOthers: boolean;
 
@@ -919,7 +930,7 @@ export interface ChangeFilterContextSelectionPayload {
      * @internal
      */
     tabLocalIdentifier?: string;
-}
+};
 
 /**
  * Command for changing multiple filters at once.
@@ -929,10 +940,10 @@ export interface ChangeFilterContextSelectionPayload {
  *
  * @public
  */
-export interface ChangeFilterContextSelection extends IDashboardCommand {
+export type ChangeFilterContextSelection = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
     readonly payload: ChangeFilterContextSelectionPayload;
-}
+};
 
 /**
  * Creates the {@link ChangeFilterContextSelection} command.
@@ -970,7 +981,7 @@ export function changeFilterContextSelection(
  *
  * @public
  */
-export interface ChangeFilterContextSelectionParams {
+export type ChangeFilterContextSelectionParams = {
     filters: (IDashboardFilter | FilterContextItem)[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     resetOthers?: boolean;
@@ -982,7 +993,7 @@ export interface ChangeFilterContextSelectionParams {
      * @internal
      */
     tabLocalIdentifier?: string;
-}
+};
 
 /**
  * Creates the {@link ChangeFilterContextSelection} command.
@@ -996,7 +1007,7 @@ export interface ChangeFilterContextSelectionParams {
  *
  * @param params - params for the command creator
  * @internal
- * TODO: next major release can remove ByParams suffix and use this implementation instead of original cmd creator + other creators can be rewriten to use params object
+ * TODO: next major release can remove ByParams suffix and use this implementation instead of original cmd creator + other creators can be rewritten to use params object
  * https://gooddata.atlassian.net/browse/STL-700
  */
 export function changeFilterContextSelectionByParams({
@@ -1021,7 +1032,7 @@ export function changeFilterContextSelectionByParams({
 /**
  * @beta
  */
-export interface SetAttributeFilterDisplayFormPayload {
+export interface ISetAttributeFilterDisplayFormPayload {
     filterLocalId: string;
     displayForm: ObjRef;
     isWorkingSelectionChange?: boolean;
@@ -1031,13 +1042,13 @@ export interface SetAttributeFilterDisplayFormPayload {
 /**
  * @beta
  */
-export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
+export interface ISetAttributeFilterDisplayForm extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM";
-    readonly payload: SetAttributeFilterDisplayFormPayload;
+    readonly payload: ISetAttributeFilterDisplayFormPayload;
 }
 
 /**
- * Creates the {@link SetAttributeFilterDisplayForm} command.
+ * Creates the {@link ISetAttributeFilterDisplayForm} command.
  *
  * @remarks
  * Dispatching the commands will result into setting provided display form as a selected
@@ -1058,7 +1069,7 @@ export function setAttributeFilterDisplayForm(
     displayForm: ObjRef,
     isWorkingSelectionChange?: boolean,
     isResultOfMigration?: boolean,
-): SetAttributeFilterDisplayForm {
+): ISetAttributeFilterDisplayForm {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM",
         payload: {
@@ -1071,10 +1082,10 @@ export function setAttributeFilterDisplayForm(
 }
 
 /**
- * Payload of the {@link SetAttributeFilterTitle} command.
+ * Payload of the {@link ISetAttributeFilterTitle} command.
  * @beta
  */
-export interface SetAttributeFilterTitlePayload {
+export interface ISetAttributeFilterTitlePayload {
     /**
      * Local identifier of the filter to rename.
      */
@@ -1089,13 +1100,13 @@ export interface SetAttributeFilterTitlePayload {
  * Command for changing attribute filter title.
  * @beta
  */
-export interface SetAttributeFilterTitle extends IDashboardCommand {
+export interface ISetAttributeFilterTitle extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE";
-    readonly payload: SetAttributeFilterTitlePayload;
+    readonly payload: ISetAttributeFilterTitlePayload;
 }
 
 /**
- * Creates the {@link SetAttributeFilterTitle} command.
+ * Creates the {@link ISetAttributeFilterTitle} command.
  *
  * @remarks
  * Dispatching the commands will result into setting provided title as a selected
@@ -1112,7 +1123,7 @@ export function setAttributeFilterTitle(
     filterLocalId: string,
     title?: string,
     correlationId?: string,
-): SetAttributeFilterTitle {
+): ISetAttributeFilterTitle {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE",
         correlationId,
@@ -1126,7 +1137,7 @@ export function setAttributeFilterTitle(
 /**
  * @beta
  */
-export interface SetAttributeFilterSelectionModePayload {
+export interface ISetAttributeFilterSelectionModePayload {
     filterLocalId: string;
     selectionMode: DashboardAttributeFilterSelectionMode;
 }
@@ -1134,13 +1145,13 @@ export interface SetAttributeFilterSelectionModePayload {
 /**
  * @beta
  */
-export interface SetAttributeFilterSelectionMode extends IDashboardCommand {
+export interface ISetAttributeFilterSelectionMode extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE";
-    readonly payload: SetAttributeFilterSelectionModePayload;
+    readonly payload: ISetAttributeFilterSelectionModePayload;
 }
 
 /**
- * Creates the {@link SetAttributeFilterSelectionMode} command.
+ * Creates the {@link ISetAttributeFilterSelectionMode} command.
  *
  * @remarks
  * Dispatching the commands will result into setting provided selection mode as a selected
@@ -1155,7 +1166,7 @@ export interface SetAttributeFilterSelectionMode extends IDashboardCommand {
 export function setAttributeFilterSelectionMode(
     filterLocalId: string,
     selectionMode: DashboardAttributeFilterSelectionMode,
-): SetAttributeFilterSelectionMode {
+): ISetAttributeFilterSelectionMode {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE",
         payload: {
@@ -1168,11 +1179,11 @@ export function setAttributeFilterSelectionMode(
 //////////////////// DATE FILTER //////////////////////////
 
 /**
- * Payload of the {@link AddDateFilter} command.
+ * Payload of the {@link IAddDateFilter} command.
  *
  * @alpha
  */
-export interface AddDateFilterPayload {
+export interface IAddDateFilterPayload {
     readonly index: number;
     readonly dateDataset: ObjRef;
 }
@@ -1180,9 +1191,9 @@ export interface AddDateFilterPayload {
 /**
  * @alpha
  */
-export interface AddDateFilter extends IDashboardCommand {
+export interface IAddDateFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD";
-    readonly payload: AddDateFilterPayload;
+    readonly payload: IAddDateFilterPayload;
 }
 
 /**
@@ -1200,7 +1211,7 @@ export interface AddDateFilter extends IDashboardCommand {
  *
  * @alpha
  */
-export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?: string): AddDateFilter {
+export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?: string): IAddDateFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD",
         correlationId,
@@ -1212,10 +1223,10 @@ export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?
 }
 
 /**
- * Payload of the {@link RemoveDateFilters} command.
+ * Payload of the {@link IRemoveDateFilters} command.
  * @beta
  */
-export interface RemoveDateFiltersPayload {
+export interface IRemoveDateFiltersPayload {
     /**
      * XXX: we do not necessarily need to remove multiple filters atm, but this should
      *  be very easy to do and adds some extra flexibility.
@@ -1226,9 +1237,9 @@ export interface RemoveDateFiltersPayload {
 /**
  * @beta
  */
-export interface RemoveDateFilters extends IDashboardCommand {
+export interface IRemoveDateFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE";
-    readonly payload: RemoveDateFiltersPayload;
+    readonly payload: IRemoveDateFiltersPayload;
 }
 
 /**
@@ -1240,7 +1251,7 @@ export interface RemoveDateFilters extends IDashboardCommand {
  *  events that will be emitted during the command processing
  * @beta
  */
-export function removeDateFilter(dataSet: ObjRef, correlationId?: string): RemoveDateFilters {
+export function removeDateFilter(dataSet: ObjRef, correlationId?: string): IRemoveDateFilters {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE",
         correlationId,
@@ -1251,10 +1262,10 @@ export function removeDateFilter(dataSet: ObjRef, correlationId?: string): Remov
 }
 
 /**
- * Payload of the {@link MoveDateFilter} command.
+ * Payload of the {@link IMoveDateFilter} command.
  * @beta
  */
-export interface MoveDateFilterPayload {
+export type MoveDateFilterPayload = {
     /**
      * Data set of the filter to move.
      */
@@ -1263,12 +1274,12 @@ export interface MoveDateFilterPayload {
      * Index to move the filter to.
      */
     readonly index: number;
-}
+};
 
 /**
  * @beta
  */
-export interface MoveDateFilter extends IDashboardCommand {
+export interface IMoveDateFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE";
     readonly payload: MoveDateFilterPayload;
 }
@@ -1286,7 +1297,7 @@ export interface MoveDateFilter extends IDashboardCommand {
  *
  * @beta
  */
-export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: string): MoveDateFilter {
+export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: string): IMoveDateFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE",
         correlationId,
@@ -1298,10 +1309,10 @@ export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: s
 }
 
 /**
- * Payload of the {@link SaveFilterView} command.
+ * Payload of the {@link ISaveFilterView} command.
  * @alpha
  */
-export interface SaveFilterViewPayload {
+export interface ISaveFilterViewPayload {
     readonly name: string;
     readonly isDefault: boolean;
 }
@@ -1314,13 +1325,13 @@ export interface SaveFilterViewPayload {
  *
  * @alpha
  */
-export interface SaveFilterView extends IDashboardCommand {
+export interface ISaveFilterView extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE";
-    readonly payload: SaveFilterViewPayload;
+    readonly payload: ISaveFilterViewPayload;
 }
 
 /**
- * Creates the {@link SaveFilterView} command.
+ * Creates the {@link ISaveFilterView} command.
  *
  * @remarks
  * Dispatching this command will result into snapshotting of the current dashboard filter context into a
@@ -1333,7 +1344,7 @@ export interface SaveFilterView extends IDashboardCommand {
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns save filter view command
  */
-export function saveFilterView(name: string, isDefault: boolean, correlationId?: string): SaveFilterView {
+export function saveFilterView(name: string, isDefault: boolean, correlationId?: string): ISaveFilterView {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE",
         correlationId,
@@ -1345,10 +1356,10 @@ export function saveFilterView(name: string, isDefault: boolean, correlationId?:
 }
 
 /**
- * Payload of the {@link DeleteFilterView} command.
+ * Payload of the {@link IDeleteFilterView} command.
  * @alpha
  */
-export interface DeleteFilterViewPayload {
+export interface IDeleteFilterViewPayload {
     readonly ref: ObjRef;
 }
 
@@ -1360,13 +1371,13 @@ export interface DeleteFilterViewPayload {
  *
  * @alpha
  */
-export interface DeleteFilterView extends IDashboardCommand {
+export interface IDeleteFilterView extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE";
-    readonly payload: DeleteFilterViewPayload;
+    readonly payload: IDeleteFilterViewPayload;
 }
 
 /**
- * Creates the {@link DeleteFilterView} command.
+ * Creates the {@link IDeleteFilterView} command.
  *
  * @remarks
  * Dispatching this command will result into deletion of the persisted filter view.
@@ -1376,7 +1387,7 @@ export interface DeleteFilterView extends IDashboardCommand {
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns delete filter view command
  */
-export function deleteFilterView(ref: ObjRef, correlationId?: string): DeleteFilterView {
+export function deleteFilterView(ref: ObjRef, correlationId?: string): IDeleteFilterView {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE",
         correlationId,
@@ -1387,10 +1398,10 @@ export function deleteFilterView(ref: ObjRef, correlationId?: string): DeleteFil
 }
 
 /**
- * Payload of the {@link ApplyFilterView} command.
+ * Payload of the {@link IApplyFilterView} command.
  * @alpha
  */
-export interface ApplyFilterViewPayload {
+export interface IApplyFilterViewPayload {
     readonly ref: ObjRef;
 }
 
@@ -1402,13 +1413,13 @@ export interface ApplyFilterViewPayload {
  *
  * @alpha
  */
-export interface ApplyFilterView extends IDashboardCommand {
+export interface IApplyFilterView extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY";
-    readonly payload: ApplyFilterViewPayload;
+    readonly payload: IApplyFilterViewPayload;
 }
 
 /**
- * Creates the {@link ApplyFilterView} command.
+ * Creates the {@link IApplyFilterView} command.
  *
  * @remarks
  * Dispatching this command will result into application of the persisted filter view.
@@ -1418,7 +1429,7 @@ export interface ApplyFilterView extends IDashboardCommand {
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns delete filter view command
  */
-export function applyFilterView(ref: ObjRef, correlationId?: string): ApplyFilterView {
+export function applyFilterView(ref: ObjRef, correlationId?: string): IApplyFilterView {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY",
         correlationId,
@@ -1429,10 +1440,10 @@ export function applyFilterView(ref: ObjRef, correlationId?: string): ApplyFilte
 }
 
 /**
- * Payload of the {@link SetFilterViewAsDefault} command.
+ * Payload of the {@link ISetFilterViewAsDefault} command.
  * @alpha
  */
-export interface SetFilterViewAsDefaultPayload {
+export interface ISetFilterViewAsDefaultPayload {
     readonly ref: ObjRef;
     readonly isDefault: boolean;
 }
@@ -1445,13 +1456,13 @@ export interface SetFilterViewAsDefaultPayload {
  *
  * @alpha
  */
-export interface SetFilterViewAsDefault extends IDashboardCommand {
+export interface ISetFilterViewAsDefault extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS";
-    readonly payload: SetFilterViewAsDefaultPayload;
+    readonly payload: ISetFilterViewAsDefaultPayload;
 }
 
 /**
- * Creates the {@link SetFilterViewAsDefault} command.
+ * Creates the {@link ISetFilterViewAsDefault} command.
  *
  * @remarks
  * Dispatching this command will result into setting of the persisted filter view as a default one when
@@ -1469,7 +1480,7 @@ export function setFilterViewAsDefault(
     ref: ObjRef,
     isDefault: boolean,
     correlationId?: string,
-): SetFilterViewAsDefault {
+): ISetFilterViewAsDefault {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS",
         correlationId,
@@ -1488,12 +1499,12 @@ export function setFilterViewAsDefault(
  *
  * @alpha
  */
-export interface ReloadFilterViews extends IDashboardCommand {
+export interface IReloadFilterViews extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD";
 }
 
 /**
- * Creates the {@link ReloadFilterViews} command.
+ * Creates the {@link IReloadFilterViews} command.
  *
  * @remarks
  * Dispatching this command will result with refreshing of the cache with saved filter views from
@@ -1503,7 +1514,7 @@ export interface ReloadFilterViews extends IDashboardCommand {
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns delete filter view command
  */
-export function reloadFilterViews(correlationId?: string): ReloadFilterViews {
+export function reloadFilterViews(correlationId?: string): IReloadFilterViews {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD",
         correlationId,
@@ -1519,12 +1530,12 @@ export function reloadFilterViews(correlationId?: string): ReloadFilterViews {
  *
  * @alpha
  */
-export interface ApplyFilterContextWorkingSelection extends IDashboardCommand {
+export interface IApplyFilterContextWorkingSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION";
 }
 
 /**
- * Creates the {@link ApplyFilterContextWorkingSelection} command.
+ * Creates the {@link IApplyFilterContextWorkingSelection} command.
  *
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns apply all filters command
@@ -1533,7 +1544,7 @@ export interface ApplyFilterContextWorkingSelection extends IDashboardCommand {
  */
 export function applyFilterContextWorkingSelection(
     correlationId?: string,
-): ApplyFilterContextWorkingSelection {
+): IApplyFilterContextWorkingSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION",
         correlationId,
@@ -1541,7 +1552,7 @@ export function applyFilterContextWorkingSelection(
 }
 
 /**
- * Command for reseting all working filters.
+ * Command for resetting all working filters.
  * It resets the working filters in to  same state as applied filters.
  *
  * @remarks
@@ -1554,12 +1565,12 @@ export function applyFilterContextWorkingSelection(
  *
  * @alpha
  */
-export interface ResetFilterContextWorkingSelection extends IDashboardCommand {
+export interface IResetFilterContextWorkingSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION";
 }
 
 /**
- * Creates the {@link ResetFilterContextWorkingSelection} command.
+ * Creates the {@link IResetFilterContextWorkingSelection} command.
  *
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns apply reset working filters command
@@ -1568,7 +1579,7 @@ export interface ResetFilterContextWorkingSelection extends IDashboardCommand {
  */
 export function resetFilterContextWorkingSelection(
     correlationId?: string,
-): ResetFilterContextWorkingSelection {
+): IResetFilterContextWorkingSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION",
         correlationId,

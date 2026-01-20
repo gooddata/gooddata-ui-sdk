@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -47,7 +47,7 @@ describe("widget customizer", () => {
 
     it("should use last-win when multiple widgets of same type", () => {
         Customizer.addCustomWidget("w1", TestWidget1);
-        suppressConsole(
+        void suppressConsole(
             () => Customizer.addCustomWidget("w1", TestWidget2),
             "warn",
             (message: string) =>
@@ -61,7 +61,7 @@ describe("widget customizer", () => {
     it("should not do any modifications once sealed", () => {
         Customizer.addCustomWidget("w1", TestWidget1);
         Customizer.sealCustomizer();
-        suppressConsole(
+        void suppressConsole(
             () => Customizer.addCustomWidget("w1", TestWidget2),
             "warn",
             (message: string) =>

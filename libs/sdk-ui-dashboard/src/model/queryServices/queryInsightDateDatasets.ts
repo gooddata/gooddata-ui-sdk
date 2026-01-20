@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { compact, uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
@@ -28,9 +29,9 @@ import {
 import { type ObjRefMap, newDisplayFormMap } from "../../_staging/metadata/objRefMap.js";
 import { invalidQueryArguments } from "../events/general.js";
 import {
-    type InsightAttributesMeta,
-    type InsightDateDatasets,
-    type QueryInsightDateDatasets,
+    type IInsightAttributesMeta,
+    type IInsightDateDatasets,
+    type IQueryInsightDateDatasets,
     queryInsightAttributesMeta,
 } from "../queries/index.js";
 import { query } from "../store/_infra/queryCall.js";
@@ -47,7 +48,7 @@ import { type DashboardContext } from "../types/commonTypes.js";
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
     queryService,
-    (query: QueryInsightDateDatasets) => {
+    (query: IQueryInsightDateDatasets) => {
         const {
             payload: { insightOrRef },
         } = query;
@@ -62,18 +63,18 @@ export const QueryDateDatasetsForInsightService = createCachedQueryService(
  * @internal
  */
 export type selectDateDatasetsForInsightType = (
-    query: QueryInsightDateDatasets,
-) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightDateDatasets> | undefined;
+    query: IQueryInsightDateDatasets,
+) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<IInsightDateDatasets> | undefined;
 
 /**
  * Selector that will return date datasets for insight. The input to the selector is the dashboard query that is used
  * to obtain and cache the data.
  *
  * This selector will return undefined if the query to obtain the data for particular insight was not yet fired or
- * processed. Otherwise will return object containing `status` of the data retrieval; if the `status` is
+ * processed. Otherwise, will return object containing `status` of the data retrieval; if the `status` is
  * `'success'` then the `result` prop will contain the data.
  *
- * @remarks see {@link QueryInsightDateDatasets}
+ * @remarks see {@link IQueryInsightDateDatasets}
  * @internal
  */
 export const selectDateDatasetsForInsight: selectDateDatasetsForInsightType =
@@ -109,10 +110,10 @@ function lookupDatasetsUsedInDateFilters(
 
 /**
  * Given insight and list of available cataloged date datasets, this generator will first query usage & metadata about
- * used display forms and attributes. With this, the function will lookup date datasets for each display form
+ * used display forms and attributes. With this, the function will look up date datasets for each display form
  * used in insight's attribute buckets and attribute filters.
  *
- * Note: that cataloged date datasets already contain mapping of dataset → attribute → default display form. However
+ * Note: that cataloged date datasets already contain mapping of dataset → attribute → default display form. However,
  * this cannot be used because the code cannot expect that the insights only use date dataset's default display forms.
  *
  * @param insight - insight work with
@@ -122,7 +123,7 @@ function* lookupDatasetsUsedInAttributesAndFilters(
     insight: IInsight,
     attributeToDataset: ObjRefMap<CatalogDateAttributeWithDataset>,
 ) {
-    const insightAttributes: InsightAttributesMeta = yield call(query, queryInsightAttributesMeta(insight));
+    const insightAttributes: IInsightAttributesMeta = yield call(query, queryInsightAttributesMeta(insight));
     const {
         usage: { inAttributes, inFilters },
         displayForms,
@@ -180,8 +181,8 @@ function* lookupDatasetsInInsight(insight: IInsight) {
 
 function* queryService(
     ctx: DashboardContext,
-    query: QueryInsightDateDatasets,
-): SagaIterator<InsightDateDatasets> {
+    query: IQueryInsightDateDatasets,
+): SagaIterator<IInsightDateDatasets> {
     const {
         payload: { insightOrRef },
         correlationId,

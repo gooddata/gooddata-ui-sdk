@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
-    type DashboardCommandFailed,
-    type DashboardDrillToCustomUrlResolved,
-    type DrillToCustomUrl,
+    type IDashboardCommandFailed,
+    type IDashboardDrillToCustomUrlResolved,
+    type IDrillToCustomUrl,
     drillToCustomUrl,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";
@@ -11,16 +11,16 @@ import {
 /**
  * @internal
  */
-export interface UseDrillToCustomUrlProps {
-    onSuccess?: (event: DashboardDrillToCustomUrlResolved) => void;
-    onError?: (event: DashboardCommandFailed<DrillToCustomUrl>) => void;
-    onBeforeRun?: (cmd: DrillToCustomUrl) => void;
+export interface IUseDrillToCustomUrlProps {
+    onSuccess?: (event: IDashboardDrillToCustomUrlResolved) => void;
+    onError?: (event: IDashboardCommandFailed<IDrillToCustomUrl>) => void;
+    onBeforeRun?: (cmd: IDrillToCustomUrl) => void;
 }
 
 /**
  * @internal
  */
-export const useDrillToCustomUrl = ({ onSuccess, onError, onBeforeRun }: UseDrillToCustomUrlProps = {}) => {
+export const useDrillToCustomUrl = ({ onSuccess, onError, onBeforeRun }: IUseDrillToCustomUrlProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drillToCustomUrl,
         successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED",

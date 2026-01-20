@@ -87,6 +87,8 @@ export type {
 export {
     getFiscalTabsConfig,
     getDefaultCalendarTab,
+    getFilteredPresets,
+    getFilteredGranularities,
     hasFiscalPresets,
     hasStandardPresets,
     filterStandardPresets,

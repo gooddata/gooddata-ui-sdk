@@ -1,10 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type DashboardEventEvalFn,
     type DashboardEventHandler,
     type DashboardEventHandlerFn,
-    type DashboardEventType,
     type DashboardEvents,
     type ICustomDashboardEvent,
 } from "../../model/index.js";
@@ -23,9 +22,9 @@ const sameHandlerPredicateFactory = (other: DashboardEventHandler) => {
     };
 };
 
-type EvalFnCache = Map<DashboardEventType | string | "*", DashboardEventEvalFn>;
+type EvalFnCache = Map<string, DashboardEventEvalFn>;
 
-function createEvalFn(eventType: DashboardEventType | string | "*"): DashboardEventEvalFn {
+function createEvalFn(eventType: string): DashboardEventEvalFn {
     if (eventType === "*") {
         return () => true;
     }
@@ -87,7 +86,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
      */
     private unregisterHandler: undefined | ((handler: DashboardEventHandler) => void);
 
-    private getOrCreateEvalFn = (eventType: DashboardEventType | string | "*"): DashboardEventEvalFn => {
+    private getOrCreateEvalFn = (eventType: string): DashboardEventEvalFn => {
         const evalFn = this.evalCache.get(eventType);
 
         if (evalFn !== undefined) {
@@ -101,7 +100,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     };
 
     public addEventHandler = <TEvents extends DashboardEvents | ICustomDashboardEvent>(
-        eventType: DashboardEventType | string | "*",
+        eventType: string,
         callback: DashboardEventHandlerFn<TEvents>,
     ): IDashboardEventHandling => {
         const newHandler: DashboardEventHandler = {
@@ -113,7 +112,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     };
 
     public removeEventHandler = <TEvents extends DashboardEvents | ICustomDashboardEvent>(
-        eventType: DashboardEventType | string | "*",
+        eventType: string,
         callback: DashboardEventHandlerFn<TEvents>,
     ): IDashboardEventHandling => {
         const handler: DashboardEventHandler = {

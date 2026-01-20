@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -20,14 +20,14 @@ import { type RenderMode } from "../../types.js";
 /**
  * @alpha
  */
-export interface DefaultDashboardExportVariablesProps {
+export interface IDefaultDashboardExportVariablesProps {
     renderMode: RenderMode;
 }
 
 /**
  * @alpha
  */
-export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboardExportVariablesProps) {
+export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboardExportVariablesProps) {
     const run = renderMode === "export";
     const exportData = useMetaExportData();
     const user = useDashboardSelector(selectCurrentUser);

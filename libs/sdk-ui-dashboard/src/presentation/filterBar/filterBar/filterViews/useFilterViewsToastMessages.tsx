@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type MessageDescriptor, defineMessages } from "react-intl";
 
 import { useEventToastMessage } from "../../../../_staging/sharedHooks/useEventToastMessage.js";
 import {
-    type DashboardFilterViewDefaultStatusChangeFailed,
-    type DashboardFilterViewDefaultStatusChangeSucceeded,
+    type IDashboardFilterViewDefaultStatusChangeFailed,
+    type IDashboardFilterViewDefaultStatusChangeSucceeded,
     isDashboardFilterViewApplicationFailed,
     isDashboardFilterViewApplicationSucceeded,
     isDashboardFilterViewCreationFailed,
@@ -29,10 +29,10 @@ const messages: Record<string, MessageDescriptor> = defineMessages({
     unsetAsDefaultFailure: { id: "filters.filterViews.toast.viewNotUnsetAsDefault" },
 });
 
-const getChangeDefaultStatusSucceededMessage = (cmd: DashboardFilterViewDefaultStatusChangeSucceeded) =>
+const getChangeDefaultStatusSucceededMessage = (cmd: IDashboardFilterViewDefaultStatusChangeSucceeded) =>
     cmd.payload.filterView.isDefault ? messages["setAsDefaultSuccess"] : messages["unsetAsDefaultSuccess"];
 
-const getChangeDefaultStatusFailedMessage = (cmd: DashboardFilterViewDefaultStatusChangeFailed) =>
+const getChangeDefaultStatusFailedMessage = (cmd: IDashboardFilterViewDefaultStatusChangeFailed) =>
     cmd.payload.filterView.isDefault ? messages["unsetAsDefaultFailure"] : messages["setAsDefaultFailure"];
 
 // this hook handles pushing of toast messages to the message context based on emitted events that are
@@ -48,12 +48,12 @@ export const useFilterViewsToastMessages = () => {
         messages["applicationSuccess"],
     );
     useEventToastMessage("error", isDashboardFilterViewApplicationFailed, messages["applicationFailure"]);
-    useEventToastMessage<DashboardFilterViewDefaultStatusChangeSucceeded>(
+    useEventToastMessage<IDashboardFilterViewDefaultStatusChangeSucceeded>(
         "success",
         isDashboardFilterViewDefaultStatusChangeSucceeded,
         getChangeDefaultStatusSucceededMessage,
     );
-    useEventToastMessage<DashboardFilterViewDefaultStatusChangeFailed>(
+    useEventToastMessage<IDashboardFilterViewDefaultStatusChangeFailed>(
         "error",
         isDashboardFilterViewDefaultStatusChangeFailed,
         getChangeDefaultStatusFailedMessage,

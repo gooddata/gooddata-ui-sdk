@@ -1,12 +1,12 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type ChangeInsightWidgetIgnoreCrossFiltering } from "../../commands/insight.js";
+import { type IChangeInsightWidgetIgnoreCrossFiltering } from "../../commands/insight.js";
 import {
-    type DashboardInsightWidgetIgnoreCrossFilteringChanged,
+    type IDashboardInsightWidgetIgnoreCrossFilteringChanged,
     insightWidgetIgnoreCrossFilteringChanged,
 } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -15,8 +15,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetIgnoreCrossFilteringHandler(
     ctx: DashboardContext,
-    cmd: ChangeInsightWidgetIgnoreCrossFiltering,
-): SagaIterator<DashboardInsightWidgetIgnoreCrossFilteringChanged> {
+    cmd: IChangeInsightWidgetIgnoreCrossFiltering,
+): SagaIterator<IDashboardInsightWidgetIgnoreCrossFilteringChanged> {
     const {
         payload: { ignoreCrossFiltering },
         correlationId,

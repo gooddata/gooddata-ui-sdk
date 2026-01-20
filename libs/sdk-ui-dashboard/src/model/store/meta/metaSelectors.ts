@@ -47,7 +47,7 @@ import {
     selectFilterContextDefinitionsByTab,
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
-import { DEFAULT_TAB_ID, type TabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
+import { DEFAULT_TAB_ID, type ITabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
 import { selectBasicLayout, selectBasicLayoutByTab } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
@@ -66,7 +66,7 @@ export const selectDashboardDescriptor: DashboardSelector<DashboardDescriptor> =
     (state) => {
         invariant(state.descriptor, "attempting to access uninitialized meta state");
 
-        return state.descriptor!;
+        return state.descriptor;
     },
 );
 
@@ -293,7 +293,7 @@ const selectPersistedDashboardDraggableFiltersByTab: DashboardSelector<
     >((acc, [identifier, filters]) => {
         acc[identifier] = filters.filter(
             (filter) => isDashboardDateFilterWithDimension(filter) || isDashboardAttributeFilter(filter),
-        ) as Array<IDashboardDateFilter | IDashboardAttributeFilter>;
+        );
         return acc;
     }, {});
 });
@@ -306,7 +306,7 @@ const selectWorkingDraggableFiltersByTab: DashboardSelector<
     >((acc, [identifier, filters]) => {
         acc[identifier] = filters.filter(
             (filter) => isDashboardDateFilterWithDimension(filter) || isDashboardAttributeFilter(filter),
-        ) as Array<IDashboardDateFilter | IDashboardAttributeFilter>;
+        );
         return acc;
     }, {});
 });
@@ -993,7 +993,7 @@ const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
         // Normalize tabs for comparison - compare all common properties including filter configs
         // Layout is compared separately via selectIsLayoutChanged
         const normalizeTabsForComparison = (
-            tabs: IDashboardTab<IDashboardWidget>[] | TabState[] | undefined,
+            tabs: IDashboardTab<IDashboardWidget>[] | ITabState[] | undefined,
         ) => {
             if (!tabs || tabs.length === 0) {
                 return [];

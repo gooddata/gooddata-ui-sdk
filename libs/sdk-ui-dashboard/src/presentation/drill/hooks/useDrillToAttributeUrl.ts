@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
-    type DashboardCommandFailed,
-    type DashboardDrillToAttributeUrlResolved,
-    type DrillToAttributeUrl,
+    type IDashboardCommandFailed,
+    type IDashboardDrillToAttributeUrlResolved,
+    type IDrillToAttributeUrl,
     drillToAttributeUrl,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";
@@ -11,10 +11,10 @@ import {
 /**
  * @internal
  */
-export interface UseDrillToAttributeUrlProps {
-    onSuccess?: (event: DashboardDrillToAttributeUrlResolved) => void;
-    onError?: (event: DashboardCommandFailed<DrillToAttributeUrl>) => void;
-    onBeforeRun?: (cmd: DrillToAttributeUrl) => void;
+export interface IUseDrillToAttributeUrlProps {
+    onSuccess?: (event: IDashboardDrillToAttributeUrlResolved) => void;
+    onError?: (event: IDashboardCommandFailed<IDrillToAttributeUrl>) => void;
+    onBeforeRun?: (cmd: IDrillToAttributeUrl) => void;
 }
 
 /**
@@ -24,7 +24,7 @@ export const useDrillToAttributeUrl = ({
     onSuccess,
     onError,
     onBeforeRun,
-}: UseDrillToAttributeUrlProps = {}) => {
+}: IUseDrillToAttributeUrlProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drillToAttributeUrl,
         successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED",

@@ -12,6 +12,7 @@ import { IAttributeFilterConfigs } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext as IFilterContext_2 } from '@gooddata/sdk-model';
@@ -13643,6 +13644,7 @@ interface IDashboardTab {
     dateFilterConfig?: IDashboardDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     filterContextRef: ObjRef;
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
     layout: IDashboardLayout;
     localIdentifier: string;
     title: string;

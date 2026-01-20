@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -52,7 +52,7 @@ export const selectPermissions: DashboardSelector<IWorkspacePermissions> = creat
     (state) => {
         invariant(state.permissions, "attempting to access uninitialized permissions state");
 
-        return state.permissions!;
+        return state.permissions;
     },
 );
 

@@ -16,7 +16,7 @@ import {
 import { type ILocale } from "@gooddata/sdk-ui";
 
 import {
-    type DashboardFocusObject,
+    type IDashboardFocusObject,
     type ObjectAvailabilityConfig,
     type ResolvedDashboardConfig,
 } from "../../types/commonTypes.js";
@@ -41,7 +41,7 @@ export const selectConfig: DashboardSelector<ResolvedDashboardConfig> = createSe
     (configState) => {
         invariant(configState.config, "attempting to access uninitialized config state");
 
-        return configState.config!;
+        return configState.config;
     },
 );
 
@@ -613,7 +613,7 @@ export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = c
  *
  * @beta
  */
-export const selectFocusObject: DashboardSelector<DashboardFocusObject> = createSelector(
+export const selectFocusObject: DashboardSelector<IDashboardFocusObject> = createSelector(
     selectConfig,
     (state) => {
         return state.focusObject ?? {};
@@ -1060,5 +1060,17 @@ export const selectActiveCalendars: DashboardSelector<IActiveCalendars | undefin
             return { ...activeCalendars, standard: true };
         }
         return activeCalendars;
+    },
+);
+
+/**
+ * Returns whether dashboard filter group feature is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableDashboardFilterGroups: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFilterGroups ?? false;
     },
 );

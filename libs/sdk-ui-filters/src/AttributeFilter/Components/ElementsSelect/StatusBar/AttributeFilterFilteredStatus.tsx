@@ -6,6 +6,8 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
+import { ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS } from "../../../constants.js";
+
 const ALIGN_POINTS = [{ align: "cr cl" }];
 const ARROW_OFFSETS = { "cr cl": [10, 0] };
 
@@ -35,7 +37,7 @@ export function AttributeFilterFilteredStatus({ parentFilterTitles }: IAttribute
                     <span className="gd-icon-circle-question" />
                 </div>
                 <Bubble
-                    className={`bubble-primary gd-attribute-filter-dropdown-bubble__next s-attribute-filter-dropdown-bubble`}
+                    className={`bubble-primary ${ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS} s-attribute-filter-dropdown-bubble`}
                     alignPoints={ALIGN_POINTS}
                     arrowOffsets={ARROW_OFFSETS}
                 >

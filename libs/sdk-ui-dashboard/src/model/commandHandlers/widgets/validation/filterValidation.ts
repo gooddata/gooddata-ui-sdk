@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty, partition } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -23,8 +23,8 @@ import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMa
 import { type IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
-    type InsightDateDatasets,
-    type MeasureDateDatasets,
+    type IInsightDateDatasets,
+    type IMeasureDateDatasets,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
@@ -71,7 +71,7 @@ export function* validateDatasetForInsightWidgetDateFilter(
     dateDataSet: ObjRef,
     resolvedInsight?: IInsight,
 ): SagaIterator<ICatalogDateDataset> {
-    const insightDateDatasets: InsightDateDatasets = yield call(
+    const insightDateDatasets: IInsightDateDatasets = yield call(
         query,
         queryDateDatasetsForInsight(resolvedInsight || widget.insight),
     );
@@ -117,7 +117,7 @@ export function* validateDatasetForRichTextWidgetDateFilter(
     widget: IRichTextWidget,
     dateDataSet: ObjRef,
 ): SagaIterator<ICatalogDateDataset> {
-    const insightDateDatasets: InsightDateDatasets = yield call(
+    const insightDateDatasets: IInsightDateDatasets = yield call(
         query,
         queryDateDatasetsForInsight(newInsight("local:table")),
     );
@@ -163,7 +163,7 @@ export function* validateDatasetForKpiWidgetDateFilter(
     widget: IKpiWidget,
     dateDataSet: ObjRef,
 ): SagaIterator<ICatalogDateDataset> {
-    const measureDateDatasets: MeasureDateDatasets = yield call(
+    const measureDateDatasets: IMeasureDateDatasets = yield call(
         query,
         queryDateDatasetsForMeasure(widget.kpi.metric),
     );

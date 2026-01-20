@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type FC,
@@ -22,7 +22,8 @@ import { SyntaxHighlightingInput, UiIconButton, UiTooltip } from "@gooddata/sdk-
 import { makeTextContents, makeUserMessage } from "../model.js";
 import { collectReferences, useCompletion } from "./completion/index.js";
 import { useHighlight } from "./highlight/index.js";
-import { type RootState, asyncProcessSelector, newMessageAction } from "../store/index.js";
+import { type RootState, asyncProcessSelector, messagesSelector, newMessageAction } from "../store/index.js";
+import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { escapeMarkdown } from "./utils/markdownUtils.js";
 
 export type InputOwnProps = {
@@ -36,13 +37,15 @@ export type InputOwnProps = {
 type InputStateProps = {
     isBusy: boolean;
     isEvaluating: boolean;
+    messages: ReturnType<typeof messagesSelector>;
+    loading: ReturnType<typeof asyncProcessSelector>;
 };
 
 type InputDispatchProps = {
     newMessage: typeof newMessageAction;
 };
 
-const messages = defineMessages({
+const msgs = defineMessages({
     placeholder: {
         id: "gd.gen-ai.input-placeholder",
     },
@@ -70,8 +73,14 @@ function InputComponent({
     canManage,
     canAnalyze,
     targetRef,
+    messages,
+    loading,
 }: InputOwnProps & InputStateProps & InputDispatchProps) {
     const intl = useIntl();
+    const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
+
+    const isLoading = loading === "loading" || loading === "clearing";
+    const isEmpty = !messages?.length && !isLoading;
 
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
@@ -139,93 +148,122 @@ function InputComponent({
         "gd-gen-ai-chat__input__send_button--disabled": buttonDisabled,
     });
 
-    const sendLabel = intl.formatMessage(messages.send);
+    const sendLabel = intl.formatMessage(msgs.send);
 
     return (
         <div
             className={cx("gd-gen-ai-chat__input", {
                 focused,
+                "gd-gen-ai-chat__input--fullscreen": isFullscreen,
+                "gd-gen-ai-chat__input--big-screen": isBigScreen,
+                "gd-gen-ai-chat__input--small-screen": isSmallScreen,
+                "gd-gen-ai-chat__input--empty": isEmpty,
             })}
         >
-            <div
-                ref={targetRef}
-                onFocus={() => {
-                    editorApi?.focus();
-                }}
-            />
-            <div
-                className={cx("gd-gen-ai-chat__input__info", {
-                    hidden: !focused,
-                })}
-            >
-                {isMac ? (
-                    <FormattedMessage
-                        id="gd.gen-ai.autocomplete.input-info.mac"
-                        values={{
-                            code: (chunks: ReactNode) => <code>{chunks}</code>,
-                        }}
-                    />
-                ) : (
-                    <FormattedMessage
-                        id="gd.gen-ai.autocomplete.input-info.win"
-                        values={{
-                            code: (chunks: ReactNode) => <code>{chunks}</code>,
-                        }}
-                    />
-                )}
-            </div>
-            <SyntaxHighlightingInput
-                className="gd-gen-ai-chat__input__mc"
-                placeholder={intl.formatMessage(messages.placeholder)}
-                label={isMac ? intl.formatMessage(messages.labelMac) : intl.formatMessage(messages.labelWin)}
-                value={value}
-                disabled={isBusy}
-                autocompletion={{
-                    aboveCursor: true,
-                    whenTyping: true,
-                    whenTypingDelay: 300,
-                }}
-                beforeExtensions={beforeExtensions}
-                extensions={extensions}
-                onApi={setApi}
-                onChange={setValue}
-                onFocus={() => {
-                    setFocused(true);
-                }}
-                onBlur={() => {
-                    setFocused(false);
-                }}
-                onKeyDown={handleKeyDown}
-                onCompletion={onCompletion}
-            />
-            <div className={buttonClasses}>
-                <UiTooltip
-                    triggerBy={["focus", "hover"]}
-                    arrowPlacement="bottom"
-                    anchor={
-                        <UiIconButton
-                            icon="send"
-                            variant="tertiary"
-                            size="medium"
-                            dataTestId="send_message"
-                            isDisabled={buttonDisabled}
-                            onClick={buttonDisabled ? undefined : handleSubmit}
-                            accessibilityConfig={{
-                                ariaLabel: sendLabel,
-                            }}
-                        />
-                    }
-                    content={sendLabel}
+            <div className="gd-gen-ai-chat__input__content">
+                <div
+                    ref={targetRef}
+                    onFocus={() => {
+                        editorApi?.focus();
+                    }}
                 />
+                <HintText focused={focused} where="top" />
+                <SyntaxHighlightingInput
+                    className="gd-gen-ai-chat__input__mc"
+                    placeholder={intl.formatMessage(msgs.placeholder)}
+                    label={isMac ? intl.formatMessage(msgs.labelMac) : intl.formatMessage(msgs.labelWin)}
+                    value={value}
+                    disabled={isBusy}
+                    autocompletion={{
+                        aboveCursor: true,
+                        whenTyping: true,
+                        whenTypingDelay: 300,
+                    }}
+                    beforeExtensions={beforeExtensions}
+                    extensions={extensions}
+                    onApi={setApi}
+                    onChange={setValue}
+                    onFocus={() => {
+                        setFocused(true);
+                    }}
+                    onBlur={() => {
+                        setFocused(false);
+                    }}
+                    onKeyDown={handleKeyDown}
+                    onCompletion={onCompletion}
+                />
+                <HintText focused={focused} where="bottom" />
+                <div className={buttonClasses}>
+                    <UiTooltip
+                        triggerBy={["focus", "hover"]}
+                        arrowPlacement="bottom"
+                        anchor={
+                            <UiIconButton
+                                icon="send"
+                                variant="tertiary"
+                                size="medium"
+                                dataTestId="send_message"
+                                isDisabled={buttonDisabled}
+                                onClick={buttonDisabled ? undefined : handleSubmit}
+                                accessibilityConfig={{
+                                    ariaLabel: sendLabel,
+                                }}
+                            />
+                        }
+                        content={sendLabel}
+                    />
+                </div>
             </div>
         </div>
     );
 }
 
-const mapStateToProps = (state: RootState): { isBusy: boolean; isEvaluating: boolean } => {
+interface IHintTextProps {
+    focused: boolean;
+    where: "top" | "bottom";
+}
+
+function HintText({ where, focused }: IHintTextProps) {
+    return (
+        <div
+            className={cx("gd-gen-ai-chat__input__info", {
+                hidden: !focused,
+                top: where === "top",
+                bottom: where === "bottom",
+            })}
+        >
+            {isMac ? (
+                <FormattedMessage
+                    id="gd.gen-ai.autocomplete.input-info.mac"
+                    values={{
+                        code: (chunks: ReactNode) => <code>{chunks}</code>,
+                    }}
+                />
+            ) : (
+                <FormattedMessage
+                    id="gd.gen-ai.autocomplete.input-info.win"
+                    values={{
+                        code: (chunks: ReactNode) => <code>{chunks}</code>,
+                    }}
+                />
+            )}
+        </div>
+    );
+}
+
+const mapStateToProps = (
+    state: RootState,
+): {
+    isBusy: boolean;
+    isEvaluating: boolean;
+    messages: ReturnType<typeof messagesSelector>;
+    loading: ReturnType<typeof asyncProcessSelector>;
+} => {
     const asyncState = asyncProcessSelector(state);
 
     return {
+        messages: messagesSelector(state),
+        loading: asyncState,
         isBusy: !!asyncState,
         isEvaluating: asyncState === "evaluating",
     };

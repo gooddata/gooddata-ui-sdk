@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
 import noop from "lodash-es/noop.js";
@@ -13,13 +13,13 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { useDrillAttributeHandler } from "../composition/hooks/useDrillAttributeHandler.js";
 
-export interface KdaKeyDriverChartProps {
+export interface IKdaKeyDriverChartProps {
     config: IChartConfig | null;
     dataView: IDataView | null;
     displayForm?: ObjRef | null;
 }
 
-export function KdaKeyDriverChart({ config, dataView, displayForm }: KdaKeyDriverChartProps) {
+export function KdaKeyDriverChart({ config, dataView, displayForm }: IKdaKeyDriverChartProps) {
     const intl = useIntl();
     const theme = useTheme();
 

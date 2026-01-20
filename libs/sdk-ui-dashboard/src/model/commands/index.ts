@@ -1,138 +1,138 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { type CreateAlert, type SaveAlert } from "./alerts.js";
+import { type ICreateAlert, type ISaveAlert } from "./alerts.js";
 import {
-    type ChangeIgnoreExecutionTimestamp,
-    type ChangeSharing,
-    type DeleteDashboard,
-    type ExportDashboardToExcel,
-    type ExportDashboardToPdf,
-    type ExportDashboardToPdfPresentation,
-    type ExportDashboardToPptPresentation,
+    type IChangeIgnoreExecutionTimestamp,
+    type IChangeSharing,
+    type IDeleteDashboard,
+    type IExportDashboardToExcel,
+    type IExportDashboardToPdf,
+    type IExportDashboardToPdfPresentation,
+    type IExportDashboardToPptPresentation,
+    type IRenameDashboard,
+    type IResetDashboard,
+    type ISaveDashboard,
+    type ISetAttributeFilterLimitingItems,
+    type ISetDashboardAttributeFilterConfigDisplayAsLabel,
+    type ISetDashboardAttributeFilterConfigMode,
+    type ISetDashboardDateFilterConfigMode,
+    type ISetDashboardDateFilterWithDimensionConfigMode,
+    type ISetDateFilterConfigTitle,
     type InitializeDashboard,
-    type RenameDashboard,
-    type ResetDashboard,
-    type SaveDashboard,
     type SaveDashboardAs,
-    type SetAttributeFilterLimitingItems,
-    type SetDashboardAttributeFilterConfigDisplayAsLabel,
-    type SetDashboardAttributeFilterConfigMode,
-    type SetDashboardDateFilterConfigMode,
-    type SetDashboardDateFilterWithDimensionConfigMode,
-    type SetDateFilterConfigTitle,
 } from "./dashboard.js";
 import {
-    type ChangeDrillableItems,
-    type CrossFiltering,
-    type Drill,
-    type DrillDown,
-    type DrillToAttributeUrl,
-    type DrillToCustomUrl,
-    type DrillToDashboard,
-    type DrillToInsight,
-    type DrillToLegacyDashboard,
-    type KeyDriverAnalysis,
+    type IChangeDrillableItems,
+    type ICrossFiltering,
+    type IDrill,
+    type IDrillDown,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IDrillToLegacyDashboard,
+    type IKeyDriverAnalysis,
 } from "./drill.js";
-import { type AddDrillTargets } from "./drillTargets.js";
-import { type TriggerEvent } from "./events.js";
-import { type UpsertExecutionResult } from "./executionResults.js";
+import { type IAddDrillTargets } from "./drillTargets.js";
+import { type ITriggerEvent } from "./events.js";
+import { type IUpsertExecutionResult } from "./executionResults.js";
 import {
-    type AddAttributeFilter,
-    type AddDateFilter,
-    type ApplyFilterContextWorkingSelection,
-    type ApplyFilterView,
     type ChangeAttributeFilterSelection,
     type ChangeDateFilterSelection,
     type ChangeFilterContextSelection,
-    type DeleteFilterView,
-    type MoveAttributeFilter,
-    type MoveDateFilter,
-    type ReloadFilterViews,
-    type RemoveAttributeFilters,
-    type RemoveDateFilters,
-    type ResetFilterContextWorkingSelection,
-    type SaveFilterView,
-    type SetAttributeFilterDependentDateFilters,
-    type SetAttributeFilterDisplayForm,
-    type SetAttributeFilterParents,
-    type SetAttributeFilterSelectionMode,
-    type SetAttributeFilterTitle,
-    type SetFilterViewAsDefault,
+    type IAddAttributeFilter,
+    type IAddDateFilter,
+    type IApplyFilterContextWorkingSelection,
+    type IApplyFilterView,
+    type IDeleteFilterView,
+    type IMoveAttributeFilter,
+    type IMoveDateFilter,
+    type IReloadFilterViews,
+    type IRemoveAttributeFilters,
+    type IRemoveDateFilters,
+    type IResetFilterContextWorkingSelection,
+    type ISaveFilterView,
+    type ISetAttributeFilterDependentDateFilters,
+    type ISetAttributeFilterDisplayForm,
+    type ISetAttributeFilterParents,
+    type ISetAttributeFilterSelectionMode,
+    type ISetAttributeFilterTitle,
+    type ISetFilterViewAsDefault,
 } from "./filters.js";
 import {
-    type AddDrillDownForInsightWidget,
-    type AttributeHierarchyModified,
-    type ChangeInsightWidgetDescription,
-    type ChangeInsightWidgetFilterSettings,
-    type ChangeInsightWidgetHeader,
-    type ChangeInsightWidgetIgnoreCrossFiltering,
-    type ChangeInsightWidgetInsight,
     type ChangeInsightWidgetVisConfiguration,
-    type ChangeInsightWidgetVisProperties,
-    type ExportImageInsightWidget,
-    type ExportInsightWidget,
-    type ExportRawInsightWidget,
-    type ExportSlidesInsightWidget,
-    type ModifyDrillDownForInsightWidget,
-    type ModifyDrillsForInsightWidget,
-    type RefreshInsightWidget,
-    type RemoveDrillDownForInsightWidget,
-    type RemoveDrillToUrlForInsightWidget,
-    type RemoveDrillsForInsightWidget,
+    type IAddDrillDownForInsightWidget,
+    type IAttributeHierarchyModified,
+    type IChangeInsightWidgetDescription,
+    type IChangeInsightWidgetFilterSettings,
+    type IChangeInsightWidgetHeader,
+    type IChangeInsightWidgetIgnoreCrossFiltering,
+    type IChangeInsightWidgetInsight,
+    type IChangeInsightWidgetVisProperties,
+    type IExportImageInsightWidget,
+    type IExportInsightWidget,
+    type IExportRawInsightWidget,
+    type IExportSlidesInsightWidget,
+    type IModifyDrillDownForInsightWidget,
+    type IModifyDrillsForInsightWidget,
+    type IRefreshInsightWidget,
+    type IRemoveDrillDownForInsightWidget,
+    type IRemoveDrillToUrlForInsightWidget,
+    type IRemoveDrillsForInsightWidget,
 } from "./insight.js";
 import {
-    type ChangeKpiWidgetComparison,
-    type ChangeKpiWidgetConfiguration,
-    type ChangeKpiWidgetDescription,
-    type ChangeKpiWidgetFilterSettings,
-    type ChangeKpiWidgetHeader,
-    type ChangeKpiWidgetMeasure,
-    type RefreshKpiWidget,
-    type RemoveDrillForKpiWidget,
-    type SetDrillForKpiWidget,
+    type IChangeKpiWidgetComparison,
+    type IChangeKpiWidgetConfiguration,
+    type IChangeKpiWidgetDescription,
+    type IChangeKpiWidgetFilterSettings,
+    type IChangeKpiWidgetHeader,
+    type IChangeKpiWidgetMeasure,
+    type IRefreshKpiWidget,
+    type IRemoveDrillForKpiWidget,
+    type ISetDrillForKpiWidget,
 } from "./kpi.js";
 import {
-    type AddLayoutSection,
-    type AddSectionItems,
     type ChangeLayoutSectionHeader,
-    type MoveLayoutSection,
-    type MoveSectionItem,
-    type MoveSectionItemToNewSection,
-    type RemoveLayoutSection,
-    type RemoveSectionItem,
-    type RemoveSectionItemByWidgetRef,
-    type ReplaceSectionItem,
-    type ResizeHeight,
-    type ResizeWidth,
-    type SetScreenSize,
-    type ToggleLayoutDirection,
-    type ToggleLayoutSectionHeaders,
-    type UndoLayoutChanges,
+    type IAddLayoutSection,
+    type IAddSectionItems,
+    type IMoveLayoutSection,
+    type IMoveSectionItem,
+    type IMoveSectionItemToNewSection,
+    type IRemoveLayoutSection,
+    type IRemoveSectionItem,
+    type IRemoveSectionItemByWidgetRef,
+    type IReplaceSectionItem,
+    type IResizeHeight,
+    type IResizeWidth,
+    type ISetScreenSize,
+    type IToggleLayoutDirection,
+    type IToggleLayoutSectionHeaders,
+    type IUndoLayoutChanges,
 } from "./layout.js";
 import { type RequestAsyncRender, type ResolveAsyncRender } from "./render.js";
-import { type ChangeRenderMode } from "./renderMode.js";
-import { type ChangeRichTextWidgetContent, type ChangeRichTextWidgetFilterSettings } from "./richText.js";
+import { type IChangeRenderMode } from "./renderMode.js";
+import { type IChangeRichTextWidgetContent, type IChangeRichTextWidgetFilterSettings } from "./richText.js";
 import {
-    type CreateScheduledEmail,
-    type InitializeAutomations,
-    type RefreshAutomations,
-    type SaveScheduledEmail,
+    type ICreateScheduledEmail,
+    type IInitializeAutomations,
+    type IRefreshAutomations,
+    type ISaveScheduledEmail,
 } from "./scheduledEmail.js";
-import { type SetShowWidgetAsTable } from "./showWidgetAsTable.js";
+import { type ISetShowWidgetAsTable } from "./showWidgetAsTable.js";
 import {
-    type CancelRenamingDashboardTab,
-    type ConvertDashboardTabFromDefault,
-    type CreateDashboardTab,
-    type DeleteDashboardTab,
-    type RenameDashboardTab,
-    type RepositionDashboardTab,
-    type StartRenamingDashboardTab,
-    type SwitchDashboardTab,
+    type ICancelRenamingDashboardTab,
+    type IConvertDashboardTabFromDefault,
+    type ICreateDashboardTab,
+    type IDeleteDashboardTab,
+    type IRenameDashboardTab,
+    type IRepositionDashboardTab,
+    type IStartRenamingDashboardTab,
+    type ISwitchDashboardTab,
 } from "./tabs.js";
-import { type LoadAllWorkspaceUsers } from "./users.js";
+import { type ILoadAllWorkspaceUsers } from "./users.js";
 import {
-    type AddVisualizationToVisualizationSwitcherWidgetContent,
-    type UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+    type IAddVisualizationToVisualizationSwitcherWidgetContent,
+    type IUpdateVisualizationsFromVisualizationSwitcherWidgetContent,
 } from "./visualizationSwitcher.js";
 
 export type { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
@@ -141,34 +141,34 @@ export type {
     InitializeDashboardPayload,
     SaveDashboardAs,
     SaveDashboardAsPayload,
-    SaveDashboard,
-    SaveDashboardPayload,
-    RenameDashboard,
-    RenameDashboardPayload,
-    ResetDashboard,
-    ExportDashboardToPdf,
-    ExportDashboardToPptPresentation,
-    ExportDashboardToPdfPresentation,
-    ExportDashboardToExcel,
-    ExportDashboardToExcelPayload,
-    DeleteDashboard,
-    ChangeSharing,
-    ChangeSharingPayload,
-    SetDashboardDateFilterConfigMode,
-    SetDashboardDateFilterConfigModePayload,
-    SetDashboardDateFilterWithDimensionConfigMode,
-    SetDashboardDateFilterWithDimensionConfigModePayload,
-    SetDashboardAttributeFilterConfigMode,
-    SetDashboardAttributeFilterConfigModePayload,
-    SetDateFilterConfigTitle,
-    SetDateFilterConfigTitlePayload,
-    SetAttributeFilterLimitingItems,
-    SetAttributeFilterLimitingItemsPayload,
-    SetDashboardAttributeFilterConfigDisplayAsLabel,
-    SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
-    ChangeIgnoreExecutionTimestamp,
-    ChangeIgnoreExecutionTimestampPayload,
-    ExportDashboardToPresentationPayload,
+    ISaveDashboard,
+    ISaveDashboardPayload,
+    IRenameDashboard,
+    IRenameDashboardPayload,
+    IResetDashboard,
+    IExportDashboardToPdf,
+    IExportDashboardToPptPresentation,
+    IExportDashboardToPdfPresentation,
+    IExportDashboardToExcel,
+    IExportDashboardToExcelPayload,
+    IDeleteDashboard,
+    IChangeSharing,
+    IChangeSharingPayload,
+    ISetDashboardDateFilterConfigMode,
+    ISetDashboardDateFilterConfigModePayload,
+    ISetDashboardDateFilterWithDimensionConfigMode,
+    ISetDashboardDateFilterWithDimensionConfigModePayload,
+    ISetDashboardAttributeFilterConfigMode,
+    ISetDashboardAttributeFilterConfigModePayload,
+    ISetDateFilterConfigTitle,
+    ISetDateFilterConfigTitlePayload,
+    ISetAttributeFilterLimitingItems,
+    ISetAttributeFilterLimitingItemsPayload,
+    ISetDashboardAttributeFilterConfigDisplayAsLabel,
+    ISetDashboardAttributeFilterConfigDisplayAsLabelPayload,
+    IChangeIgnoreExecutionTimestamp,
+    IChangeIgnoreExecutionTimestampPayload,
+    IExportDashboardToPresentationPayload,
     PdfConfiguration,
 } from "./dashboard.js";
 export {
@@ -194,51 +194,51 @@ export {
     changeIgnoreExecutionTimestamp,
 } from "./dashboard.js";
 
-export type { TriggerEvent, TriggerEventPayload } from "./events.js";
+export type { ITriggerEvent, ITriggerEventPayload } from "./events.js";
 export { triggerEvent } from "./events.js";
 
 export type {
     ChangeDateFilterSelection,
-    AddAttributeFilter,
+    IAddAttributeFilter,
     AddAttributeFilterPayload,
-    MoveAttributeFilter,
+    IMoveAttributeFilter,
     MoveAttributeFilterPayload,
-    RemoveAttributeFilters,
-    RemoveAttributeFiltersPayload,
-    AddDateFilter,
-    AddDateFilterPayload,
-    RemoveDateFilters,
-    RemoveDateFiltersPayload,
-    MoveDateFilter,
+    IRemoveAttributeFilters,
+    IRemoveAttributeFiltersPayload,
+    IAddDateFilter,
+    IAddDateFilterPayload,
+    IRemoveDateFilters,
+    IRemoveDateFiltersPayload,
+    IMoveDateFilter,
     MoveDateFilterPayload,
     ChangeAttributeFilterSelection,
     AttributeFilterSelectionType,
-    SetAttributeFilterParents,
+    ISetAttributeFilterParents,
     SetAttributeFilterParentsPayload,
     ChangeAttributeFilterSelectionPayload,
     ChangeFilterContextSelection,
     ChangeFilterContextSelectionPayload,
     DateFilterSelection,
     ChangeFilterContextSelectionParams,
-    SetAttributeFilterDisplayForm,
-    SetAttributeFilterDisplayFormPayload,
-    SetAttributeFilterTitle,
-    SetAttributeFilterTitlePayload,
-    SetAttributeFilterSelectionMode,
-    SetAttributeFilterSelectionModePayload,
-    SetAttributeFilterDependentDateFilters,
+    ISetAttributeFilterDisplayForm,
+    ISetAttributeFilterDisplayFormPayload,
+    ISetAttributeFilterTitle,
+    ISetAttributeFilterTitlePayload,
+    ISetAttributeFilterSelectionMode,
+    ISetAttributeFilterSelectionModePayload,
+    ISetAttributeFilterDependentDateFilters,
     SetAttributeFilterDependentDateFiltersPayload,
-    SaveFilterView,
-    SaveFilterViewPayload,
-    DeleteFilterView,
-    DeleteFilterViewPayload,
-    ApplyFilterView,
-    ApplyFilterViewPayload,
-    SetFilterViewAsDefault,
-    SetFilterViewAsDefaultPayload,
-    ReloadFilterViews,
-    ApplyFilterContextWorkingSelection,
-    ResetFilterContextWorkingSelection,
+    ISaveFilterView,
+    ISaveFilterViewPayload,
+    IDeleteFilterView,
+    IDeleteFilterViewPayload,
+    IApplyFilterView,
+    IApplyFilterViewPayload,
+    ISetFilterViewAsDefault,
+    ISetFilterViewAsDefaultPayload,
+    IReloadFilterViews,
+    IApplyFilterContextWorkingSelection,
+    IResetFilterContextWorkingSelection,
 } from "./filters.js";
 export {
     changeDateFilterSelection,
@@ -273,40 +273,40 @@ export {
 } from "./filters.js";
 
 export type {
-    AddLayoutSection,
-    AddLayoutSectionPayload,
-    MoveLayoutSection,
-    MoveLayoutSectionPayload,
-    RemoveLayoutSection,
-    RemoveLayoutSectionPayload,
+    IAddLayoutSection,
+    IAddLayoutSectionPayload,
+    IMoveLayoutSection,
+    IMoveLayoutSectionPayload,
+    IRemoveLayoutSection,
+    IRemoveLayoutSectionPayload,
     ChangeLayoutSectionHeader,
     ChangeLayoutSectionHeaderPayload,
-    AddSectionItems,
-    AddSectionItemsPayload,
-    ReplaceSectionItem,
-    ReplaceSectionItemPayload,
-    MoveSectionItem,
-    MoveSectionItemPayload,
-    MoveSectionItemToNewSection,
-    MoveSectionItemToNewSectionPayload,
-    RemoveSectionItem,
-    RemoveSectionItemPayload,
-    RemoveSectionItemByWidgetRef,
-    RemoveSectionItemByWidgetRefPayload,
-    UndoLayoutChanges,
-    UndoLayoutChangesPayload,
+    IAddSectionItems,
+    IAddSectionItemsPayload,
+    IReplaceSectionItem,
+    IReplaceSectionItemPayload,
+    IMoveSectionItem,
+    IMoveSectionItemPayload,
+    IMoveSectionItemToNewSection,
+    IMoveSectionItemToNewSectionPayload,
+    IRemoveSectionItem,
+    IRemoveSectionItemPayload,
+    IRemoveSectionItemByWidgetRef,
+    IRemoveSectionItemByWidgetRefPayload,
+    IUndoLayoutChanges,
+    IUndoLayoutChangesPayload,
     DashboardLayoutCommands,
     UndoPointSelector,
-    ResizeHeight,
-    ResizeHeightPayload,
-    ResizeWidth,
-    ResizeWidthPayload,
-    SetScreenSize,
-    SetScreenSizePayload,
-    ToggleLayoutSectionHeaders,
-    ToggleLayoutSectionHeadersPayload,
-    ToggleLayoutDirection,
-    ToggleLayoutDirectionPayload,
+    IResizeHeight,
+    IResizeHeightPayload,
+    IResizeWidth,
+    IResizeWidthPayload,
+    ISetScreenSize,
+    ISetScreenSizePayload,
+    IToggleLayoutSectionHeaders,
+    IToggleLayoutSectionHeadersPayload,
+    IToggleLayoutDirection,
+    IToggleLayoutDirectionPayload,
 } from "./layout.js";
 export {
     addLayoutSection,
@@ -346,16 +346,16 @@ export {
     toggleLayoutDirection,
 } from "./layout.js";
 
-export type { CreateAlert, CreateAlertPayload, SaveAlert, SaveAlertPayload } from "./alerts.js";
+export type { ICreateAlert, ICreateAlertPayload, ISaveAlert, ISaveAlertPayload } from "./alerts.js";
 export { createAlert, saveAlert } from "./alerts.js";
 
 export type {
-    CreateScheduledEmail,
-    CreateScheduledEmailPayload,
-    SaveScheduledEmail,
-    SaveScheduledEmailPayload,
-    RefreshAutomations,
-    InitializeAutomations,
+    ICreateScheduledEmail,
+    ICreateScheduledEmailPayload,
+    ISaveScheduledEmail,
+    ISaveScheduledEmailPayload,
+    IRefreshAutomations,
+    IInitializeAutomations,
 } from "./scheduledEmail.js";
 export {
     createScheduledEmail,
@@ -365,27 +365,27 @@ export {
 } from "./scheduledEmail.js";
 
 export type {
-    Drill,
-    DrillPayload,
-    DrillDown,
-    DrillDownPayload,
-    DrillToAttributeUrl,
-    DrillToAttributeUrlPayload,
-    DrillToCustomUrl,
-    DrillToCustomUrlPayload,
-    DrillToDashboard,
-    DrillToDashboardPayload,
-    DrillToInsight,
-    DrillToInsightPayload,
-    DrillToLegacyDashboard,
-    DrillToLegacyDashboardPayload,
-    ChangeDrillableItems,
-    ChangeDrillableItemsPayload,
+    IDrill,
+    IDrillPayload,
+    IDrillDown,
+    IDrillDownPayload,
+    IDrillToAttributeUrl,
+    IDrillToAttributeUrlPayload,
+    IDrillToCustomUrl,
+    IDrillToCustomUrlPayload,
+    IDrillToDashboard,
+    IDrillToDashboardPayload,
+    IDrillToInsight,
+    IDrillToInsightPayload,
+    IDrillToLegacyDashboard,
+    IDrillToLegacyDashboardPayload,
+    IChangeDrillableItems,
+    IChangeDrillableItemsPayload,
     DashboardDrillCommand,
-    CrossFiltering,
-    CrossFilteringPayload,
-    KeyDriverAnalysis,
-    KeyDriverAnalysisPayload,
+    ICrossFiltering,
+    ICrossFilteringPayload,
+    IKeyDriverAnalysis,
+    IKeyDriverAnalysisPayload,
 } from "./drill.js";
 export {
     drill,
@@ -400,7 +400,7 @@ export {
     keyDriverAnalysis,
 } from "./drill.js";
 
-export type { UpsertExecutionResult } from "./executionResults.js";
+export type { IUpsertExecutionResult } from "./executionResults.js";
 export {
     setExecutionResultData,
     setExecutionResultError,
@@ -408,25 +408,25 @@ export {
 } from "./executionResults.js";
 
 export type {
-    ChangeKpiWidgetHeader,
-    ChangeKpiWidgetHeaderPayload,
-    ChangeKpiWidgetDescription,
-    ChangeKpiWidgetDescriptionPayload,
-    ChangeKpiWidgetConfiguration,
-    ChangeKpiWidgetConfigurationPayload,
-    ChangeKpiWidgetMeasure,
-    ChangeKpiWidgetMeasurePayload,
-    ChangeKpiWidgetFilterSettings,
-    ChangeKpiWidgetFilterSettingsPayload,
-    ChangeKpiWidgetComparison,
-    ChangeKpiWidgetComparisonPayload,
-    RefreshKpiWidget,
-    RefreshKpiWidgetPayload,
-    KpiWidgetComparison,
-    RemoveDrillForKpiWidget,
-    RemoveDrillForKpiWidgetPayload,
-    SetDrillForKpiWidget,
-    SetDrillForKpiWidgetPayload,
+    IChangeKpiWidgetHeader,
+    IChangeKpiWidgetHeaderPayload,
+    IChangeKpiWidgetDescription,
+    IChangeKpiWidgetDescriptionPayload,
+    IChangeKpiWidgetConfiguration,
+    IChangeKpiWidgetConfigurationPayload,
+    IChangeKpiWidgetMeasure,
+    IChangeKpiWidgetMeasurePayload,
+    IChangeKpiWidgetFilterSettings,
+    IChangeKpiWidgetFilterSettingsPayload,
+    IChangeKpiWidgetComparison,
+    IChangeKpiWidgetComparisonPayload,
+    IRefreshKpiWidget,
+    IRefreshKpiWidgetPayload,
+    IKpiWidgetComparison,
+    IRemoveDrillForKpiWidget,
+    IRemoveDrillForKpiWidgetPayload,
+    ISetDrillForKpiWidget,
+    ISetDrillForKpiWidgetPayload,
 } from "./kpi.js";
 export {
     changeKpiWidgetHeader,
@@ -446,46 +446,46 @@ export {
 } from "./kpi.js";
 
 export type {
-    ChangeInsightWidgetHeader,
-    ChangeInsightWidgetHeaderPayload,
-    ChangeInsightWidgetDescription,
-    ChangeInsightWidgetDescriptionPayload,
-    ChangeInsightWidgetIgnoreCrossFiltering,
-    ChangeInsightWidgetIgnoreCrossFilteringPayload,
-    ChangeInsightWidgetFilterSettings,
-    ChangeInsightWidgetFilterSettingsPayload,
-    ChangeInsightWidgetVisProperties,
-    ChangeInsightWidgetVisPropertiesPayload,
+    IChangeInsightWidgetHeader,
+    IChangeInsightWidgetHeaderPayload,
+    IChangeInsightWidgetDescription,
+    IChangeInsightWidgetDescriptionPayload,
+    IChangeInsightWidgetIgnoreCrossFiltering,
+    IChangeInsightWidgetIgnoreCrossFilteringPayload,
+    IChangeInsightWidgetFilterSettings,
+    IChangeInsightWidgetFilterSettingsPayload,
+    IChangeInsightWidgetVisProperties,
+    IChangeInsightWidgetVisPropertiesPayload,
     ChangeInsightWidgetVisConfiguration,
     ChangeInsightWidgetVisConfigurationPayload,
-    ChangeInsightWidgetInsight,
-    ChangeInsightWidgetInsightPayload,
-    ModifyDrillsForInsightWidget,
-    ModifyDrillsForInsightWidgetPayload,
-    RemoveDrillsForInsightWidget,
-    RemoveDrillsForInsightWidgetPayload,
-    RemoveDrillDownForInsightWidget,
-    RemoveDrillDownForInsightWidgetPayload,
-    RemoveDrillToUrlForInsightWidget,
-    RemoveDrillToUrlForInsightWidgetPayload,
-    AddDrillDownForInsightWidget,
-    AddDrillDownForInsightWidgetPayload,
-    ModifyDrillDownForInsightWidget,
-    ModifyDrillDownForInsightWidgetPayload,
+    IChangeInsightWidgetInsight,
+    IChangeInsightWidgetInsightPayload,
+    IModifyDrillsForInsightWidget,
+    IModifyDrillsForInsightWidgetPayload,
+    IRemoveDrillsForInsightWidget,
+    IRemoveDrillsForInsightWidgetPayload,
+    IRemoveDrillDownForInsightWidget,
+    IRemoveDrillDownForInsightWidgetPayload,
+    IRemoveDrillToUrlForInsightWidget,
+    IRemoveDrillToUrlForInsightWidgetPayload,
+    IAddDrillDownForInsightWidget,
+    IAddDrillDownForInsightWidgetPayload,
+    IModifyDrillDownForInsightWidget,
+    IModifyDrillDownForInsightWidgetPayload,
     RemoveDrillsSelector,
-    RefreshInsightWidget,
-    RefreshInsightWidgetPayload,
-    ExportInsightWidget,
-    ExportInsightWidgetPayload,
-    AttributeHierarchyModified,
-    ExportRawInsightWidget,
-    ExportRawInsightWidgetPayload,
-    ExportSlidesInsightWidget,
-    ExportSlidesInsightWidgetPayload,
-    ExportImageInsightWidget,
-    ExportImageInsightWidgetPayload,
+    IRefreshInsightWidget,
+    IRefreshInsightWidgetPayload,
+    IExportInsightWidget,
+    IExportInsightWidgetPayload,
+    IAttributeHierarchyModified,
+    IExportRawInsightWidget,
+    IExportRawInsightWidgetPayload,
+    IExportSlidesInsightWidget,
+    IExportSlidesInsightWidgetPayload,
+    IExportImageInsightWidget,
+    IExportImageInsightWidgetPayload,
 } from "./insight.js";
-export type { SetShowWidgetAsTable } from "./showWidgetAsTable.js";
+export type { ISetShowWidgetAsTable } from "./showWidgetAsTable.js";
 
 export {
     changeInsightWidgetHeader,
@@ -516,13 +516,13 @@ export {
     exportImageInsightWidget,
 } from "./insight.js";
 export { loadAllWorkspaceUsers } from "./users.js";
-export type { LoadAllWorkspaceUsers } from "./users.js";
+export type { ILoadAllWorkspaceUsers } from "./users.js";
 
 export type {
-    ChangeRichTextWidgetContent,
-    ChangeRichTextWidgetContentPayload,
-    ChangeRichTextWidgetFilterSettings,
-    ChangeRichTextWidgetFilterSettingsPayload,
+    IChangeRichTextWidgetContent,
+    IChangeRichTextWidgetContentPayload,
+    IChangeRichTextWidgetFilterSettings,
+    IChangeRichTextWidgetFilterSettingsPayload,
 } from "./richText.js";
 export {
     changeRichTextWidgetContent,
@@ -535,10 +535,10 @@ export {
 } from "./richText.js";
 
 export type {
-    AddVisualizationToVisualizationSwitcherWidgetContent,
-    AddVisualizationToVisualizationSwitcherWidgetContentPayload,
-    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
-    UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload,
+    IAddVisualizationToVisualizationSwitcherWidgetContent,
+    IAddVisualizationToVisualizationSwitcherWidgetContentPayload,
+    IUpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+    IUpdateVisualizationsFromVisualizationSwitcherWidgetContentPayload,
 } from "./visualizationSwitcher.js";
 export {
     addVisualizationToSwitcherWidgetContent,
@@ -553,31 +553,31 @@ export type {
 } from "./render.js";
 export { requestAsyncRender, resolveAsyncRender } from "./render.js";
 
-export type { ChangeRenderMode, ChangeRenderModePayload, RenderModeChangeOptions } from "./renderMode.js";
+export type { IChangeRenderMode, IChangeRenderModePayload, IRenderModeChangeOptions } from "./renderMode.js";
 export { changeRenderMode, cancelEditRenderMode, switchToEditRenderMode } from "./renderMode.js";
 
-export type { AddDrillTargets, AddDrillTargetsPayload } from "./drillTargets.js";
+export type { IAddDrillTargets, IAddDrillTargetsPayload } from "./drillTargets.js";
 export { addDrillTargets } from "./drillTargets.js";
 
-export type { SetShowWidgetAsTablePayload } from "./showWidgetAsTable.js";
+export type { ISetShowWidgetAsTablePayload } from "./showWidgetAsTable.js";
 export { setShowWidgetAsTable } from "./showWidgetAsTable.js";
 export type {
-    SwitchDashboardTab,
-    SwitchDashboardTabPayload,
-    ConvertDashboardTabFromDefault,
-    ConvertDashboardTabFromDefaultPayload,
-    CreateDashboardTab,
-    CreateDashboardTabPayload,
-    RepositionDashboardTab,
-    RepositionDashboardTabPayload,
-    DeleteDashboardTab,
-    DeleteDashboardTabPayload,
-    StartRenamingDashboardTab,
-    StartRenamingDashboardTabPayload,
-    CancelRenamingDashboardTab,
-    CancelRenamingDashboardTabPayload,
-    RenameDashboardTab,
-    RenameDashboardTabPayload,
+    ISwitchDashboardTab,
+    ISwitchDashboardTabPayload,
+    IConvertDashboardTabFromDefault,
+    IConvertDashboardTabFromDefaultPayload,
+    ICreateDashboardTab,
+    ICreateDashboardTabPayload,
+    IRepositionDashboardTab,
+    IRepositionDashboardTabPayload,
+    IDeleteDashboardTab,
+    IDeleteDashboardTabPayload,
+    IStartRenamingDashboardTab,
+    IStartRenamingDashboardTabPayload,
+    ICancelRenamingDashboardTab,
+    ICancelRenamingDashboardTabPayload,
+    IRenameDashboardTab,
+    IRenameDashboardTabPayload,
 } from "./tabs.js";
 export {
     switchDashboardTab,
@@ -610,117 +610,117 @@ export type DashboardCommands =
     | ChangeDateFilterSelection
     | ChangeAttributeFilterSelection
     //beta
-    | ChangeRenderMode
-    | SaveDashboard
-    | RenameDashboard
-    | ResetDashboard
-    | ExportDashboardToPdf
-    | ExportDashboardToExcel
-    | ExportDashboardToPdfPresentation
-    | ExportDashboardToPptPresentation
-    | DeleteDashboard
-    | TriggerEvent
-    | UpsertExecutionResult
-    | AddAttributeFilter
-    | RemoveAttributeFilters
-    | MoveAttributeFilter
-    | SetAttributeFilterParents
-    | SetAttributeFilterDependentDateFilters
-    | AddLayoutSection
-    | MoveLayoutSection
-    | RemoveLayoutSection
+    | IChangeRenderMode
+    | ISaveDashboard
+    | IRenameDashboard
+    | IResetDashboard
+    | IExportDashboardToPdf
+    | IExportDashboardToExcel
+    | IExportDashboardToPdfPresentation
+    | IExportDashboardToPptPresentation
+    | IDeleteDashboard
+    | ITriggerEvent
+    | IUpsertExecutionResult
+    | IAddAttributeFilter
+    | IRemoveAttributeFilters
+    | IMoveAttributeFilter
+    | ISetAttributeFilterParents
+    | ISetAttributeFilterDependentDateFilters
+    | IAddLayoutSection
+    | IMoveLayoutSection
+    | IRemoveLayoutSection
     | ChangeLayoutSectionHeader
-    | ResizeHeight
-    | ResizeWidth
-    | AddSectionItems
-    | ReplaceSectionItem
-    | MoveSectionItem
-    | MoveSectionItemToNewSection
-    | RemoveSectionItem
-    | RemoveSectionItemByWidgetRef
-    | UndoLayoutChanges
-    | ChangeKpiWidgetHeader
-    | ChangeKpiWidgetDescription
-    | ChangeKpiWidgetConfiguration
-    | ChangeKpiWidgetMeasure
-    | ChangeKpiWidgetFilterSettings
-    | ChangeKpiWidgetComparison
-    | RefreshKpiWidget
-    | SetDrillForKpiWidget
-    | RemoveDrillForKpiWidget
-    | ChangeInsightWidgetHeader
-    | ChangeInsightWidgetDescription
-    | ChangeInsightWidgetIgnoreCrossFiltering
-    | ChangeInsightWidgetFilterSettings
-    | ChangeInsightWidgetVisProperties
+    | IResizeHeight
+    | IResizeWidth
+    | IAddSectionItems
+    | IReplaceSectionItem
+    | IMoveSectionItem
+    | IMoveSectionItemToNewSection
+    | IRemoveSectionItem
+    | IRemoveSectionItemByWidgetRef
+    | IUndoLayoutChanges
+    | IChangeKpiWidgetHeader
+    | IChangeKpiWidgetDescription
+    | IChangeKpiWidgetConfiguration
+    | IChangeKpiWidgetMeasure
+    | IChangeKpiWidgetFilterSettings
+    | IChangeKpiWidgetComparison
+    | IRefreshKpiWidget
+    | ISetDrillForKpiWidget
+    | IRemoveDrillForKpiWidget
+    | IChangeInsightWidgetHeader
+    | IChangeInsightWidgetDescription
+    | IChangeInsightWidgetIgnoreCrossFiltering
+    | IChangeInsightWidgetFilterSettings
+    | IChangeInsightWidgetVisProperties
     | ChangeInsightWidgetVisConfiguration
-    | ChangeInsightWidgetInsight
-    | ModifyDrillsForInsightWidget
-    | RemoveDrillsForInsightWidget
-    | RefreshInsightWidget
-    | ExportInsightWidget
-    | CreateAlert
-    | SaveAlert
-    | CreateScheduledEmail
-    | SaveScheduledEmail
-    | ChangeSharing
-    | SetAttributeFilterDisplayForm
-    | SetAttributeFilterTitle
-    | SetAttributeFilterSelectionMode
-    | ChangeRichTextWidgetContent
-    | ChangeRichTextWidgetFilterSettings
-    | AddVisualizationToVisualizationSwitcherWidgetContent
-    | UpdateVisualizationsFromVisualizationSwitcherWidgetContent
+    | IChangeInsightWidgetInsight
+    | IModifyDrillsForInsightWidget
+    | IRemoveDrillsForInsightWidget
+    | IRefreshInsightWidget
+    | IExportInsightWidget
+    | ICreateAlert
+    | ISaveAlert
+    | ICreateScheduledEmail
+    | ISaveScheduledEmail
+    | IChangeSharing
+    | ISetAttributeFilterDisplayForm
+    | ISetAttributeFilterTitle
+    | ISetAttributeFilterSelectionMode
+    | IChangeRichTextWidgetContent
+    | IChangeRichTextWidgetFilterSettings
+    | IAddVisualizationToVisualizationSwitcherWidgetContent
+    | IUpdateVisualizationsFromVisualizationSwitcherWidgetContent
     //alpha
-    | Drill
-    | DrillDown
-    | DrillToAttributeUrl
-    | DrillToCustomUrl
-    | DrillToDashboard
-    | DrillToInsight
-    | DrillToLegacyDashboard
-    | ChangeDrillableItems
-    | AddDrillTargets
-    | SetDashboardDateFilterConfigMode
-    | SetDashboardAttributeFilterConfigMode
-    | SetDashboardAttributeFilterConfigDisplayAsLabel
-    | RemoveDrillDownForInsightWidget
-    | RemoveDrillToUrlForInsightWidget
-    | AddDrillDownForInsightWidget
-    | ModifyDrillDownForInsightWidget
-    | CrossFiltering
-    | KeyDriverAnalysis
-    | AttributeHierarchyModified
-    | AddDateFilter
-    | RemoveDateFilters
-    | MoveDateFilter
-    | SetDashboardDateFilterWithDimensionConfigMode
-    | SetDateFilterConfigTitle
-    | InitializeAutomations
-    | RefreshAutomations
-    | SetAttributeFilterLimitingItems
-    | SaveFilterView
-    | DeleteFilterView
-    | ApplyFilterView
-    | SetFilterViewAsDefault
-    | ReloadFilterViews
-    | ToggleLayoutSectionHeaders
-    | ToggleLayoutDirection
-    | ApplyFilterContextWorkingSelection
-    | ResetFilterContextWorkingSelection
-    | ChangeIgnoreExecutionTimestamp
-    | SwitchDashboardTab
-    | ConvertDashboardTabFromDefault
-    | CreateDashboardTab
-    | RepositionDashboardTab
-    | DeleteDashboardTab
-    | StartRenamingDashboardTab
-    | CancelRenamingDashboardTab
-    | RenameDashboardTab
+    | IDrill
+    | IDrillDown
+    | IDrillToAttributeUrl
+    | IDrillToCustomUrl
+    | IDrillToDashboard
+    | IDrillToInsight
+    | IDrillToLegacyDashboard
+    | IChangeDrillableItems
+    | IAddDrillTargets
+    | ISetDashboardDateFilterConfigMode
+    | ISetDashboardAttributeFilterConfigMode
+    | ISetDashboardAttributeFilterConfigDisplayAsLabel
+    | IRemoveDrillDownForInsightWidget
+    | IRemoveDrillToUrlForInsightWidget
+    | IAddDrillDownForInsightWidget
+    | IModifyDrillDownForInsightWidget
+    | ICrossFiltering
+    | IKeyDriverAnalysis
+    | IAttributeHierarchyModified
+    | IAddDateFilter
+    | IRemoveDateFilters
+    | IMoveDateFilter
+    | ISetDashboardDateFilterWithDimensionConfigMode
+    | ISetDateFilterConfigTitle
+    | IInitializeAutomations
+    | IRefreshAutomations
+    | ISetAttributeFilterLimitingItems
+    | ISaveFilterView
+    | IDeleteFilterView
+    | IApplyFilterView
+    | ISetFilterViewAsDefault
+    | IReloadFilterViews
+    | IToggleLayoutSectionHeaders
+    | IToggleLayoutDirection
+    | IApplyFilterContextWorkingSelection
+    | IResetFilterContextWorkingSelection
+    | IChangeIgnoreExecutionTimestamp
+    | ISwitchDashboardTab
+    | IConvertDashboardTabFromDefault
+    | ICreateDashboardTab
+    | IRepositionDashboardTab
+    | IDeleteDashboardTab
+    | IStartRenamingDashboardTab
+    | ICancelRenamingDashboardTab
+    | IRenameDashboardTab
     //internal
-    | SetScreenSize
-    | LoadAllWorkspaceUsers
-    | ExportRawInsightWidget
-    | ExportSlidesInsightWidget
-    | ExportImageInsightWidget
-    | SetShowWidgetAsTable;
+    | ISetScreenSize
+    | ILoadAllWorkspaceUsers
+    | IExportRawInsightWidget
+    | IExportSlidesInsightWidget
+    | IExportImageInsightWidget
+    | ISetShowWidgetAsTable;

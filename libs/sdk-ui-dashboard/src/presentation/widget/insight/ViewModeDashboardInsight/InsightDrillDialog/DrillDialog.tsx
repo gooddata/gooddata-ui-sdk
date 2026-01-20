@@ -28,7 +28,7 @@ import {
     useDashboardSelector,
 } from "../../../../../model/index.js";
 
-export interface DrillDialogProps
+export interface IDrillDialogProps
     extends Pick<
         IDialogBaseProps,
         "initialFocus" | "returnFocusTo" | "focusCheckFn" | "accessibilityConfig" | "autofocusOnOpen"
@@ -99,7 +99,7 @@ export function DrillDialog({
     isWidgetAsTable,
     onShowAsTable,
     focusCheckFn,
-}: DrillDialogProps) {
+}: IDrillDialogProps) {
     const [announcementText, setAnnouncementText] = useState<string>("");
 
     const canExport = useDashboardSelector(selectCanExportTabular);

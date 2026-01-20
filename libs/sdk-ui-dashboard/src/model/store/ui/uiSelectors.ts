@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { union } from "lodash-es";
 
 import { type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
-import { type FilterViewDialogMode, type InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
+import { type FilterViewDialogMode, type IInvalidCustomUrlDrillParameterInfo } from "./uiState.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
@@ -405,7 +405,7 @@ export const selectInvalidUrlDrillParameterWidgetWarnings: DashboardSelector<Obj
 const selectInvalidUrlDrillParameterWidgetsMap = createSelector(
     selectInvalidCustomUrlDrillParameterWidgets,
     (invalidCustomUrlDrillParameterWidgets) =>
-        new ObjRefMap<InvalidCustomUrlDrillParameterInfo>({
+        new ObjRefMap<IInvalidCustomUrlDrillParameterInfo>({
             idExtract: (i) => i.widgetId,
             refExtract: (i) => i.widgetRef,
             uriExtract: (i) => i.widgetUri,

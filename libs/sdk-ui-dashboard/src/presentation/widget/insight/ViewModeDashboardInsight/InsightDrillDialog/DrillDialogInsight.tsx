@@ -26,18 +26,21 @@ import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
 import {
     selectAgGridToken,
+    selectCatalogAttributes,
     selectColorPalette,
     selectDrillableItems,
     selectExecutionTimestamp,
     selectIsExport,
     selectLocale,
     selectMapboxToken,
+    selectPreloadedAttributesWithReferences,
     selectSeparators,
     selectSettings,
     useDashboardSelector,
     useWidgetFilters,
 } from "../../../../../model/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
+import { getGeoDefaultDisplayFormRefs } from "../../geoDefaultDisplayFormRefs.js";
 import { InsightBody } from "../../InsightBody.js";
 import { convertInsightToTableDefinition } from "../../insightToTable.js";
 import { type IDashboardInsightProps } from "../../types.js";
@@ -95,6 +98,8 @@ export function DrillDialogInsight({
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
     const chartConfig = useDashboardSelector(selectChartConfig);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const preloadedAttributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
 
     // Loading and rendering
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
@@ -138,10 +143,18 @@ export function DrillDialogInsight({
     });
 
     // Convert insight to table format if needed for drill dialog
-    const finalInsight = useMemo(
-        () => (isWidgetAsTable ? convertInsightToTableDefinition(syncedInsight) : syncedInsight),
-        [isWidgetAsTable, syncedInsight],
-    );
+    const finalInsight = useMemo(() => {
+        const defaultDisplayFormRefs = getGeoDefaultDisplayFormRefs(
+            syncedInsight,
+            settings,
+            catalogAttributes,
+            preloadedAttributesWithReferences,
+        );
+        if (!isWidgetAsTable) {
+            return syncedInsight;
+        }
+        return convertInsightToTableDefinition(syncedInsight, { settings, defaultDisplayFormRefs });
+    }, [isWidgetAsTable, syncedInsight, settings, catalogAttributes, preloadedAttributesWithReferences]);
 
     // CSS
     const insightPositionStyle = useInsightPositionStyle();

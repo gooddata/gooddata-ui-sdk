@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -15,8 +15,8 @@ import {
 import { fillMissingTitles, resolveMessages } from "@gooddata/sdk-ui";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
-import { type CreateScheduledEmail } from "../../commands/scheduledEmail.js";
-import { type DashboardScheduledEmailCreated, scheduledEmailCreated } from "../../events/scheduledEmail.js";
+import { type ICreateScheduledEmail } from "../../commands/scheduledEmail.js";
+import { type IDashboardScheduledEmailCreated, scheduledEmailCreated } from "../../events/scheduledEmail.js";
 import { selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
@@ -45,8 +45,8 @@ function createScheduledEmail(
 
 export function* createScheduledEmailHandler(
     ctx: DashboardContext,
-    cmd: CreateScheduledEmail,
-): SagaIterator<DashboardScheduledEmailCreated> {
+    cmd: ICreateScheduledEmail,
+): SagaIterator<IDashboardScheduledEmailCreated> {
     const csvRawRequest = cmd.payload.scheduledEmail.exportDefinitions?.find(
         (def) => def.requestPayload.format === "CSV_RAW",
     )?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload;

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";
@@ -19,7 +19,7 @@ enum ResizeOverlayStatus {
     Error,
 }
 
-export interface ResizeOverlayProps {
+export interface IResizeOverlayProps {
     isResizingColumnOrRow: boolean;
     isActive: boolean;
     reachedWidthLimit: ReachedResizingLimit;
@@ -55,7 +55,7 @@ function getStatus({
     isActive,
     reachedWidthLimit,
     reachedHeightLimit,
-}: ResizeOverlayProps) {
+}: IResizeOverlayProps) {
     let status = ResizeOverlayStatus.None;
     if (isResizingColumnOrRow) {
         status = ResizeOverlayStatus.Grey;
@@ -69,7 +69,7 @@ function getStatus({
     return status;
 }
 
-export function ResizeOverlay(props: ResizeOverlayProps) {
+export function ResizeOverlay(props: IResizeOverlayProps) {
     const status = getStatus(props);
     const { isOverNestedLayout = false, isInFirstRow = false } = props;
 

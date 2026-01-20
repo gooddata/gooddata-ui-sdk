@@ -8,18 +8,29 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins" as typo-mixins;
 
 .gd-gen-ai-chat__messages {
+    $root: &;
+
     flex: 1;
     overflow-y: auto;
+    display: flex;
+    justify-content: center;
 
     // Use padding on the right to prevent the scrollbar from overlapping the content
     margin: variables.$y-spacing 0 0 variables.$x-spacing;
     padding-right: variables.$x-spacing;
+
+    &--fullscreen#{$root}--big-screen#{$root}--empty {
+        flex-grow: 0;
+        overflow-y: visible;
+    }
 }
 
 .gd-gen-ai-chat__messages__scroll {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
+    max-width: 720px;
 
     .react-loading-skeleton {
         --base-color: #{kit-variables.$is-focused-background};
@@ -372,7 +383,50 @@
 .gd-gen-ai-chat__messages__empty {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+
+    &__container {
+        $root: &;
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 720px;
+
+        &--fullscreen#{$root}--big-screen {
+            margin-top: 40px;
+        }
+    }
+
+    &__questions {
+        $root: &;
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        &--fullscreen#{$root}--big-screen {
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 10px;
+
+            & .gd-button {
+                flex: 0 0 auto;
+                min-width: 0;
+                margin-top: 1em;
+
+                & + .gd-button {
+                    margin-top: 1em;
+                }
+
+                &:last-child {
+                    flex-shrink: 1;
+                }
+            }
+        }
+    }
 
     &__h1--accent {
         color: kit-variables.$gd-palette-primary-base;
@@ -390,6 +444,7 @@
     & .gd-button-text {
         display: flex;
         align-items: center;
+        justify-content: flex-start;
         line-height: 20px;
         gap: 10px;
     }
@@ -397,6 +452,12 @@
     &__icon {
         width: 18px;
         height: 18px;
+    }
+
+    &__text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 

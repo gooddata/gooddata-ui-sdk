@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -7,7 +7,7 @@ import { type IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi"
 import { idRef } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { type IMetricsAndFacts, type QueryMetricsAndFacts } from "../queries/index.js";
+import { type IMetricsAndFacts, type IQueryMetricsAndFacts } from "../queries/index.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
 import { catalogActions, selectCatalogFacts, selectCatalogMeasures } from "../store/index.js";
 import { type DashboardContext } from "../types/commonTypes.js";
@@ -15,7 +15,7 @@ import { type DashboardContext } from "../types/commonTypes.js";
 export const QueryMetricsAndFactsService = createCachedQueryService(
     "GDC.DASH/QUERY.METRICS_AND_FACTS",
     queryService,
-    (_query: QueryMetricsAndFacts) => "metrics_and_facts",
+    (_query: IQueryMetricsAndFacts) => "metrics_and_facts",
 );
 
 async function loadMetricsAndFacts({ backend, workspace, config }: DashboardContext) {
@@ -31,7 +31,7 @@ async function loadMetricsAndFacts({ backend, workspace, config }: DashboardCont
     return backend.workspace(workspace).catalog().withOptions(options).load();
 }
 
-function* queryService(ctx: DashboardContext, query: QueryMetricsAndFacts): SagaIterator<IMetricsAndFacts> {
+function* queryService(ctx: DashboardContext, query: IQueryMetricsAndFacts): SagaIterator<IMetricsAndFacts> {
     const metrics: ReturnType<typeof selectCatalogMeasures> = yield select(selectCatalogMeasures);
     const facts: ReturnType<typeof selectCatalogFacts> = yield select(selectCatalogFacts);
 

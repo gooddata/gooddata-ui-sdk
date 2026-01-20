@@ -1,12 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { defineMessage, useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { type IDashboardUrlBuilder, buildDashboardUrl, useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { Automations, type AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
 import {
     Button,
@@ -33,6 +33,7 @@ import {
     selectEntitlementUnlimitedAutomations,
     selectExecutionTimestamp,
     selectExternalRecipient,
+    selectIsEmbedded,
     selectIsScheduleEmailDialogOpen,
     selectIsWhiteLabeled,
     selectLocale,
@@ -84,6 +85,7 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
 
     const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
@@ -101,6 +103,12 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
     const helpTextId = isMobile
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
+
+    const dashboardUrlBuilder: IDashboardUrlBuilder = useCallback(
+        ({ workspaceId, dashboardId, tabId }) =>
+            buildDashboardUrl({ workspaceId, dashboardId, tabId, isEmbedded }),
+        [isEmbedded],
+    );
 
     const titleElementId = useId();
 
@@ -139,7 +147,7 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                         editAutomation={onEdit}
                         preselectedFilters={{
                             dashboard: dashboardId
-                                ? [{ value: dashboardId, label: dashboardTitle! }]
+                                ? [{ value: dashboardId, label: dashboardTitle }]
                                 : undefined,
                             externalRecipients: externalRecipientOverride
                                 ? [{ value: externalRecipientOverride }]
@@ -155,16 +163,16 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                                     onClick={onAdd}
                                     isDisabled={isAddButtonDisabled}
                                     label={intl.formatMessage({
-                                        id: messages.scheduleManagementCreateNew.id!,
+                                        id: messages.scheduleManagementCreateNew.id,
                                     })}
                                     tooltipContent={
                                         maxAutomationsReached
                                             ? intl.formatMessage({
-                                                  id: messages.scheduleManagementCreateTooMany.id!,
+                                                  id: messages.scheduleManagementCreateTooMany.id,
                                               })
                                             : isExecutionTimestampMode
                                               ? intl.formatMessage({
-                                                    id: messages.scheduleManagementExecutionTimestampMode.id!,
+                                                    id: messages.scheduleManagementExecutionTimestampMode.id,
                                                 })
                                               : undefined
                                     }
@@ -177,6 +185,7 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                             ) : null
                         }
                         selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
+                        dashboardUrlBuilder={dashboardUrlBuilder}
                     />
                 </div>
                 <ContentDivider className="gd-content-divider--no-spacing" />

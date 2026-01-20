@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { type RenameDashboardTab } from "../../commands/tabs.js";
+import { type IRenameDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardTabRenamed, dashboardTabRenamed } from "../../events/tabs.js";
+import { type IDashboardTabRenamed, dashboardTabRenamed } from "../../events/tabs.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -15,8 +15,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
  */
 export function* renameDashboardTabHandler(
     ctx: DashboardContext,
-    cmd: RenameDashboardTab,
-): SagaIterator<DashboardTabRenamed> {
+    cmd: IRenameDashboardTab,
+): SagaIterator<IDashboardTabRenamed> {
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
     const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
         selectActiveTabLocalIdentifier,

@@ -75,26 +75,17 @@ export function createAttributeRef(locationAttribute: IAttribute, attributeId: s
 }
 
 /**
- * Extracts location-related properties for tooltip text, latitude, and longitude display forms.
+ * Extracts location-related properties for latitude and longitude display forms.
  *
  * @param locationItem - The location bucket item containing display forms
  * @param supportsSeparateLatLong - Whether backend supports separate lat/long labels
- * @returns Object with tooltipText and optionally latitude/longitude identifiers
+ * @returns Object with optional latitude/longitude identifiers
  * @internal
  */
 export function getLocationProperties(locationItem: IBucketItem): {
-    tooltipText: string | undefined;
     latitude?: string | undefined;
     longitude?: string | undefined;
 } {
-    const { dfRef } = locationItem;
-
-    // For tooltip, prefer standard text display form (type is undefined) over geo or hyperlink forms
-    const textDfs = locationItem.displayForms?.filter((displayForm) => !displayForm.type) ?? [];
-    const defaultOrFirstTextDf = textDfs.find((displayForm) => displayForm.isDefault) ?? textDfs[0];
-    const tooltipDfRef = defaultOrFirstTextDf?.ref ?? dfRef;
-    const tooltipText = getRefIdentifier(tooltipDfRef);
-
     const latitudeDfRef = locationItem.displayForms?.find(
         (displayForm) => displayForm.type === "GDC.geo.pin_latitude",
     )?.ref;
@@ -103,7 +94,6 @@ export function getLocationProperties(locationItem: IBucketItem): {
     )?.ref;
 
     return {
-        tooltipText,
         ...(latitudeDfRef ? { latitude: getRefIdentifier(latitudeDfRef) } : {}),
         ...(longitudeDfRef ? { longitude: getRefIdentifier(longitudeDfRef) } : {}),
     };
@@ -135,7 +125,6 @@ export function getAttributeMetadata(
 export function getPrimaryLayerControls(insight: IInsightDefinition): {
     latitude?: string;
     longitude?: string;
-    tooltipText?: string;
 } {
     const layers = insightLayers(insight);
     const pushpinLayer = layers.find((layer) => layer.type === "pushpin");
@@ -147,6 +136,5 @@ export function getPrimaryLayerControls(insight: IInsightDefinition): {
     return {
         latitude: readControl("latitude"),
         longitude: readControl("longitude"),
-        tooltipText: readControl("tooltipText"),
     };
 }

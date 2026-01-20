@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -121,7 +121,7 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 /**
  * @alpha
  */
-export interface DashboardDrillContext {
+export interface IDashboardDrillContext {
     /**
      * Particular insight that triggered the drill event.
      */

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -17,9 +17,9 @@ import {
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
-import { type ChangeInsightWidgetInsight } from "../../commands/index.js";
+import { type IChangeInsightWidgetInsight } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardInsightWidgetInsightSwitched } from "../../events/index.js";
+import { type IDashboardInsightWidgetInsightSwitched } from "../../events/index.js";
 import { insightWidgetInsightChanged } from "../../events/insight.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
@@ -31,8 +31,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetInsightHandler(
     ctx: DashboardContext,
-    cmd: ChangeInsightWidgetInsight,
-): SagaIterator<DashboardInsightWidgetInsightSwitched> {
+    cmd: IChangeInsightWidgetInsight,
+): SagaIterator<IDashboardInsightWidgetInsightSwitched> {
     const {
         payload: { ref, insightRef, visualizationProperties },
         correlationId,

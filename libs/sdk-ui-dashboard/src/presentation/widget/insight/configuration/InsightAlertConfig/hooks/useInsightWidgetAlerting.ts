@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -164,7 +164,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(insight);
     useEffect(() => {
         if (insight) {
-            fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
+            void fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
         }
     }, [insight, locale]);
     const supportedMeasures = useMemo(

@@ -1,10 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type Action, type AnyAction, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { type RenderModeState } from "./renderModeState.js";
+import { type IRenderModeState } from "./renderModeState.js";
 import { type RenderMode } from "../../../types.js";
 
-type RenderModeReducer<A extends Action = AnyAction> = CaseReducer<RenderModeState, A>;
+type RenderModeReducer<A extends Action = AnyAction> = CaseReducer<IRenderModeState, A>;
 
 const setRenderMode: RenderModeReducer<PayloadAction<RenderMode>> = (state, action) => {
     state.renderMode = action.payload;

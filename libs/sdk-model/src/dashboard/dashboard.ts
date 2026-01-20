@@ -126,6 +126,44 @@ export interface IDashboardAttributeFilterConfig {
 }
 
 /**
+ * Dashboard filter groups config.
+ * There can be multiple groups defined.
+ * Group is displayed in a filter bar beside other filters.
+ * Order is defined by the first filter in the group.
+ * Meaning the group is displayed in the place of the first filter hwo defined in filter context.
+ * If there are no filters in the group, the group is not displayed.
+ * If there are no groups defined, filters are displayed ungrouped.
+ * @alpha
+ */
+export interface IDashboardFilterGroupsConfig {
+    groups: IDashboardFilterGroup[];
+}
+
+/**
+ * Single dashboard filter group configuration.
+ * Title is displayed in the filter bar.
+ * Filters are removed from the filter bar and displayed under the group.
+ * There is no way to have single filter in multiple groups or in a group and in the filter bar directly.
+ * If you want such behavior, you need to define multiple fitlers with specific local identifiers.
+ * @alpha
+ */
+export interface IDashboardFilterGroup {
+    title: string;
+    filters: IDashboardFilterGroupItem[];
+}
+
+/**
+ * Single filter in a group.
+ * It does not contain any filter configuration. It is just a reference to a dashboard filter context.
+ * Filter is referenced by its local identifier which is defined in filter context.
+ * If the filter does not exists it is ignored.
+ * @alpha
+ */
+export interface IDashboardFilterGroupItem {
+    filterLocalIdentifier: string;
+}
+
+/**
  * Extended date filter config item for date filters fully specified including date data set
  * @alpha
  */
@@ -178,6 +216,15 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
      * Dashboard extended attribute filter configs
      */
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+
+    /**
+     * Dashboard filter groups config.
+     * It allows to group some filters from filter context into a group.
+     * It groups them only visually. Does not affect a computation.
+     * This is usually used on dashboards with many filters to improve readability.
+     * If not defined, filters are displayed ungrouped as defined in single context.
+     */
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
 }
 
 /**

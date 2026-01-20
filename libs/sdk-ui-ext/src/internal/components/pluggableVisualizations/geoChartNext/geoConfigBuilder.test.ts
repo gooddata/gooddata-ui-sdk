@@ -9,14 +9,13 @@ import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigBuilder.j
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 
 describe("geoConfigFromInsight", () => {
-    it("converts tooltip text identifiers to attributes and keeps mapStyle", () => {
+    it("keeps mapStyle configuration", () => {
         const areaAttribute = newAttribute(idRef("label.area", "displayForm"), (attribute) =>
             attribute.localId("area_df"),
         );
         const insight = newInsightDefinition("local:geoArea", (builder) =>
             builder.buckets([newBucket(BucketNames.AREA, areaAttribute)]).properties({
                 controls: {
-                    tooltipText: "label.area.tooltip",
                     mapStyle: "gd://custom-style",
                 },
             }),
@@ -25,24 +24,6 @@ describe("geoConfigFromInsight", () => {
         const config = geoConfigFromInsight(insight);
 
         expect(config.mapStyle).toBe("gd://custom-style");
-        expect(config.tooltipText?.attribute?.localIdentifier).toBe("tooltipText_df");
-    });
-
-    it("falls back to location attribute when area bucket is missing", () => {
-        const locationAttribute = newAttribute(idRef("label.location", "displayForm"), (attribute) =>
-            attribute.localId("location_df"),
-        );
-        const insight = newInsightDefinition("local:geoPushpin", (builder) =>
-            builder.buckets([newBucket(BucketNames.LOCATION, locationAttribute)]).properties({
-                controls: {
-                    tooltipText: "label.location.tooltip",
-                },
-            }),
-        );
-
-        const config = geoConfigFromInsight(insight);
-
-        expect(config.tooltipText?.attribute?.localIdentifier).toBe("tooltipText_df");
     });
 });
 

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -21,9 +21,9 @@ import {
     serializeLayoutItemPath,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { type ReplaceSectionItem } from "../../commands/index.js";
+import { type IReplaceSectionItem } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
+import { type IDashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -34,7 +34,7 @@ import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
-    cmd: ReplaceSectionItem;
+    cmd: IReplaceSectionItem;
     items: InternalDashboardItemDefinition[];
     layout: ReturnType<typeof selectLayout>;
     stash: ReturnType<typeof selectStash>;
@@ -130,8 +130,8 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
 
 export function* replaceSectionItemHandler(
     ctx: DashboardContext,
-    cmd: ReplaceSectionItem,
-): SagaIterator<DashboardLayoutSectionItemReplaced> {
+    cmd: IReplaceSectionItem,
+): SagaIterator<IDashboardLayoutSectionItemReplaced> {
     const {
         payload: { item },
     } = cmd;

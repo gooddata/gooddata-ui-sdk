@@ -1,10 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
+import { useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { type IDashboardUrlBuilder, buildDashboardUrl, useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { Automations, type AutomationsAvailableFilters } from "@gooddata/sdk-ui-ext";
 import {
     Button,
@@ -30,6 +32,7 @@ import {
     selectInsightByWidgetRef,
     selectIsAlertingDialogOpen,
     selectIsAlertingManagementDialogContext,
+    selectIsEmbedded,
     selectIsWhiteLabeled,
     selectTimezone,
     selectWidgetByRef,
@@ -76,6 +79,7 @@ export function DefaultAlertingManagementDialogContentEnhanced({
     const { returnFocusTo } = useAlertingDialogAccessibility();
 
     const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const isMobile = isMobileView();
 
     // Check if widget has metrics for alert creation
@@ -93,6 +97,12 @@ export function DefaultAlertingManagementDialogContentEnhanced({
     const helpTextId = isMobile
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
         : defineMessage({ id: "dialogs.alerting.footer.title" }).id;
+
+    const dashboardUrlBuilder: IDashboardUrlBuilder = useCallback(
+        ({ workspaceId, dashboardId, tabId }) =>
+            buildDashboardUrl({ workspaceId, dashboardId, tabId, isEmbedded }),
+        [isEmbedded],
+    );
 
     const titleElementId = useId();
 
@@ -132,7 +142,7 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                         editAutomation={onEdit}
                         preselectedFilters={{
                             dashboard: dashboardId
-                                ? [{ value: dashboardId, label: dashboardTitle! }]
+                                ? [{ value: dashboardId, label: dashboardTitle }]
                                 : undefined,
                             externalRecipients: externalRecipientOverride
                                 ? [{ value: externalRecipientOverride }]
@@ -142,16 +152,17 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                         availableFilters={availableFilters}
                         locale={intl.locale}
                         externalInvalidationId={automationsInvalidationId}
+                        dashboardUrlBuilder={dashboardUrlBuilder}
                         renderToolbarCustomElement={() =>
                             managementDialogContext.widgetRef && canCreateAutomation ? (
                                 <CreateButton
                                     onClick={onAdd}
                                     hasMetrics={hasMetrics}
                                     label={intl.formatMessage({
-                                        id: messages.alertingManagementCreateNew.id!,
+                                        id: messages.alertingManagementCreateNew.id,
                                     })}
                                     tooltipContent={intl.formatMessage({
-                                        id: messages.alertingCreateNoMeasureTooltip.id!,
+                                        id: messages.alertingCreateNoMeasureTooltip.id,
                                     })}
                                     accessibilityConfig={{
                                         ariaHaspopup: "dialog",

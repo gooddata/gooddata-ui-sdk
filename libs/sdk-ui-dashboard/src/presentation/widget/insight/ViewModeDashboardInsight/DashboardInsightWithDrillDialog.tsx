@@ -18,8 +18,8 @@ import {
 } from "../../../../model/index.js";
 import { type IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
 import {
-    type DrillStep,
-    type KeyDriveInfo,
+    type IDrillStep,
+    type IKeyDriveInfo,
     type OnDashboardDrill,
     type OnDrillDownSuccess,
     type OnDrillToInsightSuccess,
@@ -36,7 +36,7 @@ type IReturnFocusInfo =
  * @internal
  */
 export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): ReactElement {
-    const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
+    const [drillSteps, setDrillSteps] = useState<IDrillStep[]>([]);
     const activeDrillStep = drillSteps.at(-1);
     const insight = activeDrillStep?.insight;
     const widget = props.widget;
@@ -67,7 +67,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     const locale = useDashboardSelector(selectLocale);
     const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
 
-    const setNextDrillStep = useCallback((drillStep: DrillStep) => {
+    const setNextDrillStep = useCallback((drillStep: IDrillStep) => {
         setDrillSteps((s) => [...s, drillStep]);
     }, []);
 
@@ -130,7 +130,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
         [storeDatapointInfo],
     );
 
-    const [keyDriveInfo, setKeyDriveInfo] = useState<KeyDriveInfo | undefined>(undefined);
+    const [keyDriveInfo, setKeyDriveInfo] = useState<IKeyDriveInfo | undefined>(undefined);
     const onKeyDriverAnalysisSuccess = useCallback<OnKeyDriverAnalysisSuccess>((evt) => {
         setKeyDriveInfo(evt.payload);
     }, []);
@@ -140,7 +140,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     }, [returnFocusToInsight]);
 
     const onRequestedDefinitionChange = useCallback(
-        (definition: KeyDriveInfo["keyDriveDefinition"] | undefined) => {
+        (definition: IKeyDriveInfo["keyDriveDefinition"] | undefined) => {
             // Keep the drill-derived state in sync with the controller
             if (!definition) {
                 setKeyDriveInfo(undefined);
@@ -166,7 +166,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                 <InsightDrillDialog
                     locale={locale}
                     breadcrumbs={breadcrumbs}
-                    widget={widget!}
+                    widget={widget}
                     insight={insight!}
                     onDrillDown={onDrillDown}
                     onBackButtonClick={goBack}

@@ -1,14 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type ILayoutItemPath } from "../../../../types.js";
-import { type MoveLayoutSection, moveSectionItem, undoLayoutChanges } from "../../../commands/index.js";
+import { type IMoveLayoutSection, moveSectionItem, undoLayoutChanges } from "../../../commands/index.js";
 import { moveSectionItemAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardLayoutChanged,
-    type DashboardLayoutSectionItemMoved,
+    type IDashboardCommandFailed,
+    type IDashboardLayoutChanged,
+    type IDashboardLayoutSectionItemMoved,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -30,7 +30,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if bad source item index is provided", async () => {
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IMoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 4, -1, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -41,7 +41,7 @@ describe("move layout section item handler", () => {
 
         it("should fail if bad target section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IMoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 0, originalLayout.sections.length + 1, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -51,7 +51,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if bad target item index is provided", async () => {
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IMoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 0, 0, 4, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -61,7 +61,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if no move would happen", async () => {
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IMoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 0, 0, 0, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -71,7 +71,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should fail if no move would happen using relative index", async () => {
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IMoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveSectionItem(0, 3, 0, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -96,7 +96,7 @@ describe("move layout section item handler", () => {
         const [ThirdSectionFirstItem] = ComplexDashboardWithReferences.dashboard.layout!.sections[2].items;
 
         it("should move item within section using absolute indexes", async () => {
-            const event: DashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
                 moveSectionItem(1, 0, 1, 1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
             );
@@ -107,7 +107,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should move item to the end of same section using relative item index", async () => {
-            const event: DashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
                 moveSectionItem(1, 0, 1, -1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
             );
@@ -118,7 +118,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should move item to the end of another section using relative item index", async () => {
-            const event: DashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
                 moveSectionItem(1, 0, 2, -1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
             );
@@ -130,7 +130,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should move item to the beginning of another section using relative item index", async () => {
-            const event: DashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
                 moveSectionItem(1, 1, 2, 0),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
             );
@@ -142,7 +142,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should move last item from section and leave an empty section", async () => {
-            const event: DashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
                 moveSectionItem(2, 0, 1, -1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
             );
@@ -158,7 +158,7 @@ describe("move layout section item handler", () => {
         });
 
         it("should move last item from section and remove an empty section", async () => {
-            const event: DashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
                 moveSectionItemAndRemoveOriginalSectionIfEmpty(2, 0, 1, -1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
             );
@@ -185,7 +185,7 @@ describe("move layout section item handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
             );
 
-            const lastMoveUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const lastMoveUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -196,7 +196,7 @@ describe("move layout section item handler", () => {
                 SecondSectionFirstItem,
             ]);
 
-            const firstMoveUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const firstMoveUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );

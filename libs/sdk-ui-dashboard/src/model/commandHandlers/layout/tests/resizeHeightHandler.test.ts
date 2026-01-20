@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type ResizeHeight, resizeHeight } from "../../../commands/layout.js";
-import { type DashboardCommandFailed } from "../../../events/index.js";
+import { type IResizeHeight, resizeHeight } from "../../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -21,7 +21,7 @@ describe("resize section items height handler", () => {
     describe("with invalid indexes", () => {
         it("should fail if bad section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const fail: DashboardCommandFailed<ResizeHeight> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IResizeHeight> = await Tester.dispatchAndWaitFor(
                 resizeHeight(originalLayout.sections.length, [], 10, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -33,7 +33,7 @@ describe("resize section items height handler", () => {
         it("should fail if bad item index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const fail: DashboardCommandFailed<ResizeHeight> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IResizeHeight> = await Tester.dispatchAndWaitFor(
                 resizeHeight(0, [originalLayout.sections[0].items.length], 10, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -45,7 +45,7 @@ describe("resize section items height handler", () => {
 
     describe("for valid indexes", () => {
         it("should throw error for invalid height", async () => {
-            const fail: DashboardCommandFailed<ResizeHeight> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IResizeHeight> = await Tester.dispatchAndWaitFor(
                 resizeHeight(1, [0, 1], 1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

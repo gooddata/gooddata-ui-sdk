@@ -1,11 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 
-import { type AddSectionItems, addSectionItem, undoLayoutChanges } from "../../../commands/index.js";
-import { type DashboardCommandFailed, type DashboardLayoutSectionItemsAdded } from "../../../events/index.js";
+import { type IAddSectionItems, addSectionItem, undoLayoutChanges } from "../../../commands/index.js";
+import {
+    type IDashboardCommandFailed,
+    type IDashboardLayoutSectionItemsAdded,
+} from "../../../events/index.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -61,7 +64,7 @@ describe("add section items handler", () => {
         it("should fail if bad section is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(
                     originalLayout.sections.length,
                     0,
@@ -77,7 +80,7 @@ describe("add section items handler", () => {
         });
 
         it("should fail if bad item index is provided", async () => {
-            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(0, 4, TestKpiPlaceholderItem, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -87,7 +90,7 @@ describe("add section items handler", () => {
         });
 
         it("should fail if attempting to add item with non-existent insight", async () => {
-            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(0, 4, createTestInsightItem(uriRef("does-not-exist")), false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -97,7 +100,7 @@ describe("add section items handler", () => {
         });
 
         it("should fail if bad stash identifier is provided", async () => {
-            const event: DashboardCommandFailed<AddSectionItems> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddSectionItems> = await Tester.dispatchAndWaitFor(
                 addSectionItem(0, -1, TestStash, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -120,7 +123,7 @@ describe("add section items handler", () => {
         const TestSectionIdx = 1;
 
         it("should add new item as first item in an existing section", async () => {
-            const event: DashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
                 addSectionItem(TestSectionIdx, 0, TestKpiPlaceholderItem),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
             );
@@ -138,7 +141,7 @@ describe("add section items handler", () => {
         });
 
         it("should add new item in between to items in an existing section", async () => {
-            const event: DashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
                 addSectionItem(TestSectionIdx, 1, TestKpiPlaceholderItem),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
             );
@@ -156,7 +159,7 @@ describe("add section items handler", () => {
         });
 
         it("should add new item as last item in an existing section", async () => {
-            const event: DashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemsAdded = await Tester.dispatchAndWaitFor(
                 addSectionItem(TestSectionIdx, -1, TestKpiPlaceholderItem),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
             );

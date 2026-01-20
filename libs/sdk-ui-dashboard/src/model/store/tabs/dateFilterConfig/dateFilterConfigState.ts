@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDashboardDateFilterConfig, type IDateFilterConfig } from "@gooddata/sdk-model";
 
@@ -7,7 +7,7 @@ import { type DateFilterValidationResult } from "../../../../types.js";
 /**
  * @beta
  */
-export interface DateFilterConfigState {
+export interface IDateFilterConfigState {
     /**
      * Dashboard-level overrides of the workspace-level date filter config.
      */
@@ -41,7 +41,7 @@ export interface DateFilterConfigState {
     dateFilterConfigValidationWarnings?: DateFilterValidationResult[];
 }
 
-export const dateFilterConfigInitialState: DateFilterConfigState = {
+export const dateFilterConfigInitialState: IDateFilterConfigState = {
     dateFilterConfig: undefined,
     effectiveDateFilterConfig: undefined,
     isUsingDashboardOverrides: undefined,

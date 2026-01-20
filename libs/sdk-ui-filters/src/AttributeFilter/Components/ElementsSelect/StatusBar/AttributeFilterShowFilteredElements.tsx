@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
+import { ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS } from "../../../constants.js";
 
 const ALIGN_POINTS = [{ align: "bl tl" }];
 const ARROW_OFFSETS = { "bl tl": [0, 8] };
@@ -56,7 +57,7 @@ export function AttributeFilterShowFilteredElements({
                     <FormattedMessage id="attributesDropdown.relevantValues" values={{ nbsp: <>&nbsp;</> }} />
                 </div>
                 <Bubble
-                    className={`bubble-primary gd-attribute-filter-dropdown-bubble__next s-attribute-filter-dropdown-bubble`}
+                    className={`bubble-primary ${ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS} s-attribute-filter-dropdown-bubble`}
                     alignPoints={ALIGN_POINTS}
                     arrowOffsets={ARROW_OFFSETS}
                 >

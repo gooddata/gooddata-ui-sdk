@@ -24,7 +24,7 @@ import { type OnWidgetDrill } from "../../../../drill/types.js";
 /**
  * @internal
  */
-export interface UseDashboardInsightDrillsProps {
+export interface IUseDashboardInsightDrillsProps {
     widget: IInsightWidget;
     insight: IInsight;
     onDrill?: OnWidgetDrill;
@@ -37,7 +37,7 @@ export const useDrillDialogInsightDrills = ({
     widget,
     insight,
     onDrill: onDrillFn,
-}: UseDashboardInsightDrillsProps) => {
+}: IUseDashboardInsightDrillsProps) => {
     // Drilling
     const [drillTargets, setDrillTargets] = useState<IAvailableDrillTargets>();
     const disableDrillDownOnInsight = insight.insight.properties["controls"]?.["disableDrillDown"];

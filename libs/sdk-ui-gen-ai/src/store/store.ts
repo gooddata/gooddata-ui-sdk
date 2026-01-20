@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type EnhancedStore, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
 import defaultReduxSaga from "redux-saga";
@@ -37,7 +38,11 @@ export const getStore = (
             [chatWindowSliceName]: chatWindowSliceReducer,
         },
         middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware()
+            getDefaultMiddleware({
+                serializableCheck: {
+                    ignoredActionPaths: ["payload.error"],
+                },
+            })
                 .prepend(sagaMiddleware as any)
                 .prepend(queueMiddleware),
         devTools: {

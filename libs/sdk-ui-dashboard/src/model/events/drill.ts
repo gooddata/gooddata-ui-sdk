@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type FilterContextItem,
@@ -21,7 +21,7 @@ import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 import { type IKdaDefinition } from "../../kdaDialog/types.js";
 import {
-    type DashboardDrillContext,
+    type IDashboardDrillContext,
     type IDashboardDrillEvent,
     type IDashboardFilter,
     type IDrillDownDefinition,
@@ -36,7 +36,7 @@ export type DashboardKeyDriverCombinationRangeItem = { normalizedValue: string }
 /**
  * @internal
  */
-export interface DashboardKeyDriverCombinationItem {
+export interface IDashboardKeyDriverCombinationItem {
     where: "before" | "after" | "none";
     type: "comparative" | "year-to-year";
     measure: IMeasureDescriptor;
@@ -46,10 +46,10 @@ export interface DashboardKeyDriverCombinationItem {
 }
 
 /**
- * Payload of the {@link DashboardDrillRequested} event.
+ * Payload of the {@link IDashboardDrillRequested} event.
  * @alpha
  */
-export interface DashboardDrillRequestedPayload {
+export interface IDashboardDrillRequestedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -57,18 +57,18 @@ export interface DashboardDrillRequestedPayload {
     /**
      * Context in which the drill interaction was triggered (widget and insight details - if available).
      */
-    readonly drillContext: DashboardDrillContext;
+    readonly drillContext: IDashboardDrillContext;
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link Drill} command.
+ * This event is emitted on start of the resolution of the {@link IDrill} command.
  * It contains details about all possible drill definitions that are available for this particular drill interaction
  *
  * @alpha
  */
-export interface DashboardDrillRequested extends IDashboardEvent {
+export interface IDashboardDrillRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.REQUESTED";
-    readonly payload: DashboardDrillRequestedPayload;
+    readonly payload: IDashboardDrillRequestedPayload;
 }
 
 /**
@@ -77,9 +77,9 @@ export interface DashboardDrillRequested extends IDashboardEvent {
 export function drillRequested(
     ctx: DashboardContext,
     drillEvent: IDashboardDrillEvent,
-    drillContext: DashboardDrillContext,
+    drillContext: IDashboardDrillContext,
     correlationId?: string,
-): DashboardDrillRequested {
+): IDashboardDrillRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.REQUESTED",
         ctx,
@@ -92,18 +92,18 @@ export function drillRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillRequested}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillRequested = eventGuard<DashboardDrillRequested>("GDC.DASH/EVT.DRILL.REQUESTED");
+export const isDashboardDrillRequested = eventGuard<IDashboardDrillRequested>("GDC.DASH/EVT.DRILL.REQUESTED");
 
 /**
- * Payload of the {@link DashboardDrillResolved} event.
+ * Payload of the {@link IDashboardDrillResolved} event.
  * @alpha
  */
-export interface DashboardDrillResolvedPayload {
+export interface IDashboardDrillResolvedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -111,7 +111,7 @@ export interface DashboardDrillResolvedPayload {
     /**
      * Context in which the drill interaction was triggered (widget and insight details - if available).
      */
-    readonly drillContext: DashboardDrillContext;
+    readonly drillContext: IDashboardDrillContext;
 }
 
 /**
@@ -122,18 +122,18 @@ export interface DashboardDrillResolvedPayload {
  * This is general dashboard drill event with details about all possible more granular drill interactions that can follow.
  * Reason for this general drill event is that it may happen that multiple drill interactions are possible for one drill event.
  *
- * Example: some attribute on the insight has drill down set and also widget has drill to insight set. Then this event will be dispatched with both
+ * Example: some attribute on the insight has drilled down set and also widget has drilled to insight set. Then this event will be dispatched with both
  * {@link @gooddata/sdk-ui-ext#IDrillDownDefinition} and {@link @gooddata/sdk-backend-spi#IDrillToInsight} definitions.
  *
  * - This must be always the first event that occurs after the drill interaction, and must be dispatched before more granular drill events.
- * - Specific drill commands that can follow this general drill event are: {@link DrillDown}, {@link DrillToInsight}, {@link DrillToDashboard},
- *   {@link DrillToCustomUrl}, {@link DrillToAttributeUrl}, {@link DrillToLegacyDashboard}
+ * - Specific drill commands that can follow this general drill event are: {@link IDrillDown}, {@link IDrillToInsight}, {@link IDrillToDashboard},
+ *   {@link IDrillToCustomUrl}, {@link IDrillToAttributeUrl}, {@link IDrillToLegacyDashboard}
  *
  * @alpha
  */
-export interface DashboardDrillResolved extends IDashboardEvent {
+export interface IDashboardDrillResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.RESOLVED";
-    readonly payload: DashboardDrillResolvedPayload;
+    readonly payload: IDashboardDrillResolvedPayload;
 }
 
 /**
@@ -142,9 +142,9 @@ export interface DashboardDrillResolved extends IDashboardEvent {
 export function drillResolved(
     ctx: DashboardContext,
     drillEvent: IDashboardDrillEvent,
-    drillContext: DashboardDrillContext,
+    drillContext: IDashboardDrillContext,
     correlationId?: string,
-): DashboardDrillResolved {
+): IDashboardDrillResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.RESOLVED",
         ctx,
@@ -157,22 +157,22 @@ export function drillResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillResolved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillResolved = eventGuard<DashboardDrillResolved>("GDC.DASH/EVT.DRILL.RESOLVED");
+export const isDashboardDrillResolved = eventGuard<IDashboardDrillResolved>("GDC.DASH/EVT.DRILL.RESOLVED");
 
 //
 //
 //
 
 /**
- * Payload of the {@link DashboardDrillDownRequested} event.
+ * Payload of the {@link IDashboardDrillDownRequested} event.
  * @alpha
  */
-export interface DashboardDrillDownRequestedPayload {
+export interface IDashboardDrillDownRequestedPayload {
     /**
      * Drill down definition that was applied.
      */
@@ -188,15 +188,15 @@ export interface DashboardDrillDownRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link DrillDown} command.
- * It contains the target insight to apply the drill down on (result of the drill down application
+ * This event is emitted on start of the resolution of the {@link IDrillDown} command.
+ * It contains the target insight to apply the drill-down on (result of the drill-down application
  * depends on the particular visualization type).
  *
  * @alpha
  */
-export interface DashboardDrillDownRequested extends IDashboardEvent {
+export interface IDashboardDrillDownRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED";
-    readonly payload: DashboardDrillDownRequestedPayload;
+    readonly payload: IDashboardDrillDownRequestedPayload;
 }
 
 /**
@@ -208,7 +208,7 @@ export function drillDownRequested(
     drillDefinition: IDrillDownDefinition,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillDownRequested {
+): IDashboardDrillDownRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED",
         ctx,
@@ -222,20 +222,20 @@ export function drillDownRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillDownRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillDownRequested}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillDownRequested = eventGuard<DashboardDrillDownRequested>(
+export const isDashboardDrillDownRequested = eventGuard<IDashboardDrillDownRequested>(
     "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardDrillDownResolved} event.
+ * Payload of the {@link IDashboardDrillDownResolved} event.
  * @alpha
  */
-export interface DashboardDrillDownResolvedPayload {
+export interface IDashboardDrillDownResolvedPayload {
     /**
      * Drill down definition that was applied.
      */
@@ -245,14 +245,14 @@ export interface DashboardDrillDownResolvedPayload {
      */
     readonly drillEvent: IDashboardDrillEvent;
     /**
-     * Target insight with the drill down definition applied.
+     * Target insight with the drill-down definition applied.
      */
     readonly insight: IInsight;
 }
 
 /**
- * This event is emitted as a result of the {@link DrillDown} command.
- * It contains the target insight with the drill down definition applied (result of the drill down application
+ * This event is emitted as a result of the {@link IDrillDown} command.
+ * It contains the target insight with the drill-down definition applied (result of the drill-down application
  * depends on the particular visualization type).
  *
  * In the default dashboard implementation this event also opens drill dialog with the insight
@@ -260,9 +260,9 @@ export interface DashboardDrillDownResolvedPayload {
  *
  * @alpha
  */
-export interface DashboardDrillDownResolved extends IDashboardEvent {
+export interface IDashboardDrillDownResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED";
-    readonly payload: DashboardDrillDownResolvedPayload;
+    readonly payload: IDashboardDrillDownResolvedPayload;
 }
 
 /**
@@ -274,7 +274,7 @@ export function drillDownResolved(
     drillDefinition: IDrillDownDefinition,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillDownResolved {
+): IDashboardDrillDownResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED",
         ctx,
@@ -288,12 +288,12 @@ export function drillDownResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillDownResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillDownResolved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillDownResolved = eventGuard<DashboardDrillDownResolved>(
+export const isDashboardDrillDownResolved = eventGuard<IDashboardDrillDownResolved>(
     "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED",
 );
 
@@ -302,10 +302,10 @@ export const isDashboardDrillDownResolved = eventGuard<DashboardDrillDownResolve
 //
 
 /**
- * Payload of the {@link DashboardDrillToInsightRequested} event.
+ * Payload of the {@link IDashboardDrillToInsightRequested} event.
  * @alpha
  */
-export interface DashboardDrillToInsightRequestedPayload {
+export interface IDashboardDrillToInsightRequestedPayload {
     /**
      * Drill definition with the target insight.
      */
@@ -321,14 +321,14 @@ export interface DashboardDrillToInsightRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link DrillToInsight} command.
+ * This event is emitted on start of the resolution of the {@link IDrillToInsight} command.
  * It contains the target insight to apply drill intersection filters on.
  *
  * @alpha
  */
-export interface DashboardDrillToInsightRequested extends IDashboardEvent {
+export interface IDashboardDrillToInsightRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED";
-    readonly payload: DashboardDrillToInsightRequestedPayload;
+    readonly payload: IDashboardDrillToInsightRequestedPayload;
 }
 
 /**
@@ -340,7 +340,7 @@ export function drillToInsightRequested(
     drillDefinition: IDrillToInsight,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToInsightRequested {
+): IDashboardDrillToInsightRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED",
         ctx,
@@ -354,20 +354,20 @@ export function drillToInsightRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToInsightRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToInsightRequested}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToInsightRequested = eventGuard<DashboardDrillToInsightRequested>(
+export const isDashboardDrillToInsightRequested = eventGuard<IDashboardDrillToInsightRequested>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardDrillToInsightResolved} event.
+ * Payload of the {@link IDashboardDrillToInsightResolved} event.
  * @alpha
  */
-export interface DashboardDrillToInsightResolvedPayload {
+export interface IDashboardDrillToInsightResolvedPayload {
     /**
      * Drill definition with the target insight.
      */
@@ -383,7 +383,7 @@ export interface DashboardDrillToInsightResolvedPayload {
 }
 
 /**
- * This event is emitted as a result of the {@link DrillToInsight} command.
+ * This event is emitted as a result of the {@link IDrillToInsight} command.
  * It contains the target insight with the drill intersection filters applied.
  *
  * In the default dashboard implementation this event also opens drill dialog with the insight
@@ -391,9 +391,9 @@ export interface DashboardDrillToInsightResolvedPayload {
  *
  * @alpha
  */
-export interface DashboardDrillToInsightResolved extends IDashboardEvent {
+export interface IDashboardDrillToInsightResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED";
-    readonly payload: DashboardDrillToInsightResolvedPayload;
+    readonly payload: IDashboardDrillToInsightResolvedPayload;
 }
 
 /**
@@ -405,7 +405,7 @@ export function drillToInsightResolved(
     drillDefinition: IDrillToInsight,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToInsightResolved {
+): IDashboardDrillToInsightResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED",
         ctx,
@@ -419,12 +419,12 @@ export function drillToInsightResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToInsightResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToInsightResolved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToInsightResolved = eventGuard<DashboardDrillToInsightResolved>(
+export const isDashboardDrillToInsightResolved = eventGuard<IDashboardDrillToInsightResolved>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED",
 );
 
@@ -433,10 +433,10 @@ export const isDashboardDrillToInsightResolved = eventGuard<DashboardDrillToInsi
 //
 
 /**
- * Payload of the {@link DashboardDrillToDashboardRequested} event.
+ * Payload of the {@link IDashboardDrillToDashboardRequested} event.
  * @alpha
  */
-export interface DashboardDrillToDashboardRequestedPayload {
+export interface IDashboardDrillToDashboardRequestedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -448,13 +448,13 @@ export interface DashboardDrillToDashboardRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link DrillToDashboard} command.
+ * This event is emitted on start of the resolution of the {@link IDrillToDashboard} command.
  *
  * @alpha
  */
-export interface DashboardDrillToDashboardRequested extends IDashboardEvent {
+export interface IDashboardDrillToDashboardRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED";
-    readonly payload: DashboardDrillToDashboardRequestedPayload;
+    readonly payload: IDashboardDrillToDashboardRequestedPayload;
 }
 
 /**
@@ -465,7 +465,7 @@ export function drillToDashboardRequested(
     drillDefinition: IDrillToDashboard,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToDashboardRequested {
+): IDashboardDrillToDashboardRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED",
         ctx,
@@ -478,20 +478,20 @@ export function drillToDashboardRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToDashboardRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToDashboardRequested}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToDashboardRequested = eventGuard<DashboardDrillToDashboardRequested>(
+export const isDashboardDrillToDashboardRequested = eventGuard<IDashboardDrillToDashboardRequested>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardDrillToDashboardResolved} event.
+ * Payload of the {@link IDashboardDrillToDashboardResolved} event.
  * @alpha
  */
-export interface DashboardDrillToDashboardResolvedPayload {
+export interface IDashboardDrillToDashboardResolvedPayload {
     /**
      * Drill intersection filters that can be applied to the target dashboard.
      */
@@ -512,16 +512,16 @@ export interface DashboardDrillToDashboardResolvedPayload {
 }
 
 /**
- * This event is emitted as a result of the {@link DrillToDashboard} command.
+ * This event is emitted as a result of the {@link IDrillToDashboard} command.
  * It contains the drill intersection filters that can be applied to the target dashboard.
  *
  * There is a factory function to create default event handler for drill to same dashboard - see {@link newDrillToSameDashboardHandler}.
  *
  * @alpha
  */
-export interface DashboardDrillToDashboardResolved extends IDashboardEvent {
+export interface IDashboardDrillToDashboardResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED";
-    readonly payload: DashboardDrillToDashboardResolvedPayload;
+    readonly payload: IDashboardDrillToDashboardResolvedPayload;
 }
 
 /**
@@ -534,7 +534,7 @@ export function drillToDashboardResolved(
     drillDefinition: IDrillToDashboard,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToDashboardResolved {
+): IDashboardDrillToDashboardResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
         ctx,
@@ -549,12 +549,12 @@ export function drillToDashboardResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToDashboardResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToDashboardResolved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToDashboardResolved = eventGuard<DashboardDrillToDashboardResolved>(
+export const isDashboardDrillToDashboardResolved = eventGuard<IDashboardDrillToDashboardResolved>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
 );
 
@@ -563,10 +563,10 @@ export const isDashboardDrillToDashboardResolved = eventGuard<DashboardDrillToDa
 //
 
 /**
- * Payload of the {@link DashboardDrillToCustomUrlRequested} event.
+ * Payload of the {@link IDashboardDrillToCustomUrlRequested} event.
  * @alpha
  */
-export interface DashboardDrillToCustomUrlRequestedPayload {
+export interface IDashboardDrillToCustomUrlRequestedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -578,13 +578,13 @@ export interface DashboardDrillToCustomUrlRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link DrillToCustomUrl} command.
+ * This event is emitted on start of the resolution of the {@link IDrillToCustomUrl} command.
  *
  * @alpha
  */
-export interface DashboardDrillToCustomUrlRequested extends IDashboardEvent {
+export interface IDashboardDrillToCustomUrlRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED";
-    readonly payload: DashboardDrillToCustomUrlRequestedPayload;
+    readonly payload: IDashboardDrillToCustomUrlRequestedPayload;
 }
 
 /**
@@ -595,7 +595,7 @@ export function drillToCustomUrlRequested(
     drillDefinition: IDrillToCustomUrl,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToCustomUrlRequested {
+): IDashboardDrillToCustomUrlRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED",
         ctx,
@@ -608,20 +608,20 @@ export function drillToCustomUrlRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToCustomUrlRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToCustomUrlRequested}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToCustomUrlRequested = eventGuard<DashboardDrillToCustomUrlRequested>(
+export const isDashboardDrillToCustomUrlRequested = eventGuard<IDashboardDrillToCustomUrlRequested>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardDrillToCustomUrlResolved} event.
+ * Payload of the {@link IDashboardDrillToCustomUrlResolved} event.
  * @alpha
  */
-export interface DashboardDrillToCustomUrlResolvedPayload {
+export interface IDashboardDrillToCustomUrlResolvedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -641,14 +641,14 @@ export interface DashboardDrillToCustomUrlResolvedPayload {
 }
 
 /**
- * This event is emitted as a result of the {@link DrillToCustomUrl} command.
+ * This event is emitted as a result of the {@link IDrillToCustomUrl} command.
  * It contains resolved custom url from the drill definition.
  *
  * @alpha
  */
-export interface DashboardDrillToCustomUrlResolved extends IDashboardEvent {
+export interface IDashboardDrillToCustomUrlResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED";
-    readonly payload: DashboardDrillToCustomUrlResolvedPayload;
+    readonly payload: IDashboardDrillToCustomUrlResolvedPayload;
 }
 
 /**
@@ -661,7 +661,7 @@ export function drillToCustomUrlResolved(
     drillEvent: IDashboardDrillEvent,
     filtersInfo: FiltersInfo,
     correlationId?: string,
-): DashboardDrillToCustomUrlResolved {
+): IDashboardDrillToCustomUrlResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED",
         ctx,
@@ -676,12 +676,12 @@ export function drillToCustomUrlResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToCustomUrlResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToCustomUrlResolved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToCustomUrlResolved = eventGuard<DashboardDrillToCustomUrlResolved>(
+export const isDashboardDrillToCustomUrlResolved = eventGuard<IDashboardDrillToCustomUrlResolved>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED",
 );
 
@@ -690,10 +690,10 @@ export const isDashboardDrillToCustomUrlResolved = eventGuard<DashboardDrillToCu
 //
 
 /**
- * Payload of the {@link DashboardDrillToAttributeUrlRequested} event.
+ * Payload of the {@link IDashboardDrillToAttributeUrlRequested} event.
  * @alpha
  */
-export interface DashboardDrillToAttributeUrlRequestedPayload {
+export interface IDashboardDrillToAttributeUrlRequestedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -705,13 +705,13 @@ export interface DashboardDrillToAttributeUrlRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link DrillToAttributeUrl} command.
+ * This event is emitted on start of the resolution of the {@link IDrillToAttributeUrl} command.
  *
  * @alpha
  */
-export interface DashboardDrillToAttributeUrlRequested extends IDashboardEvent {
+export interface IDashboardDrillToAttributeUrlRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED";
-    readonly payload: DashboardDrillToAttributeUrlRequestedPayload;
+    readonly payload: IDashboardDrillToAttributeUrlRequestedPayload;
 }
 
 /**
@@ -722,7 +722,7 @@ export function drillToAttributeUrlRequested(
     drillDefinition: IDrillToAttributeUrl,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToAttributeUrlRequested {
+): IDashboardDrillToAttributeUrlRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED",
         ctx,
@@ -735,20 +735,20 @@ export function drillToAttributeUrlRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToAttributeUrlRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToAttributeUrlRequested}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToAttributeUrlRequested = eventGuard<DashboardDrillToAttributeUrlRequested>(
+export const isDashboardDrillToAttributeUrlRequested = eventGuard<IDashboardDrillToAttributeUrlRequested>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardDrillToAttributeUrlResolved} event.
+ * Payload of the {@link IDashboardDrillToAttributeUrlResolved} event.
  * @alpha
  */
-export interface DashboardDrillToAttributeUrlResolvedPayload {
+export interface IDashboardDrillToAttributeUrlResolvedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -772,14 +772,14 @@ export interface DashboardDrillToAttributeUrlResolvedPayload {
 }
 
 /**
- * This event is emitted as a result of the {@link DrillToAttributeUrl} command.
+ * This event is emitted as a result of the {@link IDrillToAttributeUrl} command.
  * It contains resolved attribute url from the drill definition.
  *
  * @alpha
  */
-export interface DashboardDrillToAttributeUrlResolved extends IDashboardEvent {
+export interface IDashboardDrillToAttributeUrlResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED";
-    readonly payload: DashboardDrillToAttributeUrlResolvedPayload;
+    readonly payload: IDashboardDrillToAttributeUrlResolvedPayload;
 }
 
 /**
@@ -793,7 +793,7 @@ export function drillToAttributeUrlResolved(
     filtersInfo: FiltersInfo,
     isImplicit: boolean,
     correlationId?: string,
-): DashboardDrillToAttributeUrlResolved {
+): IDashboardDrillToAttributeUrlResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED",
         ctx,
@@ -809,12 +809,12 @@ export function drillToAttributeUrlResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToAttributeUrlResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToAttributeUrlResolved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToAttributeUrlResolved = eventGuard<DashboardDrillToAttributeUrlResolved>(
+export const isDashboardDrillToAttributeUrlResolved = eventGuard<IDashboardDrillToAttributeUrlResolved>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED",
 );
 
@@ -823,10 +823,10 @@ export const isDashboardDrillToAttributeUrlResolved = eventGuard<DashboardDrillT
 //
 
 /**
- * Payload of the {@link DashboardDrillToLegacyDashboardRequested} event.
+ * Payload of the {@link IDashboardDrillToLegacyDashboardRequested} event.
  * @alpha
  */
-export interface DashboardDrillToLegacyDashboardRequestedPayload {
+export interface IDashboardDrillToLegacyDashboardRequestedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -838,13 +838,13 @@ export interface DashboardDrillToLegacyDashboardRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link DrillToLegacyDashboard} command.
+ * This event is emitted on start of the resolution of the {@link IDrillToLegacyDashboard} command.
  *
  * @alpha
  */
-export interface DashboardDrillToLegacyDashboardRequested extends IDashboardEvent {
+export interface IDashboardDrillToLegacyDashboardRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED";
-    readonly payload: DashboardDrillToLegacyDashboardRequestedPayload;
+    readonly payload: IDashboardDrillToLegacyDashboardRequestedPayload;
 }
 
 /**
@@ -855,7 +855,7 @@ export function drillToLegacyDashboardRequested(
     drillDefinition: IDrillToLegacyDashboard,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToLegacyDashboardRequested {
+): IDashboardDrillToLegacyDashboardRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED",
         ctx,
@@ -868,21 +868,21 @@ export function drillToLegacyDashboardRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToLegacyDashboardRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToLegacyDashboardRequested}.
  *
  * @param obj - object to test
  * @alpha
  */
 export const isDashboardDrillToLegacyDashboardRequested =
-    eventGuard<DashboardDrillToLegacyDashboardRequested>(
+    eventGuard<IDashboardDrillToLegacyDashboardRequested>(
         "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED",
     );
 
 /**
- * Payload of the {@link DashboardDrillToLegacyDashboardResolved} event.
+ * Payload of the {@link IDashboardDrillToLegacyDashboardResolved} event.
  * @alpha
  */
-export interface DashboardDrillToLegacyDashboardResolvedPayload {
+export interface IDashboardDrillToLegacyDashboardResolvedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -894,15 +894,15 @@ export interface DashboardDrillToLegacyDashboardResolvedPayload {
 }
 
 /**
- * This event is emitted as a result of the {@link DrillToLegacyDashboard} command.
+ * This event is emitted as a result of the {@link IDrillToLegacyDashboard} command.
  *
  * Drill to legacy dashboard can be configured for Kpi widgets only.
  *
  * @alpha
  */
-export interface DashboardDrillToLegacyDashboardResolved extends IDashboardEvent {
+export interface IDashboardDrillToLegacyDashboardResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED";
-    readonly payload: DashboardDrillToLegacyDashboardResolvedPayload;
+    readonly payload: IDashboardDrillToLegacyDashboardResolvedPayload;
 }
 
 /**
@@ -913,7 +913,7 @@ export function drillToLegacyDashboardResolved(
     drillDefinition: IDrillToLegacyDashboard,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardDrillToLegacyDashboardResolved {
+): IDashboardDrillToLegacyDashboardResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",
         ctx,
@@ -926,12 +926,12 @@ export function drillToLegacyDashboardResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillToLegacyDashboardResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillToLegacyDashboardResolved}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillToLegacyDashboardResolved = eventGuard<DashboardDrillToLegacyDashboardResolved>(
+export const isDashboardDrillToLegacyDashboardResolved = eventGuard<IDashboardDrillToLegacyDashboardResolved>(
     "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",
 );
 
@@ -940,10 +940,10 @@ export const isDashboardDrillToLegacyDashboardResolved = eventGuard<DashboardDri
 //
 
 /**
- * Payload of the {@link DashboardDrillableItemsChanged} event.
+ * Payload of the {@link IDashboardDrillableItemsChanged} event.
  * @alpha
  */
-export interface DashboardDrillableItemsChangedPayload {
+export interface IDashboardDrillableItemsChangedPayload {
     /**
      * Drillable items that was set.
      */
@@ -951,13 +951,13 @@ export interface DashboardDrillableItemsChangedPayload {
 }
 
 /**
- * This event is emitted as a result of the {@link ChangeDrillableItems} command, if drillable items was successfully changed.
+ * This event is emitted as a result of the {@link IChangeDrillableItems} command, if drillable items was successfully changed.
  *
  * @alpha
  */
-export interface DashboardDrillableItemsChanged extends IDashboardEvent {
+export interface IDashboardDrillableItemsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED";
-    readonly payload: DashboardDrillableItemsChangedPayload;
+    readonly payload: IDashboardDrillableItemsChangedPayload;
 }
 
 /**
@@ -967,7 +967,7 @@ export function drillableItemsChanged(
     ctx: DashboardContext,
     drillableItems: ExplicitDrill[],
     correlationId?: string,
-): DashboardDrillableItemsChanged {
+): IDashboardDrillableItemsChanged {
     return {
         type: "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
         ctx,
@@ -979,12 +979,12 @@ export function drillableItemsChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDrillableItemsChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardDrillableItemsChanged}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDashboardDrillableItemsChanged = eventGuard<DashboardDrillableItemsChanged>(
+export const isDashboardDrillableItemsChanged = eventGuard<IDashboardDrillableItemsChanged>(
     "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED",
 );
 
@@ -993,10 +993,10 @@ export const isDashboardDrillableItemsChanged = eventGuard<DashboardDrillableIte
 //
 
 /**
- * Payload of the {@link DashboardCrossFilteringRequested} event.
+ * Payload of the {@link IDashboardCrossFilteringRequested} event.
  * @beta
  */
-export interface DashboardCrossFilteringRequestedPayload {
+export interface IDashboardCrossFilteringRequestedPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -1008,13 +1008,13 @@ export interface DashboardCrossFilteringRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link CrossFiltering} command.
+ * This event is emitted on start of the resolution of the {@link ICrossFiltering} command.
  *
  * @beta
  */
-export interface DashboardCrossFilteringRequested extends IDashboardEvent {
+export interface IDashboardCrossFilteringRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED";
-    readonly payload: DashboardCrossFilteringRequestedPayload;
+    readonly payload: IDashboardCrossFilteringRequestedPayload;
 }
 
 /**
@@ -1025,7 +1025,7 @@ export function crossFilteringRequested(
     drillDefinition: ICrossFiltering,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardCrossFilteringRequested {
+): IDashboardCrossFilteringRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED",
         ctx,
@@ -1038,20 +1038,20 @@ export function crossFilteringRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardCrossFilteringRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardCrossFilteringRequested}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardCrossFilteringRequested = eventGuard<DashboardCrossFilteringRequested>(
+export const isDashboardCrossFilteringRequested = eventGuard<IDashboardCrossFilteringRequested>(
     "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardCrossFilteringResolved} event.
+ * Payload of the {@link IDashboardCrossFilteringResolved} event.
  * @beta
  */
-export interface DashboardCrossFilteringResolvedPayload {
+export interface IDashboardCrossFilteringResolvedPayload {
     /**
      * Dashboard filters from drill intersection.
      */
@@ -1067,13 +1067,13 @@ export interface DashboardCrossFilteringResolvedPayload {
 }
 
 /**
- * This event is emitted as a result of the {@link CrossFiltering} command.
+ * This event is emitted as a result of the {@link ICrossFiltering} command.
  *
  * @beta
  */
-export interface DashboardCrossFilteringResolved extends IDashboardEvent {
+export interface IDashboardCrossFilteringResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED";
-    readonly payload: DashboardCrossFilteringResolvedPayload;
+    readonly payload: IDashboardCrossFilteringResolvedPayload;
 }
 
 /**
@@ -1085,7 +1085,7 @@ export function crossFilteringResolved(
     drillDefinition: ICrossFiltering,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DashboardCrossFilteringResolved {
+): IDashboardCrossFilteringResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",
         ctx,
@@ -1099,12 +1099,12 @@ export function crossFilteringResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardCrossFilteringResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardCrossFilteringResolved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardCrossFilteringResolved = eventGuard<DashboardCrossFilteringResolved>(
+export const isDashboardCrossFilteringResolved = eventGuard<IDashboardCrossFilteringResolved>(
     "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",
 );
 
@@ -1113,14 +1113,14 @@ export const isDashboardCrossFilteringResolved = eventGuard<DashboardCrossFilter
 //
 
 /**
- * Payload of the {@link DashboardKeyDriverAnalysisRequested} event.
+ * Payload of the {@link IDashboardKeyDriverAnalysisRequested} event.
  * @beta
  */
-export interface DashboardKeyDriverAnalysisRequestedPayload {
+export interface IDashboardKeyDriverAnalysisRequestedPayload {
     /**
      * Key driver item to analyze.
      */
-    readonly keyDriveItem: DashboardKeyDriverCombinationItem;
+    readonly keyDriveItem: IDashboardKeyDriverCombinationItem;
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -1132,13 +1132,13 @@ export interface DashboardKeyDriverAnalysisRequestedPayload {
 }
 
 /**
- * This event is emitted on start of the resolution of the {@link KeyDriverAnalysis} command.
+ * This event is emitted on start of the resolution of the {@link IKeyDriverAnalysis} command.
  *
  * @beta
  */
-export interface DashboardKeyDriverAnalysisRequested extends IDashboardEvent {
+export interface IDashboardKeyDriverAnalysisRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED";
-    readonly payload: DashboardKeyDriverAnalysisRequestedPayload;
+    readonly payload: IDashboardKeyDriverAnalysisRequestedPayload;
 }
 
 /**
@@ -1148,9 +1148,9 @@ export function keyDriverAnalysisRequested(
     ctx: DashboardContext,
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDashboardDrillEvent,
-    keyDriveItem: DashboardKeyDriverCombinationItem,
+    keyDriveItem: IDashboardKeyDriverCombinationItem,
     correlationId?: string,
-): DashboardKeyDriverAnalysisRequested {
+): IDashboardKeyDriverAnalysisRequested {
     return {
         type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED",
         ctx,
@@ -1164,30 +1164,30 @@ export function keyDriverAnalysisRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardKeyDriverAnalysisRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardKeyDriverAnalysisRequested}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardKeyDriverAnalysisRequested = eventGuard<DashboardKeyDriverAnalysisRequested>(
+export const isDashboardKeyDriverAnalysisRequested = eventGuard<IDashboardKeyDriverAnalysisRequested>(
     "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED",
 );
 
 /**
- * This event is emitted as a result of the {@link KeyDriverAnalysis} command.
+ * This event is emitted as a result of the {@link IKeyDriverAnalysis} command.
  *
  * @beta
  */
-export interface DashboardKeyDriverAnalysisResolved extends IDashboardEvent {
+export interface IDashboardKeyDriverAnalysisResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED";
-    readonly payload: DashboardKeyDriverAnalysisResolvedPayload;
+    readonly payload: IDashboardKeyDriverAnalysisResolvedPayload;
 }
 
 /**
- * Payload of the {@link DashboardKeyDriverAnalysisResolved} event.
+ * Payload of the {@link IDashboardKeyDriverAnalysisResolved} event.
  * @beta
  */
-export interface DashboardKeyDriverAnalysisResolvedPayload {
+export interface IDashboardKeyDriverAnalysisResolvedPayload {
     /**
      * Key driver item to analyze.
      */
@@ -1211,7 +1211,7 @@ export function keyDriverAnalysisResolved(
     drillEvent: IDashboardDrillEvent,
     keyDriveDefinition: IKdaDefinition,
     correlationId?: string,
-): DashboardKeyDriverAnalysisResolved {
+): IDashboardKeyDriverAnalysisResolved {
     return {
         type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED",
         ctx,
@@ -1225,11 +1225,11 @@ export function keyDriverAnalysisResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardKeyDriverAnalysisResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardKeyDriverAnalysisResolved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardKeyDriverAnalysisResolved = eventGuard<DashboardKeyDriverAnalysisResolved>(
+export const isDashboardKeyDriverAnalysisResolved = eventGuard<IDashboardKeyDriverAnalysisResolved>(
     "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED",
 );

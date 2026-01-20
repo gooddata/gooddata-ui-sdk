@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IDashboardCommand } from "./base.js";
 import { type RenderMode } from "../../types.js";
@@ -6,25 +6,25 @@ import { type RenderMode } from "../../types.js";
 /**
  * @beta
  */
-export interface RenderModeChangeOptions {
+export interface IRenderModeChangeOptions {
     readonly resetDashboard: boolean;
 }
 
 /**
- * Payload of the {@link ChangeRenderMode} command.
+ * Payload of the {@link IChangeRenderMode} command.
  * @beta
  */
-export interface ChangeRenderModePayload {
+export interface IChangeRenderModePayload {
     readonly renderMode: RenderMode;
-    readonly renderModeChangeOptions: RenderModeChangeOptions;
+    readonly renderModeChangeOptions: IRenderModeChangeOptions;
 }
 
 /**
  * @beta
  */
-export interface ChangeRenderMode extends IDashboardCommand {
+export interface IChangeRenderMode extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.CHANGE_RENDER_MODE";
-    readonly payload: ChangeRenderModePayload;
+    readonly payload: IChangeRenderModePayload;
 }
 
 /**
@@ -39,9 +39,9 @@ export interface ChangeRenderMode extends IDashboardCommand {
  */
 export function changeRenderMode(
     renderMode: RenderMode,
-    renderModeChangeOptions: RenderModeChangeOptions = { resetDashboard: true },
+    renderModeChangeOptions: IRenderModeChangeOptions = { resetDashboard: true },
     correlationId?: string,
-): ChangeRenderMode {
+): IChangeRenderMode {
     return {
         type: "GDC.DASH/CMD.CHANGE_RENDER_MODE",
         correlationId,
@@ -60,7 +60,7 @@ export function changeRenderMode(
  *
  * @beta
  */
-export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode {
+export function switchToEditRenderMode(correlationId?: string): IChangeRenderMode {
     return changeRenderMode("edit", { resetDashboard: true }, correlationId);
 }
 
@@ -72,6 +72,6 @@ export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode
  *
  * @beta
  */
-export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode {
+export function cancelEditRenderMode(correlationId?: string): IChangeRenderMode {
     return changeRenderMode("view", { resetDashboard: true }, correlationId);
 }

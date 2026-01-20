@@ -8,6 +8,7 @@ import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
+    type IDashboardFilterGroup,
     type ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilter,
@@ -79,10 +80,27 @@ export type FilterBarDateFilterIndexed = {
 export function isFilterBarDateFilterWithDimension(
     object: FilterBarItem,
 ): object is FilterBarDateFilterIndexed {
-    if (!isFilterBarFilterPlaceholder(object) && isDashboardDateFilter(object.filter)) {
+    if (
+        !isFilterBarFilterPlaceholder(object) &&
+        !isFilterBarFilterGroupItem(object) &&
+        isDashboardDateFilter(object.filter)
+    ) {
         return !!object.filter.dateFilter.dataSet;
     }
     return false;
+}
+
+export interface IFilterBarFilterGroupItem {
+    filterIndex: number;
+    groupConfig: IDashboardFilterGroup;
+    filters: FilterBarItem[];
+}
+
+/**
+ * @internal
+ */
+export function isFilterBarFilterGroupItem(object?: FilterBarItem) {
+    return object !== undefined && "groupConfig" in object;
 }
 
 /**
@@ -91,7 +109,8 @@ export function isFilterBarDateFilterWithDimension(
 export type FilterBarItem =
     | FilterBarFilterPlaceholder
     | FilterBarAttributeFilterIndexed
-    | FilterBarDateFilterIndexed;
+    | FilterBarDateFilterIndexed
+    | IFilterBarFilterGroupItem;
 
 /**
  * @internal
@@ -246,7 +265,7 @@ export function useFiltersWithAddedPlaceholder(
                 } else {
                     setSelectedDisplayForm(ref);
                     setAutoOpenFilter(ref);
-                    dispatchAndWaitFor(
+                    void dispatchAndWaitFor(
                         dispatch,
                         addDateFilterAction(ref, addedAttributeFilter.filterIndex),
                     ).finally(clearAddedFilter);
@@ -274,7 +293,7 @@ export function useFiltersWithAddedPlaceholder(
                 } else {
                     setSelectedDisplayForm(ref);
                     setAutoOpenFilter(primaryDisplayForm ? primaryDisplayForm.ref : ref);
-                    dispatchAndWaitFor(
+                    void dispatchAndWaitFor(
                         dispatch,
                         addAttributeFilterAction(
                             ref,

@@ -24,3 +24,14 @@ export const COORDINATE_FORM_TYPES: AttributeDisplayFormType[] = [
     "GDC.geo.pin_longitude",
     "GDC.geo.pin",
 ];
+
+/**
+ * Local identifier used for the derived tooltip-text attribute in GeoChartNext executions.
+ *
+ * @remarks
+ * GeoChartNext may inject a TOOLTIP_TEXT bucket (see `prepareExecutionWithTooltipText`) and uses
+ * this localId to recognize the derived attribute across drill/tooltip handling.
+ *
+ * @internal
+ */
+export const TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID = "tooltipText_df";

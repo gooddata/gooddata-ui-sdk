@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { type SetDashboardAttributeFilterConfigMode } from "../../commands/dashboard.js";
+import { type ISetDashboardAttributeFilterConfigMode } from "../../commands/dashboard.js";
 import { dashboardAttributeConfigModeChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -15,7 +15,7 @@ import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
 export function* changeAttributeFilterModeHandler(
     ctx: DashboardContext,
-    cmd: SetDashboardAttributeFilterConfigMode,
+    cmd: ISetDashboardAttributeFilterConfigMode,
 ): SagaIterator<void> {
     const { localIdentifier } = cmd.payload;
 

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -21,14 +21,14 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { type ItemResolutionResult } from "./stashValidation.js";
+import { type IItemResolutionResult } from "./stashValidation.js";
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
-    type InsightDateDatasets,
-    type MeasureDateDatasets,
+    type IInsightDateDatasets,
+    type IMeasureDateDatasets,
     insightSelectDateDataset,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
@@ -39,7 +39,7 @@ import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterC
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";
-import { type InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
+import { type IInsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
@@ -71,8 +71,8 @@ function normalizeItems(
 }
 
 type ItemValidationResult = {
-    normalizedItems: ItemResolutionResult;
-    resolvedInsights: InsightResolutionResult;
+    normalizedItems: IItemResolutionResult;
+    resolvedInsights: IInsightResolutionResult;
 };
 
 /**
@@ -88,7 +88,7 @@ type ItemValidationResult = {
  */
 export function* validateAndNormalizeWidgetItems(
     ctx: DashboardContext,
-    items: ItemResolutionResult,
+    items: IItemResolutionResult,
     cmd: IDashboardCommand,
 ): SagaIterator<ItemValidationResult> {
     const insightRefs = extractInsightRefsFromItems(items.resolved);
@@ -141,7 +141,7 @@ function* validateAndResolveInsightWidgetFilters(
 
         return widget;
     } else if (autoDateDataset) {
-        const insightDateDatasets: InsightDateDatasets = yield call(
+        const insightDateDatasets: IInsightDateDatasets = yield call(
             query,
             queryDateDatasetsForInsight(resolvedInsight),
         );
@@ -171,7 +171,7 @@ function* validateAndResolveKpiFilters(
 
         return widget;
     } else if (autoDateDataset) {
-        const measureDateDatasets: MeasureDateDatasets = yield call(
+        const measureDateDatasets: IMeasureDateDatasets = yield call(
             query,
             queryDateDatasetsForMeasure(widget.kpi.metric),
         );
@@ -201,7 +201,7 @@ function* validateAndResolveRichTextFilters(
 
         return widget;
     } else if (autoDateDataset) {
-        const insightDateDatasets: InsightDateDatasets = yield call(
+        const insightDateDatasets: IInsightDateDatasets = yield call(
             query,
             queryDateDatasetsForInsight(newInsight("local:table")),
         );

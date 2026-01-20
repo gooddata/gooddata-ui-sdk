@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type IDashboardLayoutItem,
     type IDashboardLayoutSectionHeader,
@@ -18,8 +19,8 @@ import {
 
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures.js";
 import {
-    type InsightPlaceholderWidget,
-    type KpiPlaceholderWidget,
+    type IInsightPlaceholderWidget,
+    type IKpiPlaceholderWidget,
     newInsightPlaceholderWidget,
     newKpiPlaceholderWidget,
 } from "../../../widgets/index.js";
@@ -30,7 +31,7 @@ export const TestSectionHeader: IDashboardLayoutSectionHeader = {
 };
 
 const TestKpiPlaceholderWidget = newKpiPlaceholderWidget();
-export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> = {
+export const TestKpiPlaceholderItem: IDashboardLayoutItem<IKpiPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
     widget: TestKpiPlaceholderWidget,
     size: {
@@ -41,7 +42,7 @@ export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> 
 };
 
 const TestInsightPlaceholderWidget = newInsightPlaceholderWidget();
-export const TestInsightPlaceholderItem: IDashboardLayoutItem<InsightPlaceholderWidget> = {
+export const TestInsightPlaceholderItem: IDashboardLayoutItem<IInsightPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
     widget: TestInsightPlaceholderWidget,
     size: {

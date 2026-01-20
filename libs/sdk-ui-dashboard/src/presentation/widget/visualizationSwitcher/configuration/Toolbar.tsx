@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -37,7 +37,7 @@ const defaultFlexibleArrowOffsets: ArrowOffsets = {
     "br br": [-76, -8],
 };
 
-interface ToolbarProps {
+interface IToolbarProps {
     widget: IVisualizationSwitcherWidget;
     onVisualizationsChanged: (visualizations: IInsightWidget[]) => void;
     onVisualizationAdded: (
@@ -57,7 +57,7 @@ export function Toolbar({
     onWidgetDelete,
     onSelectedVisualizationChanged,
     onClose,
-}: ToolbarProps) {
+}: IToolbarProps) {
     const userInteraction = useDashboardUserInteraction();
 
     const visualizations = widget.visualizations;

@@ -1,10 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IDashboardDateFilter, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-export async function canFilterBeAdded(
-    addedDateDataSetRef: ObjRef,
-    allFilters: IDashboardDateFilter[],
-): Promise<boolean> {
+export function canFilterBeAdded(addedDateDataSetRef: ObjRef, allFilters: IDashboardDateFilter[]): boolean {
     // first filter is always ok, save some useless work upfront
     if (allFilters.length === 0) {
         return true;

@@ -7,6 +7,8 @@ import { FormattedMessage } from "react-intl";
 import { type IAttributeElement } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 
+import { ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS } from "../../../constants.js";
+
 const ALIGN_POINTS = [{ align: "bl tl" }];
 const ARROW_OFFSETS = { "bl tl": [-10, 12] };
 
@@ -45,7 +47,7 @@ export function AttributeFilterIrrelevantSelectionStatus({
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                 <FormattedMessage id="attributesDropdown.irrelevantValues" values={{ nbsp: <>&nbsp;</> }} />
                 <Bubble
-                    className={`bubble-primary gd-attribute-filter-dropdown-bubble__next s-attribute-filter-dropdown-bubble`}
+                    className={`bubble-primary ${ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS} s-attribute-filter-dropdown-bubble`}
                     alignPoints={ALIGN_POINTS}
                     arrowOffsets={ARROW_OFFSETS}
                 >

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
@@ -22,8 +22,8 @@ import {
 
 import { type IDashboardCommand } from "../../../commands/index.js";
 import {
-    type InsightDateDatasets,
-    type MeasureDateDatasets,
+    type IInsightDateDatasets,
+    type IMeasureDateDatasets,
     insightSelectDateDataset,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
@@ -38,14 +38,14 @@ import {
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import {
-    type FilterOpEnableDateFilter,
-    type FilterOpIgnoreAttributeFilter,
-    type FilterOpIgnoreDateFilter,
-    type FilterOpReplaceAll,
-    type FilterOpReplaceAttributeIgnores,
-    type FilterOpUnignoreAttributeFilter,
-    type FilterOpUnignoreDateFilter,
-    type WidgetFilterOperation,
+    type IFilterOpEnableDateFilter,
+    type IFilterOpIgnoreAttributeFilter,
+    type IFilterOpIgnoreDateFilter,
+    type IFilterOpReplaceAll,
+    type IFilterOpReplaceAttributeIgnores,
+    type IFilterOpUnignoreAttributeFilter,
+    type IFilterOpUnignoreDateFilter,
+    type IWidgetFilterOperation,
 } from "../../../types/widgetTypes.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
@@ -120,8 +120,8 @@ function* replaceFilterSettings(
     validators: FilterValidators<IAnalyticalWidget>,
     cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-    op: FilterOpReplaceAll,
-): SagaIterator<FilterOpResult> {
+    op: IFilterOpReplaceAll,
+): SagaIterator<IFilterOpResult> {
     let dateDataSet: ICatalogDateDataset | undefined;
     if (op.dateDatasetForFiltering) {
         dateDataSet = yield call(
@@ -168,7 +168,7 @@ function* replaceFilterSettings(
 function* changeDateFilterIgnore(
     widget: IAnalyticalWidget,
     dateDataSet: ICatalogDateDataset | undefined,
-): SagaIterator<FilterOpResult> {
+): SagaIterator<IFilterOpResult> {
     const filters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextDraggableFilters,
     );
@@ -188,7 +188,7 @@ function* disableDateFilter(
     _validators: FilterValidators<IAnalyticalWidget>,
     _cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-): SagaIterator<FilterOpResult> {
+): SagaIterator<IFilterOpResult> {
     const result: SagaReturnType<typeof changeDateFilterIgnore> = yield call(
         changeDateFilterIgnore,
         widget,
@@ -202,25 +202,25 @@ function* enableDateFilter(
     validators: FilterValidators<IAnalyticalWidget>,
     cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-    op: FilterOpEnableDateFilter,
-): SagaIterator<FilterOpResult> {
+    op: IFilterOpEnableDateFilter,
+): SagaIterator<IFilterOpResult> {
     let dateDatasetToUse: ICatalogDateDataset | undefined;
 
     if (op.dateDataset === "default") {
         if (isInsightWidget(widget)) {
-            const queryResult: InsightDateDatasets = yield call(
+            const queryResult: IInsightDateDatasets = yield call(
                 query,
                 queryDateDatasetsForInsight(widget.insight),
             );
             dateDatasetToUse = insightSelectDateDataset(queryResult);
         } else if (isKpiWidget(widget)) {
-            const queryResult: MeasureDateDatasets = yield call(
+            const queryResult: IMeasureDateDatasets = yield call(
                 query,
                 queryDateDatasetsForMeasure(widget.kpi.metric),
             );
             dateDatasetToUse = queryResult.dateDatasetsOrdered[0];
         } else if (isRichTextWidget(widget)) {
-            const queryResult: InsightDateDatasets = yield call(query, queryDateDatasetsForInsight());
+            const queryResult: IInsightDateDatasets = yield call(query, queryDateDatasetsForInsight());
             dateDatasetToUse = insightSelectDateDataset(queryResult);
         } else {
             invariant(false, "Cannot use default date dataset for custom widgets");
@@ -240,7 +240,7 @@ function* enableDateFilter(
 function* changeIgnores(
     widget: IAnalyticalWidget,
     newlyIgnoredFilters: Array<IDashboardAttributeFilter | IDashboardDateFilter> | undefined,
-): SagaIterator<FilterOpResult> {
+): SagaIterator<IFilterOpResult> {
     const dateDataSetMap: SagaReturnType<typeof selectAllCatalogDateDatasetsMap> = yield select(
         selectAllCatalogDateDatasetsMap,
     );
@@ -257,8 +257,8 @@ function* replaceAttributeIgnores(
     validators: FilterValidators<IAnalyticalWidget>,
     cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-    op: FilterOpReplaceAttributeIgnores,
-): SagaIterator<FilterOpResult> {
+    op: IFilterOpReplaceAttributeIgnores,
+): SagaIterator<IFilterOpResult> {
     const ignoredFilters: SagaReturnType<typeof validators.attributeFilterValidator> = yield call(
         validators.attributeFilterValidator,
         ctx,
@@ -303,8 +303,8 @@ function* ignoreAttributeFilter(
     validators: FilterValidators<IAnalyticalWidget>,
     cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-    op: FilterOpIgnoreAttributeFilter,
-): SagaIterator<FilterOpResult> {
+    op: IFilterOpIgnoreAttributeFilter,
+): SagaIterator<IFilterOpResult> {
     const ignoredFilters: SagaReturnType<typeof validators.attributeFilterValidator> = yield call(
         validators.attributeFilterValidator,
         ctx,
@@ -342,8 +342,8 @@ function* unignoreAttributeFilter(
     validators: FilterValidators<IAnalyticalWidget>,
     cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-    op: FilterOpUnignoreAttributeFilter,
-): SagaIterator<FilterOpResult> {
+    op: IFilterOpUnignoreAttributeFilter,
+): SagaIterator<IFilterOpResult> {
     const unignoredFilters: SagaReturnType<typeof validators.attributeFilterValidator> = yield call(
         validators.attributeFilterValidator,
         ctx,
@@ -380,12 +380,12 @@ function* ignoreDateFilter(
     validators: FilterValidators<IAnalyticalWidget>,
     cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-    op: FilterOpIgnoreDateFilter,
-): SagaIterator<FilterOpResult> {
+    op: IFilterOpIgnoreDateFilter,
+): SagaIterator<IFilterOpResult> {
     let ignoreFilterDataSetRefs: ObjRef[] = [];
     if (validators.dateFilterValidator) {
         const ignoreDateFilters: SagaReturnType<typeof validators.dateFilterValidator> = yield call(
-            validators.dateFilterValidator!,
+            validators.dateFilterValidator,
             ctx,
             cmd,
             widget,
@@ -431,12 +431,12 @@ function* unignoreDateFilter(
     validators: FilterValidators<IAnalyticalWidget>,
     cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
-    op: FilterOpUnignoreDateFilter,
-): SagaIterator<FilterOpResult> {
+    op: IFilterOpUnignoreDateFilter,
+): SagaIterator<IFilterOpResult> {
     let unignoreFilterDataSets: ObjRef[] = [];
     if (validators.dateFilterValidator) {
         const ignoreDateFilters: SagaReturnType<typeof validators.dateFilterValidator> = yield call(
-            validators.dateFilterValidator!,
+            validators.dateFilterValidator,
             ctx,
             cmd,
             widget,
@@ -479,7 +479,7 @@ function* unignoreDateFilter(
  * Result of the filter operation. This is fully resolved variant of filter settings that should be set as-is
  * on the widget.
  */
-export interface FilterOpResult {
+export interface IFilterOpResult {
     /**
      * Date data set (if any) to use for date filtering the widget
      */
@@ -515,9 +515,9 @@ export type FilterValidators<T extends IAnalyticalWidget> = {
     dateFilterValidator?: DateFilterValidator<T>;
 };
 
-export interface FilterOpCommand extends IDashboardCommand {
+export interface IFilterOpCommand extends IDashboardCommand {
     payload: {
-        readonly operation: WidgetFilterOperation;
+        readonly operation: IWidgetFilterOperation;
     };
 }
 
@@ -565,9 +565,9 @@ export interface FilterOpCommand extends IDashboardCommand {
 export function* processFilterOp(
     ctx: DashboardContext,
     validators: FilterValidators<IAnalyticalWidget>,
-    cmd: FilterOpCommand,
+    cmd: IFilterOpCommand,
     widget: IAnalyticalWidget,
-): SagaIterator<FilterOpResult> {
+): SagaIterator<IFilterOpResult> {
     const {
         payload: { operation },
     } = cmd;

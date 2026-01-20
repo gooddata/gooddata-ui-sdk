@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
@@ -7,7 +7,7 @@ import { type IDashboardQuery } from "./base.js";
 /**
  * @alpha
  */
-export interface QueryAttributeByDisplayForm extends IDashboardQuery {
+export interface IQueryAttributeByDisplayForm extends IDashboardQuery {
     type: "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE";
     payload: {
         readonly displayForms: ObjRef[];
@@ -27,7 +27,7 @@ export interface QueryAttributeByDisplayForm extends IDashboardQuery {
 export function queryAttributeByDisplayForm(
     displayForms: ObjRef[],
     correlationId?: string,
-): QueryAttributeByDisplayForm {
+): IQueryAttributeByDisplayForm {
     return {
         type: "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE",
         correlationId,

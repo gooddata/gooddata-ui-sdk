@@ -31,7 +31,8 @@ export function PermissionsProvider({ children }: PropsWithChildren) {
     const value = useMemo(() => ({ permissions: result, loading }), [loading, result]);
 
     if (isUnexpectedResponseError(error)) {
-        return <GlobalError errorDetails={error.message} errorTraceId={error.traceId} />;
+        const traceId = (error.responseBody as any)?.traceId;
+        return <GlobalError errorDetails={error.message} errorTraceId={error.traceId ?? traceId} />;
     }
     if (isAnalyticalBackendError(error) && error.abeType === AnalyticalBackendErrorTypes.UNEXPECTED) {
         return <GlobalError errorDetails={error.message} />;

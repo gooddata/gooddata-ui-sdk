@@ -1,12 +1,12 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ResolvedEntitlements } from "../../types/commonTypes.js";
 
 /**
  * @beta
  */
-export interface EntitlementsState {
+export interface IEntitlementsState {
     entitlements?: ResolvedEntitlements;
 }
 
-export const entitlementsInitialState: EntitlementsState = { entitlements: undefined };
+export const entitlementsInitialState: IEntitlementsState = { entitlements: undefined };

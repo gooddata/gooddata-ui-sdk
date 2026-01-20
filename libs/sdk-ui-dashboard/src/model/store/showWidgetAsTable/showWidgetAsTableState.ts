@@ -1,16 +1,17 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @beta
  */
-export interface ShowWidgetAsTableState {
+export interface IShowWidgetAsTableState {
     widgetRefs: ObjRef[];
 }
 
 /**
  * @beta
  */
-export const initialState: ShowWidgetAsTableState = {
+export const initialState: IShowWidgetAsTableState = {
     widgetRefs: [],
 };

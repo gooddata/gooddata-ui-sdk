@@ -160,7 +160,7 @@ export function useEditAlert({
 
     useEffect(() => {
         if (insight) {
-            fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
+            void fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
         }
     }, [insight, locale]);
 
@@ -200,8 +200,8 @@ export function useEditAlert({
                 getAppliedWidgetFilters(
                     editedAutomationFilters ?? [],
                     dashboardHiddenFilters,
-                    widget!,
-                    insight!,
+                    widget,
+                    insight,
                     commonDateFilterId,
                     true,
                 ),
@@ -530,7 +530,7 @@ export function useEditAlert({
                 return selectedMeasure
                     ? transformAlertByMetric(
                           supportedMeasures,
-                          updatedAutomationWithAttribute as IAutomationMetadataObject,
+                          updatedAutomationWithAttribute,
                           selectedMeasure,
                           measureFormatMap,
                           weekStart,

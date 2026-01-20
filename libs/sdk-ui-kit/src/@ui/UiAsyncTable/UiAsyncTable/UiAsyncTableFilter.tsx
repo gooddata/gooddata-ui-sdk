@@ -52,6 +52,9 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
         return isSmall ? FILTER_CHIP_MAX_WIDTH : undefined;
     }, [isSmall, isMobileView, width]);
 
+    const dropdownId = getFilterDropdownId(label);
+    const dropdownListId = `${dropdownId}-list`;
+
     return (
         <div className={e("filter")}>
             <Dropdown
@@ -62,17 +65,18 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
                         onClick={() => toggleDropdown()}
                         isActive={isOpen}
                         accessibilityConfig={{
-                            ariaControls: getFilterDropdownId(label),
-                            ariaHaspopup: "true",
+                            isExpanded: isOpen,
+                            popupId: dropdownId,
+                            popupType: "dialog",
                         }}
                     />
                 )}
                 alignPoints={[{ align: "bl tl" }]}
                 renderBody={({ closeDropdown }) => (
                     <UiAutofocus>
-                        <>
+                        <div role="dialog" id={dropdownId} aria-label={labelWithSelected}>
                             <DropdownList<IUiAsyncTableFilterOption>
-                                id={getFilterDropdownId(label)}
+                                id={dropdownListId}
                                 items={filteredOptions}
                                 renderItem={({ item, isFirst }) => (
                                     <UiAsyncTableDropdownItem
@@ -127,7 +131,7 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
                                     </Message>
                                 </div>
                             ) : null}
-                        </>
+                        </div>
                     </UiAutofocus>
                 )}
             />

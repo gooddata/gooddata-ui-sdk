@@ -137,7 +137,13 @@ export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThrea
 export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
 // @beta (undocumented)
+export function DefaultLandingContainer({ children, isBigScreen, isSmallScreen, isFullscreen, }: ILandingContentProps): JSX.Element;
+
+// @beta (undocumented)
 export const DefaultLandingQuestion: FC<ILandingQuestionProps>;
+
+// @beta (undocumented)
+export function DefaultLandingQuestions({ children, isFullscreen, isBigScreen, isSmallScreen, }: ILandingContentProps): JSX.Element;
 
 // @beta (undocumented)
 export const DefaultLandingScreen: FC<LandingScreenProps>;
@@ -183,6 +189,18 @@ export const GenAIChat: typeof GenAIAssistant;
 
 // @public @deprecated
 export type GenAIChatProps = GenAIAssistantProps;
+
+// @beta (undocumented)
+export interface ILandingContentProps {
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    isBigScreen?: boolean;
+    // (undocumented)
+    isFullscreen?: boolean;
+    // (undocumented)
+    isSmallScreen?: boolean;
+}
 
 // @beta (undocumented)
 export interface ILandingQuestionProps {
@@ -238,6 +256,9 @@ export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatV
 // @beta (undocumented)
 export type LandingScreenProps = {
     LandingScreen?: ComponentType;
+    isFullscreen?: boolean;
+    isBigScreen?: boolean;
+    isSmallScreen?: boolean;
 };
 
 // @public (undocumented)

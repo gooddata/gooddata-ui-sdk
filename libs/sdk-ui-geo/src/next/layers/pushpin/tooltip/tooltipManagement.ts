@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { escape, isEmpty } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -6,17 +6,20 @@ import { type IntlShape } from "react-intl";
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
-import { formatValueForTooltip, getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
-import { type IGeoTooltipItem } from "../../../types/common/legends.js";
+import { getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
 import { type IGeoPushpinChartNextConfig } from "../../../types/config/pushpinChart.js";
-import {
-    type JsonValue,
-    type LngLatTuple,
-    isGeoJsonPoint,
-    isLngLatTuple,
-    isRecord,
-} from "../../../utils/guards.js";
+import { type JsonValue, type LngLatTuple, isGeoJsonPoint, isLngLatTuple } from "../../../utils/guards.js";
 import { type IPopupFacade } from "../../common/mapFacade.js";
+import {
+    type TooltipFormatConfig,
+    type TooltipPayload,
+    dedupeAttributePayloadsByAttrId,
+    formatAttributeHtml,
+    formatMeasureHtml,
+    getTooltipProperties,
+    isTooltipPayloadValid,
+    parseTooltipPayload,
+} from "../../common/tooltipUtils.js";
 import type { IGeoTooltipConfig } from "../../registry/adapterTypes.js";
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "../constants.js";
 import { parsePushpinGeoProperties } from "../data/transformation.js";
@@ -24,16 +27,10 @@ import { parsePushpinGeoProperties } from "../data/transformation.js";
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 export const TOOLTIP_MAX_WIDTH = 320;
 
-interface ITooltipPayload {
-    title: string;
-    value?: string | number;
-    format?: string;
-}
-
 /**
  * Extended tooltip payload that includes fill color for stroke styling.
  */
-interface ITooltipColorPayload extends ITooltipPayload {
+interface ITooltipColorPayload extends TooltipPayload {
     fill?: string;
 }
 
@@ -41,81 +38,21 @@ interface ITooltipColorPayload extends ITooltipPayload {
  * Type guard for ITooltipColorPayload.
  */
 function isTooltipColorPayload(value: unknown): value is ITooltipColorPayload {
-    if (!isRecord(value)) {
+    if (value === null || typeof value !== "object") {
         return false;
     }
-    const title = value["title"];
+    const title = (value as Record<string, unknown>)["title"];
     return typeof title === "string" && title.length > 0;
 }
 
-function resolveTooltipPayload(item: JsonValue): ITooltipPayload | undefined {
-    if (!isRecord(item)) {
-        return undefined;
-    }
-
-    const title = item["title"];
-    if (typeof title !== "string" || title.length === 0) {
-        return undefined;
-    }
-
-    const rawValue = item["value"];
-    const value = typeof rawValue === "string" || typeof rawValue === "number" ? rawValue : undefined;
-    const format = typeof item["format"] === "string" ? item["format"] : undefined;
-
-    return {
-        title,
-        value,
-        format,
-    };
-}
-
 function isTooltipItemValid(item: JsonValue): boolean {
-    return Boolean(resolveTooltipPayload(item));
+    return isTooltipPayloadValid(item);
 }
 
-function escapeAttributeValue(value: number | string): number | string {
-    return Number.isFinite(value) ? value : escape(String(value));
-}
-
-function formatMeasure(item: JsonValue, separators?: ISeparators): IGeoTooltipItem | null {
-    const payload = resolveTooltipPayload(item);
-    if (!payload) {
-        return null;
-    }
-
-    const { title, value, format } = payload;
-    if (typeof value === "number" && Number.isFinite(value)) {
-        return {
-            title,
-            value: formatValueForTooltip(value, format, separators),
-        };
-    }
-
-    return {
-        title,
-        value: NULL_TOOLTIP_VALUE,
-    };
-}
-
-function formatAttribute(item: JsonValue): IGeoTooltipItem | null {
-    const payload = resolveTooltipPayload(item);
-    if (!payload) {
-        return null;
-    }
-
-    const { title, value } = payload;
-    if (value === undefined) {
-        return {
-            title,
-            value: NULL_TOOLTIP_VALUE,
-        };
-    }
-
-    return {
-        title,
-        value: escapeAttributeValue(value),
-    };
-}
+const tooltipFormatConfig: TooltipFormatConfig = {
+    emptyValue: NULL_TOOLTIP_VALUE,
+    escape,
+};
 
 // Tooltips are now switched off in edit/export mode
 function isTooltipDisabled({ viewport = {} }: IGeoPushpinChartNextConfig): boolean {
@@ -177,33 +114,31 @@ export function getTooltipHtml(
     intl?: IntlShape,
 ): string {
     const interactionMessage = getInteractionMessage(drillableItems, intl);
+    const properties = getTooltipProperties(geoProperties);
+    const locationPayload = parseTooltipPayload(properties["locationName"]);
+    const sizePayload = parseTooltipPayload(properties["size"]);
+    const colorPayload = parseTooltipPayload(properties["color"]);
+    const segmentPayload = parseTooltipPayload(properties["segment"]);
+    const tooltipTextPayload = parseTooltipPayload(properties["tooltipText"]);
+    const [locationAttribute, segmentAttribute, tooltipTextAttribute] = dedupeAttributePayloadsByAttrId([
+        locationPayload,
+        segmentPayload,
+        tooltipTextPayload,
+    ]);
 
     const tooltipItems: string = [
-        formatAttribute(geoProperties?.["locationName"]),
-        formatMeasure(geoProperties?.["size"], separators),
-        formatMeasure(geoProperties?.["color"], separators),
-        formatAttribute(geoProperties?.["segment"]),
-        formatAttribute(geoProperties?.["tooltipText"]),
+        formatAttributeHtml(locationAttribute, tooltipFormatConfig),
+        formatMeasureHtml(sizePayload, separators, tooltipFormatConfig),
+        formatMeasureHtml(colorPayload, separators, tooltipFormatConfig),
+        formatAttributeHtml(segmentAttribute, tooltipFormatConfig),
+        formatAttributeHtml(tooltipTextAttribute, tooltipFormatConfig),
     ]
-        .filter((item): item is IGeoTooltipItem => item !== null)
-        .map(getTooltipItemHtml)
+        .filter((item): item is string => item !== null)
         .join("");
 
     return `<div class="gd-viz-tooltip" style="max-width:${maxWidth}px">
                 <span class="gd-viz-tooltip-stroke" style="border-top-color: ${tooltipStroke}"></span>
                 <div class="gd-viz-tooltip-content">${tooltipItems}${interactionMessage}</div>
-            </div>`;
-}
-
-function getTooltipItemHtml(item: IGeoTooltipItem): string {
-    // value is escaped in formatAttribute or formatMeasure function
-    const { title, value } = item;
-
-    return `<div class="gd-viz-tooltip-item">
-                <span class="gd-viz-tooltip-title">${escape(title)}</span>
-                <div class="gd-viz-tooltip-value-wraper">
-                    <span class="gd-viz-tooltip-value">${value}</span>
-                </div>
             </div>`;
 }
 

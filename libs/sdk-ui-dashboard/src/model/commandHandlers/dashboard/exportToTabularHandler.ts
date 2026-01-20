@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -6,9 +6,9 @@ import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { type FiltersByTab, type IExportResult } from "@gooddata/sdk-backend-spi";
 import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
 
-import { type ExportDashboardToExcel } from "../../commands/index.js";
+import { type IExportDashboardToExcel } from "../../commands/index.js";
 import {
-    type DashboardExportToExcelResolved,
+    type IDashboardExportToExcelResolved,
     dashboardExportToExcelRequested,
     dashboardExportToExcelResolved,
 } from "../../events/dashboard.js";
@@ -56,8 +56,8 @@ function exportDashboardToTabular(
 
 export function* exportToTabularHandler(
     ctx: DashboardContext,
-    cmd: ExportDashboardToExcel,
-): SagaIterator<DashboardExportToExcelResolved> {
+    cmd: IExportDashboardToExcel,
+): SagaIterator<IDashboardExportToExcelResolved> {
     yield put(dashboardExportToExcelRequested(ctx, cmd.correlationId));
 
     const dashboardRef = yield select(selectDashboardRef);

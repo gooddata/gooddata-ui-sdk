@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -8,10 +8,10 @@ import { invariant } from "ts-invariant";
 import { type ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
 
 import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
-import { type DeleteDashboard } from "../../commands/index.js";
+import { type IDeleteDashboard } from "../../commands/index.js";
 import { dashboardDeleted } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardDeleted } from "../../events/index.js";
+import { type IDashboardDeleted } from "../../events/index.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
 import { executionResultsActions } from "../../store/executionResults/index.js";
@@ -61,8 +61,8 @@ function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<void> {
 
 export function* deleteDashboardHandler(
     ctx: DashboardContext,
-    cmd: DeleteDashboard,
-): SagaIterator<DashboardDeleted> {
+    cmd: IDeleteDashboard,
+): SagaIterator<IDashboardDeleted> {
     const existingDashboardRef = ctx.dashboardRef;
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
         yield select(selectPersistedDashboard);

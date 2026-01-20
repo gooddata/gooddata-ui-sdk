@@ -46,6 +46,7 @@ import {
 } from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { DEFAULT_FISCAL_DATE_FILTER_PRESET } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { drillActions } from "../../../store/drill/index.js";
@@ -56,7 +57,7 @@ import { filterContextInitialState } from "../../../store/tabs/filterContext/fil
 import {
     DEFAULT_TAB_ID,
     type FilterContextState,
-    type TabState,
+    type ITabState,
     tabsActions,
 } from "../../../store/tabs/index.js";
 import { selectScreen } from "../../../store/tabs/layout/layoutSelectors.js";
@@ -222,6 +223,11 @@ export function* actionsToInitializeNewDashboard(
     dashboard: IDashboard | undefined;
     insights: IInsight[];
 }> {
+    const effectiveDateFilterConfig =
+        settings.activeCalendars?.default === "FISCAL"
+            ? { ...dateFilterConfig, selectedOption: DEFAULT_FISCAL_DATE_FILTER_PRESET }
+            : dateFilterConfig;
+
     const {
         dashboard,
         insights,
@@ -232,7 +238,13 @@ export function* actionsToInitializeNewDashboard(
         filterContextDefinition,
         originalFilterContextDefinition,
         initialContent,
-    } = yield call(actionsToInitializeOrFillNewDashboard, ctx, settings, dateFilterConfig, displayForms);
+    } = yield call(
+        actionsToInitializeOrFillNewDashboard,
+        ctx,
+        settings,
+        effectiveDateFilterConfig,
+        displayForms,
+    );
 
     // Check if dashboard tabs feature is enabled
     const enableDashboardTabs = settings.enableDashboardTabs ?? false;
@@ -320,6 +332,7 @@ export function* actionsToInitializeNewDashboard(
                       activeTabLocalIdentifier: DEFAULT_TAB_ID,
                   }),
               ];
+
     return {
         initActions: [
             ...tabsAction,
@@ -669,7 +682,7 @@ export function* actionsToInitializeExistingDashboard(
     const validationResults: ValidationResult[] = [];
     if (enableDashboardTabs && customizedDashboard?.tabs && customizedDashboard.tabs.length > 0) {
         // Process each tab to build complete TabState with filterContext
-        const processedTabs: TabState[] = [];
+        const processedTabs: ITabState[] = [];
 
         for (const tab of customizedDashboard.tabs as IDashboardTab<IDashboardWidget>[]) {
             const isActiveTab = tab.localIdentifier === effectiveActiveTabId;
@@ -708,7 +721,7 @@ export function* actionsToInitializeExistingDashboard(
             );
 
             // Build complete TabState with all nested states
-            const tabState: TabState = {
+            const tabState: ITabState = {
                 ...tab,
                 filterContext: tabFilterContext,
                 dateFilterConfig: {
@@ -773,7 +786,7 @@ export function* actionsToInitializeExistingDashboard(
             ? (migratedAttributeFilterConfigs?.[tabIdentifier] ?? [])
             : dashboard.attributeFilterConfigs;
 
-        const defaultTab: TabState = {
+        const defaultTab: ITabState = {
             localIdentifier: tabIdentifier,
             title: "",
             filterContext: tabFilterContext,

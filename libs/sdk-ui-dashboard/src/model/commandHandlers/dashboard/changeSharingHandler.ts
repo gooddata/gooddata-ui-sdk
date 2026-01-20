@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { type BatchAction, batchActions } from "redux-batched-actions";
@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions.js";
-import { type ChangeSharing } from "../../commands/index.js";
+import { type IChangeSharing } from "../../commands/index.js";
 import { type DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dashboardPermissionsActions } from "../../store/dashboardPermissions/index.js";
@@ -24,7 +24,7 @@ import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/m
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 type DashboardSaveSharingContext = {
-    cmd: ChangeSharing;
+    cmd: IChangeSharing;
     /**
      * Dashboard as it is saved on the backend.
      */
@@ -35,7 +35,7 @@ type DashboardSaveSharingContext = {
     dashboardToSave: IDashboardDefinition;
 };
 
-function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<DashboardSaveSharingContext> {
+function* createDashboardSaveSharingContext(cmd: IChangeSharing): SagaIterator<DashboardSaveSharingContext> {
     const { newSharingProperties } = cmd.payload;
 
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
@@ -143,7 +143,7 @@ function* saveSharing(
 
 export function* changeSharingHandler(
     ctx: DashboardContext,
-    cmd: ChangeSharing,
+    cmd: IChangeSharing,
 ): SagaIterator<DashboardSharingChanged> {
     const dashboardRef = yield select(selectDashboardRef);
     if (!dashboardRef) {

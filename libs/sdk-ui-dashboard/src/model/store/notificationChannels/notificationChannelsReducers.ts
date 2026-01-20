@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
@@ -7,9 +7,9 @@ import {
     type INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 
-import { type NotificationChannelsState } from "./notificationChannelsState.js";
+import { type INotificationChannelsState } from "./notificationChannelsState.js";
 
-type NotificationChannelsReducer<A extends Action> = CaseReducer<NotificationChannelsState, A>;
+type NotificationChannelsReducer<A extends Action> = CaseReducer<INotificationChannelsState, A>;
 
 const setNotificationChannels: NotificationChannelsReducer<
     PayloadAction<INotificationChannelIdentifier[] | INotificationChannelMetadataObject[]>

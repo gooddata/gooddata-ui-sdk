@@ -5,8 +5,6 @@ import {
     type ISortItem,
     bucketAttribute,
     insightBucket,
-    isIdentifierRef,
-    isUriRef,
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -22,9 +20,13 @@ import {
     filterOutDerivedMeasures,
     getAllMeasures,
     getItemsCount,
+    getItemsFromBuckets,
     isDateBucketItem,
 } from "../../../utils/bucketHelper.js";
 import { getRefIdentifier } from "../geoChartNext/geoAttributeHelper.js";
+
+const GEO_AREA_DISPLAY_FORM_TYPE = "GDC.geo.area";
+const TEXT_DISPLAY_FORM_TYPE = "GDC.text";
 
 /**
  * Finds a bucket by local identifier
@@ -94,43 +96,47 @@ export function sanitizeAreaMeasures(referencePoint: IExtendedReferencePoint): I
  * @internal
  */
 export function getAreaItems(buckets: IBucketOfFun[], uiConfig: IUiConfig): IBucketItem[] {
-    const areaBucket = findBucket(buckets, BucketNames.AREA);
-    if (!areaBucket) {
-        return [];
-    }
-
+    const limit = uiConfig?.buckets?.[BucketNames.AREA]?.itemsLimit ?? 1;
     const isValidAreaItem = (item: IBucketItem) => item.type === ATTRIBUTE && !isDateBucketItem(item);
+    const isAreaCapableItem = (item: IBucketItem) =>
+        Boolean(item.areaDisplayFormRef) ||
+        Boolean(item.displayForms?.some((displayForm) => displayForm.type === GEO_AREA_DISPLAY_FORM_TYPE));
 
-    const areaItems = areaBucket.items.filter(
-        (item: IBucketItem) => isValidAreaItem(item) && Boolean(item.areaDisplayFormRef),
-    );
-    const fallbackItems = areaBucket.items.filter(isValidAreaItem);
-    const selectedItems = areaItems.length > 0 ? areaItems : fallbackItems;
-
-    const mappedItems = selectedItems.map((item) => {
-        const areaDisplayForm = item.displayForms?.find((displayForm) => displayForm.type === "GDC.geo.area");
+    const mapToGeoAreaDisplayForm = (item: IBucketItem): IBucketItem => {
+        const areaDisplayForm = item.displayForms?.find(
+            (displayForm) => displayForm.type === GEO_AREA_DISPLAY_FORM_TYPE,
+        );
 
         if (!areaDisplayForm?.ref) {
             return item;
         }
 
-        const refIdentifier = isIdentifierRef(areaDisplayForm.ref)
-            ? areaDisplayForm.ref.identifier
-            : undefined;
-        const refUri = isUriRef(areaDisplayForm.ref) ? areaDisplayForm.ref.uri : undefined;
-        const resolvedIdentifier = refIdentifier ?? refUri;
-
         return {
             ...item,
             areaDisplayFormRef: areaDisplayForm.ref,
-            locationDisplayFormIdentifier: resolvedIdentifier,
-            locationDisplayFormUri: refUri,
         };
-    });
+    };
 
-    const limit = uiConfig?.buckets?.[BucketNames.AREA]?.itemsLimit ?? 1;
+    // 1) Do not override user choice: if AREA bucket already contains at least one valid attribute, keep it.
+    const areaBucket = findBucket(buckets, BucketNames.AREA);
+    const existingAreaItems = areaBucket?.items.filter(isValidAreaItem) ?? [];
+    const existingPreferred = existingAreaItems.filter(isAreaCapableItem);
+    if (existingAreaItems.length > 0) {
+        // Align with Pushpin behavior: never keep a non-geo-capable attribute in the geo bucket.
+        return existingPreferred.map(mapToGeoAreaDisplayForm).slice(0, limit);
+    }
 
-    return mappedItems.slice(0, limit);
+    // 2) When switching to geo area from another visualization, the candidate geo-area attribute may live
+    // in a different bucket (e.g. VIEW/ATTRIBUTE). Mirror Geo Pushpin's cross-bucket scan behavior.
+    const candidates = getItemsFromBuckets(
+        buckets,
+        [BucketNames.ATTRIBUTE, BucketNames.VIEW, BucketNames.TREND, BucketNames.AREA],
+        [ATTRIBUTE],
+    ).filter(isValidAreaItem);
+
+    const preferredCandidates = candidates.filter(isAreaCapableItem);
+    // Strict like Pushpin: if there is no area-capable attribute, leave AREA empty.
+    return preferredCandidates.map(mapToGeoAreaDisplayForm).slice(0, limit);
 }
 
 /**
@@ -143,7 +149,7 @@ export function getAreaItems(buckets: IBucketOfFun[], uiConfig: IUiConfig): IBuc
 export function getAreaTooltipText(areaItem: IBucketItem): string | undefined {
     const textDisplayForms =
         areaItem.displayForms?.filter(
-            (displayForm) => !displayForm.type || displayForm.type === "GDC.text",
+            (displayForm) => !displayForm.type || displayForm.type === TEXT_DISPLAY_FORM_TYPE,
         ) ?? [];
 
     const preferredTextDf =

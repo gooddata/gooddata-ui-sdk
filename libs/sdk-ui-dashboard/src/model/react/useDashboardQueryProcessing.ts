@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
@@ -7,8 +8,8 @@ import { type GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import {
-    type DashboardQueryFailed,
-    type DashboardQueryRejected,
+    type IDashboardQueryFailed,
+    type IDashboardQueryRejected,
     isDashboardQueryFailed,
     isDashboardQueryRejected,
 } from "../events/index.js";
@@ -18,47 +19,47 @@ import { queryAndWaitFor } from "../store/index.js";
 /**
  * @public
  */
-export interface QueryProcessingPendingState {
+export type QueryProcessingPendingState = {
     status: "pending";
     error: undefined;
     result: undefined;
-}
+};
 
 /**
  * @public
  */
-export interface QueryProcessingRunningState {
+export type QueryProcessingRunningState = {
     status: "running";
     error: undefined;
     result: undefined;
-}
+};
 
 /**
  * @public
  */
-export interface QueryProcessingErrorState {
+export type QueryProcessingErrorState = {
     status: "error";
     error: GoodDataSdkError;
     result: undefined;
-}
+};
 
 /**
  * @public
  */
-export interface QueryProcessingRejectedState {
+export type QueryProcessingRejectedState = {
     status: "rejected";
     error: undefined;
     result: undefined;
-}
+};
 
 /**
  * @public
  */
-export interface QueryProcessingSuccessState<TResult> {
+export type QueryProcessingSuccessState<TResult> = {
     status: "success";
     error: undefined;
     result: TResult;
-}
+};
 
 /**
  * @public
@@ -101,8 +102,8 @@ export const useDashboardQueryProcessing = <
 }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
     onSuccess?: (result: TQueryResult) => void;
-    onError?: (event: DashboardQueryFailed) => void;
-    onRejected?: (event: DashboardQueryRejected) => void;
+    onError?: (event: IDashboardQueryFailed) => void;
+    onRejected?: (event: IDashboardQueryRejected) => void;
     onBeforeRun?: (query: TQuery) => void;
 }): UseDashboardQueryProcessingResult<TQueryCreatorArgs, TQueryResult> => {
     const [state, setState] = useState<QueryProcessingState<TQueryResult>>({

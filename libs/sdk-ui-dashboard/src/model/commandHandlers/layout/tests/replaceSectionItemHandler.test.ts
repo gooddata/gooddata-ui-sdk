@@ -1,14 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 
-import { type ReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands/index.js";
+import { type IReplaceSectionItem, replaceSectionItem, undoLayoutChanges } from "../../../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardLayoutChanged,
-    type DashboardLayoutSectionItemReplaced,
+    type IDashboardCommandFailed,
+    type IDashboardLayoutChanged,
+    type IDashboardLayoutSectionItemReplaced,
 } from "../../../events/index.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
 import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSelectors.js";
@@ -37,7 +37,7 @@ describe("replace section item handler", () => {
 
         it("should fail if bad section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const fail: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(
                     originalLayout.sections.length,
                     0,
@@ -54,7 +54,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if bad item index is provided", async () => {
-            const fail: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(0, 4, TestKpiPlaceholderItem, undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -64,7 +64,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if bad stash identifier is provided", async () => {
-            const fail: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(0, 0, "InvalidStashIdentifier", undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -89,7 +89,7 @@ describe("replace section item handler", () => {
         const [ThirdSectionFirstItem] = ComplexDashboardWithReferences.dashboard.layout!.sections[2].items;
 
         it("should replace existing item in section with multiple items", async () => {
-            const event: DashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(1, 0, TestKpiPlaceholderItem, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
@@ -101,7 +101,7 @@ describe("replace section item handler", () => {
         });
 
         it("should replace existing item in section with single item", async () => {
-            const event: DashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(2, 0, TestKpiPlaceholderItem, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
@@ -113,7 +113,7 @@ describe("replace section item handler", () => {
         });
 
         it("should replace existing item and store previous item in stash", async () => {
-            const event: DashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(1, 0, TestKpiPlaceholderItem, TestStash),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
@@ -132,7 +132,7 @@ describe("replace section item handler", () => {
             );
 
             // now use the stashed item and replace the second item with it
-            const event: DashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(1, 1, TestStash, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
@@ -148,7 +148,7 @@ describe("replace section item handler", () => {
                 replaceSectionItem(1, 0, TestKpiPlaceholderItem, TestStash),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
-            const event: DashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemReplaced = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(1, 1, TestStash, TestStash),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
@@ -170,7 +170,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad date dataset setting", async () => {
-            const event: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(
                     1,
                     0,
@@ -187,7 +187,7 @@ describe("replace section item handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad filter ignore list", async () => {
-            const event: DashboardCommandFailed<ReplaceSectionItem> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IReplaceSectionItem> = await Tester.dispatchAndWaitFor(
                 replaceSectionItem(
                     1,
                     0,
@@ -217,7 +217,7 @@ describe("replace section item handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
             );
 
-            const lastReplaceUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const lastReplaceUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -228,7 +228,7 @@ describe("replace section item handler", () => {
             ]);
             expect(selectStash(Tester.state())[TestStash]).toEqual([SecondSectionFirstItem]);
 
-            const firstReplaceUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const firstReplaceUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );

@@ -12,7 +12,7 @@ import {
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
 
-import { type KdaItem, type KdaItemGroup } from "../internalTypes.js";
+import { type IKdaItem, type IKdaItemGroup } from "../internalTypes.js";
 import { driverColumn } from "./columns/driverColumn.js";
 import { driversCountColumn } from "./columns/driversCount.js";
 import { titleColumn } from "./columns/titleColumn.js";
@@ -26,7 +26,7 @@ export function KdaSummaryDrivers() {
 
     const { state, setState } = useKdaState();
     const onSelect = useCallback(
-        (item: KdaItem) => {
+        (item: IKdaItem) => {
             const selectedItem = state.items.find(({ data }) => data === item);
             setState({
                 selectedItem: selectedItem ?? "summary",
@@ -42,7 +42,7 @@ export function KdaSummaryDrivers() {
             titleColumn(intl, columnWidth[0]),
             driverColumn(intl, columnWidth[1]),
             driversCountColumn(intl, columnWidth[2]),
-        ] as IUiAsyncTableColumn<KdaItemGroup>[];
+        ] as IUiAsyncTableColumn<IKdaItemGroup>[];
     }, [intl, width, list]);
 
     return (

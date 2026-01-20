@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDashboardCustomizer, type IDashboardEventHandling } from "./customizer.js";
 import { type DashboardContext } from "../model/index.js";
@@ -8,7 +8,7 @@ import { type DashboardContext } from "../model/index.js";
  *
  * @public
  */
-export interface DashboardPluginDescriptor {
+export type DashboardPluginDescriptor = {
     /**
      * Author of the plugin.
      *
@@ -80,7 +80,7 @@ export interface DashboardPluginDescriptor {
      * @deprecated - use compatibility property instead
      */
     readonly maxEngineVersion?: string;
-}
+};
 
 /**
  * Raw, low-level interface that the dashboard plugins need to implement.
@@ -94,7 +94,7 @@ export interface DashboardPluginDescriptor {
  *
  * @public
  */
-export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
+export type IDashboardPluginContract_V1 = DashboardPluginDescriptor & {
     /**
      * Version of the SPI that is realized by the plugin.
      */
@@ -156,7 +156,7 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
      * @param ctx - dashboard context into which this plugin was loaded
      */
     onPluginUnload?(ctx: DashboardContext): Promise<void> | void;
-}
+};
 
 /**
  * Abstract base class for the Dashboard Plugin.

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -16,8 +16,8 @@ import {
     validateDatasetForKpiWidgetDateFilter,
 } from "./validation/filterValidation.js";
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type ChangeKpiWidgetFilterSettings } from "../../commands/index.js";
-import { type DashboardKpiWidgetFilterSettingsChanged } from "../../events/index.js";
+import { type IChangeKpiWidgetFilterSettings } from "../../commands/index.js";
+import { type IDashboardKpiWidgetFilterSettingsChanged } from "../../events/index.js";
 import { kpiWidgetFilterSettingsChanged } from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -41,8 +41,8 @@ const KpiWidgetFilterValidations: FilterValidators<IKpiWidget> = {
  */
 export function* changeKpiWidgetFilterSettingsHandler(
     ctx: DashboardContext,
-    cmd: ChangeKpiWidgetFilterSettings,
-): SagaIterator<DashboardKpiWidgetFilterSettingsChanged> {
+    cmd: IChangeKpiWidgetFilterSettings,
+): SagaIterator<IDashboardKpiWidgetFilterSettingsChanged> {
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const kpiWidget = validateExistingKpiWidget(widgets, cmd, ctx);
 

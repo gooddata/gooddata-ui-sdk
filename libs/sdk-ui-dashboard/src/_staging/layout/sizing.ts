@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -170,10 +170,10 @@ export function getContainerHeight(
     settings: ISettings,
 ): number {
     const emptyLayoutMinHeight = getDashboardLayoutWidgetMinGridHeight(settings, container.widget!.type);
-    if (!isDashboardLayout(container.widget) || container.widget!.sections.length === 0) {
+    if (!isDashboardLayout(container.widget) || container.widget.sections.length === 0) {
         return emptyLayoutMinHeight;
     }
-    return container.widget!.sections.reduce((allSectionsHeight, section) => {
+    return container.widget.sections.reduce((allSectionsHeight, section) => {
         const allScreenSizes = implicitLayoutItemSizeFromXlSize(container.size.xl);
         const rows = splitDashboardLayoutItemsAsRenderedGridRows(section.items, allScreenSizes, screen);
         const currentSectionHeight = getSectionHeight(rows, screen, emptyLayoutMinHeight);

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type AccessGranularPermission,
@@ -13,7 +13,7 @@ import { eventGuard } from "./util.js";
 /**
  * @beta
  */
-export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
+export interface IUserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
     interaction: TType;
     data: TData;
 }
@@ -21,7 +21,7 @@ export interface UserInteractionPayloadWithDataBase<TType extends string, TData 
 /**
  * @beta
  */
-export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<
+export type KpiAlertDialogOpenedPayload = IUserInteractionPayloadWithDataBase<
     "kpiAlertDialogOpened",
     {
         alreadyHasAlert: boolean;
@@ -47,7 +47,7 @@ export type DescriptionTooltipOpenedData = {
 /**
  * @beta
  */
-export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase<
+export type DescriptionTooltipOpenedPayload = IUserInteractionPayloadWithDataBase<
     "descriptionTooltipOpened",
     DescriptionTooltipOpenedData
 >;
@@ -86,7 +86,7 @@ export type ShareDialogInteractionData = {
 /**
  * @beta
  */
-export type ShareDialogInteractionPayload = UserInteractionPayloadWithDataBase<
+export type ShareDialogInteractionPayload = IUserInteractionPayloadWithDataBase<
     "shareDialogInteraction",
     ShareDialogInteractionData
 >;
@@ -169,7 +169,7 @@ export type AutomationInteractionData = {
 /**
  * @alpha
  */
-export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<
+export type AutomationInteractionPayload = IUserInteractionPayloadWithDataBase<
     "automationInteraction",
     AutomationInteractionData
 >;
@@ -182,7 +182,7 @@ export type SavedFilterViewInteractionType = "DIALOG_OPENED";
 /**
  * @alpha
  */
-export interface SavedFilterViewInteractionData {
+export interface ISavedFilterViewInteractionData {
     type: SavedFilterViewInteractionType;
     countOfSavedViews: number;
 }
@@ -190,15 +190,15 @@ export interface SavedFilterViewInteractionData {
 /**
  * @alpha
  */
-export type SavedFilterViewInteractionPayload = UserInteractionPayloadWithDataBase<
+export type SavedFilterViewInteractionPayload = IUserInteractionPayloadWithDataBase<
     "savedFilterViewInteraction",
-    SavedFilterViewInteractionData
+    ISavedFilterViewInteractionData
 >;
 
 /**
  * @beta
  */
-export interface BareUserInteractionPayload {
+export interface IBareUserInteractionPayload {
     interaction:
         | "kpiAlertDialogClosed"
         | "poweredByGDLogoClicked"
@@ -230,7 +230,7 @@ export type UserInteractionPayloadWithData =
 /**
  * @beta
  */
-export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
+export type UserInteractionPayload = UserInteractionPayloadWithData | IBareUserInteractionPayload;
 
 /**
  * @beta
@@ -240,7 +240,7 @@ export type UserInteractionType = UserInteractionPayload["interaction"];
 /**
  * @beta
  */
-export type BareUserInteractionType = BareUserInteractionPayload["interaction"];
+export type BareUserInteractionType = IBareUserInteractionPayload["interaction"];
 
 /**
  * This event is emitted after the user interaction that cannot be tracked by other existing events
@@ -248,22 +248,22 @@ export type BareUserInteractionType = BareUserInteractionPayload["interaction"];
  *
  * @beta
  */
-export interface DashboardUserInteractionTriggered extends IDashboardEvent {
+export interface IDashboardUserInteractionTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED";
     readonly payload: UserInteractionPayload;
 }
 
 /**
- * Creates the {@link DashboardUserInteractionTriggered} event body.
+ * Creates the {@link IDashboardUserInteractionTriggered} event body.
  *
- * @param interactionPayloadOrType - interaction payload or a type of a user interaction without extra data (for convenience)
+ * @param interactionPayloadOrType - interaction payload or a type of user interaction without extra data (for convenience)
  * @param correlationId - specify correlation id to use for this event. this can be used to correlate this event to a command that caused it.
  * @beta
  */
 export function userInteractionTriggered(
     interactionPayloadOrType: UserInteractionPayload | BareUserInteractionType,
     correlationId?: string,
-): DashboardEventBody<DashboardUserInteractionTriggered> {
+): DashboardEventBody<IDashboardUserInteractionTriggered> {
     const payload: UserInteractionPayload =
         typeof interactionPayloadOrType === "string"
             ? { interaction: interactionPayloadOrType }
@@ -277,11 +277,11 @@ export function userInteractionTriggered(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardUserInteractionTriggered}.
+ * Tests whether the provided object is an instance of {@link IDashboardUserInteractionTriggered}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardUserInteractionTriggered = eventGuard<DashboardUserInteractionTriggered>(
+export const isDashboardUserInteractionTriggered = eventGuard<IDashboardUserInteractionTriggered>(
     "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED",
 );

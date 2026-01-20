@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { type KdaItem, type KdaItemGroup } from "../../internalTypes.js";
+import { type IKdaItem, type IKdaItemGroup } from "../../internalTypes.js";
 import { type DeepReadonly, type IKdaDefinition } from "../../types.js";
 
 const YAXIS_ADDITION_PERCENTAGE = 1.1; //+10%
@@ -28,8 +28,8 @@ const LIMIT_KDA = 20;
 export function createDataView(
     workspace: string,
     def: DeepReadonly<IKdaDefinition> | null,
-    group: KdaItemGroup,
-    item: KdaItem,
+    group: IKdaItemGroup,
+    item: IKdaItem,
     title: string,
 ): IDataView | null {
     if (!def) {
@@ -109,7 +109,7 @@ export function createDataView(
             dataSourceMessages: [],
         },
         equals: (v: IDataView) => {
-            return view!.fingerprint() === v.fingerprint();
+            return view.fingerprint() === v.fingerprint();
         },
         fingerprint: () => {
             return JSON.stringify(definition);
@@ -302,8 +302,8 @@ function createDateAttribute(ref: ObjRef, alias: string): [IAttribute, IAttribut
 export function createConfig(
     settings: ISettings,
     colorPalette: IColorPalette,
-    group: KdaItemGroup,
-    item: KdaItem,
+    group: IKdaItemGroup,
+    item: IKdaItem,
 ): IChartConfig {
     const { trend, deviation } = getTrendAndDeviation(item);
 
@@ -359,7 +359,7 @@ export function createConfig(
     };
 }
 
-function getLimitedDataOnly(group: KdaItemGroup, trend: number) {
+function getLimitedDataOnly(group: IKdaItemGroup, trend: number) {
     return group.allDrivers.slice(0, LIMIT_KDA).filter((item) => {
         const diff = item.to.value - item.from.value;
         if (trend >= 0) {
@@ -369,7 +369,7 @@ function getLimitedDataOnly(group: KdaItemGroup, trend: number) {
     });
 }
 
-function getTrendAndDeviation(item: KdaItem) {
+function getTrendAndDeviation(item: IKdaItem) {
     const trend = item.to.value - item.from.value;
     const deviation = trend >= 0 ? item.mean + item.standardDeviation : item.mean - item.standardDeviation;
 

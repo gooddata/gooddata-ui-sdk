@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { produce } from "immer";
 import { cloneDeep } from "lodash-es";
@@ -7,14 +7,14 @@ import { describe, expect, it } from "vitest";
 import { DashboardDateFilterConfigModeValues, type IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
 import { tabsActions } from "../../index.js";
-import { type TabsState, tabsInitialState } from "../../tabsState.js";
+import { type ITabsState, tabsInitialState } from "../../tabsState.js";
 import { dateFilterConfigReducers } from "../dateFilterConfigReducers.js";
 
 describe("dateFilterConfigReducers", () => {
     const createTabsInitialState = (
         dateFilterConfig?: IDashboardDateFilterConfig,
         activeTabLocalIdentifier: string = "tab1",
-    ): TabsState => {
+    ): ITabsState => {
         return {
             ...tabsInitialState,
             tabs: [

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -6,8 +6,8 @@ import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import { isInsightWidget } from "@gooddata/sdk-model";
 
-import { type ChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands/index.js";
-import { type DashboardRenderModeChanged } from "../../events/index.js";
+import { type IChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands/index.js";
+import { type IDashboardRenderModeChanged } from "../../events/index.js";
 import { renderModeChanged } from "../../events/renderMode.js";
 import { renderModeActions } from "../../store/renderMode/index.js";
 import { clearShowWidgetAsTable } from "../../store/showWidgetAsTable/index.js";
@@ -21,8 +21,8 @@ import { resetDashboardRuntime } from "../dashboard/resetDashboardHandler.js";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
-    cmd: ChangeRenderMode,
-): SagaIterator<DashboardRenderModeChanged> {
+    cmd: IChangeRenderMode,
+): SagaIterator<IDashboardRenderModeChanged> {
     const {
         payload: { renderMode, renderModeChangeOptions },
         correlationId,

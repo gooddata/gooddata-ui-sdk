@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -71,7 +71,7 @@ export function transformAlertByMetric(
     );
 
     if (alert.alert?.condition.type === "anomalyDetection" && periodMeasure) {
-        const cond = transformToAnomalyDetectionCondition(alert.alert!.condition, periodMeasure);
+        const cond = transformToAnomalyDetectionCondition(alert.alert.condition, periodMeasure);
         const condition = {
             ...cond,
             measure: {
@@ -93,7 +93,7 @@ export function transformAlertByMetric(
         return {
             ...alert,
             alert: {
-                ...alert.alert!,
+                ...alert.alert,
                 condition,
                 execution,
             },
@@ -109,7 +109,7 @@ export function transformAlertByMetric(
     }
 
     if (alert.alert?.condition.type === "relative" && periodMeasure) {
-        const cond = transformToRelativeCondition(alert.alert!.condition);
+        const cond = transformToRelativeCondition(alert.alert.condition);
         const condition = {
             ...cond,
             measure: {
@@ -129,7 +129,7 @@ export function transformAlertByMetric(
         return {
             ...alert,
             alert: {
-                ...alert.alert!,
+                ...alert.alert,
                 condition,
                 execution,
             },
@@ -412,9 +412,9 @@ export function transformAlertByValue(
         return {
             ...alert,
             alert: {
-                ...alert.alert!,
+                ...alert.alert,
                 condition: {
-                    ...alert.alert!.condition,
+                    ...alert.alert.condition,
                     threshold: value,
                 },
             },

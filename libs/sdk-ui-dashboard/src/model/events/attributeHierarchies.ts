@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type DashboardEventBody, type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
@@ -8,18 +8,18 @@ import { eventGuard } from "./util.js";
  *
  * @internal
  */
-export interface CreateAttributeHierarchyRequested extends IDashboardEvent {
+export interface ICreateAttributeHierarchyRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED";
 }
 
 /**
- * Create {@link CreateAttributeHierarchyRequested} event
+ * Create {@link ICreateAttributeHierarchyRequested} event
  *
  * @internal
  */
 export function createAttributeHierarchyRequested(
     correlationId?: string,
-): DashboardEventBody<CreateAttributeHierarchyRequested> {
+): DashboardEventBody<ICreateAttributeHierarchyRequested> {
     return {
         type: "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED",
         correlationId,
@@ -27,12 +27,12 @@ export function createAttributeHierarchyRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link CreateAttributeHierarchyRequested}.
+ * Tests whether the provided object is an instance of {@link ICreateAttributeHierarchyRequested}.
  *
  * @param obj - object to test
  * @internal
  */
-export const isCreateAttributeHierarchyRequested = eventGuard<CreateAttributeHierarchyRequested>(
+export const isCreateAttributeHierarchyRequested = eventGuard<ICreateAttributeHierarchyRequested>(
     "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED",
 );
 
@@ -41,18 +41,18 @@ export const isCreateAttributeHierarchyRequested = eventGuard<CreateAttributeHie
  *
  * @internal
  */
-export interface DeleteAttributeHierarchyRequested extends IDashboardEvent {
+export interface IDeleteAttributeHierarchyRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED";
 }
 
 /**
- * Create {@link DeleteAttributeHierarchyRequested} event
+ * Create {@link IDeleteAttributeHierarchyRequested} event
  *
  * @internal
  */
 export function deleteAttributeHierarchyRequested(
     correlationId?: string,
-): DashboardEventBody<DeleteAttributeHierarchyRequested> {
+): DashboardEventBody<IDeleteAttributeHierarchyRequested> {
     return {
         type: "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED",
         correlationId,
@@ -60,11 +60,11 @@ export function deleteAttributeHierarchyRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DeleteAttributeHierarchyRequested}.
+ * Tests whether the provided object is an instance of {@link IDeleteAttributeHierarchyRequested}.
  *
  * @param obj - object to test
  * @internal
  */
-export const isDeleteAttributeHierarchyRequested = eventGuard<DeleteAttributeHierarchyRequested>(
+export const isDeleteAttributeHierarchyRequested = eventGuard<IDeleteAttributeHierarchyRequested>(
     "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED",
 );

@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 
 import { type ICatalogDateDataset } from "@gooddata/sdk-model";
 
-import { type QueryAvailableDatasetsForItems } from "../queries/availableDatasetsForItems.js";
+import { type IQueryAvailableDatasetsForItems } from "../queries/availableDatasetsForItems.js";
 import { createQueryService } from "../store/_infra/queryService.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../types/sagas.js";
@@ -17,7 +17,7 @@ export const QueryAvailableDatasetForItemsService = createQueryService(
 
 function* queryService(
     ctx: DashboardContext,
-    query: QueryAvailableDatasetsForItems,
+    query: IQueryAvailableDatasetsForItems,
 ): SagaIterator<ICatalogDateDataset[]> {
     const {
         payload: { items },

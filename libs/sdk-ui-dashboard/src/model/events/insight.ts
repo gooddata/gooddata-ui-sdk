@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IExportResult } from "@gooddata/sdk-backend-spi";
 import {
     type DrillDefinition,
@@ -18,13 +19,13 @@ import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 import { type IExportConfig } from "../types/exportTypes.js";
-import { type WidgetDescription, type WidgetHeader } from "../types/widgetTypes.js";
+import { type IWidgetDescription, type IWidgetHeader } from "../types/widgetTypes.js";
 
 /**
- * Payload of the {@link DashboardInsightWidgetHeaderChanged} event.
+ * Payload of the {@link IDashboardInsightWidgetHeaderChanged} event.
  * @beta
  */
-export interface DashboardInsightWidgetHeaderChangedPayload {
+export interface IDashboardInsightWidgetHeaderChangedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -32,7 +33,7 @@ export interface DashboardInsightWidgetHeaderChangedPayload {
     /**
      * New widget header that is now used on the widget.
      */
-    readonly header: WidgetHeader;
+    readonly header: IWidgetHeader;
 }
 
 /**
@@ -41,17 +42,17 @@ export interface DashboardInsightWidgetHeaderChangedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetHeaderChanged extends IDashboardEvent {
+export interface IDashboardInsightWidgetHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED";
-    readonly payload: DashboardInsightWidgetHeaderChangedPayload;
+    readonly payload: IDashboardInsightWidgetHeaderChangedPayload;
 }
 
 export function insightWidgetHeaderChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    header: WidgetHeader,
+    header: IWidgetHeader,
     correlationId?: string,
-): DashboardInsightWidgetHeaderChanged {
+): IDashboardInsightWidgetHeaderChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED",
         ctx,
@@ -64,12 +65,12 @@ export function insightWidgetHeaderChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetHeaderChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetHeaderChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetHeaderChanged = eventGuard<DashboardInsightWidgetHeaderChanged>(
+export const isDashboardInsightWidgetHeaderChanged = eventGuard<IDashboardInsightWidgetHeaderChanged>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED",
 );
 
@@ -78,10 +79,10 @@ export const isDashboardInsightWidgetHeaderChanged = eventGuard<DashboardInsight
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetDescriptionChanged} event.
+ * Payload of the {@link IDashboardInsightWidgetDescriptionChanged} event.
  * @beta
  */
-export interface DashboardInsightWidgetDescriptionChangedPayload {
+export interface IDashboardInsightWidgetDescriptionChangedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -89,7 +90,7 @@ export interface DashboardInsightWidgetDescriptionChangedPayload {
     /**
      * New widget description that is now used on the widget.
      */
-    readonly description: WidgetDescription;
+    readonly description: IWidgetDescription;
 }
 
 /**
@@ -98,17 +99,17 @@ export interface DashboardInsightWidgetDescriptionChangedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetDescriptionChanged extends IDashboardEvent {
+export interface IDashboardInsightWidgetDescriptionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED";
-    readonly payload: DashboardInsightWidgetDescriptionChangedPayload;
+    readonly payload: IDashboardInsightWidgetDescriptionChangedPayload;
 }
 
 export function insightWidgetDescriptionChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    description: WidgetDescription,
+    description: IWidgetDescription,
     correlationId?: string,
-): DashboardInsightWidgetDescriptionChanged {
+): IDashboardInsightWidgetDescriptionChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED",
         ctx,
@@ -121,23 +122,23 @@ export function insightWidgetDescriptionChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetDescriptionChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetDescriptionChanged}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardInsightWidgetDescriptionChanged =
-    eventGuard<DashboardInsightWidgetDescriptionChanged>("GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED");
+    eventGuard<IDashboardInsightWidgetDescriptionChanged>("GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED");
 
 //
 //
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetFilterSettingsChanged} event.
+ * Payload of the {@link IDashboardInsightWidgetFilterSettingsChanged} event.
  * @beta
  */
-export interface DashboardInsightWidgetFilterSettingsChangedPayload {
+export interface IDashboardInsightWidgetFilterSettingsChangedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -174,9 +175,9 @@ export interface DashboardInsightWidgetFilterSettingsChangedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetFilterSettingsChanged extends IDashboardEvent {
+export interface IDashboardInsightWidgetFilterSettingsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED";
-    readonly payload: DashboardInsightWidgetFilterSettingsChangedPayload;
+    readonly payload: IDashboardInsightWidgetFilterSettingsChangedPayload;
 }
 
 export function insightWidgetFilterSettingsChanged(
@@ -186,7 +187,7 @@ export function insightWidgetFilterSettingsChanged(
     dateDatasetForFiltering: ICatalogDateDataset | undefined,
     correlationId?: string,
     ignoredDateFilters?: IDashboardDateFilter[],
-): DashboardInsightWidgetFilterSettingsChanged {
+): IDashboardInsightWidgetFilterSettingsChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
         ctx,
@@ -201,13 +202,13 @@ export function insightWidgetFilterSettingsChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetFilterSettingsChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetFilterSettingsChanged}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardInsightWidgetFilterSettingsChanged =
-    eventGuard<DashboardInsightWidgetFilterSettingsChanged>(
+    eventGuard<IDashboardInsightWidgetFilterSettingsChanged>(
         "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
     );
 
@@ -216,10 +217,10 @@ export const isDashboardInsightWidgetFilterSettingsChanged =
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetVisPropertiesChanged} event.
+ * Payload of the {@link IDashboardInsightWidgetVisPropertiesChanged} event.
  * @beta
  */
-export interface DashboardInsightWidgetVisPropertiesChangedPayload {
+export interface IDashboardInsightWidgetVisPropertiesChangedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -240,13 +241,13 @@ export interface DashboardInsightWidgetVisPropertiesChangedPayload {
  * This event is emitted when the insight widget's visualization properties change.
  *
  * The properties specified influence how the insight rendered in the widget appears visually (legend, tooltips,
- * axes, etc)
+ * axes, etc.)
  *
  * @beta
  */
-export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEvent {
+export interface IDashboardInsightWidgetVisPropertiesChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED";
-    readonly payload: DashboardInsightWidgetVisPropertiesChangedPayload;
+    readonly payload: IDashboardInsightWidgetVisPropertiesChangedPayload;
 }
 
 export function insightWidgetVisPropertiesChanged(
@@ -254,7 +255,7 @@ export function insightWidgetVisPropertiesChanged(
     ref: ObjRef,
     properties: VisualizationProperties | undefined,
     correlationId?: string,
-): DashboardInsightWidgetVisPropertiesChanged {
+): IDashboardInsightWidgetVisPropertiesChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED",
         ctx,
@@ -267,23 +268,23 @@ export function insightWidgetVisPropertiesChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetVisPropertiesChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetVisPropertiesChanged}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardInsightWidgetVisPropertiesChanged =
-    eventGuard<DashboardInsightWidgetVisPropertiesChanged>("GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED");
+    eventGuard<IDashboardInsightWidgetVisPropertiesChanged>("GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED");
 
 //
 //
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetVisPropertiesChanged} event.
+ * Payload of the {@link IDashboardInsightWidgetVisPropertiesChanged} event.
  * @beta
  */
-export interface DashboardInsightWidgetVisConfigurationChangedPayload {
+export interface IDashboardInsightWidgetVisConfigurationChangedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -311,9 +312,9 @@ export interface DashboardInsightWidgetVisConfigurationChangedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetVisConfigurationChanged extends IDashboardEvent {
+export interface IDashboardInsightWidgetVisConfigurationChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED";
-    readonly payload: DashboardInsightWidgetVisConfigurationChangedPayload;
+    readonly payload: IDashboardInsightWidgetVisConfigurationChangedPayload;
 }
 
 export function insightWidgetVisConfigurationChanged(
@@ -322,7 +323,7 @@ export function insightWidgetVisConfigurationChanged(
     newConfig: IInsightWidgetConfiguration | undefined,
     oldConfig: IInsightWidgetConfiguration | undefined,
     correlationId?: string,
-): DashboardInsightWidgetVisConfigurationChanged {
+): IDashboardInsightWidgetVisConfigurationChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED",
         ctx,
@@ -336,13 +337,13 @@ export function insightWidgetVisConfigurationChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetVisConfigurationChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetVisConfigurationChanged}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardInsightWidgetVisConfigurationChanged =
-    eventGuard<DashboardInsightWidgetVisConfigurationChanged>(
+    eventGuard<IDashboardInsightWidgetVisConfigurationChanged>(
         "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED",
     );
 
@@ -351,10 +352,10 @@ export const isDashboardInsightWidgetVisConfigurationChanged =
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetInsightSwitched} event.
+ * Payload of the {@link IDashboardInsightWidgetInsightSwitched} event.
  * @beta
  */
-export interface DashboardInsightWidgetInsightSwitchedPayload {
+export interface IDashboardInsightWidgetInsightSwitchedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -373,9 +374,9 @@ export interface DashboardInsightWidgetInsightSwitchedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetInsightSwitched extends IDashboardEvent {
+export interface IDashboardInsightWidgetInsightSwitched extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED";
-    readonly payload: DashboardInsightWidgetInsightSwitchedPayload;
+    readonly payload: IDashboardInsightWidgetInsightSwitchedPayload;
 }
 
 export function insightWidgetInsightChanged(
@@ -383,7 +384,7 @@ export function insightWidgetInsightChanged(
     ref: ObjRef,
     insight: IInsight,
     correlationId?: string,
-): DashboardInsightWidgetInsightSwitched {
+): IDashboardInsightWidgetInsightSwitched {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED",
         ctx,
@@ -396,12 +397,12 @@ export function insightWidgetInsightChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetInsightSwitched}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetInsightSwitched}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetInsightSwitched = eventGuard<DashboardInsightWidgetInsightSwitched>(
+export const isDashboardInsightWidgetInsightSwitched = eventGuard<IDashboardInsightWidgetInsightSwitched>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED",
 );
 
@@ -410,10 +411,10 @@ export const isDashboardInsightWidgetInsightSwitched = eventGuard<DashboardInsig
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetDrillsModified} event.
+ * Payload of the {@link IDashboardInsightWidgetDrillsModified} event.
  * @beta
  */
-export interface DashboardInsightWidgetDrillsModifiedPayload {
+export interface IDashboardInsightWidgetDrillsModifiedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -438,9 +439,9 @@ export interface DashboardInsightWidgetDrillsModifiedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetDrillsModified extends IDashboardEvent {
+export interface IDashboardInsightWidgetDrillsModified extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED";
-    readonly payload: DashboardInsightWidgetDrillsModifiedPayload;
+    readonly payload: IDashboardInsightWidgetDrillsModifiedPayload;
 }
 
 export function insightWidgetDrillsModified(
@@ -449,7 +450,7 @@ export function insightWidgetDrillsModified(
     added: DrillDefinition[],
     updated: DrillDefinition[],
     correlationId?: string,
-): DashboardInsightWidgetDrillsModified {
+): IDashboardInsightWidgetDrillsModified {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
         ctx,
@@ -463,12 +464,12 @@ export function insightWidgetDrillsModified(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetDrillsModified}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetDrillsModified}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetDrillsModified = eventGuard<DashboardInsightWidgetDrillsModified>(
+export const isDashboardInsightWidgetDrillsModified = eventGuard<IDashboardInsightWidgetDrillsModified>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
 );
 
@@ -477,10 +478,10 @@ export const isDashboardInsightWidgetDrillsModified = eventGuard<DashboardInsigh
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetDrillsRemoved} event.
+ * Payload of the {@link IDashboardInsightWidgetDrillsRemoved} event.
  * @beta
  */
-export interface DashboardInsightWidgetDrillsRemovedPayload {
+export interface IDashboardInsightWidgetDrillsRemovedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -498,9 +499,9 @@ export interface DashboardInsightWidgetDrillsRemovedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetDrillsRemoved extends IDashboardEvent {
+export interface IDashboardInsightWidgetDrillsRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED";
-    readonly payload: DashboardInsightWidgetDrillsRemovedPayload;
+    readonly payload: IDashboardInsightWidgetDrillsRemovedPayload;
 }
 
 export function insightWidgetDrillsRemoved(
@@ -508,7 +509,7 @@ export function insightWidgetDrillsRemoved(
     ref: ObjRef,
     removed: DrillDefinition[],
     correlationId?: string,
-): DashboardInsightWidgetDrillsRemoved {
+): IDashboardInsightWidgetDrillsRemoved {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
         ctx,
@@ -521,12 +522,12 @@ export function insightWidgetDrillsRemoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetDrillsRemoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetDrillsRemoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetDrillsRemoved = eventGuard<DashboardInsightWidgetDrillsRemoved>(
+export const isDashboardInsightWidgetDrillsRemoved = eventGuard<IDashboardInsightWidgetDrillsRemoved>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
 );
 
@@ -537,7 +538,7 @@ export const isDashboardInsightWidgetDrillsRemoved = eventGuard<DashboardInsight
 /**
  * @alpha
  */
-export interface DashboardInsightWidgetDrillDownRemovedPayload {
+export interface IDashboardInsightWidgetDrillDownRemovedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -552,9 +553,9 @@ export interface DashboardInsightWidgetDrillDownRemovedPayload {
 /**
  * @alpha
  */
-export interface DashboardInsightWidgetDrillDownRemoved extends IDashboardEvent {
+export interface IDashboardInsightWidgetDrillDownRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_REMOVED";
-    readonly payload: DashboardInsightWidgetDrillDownRemovedPayload;
+    readonly payload: IDashboardInsightWidgetDrillDownRemovedPayload;
 }
 
 /**
@@ -565,7 +566,7 @@ export function insightWidgetDrillDownRemoved(
     ref: ObjRef,
     removed: IDrillDownReference[],
     correlationId?: string,
-): DashboardInsightWidgetDrillDownRemoved {
+): IDashboardInsightWidgetDrillDownRemoved {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_REMOVED",
         ctx,
@@ -584,7 +585,7 @@ export function insightWidgetDrillDownRemoved(
 /**
  * @alpha
  */
-export interface DashboardInsightWidgetDrillDownAddedPayload {
+export interface IDashboardInsightWidgetDrillDownAddedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -604,9 +605,9 @@ export interface DashboardInsightWidgetDrillDownAddedPayload {
 /**
  * @alpha
  */
-export interface DashboardInsightWidgetDrillDownAdded extends IDashboardEvent {
+export interface IDashboardInsightWidgetDrillDownAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_ADDED";
-    readonly payload: DashboardInsightWidgetDrillDownAddedPayload;
+    readonly payload: IDashboardInsightWidgetDrillDownAddedPayload;
 }
 
 /**
@@ -618,7 +619,7 @@ export function insightWidgetDrillDownAdded(
     attributeHierarchyRef: ObjRef,
     attribute: ObjRef,
     correlationId?: string,
-): DashboardInsightWidgetDrillDownAdded {
+): IDashboardInsightWidgetDrillDownAdded {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_ADDED",
         ctx,
@@ -638,7 +639,7 @@ export function insightWidgetDrillDownAdded(
 /**
  * @alpha
  */
-export interface DashboardInsightWidgetDrillDownModifiedPayload {
+export interface IDashboardInsightWidgetDrillDownModifiedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -656,9 +657,9 @@ export interface DashboardInsightWidgetDrillDownModifiedPayload {
  *
  * @alpha
  */
-export interface DashboardInsightWidgetDrillDownModified extends IDashboardEvent {
+export interface IDashboardInsightWidgetDrillDownModified extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_MODIFIED";
-    readonly payload: DashboardInsightWidgetDrillDownModifiedPayload;
+    readonly payload: IDashboardInsightWidgetDrillDownModifiedPayload;
 }
 
 export function insightWidgetDrillDownModified(
@@ -666,7 +667,7 @@ export function insightWidgetDrillDownModified(
     ref: ObjRef,
     updated: IDrillDownReference[],
     correlationId?: string,
-): DashboardInsightWidgetDrillDownModified {
+): IDashboardInsightWidgetDrillDownModified {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_MODIFIED",
         ctx,
@@ -687,14 +688,14 @@ export function insightWidgetDrillDownModified(
  *
  * @beta
  */
-export interface AttributeHierarchyModifiedEvent extends IDashboardEvent {
+export interface IAttributeHierarchyModifiedEvent extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ATTRIBUTE_HIERARCHY_MODIFIED";
 }
 
 export function attributeHierarchyModifiedEvent(
     ctx: DashboardContext,
     correlationId?: string,
-): AttributeHierarchyModifiedEvent {
+): IAttributeHierarchyModifiedEvent {
     return {
         type: "GDC.DASH/EVT.ATTRIBUTE_HIERARCHY_MODIFIED",
         ctx,
@@ -707,10 +708,10 @@ export function attributeHierarchyModifiedEvent(
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetChanged} event.
+ * Payload of the {@link IDashboardInsightWidgetChanged} event.
  * @beta
  */
-export interface DashboardInsightWidgetChangedPayload {
+export interface IDashboardInsightWidgetChangedPayload {
     /**
      * The entire definition of the insight widget after the change.
      */
@@ -723,16 +724,16 @@ export interface DashboardInsightWidgetChangedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetChanged extends IDashboardEvent {
+export interface IDashboardInsightWidgetChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED";
-    readonly payload: DashboardInsightWidgetChangedPayload;
+    readonly payload: IDashboardInsightWidgetChangedPayload;
 }
 
 export function insightWidgetChanged(
     ctx: DashboardContext,
     insightWidget: IInsightWidget | IInsightWidgetDefinition,
     correlationId?: string,
-): DashboardInsightWidgetChanged {
+): IDashboardInsightWidgetChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED",
         ctx,
@@ -744,12 +745,12 @@ export function insightWidgetChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetChanged = eventGuard<DashboardInsightWidgetChanged>(
+export const isDashboardInsightWidgetChanged = eventGuard<IDashboardInsightWidgetChanged>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED",
 );
 
@@ -758,10 +759,10 @@ export const isDashboardInsightWidgetChanged = eventGuard<DashboardInsightWidget
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetExportRequested} event.
+ * Payload of the {@link IDashboardInsightWidgetExportRequested} event.
  * @beta
  */
-export interface DashboardInsightWidgetExportRequestedPayload {
+export interface IDashboardInsightWidgetExportRequestedPayload {
     /**
      * Reference to the Insight to be exported.
      */
@@ -777,9 +778,9 @@ export interface DashboardInsightWidgetExportRequestedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetExportRequested extends IDashboardEvent {
+export interface IDashboardInsightWidgetExportRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED";
-    readonly payload: DashboardInsightWidgetExportRequestedPayload;
+    readonly payload: IDashboardInsightWidgetExportRequestedPayload;
 }
 
 /**
@@ -790,7 +791,7 @@ export function insightWidgetExportRequested(
     ref: ObjRef,
     config: IExportConfig,
     correlationId?: string,
-): DashboardInsightWidgetExportRequested {
+): IDashboardInsightWidgetExportRequested {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED",
         ctx,
@@ -803,12 +804,12 @@ export function insightWidgetExportRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExportRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetExportRequested}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetExportRequested = eventGuard<DashboardInsightWidgetExportRequested>(
+export const isDashboardInsightWidgetExportRequested = eventGuard<IDashboardInsightWidgetExportRequested>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED",
 );
 
@@ -817,10 +818,10 @@ export const isDashboardInsightWidgetExportRequested = eventGuard<DashboardInsig
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetExportResolved} event.
+ * Payload of the {@link IDashboardInsightWidgetExportResolved} event.
  * @beta
  */
-export interface DashboardInsightWidgetExportResolvedPayload {
+export interface IDashboardInsightWidgetExportResolvedPayload {
     /**
      * URI of the resulting file that can be used to download it.
      */
@@ -836,9 +837,9 @@ export interface DashboardInsightWidgetExportResolvedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetExportResolved extends IDashboardEvent {
+export interface IDashboardInsightWidgetExportResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED";
-    readonly payload: DashboardInsightWidgetExportResolvedPayload;
+    readonly payload: IDashboardInsightWidgetExportResolvedPayload;
 }
 
 /**
@@ -848,7 +849,7 @@ export function insightWidgetExportResolved(
     ctx: DashboardContext,
     result: IExportResult,
     correlationId?: string,
-): DashboardInsightWidgetExportResolved {
+): IDashboardInsightWidgetExportResolved {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED",
         ctx,
@@ -861,12 +862,12 @@ export function insightWidgetExportResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetExportResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetExportResolved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetExportResolved = eventGuard<DashboardInsightWidgetExportResolved>(
+export const isDashboardInsightWidgetExportResolved = eventGuard<IDashboardInsightWidgetExportResolved>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED",
 );
 
@@ -875,10 +876,10 @@ export const isDashboardInsightWidgetExportResolved = eventGuard<DashboardInsigh
 //
 
 /**
- * Payload of the {@link DashboardInsightWidgetRefreshed} event.
+ * Payload of the {@link IDashboardInsightWidgetRefreshed} event.
  * @beta
  */
-export interface DashboardInsightWidgetRefreshedPayload {
+export interface IDashboardInsightWidgetRefreshedPayload {
     /**
      * The new value of the insight.
      */
@@ -890,9 +891,9 @@ export interface DashboardInsightWidgetRefreshedPayload {
  *
  * @beta
  */
-export interface DashboardInsightWidgetRefreshed extends IDashboardEvent {
+export interface IDashboardInsightWidgetRefreshed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED";
-    readonly payload: DashboardInsightWidgetRefreshedPayload;
+    readonly payload: IDashboardInsightWidgetRefreshedPayload;
 }
 
 /**
@@ -902,7 +903,7 @@ export function insightWidgetRefreshed(
     ctx: DashboardContext,
     insight: IInsight,
     correlationId?: string,
-): DashboardInsightWidgetRefreshed {
+): IDashboardInsightWidgetRefreshed {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED",
         ctx,
@@ -914,20 +915,20 @@ export function insightWidgetRefreshed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetRefreshed}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetRefreshed}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardInsightWidgetRefreshed = eventGuard<DashboardInsightWidgetRefreshed>(
+export const isDashboardInsightWidgetRefreshed = eventGuard<IDashboardInsightWidgetRefreshed>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED",
 );
 
 /**
- * Payload of the {@link DashboardInsightWidgetIgnoreCrossFilteringChanged} event.
+ * Payload of the {@link IDashboardInsightWidgetIgnoreCrossFilteringChanged} event.
  * @alpha
  */
-export interface DashboardInsightWidgetIgnoreCrossFilteringChangedPayload {
+export interface IDashboardInsightWidgetIgnoreCrossFilteringChangedPayload {
     /**
      * Reference to Insight Widget that was changed.
      */
@@ -940,15 +941,15 @@ export interface DashboardInsightWidgetIgnoreCrossFilteringChangedPayload {
 }
 
 /**
- * This event is emitted when the insight widget's ignore cross-filters setting changes.
+ * This event is emitted when the insight widgets ignore cross-filters setting changes.
  *
  * The configuration specified influence how the insight is filtered
  *
  * @alpha
  */
-export interface DashboardInsightWidgetIgnoreCrossFilteringChanged extends IDashboardEvent {
+export interface IDashboardInsightWidgetIgnoreCrossFilteringChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.IGNORE_CROSS_FILTERING_CHANGED";
-    readonly payload: DashboardInsightWidgetIgnoreCrossFilteringChangedPayload;
+    readonly payload: IDashboardInsightWidgetIgnoreCrossFilteringChangedPayload;
 }
 
 export function insightWidgetIgnoreCrossFilteringChanged(
@@ -956,7 +957,7 @@ export function insightWidgetIgnoreCrossFilteringChanged(
     ref: ObjRef,
     ignoreCrossFiltering: boolean,
     correlationId?: string,
-): DashboardInsightWidgetIgnoreCrossFilteringChanged {
+): IDashboardInsightWidgetIgnoreCrossFilteringChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.IGNORE_CROSS_FILTERING_CHANGED",
         ctx,

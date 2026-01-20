@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
-    type DashboardCommandFailed,
-    type DashboardDrillResolved,
-    type Drill,
+    type IDashboardCommandFailed,
+    type IDashboardDrillResolved,
+    type IDrill,
     drill,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";
@@ -11,16 +11,16 @@ import {
 /**
  * @internal
  */
-export interface UseDrillProps {
-    onSuccess?: (event: DashboardDrillResolved) => void;
-    onError?: (event: DashboardCommandFailed<Drill>) => void;
-    onBeforeRun?: (cmd: Drill) => void;
+export interface IUseDrillProps {
+    onSuccess?: (event: IDashboardDrillResolved) => void;
+    onError?: (event: IDashboardCommandFailed<IDrill>) => void;
+    onBeforeRun?: (cmd: IDrill) => void;
 }
 
 /**
  * @internal
  */
-export const useDrill = ({ onSuccess, onError, onBeforeRun }: UseDrillProps = {}) => {
+export const useDrill = ({ onSuccess, onError, onBeforeRun }: IUseDrillProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drill,
         successEvent: "GDC.DASH/EVT.DRILL.RESOLVED",

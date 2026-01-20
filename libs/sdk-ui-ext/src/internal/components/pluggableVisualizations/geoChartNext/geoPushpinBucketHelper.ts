@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IInsightDefinition,
@@ -27,6 +27,25 @@ import {
     removeAllDerivedMeasures,
     removeShowOnSecondaryAxis,
 } from "../../../utils/bucketHelper.js";
+
+const GEO_PIN_LATITUDE_DISPLAY_FORM_TYPE = "GDC.geo.pin_latitude";
+const GEO_PIN_LONGITUDE_DISPLAY_FORM_TYPE = "GDC.geo.pin_longitude";
+
+function isPushpinLocationCapable(item: IBucketItem): boolean {
+    // Prefer strict detection when display forms are available (prevents treating area-only attrs as location).
+    if (item.displayForms?.length) {
+        const hasLatitude = item.displayForms.some(
+            (displayForm) => displayForm.type === GEO_PIN_LATITUDE_DISPLAY_FORM_TYPE,
+        );
+        const hasLongitude = item.displayForms.some(
+            (displayForm) => displayForm.type === GEO_PIN_LONGITUDE_DISPLAY_FORM_TYPE,
+        );
+        return hasLatitude && hasLongitude;
+    }
+
+    // Backward-compatible fallback used by existing reference point mocks / older enrichment paths.
+    return Boolean(item.locationDisplayFormRef);
+}
 
 /**
  * Distributes measures between SIZE and COLOR buckets based on user preferences.
@@ -121,10 +140,12 @@ export function createConfiguredBuckets(
     colorMeasures: IBucketItem[],
     uiConfig: IUiConfig,
 ): IBucketOfFun[] {
+    const locationItems = getLocationItems(buckets, uiConfig);
+
     return [
         {
             localIdentifier: BucketNames.LOCATION,
-            items: getLocationItems(buckets, uiConfig),
+            items: locationItems,
         },
         {
             localIdentifier: BucketNames.SIZE,
@@ -136,13 +157,13 @@ export function createConfiguredBuckets(
         },
         {
             localIdentifier: BucketNames.SEGMENT,
-            items: getSegmentItems(buckets),
+            items: getSegmentItems(buckets, locationItems.length > 0),
         },
     ];
 }
 
 /**
- * Extracts location attribute items from buckets. Only attributes with locationDisplayFormRef are valid.
+ * Extracts location attribute items from buckets.
  *
  * @param buckets - All buckets from the reference point
  * @param uiConfig - UI configuration containing bucket item limits
@@ -154,7 +175,7 @@ export function getLocationItems(buckets: IBucketOfFun[], uiConfig: IUiConfig): 
         buckets,
         [BucketNames.ATTRIBUTE, BucketNames.VIEW, BucketNames.LOCATION, BucketNames.TREND],
         [ATTRIBUTE],
-    ).filter((bucketItem) => Boolean(bucketItem.locationDisplayFormRef));
+    ).filter(isPushpinLocationCapable);
 
     const limit = uiConfig.buckets[BucketNames.LOCATION].itemsLimit;
     return locationItems.slice(0, limit);
@@ -168,15 +189,26 @@ export function getLocationItems(buckets: IBucketOfFun[], uiConfig: IUiConfig): 
  * @returns Filtered segment items (max 1)
  * @internal
  */
-export function getSegmentItems(buckets: IBucketOfFun[]): IBucketItem[] {
+export function getSegmentItems(buckets: IBucketOfFun[], hasLocation: boolean): IBucketItem[] {
     const segmentItems = getPreferredBucketItems(buckets, [BucketNames.SEGMENT], [ATTRIBUTE]);
-    const attributeItems = getAttributeItemsWithoutStacks(buckets).filter(
-        (item: IBucketItem) =>
-            // Exclude location attributes (those with locationDisplayFormRef)
-            !item.locationDisplayFormRef &&
-            (getItemsCount(buckets, BucketNames.LOCATION) === 0 || !isDateBucketItem(item)),
-    );
-    return (segmentItems.length > 0 ? segmentItems : attributeItems).slice(0, 1);
+
+    // Align with legacy pushpin behavior:
+    // - never infer SEGMENT when there is no valid location selected
+    // - keep explicit user SEGMENT selection (if any)
+    if (!hasLocation) {
+        return segmentItems.slice(0, 1);
+    }
+
+    // Legacy pushpin can infer a segment when there are multiple attributes present and location is set.
+    const nonSegmentAttributes = getAttributeItemsWithoutStacks(buckets);
+    if (nonSegmentAttributes.length > 1 && segmentItems.length === 0) {
+        return nonSegmentAttributes
+            .filter((item: IBucketItem) => !isPushpinLocationCapable(item))
+            .filter((item: IBucketItem) => !isDateBucketItem(item))
+            .slice(0, 1);
+    }
+
+    return segmentItems.slice(0, 1);
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -7,16 +7,16 @@ import { type KpiDrillDefinition } from "@gooddata/sdk-model";
 
 import { validateKpiDrill } from "./validation/kpiDrillValidation.js";
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type SetDrillForKpiWidget } from "../../commands/index.js";
-import { type DashboardKpiWidgetDrillSet, kpiWidgetDrillSet } from "../../events/kpi.js";
+import { type ISetDrillForKpiWidget } from "../../commands/index.js";
+import { type IDashboardKpiWidgetDrillSet, kpiWidgetDrillSet } from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* setDrillForKpiWidgetHandler(
     ctx: DashboardContext,
-    cmd: SetDrillForKpiWidget,
-): SagaIterator<DashboardKpiWidgetDrillSet> {
+    cmd: ISetDrillForKpiWidget,
+): SagaIterator<IDashboardKpiWidgetDrillSet> {
     const { correlationId } = cmd;
     const { legacyDashboardTabIdentifier, legacyDashboardRef } = cmd.payload;
 

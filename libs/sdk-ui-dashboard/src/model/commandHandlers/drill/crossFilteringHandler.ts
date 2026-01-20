@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
-import { type CrossFiltering } from "../../commands/drill.js";
+import { type ICrossFiltering } from "../../commands/drill.js";
 import {
     addAttributeFilter,
     changeAttributeFilterSelection,
@@ -88,9 +88,9 @@ function shouldUpdateExistingFiltering(
     }
 
     // Intersection may have multiple lengths in pivot table so we need to make sure that when we are updating existing
-    // cross-filtering, the intersection length has to be larger or the same than the current virtual filters length.
-    // Otherwise we would want the cross-filtering to be reset together with all virtual filters.
-    if (crossFilteringItemByWidget!.filterLocalIdentifiers.length > drillIntersectionFilters.length) {
+    // cross-filtering, the intersection length has to be larger or the same as the current virtual filters length.
+    // Otherwise, we would want the cross-filtering to be reset together with all virtual filters.
+    if (crossFilteringItemByWidget.filterLocalIdentifiers.length > drillIntersectionFilters.length) {
         return false;
     }
 
@@ -124,7 +124,7 @@ function createVirtualFilter(
     };
 }
 
-export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
+export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFiltering) {
     yield put(
         crossFilteringRequested(ctx, cmd.payload.drillDefinition, cmd.payload.drillEvent, cmd.correlationId),
     );

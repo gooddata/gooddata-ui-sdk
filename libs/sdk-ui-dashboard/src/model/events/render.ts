@@ -1,7 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
-import { type RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
+import { type IRenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
@@ -10,9 +11,9 @@ import { type DashboardContext } from "../types/commonTypes.js";
  *
  * @public
  */
-export interface DashboardRenderRequested extends IDashboardEvent {
+export type DashboardRenderRequested = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.RENDER.REQUESTED";
-}
+};
 
 /**
  * @public
@@ -43,19 +44,19 @@ export const isDashboardRenderRequested = eventGuard<DashboardRenderRequested>(
  * Payload of the {@link DashboardAsyncRenderRequested} event.
  * @public
  */
-export interface DashboardAsyncRenderRequestedPayload {
+export type DashboardAsyncRenderRequestedPayload = {
     /**
      * Item identifier.
      */
     readonly id: string;
-}
+};
 
 /**
  * This event is emitted when a component on the dashboard requests async rendering.
  *
  * @public
  */
-export interface DashboardAsyncRenderRequested extends IDashboardEvent {
+export type DashboardAsyncRenderRequested = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED";
     readonly payload: {
         /**
@@ -63,7 +64,7 @@ export interface DashboardAsyncRenderRequested extends IDashboardEvent {
          */
         readonly id: string;
     };
-}
+};
 
 /**
  * @public
@@ -101,22 +102,22 @@ export const isDashboardAsyncRenderRequested = eventGuard<DashboardAsyncRenderRe
  * Payload of the {@link DashboardAsyncRenderResolved} event.
  * @public
  */
-export interface DashboardAsyncRenderResolvedPayload {
+export type DashboardAsyncRenderResolvedPayload = {
     /**
      * Item identifier.
      */
     readonly id: string;
-}
+};
 
 /**
  * This event is emitted when a component on the dashboard resolves async rendering.
  *
  * @public
  */
-export interface DashboardAsyncRenderResolved extends IDashboardEvent {
+export type DashboardAsyncRenderResolved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED";
     readonly payload: DashboardAsyncRenderResolvedPayload;
-}
+};
 
 /**
  * @public
@@ -153,12 +154,12 @@ export const isDashboardAsyncRenderResolved = eventGuard<DashboardAsyncRenderRes
 /**
  * @public
  */
-export interface DashboardRenderResolved extends IDashboardEvent {
+export type DashboardRenderResolved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.RENDER.RESOLVED";
     readonly payload?: {
-        config: Omit<RenderingWorkerConfiguration, "correlationIdGenerator">;
+        config: Omit<IRenderingWorkerConfiguration, "correlationIdGenerator">;
     };
-}
+};
 
 /**
  * This event is emitted as soon as the dashboard component is fully rendered,
@@ -182,7 +183,7 @@ export function renderResolved(ctx: DashboardContext, correlationId?: string): D
  */
 export function renderResolvedWithDetails(
     ctx: DashboardContext,
-    config: Omit<RenderingWorkerConfiguration, "correlationIdGenerator">,
+    config: Omit<IRenderingWorkerConfiguration, "correlationIdGenerator">,
     correlationId?: string,
 ): DashboardRenderResolved {
     return {

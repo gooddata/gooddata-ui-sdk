@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type IDashboardLayout,
     type IDashboardLayoutItem,
@@ -9,7 +10,6 @@ import {
     type DashboardDispatch,
     type DashboardEventHandler,
     type DashboardEventHandlerFn,
-    type DashboardEventType,
     type DashboardEvents,
     type DashboardState,
     type ExtendedDashboardWidget,
@@ -300,13 +300,13 @@ export type ExportLayoutCustomizationFn = <TWidget>(
  */
 export type SectionSlidesTransformer<TWidget> = (
     section: IDashboardLayoutSection<TWidget>,
-    fn: SectionSlidesTransformerFunction<TWidget>,
+    fn: ISectionSlidesTransformerFunction<TWidget>,
 ) => IDashboardLayoutSection<TWidget>[] | undefined;
 
 /**
  * @alpha
  */
-export interface SectionSlidesTransformerFunction<TWidget> {
+export interface ISectionSlidesTransformerFunction<TWidget> {
     /**
      * Default transformer for the section. This is used as default transformation method for the section in
      * case that no plugin override it. Can be used to provide default transformation for the section in custom
@@ -1333,7 +1333,7 @@ export interface IDashboardEventHandling {
      * @param callback - function to call when the event occurs
      */
     addEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(
-        eventType: DashboardEventType | string | "*",
+        eventType: string,
         callback: DashboardEventHandlerFn<TEvents>,
     ): IDashboardEventHandling;
 
@@ -1352,7 +1352,7 @@ export interface IDashboardEventHandling {
      * @returns self, for call chaining sakes
      */
     removeEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(
-        eventType: DashboardEventType | string | "*",
+        eventType: string,
         callback: DashboardEventHandlerFn<TEvents>,
     ): IDashboardEventHandling;
 

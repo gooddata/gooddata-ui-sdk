@@ -51,7 +51,7 @@ function LandingQuestionComponent({
                     {icon}
                 </span>
             ) : null}
-            {title}
+            <span className="gd-gen-ai-chat__messages__empty__text">{title}</span>
         </Button>
     );
 }

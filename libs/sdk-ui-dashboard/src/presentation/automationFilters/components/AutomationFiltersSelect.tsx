@@ -798,7 +798,7 @@ function ButtonDisabledFocusableWrapper({
             aria-disabled
             role="button"
             aria-label={ariaLabel}
-            ref={(element) => onRefSet(element as HTMLDivElement | null)}
+            ref={(element) => onRefSet(element)}
             onKeyDown={(e) => {
                 if (isActionKey(e)) {
                     e.stopPropagation();

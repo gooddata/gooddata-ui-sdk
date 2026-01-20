@@ -1,15 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
-export interface DateHeadlineProps {
+export interface IDateHeadlineProps {
     when: string;
     amount: string;
 }
 
-export function DateHeadline({ when, amount }: DateHeadlineProps) {
+export function DateHeadline({ when, amount }: IDateHeadlineProps) {
     return (
         <div className={cx("gd-kda-headline-date")}>
             <UiIcon type="date" size={14} color="primary" />

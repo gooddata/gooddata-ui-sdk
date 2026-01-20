@@ -24,17 +24,19 @@ export function ChipContent({
 }: IChipContentProps) {
     const { isExpanded, popupId, popupType, ariaHaspopup, ariaLabel, ariaLabelledBy, ariaControls } =
         accessibilityConfig ?? {};
-    const ariaDropdownProps = {
-        ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
-        ...(!popupId && isExpanded && ariaControls ? { "aria-controls": ariaControls } : {}),
-        ...(popupId ? { "aria-haspopup": popupType ?? ariaHaspopup ?? !!popupId } : {}),
-        ...(isExpanded === undefined ? {} : { "aria-expanded": isExpanded }),
-    };
+    const isDropdownTrigger = isExpandable || isExpanded !== undefined || popupId !== undefined;
+    const ariaDropdownProps = isDropdownTrigger
+        ? {
+              ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
+              ...(!popupId && isExpanded && ariaControls ? { "aria-controls": ariaControls } : {}),
+              ...(popupId ? { "aria-haspopup": popupType ?? ariaHaspopup ?? !!popupId } : {}),
+              ...(isExpanded === undefined ? { "aria-expanded": isActive } : { "aria-expanded": isExpanded }),
+          }
+        : {};
 
     return (
         <button
             data-testid={dataTestId}
-            aria-expanded={isActive}
             className={e("trigger", { isDeletable, isActive, isLocked: isLocked || isDisabled })}
             disabled={isDisabled}
             onClick={isLocked ? undefined : onClick}

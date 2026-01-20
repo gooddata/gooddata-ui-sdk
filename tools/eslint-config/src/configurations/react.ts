@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -9,7 +9,7 @@ export const react: IConfiguration<"react"> = {
             version: "7.37.5",
         },
     ],
-    plugin: "react",
+    plugins: ["react"],
     rules: {
         "react/no-danger": "error",
         "react/prop-types": "off",

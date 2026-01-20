@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { type IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
@@ -7,8 +8,8 @@ import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSize
 import { serializeLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
-    type ChangeInsightWidgetFilterSettings,
-    type DashboardCommandFailed,
+    type IChangeInsightWidgetFilterSettings,
+    type IDashboardCommandFailed,
     addNestedLayoutSectionItem,
     dispatchAndWaitFor,
     enableInsightWidgetDateFilter,
@@ -34,7 +35,7 @@ export function useInsightListItemDropHandler(layoutPath: ILayoutItemPath) {
         onSuccess: (event) => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
         },
-        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
+        onError: (event: IDashboardCommandFailed<IChangeInsightWidgetFilterSettings>) => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
         },
     });
@@ -59,7 +60,7 @@ export function useInsightListItemDropHandler(layoutPath: ILayoutItemPath) {
             const defaultItemSize = getSizeInfo(settings, "insight", insight);
             const itemSize = updateWidgetDefaultSizeByParent(defaultItemSize);
 
-            dispatchAndWaitFor(
+            void dispatchAndWaitFor(
                 dispatch,
                 addNestedLayoutSectionItem(
                     layoutPath,

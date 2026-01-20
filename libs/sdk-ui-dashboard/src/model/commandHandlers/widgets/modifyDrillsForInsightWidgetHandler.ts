@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -10,9 +10,9 @@ import {
 } from "./validation/insightDrillDefinitionUtils.js";
 import { getValidationData, validateDrillDefinition } from "./validation/insightDrillDefinitionValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type ModifyDrillsForInsightWidget } from "../../commands/index.js";
+import { type IModifyDrillsForInsightWidget } from "../../commands/index.js";
 import {
-    type DashboardInsightWidgetDrillsModified,
+    type IDashboardInsightWidgetDrillsModified,
     insightWidgetDrillsModified,
 } from "../../events/insight.js";
 import { insightsActions } from "../../store/insights/index.js";
@@ -24,8 +24,8 @@ import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomU
 
 export function* modifyDrillsForInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: ModifyDrillsForInsightWidget,
-): SagaIterator<DashboardInsightWidgetDrillsModified> {
+    cmd: IModifyDrillsForInsightWidget,
+): SagaIterator<IDashboardInsightWidgetDrillsModified> {
     const {
         payload: { drills: drillsToModify = [], blacklistHierarchiesToUpdate = [] },
         correlationId,

@@ -8,7 +8,6 @@ import {
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import {
-    type IAttribute,
     type IFilter,
     type IInsightDefinition,
     bucketAttribute,
@@ -19,9 +18,8 @@ import {
     insightHasDataDefined,
     insightLayers,
     insightTitle,
-    newAttribute,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, GeoAreaMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     GeoChartNextInternal,
     type IGeoAreaChartConfig,
@@ -36,7 +34,6 @@ import {
     createAreaConfiguredBuckets,
     createAreaSortForSegment,
     getAreaItems,
-    getAreaTooltipText,
     getColorMeasures,
     getSegmentItems,
     hasAreaMinimumData,
@@ -48,7 +45,6 @@ import { GEOAREA_SUPPORTED_PROPERTIES } from "../../../constants/supportedProper
 import { GEO_AREA_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
     EmptyAfmSdkError,
-    type IBucketItem,
     type IExtendedReferencePoint,
     type IReferencePoint,
     type IUiConfig,
@@ -63,7 +59,6 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { createAttributeRef } from "../geoChartNext/geoAttributeHelper.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartNextInternal>[0];
 
@@ -113,11 +108,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                 );
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
-                const tooltipText = this.visualizationProperties?.controls?.["tooltipText"] as
-                    | string
-                    | undefined;
-                const withTooltip = this.applyTooltipProperty(newReferencePoint, tooltipText);
-                return { ...withTooltip, filters: originalFilters };
+                return { ...newReferencePoint, filters: originalFilters };
             });
     }
 
@@ -139,10 +130,9 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         const buckets = limitNumberOfMeasuresInBuckets(sanitized.buckets, NUMBER_MEASURES_IN_BUCKETS_LIMIT);
 
         const uiConfig = this.getUiConfig();
-        const areaItems = getAreaItems(buckets, uiConfig);
-        const tooltipText = this.resolveTooltipText(areaItems[0]);
         const segmentItems = getSegmentItems(buckets);
         const colorMeasures = getColorMeasures(buckets);
+        const areaItems = getAreaItems(buckets, uiConfig);
         const configuredBuckets = createAreaConfiguredBuckets(
             buckets,
             areaItems,
@@ -152,10 +142,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         );
 
         set(sanitized, BUCKETS, configuredBuckets);
-
-        this.updateTooltipVisualizationProperties(tooltipText);
-
-        return this.applyTooltipProperty(sanitized, tooltipText);
+        return sanitized;
     }
 
     /**
@@ -168,7 +155,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
         const buckets = insightBuckets(insight);
         if (!hasAreaMinimumData(buckets)) {
-            throw new EmptyAfmSdkError();
+            throw new GeoAreaMissingSdkError();
         }
 
         return true;
@@ -186,14 +173,19 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ) {
-        const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+    ): IPreparedExecution {
+        const ctx = this.buildPrimaryLayerContext(options, insight);
+        if (!ctx) {
+            // Never throw outside checkBeforeRender(). This fallback execution should be unreachable
+            // when called from update()-driven rendering (validation happens in checkBeforeRender).
+            return executionFactory.forInsight(insight).withExecConfig(options.executionConfig!);
+        }
+        const { primaryLayer, config, filters } = ctx;
         const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
             { id: primaryLayer.id, buckets: insightBuckets(insight) },
             ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
         ]);
         const effectiveFilters = [...globalFilters, ...(routedByLayerId.get(primaryLayer.id) ?? [])];
-
         return buildLayerExecution(primaryLayer, {
             backend: this.backend,
             workspace: this.workspace,
@@ -209,7 +201,11 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
-        const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const ctx = this.buildPrimaryLayerContext(options, insight);
+        if (!ctx) {
+            return [];
+        }
+        const { primaryLayer, config, filters } = ctx;
         const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
             { id: primaryLayer.id, buckets: insightBuckets(insight) },
             ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
@@ -217,7 +213,6 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         const insightLayerDefs = insightLayers(insight);
         const additionalLayers = insightLayersToGeoLayers(insightLayerDefs);
         const resolvedAdditionalLayers = additionalLayers.filter((layer) => !this.shouldSkipLayer(layer));
-
         return this.buildAdditionalLayerExecutions(
             resolvedAdditionalLayers,
             options,
@@ -276,7 +271,11 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
     ): void {
         const { custom = {}, locale, theme } = options;
         const { drillableItems } = custom;
-        const { config: configWithTooltip } = this.buildPrimaryLayerContext(options, insight);
+        const ctx = this.buildPrimaryLayerContext(options, insight);
+        if (!ctx) {
+            return;
+        }
+        const { config } = ctx;
         const primaryExecution = this.getExecution(options, insight, executionFactory);
         const additionalLayerExecutions = this.getExecutions(options, insight, executionFactory) ?? [];
 
@@ -288,7 +287,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             executions: additionalLayerExecutions,
             execConfig: options.executionConfig,
             drillableItems,
-            config: configWithTooltip,
+            config,
             locale,
             theme,
             pushData: this.handlePushData,
@@ -305,7 +304,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
     private buildPrimaryLayerContext(
         options: IVisProps,
         insight: IInsightDefinition,
-    ): { primaryLayer: IGeoLayer; config: IGeoAreaChartConfig; filters: IFilter[] } {
+    ): { primaryLayer: IGeoLayer; config: IGeoAreaChartConfig; filters: IFilter[] } | undefined {
         const supportedControls = this.visualizationProperties.controls || {};
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const filters = insightFilters(insight);
@@ -313,22 +312,20 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
         const areaBucket = insightBucket(insight, BucketNames.AREA);
         const area = areaBucket ? bucketAttribute(areaBucket) : undefined;
+        if (!area) {
+            // Invalid or incomplete geo config; validation is handled in checkBeforeRender().
+            return undefined;
+        }
         const colorBucket = insightBucket(insight, BucketNames.COLOR);
         const color = colorBucket ? bucketItems(colorBucket)[0] : undefined;
         const segmentBucket = insightBucket(insight, BucketNames.SEGMENT);
         const segmentBy = segmentBucket ? bucketAttribute(segmentBucket) : undefined;
 
-        const tooltipTextId = supportedControls?.["tooltipText"] as string | undefined;
-        const tooltipTextAttribute = this.createTooltipTextAttribute(area, tooltipTextId);
-        const configWithTooltip = tooltipTextAttribute
-            ? { ...fullConfig, tooltipText: tooltipTextAttribute }
-            : fullConfig;
-
         // Set primary layer name to the insight title so legend/title logic is consistent for all layers.
         const title = insightTitle(insight);
         const primaryLayer = createAreaLayer({
             ...(title ? { name: title } : {}),
-            area: area as IAttribute,
+            area,
             ...(color ? { color } : {}),
             ...(segmentBy ? { segmentBy } : {}),
             sortBy,
@@ -336,7 +333,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
         return {
             primaryLayer,
-            config: configWithTooltip,
+            config: fullConfig,
             filters,
         };
     }
@@ -373,62 +370,5 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
         // Skip layers when latitude or longitude is missing
         return !layer.latitude || !layer.longitude;
-    }
-
-    private createTooltipTextAttribute(
-        area: IAttribute | undefined,
-        tooltipTextId?: string,
-    ): IAttribute | undefined {
-        if (!area || !tooltipTextId) {
-            return undefined;
-        }
-
-        const tooltipRef = createAttributeRef(area, tooltipTextId);
-        return newAttribute(tooltipRef, (attribute) => attribute.localId("tooltipText_df"));
-    }
-
-    private resolveTooltipText(areaItem?: IBucketItem): string | undefined {
-        if (!areaItem) {
-            return undefined;
-        }
-
-        return getAreaTooltipText(areaItem);
-    }
-
-    private updateTooltipVisualizationProperties(tooltipText?: string): void {
-        if (!tooltipText) {
-            return;
-        }
-
-        const currentProperties = this.visualizationProperties ?? {};
-        const currentControls = currentProperties.controls ?? {};
-
-        this.visualizationProperties = {
-            ...currentProperties,
-            controls: {
-                ...currentControls,
-                tooltipText,
-            },
-        };
-    }
-
-    private applyTooltipProperty(
-        referencePoint: IExtendedReferencePoint,
-        tooltipText?: string,
-    ): IExtendedReferencePoint {
-        if (!tooltipText) {
-            return referencePoint;
-        }
-
-        const updated = cloneDeep(referencePoint);
-        const properties = updated.properties ?? {};
-        const controls = properties.controls ?? {};
-
-        set(updated, "properties.controls", {
-            ...controls,
-            tooltipText,
-        });
-
-        return updated;
     }
 }

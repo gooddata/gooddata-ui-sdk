@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
@@ -7,7 +7,7 @@ import { type IDashboardQuery } from "./base.js";
 /**
  * @alpha
  */
-export interface QueryConnectedAttributes extends IDashboardQuery {
+export interface IQueryConnectedAttributes extends IDashboardQuery {
     type: "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
     payload: {
         readonly ref: ObjRef;
@@ -26,7 +26,7 @@ export interface QueryConnectedAttributes extends IDashboardQuery {
  *
  * @alpha
  */
-export function queryConnectedAttributes(ref: ObjRef, correlationId?: string): QueryConnectedAttributes {
+export function queryConnectedAttributes(ref: ObjRef, correlationId?: string): IQueryConnectedAttributes {
     return {
         type: "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES",
         correlationId,

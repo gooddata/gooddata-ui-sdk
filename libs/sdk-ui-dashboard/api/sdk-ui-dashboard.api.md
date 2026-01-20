@@ -62,7 +62,7 @@ import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { ICrossFiltering } from '@gooddata/sdk-model';
+import { ICrossFiltering as ICrossFiltering_2 } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterByDate } from '@gooddata/sdk-model';
@@ -73,6 +73,7 @@ import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@goo
 import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
+import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
@@ -97,11 +98,11 @@ import { IDrillDownIntersectionIgnoredAttributes } from '@gooddata/sdk-model';
 import { IDrillDownReference } from '@gooddata/sdk-model';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
-import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
-import { IDrillToCustomUrl } from '@gooddata/sdk-model';
-import { IDrillToDashboard } from '@gooddata/sdk-model';
-import { IDrillToInsight } from '@gooddata/sdk-model';
-import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IDrillToAttributeUrl as IDrillToAttributeUrl_2 } from '@gooddata/sdk-model';
+import { IDrillToCustomUrl as IDrillToCustomUrl_2 } from '@gooddata/sdk-model';
+import { IDrillToDashboard as IDrillToDashboard_2 } from '@gooddata/sdk-model';
+import { IDrillToInsight as IDrillToInsight_2 } from '@gooddata/sdk-model';
+import { IDrillToLegacyDashboard as IDrillToLegacyDashboard_2 } from '@gooddata/sdk-model';
 import { IDropdownListNoDataRenderProps } from '@gooddata/sdk-ui-kit';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IErrorProps } from '@gooddata/sdk-ui';
@@ -206,175 +207,55 @@ import { weakMapMemoize } from '@reduxjs/toolkit';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer';
 
-// @alpha (undocumented)
-export interface AccessibleDashboardsState extends EntityState<IListedDashboard, EntityId> {
-    // (undocumented)
-    isLoaded: boolean;
-}
-
 // @beta (undocumented)
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
-// @beta (undocumented)
-export interface AddAttributeFilter extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: AddAttributeFilterPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD";
-}
-
 // @beta
-export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): AddAttributeFilter;
+export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): IAddAttributeFilter;
 
 // @internal (undocumented)
 export function AddAttributeFilterButton({ id, className, isOpen, title, buttonRef, onClick, }: IAddAttributeFilterButtonProps): JSX.Element;
 
 // @beta
-export interface AddAttributeFilterPayload {
-    // (undocumented)
+export type AddAttributeFilterPayload = {
     readonly displayForm: ObjRef;
-    // (undocumented)
     readonly index: number;
-    readonly initialIsNegativeSelection?: boolean;
-    readonly initialSelection?: IAttributeElements;
-    readonly localIdentifier?: string;
-    readonly mode?: DashboardAttributeFilterConfigMode;
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
-    readonly primaryDisplayForm?: ObjRef;
+    readonly initialSelection?: IAttributeElements;
+    readonly initialIsNegativeSelection?: boolean;
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
+    readonly mode?: DashboardAttributeFilterConfigMode;
+    readonly localIdentifier?: string;
+    readonly primaryDisplayForm?: ObjRef;
     readonly title?: string;
-}
+};
 
 // @internal (undocumented)
-export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps): JSX.Element;
-
-// @internal (undocumented)
-export interface AddAttributeFilterPlaceholderProps {
-    // (undocumented)
-    disabled?: boolean;
-}
-
-// @alpha (undocumented)
-export interface AddDateFilter extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: AddDateFilterPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD";
-}
+export function AddAttributeFilterPlaceholder({ disabled }: IAddAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha
-export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?: string): AddDateFilter;
+export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?: string): IAddDateFilter;
 
 // @alpha
-export interface AddDateFilterPayload {
-    // (undocumented)
-    readonly dateDataset: ObjRef;
-    // (undocumented)
-    readonly index: number;
-}
-
-// @alpha (undocumented)
-export interface AddDrillDownForInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: AddDrillDownForInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN";
-}
+export function addDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, drillDownIdentifier: string, drillDownAttributeHierarchyRef: ObjRef, intersectionIgnoredAttributes?: string[], correlationId?: string): IAddDrillDownForInsightWidget;
 
 // @alpha
-export function addDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, drillDownIdentifier: string, drillDownAttributeHierarchyRef: ObjRef, intersectionIgnoredAttributes?: string[], correlationId?: string): AddDrillDownForInsightWidget;
-
-// @alpha
-export interface AddDrillDownForInsightWidgetPayload {
-    readonly attributeIdentifier: ObjRef;
-    readonly drillDownAttributeHierarchyRef: ObjRef;
-    readonly drillDownIdentifier: string;
-    readonly intersectionIgnoredAttributes: string[];
-    readonly ref: ObjRef;
-}
-
-// @alpha
-export interface AddDrillTargets extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: AddDrillTargetsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL_TARGETS.ADD";
-}
-
-// @alpha
-export function addDrillTargets(ref: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): AddDrillTargets;
-
-// @alpha
-export interface AddDrillTargetsPayload {
-    // (undocumented)
-    readonly availableDrillTargets: IAvailableDrillTargets;
-    // (undocumented)
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface AddLayoutSection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: AddLayoutSectionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
-}
+export function addDrillTargets(ref: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): IAddDrillTargets;
 
 // @beta
-export function addLayoutSection(index: number, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], autoResolveDateFilterDataset?: boolean, correlationId?: string): AddLayoutSection;
-
-// @beta
-export interface AddLayoutSectionPayload {
-    readonly autoResolveDateFilterDataset?: boolean;
-    readonly index: RelativeIndex | ILayoutSectionPath;
-    readonly initialHeader?: IDashboardLayoutSectionHeader;
-    readonly initialItems?: DashboardItemDefinition[];
-}
+export function addLayoutSection(index: number, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], autoResolveDateFilterDataset?: boolean, correlationId?: string): IAddLayoutSection;
 
 // @alpha
-export function addNestedLayoutSection(index: ILayoutSectionPath, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], autoResolveDateFilterDataset?: boolean, correlationId?: string): AddLayoutSection;
+export function addNestedLayoutSection(index: ILayoutSectionPath, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], autoResolveDateFilterDataset?: boolean, correlationId?: string): IAddLayoutSection;
 
 // @alpha
-export function addNestedLayoutSectionItem(itemPath: ILayoutItemPath, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): AddSectionItems;
+export function addNestedLayoutSectionItem(itemPath: ILayoutItemPath, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): IAddSectionItems;
 
 // @beta
-export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): AddSectionItems;
-
-// @beta (undocumented)
-export interface AddSectionItems extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: AddSectionItemsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
-}
+export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): IAddSectionItems;
 
 // @beta
-export interface AddSectionItemsPayload {
-    readonly autoResolveDateFilterDataset?: boolean;
-    readonly itemIndex: RelativeIndex;
-    readonly itemPath?: ILayoutItemPath;
-    readonly items: DashboardItemDefinition[];
-    readonly sectionIndex: number;
-}
-
-// @beta
-export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualization: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo, correlationId?: string): AddVisualizationToVisualizationSwitcherWidgetContent;
-
-// @beta (undocumented)
-export interface AddVisualizationToVisualizationSwitcherWidgetContent extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: AddVisualizationToVisualizationSwitcherWidgetContentPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION";
-}
-
-// @beta
-export interface AddVisualizationToVisualizationSwitcherWidgetContentPayload {
-    readonly insight: IInsight;
-    readonly ref: ObjRef;
-    readonly sizeInfo: IVisualizationSizeInfo;
-    readonly visualization: IInsightWidget;
-}
+export function addVisualizationToSwitcherWidgetContent(ref: ObjRef, visualization: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo, correlationId?: string): IAddVisualizationToVisualizationSwitcherWidgetContent;
 
 // @internal (undocumented)
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement;
@@ -405,41 +286,16 @@ export function applyAttributeFilter(filterLocalId: string, filter: IAttributeFi
 export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection;
 
 // @alpha
-export interface ApplyFilterContextWorkingSelection extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION";
-}
+export function applyFilterContextWorkingSelection(correlationId?: string): IApplyFilterContextWorkingSelection;
 
 // @alpha
-export function applyFilterContextWorkingSelection(correlationId?: string): ApplyFilterContextWorkingSelection;
-
-// @alpha
-export interface ApplyFilterView extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ApplyFilterViewPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY";
-}
-
-// @alpha
-export function applyFilterView(ref: ObjRef, correlationId?: string): ApplyFilterView;
-
-// @alpha
-export interface ApplyFilterViewPayload {
-    // (undocumented)
-    readonly ref: ObjRef;
-}
+export function applyFilterView(ref: ObjRef, correlationId?: string): IApplyFilterView;
 
 // @public (undocumented)
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
 // @internal
-export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps, Parameters<AttributeFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & CreatableByDragComponent;
-
-// @alpha (undocumented)
-export interface AttributeFilterConfigsState {
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
-}
+export type AttributeFilterComponentSet = ICustomComponentBase<IDashboardAttributeFilterProps, Parameters<AttributeFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & CreatableByDragComponent;
 
 // @internal (undocumented)
 export type AttributeFilterDraggableComponent = {
@@ -471,14 +327,8 @@ export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 // @beta (undocumented)
 export type AttributeHierarchiesInteractionType = "attributeHierarchyDrillDownSelected" | "attributeHierarchyDrillDownCreateClicked" | "attributeHierarchyAddAttributeClicked" | "attributeHierarchyCreateClicked";
 
-// @beta (undocumented)
-export interface AttributeHierarchyModified extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
-}
-
 // @beta
-export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
+export function attributeHierarchyModified(correlationId?: string): IAttributeHierarchyModified;
 
 // @internal (undocumented)
 export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, accessibilityConfig, returnFocusTo, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
@@ -497,39 +347,18 @@ export type AutomationInteractionData = {
 };
 
 // @alpha (undocumented)
-export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<"automationInteraction", AutomationInteractionData>;
+export type AutomationInteractionPayload = IUserInteractionPayloadWithDataBase<"automationInteraction", AutomationInteractionData>;
 
 // @alpha (undocumented)
 export type AutomationInteractionType = "scheduledExportInitialized" | "scheduledExportCreated" | "alertInitialized" | "alertCreated";
 
-// @alpha (undocumented)
-export interface AutomationsState {
-    // (undocumented)
-    allAutomationsCount: number;
-    // (undocumented)
-    error?: GoodDataSdkError;
-    // (undocumented)
-    isInitialized: boolean;
-    // (undocumented)
-    isLoading: boolean;
-    // (undocumented)
-    userAutomations: IAutomationMetadataObject[];
-}
-
 // @public (undocumented)
-export interface BackendCapabilitiesState {
-    // (undocumented)
+export type BackendCapabilitiesState = {
     backendCapabilities?: IBackendCapabilities;
-}
+};
 
 // @beta (undocumented)
-export interface BareUserInteractionPayload {
-    // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType | NestedLayoutInteractionType;
-}
-
-// @beta (undocumented)
-export type BareUserInteractionType = BareUserInteractionPayload["interaction"];
+export type BareUserInteractionType = IBareUserInteractionPayload["interaction"];
 
 // @internal (undocumented)
 export type BaseDraggableLayoutItem = {
@@ -570,23 +399,10 @@ export function CancelButton(props: ICancelButtonProps): ReactElement;
 export function CancelEditDialog(props: ICancelEditDialogProps): JSX.Element;
 
 // @beta
-export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
+export function cancelEditRenderMode(correlationId?: string): IChangeRenderMode;
 
 // @alpha
-export interface CancelRenamingDashboardTab extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: CancelRenamingDashboardTabPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL";
-}
-
-// @alpha
-export function cancelRenamingDashboardTab(tabId?: string, correlationId?: string): CancelRenamingDashboardTab;
-
-// @alpha
-export interface CancelRenamingDashboardTabPayload {
-    readonly tabId?: string;
-}
+export function cancelRenamingDashboardTab(tabId?: string, correlationId?: string): ICancelRenamingDashboardTab;
 
 // @internal (undocumented)
 export const catalogActions: {
@@ -598,76 +414,51 @@ export const catalogActions: {
 };
 
 // @public (undocumented)
-export interface CatalogState {
-    // @beta (undocumented)
-    attributeHierarchies?: ICatalogAttributeHierarchy[];
-    // @beta (undocumented)
+export type CatalogState = {
     attributes?: ICatalogAttribute[];
-    // @beta (undocumented)
-    dateDatasets?: ICatalogDateDataset[];
-    // @beta (undocumented)
-    dateHierarchyTemplates?: IDateHierarchyTemplate[];
-    // @beta (undocumented)
-    facts?: ICatalogFact[];
-    // @beta (undocumented)
     measures?: ICatalogMeasure[];
-}
+    dateDatasets?: ICatalogDateDataset[];
+    facts?: ICatalogFact[];
+    attributeHierarchies?: ICatalogAttributeHierarchy[];
+    dateHierarchyTemplates?: IDateHierarchyTemplate[];
+};
 
 // @public
-export interface ChangeAttributeFilterSelection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeAttributeFilterSelectionPayload;
-    // (undocumented)
+export type ChangeAttributeFilterSelection = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
-}
+    readonly payload: ChangeAttributeFilterSelectionPayload;
+};
 
 // @public
 export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string, isSelectionInvalid?: boolean): ChangeAttributeFilterSelection;
 
 // @public
-export interface ChangeAttributeFilterSelectionPayload {
-    readonly elements: IAttributeElements;
+export type ChangeAttributeFilterSelectionPayload = {
     readonly filterLocalId: string;
+    readonly elements: IAttributeElements;
+    readonly selectionType: AttributeFilterSelectionType;
+    readonly isWorkingSelectionChange?: boolean;
     readonly isResultOfMigration?: boolean;
     readonly isSelectionInvalid?: boolean;
-    readonly isWorkingSelectionChange?: boolean;
-    readonly selectionType: AttributeFilterSelectionType;
-}
+};
 
 // @public
-export interface ChangeDateFilterSelection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DateFilterSelection;
-    // (undocumented)
+export type ChangeDateFilterSelection = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION";
-}
+    readonly payload: DateFilterSelection;
+};
 
 // @public
 export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): ChangeDateFilterSelection;
 
-// @alpha (undocumented)
-export interface ChangeDrillableItems extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeDrillableItemsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE";
-}
-
 // @alpha
-export function changeDrillableItems(drillableItems: ExplicitDrill[], correlationId?: string): ChangeDrillableItems;
-
-// @alpha
-export interface ChangeDrillableItemsPayload {
-    readonly drillableItems: ExplicitDrill[];
-}
+export function changeDrillableItems(drillableItems: ExplicitDrill[], correlationId?: string): IChangeDrillableItems;
 
 // @public
-export interface ChangeFilterContextSelection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeFilterContextSelectionPayload;
-    // (undocumented)
+export type ChangeFilterContextSelection = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
-}
+    readonly payload: ChangeFilterContextSelectionPayload;
+};
 
 // @public
 export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
@@ -676,278 +467,85 @@ export function changeFilterContextSelection(filters: (IDashboardFilter | Filter
 export function changeFilterContextSelectionByParams({ filters, attributeFilterConfigs, resetOthers, correlationId, tabLocalIdentifier, }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
 
 // @public
-export interface ChangeFilterContextSelectionParams {
-    // (undocumented)
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
-    // (undocumented)
-    correlationId?: string;
-    // (undocumented)
+export type ChangeFilterContextSelectionParams = {
     filters: (IDashboardFilter | FilterContextItem)[];
-    // (undocumented)
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     resetOthers?: boolean;
-    // @internal
+    correlationId?: string;
     tabLocalIdentifier?: string;
-}
+};
 
 // @public
-export interface ChangeFilterContextSelectionPayload {
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+export type ChangeFilterContextSelectionPayload = {
     filters: (IDashboardFilter | FilterContextItem)[];
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     resetOthers: boolean;
-    // @internal
     tabLocalIdentifier?: string;
-}
+};
 
 // @alpha
-export interface ChangeIgnoreExecutionTimestamp extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeIgnoreExecutionTimestampPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP";
-}
+export function changeIgnoreExecutionTimestamp(ignoreExecutionTimestamp: boolean, correlationId?: string): IChangeIgnoreExecutionTimestamp;
+
+// @beta
+export function changeInsightWidgetDescription(ref: ObjRef, description: IWidgetDescription, correlationId?: string): IChangeInsightWidgetDescription;
+
+// @beta
+export function changeInsightWidgetHeader(ref: ObjRef, header: IWidgetHeader, correlationId?: string): IChangeInsightWidgetHeader;
 
 // @alpha
-export function changeIgnoreExecutionTimestamp(ignoreExecutionTimestamp: boolean, correlationId?: string): ChangeIgnoreExecutionTimestamp;
-
-// @alpha
-export interface ChangeIgnoreExecutionTimestampPayload {
-    ignoreExecutionTimestamp: boolean;
-}
-
-// @beta (undocumented)
-export interface ChangeInsightWidgetDescription extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeInsightWidgetDescriptionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION";
-}
+export function changeInsightWidgetIgnoreCrossFiltering(ref: ObjRef, ignoreCrossFiltering: boolean, correlationId?: string): IChangeInsightWidgetIgnoreCrossFiltering;
 
 // @beta
-export function changeInsightWidgetDescription(ref: ObjRef, description: WidgetDescription, correlationId?: string): ChangeInsightWidgetDescription;
-
-// @beta
-export interface ChangeInsightWidgetDescriptionPayload {
-    readonly description: WidgetDescription;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeInsightWidgetFilterSettingsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS";
-}
-
-// @beta
-export interface ChangeInsightWidgetFilterSettingsPayload {
-    readonly operation: WidgetFilterOperation;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeInsightWidgetHeader extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeInsightWidgetHeaderPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER";
-}
-
-// @beta
-export function changeInsightWidgetHeader(ref: ObjRef, header: WidgetHeader, correlationId?: string): ChangeInsightWidgetHeader;
-
-// @beta
-export interface ChangeInsightWidgetHeaderPayload {
-    readonly header: WidgetHeader;
-    readonly ref: ObjRef;
-}
-
-// @alpha (undocumented)
-export interface ChangeInsightWidgetIgnoreCrossFiltering extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeInsightWidgetIgnoreCrossFilteringPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING";
-}
-
-// @alpha
-export function changeInsightWidgetIgnoreCrossFiltering(ref: ObjRef, ignoreCrossFiltering: boolean, correlationId?: string): ChangeInsightWidgetIgnoreCrossFiltering;
-
-// @alpha
-export interface ChangeInsightWidgetIgnoreCrossFilteringPayload {
-    readonly ignoreCrossFiltering: boolean;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface ChangeInsightWidgetInsight extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeInsightWidgetInsightPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT";
-}
-
-// @beta
-export function changeInsightWidgetInsight(ref: ObjRef, insightRef: ObjRef, visualizationProperties?: VisualizationProperties, correlationId?: string): ChangeInsightWidgetInsight;
-
-// @beta
-export interface ChangeInsightWidgetInsightPayload {
-    readonly insightRef: ObjRef;
-    readonly ref: ObjRef;
-    readonly visualizationProperties?: VisualizationProperties;
-}
+export function changeInsightWidgetInsight(ref: ObjRef, insightRef: ObjRef, visualizationProperties?: VisualizationProperties, correlationId?: string): IChangeInsightWidgetInsight;
 
 // @public (undocumented)
-export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeInsightWidgetVisConfigurationPayload;
-    // (undocumented)
+export type ChangeInsightWidgetVisConfiguration = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION";
-}
+    readonly payload: ChangeInsightWidgetVisConfigurationPayload;
+};
 
 // @public
 export function changeInsightWidgetVisConfiguration(ref: ObjRef, config: IInsightWidgetConfiguration | undefined, correlationId?: string): ChangeInsightWidgetVisConfiguration;
 
 // @public
-export interface ChangeInsightWidgetVisConfigurationPayload {
+export type ChangeInsightWidgetVisConfigurationPayload = {
+    readonly ref: ObjRef;
     readonly config: IInsightWidgetConfiguration | undefined;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeInsightWidgetVisPropertiesPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES";
-}
+};
 
 // @beta
-export function changeInsightWidgetVisProperties(ref: ObjRef, properties: VisualizationProperties | undefined, correlationId?: string): ChangeInsightWidgetVisProperties;
+export function changeInsightWidgetVisProperties(ref: ObjRef, properties: VisualizationProperties | undefined, correlationId?: string): IChangeInsightWidgetVisProperties;
 
 // @beta
-export interface ChangeInsightWidgetVisPropertiesPayload {
-    readonly properties: VisualizationProperties | undefined;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeKpiWidgetComparison extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeKpiWidgetComparisonPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON";
-}
+export function changeKpiWidgetComparison(ref: ObjRef, comparison: IKpiWidgetComparison, correlationId?: string): IChangeKpiWidgetComparison;
 
 // @beta
-export function changeKpiWidgetComparison(ref: ObjRef, comparison: KpiWidgetComparison, correlationId?: string): ChangeKpiWidgetComparison;
+export function changeKpiWidgetConfiguration(ref: ObjRef, config: IKpiWidgetConfiguration | undefined, correlationId?: string): IChangeKpiWidgetConfiguration;
 
 // @beta
-export interface ChangeKpiWidgetComparisonPayload {
-    readonly comparison: KpiWidgetComparison;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeKpiWidgetConfiguration extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeKpiWidgetConfigurationPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION";
-}
+export function changeKpiWidgetDescription(ref: ObjRef, description: IWidgetDescription, correlationId?: string): IChangeKpiWidgetDescription;
 
 // @beta
-export function changeKpiWidgetConfiguration(ref: ObjRef, config: IKpiWidgetConfiguration | undefined, correlationId?: string): ChangeKpiWidgetConfiguration;
+export function changeKpiWidgetHeader(ref: ObjRef, header: IWidgetHeader, correlationId?: string): IChangeKpiWidgetHeader;
 
 // @beta
-export interface ChangeKpiWidgetConfigurationPayload {
-    readonly config: IKpiWidgetConfiguration | undefined;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeKpiWidgetDescription extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeKpiWidgetDescriptionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION";
-}
-
-// @beta
-export function changeKpiWidgetDescription(ref: ObjRef, description: WidgetDescription, correlationId?: string): ChangeKpiWidgetDescription;
-
-// @beta
-export interface ChangeKpiWidgetDescriptionPayload {
-    readonly description: WidgetDescription;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeKpiWidgetFilterSettingsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
-}
-
-// @beta
-export interface ChangeKpiWidgetFilterSettingsPayload {
-    readonly operation: WidgetFilterOperation;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeKpiWidgetHeader extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeKpiWidgetHeaderPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER";
-}
-
-// @beta
-export function changeKpiWidgetHeader(ref: ObjRef, header: WidgetHeader, correlationId?: string): ChangeKpiWidgetHeader;
-
-// @beta
-export interface ChangeKpiWidgetHeaderPayload {
-    readonly header: WidgetHeader;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeKpiWidgetMeasurePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE";
-}
-
-// @beta
-export function changeKpiWidgetMeasure(ref: ObjRef, measureRef: ObjRef, header?: WidgetHeader | "from-measure", correlationId?: string): ChangeKpiWidgetMeasure;
-
-// @beta
-export interface ChangeKpiWidgetMeasurePayload {
-    readonly header?: WidgetHeader | "from-measure";
-    readonly measureRef: ObjRef;
-    readonly ref: ObjRef;
-}
+export function changeKpiWidgetMeasure(ref: ObjRef, measureRef: ObjRef, header?: IWidgetHeader | "from-measure", correlationId?: string): IChangeKpiWidgetMeasure;
 
 // @public (undocumented)
-export interface ChangeLayoutSectionHeader extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeLayoutSectionHeaderPayload;
-    // (undocumented)
+export type ChangeLayoutSectionHeader = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
-}
+    readonly payload: ChangeLayoutSectionHeaderPayload;
+};
 
 // @public
 export function changeLayoutSectionHeader(index: number, header: IDashboardLayoutSectionHeader, merge?: boolean, correlationId?: string): ChangeLayoutSectionHeader;
 
 // @public
-export interface ChangeLayoutSectionHeaderPayload {
-    readonly header: IDashboardLayoutSectionHeader;
+export type ChangeLayoutSectionHeaderPayload = {
     readonly index: number | ILayoutSectionPath;
+    readonly header: IDashboardLayoutSectionHeader;
     readonly merge?: boolean;
-}
+};
 
 // @internal
 export function changeMigratedAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
@@ -955,71 +553,14 @@ export function changeMigratedAttributeFilterSelection(filterLocalId: string, el
 // @alpha
 export function changeNestedLayoutSectionHeader(index: ILayoutSectionPath, header: IDashboardLayoutSectionHeader, merge?: boolean, correlationId?: string): ChangeLayoutSectionHeader;
 
-// @beta (undocumented)
-export interface ChangeRenderMode extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeRenderModePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.CHANGE_RENDER_MODE";
-}
+// @beta
+export function changeRenderMode(renderMode: RenderMode, renderModeChangeOptions?: IRenderModeChangeOptions, correlationId?: string): IChangeRenderMode;
 
 // @beta
-export function changeRenderMode(renderMode: RenderMode, renderModeChangeOptions?: RenderModeChangeOptions, correlationId?: string): ChangeRenderMode;
+export function changeRichTextWidgetContent(ref: ObjRef, content: string, correlationId?: string): IChangeRichTextWidgetContent;
 
 // @beta
-export interface ChangeRenderModePayload {
-    // (undocumented)
-    readonly renderMode: RenderMode;
-    // (undocumented)
-    readonly renderModeChangeOptions: RenderModeChangeOptions;
-}
-
-// @beta (undocumented)
-export interface ChangeRichTextWidgetContent extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeRichTextWidgetContentPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT";
-}
-
-// @beta
-export function changeRichTextWidgetContent(ref: ObjRef, content: string, correlationId?: string): ChangeRichTextWidgetContent;
-
-// @beta
-export interface ChangeRichTextWidgetContentPayload {
-    readonly content: string;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeRichTextWidgetFilterSettings extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeRichTextWidgetFilterSettingsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS";
-}
-
-// @beta
-export interface ChangeRichTextWidgetFilterSettingsPayload {
-    readonly operation: WidgetFilterOperation;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ChangeSharing extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ChangeSharingPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
-}
-
-// @beta
-export function changeSharing(newSharingProperties: ISharingApplyPayload_2, correlationId?: string): ChangeSharing;
-
-// @beta
-export interface ChangeSharingPayload {
-    readonly newSharingProperties: ISharingApplyPayload_2;
-}
+export function changeSharing(newSharingProperties: ISharingApplyPayload_2, correlationId?: string): IChangeSharing;
 
 // @public
 export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string, isSelectionInvalid?: boolean): ChangeAttributeFilterSelection;
@@ -1028,18 +569,18 @@ export function changeWorkingAttributeFilterSelection(filterLocalId: string, ele
 export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
 
 // @alpha
-export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandFailed<TCommand>>;
+export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<IDashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<IDashboardCommandFailed<TCommand>>;
 
 // @public (undocumented)
-export interface CommandProcessingMeta {
+export type CommandProcessingMeta = {
     readonly uuid: string;
-}
+};
 
 // @internal (undocumented)
 export type CommandProcessingStatus = "running" | "success" | "error";
 
 // @alpha
-export function commandStartedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandStarted<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandStarted<TCommand>>;
+export function commandStartedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<IDashboardCommandStarted<TCommand>>["handler"]): DashboardEventHandler<IDashboardCommandStarted<TCommand>>;
 
 // @alpha
 export type CommonExportDataAttributes = {
@@ -1049,10 +590,9 @@ export type CommonExportDataAttributes = {
 };
 
 // @public (undocumented)
-export interface ConfigState {
-    // @beta (undocumented)
+export type ConfigState = {
     config?: ResolvedDashboardConfig;
-}
+};
 
 // @internal
 export type ConfigurableWidget<TWidget> = {
@@ -1062,20 +602,7 @@ export type ConfigurableWidget<TWidget> = {
 };
 
 // @alpha
-export interface ConvertDashboardTabFromDefault extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ConvertDashboardTabFromDefaultPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT";
-}
-
-// @alpha
-export function convertDashboardTabFromDefault(title?: string, correlationId?: string): ConvertDashboardTabFromDefault;
-
-// @alpha
-export interface ConvertDashboardTabFromDefaultPayload {
-    readonly title?: string;
-}
+export function convertDashboardTabFromDefault(title?: string, correlationId?: string): IConvertDashboardTabFromDefault;
 
 // @internal (undocumented)
 export function CreatableAttributeFilter({ WrapCreatePanelItemWithDragComponent, }: ICreatePanelItemComponentProps): JSX.Element;
@@ -1097,90 +624,22 @@ export type CreatablePlaceholderComponent<TProps> = {
 };
 
 // @beta
-export interface CreateAlert extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: CreateAlertPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.ALERT.CREATE";
-}
-
-// @beta
-export function createAlert(alert: IAutomationMetadataObjectDefinition, correlationId?: string): CreateAlert;
-
-// @beta
-export interface CreateAlertPayload {
-    readonly alert: IAutomationMetadataObjectDefinition;
-}
+export function createAlert(alert: IAutomationMetadataObjectDefinition, correlationId?: string): ICreateAlert;
 
 // @internal
-export interface CreateAttributeHierarchyRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED";
-}
-
-// @internal
-export function createAttributeHierarchyRequested(correlationId?: string): DashboardEventBody<CreateAttributeHierarchyRequested>;
+export function createAttributeHierarchyRequested(correlationId?: string): DashboardEventBody<ICreateAttributeHierarchyRequested>;
 
 // @alpha
-export interface CreateDashboardTab extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: CreateDashboardTabPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.CREATE";
-}
-
-// @alpha
-export function createDashboardTab(title?: string, index?: number, shouldStartRenaming?: boolean, correlationId?: string): CreateDashboardTab;
-
-// @alpha
-export interface CreateDashboardTabPayload {
-    readonly index?: number;
-    readonly shouldStartRenaming?: boolean;
-    readonly title?: string;
-}
+export function createDashboardTab(title?: string, index?: number, shouldStartRenaming?: boolean, correlationId?: string): ICreateDashboardTab;
 
 // @internal
-export interface CreateInsightRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED";
-}
-
-// @internal
-export function createInsightRequested(correlationId?: string): DashboardEventBody<CreateInsightRequested>;
+export function createInsightRequested(correlationId?: string): DashboardEventBody<ICreateInsightRequested>;
 
 // @beta
-export interface CreateScheduledEmail extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: CreateScheduledEmailPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
-}
+export function createScheduledEmail(scheduledEmail: IAutomationMetadataObjectDefinition, correlationId?: string): ICreateScheduledEmail;
 
 // @beta
-export function createScheduledEmail(scheduledEmail: IAutomationMetadataObjectDefinition, correlationId?: string): CreateScheduledEmail;
-
-// @beta
-export interface CreateScheduledEmailPayload {
-    readonly scheduledEmail: IAutomationMetadataObjectDefinition;
-}
-
-// @beta (undocumented)
-export interface CrossFiltering extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: CrossFilteringPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.CROSS_FILTERING";
-}
-
-// @beta
-export function crossFiltering(insight: IInsight, drillDefinition: ICrossFiltering, drillEvent: IDashboardDrillEvent, correlationId?: string): CrossFiltering;
-
-// @beta
-export interface CrossFilteringPayload {
-    readonly drillDefinition: ICrossFiltering;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly insight: IInsight;
-}
+export function crossFiltering(insight: IInsight, drillDefinition: ICrossFiltering_2, drillEvent: IDashboardDrillEvent, correlationId?: string): ICrossFiltering;
 
 // @alpha (undocumented)
 export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
@@ -1193,11 +652,6 @@ export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
 
 // @beta (undocumented)
 export type CustomCancelButtonComponent = ComponentType<ICancelButtonProps>;
-
-// @internal (undocumented)
-export interface CustomComponentBase<TMainProps, TProviderParams extends any[]> {
-    MainComponentProvider: (...params: TProviderParams) => ComponentType<TMainProps>;
-}
 
 // @internal (undocumented)
 export type CustomCreatePanelItemComponent = ComponentType<ICreatePanelItemComponentProps>;
@@ -1342,10 +796,10 @@ export type CustomTopBarComponent = ComponentType<ITopBarProps>;
 export type CustomVisualizationSwitcherToolbarComponent = ComponentType<IVisualizationSwitcherToolbarProps>;
 
 // @internal
-export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps, Parameters<WidgetComponentProvider>> & DraggableComponent & Partial<ConfigurableWidget<ICustomWidget>> & Partial<CreatableByDragComponent>;
+export type CustomWidgetComponentSet = ICustomComponentBase<IDashboardWidgetProps, Parameters<WidgetComponentProvider>> & DraggableComponent & Partial<ConfigurableWidget<ICustomWidget>> & Partial<CreatableByDragComponent>;
 
 // @internal (undocumented)
-export type CustomWidgetConfigPanelComponent<TWidget> = ComponentType<WidgetConfigPanelProps<TWidget>>;
+export type CustomWidgetConfigPanelComponent<TWidget> = ComponentType<IWidgetConfigPanelProps<TWidget>>;
 
 // @internal (undocumented)
 export type CustomWidgetDraggableItem = BaseDraggableMovingItem & {
@@ -1359,365 +813,132 @@ export function Dashboard(props: IDashboardProps): JSX.Element;
 // @alpha
 export type DashboardAccessibilityLimitation = "forbidden" | "notShared";
 
-// @beta
-export interface DashboardAlertCreated extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAlertCreatedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.ALERT.CREATED";
-}
-
-// @beta
-export interface DashboardAlertCreatedPayload {
-    readonly alert: IAutomationMetadataObject;
-}
-
-// @beta
-export interface DashboardAlertSaved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAlertSavedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.ALERT.SAVED";
-}
-
-// @beta
-export interface DashboardAlertSavedPayload {
-    readonly alert: IAutomationMetadataObject;
-}
-
 // @public
-export interface DashboardAsyncRenderRequested extends IDashboardEvent {
-    // (undocumented)
+export type DashboardAsyncRenderRequested = IDashboardEvent & {
+    readonly type: "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED";
     readonly payload: {
         readonly id: string;
     };
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED";
-}
+};
 
 // @public
-export interface DashboardAsyncRenderRequestedPayload {
+export type DashboardAsyncRenderRequestedPayload = {
     readonly id: string;
-}
+};
 
 // @public
-export interface DashboardAsyncRenderResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAsyncRenderResolvedPayload;
-    // (undocumented)
+export type DashboardAsyncRenderResolved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED";
-}
+    readonly payload: DashboardAsyncRenderResolvedPayload;
+};
 
 // @public
-export interface DashboardAsyncRenderResolvedPayload {
+export type DashboardAsyncRenderResolvedPayload = {
     readonly id: string;
-}
-
-// @beta
-export interface DashboardAttributeFilterAdded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeFilterAddedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
-}
-
-// @beta
-export interface DashboardAttributeFilterAddedPayload {
-    readonly added: IDashboardAttributeFilter;
-    readonly index: number;
-}
-
-// @alpha
-export interface DashboardAttributeFilterConfigLimitingItemsChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeFilterConfigLimitingItemsChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED";
-}
-
-// @alpha
-export interface DashboardAttributeFilterConfigLimitingItemsChangedPayload {
-    readonly filter: IDashboardAttributeFilter;
-}
-
-// @alpha
-export interface DashboardAttributeFilterConfigModeChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeFilterConfigModeChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED";
-}
-
-// @alpha
-export interface DashboardAttributeFilterConfigModeChangedPayload {
-    readonly filter: IDashboardAttributeFilter;
-}
-
-// @beta
-export interface DashboardAttributeFilterMoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeFilterMovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED";
-}
-
-// @beta
-export interface DashboardAttributeFilterMovedPayload {
-    readonly fromIndex: number;
-    readonly moved: IDashboardAttributeFilter;
-    readonly toIndex: number;
-}
-
-// @beta
-export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeFilterParentChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
-}
-
-// @beta
-export interface DashboardAttributeFilterParentChangedPayload {
-    readonly filter: IDashboardAttributeFilter;
-}
-
-// @beta
-export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeFilterRemovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
-}
-
-// @beta
-export interface DashboardAttributeFilterRemovedPayload {
-    readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
-    readonly removed: IDashboardAttributeFilter;
-}
+};
 
 // @public
-export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeFilterSelectionChangedPayload;
-    // (undocumented)
+export type DashboardAttributeFilterSelectionChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
-}
+    readonly payload: DashboardAttributeFilterSelectionChangedPayload;
+};
 
 // @public
-export interface DashboardAttributeFilterSelectionChangedPayload {
+export type DashboardAttributeFilterSelectionChangedPayload = {
     readonly filter: IDashboardAttributeFilter;
-}
+};
 
 // @public
 export function dashboardAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
 
-// @beta
-export interface DashboardAttributeSelectionModeChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeSelectionModeChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED";
-}
-
-// @beta
-export interface DashboardAttributeSelectionModeChangedPayload {
-    readonly filter: IDashboardAttributeFilter;
-}
-
-// @beta
-export interface DashboardAttributeTitleChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardAttributeTitleChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED";
-}
-
-// @beta
-export interface DashboardAttributeTitleChangedPayload {
-    readonly filter: IDashboardAttributeFilter;
-}
-
-// @beta
-export interface DashboardAutomationsRefreshed extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.AUTOMATIONS.REFRESHED";
-}
-
-// @beta
-export interface DashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand> extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardCommandFailedPayload<TCommand>;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
-}
-
-// @beta
-export interface DashboardCommandFailedPayload<TCommand extends IDashboardCommand> {
-    readonly command: TCommand;
-    readonly error?: Error;
-    readonly message: string;
-    readonly reason: ActionFailedErrorReason;
-}
-
-// @beta
-export interface DashboardCommandRejected extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.COMMAND.REJECTED";
-}
-
 // @public
-export type DashboardCommands = InitializeDashboard | SaveDashboardAs | RequestAsyncRender | ResolveAsyncRender | ChangeFilterContextSelection | ChangeDateFilterSelection | ChangeAttributeFilterSelection | ChangeRenderMode | SaveDashboard | RenameDashboard | ResetDashboard | ExportDashboardToPdf | ExportDashboardToExcel | ExportDashboardToPdfPresentation | ExportDashboardToPptPresentation | DeleteDashboard | TriggerEvent | UpsertExecutionResult | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | SetAttributeFilterParents | SetAttributeFilterDependentDateFilters | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | ResizeHeight | ResizeWidth | AddSectionItems | ReplaceSectionItem | MoveSectionItem | MoveSectionItemToNewSection | RemoveSectionItem | RemoveSectionItemByWidgetRef | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetDescription | ChangeKpiWidgetConfiguration | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | SetDrillForKpiWidget | RemoveDrillForKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetDescription | ChangeInsightWidgetIgnoreCrossFiltering | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetVisConfiguration | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget | ExportInsightWidget | CreateAlert | SaveAlert | CreateScheduledEmail | SaveScheduledEmail | ChangeSharing | SetAttributeFilterDisplayForm | SetAttributeFilterTitle | SetAttributeFilterSelectionMode | ChangeRichTextWidgetContent | ChangeRichTextWidgetFilterSettings | AddVisualizationToVisualizationSwitcherWidgetContent | UpdateVisualizationsFromVisualizationSwitcherWidgetContent | Drill | DrillDown | DrillToAttributeUrl | DrillToCustomUrl | DrillToDashboard | DrillToInsight | DrillToLegacyDashboard | ChangeDrillableItems | AddDrillTargets | SetDashboardDateFilterConfigMode | SetDashboardAttributeFilterConfigMode | SetDashboardAttributeFilterConfigDisplayAsLabel | RemoveDrillDownForInsightWidget | RemoveDrillToUrlForInsightWidget | AddDrillDownForInsightWidget | ModifyDrillDownForInsightWidget | CrossFiltering | KeyDriverAnalysis | AttributeHierarchyModified | AddDateFilter | RemoveDateFilters | MoveDateFilter | SetDashboardDateFilterWithDimensionConfigMode | SetDateFilterConfigTitle | InitializeAutomations | RefreshAutomations | SetAttributeFilterLimitingItems | SaveFilterView | DeleteFilterView | ApplyFilterView | SetFilterViewAsDefault | ReloadFilterViews | ToggleLayoutSectionHeaders | ToggleLayoutDirection | ApplyFilterContextWorkingSelection | ResetFilterContextWorkingSelection | ChangeIgnoreExecutionTimestamp | SwitchDashboardTab | ConvertDashboardTabFromDefault | CreateDashboardTab | RepositionDashboardTab | DeleteDashboardTab | StartRenamingDashboardTab | CancelRenamingDashboardTab | RenameDashboardTab | SetScreenSize | LoadAllWorkspaceUsers | ExportRawInsightWidget | ExportSlidesInsightWidget | ExportImageInsightWidget | SetShowWidgetAsTable;
-
-// @beta
-export interface DashboardCommandStarted<TCommand extends IDashboardCommand> extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardCommandStartedPayload<TCommand>;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.COMMAND.STARTED";
-}
-
-// @beta
-export interface DashboardCommandStartedPayload<TCommand extends IDashboardCommand> {
-    readonly command: TCommand;
-}
+export type DashboardCommands = InitializeDashboard | SaveDashboardAs | RequestAsyncRender | ResolveAsyncRender | ChangeFilterContextSelection | ChangeDateFilterSelection | ChangeAttributeFilterSelection | IChangeRenderMode | ISaveDashboard | IRenameDashboard | IResetDashboard | IExportDashboardToPdf | IExportDashboardToExcel | IExportDashboardToPdfPresentation | IExportDashboardToPptPresentation | IDeleteDashboard | ITriggerEvent | IUpsertExecutionResult | IAddAttributeFilter | IRemoveAttributeFilters | IMoveAttributeFilter | ISetAttributeFilterParents | ISetAttributeFilterDependentDateFilters | IAddLayoutSection | IMoveLayoutSection | IRemoveLayoutSection | ChangeLayoutSectionHeader | IResizeHeight | IResizeWidth | IAddSectionItems | IReplaceSectionItem | IMoveSectionItem | IMoveSectionItemToNewSection | IRemoveSectionItem | IRemoveSectionItemByWidgetRef | IUndoLayoutChanges | IChangeKpiWidgetHeader | IChangeKpiWidgetDescription | IChangeKpiWidgetConfiguration | IChangeKpiWidgetMeasure | IChangeKpiWidgetFilterSettings | IChangeKpiWidgetComparison | IRefreshKpiWidget | ISetDrillForKpiWidget | IRemoveDrillForKpiWidget | IChangeInsightWidgetHeader | IChangeInsightWidgetDescription | IChangeInsightWidgetIgnoreCrossFiltering | IChangeInsightWidgetFilterSettings | IChangeInsightWidgetVisProperties | ChangeInsightWidgetVisConfiguration | IChangeInsightWidgetInsight | IModifyDrillsForInsightWidget | IRemoveDrillsForInsightWidget | IRefreshInsightWidget | IExportInsightWidget | ICreateAlert | ISaveAlert | ICreateScheduledEmail | ISaveScheduledEmail | IChangeSharing | ISetAttributeFilterDisplayForm | ISetAttributeFilterTitle | ISetAttributeFilterSelectionMode | IChangeRichTextWidgetContent | IChangeRichTextWidgetFilterSettings | IAddVisualizationToVisualizationSwitcherWidgetContent | IUpdateVisualizationsFromVisualizationSwitcherWidgetContent | IDrill | IDrillDown | IDrillToAttributeUrl | IDrillToCustomUrl | IDrillToDashboard | IDrillToInsight | IDrillToLegacyDashboard | IChangeDrillableItems | IAddDrillTargets | ISetDashboardDateFilterConfigMode | ISetDashboardAttributeFilterConfigMode | ISetDashboardAttributeFilterConfigDisplayAsLabel | IRemoveDrillDownForInsightWidget | IRemoveDrillToUrlForInsightWidget | IAddDrillDownForInsightWidget | IModifyDrillDownForInsightWidget | ICrossFiltering | IKeyDriverAnalysis | IAttributeHierarchyModified | IAddDateFilter | IRemoveDateFilters | IMoveDateFilter | ISetDashboardDateFilterWithDimensionConfigMode | ISetDateFilterConfigTitle | IInitializeAutomations | IRefreshAutomations | ISetAttributeFilterLimitingItems | ISaveFilterView | IDeleteFilterView | IApplyFilterView | ISetFilterViewAsDefault | IReloadFilterViews | IToggleLayoutSectionHeaders | IToggleLayoutDirection | IApplyFilterContextWorkingSelection | IResetFilterContextWorkingSelection | IChangeIgnoreExecutionTimestamp | ISwitchDashboardTab | IConvertDashboardTabFromDefault | ICreateDashboardTab | IRepositionDashboardTab | IDeleteDashboardTab | IStartRenamingDashboardTab | ICancelRenamingDashboardTab | IRenameDashboardTab | ISetScreenSize | ILoadAllWorkspaceUsers | IExportRawInsightWidget | IExportSlidesInsightWidget | IExportImageInsightWidget | ISetShowWidgetAsTable;
 
 // @public
 export type DashboardCommandType = "GDC.DASH/CMD.INITIALIZE" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DELETE" | "GDC.DASH/CMD.CHANGE_RENDER_MODE" | "GDC.DASH/CMD.SHARING.CHANGE" | "GDC.DASH/CMD.EXPORT.PDF" | "GDC.DASH/CMD.EXPORT.EXCEL" | "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION" | "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION" | "GDC.DASH/CMD.EVENT.TRIGGER" | "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT" | "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH" | "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE" | "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS" | "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL" | "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH" | "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT" | "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION" | "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS" | "GDC.DASH/CMD.ALERT.CREATE" | "GDC.DASH/CMD.ALERT.SAVE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE" | "GDC.DASH/CMD.DRILL" | "GDC.DASH/CMD.DRILL.DRILL_DOWN" | "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT" | "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE" | "GDC.DASH/CMD.DRILL.CROSS_FILTERING" | "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS" | "GDC.DASH/CMD.DRILL_TARGETS.ADD" | "GDC.DASH/CMD.RENDER.ASYNC.REQUEST" | "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE" | "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED" | "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE" | "GDC.DASH/CMD.AUTOMATIONS.REFRESH" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD" | "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION" | "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP" | "GDC.DASH/CMD.TAB.SWITCH" | "GDC.DASH/CMD.TAB.REPOSITION" | "GDC.DASH/CMD.TAB.CREATE" | "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT" | "GDC.DASH/CMD.TAB.DELETE" | "GDC.DASH/CMD.TAB.RENAME_MODE.START" | "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL" | "GDC.DASH/CMD.TAB.RENAME" | "GDC.DASH/CMD.USERS.LOAD_ALL" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE" | "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET";
 
 // @public
-export interface DashboardConfig {
-    agGridToken?: string;
-    // @internal
-    allowCreateInsightRequest?: boolean;
-    allowUnfinishedFeatures?: boolean;
-    colorPalette?: IColorPalette;
-    dateFilterConfig?: IDateFilterConfig;
-    disableCrossFiltering?: boolean;
-    disableDefaultDrills?: boolean;
-    disableUserFilterReset?: boolean;
-    enableFilterValuesResolutionInDrillEvents?: boolean;
-    // @alpha
-    entitlements?: IEntitlementDescriptor[];
-    // @alpha
-    evaluationFrequency?: string;
-    // @alpha
-    executionTimestamp?: string;
-    // @internal
-    exportId?: string;
-    exportType?: "visual" | "slides";
-    // @alpha
-    externalRecipient?: string;
-    // @beta
-    focusObject?: DashboardFocusObject;
-    // @alpha
-    hideAddTabButton?: boolean;
-    // @internal
-    hideSaveAsNewButton?: boolean;
-    // @internal
-    hideShareButton?: boolean;
-    // @internal
-    hideWidgetTitles?: boolean;
-    initialContent?: DashboardItem[];
-    initialRenderMode?: RenderMode;
-    isEmbedded?: boolean;
-    isExport?: boolean;
-    isReadOnly?: boolean;
-    // @internal
-    isWhiteLabeled?: boolean;
+export type DashboardConfig = {
     locale?: ILocale;
-    mapboxToken?: string;
-    // @beta
-    menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
-    objectAvailability?: ObjectAvailabilityConfig;
-    // @alpha
-    openAutomationOnLoad?: boolean;
-    overrideDefaultFilters?: FilterContextItem[];
-    overrideTitle?: string;
-    // @alpha
-    references?: IDashboardReferences;
     separators?: ISeparators;
     settings?: ISettings;
-    // @alpha
-    slideConfig?: DashboardExportSlideConfig;
-    // @internal
+    dateFilterConfig?: IDateFilterConfig;
+    overrideDefaultFilters?: FilterContextItem[];
+    overrideTitle?: string;
+    colorPalette?: IColorPalette;
+    objectAvailability?: ObjectAvailabilityConfig;
+    mapboxToken?: string;
+    agGridToken?: string;
+    isReadOnly?: boolean;
+    isEmbedded?: boolean;
+    isExport?: boolean;
+    isWhiteLabeled?: boolean;
+    disableDefaultDrills?: boolean;
+    enableFilterValuesResolutionInDrillEvents?: boolean;
+    menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
+    allowUnfinishedFeatures?: boolean;
+    allowCreateInsightRequest?: boolean;
+    initialRenderMode?: RenderMode;
+    hideSaveAsNewButton?: boolean;
+    hideShareButton?: boolean;
+    hideWidgetTitles?: boolean;
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
-    // @alpha
+    exportId?: string;
+    exportType?: "visual" | "slides";
+    disableCrossFiltering?: boolean;
+    disableUserFilterReset?: boolean;
+    hideAddTabButton?: boolean;
+    openAutomationOnLoad?: boolean;
+    focusObject?: IDashboardFocusObject;
+    slideConfig?: IDashboardExportSlideConfig;
+    references?: IDashboardReferences;
+    entitlements?: IEntitlementDescriptor[];
+    initialContent?: DashboardItem[];
+    executionTimestamp?: string;
+    evaluationFrequency?: string;
     workspaceDescriptor?: {
         title: string;
     };
-}
+    externalRecipient?: string;
+};
 
 // @alpha (undocumented)
 export type DashboardContentComponentProvider = (dashboard?: string | ObjRef | IDashboard) => CustomDashboardContentComponent;
 
 // @public (undocumented)
-export interface DashboardContext {
+export type DashboardContext = {
     backend: IAnalyticalBackend;
-    clientId?: string;
-    // @internal
+    workspace: string;
     config?: DashboardConfig;
     dashboardRef?: ObjRef;
-    dataProductId?: string;
     filterContextRef?: ObjRef;
-    workspace: string;
-}
+    clientId?: string;
+    dataProductId?: string;
+};
 
 // @public
-export interface DashboardCopySaved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardCopySavedPayload;
-    // (undocumented)
+export type DashboardCopySaved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.COPY_SAVED";
-}
+    readonly payload: DashboardCopySavedPayload;
+};
 
 // @public
-export interface DashboardCopySavedPayload {
+export type DashboardCopySavedPayload = {
     readonly dashboard: IDashboard;
     readonly isOriginalDashboardLocked: boolean;
-}
-
-// @beta
-export interface DashboardCrossFilteringRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardCrossFilteringRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED";
-}
-
-// @beta
-export interface DashboardCrossFilteringRequestedPayload {
-    readonly drillDefinition: ICrossFiltering;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @beta
-export interface DashboardCrossFilteringResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardCrossFilteringResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED";
-}
-
-// @beta
-export interface DashboardCrossFilteringResolvedPayload {
-    readonly drillDefinition: ICrossFiltering;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly filters: IDashboardAttributeFilter[];
-}
+};
 
 // @public
-export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDateFilterSelectionChangedPayload;
-    // (undocumented)
+export type DashboardDateFilterSelectionChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
-}
+    readonly payload: DashboardDateFilterSelectionChangedPayload;
+};
 
 // @public
-export interface DashboardDateFilterSelectionChangedPayload {
-    readonly dateFilterOptionLocalId?: string;
+export type DashboardDateFilterSelectionChangedPayload = {
     readonly filter: IDashboardDateFilter | undefined;
-}
+    readonly dateFilterOptionLocalId?: string;
+};
 
 // @public
 export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
@@ -1726,32 +947,15 @@ export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardD
 export function dashboardDateFilterToDateFilterByWidget(filter: IDashboardDateFilter, widget?: Partial<IFilterableWidget>): IDateFilter;
 
 // @public
-export interface DashboardDeinitialized extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDeinitializedPayload;
-    // (undocumented)
+export type DashboardDeinitialized = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.DEINITIALIZED";
-}
+    readonly payload: DashboardDeinitializedPayload;
+};
 
 // @public
-export interface DashboardDeinitializedPayload {
+export type DashboardDeinitializedPayload = {
     dashboard: ObjRef | undefined;
-}
-
-// @beta
-export interface DashboardDeleted extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: {
-        readonly dashboard: IDashboard;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DELETED";
-}
-
-// @beta
-export interface DashboardDeletedPayload {
-    readonly dashboard: IDashboard;
-}
+};
 
 // @public (undocumented)
 export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "evaluationFrequency" | "sectionHeadersDateDataSet"> & IAccessControlAware;
@@ -1759,237 +963,11 @@ export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "ta
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
 
-// @alpha
-export interface DashboardDrillableItemsChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillableItemsChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED";
-}
-
-// @alpha
-export interface DashboardDrillableItemsChangedPayload {
-    readonly drillableItems: ExplicitDrill[];
-}
-
 // @alpha (undocumented)
-export type DashboardDrillCommand = Drill | DrillDown | DrillToAttributeUrl | DrillToCustomUrl | DrillToDashboard | DrillToInsight | DrillToLegacyDashboard | CrossFiltering | KeyDriverAnalysis;
-
-// @alpha (undocumented)
-export interface DashboardDrillContext {
-    insight?: IInsight;
-    widget?: IWidget;
-}
+export type DashboardDrillCommand = IDrill | IDrillDown | IDrillToAttributeUrl | IDrillToCustomUrl | IDrillToDashboard | IDrillToInsight | IDrillToLegacyDashboard | ICrossFiltering | IKeyDriverAnalysis;
 
 // @beta
 export type DashboardDrillDefinition = DrillDefinition | IDrillDownDefinition;
-
-// @alpha
-export interface DashboardDrillDownRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillDownRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED";
-}
-
-// @alpha
-export interface DashboardDrillDownRequestedPayload {
-    readonly drillDefinition: IDrillDownDefinition;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly insight: IInsight;
-}
-
-// @alpha
-export interface DashboardDrillDownResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillDownResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED";
-}
-
-// @alpha
-export interface DashboardDrillDownResolvedPayload {
-    readonly drillDefinition: IDrillDownDefinition;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly insight: IInsight;
-}
-
-// @alpha
-export interface DashboardDrillRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.REQUESTED";
-}
-
-// @alpha
-export interface DashboardDrillRequestedPayload {
-    readonly drillContext: DashboardDrillContext;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha
-export interface DashboardDrillResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.RESOLVED";
-}
-
-// @alpha
-export interface DashboardDrillResolvedPayload {
-    readonly drillContext: DashboardDrillContext;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha
-export interface DashboardDrillToAttributeUrlRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToAttributeUrlRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED";
-}
-
-// @alpha
-export interface DashboardDrillToAttributeUrlRequestedPayload {
-    readonly drillDefinition: IDrillToAttributeUrl;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha
-export interface DashboardDrillToAttributeUrlResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToAttributeUrlResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED";
-}
-
-// @alpha
-export interface DashboardDrillToAttributeUrlResolvedPayload {
-    readonly drillDefinition: IDrillToAttributeUrl;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly filtersInfo: FiltersInfo;
-    readonly isImplicit: boolean;
-    readonly url: string;
-}
-
-// @alpha
-export interface DashboardDrillToCustomUrlRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToCustomUrlRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED";
-}
-
-// @alpha
-export interface DashboardDrillToCustomUrlRequestedPayload {
-    readonly drillDefinition: IDrillToCustomUrl;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha
-export interface DashboardDrillToCustomUrlResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToCustomUrlResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED";
-}
-
-// @alpha
-export interface DashboardDrillToCustomUrlResolvedPayload {
-    readonly drillDefinition: IDrillToCustomUrl;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly filtersInfo: FiltersInfo;
-    readonly url: string;
-}
-
-// @alpha
-export interface DashboardDrillToDashboardRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToDashboardRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED";
-}
-
-// @alpha
-export interface DashboardDrillToDashboardRequestedPayload {
-    readonly drillDefinition: IDrillToDashboard;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha
-export interface DashboardDrillToDashboardResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToDashboardResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED";
-}
-
-// @alpha
-export interface DashboardDrillToDashboardResolvedPayload {
-    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
-    readonly drillDefinition: IDrillToDashboard;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly filters: (IDashboardFilter | FilterContextItem)[];
-}
-
-// @alpha
-export interface DashboardDrillToInsightRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToInsightRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED";
-}
-
-// @alpha
-export interface DashboardDrillToInsightRequestedPayload {
-    readonly drillDefinition: IDrillToInsight;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly insight: IInsight;
-}
-
-// @alpha
-export interface DashboardDrillToInsightResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToInsightResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED";
-}
-
-// @alpha
-export interface DashboardDrillToInsightResolvedPayload {
-    readonly drillDefinition: IDrillToInsight;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly insight: IInsight;
-}
-
-// @alpha
-export interface DashboardDrillToLegacyDashboardRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToLegacyDashboardRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED";
-}
-
-// @alpha
-export interface DashboardDrillToLegacyDashboardRequestedPayload {
-    readonly drillDefinition: IDrillToLegacyDashboard;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha
-export interface DashboardDrillToLegacyDashboardResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardDrillToLegacyDashboardResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED";
-}
-
-// @alpha
-export interface DashboardDrillToLegacyDashboardResolvedPayload {
-    readonly drillDefinition: IDrillToLegacyDashboard;
-    readonly drillEvent: IDashboardDrillEvent;
-}
 
 // @public (undocumented)
 export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent> = Omit<T, "ctx">;
@@ -1998,271 +976,46 @@ export type DashboardEventBody<T extends IDashboardEvent | ICustomDashboardEvent
 export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEvent) => boolean;
 
 // @public
-export interface DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> {
+export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
     eval: DashboardEventEvalFn;
     handler: DashboardEventHandlerFn<TEvents>;
-}
+};
 
 // @public (undocumented)
 export type DashboardEventHandlerFn<TEvents extends DashboardEvents | ICustomDashboardEvent> = (event: TEvents, dashboardDispatch: Dispatch<AnyAction>, stateSelect: DashboardSelectorEvaluator) => void;
 
 // @public
-export type DashboardEvents = DashboardInitialized | DashboardDeinitialized | DateFilterValidationFailed | DashboardSaved | DashboardCopySaved | DashboardRenderRequested | DashboardAsyncRenderRequested | DashboardAsyncRenderResolved | DashboardRenderResolved | DashboardSharingChanged | DashboardRenderModeChanged | DashboardCommandStarted<any> | DashboardCommandFailed<any> | DashboardCommandRejected | DashboardQueryFailed | DashboardQueryRejected | DashboardQueryStarted | DashboardQueryCompleted<any, any> | DashboardRenamed | DashboardWasReset | DashboardExportToPdfRequested | DashboardExportToPdfResolved | DashboardExportToExcelRequested | DashboardExportToExcelResolved | DashboardExportToPdfPresentationRequested | DashboardExportToPdfPresentationResolved | DashboardExportToPptPresentationResolved | DashboardExportToPptPresentationRequested | DashboardExportToImageRequested | DashboardExportToImageResolved | DashboardUserInteractionTriggered | DashboardDateFilterSelectionChanged | DashboardAttributeFilterAdded | DashboardAttributeFilterRemoved | DashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | DashboardAttributeTitleChanged | DashboardAttributeSelectionModeChanged | DashboardAttributeFilterParentChanged | DashboardFilterContextChanged | DashboardLayoutSectionAdded | DashboardLayoutSectionMoved | DashboardLayoutSectionRemoved | DashboardLayoutSectionHeaderChanged | DashboardLayoutSectionItemsAdded | DashboardLayoutSectionItemReplaced | DashboardLayoutSectionItemMoved | DashboardLayoutSectionItemRemoved | DashboardLayoutSectionItemMovedToNewSection | DashboardLayoutChanged | DashboardKpiWidgetHeaderChanged | DashboardKpiWidgetDescriptionChanged | DashboardKpiWidgetConfigurationChanged | DashboardKpiWidgetMeasureChanged | DashboardKpiWidgetFilterSettingsChanged | DashboardKpiWidgetComparisonChanged | DashboardKpiWidgetDrillRemoved | DashboardKpiWidgetDrillSet | DashboardKpiWidgetChanged | DashboardInsightWidgetHeaderChanged | DashboardInsightWidgetDescriptionChanged | DashboardInsightWidgetFilterSettingsChanged | DashboardInsightWidgetVisPropertiesChanged | DashboardInsightWidgetVisConfigurationChanged | DashboardInsightWidgetInsightSwitched | DashboardInsightWidgetDrillsModified | DashboardInsightWidgetDrillsRemoved | DashboardInsightWidgetChanged | DashboardInsightWidgetExportRequested | DashboardInsightWidgetExportResolved | DashboardInsightWidgetRefreshed | DashboardRichTextWidgetContentChanged | DashboardRichTextWidgetFilterSettingsChanged | DashboardVisualizationSwitcherWidgetVisualizationAdded | DashboardVisualizationSwitcherWidgetVisualizationsUpdated | DashboardWidgetExecutionStarted | DashboardWidgetExecutionSucceeded | DashboardWidgetExecutionFailed | DashboardAlertCreated | DashboardAlertSaved | DashboardScheduledEmailCreated | DashboardScheduledEmailSaved | DashboardAutomationsRefreshed | ShowWidgetAsTableSet | DashboardDrillDownResolved | DashboardDrillToAttributeUrlResolved | DashboardDrillToCustomUrlResolved | DashboardDrillToDashboardResolved | DashboardDrillToInsightResolved | DashboardDrillToLegacyDashboardResolved | DashboardKeyDriverAnalysisResolved | DashboardKeyDriverAnalysisRequested | DashboardDrillResolved | DashboardDrillDownRequested | DashboardDrillToAttributeUrlRequested | DashboardDrillToCustomUrlRequested | DashboardDrillToDashboardRequested | DashboardDrillToInsightRequested | DashboardDrillToLegacyDashboardRequested | DashboardDrillRequested | DashboardDrillableItemsChanged | DashboardIgnoreExecutionTimestampChanged | DashboardTabSwitched | DashboardTabConvertedFromDefault | DashboardTabCreated | DashboardTabDeleted | DashboardTabRenamingStarted | DashboardTabRenamingCanceled | DashboardTabRenamed | CreateInsightRequested | CreateAttributeHierarchyRequested | DeleteAttributeHierarchyRequested;
+export type DashboardEvents = DashboardInitialized | DashboardDeinitialized | DateFilterValidationFailed | DashboardSaved | DashboardCopySaved | DashboardRenderRequested | DashboardAsyncRenderRequested | DashboardAsyncRenderResolved | DashboardRenderResolved | DashboardSharingChanged | IDashboardRenderModeChanged | IDashboardCommandStarted<any> | IDashboardCommandFailed<any> | IDashboardCommandRejected | IDashboardQueryFailed | IDashboardQueryRejected | IDashboardQueryStarted | IDashboardQueryCompleted<any, any> | IDashboardRenamed | IDashboardWasReset | IDashboardExportToPdfRequested | IDashboardExportToPdfResolved | IDashboardExportToExcelRequested | IDashboardExportToExcelResolved | IDashboardExportToPdfPresentationRequested | IDashboardExportToPdfPresentationResolved | IDashboardExportToPptPresentationResolved | IDashboardExportToPptPresentationRequested | IDashboardExportToImageRequested | IDashboardExportToImageResolved | IDashboardUserInteractionTriggered | DashboardDateFilterSelectionChanged | IDashboardAttributeFilterAdded | IDashboardAttributeFilterRemoved | IDashboardAttributeFilterMoved | DashboardAttributeFilterSelectionChanged | IDashboardAttributeTitleChanged | IDashboardAttributeSelectionModeChanged | IDashboardAttributeFilterParentChanged | DashboardFilterContextChanged | IDashboardLayoutSectionAdded | IDashboardLayoutSectionMoved | IDashboardLayoutSectionRemoved | IDashboardLayoutSectionHeaderChanged | IDashboardLayoutSectionItemsAdded | IDashboardLayoutSectionItemReplaced | IDashboardLayoutSectionItemMoved | IDashboardLayoutSectionItemRemoved | IDashboardLayoutSectionItemMovedToNewSection | IDashboardLayoutChanged | IDashboardKpiWidgetHeaderChanged | IDashboardKpiWidgetDescriptionChanged | IDashboardKpiWidgetConfigurationChanged | IDashboardKpiWidgetMeasureChanged | IDashboardKpiWidgetFilterSettingsChanged | IDashboardKpiWidgetComparisonChanged | IDashboardKpiWidgetDrillRemoved | IDashboardKpiWidgetDrillSet | IDashboardKpiWidgetChanged | IDashboardInsightWidgetHeaderChanged | IDashboardInsightWidgetDescriptionChanged | IDashboardInsightWidgetFilterSettingsChanged | IDashboardInsightWidgetVisPropertiesChanged | IDashboardInsightWidgetVisConfigurationChanged | IDashboardInsightWidgetInsightSwitched | IDashboardInsightWidgetDrillsModified | IDashboardInsightWidgetDrillsRemoved | IDashboardInsightWidgetChanged | IDashboardInsightWidgetExportRequested | IDashboardInsightWidgetExportResolved | IDashboardInsightWidgetRefreshed | IDashboardRichTextWidgetContentChanged | IDashboardRichTextWidgetFilterSettingsChanged | IDashboardVisualizationSwitcherWidgetVisualizationAdded | IDashboardVisualizationSwitcherWidgetVisualizationsUpdated | IDashboardWidgetExecutionStarted | IDashboardWidgetExecutionSucceeded | IDashboardWidgetExecutionFailed | IDashboardAlertCreated | IDashboardAlertSaved | IDashboardScheduledEmailCreated | IDashboardScheduledEmailSaved | IDashboardAutomationsRefreshed | IShowWidgetAsTableSet | IDashboardDrillDownResolved | IDashboardDrillToAttributeUrlResolved | IDashboardDrillToCustomUrlResolved | IDashboardDrillToDashboardResolved | IDashboardDrillToInsightResolved | IDashboardDrillToLegacyDashboardResolved | IDashboardKeyDriverAnalysisResolved | IDashboardKeyDriverAnalysisRequested | IDashboardDrillResolved | IDashboardDrillDownRequested | IDashboardDrillToAttributeUrlRequested | IDashboardDrillToCustomUrlRequested | IDashboardDrillToDashboardRequested | IDashboardDrillToInsightRequested | IDashboardDrillToLegacyDashboardRequested | IDashboardDrillRequested | IDashboardDrillableItemsChanged | IDashboardIgnoreExecutionTimestampChanged | IDashboardTabSwitched | IDashboardTabConvertedFromDefault | IDashboardTabCreated | IDashboardTabDeleted | IDashboardTabRenamingStarted | IDashboardTabRenamingCanceled | IDashboardTabRenamed | ICreateInsightRequested | ICreateAttributeHierarchyRequested | IDeleteAttributeHierarchyRequested;
 
 // @public
 export type DashboardEventType = "GDC.DASH/EVT.COMMAND.FAILED" | "GDC.DASH/EVT.COMMAND.REJECTED" | "GDC.DASH/EVT.COMMAND.STARTED" | "GDC.DASH/EVT.QUERY.FAILED" | "GDC.DASH/EVT.QUERY.REJECTED" | "GDC.DASH/EVT.QUERY.STARTED" | "GDC.DASH/EVT.QUERY.COMPLETED" | "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED" | "GDC.DASH/EVT.INITIALIZED" | "GDC.DASH/EVT.DEINITIALIZED" | "GDC.DASH/EVT.SAVED" | "GDC.DASH/EVT.COPY_SAVED" | "GDC.DASH/EVT.RENAMED" | "GDC.DASH/EVT.RESET" | "GDC.DASH/EVT.DELETED" | "GDC.DASH/EVT.RENDER_MODE.CHANGED" | "GDC.DASH/EVT.EXPORT.PDF.REQUESTED" | "GDC.DASH/EVT.EXPORT.PDF.RESOLVED" | "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED" | "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED" | "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED" | "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED" | "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED" | "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED" | "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED" | "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED" | "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED" | "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED" | "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED" | "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION" | "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED" | "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED" | "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED" | "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED" | "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED" | "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED" | "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET" | "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.IGNORE_CROSS_FILTERING_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED" | "GDC.DASH/EVT.SHOW_WIDGET_AS_TABLE.SET" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_REMOVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_ADDED" | "GDC.DASH/EVT.INSIGHT_WIDGET.DRILL_DOWN_MODIFIED" | "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED" | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED" | "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED" | "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED" | "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED" | "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED" | "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED" | "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED" | "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED" | "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED" | "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED" | "GDC.DASH/EVT.ALERT.CREATED" | "GDC.DASH/EVT.ALERT.SAVED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED" | "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED" | "GDC.DASH/EVT.DRILL.REQUESTED" | "GDC.DASH/EVT.DRILL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED" | "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED" | "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED" | "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED" | "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED" | "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED" | "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED" | "GDC.DASH/EVT.DRILL_TARGETS.ADDED" | "GDC.DASH/EVT.RENDER.REQUESTED" | "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED" | "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED" | "GDC.DASH/EVT.RENDER.RESOLVED" | "GDC.DASH/EVT.SHARING.CHANGED" | "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED" | "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED" | "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED" | "GDC.DASH/EVT.ATTRIBUTE_HIERARCHY_MODIFIED" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.SUCCESS" | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE" | "GDC.DASH/EVT.AUTOMATIONS.REFRESHED" | "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED" | "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET" | "GDC.DASH/EVT.TAB.SWITCHED" | "GDC.DASH/EVT.TAB.REPOSITIONED" | "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT" | "GDC.DASH/EVT.TAB.CREATED" | "GDC.DASH/EVT.TAB.DELETED" | "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED" | "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED" | "GDC.DASH/EVT.TAB.RENAMED";
 
-// @alpha
-export interface DashboardExportSlideConfig {
-    height: number;
-    width: number;
-}
-
-// @beta
-export interface DashboardExportToExcelRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED";
-}
-
-// @beta
-export interface DashboardExportToExcelResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardExportToExcelResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED";
-}
-
-// @beta
-export interface DashboardExportToExcelResolvedPayload {
-    readonly result: IExportResult;
-    readonly resultUri: string;
-}
-
-// @beta
-export interface DashboardExportToImageRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED";
-}
-
-// @beta
-export interface DashboardExportToImageResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardExportToImageResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED";
-}
-
-// @beta
-export interface DashboardExportToImageResolvedPayload {
-    readonly result: IExportResult;
-    readonly resultUri: string;
-}
-
-// @beta
-export interface DashboardExportToPdfPresentationRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED";
-}
-
-// @beta
-export interface DashboardExportToPdfPresentationResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardExportToExcelResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED";
-}
-
-// @beta
-export interface DashboardExportToPdfPresentationResolvedPayload {
-    readonly result: IExportResult;
-    readonly resultUri: string;
-}
-
-// @beta
-export interface DashboardExportToPdfRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.PDF.REQUESTED";
-}
-
-// @beta
-export interface DashboardExportToPdfResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardExportToPdfResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED";
-}
-
-// @beta
-export interface DashboardExportToPdfResolvedPayload {
-    readonly result: IExportResult;
-    readonly resultUri: string;
-}
-
-// @beta
-export interface DashboardExportToPptPresentationRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED";
-}
-
-// @beta
-export interface DashboardExportToPptPresentationResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardExportToExcelResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED";
-}
-
-// @beta
-export interface DashboardExportToPptPresentationResolvedPayload {
-    readonly result: IExportResult;
-    readonly resultUri: string;
-}
-
 // @public
-export interface DashboardFilterContextChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardFilterContextChangedPayload;
-    // (undocumented)
+export type DashboardFilterContextChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED";
-}
+    readonly payload: DashboardFilterContextChangedPayload;
+};
 
 // @public
-export interface DashboardFilterContextChangedPayload {
-    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
+export type DashboardFilterContextChangedPayload = {
     readonly filterContext: IFilterContextDefinition;
-    // @internal
+    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
     readonly tabLocalIdentifier?: string;
-}
-
-// @alpha
-export interface DashboardFilterContextSelectionReseted extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET";
-}
-
-// @alpha
-export interface DashboardFilterViewApplicationFailed extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE";
-}
-
-// @alpha
-export interface DashboardFilterViewApplicationSucceeded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardFilterViewApplicationSucceededPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS";
-}
-
-// @alpha
-export interface DashboardFilterViewApplicationSucceededPayload {
-    // (undocumented)
-    readonly filterView: IDashboardFilterView;
-}
-
-// @alpha
-export interface DashboardFilterViewCreationFailed extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE";
-}
-
-// @alpha
-export interface DashboardFilterViewCreationSucceeded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardFilterViewCreationSucceededPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS";
-}
-
-// @alpha
-export interface DashboardFilterViewCreationSucceededPayload {
-    // (undocumented)
-    readonly filterView: IDashboardFilterView;
-}
-
-// @alpha
-export interface DashboardFilterViewDefaultStatusChangeFailed extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardFilterViewDefaultStatusChangeFailedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE";
-}
-
-// @alpha
-export interface DashboardFilterViewDefaultStatusChangeFailedPayload {
-    // (undocumented)
-    readonly filterView: IDashboardFilterView;
-}
-
-// @alpha
-export interface DashboardFilterViewDefaultStatusChangeSucceeded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardFilterViewDefaultStatusChangeSucceededPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.SUCCESS";
-}
-
-// @alpha
-export interface DashboardFilterViewDefaultStatusChangeSucceededPayload {
-    // (undocumented)
-    readonly filterView: IDashboardFilterView;
-}
-
-// @alpha
-export interface DashboardFilterViewDeletionFailed extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE";
-}
-
-// @alpha
-export interface DashboardFilterViewDeletionSucceeded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardFilterViewDeletionSucceededPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS";
-}
-
-// @alpha
-export interface DashboardFilterViewDeletionSucceededPayload {
-    // (undocumented)
-    readonly filterView: IDashboardFilterView;
-}
-
-// @beta
-export interface DashboardFocusObject {
-    automationId?: Identifier;
-    visualizationId?: Identifier;
-    widgetId?: string;
-}
-
-// @alpha
-export interface DashboardIgnoreExecutionTimestampChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardIgnoreExecutionTimestampChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED";
-}
-
-// @alpha
-export interface DashboardIgnoreExecutionTimestampChangedPayload {
-    ignoreExecutionTimestamp: boolean;
-}
+};
 
 // @public
-export interface DashboardInitialized extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInitializedPayload;
-    // (undocumented)
+export type DashboardInitialized = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.INITIALIZED";
-}
+    readonly payload: DashboardInitializedPayload;
+};
 
 // @public
-export interface DashboardInitializedPayload {
-    readonly config: DashboardConfig;
+export type DashboardInitializedPayload = {
     readonly dashboard?: IDashboard;
     readonly insights: ReadonlyArray<IInsight>;
+    readonly config: DashboardConfig;
     readonly permissions: IWorkspacePermissions;
-}
+};
 
 // @internal (undocumented)
 export function DashboardInsight(props: Omit<IDashboardInsightProps, "insight"> & {
@@ -2277,176 +1030,6 @@ export function DashboardInsightMenuButton(props: IDashboardInsightMenuButtonPro
 
 // @internal (undocumented)
 export function DashboardInsightMenuTitle(props: IDashboardInsightMenuTitleProps): ReactElement;
-
-// @beta
-export interface DashboardInsightWidgetChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED";
-}
-
-// @beta
-export interface DashboardInsightWidgetChangedPayload {
-    insightWidget: IInsightWidget | IInsightWidgetDefinition;
-}
-
-// @beta
-export interface DashboardInsightWidgetDescriptionChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetDescriptionChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED";
-}
-
-// @beta
-export interface DashboardInsightWidgetDescriptionChangedPayload {
-    readonly description: WidgetDescription;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardInsightWidgetDrillsModified extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetDrillsModifiedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED";
-}
-
-// @beta
-export interface DashboardInsightWidgetDrillsModifiedPayload {
-    readonly added: DrillDefinition[];
-    readonly ref: ObjRef;
-    readonly updated: DrillDefinition[];
-}
-
-// @beta
-export interface DashboardInsightWidgetDrillsRemoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetDrillsRemovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED";
-}
-
-// @beta
-export interface DashboardInsightWidgetDrillsRemovedPayload {
-    readonly ref: ObjRef;
-    readonly removed: DrillDefinition[];
-}
-
-// @beta
-export interface DashboardInsightWidgetExportRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetExportRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED";
-}
-
-// @beta
-export interface DashboardInsightWidgetExportRequestedPayload {
-    readonly config: IExportConfig;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardInsightWidgetExportResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetExportResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED";
-}
-
-// @beta
-export interface DashboardInsightWidgetExportResolvedPayload {
-    result: IExportResult;
-    resultUri: string;
-}
-
-// @beta
-export interface DashboardInsightWidgetFilterSettingsChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetFilterSettingsChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED";
-}
-
-// @beta
-export interface DashboardInsightWidgetFilterSettingsChangedPayload {
-    readonly dateDatasetForFiltering?: ICatalogDateDataset;
-    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
-    readonly ignoredDateFilters?: IDashboardDateFilter[];
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardInsightWidgetHeaderChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetHeaderChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED";
-}
-
-// @beta
-export interface DashboardInsightWidgetHeaderChangedPayload {
-    readonly header: WidgetHeader;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardInsightWidgetInsightSwitched extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetInsightSwitchedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED";
-}
-
-// @beta
-export interface DashboardInsightWidgetInsightSwitchedPayload {
-    readonly insight: IInsight;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardInsightWidgetRefreshed extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetRefreshedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED";
-}
-
-// @beta
-export interface DashboardInsightWidgetRefreshedPayload {
-    insight: IInsight;
-}
-
-// @beta
-export interface DashboardInsightWidgetVisConfigurationChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetVisConfigurationChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED";
-}
-
-// @beta
-export interface DashboardInsightWidgetVisConfigurationChangedPayload {
-    readonly newConfig: IInsightWidgetConfiguration | undefined;
-    readonly oldConfig: IInsightWidgetConfiguration | undefined;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardInsightWidgetVisPropertiesChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED";
-}
-
-// @beta
-export interface DashboardInsightWidgetVisPropertiesChangedPayload {
-    readonly properties: VisualizationProperties | undefined;
-    readonly ref: ObjRef;
-}
 
 // @public
 export type DashboardItem = DashboardItemVisualization | DashboardItemVisualizationContent;
@@ -2464,197 +1047,11 @@ export type DashboardItemVisualizationContent = {
     visualizationContent: IInsight;
 };
 
-// @beta
-export interface DashboardKeyDriverAnalysisRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKeyDriverAnalysisRequestedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED";
-}
-
-// @beta
-export interface DashboardKeyDriverAnalysisRequestedPayload {
-    readonly drillDefinition: IKeyDriveAnalysis;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly keyDriveItem: DashboardKeyDriverCombinationItem;
-}
-
-// @beta
-export interface DashboardKeyDriverAnalysisResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKeyDriverAnalysisResolvedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED";
-}
-
-// @beta
-export interface DashboardKeyDriverAnalysisResolvedPayload {
-    readonly drillDefinition: IKeyDriveAnalysis;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly keyDriveDefinition: IKdaDefinition;
-}
-
-// @internal (undocumented)
-export interface DashboardKeyDriverCombinationItem {
-    // (undocumented)
-    difference: number;
-    // (undocumented)
-    measure: IMeasureDescriptor;
-    // (undocumented)
-    range: [ITableDataAttributeScope, ITableDataAttributeScope];
-    // (undocumented)
-    type: "comparative" | "year-to-year";
-    // (undocumented)
-    values: [number, number];
-    // (undocumented)
-    where: "before" | "after" | "none";
-}
-
-// @beta
-export interface DashboardKpiWidgetChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED";
-}
-
-// @beta
-export interface DashboardKpiWidgetChangedPayload {
-    kpiWidget: IKpiWidget | IKpiWidgetDefinition;
-}
-
-// @beta
-export interface DashboardKpiWidgetComparisonChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetComparisonChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED";
-}
-
-// @beta
-export interface DashboardKpiWidgetComparisonChangedPayload {
-    readonly kpi: IKpi;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardKpiWidgetConfigurationChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetConfigurationChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED";
-}
-
-// @beta
-export interface DashboardKpiWidgetConfigurationChangedPayload {
-    readonly configuration: IKpiWidgetConfiguration | undefined;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardKpiWidgetDescriptionChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetDescriptionChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED";
-}
-
-// @beta
-export interface DashboardKpiWidgetDescriptionChangedPayload {
-    readonly description: WidgetDescription;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardKpiWidgetDrillRemoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetDrillRemovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED";
-}
-
-// @beta
-export interface DashboardKpiWidgetDrillRemovedPayload {
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardKpiWidgetDrillSet extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetDrillSetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET";
-}
-
-// @beta
-export interface DashboardKpiWidgetDrillSetPayload {
-    readonly drill: IDrillToLegacyDashboard;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetFilterSettingsChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
-}
-
-// @beta
-export interface DashboardKpiWidgetFilterSettingsChangedPayload {
-    readonly dateDatasetForFiltering?: ICatalogDateDataset;
-    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardKpiWidgetHeaderChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetHeaderChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED";
-}
-
-// @beta
-export interface DashboardKpiWidgetHeaderChangedPayload {
-    readonly header: WidgetHeader;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardKpiWidgetMeasureChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED";
-}
-
-// @beta
-export interface DashboardKpiWidgetMeasureChangedPayload {
-    readonly header?: WidgetHeader;
-    readonly kpiWidget: IKpiWidget;
-    readonly measure: IMeasureMetadataObject;
-    readonly ref: ObjRef;
-}
-
 // @internal (undocumented)
 export function DashboardLayout(props: IDashboardLayoutProps): ReactElement;
 
-// @beta
-export interface DashboardLayoutChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
-}
-
-// @beta
-export interface DashboardLayoutChangedPayload {
-    readonly layout: IDashboardLayout<ExtendedDashboardWidget>;
-}
-
 // @beta (undocumented)
-export type DashboardLayoutCommands = AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem | RemoveSectionItemByWidgetRef | ResizeHeight;
+export type DashboardLayoutCommands = IAddLayoutSection | IMoveLayoutSection | IRemoveLayoutSection | ChangeLayoutSectionHeader | IAddSectionItems | IMoveSectionItem | IRemoveSectionItem | IRemoveSectionItemByWidgetRef | IResizeHeight;
 
 // @alpha (undocumented)
 export type DashboardLayoutComponentProvider = (widget: IDashboardLayout) => CustomDashboardLayoutComponent;
@@ -2679,197 +1076,16 @@ export type DashboardLayoutDraggableListItem = BaseDraggableLayoutItem & {
 export type DashboardLayoutDraggingComponent = ComponentType<IDashboardLayoutDraggingComponentProps>;
 
 // @public (undocumented)
-export type DashboardLayoutExportTransformFn = <TWidget>(layout: IDashboardLayout<TWidget>, focusObject?: DashboardFocusObject) => IDashboardLayout<TWidget> | undefined;
-
-// @beta
-export interface DashboardLayoutSectionAdded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionAddedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
-}
-
-// @beta
-export interface DashboardLayoutSectionAddedPayload {
-    // @deprecated
-    readonly index: number;
-    readonly path: ILayoutSectionPath;
-    readonly section: ExtendedDashboardLayoutSection;
-}
-
-// @beta
-export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionHeaderChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
-}
-
-// @beta
-export interface DashboardLayoutSectionHeaderChangedPayload {
-    readonly newHeader: IDashboardLayoutSectionHeader;
-    // @deprecated
-    readonly sectionIndex: number;
-    readonly sectionPath: ILayoutSectionPath;
-}
-
-// @beta
-export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionItemMovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
-}
-
-// @beta
-export interface DashboardLayoutSectionItemMovedPayload {
-    // @deprecated
-    readonly fromIndex: number;
-    readonly fromPath: ILayoutItemPath;
-    // @deprecated
-    readonly fromSectionIndex: number;
-    readonly item: ExtendedDashboardItem;
-    readonly originalSectionRemoved: boolean;
-    // @deprecated
-    readonly toIndex: number;
-    readonly toPath: ILayoutItemPath;
-    // @deprecated
-    readonly toSectionIndex: number;
-}
-
-// @beta
-export interface DashboardLayoutSectionItemMovedToNewSection extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionItemMovedToNewSectionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION";
-}
-
-// @beta
-export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
-    // @deprecated
-    readonly fromIndex: number;
-    readonly fromPath: ILayoutItemPath;
-    // @deprecated
-    readonly fromSectionIndex: number;
-    readonly item: ExtendedDashboardItem;
-    readonly originalSectionRemoved: boolean;
-    // @deprecated
-    readonly toIndex: number;
-    readonly toPath: ILayoutItemPath;
-    // @deprecated
-    readonly toSectionIndex: number;
-}
-
-// @beta
-export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionItemRemovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
-}
-
-// @beta
-export interface DashboardLayoutSectionItemRemovedPayload {
-    readonly item: ExtendedDashboardItem;
-    // @deprecated
-    readonly itemIndex: number;
-    readonly itemPath: ILayoutItemPath;
-    readonly section?: ExtendedDashboardLayoutSection;
-    readonly stashIdentifier?: StashedDashboardItemsId;
-}
-
-// @beta
-export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionItemReplacedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
-}
-
-// @beta
-export interface DashboardLayoutSectionItemReplacedPayload {
-    // @deprecated
-    readonly itemIndex: number;
-    readonly items: ReadonlyArray<ExtendedDashboardItem>;
-    readonly path: ILayoutItemPath;
-    readonly previousItem: ExtendedDashboardItem;
-    // @deprecated
-    readonly sectionIndex: number;
-    readonly stashIdentifier?: StashedDashboardItemsId;
-}
-
-// @beta
-export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionItemsAddedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
-}
-
-// @beta
-export interface DashboardLayoutSectionItemsAddedPayload {
-    readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
-    readonly path: ILayoutItemPath;
-    // @deprecated
-    readonly sectionIndex: number;
-    // @deprecated
-    readonly startIndex: number;
-    readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
-}
-
-// @beta
-export interface DashboardLayoutSectionMoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionMovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
-}
-
-// @beta
-export interface DashboardLayoutSectionMovedPayload {
-    // @deprecated
-    readonly fromIndex: number;
-    readonly fromPath: ILayoutSectionPath;
-    readonly section: ExtendedDashboardLayoutSection;
-    // @deprecated
-    readonly toIndex: number;
-    readonly toPath: ILayoutSectionPath;
-}
-
-// @beta
-export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardLayoutSectionRemovedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
-}
-
-// @beta
-export interface DashboardLayoutSectionRemovedPayload {
-    readonly eagerRemoval?: boolean;
-    // @deprecated
-    readonly index: number;
-    readonly path: ILayoutSectionPath;
-    readonly section: ExtendedDashboardLayoutSection;
-    readonly stashIdentifier?: StashedDashboardItemsId;
-}
+export type DashboardLayoutExportTransformFn = <TWidget>(layout: IDashboardLayout<TWidget>, focusObject?: IDashboardFocusObject) => IDashboardLayout<TWidget> | undefined;
 
 // @internal
-export type DashboardLayoutWidgetComponentSet = CustomComponentBase<IDashboardLayoutProps, Parameters<DashboardLayoutComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardLayoutProps>> & ConfigurableWidget<IDashboardLayout>;
-
-// @beta (undocumented)
-export interface DashboardMetaState {
-    descriptor?: DashboardDescriptor;
-    initialContent?: boolean;
-    persistedDashboard?: IDashboard;
-}
+export type DashboardLayoutWidgetComponentSet = ICustomComponentBase<IDashboardLayoutProps, Parameters<DashboardLayoutComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardLayoutProps>> & ConfigurableWidget<IDashboardLayout>;
 
 // @public (undocumented)
-export interface DashboardModelCustomizationFns {
+export type DashboardModelCustomizationFns = {
     existingDashboardTransformFn?: DashboardTransformFn;
     existingExportTransformFn?: DashboardLayoutExportTransformFn;
-}
+};
 
 // @internal (undocumented)
 export enum DashboardPartId {
@@ -2882,25 +1098,22 @@ export enum DashboardPartId {
 }
 
 // @public (undocumented)
-export interface DashboardPermissionsState {
-    // @beta (undocumented)
+export type DashboardPermissionsState = {
     dashboardPermissions?: IDashboardPermissions;
-}
+};
 
 // @public
-export interface DashboardPluginDescriptor {
+export type DashboardPluginDescriptor = {
     readonly author: string;
-    readonly compatibility?: string;
-    readonly debugName?: string;
     readonly displayName: string;
-    readonly longDescription?: string;
-    // @deprecated
-    readonly maxEngineVersion?: string;
-    // @deprecated
-    readonly minEngineVersion: string;
-    readonly shortDescription?: string;
     readonly version: string;
-}
+    readonly shortDescription?: string;
+    readonly longDescription?: string;
+    readonly debugName?: string;
+    readonly compatibility?: string;
+    readonly minEngineVersion: string;
+    readonly maxEngineVersion?: string;
+};
 
 // @public
 export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
@@ -2923,55 +1136,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes | QueryAttributeByDisplayForm | QueryAttributeDataSet | QueryAttributeElements | QueryConnectedAttributes | QueryMetricsAndFacts | QueryAvailableDatasetsForItems;
-
-// @beta
-export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardQueryCompletedPayload<TQuery, TResult>;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.QUERY.COMPLETED";
-}
-
-// @beta
-export interface DashboardQueryCompletedPayload<TQuery extends IDashboardQuery, TResult> {
-    readonly query: TQuery;
-    readonly result: TResult;
-}
-
-// @beta
-export interface DashboardQueryFailed extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardQueryFailedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.QUERY.FAILED";
-}
-
-// @beta
-export interface DashboardQueryFailedPayload {
-    readonly error?: Error;
-    readonly message: string;
-    readonly reason: ActionFailedErrorReason;
-}
-
-// @beta
-export interface DashboardQueryRejected extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.QUERY.REJECTED";
-}
-
-// @beta
-export interface DashboardQueryStarted extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardQueryStartedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.QUERY.STARTED";
-}
-
-// @beta
-export interface DashboardQueryStartedPayload {
-    readonly query: IDashboardQuery;
-}
+export type DashboardQueries = IQueryInsightDateDatasets | IQueryMeasureDateDatasets | IQueryInsightAttributesMeta | IQueryWidgetFilters | IQueryWidgetBrokenAlerts | IQueryWidgetAlertCount | IQueryConnectingAttributes | IQueryAttributeByDisplayForm | IQueryAttributeDataSet | IQueryAttributeElements | IQueryConnectedAttributes | IQueryMetricsAndFacts | IQueryAvailableDatasetsForItems;
 
 // @beta (undocumented)
 export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.METRICS_AND_FACTS" | "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
@@ -2987,110 +1152,30 @@ export type DashboardRelatedFilter = {
     mode: DashboardDateFilterConfigMode | DashboardAttributeFilterConfigMode;
 };
 
-// @beta
-export interface DashboardRenamed extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardRenamedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.RENAMED";
-}
-
-// @beta
-export interface DashboardRenamedPayload {
-    readonly newTitle: string;
-}
-
-// @beta
-export interface DashboardRenderModeChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardRenderModeChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.RENDER_MODE.CHANGED";
-}
-
-// @beta
-export interface DashboardRenderModeChangedPayload {
-    renderMode: RenderMode;
-}
-
 // @public
-export interface DashboardRenderRequested extends IDashboardEvent {
-    // (undocumented)
+export type DashboardRenderRequested = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.RENDER.REQUESTED";
-}
+};
 
 // @public (undocumented)
-export interface DashboardRenderResolved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload?: {
-        config: Omit<RenderingWorkerConfiguration, "correlationIdGenerator">;
-    };
-    // (undocumented)
+export type DashboardRenderResolved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.RENDER.RESOLVED";
-}
-
-// @beta
-export interface DashboardRichTextWidgetContentChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardRichTextWidgetContentChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED";
-}
-
-// @beta
-export interface DashboardRichTextWidgetContentChangedPayload {
-    readonly content: string;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export interface DashboardRichTextWidgetFilterSettingsChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardRichTextWidgetFilterSettingsChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED";
-}
-
-// @beta
-export interface DashboardRichTextWidgetFilterSettingsChangedPayload {
-    readonly dateDatasetForFiltering?: ICatalogDateDataset;
-    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
-    readonly ignoredDateFilters?: IDashboardDateFilter[];
-    readonly ref: ObjRef;
-}
+    readonly payload?: {
+        config: Omit<IRenderingWorkerConfiguration, "correlationIdGenerator">;
+    };
+};
 
 // @public
-export interface DashboardSaved extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardSavedPayload;
-    // (undocumented)
+export type DashboardSaved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.SAVED";
-}
+    readonly payload: DashboardSavedPayload;
+};
 
 // @public
-export interface DashboardSavedPayload {
+export type DashboardSavedPayload = {
     readonly dashboard: IDashboard;
     readonly newDashboard: boolean;
-}
-
-// @beta
-export interface DashboardScheduledEmailCreated extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardScheduledEmailCreatedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
-}
-
-// @beta
-export interface DashboardScheduledEmailCreatedPayload {
-    readonly scheduledEmail: IAutomationMetadataObject;
-}
-
-// @beta
-export interface DashboardScheduledEmailSaved extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED";
-}
+};
 
 // @public
 export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
@@ -3102,77 +1187,48 @@ export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<T
 export function DashboardSettingsDialog(props: IDashboardSettingsDialogProps): ReactElement;
 
 // @public
-export interface DashboardSharingChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardSharingChangedPayload;
-    // (undocumented)
+export type DashboardSharingChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.SHARING.CHANGED";
-}
+    readonly payload: DashboardSharingChangedPayload;
+};
 
 // @public
-export interface DashboardSharingChangedPayload {
+export type DashboardSharingChangedPayload = {
     newSharingProperties: ISharingProperties;
-}
+};
 
 // @public
-export interface DashboardState {
-    // @beta (undocumented)
-    accessibleDashboards: AccessibleDashboardsState;
-    // @alpha (undocumented)
-    automations: AutomationsState;
-    // (undocumented)
+export type DashboardState = {
+    showWidgetAsTable: IShowWidgetAsTableState;
+    loading: ILoadingState;
+    saving: SavingState;
+    executed: IExecutedState;
     backendCapabilities: BackendCapabilitiesState;
-    // (undocumented)
-    catalog: CatalogState;
-    // (undocumented)
     config: ConfigState;
-    // (undocumented)
-    dashboardPermissions: DashboardPermissionsState;
-    // @beta (undocumented)
-    drill: DrillState;
-    // @alpha (undocumented)
-    drillTargets: EntityState<IDrillTargets, EntityId>;
-    // @beta (undocumented)
-    entitlements: EntitlementsState;
-    // (undocumented)
-    executed: ExecutedState;
-    // @beta
-    executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
-    // (undocumented)
-    filterViews: FilterViewsState;
-    // @alpha (undocumented)
-    inaccessibleDashboards: EntityState<IInaccessibleDashboard, EntityId>;
-    // @beta (undocumented)
-    insights: EntityState<IInsight, EntityId>;
-    // @beta (undocumented)
-    listedDashboards: EntityState<IListedDashboard, EntityId>;
-    // @beta (undocumented)
-    loading: LoadingState;
-    // @beta (undocumented)
-    meta: DashboardMetaState;
-    // @alpha (undocumented)
-    notificationChannels: NotificationChannelsState;
-    // (undocumented)
+    entitlements: IEntitlementsState;
     permissions: PermissionsState;
-    // @internal
+    tabs: ITabsState;
+    catalog: CatalogState;
+    user: UserState;
+    meta: IDashboardMetaState;
+    drill: IDrillState;
+    insights: EntityState<IInsight, EntityId>;
+    drillTargets: EntityState<IDrillTargets, EntityId>;
+    listedDashboards: EntityState<IListedDashboard, EntityId>;
+    accessibleDashboards: IAccessibleDashboardsState;
+    inaccessibleDashboards: EntityState<IInaccessibleDashboard, EntityId>;
+    dashboardPermissions: DashboardPermissionsState;
+    automations: IAutomationsState;
+    users: IUsersState;
+    notificationChannels: INotificationChannelsState;
+    renderMode: IRenderModeState;
+    ui: IUiState;
+    executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
     _queryCache: {
         [queryName: string]: any;
     };
-    // @beta
-    renderMode: RenderModeState;
-    // (undocumented)
-    saving: SavingState;
-    // @internal
-    showWidgetAsTable: ShowWidgetAsTableState;
-    // @alpha (undocumented)
-    tabs: TabsState;
-    // @beta
-    ui: UiState;
-    // (undocumented)
-    user: UserState;
-    // @alpha (undocumented)
-    users: UsersState;
-}
+    filterViews: IFilterViewsState;
+};
 
 // @public
 export type DashboardStateChangeCallback = (state: DashboardState, dispatch: DashboardDispatch) => void;
@@ -3205,239 +1261,38 @@ export class DashboardStoreAccessorRepository {
 export function DashboardStoreProvider(props: IDashboardStoreProviderProps): JSX.Element | null;
 
 // @alpha
-export interface DashboardTabConvertedFromDefault extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardTabConvertedFromDefaultPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT";
-}
+export function dashboardTabConvertedFromDefault(ctx: DashboardContext, newTabId: string, index: number, correlationId?: string): IDashboardTabConvertedFromDefault;
 
 // @alpha
-export function dashboardTabConvertedFromDefault(ctx: DashboardContext, newTabId: string, index: number, correlationId?: string): DashboardTabConvertedFromDefault;
+export function dashboardTabCreated(ctx: DashboardContext, newTabId: string, index: number, correlationId?: string): IDashboardTabCreated;
 
 // @alpha
-export interface DashboardTabConvertedFromDefaultPayload {
-    readonly index: number;
-    readonly newTabId: string;
-}
+export function dashboardTabDeleted(ctx: DashboardContext, deletedTabId: string, previousIndex: number, nextActiveTabId?: string, correlationId?: string): IDashboardTabDeleted;
 
 // @alpha
-export interface DashboardTabCreated extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardTabCreatedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.TAB.CREATED";
-}
+export function dashboardTabRenamed(ctx: DashboardContext, tabId: string, title: string, correlationId?: string): IDashboardTabRenamed;
 
 // @alpha
-export function dashboardTabCreated(ctx: DashboardContext, newTabId: string, index: number, correlationId?: string): DashboardTabCreated;
+export function dashboardTabRenamingCanceled(ctx: DashboardContext, tabId: string, correlationId?: string): IDashboardTabRenamingCanceled;
 
 // @alpha
-export interface DashboardTabCreatedPayload {
-    readonly index: number;
-    readonly newTabId: string;
-}
+export function dashboardTabRenamingStarted(ctx: DashboardContext, tabId: string, correlationId?: string): IDashboardTabRenamingStarted;
 
 // @alpha
-export interface DashboardTabDeleted extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardTabDeletedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.TAB.DELETED";
-}
-
-// @alpha
-export function dashboardTabDeleted(ctx: DashboardContext, deletedTabId: string, previousIndex: number, nextActiveTabId?: string, correlationId?: string): DashboardTabDeleted;
-
-// @alpha
-export interface DashboardTabDeletedPayload {
-    readonly deletedTabId: string;
-    readonly nextActiveTabId?: string;
-    readonly previousIndex: number;
-}
-
-// @alpha
-export interface DashboardTabRenamed extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardTabRenamedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.TAB.RENAMED";
-}
-
-// @alpha
-export function dashboardTabRenamed(ctx: DashboardContext, tabId: string, title: string, correlationId?: string): DashboardTabRenamed;
-
-// @alpha
-export interface DashboardTabRenamedPayload {
-    readonly tabId: string;
-    readonly title: string;
-}
-
-// @alpha
-export interface DashboardTabRenamingCanceled extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardTabRenamingCanceledPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED";
-}
-
-// @alpha
-export function dashboardTabRenamingCanceled(ctx: DashboardContext, tabId: string, correlationId?: string): DashboardTabRenamingCanceled;
-
-// @alpha
-export interface DashboardTabRenamingCanceledPayload {
-    readonly tabId: string;
-}
-
-// @alpha
-export interface DashboardTabRenamingStarted extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardTabRenamingStartedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED";
-}
-
-// @alpha
-export function dashboardTabRenamingStarted(ctx: DashboardContext, tabId: string, correlationId?: string): DashboardTabRenamingStarted;
-
-// @alpha
-export interface DashboardTabRenamingStartedPayload {
-    readonly tabId: string;
-}
-
-// @alpha
-export interface DashboardTabSwitched extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardTabSwitchedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.TAB.SWITCHED";
-}
-
-// @alpha
-export function dashboardTabSwitched(ctx: DashboardContext, previousTabId: string | undefined, newTabId: string, correlationId?: string): DashboardTabSwitched;
-
-// @alpha
-export interface DashboardTabSwitchedPayload {
-    readonly newTabId: string;
-    readonly previousTabId: string | undefined;
-}
+export function dashboardTabSwitched(ctx: DashboardContext, previousTabId: string | undefined, newTabId: string, correlationId?: string): IDashboardTabSwitched;
 
 // @public (undocumented)
 export type DashboardTransformFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => IDashboard<ExtendedDashboardWidget> | undefined;
 
-// @beta
-export interface DashboardUserInteractionTriggered extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: UserInteractionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED";
-}
-
-// @beta
-export interface DashboardVisualizationSwitcherWidgetVisualizationAdded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationAddedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED";
-}
-
-// @beta
-export interface DashboardVisualizationSwitcherWidgetVisualizationAddedPayload {
-    readonly ref: ObjRef;
-    readonly visualization: IInsightWidget;
-}
-
-// @beta
-export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdated extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED";
-}
-
-// @beta
-export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload {
-    readonly ref: ObjRef;
-    readonly visualizations: IInsightWidget[];
-}
-
-// @beta
-export interface DashboardWasReset extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardWasResetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.RESET";
-}
-
-// @beta
-export interface DashboardWasResetPayload {
-    dashboard?: IDashboard;
-}
-
 // @internal (undocumented)
 export function DashboardWidget(props: IDashboardWidgetProps): ReactElement;
-
-// @beta
-export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardWidgetExecutionFailedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED";
-}
-
-// @beta
-export interface DashboardWidgetExecutionFailedPayload {
-    error: GoodDataSdkError;
-    widgetRef: ObjRef;
-}
-
-// @beta
-export interface DashboardWidgetExecutionStarted extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardWidgetExecutionStartedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED";
-}
-
-// @beta
-export interface DashboardWidgetExecutionStartedPayload {
-    executionDefinition: IExecutionDefinition;
-    widgetRef: ObjRef;
-}
-
-// @beta
-export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardWidgetExecutionSucceededPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED";
-}
-
-// @beta
-export interface DashboardWidgetExecutionSucceededPayload {
-    dataView: IDataView;
-    widgetRef: ObjRef;
-}
 
 // @public (undocumented)
 export type DateFilterComponentProvider = (filter: IDashboardDateFilter) => CustomDashboardDateFilterComponent;
 
 // @internal
-export type DateFilterComponentSet = CustomComponentBase<IDashboardDateFilterProps, Parameters<DateFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
+export type DateFilterComponentSet = ICustomComponentBase<IDashboardDateFilterProps, Parameters<DateFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
 CreatableByDragComponent;
-
-// @alpha (undocumented)
-export interface DateFilterConfigsState {
-    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
-}
-
-// @beta (undocumented)
-export interface DateFilterConfigState {
-    dateFilterConfig?: IDashboardDateFilterConfig_2;
-    dateFilterConfigValidationWarnings?: DateFilterValidationResult[];
-    effectiveDateFilterConfig?: IDateFilterConfig;
-    isUsingDashboardOverrides?: boolean;
-}
 
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
@@ -3462,31 +1317,28 @@ export type DateFilterDraggingComponent = ComponentType<IDateFilterDraggingCompo
 export type DateFilterInteractionType = "dateFilterTitleResetClicked" | "dateFilterConfigurationOpened";
 
 // @public
-export interface DateFilterSelection {
-    // @alpha
-    readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+export type DateFilterSelection = {
     readonly dataSet?: ObjRef;
-    readonly dateFilterOptionLocalId?: string;
-    readonly from?: DateString | number;
+    readonly type: DateFilterType;
     readonly granularity: DateFilterGranularity;
+    readonly from?: DateString | number;
+    readonly to?: DateString | number;
+    readonly dateFilterOptionLocalId?: string;
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
-    readonly to?: DateString | number;
-    readonly type: DateFilterType;
-}
+    readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+};
 
 // @public
-export interface DateFilterValidationFailed extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DateFilterValidationFailedPayload;
-    // (undocumented)
+export type DateFilterValidationFailed = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED";
-}
+    readonly payload: DateFilterValidationFailedPayload;
+};
 
 // @public
-export interface DateFilterValidationFailedPayload {
+export type DateFilterValidationFailedPayload = {
     readonly result: DateFilterValidationResult;
-}
+};
 
 // @public (undocumented)
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
@@ -3542,13 +1394,7 @@ export function DefaultDashboardDateFilter({ filter, workingFilter, onFilterChan
 export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
 
 // @alpha (undocumented)
-export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboardExportVariablesProps): JSX.Element | null;
-
-// @alpha (undocumented)
-export interface DefaultDashboardExportVariablesProps {
-    // (undocumented)
-    renderMode: RenderMode;
-}
+export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboardExportVariablesProps): JSX.Element | null;
 
 // @public
 export function DefaultDashboardInsight(props: IDashboardInsightProps): JSX.Element;
@@ -3671,55 +1517,16 @@ export function DefaultTopBar(props: ITopBarProps): ReactElement;
 export function DefaultVisualizationSwitcherToolbar(props: IVisualizationSwitcherToolbarProps): ReactElement;
 
 // @internal
-export interface DeleteAttributeHierarchyRequested extends IDashboardEvent {
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED";
-}
-
-// @internal
-export function deleteAttributeHierarchyRequested(correlationId?: string): DashboardEventBody<DeleteAttributeHierarchyRequested>;
-
-// @beta (undocumented)
-export interface DeleteDashboard extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DELETE";
-}
+export function deleteAttributeHierarchyRequested(correlationId?: string): DashboardEventBody<IDeleteAttributeHierarchyRequested>;
 
 // @beta
-export function deleteDashboard(correlationId?: string): DeleteDashboard;
+export function deleteDashboard(correlationId?: string): IDeleteDashboard;
 
 // @alpha
-export interface DeleteDashboardTab extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DeleteDashboardTabPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.DELETE";
-}
+export function deleteDashboardTab(tabId: string, correlationId?: string): IDeleteDashboardTab;
 
 // @alpha
-export function deleteDashboardTab(tabId: string, correlationId?: string): DeleteDashboardTab;
-
-// @alpha
-export interface DeleteDashboardTabPayload {
-    readonly tabId: string;
-}
-
-// @alpha
-export interface DeleteFilterView extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DeleteFilterViewPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE";
-}
-
-// @alpha
-export function deleteFilterView(ref: ObjRef, correlationId?: string): DeleteFilterView;
-
-// @alpha
-export interface DeleteFilterViewPayload {
-    // (undocumented)
-    readonly ref: ObjRef;
-}
+export function deleteFilterView(ref: ObjRef, correlationId?: string): IDeleteFilterView;
 
 // @alpha
 export type DescriptionExportData = {
@@ -3738,7 +1545,7 @@ export type DescriptionTooltipOpenedData = {
 export type DescriptionTooltipOpenedFrom = "kpi" | "widget" | "insight";
 
 // @beta (undocumented)
-export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase<"descriptionTooltipOpened", DescriptionTooltipOpenedData>;
+export type DescriptionTooltipOpenedPayload = IUserInteractionPayloadWithDataBase<"descriptionTooltipOpened", DescriptionTooltipOpenedData>;
 
 // @beta (undocumented)
 export type DescriptionTooltipOpenedType = "inherit" | "custom";
@@ -3747,13 +1554,13 @@ export type DescriptionTooltipOpenedType = "inherit" | "custom";
 export type DisabledReason = "oldWidget";
 
 // @beta
-export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @beta
-export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string): IChangeKpiWidgetFilterSettings;
 
 // @alpha
-export function disableRichTextWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeRichTextWidgetFilterSettings;
+export function disableRichTextWidgetDateFilter(ref: ObjRef, correlationId?: string): IChangeRichTextWidgetFilterSettings;
 
 // @alpha
 export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(dispatch: DashboardDispatch, command: TCommand): Promise<TResult>;
@@ -3773,7 +1580,7 @@ export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attri
 export function DraggableCreatePanelItem(props: IDraggableCreatePanelItemProps): JSX.Element;
 
 // @internal (undocumented)
-export type DraggableInternalItem = HeightResizerDragItem | WidthResizerDragItem;
+export type DraggableInternalItem = IHeightResizerDragItem | IWidthResizerDragItem;
 
 // @internal (undocumented)
 export type DraggableInternalItemType = "internal-width-resizer" | "internal-height-resizer";
@@ -3802,8 +1609,8 @@ export type DraggableItemComponentTypeMapping = {
 
 // @internal (undocumented)
 export type DraggableItemInternalTypeMapping = {
-    "internal-width-resizer": WidthResizerDragItem;
-    "internal-height-resizer": HeightResizerDragItem;
+    "internal-width-resizer": IWidthResizerDragItem;
+    "internal-height-resizer": IHeightResizerDragItem;
 };
 
 // @internal (undocumented)
@@ -3815,20 +1622,8 @@ export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & Dragg
 // @internal (undocumented)
 export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | VisualizationSwitcherDraggableItem | DashboardLayoutDraggableItem | CustomWidgetDraggableItem;
 
-// @internal (undocumented)
-export interface DraggingComponentProps {
-}
-
-// @alpha (undocumented)
-export interface Drill extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DrillPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL";
-}
-
 // @alpha
-export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): Drill;
+export function drill(drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext, correlationId?: string): IDrill;
 
 // @internal (undocumented)
 export enum DRILL_TO_URL_PLACEHOLDER {
@@ -3861,173 +1656,45 @@ export const drillActions: {
     resetCrossFiltering: ActionCreatorWithOptionalPayload<string | undefined, "drill/resetCrossFiltering">;
 };
 
-// @alpha (undocumented)
-export interface DrillDown extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DrillDownPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.DRILL_DOWN";
-}
+// @alpha
+export function drillDown(insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): IDrillDown;
 
 // @alpha
-export function drillDown(insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillDown;
+export function drillTargetsAdded(ctx: DashboardContext, ref: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): IDrillTargetsAdded;
 
 // @alpha
-export interface DrillDownPayload {
-    readonly drillDefinition: IDrillDownDefinition;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly insight: IInsight;
-}
+export function drillToAttributeUrl(drillDefinition: IDrillToAttributeUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string): IDrillToAttributeUrl;
 
 // @alpha
-export interface DrillPayload {
-    readonly drillContext: DashboardDrillContext;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @beta (undocumented)
-export interface DrillState {
-    // (undocumented)
-    crossFiltering: Record<string, ICrossFilteringItem[]>;
-    // (undocumented)
-    drillableItems: Record<string, ExplicitDrill[]>;
-}
-
-// @beta (undocumented)
-export interface DrillStep {
-    // (undocumented)
-    drillDefinition: IDrillToInsight | IDrillDownDefinition;
-    // (undocumented)
-    drillEvent: IDashboardDrillEvent;
-    // (undocumented)
-    insight: IInsight;
-}
+export function drillToCustomUrl(drillDefinition: IDrillToCustomUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string): IDrillToCustomUrl;
 
 // @alpha
-export interface DrillTargetsAdded extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DrillTargetsAddedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.DRILL_TARGETS.ADDED";
-}
+export function drillToDashboard(drillDefinition: IDrillToDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string): IDrillToDashboard;
 
 // @alpha
-export function drillTargetsAdded(ctx: DashboardContext, ref: ObjRef, availableDrillTargets: IAvailableDrillTargets, correlationId?: string): DrillTargetsAdded;
+export function drillToInsight(drillDefinition: IDrillToInsight_2, drillEvent: IDashboardDrillEvent, correlationId?: string): IDrillToInsight;
 
 // @alpha
-export interface DrillTargetsAddedPayload {
-    // (undocumented)
-    readonly availableDrillTargets: IAvailableDrillTargets;
-    readonly ref: ObjRef;
-}
-
-// @alpha (undocumented)
-export interface DrillToAttributeUrl extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DrillToAttributeUrlPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL";
-}
-
-// @alpha
-export function drillToAttributeUrl(drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToAttributeUrl;
-
-// @alpha
-export interface DrillToAttributeUrlPayload {
-    readonly drillDefinition: IDrillToAttributeUrl;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha (undocumented)
-export interface DrillToCustomUrl extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DrillToCustomUrlPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL";
-}
-
-// @alpha
-export function drillToCustomUrl(drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToCustomUrl;
-
-// @alpha
-export interface DrillToCustomUrlPayload {
-    readonly drillDefinition: IDrillToCustomUrl;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha (undocumented)
-export interface DrillToDashboard extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DrillToDashboardPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD";
-}
-
-// @alpha
-export function drillToDashboard(drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToDashboard;
-
-// @alpha
-export interface DrillToDashboardPayload {
-    readonly drillDefinition: IDrillToDashboard;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha (undocumented)
-export interface DrillToInsight extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DrillToInsightPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT";
-}
-
-// @alpha
-export function drillToInsight(drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToInsight;
-
-// @alpha
-export interface DrillToInsightPayload {
-    readonly drillDefinition: IDrillToInsight;
-    readonly drillEvent: IDashboardDrillEvent;
-}
-
-// @alpha (undocumented)
-export interface DrillToLegacyDashboard extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: DrillToLegacyDashboardPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
-}
-
-// @alpha
-export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string): DrillToLegacyDashboard;
-
-// @alpha
-export interface DrillToLegacyDashboardPayload {
-    readonly drillDefinition: IDrillToLegacyDashboard;
-    readonly drillEvent: IDashboardDrillEvent;
-}
+export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string): IDrillToLegacyDashboard;
 
 // @internal
 export type DropTarget = {
     dropping: {
-        DropTargetComponent: ComponentType<DropTargetComponentProps>;
+        DropTargetComponent: ComponentType<IDropTargetComponentProps>;
     };
 };
-
-// @internal (undocumented)
-export interface DropTargetComponentProps {
-}
 
 // @internal
 export type DropZoneType = "prev" | "next";
 
 // @alpha
-export function eagerRemoveNestedLayoutSectionItem(itemPath: ILayoutItemPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
+export function eagerRemoveNestedLayoutSectionItem(itemPath: ILayoutItemPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveSectionItem;
 
 // @beta
-export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
+export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveSectionItem;
 
 // @beta
-export function eagerRemoveSectionItemByWidgetRef(widgetRef: ObjRef, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItemByWidgetRef;
+export function eagerRemoveSectionItemByWidgetRef(widgetRef: ObjRef, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveSectionItemByWidgetRef;
 
 // @alpha (undocumented)
 export function EditableTitle({ title, onTitleChanged }: ITitleProps): JSX.Element;
@@ -4036,25 +1703,13 @@ export function EditableTitle({ title, onTitleChanged }: ITitleProps): JSX.Eleme
 export function EditButton(props: IEditButtonProps): ReactElement;
 
 // @beta
-export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @beta
-export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): IChangeKpiWidgetFilterSettings;
 
 // @beta
-export function enableRichTextWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeRichTextWidgetFilterSettings;
-
-// @beta (undocumented)
-export interface EntitlementsState {
-    // (undocumented)
-    entitlements?: ResolvedEntitlements;
-}
-
-// @beta (undocumented)
-export interface ExecutedState {
-    // (undocumented)
-    executed: boolean;
-}
+export function enableRichTextWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): IChangeRichTextWidgetFilterSettings;
 
 // @internal (undocumented)
 export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
@@ -4068,106 +1723,26 @@ export const EXPORT_VIS_MINIMAL_WIDTH = 200;
 // @internal (undocumented)
 export const EXPORT_VIS_WARNING_MINIMAL_FONT_SIZE = 0.8;
 
-// @beta (undocumented)
-export interface ExportDashboardToExcel extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ExportDashboardToExcelPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.EXPORT.EXCEL";
-}
+// @beta
+export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, widgetIds?: string[], fileName?: string, format?: "XLSX" | "PDF", pdfConfiguration?: PdfConfiguration, correlationId?: string): IExportDashboardToExcel;
 
 // @beta
-export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, widgetIds?: string[], fileName?: string, format?: "XLSX" | "PDF", pdfConfiguration?: PdfConfiguration, correlationId?: string): ExportDashboardToExcel;
-
-// @beta (undocumented)
-export interface ExportDashboardToExcelPayload {
-    // (undocumented)
-    exportInfo: boolean;
-    // (undocumented)
-    fileName?: string;
-    // (undocumented)
-    format?: "XLSX" | "PDF";
-    // (undocumented)
-    mergeHeaders: boolean;
-    // (undocumented)
-    pdfConfiguration?: PdfConfiguration;
-    // (undocumented)
-    widgetIds?: string[];
-}
-
-// @beta (undocumented)
-export interface ExportDashboardToPdf extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.EXPORT.PDF";
-}
+export function exportDashboardToPdf(correlationId?: string): IExportDashboardToPdf;
 
 // @beta
-export function exportDashboardToPdf(correlationId?: string): ExportDashboardToPdf;
-
-// @beta (undocumented)
-export interface ExportDashboardToPdfPresentation extends IDashboardCommand {
-    // (undocumented)
-    readonly payload?: ExportDashboardToPresentationPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION";
-}
+export function exportDashboardToPdfPresentation(payload?: IExportDashboardToPresentationPayload, correlationId?: string): IExportDashboardToPdfPresentation;
 
 // @beta
-export function exportDashboardToPdfPresentation(payload?: ExportDashboardToPresentationPayload, correlationId?: string): ExportDashboardToPdfPresentation;
-
-// @beta (undocumented)
-export interface ExportDashboardToPptPresentation extends IDashboardCommand {
-    // (undocumented)
-    readonly payload?: ExportDashboardToPresentationPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION";
-}
-
-// @beta
-export function exportDashboardToPptPresentation(payload?: ExportDashboardToPresentationPayload, correlationId?: string): ExportDashboardToPptPresentation;
-
-// @beta (undocumented)
-export interface ExportDashboardToPresentationPayload {
-    filters?: FilterContextItem[];
-    options?: IDashboardExportPresentationOptions;
-}
+export function exportDashboardToPptPresentation(payload?: IExportDashboardToPresentationPayload, correlationId?: string): IExportDashboardToPptPresentation;
 
 // @alpha
 export type ExportElementType = "meta" | "dashboard" | "section" | "section-info" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
 
-// @alpha (undocumented)
-export interface ExportImageInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ExportImageInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE";
-}
-
 // @alpha
-export function exportImageInsightWidget(ref: ObjRef, filename: string, correlationId?: string): ExportImageInsightWidget;
-
-// @alpha
-export interface ExportImageInsightWidgetPayload {
-    readonly filename: string;
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ExportInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ExportInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT";
-}
+export function exportImageInsightWidget(ref: ObjRef, filename: string, correlationId?: string): IExportImageInsightWidget;
 
 // @beta
-export function exportInsightWidget(ref: ObjRef, config: IExportConfig, correlationId?: string): ExportInsightWidget;
-
-// @beta
-export interface ExportInsightWidgetPayload {
-    readonly config: IExportConfig;
-    readonly ref: ObjRef;
-}
+export function exportInsightWidget(ref: ObjRef, config: IExportConfig, correlationId?: string): IExportInsightWidget;
 
 // @alpha (undocumented)
 export type ExportLayoutCustomizationFn = <TWidget>(layout: IDashboardLayout, customizer: IExportLayoutCustomizer<TWidget>) => void;
@@ -4175,51 +1750,14 @@ export type ExportLayoutCustomizationFn = <TWidget>(layout: IDashboardLayout, cu
 // @alpha
 export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value" | "workspace-title" | "user-full-name" | "logo" | "cover-image" | "theme-palette";
 
-// @alpha (undocumented)
-export interface ExportRawInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ExportRawInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
-}
+// @alpha
+export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insight: IInsight, filename: string, correlationId?: string): IExportRawInsightWidget;
 
 // @alpha
-export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insight: IInsight, filename: string, correlationId?: string): ExportRawInsightWidget;
-
-// @alpha
-export interface ExportRawInsightWidgetPayload {
-    readonly filename: string;
-    readonly insight: IInsight;
-    readonly ref: ObjRef;
-    readonly widget: IInsightWidget;
-}
+export function exportSlidesInsightWidget(ref: ObjRef, filename: string, exportType: "pdf" | "pptx", correlationId?: string): IExportSlidesInsightWidget;
 
 // @alpha (undocumented)
-export interface ExportSlidesInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ExportSlidesInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES";
-}
-
-// @alpha
-export function exportSlidesInsightWidget(ref: ObjRef, filename: string, exportType: "pdf" | "pptx", correlationId?: string): ExportSlidesInsightWidget;
-
-// @alpha
-export interface ExportSlidesInsightWidgetPayload {
-    readonly exportType: "pdf" | "pptx";
-    readonly filename: string;
-    readonly ref: ObjRef;
-}
-
-// @alpha (undocumented)
-export function ExportThemeProvider({ children }: ExportThemeProviderProps): JSX.Element;
-
-// @alpha (undocumented)
-export interface ExportThemeProviderProps {
-    // (undocumented)
-    children: ReactNode;
-}
+export function ExportThemeProvider({ children }: IExportThemeProviderProps): JSX.Element;
 
 // @public
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
@@ -4236,10 +1774,9 @@ export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboard
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @public
-export interface ExtendedDashboardLayoutWidget extends IDashboardLayout<ExtendedDashboardWidget>, IBaseWidget, IDashboardObjectIdentity {
-    // (undocumented)
+export type ExtendedDashboardLayoutWidget = IDashboardLayout<ExtendedDashboardWidget> & IBaseWidget & IDashboardObjectIdentity & {
     type: "IDashboardLayout";
-}
+};
 
 // @public
 export type ExtendedDashboardWidget = IWidget | ICustomWidget | ExtendedDashboardLayoutWidget;
@@ -4269,27 +1806,19 @@ export function filterContextItemsToDashboardFiltersByRichTextWidget(filterConte
 export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @alpha (undocumented)
-export function filterContextSelectionReseted(correlationId?: string): DashboardEventBody<DashboardFilterContextSelectionReseted>;
+export function filterContextSelectionReset(correlationId?: string): DashboardEventBody<IDashboardFilterContextSelectionReset>;
 
 // @public (undocumented)
-export interface FilterContextState {
-    // @beta
-    attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
-    // @beta
-    attributesWithReferences?: IAttributeWithReferences[];
-    // @beta
-    defaultFilterOverrides?: FilterContextItem[];
-    // @beta
-    filterContextDefinition?: IFilterContextDefinition;
-    // @beta
-    filterContextIdentity?: IDashboardObjectIdentity;
-    // @alpha
+export type FilterContextState = {
     filtersWithInvalidSelection: string[];
-    // @beta
-    originalFilterContextDefinition?: IFilterContextDefinition;
-    // @alpha
+    filterContextDefinition?: IFilterContextDefinition;
     workingFilterContextDefinition?: IWorkingFilterContextDefinition;
-}
+    originalFilterContextDefinition?: IFilterContextDefinition;
+    filterContextIdentity?: IDashboardObjectIdentity;
+    attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
+    attributesWithReferences?: IAttributeWithReferences[];
+    defaultFilterOverrides?: FilterContextItem[];
+};
 
 // @public
 export function filterContextToDashboardFiltersByDateDataSet(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, dateDataSet: ObjRef): IDashboardFilter[];
@@ -4298,70 +1827,7 @@ export function filterContextToDashboardFiltersByDateDataSet(filterContext: IFil
 export function filterContextToDashboardFiltersByWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
 
 // @beta (undocumented)
-export interface FilterOp {
-    // (undocumented)
-    readonly type: FilterOperations;
-}
-
-// @beta
-export interface FilterOpDisableDateFilter extends FilterOp {
-    // (undocumented)
-    type: "disableDateFilter";
-}
-
-// @beta
-export interface FilterOpEnableDateFilter extends FilterOp {
-    dateDataset: ObjRef | "default";
-    // (undocumented)
-    type: "enableDateFilter";
-}
-
-// @beta (undocumented)
 export type FilterOperations = "enableDateFilter" | "disableDateFilter" | "replaceAttributeIgnores" | "ignoreAttributeFilter" | "unignoreAttributeFilter" | "ignoreDateFilter" | "unignoreDateFilter" | "replace";
-
-// @beta
-export interface FilterOpIgnoreAttributeFilter extends FilterOp {
-    displayFormRefs: ObjRef[];
-    // (undocumented)
-    type: "ignoreAttributeFilter";
-}
-
-// @beta
-export interface FilterOpIgnoreDateFilter extends FilterOp {
-    dateDataSetRefs: ObjRef[];
-    // (undocumented)
-    type: "ignoreDateFilter";
-}
-
-// @beta
-export interface FilterOpReplaceAll extends FilterOp {
-    readonly dateDatasetForFiltering?: ObjRef;
-    readonly ignoreAttributeFilters?: ObjRef[];
-    readonly ignoreDateFilters?: ObjRef[];
-    // (undocumented)
-    type: "replace";
-}
-
-// @beta
-export interface FilterOpReplaceAttributeIgnores extends FilterOp {
-    displayFormRefs: ObjRef[];
-    // (undocumented)
-    type: "replaceAttributeIgnores";
-}
-
-// @beta
-export interface FilterOpUnignoreAttributeFilter extends FilterOp {
-    displayFormRefs: ObjRef[];
-    // (undocumented)
-    type: "unignoreAttributeFilter";
-}
-
-// @beta
-export interface FilterOpUnignoreDateFilter extends FilterOp {
-    dateDataSetRefs: ObjRef[];
-    // (undocumented)
-    type: "unignoreDateFilter";
-}
 
 // @alpha
 export type FiltersInfo = {
@@ -4371,14 +1837,6 @@ export type FiltersInfo = {
 
 // @beta (undocumented)
 export type FilterViewDialogMode = "list" | "add";
-
-// @alpha (undocumented)
-export interface FilterViewsState {
-    // (undocumented)
-    filterViews: IFilterViews[];
-    // (undocumented)
-    isLoading: boolean;
-}
 
 // @public (undocumented)
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
@@ -4405,10 +1863,10 @@ export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEv
 export function getFilterIdentifier(filter: FilterContextItem): string;
 
 // @internal (undocumented)
-export function getKdaKeyDriverCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent): DashboardKeyDriverCombinationItem[];
+export function getKdaKeyDriverCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent): IDashboardKeyDriverCombinationItem[];
 
 // @internal (undocumented)
-export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: DashboardKeyDriverCombinationItem): string;
+export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: IDashboardKeyDriverCombinationItem): string;
 
 // @public
 export function getWidgetTitle(widget?: ExtendedDashboardWidget, fallbackTitle?: string): string;
@@ -4422,7 +1880,7 @@ export type HeaderExportData = {
 
 // @internal (undocumented)
 export class HeadlessDashboard {
-    constructor(ctx: DashboardContext, config?: HeadlessDashboardConfig);
+    constructor(ctx: DashboardContext, config?: IHeadlessDashboardConfig);
     // (undocumented)
     protected capturedActions: Array<PayloadAction<any>>;
     // (undocumented)
@@ -4431,43 +1889,13 @@ export class HeadlessDashboard {
     dispatch(action: DashboardCommands | PayloadAction<any>): void;
     dispatchAndWaitFor(action: DashboardCommands | PayloadAction<any>, actionType: DashboardEventType | DashboardCommandType | string, timeout?: number): Promise<any>;
     // (undocumented)
-    protected getOrCreateMonitoredAction: (actionType: string) => MonitoredAction;
+    protected getOrCreateMonitoredAction: (actionType: string) => IMonitoredAction;
     // (undocumented)
-    protected monitoredActions: Record<string, MonitoredAction>;
+    protected monitoredActions: Record<string, IMonitoredAction>;
     query<TQueryResult>(action: IDashboardQuery): Promise<TQueryResult>;
     select<TSelectorFactory extends (...args: any[]) => any>(selectorFactory: TSelectorFactory): ReturnType<TSelectorFactory>;
     protected state(): DashboardState;
     waitFor(actionType: DashboardEventType | DashboardCommandType | string, timeout?: number): Promise<any>;
-}
-
-// @internal (undocumented)
-export interface HeadlessDashboardConfig {
-    // (undocumented)
-    backgroundWorkers?: ((context: DashboardContext) => SagaIterator<void>)[];
-    // (undocumented)
-    customizationFns?: DashboardModelCustomizationFns;
-    // (undocumented)
-    queryServices?: IDashboardQueryService<any, any>[];
-}
-
-// @internal (undocumented)
-export interface HeightResizerDragItem {
-    // (undocumented)
-    initialLayoutDimensions: DOMRect;
-    // (undocumented)
-    itemIndexes: number[];
-    // (undocumented)
-    maxLimit: number;
-    // (undocumented)
-    minLimit: number;
-    // (undocumented)
-    sectionIndex: number;
-    // (undocumented)
-    sectionPath?: ILayoutSectionPath;
-    // (undocumented)
-    type: "internal-height-resizer";
-    // (undocumented)
-    widgetHeights: number[];
 }
 
 // @alpha
@@ -4496,6 +1924,20 @@ export function HiddenToolbar(_props: IToolbarProps): null;
 
 // @alpha
 export function HiddenTopBar(_props: ITopBarProps): ReactElement | null;
+
+// @alpha (undocumented)
+export interface IAccessibleDashboardsState extends EntityState<IListedDashboard, EntityId> {
+    // (undocumented)
+    isLoaded: boolean;
+}
+
+// @beta (undocumented)
+export interface IAddAttributeFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: AddAttributeFilterPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD";
+}
 
 // @internal (undocumented)
 export interface IAddAttributeFilterButtonProps {
@@ -4538,6 +1980,110 @@ export interface IAddAttributeFilterPayload {
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
     // (undocumented)
     readonly title?: string;
+}
+
+// @internal (undocumented)
+export interface IAddAttributeFilterPlaceholderProps {
+    // (undocumented)
+    disabled?: boolean;
+}
+
+// @alpha (undocumented)
+export interface IAddDateFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IAddDateFilterPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD";
+}
+
+// @alpha
+export interface IAddDateFilterPayload {
+    // (undocumented)
+    readonly dateDataset: ObjRef;
+    // (undocumented)
+    readonly index: number;
+}
+
+// @alpha (undocumented)
+export interface IAddDrillDownForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IAddDrillDownForInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN";
+}
+
+// @alpha
+export interface IAddDrillDownForInsightWidgetPayload {
+    readonly attributeIdentifier: ObjRef;
+    readonly drillDownAttributeHierarchyRef: ObjRef;
+    readonly drillDownIdentifier: string;
+    readonly intersectionIgnoredAttributes: string[];
+    readonly ref: ObjRef;
+}
+
+// @alpha
+export interface IAddDrillTargets extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IAddDrillTargetsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL_TARGETS.ADD";
+}
+
+// @alpha
+export interface IAddDrillTargetsPayload {
+    // (undocumented)
+    readonly availableDrillTargets: IAvailableDrillTargets;
+    // (undocumented)
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IAddLayoutSection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IAddLayoutSectionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
+}
+
+// @beta
+export interface IAddLayoutSectionPayload {
+    readonly autoResolveDateFilterDataset?: boolean;
+    readonly index: RelativeIndex | ILayoutSectionPath;
+    readonly initialHeader?: IDashboardLayoutSectionHeader;
+    readonly initialItems?: DashboardItemDefinition[];
+}
+
+// @beta (undocumented)
+export interface IAddSectionItems extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IAddSectionItemsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
+}
+
+// @beta
+export interface IAddSectionItemsPayload {
+    readonly autoResolveDateFilterDataset?: boolean;
+    readonly itemIndex: RelativeIndex;
+    readonly itemPath?: ILayoutItemPath;
+    readonly items: DashboardItemDefinition[];
+    readonly sectionIndex: number;
+}
+
+// @beta (undocumented)
+export interface IAddVisualizationToVisualizationSwitcherWidgetContent extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IAddVisualizationToVisualizationSwitcherWidgetContentPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION";
+}
+
+// @beta
+export interface IAddVisualizationToVisualizationSwitcherWidgetContentPayload {
+    readonly insight: IInsight;
+    readonly ref: ObjRef;
+    readonly sizeInfo: IVisualizationSizeInfo;
+    readonly visualization: IInsightWidget;
 }
 
 // @internal (undocumented)
@@ -4601,10 +2147,35 @@ export interface IAlertingManagementDialogProps {
     onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
 }
 
+// @alpha
+export interface IApplyFilterContextWorkingSelection extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION";
+}
+
+// @alpha
+export interface IApplyFilterView extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IApplyFilterViewPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY";
+}
+
+// @alpha
+export interface IApplyFilterViewPayload {
+    // (undocumented)
+    readonly ref: ObjRef;
+}
+
 // @internal (undocumented)
 export interface IApplyWorkingSelectionPayload {
     // (undocumented)
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterConfigsState {
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 }
 
 // @internal (undocumented)
@@ -4619,6 +2190,12 @@ export interface IAttributeFiltersCustomizer {
     withCustomProvider(provider: OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
 }
 
+// @beta (undocumented)
+export interface IAttributeHierarchyModified extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
+}
+
 // @alpha
 export interface IAutomationFiltersTab {
     availableFilters: FilterContextItem[];
@@ -4627,6 +2204,26 @@ export interface IAutomationFiltersTab {
     lockedFilters: FilterContextItem[];
     tabId: string;
     tabTitle: string;
+}
+
+// @alpha (undocumented)
+export interface IAutomationsState {
+    // (undocumented)
+    allAutomationsCount: number;
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    isInitialized: boolean;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    userAutomations: IAutomationMetadataObject[];
+}
+
+// @beta (undocumented)
+export interface IBareUserInteractionPayload {
+    // (undocumented)
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType | NestedLayoutInteractionType;
 }
 
 // @alpha
@@ -4677,6 +2274,19 @@ export interface ICancelEditDialogProps {
     onSubmit: () => void;
 }
 
+// @alpha
+export interface ICancelRenamingDashboardTab extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ICancelRenamingDashboardTabPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL";
+}
+
+// @alpha
+export interface ICancelRenamingDashboardTabPayload {
+    readonly tabId?: string;
+}
+
 // @internal (undocumented)
 export interface IChangeAttributeDisplayFormPayload {
     // (undocumented)
@@ -4716,6 +2326,259 @@ export interface IChangeAttributeTitlePayload {
     readonly title?: string;
 }
 
+// @alpha (undocumented)
+export interface IChangeDrillableItems extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeDrillableItemsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE";
+}
+
+// @alpha
+export interface IChangeDrillableItemsPayload {
+    readonly drillableItems: ExplicitDrill[];
+}
+
+// @alpha
+export interface IChangeIgnoreExecutionTimestamp extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeIgnoreExecutionTimestampPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP";
+}
+
+// @alpha
+export interface IChangeIgnoreExecutionTimestampPayload {
+    ignoreExecutionTimestamp: boolean;
+}
+
+// @beta (undocumented)
+export interface IChangeInsightWidgetDescription extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeInsightWidgetDescriptionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION";
+}
+
+// @beta
+export interface IChangeInsightWidgetDescriptionPayload {
+    readonly description: IWidgetDescription;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeInsightWidgetFilterSettings extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeInsightWidgetFilterSettingsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS";
+}
+
+// @beta
+export interface IChangeInsightWidgetFilterSettingsPayload {
+    readonly operation: IWidgetFilterOperation;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeInsightWidgetHeader extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeInsightWidgetHeaderPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER";
+}
+
+// @beta
+export interface IChangeInsightWidgetHeaderPayload {
+    readonly header: IWidgetHeader;
+    readonly ref: ObjRef;
+}
+
+// @alpha (undocumented)
+export interface IChangeInsightWidgetIgnoreCrossFiltering extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeInsightWidgetIgnoreCrossFilteringPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING";
+}
+
+// @alpha
+export interface IChangeInsightWidgetIgnoreCrossFilteringPayload {
+    readonly ignoreCrossFiltering: boolean;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IChangeInsightWidgetInsight extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeInsightWidgetInsightPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT";
+}
+
+// @beta
+export interface IChangeInsightWidgetInsightPayload {
+    readonly insightRef: ObjRef;
+    readonly ref: ObjRef;
+    readonly visualizationProperties?: VisualizationProperties;
+}
+
+// @beta (undocumented)
+export interface IChangeInsightWidgetVisProperties extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeInsightWidgetVisPropertiesPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES";
+}
+
+// @beta
+export interface IChangeInsightWidgetVisPropertiesPayload {
+    readonly properties: VisualizationProperties | undefined;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeKpiWidgetComparison extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeKpiWidgetComparisonPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON";
+}
+
+// @beta
+export interface IChangeKpiWidgetComparisonPayload {
+    readonly comparison: IKpiWidgetComparison;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeKpiWidgetConfiguration extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeKpiWidgetConfigurationPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION";
+}
+
+// @beta
+export interface IChangeKpiWidgetConfigurationPayload {
+    readonly config: IKpiWidgetConfiguration | undefined;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeKpiWidgetDescription extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeKpiWidgetDescriptionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION";
+}
+
+// @beta
+export interface IChangeKpiWidgetDescriptionPayload {
+    readonly description: IWidgetDescription;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeKpiWidgetFilterSettings extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeKpiWidgetFilterSettingsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
+}
+
+// @beta
+export interface IChangeKpiWidgetFilterSettingsPayload {
+    readonly operation: IWidgetFilterOperation;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeKpiWidgetHeader extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeKpiWidgetHeaderPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER";
+}
+
+// @beta
+export interface IChangeKpiWidgetHeaderPayload {
+    readonly header: IWidgetHeader;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeKpiWidgetMeasure extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeKpiWidgetMeasurePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE";
+}
+
+// @beta
+export interface IChangeKpiWidgetMeasurePayload {
+    readonly header?: IWidgetHeader | "from-measure";
+    readonly measureRef: ObjRef;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeRenderMode extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeRenderModePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.CHANGE_RENDER_MODE";
+}
+
+// @beta
+export interface IChangeRenderModePayload {
+    // (undocumented)
+    readonly renderMode: RenderMode;
+    // (undocumented)
+    readonly renderModeChangeOptions: IRenderModeChangeOptions;
+}
+
+// @beta (undocumented)
+export interface IChangeRichTextWidgetContent extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeRichTextWidgetContentPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT";
+}
+
+// @beta
+export interface IChangeRichTextWidgetContentPayload {
+    readonly content: string;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeRichTextWidgetFilterSettings extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeRichTextWidgetFilterSettingsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS";
+}
+
+// @beta
+export interface IChangeRichTextWidgetFilterSettingsPayload {
+    readonly operation: IWidgetFilterOperation;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IChangeSharing extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IChangeSharingPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
+}
+
+// @beta
+export interface IChangeSharingPayload {
+    readonly newSharingProperties: ISharingApplyPayload_2;
+}
+
 // @internal (undocumented)
 export interface IClearAttributeFiltersSelectionPayload {
     // (undocumented)
@@ -4731,12 +2594,86 @@ export interface IConnectingAttribute {
     title: string;
 }
 
+// @alpha
+export interface IConvertDashboardTabFromDefault extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IConvertDashboardTabFromDefaultPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT";
+}
+
+// @alpha
+export interface IConvertDashboardTabFromDefaultPayload {
+    readonly title?: string;
+}
+
+// @beta
+export interface ICreateAlert extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ICreateAlertPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ALERT.CREATE";
+}
+
+// @beta
+export interface ICreateAlertPayload {
+    readonly alert: IAutomationMetadataObjectDefinition;
+}
+
+// @internal
+export interface ICreateAttributeHierarchyRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.CREATE_ATTRIBUTE_HIERARCHY_REQUESTED";
+}
+
+// @alpha
+export interface ICreateDashboardTab extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ICreateDashboardTabPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.CREATE";
+}
+
+// @alpha
+export interface ICreateDashboardTabPayload {
+    readonly index?: number;
+    readonly shouldStartRenaming?: boolean;
+    readonly title?: string;
+}
+
+// @internal
+export interface ICreateInsightRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED";
+}
+
 // @internal (undocumented)
 export interface ICreatePanelItemComponentProps {
     // (undocumented)
     disabled?: boolean;
     // (undocumented)
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
+}
+
+// @beta
+export interface ICreateScheduledEmail extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ICreateScheduledEmailPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
+}
+
+// @beta
+export interface ICreateScheduledEmailPayload {
+    readonly scheduledEmail: IAutomationMetadataObjectDefinition;
+}
+
+// @beta (undocumented)
+export interface ICrossFiltering extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ICrossFilteringPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.CROSS_FILTERING";
 }
 
 // @beta (undocumented)
@@ -4746,12 +2683,24 @@ export interface ICrossFilteringItem {
     widgetRef: ObjRef | undefined;
 }
 
+// @beta
+export interface ICrossFilteringPayload {
+    readonly drillDefinition: ICrossFiltering_2;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly insight: IInsight;
+}
+
 // @beta (undocumented)
 export interface ICsvExportConfig {
     // (undocumented)
     format: "csv";
     // (undocumented)
     title?: string;
+}
+
+// @internal (undocumented)
+export interface ICustomComponentBase<TMainProps, TProviderParams extends any[]> {
+    MainComponentProvider: (...params: TProviderParams) => ComponentType<TMainProps>;
 }
 
 // @public
@@ -4786,6 +2735,32 @@ export interface ICustomWidgetBase extends IBaseWidget {
 export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDashboardObjectIdentity> {
 }
 
+// @beta
+export interface IDashboardAlertCreated extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAlertCreatedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ALERT.CREATED";
+}
+
+// @beta
+export interface IDashboardAlertCreatedPayload {
+    readonly alert: IAutomationMetadataObject;
+}
+
+// @beta
+export interface IDashboardAlertSaved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAlertSavedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ALERT.SAVED";
+}
+
+// @beta
+export interface IDashboardAlertSavedPayload {
+    readonly alert: IAutomationMetadataObject;
+}
+
 // @internal (undocumented)
 export interface IDashboardAttributeFilterAccessibilityConfig {
     // (undocumented)
@@ -4794,12 +2769,80 @@ export interface IDashboardAttributeFilterAccessibilityConfig {
     searchAriaLabel?: string;
 }
 
+// @beta
+export interface IDashboardAttributeFilterAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeFilterAddedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
+}
+
+// @beta
+export interface IDashboardAttributeFilterAddedPayload {
+    readonly added: IDashboardAttributeFilter;
+    readonly index: number;
+}
+
+// @alpha
+export interface IDashboardAttributeFilterConfigLimitingItemsChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeFilterConfigLimitingItemsChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED";
+}
+
+// @alpha
+export interface IDashboardAttributeFilterConfigLimitingItemsChangedPayload {
+    readonly filter: IDashboardAttributeFilter;
+}
+
+// @alpha
+export interface IDashboardAttributeFilterConfigModeChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeFilterConfigModeChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED";
+}
+
+// @alpha
+export interface IDashboardAttributeFilterConfigModeChangedPayload {
+    readonly filter: IDashboardAttributeFilter;
+}
+
 // @internal (undocumented)
 export interface IDashboardAttributeFilterDisplayForms {
     // (undocumented)
     availableDisplayForms: IAttributeDisplayFormMetadataObject[];
     // (undocumented)
     selectedDisplayForm: ObjRef;
+}
+
+// @beta
+export interface IDashboardAttributeFilterMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeFilterMovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED";
+}
+
+// @beta
+export interface IDashboardAttributeFilterMovedPayload {
+    readonly fromIndex: number;
+    readonly moved: IDashboardAttributeFilter;
+    readonly toIndex: number;
+}
+
+// @beta
+export interface IDashboardAttributeFilterParentChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeFilterParentChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
+}
+
+// @beta
+export interface IDashboardAttributeFilterParentChangedPayload {
+    readonly filter: IDashboardAttributeFilter;
 }
 
 // @internal (undocumented)
@@ -4874,6 +2917,52 @@ export interface IDashboardAttributeFilterProps {
     workingFilter?: IDashboardAttributeFilter;
 }
 
+// @beta
+export interface IDashboardAttributeFilterRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeFilterRemovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
+}
+
+// @beta
+export interface IDashboardAttributeFilterRemovedPayload {
+    readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
+    readonly removed: IDashboardAttributeFilter;
+}
+
+// @beta
+export interface IDashboardAttributeSelectionModeChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeSelectionModeChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED";
+}
+
+// @beta
+export interface IDashboardAttributeSelectionModeChangedPayload {
+    readonly filter: IDashboardAttributeFilter;
+}
+
+// @beta
+export interface IDashboardAttributeTitleChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardAttributeTitleChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED";
+}
+
+// @beta
+export interface IDashboardAttributeTitleChangedPayload {
+    readonly filter: IDashboardAttributeFilter;
+}
+
+// @beta
+export interface IDashboardAutomationsRefreshed extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.AUTOMATIONS.REFRESHED";
+}
+
 // @public (undocumented)
 export interface IDashboardBaseProps {
     backend?: IAnalyticalBackend;
@@ -4894,6 +2983,41 @@ export interface IDashboardCommand {
     readonly type: DashboardCommandType;
 }
 
+// @beta
+export interface IDashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand> extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardCommandFailedPayload<TCommand>;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
+}
+
+// @beta
+export interface IDashboardCommandFailedPayload<TCommand extends IDashboardCommand> {
+    readonly command: TCommand;
+    readonly error?: Error;
+    readonly message: string;
+    readonly reason: ActionFailedErrorReason;
+}
+
+// @beta
+export interface IDashboardCommandRejected extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.COMMAND.REJECTED";
+}
+
+// @beta
+export interface IDashboardCommandStarted<TCommand extends IDashboardCommand> extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardCommandStartedPayload<TCommand>;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.COMMAND.STARTED";
+}
+
+// @beta
+export interface IDashboardCommandStartedPayload<TCommand extends IDashboardCommand> {
+    readonly command: TCommand;
+}
+
 // @internal (undocumented)
 export interface IDashboardContentBaseProps {
     backend?: IAnalyticalBackend;
@@ -4907,6 +3031,35 @@ export interface IDashboardContentBaseProps {
 // @alpha (undocumented)
 export interface IDashboardContentCustomizer {
     withCustomDecorator(providerFactory: (next: DashboardContentComponentProvider) => OptionalDashboardContentComponentProvider): IDashboardContentCustomizer;
+}
+
+// @beta
+export interface IDashboardCrossFilteringRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardCrossFilteringRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.REQUESTED";
+}
+
+// @beta
+export interface IDashboardCrossFilteringRequestedPayload {
+    readonly drillDefinition: ICrossFiltering_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @beta
+export interface IDashboardCrossFilteringResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardCrossFilteringResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED";
+}
+
+// @beta
+export interface IDashboardCrossFilteringResolvedPayload {
+    readonly drillDefinition: ICrossFiltering_2;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly filters: IDashboardAttributeFilter[];
 }
 
 // @public
@@ -5032,6 +3185,21 @@ export interface IDashboardDateFilterProps {
     workingFilter: IDashboardDateFilter | undefined;
 }
 
+// @beta
+export interface IDashboardDeleted extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly dashboard: IDashboard;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DELETED";
+}
+
+// @beta
+export interface IDashboardDeletedPayload {
+    readonly dashboard: IDashboard;
+}
+
 // @internal (undocumented)
 export interface IDashboardDependentDateFilter {
     // (undocumented)
@@ -5056,10 +3224,236 @@ export interface IDashboardDependentDateFilter {
     type: string;
 }
 
+// @alpha
+export interface IDashboardDrillableItemsChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillableItemsChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILLABLE_ITEMS.CHANGED";
+}
+
+// @alpha
+export interface IDashboardDrillableItemsChangedPayload {
+    readonly drillableItems: ExplicitDrill[];
+}
+
+// @alpha (undocumented)
+export interface IDashboardDrillContext {
+    insight?: IInsight;
+    widget?: IWidget;
+}
+
+// @alpha
+export interface IDashboardDrillDownRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillDownRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.REQUESTED";
+}
+
+// @alpha
+export interface IDashboardDrillDownRequestedPayload {
+    readonly drillDefinition: IDrillDownDefinition;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly insight: IInsight;
+}
+
+// @alpha
+export interface IDashboardDrillDownResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillDownResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_DOWN.RESOLVED";
+}
+
+// @alpha
+export interface IDashboardDrillDownResolvedPayload {
+    readonly drillDefinition: IDrillDownDefinition;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly insight: IInsight;
+}
+
 // @beta
 export interface IDashboardDrillEvent extends IDrillEvent {
     drillDefinitions: DashboardDrillDefinition[];
     widgetRef?: ObjRef;
+}
+
+// @alpha
+export interface IDashboardDrillRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.REQUESTED";
+}
+
+// @alpha
+export interface IDashboardDrillRequestedPayload {
+    readonly drillContext: IDashboardDrillContext;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha
+export interface IDashboardDrillResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.RESOLVED";
+}
+
+// @alpha
+export interface IDashboardDrillResolvedPayload {
+    readonly drillContext: IDashboardDrillContext;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha
+export interface IDashboardDrillToAttributeUrlRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToAttributeUrlRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.REQUESTED";
+}
+
+// @alpha
+export interface IDashboardDrillToAttributeUrlRequestedPayload {
+    readonly drillDefinition: IDrillToAttributeUrl_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha
+export interface IDashboardDrillToAttributeUrlResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToAttributeUrlResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_ATTRIBUTE_URL.RESOLVED";
+}
+
+// @alpha
+export interface IDashboardDrillToAttributeUrlResolvedPayload {
+    readonly drillDefinition: IDrillToAttributeUrl_2;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly filtersInfo: FiltersInfo;
+    readonly isImplicit: boolean;
+    readonly url: string;
+}
+
+// @alpha
+export interface IDashboardDrillToCustomUrlRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToCustomUrlRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.REQUESTED";
+}
+
+// @alpha
+export interface IDashboardDrillToCustomUrlRequestedPayload {
+    readonly drillDefinition: IDrillToCustomUrl_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha
+export interface IDashboardDrillToCustomUrlResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToCustomUrlResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_CUSTOM_URL.RESOLVED";
+}
+
+// @alpha
+export interface IDashboardDrillToCustomUrlResolvedPayload {
+    readonly drillDefinition: IDrillToCustomUrl_2;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly filtersInfo: FiltersInfo;
+    readonly url: string;
+}
+
+// @alpha
+export interface IDashboardDrillToDashboardRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToDashboardRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.REQUESTED";
+}
+
+// @alpha
+export interface IDashboardDrillToDashboardRequestedPayload {
+    readonly drillDefinition: IDrillToDashboard_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha
+export interface IDashboardDrillToDashboardResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToDashboardResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED";
+}
+
+// @alpha
+export interface IDashboardDrillToDashboardResolvedPayload {
+    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    readonly drillDefinition: IDrillToDashboard_2;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly filters: (IDashboardFilter | FilterContextItem)[];
+}
+
+// @alpha
+export interface IDashboardDrillToInsightRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToInsightRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.REQUESTED";
+}
+
+// @alpha
+export interface IDashboardDrillToInsightRequestedPayload {
+    readonly drillDefinition: IDrillToInsight_2;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly insight: IInsight;
+}
+
+// @alpha
+export interface IDashboardDrillToInsightResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToInsightResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_INSIGHT.RESOLVED";
+}
+
+// @alpha
+export interface IDashboardDrillToInsightResolvedPayload {
+    readonly drillDefinition: IDrillToInsight_2;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly insight: IInsight;
+}
+
+// @alpha
+export interface IDashboardDrillToLegacyDashboardRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToLegacyDashboardRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.REQUESTED";
+}
+
+// @alpha
+export interface IDashboardDrillToLegacyDashboardRequestedPayload {
+    readonly drillDefinition: IDrillToLegacyDashboard_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha
+export interface IDashboardDrillToLegacyDashboardResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardDrillToLegacyDashboardResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED";
+}
+
+// @alpha
+export interface IDashboardDrillToLegacyDashboardResolvedPayload {
+    readonly drillDefinition: IDrillToLegacyDashboard_2;
+    readonly drillEvent: IDashboardDrillEvent;
 }
 
 // @public
@@ -5083,9 +3477,9 @@ export interface IDashboardEvent<TPayload = any> {
 // @public
 export interface IDashboardEventHandling {
     addCustomEventHandler(handler: DashboardEventHandler): IDashboardEventHandling;
-    addEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(eventType: DashboardEventType | string | "*", callback: DashboardEventHandlerFn<TEvents>): IDashboardEventHandling;
+    addEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(eventType: string, callback: DashboardEventHandlerFn<TEvents>): IDashboardEventHandling;
     removeCustomEventHandler(handler: DashboardEventHandler): IDashboardEventHandling;
-    removeEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(eventType: DashboardEventType | string | "*", callback: DashboardEventHandlerFn<TEvents>): IDashboardEventHandling;
+    removeEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(eventType: string, callback: DashboardEventHandlerFn<TEvents>): IDashboardEventHandling;
     subscribeToStateChanges(callback: DashboardStateChangeCallback): IDashboardEventHandling;
     unsubscribeFromStateChanges(callback: DashboardStateChangeCallback): IDashboardEventHandling;
 }
@@ -5105,6 +3499,112 @@ export interface IDashboardEventsContext {
     unregisterHandler: (handler: DashboardEventHandler) => void;
 }
 
+// @alpha
+export interface IDashboardExportSlideConfig {
+    height: number;
+    width: number;
+}
+
+// @beta
+export interface IDashboardExportToExcelRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED";
+}
+
+// @beta
+export interface IDashboardExportToExcelResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardExportToExcelResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED";
+}
+
+// @beta
+export interface IDashboardExportToExcelResolvedPayload {
+    readonly result: IExportResult;
+    readonly resultUri: string;
+}
+
+// @beta
+export interface IDashboardExportToImageRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED";
+}
+
+// @beta
+export interface IDashboardExportToImageResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardExportToImageResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED";
+}
+
+// @beta
+export interface IDashboardExportToImageResolvedPayload {
+    readonly result: IExportResult;
+    readonly resultUri: string;
+}
+
+// @beta
+export interface IDashboardExportToPdfPresentationRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED";
+}
+
+// @beta
+export interface IDashboardExportToPdfPresentationResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardExportToExcelResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED";
+}
+
+// @beta
+export interface IDashboardExportToPdfPresentationResolvedPayload {
+    readonly result: IExportResult;
+    readonly resultUri: string;
+}
+
+// @beta
+export interface IDashboardExportToPdfRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF.REQUESTED";
+}
+
+// @beta
+export interface IDashboardExportToPdfResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardExportToPdfResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED";
+}
+
+// @beta
+export interface IDashboardExportToPdfResolvedPayload {
+    readonly result: IExportResult;
+    readonly resultUri: string;
+}
+
+// @beta
+export interface IDashboardExportToPptPresentationRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED";
+}
+
+// @beta
+export interface IDashboardExportToPptPresentationResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardExportToExcelResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED";
+}
+
+// @beta
+export interface IDashboardExportToPptPresentationResolvedPayload {
+    readonly result: IExportResult;
+    readonly resultUri: string;
+}
+
 // @public
 export interface IDashboardExtensionProps extends IDashboardEventing, IDashboardCustomizationProps, IDashboardWidgetsOverlayProps, IDashboardThemingProps {
     additionalReduxContext?: Context<ReactReduxContextValue | null>;
@@ -5112,6 +3612,120 @@ export interface IDashboardExtensionProps extends IDashboardEventing, IDashboard
 
 // @public
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
+
+// @alpha
+export interface IDashboardFilterContextSelectionReset extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET";
+}
+
+// @alpha
+export interface IDashboardFilterViewApplicationFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE";
+}
+
+// @alpha
+export interface IDashboardFilterViewApplicationSucceeded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardFilterViewApplicationSucceededPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS";
+}
+
+// @alpha
+export interface IDashboardFilterViewApplicationSucceededPayload {
+    // (undocumented)
+    readonly filterView: IDashboardFilterView;
+}
+
+// @alpha
+export interface IDashboardFilterViewCreationFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE";
+}
+
+// @alpha
+export interface IDashboardFilterViewCreationSucceeded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardFilterViewCreationSucceededPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS";
+}
+
+// @alpha
+export interface IDashboardFilterViewCreationSucceededPayload {
+    // (undocumented)
+    readonly filterView: IDashboardFilterView;
+}
+
+// @alpha
+export interface IDashboardFilterViewDefaultStatusChangeFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardFilterViewDefaultStatusChangeFailedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE";
+}
+
+// @alpha
+export interface IDashboardFilterViewDefaultStatusChangeFailedPayload {
+    // (undocumented)
+    readonly filterView: IDashboardFilterView;
+}
+
+// @alpha
+export interface IDashboardFilterViewDefaultStatusChangeSucceeded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardFilterViewDefaultStatusChangeSucceededPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.SUCCESS";
+}
+
+// @alpha
+export interface IDashboardFilterViewDefaultStatusChangeSucceededPayload {
+    // (undocumented)
+    readonly filterView: IDashboardFilterView;
+}
+
+// @alpha
+export interface IDashboardFilterViewDeletionFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE";
+}
+
+// @alpha
+export interface IDashboardFilterViewDeletionSucceeded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardFilterViewDeletionSucceededPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS";
+}
+
+// @alpha
+export interface IDashboardFilterViewDeletionSucceededPayload {
+    // (undocumented)
+    readonly filterView: IDashboardFilterView;
+}
+
+// @beta
+export interface IDashboardFocusObject {
+    automationId?: Identifier;
+    visualizationId?: Identifier;
+    widgetId?: string;
+}
+
+// @alpha
+export interface IDashboardIgnoreExecutionTimestampChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardIgnoreExecutionTimestampChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED";
+}
+
+// @alpha
+export interface IDashboardIgnoreExecutionTimestampChangedPayload {
+    ignoreExecutionTimestamp: boolean;
+}
 
 // @public
 export interface IDashboardInsightCustomizer {
@@ -5172,7 +3786,7 @@ export interface IDashboardInsightProps {
     clientHeight?: number;
     // @alpha (undocumented)
     clientWidth?: number;
-    drillStep?: DrillStep;
+    drillStep?: IDrillStep;
     // @alpha
     ErrorComponent: ComponentType<IErrorProps>;
     // @alpha (undocumented)
@@ -5219,6 +3833,362 @@ export interface IDashboardInsightProps {
     workspace?: string;
 }
 
+// @beta
+export interface IDashboardInsightWidgetChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetChangedPayload {
+    insightWidget: IInsightWidget | IInsightWidgetDefinition;
+}
+
+// @beta
+export interface IDashboardInsightWidgetDescriptionChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetDescriptionChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetDescriptionChangedPayload {
+    readonly description: IWidgetDescription;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardInsightWidgetDrillsModified extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetDrillsModifiedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetDrillsModifiedPayload {
+    readonly added: DrillDefinition[];
+    readonly ref: ObjRef;
+    readonly updated: DrillDefinition[];
+}
+
+// @beta
+export interface IDashboardInsightWidgetDrillsRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetDrillsRemovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetDrillsRemovedPayload {
+    readonly ref: ObjRef;
+    readonly removed: DrillDefinition[];
+}
+
+// @beta
+export interface IDashboardInsightWidgetExportRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetExportRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetExportRequestedPayload {
+    readonly config: IExportConfig;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardInsightWidgetExportResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetExportResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetExportResolvedPayload {
+    result: IExportResult;
+    resultUri: string;
+}
+
+// @beta
+export interface IDashboardInsightWidgetFilterSettingsChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetFilterSettingsChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetFilterSettingsChangedPayload {
+    readonly dateDatasetForFiltering?: ICatalogDateDataset;
+    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+    readonly ignoredDateFilters?: IDashboardDateFilter[];
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardInsightWidgetHeaderChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetHeaderChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetHeaderChangedPayload {
+    readonly header: IWidgetHeader;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardInsightWidgetInsightSwitched extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetInsightSwitchedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetInsightSwitchedPayload {
+    readonly insight: IInsight;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardInsightWidgetRefreshed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetRefreshedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetRefreshedPayload {
+    insight: IInsight;
+}
+
+// @beta
+export interface IDashboardInsightWidgetVisConfigurationChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetVisConfigurationChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetVisConfigurationChangedPayload {
+    readonly newConfig: IInsightWidgetConfiguration | undefined;
+    readonly oldConfig: IInsightWidgetConfiguration | undefined;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardInsightWidgetVisPropertiesChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardInsightWidgetVisPropertiesChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED";
+}
+
+// @beta
+export interface IDashboardInsightWidgetVisPropertiesChangedPayload {
+    readonly properties: VisualizationProperties | undefined;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKeyDriverAnalysisRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKeyDriverAnalysisRequestedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.REQUESTED";
+}
+
+// @beta
+export interface IDashboardKeyDriverAnalysisRequestedPayload {
+    readonly drillDefinition: IKeyDriveAnalysis;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly keyDriveItem: IDashboardKeyDriverCombinationItem;
+}
+
+// @beta
+export interface IDashboardKeyDriverAnalysisResolved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKeyDriverAnalysisResolvedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED";
+}
+
+// @beta
+export interface IDashboardKeyDriverAnalysisResolvedPayload {
+    readonly drillDefinition: IKeyDriveAnalysis;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly keyDriveDefinition: IKdaDefinition;
+}
+
+// @internal (undocumented)
+export interface IDashboardKeyDriverCombinationItem {
+    // (undocumented)
+    difference: number;
+    // (undocumented)
+    measure: IMeasureDescriptor;
+    // (undocumented)
+    range: [ITableDataAttributeScope, ITableDataAttributeScope];
+    // (undocumented)
+    type: "comparative" | "year-to-year";
+    // (undocumented)
+    values: [number, number];
+    // (undocumented)
+    where: "before" | "after" | "none";
+}
+
+// @beta
+export interface IDashboardKpiWidgetChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetChangedPayload {
+    kpiWidget: IKpiWidget | IKpiWidgetDefinition;
+}
+
+// @beta
+export interface IDashboardKpiWidgetComparisonChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetComparisonChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetComparisonChangedPayload {
+    readonly kpi: IKpi;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKpiWidgetConfigurationChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetConfigurationChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetConfigurationChangedPayload {
+    readonly configuration: IKpiWidgetConfiguration | undefined;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKpiWidgetDescriptionChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetDescriptionChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetDescriptionChangedPayload {
+    readonly description: IWidgetDescription;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKpiWidgetDrillRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetDrillRemovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetDrillRemovedPayload {
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKpiWidgetDrillSet extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetDrillSetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET";
+}
+
+// @beta
+export interface IDashboardKpiWidgetDrillSetPayload {
+    readonly drill: IDrillToLegacyDashboard_2;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetFilterSettingsChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetFilterSettingsChangedPayload {
+    readonly dateDatasetForFiltering?: ICatalogDateDataset;
+    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKpiWidgetHeaderChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetHeaderChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetHeaderChangedPayload {
+    readonly header: IWidgetHeader;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardKpiWidgetMeasureChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardKpiWidgetMeasureChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED";
+}
+
+// @beta
+export interface IDashboardKpiWidgetMeasureChangedPayload {
+    readonly header?: IWidgetHeader;
+    readonly kpiWidget: IKpiWidget;
+    readonly measure: IMeasureMetadataObject;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardLayoutChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
+}
+
+// @beta
+export interface IDashboardLayoutChangedPayload {
+    readonly layout: IDashboardLayout<ExtendedDashboardWidget>;
+}
+
 // @public
 export interface IDashboardLayoutCustomizer {
     customizeExportLayout(fun: ExportLayoutCustomizationFn): IDashboardLayoutCustomizer;
@@ -5247,13 +4217,194 @@ interface IDashboardLayoutProps extends INestedLayoutProps {
 export { IDashboardLayoutProps }
 export { IDashboardLayoutProps as IDashboardNestedLayoutProps }
 
-// @public
-export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
-    onPluginLoaded?(ctx: DashboardContext, parameters?: string): Promise<void> | void;
-    onPluginUnload?(ctx: DashboardContext): Promise<void> | void;
-    readonly _pluginVersion: "1.0";
-    register(ctx: DashboardContext, customize: IDashboardCustomizer, eventing: IDashboardEventHandling): void;
+// @beta
+export interface IDashboardLayoutSectionAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionAddedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
 }
+
+// @beta
+export interface IDashboardLayoutSectionAddedPayload {
+    // @deprecated
+    readonly index: number;
+    readonly path: ILayoutSectionPath;
+    readonly section: ExtendedDashboardLayoutSection;
+}
+
+// @beta
+export interface IDashboardLayoutSectionHeaderChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionHeaderChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
+}
+
+// @beta
+export interface IDashboardLayoutSectionHeaderChangedPayload {
+    readonly newHeader: IDashboardLayoutSectionHeader;
+    // @deprecated
+    readonly sectionIndex: number;
+    readonly sectionPath: ILayoutSectionPath;
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionItemMovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemMovedPayload {
+    // @deprecated
+    readonly fromIndex: number;
+    readonly fromPath: ILayoutItemPath;
+    // @deprecated
+    readonly fromSectionIndex: number;
+    readonly item: ExtendedDashboardItem;
+    readonly originalSectionRemoved: boolean;
+    // @deprecated
+    readonly toIndex: number;
+    readonly toPath: ILayoutItemPath;
+    // @deprecated
+    readonly toSectionIndex: number;
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemMovedToNewSection extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionItemMovedToNewSectionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION";
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemMovedToNewSectionPayload {
+    // @deprecated
+    readonly fromIndex: number;
+    readonly fromPath: ILayoutItemPath;
+    // @deprecated
+    readonly fromSectionIndex: number;
+    readonly item: ExtendedDashboardItem;
+    readonly originalSectionRemoved: boolean;
+    // @deprecated
+    readonly toIndex: number;
+    readonly toPath: ILayoutItemPath;
+    // @deprecated
+    readonly toSectionIndex: number;
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionItemRemovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemRemovedPayload {
+    readonly item: ExtendedDashboardItem;
+    // @deprecated
+    readonly itemIndex: number;
+    readonly itemPath: ILayoutItemPath;
+    readonly section?: ExtendedDashboardLayoutSection;
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemReplaced extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionItemReplacedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemReplacedPayload {
+    // @deprecated
+    readonly itemIndex: number;
+    readonly items: ReadonlyArray<ExtendedDashboardItem>;
+    readonly path: ILayoutItemPath;
+    readonly previousItem: ExtendedDashboardItem;
+    // @deprecated
+    readonly sectionIndex: number;
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemsAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionItemsAddedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
+}
+
+// @beta
+export interface IDashboardLayoutSectionItemsAddedPayload {
+    readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
+    readonly path: ILayoutItemPath;
+    // @deprecated
+    readonly sectionIndex: number;
+    // @deprecated
+    readonly startIndex: number;
+    readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
+}
+
+// @beta
+export interface IDashboardLayoutSectionMoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionMovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
+}
+
+// @beta
+export interface IDashboardLayoutSectionMovedPayload {
+    // @deprecated
+    readonly fromIndex: number;
+    readonly fromPath: ILayoutSectionPath;
+    readonly section: ExtendedDashboardLayoutSection;
+    // @deprecated
+    readonly toIndex: number;
+    readonly toPath: ILayoutSectionPath;
+}
+
+// @beta
+export interface IDashboardLayoutSectionRemoved extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardLayoutSectionRemovedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
+}
+
+// @beta
+export interface IDashboardLayoutSectionRemovedPayload {
+    readonly eagerRemoval?: boolean;
+    // @deprecated
+    readonly index: number;
+    readonly path: ILayoutSectionPath;
+    readonly section: ExtendedDashboardLayoutSection;
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+// @beta (undocumented)
+export interface IDashboardMetaState {
+    descriptor?: DashboardDescriptor;
+    initialContent?: boolean;
+    persistedDashboard?: IDashboard;
+}
+
+// @public
+export type IDashboardPluginContract_V1 = DashboardPluginDescriptor & {
+    readonly _pluginVersion: "1.0";
+    onPluginLoaded?(ctx: DashboardContext, parameters?: string): Promise<void> | void;
+    register(ctx: DashboardContext, customize: IDashboardCustomizer, eventing: IDashboardEventHandling): void;
+    onPluginUnload?(ctx: DashboardContext): Promise<void> | void;
+};
 
 // @public (undocumented)
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
@@ -5269,6 +4420,41 @@ export interface IDashboardQuery {
     readonly type: DashboardQueryType;
 }
 
+// @beta
+export interface IDashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardQueryCompletedPayload<TQuery, TResult>;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.COMPLETED";
+}
+
+// @beta
+export interface IDashboardQueryCompletedPayload<TQuery extends IDashboardQuery, TResult> {
+    readonly query: TQuery;
+    readonly result: TResult;
+}
+
+// @beta
+export interface IDashboardQueryFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardQueryFailedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.FAILED";
+}
+
+// @beta
+export interface IDashboardQueryFailedPayload {
+    readonly error?: Error;
+    readonly message: string;
+    readonly reason: ActionFailedErrorReason;
+}
+
+// @beta
+export interface IDashboardQueryRejected extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.REJECTED";
+}
+
 // @internal
 export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult> {
     // (undocumented)
@@ -5277,6 +4463,45 @@ export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult>
     generator: (ctx: DashboardContext, query: TQuery, refresh: boolean) => SagaIterator<TResult>;
     // (undocumented)
     name: DashboardQueryType;
+}
+
+// @beta
+export interface IDashboardQueryStarted extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardQueryStartedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.QUERY.STARTED";
+}
+
+// @beta
+export interface IDashboardQueryStartedPayload {
+    readonly query: IDashboardQuery;
+}
+
+// @beta
+export interface IDashboardRenamed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardRenamedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.RENAMED";
+}
+
+// @beta
+export interface IDashboardRenamedPayload {
+    readonly newTitle: string;
+}
+
+// @beta
+export interface IDashboardRenderModeChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardRenderModeChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.RENDER_MODE.CHANGED";
+}
+
+// @beta
+export interface IDashboardRenderModeChangedPayload {
+    renderMode: RenderMode;
 }
 
 // @alpha (undocumented)
@@ -5329,6 +4554,55 @@ export interface IDashboardRichTextProps {
     widget: IRichTextWidget;
     // @alpha
     workspace?: string;
+}
+
+// @beta
+export interface IDashboardRichTextWidgetContentChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardRichTextWidgetContentChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED";
+}
+
+// @beta
+export interface IDashboardRichTextWidgetContentChangedPayload {
+    readonly content: string;
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardRichTextWidgetFilterSettingsChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardRichTextWidgetFilterSettingsChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED";
+}
+
+// @beta
+export interface IDashboardRichTextWidgetFilterSettingsChangedPayload {
+    readonly dateDatasetForFiltering?: ICatalogDateDataset;
+    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+    readonly ignoredDateFilters?: IDashboardDateFilter[];
+    readonly ref: ObjRef;
+}
+
+// @beta
+export interface IDashboardScheduledEmailCreated extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardScheduledEmailCreatedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
+}
+
+// @beta
+export interface IDashboardScheduledEmailCreatedPayload {
+    readonly scheduledEmail: IAutomationMetadataObject;
+}
+
+// @beta
+export interface IDashboardScheduledEmailSaved extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED";
 }
 
 // @alpha (undocumented)
@@ -5393,11 +4667,116 @@ export interface IDashboardStoreProviderProps {
     workspace?: string;
 }
 
+// @alpha
+export interface IDashboardTabConvertedFromDefault extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardTabConvertedFromDefaultPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT";
+}
+
+// @alpha
+export interface IDashboardTabConvertedFromDefaultPayload {
+    readonly index: number;
+    readonly newTabId: string;
+}
+
+// @alpha
+export interface IDashboardTabCreated extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardTabCreatedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.TAB.CREATED";
+}
+
+// @alpha
+export interface IDashboardTabCreatedPayload {
+    readonly index: number;
+    readonly newTabId: string;
+}
+
+// @alpha
+export interface IDashboardTabDeleted extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardTabDeletedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.TAB.DELETED";
+}
+
+// @alpha
+export interface IDashboardTabDeletedPayload {
+    readonly deletedTabId: string;
+    readonly nextActiveTabId?: string;
+    readonly previousIndex: number;
+}
+
+// @alpha
+export interface IDashboardTabRenamed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardTabRenamedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.TAB.RENAMED";
+}
+
+// @alpha
+export interface IDashboardTabRenamedPayload {
+    readonly tabId: string;
+    readonly title: string;
+}
+
+// @alpha
+export interface IDashboardTabRenamingCanceled extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardTabRenamingCanceledPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED";
+}
+
+// @alpha
+export interface IDashboardTabRenamingCanceledPayload {
+    readonly tabId: string;
+}
+
+// @alpha
+export interface IDashboardTabRenamingStarted extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardTabRenamingStartedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED";
+}
+
+// @alpha
+export interface IDashboardTabRenamingStartedPayload {
+    readonly tabId: string;
+}
+
+// @alpha
+export interface IDashboardTabSwitched extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardTabSwitchedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.TAB.SWITCHED";
+}
+
+// @alpha
+export interface IDashboardTabSwitchedPayload {
+    readonly newTabId: string;
+    readonly previousTabId: string | undefined;
+}
+
 // @public (undocumented)
 export interface IDashboardThemingProps {
     disableThemeLoading?: boolean;
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
+}
+
+// @beta
+export interface IDashboardUserInteractionTriggered extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: UserInteractionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED";
 }
 
 // @public
@@ -5424,9 +4803,92 @@ export interface IDashboardVisualizationSwitcherProps {
     workspace?: string;
 }
 
+// @beta
+export interface IDashboardVisualizationSwitcherWidgetVisualizationAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardVisualizationSwitcherWidgetVisualizationAddedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED";
+}
+
+// @beta
+export interface IDashboardVisualizationSwitcherWidgetVisualizationAddedPayload {
+    readonly ref: ObjRef;
+    readonly visualization: IInsightWidget;
+}
+
+// @beta
+export interface IDashboardVisualizationSwitcherWidgetVisualizationsUpdated extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED";
+}
+
+// @beta
+export interface IDashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload {
+    readonly ref: ObjRef;
+    readonly visualizations: IInsightWidget[];
+}
+
+// @beta
+export interface IDashboardWasReset extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardWasResetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.RESET";
+}
+
+// @beta
+export interface IDashboardWasResetPayload {
+    dashboard?: IDashboard;
+}
+
 // @public
 export interface IDashboardWidgetCustomizer {
     addCustomWidget(widgetType: string, Component: CustomDashboardWidgetComponent): IDashboardWidgetCustomizer;
+}
+
+// @beta
+export interface IDashboardWidgetExecutionFailed extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardWidgetExecutionFailedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED";
+}
+
+// @beta
+export interface IDashboardWidgetExecutionFailedPayload {
+    error: GoodDataSdkError;
+    widgetRef: ObjRef;
+}
+
+// @beta
+export interface IDashboardWidgetExecutionStarted extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardWidgetExecutionStartedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED";
+}
+
+// @beta
+export interface IDashboardWidgetExecutionStartedPayload {
+    executionDefinition: IExecutionDefinition;
+    widgetRef: ObjRef;
+}
+
+// @beta
+export interface IDashboardWidgetExecutionSucceeded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDashboardWidgetExecutionSucceededPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED";
+}
+
+// @beta
+export interface IDashboardWidgetExecutionSucceededPayload {
+    dataView: IDataView;
+    widgetRef: ObjRef;
 }
 
 // @beta (undocumented)
@@ -5481,6 +4943,19 @@ export interface IDashboardWidgetsOverlayProps {
     widgetsOverlayFn?: WidgetsOverlayFn;
 }
 
+// @alpha (undocumented)
+export interface IDateFilterConfigsState {
+    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
+}
+
+// @beta (undocumented)
+export interface IDateFilterConfigState {
+    dateFilterConfig?: IDashboardDateFilterConfig_2;
+    dateFilterConfigValidationWarnings?: DateFilterValidationResult[];
+    effectiveDateFilterConfig?: IDateFilterConfig;
+    isUsingDashboardOverrides?: boolean;
+}
+
 // @internal (undocumented)
 export type IDateFilterDraggingComponentProps = {
     itemType: "dateFilter";
@@ -5490,6 +4965,12 @@ export type IDateFilterDraggingComponentProps = {
 // @public
 export interface IDateFiltersCustomizer {
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
+}
+
+// @alpha (undocumented)
+export interface IDefaultDashboardExportVariablesProps {
+    // (undocumented)
+    renderMode: RenderMode;
 }
 
 // @internal (undocumented)
@@ -5515,6 +4996,45 @@ export interface IDefaultDashboardToolbarGroupProps {
 }
 
 // @internal
+export interface IDeleteAttributeHierarchyRequested extends IDashboardEvent {
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DELETE_ATTRIBUTE_HIERARCHY_REQUESTED";
+}
+
+// @beta (undocumented)
+export interface IDeleteDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DELETE";
+}
+
+// @alpha
+export interface IDeleteDashboardTab extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDeleteDashboardTabPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.DELETE";
+}
+
+// @alpha
+export interface IDeleteDashboardTabPayload {
+    readonly tabId: string;
+}
+
+// @alpha
+export interface IDeleteFilterView extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDeleteFilterViewPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE";
+}
+
+// @alpha
+export interface IDeleteFilterViewPayload {
+    // (undocumented)
+    readonly ref: ObjRef;
+}
+
+// @internal
 export type IdentityMapping = {
     original: IDashboardObjectIdentity;
     updated: IDashboardObjectIdentity;
@@ -5529,6 +5049,26 @@ export type IDraggableCreatePanelItemProps = {
     disabled?: boolean;
     onDragStart?: (item: DraggableItem) => void;
 };
+
+// @internal (undocumented)
+export interface IDraggingComponentProps {
+}
+
+// @alpha (undocumented)
+export interface IDrill extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDrillPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL";
+}
+
+// @alpha (undocumented)
+export interface IDrillDown extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDrillDownPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_DOWN";
+}
 
 // @alpha
 export interface IDrillDownContext {
@@ -5549,6 +5089,37 @@ export interface IDrillDownDefinition {
 }
 
 // @alpha
+export interface IDrillDownPayload {
+    readonly drillDefinition: IDrillDownDefinition;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly insight: IInsight;
+}
+
+// @alpha
+export interface IDrillPayload {
+    readonly drillContext: IDashboardDrillContext;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @beta (undocumented)
+export interface IDrillState {
+    // (undocumented)
+    crossFiltering: Record<string, ICrossFilteringItem[]>;
+    // (undocumented)
+    drillableItems: Record<string, ExplicitDrill[]>;
+}
+
+// @beta (undocumented)
+export interface IDrillStep {
+    // (undocumented)
+    drillDefinition: IDrillToInsight_2 | IDrillDownDefinition;
+    // (undocumented)
+    drillEvent: IDashboardDrillEvent;
+    // (undocumented)
+    insight: IInsight;
+}
+
+// @alpha
 export interface IDrillTargets {
     availableDrillTargets?: IAvailableDrillTargets;
     identifier: Identifier;
@@ -5556,8 +5127,93 @@ export interface IDrillTargets {
     uri: string;
 }
 
+// @alpha
+export interface IDrillTargetsAdded extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IDrillTargetsAddedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.DRILL_TARGETS.ADDED";
+}
+
+// @alpha
+export interface IDrillTargetsAddedPayload {
+    // (undocumented)
+    readonly availableDrillTargets: IAvailableDrillTargets;
+    readonly ref: ObjRef;
+}
+
+// @alpha (undocumented)
+export interface IDrillToAttributeUrl extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDrillToAttributeUrlPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL";
+}
+
+// @alpha
+export interface IDrillToAttributeUrlPayload {
+    readonly drillDefinition: IDrillToAttributeUrl_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha (undocumented)
+export interface IDrillToCustomUrl extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDrillToCustomUrlPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL";
+}
+
+// @alpha
+export interface IDrillToCustomUrlPayload {
+    readonly drillDefinition: IDrillToCustomUrl_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha (undocumented)
+export interface IDrillToDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDrillToDashboardPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD";
+}
+
+// @alpha
+export interface IDrillToDashboardPayload {
+    readonly drillDefinition: IDrillToDashboard_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha (undocumented)
+export interface IDrillToInsight extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDrillToInsightPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT";
+}
+
+// @alpha
+export interface IDrillToInsightPayload {
+    readonly drillDefinition: IDrillToInsight_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @alpha (undocumented)
+export interface IDrillToLegacyDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IDrillToLegacyDashboardPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
+}
+
+// @alpha
+export interface IDrillToLegacyDashboardPayload {
+    readonly drillDefinition: IDrillToLegacyDashboard_2;
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
 // @internal (undocumented)
-export type IDrillToUrl = IDrillToCustomUrl | IDrillToAttributeUrl;
+export type IDrillToUrl = IDrillToCustomUrl_2 | IDrillToAttributeUrl_2;
 
 // @internal (undocumented)
 export interface IDrillToUrlAttributeDefinition {
@@ -5577,6 +5233,10 @@ export interface IDrillToUrlPlaceholder {
     toBeEncoded: boolean;
 }
 
+// @internal (undocumented)
+export interface IDropTargetComponentProps {
+}
+
 // @beta (undocumented)
 export interface IEditButtonProps {
     // (undocumented)
@@ -5587,6 +5247,18 @@ export interface IEditButtonProps {
     onEditClick: () => void;
     // (undocumented)
     tooltipText: string;
+}
+
+// @beta (undocumented)
+export interface IEntitlementsState {
+    // (undocumented)
+    entitlements?: ResolvedEntitlements;
+}
+
+// @beta (undocumented)
+export interface IExecutedState {
+    // (undocumented)
+    executed: boolean;
 }
 
 // @beta (undocumented)
@@ -5606,10 +5278,127 @@ export interface IExecutionResultEnvelope {
 // @beta (undocumented)
 export type IExportConfig = ICsvExportConfig | IXlsxExportConfig | IPdfExportConfig;
 
+// @beta (undocumented)
+export interface IExportDashboardToExcel extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IExportDashboardToExcelPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.EXPORT.EXCEL";
+}
+
+// @beta (undocumented)
+export interface IExportDashboardToExcelPayload {
+    // (undocumented)
+    exportInfo: boolean;
+    // (undocumented)
+    fileName?: string;
+    // (undocumented)
+    format?: "XLSX" | "PDF";
+    // (undocumented)
+    mergeHeaders: boolean;
+    // (undocumented)
+    pdfConfiguration?: PdfConfiguration;
+    // (undocumented)
+    widgetIds?: string[];
+}
+
+// @beta (undocumented)
+export interface IExportDashboardToPdf extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.EXPORT.PDF";
+}
+
+// @beta (undocumented)
+export interface IExportDashboardToPdfPresentation extends IDashboardCommand {
+    // (undocumented)
+    readonly payload?: IExportDashboardToPresentationPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION";
+}
+
+// @beta (undocumented)
+export interface IExportDashboardToPptPresentation extends IDashboardCommand {
+    // (undocumented)
+    readonly payload?: IExportDashboardToPresentationPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION";
+}
+
+// @beta (undocumented)
+export interface IExportDashboardToPresentationPayload {
+    filters?: FilterContextItem[];
+    options?: IDashboardExportPresentationOptions;
+}
+
+// @alpha (undocumented)
+export interface IExportImageInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IExportImageInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE";
+}
+
+// @alpha
+export interface IExportImageInsightWidgetPayload {
+    readonly filename: string;
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IExportInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IExportInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT";
+}
+
+// @beta
+export interface IExportInsightWidgetPayload {
+    readonly config: IExportConfig;
+    readonly ref: ObjRef;
+}
+
 // @alpha
 export interface IExportLayoutCustomizer<TWidget> {
     // (undocumented)
     addTransformer(fn: SectionSlidesTransformer<TWidget>): IExportLayoutCustomizer<TWidget>;
+}
+
+// @alpha (undocumented)
+export interface IExportRawInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IExportRawInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
+}
+
+// @alpha
+export interface IExportRawInsightWidgetPayload {
+    readonly filename: string;
+    readonly insight: IInsight;
+    readonly ref: ObjRef;
+    readonly widget: IInsightWidget;
+}
+
+// @alpha (undocumented)
+export interface IExportSlidesInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IExportSlidesInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES";
+}
+
+// @alpha
+export interface IExportSlidesInsightWidgetPayload {
+    readonly exportType: "pdf" | "pptx";
+    readonly filename: string;
+    readonly ref: ObjRef;
+}
+
+// @alpha (undocumented)
+export interface IExportThemeProviderProps {
+    // (undocumented)
+    children: ReactNode;
 }
 
 // @public
@@ -5622,10 +5411,74 @@ export interface IFilterBarCustomizer {
 // @alpha (undocumented)
 export interface IFilterBarProps {
     DefaultFilterBar: ComponentType<IFilterBarProps>;
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
     filters: FilterContextItem[];
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
     workingFilters?: FilterContextItem[];
+}
+
+// @beta (undocumented)
+export interface IFilterOp {
+    // (undocumented)
+    readonly type: FilterOperations;
+}
+
+// @beta
+export interface IFilterOpDisableDateFilter extends IFilterOp {
+    // (undocumented)
+    type: "disableDateFilter";
+}
+
+// @beta
+export interface IFilterOpEnableDateFilter extends IFilterOp {
+    dateDataset: ObjRef | "default";
+    // (undocumented)
+    type: "enableDateFilter";
+}
+
+// @beta
+export interface IFilterOpIgnoreAttributeFilter extends IFilterOp {
+    displayFormRefs: ObjRef[];
+    // (undocumented)
+    type: "ignoreAttributeFilter";
+}
+
+// @beta
+export interface IFilterOpIgnoreDateFilter extends IFilterOp {
+    dateDataSetRefs: ObjRef[];
+    // (undocumented)
+    type: "ignoreDateFilter";
+}
+
+// @beta
+export interface IFilterOpReplaceAll extends IFilterOp {
+    readonly dateDatasetForFiltering?: ObjRef;
+    readonly ignoreAttributeFilters?: ObjRef[];
+    readonly ignoreDateFilters?: ObjRef[];
+    // (undocumented)
+    type: "replace";
+}
+
+// @beta
+export interface IFilterOpReplaceAttributeIgnores extends IFilterOp {
+    displayFormRefs: ObjRef[];
+    // (undocumented)
+    type: "replaceAttributeIgnores";
+}
+
+// @beta
+export interface IFilterOpUnignoreAttributeFilter extends IFilterOp {
+    displayFormRefs: ObjRef[];
+    // (undocumented)
+    type: "unignoreAttributeFilter";
+}
+
+// @beta
+export interface IFilterOpUnignoreDateFilter extends IFilterOp {
+    dateDataSetRefs: ObjRef[];
+    // (undocumented)
+    type: "unignoreDateFilter";
 }
 
 // @public
@@ -5640,6 +5493,14 @@ export interface IFilterViews {
     dashboard: ObjRef;
     // (undocumented)
     filterViews: IDashboardFilterView[];
+}
+
+// @alpha (undocumented)
+export interface IFilterViewsState {
+    // (undocumented)
+    filterViews: IFilterViews[];
+    // (undocumented)
+    isLoading: boolean;
 }
 
 // @public
@@ -5661,19 +5522,49 @@ export interface IGlobalDrillDownAttributeHierarchyDefinition {
 }
 
 // @public
-export function ignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function ignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @alpha
-export function ignoreDateFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
+export function ignoreDateFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): IChangeRichTextWidgetFilterSettings;
 
 // @public
-export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function ignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @beta
-export function ignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function ignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): IChangeKpiWidgetFilterSettings;
 
 // @alpha
-export function ignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
+export function ignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): IChangeRichTextWidgetFilterSettings;
+
+// @internal (undocumented)
+export interface IHeadlessDashboardConfig {
+    // (undocumented)
+    backgroundWorkers?: ((context: DashboardContext) => SagaIterator<void>)[];
+    // (undocumented)
+    customizationFns?: DashboardModelCustomizationFns;
+    // (undocumented)
+    queryServices?: IDashboardQueryService<any, any>[];
+}
+
+// @internal (undocumented)
+export interface IHeightResizerDragItem {
+    // (undocumented)
+    initialLayoutDimensions: DOMRect;
+    // (undocumented)
+    itemIndexes: number[];
+    // (undocumented)
+    maxLimit: number;
+    // (undocumented)
+    minLimit: number;
+    // (undocumented)
+    sectionIndex: number;
+    // (undocumented)
+    sectionPath?: ILayoutSectionPath;
+    // (undocumented)
+    type: "internal-height-resizer";
+    // (undocumented)
+    widgetHeights: number[];
+}
 
 // @internal (undocumented)
 export interface IImplicitDrillWithPredicates {
@@ -5689,6 +5580,19 @@ export interface IInaccessibleDashboard extends IDashboardObjectIdentity {
     title: string;
 }
 
+// @beta
+export interface IInitializeAutomations extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE";
+}
+
+// @alpha (undocumented)
+export interface IInsightAttributesMeta {
+    attributes: ReadonlyArray<IAttributeMetadataObject>;
+    displayForms: ReadonlyArray<IAttributeDisplayFormMetadataObject>;
+    usage: InsightDisplayFormUsage;
+}
+
 // @public
 export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     backend: IAnalyticalBackend;
@@ -5702,7 +5606,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
         selectedPoints?: IDrillEventIntersectionElement[][];
     };
     drillableItems: ExplicitDrill[] | undefined;
-    drillStep?: DrillStep;
+    drillStep?: IDrillStep;
     ErrorComponent: ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;
     insight: IInsight;
@@ -5711,6 +5615,18 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     settings: IUserWorkspaceSettings | undefined;
     widget: IInsightWidget;
     workspace: string;
+}
+
+// @alpha
+export interface IInsightDateDatasets {
+    readonly allAvailableDateDatasets: ICatalogDateDataset[];
+    readonly dateDatasetDisplayNames: Record<string, string>;
+    readonly dateDatasets: ReadonlyArray<ICatalogDateDataset>;
+    readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
+    readonly mostImportantFromInsight: ICatalogDateDataset | undefined;
+    readonly usedInAttributeFilters: ReadonlyArray<ICatalogDateDataset | undefined>;
+    readonly usedInAttributes: ReadonlyArray<ICatalogDateDataset | undefined>;
+    readonly usedInDateFilters: ReadonlyArray<ICatalogDateDataset>;
 }
 
 // @internal (undocumented)
@@ -5813,6 +5729,26 @@ export interface IInsightMenuSubmenuComponentProps {
 }
 
 // @alpha (undocumented)
+export interface IInsightPlaceholderWidget extends ICustomWidget {
+    // (undocumented)
+    readonly customType: "gd-insight-placeholder";
+}
+
+// @alpha (undocumented)
+export interface IInvalidCustomUrlDrillParameterInfo {
+    // (undocumented)
+    drillsWithInvalidParametersLocalIds: string[];
+    // (undocumented)
+    showMessage: boolean;
+    // (undocumented)
+    widgetId: Identifier;
+    // (undocumented)
+    widgetRef: ObjRef;
+    // (undocumented)
+    widgetUri: Uri;
+}
+
+// @alpha (undocumented)
 export interface IIRichTextMenuItemSeparator {
     // (undocumented)
     itemId: string;
@@ -5870,10 +5806,48 @@ export interface IKeyboardNavigationConfigItem {
 }
 
 // @internal (undocumented)
+export interface IKeyDriveInfo {
+    // (undocumented)
+    drillDefinition: IKeyDriveAnalysis;
+    // (undocumented)
+    drillEvent: IDashboardDrillEvent;
+    // (undocumented)
+    readonly keyDriveDefinition: IKdaDefinition;
+}
+
+// @beta (undocumented)
+export interface IKeyDriverAnalysis extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IKeyDriverAnalysisPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS";
+}
+
+// @beta
+export interface IKeyDriverAnalysisPayload {
+    readonly drillDefinition: IKeyDriveAnalysis;
+    readonly drillEvent: IDashboardDrillEvent;
+    readonly filters: FilterContextItem[];
+    readonly keyDriveItem: IDashboardKeyDriverCombinationItem;
+}
+
+// @internal (undocumented)
 export type IKpiDraggingComponentProps = {
     itemType: "kpi";
     item: KpiDraggableItem;
 };
+
+// @alpha (undocumented)
+export interface IKpiPlaceholderWidget extends ICustomWidget {
+    // (undocumented)
+    readonly customType: "gd-kpi-placeholder";
+}
+
+// @beta (undocumented)
+export interface IKpiWidgetComparison {
+    comparisonDirection?: IKpiComparisonDirection;
+    comparisonType?: IKpiComparisonTypeComparison;
+}
 
 // @beta
 export interface ILayoutCoordinates {
@@ -5882,12 +5856,50 @@ export interface ILayoutCoordinates {
 }
 
 // @alpha
+export interface ILayoutDirectionChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: ILayoutDirectionChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED";
+}
+
+// @beta
+export interface ILayoutDirectionChangedPayload {
+    direction: IDashboardLayoutContainerDirection;
+    layoutPath: ILayoutItemPath | undefined;
+}
+
+// @alpha
 export type ILayoutItemPath = ILayoutCoordinates[];
+
+// @alpha
+export interface ILayoutSectionHeadersToggled extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: ILayoutSectionHeadersToggledPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED";
+}
+
+// @beta
+export interface ILayoutSectionHeadersToggledPayload {
+    areSectionHeadersEnabled: boolean;
+    layoutPath: ILayoutItemPath | undefined;
+}
 
 // @alpha
 export interface ILayoutSectionPath {
     parent?: ILayoutItemPath;
     sectionIndex: number;
+}
+
+// @alpha (undocumented)
+export interface ILayoutState extends IUndoEnhancedState<DashboardLayoutCommands> {
+    // (undocumented)
+    layout?: IDashboardLayout<ExtendedDashboardWidget>;
+    // (undocumented)
+    screen: ScreenSize | undefined;
+    // (undocumented)
+    stash: LayoutStash;
 }
 
 // @alpha
@@ -5905,10 +5917,26 @@ export interface ILegacyDashboardTab {
     readonly title: string;
 }
 
+// @internal
+export interface ILoadAllWorkspaceUsers extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.USERS.LOAD_ALL";
+}
+
 // @public
 export interface ILoadingCustomizer {
     withCustomDecorator(providerFactory: (next: LoadingComponentProvider) => OptionalLoadingComponentProvider): ILoadingCustomizer;
     withCustomProvider(provider: OptionalLoadingComponentProvider): ILoadingCustomizer;
+}
+
+// @beta (undocumented)
+export interface ILoadingState {
+    // (undocumented)
+    error?: Error;
+    // (undocumented)
+    loading: boolean;
+    // (undocumented)
+    result?: boolean;
 }
 
 // @alpha (undocumented)
@@ -5917,6 +5945,13 @@ export interface ILockedStatusProps {
     isLocked: boolean;
     // (undocumented)
     theme?: ITheme;
+}
+
+// @alpha
+export interface IMeasureDateDatasets {
+    readonly dateDatasetDisplayNames: Record<string, string>;
+    readonly dateDatasets: ReadonlyArray<ICatalogDateDataset>;
+    readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
 }
 
 // @alpha (undocumented)
@@ -6014,6 +6049,58 @@ export interface IMetricsAndFacts {
     metrics: ICatalogMeasure[];
 }
 
+// @alpha (undocumented)
+export interface IModifyDrillDownForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IModifyDrillDownForInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN";
+}
+
+// @alpha
+export interface IModifyDrillDownForInsightWidgetPayload {
+    readonly attributeHierarchyRef: ObjRef;
+    readonly attributeIdentifier: ObjRef;
+    readonly blacklistHierarchies: IDrillDownReference[];
+    readonly intersectionIgnoredAttributes?: string[];
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IModifyDrillsForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IModifyDrillsForInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS";
+}
+
+// @beta
+export interface IModifyDrillsForInsightWidgetPayload {
+    readonly blacklistHierarchiesToUpdate?: IDrillDownReference[];
+    readonly drills: InsightDrillDefinition[];
+    readonly ref: ObjRef;
+}
+
+// @internal (undocumented)
+export interface IMonitoredAction {
+    // (undocumented)
+    calls: number;
+    // (undocumented)
+    promise: Promise<PayloadAction<any>>;
+    // (undocumented)
+    reject: (e: any) => void;
+    // (undocumented)
+    resolve: (action: PayloadAction<any>) => void;
+}
+
+// @beta (undocumented)
+export interface IMoveAttributeFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: MoveAttributeFilterPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE";
+}
+
 // @internal (undocumented)
 export interface IMoveAttributeFilterPayload {
     // (undocumented)
@@ -6022,12 +6109,71 @@ export interface IMoveAttributeFilterPayload {
     readonly index: number;
 }
 
+// @beta (undocumented)
+export interface IMoveDateFilter extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: MoveDateFilterPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE";
+}
+
 // @internal (undocumented)
 export interface IMoveDateFilterPayload {
     // (undocumented)
     readonly dataSet: ObjRef;
     // (undocumented)
     readonly index: number;
+}
+
+// @beta (undocumented)
+export interface IMoveLayoutSection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IMoveLayoutSectionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
+}
+
+// @beta
+export interface IMoveLayoutSectionPayload {
+    readonly sectionIndex: number | ILayoutSectionPath;
+    readonly toIndex: number | ILayoutSectionPath;
+}
+
+// @beta (undocumented)
+export interface IMoveSectionItem extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IMoveSectionItemPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
+}
+
+// @beta
+export interface IMoveSectionItemPayload {
+    readonly fromPath?: ILayoutItemPath;
+    readonly itemIndex: number;
+    readonly removeOriginalSectionIfEmpty: boolean;
+    readonly sectionIndex: number;
+    readonly toItemIndex: RelativeIndex;
+    readonly toPath?: ILayoutItemPath;
+    readonly toSectionIndex: RelativeIndex;
+}
+
+// @beta (undocumented)
+export interface IMoveSectionItemToNewSection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IMoveSectionItemToNewSectionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION";
+}
+
+// @beta
+export interface IMoveSectionItemToNewSectionPayload {
+    readonly itemIndex: number;
+    readonly itemPath?: ILayoutItemPath;
+    readonly removeOriginalSectionIfEmpty: boolean;
+    readonly sectionIndex: number;
+    readonly toSection?: ILayoutSectionPath;
+    readonly toSectionIndex: RelativeIndex;
 }
 
 // @alpha (undocumented)
@@ -6044,36 +6190,24 @@ export interface INestedLayoutProps {
 }
 
 // @beta
-export interface InitializeAutomations extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE";
-}
-
-// @beta
-export function initializeAutomations(correlationId?: string): InitializeAutomations;
+export function initializeAutomations(correlationId?: string): IInitializeAutomations;
 
 // @public
-export interface InitializeDashboard extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: InitializeDashboardPayload;
-    // (undocumented)
+export type InitializeDashboard = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.INITIALIZE";
-}
+    readonly payload: InitializeDashboardPayload;
+};
 
 // @public
 export function initializeDashboard(config?: DashboardConfig, permissions?: IWorkspacePermissions, correlationId?: string, initialTabId?: string): InitializeDashboard;
 
 // @public
-export interface InitializeDashboardPayload {
-    // (undocumented)
+export type InitializeDashboardPayload = {
     readonly config?: DashboardConfig;
-    // @alpha
-    readonly initialTabId?: string;
-    // (undocumented)
     readonly permissions?: IWorkspacePermissions;
-    // @internal (undocumented)
     readonly persistedDashboard?: IDashboard;
-}
+    readonly initialTabId?: string;
+};
 
 // @internal
 export function initializeDashboardWithPersistedDashboard(config?: DashboardConfig, permissions?: IWorkspacePermissions, persistedDashboard?: IDashboard, correlationId?: string, initialTabId?: string): InitializeDashboard;
@@ -6081,15 +6215,16 @@ export function initializeDashboardWithPersistedDashboard(config?: DashboardConf
 // @beta
 export const InitialLoadCorrelationId = "initialLoad";
 
+// @alpha (undocumented)
+export interface INotificationChannelsState {
+    // (undocumented)
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    // (undocumented)
+    notificationChannelsCount: number;
+}
+
 // @internal (undocumented)
 export const INSIGHT_PLACEHOLDER_WIDGET_ID = "__insightPlaceholder__";
-
-// @alpha (undocumented)
-export interface InsightAttributesMeta {
-    attributes: ReadonlyArray<IAttributeMetadataObject>;
-    displayForms: ReadonlyArray<IAttributeDisplayFormMetadataObject>;
-    usage: InsightDisplayFormUsage;
-}
 
 // @alpha (undocumented)
 export type InsightBodyComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomInsightBodyComponent;
@@ -6099,18 +6234,6 @@ export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidge
 
 // @internal (undocumented)
 export type InsightComponentSetProvider = (defaultComponentSet: InsightWidgetComponentSet) => InsightWidgetComponentSet;
-
-// @alpha
-export interface InsightDateDatasets {
-    readonly allAvailableDateDatasets: ICatalogDateDataset[];
-    readonly dateDatasetDisplayNames: Record<string, string>;
-    readonly dateDatasets: ReadonlyArray<ICatalogDateDataset>;
-    readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
-    readonly mostImportantFromInsight: ICatalogDateDataset | undefined;
-    readonly usedInAttributeFilters: ReadonlyArray<ICatalogDateDataset | undefined>;
-    readonly usedInAttributes: ReadonlyArray<ICatalogDateDataset | undefined>;
-    readonly usedInDateFilters: ReadonlyArray<ICatalogDateDataset>;
-}
 
 // @internal (undocumented)
 export type InsightDraggableComponent = {
@@ -6163,14 +6286,8 @@ export type InsightPlaceholderDraggableItem = BaseDraggableLayoutItem & {
     type: "insight-placeholder";
 };
 
-// @alpha (undocumented)
-export interface InsightPlaceholderWidget extends ICustomWidget {
-    // (undocumented)
-    readonly customType: "gd-insight-placeholder";
-}
-
 // @alpha
-export function insightSelectDateDataset({ mostImportantFromInsight, dateDatasetsOrdered, }: InsightDateDatasets): ICatalogDateDataset | undefined;
+export function insightSelectDateDataset({ mostImportantFromInsight, dateDatasetsOrdered, }: IInsightDateDatasets): ICatalogDateDataset | undefined;
 
 // @internal
 export class InsightWidgetBuilder {
@@ -6196,23 +6313,18 @@ export class InsightWidgetBuilder {
 }
 
 // @internal
-export type InsightWidgetComponentSet = CustomComponentBase<IDashboardInsightProps, Parameters<InsightComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IInsightWidget>;
+export type InsightWidgetComponentSet = ICustomComponentBase<IDashboardInsightProps, Parameters<InsightComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IInsightWidget>;
 
 // @internal (undocumented)
 export type InsightWidgetModifications = (builder: InsightWidgetBuilder) => InsightWidgetBuilder;
 
-// @alpha (undocumented)
-export interface InvalidCustomUrlDrillParameterInfo {
-    // (undocumented)
-    drillsWithInvalidParametersLocalIds: string[];
-    // (undocumented)
-    showMessage: boolean;
-    // (undocumented)
-    widgetId: Identifier;
-    // (undocumented)
-    widgetRef: ObjRef;
-    // (undocumented)
-    widgetUri: Uri;
+// @alpha
+export interface IObjRefMapConfig<T> {
+    readonly idExtract: (obj: T) => Identifier;
+    readonly refExtract: (obj: T) => ObjRef;
+    readonly strictTypeCheck: boolean;
+    readonly type?: ObjectType;
+    readonly uriExtract: (obj: T) => string;
 }
 
 // @internal (undocumented)
@@ -6229,16 +6341,443 @@ export interface IPdfExportConfig {
     title?: string;
 }
 
+// @alpha (undocumented)
+export interface IPlaceholderWidget extends ICustomWidget {
+    // (undocumented)
+    readonly customType: "gd-widget-placeholder";
+    // (undocumented)
+    readonly isInitial?: boolean;
+    // (undocumented)
+    readonly isLoading?: boolean;
+}
+
+// @alpha (undocumented)
+export interface IQueryAttributeByDisplayForm extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly displayForms: ObjRef[];
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE";
+}
+
+// @internal (undocumented)
+export interface IQueryAttributeDataSet extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly displayForm: ObjRef;
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE";
+}
+
+// @internal (undocumented)
+export interface IQueryAttributeElements extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly displayForm: ObjRef;
+        readonly limit?: number;
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE";
+}
+
+// @internal (undocumented)
+export interface IQueryAvailableDatasetsForItems extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly items: IAttributeOrMeasure[];
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
+}
+
+// @alpha (undocumented)
+export interface IQueryConnectedAttributes extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly ref: ObjRef;
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
+}
+
+// @alpha (undocumented)
+export interface IQueryConnectingAttributes extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly refs: [ObjRef, ObjRef][];
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES";
+}
+
+// @alpha
+export interface IQueryInsightAttributesMeta extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly insightOrRef: ObjRef | IInsight;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
+}
+
+// @alpha
+export interface IQueryInsightDateDatasets extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly insightOrRef: ObjRef | IInsight;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
+}
+
+// @alpha
+export interface IQueryMeasureDateDatasets extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly measureRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
+}
+
+// @alpha (undocumented)
+export interface IQueryMetricsAndFacts extends IDashboardQuery {
+    // (undocumented)
+    type: "GDC.DASH/QUERY.METRICS_AND_FACTS";
+}
+
+// @alpha
+export interface IQueryWidgetAlertCount extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.WIDGET.ALERT_COUNT";
+}
+
+// @alpha
+export interface IQueryWidgetBrokenAlerts extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
+}
+
+// @alpha
+export interface IQueryWidgetFilters extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+        readonly insight?: IInsightDefinition | null;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
+}
+
+// @beta
+export interface IRefreshAutomations extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH";
+}
+
+// @beta (undocumented)
+export interface IRefreshInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRefreshInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
+}
+
+// @beta
+export interface IRefreshInsightWidgetPayload {
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IRefreshKpiWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRefreshKpiWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.REFRESH";
+}
+
+// @beta
+export interface IRefreshKpiWidgetPayload {
+    readonly ref: ObjRef;
+}
+
+// @alpha
+export interface IReloadFilterViews extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD";
+}
+
 // @internal (undocumented)
 export interface IRemoveAttributeFilterPayload {
     // (undocumented)
     readonly filterLocalId: string;
 }
 
+// @beta (undocumented)
+export interface IRemoveAttributeFilters extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveAttributeFiltersPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
+}
+
+// @beta
+export interface IRemoveAttributeFiltersPayload {
+    readonly filterLocalIds: string[];
+}
+
 // @internal (undocumented)
 export interface IRemoveDateFilterPayload {
     // (undocumented)
     readonly dataSet: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IRemoveDateFilters extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveDateFiltersPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE";
+}
+
+// @beta
+export interface IRemoveDateFiltersPayload {
+    readonly dataSets: ObjRef[];
+}
+
+// @alpha (undocumented)
+export interface IRemoveDrillDownForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveDrillDownForInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN";
+}
+
+// @alpha
+export interface IRemoveDrillDownForInsightWidgetPayload {
+    readonly blacklistHierarchies: IDrillDownReference[];
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IRemoveDrillForKpiWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveDrillForKpiWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL";
+}
+
+// @beta
+export interface IRemoveDrillForKpiWidgetPayload {
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IRemoveDrillsForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveDrillsForInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS";
+}
+
+// @beta
+export interface IRemoveDrillsForInsightWidgetPayload {
+    readonly localIdentifiers: RemoveDrillsSelector;
+    readonly ref: ObjRef;
+}
+
+// @alpha (undocumented)
+export interface IRemoveDrillToUrlForInsightWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveDrillToUrlForInsightWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL";
+}
+
+// @alpha (undocumented)
+export interface IRemoveDrillToUrlForInsightWidgetPayload {
+    readonly blacklistAttributes: ObjRef[];
+    readonly ref: ObjRef;
+}
+
+// @beta (undocumented)
+export interface IRemoveLayoutSection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveLayoutSectionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
+}
+
+// @beta
+export interface IRemoveLayoutSectionPayload {
+    readonly index: RelativeIndex | ILayoutSectionPath;
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+// @beta (undocumented)
+export interface IRemoveSectionItem extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveSectionItemPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
+}
+
+// @beta (undocumented)
+export interface IRemoveSectionItemByWidgetRef extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRemoveSectionItemByWidgetRefPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF";
+}
+
+// @beta
+export interface IRemoveSectionItemByWidgetRefPayload {
+    readonly eager?: boolean;
+    readonly stashIdentifier?: StashedDashboardItemsId;
+    readonly widgetRef: ObjRef;
+}
+
+// @beta
+export interface IRemoveSectionItemPayload {
+    readonly eager?: boolean;
+    readonly itemIndex: RelativeIndex;
+    readonly itemPath?: ILayoutItemPath;
+    readonly sectionIndex: number;
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+// @beta (undocumented)
+export interface IRenameDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRenameDashboardPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.RENAME";
+}
+
+// @beta
+export interface IRenameDashboardPayload {
+    readonly newTitle: string;
+}
+
+// @alpha
+export interface IRenameDashboardTab extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRenameDashboardTabPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.RENAME";
+}
+
+// @alpha
+export interface IRenameDashboardTabPayload {
+    readonly tabId?: string;
+    readonly title: string;
+}
+
+// @beta (undocumented)
+export interface IRenderingWorkerConfiguration {
+    asyncRenderExpectedCount?: number;
+    asyncRenderRequestedTimeout: number;
+    asyncRenderResolvedTimeout: number;
+    correlationIdGenerator: () => string;
+    isExport?: boolean;
+    maxTimeout: number;
+}
+
+// @beta (undocumented)
+export interface IRenderModeChangeOptions {
+    // (undocumented)
+    readonly resetDashboard: boolean;
+}
+
+// @beta (undocumented)
+export interface IRenderModeState {
+    // (undocumented)
+    renderMode: RenderMode;
+}
+
+// @beta (undocumented)
+export interface IReplaceSectionItem extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IReplaceSectionItemPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
+}
+
+// @beta
+export interface IReplaceSectionItemPayload {
+    readonly autoResolveDateFilterDataset?: boolean;
+    readonly item: DashboardItemDefinition;
+    readonly itemIndex: number;
+    readonly itemPath?: ILayoutItemPath;
+    readonly sectionIndex: number;
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+// @alpha
+export interface IRepositionDashboardTab extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IRepositionDashboardTabPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.REPOSITION";
+}
+
+// @alpha
+export interface IRepositionDashboardTabPayload {
+    readonly newIndex: number;
+    readonly oldIndex: number;
+}
+
+// @beta (undocumented)
+export interface IResetDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.RESET";
+}
+
+// @alpha
+export interface IResetFilterContextWorkingSelection extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION";
+}
+
+// @beta (undocumented)
+export interface IResizeHeight extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IResizeHeightPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT";
+}
+
+// @beta
+export interface IResizeHeightPayload {
+    readonly height: number;
+    readonly itemIndexes: number[];
+    readonly sectionIndex: number | ILayoutSectionPath;
+}
+
+// @beta (undocumented)
+export interface IResizeWidth extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IResizeWidthPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH";
+}
+
+// @beta
+export interface IResizeWidthPayload {
+    readonly itemIndex: number;
+    readonly itemPath?: ILayoutItemPath;
+    readonly sectionIndex: number;
+    readonly width: number;
 }
 
 // @alpha (undocumented)
@@ -6328,13 +6867,26 @@ export interface IRichTextMenuSubmenuComponentProps {
 }
 
 // @alpha
-export function isAnyPlaceholderWidget(obj: unknown): obj is PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget;
+export function isAnyPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget | IInsightPlaceholderWidget | IKpiPlaceholderWidget;
 
 // @internal (undocumented)
 export function isAttributeFilterDraggableItem(item: any): item is AttributeFilterDraggableItem;
 
 // @internal (undocumented)
 export function isAttributeFilterPlaceholderDraggableItem(item: any): item is AttributeFilterPlaceholderDraggableItem;
+
+// @beta
+export interface ISaveAlert extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISaveAlertPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ALERT.SAVE";
+}
+
+// @beta
+export interface ISaveAlertPayload {
+    readonly alert: IAutomationMetadataObject;
+}
 
 // @alpha (undocumented)
 export interface ISaveAsDialogProps {
@@ -6365,6 +6917,56 @@ export interface ISaveButtonProps {
     isVisible: boolean;
     // (undocumented)
     onSaveClick: () => void;
+}
+
+// @beta (undocumented)
+export interface ISaveDashboard extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISaveDashboardPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.SAVE";
+}
+
+// @beta
+export interface ISaveDashboardPayload {
+    readonly title?: string;
+}
+
+// @alpha (undocumented)
+export interface ISavedFilterViewInteractionData {
+    // (undocumented)
+    countOfSavedViews: number;
+    // (undocumented)
+    type: SavedFilterViewInteractionType;
+}
+
+// @alpha
+export interface ISaveFilterView extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISaveFilterViewPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE";
+}
+
+// @alpha
+export interface ISaveFilterViewPayload {
+    // (undocumented)
+    readonly isDefault: boolean;
+    // (undocumented)
+    readonly name: string;
+}
+
+// @beta
+export interface ISaveScheduledEmail extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISaveScheduledEmailPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE";
+}
+
+// @beta
+export interface ISaveScheduledEmailPayload {
+    readonly scheduledEmail: IAutomationMetadataObject;
 }
 
 // @internal (undocumented)
@@ -6428,10 +7030,23 @@ export interface IScheduleEmailContext {
 }
 
 // @internal
-export const isCreateAttributeHierarchyRequested: (obj: unknown) => obj is CreateAttributeHierarchyRequested;
+export const isCreateAttributeHierarchyRequested: (obj: unknown) => obj is ICreateAttributeHierarchyRequested;
 
 // @internal
-export const isCreateInsightRequested: (obj: unknown) => obj is CreateInsightRequested;
+export const isCreateInsightRequested: (obj: unknown) => obj is ICreateInsightRequested;
+
+// @beta
+export interface IScreenSizeChanged extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IScreenSizeChangedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED";
+}
+
+// @beta
+export interface IScreenSizeChangedPayload {
+    readonly screenSize: ScreenSize;
+}
 
 // @public
 export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent;
@@ -6446,10 +7061,10 @@ export function isCustomWidgetBase(obj: unknown): obj is ICustomWidgetBase;
 export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidgetDefinition;
 
 // @beta
-export const isDashboardAlertCreated: (obj: unknown) => obj is DashboardAlertCreated;
+export const isDashboardAlertCreated: (obj: unknown) => obj is IDashboardAlertCreated;
 
 // @beta
-export const isDashboardAlertSaved: (obj: unknown) => obj is DashboardAlertSaved;
+export const isDashboardAlertSaved: (obj: unknown) => obj is IDashboardAlertSaved;
 
 // @public
 export const isDashboardAsyncRenderRequested: (obj: unknown) => obj is DashboardAsyncRenderRequested;
@@ -6458,52 +7073,52 @@ export const isDashboardAsyncRenderRequested: (obj: unknown) => obj is Dashboard
 export const isDashboardAsyncRenderResolved: (obj: unknown) => obj is DashboardAsyncRenderResolved;
 
 // @beta
-export const isDashboardAttributeFilterAdded: (obj: unknown) => obj is DashboardAttributeFilterAdded;
+export const isDashboardAttributeFilterAdded: (obj: unknown) => obj is IDashboardAttributeFilterAdded;
 
 // @alpha
-export const isDashboardAttributeFilterConfigLimitingItemsChanged: (obj: unknown) => obj is DashboardAttributeFilterConfigLimitingItemsChanged;
+export const isDashboardAttributeFilterConfigLimitingItemsChanged: (obj: unknown) => obj is IDashboardAttributeFilterConfigLimitingItemsChanged;
 
 // @alpha
-export const isDashboardAttributeFilterConfigModeChanged: (obj: unknown) => obj is DashboardAttributeFilterConfigModeChanged;
+export const isDashboardAttributeFilterConfigModeChanged: (obj: unknown) => obj is IDashboardAttributeFilterConfigModeChanged;
 
 // @beta
-export const isDashboardAttributeFilterMoved: (obj: unknown) => obj is DashboardAttributeFilterMoved;
+export const isDashboardAttributeFilterMoved: (obj: unknown) => obj is IDashboardAttributeFilterMoved;
 
 // @beta
-export const isDashboardAttributeFilterParentChanged: (obj: unknown) => obj is DashboardAttributeFilterParentChanged;
+export const isDashboardAttributeFilterParentChanged: (obj: unknown) => obj is IDashboardAttributeFilterParentChanged;
 
 // @beta
-export const isDashboardAttributeFilterRemoved: (obj: unknown) => obj is DashboardAttributeFilterRemoved;
+export const isDashboardAttributeFilterRemoved: (obj: unknown) => obj is IDashboardAttributeFilterRemoved;
 
 // @public
 export const isDashboardAttributeFilterSelectionChanged: (obj: unknown) => obj is DashboardAttributeFilterSelectionChanged;
 
 // @beta
-export const isDashboardAttributeFilterSelectionModeChanged: (obj: unknown) => obj is DashboardAttributeSelectionModeChanged;
+export const isDashboardAttributeFilterSelectionModeChanged: (obj: unknown) => obj is IDashboardAttributeSelectionModeChanged;
 
 // @beta
-export const isDashboardAttributeFilterTitleChanged: (obj: unknown) => obj is DashboardAttributeTitleChanged;
+export const isDashboardAttributeFilterTitleChanged: (obj: unknown) => obj is IDashboardAttributeTitleChanged;
 
 // @beta
-export const isDashboardAutomationsRefreshed: (obj: unknown) => obj is DashboardAutomationsRefreshed;
+export const isDashboardAutomationsRefreshed: (obj: unknown) => obj is IDashboardAutomationsRefreshed;
 
 // @beta
-export const isDashboardCommandFailed: (obj: unknown) => obj is DashboardCommandFailed<any>;
+export const isDashboardCommandFailed: (obj: unknown) => obj is IDashboardCommandFailed<any>;
 
 // @beta
-export const isDashboardCommandRejected: (obj: unknown) => obj is DashboardCommandRejected;
+export const isDashboardCommandRejected: (obj: unknown) => obj is IDashboardCommandRejected;
 
 // @beta
-export const isDashboardCommandStarted: (obj: unknown) => obj is DashboardCommandStarted<any>;
+export const isDashboardCommandStarted: (obj: unknown) => obj is IDashboardCommandStarted<any>;
 
 // @public
 export const isDashboardCopySaved: (obj: unknown) => obj is DashboardCopySaved;
 
 // @beta
-export const isDashboardCrossFilteringRequested: (obj: unknown) => obj is DashboardCrossFilteringRequested;
+export const isDashboardCrossFilteringRequested: (obj: unknown) => obj is IDashboardCrossFilteringRequested;
 
 // @beta
-export const isDashboardCrossFilteringResolved: (obj: unknown) => obj is DashboardCrossFilteringResolved;
+export const isDashboardCrossFilteringResolved: (obj: unknown) => obj is IDashboardCrossFilteringResolved;
 
 // @public
 export const isDashboardDateFilterSelectionChanged: (obj: unknown) => obj is DashboardDateFilterSelectionChanged;
@@ -6512,55 +7127,55 @@ export const isDashboardDateFilterSelectionChanged: (obj: unknown) => obj is Das
 export const isDashboardDeinitialized: (obj: unknown) => obj is DashboardDeinitialized;
 
 // @beta
-export const isDashboardDeleted: (obj: unknown) => obj is DashboardDeleted;
+export const isDashboardDeleted: (obj: unknown) => obj is IDashboardDeleted;
 
 // @internal
 export function isDashboardDependentDateFilter(obj: unknown): obj is IDashboardDependentDateFilter;
 
 // @alpha
-export const isDashboardDrillableItemsChanged: (obj: unknown) => obj is DashboardDrillableItemsChanged;
+export const isDashboardDrillableItemsChanged: (obj: unknown) => obj is IDashboardDrillableItemsChanged;
 
 // @alpha
-export const isDashboardDrillDownRequested: (obj: unknown) => obj is DashboardDrillDownRequested;
+export const isDashboardDrillDownRequested: (obj: unknown) => obj is IDashboardDrillDownRequested;
 
 // @alpha
-export const isDashboardDrillDownResolved: (obj: unknown) => obj is DashboardDrillDownResolved;
+export const isDashboardDrillDownResolved: (obj: unknown) => obj is IDashboardDrillDownResolved;
 
 // @alpha
-export const isDashboardDrillRequested: (obj: unknown) => obj is DashboardDrillRequested;
+export const isDashboardDrillRequested: (obj: unknown) => obj is IDashboardDrillRequested;
 
 // @alpha
-export const isDashboardDrillResolved: (obj: unknown) => obj is DashboardDrillResolved;
+export const isDashboardDrillResolved: (obj: unknown) => obj is IDashboardDrillResolved;
 
 // @alpha
-export const isDashboardDrillToAttributeUrlRequested: (obj: unknown) => obj is DashboardDrillToAttributeUrlRequested;
+export const isDashboardDrillToAttributeUrlRequested: (obj: unknown) => obj is IDashboardDrillToAttributeUrlRequested;
 
 // @alpha
-export const isDashboardDrillToAttributeUrlResolved: (obj: unknown) => obj is DashboardDrillToAttributeUrlResolved;
+export const isDashboardDrillToAttributeUrlResolved: (obj: unknown) => obj is IDashboardDrillToAttributeUrlResolved;
 
 // @alpha
-export const isDashboardDrillToCustomUrlRequested: (obj: unknown) => obj is DashboardDrillToCustomUrlRequested;
+export const isDashboardDrillToCustomUrlRequested: (obj: unknown) => obj is IDashboardDrillToCustomUrlRequested;
 
 // @alpha
-export const isDashboardDrillToCustomUrlResolved: (obj: unknown) => obj is DashboardDrillToCustomUrlResolved;
+export const isDashboardDrillToCustomUrlResolved: (obj: unknown) => obj is IDashboardDrillToCustomUrlResolved;
 
 // @alpha
-export const isDashboardDrillToDashboardRequested: (obj: unknown) => obj is DashboardDrillToDashboardRequested;
+export const isDashboardDrillToDashboardRequested: (obj: unknown) => obj is IDashboardDrillToDashboardRequested;
 
 // @alpha
-export const isDashboardDrillToDashboardResolved: (obj: unknown) => obj is DashboardDrillToDashboardResolved;
+export const isDashboardDrillToDashboardResolved: (obj: unknown) => obj is IDashboardDrillToDashboardResolved;
 
 // @alpha
-export const isDashboardDrillToInsightRequested: (obj: unknown) => obj is DashboardDrillToInsightRequested;
+export const isDashboardDrillToInsightRequested: (obj: unknown) => obj is IDashboardDrillToInsightRequested;
 
 // @alpha
-export const isDashboardDrillToInsightResolved: (obj: unknown) => obj is DashboardDrillToInsightResolved;
+export const isDashboardDrillToInsightResolved: (obj: unknown) => obj is IDashboardDrillToInsightResolved;
 
 // @alpha
-export const isDashboardDrillToLegacyDashboardRequested: (obj: unknown) => obj is DashboardDrillToLegacyDashboardRequested;
+export const isDashboardDrillToLegacyDashboardRequested: (obj: unknown) => obj is IDashboardDrillToLegacyDashboardRequested;
 
 // @alpha
-export const isDashboardDrillToLegacyDashboardResolved: (obj: unknown) => obj is DashboardDrillToLegacyDashboardResolved;
+export const isDashboardDrillToLegacyDashboardResolved: (obj: unknown) => obj is IDashboardDrillToLegacyDashboardResolved;
 
 // @public
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
@@ -6569,34 +7184,34 @@ export function isDashboardEvent(obj: unknown): obj is IDashboardEvent;
 export function isDashboardEventOrCustomDashboardEvent(obj: unknown): obj is IDashboardEvent | ICustomDashboardEvent;
 
 // @beta
-export const isDashboardExportToExcelRequested: (obj: unknown) => obj is DashboardExportToExcelRequested;
+export const isDashboardExportToExcelRequested: (obj: unknown) => obj is IDashboardExportToExcelRequested;
 
 // @beta
-export const isDashboardExportToExcelResolved: (obj: unknown) => obj is DashboardExportToExcelResolved;
+export const isDashboardExportToExcelResolved: (obj: unknown) => obj is IDashboardExportToExcelResolved;
 
 // @beta
-export const isDashboardExportToImageRequested: (obj: unknown) => obj is DashboardExportToImageRequested;
+export const isDashboardExportToImageRequested: (obj: unknown) => obj is IDashboardExportToImageRequested;
 
 // @beta
-export const isDashboardExportToImageResolved: (obj: unknown) => obj is DashboardExportToImageResolved;
+export const isDashboardExportToImageResolved: (obj: unknown) => obj is IDashboardExportToImageResolved;
 
 // @beta
-export const isDashboardExportToPdfPresentationRequested: (obj: unknown) => obj is DashboardExportToPdfPresentationRequested;
+export const isDashboardExportToPdfPresentationRequested: (obj: unknown) => obj is IDashboardExportToPdfPresentationRequested;
 
 // @beta
-export const isDashboardExportToPdfPresentationResolved: (obj: unknown) => obj is DashboardExportToPdfPresentationResolved;
+export const isDashboardExportToPdfPresentationResolved: (obj: unknown) => obj is IDashboardExportToPdfPresentationResolved;
 
 // @beta
-export const isDashboardExportToPdfRequested: (obj: unknown) => obj is DashboardExportToPdfRequested;
+export const isDashboardExportToPdfRequested: (obj: unknown) => obj is IDashboardExportToPdfRequested;
 
 // @beta
-export const isDashboardExportToPdfResolved: (obj: unknown) => obj is DashboardExportToPdfResolved;
+export const isDashboardExportToPdfResolved: (obj: unknown) => obj is IDashboardExportToPdfResolved;
 
 // @beta
-export const isDashboardExportToPptPresentationRequested: (obj: unknown) => obj is DashboardExportToPptPresentationRequested;
+export const isDashboardExportToPptPresentationRequested: (obj: unknown) => obj is IDashboardExportToPptPresentationRequested;
 
 // @beta
-export const isDashboardExportToPptPresentationResolved: (obj: unknown) => obj is DashboardExportToPptPresentationResolved;
+export const isDashboardExportToPptPresentationResolved: (obj: unknown) => obj is IDashboardExportToPptPresentationResolved;
 
 // @alpha
 export function isDashboardFilter(obj: unknown): obj is IDashboardFilter;
@@ -6605,73 +7220,73 @@ export function isDashboardFilter(obj: unknown): obj is IDashboardFilter;
 export const isDashboardFilterContextChanged: (obj: unknown) => obj is DashboardFilterContextChanged;
 
 // @alpha
-export const isDashboardFilterContextSelectionReseted: (obj: unknown) => obj is DashboardFilterContextSelectionReseted;
+export const isDashboardFilterContextSelectionReset: (obj: unknown) => obj is IDashboardFilterContextSelectionReset;
 
 // @alpha
-export const isDashboardFilterViewApplicationFailed: (obj: unknown) => obj is DashboardFilterViewApplicationFailed;
+export const isDashboardFilterViewApplicationFailed: (obj: unknown) => obj is IDashboardFilterViewApplicationFailed;
 
 // @beta
-export const isDashboardFilterViewApplicationSucceeded: (obj: unknown) => obj is DashboardFilterViewApplicationSucceeded;
+export const isDashboardFilterViewApplicationSucceeded: (obj: unknown) => obj is IDashboardFilterViewApplicationSucceeded;
 
 // @alpha
-export const isDashboardFilterViewCreationFailed: (obj: unknown) => obj is DashboardFilterViewCreationFailed;
+export const isDashboardFilterViewCreationFailed: (obj: unknown) => obj is IDashboardFilterViewCreationFailed;
 
 // @beta
-export const isDashboardFilterViewCreationSucceeded: (obj: unknown) => obj is DashboardFilterViewCreationSucceeded;
+export const isDashboardFilterViewCreationSucceeded: (obj: unknown) => obj is IDashboardFilterViewCreationSucceeded;
 
 // @alpha
-export const isDashboardFilterViewDefaultStatusChangeFailed: (obj: unknown) => obj is DashboardFilterViewDefaultStatusChangeFailed;
+export const isDashboardFilterViewDefaultStatusChangeFailed: (obj: unknown) => obj is IDashboardFilterViewDefaultStatusChangeFailed;
 
 // @beta
-export const isDashboardFilterViewDefaultStatusChangeSucceeded: (obj: unknown) => obj is DashboardFilterViewDefaultStatusChangeSucceeded;
+export const isDashboardFilterViewDefaultStatusChangeSucceeded: (obj: unknown) => obj is IDashboardFilterViewDefaultStatusChangeSucceeded;
 
 // @alpha
-export const isDashboardFilterViewDeletionFailed: (obj: unknown) => obj is DashboardFilterViewDeletionFailed;
+export const isDashboardFilterViewDeletionFailed: (obj: unknown) => obj is IDashboardFilterViewDeletionFailed;
 
 // @beta
-export const isDashboardFilterViewDeletionSucceeded: (obj: unknown) => obj is DashboardFilterViewDeletionSucceeded;
+export const isDashboardFilterViewDeletionSucceeded: (obj: unknown) => obj is IDashboardFilterViewDeletionSucceeded;
 
 // @alpha
-export const isDashboardIgnoreExecutionTimestampChanged: (obj: unknown) => obj is DashboardIgnoreExecutionTimestampChanged;
+export const isDashboardIgnoreExecutionTimestampChanged: (obj: unknown) => obj is IDashboardIgnoreExecutionTimestampChanged;
 
 // @public
 export const isDashboardInitialized: (obj: unknown) => obj is DashboardInitialized;
 
 // @beta
-export const isDashboardInsightWidgetChanged: (obj: unknown) => obj is DashboardInsightWidgetChanged;
+export const isDashboardInsightWidgetChanged: (obj: unknown) => obj is IDashboardInsightWidgetChanged;
 
 // @beta
-export const isDashboardInsightWidgetDescriptionChanged: (obj: unknown) => obj is DashboardInsightWidgetDescriptionChanged;
+export const isDashboardInsightWidgetDescriptionChanged: (obj: unknown) => obj is IDashboardInsightWidgetDescriptionChanged;
 
 // @beta
-export const isDashboardInsightWidgetDrillsModified: (obj: unknown) => obj is DashboardInsightWidgetDrillsModified;
+export const isDashboardInsightWidgetDrillsModified: (obj: unknown) => obj is IDashboardInsightWidgetDrillsModified;
 
 // @beta
-export const isDashboardInsightWidgetDrillsRemoved: (obj: unknown) => obj is DashboardInsightWidgetDrillsRemoved;
+export const isDashboardInsightWidgetDrillsRemoved: (obj: unknown) => obj is IDashboardInsightWidgetDrillsRemoved;
 
 // @beta
-export const isDashboardInsightWidgetExportRequested: (obj: unknown) => obj is DashboardInsightWidgetExportRequested;
+export const isDashboardInsightWidgetExportRequested: (obj: unknown) => obj is IDashboardInsightWidgetExportRequested;
 
 // @beta
-export const isDashboardInsightWidgetExportResolved: (obj: unknown) => obj is DashboardInsightWidgetExportResolved;
+export const isDashboardInsightWidgetExportResolved: (obj: unknown) => obj is IDashboardInsightWidgetExportResolved;
 
 // @beta
-export const isDashboardInsightWidgetFilterSettingsChanged: (obj: unknown) => obj is DashboardInsightWidgetFilterSettingsChanged;
+export const isDashboardInsightWidgetFilterSettingsChanged: (obj: unknown) => obj is IDashboardInsightWidgetFilterSettingsChanged;
 
 // @beta
-export const isDashboardInsightWidgetHeaderChanged: (obj: unknown) => obj is DashboardInsightWidgetHeaderChanged;
+export const isDashboardInsightWidgetHeaderChanged: (obj: unknown) => obj is IDashboardInsightWidgetHeaderChanged;
 
 // @beta
-export const isDashboardInsightWidgetInsightSwitched: (obj: unknown) => obj is DashboardInsightWidgetInsightSwitched;
+export const isDashboardInsightWidgetInsightSwitched: (obj: unknown) => obj is IDashboardInsightWidgetInsightSwitched;
 
 // @beta
-export const isDashboardInsightWidgetRefreshed: (obj: unknown) => obj is DashboardInsightWidgetRefreshed;
+export const isDashboardInsightWidgetRefreshed: (obj: unknown) => obj is IDashboardInsightWidgetRefreshed;
 
 // @beta
-export const isDashboardInsightWidgetVisConfigurationChanged: (obj: unknown) => obj is DashboardInsightWidgetVisConfigurationChanged;
+export const isDashboardInsightWidgetVisConfigurationChanged: (obj: unknown) => obj is IDashboardInsightWidgetVisConfigurationChanged;
 
 // @beta
-export const isDashboardInsightWidgetVisPropertiesChanged: (obj: unknown) => obj is DashboardInsightWidgetVisPropertiesChanged;
+export const isDashboardInsightWidgetVisPropertiesChanged: (obj: unknown) => obj is IDashboardInsightWidgetVisPropertiesChanged;
 
 // @public
 export function isDashboardItemVisualization(item: unknown): item is DashboardItemVisualization;
@@ -6680,40 +7295,40 @@ export function isDashboardItemVisualization(item: unknown): item is DashboardIt
 export function isDashboardItemVisualizationContent(item: unknown): item is DashboardItemVisualizationContent;
 
 // @beta
-export const isDashboardKeyDriverAnalysisRequested: (obj: unknown) => obj is DashboardKeyDriverAnalysisRequested;
+export const isDashboardKeyDriverAnalysisRequested: (obj: unknown) => obj is IDashboardKeyDriverAnalysisRequested;
 
 // @beta
-export const isDashboardKeyDriverAnalysisResolved: (obj: unknown) => obj is DashboardKeyDriverAnalysisResolved;
+export const isDashboardKeyDriverAnalysisResolved: (obj: unknown) => obj is IDashboardKeyDriverAnalysisResolved;
 
 // @beta
-export const isDashboardKpiWidgetChanged: (obj: unknown) => obj is DashboardKpiWidgetChanged;
+export const isDashboardKpiWidgetChanged: (obj: unknown) => obj is IDashboardKpiWidgetChanged;
 
 // @beta
-export const isDashboardKpiWidgetComparisonChanged: (obj: unknown) => obj is DashboardKpiWidgetComparisonChanged;
+export const isDashboardKpiWidgetComparisonChanged: (obj: unknown) => obj is IDashboardKpiWidgetComparisonChanged;
 
 // @beta
-export const isDashboardKpiWidgetConfigurationChanged: (obj: unknown) => obj is DashboardKpiWidgetConfigurationChanged;
+export const isDashboardKpiWidgetConfigurationChanged: (obj: unknown) => obj is IDashboardKpiWidgetConfigurationChanged;
 
 // @beta
-export const isDashboardKpiWidgetDescriptionChanged: (obj: unknown) => obj is DashboardKpiWidgetDescriptionChanged;
+export const isDashboardKpiWidgetDescriptionChanged: (obj: unknown) => obj is IDashboardKpiWidgetDescriptionChanged;
 
 // @beta
-export const isDashboardKpiWidgetDrillRemoved: (obj: unknown) => obj is DashboardKpiWidgetDrillRemoved;
+export const isDashboardKpiWidgetDrillRemoved: (obj: unknown) => obj is IDashboardKpiWidgetDrillRemoved;
 
 // @beta
-export const isDashboardKpiWidgetDrillSet: (obj: unknown) => obj is DashboardKpiWidgetDrillSet;
+export const isDashboardKpiWidgetDrillSet: (obj: unknown) => obj is IDashboardKpiWidgetDrillSet;
 
 // @beta
-export const isDashboardKpiWidgetFilterSettingsChanged: (obj: unknown) => obj is DashboardKpiWidgetFilterSettingsChanged;
+export const isDashboardKpiWidgetFilterSettingsChanged: (obj: unknown) => obj is IDashboardKpiWidgetFilterSettingsChanged;
 
 // @beta
-export const isDashboardKpiWidgetHeaderChanged: (obj: unknown) => obj is DashboardKpiWidgetHeaderChanged;
+export const isDashboardKpiWidgetHeaderChanged: (obj: unknown) => obj is IDashboardKpiWidgetHeaderChanged;
 
 // @beta
-export const isDashboardKpiWidgetMeasureChanged: (obj: unknown) => obj is DashboardKpiWidgetMeasureChanged;
+export const isDashboardKpiWidgetMeasureChanged: (obj: unknown) => obj is IDashboardKpiWidgetMeasureChanged;
 
 // @beta
-export const isDashboardLayoutChanged: (obj: unknown) => obj is DashboardLayoutChanged;
+export const isDashboardLayoutChanged: (obj: unknown) => obj is IDashboardLayoutChanged;
 
 // @internal (undocumented)
 export function isDashboardLayoutDraggableItem(item: any): item is DashboardLayoutDraggableItem;
@@ -6722,49 +7337,49 @@ export function isDashboardLayoutDraggableItem(item: any): item is DashboardLayo
 export function isDashboardLayoutDraggableListItem(item: any): item is DashboardLayoutDraggableListItem;
 
 // @beta
-export const isDashboardLayoutSectionAdded: (obj: unknown) => obj is DashboardLayoutSectionAdded;
+export const isDashboardLayoutSectionAdded: (obj: unknown) => obj is IDashboardLayoutSectionAdded;
 
 // @beta
-export const isDashboardLayoutSectionHeaderChanged: (obj: unknown) => obj is DashboardLayoutSectionHeaderChanged;
+export const isDashboardLayoutSectionHeaderChanged: (obj: unknown) => obj is IDashboardLayoutSectionHeaderChanged;
 
 // @beta
-export const isDashboardLayoutSectionItemMoved: (obj: unknown) => obj is DashboardLayoutSectionItemMoved;
+export const isDashboardLayoutSectionItemMoved: (obj: unknown) => obj is IDashboardLayoutSectionItemMoved;
 
 // @beta
-export const isDashboardLayoutSectionItemMovedToNewSection: (obj: unknown) => obj is DashboardLayoutSectionItemMovedToNewSection;
+export const isDashboardLayoutSectionItemMovedToNewSection: (obj: unknown) => obj is IDashboardLayoutSectionItemMovedToNewSection;
 
 // @beta
-export const isDashboardLayoutSectionItemRemoved: (obj: unknown) => obj is DashboardLayoutSectionItemRemoved;
+export const isDashboardLayoutSectionItemRemoved: (obj: unknown) => obj is IDashboardLayoutSectionItemRemoved;
 
 // @beta
-export const isDashboardLayoutSectionItemReplaced: (obj: unknown) => obj is DashboardLayoutSectionItemReplaced;
+export const isDashboardLayoutSectionItemReplaced: (obj: unknown) => obj is IDashboardLayoutSectionItemReplaced;
 
 // @beta
-export const isDashboardLayoutSectionItemsAdded: (obj: unknown) => obj is DashboardLayoutSectionItemsAdded;
+export const isDashboardLayoutSectionItemsAdded: (obj: unknown) => obj is IDashboardLayoutSectionItemsAdded;
 
 // @beta
-export const isDashboardLayoutSectionMoved: (obj: unknown) => obj is DashboardLayoutSectionMoved;
+export const isDashboardLayoutSectionMoved: (obj: unknown) => obj is IDashboardLayoutSectionMoved;
 
 // @beta
-export const isDashboardLayoutSectionRemoved: (obj: unknown) => obj is DashboardLayoutSectionRemoved;
+export const isDashboardLayoutSectionRemoved: (obj: unknown) => obj is IDashboardLayoutSectionRemoved;
 
 // @beta
-export const isDashboardQueryCompleted: (obj: unknown) => obj is DashboardQueryCompleted<any, any>;
+export const isDashboardQueryCompleted: (obj: unknown) => obj is IDashboardQueryCompleted<any, any>;
 
 // @beta
-export const isDashboardQueryFailed: (obj: unknown) => obj is DashboardQueryFailed;
+export const isDashboardQueryFailed: (obj: unknown) => obj is IDashboardQueryFailed;
 
 // @beta
-export const isDashboardQueryRejected: (obj: unknown) => obj is DashboardQueryRejected;
+export const isDashboardQueryRejected: (obj: unknown) => obj is IDashboardQueryRejected;
 
 // @beta
-export const isDashboardQueryStarted: (obj: unknown) => obj is DashboardQueryStarted;
+export const isDashboardQueryStarted: (obj: unknown) => obj is IDashboardQueryStarted;
 
 // @beta
-export const isDashboardRenamed: (obj: unknown) => obj is DashboardRenamed;
+export const isDashboardRenamed: (obj: unknown) => obj is IDashboardRenamed;
 
 // @beta
-export const isDashboardRenderModeChanged: (obj: unknown) => obj is DashboardRenderModeChanged;
+export const isDashboardRenderModeChanged: (obj: unknown) => obj is IDashboardRenderModeChanged;
 
 // @public
 export const isDashboardRenderRequested: (obj: unknown) => obj is DashboardRenderRequested;
@@ -6773,64 +7388,64 @@ export const isDashboardRenderRequested: (obj: unknown) => obj is DashboardRende
 export const isDashboardRenderResolved: (obj: unknown) => obj is DashboardRenderResolved;
 
 // @beta
-export const isDashboardRichTextWidgetContentChanged: (obj: unknown) => obj is DashboardRichTextWidgetContentChanged;
+export const isDashboardRichTextWidgetContentChanged: (obj: unknown) => obj is IDashboardRichTextWidgetContentChanged;
 
 // @beta
-export const isDashboardRichTextWidgetFilterSettingsChanged: (obj: unknown) => obj is DashboardRichTextWidgetFilterSettingsChanged;
+export const isDashboardRichTextWidgetFilterSettingsChanged: (obj: unknown) => obj is IDashboardRichTextWidgetFilterSettingsChanged;
 
 // @public
 export const isDashboardSaved: (obj: unknown) => obj is DashboardSaved;
 
 // @beta
-export const isDashboardScheduledEmailCreated: (obj: unknown) => obj is DashboardScheduledEmailCreated;
+export const isDashboardScheduledEmailCreated: (obj: unknown) => obj is IDashboardScheduledEmailCreated;
 
 // @beta
-export const isDashboardScheduledEmailSaved: (obj: unknown) => obj is DashboardScheduledEmailSaved;
+export const isDashboardScheduledEmailSaved: (obj: unknown) => obj is IDashboardScheduledEmailSaved;
 
 // @public
 export const isDashboardSharingChanged: (obj: unknown) => obj is DashboardSharingChanged;
 
 // @alpha
-export const isDashboardTabConvertedFromDefault: (event: any) => event is DashboardTabConvertedFromDefault;
+export const isDashboardTabConvertedFromDefault: (event: any) => event is IDashboardTabConvertedFromDefault;
 
 // @alpha
-export const isDashboardTabCreated: (event: any) => event is DashboardTabCreated;
+export const isDashboardTabCreated: (event: any) => event is IDashboardTabCreated;
 
 // @alpha
-export const isDashboardTabDeleted: (event: any) => event is DashboardTabDeleted;
+export const isDashboardTabDeleted: (event: any) => event is IDashboardTabDeleted;
 
 // @alpha
-export const isDashboardTabRenamed: (event: any) => event is DashboardTabRenamed;
+export const isDashboardTabRenamed: (event: any) => event is IDashboardTabRenamed;
 
 // @alpha
-export const isDashboardTabRenamingCanceled: (event: any) => event is DashboardTabRenamingCanceled;
+export const isDashboardTabRenamingCanceled: (event: any) => event is IDashboardTabRenamingCanceled;
 
 // @alpha
-export const isDashboardTabRenamingStarted: (event: any) => event is DashboardTabRenamingStarted;
+export const isDashboardTabRenamingStarted: (event: any) => event is IDashboardTabRenamingStarted;
 
 // @alpha
-export const isDashboardTabSwitched: (event: any) => event is DashboardTabSwitched;
+export const isDashboardTabSwitched: (event: any) => event is IDashboardTabSwitched;
 
 // @beta
-export const isDashboardUserInteractionTriggered: (obj: unknown) => obj is DashboardUserInteractionTriggered;
+export const isDashboardUserInteractionTriggered: (obj: unknown) => obj is IDashboardUserInteractionTriggered;
 
 // @beta
-export const isDashboardVisualizationSwitcherWidgetVisualizationAdded: (obj: unknown) => obj is DashboardVisualizationSwitcherWidgetVisualizationAdded;
+export const isDashboardVisualizationSwitcherWidgetVisualizationAdded: (obj: unknown) => obj is IDashboardVisualizationSwitcherWidgetVisualizationAdded;
 
 // @beta
-export const isDashboardVisualizationSwitcherWidgetVisualizationsUpdated: (obj: unknown) => obj is DashboardVisualizationSwitcherWidgetVisualizationsUpdated;
+export const isDashboardVisualizationSwitcherWidgetVisualizationsUpdated: (obj: unknown) => obj is IDashboardVisualizationSwitcherWidgetVisualizationsUpdated;
 
 // @beta
-export const isDashboardWasReset: (obj: unknown) => obj is DashboardWasReset;
+export const isDashboardWasReset: (obj: unknown) => obj is IDashboardWasReset;
 
 // @beta
-export const isDashboardWidgetExecutionFailed: (obj: unknown) => obj is DashboardWidgetExecutionFailed;
+export const isDashboardWidgetExecutionFailed: (obj: unknown) => obj is IDashboardWidgetExecutionFailed;
 
 // @beta
-export const isDashboardWidgetExecutionStarted: (obj: unknown) => obj is DashboardWidgetExecutionStarted;
+export const isDashboardWidgetExecutionStarted: (obj: unknown) => obj is IDashboardWidgetExecutionStarted;
 
 // @beta
-export const isDashboardWidgetExecutionSucceeded: (obj: unknown) => obj is DashboardWidgetExecutionSucceeded;
+export const isDashboardWidgetExecutionSucceeded: (obj: unknown) => obj is IDashboardWidgetExecutionSucceeded;
 
 // @internal (undocumented)
 export function isDateFilterDraggableItem(item: any): item is DateFilterDraggableItem;
@@ -6839,7 +7454,7 @@ export function isDateFilterDraggableItem(item: any): item is DateFilterDraggabl
 export const isDateFilterValidationFailed: (obj: unknown) => obj is DateFilterValidationFailed;
 
 // @internal
-export const isDeleteAttributeHierarchyRequested: (obj: unknown) => obj is DeleteAttributeHierarchyRequested;
+export const isDeleteAttributeHierarchyRequested: (obj: unknown) => obj is IDeleteAttributeHierarchyRequested;
 
 // @internal (undocumented)
 export function isDraggableInternalItemType(type: string): type is DraggableInternalItemType;
@@ -6848,7 +7463,28 @@ export function isDraggableInternalItemType(type: string): type is DraggableInte
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
 
 // @alpha
-export const isDrillTargetsAdded: (obj: unknown) => obj is DrillTargetsAdded;
+export const isDrillTargetsAdded: (obj: unknown) => obj is IDrillTargetsAdded;
+
+// @alpha (undocumented)
+export interface ISectionSlidesTransformerFunction<TWidget> {
+    breakUpSlide: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    containerSlide: (item: IDashboardLayoutItem<TWidget>, transform: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined) => IDashboardLayoutSection<TWidget>[] | undefined;
+    containerSwitcherSlide: (item: IDashboardLayoutItem<TWidget>, transform: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined) => IDashboardLayoutSection<TWidget>[] | undefined;
+    containsVisualisationSwitcher: (section: IDashboardLayoutSection<TWidget>) => boolean;
+    defaultItems: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    defaultSection: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    itemsSlide: (section: IDashboardLayoutSection<TWidget>, transform: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[]) => IDashboardLayoutSection<TWidget>[] | undefined;
+    switcherSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    widgetSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+}
+
+// @beta (undocumented)
+export interface ISetAttributeFilterDependentDateFilters extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: SetAttributeFilterDependentDateFiltersPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS";
+}
 
 // @internal (undocumented)
 export interface ISetAttributeFilterDependentDateFiltersPayload {
@@ -6858,12 +7494,219 @@ export interface ISetAttributeFilterDependentDateFiltersPayload {
     readonly filterLocalId: string;
 }
 
+// @beta (undocumented)
+export interface ISetAttributeFilterDisplayForm extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetAttributeFilterDisplayFormPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM";
+}
+
+// @beta (undocumented)
+export interface ISetAttributeFilterDisplayFormPayload {
+    // (undocumented)
+    displayForm: ObjRef;
+    // (undocumented)
+    filterLocalId: string;
+    // (undocumented)
+    isResultOfMigration?: boolean;
+    // (undocumented)
+    isWorkingSelectionChange?: boolean;
+}
+
+// @alpha
+export interface ISetAttributeFilterLimitingItems extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetAttributeFilterLimitingItemsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS";
+}
+
+// @alpha
+export interface ISetAttributeFilterLimitingItemsPayload {
+    limitingItems: ObjRef[];
+    localIdentifier: string;
+}
+
+// @beta (undocumented)
+export interface ISetAttributeFilterParents extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: SetAttributeFilterParentsPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS";
+}
+
 // @internal (undocumented)
 export interface ISetAttributeFilterParentsPayload {
     // (undocumented)
     readonly filterLocalId: string;
     // (undocumented)
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
+}
+
+// @beta (undocumented)
+export interface ISetAttributeFilterSelectionMode extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetAttributeFilterSelectionModePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE";
+}
+
+// @beta (undocumented)
+export interface ISetAttributeFilterSelectionModePayload {
+    // (undocumented)
+    filterLocalId: string;
+    // (undocumented)
+    selectionMode: DashboardAttributeFilterSelectionMode;
+}
+
+// @beta
+export interface ISetAttributeFilterTitle extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetAttributeFilterTitlePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE";
+}
+
+// @beta
+export interface ISetAttributeFilterTitlePayload {
+    filterLocalId: string;
+    title?: string;
+}
+
+// @alpha
+export interface ISetDashboardAttributeFilterConfigDisplayAsLabel extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL";
+}
+
+// @alpha
+export interface ISetDashboardAttributeFilterConfigDisplayAsLabelPayload {
+    displayAsLabel: ObjRef | undefined;
+    localIdentifier: string;
+    // @internal
+    tabLocalIdentifier?: string;
+}
+
+// @alpha
+export interface ISetDashboardAttributeFilterConfigMode extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetDashboardAttributeFilterConfigModePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE";
+}
+
+// @alpha
+export interface ISetDashboardAttributeFilterConfigModePayload {
+    localIdentifier: string;
+    mode?: DashboardAttributeFilterConfigMode;
+}
+
+// @alpha
+export interface ISetDashboardDateFilterConfigMode extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetDashboardDateFilterConfigModePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE";
+}
+
+// @alpha
+export interface ISetDashboardDateFilterConfigModePayload {
+    // (undocumented)
+    mode: DashboardDateFilterConfigMode;
+}
+
+// @alpha
+export interface ISetDashboardDateFilterWithDimensionConfigMode extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetDashboardDateFilterWithDimensionConfigModePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE";
+}
+
+// @alpha
+export interface ISetDashboardDateFilterWithDimensionConfigModePayload {
+    dataSet: ObjRef;
+    mode?: DashboardDateFilterConfigMode;
+}
+
+// @beta
+export interface ISetDateFilterConfigTitle extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetDateFilterConfigTitlePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE";
+}
+
+// @beta
+export interface ISetDateFilterConfigTitlePayload {
+    dataSet?: ObjRef;
+    title?: string;
+}
+
+// @beta (undocumented)
+export interface ISetDrillForKpiWidget extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetDrillForKpiWidgetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL";
+}
+
+// @beta
+export interface ISetDrillForKpiWidgetPayload {
+    // (undocumented)
+    readonly legacyDashboardRef: ObjRef;
+    // (undocumented)
+    readonly legacyDashboardTabIdentifier: string;
+    readonly ref: ObjRef;
+}
+
+// @alpha
+export interface ISetFilterViewAsDefault extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetFilterViewAsDefaultPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS";
+}
+
+// @alpha
+export interface ISetFilterViewAsDefaultPayload {
+    // (undocumented)
+    readonly isDefault: boolean;
+    // (undocumented)
+    readonly ref: ObjRef;
+}
+
+// @internal (undocumented)
+export interface ISetScreenSize extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetScreenSizePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE";
+}
+
+// @internal
+export interface ISetScreenSizePayload {
+    // (undocumented)
+    screenSize: ScreenSize;
+}
+
+// @beta (undocumented)
+export interface ISetShowWidgetAsTable extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISetShowWidgetAsTablePayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET";
+}
+
+// @beta (undocumented)
+export interface ISetShowWidgetAsTablePayload {
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    showAsTable: boolean;
 }
 
 // @beta (undocumented)
@@ -6946,6 +7789,26 @@ export interface IShowAsTableButtonProps {
     widget: IInsightWidget;
 }
 
+// @beta
+export interface IShowWidgetAsTableSet extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: IShowWidgetAsTableSetPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.SHOW_WIDGET_AS_TABLE.SET";
+}
+
+// @beta
+export interface IShowWidgetAsTableSetPayload {
+    ref: ObjRef;
+    showAsTable: boolean;
+}
+
+// @beta (undocumented)
+export interface IShowWidgetAsTableState {
+    // (undocumented)
+    widgetRefs: ObjRef[];
+}
+
 // @alpha (undocumented)
 export interface ISidebarProps {
     // @internal
@@ -6969,7 +7832,7 @@ export interface ISidebarProps {
 }
 
 // @internal
-export function isInitialPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
+export function isInitialPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget;
 
 // @internal (undocumented)
 export function isInsightDraggableItem(item: any): item is InsightDraggableItem;
@@ -6981,7 +7844,7 @@ export function isInsightDraggableListItem(item: any): item is InsightDraggableL
 export function isInsightPlaceholderDraggableItem(item: any): item is InsightPlaceholderDraggableItem;
 
 // @alpha
-export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlaceholderWidget;
+export function isInsightPlaceholderWidget(obj: unknown): obj is IInsightPlaceholderWidget;
 
 // @internal (undocumented)
 export function isKpiDraggableItem(item: any): item is KpiDraggableItem;
@@ -6990,28 +7853,28 @@ export function isKpiDraggableItem(item: any): item is KpiDraggableItem;
 export function isKpiPlaceholderDraggableItem(item: any): item is KpiPlaceholderDraggableItem;
 
 // @alpha
-export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget;
+export function isKpiPlaceholderWidget(obj: unknown): obj is IKpiPlaceholderWidget;
 
 // @alpha
 export function isLayoutCoordinates(obj: unknown): obj is ILayoutCoordinates;
 
 // @beta
-export const isLayoutDirectionChanged: (obj: unknown) => obj is LayoutDirectionChanged;
+export const isLayoutDirectionChanged: (obj: unknown) => obj is ILayoutDirectionChanged;
 
 // @alpha
 export function isLayoutItemPath(obj: unknown): obj is ILayoutItemPath;
 
 // @beta
-export const isLayoutSectionHeadersToggled: (obj: unknown) => obj is LayoutSectionHeadersToggled;
+export const isLayoutSectionHeadersToggled: (obj: unknown) => obj is ILayoutSectionHeadersToggled;
 
 // @alpha
 export function isLayoutSectionPath(obj: unknown): obj is ILayoutSectionPath;
 
 // @internal
-export function isLoadingPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
+export function isLoadingPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget;
 
 // @alpha
-export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
+export function isPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget;
 
 // @internal (undocumented)
 export function isRichTextDraggableItem(item: any): item is InsightDraggableItem;
@@ -7020,10 +7883,24 @@ export function isRichTextDraggableItem(item: any): item is InsightDraggableItem
 export function isRichTextDraggableListItem(item: any): item is RichTextDraggableListItem;
 
 // @beta
-export const isScreenSizeChanged: (obj: unknown) => obj is ScreenSizeChanged;
+export const isScreenSizeChanged: (obj: unknown) => obj is IScreenSizeChanged;
 
 // @beta
-export const isShowWidgetAsTableSet: (obj: unknown) => obj is ShowWidgetAsTableSet;
+export const isShowWidgetAsTableSet: (obj: unknown) => obj is IShowWidgetAsTableSet;
+
+// @alpha
+export interface IStartRenamingDashboardTab extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IStartRenamingDashboardTabPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.START";
+}
+
+// @alpha
+export interface IStartRenamingDashboardTabPayload {
+    readonly shouldSelectTab?: boolean;
+    readonly tabId?: string;
+}
 
 // @internal
 export function isTemporaryIdentity(obj: IDashboardObjectIdentity): boolean;
@@ -7033,6 +7910,49 @@ export function isVisualizationSwitcherDraggableItem(item: any): item is Visuali
 
 // @internal (undocumented)
 export function isVisualizationSwitcherDraggableListItem(item: any): item is VisualizationSwitcherDraggableListItem;
+
+// @alpha
+export interface ISwitchDashboardTab extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ISwitchDashboardTabPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.TAB.SWITCH";
+}
+
+// @alpha
+export interface ISwitchDashboardTabPayload {
+    readonly tabId: string;
+}
+
+// @alpha (undocumented)
+export interface ITabsState {
+    activeTabLocalIdentifier?: string;
+    // @beta
+    attributesWithReferences?: IAttributeWithReferences[];
+    tabs?: ITabState[];
+}
+
+// @alpha (undocumented)
+export interface ITabState {
+    // (undocumented)
+    attributeFilterConfigs?: IAttributeFilterConfigsState;
+    // (undocumented)
+    dateFilterConfig?: IDateFilterConfigState;
+    // (undocumented)
+    dateFilterConfigs?: IDateFilterConfigsState;
+    // (undocumented)
+    filterContext?: FilterContextState;
+    // (undocumented)
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
+    // @internal
+    isRenaming?: boolean;
+    // (undocumented)
+    layout?: ILayoutState;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title?: string;
+}
 
 // @public
 export interface ITitleCustomizer {
@@ -7046,6 +7966,38 @@ export interface ITitleProps {
     onTitleChanged?: (newTitle: string) => void;
     // (undocumented)
     title: string;
+}
+
+// @internal (undocumented)
+export interface IToggleLayoutDirection extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IToggleLayoutDirectionPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION";
+}
+
+// @internal
+export interface IToggleLayoutDirectionPayload {
+    // (undocumented)
+    direction: IDashboardLayoutContainerDirection;
+    // (undocumented)
+    layoutPath: ILayoutItemPath | undefined;
+}
+
+// @internal (undocumented)
+export interface IToggleLayoutSectionHeaders extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IToggleLayoutSectionHeadersPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS";
+}
+
+// @internal
+export interface IToggleLayoutSectionHeadersPayload {
+    // (undocumented)
+    enableSectionHeaders: boolean;
+    // (undocumented)
+    layoutPath: ILayoutItemPath | undefined;
 }
 
 // @internal (undocumented)
@@ -7076,6 +8028,168 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
+// @beta
+export interface ITriggerEvent extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: ITriggerEventPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.EVENT.TRIGGER";
+}
+
+// @beta
+export interface ITriggerEventPayload {
+    readonly eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>;
+}
+
+// @beta (undocumented)
+export interface IUiState {
+    // (undocumented)
+    activeSection: ILayoutSectionPath | undefined;
+    // (undocumented)
+    alertsDialog: {
+        open: boolean;
+        returnFocusTo?: string;
+        context?: IAlertDialogContext;
+    };
+    // (undocumented)
+    alertsManagementDialog: {
+        open: boolean;
+        context?: IAlertDialogContext;
+    };
+    // (undocumented)
+    automationsManagement: {
+        invalidationId: number;
+    };
+    // (undocumented)
+    cancelEditModeDialog: {
+        open: boolean;
+    };
+    // (undocumented)
+    configurationPanelOpened: boolean;
+    // (undocumented)
+    deleteDialog: {
+        open: boolean;
+    };
+    // @internal (undocumented)
+    draggingWidgetSource: DraggableLayoutItem | undefined;
+    // (undocumented)
+    draggingWidgetTarget: ILayoutItemPath | undefined;
+    // @internal (undocumented)
+    draggingWidgetTriggeringDropZoneType: DropZoneType | undefined;
+    // @alpha (undocumented)
+    drillValidationMessages: {
+        invalidDrillWidgetRefs: ObjRef[];
+        invalidCustomUrlDrillParameterWidgets: IInvalidCustomUrlDrillParameterInfo[];
+    };
+    // (undocumented)
+    filterAttributeSelectionOpen: boolean;
+    // (undocumented)
+    filterBar: {
+        expanded: boolean;
+    };
+    // (undocumented)
+    filterValidationMessages: {
+        incompatibleDefaultFiltersOverride: boolean;
+    };
+    // (undocumented)
+    filterViews: {
+        open: boolean;
+        mode: FilterViewDialogMode;
+    };
+    // (undocumented)
+    ignoreExecutionTimestamp: boolean;
+    // (undocumented)
+    insightListLastUpdateRequested: number;
+    // (undocumented)
+    kpiAlerts: {
+        openedWidgetRef: ObjRef | undefined;
+        highlightedWidgetRef: ObjRef | undefined;
+    };
+    // (undocumented)
+    kpiDeleteDialog: {
+        widgetCoordinates: ILayoutItemPath | undefined;
+    };
+    // (undocumented)
+    menuButton: {
+        itemsVisibility: IMenuButtonItemsVisibility;
+    };
+    // (undocumented)
+    saveAsDialog: {
+        open: boolean;
+    };
+    // (undocumented)
+    scheduleEmailDialog: {
+        open: boolean;
+        defaultAttachmentRef: ObjRef | undefined;
+        returnFocusTo?: string;
+        context?: IScheduleEmailContext;
+    };
+    // (undocumented)
+    scheduleEmailManagementDialog: {
+        open: boolean;
+        context?: IScheduleEmailContext;
+    };
+    // (undocumented)
+    selectedFilterIndex: number | undefined;
+    // (undocumented)
+    selectedWidgetRef: ObjRef | undefined;
+    // (undocumented)
+    settingsDialog: {
+        open: boolean;
+    };
+    // (undocumented)
+    shareDialog: {
+        open: boolean;
+    };
+    // (undocumented)
+    widgetDateDatasetAutoSelect: boolean;
+    // (undocumented)
+    widgetDeleteDialog: {
+        open: boolean;
+        widgetRef: ObjRef | undefined;
+    };
+    // (undocumented)
+    widgetsLoadingAdditionalData: ObjRef[];
+    // (undocumented)
+    widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
+}
+
+// @alpha
+export interface IUndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> {
+    // (undocumented)
+    _undo: {
+        undoPointer: number;
+        undoStack: IUndoEntry<T>[];
+    };
+}
+
+// @alpha
+export interface IUndoEntry<T extends IDashboardCommand = IDashboardCommand> {
+    cmd: T;
+    redoPatches: Patch[];
+    undoPatches: Patch[];
+}
+
+// @beta (undocumented)
+export interface IUndoLayoutChanges extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IUndoLayoutChangesPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
+}
+
+// @beta
+export interface IUndoLayoutChangesPayload {
+    readonly undoPointSelector?: UndoPointSelector;
+}
+
+// @internal
+export interface IUndoPayload<T extends IDashboardCommand = IDashboardCommand> {
+    undo: {
+        cmd: T;
+    };
+}
+
 // @internal (undocumented)
 export interface IUpdateAttributeFilterSelectionPayload {
     // (undocumented)
@@ -7093,6 +8207,20 @@ export interface IUpdateAttributeFilterSelectionPayload {
     // (undocumented)
     readonly negativeSelection: boolean;
     readonly tabLocalIdentifier?: string;
+}
+
+// @beta (undocumented)
+export interface IUpdateVisualizationsFromVisualizationSwitcherWidgetContent extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IUpdateVisualizationsFromVisualizationSwitcherWidgetContentPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS";
+}
+
+// @beta
+export interface IUpdateVisualizationsFromVisualizationSwitcherWidgetContentPayload {
+    readonly ref: ObjRef;
+    readonly visualizations: IInsightWidget[];
 }
 
 // @internal (undocumented)
@@ -7132,6 +8260,14 @@ export interface IUpsertDateFilterNonAllTimePayload {
 // @internal (undocumented)
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
 
+// @beta
+export interface IUpsertExecutionResult extends IDashboardCommand {
+    // (undocumented)
+    readonly payload: IExecutionResultEnvelope;
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
+}
+
 // @internal (undocumented)
 export interface IUseAttributeElements {
     // (undocumented)
@@ -7152,6 +8288,76 @@ export interface IUseCustomWidgetInsightDataViewConfig {
     enableExecutionCancelling?: boolean;
     insight?: IInsightDefinition | ObjRef;
     widget: ICustomWidget;
+}
+
+// @internal (undocumented)
+export interface IUseDrillDownProps {
+    // (undocumented)
+    onBeforeRun?: (cmd: IDrillDown) => void;
+    // (undocumented)
+    onError?: (event: IDashboardCommandFailed<IDrillDown>) => void;
+    // (undocumented)
+    onSuccess?: (event: IDashboardDrillDownResolved) => void;
+}
+
+// @internal (undocumented)
+export interface IUseDrillProps {
+    // (undocumented)
+    onBeforeRun?: (cmd: IDrill) => void;
+    // (undocumented)
+    onError?: (event: IDashboardCommandFailed<IDrill>) => void;
+    // (undocumented)
+    onSuccess?: (event: IDashboardDrillResolved) => void;
+}
+
+// @internal (undocumented)
+export interface IUseDrillToAttributeUrlProps {
+    // (undocumented)
+    onBeforeRun?: (cmd: IDrillToAttributeUrl) => void;
+    // (undocumented)
+    onError?: (event: IDashboardCommandFailed<IDrillToAttributeUrl>) => void;
+    // (undocumented)
+    onSuccess?: (event: IDashboardDrillToAttributeUrlResolved) => void;
+}
+
+// @internal (undocumented)
+export interface IUseDrillToCustomUrlProps {
+    // (undocumented)
+    onBeforeRun?: (cmd: IDrillToCustomUrl) => void;
+    // (undocumented)
+    onError?: (event: IDashboardCommandFailed<IDrillToCustomUrl>) => void;
+    // (undocumented)
+    onSuccess?: (event: IDashboardDrillToCustomUrlResolved) => void;
+}
+
+// @internal (undocumented)
+export interface IUseDrillToDashboardProps {
+    // (undocumented)
+    onBeforeRun?: (cmd: IDrillToDashboard) => void;
+    // (undocumented)
+    onError?: (event: IDashboardCommandFailed<IDrillToDashboard>) => void;
+    // (undocumented)
+    onSuccess?: (event: IDashboardDrillToDashboardResolved) => void;
+}
+
+// @internal (undocumented)
+export interface IUseDrillToInsightProps {
+    // (undocumented)
+    onBeforeRun?: (cmd: IDrillToInsight) => void;
+    // (undocumented)
+    onError?: (event: IDashboardCommandFailed<IDrillToInsight>) => void;
+    // (undocumented)
+    onSuccess?: (event: IDashboardDrillToInsightResolved) => void;
+}
+
+// @internal (undocumented)
+export interface IUseDrillToLegacyDashboardProps {
+    // (undocumented)
+    onBeforeRun?: (cmd: IDrillToLegacyDashboard) => void;
+    // (undocumented)
+    onError?: (event: IDashboardCommandFailed<IDrillToLegacyDashboard>) => void;
+    // (undocumented)
+    onSuccess?: (event: IDashboardDrillToLegacyDashboardResolved) => void;
 }
 
 // @internal (undocumented)
@@ -7233,6 +8439,24 @@ export interface IUseInsightWidgetDataView {
     insightWidget?: IInsightWidget;
 }
 
+// @beta (undocumented)
+export interface IUserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
+    // (undocumented)
+    data: TData;
+    // (undocumented)
+    interaction: TType;
+}
+
+// @alpha (undocumented)
+export interface IUsersState {
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    status: "pending" | "loading" | "success" | "error";
+    // (undocumented)
+    users?: IWorkspaceUser[];
+}
+
 // @alpha @deprecated (undocumented)
 export interface IUseScheduledExportFiltersProps {
     // (undocumented)
@@ -7297,6 +8521,83 @@ export interface IVisualizationSwitcherToolbarProps {
     widget: IVisualizationSwitcherWidget;
 }
 
+// @internal (undocumented)
+export interface IWidgetConfigPanelProps<TWidget> {
+    // (undocumented)
+    widget: TWidget;
+}
+
+// @beta (undocumented)
+export interface IWidgetDescription {
+    description?: string;
+}
+
+// @beta
+export type IWidgetFilterOperation = IFilterOpEnableDateFilter | IFilterOpDisableDateFilter | IFilterOpReplaceAttributeIgnores | IFilterOpIgnoreAttributeFilter | IFilterOpUnignoreAttributeFilter | IFilterOpIgnoreDateFilter | IFilterOpUnignoreDateFilter | IFilterOpReplaceAll;
+
+// @beta (undocumented)
+export interface IWidgetHeader {
+    title?: string;
+}
+
+// @internal (undocumented)
+export interface IWidthResizerDragItem {
+    // (undocumented)
+    currentWidth: number;
+    // (undocumented)
+    gridColumnHeightInPx: number;
+    // (undocumented)
+    gridColumnWidth: number;
+    // (undocumented)
+    initialLayoutDimensions: DOMRect;
+    // (undocumented)
+    itemIndex: number;
+    // (undocumented)
+    layoutPath?: ILayoutItemPath;
+    // (undocumented)
+    maxLimit: number;
+    // (undocumented)
+    minLimit: number;
+    // (undocumented)
+    rowIndex?: number;
+    // (undocumented)
+    sectionIndex: number;
+    // (undocumented)
+    type: "internal-width-resizer";
+}
+
+// @internal (undocumented)
+export interface IWithDrillSelectProps {
+    // (undocumented)
+    children: (props: {
+        onDrill: OnWidgetDrill;
+    }) => ReactElement;
+    // (undocumented)
+    insight: IInsight;
+    // (undocumented)
+    onDrillDownSuccess?: OnDrillDownSuccess;
+    // (undocumented)
+    onDrillStart?: OnDashboardDrill;
+    // (undocumented)
+    onDrillToAttributeUrlSuccess?: OnDrillToAttributeUrlSuccess;
+    // (undocumented)
+    onDrillToCustomUrlSuccess?: OnDrillToCustomUrlSuccess;
+    // (undocumented)
+    onDrillToDashboardSuccess?: OnDrillToDashboardSuccess;
+    // (undocumented)
+    onDrillToInsightSuccess?: OnDrillToInsightSuccess;
+    // (undocumented)
+    onError?: (error: any) => void;
+    // (undocumented)
+    onKeyDriverAnalysisSuccess?: OnKeyDriverAnalysisSuccess;
+    // (undocumented)
+    returnFocusToInsight?: (force?: boolean) => void;
+    // (undocumented)
+    visualizationId?: string;
+    // (undocumented)
+    widgetRef: ObjRef;
+}
+
 // @alpha
 export interface IWorkingFilterContextDefinition {
     readonly filters: WorkingFilterContextItem[];
@@ -7358,34 +8659,8 @@ export type KeyboardNavigationConfig = {
     [key in DashboardPartId]?: IKeyboardNavigationConfigItem;
 };
 
-// @internal (undocumented)
-export interface KeyDriveInfo {
-    // (undocumented)
-    drillDefinition: IKeyDriveAnalysis;
-    // (undocumented)
-    drillEvent: IDashboardDrillEvent;
-    // (undocumented)
-    readonly keyDriveDefinition: IKdaDefinition;
-}
-
-// @beta (undocumented)
-export interface KeyDriverAnalysis extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: KeyDriverAnalysisPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS";
-}
-
 // @beta
-export function keyDriverAnalysis(drillDefinition: IKeyDriveAnalysis, drillEvent: IDashboardDrillEvent, filters: FilterContextItem[], keyDriveItem: DashboardKeyDriverCombinationItem, correlationId?: string): KeyDriverAnalysis;
-
-// @beta
-export interface KeyDriverAnalysisPayload {
-    readonly drillDefinition: IKeyDriveAnalysis;
-    readonly drillEvent: IDashboardDrillEvent;
-    readonly filters: FilterContextItem[];
-    readonly keyDriveItem: DashboardKeyDriverCombinationItem;
-}
+export function keyDriverAnalysis(drillDefinition: IKeyDriveAnalysis, drillEvent: IDashboardDrillEvent, filters: FilterContextItem[], keyDriveItem: IDashboardKeyDriverCombinationItem, correlationId?: string): IKeyDriverAnalysis;
 
 // @internal (undocumented)
 export const keyDriverAnalysisSupportedGranularities: DateAttributeGranularity[];
@@ -7400,7 +8675,7 @@ export const keyDriverYearGranularity: string[];
 export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
 
 // @beta (undocumented)
-export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kpiAlertDialogOpened", {
+export type KpiAlertDialogOpenedPayload = IUserInteractionPayloadWithDataBase<"kpiAlertDialogOpened", {
     alreadyHasAlert: boolean;
 }>;
 
@@ -7424,93 +8699,20 @@ export type KpiPlaceholderDraggableItem = BaseDraggableLayoutItem & {
     type: "kpi-placeholder";
 };
 
-// @alpha (undocumented)
-export interface KpiPlaceholderWidget extends ICustomWidget {
-    // (undocumented)
-    readonly customType: "gd-kpi-placeholder";
-}
-
-// @beta (undocumented)
-export interface KpiWidgetComparison {
-    comparisonDirection?: IKpiComparisonDirection;
-    comparisonType?: IKpiComparisonTypeComparison;
-}
-
 // @public (undocumented)
 export type LayoutComponentProvider = (props: IDashboardLayoutProps) => CustomDashboardLayoutComponent;
-
-// @alpha
-export interface LayoutDirectionChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: LayoutDirectionChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED";
-}
-
-// @beta
-export interface LayoutDirectionChangedPayload {
-    direction: IDashboardLayoutContainerDirection;
-    layoutPath: ILayoutItemPath | undefined;
-}
-
-// @alpha
-export interface LayoutSectionHeadersToggled extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: LayoutSectionHeadersToggledPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED";
-}
-
-// @beta
-export interface LayoutSectionHeadersToggledPayload {
-    areSectionHeadersEnabled: boolean;
-    layoutPath: ILayoutItemPath | undefined;
-}
 
 // @beta (undocumented)
 export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
 
-// @alpha (undocumented)
-export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> {
-    // (undocumented)
-    layout?: IDashboardLayout<ExtendedDashboardWidget>;
-    // (undocumented)
-    screen: ScreenSize | undefined;
-    // (undocumented)
-    stash: LayoutStash;
-}
-
 // @internal
-export interface LoadAllWorkspaceUsers extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.USERS.LOAD_ALL";
-}
-
-// @internal
-export function loadAllWorkspaceUsers(correlationId?: string): LoadAllWorkspaceUsers;
+export function loadAllWorkspaceUsers(correlationId?: string): ILoadAllWorkspaceUsers;
 
 // @public (undocumented)
 export type LoadingComponentProvider = (props: ILoadingProps) => ComponentType<ILoadingProps>;
 
-// @beta (undocumented)
-export interface LoadingState {
-    // (undocumented)
-    error?: Error;
-    // (undocumented)
-    loading: boolean;
-    // (undocumented)
-    result?: boolean;
-}
-
 // @alpha (undocumented)
 export function LockedStatusIndicator(props: ILockedStatusProps): ReactElement | null;
-
-// @alpha
-export interface MeasureDateDatasets {
-    readonly dateDatasetDisplayNames: Record<string, string>;
-    readonly dateDatasets: ReadonlyArray<ICatalogDateDataset>;
-    readonly dateDatasetsOrdered: ReadonlyArray<ICatalogDateDataset>;
-}
 
 // @internal (undocumented)
 export function MenuButton(props: IMenuButtonProps): ReactElement;
@@ -7567,170 +8769,59 @@ export type MetaExportDataAttributes = {
     "data-export-palette-value"?: string;
 };
 
-// @alpha (undocumented)
-export interface ModifyDrillDownForInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ModifyDrillDownForInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN";
-}
-
 // @alpha
-export function modifyDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, attributeHierarchyRef: ObjRef, blacklistHierarchies: IDrillDownReference[], intersectionIgnoredAttributes?: string[], correlationId?: string): ModifyDrillDownForInsightWidget;
-
-// @alpha
-export interface ModifyDrillDownForInsightWidgetPayload {
-    readonly attributeHierarchyRef: ObjRef;
-    readonly attributeIdentifier: ObjRef;
-    readonly blacklistHierarchies: IDrillDownReference[];
-    readonly intersectionIgnoredAttributes?: string[];
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ModifyDrillsForInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS";
-}
+export function modifyDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, attributeHierarchyRef: ObjRef, blacklistHierarchies: IDrillDownReference[], intersectionIgnoredAttributes?: string[], correlationId?: string): IModifyDrillDownForInsightWidget;
 
 // @beta
-export function modifyDrillsForInsightWidget(ref: ObjRef, drills: InsightDrillDefinition[], blacklistHierarchiesToUpdate?: IDrillDownReference[], correlationId?: string): ModifyDrillsForInsightWidget;
+export function modifyDrillsForInsightWidget(ref: ObjRef, drills: InsightDrillDefinition[], blacklistHierarchiesToUpdate?: IDrillDownReference[], correlationId?: string): IModifyDrillsForInsightWidget;
 
 // @beta
-export interface ModifyDrillsForInsightWidgetPayload {
-    readonly blacklistHierarchiesToUpdate?: IDrillDownReference[];
-    readonly drills: InsightDrillDefinition[];
-    readonly ref: ObjRef;
-}
-
-// @internal (undocumented)
-export interface MonitoredAction {
-    // (undocumented)
-    calls: number;
-    // (undocumented)
-    promise: Promise<PayloadAction<any>>;
-    // (undocumented)
-    reject: (e: any) => void;
-    // (undocumented)
-    resolve: (action: PayloadAction<any>) => void;
-}
-
-// @beta (undocumented)
-export interface MoveAttributeFilter extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: MoveAttributeFilterPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE";
-}
+export function moveAttributeFilter(filterLocalId: string, index: number, correlationId?: string): IMoveAttributeFilter;
 
 // @beta
-export function moveAttributeFilter(filterLocalId: string, index: number, correlationId?: string): MoveAttributeFilter;
-
-// @beta
-export interface MoveAttributeFilterPayload {
+export type MoveAttributeFilterPayload = {
     readonly filterLocalId: string;
     readonly index: number;
-}
-
-// @beta (undocumented)
-export interface MoveDateFilter extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: MoveDateFilterPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE";
-}
+};
 
 // @beta
-export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: string): MoveDateFilter;
+export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: string): IMoveDateFilter;
 
 // @beta
-export interface MoveDateFilterPayload {
+export type MoveDateFilterPayload = {
     readonly dataSet: ObjRef;
     readonly index: number;
-}
-
-// @beta (undocumented)
-export interface MoveLayoutSection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: MoveLayoutSectionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
-}
+};
 
 // @beta
-export function moveLayoutSection(sectionIndex: number, toIndex: number, correlationId?: string): MoveLayoutSection;
-
-// @beta
-export interface MoveLayoutSectionPayload {
-    readonly sectionIndex: number | ILayoutSectionPath;
-    readonly toIndex: number | ILayoutSectionPath;
-}
+export function moveLayoutSection(sectionIndex: number, toIndex: number, correlationId?: string): IMoveLayoutSection;
 
 // @alpha
-export function moveNestedLayoutSection(sectionIndex: ILayoutSectionPath, toIndex: ILayoutSectionPath, correlationId?: string): MoveLayoutSection;
+export function moveNestedLayoutSection(sectionIndex: ILayoutSectionPath, toIndex: ILayoutSectionPath, correlationId?: string): IMoveLayoutSection;
 
 // @alpha
-export function moveNestedLayoutSectionItem(fromPath: ILayoutItemPath, toPath: ILayoutItemPath, correlationId?: string): MoveSectionItem;
+export function moveNestedLayoutSectionItem(fromPath: ILayoutItemPath, toPath: ILayoutItemPath, correlationId?: string): IMoveSectionItem;
 
 // @alpha
-export function moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(fromPath: ILayoutItemPath, toPath: ILayoutItemPath, correlationId?: string): MoveSectionItem;
+export function moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(fromPath: ILayoutItemPath, toPath: ILayoutItemPath, correlationId?: string): IMoveSectionItem;
 
 // @alpha
-export function moveNestedLayoutSectionItemToNewSection(itemPath: ILayoutItemPath, toSection: ILayoutSectionPath, correlationId?: string): MoveSectionItemToNewSection;
+export function moveNestedLayoutSectionItemToNewSection(itemPath: ILayoutItemPath, toSection: ILayoutSectionPath, correlationId?: string): IMoveSectionItemToNewSection;
 
 // @alpha
-export function moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(itemPath: ILayoutItemPath, toSection: ILayoutSectionPath, correlationId?: string): MoveSectionItemToNewSection;
-
-// @beta (undocumented)
-export interface MoveSectionItem extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: MoveSectionItemPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
-}
+export function moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(itemPath: ILayoutItemPath, toSection: ILayoutSectionPath, correlationId?: string): IMoveSectionItemToNewSection;
 
 // @beta
-export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
+export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): IMoveSectionItem;
 
 // @beta
-export function moveSectionItemAndRemoveOriginalSectionIfEmpty(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
+export function moveSectionItemAndRemoveOriginalSectionIfEmpty(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): IMoveSectionItem;
 
 // @beta
-export interface MoveSectionItemPayload {
-    readonly fromPath?: ILayoutItemPath;
-    readonly itemIndex: number;
-    readonly removeOriginalSectionIfEmpty: boolean;
-    readonly sectionIndex: number;
-    readonly toItemIndex: RelativeIndex;
-    readonly toPath?: ILayoutItemPath;
-    readonly toSectionIndex: RelativeIndex;
-}
-
-// @beta (undocumented)
-export interface MoveSectionItemToNewSection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: MoveSectionItemToNewSectionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION";
-}
+export function moveSectionItemToNewSection(sectionIndex: number, itemIndex: number, toSectionIndex: number, correlationId?: string): IMoveSectionItemToNewSection;
 
 // @beta
-export function moveSectionItemToNewSection(sectionIndex: number, itemIndex: number, toSectionIndex: number, correlationId?: string): MoveSectionItemToNewSection;
-
-// @beta
-export function moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(sectionIndex: number, itemIndex: number, toSectionIndex: number, correlationId?: string): MoveSectionItemToNewSection;
-
-// @beta
-export interface MoveSectionItemToNewSectionPayload {
-    readonly itemIndex: number;
-    readonly itemPath?: ILayoutItemPath;
-    readonly removeOriginalSectionIfEmpty: boolean;
-    readonly sectionIndex: number;
-    readonly toSection?: ILayoutSectionPath;
-    readonly toSectionIndex: RelativeIndex;
-}
+export function moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(sectionIndex: number, itemIndex: number, toSectionIndex: number, correlationId?: string): IMoveSectionItemToNewSection;
 
 // @beta (undocumented)
 export type NestedLayoutInteractionType = "nestedLayoutDirectionColumn" | "nestedLayoutDirectionRow" | "nestedLayoutRemoved" | "nestedLayoutHeaderEnabled" | "nestedLayoutHeaderDisabled" | "nestedLayoutDirectionConfigurationOpened" | "nestedLayoutDirectionConfigurationClosed";
@@ -7756,39 +8847,31 @@ export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardIte
 export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMetadataObject>, strictTypeCheck?: boolean): ObjRefMap<IAttributeDisplayFormMetadataObject>;
 
 // @alpha
-export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => DashboardEventHandler<DashboardDrillToDashboardResolved>;
+export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => DashboardEventHandler<IDashboardDrillToDashboardResolved>;
 
 // @internal (undocumented)
-export function newInitialPlaceholderWidget(): PlaceholderWidget;
+export function newInitialPlaceholderWidget(): IPlaceholderWidget;
 
 // @alpha (undocumented)
-export function newInsightPlaceholderWidget(): InsightPlaceholderWidget;
+export function newInsightPlaceholderWidget(): IInsightPlaceholderWidget;
 
 // @internal
 export function newInsightWidget(insight: IInsight, modifications?: InsightWidgetModifications): IInsightWidgetBase;
 
 // @alpha (undocumented)
-export function newKpiPlaceholderWidget(): KpiPlaceholderWidget;
+export function newKpiPlaceholderWidget(): IKpiPlaceholderWidget;
 
 // @internal (undocumented)
-export function newLoadingPlaceholderWidget(): PlaceholderWidget;
+export function newLoadingPlaceholderWidget(): IPlaceholderWidget;
 
 // @alpha (undocumented)
-export function newPlaceholderWidget(): PlaceholderWidget;
-
-// @alpha (undocumented)
-export interface NotificationChannelsState {
-    // (undocumented)
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    // (undocumented)
-    notificationChannelsCount: number;
-}
+export function newPlaceholderWidget(): IPlaceholderWidget;
 
 // @public
-export interface ObjectAvailabilityConfig {
+export type ObjectAvailabilityConfig = {
     excludeObjectsWithTags?: string[];
     includeObjectsWithTags?: string[];
-}
+};
 
 // @alpha
 export class ObjRefMap<T> {
@@ -7796,7 +8879,7 @@ export class ObjRefMap<T> {
     [Symbol.iterator](): IterableIterator<[ObjRef, T]>;
     // (undocumented)
     readonly [Symbol.toStringTag]: string;
-    constructor(config: ObjRefMapConfig<T>);
+    constructor(config: IObjRefMapConfig<T>);
     // (undocumented)
     entries(): IterableIterator<[ObjRef, T]>;
     // (undocumented)
@@ -7813,74 +8896,65 @@ export class ObjRefMap<T> {
     values(): IterableIterator<T>;
 }
 
-// @alpha
-export interface ObjRefMapConfig<T> {
-    readonly idExtract: (obj: T) => Identifier;
-    readonly refExtract: (obj: T) => ObjRef;
-    readonly strictTypeCheck: boolean;
-    readonly type?: ObjectType;
-    readonly uriExtract: (obj: T) => string;
-}
+// @internal (undocumented)
+export type OnDashboardDrill = (cmd: IDrill) => void;
 
 // @internal (undocumented)
-export type OnDashboardDrill = (cmd: Drill) => void;
+export type OnDashboardDrillError = (event: IDashboardCommandFailed<DashboardDrillCommand>) => void;
 
 // @internal (undocumented)
-export type OnDashboardDrillError = (event: DashboardCommandFailed<DashboardDrillCommand>) => void;
+export type OnDashboardDrillSuccess = (event: IDashboardDrillResolved) => void;
 
 // @internal (undocumented)
-export type OnDashboardDrillSuccess = (event: DashboardDrillResolved) => void;
-
-// @internal (undocumented)
-export type OnDrillDown = (cmd: DrillDown) => void;
+export type OnDrillDown = (cmd: IDrillDown) => void;
 
 // @alpha (undocumented)
-export type OnDrillDownSuccess = (event: DashboardDrillDownResolved) => void;
+export type OnDrillDownSuccess = (event: IDashboardDrillDownResolved) => void;
 
 // @internal (undocumented)
-export type OnDrillToAttributeUrl = (cmd: DrillToAttributeUrl) => void;
+export type OnDrillToAttributeUrl = (cmd: IDrillToAttributeUrl) => void;
 
 // @alpha (undocumented)
-export type OnDrillToAttributeUrlSuccess = (event: DashboardDrillToAttributeUrlResolved) => void;
+export type OnDrillToAttributeUrlSuccess = (event: IDashboardDrillToAttributeUrlResolved) => void;
 
 // @internal (undocumented)
-export type OnDrillToCustomUrl = (cmd: DrillToCustomUrl) => void;
+export type OnDrillToCustomUrl = (cmd: IDrillToCustomUrl) => void;
 
 // @alpha (undocumented)
-export type OnDrillToCustomUrlSuccess = (event: DashboardDrillToCustomUrlResolved) => void;
+export type OnDrillToCustomUrlSuccess = (event: IDashboardDrillToCustomUrlResolved) => void;
 
 // @internal (undocumented)
-export type OnDrillToDashboard = (cmd: DrillToDashboard) => void;
+export type OnDrillToDashboard = (cmd: IDrillToDashboard) => void;
 
 // @alpha (undocumented)
-export type OnDrillToDashboardSuccess = (event: DashboardDrillToDashboardResolved) => void;
+export type OnDrillToDashboardSuccess = (event: IDashboardDrillToDashboardResolved) => void;
 
 // @internal (undocumented)
-export type OnDrillToInsight = (cmd: DrillToInsight) => void;
+export type OnDrillToInsight = (cmd: IDrillToInsight) => void;
 
 // @alpha (undocumented)
-export type OnDrillToInsightSuccess = (event: DashboardDrillToInsightResolved) => void;
+export type OnDrillToInsightSuccess = (event: IDashboardDrillToInsightResolved) => void;
 
 // @internal (undocumented)
-export type OnDrillToLegacyDashboard = (cmd: DrillToLegacyDashboard) => void;
+export type OnDrillToLegacyDashboard = (cmd: IDrillToLegacyDashboard) => void;
 
 // @internal (undocumented)
-export type OnDrillToLegacyDashboardSuccess = (event: DashboardDrillToLegacyDashboardResolved) => void;
+export type OnDrillToLegacyDashboardSuccess = (event: IDashboardDrillToLegacyDashboardResolved) => void;
 
 // @beta
 export type OnFiredDashboardDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
 // @internal (undocumented)
-export type OnKeyDriverAnalysis = (cmd: KeyDriverAnalysis) => void;
+export type OnKeyDriverAnalysis = (cmd: IKeyDriverAnalysis) => void;
 
 // @internal (undocumented)
 export type OnKeyDriverAnalysisError = OnDashboardDrillError;
 
 // @internal (undocumented)
-export type OnKeyDriverAnalysisSuccess = (event: DashboardKeyDriverAnalysisResolved) => void;
+export type OnKeyDriverAnalysisSuccess = (event: IDashboardKeyDriverAnalysisResolved) => void;
 
 // @alpha (undocumented)
-export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
+export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext) => void;
 
 // @public (undocumented)
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
@@ -7956,23 +9030,12 @@ export type PdfConfiguration = {
 };
 
 // @public (undocumented)
-export interface PermissionsState {
-    // (undocumented)
+export type PermissionsState = {
     permissions?: IWorkspacePermissions;
-}
+};
 
 // @internal (undocumented)
 export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
-
-// @alpha (undocumented)
-export interface PlaceholderWidget extends ICustomWidget {
-    // (undocumented)
-    readonly customType: "gd-widget-placeholder";
-    // (undocumented)
-    readonly isInitial?: boolean;
-    // (undocumented)
-    readonly isLoading?: boolean;
-}
 
 // @internal (undocumented)
 export type PrivateDashboardContext = DashboardModelCustomizationFns & {
@@ -7986,58 +9049,17 @@ export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerA
 // @alpha
 export function queryAndWaitFor<TQuery extends DashboardQueries, TQueryResult>(dispatch: DashboardDispatch, query: TQuery): Promise<TQueryResult>;
 
-// @alpha (undocumented)
-export interface QueryAttributeByDisplayForm extends IDashboardQuery {
-    // (undocumented)
-    payload: {
-        readonly displayForms: ObjRef[];
-    };
-    // (undocumented)
-    type: "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE";
-}
-
 // @alpha
-export function queryAttributeByDisplayForm(displayForms: ObjRef[], correlationId?: string): QueryAttributeByDisplayForm;
-
-// @internal (undocumented)
-export interface QueryAttributeDataSet extends IDashboardQuery {
-    // (undocumented)
-    payload: {
-        readonly displayForm: ObjRef;
-    };
-    // (undocumented)
-    type: "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE";
-}
+export function queryAttributeByDisplayForm(displayForms: ObjRef[], correlationId?: string): IQueryAttributeByDisplayForm;
 
 // @internal
-export function queryAttributeDataSet(displayForm: ObjRef, correlationId?: string): QueryAttributeDataSet;
-
-// @internal (undocumented)
-export interface QueryAttributeElements extends IDashboardQuery {
-    // (undocumented)
-    payload: {
-        readonly displayForm: ObjRef;
-        readonly limit?: number;
-    };
-    // (undocumented)
-    type: "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE";
-}
+export function queryAttributeDataSet(displayForm: ObjRef, correlationId?: string): IQueryAttributeDataSet;
 
 // @internal
-export function queryAttributeElements(displayForm: ObjRef, limit?: number, correlationId?: string): QueryAttributeElements;
-
-// @internal (undocumented)
-export interface QueryAvailableDatasetsForItems extends IDashboardQuery {
-    // (undocumented)
-    payload: {
-        readonly items: IAttributeOrMeasure[];
-    };
-    // (undocumented)
-    type: "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
-}
+export function queryAttributeElements(displayForm: ObjRef, limit?: number, correlationId?: string): IQueryAttributeElements;
 
 // @internal
-export function queryAvailableDatasetsForItems(items: IAttributeOrMeasure[], correlationId?: string): QueryAvailableDatasetsForItems;
+export function queryAvailableDatasetsForItems(items: IAttributeOrMeasure[], correlationId?: string): IQueryAvailableDatasetsForItems;
 
 // @internal
 export type QueryCache<TQuery extends IDashboardQuery, TResult> = {
@@ -8063,119 +9085,51 @@ export type QueryCacheEntryResult<TResult> = {
 // @internal
 export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>, EntityId>, PayloadAction<TPayload>>;
 
-// @alpha (undocumented)
-export interface QueryConnectedAttributes extends IDashboardQuery {
-    // (undocumented)
-    payload: {
-        readonly ref: ObjRef;
-    };
-    // (undocumented)
-    type: "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES";
-}
+// @alpha
+export function queryConnectedAttributes(ref: ObjRef, correlationId?: string): IQueryConnectedAttributes;
 
 // @alpha
-export function queryConnectedAttributes(ref: ObjRef, correlationId?: string): QueryConnectedAttributes;
-
-// @alpha (undocumented)
-export interface QueryConnectingAttributes extends IDashboardQuery {
-    // (undocumented)
-    payload: {
-        readonly refs: [ObjRef, ObjRef][];
-    };
-    // (undocumented)
-    type: "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES";
-}
+export function queryConnectingAttributes(refs: [ObjRef, ObjRef][], correlationId?: string): IQueryConnectingAttributes;
 
 // @alpha
-export function queryConnectingAttributes(refs: [ObjRef, ObjRef][], correlationId?: string): QueryConnectingAttributes;
+export function queryDateDatasetsForInsight(insightOrRef?: ObjRef | IInsight, correlationId?: string): IQueryInsightDateDatasets;
 
 // @alpha
-export function queryDateDatasetsForInsight(insightOrRef?: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
+export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): IQueryMeasureDateDatasets;
 
 // @alpha
-export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
+export function queryInsightAttributesMeta(insightOrRef: ObjRef | IInsight, correlationId?: string): IQueryInsightAttributesMeta;
 
 // @alpha
-export interface QueryInsightAttributesMeta extends IDashboardQuery {
-    // (undocumented)
-    readonly payload: {
-        readonly insightOrRef: ObjRef | IInsight;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
-}
-
-// @alpha
-export function queryInsightAttributesMeta(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightAttributesMeta;
-
-// @alpha
-export interface QueryInsightDateDatasets extends IDashboardQuery {
-    // (undocumented)
-    readonly payload: {
-        readonly insightOrRef: ObjRef | IInsight;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
-}
-
-// @alpha
-export interface QueryMeasureDateDatasets extends IDashboardQuery {
-    // (undocumented)
-    readonly payload: {
-        readonly measureRef: ObjRef;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
-}
-
-// @alpha (undocumented)
-export interface QueryMetricsAndFacts extends IDashboardQuery {
-    // (undocumented)
-    type: "GDC.DASH/QUERY.METRICS_AND_FACTS";
-}
-
-// @alpha
-export function queryMetricsAndFacts(correlationId?: string): QueryMetricsAndFacts;
+export function queryMetricsAndFacts(correlationId?: string): IQueryMetricsAndFacts;
 
 // @public (undocumented)
-export interface QueryProcessingErrorState {
-    // (undocumented)
-    error: GoodDataSdkError;
-    // (undocumented)
-    result: undefined;
-    // (undocumented)
+export type QueryProcessingErrorState = {
     status: "error";
-}
+    error: GoodDataSdkError;
+    result: undefined;
+};
 
 // @public (undocumented)
-export interface QueryProcessingPendingState {
-    // (undocumented)
-    error: undefined;
-    // (undocumented)
-    result: undefined;
-    // (undocumented)
+export type QueryProcessingPendingState = {
     status: "pending";
-}
+    error: undefined;
+    result: undefined;
+};
 
 // @public (undocumented)
-export interface QueryProcessingRejectedState {
-    // (undocumented)
-    error: undefined;
-    // (undocumented)
-    result: undefined;
-    // (undocumented)
+export type QueryProcessingRejectedState = {
     status: "rejected";
-}
+    error: undefined;
+    result: undefined;
+};
 
 // @public (undocumented)
-export interface QueryProcessingRunningState {
-    // (undocumented)
-    error: undefined;
-    // (undocumented)
-    result: undefined;
-    // (undocumented)
+export type QueryProcessingRunningState = {
     status: "running";
-}
+    error: undefined;
+    result: undefined;
+};
 
 // @public (undocumented)
 export type QueryProcessingState<TResult> = QueryProcessingPendingState | QueryProcessingRunningState | QueryProcessingErrorState | QueryProcessingRejectedState | QueryProcessingSuccessState<TResult>;
@@ -8184,325 +9138,89 @@ export type QueryProcessingState<TResult> = QueryProcessingPendingState | QueryP
 export type QueryProcessingStatus = QueryProcessingState<any>["status"];
 
 // @public (undocumented)
-export interface QueryProcessingSuccessState<TResult> {
-    // (undocumented)
-    error: undefined;
-    // (undocumented)
-    result: TResult;
-    // (undocumented)
+export type QueryProcessingSuccessState<TResult> = {
     status: "success";
-}
+    error: undefined;
+    result: TResult;
+};
 
 // @alpha
-export interface QueryWidgetAlertCount extends IDashboardQuery {
-    // (undocumented)
-    readonly payload: {
-        readonly widgetRef: ObjRef;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/QUERY.WIDGET.ALERT_COUNT";
-}
+export function queryWidgetAlertCount(widgetRef: ObjRef, correlationId?: string): IQueryWidgetAlertCount;
 
 // @alpha
-export function queryWidgetAlertCount(widgetRef: ObjRef, correlationId?: string): QueryWidgetAlertCount;
+export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): IQueryWidgetBrokenAlerts;
 
 // @alpha
-export interface QueryWidgetBrokenAlerts extends IDashboardQuery {
-    // (undocumented)
-    readonly payload: {
-        readonly widgetRef: ObjRef;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
-}
-
-// @alpha
-export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
-
-// @alpha
-export interface QueryWidgetFilters extends IDashboardQuery {
-    // (undocumented)
-    readonly payload: {
-        readonly widgetRef: ObjRef;
-        readonly insight?: IInsightDefinition | null;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
-}
-
-// @alpha
-export function queryWidgetFilters(widgetRef: ObjRef, insight?: IInsightDefinition | null, correlationId?: string): QueryWidgetFilters;
+export function queryWidgetFilters(widgetRef: ObjRef, insight?: IInsightDefinition | null, correlationId?: string): IQueryWidgetFilters;
 
 // @alpha (undocumented)
 export const ReactDashboardContext: Context<ReactReduxContextValue<any, UnknownAction> | null>;
 
 // @beta
-export interface RefreshAutomations extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH";
-}
+export function refreshAutomations(correlationId?: string): IRefreshAutomations;
 
 // @beta
-export function refreshAutomations(correlationId?: string): RefreshAutomations;
-
-// @beta (undocumented)
-export interface RefreshInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RefreshInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
-}
+export function refreshInsightWidget(ref: ObjRef, correlationId?: string): IRefreshInsightWidget;
 
 // @beta
-export function refreshInsightWidget(ref: ObjRef, correlationId?: string): RefreshInsightWidget;
-
-// @beta
-export interface RefreshInsightWidgetPayload {
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface RefreshKpiWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RefreshKpiWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.REFRESH";
-}
-
-// @beta
-export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKpiWidget;
-
-// @beta
-export interface RefreshKpiWidgetPayload {
-    readonly ref: ObjRef;
-}
+export function refreshKpiWidget(ref: ObjRef, correlationId?: string): IRefreshKpiWidget;
 
 // @beta
 export type RelativeIndex = number;
 
 // @alpha
-export interface ReloadFilterViews extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD";
-}
-
-// @alpha
-export function reloadFilterViews(correlationId?: string): ReloadFilterViews;
+export function reloadFilterViews(correlationId?: string): IReloadFilterViews;
 
 // @beta
-export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters;
-
-// @beta (undocumented)
-export interface RemoveAttributeFilters extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveAttributeFiltersPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
-}
+export function removeAttributeFilter(filterLocalId: string, correlationId?: string): IRemoveAttributeFilters;
 
 // @beta
-export function removeAttributeFilters(filterLocalIds: string[], correlationId?: string): RemoveAttributeFilters;
+export function removeAttributeFilters(filterLocalIds: string[], correlationId?: string): IRemoveAttributeFilters;
 
 // @beta
-export interface RemoveAttributeFiltersPayload {
-    readonly filterLocalIds: string[];
-}
-
-// @beta
-export function removeDateFilter(dataSet: ObjRef, correlationId?: string): RemoveDateFilters;
-
-// @beta (undocumented)
-export interface RemoveDateFilters extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveDateFiltersPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE";
-}
+export function removeDateFilter(dataSet: ObjRef, correlationId?: string): IRemoveDateFilters;
 
 // @internal (undocumented)
 export function removeDateFilters(filters: FilterContextItem[]): IDashboardAttributeFilter[];
 
-// @beta
-export interface RemoveDateFiltersPayload {
-    readonly dataSets: ObjRef[];
-}
-
-// @alpha (undocumented)
-export interface RemoveDrillDownForInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveDrillDownForInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN";
-}
-
 // @alpha
-export function removeDrillDownForInsightWidget(ref: ObjRef, blacklistHierarchies: IDrillDownReference[], correlationId?: string): RemoveDrillDownForInsightWidget;
-
-// @alpha
-export interface RemoveDrillDownForInsightWidgetPayload {
-    readonly blacklistHierarchies: IDrillDownReference[];
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface RemoveDrillForKpiWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveDrillForKpiWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL";
-}
+export function removeDrillDownForInsightWidget(ref: ObjRef, blacklistHierarchies: IDrillDownReference[], correlationId?: string): IRemoveDrillDownForInsightWidget;
 
 // @beta
-export function removeDrillForKpiWidget(ref: ObjRef, correlationId?: string): RemoveDrillForKpiWidget;
+export function removeDrillForKpiWidget(ref: ObjRef, correlationId?: string): IRemoveDrillForKpiWidget;
 
 // @beta
-export interface RemoveDrillForKpiWidgetPayload {
-    readonly ref: ObjRef;
-}
-
-// @beta (undocumented)
-export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveDrillsForInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS";
-}
-
-// @beta
-export function removeDrillsForInsightWidget(ref: ObjRef, localIdentifiers: RemoveDrillsSelector, correlationId?: string): RemoveDrillsForInsightWidget;
-
-// @beta
-export interface RemoveDrillsForInsightWidgetPayload {
-    readonly localIdentifiers: RemoveDrillsSelector;
-    readonly ref: ObjRef;
-}
+export function removeDrillsForInsightWidget(ref: ObjRef, localIdentifiers: RemoveDrillsSelector, correlationId?: string): IRemoveDrillsForInsightWidget;
 
 // @beta (undocumented)
 export type RemoveDrillsSelector = LocalIdRef[] | "*";
 
-// @alpha (undocumented)
-export interface RemoveDrillToUrlForInsightWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveDrillToUrlForInsightWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL";
-}
-
 // @alpha
-export function removeDrillToUrlForInsightWidget(ref: ObjRef, blacklistAttributes: ObjRef[], correlationId?: string): RemoveDrillToUrlForInsightWidget;
-
-// @alpha (undocumented)
-export interface RemoveDrillToUrlForInsightWidgetPayload {
-    readonly blacklistAttributes: ObjRef[];
-    readonly ref: ObjRef;
-}
+export function removeDrillToUrlForInsightWidget(ref: ObjRef, blacklistAttributes: ObjRef[], correlationId?: string): IRemoveDrillToUrlForInsightWidget;
 
 // @internal (undocumented)
 export function removeIgnoredWidgetFilters(filters: FilterContextItem[], widget: ExtendedDashboardWidget | undefined): FilterContextItem[];
 
-// @beta (undocumented)
-export interface RemoveLayoutSection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveLayoutSectionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
-}
-
 // @beta
-export function removeLayoutSection(index: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
-
-// @beta
-export interface RemoveLayoutSectionPayload {
-    readonly index: RelativeIndex | ILayoutSectionPath;
-    readonly stashIdentifier?: StashedDashboardItemsId;
-}
+export function removeLayoutSection(index: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveLayoutSection;
 
 // @alpha
-export function removeNestedLayoutSection(index: ILayoutSectionPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
+export function removeNestedLayoutSection(index: ILayoutSectionPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveLayoutSection;
 
 // @alpha
-export function removeNestedLayoutSectionItem(itemPath: ILayoutItemPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
-
-// @beta (undocumented)
-export interface RemoveSectionItem extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveSectionItemPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
-}
+export function removeNestedLayoutSectionItem(itemPath: ILayoutItemPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveSectionItem;
 
 // @beta
-export function removeSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
-
-// @beta (undocumented)
-export interface RemoveSectionItemByWidgetRef extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RemoveSectionItemByWidgetRefPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF";
-}
+export function removeSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveSectionItem;
 
 // @beta
-export function removeSectionItemByWidgetRef(widgetRef: ObjRef, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItemByWidgetRef;
+export function removeSectionItemByWidgetRef(widgetRef: ObjRef, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveSectionItemByWidgetRef;
 
 // @beta
-export interface RemoveSectionItemByWidgetRefPayload {
-    readonly eager?: boolean;
-    readonly stashIdentifier?: StashedDashboardItemsId;
-    readonly widgetRef: ObjRef;
-}
-
-// @beta
-export interface RemoveSectionItemPayload {
-    readonly eager?: boolean;
-    readonly itemIndex: RelativeIndex;
-    readonly itemPath?: ILayoutItemPath;
-    readonly sectionIndex: number;
-    readonly stashIdentifier?: StashedDashboardItemsId;
-}
-
-// @beta (undocumented)
-export interface RenameDashboard extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RenameDashboardPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.RENAME";
-}
-
-// @beta
-export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard;
-
-// @beta
-export interface RenameDashboardPayload {
-    readonly newTitle: string;
-}
+export function renameDashboard(newTitle: string, correlationId?: string): IRenameDashboard;
 
 // @alpha
-export interface RenameDashboardTab extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RenameDashboardTabPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.RENAME";
-}
-
-// @alpha
-export function renameDashboardTab(title: string, tabId?: string, correlationId?: string): RenameDashboardTab;
-
-// @alpha
-export interface RenameDashboardTabPayload {
-    readonly tabId?: string;
-    readonly title: string;
-}
-
-// @beta (undocumented)
-export interface RenderingWorkerConfiguration {
-    asyncRenderExpectedCount?: number;
-    asyncRenderRequestedTimeout: number;
-    asyncRenderResolvedTimeout: number;
-    correlationIdGenerator: () => string;
-    isExport?: boolean;
-    maxTimeout: number;
-}
+export function renameDashboardTab(title: string, tabId?: string, correlationId?: string): IRenameDashboardTab;
 
 // @beta (undocumented)
 export type RenderMode = "view" | "edit" | "export";
@@ -8529,169 +9247,78 @@ export const RenderModeAwareTitle: ComponentType<ITitleProps>;
 // @internal (undocumented)
 export const RenderModeAwareTopBar: ComponentType<ITopBarProps>;
 
-// @beta (undocumented)
-export interface RenderModeChangeOptions {
-    // (undocumented)
-    readonly resetDashboard: boolean;
-}
-
-// @beta (undocumented)
-export interface RenderModeState {
-    // (undocumented)
-    renderMode: RenderMode;
-}
+// @beta
+export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<IFilterOpReplaceAll, "type">, correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @beta
-export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function replaceInsightWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @beta
-export function replaceInsightWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function replaceKpiWidgetFilterSettings(ref: ObjRef, settings: Omit<IFilterOpReplaceAll, "type">, correlationId?: string): IChangeKpiWidgetFilterSettings;
 
 // @beta
-export function replaceKpiWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeKpiWidgetFilterSettings;
-
-// @beta
-export function replaceKpiWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function replaceKpiWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): IChangeKpiWidgetFilterSettings;
 
 // @alpha
-export function replaceNestedLayoutSectionItem(itemPath: ILayoutItemPath, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, autoResolveDateFilterDataset?: boolean, correlationId?: string): ReplaceSectionItem;
-
-// @beta (undocumented)
-export interface ReplaceSectionItem extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ReplaceSectionItemPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
-}
+export function replaceNestedLayoutSectionItem(itemPath: ILayoutItemPath, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, autoResolveDateFilterDataset?: boolean, correlationId?: string): IReplaceSectionItem;
 
 // @beta
-export function replaceSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, autoResolveDateFilterDataset?: boolean, correlationId?: string): ReplaceSectionItem;
-
-// @beta
-export interface ReplaceSectionItemPayload {
-    readonly autoResolveDateFilterDataset?: boolean;
-    readonly item: DashboardItemDefinition;
-    readonly itemIndex: number;
-    readonly itemPath?: ILayoutItemPath;
-    readonly sectionIndex: number;
-    readonly stashIdentifier?: StashedDashboardItemsId;
-}
+export function replaceSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, autoResolveDateFilterDataset?: boolean, correlationId?: string): IReplaceSectionItem;
 
 // @alpha
-export interface RepositionDashboardTab extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RepositionDashboardTabPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.REPOSITION";
-}
-
-// @alpha
-export function repositionDashboardTab(oldIndex: number, newIndex: number, correlationId?: string): RepositionDashboardTab;
-
-// @alpha
-export interface RepositionDashboardTabPayload {
-    readonly newIndex: number;
-    readonly oldIndex: number;
-}
+export function repositionDashboardTab(oldIndex: number, newIndex: number, correlationId?: string): IRepositionDashboardTab;
 
 // @public (undocumented)
-export interface RequestAsyncRender extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: RequestAsyncRenderPayload;
-    // (undocumented)
+export type RequestAsyncRender = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.REQUEST";
-}
+    readonly payload: RequestAsyncRenderPayload;
+};
 
 // @public
 export function requestAsyncRender(id: string, correlationId?: string): RequestAsyncRender;
 
 // @public
-export interface RequestAsyncRenderPayload {
+export type RequestAsyncRenderPayload = {
     readonly id: string;
-}
+};
 
 // @public
 export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
 
-// @beta (undocumented)
-export interface ResetDashboard extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.RESET";
-}
-
 // @beta
-export function resetDashboard(correlationId?: string): ResetDashboard;
+export function resetDashboard(correlationId?: string): IResetDashboard;
 
 // @alpha
-export interface ResetFilterContextWorkingSelection extends IDashboardCommand {
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION";
-}
+export function resetFilterContextWorkingSelection(correlationId?: string): IResetFilterContextWorkingSelection;
+
+// @beta
+export function resizeHeight(sectionIndex: number, itemIndexes: number[], height: number, correlationId?: string): IResizeHeight;
 
 // @alpha
-export function resetFilterContextWorkingSelection(correlationId?: string): ResetFilterContextWorkingSelection;
-
-// @beta (undocumented)
-export interface ResizeHeight extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ResizeHeightPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT";
-}
-
-// @beta
-export function resizeHeight(sectionIndex: number, itemIndexes: number[], height: number, correlationId?: string): ResizeHeight;
-
-// @beta
-export interface ResizeHeightPayload {
-    readonly height: number;
-    readonly itemIndexes: number[];
-    readonly sectionIndex: number | ILayoutSectionPath;
-}
+export function resizeNestedLayoutItemsHeight(sectionIndex: ILayoutSectionPath, itemIndexes: number[], height: number, correlationId?: string): IResizeHeight;
 
 // @alpha
-export function resizeNestedLayoutItemsHeight(sectionIndex: ILayoutSectionPath, itemIndexes: number[], height: number, correlationId?: string): ResizeHeight;
-
-// @alpha
-export function resizeNestedLayoutItemWidth(itemPath: ILayoutItemPath, width: number, correlationId?: string): ResizeWidth;
-
-// @beta (undocumented)
-export interface ResizeWidth extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ResizeWidthPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH";
-}
+export function resizeNestedLayoutItemWidth(itemPath: ILayoutItemPath, width: number, correlationId?: string): IResizeWidth;
 
 // @beta
-export function resizeWidth(sectionIndex: number, itemIndex: number, width: number, correlationId?: string): ResizeWidth;
-
-// @beta
-export interface ResizeWidthPayload {
-    readonly itemIndex: number;
-    readonly itemPath?: ILayoutItemPath;
-    readonly sectionIndex: number;
-    readonly width: number;
-}
+export function resizeWidth(sectionIndex: number, itemIndex: number, width: number, correlationId?: string): IResizeWidth;
 
 // @alpha
 export type ResolvableFilter = IDashboardFilter;
 
 // @public (undocumented)
-export interface ResolveAsyncRender extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ResolveAsyncRenderPayload;
-    // (undocumented)
+export type ResolveAsyncRender = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
-}
+    readonly payload: ResolveAsyncRenderPayload;
+};
 
 // @public
 export function resolveAsyncRender(id: string, correlationId?: string): ResolveAsyncRender;
 
 // @public
-export interface ResolveAsyncRenderPayload {
+export type ResolveAsyncRenderPayload = {
     readonly id: string;
-}
+};
 
 // @public
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
@@ -8709,7 +9336,7 @@ export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnal
 export const resolveMessages: (locale: string) => Promise<any>;
 
 // @alpha
-export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges;
+export function revertLastLayoutChange(correlationId?: string): IUndoLayoutChanges;
 
 // @public (undocumented)
 export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextComponent;
@@ -8761,29 +9388,16 @@ export type RichTextMenuItemsProvider = (widget: IRichTextWidget, defaultItems: 
 export type RichTextMenuTitleComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextMenuTitleComponent;
 
 // @internal
-export type RichTextWidgetComponentSet = CustomComponentBase<IDashboardRichTextProps, Parameters<RichTextComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IRichTextWidget>;
+export type RichTextWidgetComponentSet = ICustomComponentBase<IDashboardRichTextProps, Parameters<RichTextComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IRichTextWidget>;
 
 // @internal (undocumented)
-export function richTextWidgetContentChanged(ctx: DashboardContext, ref: ObjRef, content: string, correlationId?: string): DashboardRichTextWidgetContentChanged;
+export function richTextWidgetContentChanged(ctx: DashboardContext, ref: ObjRef, content: string, correlationId?: string): IDashboardRichTextWidgetContentChanged;
 
 // @internal (undocumented)
-export function richTextWidgetFilterSettingsChanged(ctx: DashboardContext, ref: ObjRef, ignoredAttributeFilters: IDashboardAttributeFilter[], dateDatasetForFiltering: ICatalogDateDataset | undefined, correlationId?: string, ignoredDateFilters?: IDashboardDateFilter[]): DashboardRichTextWidgetFilterSettingsChanged;
+export function richTextWidgetFilterSettingsChanged(ctx: DashboardContext, ref: ObjRef, ignoredAttributeFilters: IDashboardAttributeFilter[], dateDatasetForFiltering: ICatalogDateDataset | undefined, correlationId?: string, ignoredDateFilters?: IDashboardDateFilter[]): IDashboardRichTextWidgetFilterSettingsChanged;
 
 // @beta
-export interface SaveAlert extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SaveAlertPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.ALERT.SAVE";
-}
-
-// @beta
-export function saveAlert(alert: IAutomationMetadataObject, correlationId?: string): SaveAlert;
-
-// @beta
-export interface SaveAlertPayload {
-    readonly alert: IAutomationMetadataObject;
-}
+export function saveAlert(alert: IAutomationMetadataObject, correlationId?: string): ISaveAlert;
 
 // @internal (undocumented)
 export function SaveAsDialog(props: ISaveAsDialogProps): ReactElement;
@@ -8794,98 +9408,43 @@ export function SaveAsNewButton(props: ISaveAsNewButtonProps): ReactElement;
 // @internal (undocumented)
 export function SaveButton(props: ISaveButtonProps): ReactElement;
 
-// @beta (undocumented)
-export interface SaveDashboard extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SaveDashboardPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.SAVE";
-}
-
 // @beta
-export function saveDashboard(title?: string, correlationId?: string): SaveDashboard;
+export function saveDashboard(title?: string, correlationId?: string): ISaveDashboard;
 
 // @public (undocumented)
-export interface SaveDashboardAs extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SaveDashboardAsPayload;
-    // (undocumented)
+export type SaveDashboardAs = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.SAVEAS";
-}
+    readonly payload: SaveDashboardAsPayload;
+};
 
 // @public
 export function saveDashboardAs(title?: string, switchToCopy?: boolean, useOriginalFilterContext?: boolean, correlationId?: string): SaveDashboardAs;
 
 // @public
-export interface SaveDashboardAsPayload {
+export type SaveDashboardAsPayload = {
+    readonly title?: string;
     readonly switchToCopy?: boolean;
-    readonly title?: string;
     readonly useOriginalFilterContext?: boolean;
-}
-
-// @beta
-export interface SaveDashboardPayload {
-    readonly title?: string;
-}
+};
 
 // @alpha (undocumented)
-export interface SavedFilterViewInteractionData {
-    // (undocumented)
-    countOfSavedViews: number;
-    // (undocumented)
-    type: SavedFilterViewInteractionType;
-}
-
-// @alpha (undocumented)
-export type SavedFilterViewInteractionPayload = UserInteractionPayloadWithDataBase<"savedFilterViewInteraction", SavedFilterViewInteractionData>;
+export type SavedFilterViewInteractionPayload = IUserInteractionPayloadWithDataBase<"savedFilterViewInteraction", ISavedFilterViewInteractionData>;
 
 // @alpha (undocumented)
 export type SavedFilterViewInteractionType = "DIALOG_OPENED";
 
 // @alpha
-export interface SaveFilterView extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SaveFilterViewPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE";
-}
-
-// @alpha
-export function saveFilterView(name: string, isDefault: boolean, correlationId?: string): SaveFilterView;
-
-// @alpha
-export interface SaveFilterViewPayload {
-    // (undocumented)
-    readonly isDefault: boolean;
-    // (undocumented)
-    readonly name: string;
-}
+export function saveFilterView(name: string, isDefault: boolean, correlationId?: string): ISaveFilterView;
 
 // @beta
-export interface SaveScheduledEmail extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SaveScheduledEmailPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE";
-}
-
-// @beta
-export function saveScheduledEmail(scheduledEmail: IAutomationMetadataObject, correlationId?: string): SaveScheduledEmail;
-
-// @beta
-export interface SaveScheduledEmailPayload {
-    readonly scheduledEmail: IAutomationMetadataObject;
-}
+export function saveScheduledEmail(scheduledEmail: IAutomationMetadataObject, correlationId?: string): ISaveScheduledEmail;
 
 // @public (undocumented)
-export interface SavingState {
-    // @beta (undocumented)
-    error?: Error;
-    // @beta (undocumented)
-    result?: boolean;
-    // @beta (undocumented)
+export type SavingState = {
     saving: boolean;
-}
+    result?: boolean;
+    error?: Error;
+};
 
 // @internal (undocumented)
 export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement;
@@ -8895,19 +9454,6 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
 
 // @internal (undocumented)
 export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "disabledOnInsight";
-
-// @beta
-export interface ScreenSizeChanged extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: ScreenSizeChangedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED";
-}
-
-// @beta
-export interface ScreenSizeChangedPayload {
-    readonly screenSize: ScreenSize;
-}
 
 // @alpha
 export type SectionDescriptionExportDataAttributes = CommonExportDataAttributes & {
@@ -8920,20 +9466,7 @@ export type SectionExportData = HeaderExportData & {
 };
 
 // @alpha (undocumented)
-export type SectionSlidesTransformer<TWidget> = (section: IDashboardLayoutSection<TWidget>, fn: SectionSlidesTransformerFunction<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
-
-// @alpha (undocumented)
-export interface SectionSlidesTransformerFunction<TWidget> {
-    breakUpSlide: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
-    containerSlide: (item: IDashboardLayoutItem<TWidget>, transform: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined) => IDashboardLayoutSection<TWidget>[] | undefined;
-    containerSwitcherSlide: (item: IDashboardLayoutItem<TWidget>, transform: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined) => IDashboardLayoutSection<TWidget>[] | undefined;
-    containsVisualisationSwitcher: (section: IDashboardLayoutSection<TWidget>) => boolean;
-    defaultItems: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
-    defaultSection: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
-    itemsSlide: (section: IDashboardLayoutSection<TWidget>, transform: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[]) => IDashboardLayoutSection<TWidget>[] | undefined;
-    switcherSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
-    widgetSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
-}
+export type SectionSlidesTransformer<TWidget> = (section: IDashboardLayoutSection<TWidget>, fn: ISectionSlidesTransformerFunction<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
 
 // @alpha
 export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];
@@ -8954,7 +9487,7 @@ export const selectActiveSection: DashboardSelector<ILayoutSectionPath | undefin
 export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 
 // @alpha
-export const selectActiveTab: DashboardSelector<TabState | undefined>;
+export const selectActiveTab: DashboardSelector<ITabState | undefined>;
 
 // @alpha
 export const selectActiveTabLocalIdentifier: DashboardSelector<string | undefined>;
@@ -9254,7 +9787,7 @@ export const selectDashboardId: DashboardSelector<string | undefined>;
 export const selectDashboardIdRef: DashboardSelector<IdentifierRef | undefined>;
 
 // @internal (undocumented)
-export const selectDashboardLoading: DashboardSelector<LoadingState>;
+export const selectDashboardLoading: DashboardSelector<ILoadingState>;
 
 // @alpha (undocumented)
 export const selectDashboardLockedFilters: DashboardSelector<FilterContextItem[]>;
@@ -9311,13 +9844,13 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
 export const selectDateDatasetsForInsight: selectDateDatasetsForInsightType;
 
 // @internal
-export type selectDateDatasetsForInsightType = (query: QueryInsightDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightDateDatasets> | undefined;
+export type selectDateDatasetsForInsightType = (query: IQueryInsightDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<IInsightDateDatasets> | undefined;
 
 // @internal
 export const selectDateDatasetsForMeasure: selectDateDatasetsForMeasureType;
 
 // @internal
-export type selectDateDatasetsForMeasureType = (query: QueryMeasureDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<MeasureDateDatasets> | undefined;
+export type selectDateDatasetsForMeasureType = (query: IQueryMeasureDateDatasets) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<IMeasureDateDatasets> | undefined;
 
 // @public
 export const selectDateFilterConfig: DashboardSelector<IDateFilterConfig>;
@@ -9471,6 +10004,9 @@ export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSele
 
 // @internal
 export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableDashboardFilterGroups: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<boolean>;
@@ -9667,6 +10203,9 @@ export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]>;
 // @internal
 export const selectFilterContextIdentity: DashboardSelector<IDashboardObjectIdentity | undefined>;
 
+// @alpha
+export const selectFilterGroupsConfig: DashboardSelector<IDashboardFilterGroupsConfig | undefined>;
+
 // @internal
 export const selectFiltersByTab: ((state: DashboardState) => Record<string, FilterContextItem[]>) & {
     clearCache: () => void;
@@ -9697,26 +10236,26 @@ export const selectFiltersByTab: ((state: DashboardState) => Record<string, Filt
             resultsCount: () => number;
             resetResultsCount: () => void;
         } & {
-            resultFunc: (resultFuncArgs_0: TabState[]) => Record<string, FilterContextState>;
-            memoizedResultFunc: ((resultFuncArgs_0: TabState[]) => Record<string, FilterContextState>) & {
+            resultFunc: (resultFuncArgs_0: ITabState[]) => Record<string, FilterContextState>;
+            memoizedResultFunc: ((resultFuncArgs_0: ITabState[]) => Record<string, FilterContextState>) & {
                 clearCache: () => void;
                 resultsCount: () => number;
                 resetResultsCount: () => void;
             };
             lastResult: () => Record<string, FilterContextState>;
-            dependencies: [((state: DashboardState) => TabState[]) & {
+            dependencies: [((state: DashboardState) => ITabState[]) & {
                 clearCache: () => void;
                 resultsCount: () => number;
                 resetResultsCount: () => void;
             } & {
-                resultFunc: (resultFuncArgs_0: TabState[] | undefined) => TabState[];
-                memoizedResultFunc: ((resultFuncArgs_0: TabState[] | undefined) => TabState[]) & {
+                resultFunc: (resultFuncArgs_0: ITabState[] | undefined) => ITabState[];
+                memoizedResultFunc: ((resultFuncArgs_0: ITabState[] | undefined) => ITabState[]) & {
                     clearCache: () => void;
                     resultsCount: () => number;
                     resetResultsCount: () => void;
                 };
-                lastResult: () => TabState[];
-                dependencies: [DashboardSelector<TabState[] | undefined>];
+                lastResult: () => ITabState[];
+                dependencies: [DashboardSelector<ITabState[] | undefined>];
                 recomputations: () => number;
                 resetRecomputations: () => void;
                 dependencyRecomputations: () => number;
@@ -9772,7 +10311,7 @@ export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode
 export const selectFilterViewsVisible: DashboardSelector<boolean>;
 
 // @beta
-export const selectFocusObject: DashboardSelector<DashboardFocusObject>;
+export const selectFocusObject: DashboardSelector<IDashboardFocusObject>;
 
 // @internal (undocumented)
 export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (ref: ObjRef) => DashboardSelector<IGlobalDrillDownAttributeHierarchyDefinition[]>;
@@ -9820,7 +10359,7 @@ export const selectInaccessibleDashboardsMap: DashboardSelector<ObjRefMap<IInacc
 export const selectInsightAttributesMeta: selectInsightAttributesMetaType;
 
 // @internal
-export type selectInsightAttributesMetaType = (query: QueryInsightAttributesMeta) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightAttributesMeta> | undefined;
+export type selectInsightAttributesMetaType = (query: IQueryInsightAttributesMeta) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<IInsightAttributesMeta> | undefined;
 
 // @alpha
 export const selectInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined>;
@@ -10149,26 +10688,26 @@ export const selectOriginalFilterContextFiltersByTab: ((state: DashboardState) =
             resultsCount: () => number;
             resetResultsCount: () => void;
         } & {
-            resultFunc: (resultFuncArgs_0: TabState[]) => Record<string, FilterContextState>;
-            memoizedResultFunc: ((resultFuncArgs_0: TabState[]) => Record<string, FilterContextState>) & {
+            resultFunc: (resultFuncArgs_0: ITabState[]) => Record<string, FilterContextState>;
+            memoizedResultFunc: ((resultFuncArgs_0: ITabState[]) => Record<string, FilterContextState>) & {
                 clearCache: () => void;
                 resultsCount: () => number;
                 resetResultsCount: () => void;
             };
             lastResult: () => Record<string, FilterContextState>;
-            dependencies: [((state: DashboardState) => TabState[]) & {
+            dependencies: [((state: DashboardState) => ITabState[]) & {
                 clearCache: () => void;
                 resultsCount: () => number;
                 resetResultsCount: () => void;
             } & {
-                resultFunc: (resultFuncArgs_0: TabState[] | undefined) => TabState[];
-                memoizedResultFunc: ((resultFuncArgs_0: TabState[] | undefined) => TabState[]) & {
+                resultFunc: (resultFuncArgs_0: ITabState[] | undefined) => ITabState[];
+                memoizedResultFunc: ((resultFuncArgs_0: ITabState[] | undefined) => ITabState[]) & {
                     clearCache: () => void;
                     resultsCount: () => number;
                     resetResultsCount: () => void;
                 };
-                lastResult: () => TabState[];
-                dependencies: [DashboardSelector<TabState[] | undefined>];
+                lastResult: () => ITabState[];
+                dependencies: [DashboardSelector<ITabState[] | undefined>];
                 recomputations: () => number;
                 resetRecomputations: () => void;
                 dependencyRecomputations: () => number;
@@ -10314,10 +10853,10 @@ export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolea
 export const selectSupportsSingleSelectDependentFilters: DashboardSelector<boolean>;
 
 // @alpha
-export const selectTabById: (tabId: string) => DashboardSelector<TabState | undefined>;
+export const selectTabById: (tabId: string) => DashboardSelector<ITabState | undefined>;
 
 // @alpha
-export const selectTabs: DashboardSelector<TabState[] | undefined>;
+export const selectTabs: DashboardSelector<ITabState[] | undefined>;
 
 // @public
 export const selectTimezone: DashboardSelector<string | undefined>;
@@ -10347,7 +10886,7 @@ export const selectWidgetDateDatasetAutoSelect: DashboardSelector<boolean>;
 export const selectWidgetDeleteDialogWidgetRef: DashboardSelector<ObjRef | undefined>;
 
 // @alpha
-export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]>;
+export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard_2[] | InsightDrillDefinition[] | DrillDefinition[]>;
 
 // @alpha
 export const selectWidgetLocalIdToTabIdMap: DashboardSelector<Record<string, string>>;
@@ -10403,314 +10942,87 @@ export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterCont
 // @public
 export const selectWorkingFilterContextFilters: DashboardSelector<FilterContextItem[]>;
 
-// @beta (undocumented)
-export interface SetAttributeFilterDependentDateFilters extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetAttributeFilterDependentDateFiltersPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS";
-}
+// @beta
+export function setAttributeFilterDependentDateFilters(filterLocalId: string, dependentDateFilters: IDashboardAttributeFilterByDate[], correlationId?: string): ISetAttributeFilterDependentDateFilters;
 
 // @beta
-export function setAttributeFilterDependentDateFilters(filterLocalId: string, dependentDateFilters: IDashboardAttributeFilterByDate[], correlationId?: string): SetAttributeFilterDependentDateFilters;
-
-// @beta
-export interface SetAttributeFilterDependentDateFiltersPayload {
-    // (undocumented)
+export type SetAttributeFilterDependentDateFiltersPayload = {
+    readonly filterLocalId: string;
     readonly dependentDateFilters: ReadonlyArray<IDashboardAttributeFilterByDate>;
-    // (undocumented)
+};
+
+// @beta
+export function setAttributeFilterDisplayForm(filterLocalId: string, displayForm: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean): ISetAttributeFilterDisplayForm;
+
+// @alpha
+export function setAttributeFilterLimitingItems(localIdentifier: string, limitingItems: ObjRef[], correlationId?: string): ISetAttributeFilterLimitingItems;
+
+// @beta
+export function setAttributeFilterParents(filterLocalId: string, parentFilters: IDashboardAttributeFilterParent[], correlationId?: string): ISetAttributeFilterParents;
+
+// @beta
+export type SetAttributeFilterParentsPayload = {
     readonly filterLocalId: string;
-}
-
-// @beta (undocumented)
-export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetAttributeFilterDisplayFormPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM";
-}
-
-// @beta
-export function setAttributeFilterDisplayForm(filterLocalId: string, displayForm: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean): SetAttributeFilterDisplayForm;
-
-// @beta (undocumented)
-export interface SetAttributeFilterDisplayFormPayload {
-    // (undocumented)
-    displayForm: ObjRef;
-    // (undocumented)
-    filterLocalId: string;
-    // (undocumented)
-    isResultOfMigration?: boolean;
-    // (undocumented)
-    isWorkingSelectionChange?: boolean;
-}
-
-// @alpha
-export interface SetAttributeFilterLimitingItems extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetAttributeFilterLimitingItemsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS";
-}
-
-// @alpha
-export function setAttributeFilterLimitingItems(localIdentifier: string, limitingItems: ObjRef[], correlationId?: string): SetAttributeFilterLimitingItems;
-
-// @alpha
-export interface SetAttributeFilterLimitingItemsPayload {
-    limitingItems: ObjRef[];
-    localIdentifier: string;
-}
-
-// @beta (undocumented)
-export interface SetAttributeFilterParents extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetAttributeFilterParentsPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS";
-}
-
-// @beta
-export function setAttributeFilterParents(filterLocalId: string, parentFilters: IDashboardAttributeFilterParent[], correlationId?: string): SetAttributeFilterParents;
-
-// @beta
-export interface SetAttributeFilterParentsPayload {
-    // (undocumented)
-    readonly filterLocalId: string;
-    // (undocumented)
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
-}
-
-// @beta (undocumented)
-export interface SetAttributeFilterSelectionMode extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetAttributeFilterSelectionModePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE";
-}
+};
 
 // @beta
-export function setAttributeFilterSelectionMode(filterLocalId: string, selectionMode: DashboardAttributeFilterSelectionMode): SetAttributeFilterSelectionMode;
-
-// @beta (undocumented)
-export interface SetAttributeFilterSelectionModePayload {
-    // (undocumented)
-    filterLocalId: string;
-    // (undocumented)
-    selectionMode: DashboardAttributeFilterSelectionMode;
-}
+export function setAttributeFilterSelectionMode(filterLocalId: string, selectionMode: DashboardAttributeFilterSelectionMode): ISetAttributeFilterSelectionMode;
 
 // @beta
-export interface SetAttributeFilterTitle extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetAttributeFilterTitlePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE";
-}
-
-// @beta
-export function setAttributeFilterTitle(filterLocalId: string, title?: string, correlationId?: string): SetAttributeFilterTitle;
-
-// @beta
-export interface SetAttributeFilterTitlePayload {
-    filterLocalId: string;
-    title?: string;
-}
+export function setAttributeFilterTitle(filterLocalId: string, title?: string, correlationId?: string): ISetAttributeFilterTitle;
 
 // @public (undocumented)
-export interface SetCatalogItemsPayload {
-    // (undocumented)
-    attributeHierarchies?: ICatalogAttributeHierarchy[];
-    // (undocumented)
+export type SetCatalogItemsPayload = {
     attributes?: ICatalogAttribute[];
-    // (undocumented)
-    dateDatasets?: ICatalogDateDataset[];
-    // (undocumented)
-    dateHierarchyTemplates?: IDateHierarchyTemplate[];
-    // (undocumented)
-    facts?: ICatalogFact[];
-    // (undocumented)
     measures?: ICatalogMeasure[];
-}
+    facts?: ICatalogFact[];
+    dateDatasets?: ICatalogDateDataset[];
+    attributeHierarchies?: ICatalogAttributeHierarchy[];
+    dateHierarchyTemplates?: IDateHierarchyTemplate[];
+};
 
 // @public (undocumented)
-export interface SetCatalogMeasuresAndFactsPayload {
-    // (undocumented)
-    facts: ICatalogFact[];
-    // (undocumented)
+export type SetCatalogMeasuresAndFactsPayload = {
     measures: ICatalogMeasure[];
-}
+    facts: ICatalogFact[];
+};
 
 // @alpha
-export interface SetDashboardAttributeFilterConfigDisplayAsLabel extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetDashboardAttributeFilterConfigDisplayAsLabelPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL";
-}
+export function setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier: string, displayAsLabel: ObjRef): ISetDashboardAttributeFilterConfigDisplayAsLabel;
 
 // @alpha
-export function setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier: string, displayAsLabel: ObjRef): SetDashboardAttributeFilterConfigDisplayAsLabel;
+export function setDashboardAttributeFilterConfigMode(localIdentifier: string, mode?: DashboardAttributeFilterConfigMode): ISetDashboardAttributeFilterConfigMode;
 
 // @alpha
-export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
-    displayAsLabel: ObjRef | undefined;
-    localIdentifier: string;
-    // @internal
-    tabLocalIdentifier?: string;
-}
+export function setDashboardDateFilterConfigMode(mode: DashboardDateFilterConfigMode): ISetDashboardDateFilterConfigMode;
 
 // @alpha
-export interface SetDashboardAttributeFilterConfigMode extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetDashboardAttributeFilterConfigModePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE";
-}
-
-// @alpha
-export function setDashboardAttributeFilterConfigMode(localIdentifier: string, mode?: DashboardAttributeFilterConfigMode): SetDashboardAttributeFilterConfigMode;
-
-// @alpha
-export interface SetDashboardAttributeFilterConfigModePayload {
-    localIdentifier: string;
-    mode?: DashboardAttributeFilterConfigMode;
-}
-
-// @alpha
-export interface SetDashboardDateFilterConfigMode extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetDashboardDateFilterConfigModePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE";
-}
-
-// @alpha
-export function setDashboardDateFilterConfigMode(mode: DashboardDateFilterConfigMode): SetDashboardDateFilterConfigMode;
-
-// @alpha
-export interface SetDashboardDateFilterConfigModePayload {
-    // (undocumented)
-    mode: DashboardDateFilterConfigMode;
-}
-
-// @alpha
-export interface SetDashboardDateFilterWithDimensionConfigMode extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetDashboardDateFilterWithDimensionConfigModePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE";
-}
-
-// @alpha
-export function setDashboardDateFilterWithDimensionConfigMode(dataSet: ObjRef, mode?: DashboardDateFilterConfigMode): SetDashboardDateFilterWithDimensionConfigMode;
-
-// @alpha
-export interface SetDashboardDateFilterWithDimensionConfigModePayload {
-    dataSet: ObjRef;
-    mode?: DashboardDateFilterConfigMode;
-}
+export function setDashboardDateFilterWithDimensionConfigMode(dataSet: ObjRef, mode?: DashboardDateFilterConfigMode): ISetDashboardDateFilterWithDimensionConfigMode;
 
 // @beta
-export interface SetDateFilterConfigTitle extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetDateFilterConfigTitlePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE";
-}
+export function setDateFilterConfigTitle(dataSet?: ObjRef, title?: string, correlationId?: string): ISetDateFilterConfigTitle;
 
 // @beta
-export function setDateFilterConfigTitle(dataSet?: ObjRef, title?: string, correlationId?: string): SetDateFilterConfigTitle;
+export function setDrillForKpiWidget(ref: ObjRef, legacyDashboardRef: ObjRef, legacyDashboardTabIdentifier: string, correlationId?: string): ISetDrillForKpiWidget;
 
 // @beta
-export interface SetDateFilterConfigTitlePayload {
-    dataSet?: ObjRef;
-    title?: string;
-}
-
-// @beta (undocumented)
-export interface SetDrillForKpiWidget extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetDrillForKpiWidgetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL";
-}
+export function setExecutionResultData(id: ObjRef | string, executionResult: IExecutionResult, executionWarnings: IResultWarning[] | undefined, correlationId?: string): IUpsertExecutionResult;
 
 // @beta
-export function setDrillForKpiWidget(ref: ObjRef, legacyDashboardRef: ObjRef, legacyDashboardTabIdentifier: string, correlationId?: string): SetDrillForKpiWidget;
+export function setExecutionResultError(id: ObjRef | string, error: GoodDataSdkError, correlationId?: string): IUpsertExecutionResult;
 
 // @beta
-export interface SetDrillForKpiWidgetPayload {
-    // (undocumented)
-    readonly legacyDashboardRef: ObjRef;
-    // (undocumented)
-    readonly legacyDashboardTabIdentifier: string;
-    readonly ref: ObjRef;
-}
-
-// @beta
-export function setExecutionResultData(id: ObjRef | string, executionResult: IExecutionResult, executionWarnings: IResultWarning[] | undefined, correlationId?: string): UpsertExecutionResult;
-
-// @beta
-export function setExecutionResultError(id: ObjRef | string, error: GoodDataSdkError, correlationId?: string): UpsertExecutionResult;
-
-// @beta
-export function setExecutionResultLoading(id: ObjRef | string, correlationId?: string): UpsertExecutionResult;
+export function setExecutionResultLoading(id: ObjRef | string, correlationId?: string): IUpsertExecutionResult;
 
 // @alpha
-export interface SetFilterViewAsDefault extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetFilterViewAsDefaultPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS";
-}
-
-// @alpha
-export function setFilterViewAsDefault(ref: ObjRef, isDefault: boolean, correlationId?: string): SetFilterViewAsDefault;
-
-// @alpha
-export interface SetFilterViewAsDefaultPayload {
-    // (undocumented)
-    readonly isDefault: boolean;
-    // (undocumented)
-    readonly ref: ObjRef;
-}
-
-// @internal (undocumented)
-export interface SetScreenSize extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetScreenSizePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE";
-}
+export function setFilterViewAsDefault(ref: ObjRef, isDefault: boolean, correlationId?: string): ISetFilterViewAsDefault;
 
 // @internal
-export function setScreenSize(screenSize: ScreenSize, correlationId?: string): SetScreenSize;
-
-// @internal
-export interface SetScreenSizePayload {
-    // (undocumented)
-    screenSize: ScreenSize;
-}
-
-// @beta (undocumented)
-export interface SetShowWidgetAsTable extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SetShowWidgetAsTablePayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET";
-}
+export function setScreenSize(screenSize: ScreenSize, correlationId?: string): ISetScreenSize;
 
 // @beta
-export function setShowWidgetAsTable(ref: ObjRef, showAsTable: boolean): SetShowWidgetAsTable;
-
-// @beta (undocumented)
-export interface SetShowWidgetAsTablePayload {
-    // (undocumented)
-    ref: ObjRef;
-    // (undocumented)
-    showAsTable: boolean;
-}
+export function setShowWidgetAsTable(ref: ObjRef, showAsTable: boolean): ISetShowWidgetAsTable;
 
 // @internal (undocumented)
 export function SettingButton(props: ISettingButtonProps): ReactElement;
@@ -10738,7 +11050,7 @@ export type ShareDialogInteractionData = {
 };
 
 // @beta (undocumented)
-export type ShareDialogInteractionPayload = UserInteractionPayloadWithDataBase<"shareDialogInteraction", ShareDialogInteractionData>;
+export type ShareDialogInteractionPayload = IUserInteractionPayloadWithDataBase<"shareDialogInteraction", ShareDialogInteractionData>;
 
 // @beta (undocumented)
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
@@ -10753,27 +11065,7 @@ export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement;
 export type ShowAsTableButtonComponentProvider = (widget: IInsightWidget) => CustomShowAsTableButtonComponent;
 
 // @beta
-export interface ShowWidgetAsTableSet extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: ShowWidgetAsTableSetPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.SHOW_WIDGET_AS_TABLE.SET";
-}
-
-// @beta
-export function showWidgetAsTableSet(ctx: DashboardContext, ref: ObjRef, showAsTable: boolean, correlationId?: string): ShowWidgetAsTableSet;
-
-// @beta
-export interface ShowWidgetAsTableSetPayload {
-    ref: ObjRef;
-    showAsTable: boolean;
-}
-
-// @beta (undocumented)
-export interface ShowWidgetAsTableState {
-    // (undocumented)
-    widgetRefs: ObjRef[];
-}
+export function showWidgetAsTableSet(ctx: DashboardContext, ref: ObjRef, showAsTable: boolean, correlationId?: string): IShowWidgetAsTableSet;
 
 // @internal (undocumented)
 export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSidebar">): ReactElement;
@@ -10791,351 +11083,324 @@ export class SingleDashboardStoreAccessor {
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
 // @alpha
-export interface StartRenamingDashboardTab extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: StartRenamingDashboardTabPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.START";
-}
-
-// @alpha
-export function startRenamingDashboardTab(tabId?: string, correlationId?: string, shouldSelectTab?: boolean): StartRenamingDashboardTab;
-
-// @alpha
-export interface StartRenamingDashboardTabPayload {
-    readonly shouldSelectTab?: boolean;
-    readonly tabId?: string;
-}
+export function startRenamingDashboardTab(tabId?: string, correlationId?: string, shouldSelectTab?: boolean): IStartRenamingDashboardTab;
 
 // @beta
 export type StashedDashboardItemsId = string;
 
 // @alpha
-export interface SwitchDashboardTab extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: SwitchDashboardTabPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.TAB.SWITCH";
-}
-
-// @alpha
-export function switchDashboardTab(tabId: string, correlationId?: string): SwitchDashboardTab;
-
-// @alpha
-export interface SwitchDashboardTabPayload {
-    readonly tabId: string;
-}
+export function switchDashboardTab(tabId: string, correlationId?: string): ISwitchDashboardTab;
 
 // @beta
-export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode;
+export function switchToEditRenderMode(correlationId?: string): IChangeRenderMode;
 
 // @internal (undocumented)
 export const tabsActions: CaseReducerActions<    {
-readonly setLayout: (state: WritableDraft<TabsState>, action: {
+readonly setLayout: (state: WritableDraft<ITabsState>, action: {
 payload: IDashboardLayout<ExtendedDashboardWidget>;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setScreen: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setScreen: (state: WritableDraft<ITabsState>, action: {
 payload: {
 screen: ScreenSize;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateWidgetIdentities: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateWidgetIdentities: (state: WritableDraft<ITabsState>, action: {
 payload: ObjRefMap<IdentityMapping>;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateWidgetIdentitiesForTab: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateWidgetIdentitiesForTab: (state: WritableDraft<ITabsState>, action: {
 payload: {
 tabId: string;
 mapping: ObjRefMap<IdentityMapping>;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeIgnoredAttributeFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeIgnoredAttributeFilter: (state: WritableDraft<ITabsState>, action: {
 payload: {
 displayFormRefs: ObjRef[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeIgnoredDateFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeIgnoredDateFilter: (state: WritableDraft<ITabsState>, action: {
 payload: {
 dateDataSets: ObjRef[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly addSection: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addSection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 section: ExtendedDashboardLayoutSection;
 index: ILayoutSectionPath;
 usedStashes: StashedDashboardItemsId[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeSection: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeSection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 index: ILayoutSectionPath;
 stashIdentifier?: StashedDashboardItemsId;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly moveSection: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly moveSection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 sectionIndex: ILayoutSectionPath;
 toIndex: ILayoutSectionPath;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeSectionHeader: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeSectionHeader: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 index: ILayoutSectionPath;
 header: IDashboardLayoutSectionHeader;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly addSectionItems: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addSectionItems: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 layoutPath: ILayoutItemPath;
 items: ExtendedDashboardItem[];
 usedStashes: StashedDashboardItemsId[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly moveSectionItem: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly moveSectionItem: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 itemIndex: ILayoutItemPath;
 toItemIndex: ILayoutItemPath;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeSectionItem: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeSectionItem: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 itemIndex: ILayoutItemPath;
 stashIdentifier?: StashedDashboardItemsId;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceSectionItem: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceSectionItem: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 layoutPath: ILayoutItemPath;
 newItems: ExtendedDashboardItem[];
 stashIdentifier?: StashedDashboardItemsId;
 usedStashes: StashedDashboardItemsId[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetHeader: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetHeader: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
-header: WidgetHeader;
+header: IWidgetHeader;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetDescription: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDescription: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
-description: WidgetDescription;
+description: IWidgetDescription;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetDrillWithoutUndo: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDrillWithoutUndo: (state: WritableDraft<ITabsState>, action: {
 payload: {
 ref: ObjRef;
 drillDefinitions: InsightDrillDefinition[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetDrills: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDrills: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 drillDefinitions: InsightDrillDefinition[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetBlacklistHierarchies: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetBlacklistHierarchies: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 blacklistHierarchies: IDrillDownReference[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetBlacklistAttributes: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetBlacklistAttributes: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 blacklistAttributes: ObjRef[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetDrillDownIntersectionIgnoredAttributes: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDrillDownIntersectionIgnoredAttributes: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 ignoredDrillDownIntersectionIgnoredAttributes: IDrillDownIntersectionIgnoredAttributes[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceInsightWidgetVisProperties: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceInsightWidgetVisProperties: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 properties: VisualizationProperties | undefined;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceInsightWidgetVisConfiguration: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceInsightWidgetVisConfiguration: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 config: IInsightWidgetConfiguration | undefined;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceInsightWidgetInsight: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceInsightWidgetInsight: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 insightRef: ObjRef;
 properties: VisualizationProperties | undefined;
-header: WidgetHeader | undefined;
+header: IWidgetHeader | undefined;
 newSize?: IVisualizationSizeInfo;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetFilterSettings: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetFilterSettings: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 ignoreDashboardFilters?: IDashboardFilterReference[];
 dateDataSet?: ObjRef;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceWidgetDateDataset: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDateDataset: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 dateDataSet?: ObjRef;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceKpiWidgetMeasure: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetMeasure: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 measureRef: ObjRef;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceKpiWidgetComparison: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetComparison: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 comparisonType: IKpiComparisonTypeComparison;
 comparisonDirection?: IKpiComparisonDirection;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceKpiWidgetDrillWithoutUndo: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetDrillWithoutUndo: (state: WritableDraft<ITabsState>, action: {
 payload: {
 ref: ObjRef;
 drillDefinitions: InsightDrillDefinition[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceKpiWidgetDrill: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetDrill: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
-drill: IDrillToLegacyDashboard | undefined;
+drill: IDrillToLegacyDashboard_2 | undefined;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceKpiWidgetConfiguration: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetConfiguration: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 config: IKpiWidgetConfiguration | undefined;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly replaceRichTextWidgetContent: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceRichTextWidgetContent: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 content: string;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly addVisualizationSwitcherWidgetVisualization: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addVisualizationSwitcherWidgetVisualization: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 visualization: IInsightWidget;
 newSize?: IVisualizationSizeInfo;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateVisualizationSwitcherWidgetVisualizations: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateVisualizationSwitcherWidgetVisualizations: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 visualizations: IInsightWidget[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly undoLayout: <TState extends UndoEnhancedState>(state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly undoLayout: <TState extends IUndoEnhancedState>(state: WritableDraft<ITabsState>, action: {
 payload: {
 undoDownTo: number;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly clearLayoutHistory: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly clearLayoutHistory: (state: WritableDraft<ITabsState>, action: {
 payload: void;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeItemsHeight: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeItemsHeight: (state: WritableDraft<ITabsState>, action: {
 payload: {
 sectionIndex: ILayoutSectionPath;
 itemIndexes: number[];
 height: number;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeItemWidth: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeItemWidth: (state: WritableDraft<ITabsState>, action: {
 payload: {
 layoutPath: ILayoutItemPath;
 width: number;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeWidgetIgnoreCrossFiltering: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeWidgetIgnoreCrossFiltering: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 ignoreCrossFiltering?: boolean;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly resizeVisualizationSwitcherOnInsightChanged: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly resizeVisualizationSwitcherOnInsightChanged: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 ref: ObjRef;
 newSize?: IVisualizationSizeInfo;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly toggleLayoutSectionHeaders: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly toggleLayoutSectionHeaders: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 layoutPath: ILayoutItemPath | undefined;
 enableSectionHeaders: boolean;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly toggleLayoutDirection: (state: WritableDraft<TabsState>, action: {
-payload: UndoPayload<IDashboardCommand> & {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly toggleLayoutDirection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
 layoutPath: ILayoutItemPath | undefined;
 direction: IDashboardLayoutContainerDirection;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateHeightOfMultipleItems: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateHeightOfMultipleItems: (state: WritableDraft<ITabsState>, action: {
 payload: {
 itemsWithSizes: IItemWithHeight[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateWidthOfMultipleItems: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateWidthOfMultipleItems: (state: WritableDraft<ITabsState>, action: {
 payload: {
 itemsWithSizes: IItemWithWidth[];
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setFilterContext: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setFilterContext: (state: WritableDraft<ITabsState>, action: {
 payload: {
 filterContextDefinition: IFilterContextDefinition;
 originalFilterContextDefinition?: IFilterContextDefinition;
@@ -11143,167 +11408,167 @@ attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
 filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateFilterContextIdentity: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateFilterContextIdentity: (state: WritableDraft<ITabsState>, action: {
 payload: {
 filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateFilterContextIdentityForTab: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateFilterContextIdentityForTab: (state: WritableDraft<ITabsState>, action: {
 payload: {
 tabId: string;
 filterContextIdentity?: IDashboardObjectIdentity;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeAttributeFilterDisplayForms: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeAttributeFilterDisplayForms: (state: WritableDraft<ITabsState>, action: {
 payload: ObjRef;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly addAttributeFilterDisplayForm: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addAttributeFilterDisplayForm: (state: WritableDraft<ITabsState>, action: {
 payload: IAttributeDisplayFormMetadataObject | IAddAttributeFilterDisplayFormPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly addAttributeFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addAttributeFilter: (state: WritableDraft<ITabsState>, action: {
 payload: IAddAttributeFilterPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeAttributeFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeAttributeFilter: (state: WritableDraft<ITabsState>, action: {
 payload: IRemoveAttributeFilterPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly moveAttributeFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly moveAttributeFilter: (state: WritableDraft<ITabsState>, action: {
 payload: IMoveAttributeFilterPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly addDateFilter: (state: WritableDraft<TabsState>, action: {
-payload: AddDateFilterPayload;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addDateFilter: (state: WritableDraft<ITabsState>, action: {
+payload: IAddDateFilterPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeDateFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeDateFilter: (state: WritableDraft<ITabsState>, action: {
 payload: IRemoveDateFilterPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly moveDateFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly moveDateFilter: (state: WritableDraft<ITabsState>, action: {
 payload: IMoveDateFilterPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateAttributeFilterSelection: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateAttributeFilterSelection: (state: WritableDraft<ITabsState>, action: {
 payload: IUpdateAttributeFilterSelectionPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setAttributeFilterParents: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setAttributeFilterParents: (state: WritableDraft<ITabsState>, action: {
 payload: ISetAttributeFilterParentsPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setAttributeFilterDependentDateFilters: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setAttributeFilterDependentDateFilters: (state: WritableDraft<ITabsState>, action: {
 payload: ISetAttributeFilterDependentDateFiltersPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly clearAttributeFiltersSelection: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly clearAttributeFiltersSelection: (state: WritableDraft<ITabsState>, action: {
 payload: IClearAttributeFiltersSelectionPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly upsertDateFilter: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly upsertDateFilter: (state: WritableDraft<ITabsState>, action: {
 payload: IUpsertDateFilterPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeAttributeDisplayForm: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeAttributeDisplayForm: (state: WritableDraft<ITabsState>, action: {
 payload: IChangeAttributeDisplayFormPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeAttributeTitle: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeAttributeTitle: (state: WritableDraft<ITabsState>, action: {
 payload: IChangeAttributeTitlePayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeSelectionMode: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeSelectionMode: (state: WritableDraft<ITabsState>, action: {
 payload: IChangeAttributeSelectionModePayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeLimitingItems: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeLimitingItems: (state: WritableDraft<ITabsState>, action: {
 payload: IChangeAttributeLimitingItemsPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setPreloadedAttributesWithReferences: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setPreloadedAttributesWithReferences: (state: WritableDraft<ITabsState>, action: {
 payload: IAttributeWithReferences[];
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly applyWorkingSelection: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly applyWorkingSelection: (state: WritableDraft<ITabsState>, action: {
 payload: IApplyWorkingSelectionPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly resetWorkingSelection: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly resetWorkingSelection: (state: WritableDraft<ITabsState>, action: {
 payload: void;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setDefaultFilterOverrides: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDefaultFilterOverrides: (state: WritableDraft<ITabsState>, action: {
 payload: FilterContextItem[];
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setDateFilterConfig: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
 payload: {
 dateFilterConfig?: IDashboardDateFilterConfig_2;
 effectiveDateFilterConfig: IDateFilterConfig;
 isUsingDashboardOverrides: boolean;
 };
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setDateFilterConfigMode: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
 payload: DashboardDateFilterConfigMode;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setDateFilterConfigTitle: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfigTitle: (state: WritableDraft<ITabsState>, action: {
 payload: string | undefined;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly updateDateFilterConfig: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
 payload: IDashboardDateFilterConfig_2;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly addDateFilterConfigValidationWarning: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
 payload: DateFilterValidationResult;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly clearDateFilterConfigValidationWarning: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly clearDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
 payload: void;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeDateFilterConfigsMode: (state: WritableDraft<TabsState>, action: {
-payload: SetDashboardDateFilterWithDimensionConfigModePayload;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeDateFilterConfigsMode: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardDateFilterWithDimensionConfigModePayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setDateFilterConfigs: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
 payload: any;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly removeDateFilterConfigs: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
 payload: ObjRef;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeDateFilterConfigsTitle: (state: WritableDraft<TabsState>, action: {
-payload: SetDateFilterConfigTitlePayload;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeDateFilterConfigsTitle: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDateFilterConfigTitlePayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly changeAttributeFilterConfigMode: (state: WritableDraft<TabsState>, action: {
-payload: SetDashboardAttributeFilterConfigModePayload;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeAttributeFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardAttributeFilterConfigModePayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
-readonly setAttributeFilterConfigs: (state: WritableDraft<TabsState>, action: {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setAttributeFilterConfigs: (state: WritableDraft<ITabsState>, action: {
 payload: any;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
+}) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeAttributeFilterConfig: TabsReducer<    {
 payload: string;
 type: string;
 }>;
-readonly changeDisplayAsLabel: (state: WritableDraft<TabsState>, action: {
-payload: SetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+readonly changeDisplayAsLabel: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
 type: string;
-}) => void | TabsState | WritableDraft<TabsState>;
+}) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setTabs: TabsReducer<    {
 payload: {
-tabs?: TabState[];
+tabs?: ITabState[];
 activeTabLocalIdentifier?: string;
 };
 type: string;
@@ -11313,7 +11578,7 @@ payload: string | undefined;
 type: string;
 }>;
 readonly updateTab: TabsReducer<    {
-payload: TabState;
+payload: ITabState;
 type: string;
 }>;
 readonly removeTabById: TabsReducer<    {
@@ -11341,35 +11606,7 @@ type: string;
 }, "tabs">;
 
 // @alpha (undocumented)
-export type TabsReducer<A extends Action> = CaseReducer<TabsState, A>;
-
-// @alpha (undocumented)
-export interface TabsState {
-    activeTabLocalIdentifier?: string;
-    // @beta
-    attributesWithReferences?: IAttributeWithReferences[];
-    tabs?: TabState[];
-}
-
-// @alpha (undocumented)
-export interface TabState {
-    // (undocumented)
-    attributeFilterConfigs?: AttributeFilterConfigsState;
-    // (undocumented)
-    dateFilterConfig?: DateFilterConfigState;
-    // (undocumented)
-    dateFilterConfigs?: DateFilterConfigsState;
-    // (undocumented)
-    filterContext?: FilterContextState;
-    // @internal
-    isRenaming?: boolean;
-    // (undocumented)
-    layout?: LayoutState;
-    // (undocumented)
-    localIdentifier: string;
-    // (undocumented)
-    title?: string;
-}
+export type TabsReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 // @internal (undocumented)
 export function Title(props: ITitleProps): ReactElement;
@@ -11377,43 +11614,11 @@ export function Title(props: ITitleProps): ReactElement;
 // @public (undocumented)
 export type TitleComponentProvider = (props: ITitleProps) => CustomTitleComponent;
 
-// @internal (undocumented)
-export interface ToggleLayoutDirection extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ToggleLayoutDirectionPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION";
-}
+// @alpha
+export function toggleLayoutDirection(layoutPath: ILayoutItemPath | undefined, direction: IDashboardLayoutContainerDirection, correlationId?: string): IToggleLayoutDirection;
 
 // @alpha
-export function toggleLayoutDirection(layoutPath: ILayoutItemPath | undefined, direction: IDashboardLayoutContainerDirection, correlationId?: string): ToggleLayoutDirection;
-
-// @internal
-export interface ToggleLayoutDirectionPayload {
-    // (undocumented)
-    direction: IDashboardLayoutContainerDirection;
-    // (undocumented)
-    layoutPath: ILayoutItemPath | undefined;
-}
-
-// @internal (undocumented)
-export interface ToggleLayoutSectionHeaders extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: ToggleLayoutSectionHeadersPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS";
-}
-
-// @alpha
-export function toggleLayoutSectionHeaders(layoutPath: ILayoutItemPath | undefined, enableSectionHeaders: boolean, correlationId?: string): ToggleLayoutSectionHeaders;
-
-// @internal
-export interface ToggleLayoutSectionHeadersPayload {
-    // (undocumented)
-    enableSectionHeaders: boolean;
-    // (undocumented)
-    layoutPath: ILayoutItemPath | undefined;
-}
+export function toggleLayoutSectionHeaders(layoutPath: ILayoutItemPath | undefined, enableSectionHeaders: boolean, correlationId?: string): IToggleLayoutSectionHeaders;
 
 // @internal (undocumented)
 export function Toolbar(props: IToolbarProps): ReactElement;
@@ -11425,20 +11630,7 @@ export function TopBar(props: ITopBarProps): ReactElement;
 export type TopBarComponentProvider = (props: ITopBarProps) => CustomTopBarComponent;
 
 // @beta
-export interface TriggerEvent extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: TriggerEventPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.EVENT.TRIGGER";
-}
-
-// @beta
-export function triggerEvent(eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>, correlationId?: string): TriggerEvent;
-
-// @beta
-export interface TriggerEventPayload {
-    readonly eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>;
-}
+export function triggerEvent(eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>, correlationId?: string): ITriggerEvent;
 
 // @internal
 export const uiActions: {
@@ -11493,7 +11685,7 @@ export const uiActions: {
     addInvalidDrillWidgetRefs: ActionCreatorWithPayload<ObjRef[], "uiSlice/addInvalidDrillWidgetRefs">;
     setInvalidCustomUrlDrillParameterWidgets: ActionCreatorWithPayload<    {
     widget: IInsightWidget;
-    invalidDrills: IDrillToCustomUrl[];
+    invalidDrills: IDrillToCustomUrl_2[];
     }[], "uiSlice/setInvalidCustomUrlDrillParameterWidgets">;
     removeInvalidDrillWidgetRefs: ActionCreatorWithPayload<ObjRef[], "uiSlice/removeInvalidDrillWidgetRefs">;
     resetInvalidCustomUrlDrillParameterWidget: ActionCreatorWithPayload<IInsightWidget[], "uiSlice/resetInvalidCustomUrlDrillParameterWidget">;
@@ -11522,200 +11714,29 @@ export const uiActions: {
     invalidateAutomationItems: ActionCreatorWithoutPayload<"uiSlice/invalidateAutomationItems">;
 };
 
-// @beta (undocumented)
-export interface UiState {
-    // (undocumented)
-    activeSection: ILayoutSectionPath | undefined;
-    // (undocumented)
-    alertsDialog: {
-        open: boolean;
-        returnFocusTo?: string;
-        context?: IAlertDialogContext;
-    };
-    // (undocumented)
-    alertsManagementDialog: {
-        open: boolean;
-        context?: IAlertDialogContext;
-    };
-    // (undocumented)
-    automationsManagement: {
-        invalidationId: number;
-    };
-    // (undocumented)
-    cancelEditModeDialog: {
-        open: boolean;
-    };
-    // (undocumented)
-    configurationPanelOpened: boolean;
-    // (undocumented)
-    deleteDialog: {
-        open: boolean;
-    };
-    // @internal (undocumented)
-    draggingWidgetSource: DraggableLayoutItem | undefined;
-    // (undocumented)
-    draggingWidgetTarget: ILayoutItemPath | undefined;
-    // @internal (undocumented)
-    draggingWidgetTriggeringDropZoneType: DropZoneType | undefined;
-    // @alpha (undocumented)
-    drillValidationMessages: {
-        invalidDrillWidgetRefs: ObjRef[];
-        invalidCustomUrlDrillParameterWidgets: InvalidCustomUrlDrillParameterInfo[];
-    };
-    // (undocumented)
-    filterAttributeSelectionOpen: boolean;
-    // (undocumented)
-    filterBar: {
-        expanded: boolean;
-    };
-    // (undocumented)
-    filterValidationMessages: {
-        incompatibleDefaultFiltersOverride: boolean;
-    };
-    // (undocumented)
-    filterViews: {
-        open: boolean;
-        mode: FilterViewDialogMode;
-    };
-    // (undocumented)
-    ignoreExecutionTimestamp: boolean;
-    // (undocumented)
-    insightListLastUpdateRequested: number;
-    // (undocumented)
-    kpiAlerts: {
-        openedWidgetRef: ObjRef | undefined;
-        highlightedWidgetRef: ObjRef | undefined;
-    };
-    // (undocumented)
-    kpiDeleteDialog: {
-        widgetCoordinates: ILayoutItemPath | undefined;
-    };
-    // (undocumented)
-    menuButton: {
-        itemsVisibility: IMenuButtonItemsVisibility;
-    };
-    // (undocumented)
-    saveAsDialog: {
-        open: boolean;
-    };
-    // (undocumented)
-    scheduleEmailDialog: {
-        open: boolean;
-        defaultAttachmentRef: ObjRef | undefined;
-        returnFocusTo?: string;
-        context?: IScheduleEmailContext;
-    };
-    // (undocumented)
-    scheduleEmailManagementDialog: {
-        open: boolean;
-        context?: IScheduleEmailContext;
-    };
-    // (undocumented)
-    selectedFilterIndex: number | undefined;
-    // (undocumented)
-    selectedWidgetRef: ObjRef | undefined;
-    // (undocumented)
-    settingsDialog: {
-        open: boolean;
-    };
-    // (undocumented)
-    shareDialog: {
-        open: boolean;
-    };
-    // (undocumented)
-    widgetDateDatasetAutoSelect: boolean;
-    // (undocumented)
-    widgetDeleteDialog: {
-        open: boolean;
-        widgetRef: ObjRef | undefined;
-    };
-    // (undocumented)
-    widgetsLoadingAdditionalData: ObjRef[];
-    // (undocumented)
-    widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
-}
-
-// @alpha
-export interface UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> {
-    // (undocumented)
-    _undo: {
-        undoPointer: number;
-        undoStack: UndoEntry<T>[];
-    };
-}
-
-// @alpha
-export interface UndoEntry<T extends IDashboardCommand = IDashboardCommand> {
-    cmd: T;
-    redoPatches: Patch[];
-    undoPatches: Patch[];
-}
-
-// @beta (undocumented)
-export interface UndoLayoutChanges extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: UndoLayoutChangesPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
-}
-
 // @beta
-export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, correlationId?: string): UndoLayoutChanges;
-
-// @beta
-export interface UndoLayoutChangesPayload {
-    readonly undoPointSelector?: UndoPointSelector;
-}
-
-// @internal
-export interface UndoPayload<T extends IDashboardCommand = IDashboardCommand> {
-    undo: {
-        cmd: T;
-    };
-}
+export function undoLayoutChanges(undoPointSelector?: UndoPointSelector, correlationId?: string): IUndoLayoutChanges;
 
 // @beta
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;
 
 // @beta
-export function unignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function unignoreDateFilterOnInsightWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @alpha
-export function unignoreDateFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
+export function unignoreDateFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDataSets: ObjRef | ObjRef[], correlationId?: string): IChangeRichTextWidgetFilterSettings;
 
 // @beta
-export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function unignoreFilterOnInsightWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): IChangeInsightWidgetFilterSettings;
 
 // @beta
-export function unignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function unignoreFilterOnKpiWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): IChangeKpiWidgetFilterSettings;
 
 // @alpha
-export function unignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): ChangeRichTextWidgetFilterSettings;
+export function unignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForms: ObjRef | ObjRef[], correlationId?: string): IChangeRichTextWidgetFilterSettings;
 
 // @beta
-export function updateVisualizationsFromSwitcherWidgetContent(ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): UpdateVisualizationsFromVisualizationSwitcherWidgetContent;
-
-// @beta (undocumented)
-export interface UpdateVisualizationsFromVisualizationSwitcherWidgetContent extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS";
-}
-
-// @beta
-export interface UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload {
-    readonly ref: ObjRef;
-    readonly visualizations: IInsightWidget[];
-}
-
-// @beta
-export interface UpsertExecutionResult extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: IExecutionResultEnvelope;
-    // (undocumented)
-    readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
-}
+export function updateVisualizationsFromSwitcherWidgetContent(ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): IUpdateVisualizationsFromVisualizationSwitcherWidgetContent;
 
 // @alpha @deprecated
 export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
@@ -11807,10 +11828,10 @@ export const useDashboardAlertsOld: () => {
 };
 
 // @public
-export interface UseDashboardAsyncRender {
+export type UseDashboardAsyncRender = {
     onRequestAsyncRender: () => void;
     onResolveAsyncRender: () => void;
-}
+};
 
 // @public
 export const useDashboardAsyncRender: (id: string) => UseDashboardAsyncRender;
@@ -11855,8 +11876,8 @@ export const useDashboardExportData: (renderMode: RenderMode | undefined, status
 export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
     onSuccess?: (result: TQueryResult) => void;
-    onError?: (event: DashboardQueryFailed) => void;
-    onRejected?: (event: DashboardQueryRejected) => void;
+    onError?: (event: IDashboardQueryFailed) => void;
+    onRejected?: (event: IDashboardQueryRejected) => void;
     onBeforeRun?: (query: TQuery) => void;
 }) => UseDashboardQueryProcessingResult<TQueryCreatorArgs, TQueryResult>;
 
@@ -11917,7 +11938,7 @@ export const useDashboardUserInteraction: () => {
     dateFilterInteraction: (eventType: DateFilterInteractionType) => void;
     visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
     automationInteraction: (eventData: AutomationInteractionData) => void;
-    savedFilterViewInteraction: (eventData: SavedFilterViewInteractionData) => void;
+    savedFilterViewInteraction: (eventData: ISavedFilterViewInteractionData) => void;
     nestedLayoutInteraction: (eventType: NestedLayoutInteractionType) => void;
 };
 
@@ -11928,116 +11949,46 @@ export function useDefaultMenuItems(): IMenuButtonItem[];
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => ((...args: TArgs) => void);
 
 // @internal (undocumented)
-export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {
-    run: (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string | undefined) => void;
+export const useDrill: ({ onSuccess, onError, onBeforeRun }?: IUseDrillProps) => {
+    run: (drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
-export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: UseDrillDownProps) => {
+export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: IUseDrillDownProps) => {
     run: (insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
-export interface UseDrillDownProps {
-    // (undocumented)
-    onBeforeRun?: (cmd: DrillDown) => void;
-    // (undocumented)
-    onError?: (event: DashboardCommandFailed<DrillDown>) => void;
-    // (undocumented)
-    onSuccess?: (event: DashboardDrillDownResolved) => void;
-}
-
-// @internal (undocumented)
-export interface UseDrillProps {
-    // (undocumented)
-    onBeforeRun?: (cmd: Drill) => void;
-    // (undocumented)
-    onError?: (event: DashboardCommandFailed<Drill>) => void;
-    // (undocumented)
-    onSuccess?: (event: DashboardDrillResolved) => void;
-}
-
-// @internal (undocumented)
-export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToAttributeUrlProps) => {
-    run: (drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: IUseDrillToAttributeUrlProps) => {
+    run: (drillDefinition: IDrillToAttributeUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
-export interface UseDrillToAttributeUrlProps {
-    // (undocumented)
-    onBeforeRun?: (cmd: DrillToAttributeUrl) => void;
-    // (undocumented)
-    onError?: (event: DashboardCommandFailed<DrillToAttributeUrl>) => void;
-    // (undocumented)
-    onSuccess?: (event: DashboardDrillToAttributeUrlResolved) => void;
-}
-
-// @internal (undocumented)
-export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: UseDrillToCustomUrlProps) => {
-    run: (drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToCustomUrlProps) => {
+    run: (drillDefinition: IDrillToCustomUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
-export interface UseDrillToCustomUrlProps {
-    // (undocumented)
-    onBeforeRun?: (cmd: DrillToCustomUrl) => void;
-    // (undocumented)
-    onError?: (event: DashboardCommandFailed<DrillToCustomUrl>) => void;
-    // (undocumented)
-    onSuccess?: (event: DashboardDrillToCustomUrlResolved) => void;
-}
-
-// @internal (undocumented)
-export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: UseDrillToDashboardProps) => {
-    run: (drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToDashboardProps) => {
+    run: (drillDefinition: IDrillToDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
-export interface UseDrillToDashboardProps {
-    // (undocumented)
-    onBeforeRun?: (cmd: DrillToDashboard) => void;
-    // (undocumented)
-    onError?: (event: DashboardCommandFailed<DrillToDashboard>) => void;
-    // (undocumented)
-    onSuccess?: (event: DashboardDrillToDashboardResolved) => void;
-}
-
-// @internal (undocumented)
-export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: UseDrillToInsightProps) => {
-    run: (drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToInsightProps) => {
+    run: (drillDefinition: IDrillToInsight_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
-export interface UseDrillToInsightProps {
-    // (undocumented)
-    onBeforeRun?: (cmd: DrillToInsight) => void;
-    // (undocumented)
-    onError?: (event: DashboardCommandFailed<DrillToInsight>) => void;
-    // (undocumented)
-    onSuccess?: (event: DashboardDrillToInsightResolved) => void;
-}
-
-// @internal (undocumented)
-export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToLegacyDashboardProps) => {
-    run: (drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: IUseDrillToLegacyDashboardProps) => {
+    run: (drillDefinition: IDrillToLegacyDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus;
 };
-
-// @internal (undocumented)
-export interface UseDrillToLegacyDashboardProps {
-    // (undocumented)
-    onBeforeRun?: (cmd: DrillToLegacyDashboard) => void;
-    // (undocumented)
-    onError?: (event: DashboardCommandFailed<DrillToLegacyDashboard>) => void;
-    // (undocumented)
-    onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
-}
 
 // @internal (undocumented)
 export function useEditButtonProps(): IEditButtonProps;
@@ -12083,40 +12034,21 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilt
 export const useRichTextExportData: () => RichTextExportData | undefined;
 
 // @beta (undocumented)
-export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
+export type UserInteractionPayload = UserInteractionPayloadWithData | IBareUserInteractionPayload;
 
 // @beta (undocumented)
 export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload | AutomationInteractionPayload | SavedFilterViewInteractionPayload;
 
-// @beta (undocumented)
-export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
-    // (undocumented)
-    data: TData;
-    // (undocumented)
-    interaction: TType;
-}
-
 // @beta
-export function userInteractionTriggered(interactionPayloadOrType: UserInteractionPayload | BareUserInteractionType, correlationId?: string): DashboardEventBody<DashboardUserInteractionTriggered>;
+export function userInteractionTriggered(interactionPayloadOrType: UserInteractionPayload | BareUserInteractionType, correlationId?: string): DashboardEventBody<IDashboardUserInteractionTriggered>;
 
 // @beta (undocumented)
 export type UserInteractionType = UserInteractionPayload["interaction"];
 
-// @alpha (undocumented)
-export interface UsersState {
-    // (undocumented)
-    error?: GoodDataSdkError;
-    // (undocumented)
-    status: "pending" | "loading" | "success" | "error";
-    // (undocumented)
-    users?: IWorkspaceUser[];
-}
-
 // @public (undocumented)
-export interface UserState {
-    // @beta (undocumented)
+export type UserState = {
     user?: IUser;
-}
+};
 
 // @internal (undocumented)
 export function useSaveAsDialogProps(): ISaveAsDialogProps;
@@ -12218,27 +12150,16 @@ export type VisualizationSwitcherInteractionType = "visualizationSwitcherSwitche
 export type VisualizationSwitcherToolbarComponentProvider = (widget: IVisualizationSwitcherWidget) => CustomVisualizationSwitcherToolbarComponent;
 
 // @internal
-export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<IDashboardVisualizationSwitcherProps, Parameters<VisualizationSwitcherComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IVisualizationSwitcherWidget>;
+export type VisualizationSwitcherWidgetComponentSet = ICustomComponentBase<IDashboardVisualizationSwitcherProps, Parameters<VisualizationSwitcherComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IVisualizationSwitcherWidget>;
 
 // @internal (undocumented)
-export function visualizationSwitcherWidgetVisualizationAdded(ctx: DashboardContext, ref: ObjRef, visualization: IInsightWidget, correlationId?: string): DashboardVisualizationSwitcherWidgetVisualizationAdded;
+export function visualizationSwitcherWidgetVisualizationAdded(ctx: DashboardContext, ref: ObjRef, visualization: IInsightWidget, correlationId?: string): IDashboardVisualizationSwitcherWidgetVisualizationAdded;
 
 // @internal (undocumented)
-export function visualizationSwitcherWidgetVisualizationsUpdated(ctx: DashboardContext, ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): DashboardVisualizationSwitcherWidgetVisualizationsUpdated;
+export function visualizationSwitcherWidgetVisualizationsUpdated(ctx: DashboardContext, ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): IDashboardVisualizationSwitcherWidgetVisualizationsUpdated;
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
-
-// @internal (undocumented)
-export interface WidgetConfigPanelProps<TWidget> {
-    // (undocumented)
-    widget: TWidget;
-}
-
-// @beta (undocumented)
-export interface WidgetDescription {
-    description?: string;
-}
 
 // @alpha
 export type WidgetExportData = HeaderExportData & {
@@ -12258,77 +12179,11 @@ export type WidgetExportDimensionsAttributes = {
     [K in `data-export-visualization-dimension-${number}`]?: string;
 };
 
-// @beta
-export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpIgnoreDateFilter | FilterOpUnignoreDateFilter | FilterOpReplaceAll;
-
-// @beta (undocumented)
-export interface WidgetHeader {
-    title?: string;
-}
-
 // @alpha (undocumented)
 export type WidgetsOverlayFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => Record<string, IDashboardWidgetOverlay>;
 
 // @internal (undocumented)
-export interface WidthResizerDragItem {
-    // (undocumented)
-    currentWidth: number;
-    // (undocumented)
-    gridColumnHeightInPx: number;
-    // (undocumented)
-    gridColumnWidth: number;
-    // (undocumented)
-    initialLayoutDimensions: DOMRect;
-    // (undocumented)
-    itemIndex: number;
-    // (undocumented)
-    layoutPath?: ILayoutItemPath;
-    // (undocumented)
-    maxLimit: number;
-    // (undocumented)
-    minLimit: number;
-    // (undocumented)
-    rowIndex?: number;
-    // (undocumented)
-    sectionIndex: number;
-    // (undocumented)
-    type: "internal-width-resizer";
-}
-
-// @internal (undocumented)
-export function WithDrillSelect({ widgetRef, children, insight, returnFocusToInsight, onDrillStart, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onKeyDriverAnalysisSuccess, onError, }: WithDrillSelectProps): ReactElement;
-
-// @internal (undocumented)
-export interface WithDrillSelectProps {
-    // (undocumented)
-    children: (props: {
-        onDrill: OnWidgetDrill;
-    }) => ReactElement;
-    // (undocumented)
-    insight: IInsight;
-    // (undocumented)
-    onDrillDownSuccess?: OnDrillDownSuccess;
-    // (undocumented)
-    onDrillStart?: OnDashboardDrill;
-    // (undocumented)
-    onDrillToAttributeUrlSuccess?: OnDrillToAttributeUrlSuccess;
-    // (undocumented)
-    onDrillToCustomUrlSuccess?: OnDrillToCustomUrlSuccess;
-    // (undocumented)
-    onDrillToDashboardSuccess?: OnDrillToDashboardSuccess;
-    // (undocumented)
-    onDrillToInsightSuccess?: OnDrillToInsightSuccess;
-    // (undocumented)
-    onError?: (error: any) => void;
-    // (undocumented)
-    onKeyDriverAnalysisSuccess?: OnKeyDriverAnalysisSuccess;
-    // (undocumented)
-    returnFocusToInsight?: (force?: boolean) => void;
-    // (undocumented)
-    visualizationId?: string;
-    // (undocumented)
-    widgetRef: ObjRef;
-}
+export function WithDrillSelect({ widgetRef, children, insight, returnFocusToInsight, onDrillStart, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onKeyDriverAnalysisSuccess, onError, }: IWithDrillSelectProps): ReactElement;
 
 // @alpha
 export type WorkingDashboardAttributeFilter = {

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -23,7 +23,7 @@ import {
  *
  * @alpha
  */
-export interface ObjRefMapConfig<T> {
+export interface IObjRefMapConfig<T> {
     /**
      * Function that extracts `ref` from object
      */
@@ -87,7 +87,7 @@ export class ObjRefMap<T> {
     private itemsByIdentifier: Record<Identifier, T> = {};
     private itemsByUri: Record<string, T> = {};
 
-    constructor(private readonly config: ObjRefMapConfig<T>) {}
+    constructor(private readonly config: IObjRefMapConfig<T>) {}
 
     private idRefToKey = (identifier: string, type?: ObjectType): string => {
         return !this.config.strictTypeCheck || !type ? identifier : `${identifier}#${type}`;

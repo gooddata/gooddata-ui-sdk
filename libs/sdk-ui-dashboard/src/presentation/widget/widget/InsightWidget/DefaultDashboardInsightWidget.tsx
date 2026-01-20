@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -14,6 +14,8 @@ import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useInsightMenu } from "./useInsightMenu.js";
 import {
+    selectCatalogAttributes,
+    selectPreloadedAttributesWithReferences,
     selectRenderMode,
     selectSettings,
     useDashboardAlerts,
@@ -30,6 +32,7 @@ import {
 import { useInsightExport } from "../../common/index.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
+import { getGeoDefaultDisplayFormRefs } from "../../insight/geoDefaultDisplayFormRefs.js";
 import { DashboardInsight } from "../../insight/index.js";
 import {
     canConvertToTable,
@@ -58,6 +61,8 @@ function DefaultDashboardInsightWidgetCore({
 }: IDefaultDashboardInsightWidgetProps & { insight?: IInsight }) {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const preloadedAttributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
     const renderMode = useDashboardSelector(selectRenderMode);
     const isExportMode = renderMode === "export";
     const isAccessibilityMode = settings.enableAccessibilityMode === true;
@@ -209,8 +214,21 @@ function DefaultDashboardInsightWidgetCore({
         if (!canConvertToTable(visType) && visType !== "table" && visType !== "repeater") {
             return null;
         }
-        return convertInsightToTableDefinition(insight);
-    }, [isExportMode, insight, isAccessibilityMode]);
+        const defaultDisplayFormRefs = getGeoDefaultDisplayFormRefs(
+            insight,
+            settings,
+            catalogAttributes,
+            preloadedAttributesWithReferences,
+        );
+        return convertInsightToTableDefinition(insight, { settings, defaultDisplayFormRefs });
+    }, [
+        isExportMode,
+        insight,
+        isAccessibilityMode,
+        settings,
+        catalogAttributes,
+        preloadedAttributesWithReferences,
+    ]);
 
     return (
         <>

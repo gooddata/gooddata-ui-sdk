@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -102,19 +102,19 @@ export function DefaultScheduledEmailManagementDialogContentBasic({
                 <div className="gd-notifications-channels-content">
                     <div className="gd-notifications-channels-content-header">
                         <Typography tagName="h3">
-                            {intl.formatMessage({ id: messages.scheduleManagementListTitle.id! })}
+                            {intl.formatMessage({ id: messages.scheduleManagementListTitle.id })}
                         </Typography>
                         {canCreateAutomation ? (
                             <AddButton
                                 onClick={onAdd}
                                 isDisabled={isAddButtonDisabled}
-                                title={<FormattedMessage id={messages.scheduleManagementCreate.id!} />}
+                                title={<FormattedMessage id={messages.scheduleManagementCreate.id} />}
                                 tooltip={
                                     maxAutomationsReached ? (
-                                        <FormattedMessage id={messages.scheduleManagementCreateTooMany.id!} />
+                                        <FormattedMessage id={messages.scheduleManagementCreateTooMany.id} />
                                     ) : isExecutionTimestampMode ? (
                                         <FormattedMessage
-                                            id={messages.scheduleManagementExecutionTimestampMode.id!}
+                                            id={messages.scheduleManagementExecutionTimestampMode.id}
                                         />
                                     ) : undefined
                                 }
@@ -127,7 +127,7 @@ export function DefaultScheduledEmailManagementDialogContentBasic({
                         isLoading={isLoadingScheduleData}
                         scheduledEmails={automations}
                         currentUserEmail={currentUser?.email}
-                        noSchedulesMessageId={messages.scheduleManagementNoSchedules.id!}
+                        noSchedulesMessageId={messages.scheduleManagementNoSchedules.id}
                         notificationChannels={notificationChannels}
                     />
                 </div>

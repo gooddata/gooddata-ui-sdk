@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty } from "lodash-es";
 
@@ -137,12 +137,11 @@ export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string 
  *
  * @public
  */
-export interface ExtendedDashboardLayoutWidget
-    extends IDashboardLayout<ExtendedDashboardWidget>,
-        IBaseWidget,
-        IDashboardObjectIdentity {
-    type: "IDashboardLayout";
-}
+export type ExtendedDashboardLayoutWidget = IDashboardLayout<ExtendedDashboardWidget> &
+    IBaseWidget &
+    IDashboardObjectIdentity & {
+        type: "IDashboardLayout";
+    };
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ExtendedDashboardLayoutWidget}.

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type CSSProperties, useEffect } from "react";
 
@@ -8,10 +8,10 @@ import cx from "classnames";
 import { applySizeLimitation } from "./sizeLimiting.js";
 import { type DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { useResizeHandlers } from "../../../dragAndDrop/index.js";
-import { type WidthResizerDragItem } from "../../../dragAndDrop/types.js";
+import { type IWidthResizerDragItem } from "../../../dragAndDrop/types.js";
 import { WidthResizer } from "../Resize/WidthResizer.js";
 
-export type WidthResizerDragPreviewProps = DragResizeProps<WidthResizerDragItem>;
+export type WidthResizerDragPreviewProps = DragResizeProps<IWidthResizerDragItem>;
 
 export function WidthResizerDragPreview({
     item,
@@ -72,7 +72,7 @@ export function WidthResizerDragPreview({
 }
 
 export function getSizeAndXCoords(
-    item: WidthResizerDragItem,
+    item: IWidthResizerDragItem,
     initialSourceClientOffsetX: number,
     differenceFromInitialOffsetX: number,
     scrollCorrectionX: number,

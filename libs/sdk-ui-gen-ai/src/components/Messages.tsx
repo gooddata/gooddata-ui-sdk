@@ -1,5 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
+import cx from "classnames";
 import { useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
 import { connect } from "react-redux";
@@ -9,6 +10,7 @@ import { useCustomization } from "./CustomizationProvider.js";
 import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { useMessageScroller } from "./messages/MessageScroller.js";
 import { type RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
+import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
 type MessagesComponentProps = {
     messages: ReturnType<typeof messagesSelector>;
@@ -19,12 +21,22 @@ type MessagesComponentProps = {
 function MessagesComponent({ messages, loading, initializing }: MessagesComponentProps) {
     const { scrollerRef } = useMessageScroller(messages);
     const { LandingScreenComponent } = useCustomization();
+    const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
     const intl = useIntl();
+
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
     const isEmpty = !messages.length && !isLoading;
 
     return (
-        <div className="gd-gen-ai-chat__messages" ref={scrollerRef}>
+        <div
+            className={cx("gd-gen-ai-chat__messages", {
+                "gd-gen-ai-chat__messages--fullscreen": isFullscreen,
+                "gd-gen-ai-chat__messages--big-screen": isBigScreen,
+                "gd-gen-ai-chat__messages--small-screen": isSmallScreen,
+                "gd-gen-ai-chat__messages--empty": isEmpty,
+            })}
+            ref={scrollerRef}
+        >
             <div
                 className="gd-gen-ai-chat__messages__scroll"
                 role="log"

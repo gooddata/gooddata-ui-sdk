@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MutableRefObject, useMemo } from "react";
 
@@ -92,6 +92,9 @@ export function DestinationSelect({
                             buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
                             isOpen={isOpen}
+                            accessibilityConfig={{
+                                popupType: "listbox",
+                            }}
                         />
                     )}
                     renderBody={({ closeDropdown, ariaAttributes }) => {

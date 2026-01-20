@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -7,7 +7,7 @@ import { type ObjRef } from "@gooddata/sdk-model";
 /**
  * @beta
  */
-export interface WidgetHeader {
+export interface IWidgetHeader {
     /**
      * Title to set. If not defined then widget will have no title.
      */
@@ -17,7 +17,7 @@ export interface WidgetHeader {
 /**
  * @beta
  */
-export interface WidgetDescription {
+export interface IWidgetDescription {
     /**
      * Description to set. If not defined then widget will have no description.
      */
@@ -27,8 +27,8 @@ export interface WidgetDescription {
 /**
  * @internal
  */
-export function isWidgetHeader(obj: unknown): obj is WidgetHeader {
-    return !isEmpty(obj) && (obj as WidgetHeader).title !== undefined;
+export function isWidgetHeader(obj: unknown): obj is IWidgetHeader {
+    return !isEmpty(obj) && (obj as IWidgetHeader).title !== undefined;
 }
 
 /**
@@ -47,7 +47,7 @@ export type FilterOperations =
 /**
  * @beta
  */
-export interface FilterOp {
+export interface IFilterOp {
     readonly type: FilterOperations;
 }
 
@@ -59,7 +59,7 @@ export interface FilterOp {
  *
  * @beta
  */
-export interface FilterOpEnableDateFilter extends FilterOp {
+export interface IFilterOpEnableDateFilter extends IFilterOp {
     type: "enableDateFilter";
 
     /**
@@ -74,7 +74,7 @@ export interface FilterOpEnableDateFilter extends FilterOp {
  *
  * @beta
  */
-export interface FilterOpDisableDateFilter extends FilterOp {
+export interface IFilterOpDisableDateFilter extends IFilterOp {
     type: "disableDateFilter";
 }
 
@@ -84,7 +84,7 @@ export interface FilterOpDisableDateFilter extends FilterOp {
  *
  * @beta
  */
-export interface FilterOpReplaceAttributeIgnores extends FilterOp {
+export interface IFilterOpReplaceAttributeIgnores extends IFilterOp {
     type: "replaceAttributeIgnores";
 
     /**
@@ -101,7 +101,7 @@ export interface FilterOpReplaceAttributeIgnores extends FilterOp {
  *
  * @beta
  */
-export interface FilterOpIgnoreAttributeFilter extends FilterOp {
+export interface IFilterOpIgnoreAttributeFilter extends IFilterOp {
     type: "ignoreAttributeFilter";
 
     /**
@@ -119,7 +119,7 @@ export interface FilterOpIgnoreAttributeFilter extends FilterOp {
  *
  * @beta
  */
-export interface FilterOpUnignoreAttributeFilter extends FilterOp {
+export interface IFilterOpUnignoreAttributeFilter extends IFilterOp {
     type: "unignoreAttributeFilter";
 
     /**
@@ -139,7 +139,7 @@ export interface FilterOpUnignoreAttributeFilter extends FilterOp {
  *
  * @beta
  */
-export interface FilterOpReplaceAll extends FilterOp {
+export interface IFilterOpReplaceAll extends IFilterOp {
     type: "replace";
 
     /**
@@ -169,7 +169,7 @@ export interface FilterOpReplaceAll extends FilterOp {
  *
  * @beta
  */
-export interface FilterOpIgnoreDateFilter extends FilterOp {
+export interface IFilterOpIgnoreDateFilter extends IFilterOp {
     type: "ignoreDateFilter";
 
     /**
@@ -187,7 +187,7 @@ export interface FilterOpIgnoreDateFilter extends FilterOp {
  *
  * @beta
  */
-export interface FilterOpUnignoreDateFilter extends FilterOp {
+export interface IFilterOpUnignoreDateFilter extends IFilterOp {
     type: "unignoreDateFilter";
 
     /**
@@ -206,12 +206,12 @@ export interface FilterOpUnignoreDateFilter extends FilterOp {
  *
  * @beta
  */
-export type WidgetFilterOperation =
-    | FilterOpEnableDateFilter
-    | FilterOpDisableDateFilter
-    | FilterOpReplaceAttributeIgnores
-    | FilterOpIgnoreAttributeFilter
-    | FilterOpUnignoreAttributeFilter
-    | FilterOpIgnoreDateFilter
-    | FilterOpUnignoreDateFilter
-    | FilterOpReplaceAll;
+export type IWidgetFilterOperation =
+    | IFilterOpEnableDateFilter
+    | IFilterOpDisableDateFilter
+    | IFilterOpReplaceAttributeIgnores
+    | IFilterOpIgnoreAttributeFilter
+    | IFilterOpUnignoreAttributeFilter
+    | IFilterOpIgnoreDateFilter
+    | IFilterOpUnignoreDateFilter
+    | IFilterOpReplaceAll;

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -29,10 +29,10 @@ import {
 } from "../../../_staging/layout/coordinates.js";
 import { determineWidthForScreen, getMinWidth } from "../../../_staging/layout/sizing.js";
 import { type ILayoutItemPath } from "../../../types.js";
-import { type ResizeWidth } from "../../commands/layout.js";
+import { type IResizeWidth } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    type DashboardLayoutSectionItemWidthResized,
+    type IDashboardLayoutSectionItemWidthResized,
     layoutSectionItemWidthResized,
 } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
@@ -45,7 +45,7 @@ import { type ExtendedDashboardWidget, type IItemWithWidth } from "../../types/l
 function validateLayoutIndexes(
     ctx: DashboardContext,
     layout: ReturnType<typeof selectLayout>,
-    command: ResizeWidth,
+    command: IResizeWidth,
 ) {
     const {
         payload: { itemPath, sectionIndex, itemIndex },
@@ -150,8 +150,8 @@ function findItemsWithChangedWidth(
 
 export function* resizeWidthHandler(
     ctx: DashboardContext,
-    cmd: ResizeWidth,
-): SagaIterator<DashboardLayoutSectionItemWidthResized> {
+    cmd: IResizeWidth,
+): SagaIterator<IDashboardLayoutSectionItemWidthResized> {
     const {
         payload: { itemPath, sectionIndex, itemIndex, width },
     } = cmd;
@@ -190,7 +190,7 @@ function validateWidth(
     ctx: DashboardContext,
     layout: ReturnType<typeof selectLayout>,
     insightsMap: ReturnType<typeof selectInsightsMap>,
-    cmd: ResizeWidth,
+    cmd: IResizeWidth,
     settings: ReturnType<typeof selectSettings>,
     screen: ReturnType<typeof selectScreen> = "xl",
 ) {

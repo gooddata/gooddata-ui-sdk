@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -83,7 +83,7 @@ export const useParentFilters = (
             return undefined;
         }
 
-        return (_parentFilter: IAttributeFilter, index: number): ObjRef => parentFiltersData[index].over!;
+        return (_parentFilter: IAttributeFilter, index: number): ObjRef => parentFiltersData[index].over;
     }, [parentFiltersData, supportsSettingConnectingAttributes]);
 
     return {

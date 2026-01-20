@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact, difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -7,7 +7,7 @@ import { call, put, select } from "redux-saga/effects";
 
 import { areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
 
-import { type RemoveAttributeFilters } from "../../../commands/filters.js";
+import { type IRemoveAttributeFilters } from "../../../commands/filters.js";
 import { attributeFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -20,7 +20,7 @@ import { dispatchFilterContextChanged } from "../common.js";
 
 export function* removeAttributeFiltersHandler(
     ctx: DashboardContext,
-    cmd: RemoveAttributeFilters,
+    cmd: IRemoveAttributeFilters,
 ): SagaIterator<void> {
     const { filterLocalIds } = cmd.payload;
 
@@ -95,7 +95,7 @@ export function* removeAttributeFiltersHandler(
 
         yield put(batch);
         yield dispatchDashboardEvent(
-            attributeFilterRemoved(ctx, removedFilter!, affectedChildren, cmd.correlationId),
+            attributeFilterRemoved(ctx, removedFilter, affectedChildren, cmd.correlationId),
         );
     }
 

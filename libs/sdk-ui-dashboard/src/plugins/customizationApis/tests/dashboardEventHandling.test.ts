@@ -54,7 +54,7 @@ describe("dashboard event handling", () => {
         it("should not do anything if trying to remove non-existing handler", () => {
             const handler = vi.fn();
 
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
                 "warn",
                 suppressConsoleCallback("removeNonExistingHandler"),
@@ -82,7 +82,7 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
                 "warn",
                 suppressConsoleCallback("doubleRegistrationSameHandler"),
@@ -118,7 +118,7 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.removeCustomEventHandler(eventHandler),
                 "warn",
                 suppressConsoleCallback("removeNonExistingHandler"),
@@ -133,7 +133,7 @@ describe("dashboard event handling", () => {
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.addCustomEventHandler(eventHandler),
                 "warn",
                 suppressConsoleCallback("doubleRegistrationSameHandler"),
@@ -201,7 +201,7 @@ describe("dashboard event handling", () => {
         it("should not do anything if trying to remove non-existing handler", () => {
             const handler = vi.fn();
 
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.removeEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
                 "warn",
                 suppressConsoleCallback("removeNonExistingHandler"),
@@ -223,7 +223,7 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
 
             Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler);
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.addEventHandler("GDC.DASH/EVT.INITIALIZED", handler),
                 "warn",
                 suppressConsoleCallback("doubleRegistrationSameHandler"),
@@ -256,7 +256,7 @@ describe("dashboard event handling", () => {
             const handler = vi.fn();
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.removeCustomEventHandler(eventHandler),
                 "warn",
                 suppressConsoleCallback("removeNonExistingHandler"),
@@ -269,7 +269,7 @@ describe("dashboard event handling", () => {
             const eventHandler = singleEventTypeHandler("GDC.DASH/EVT.INITIALIZED", handler);
 
             Facade.addCustomEventHandler(eventHandler);
-            suppressConsole(
+            void suppressConsole(
                 () => Facade.addCustomEventHandler(eventHandler),
                 "warn",
                 suppressConsoleCallback("doubleRegistrationSameHandler"),

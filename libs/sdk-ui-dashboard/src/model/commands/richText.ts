@@ -1,15 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { type IDashboardCommand } from "./base.js";
-import { type WidgetFilterOperation } from "../types/widgetTypes.js";
+import { type IWidgetFilterOperation } from "../types/widgetTypes.js";
 
 /**
- * Payload of the {@link ChangeRichTextWidgetContent} command.
+ * Payload of the {@link IChangeRichTextWidgetContent} command.
  * @beta
  */
-export interface ChangeRichTextWidgetContentPayload {
+export interface IChangeRichTextWidgetContentPayload {
     /**
      * Rich text widget reference whose content to change.
      */
@@ -24,14 +24,14 @@ export interface ChangeRichTextWidgetContentPayload {
 /**
  * @beta
  */
-export interface ChangeRichTextWidgetContent extends IDashboardCommand {
+export interface IChangeRichTextWidgetContent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT";
-    readonly payload: ChangeRichTextWidgetContentPayload;
+    readonly payload: IChangeRichTextWidgetContentPayload;
 }
 
 /**
  * Creates the ChangeRichTextWidgetContent command. Dispatching this command will result in change of the rich text widget's
- * markdown content.
+ * Markdown content.
  *
  * @param ref - reference of the rich text widget to modify
  * @param content - updated content
@@ -44,7 +44,7 @@ export function changeRichTextWidgetContent(
     ref: ObjRef,
     content: string,
     correlationId?: string,
-): ChangeRichTextWidgetContent {
+): IChangeRichTextWidgetContent {
     return {
         type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT",
         correlationId,
@@ -60,10 +60,10 @@ export function changeRichTextWidgetContent(
 //
 
 /**
- * Payload of the {@link ChangeRichTextWidgetFilterSettings} command.
+ * Payload of the {@link IChangeRichTextWidgetFilterSettings} command.
  * @beta
  */
-export interface ChangeRichTextWidgetFilterSettingsPayload {
+export interface IChangeRichTextWidgetFilterSettingsPayload {
     /**
      * Reference to RichText Widget whose filter settings to change.
      */
@@ -72,19 +72,19 @@ export interface ChangeRichTextWidgetFilterSettingsPayload {
     /**
      * Filter operation to apply.
      */
-    readonly operation: WidgetFilterOperation;
+    readonly operation: IWidgetFilterOperation;
 }
 
 /**
  * @beta
  */
-export interface ChangeRichTextWidgetFilterSettings extends IDashboardCommand {
+export interface IChangeRichTextWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS";
-    readonly payload: ChangeRichTextWidgetFilterSettingsPayload;
+    readonly payload: IChangeRichTextWidgetFilterSettingsPayload;
 }
 
 /**
- * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpEnableDateFilter} operation.
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpEnableDateFilter} operation.
  *
  * Dispatching this command will result in change of RichText widget's date filter setting. The date filtering will
  * be enabled and the provided date data set will be used for date-filtering widget's RichText.
@@ -100,7 +100,7 @@ export function enableRichTextWidgetDateFilter(
     ref: ObjRef,
     dateDataset: ObjRef | "default",
     correlationId?: string,
-): ChangeRichTextWidgetFilterSettings {
+): IChangeRichTextWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -115,7 +115,7 @@ export function enableRichTextWidgetDateFilter(
 }
 
 /**
- * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpDisableDateFilter} operation.
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpDisableDateFilter} operation.
  *
  * Dispatching this command will result in change of Rich Text widget's date filter setting. The date filtering will
  * be disabled.
@@ -129,7 +129,7 @@ export function enableRichTextWidgetDateFilter(
 export function disableRichTextWidgetDateFilter(
     ref: ObjRef,
     correlationId?: string,
-): ChangeRichTextWidgetFilterSettings {
+): IChangeRichTextWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -143,7 +143,7 @@ export function disableRichTextWidgetDateFilter(
 }
 
 /**
- * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpIgnoreDateFilter} operation.
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpIgnoreDateFilter} operation.
  *
  * Dispatching this command will result in addition of one or more filters into Rich Text widget's date filter ignore-list.
  * Ignored date filters are not passed down to the metrics resolved in rich text references.
@@ -161,7 +161,7 @@ export function ignoreDateFilterOnRichTextWidget(
     ref: ObjRef,
     oneOrMoreDataSets: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeRichTextWidgetFilterSettings {
+): IChangeRichTextWidgetFilterSettings {
     const dateDataSetRefs = Array.isArray(oneOrMoreDataSets) ? oneOrMoreDataSets : [oneOrMoreDataSets];
 
     return {
@@ -178,7 +178,7 @@ export function ignoreDateFilterOnRichTextWidget(
 }
 
 /**
- * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpUnignoreDateFilter} operation.
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpUnignoreDateFilter} operation.
  *
  * Dispatching this command will result in removal of one or more filters from Rich Text widget's date filter ignore-list.
  * Ignored date filters are not passed down to the metrics resolved in rich text references.
@@ -196,7 +196,7 @@ export function unignoreDateFilterOnRichTextWidget(
     ref: ObjRef,
     oneOrMoreDataSets: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeRichTextWidgetFilterSettings {
+): IChangeRichTextWidgetFilterSettings {
     const dateDataSetRefs = Array.isArray(oneOrMoreDataSets) ? oneOrMoreDataSets : [oneOrMoreDataSets];
 
     return {
@@ -213,7 +213,7 @@ export function unignoreDateFilterOnRichTextWidget(
 }
 
 /**
- * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpIgnoreAttributeFilter} operation.
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpIgnoreAttributeFilter} operation.
  *
  * Dispatching this command will result in addition of one or more filters into Rich Text widget's attribute filter ignore-list.
  * Those attribute filters that use the provided displayForms for filtering will be ignored by the widget on top of any
@@ -234,7 +234,7 @@ export function ignoreFilterOnRichTextWidget(
     ref: ObjRef,
     oneOrMoreDisplayForms: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeRichTextWidgetFilterSettings {
+): IChangeRichTextWidgetFilterSettings {
     const displayFormRefs = Array.isArray(oneOrMoreDisplayForms)
         ? oneOrMoreDisplayForms
         : [oneOrMoreDisplayForms];
@@ -253,7 +253,7 @@ export function ignoreFilterOnRichTextWidget(
 }
 
 /**
- * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpUnignoreAttributeFilter} operation.
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpUnignoreAttributeFilter} operation.
  *
  * Dispatching this command will result in removal of one or more filters from Rich Text widget's attribute filter ignore-list.
  * Ignored attribute filters are not passed down to the metrics and will not be used to filter those metrics.
@@ -271,7 +271,7 @@ export function unignoreFilterOnRichTextWidget(
     ref: ObjRef,
     oneOrMoreDisplayForms: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeRichTextWidgetFilterSettings {
+): IChangeRichTextWidgetFilterSettings {
     const displayFormRefs = Array.isArray(oneOrMoreDisplayForms)
         ? oneOrMoreDisplayForms
         : [oneOrMoreDisplayForms];

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -50,7 +50,7 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
 
     const onDelete = useCallback(
         () =>
-            dispatchAndWaitFor(dispatch, deleteDashboard()).finally(() => {
+            void dispatchAndWaitFor(dispatch, deleteDashboard()).finally(() => {
                 dispatch(uiActions.closeDeleteDialog());
             }),
         [dispatch],

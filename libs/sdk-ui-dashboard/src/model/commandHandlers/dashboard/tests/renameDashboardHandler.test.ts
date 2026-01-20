@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { renameDashboard } from "../../../commands/index.js";
-import { type DashboardRenamed } from "../../../events/index.js";
+import { type IDashboardRenamed } from "../../../events/index.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -22,7 +23,7 @@ describe("rename dashboard handler", () => {
         });
 
         it("should allow to set empty title", async () => {
-            const event: DashboardRenamed = await Tester.dispatchAndWaitFor(
+            const event: IDashboardRenamed = await Tester.dispatchAndWaitFor(
                 renameDashboard(""),
                 "GDC.DASH/EVT.RENAMED",
             );
@@ -31,7 +32,7 @@ describe("rename dashboard handler", () => {
         });
 
         it("should allow to set title", async () => {
-            const event: DashboardRenamed = await Tester.dispatchAndWaitFor(
+            const event: IDashboardRenamed = await Tester.dispatchAndWaitFor(
                 renameDashboard(TestTitle),
                 "GDC.DASH/EVT.RENAMED",
             );
@@ -59,7 +60,7 @@ describe("rename dashboard handler", () => {
         });
 
         it("should set title in descriptor and keep persisted dashboard data untouched", async () => {
-            const event: DashboardRenamed = await Tester.dispatchAndWaitFor(
+            const event: IDashboardRenamed = await Tester.dispatchAndWaitFor(
                 renameDashboard(TestTitle),
                 "GDC.DASH/EVT.RENAMED",
             );

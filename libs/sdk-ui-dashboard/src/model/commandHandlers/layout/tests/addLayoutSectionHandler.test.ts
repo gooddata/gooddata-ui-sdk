@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -6,11 +6,11 @@ import { type IAnalyticalWidget, type IDashboard, idRef, uriRef } from "@gooddat
 
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
-import { type AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
+import { type IAddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardLayoutChanged,
-    type DashboardLayoutSectionAdded,
+    type IDashboardCommandFailed,
+    type IDashboardLayoutChanged,
+    type IDashboardLayoutSectionAdded,
 } from "../../../events/index.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
@@ -71,7 +71,7 @@ describe("add layout section handler", () => {
         });
 
         it("should add a new empty section at relative index 0", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -83,7 +83,7 @@ describe("add layout section handler", () => {
         });
 
         it("should add a new empty section at relative index -1", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -95,7 +95,7 @@ describe("add layout section handler", () => {
         });
 
         it("should add a new section and initialize its header", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0, { title: "My Section", description: "My Section Description" }),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -106,7 +106,7 @@ describe("add layout section handler", () => {
         });
 
         it("should add a new section and initialize its items", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0, undefined, [
                     TestKpiPlaceholderItem,
                     TestInsightPlaceholderItem,
@@ -137,7 +137,7 @@ describe("add layout section handler", () => {
         });
 
         it("should auto-resolve insight's date dataset when adding insight widget", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0, {}, [TestInsightItem], true, TestCorrelation),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -150,7 +150,7 @@ describe("add layout section handler", () => {
         it("should be undoable and revert to empty layout", async () => {
             await Tester.dispatchAndWaitFor(addLayoutSection(0), "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED");
 
-            const event: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -173,7 +173,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if bad section placement index is provided", async () => {
-            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(1, undefined, undefined, false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -183,7 +183,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if attempting to add item with non-existent insight", async () => {
-            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(
                     0,
                     {},
@@ -199,7 +199,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad date dataset setting", async () => {
-            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(
                     0,
                     {},
@@ -215,7 +215,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if attempting to add insight widget with bad filter ignore list", async () => {
-            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(
                     0,
                     {},
@@ -231,7 +231,7 @@ describe("add layout section handler", () => {
         });
 
         it("should fail if bad stash identifier is provided", async () => {
-            const event: DashboardCommandFailed<AddLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IAddLayoutSection> = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0, undefined, [TestStash], false, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -241,7 +241,7 @@ describe("add layout section handler", () => {
         });
 
         it("should correctly pass correlationId", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(
                     0,
                     undefined,
@@ -268,7 +268,7 @@ describe("add layout section handler", () => {
 
         it("should add new last section by using relative index -1", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(-1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -280,7 +280,7 @@ describe("add layout section handler", () => {
         });
 
         it("should add new first section by using index 0", async () => {
-            const event: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
                 addLayoutSection(0),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -319,7 +319,7 @@ describe("add layout section handler", () => {
             const updatedLayout = selectLayout(Tester.state());
             expect(originalLayout).not.toEqual(updatedLayout);
 
-            const event: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );

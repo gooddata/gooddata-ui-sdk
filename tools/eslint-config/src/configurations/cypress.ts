@@ -9,7 +9,7 @@ export const cypress: IConfiguration<"cypress"> = {
             version: "3.6.0",
         },
     ],
-    plugin: "cypress",
+    plugins: ["cypress"],
     extends: ["plugin:cypress/recommended"],
     rules: {
         //this will be nice to fixed

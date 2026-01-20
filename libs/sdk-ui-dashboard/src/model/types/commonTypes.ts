@@ -31,7 +31,7 @@ import { type IDashboardFilter, type IMenuButtonItemsVisibility, type RenderMode
  *
  * @public
  */
-export interface ObjectAvailabilityConfig {
+export type ObjectAvailabilityConfig = {
     /**
      * Specify tags to exclude objects by.
      *
@@ -45,11 +45,11 @@ export interface ObjectAvailabilityConfig {
      *
      * @remarks
      * This option does not make sense on its own - as all objects are
-     * included by default. However it can be used in conjunction with {@link ObjectAvailabilityConfig.excludeObjectsWithTags} - a wide
+     * included by default. However, it can be used in conjunction with {@link ObjectAvailabilityConfig.excludeObjectsWithTags} - a wide
      * range of objects may be excluded at first and then a subset will be cherry-picked using this prop.
      */
     includeObjectsWithTags?: string[];
-}
+};
 
 /**
  * Dashboard item
@@ -103,7 +103,7 @@ export function isDashboardItemVisualizationContent(
  *
  * @public
  */
-export interface DashboardConfig {
+export type DashboardConfig = {
     /**
      * Locale to use for the dashboard.
      */
@@ -214,8 +214,8 @@ export interface DashboardConfig {
      * Disables default dashboard drills.
      *
      * @remarks
-     * Drills configured and stored on the widgets, or implicit drills (eg. drill down).
-     * This property has no effect for drills enabled by drillableItems set by {@link ChangeDrillableItems} command.
+     * Drills configured and stored on the widgets, or implicit drills (e.g. drill down).
+     * This property has no effect for drills enabled by drillableItems set by {@link IChangeDrillableItems} command.
      *
      * Defaults to false.
      */
@@ -286,7 +286,7 @@ export interface DashboardConfig {
      * Identifier of the export
      *
      * @remarks
-     * This identifier is utilized only by those backend implementations which suport storing
+     * This identifier is utilized only by those backend implementations which support storing
      * export metadata with the export request and is typically used to store inlined filter context.
      * In the future, there's a possibility to store some additional export-related temporary metadata there.
      *
@@ -350,7 +350,7 @@ export interface DashboardConfig {
      *
      * @remarks Only provide one of the focus properties at a time.
      */
-    focusObject?: DashboardFocusObject;
+    focusObject?: IDashboardFocusObject;
 
     /**
      * @alpha
@@ -359,7 +359,7 @@ export interface DashboardConfig {
      * of the slide where visualization will be fit and rendered.
      *
      */
-    slideConfig?: DashboardExportSlideConfig;
+    slideConfig?: IDashboardExportSlideConfig;
 
     /**
      * @alpha
@@ -411,14 +411,14 @@ export interface DashboardConfig {
      * Customized recipient context for automations
      */
     externalRecipient?: string;
-}
+};
 
 /**
  * @alpha
  *
  * Specifies the size of the slide where visualization will be fit and rendered.
  */
-export interface DashboardExportSlideConfig {
+export interface IDashboardExportSlideConfig {
     /**
      * Preferred width of slide in export mode.
      */
@@ -434,7 +434,7 @@ export interface DashboardExportSlideConfig {
  *
  * Specifies the focus object for the dashboard.
  */
-export interface DashboardFocusObject {
+export interface IDashboardFocusObject {
     /**
      * @beta
      * If provided, the dashboard will be opened in the context of the given automation.
@@ -530,7 +530,7 @@ export function isResolvedConfig(config?: DashboardConfig): config is ResolvedDa
 /**
  * @public
  */
-export interface DashboardContext {
+export type DashboardContext = {
     /**
      * Analytical Backend where the dashboard exists.
      */
@@ -579,7 +579,7 @@ export interface DashboardContext {
      * It's required, if the backend implementation supports it and workspace is provisioned via LCM.
      */
     dataProductId?: string;
-}
+};
 
 /**
  * @internal
@@ -613,18 +613,18 @@ export type DashboardTransformFn = (
  */
 export type DashboardLayoutExportTransformFn = <TWidget>(
     layout: IDashboardLayout<TWidget>,
-    focusObject?: DashboardFocusObject,
+    focusObject?: IDashboardFocusObject,
 ) => IDashboardLayout<TWidget> | undefined;
 
 /**
  * @public
  */
-export interface DashboardModelCustomizationFns {
+export type DashboardModelCustomizationFns = {
     /**
      * Provide a function that will be used during dashboard initialization of an existing dashboard.
      *
      * @remarks
-     * This function will be called after the dashboard is loaded from backend and before it is dispatched for
+     * This function will be called after the dashboard is loaded from backend, and before it is dispatched for
      * cleanup, sanitization and storage in the Dashboard component state.
      *
      * -  If the function is not defined, results in an error or returns `undefined`, then the original
@@ -643,7 +643,7 @@ export interface DashboardModelCustomizationFns {
      *  dashboard export transformation will be used as-is.
      */
     existingExportTransformFn?: DashboardLayoutExportTransformFn;
-}
+};
 
 /**
  * @alpha

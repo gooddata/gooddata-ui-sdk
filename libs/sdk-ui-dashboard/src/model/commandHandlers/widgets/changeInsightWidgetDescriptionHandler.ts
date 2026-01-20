@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type ChangeInsightWidgetDescription } from "../../commands/index.js";
-import { type DashboardInsightWidgetDescriptionChanged } from "../../events/index.js";
+import { type IChangeInsightWidgetDescription } from "../../commands/index.js";
+import { type IDashboardInsightWidgetDescriptionChanged } from "../../events/index.js";
 import { insightWidgetDescriptionChanged } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -13,8 +13,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetDescriptionHandler(
     ctx: DashboardContext,
-    cmd: ChangeInsightWidgetDescription,
-): SagaIterator<DashboardInsightWidgetDescriptionChanged> {
+    cmd: IChangeInsightWidgetDescription,
+): SagaIterator<IDashboardInsightWidgetDescriptionChanged> {
     const {
         payload: { description },
         correlationId,

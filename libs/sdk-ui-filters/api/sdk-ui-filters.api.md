@@ -49,6 +49,7 @@ import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { PureComponent } from 'react';
 import { RangeConditionOperator } from '@gooddata/sdk-model';
+import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
@@ -290,7 +291,7 @@ export function filterFiscalGranularities(granularities: DateFilterGranularity[]
 export function filterFiscalPresets(presets: DateFilterRelativeOptionGroup): DateFilterRelativeOptionGroup;
 
 // @public
-export function FilterGroup(props: IFilterGroupProps): JSX.Element;
+export function FilterGroup<P>(props: IFilterGroupProps<P>): JSX.Element;
 
 // @internal
 export function filterStandardGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[];
@@ -306,6 +307,12 @@ export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean
 
 // @alpha
 export function getDefaultCalendarTab(activeCalendars?: IActiveCalendars, currentPreset?: DateFilterOption): CalendarTabType;
+
+// @internal
+export function getFilteredGranularities(granularities: DateFilterGranularity[] | undefined, config: IFiscalTabsConfig, selectedTab: CalendarTabType): DateFilterGranularity[];
+
+// @internal
+export function getFilteredPresets(presets: DateFilterRelativeOptionGroup | undefined, config: IFiscalTabsConfig, selectedTab: CalendarTabType): DateFilterRelativeOptionGroup | undefined;
 
 // @alpha
 export function getFiscalTabsConfig(presets: DateFilterRelativeOptionGroup | undefined, activeCalendars?: IActiveCalendars): IFiscalTabsConfig;
@@ -945,9 +952,15 @@ export interface IFilterConfigurationProps {
 }
 
 // @public (undocumented)
-export interface IFilterGroupProps {
+export interface IFilterGroupProps<P> {
     // (undocumented)
-    filters: IAttributeFilterButtonProps[];
+    filters: P[];
+    // (undocumented)
+    getFilterIdentifier: (filter: P) => string;
+    // (undocumented)
+    hasSelectedElements: (filter: P) => boolean;
+    // (undocumented)
+    renderFilter: (filter: P, AttributeFilterComponent?: ComponentType<IAttributeFilterProps>) => ReactElement;
     // (undocumented)
     title: string;
 }

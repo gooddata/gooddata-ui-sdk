@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type IAttributeDisplayFormMetadataObject,
     type IAttributeMetadataObject,
@@ -17,7 +18,7 @@ import { newInsight } from "../../_staging/insight/insightBuilder.js";
  *
  * @alpha
  */
-export interface QueryInsightDateDatasets extends IDashboardQuery {
+export interface IQueryInsightDateDatasets extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
     readonly payload: {
         readonly insightOrRef: ObjRef | IInsight;
@@ -37,7 +38,7 @@ export interface QueryInsightDateDatasets extends IDashboardQuery {
 export function queryDateDatasetsForInsight(
     insightOrRef: ObjRef | IInsight = newInsight("local:table"),
     correlationId?: string,
-): QueryInsightDateDatasets {
+): IQueryInsightDateDatasets {
     return {
         type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",
         correlationId,
@@ -63,7 +64,7 @@ export function queryDateDatasetsForInsight(
  *
  * @alpha
  */
-export interface InsightDateDatasets {
+export interface IInsightDateDatasets {
     /**
      * Date datasets that are available for filtering of the insight. The available datasets are obtained by inspecting
      * the LDM entities used in the insight and how they relate to date datasets in the workspace's logical data model.
@@ -86,7 +87,7 @@ export interface InsightDateDatasets {
     /**
      * Date datasets that the insight references in the attributes used to slice and dice the results.
      *
-     * The order of appearance matches the order in which display forms from the data sets appear in the {@link InsightAttributesMeta}'s
+     * The order of appearance matches the order in which display forms from the data sets appear in the {@link IInsightAttributesMeta}'s
      * `usage.inAttributes`. If some display form does not belong to a date dataset, then the element will be undefined.
      */
     readonly usedInAttributes: ReadonlyArray<ICatalogDateDataset | undefined>;
@@ -94,20 +95,20 @@ export interface InsightDateDatasets {
     /**
      * Date datasets that the insight references in the attribute filters.
      *
-     * The order of appearance matches the order in which attribute display forms used for filtering appear in the {@link InsightAttributesMeta}'s
+     * The order of appearance matches the order in which attribute display forms used for filtering appear in the {@link IInsightAttributesMeta}'s
      * `usage.inFilters`. If some display form does not belong to a date dataset, then the element will be undefined.
      */
     readonly usedInAttributeFilters: ReadonlyArray<ICatalogDateDataset | undefined>;
 
     /**
-     * Pin-points the 'most important' date dataset referenced by the insight itself. This may be undefined if the
+     * Pinpoints the 'most important' date dataset referenced by the insight itself. This may be undefined if the
      * insight does not use any date filtering or does not use any date attribute display form's to filter or slice or
      * dice the results.
      *
      * The importance is evaluated as follows:
      *
-     * 1.  Date datasets used directly in date filters have highest importance. Dataset from first-found filter will be used
-     * 2.  Date datasets that own the display forms used to slice or dice the insight's data have the second highest importance. Dataset from first-found attribute will be used.
+     * 1.  Date datasets used directly in date filters have the highest importance. Dataset from first-found filter will be used
+     * 2.  Date datasets that own the display forms used to slice or dice the insight's data have the second-highest importance. Dataset from first-found attribute will be used.
      * 3.  Date datasets that own the display forms used for attribute-filtering the insight have the least important. Dataset from first-found attribute filter will be used.
      */
     readonly mostImportantFromInsight: ICatalogDateDataset | undefined;
@@ -135,7 +136,7 @@ export interface InsightDateDatasets {
 export function insightSelectDateDataset({
     mostImportantFromInsight,
     dateDatasetsOrdered,
-}: InsightDateDatasets): ICatalogDateDataset | undefined {
+}: IInsightDateDatasets): ICatalogDateDataset | undefined {
     return mostImportantFromInsight ?? dateDatasetsOrdered[0];
 }
 
@@ -150,7 +151,7 @@ export function insightSelectDateDataset({
  *
  * @alpha
  */
-export interface QueryInsightAttributesMeta extends IDashboardQuery {
+export interface IQueryInsightAttributesMeta extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
     readonly payload: {
         readonly insightOrRef: ObjRef | IInsight;
@@ -160,7 +161,7 @@ export interface QueryInsightAttributesMeta extends IDashboardQuery {
 /**
  * @alpha
  */
-export interface InsightAttributesMeta {
+export interface IInsightAttributesMeta {
     /**
      * High-level break down of how different display forms are used in the insight.
      */
@@ -189,7 +190,7 @@ export interface InsightAttributesMeta {
 export function queryInsightAttributesMeta(
     insightOrRef: ObjRef | IInsight,
     correlationId?: string,
-): QueryInsightAttributesMeta {
+): IQueryInsightAttributesMeta {
     return {
         type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
         correlationId,

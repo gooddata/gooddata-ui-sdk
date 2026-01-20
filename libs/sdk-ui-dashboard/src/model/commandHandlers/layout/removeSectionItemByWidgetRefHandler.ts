@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -6,14 +6,14 @@ import { call, select } from "redux-saga/effects";
 import { objRefToString } from "@gooddata/sdk-model";
 
 import { removeSectionItemSaga } from "./removeSectionItemHandler.js";
-import { type RemoveSectionItemByWidgetRef } from "../../commands/layout.js";
+import { type IRemoveSectionItemByWidgetRef } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectWidgetPathByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* removeSectionItemByWidgetRefHandler(
     ctx: DashboardContext,
-    cmd: RemoveSectionItemByWidgetRef,
+    cmd: IRemoveSectionItemByWidgetRef,
 ): SagaIterator<void> {
     let widgetCoordinates: ReturnType<ReturnType<typeof selectWidgetPathByRef>>;
     try {

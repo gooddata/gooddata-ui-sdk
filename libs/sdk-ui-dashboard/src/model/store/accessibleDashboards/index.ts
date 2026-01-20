@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type EntityId,
     type EntityState,
@@ -14,7 +15,7 @@ import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityA
 /**
  * @alpha
  */
-export interface AccessibleDashboardsState extends EntityState<IListedDashboard, EntityId> {
+export interface IAccessibleDashboardsState extends EntityState<IListedDashboard, EntityId> {
     isLoaded: boolean;
 }
 
@@ -25,14 +26,14 @@ const accessibleDashboardsSlice = createSlice({
     }),
     reducers: {
         setAccessibleDashboards: (
-            state: AccessibleDashboardsState,
+            state: IAccessibleDashboardsState,
             action: PayloadAction<IListedDashboard[]>,
         ) => {
             accessibleDashboardsEntityAdapter.setAll(state, action.payload);
             state.isLoaded = true;
         },
         addAccessibleDashboard: (
-            state: AccessibleDashboardsState,
+            state: IAccessibleDashboardsState,
             action: PayloadAction<IListedDashboard>,
         ) => {
             accessibleDashboardsEntityAdapter.upsertOne(state, action.payload);
@@ -41,7 +42,7 @@ const accessibleDashboardsSlice = createSlice({
     },
 });
 
-export const accessibleDashboardsSliceReducer: Reducer<AccessibleDashboardsState> =
+export const accessibleDashboardsSliceReducer: Reducer<IAccessibleDashboardsState> =
     accessibleDashboardsSlice.reducer;
 
 // Spread "fixes" TS2742 error

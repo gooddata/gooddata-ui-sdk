@@ -695,6 +695,14 @@ export interface ISettings {
      */
     enablePivotTablePagination?: boolean;
 
+    /**
+     * Enable dashboard filter groups.
+     *
+     * Filter group are items in a filter bar which groups regular attribute filters into a logical groups.
+     * Groups are configured via dashboard metadata new tab property called filterGroupsConfig.
+     */
+    enableDashboardFilterGroups?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

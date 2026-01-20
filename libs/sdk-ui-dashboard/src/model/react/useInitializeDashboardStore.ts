@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useEffect, useRef, useState } from "react";
 
@@ -16,7 +16,7 @@ import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js
 import { InitialLoadCorrelationId, initializeDashboardWithPersistedDashboard } from "../commands/index.js";
 import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
-import { type ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
+import { type IReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { getWidgetsOfType } from "../store/tabs/layout/layoutUtils.js";
 import type { DashboardConfig } from "../types/commonTypes.js";
 
@@ -30,7 +30,7 @@ type InitProps = {
     initialEventHandlers: DashboardEventHandler[] | undefined;
 };
 
-function dispatchDeinitialized(dashboardStore: ReduxedDashboardStore | null, initProps: InitProps): void {
+function dispatchDeinitialized(dashboardStore: IReduxedDashboardStore | null, initProps: InitProps): void {
     const dashboardRef = isDashboard(initProps.dashboard) ? initProps.dashboard.ref : initProps.dashboard;
     dashboardStore?.store.dispatch(
         dashboardDeinitialized(
@@ -48,7 +48,7 @@ function dispatchDeinitialized(dashboardStore: ReduxedDashboardStore | null, ini
 }
 
 function useNotifyDeinitializedOnUnmount(
-    dashboardStore: ReduxedDashboardStore | null,
+    dashboardStore: IReduxedDashboardStore | null,
     initProps: InitProps,
 ): void {
     // we need to keep these in refs to be able to access them from the "componentDidUnmount" effect
@@ -88,14 +88,14 @@ function enrichConfig(
  */
 export const useInitializeDashboardStore = (
     props: IDashboardStoreProviderProps,
-): ReduxedDashboardStore | null => {
+): IReduxedDashboardStore | null => {
     const { dashboard, persistedDashboard, config } = props;
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspace(props.workspace);
     const mapboxToken = useMapboxToken(props.config?.mapboxToken);
     const agGridToken = useAgGridToken(props.config?.agGridToken);
     const { client: clientId, dataProduct: dataProductId } = useClientWorkspaceIdentifiers() ?? {};
-    const [dashboardStore, setDashboardStore] = useState<ReduxedDashboardStore | null>(null);
+    const [dashboardStore, setDashboardStore] = useState<IReduxedDashboardStore | null>(null);
     const dashboardRef = isDashboard(dashboard) ? dashboard.ref : dashboard;
     const currentInitProps: InitProps = {
         backend,

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -21,7 +22,7 @@ import {
 
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { invalidQueryArguments } from "../events/general.js";
-import { type InsightAttributesMeta, type QueryInsightAttributesMeta } from "../queries/index.js";
+import { type IInsightAttributesMeta, type IQueryInsightAttributesMeta } from "../queries/index.js";
 import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import {
     selectAllCatalogAttributesMap,
@@ -34,7 +35,7 @@ import { type DashboardContext } from "../types/commonTypes.js";
 export const QueryInsightAttributesMetaService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
     queryService,
-    (query: QueryInsightAttributesMeta) => {
+    (query: IQueryInsightAttributesMeta) => {
         const {
             payload: { insightOrRef },
         } = query;
@@ -49,8 +50,8 @@ export const QueryInsightAttributesMetaService = createCachedQueryService(
  * @internal
  */
 export type selectInsightAttributesMetaType = (
-    query: QueryInsightAttributesMeta,
-) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightAttributesMeta> | undefined;
+    query: IQueryInsightAttributesMeta,
+) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<IInsightAttributesMeta> | undefined;
 
 /**
  * Selector that will return attribute metadata for an insight. The input to the selector is the dashboard query that is used
@@ -60,7 +61,7 @@ export type selectInsightAttributesMetaType = (
  * processed. Otherwise will return object containing `status` of the data retrieval; if the `status` is
  * `'success'` then the `result` prop will contain the data.
  *
- * @remarks see {@link QueryInsightAttributesMeta}
+ * @remarks see {@link IQueryInsightAttributesMeta}
  * @internal
  */
 export const selectInsightAttributesMeta: selectInsightAttributesMetaType =
@@ -102,7 +103,7 @@ async function createInsightAttributesMeta(
     usage: InsightDisplayFormUsage,
     catalogDisplayForms: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     catalogAttributes: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
-): Promise<InsightAttributesMeta> {
+): Promise<IInsightAttributesMeta> {
     const allUsedRefs = [...usage.inAttributes, ...usage.inFilters, ...usage.inMeasureFilters];
     const displayFormsFromCatalog: IAttributeDisplayFormMetadataObject[] = [];
     const missingDisplayForms: ObjRef[] = [];
@@ -144,8 +145,8 @@ async function createInsightAttributesMeta(
 
 function* queryService(
     ctx: DashboardContext,
-    query: QueryInsightAttributesMeta,
-): SagaIterator<InsightAttributesMeta> {
+    query: IQueryInsightAttributesMeta,
+): SagaIterator<IInsightAttributesMeta> {
     const {
         correlationId,
         payload: { insightOrRef },

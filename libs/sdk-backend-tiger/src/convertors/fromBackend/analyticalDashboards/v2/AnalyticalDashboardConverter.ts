@@ -167,6 +167,7 @@ function convertDashboardTabContent(
         dateFilterConfig: cloneWithSanitizedIds(tab.dateFilterConfig),
         dateFilterConfigs: cloneWithSanitizedIds(tab.dateFilterConfigs),
         attributeFilterConfigs: cloneWithSanitizedIds(tab.attributeFilterConfigs),
+        filterGroupsConfig: cloneWithSanitizedIds(tab.filterGroupsConfig),
     };
 }
 

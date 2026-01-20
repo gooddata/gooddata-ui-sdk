@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -6,11 +6,11 @@ import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { ParameterDetail } from "./ParameterDetail.js";
 
-interface IdentifierDetailProps {
+interface IIdentifierDetailProps {
     title: string;
 }
 
-export function ProjectIdParameterDetail({ title }: IdentifierDetailProps) {
+export function ProjectIdParameterDetail({ title }: IIdentifierDetailProps) {
     const value = useWorkspaceStrict();
     const intl = useIntl();
 

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ObjRef } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
@@ -7,10 +8,10 @@ import { eventGuard } from "./util.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link DrillTargetsAdded} event.
+ * Payload of the {@link IDrillTargetsAdded} event.
  * @alpha
  */
-export interface DrillTargetsAddedPayload {
+export interface IDrillTargetsAddedPayload {
     /**
      * Reference to Insight Widget
      */
@@ -23,14 +24,15 @@ export interface DrillTargetsAddedPayload {
  *
  * @alpha
  */
-export interface DrillTargetsAdded extends IDashboardEvent {
+export interface IDrillTargetsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL_TARGETS.ADDED";
-    readonly payload: DrillTargetsAddedPayload;
+    readonly payload: IDrillTargetsAddedPayload;
 }
 
 /**
- * Create DrillTargetsAdded {@link DrillTargetsAdded} event.
+ * Create DrillTargetsAdded {@link IDrillTargetsAdded} event.
  *
+ * @param ctx -
  * @param ref - Unique widget ref
  * @param availableDrillTargets - Available widget drill targets {@link @gooddata/sdk-ui#IAvailableDrillTargets}
  * @param correlationId - correlationId
@@ -43,7 +45,7 @@ export function drillTargetsAdded(
     ref: ObjRef,
     availableDrillTargets: IAvailableDrillTargets,
     correlationId?: string,
-): DrillTargetsAdded {
+): IDrillTargetsAdded {
     return {
         type: "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
         ctx,
@@ -56,9 +58,9 @@ export function drillTargetsAdded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DrillTargetsAdded}.
+ * Tests whether the provided object is an instance of {@link IDrillTargetsAdded}.
  *
  * @param obj - object to test
  * @alpha
  */
-export const isDrillTargetsAdded = eventGuard<DrillTargetsAdded>("GDC.DASH/EVT.DRILL_TARGETS.ADDED");
+export const isDrillTargetsAdded = eventGuard<IDrillTargetsAdded>("GDC.DASH/EVT.DRILL_TARGETS.ADDED");

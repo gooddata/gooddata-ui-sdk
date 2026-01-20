@@ -8,7 +8,7 @@ export type {
 } from "./types.js";
 
 export { selectDashboardLoading, selectIsDashboardLoading } from "./loading/loadingSelectors.js";
-export type { LoadingState } from "./loading/loadingState.js";
+export type { ILoadingState } from "./loading/loadingState.js";
 export { selectDashboardSaving, selectIsDashboardSaving } from "./saving/savingSelectors.js";
 export type { SavingState } from "./saving/savingState.js";
 export type { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
@@ -113,8 +113,9 @@ export {
     selectEnableImplicitDrillToUrl,
     selectEnableFiscalCalendars,
     selectActiveCalendars,
+    selectEnableDashboardFilterGroups,
 } from "./config/configSelectors.js";
-export type { EntitlementsState } from "./entitlements/entitlementsState.js";
+export type { IEntitlementsState } from "./entitlements/entitlementsState.js";
 export {
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMaxAutomations,
@@ -247,7 +248,7 @@ export {
     selectIsAutomationDialogSecondaryTitleVisible,
 } from "./topBar/topBarSelectors.js";
 
-export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
+export type { IUndoEnhancedState, IUndoEntry } from "./_infra/undoEnhancer.js";
 
 export {
     selectLayout,
@@ -279,7 +280,7 @@ export {
     selectIgnoredDrillDownHierarchiesByWidgetRef,
     selectWidgetLocalIdToTabIdMap,
 } from "./tabs/layout/layoutSelectors.js";
-export type { DateFilterConfigState } from "./tabs/dateFilterConfig/dateFilterConfigState.js";
+export type { IDateFilterConfigState } from "./tabs/dateFilterConfig/dateFilterConfigState.js";
 
 export {
     selectDateFilterConfigOverrides,
@@ -303,14 +304,14 @@ export {
     selectAttributeFilterConfigsModeMapByTab,
 } from "./tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export { DEFAULT_TAB_ID } from "./tabs/tabsState.js";
-export type { TabsState, TabState } from "./tabs/tabsState.js";
-export type { DateFilterConfigsState } from "./tabs/dateFilterConfigs/dateFilterConfigsState.js";
-export type { AttributeFilterConfigsState } from "./tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";
-export type { LayoutState, LayoutStash } from "./tabs/layout/layoutState.js";
+export type { ITabsState, ITabState } from "./tabs/tabsState.js";
+export type { IDateFilterConfigsState } from "./tabs/dateFilterConfigs/dateFilterConfigsState.js";
+export type { IAttributeFilterConfigsState } from "./tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";
+export type { ILayoutState, LayoutStash } from "./tabs/layout/layoutState.js";
 export type { TabsReducer } from "./tabs/tabsReducers.js";
 export type { IItemWithHeight, IItemWithWidth } from "../types/layoutTypes.js";
 export type { IdentityMapping } from "../../_staging/dashboard/dashboardLayout.js";
-export type { UndoPayload } from "./_infra/undoEnhancer.js";
+export type { IUndoPayload } from "./_infra/undoEnhancer.js";
 export type {
     IAddAttributeFilterPayload,
     IRemoveAttributeFilterPayload,
@@ -342,6 +343,7 @@ export {
     selectTabById,
     selectHasTabs,
     tabsActions,
+    selectFilterGroupsConfig,
 } from "./tabs/index.js";
 export {
     selectDateFilterConfigsOverrides,
@@ -395,11 +397,11 @@ export {
     selectCrossFilteringSelectedPointsByWidgetRef,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "./drill/drillSelectors.js";
-export type { DrillState } from "./drill/drillState.js";
+export type { IDrillState } from "./drill/drillState.js";
 export type { ICrossFilteringItem } from "./drill/types.js";
 export type { UserState } from "./user/userState.js";
 export { selectCurrentUser, selectCurrentUserRef } from "./user/userSelectors.js";
-export type { DashboardMetaState, DashboardDescriptor } from "./meta/metaState.js";
+export type { IDashboardMetaState, DashboardDescriptor } from "./meta/metaState.js";
 export {
     selectDashboardRef,
     selectDashboardUriRef,
@@ -454,7 +456,7 @@ export {
     selectIsExecutionResultExportableToCsvRawByRef,
 } from "./executionResults/executionResultsSelectors.js";
 export type { IExecutionResultEnvelope } from "./executionResults/types.js";
-export type { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";
+export type { IUiState, IInvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -511,7 +513,7 @@ export {
     selectAutomationsInvalidationId,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
-export type { RenderModeState } from "./renderMode/renderModeState.js";
+export type { IRenderModeState } from "./renderMode/renderModeState.js";
 export {
     selectIsInEditMode,
     selectIsInExportMode,
@@ -542,8 +544,8 @@ export {
     selectNotificationChannelsWithoutInPlatform,
     selectNotificationChannelsCountWithoutInPlatform,
 } from "./notificationChannels/notificationChannelsSelectors.js";
-export type { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
-export type { AutomationsState } from "./automations/automationsState.js";
+export type { INotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
+export type { IAutomationsState } from "./automations/automationsState.js";
 export {
     selectAutomationsIsInitialized,
     selectAllAutomationsCount,
@@ -556,7 +558,7 @@ export {
     selectAutomationsError,
 } from "./automations/automationsSelectors.js";
 
-export type { UsersState } from "./users/usersState.js";
+export type { IUsersState } from "./users/usersState.js";
 export { selectUsers, selectErrorUsers, selectUsersLoadingStatus } from "./users/usersSelectors.js";
 
 export {
@@ -565,13 +567,13 @@ export {
     keyDriverAnalysisSupportedStringGranularities,
 } from "./keyDriverAnalysis/const.js";
 
-export type { IFilterViews, FilterViewsState } from "./filterViews/index.js";
+export type { IFilterViews, IFilterViewsState } from "./filterViews/index.js";
 export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";
 
-export type { ExecutedState } from "./executed/executedState.js";
+export type { IExecutedState } from "./executed/executedState.js";
 export { selectIsDashboardExecuted } from "./executed/executedSelectors.js";
 
-export type { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
+export type { IAccessibleDashboardsState } from "./accessibleDashboards/index.js";
 
-export type { ShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
+export type { IShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
 export { selectShowWidgetAsTable } from "./showWidgetAsTable/showWidgetAsTableSelectors.js";

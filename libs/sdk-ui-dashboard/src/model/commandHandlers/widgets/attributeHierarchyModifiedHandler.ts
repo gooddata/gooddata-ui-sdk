@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -6,9 +6,9 @@ import { call, put, select } from "redux-saga/effects";
 import { type IWorkspaceCatalog, type IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
 import { type DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
 
-import { type AttributeHierarchyModified } from "../../commands/index.js";
+import { type IAttributeHierarchyModified } from "../../commands/index.js";
 import {
-    type AttributeHierarchyModifiedEvent,
+    type IAttributeHierarchyModifiedEvent,
     attributeHierarchyModifiedEvent,
 } from "../../events/insight.js";
 import { catalogActions } from "../../store/catalog/index.js";
@@ -48,8 +48,8 @@ function loadCatalog(
 
 export function* attributeHierarchyModifiedHandler(
     ctx: DashboardContext,
-    cmd: AttributeHierarchyModified,
-): SagaIterator<AttributeHierarchyModifiedEvent> {
+    cmd: IAttributeHierarchyModified,
+): SagaIterator<IAttributeHierarchyModifiedEvent> {
     const { correlationId } = cmd;
 
     const availability: ReturnType<typeof selectObjectAvailabilityConfig> = yield select(

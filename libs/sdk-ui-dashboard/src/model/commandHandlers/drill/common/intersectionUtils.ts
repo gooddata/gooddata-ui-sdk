@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type IDashboardAttributeFilter,
@@ -72,7 +72,7 @@ export function removeIgnoredValuesFromDrillIntersection(
     intersection: IDrillEventIntersectionElement[],
     drillIntersectionIgnoredAttributes: string[],
 ): IDrillEventIntersectionElement[] {
-    return intersection!.filter((i) => {
+    return intersection.filter((i) => {
         if (isAttributeDescriptor(i.header) || isDrillIntersectionAttributeItem(i.header)) {
             return !drillIntersectionIgnoredAttributes?.includes(i.header.attributeHeader.localIdentifier);
         }

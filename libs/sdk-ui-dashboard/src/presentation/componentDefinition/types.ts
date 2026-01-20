@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type ComponentType } from "react";
 
 import {
@@ -46,7 +47,7 @@ import {
 /**
  * @internal
  */
-export interface CustomComponentBase<TMainProps, TProviderParams extends any[]> {
+export interface ICustomComponentBase<TMainProps, TProviderParams extends any[]> {
     /**
      * The main body of the component that is shown by default in view and edit modes.
      */
@@ -57,7 +58,7 @@ export interface CustomComponentBase<TMainProps, TProviderParams extends any[]> 
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface DraggingComponentProps {
+export interface IDraggingComponentProps {
     // TODO define when dragging will be implemented
 }
 
@@ -65,7 +66,7 @@ export interface DraggingComponentProps {
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface DropTargetComponentProps {
+export interface IDropTargetComponentProps {
     // TODO define when dragging will be implemented
 }
 
@@ -263,7 +264,7 @@ export type DropTarget = {
         /**
          * Component shown when item is dragged onto component.
          */
-        DropTargetComponent: ComponentType<DropTargetComponentProps>;
+        DropTargetComponent: ComponentType<IDropTargetComponentProps>;
     };
 };
 
@@ -323,12 +324,12 @@ export type CreatablePlaceholderComponent<TProps> = {
 /**
  * @internal
  */
-export type CustomWidgetConfigPanelComponent<TWidget> = ComponentType<WidgetConfigPanelProps<TWidget>>;
+export type CustomWidgetConfigPanelComponent<TWidget> = ComponentType<IWidgetConfigPanelProps<TWidget>>;
 
 /**
  * @internal
  */
-export interface WidgetConfigPanelProps<TWidget> {
+export interface IWidgetConfigPanelProps<TWidget> {
     widget: TWidget;
 }
 
@@ -349,7 +350,7 @@ export type ConfigurableWidget<TWidget> = {
  * Definition of attribute filter components
  * @internal
  */
-export type AttributeFilterComponentSet = CustomComponentBase<
+export type AttributeFilterComponentSet = ICustomComponentBase<
     IDashboardAttributeFilterProps,
     Parameters<AttributeFilterComponentProvider>
 > &
@@ -361,7 +362,7 @@ export type AttributeFilterComponentSet = CustomComponentBase<
  * Definition of date filter components
  * @internal
  */
-export type DateFilterComponentSet = CustomComponentBase<
+export type DateFilterComponentSet = ICustomComponentBase<
     IDashboardDateFilterProps,
     Parameters<DateFilterComponentProvider>
 > &
@@ -373,7 +374,7 @@ export type DateFilterComponentSet = CustomComponentBase<
  * Definition of Insight widget
  * @internal
  */
-export type InsightWidgetComponentSet = CustomComponentBase<
+export type InsightWidgetComponentSet = ICustomComponentBase<
     IDashboardInsightProps,
     Parameters<InsightComponentProvider>
 > &
@@ -386,7 +387,7 @@ export type InsightWidgetComponentSet = CustomComponentBase<
  * Definition of RichText widget
  * @internal
  */
-export type RichTextWidgetComponentSet = CustomComponentBase<
+export type RichTextWidgetComponentSet = ICustomComponentBase<
     IDashboardRichTextProps,
     Parameters<RichTextComponentProvider>
 > &
@@ -399,7 +400,7 @@ export type RichTextWidgetComponentSet = CustomComponentBase<
  * Definition of VisualizationSwitcher widget
  * @internal
  */
-export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<
+export type VisualizationSwitcherWidgetComponentSet = ICustomComponentBase<
     IDashboardVisualizationSwitcherProps,
     Parameters<VisualizationSwitcherComponentProvider>
 > &
@@ -412,7 +413,7 @@ export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<
  * Definition of Dashboard layout widget
  * @internal
  */
-export type DashboardLayoutWidgetComponentSet = CustomComponentBase<
+export type DashboardLayoutWidgetComponentSet = ICustomComponentBase<
     IDashboardNestedLayoutProps,
     Parameters<DashboardLayoutComponentProvider>
 > &
@@ -425,7 +426,7 @@ export type DashboardLayoutWidgetComponentSet = CustomComponentBase<
  * Definition of widget
  * @internal
  */
-export type CustomWidgetComponentSet = CustomComponentBase<
+export type CustomWidgetComponentSet = ICustomComponentBase<
     IDashboardWidgetProps,
     Parameters<WidgetComponentProvider>
 > &

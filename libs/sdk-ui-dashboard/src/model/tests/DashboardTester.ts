@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 
@@ -13,7 +13,7 @@ import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { type Identifier, type ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
 
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
-import { type RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
+import { type IRenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
 import {
     type DashboardCommandType,
     type InitializeDashboard,
@@ -26,20 +26,20 @@ import {
     isDashboardQueryCompleted,
     isDashboardQueryStarted,
 } from "../events/index.js";
-import { HeadlessDashboard, type HeadlessDashboardConfig } from "../headlessDashboard/index.js";
+import { HeadlessDashboard, type IHeadlessDashboardConfig } from "../headlessDashboard/index.js";
 import { type IDashboardQueryService } from "../store/_infra/queryService.js";
 import { type DashboardState } from "../store/index.js";
 import { type DashboardContext, type DashboardModelCustomizationFns } from "../types/commonTypes.js";
 
 type DashboardTesterConfig = {
     queryServices?: IDashboardQueryService<any, any>[];
-    renderingWorkerConfig?: RenderingWorkerConfiguration;
+    renderingWorkerConfig?: IRenderingWorkerConfiguration;
     customizationFns?: DashboardModelCustomizationFns;
 };
 
 export class DashboardTester extends HeadlessDashboard {
     protected constructor(ctx: DashboardContext, config?: DashboardTesterConfig) {
-        const headlessDahboardConfig: HeadlessDashboardConfig = {
+        const headlessDahboardConfig: IHeadlessDashboardConfig = {
             queryServices: config?.queryServices,
             backgroundWorkers: [newRenderingWorker(config?.renderingWorkerConfig || {})],
             customizationFns: config?.customizationFns,
@@ -136,6 +136,7 @@ export class DashboardTester extends HeadlessDashboard {
      * @param timeout - timeout after which the wait fails
      */
     public waitForAll(
+        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         actionTypes: ReadonlyArray<DashboardEventType | DashboardCommandType | string>,
         timeout: number = 1000,
     ): Promise<any> {
@@ -212,7 +213,7 @@ export class DashboardTester extends HeadlessDashboard {
     }
 }
 
-export interface PreloadedTesterOptions {
+export interface IPreloadedTesterOptions {
     /**
      * Customize the load command.
      *
@@ -286,7 +287,7 @@ export interface PreloadedTesterOptions {
 export async function preloadedTesterFactory(
     onLoaded: (tester: DashboardTester) => void | Promise<void>,
     identifier?: Identifier,
-    options: PreloadedTesterOptions = {},
+    options: IPreloadedTesterOptions = {},
 ) {
     const {
         initCommand = initializeDashboard(),

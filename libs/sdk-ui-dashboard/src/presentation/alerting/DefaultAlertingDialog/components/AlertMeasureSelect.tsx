@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type MutableRefObject, useRef } from "react";
 
@@ -64,6 +64,7 @@ export function AlertMeasureSelect({
                             isOpen={isOpen}
                             accessibilityConfig={{
                                 ariaExpanded: isOpen,
+                                popupType: "listbox",
                             }}
                         />
                     </div>

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -11,6 +11,7 @@ import { DefaultScheduledEmailManagementDialogContentEnhanced } from "./DefaultS
 import {
     selectDashboardId,
     selectEnableAutomationManagement,
+    selectIsEmbedded,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { type IScheduledEmailManagementDialogProps } from "../types.js";
@@ -35,6 +36,7 @@ export function ScheduledEmailManagementDialog({
     const workspace = useWorkspace();
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -43,12 +45,19 @@ export function ScheduledEmailManagementDialog({
     const handleScheduleEdit = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => {
             if (enableAutomationManagement && scheduledEmail.dashboard?.id !== dashboardId) {
-                navigate(buildAutomationUrl(workspace, scheduledEmail.dashboard?.id, scheduledEmail.id));
+                navigate(
+                    buildAutomationUrl({
+                        workspaceId: workspace,
+                        dashboardId: scheduledEmail.dashboard?.id,
+                        automationId: scheduledEmail.id,
+                        isEmbedded,
+                    }),
+                );
                 return;
             }
             onEdit?.(scheduledEmail);
         },
-        [onEdit, enableAutomationManagement, dashboardId, workspace],
+        [onEdit, enableAutomationManagement, dashboardId, workspace, isEmbedded],
     );
 
     const handleScheduleDeleteSuccess = useCallback(() => {

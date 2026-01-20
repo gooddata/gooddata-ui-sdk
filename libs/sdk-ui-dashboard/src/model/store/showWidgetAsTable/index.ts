@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { showWidgetAsTableReducers } from "./showWidgetAsTableReducers.js";
-import { type ShowWidgetAsTableState, initialState } from "./showWidgetAsTableState.js";
+import { type IShowWidgetAsTableState, initialState } from "./showWidgetAsTableState.js";
 
 const showWidgetAsTableSlice = createSlice({
     name: "showWidgetAsTable",
@@ -18,4 +18,4 @@ export const {
     removeWidgetToShowAsTable,
 } = showWidgetAsTableSlice.actions;
 
-export const showWidgetAsTableSliceReducer: Reducer<ShowWidgetAsTableState> = showWidgetAsTableSlice.reducer;
+export const showWidgetAsTableSliceReducer: Reducer<IShowWidgetAsTableState> = showWidgetAsTableSlice.reducer;

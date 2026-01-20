@@ -1,13 +1,13 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type RemoveDrillDownForInsightWidget } from "../../commands/index.js";
+import { type IRemoveDrillDownForInsightWidget } from "../../commands/index.js";
 import {
-    type DashboardInsightWidgetDrillDownRemoved,
+    type IDashboardInsightWidgetDrillDownRemoved,
     insightWidgetDrillDownRemoved,
 } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -16,8 +16,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* removeDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: RemoveDrillDownForInsightWidget,
-): SagaIterator<DashboardInsightWidgetDrillDownRemoved> {
+    cmd: IRemoveDrillDownForInsightWidget,
+): SagaIterator<IDashboardInsightWidgetDrillDownRemoved> {
     const {
         payload: { blacklistHierarchies },
         correlationId,

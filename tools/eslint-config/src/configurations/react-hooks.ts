@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -9,7 +9,7 @@ export const reactHooks: IConfiguration<"react-hooks"> = {
             version: "4.6.0",
         },
     ],
-    plugin: "react-hooks",
+    plugins: ["react-hooks"],
     extends: ["plugin:react-hooks/recommended"],
     rules: {
         "react-hooks/rules-of-hooks": "error",

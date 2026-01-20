@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo, useState } from "react";
 
@@ -325,7 +325,7 @@ const getWarningTextForInvalidParameters = (parameters: string[]): ReactElement 
     );
 };
 
-export interface CustomUrlEditorProps {
+export interface ICustomUrlEditorProps {
     urlDrillTarget?: UrlDrillTarget;
     attributeDisplayForms?: IAttributeWithDisplayForm[];
     loadingAttributeDisplayForms?: boolean;
@@ -351,7 +351,7 @@ function CustomUrlEditorDialog({
     enableDataProductIdParameter,
     enableWidgetIdParameter,
     widgetRef,
-}: CustomUrlEditorProps) {
+}: ICustomUrlEditorProps) {
     const intl = useIntl();
 
     const insightFilters = useSanitizedInsightFilters(widgetRef);
@@ -438,7 +438,7 @@ function CustomUrlEditorDialog({
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export function CustomUrlEditor(props: CustomUrlEditorProps) {
+export function CustomUrlEditor(props: ICustomUrlEditorProps) {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const SelectedOverlay = isMobileDevice ? FullScreenOverlay : Overlay;
 

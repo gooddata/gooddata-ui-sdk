@@ -3459,6 +3459,18 @@
         "text": "Back to the parent menu",
         "crowdinContext": "Button label for navigating back to the parent menu in a nested menu structure. Used in hierarchical navigation."
     },
+    "copyButton.copy.success": {
+        "text": "Copied to clipboard!",
+        "crowdinContext": "Message to show when content is copied to clipboard"
+    },
+    "copyButton.copy.error": {
+        "text": "Failed to copy to clipboard.",
+        "crowdinContext": "Message to show when content failed to copy to clipboard"
+    },
+    "copyButton.copy": {
+        "text": "Copy to clipboard",
+        "crowdinContext": "Label for copy button"
+    },
     "table.title.searchPlaceholder": {
         "text": "Search...",
         "crowdinContext": "Placeholder text for the search input field in the table title"

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -17,7 +17,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 
-interface UseSaveAsResult {
+interface IUseSaveAsResult {
     locale: ILocale;
     dashboardTitle: string;
     isDashboardSaving: boolean;
@@ -43,7 +43,7 @@ interface UseSaveAsResult {
 /**
  * @internal
  */
-export interface UseSaveAsProps {
+export interface IUseSaveAsProps {
     /**
      * Callback to be called, when user submit the scheduled email dialog.
      */
@@ -57,10 +57,10 @@ export interface UseSaveAsProps {
     /**
      * Callback to be called, when submitting of the scheduled email failed.
      */
-    onSubmitError?: (error: any | undefined) => void;
+    onSubmitError?: (error: any) => void;
 }
 
-export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
+export const useSaveAs = (props: IUseSaveAsProps): IUseSaveAsResult => {
     const { onSubmit, onSubmitSuccess, onSubmitError } = props;
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);

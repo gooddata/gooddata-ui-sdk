@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -39,7 +39,13 @@ export function useLayersExecutions(props: {
 
     return useMemo(() => {
         const executions = layers.map((layer) =>
-            buildLayerExecution(layer, { backend, workspace, config, execConfig, globalFilters: filters }),
+            buildLayerExecution(layer, {
+                backend,
+                workspace,
+                config,
+                execConfig,
+                globalFilters: filters,
+            }),
         );
         const [primaryExecution, ...additionalExecutions] = executions;
 

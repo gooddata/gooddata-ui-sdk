@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IInsightDefinition, type ObjRef } from "@gooddata/sdk-model";
 
@@ -12,7 +12,7 @@ import { type IDashboardQuery } from "./base.js";
  *
  * @alpha
  */
-export interface QueryWidgetFilters extends IDashboardQuery {
+export interface IQueryWidgetFilters extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
     readonly payload: {
         readonly widgetRef: ObjRef;
@@ -35,7 +35,7 @@ export function queryWidgetFilters(
     widgetRef: ObjRef,
     insight?: IInsightDefinition | null,
     correlationId?: string,
-): QueryWidgetFilters {
+): IQueryWidgetFilters {
     return {
         type: "GDC.DASH/QUERY.WIDGET.FILTERS",
         correlationId,
@@ -51,7 +51,7 @@ export function queryWidgetFilters(
  * In case any broken alert filters query return empty array.
  * @alpha
  */
-export interface QueryWidgetBrokenAlerts extends IDashboardQuery {
+export interface IQueryWidgetBrokenAlerts extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
     readonly payload: {
         readonly widgetRef: ObjRef;
@@ -67,7 +67,7 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery {
  *
  * @alpha
  */
-export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts {
+export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): IQueryWidgetBrokenAlerts {
     return {
         type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS",
         correlationId,
@@ -82,7 +82,7 @@ export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: strin
  *
  * @alpha
  */
-export interface QueryWidgetAlertCount extends IDashboardQuery {
+export interface IQueryWidgetAlertCount extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.WIDGET.ALERT_COUNT";
     readonly payload: {
         readonly widgetRef: ObjRef;
@@ -98,7 +98,7 @@ export interface QueryWidgetAlertCount extends IDashboardQuery {
  *  events that will be emitted during the command processing
  * @alpha
  */
-export function queryWidgetAlertCount(widgetRef: ObjRef, correlationId?: string): QueryWidgetAlertCount {
+export function queryWidgetAlertCount(widgetRef: ObjRef, correlationId?: string): IQueryWidgetAlertCount {
     return {
         type: "GDC.DASH/QUERY.WIDGET.ALERT_COUNT",
         correlationId,

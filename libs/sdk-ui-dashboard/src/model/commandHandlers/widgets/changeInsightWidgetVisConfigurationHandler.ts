@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { type ChangeInsightWidgetVisConfiguration } from "../../commands/index.js";
-import { type DashboardInsightWidgetVisConfigurationChanged } from "../../events/index.js";
+import { type IDashboardInsightWidgetVisConfigurationChanged } from "../../events/index.js";
 import { insightWidgetVisConfigurationChanged } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -14,7 +14,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 export function* changeInsightWidgetVisConfigurationHandler(
     ctx: DashboardContext,
     cmd: ChangeInsightWidgetVisConfiguration,
-): SagaIterator<DashboardInsightWidgetVisConfigurationChanged> {
+): SagaIterator<IDashboardInsightWidgetVisConfigurationChanged> {
     const {
         payload: { config },
         correlationId,

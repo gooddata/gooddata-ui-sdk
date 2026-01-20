@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IDrillDownReference,
@@ -15,17 +15,17 @@ import {
 import { type IDashboardCommand } from "./base.js";
 import { type IExportConfig } from "../types/exportTypes.js";
 import {
-    type FilterOpReplaceAll,
-    type WidgetDescription,
-    type WidgetFilterOperation,
-    type WidgetHeader,
+    type IFilterOpReplaceAll,
+    type IWidgetDescription,
+    type IWidgetFilterOperation,
+    type IWidgetHeader,
 } from "../types/widgetTypes.js";
 
 /**
- * Payload of the {@link ChangeInsightWidgetHeader} command.
+ * Payload of the {@link IChangeInsightWidgetHeader} command.
  * @beta
  */
-export interface ChangeInsightWidgetHeaderPayload {
+export interface IChangeInsightWidgetHeaderPayload {
     /**
      * Reference to Insight Widget whose header to change.
      */
@@ -35,15 +35,15 @@ export interface ChangeInsightWidgetHeaderPayload {
      * Header to use for the Insight widget. Contents of the provided header will be used as-is and will be
      * used to replace the current header values.
      */
-    readonly header: WidgetHeader;
+    readonly header: IWidgetHeader;
 }
 
 /**
  * @beta
  */
-export interface ChangeInsightWidgetHeader extends IDashboardCommand {
+export interface IChangeInsightWidgetHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER";
-    readonly payload: ChangeInsightWidgetHeaderPayload;
+    readonly payload: IChangeInsightWidgetHeaderPayload;
 }
 
 /**
@@ -59,9 +59,9 @@ export interface ChangeInsightWidgetHeader extends IDashboardCommand {
  */
 export function changeInsightWidgetHeader(
     ref: ObjRef,
-    header: WidgetHeader,
+    header: IWidgetHeader,
     correlationId?: string,
-): ChangeInsightWidgetHeader {
+): IChangeInsightWidgetHeader {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER",
         correlationId,
@@ -77,10 +77,10 @@ export function changeInsightWidgetHeader(
 //
 
 /**
- * Payload of the {@link ChangeInsightWidgetFilterSettings} command.
+ * Payload of the {@link IChangeInsightWidgetFilterSettings} command.
  * @beta
  */
-export interface ChangeInsightWidgetFilterSettingsPayload {
+export interface IChangeInsightWidgetFilterSettingsPayload {
     /**
      * Reference to Insight Widget whose filter settings to change.
      */
@@ -89,19 +89,19 @@ export interface ChangeInsightWidgetFilterSettingsPayload {
     /**
      * Filter operation to apply.
      */
-    readonly operation: WidgetFilterOperation;
+    readonly operation: IWidgetFilterOperation;
 }
 
 /**
  * @beta
  */
-export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
+export interface IChangeInsightWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS";
-    readonly payload: ChangeInsightWidgetFilterSettingsPayload;
+    readonly payload: IChangeInsightWidgetFilterSettingsPayload;
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpReplaceAll} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpReplaceAll} operation.
  *
  * Dispatching this command will result in replacement of Insight widget's filter settings; this includes change of
  * data set used for common date filter, disabling common date filtering, ignoring attribute/date filters that are defined on the dashboard for the widget.
@@ -115,9 +115,9 @@ export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
  */
 export function replaceInsightWidgetFilterSettings(
     ref: ObjRef,
-    settings: Omit<FilterOpReplaceAll, "type">,
+    settings: Omit<IFilterOpReplaceAll, "type">,
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -132,7 +132,7 @@ export function replaceInsightWidgetFilterSettings(
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpEnableDateFilter} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpEnableDateFilter} operation.
  *
  * Dispatching this command will result in change of Insight widget's date filter setting. The date filtering will
  * be enabled and the provided date data set will be used for date-filtering widget's insight.
@@ -148,7 +148,7 @@ export function enableInsightWidgetDateFilter(
     ref: ObjRef,
     dateDataset: ObjRef | "default",
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -163,7 +163,7 @@ export function enableInsightWidgetDateFilter(
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpDisableDateFilter} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpDisableDateFilter} operation.
  *
  * Dispatching this command will result in change of Insight widget's date filter setting. The date filtering will
  * be disabled.
@@ -177,7 +177,7 @@ export function enableInsightWidgetDateFilter(
 export function disableInsightWidgetDateFilter(
     ref: ObjRef,
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -191,7 +191,7 @@ export function disableInsightWidgetDateFilter(
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpReplaceAttributeIgnores} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpReplaceAttributeIgnores} operation.
  *
  * Dispatching this command will result in replacement of Insight widget's attribute filter ignore-list. Those attribute filters
  * that use the provided displayForms for filtering will be ignored by the widget.
@@ -207,7 +207,7 @@ export function replaceInsightWidgetIgnoredFilters(
     ref: ObjRef,
     displayForms?: ObjRef[],
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -222,7 +222,7 @@ export function replaceInsightWidgetIgnoredFilters(
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpIgnoreAttributeFilter} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpIgnoreAttributeFilter} operation.
  *
  * Dispatching this command will result in addition of one or more filters into Insight widget's attribute filter ignore-list.
  * Those attribute filters that use the provided displayForms for filtering will be ignored by the widget on top of any
@@ -243,7 +243,7 @@ export function ignoreFilterOnInsightWidget(
     ref: ObjRef,
     oneOrMoreDisplayForms: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
 
     return {
@@ -260,7 +260,7 @@ export function ignoreFilterOnInsightWidget(
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpUnignoreAttributeFilter} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpUnignoreAttributeFilter} operation.
  *
  * Dispatching this command will result in removal of one or more filters from Insight widget's attribute filter ignore-list.
  * Ignored attribute filters are not passed down to the insight and will not be used to filter that insight.
@@ -278,7 +278,7 @@ export function unignoreFilterOnInsightWidget(
     ref: ObjRef,
     oneOrMoreDisplayForms: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
 
     return {
@@ -299,10 +299,10 @@ export function unignoreFilterOnInsightWidget(
 //
 
 /**
- * Payload of the {@link ChangeInsightWidgetVisProperties} command.
+ * Payload of the {@link IChangeInsightWidgetVisProperties} command.
  * @beta
  */
-export interface ChangeInsightWidgetVisPropertiesPayload {
+export interface IChangeInsightWidgetVisPropertiesPayload {
     /**
      * Reference to Insight Widget whose visualization properties to change.
      */
@@ -320,9 +320,9 @@ export interface ChangeInsightWidgetVisPropertiesPayload {
 /**
  * @beta
  */
-export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
+export interface IChangeInsightWidgetVisProperties extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES";
-    readonly payload: ChangeInsightWidgetVisPropertiesPayload;
+    readonly payload: IChangeInsightWidgetVisPropertiesPayload;
 }
 
 /**
@@ -345,7 +345,7 @@ export function changeInsightWidgetVisProperties(
     ref: ObjRef,
     properties: VisualizationProperties | undefined,
     correlationId?: string,
-): ChangeInsightWidgetVisProperties {
+): IChangeInsightWidgetVisProperties {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES",
         correlationId,
@@ -364,7 +364,7 @@ export function changeInsightWidgetVisProperties(
  * Payload of the {@link ChangeInsightWidgetVisConfiguration} command.
  * @public
  */
-export interface ChangeInsightWidgetVisConfigurationPayload {
+export type ChangeInsightWidgetVisConfigurationPayload = {
     /**
      * Reference to Insight Widget whose visualization configuration to change.
      */
@@ -377,15 +377,15 @@ export interface ChangeInsightWidgetVisConfigurationPayload {
      * currently in effect for the widget, set the configuration to `undefined`.
      */
     readonly config: IInsightWidgetConfiguration | undefined;
-}
+};
 
 /**
  * @public
  */
-export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
+export type ChangeInsightWidgetVisConfiguration = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION";
     readonly payload: ChangeInsightWidgetVisConfigurationPayload;
-}
+};
 
 /**
  *
@@ -423,10 +423,10 @@ export function changeInsightWidgetVisConfiguration(
 //
 
 /**
- * Payload of the {@link ChangeInsightWidgetInsight} command.
+ * Payload of the {@link IChangeInsightWidgetInsight} command.
  * @beta
  */
-export interface ChangeInsightWidgetInsightPayload {
+export interface IChangeInsightWidgetInsightPayload {
     /**
      * Reference to Insight Widget whose insight to change.
      */
@@ -454,9 +454,9 @@ export interface ChangeInsightWidgetInsightPayload {
  *
  * @beta
  */
-export interface ChangeInsightWidgetInsight extends IDashboardCommand {
+export interface IChangeInsightWidgetInsight extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT";
-    readonly payload: ChangeInsightWidgetInsightPayload;
+    readonly payload: IChangeInsightWidgetInsightPayload;
 }
 
 /**
@@ -477,7 +477,7 @@ export function changeInsightWidgetInsight(
     insightRef: ObjRef,
     visualizationProperties?: VisualizationProperties,
     correlationId?: string,
-): ChangeInsightWidgetInsight {
+): IChangeInsightWidgetInsight {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT",
         correlationId,
@@ -494,10 +494,10 @@ export function changeInsightWidgetInsight(
 //
 
 /**
- * Payload of the {@link ModifyDrillsForInsightWidget} command.
+ * Payload of the {@link IModifyDrillsForInsightWidget} command.
  * @beta
  */
-export interface ModifyDrillsForInsightWidgetPayload {
+export interface IModifyDrillsForInsightWidgetPayload {
     /**
      * Reference to Insight Widget whose drill items should be modified.
      */
@@ -524,9 +524,9 @@ export interface ModifyDrillsForInsightWidgetPayload {
 /**
  * @beta
  */
-export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
+export interface IModifyDrillsForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS";
-    readonly payload: ModifyDrillsForInsightWidgetPayload;
+    readonly payload: IModifyDrillsForInsightWidgetPayload;
 }
 
 /**
@@ -545,6 +545,7 @@ export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
  *
  * @param ref - reference to insight widget whose drills should be modified
  * @param drills - drills to add or modify.
+ * @param blacklistHierarchiesToUpdate -
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -555,7 +556,7 @@ export function modifyDrillsForInsightWidget(
     drills: InsightDrillDefinition[],
     blacklistHierarchiesToUpdate?: IDrillDownReference[],
     correlationId?: string,
-): ModifyDrillsForInsightWidget {
+): IModifyDrillsForInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS",
         correlationId,
@@ -570,7 +571,7 @@ export function modifyDrillsForInsightWidget(
 /**
  * @beta
  */
-export interface AttributeHierarchyModified extends IDashboardCommand {
+export interface IAttributeHierarchyModified extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
 }
 
@@ -582,7 +583,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
  *
  * @beta
  */
-export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified {
+export function attributeHierarchyModified(correlationId?: string): IAttributeHierarchyModified {
     return {
         type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED",
         correlationId,
@@ -608,10 +609,10 @@ export function isAllDrillSelector(obj: RemoveDrillsSelector): obj is "*" {
 }
 
 /**
- * Payload of the {@link RemoveDrillsForInsightWidget} command.
+ * Payload of the {@link IRemoveDrillsForInsightWidget} command.
  * @beta
  */
-export interface RemoveDrillsForInsightWidgetPayload {
+export interface IRemoveDrillsForInsightWidgetPayload {
     /**
      * Reference to Insight Widget whose drill items should be removed.
      */
@@ -626,9 +627,9 @@ export interface RemoveDrillsForInsightWidgetPayload {
 /**
  * @beta
  */
-export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
+export interface IRemoveDrillsForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS";
-    readonly payload: RemoveDrillsForInsightWidgetPayload;
+    readonly payload: IRemoveDrillsForInsightWidgetPayload;
 }
 
 /**
@@ -646,7 +647,7 @@ export function removeDrillsForInsightWidget(
     ref: ObjRef,
     localIdentifiers: RemoveDrillsSelector,
     correlationId?: string,
-): RemoveDrillsForInsightWidget {
+): IRemoveDrillsForInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS",
         correlationId,
@@ -664,16 +665,16 @@ export function removeDrillsForInsightWidget(
 /**
  * @alpha
  */
-export interface RemoveDrillDownForInsightWidget extends IDashboardCommand {
+export interface IRemoveDrillDownForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN";
-    readonly payload: RemoveDrillDownForInsightWidgetPayload;
+    readonly payload: IRemoveDrillDownForInsightWidgetPayload;
 }
 
 /**
- * Payload of the {@link RemoveDrillDownForInsightWidget} command.
+ * Payload of the {@link IRemoveDrillDownForInsightWidget} command.
  * @alpha
  */
-export interface RemoveDrillDownForInsightWidgetPayload {
+export interface IRemoveDrillDownForInsightWidgetPayload {
     /**
      * Reference to Insight Widget whose drill items should be removed.
      */
@@ -681,7 +682,7 @@ export interface RemoveDrillDownForInsightWidgetPayload {
 
     /**
      * Specify drill localIdentifier and its hierarchy should be removed.
-     * Ignored intersection attributes for specified herarchies will be removed as well.
+     * Ignored intersection attributes for specified hierarchies will be removed as well.
      */
     readonly blacklistHierarchies: IDrillDownReference[];
 }
@@ -701,7 +702,7 @@ export function removeDrillDownForInsightWidget(
     ref: ObjRef,
     blacklistHierarchies: IDrillDownReference[],
     correlationId?: string,
-): RemoveDrillDownForInsightWidget {
+): IRemoveDrillDownForInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN",
         correlationId,
@@ -715,15 +716,15 @@ export function removeDrillDownForInsightWidget(
 /**
  * @alpha
  */
-export interface RemoveDrillToUrlForInsightWidget extends IDashboardCommand {
+export interface IRemoveDrillToUrlForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL";
-    readonly payload: RemoveDrillToUrlForInsightWidgetPayload;
+    readonly payload: IRemoveDrillToUrlForInsightWidgetPayload;
 }
 
 /**
  * @alpha
  */
-export interface RemoveDrillToUrlForInsightWidgetPayload {
+export interface IRemoveDrillToUrlForInsightWidgetPayload {
     /**
      * Reference to Insight Widget whose drill items should be removed.
      */
@@ -750,7 +751,7 @@ export function removeDrillToUrlForInsightWidget(
     ref: ObjRef,
     blacklistAttributes: ObjRef[],
     correlationId?: string,
-): RemoveDrillToUrlForInsightWidget {
+): IRemoveDrillToUrlForInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_TO_URL",
         correlationId,
@@ -765,16 +766,16 @@ export function removeDrillToUrlForInsightWidget(
 /**
  * @alpha
  */
-export interface AddDrillDownForInsightWidget extends IDashboardCommand {
+export interface IAddDrillDownForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN";
-    readonly payload: AddDrillDownForInsightWidgetPayload;
+    readonly payload: IAddDrillDownForInsightWidgetPayload;
 }
 
 /**
- * Payload of the {@link AddDrillDownForInsightWidget} command.
+ * Payload of the {@link IAddDrillDownForInsightWidget} command.
  * @alpha
  */
-export interface AddDrillDownForInsightWidgetPayload {
+export interface IAddDrillDownForInsightWidgetPayload {
     /**
      * Reference to Insight Widget whose drill items should be added.
      */
@@ -822,7 +823,7 @@ export function addDrillDownForInsightWidget(
     drillDownAttributeHierarchyRef: ObjRef,
     intersectionIgnoredAttributes: string[] = [],
     correlationId?: string,
-): AddDrillDownForInsightWidget {
+): IAddDrillDownForInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN",
         correlationId,
@@ -843,16 +844,16 @@ export function addDrillDownForInsightWidget(
 /**
  * @alpha
  */
-export interface ModifyDrillDownForInsightWidget extends IDashboardCommand {
+export interface IModifyDrillDownForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN";
-    readonly payload: ModifyDrillDownForInsightWidgetPayload;
+    readonly payload: IModifyDrillDownForInsightWidgetPayload;
 }
 
 /**
- * Payload of the {@link ModifyDrillDownForInsightWidget} command.
+ * Payload of the {@link IModifyDrillDownForInsightWidget} command.
  * @alpha
  */
-export interface ModifyDrillDownForInsightWidgetPayload {
+export interface IModifyDrillDownForInsightWidgetPayload {
     /**
      * Reference to Insight Widget whose drill items should be modified.
      */
@@ -903,7 +904,7 @@ export function modifyDrillDownForInsightWidget(
     blacklistHierarchies: IDrillDownReference[],
     intersectionIgnoredAttributes?: string[],
     correlationId?: string,
-): ModifyDrillDownForInsightWidget {
+): IModifyDrillDownForInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN",
         correlationId,
@@ -917,10 +918,10 @@ export function modifyDrillDownForInsightWidget(
     };
 }
 /**
- * Payload of the {@link RefreshInsightWidget} command.
+ * Payload of the {@link IRefreshInsightWidget} command.
  * @beta
  */
-export interface RefreshInsightWidgetPayload {
+export interface IRefreshInsightWidgetPayload {
     /**
      * Reference to Insight Widget to refresh.
      */
@@ -930,9 +931,9 @@ export interface RefreshInsightWidgetPayload {
 /**
  * @beta
  */
-export interface RefreshInsightWidget extends IDashboardCommand {
+export interface IRefreshInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
-    readonly payload: RefreshInsightWidgetPayload;
+    readonly payload: IRefreshInsightWidgetPayload;
 }
 
 /**
@@ -945,7 +946,7 @@ export interface RefreshInsightWidget extends IDashboardCommand {
  *
  * @beta
  */
-export function refreshInsightWidget(ref: ObjRef, correlationId?: string): RefreshInsightWidget {
+export function refreshInsightWidget(ref: ObjRef, correlationId?: string): IRefreshInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH",
         correlationId,
@@ -960,10 +961,10 @@ export function refreshInsightWidget(ref: ObjRef, correlationId?: string): Refre
 //
 
 /**
- * Payload of the {@link ExportInsightWidget} command.
+ * Payload of the {@link IExportInsightWidget} command.
  * @beta
  */
-export interface ExportInsightWidgetPayload {
+export interface IExportInsightWidgetPayload {
     /**
      * Reference to Insight Widget to export.
      */
@@ -977,9 +978,9 @@ export interface ExportInsightWidgetPayload {
 /**
  * @beta
  */
-export interface ExportInsightWidget extends IDashboardCommand {
+export interface IExportInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT";
-    readonly payload: ExportInsightWidgetPayload;
+    readonly payload: IExportInsightWidgetPayload;
 }
 
 /**
@@ -996,7 +997,7 @@ export function exportInsightWidget(
     ref: ObjRef,
     config: IExportConfig,
     correlationId?: string,
-): ExportInsightWidget {
+): IExportInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT",
         correlationId,
@@ -1008,10 +1009,10 @@ export function exportInsightWidget(
 }
 
 /**
- * Payload of the {@link ExportRawInsightWidget} command.
+ * Payload of the {@link IExportRawInsightWidget} command.
  * @alpha
  */
-export interface ExportRawInsightWidgetPayload {
+export interface IExportRawInsightWidgetPayload {
     /**
      * Reference to Insight Widget to export.
      */
@@ -1036,13 +1037,15 @@ export interface ExportRawInsightWidgetPayload {
 /**
  * @alpha
  */
-export interface ExportRawInsightWidget extends IDashboardCommand {
+export interface IExportRawInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
-    readonly payload: ExportRawInsightWidgetPayload;
+    readonly payload: IExportRawInsightWidgetPayload;
 }
 /**
  * Creates the ExportRawInsightWidget command. Dispatching this command will result in exporting of the widget to a CSV.
  *
+ * @param ref -
+ * @param widget -
  * @param insight - insight to export
  * @param filename - filename of the exported file
  * @param correlationId - specify correlation id to use for this command. this will be included in all
@@ -1056,7 +1059,7 @@ export function exportRawInsightWidget(
     insight: IInsight,
     filename: string,
     correlationId?: string,
-): ExportRawInsightWidget {
+): IExportRawInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
         correlationId,
@@ -1070,10 +1073,10 @@ export function exportRawInsightWidget(
 }
 
 /**
- * Payload of the {@link ExportSlidesInsightWidget} command.
+ * Payload of the {@link IExportSlidesInsightWidget} command.
  * @alpha
  */
-export interface ExportSlidesInsightWidgetPayload {
+export interface IExportSlidesInsightWidgetPayload {
     /**
      * Reference to Insight to export.
      */
@@ -1093,9 +1096,9 @@ export interface ExportSlidesInsightWidgetPayload {
 /**
  * @alpha
  */
-export interface ExportSlidesInsightWidget extends IDashboardCommand {
+export interface IExportSlidesInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES";
-    readonly payload: ExportSlidesInsightWidgetPayload;
+    readonly payload: IExportSlidesInsightWidgetPayload;
 }
 /**
  * Creates the ExportSlidesInsightWidget command. Dispatching this command will result in exporting of the widget to a slides type (pdf, pptx).
@@ -1113,7 +1116,7 @@ export function exportSlidesInsightWidget(
     filename: string,
     exportType: "pdf" | "pptx",
     correlationId?: string,
-): ExportSlidesInsightWidget {
+): IExportSlidesInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES",
         correlationId,
@@ -1126,10 +1129,10 @@ export function exportSlidesInsightWidget(
 }
 
 /**
- * Payload of the {@link ExportImageInsightWidget} command.
+ * Payload of the {@link IExportImageInsightWidget} command.
  * @alpha
  */
-export interface ExportImageInsightWidgetPayload {
+export interface IExportImageInsightWidgetPayload {
     /**
      * Reference to Insight to export.
      */
@@ -1144,12 +1147,12 @@ export interface ExportImageInsightWidgetPayload {
 /**
  * @alpha
  */
-export interface ExportImageInsightWidget extends IDashboardCommand {
+export interface IExportImageInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE";
-    readonly payload: ExportImageInsightWidgetPayload;
+    readonly payload: IExportImageInsightWidgetPayload;
 }
 /**
- * Creates the ExportImageInsightWidget command. Dispatching this command will result in exporting of the widget to a image.
+ * Creates the ExportImageInsightWidget command. Dispatching this command will result in exporting of the widget to an image.
  *
  * @param ref - reference to the Insight to export
  * @param filename - filename of the exported file
@@ -1162,7 +1165,7 @@ export function exportImageInsightWidget(
     ref: ObjRef,
     filename: string,
     correlationId?: string,
-): ExportImageInsightWidget {
+): IExportImageInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE",
         correlationId,
@@ -1178,10 +1181,10 @@ export function exportImageInsightWidget(
 //
 
 /**
- * Payload of the {@link ChangeInsightWidgetDescription} command.
+ * Payload of the {@link IChangeInsightWidgetDescription} command.
  * @beta
  */
-export interface ChangeInsightWidgetDescriptionPayload {
+export interface IChangeInsightWidgetDescriptionPayload {
     /**
      * Reference to Insight Widget whose description to change.
      */
@@ -1191,15 +1194,15 @@ export interface ChangeInsightWidgetDescriptionPayload {
      * Description to use for the Insight widget. Contents of the provided description will be used as-is and will be
      * used to replace the current description values.
      */
-    readonly description: WidgetDescription;
+    readonly description: IWidgetDescription;
 }
 
 /**
  * @beta
  */
-export interface ChangeInsightWidgetDescription extends IDashboardCommand {
+export interface IChangeInsightWidgetDescription extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION";
-    readonly payload: ChangeInsightWidgetDescriptionPayload;
+    readonly payload: IChangeInsightWidgetDescriptionPayload;
 }
 
 /**
@@ -1215,9 +1218,9 @@ export interface ChangeInsightWidgetDescription extends IDashboardCommand {
  */
 export function changeInsightWidgetDescription(
     ref: ObjRef,
-    description: WidgetDescription,
+    description: IWidgetDescription,
     correlationId?: string,
-): ChangeInsightWidgetDescription {
+): IChangeInsightWidgetDescription {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION",
         correlationId,
@@ -1233,7 +1236,7 @@ export function changeInsightWidgetDescription(
 //
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpIgnoreDateFilter} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpIgnoreDateFilter} operation.
  *
  * Dispatching this command will result in addition of one or more filters into Insight widget's date filter ignore-list.
  * Those date filters that use the provided date data sets for filtering will be ignored by the widget on top of any
@@ -1241,7 +1244,7 @@ export function changeInsightWidgetDescription(
  *
  * Ignored date filters are not passed down to the insight and will not be used to filter that insight.
  *
- * The operation is idempotent - trying to ignore an date filter multiple times will have no effect.
+ * The operation is idempotent - trying to ignore a date filter multiple times will have no effect.
  *
  * @param ref - reference of the insight widget to modify
  * @param oneOrMoreDataSets - one or more refs of date dataSets used by date filters that should be added to the ignore-list
@@ -1254,7 +1257,7 @@ export function ignoreDateFilterOnInsightWidget(
     ref: ObjRef,
     oneOrMoreDataSets: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     const dateDataSetRefs = isObjRef(oneOrMoreDataSets) ? [oneOrMoreDataSets] : oneOrMoreDataSets;
 
     return {
@@ -1271,12 +1274,12 @@ export function ignoreDateFilterOnInsightWidget(
 }
 
 /**
- * Creates the ChangeInsightWidgetFilterSettings command for {@link FilterOpUnignoreDateFilter} operation.
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpUnignoreDateFilter} operation.
  *
  * Dispatching this command will result in removal of one or more filters from Insight widget's date filter ignore-list.
  * Ignored date filters are not passed down to the insight and will not be used to filter that insight.
  *
- * The operation is idempotent - trying to unignore an date filter multiple times will have no effect.
+ * The operation is idempotent - trying to unignore a date filter multiple times will have no effect.
  *
  * @param ref - reference of the insight widget to modify
  * @param oneOrMoreDataSets - one or more refs of date data sets used by date filters that should be removed from the ignore-list
@@ -1289,7 +1292,7 @@ export function unignoreDateFilterOnInsightWidget(
     ref: ObjRef,
     oneOrMoreDataSets: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeInsightWidgetFilterSettings {
+): IChangeInsightWidgetFilterSettings {
     const dateDataSetRefs = isObjRef(oneOrMoreDataSets) ? [oneOrMoreDataSets] : oneOrMoreDataSets;
 
     return {
@@ -1306,10 +1309,10 @@ export function unignoreDateFilterOnInsightWidget(
 }
 
 /**
- * Payload of the {@link ChangeInsightWidgetIgnoreCrossFiltering} command.
+ * Payload of the {@link IChangeInsightWidgetIgnoreCrossFiltering} command.
  * @alpha
  */
-export interface ChangeInsightWidgetIgnoreCrossFilteringPayload {
+export interface IChangeInsightWidgetIgnoreCrossFilteringPayload {
     /**
      * Reference to Insight Widget whose ignore cross-filtering setting to change.
      */
@@ -1324,9 +1327,9 @@ export interface ChangeInsightWidgetIgnoreCrossFilteringPayload {
 /**
  * @alpha
  */
-export interface ChangeInsightWidgetIgnoreCrossFiltering extends IDashboardCommand {
+export interface IChangeInsightWidgetIgnoreCrossFiltering extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING";
-    readonly payload: ChangeInsightWidgetIgnoreCrossFilteringPayload;
+    readonly payload: IChangeInsightWidgetIgnoreCrossFilteringPayload;
 }
 
 /**
@@ -1334,7 +1337,7 @@ export interface ChangeInsightWidgetIgnoreCrossFiltering extends IDashboardComma
  * cross-filtering setting.
  *
  * @param ref - reference of the insight widget to modify
- * @param value - new value to use
+ * @param ignoreCrossFiltering -
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -1344,7 +1347,7 @@ export function changeInsightWidgetIgnoreCrossFiltering(
     ref: ObjRef,
     ignoreCrossFiltering: boolean,
     correlationId?: string,
-): ChangeInsightWidgetIgnoreCrossFiltering {
+): IChangeInsightWidgetIgnoreCrossFiltering {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING",
         correlationId,

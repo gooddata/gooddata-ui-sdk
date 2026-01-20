@@ -1,13 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDashboardCommand } from "./base.js";
 import { type DashboardEventBody, type ICustomDashboardEvent, type IDashboardEvent } from "../events/base.js";
 
 /**
- * Payload of the {@link TriggerEvent} command.
+ * Payload of the {@link ITriggerEvent} command.
  * @beta
  */
-export interface TriggerEventPayload {
+export interface ITriggerEventPayload {
     /**
      * Event body without the {@link DashboardContext} property. That will be filled when the command is processed.
      */
@@ -19,20 +19,20 @@ export interface TriggerEventPayload {
  *
  * @beta
  */
-export interface TriggerEvent extends IDashboardCommand {
+export interface ITriggerEvent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EVENT.TRIGGER";
-    readonly payload: TriggerEventPayload;
+    readonly payload: ITriggerEventPayload;
 }
 
 /**
- * Creates an {@link TriggerEvent} command.
+ * Creates an {@link ITriggerEvent} command.
  *
  * @beta
  */
 export function triggerEvent(
     eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>,
     correlationId?: string,
-): TriggerEvent {
+): ITriggerEvent {
     return {
         type: "GDC.DASH/CMD.EVENT.TRIGGER",
         correlationId,

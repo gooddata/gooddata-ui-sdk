@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type KeyboardEvent, type RefObject } from "react";
 
@@ -159,6 +159,9 @@ export function RepeatTypeSelect({
                     dropdownId={dropdownId}
                     isOpen={isOpen}
                     buttonRef={buttonRef as RefObject<HTMLElement>}
+                    accessibilityConfig={{
+                        popupType: "listbox",
+                    }}
                 />
             )}
             renderBody={({ closeDropdown, ariaAttributes }) => {

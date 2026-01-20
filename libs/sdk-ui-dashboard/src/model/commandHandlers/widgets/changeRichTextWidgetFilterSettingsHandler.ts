@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -19,9 +19,9 @@ import {
     validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 import { validateExistingRichTextWidget } from "./validation/widgetValidations.js";
-import { type ChangeRichTextWidgetFilterSettings } from "../../commands/index.js";
+import { type IChangeRichTextWidgetFilterSettings } from "../../commands/index.js";
 import {
-    type DashboardRichTextWidgetFilterSettingsChanged,
+    type IDashboardRichTextWidgetFilterSettingsChanged,
     richTextWidgetFilterSettingsChanged,
 } from "../../events/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -47,8 +47,8 @@ const RichTextWidgetFilterValidations: FilterValidators<IRichTextWidget> = {
  */
 export function* changeRichTextWidgetFilterSettingsHandler(
     ctx: DashboardContext,
-    cmd: ChangeRichTextWidgetFilterSettings,
-): SagaIterator<DashboardRichTextWidgetFilterSettingsChanged> {
+    cmd: IChangeRichTextWidgetFilterSettings,
+): SagaIterator<IDashboardRichTextWidgetFilterSettingsChanged> {
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const richTextWidget = validateExistingRichTextWidget(widgets, cmd, ctx);
 

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
@@ -13,7 +14,7 @@ import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultF
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import { EmptyDashboardLayout } from "../../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { addLayoutSection, initializeDashboard } from "../../commands/index.js";
-import { type InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/index.js";
+import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/index.js";
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     MockAvailabilityWithDifferentRelevance,
@@ -78,7 +79,7 @@ describe("query insight date datasets", () => {
 
         it("should return date datasets for insight with date attributes in buckets", async () => {
             await addTestSection(Tester, TreemapWithOneMeasureAndViewByDateAndSegmentByDate);
-            const result: InsightDateDatasets = await Tester.query(
+            const result: IInsightDateDatasets = await Tester.query(
                 queryDateDatasetsForInsight(insightRef(TreemapWithOneMeasureAndViewByDateAndSegmentByDate)),
             );
 
@@ -93,7 +94,7 @@ describe("query insight date datasets", () => {
 
         it("should return date datasets for insight with date filter", async () => {
             await addTestSection(Tester, PivotTableWithDateFilter);
-            const result: InsightDateDatasets = await Tester.query(
+            const result: IInsightDateDatasets = await Tester.query(
                 queryDateDatasetsForInsight(insightRef(PivotTableWithDateFilter)),
             );
 
@@ -123,7 +124,7 @@ describe("query insight date datasets", () => {
 
             await addTestSection(Tester, PivotTableWithRowAndColumnAttributes);
 
-            const result: InsightDateDatasets = await Tester.query(
+            const result: IInsightDateDatasets = await Tester.query(
                 queryDateDatasetsForInsight(insightRef(PivotTableWithRowAndColumnAttributes)),
             );
 
@@ -152,7 +153,7 @@ describe("query insight date datasets", () => {
 
             await addTestSection(Tester, PivotTableWithRowAndColumnAttributes);
 
-            const result: InsightDateDatasets = await Tester.query(
+            const result: IInsightDateDatasets = await Tester.query(
                 queryDateDatasetsForInsight(insightRef(PivotTableWithRowAndColumnAttributes)),
             );
 

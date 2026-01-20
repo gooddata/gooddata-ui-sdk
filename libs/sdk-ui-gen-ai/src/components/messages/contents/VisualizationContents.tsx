@@ -43,7 +43,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
 import {
-    type DashboardKeyDriverCombinationItem,
+    type IDashboardKeyDriverCombinationItem,
     getKdaKeyDriverCombinations,
 } from "@gooddata/sdk-ui-dashboard";
 import {
@@ -292,7 +292,7 @@ function VisualizationContentsComponentCore({
 
     const visualizationContainerRef = useRef<HTMLDivElement>(null);
     const [drillState, setDrillState] = useState<{
-        keyDriverData: DashboardKeyDriverCombinationItem[];
+        keyDriverData: IDashboardKeyDriverCombinationItem[];
         event: IDrillEvent;
     } | null>(null);
     const handlerDrill = useCallback((event: IDrillEvent) => {
@@ -438,7 +438,7 @@ function VisualizationContentsComponentCore({
                             <DrillSelectDropdownMenu
                                 drillState={drillState}
                                 onSelect={(item) => {
-                                    const data = item.data.context as DashboardKeyDriverCombinationItem;
+                                    const data = item.data.context as IDashboardKeyDriverCombinationItem;
                                     const event = drillState?.event;
 
                                     if (!event) {

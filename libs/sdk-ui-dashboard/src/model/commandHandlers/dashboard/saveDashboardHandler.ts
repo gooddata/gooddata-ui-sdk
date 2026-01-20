@@ -25,7 +25,7 @@ import {
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
-import { type SaveDashboard, changeRenderMode, switchDashboardTab } from "../../commands/index.js";
+import { type ISaveDashboard, changeRenderMode, switchDashboardTab } from "../../commands/index.js";
 import { type DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
@@ -46,7 +46,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
-import { type TabState } from "../../store/tabs/tabsState.js";
+import { type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
@@ -55,7 +55,7 @@ import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.j
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
 
 type DashboardSaveContext = {
-    cmd: SaveDashboard;
+    cmd: ISaveDashboard;
     /**
      * This contains definition of dashboard that reflects the current state.
      */
@@ -128,7 +128,7 @@ export function getDashboardWithSharing(
  * @param tabs - Array of TabState objects from the dashboard state
  * @returns Array of IDashboardTab objects ready for saving to backend
  */
-function processExistingTabs(tabs: TabState[]): IDashboardTab[] {
+function processExistingTabs(tabs: ITabState[]): IDashboardTab[] {
     return tabs.map((tab) => {
         const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
 
@@ -142,6 +142,12 @@ function processExistingTabs(tabs: TabState[]): IDashboardTab[] {
         const attributeFilterConfigs: IDashboardTab["attributeFilterConfigs"] =
             tab.attributeFilterConfigs?.attributeFilterConfigs;
         const attributeFilterConfigsProp = attributeFilterConfigs?.length ? { attributeFilterConfigs } : {};
+        const filterGroupsConfigProp = tab.filterGroupsConfig
+            ? {
+                  filterGroupsConfig: tab.filterGroupsConfig,
+              }
+            : {};
+
         // Get this tab's specific layout from tab.layout.layout
         const tabLayout = tab.layout?.layout;
 
@@ -162,6 +168,7 @@ function processExistingTabs(tabs: TabState[]): IDashboardTab[] {
             ...dateFilterConfigProp,
             ...dateFilterConfigsProp,
             ...attributeFilterConfigsProp,
+            ...filterGroupsConfigProp,
         };
         return result;
     });
@@ -202,7 +209,7 @@ function createDefaultTab(
 
 function resolveProcessedTabs(
     enableDashboardTabs: boolean,
-    tabs: TabState[] | undefined,
+    tabs: ITabState[] | undefined,
     rootFilterContext: IFilterContext | ITempFilterContext | undefined,
     layout: IDashboardLayout<ExtendedDashboardWidget> | undefined,
     dateFilterConfig: IDashboardDefinition["dateFilterConfig"],
@@ -236,7 +243,7 @@ function resolveProcessedTabs(
  *  selectLayout (that keeps custom widgets).
  */
 function* createDashboardSaveContext(
-    cmd: SaveDashboard,
+    cmd: ISaveDashboard,
     isNewDashboard: boolean,
 ): SagaIterator<DashboardSaveContext> {
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
@@ -434,7 +441,7 @@ function* save(
 
 export function* saveDashboardHandler(
     ctx: DashboardContext,
-    cmd: SaveDashboard,
+    cmd: ISaveDashboard,
 ): SagaIterator<DashboardSaved> {
     try {
         yield put(savingActions.setSavingStart());

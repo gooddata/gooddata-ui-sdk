@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact, isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -37,7 +37,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { type QueryWidgetFilters } from "../queries/widgets.js";
+import { type IQueryWidgetFilters } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
@@ -367,7 +367,7 @@ function* queryWithoutInsight(
     return [...dateFilters, ...attributeFilters];
 }
 
-function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIterator<IFilter[]> {
+function* queryService(ctx: DashboardContext, query: IQueryWidgetFilters): SagaIterator<IFilter[]> {
     const {
         payload: { widgetRef, insight },
         correlationId,

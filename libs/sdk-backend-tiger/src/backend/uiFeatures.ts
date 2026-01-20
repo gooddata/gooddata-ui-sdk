@@ -135,6 +135,7 @@ export enum TigerFeaturesNames {
     EnablePivotTablePagination = "enablePivotTablePagination",
     EnableImplicitDrillToUrl = "enableImplicitDrillToUrl",
     EnableDrillMenuPositioningAtCursor = "enableDrillMenuPositioningAtCursor",
+    EnableDashboardFilterGroups = "enableDashboardFilterGroups",
 }
 
 export type ITigerFeatureFlags = {
@@ -263,6 +264,7 @@ export type ITigerFeatureFlags = {
     enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
     enableImplicitDrillToUrl: (typeof FeatureFlagsValues)["enableImplicitDrillToUrl"][number];
     enableDrillMenuPositioningAtCursor: (typeof FeatureFlagsValues)["enableDrillMenuPositioningAtCursor"][number];
+    enableDashboardFilterGroups: (typeof FeatureFlagsValues)["enableDashboardFilterGroups"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -391,6 +393,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePivotTablePagination: true,
     enableImplicitDrillToUrl: false,
     enableDrillMenuPositioningAtCursor: false,
+    enableDashboardFilterGroups: false,
 };
 
 export const FeatureFlagsValues = {
@@ -520,4 +523,5 @@ export const FeatureFlagsValues = {
     enablePivotTablePagination: [true, false] as const,
     enableImplicitDrillToUrl: [true, false] as const,
     enableDrillMenuPositioningAtCursor: [true, false] as const,
+    enableDashboardFilterGroups: [true, false] as const,
 };

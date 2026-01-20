@@ -21,6 +21,10 @@ export interface IAreaDataSourceProps {
      * Boundary features to render. These are matched with geoData by area identifier.
      */
     features: IGeoJsonFeature[];
+    tooltipAttrIds?: {
+        locationName?: string;
+        segment?: string;
+    };
 }
 
 type IAreaDataSourceFeature = GeoJSON.Feature<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>;
@@ -104,12 +108,14 @@ function buildAreaProperties(args: {
     areaNameTitle: string;
     tooltipValue?: string;
     tooltipTitle?: string;
+    tooltipAttrId?: string;
     colorTitle?: string;
     colorValue?: number;
     colorFormat?: string;
     areaColorFill: string;
     segmentTitle?: string;
     segmentValue?: string;
+    segmentAttrId?: string;
     /** All segment URIs for this area - used for MapLibre filtering with "in" expression */
     segmentUris?: string[];
 }): GeoJSON.GeoJsonProperties {
@@ -120,12 +126,14 @@ function buildAreaProperties(args: {
         areaNameTitle,
         tooltipValue,
         tooltipTitle,
+        tooltipAttrId,
         colorTitle,
         colorValue,
         colorFormat,
         areaColorFill,
         segmentTitle,
         segmentValue,
+        segmentAttrId,
         segmentUris,
     } = args;
     const properties: GeoJSON.GeoJsonProperties = {
@@ -135,6 +143,7 @@ function buildAreaProperties(args: {
         locationName: {
             title: tooltipTitle ?? areaNameTitle,
             value: tooltipValue ?? areaIdentifier,
+            attrId: tooltipAttrId,
         },
         locationIndex: index,
         color: {
@@ -154,6 +163,7 @@ function buildAreaProperties(args: {
             // This enables MapLibre "in" expression filtering
             uri: segmentUris?.[0],
             uris: segmentUris,
+            attrId: segmentAttrId,
         };
     }
 
@@ -231,6 +241,7 @@ function createAreaFeatures({
     geoData,
     colorStrategy,
     features,
+    tooltipAttrIds,
 }: IAreaDataSourceProps): IAreaDataSourceFeatures {
     const { color, area, segment, tooltipText } = geoData;
 
@@ -284,12 +295,14 @@ function createAreaFeatures({
             areaNameTitle,
             tooltipValue: areaData.tooltipValue,
             tooltipTitle: tooltipTextTitle,
+            tooltipAttrId: tooltipAttrIds?.locationName,
             colorTitle,
             colorValue: areaData.colorValue,
             colorFormat,
             areaColorFill: areaData.areaColorFill,
             segmentTitle: areaData.segmentTitle,
             segmentValue: areaData.segmentValue,
+            segmentAttrId: tooltipAttrIds?.segment,
             segmentUris: areaData.segmentUris,
         });
 

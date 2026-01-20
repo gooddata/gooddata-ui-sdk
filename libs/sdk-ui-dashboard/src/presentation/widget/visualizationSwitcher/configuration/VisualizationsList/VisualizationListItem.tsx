@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -77,7 +77,7 @@ export function VisualizationListItem({
                 >
                     <div className="visualization-title">
                         {insight ? (
-                            <InsightListItemTypeIcon type={insightVisualizationType(insight!)} />
+                            <InsightListItemTypeIcon type={insightVisualizationType(insight)} />
                         ) : null}
                         <div className="gd-visualizations-list-item-content">
                             <div className="gd-visualizations-list-item-content-name">

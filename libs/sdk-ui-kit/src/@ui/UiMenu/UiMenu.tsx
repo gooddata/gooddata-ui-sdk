@@ -91,7 +91,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     useEffect(() => {
         // Only focus when shownCustomContentItemId becomes undefined (was previously set)
         if (shownCustomContentItemId === undefined && menuComponentRef.current) {
-            menuComponentRef.current.focus();
+            menuComponentRef.current.focus({ preventScroll: true });
         }
     }, [shownCustomContentItemId, menuComponentRef]);
 

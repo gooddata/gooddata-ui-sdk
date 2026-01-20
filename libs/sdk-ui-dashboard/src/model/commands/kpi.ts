@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IKpiComparisonDirection,
@@ -10,17 +10,17 @@ import {
 
 import { type IDashboardCommand } from "./base.js";
 import {
-    type FilterOpReplaceAll,
-    type WidgetDescription,
-    type WidgetFilterOperation,
-    type WidgetHeader,
+    type IFilterOpReplaceAll,
+    type IWidgetDescription,
+    type IWidgetFilterOperation,
+    type IWidgetHeader,
 } from "../types/widgetTypes.js";
 
 /**
- * Payload of the {@link ChangeKpiWidgetHeader} command.
+ * Payload of the {@link IChangeKpiWidgetHeader} command.
  * @beta
  */
-export interface ChangeKpiWidgetHeaderPayload {
+export interface IChangeKpiWidgetHeaderPayload {
     /**
      * KPI Widget reference whose measure to change.
      */
@@ -30,15 +30,15 @@ export interface ChangeKpiWidgetHeaderPayload {
      * Header to use for the KPI widget. Contents of the provided header will be used as-is and will be
      * used to replace the current header values.
      */
-    readonly header: WidgetHeader;
+    readonly header: IWidgetHeader;
 }
 
 /**
  * @beta
  */
-export interface ChangeKpiWidgetHeader extends IDashboardCommand {
+export interface IChangeKpiWidgetHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER";
-    readonly payload: ChangeKpiWidgetHeaderPayload;
+    readonly payload: IChangeKpiWidgetHeaderPayload;
 }
 
 /**
@@ -54,9 +54,9 @@ export interface ChangeKpiWidgetHeader extends IDashboardCommand {
  */
 export function changeKpiWidgetHeader(
     ref: ObjRef,
-    header: WidgetHeader,
+    header: IWidgetHeader,
     correlationId?: string,
-): ChangeKpiWidgetHeader {
+): IChangeKpiWidgetHeader {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER",
         correlationId,
@@ -72,10 +72,10 @@ export function changeKpiWidgetHeader(
 //
 
 /**
- * Payload of the {@link ChangeKpiWidgetDescription} command.
+ * Payload of the {@link IChangeKpiWidgetDescription} command.
  * @beta
  */
-export interface ChangeKpiWidgetDescriptionPayload {
+export interface IChangeKpiWidgetDescriptionPayload {
     /**
      * Reference to Kpi whose description to change.
      */
@@ -85,15 +85,15 @@ export interface ChangeKpiWidgetDescriptionPayload {
      * Description to use for the Kpi widget. Contents of the provided description will be used as-is and will be
      * used to replace the current description values.
      */
-    readonly description: WidgetDescription;
+    readonly description: IWidgetDescription;
 }
 
 /**
  * @beta
  */
-export interface ChangeKpiWidgetDescription extends IDashboardCommand {
+export interface IChangeKpiWidgetDescription extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION";
-    readonly payload: ChangeKpiWidgetDescriptionPayload;
+    readonly payload: IChangeKpiWidgetDescriptionPayload;
 }
 
 /**
@@ -109,9 +109,9 @@ export interface ChangeKpiWidgetDescription extends IDashboardCommand {
  */
 export function changeKpiWidgetDescription(
     ref: ObjRef,
-    description: WidgetDescription,
+    description: IWidgetDescription,
     correlationId?: string,
-): ChangeKpiWidgetDescription {
+): IChangeKpiWidgetDescription {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION",
         correlationId,
@@ -127,10 +127,10 @@ export function changeKpiWidgetDescription(
 //
 
 /**
- * Payload of the {@link ChangeKpiWidgetConfiguration} command.
+ * Payload of the {@link IChangeKpiWidgetConfiguration} command.
  * @beta
  */
-export interface ChangeKpiWidgetConfigurationPayload {
+export interface IChangeKpiWidgetConfigurationPayload {
     /**
      * Reference to Kpi Widget whose configuration to change.
      */
@@ -148,9 +148,9 @@ export interface ChangeKpiWidgetConfigurationPayload {
 /**
  * @beta
  */
-export interface ChangeKpiWidgetConfiguration extends IDashboardCommand {
+export interface IChangeKpiWidgetConfiguration extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION";
-    readonly payload: ChangeKpiWidgetConfigurationPayload;
+    readonly payload: IChangeKpiWidgetConfigurationPayload;
 }
 
 /**
@@ -173,7 +173,7 @@ export function changeKpiWidgetConfiguration(
     ref: ObjRef,
     config: IKpiWidgetConfiguration | undefined,
     correlationId?: string,
-): ChangeKpiWidgetConfiguration {
+): IChangeKpiWidgetConfiguration {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION",
         correlationId,
@@ -189,10 +189,10 @@ export function changeKpiWidgetConfiguration(
 //
 
 /**
- * Payload of the {@link ChangeKpiWidgetMeasure} command.
+ * Payload of the {@link IChangeKpiWidgetMeasure} command.
  * @beta
  */
-export interface ChangeKpiWidgetMeasurePayload {
+export interface IChangeKpiWidgetMeasurePayload {
     /**
      * KPI Widget reference whose measure to change.
      */
@@ -211,15 +211,15 @@ export interface ChangeKpiWidgetMeasurePayload {
      * You may specify the widget header as 'from-measure'. In that case the title will be automatically
      * set to the title of measure specified in the `measureRef` property.
      */
-    readonly header?: WidgetHeader | "from-measure";
+    readonly header?: IWidgetHeader | "from-measure";
 }
 
 /**
  * @beta
  */
-export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
+export interface IChangeKpiWidgetMeasure extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE";
-    readonly payload: ChangeKpiWidgetMeasurePayload;
+    readonly payload: IChangeKpiWidgetMeasurePayload;
 }
 
 /**
@@ -237,9 +237,9 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
 export function changeKpiWidgetMeasure(
     ref: ObjRef,
     measureRef: ObjRef,
-    header?: WidgetHeader | "from-measure",
+    header?: IWidgetHeader | "from-measure",
     correlationId?: string,
-): ChangeKpiWidgetMeasure {
+): IChangeKpiWidgetMeasure {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE",
         correlationId,
@@ -256,10 +256,10 @@ export function changeKpiWidgetMeasure(
 //
 
 /**
- * Payload of the {@link ChangeKpiWidgetFilterSettings} command.
+ * Payload of the {@link IChangeKpiWidgetFilterSettings} command.
  * @beta
  */
-export interface ChangeKpiWidgetFilterSettingsPayload {
+export interface IChangeKpiWidgetFilterSettingsPayload {
     /**
      * KPI Widget reference whose filter settings to change.
      */
@@ -269,15 +269,15 @@ export interface ChangeKpiWidgetFilterSettingsPayload {
      * Filter settings to apply for the widget. The settings are used as-is and
      * replace current widget settings.
      */
-    readonly operation: WidgetFilterOperation;
+    readonly operation: IWidgetFilterOperation;
 }
 
 /**
  * @beta
  */
-export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
+export interface IChangeKpiWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
-    readonly payload: ChangeKpiWidgetFilterSettingsPayload;
+    readonly payload: IChangeKpiWidgetFilterSettingsPayload;
 }
 
 /**
@@ -294,9 +294,9 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
  */
 export function replaceKpiWidgetFilterSettings(
     ref: ObjRef,
-    settings: Omit<FilterOpReplaceAll, "type">,
+    settings: Omit<IFilterOpReplaceAll, "type">,
     correlationId?: string,
-): ChangeKpiWidgetFilterSettings {
+): IChangeKpiWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -311,7 +311,7 @@ export function replaceKpiWidgetFilterSettings(
 }
 
 /**
- * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpEnableDateFilter} operation.
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link IFilterOpEnableDateFilter} operation.
  *
  * Dispatching this command will result in change of KPI widget's date filter setting. The date filtering will
  * be enabled and the provided date data set will be used for date-filtering widget's KPI.
@@ -327,7 +327,7 @@ export function enableKpiWidgetDateFilter(
     ref: ObjRef,
     dateDataset: ObjRef | "default",
     correlationId?: string,
-): ChangeKpiWidgetFilterSettings {
+): IChangeKpiWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -342,7 +342,7 @@ export function enableKpiWidgetDateFilter(
 }
 
 /**
- * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpDisableDateFilter} operation.
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link IFilterOpDisableDateFilter} operation.
  *
  * Dispatching this command will result in change of KPI widget's date filter setting. The date filtering will
  * be disabled.
@@ -356,7 +356,7 @@ export function enableKpiWidgetDateFilter(
 export function disableKpiWidgetDateFilter(
     ref: ObjRef,
     correlationId?: string,
-): ChangeKpiWidgetFilterSettings {
+): IChangeKpiWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -370,7 +370,7 @@ export function disableKpiWidgetDateFilter(
 }
 
 /**
- * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpReplaceAttributeIgnores} operation.
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link IFilterOpReplaceAttributeIgnores} operation.
  *
  * Dispatching this command will result in replacement of KPI widget's attribute filter ignore-list. Those attribute filters
  * that use the provided displayForms for filtering will be ignored by the widget.
@@ -386,7 +386,7 @@ export function replaceKpiWidgetIgnoredFilters(
     ref: ObjRef,
     displayForms?: ObjRef[],
     correlationId?: string,
-): ChangeKpiWidgetFilterSettings {
+): IChangeKpiWidgetFilterSettings {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS",
         correlationId,
@@ -401,7 +401,7 @@ export function replaceKpiWidgetIgnoredFilters(
 }
 
 /**
- * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpIgnoreAttributeFilter} operation.
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link IFilterOpIgnoreAttributeFilter} operation.
  *
  * Dispatching this command will result in addition of one or more filters into KPI widget's attribute filter ignore-list.
  * Those attribute filters that use the provided displayForms for filtering will be ignored by the widget on top of any
@@ -422,7 +422,7 @@ export function ignoreFilterOnKpiWidget(
     ref: ObjRef,
     oneOrMoreDisplayForms: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeKpiWidgetFilterSettings {
+): IChangeKpiWidgetFilterSettings {
     const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
 
     return {
@@ -439,7 +439,7 @@ export function ignoreFilterOnKpiWidget(
 }
 
 /**
- * Creates the ChangeKpiWidgetFilterSettings command for {@link FilterOpUnignoreAttributeFilter} operation.
+ * Creates the ChangeKpiWidgetFilterSettings command for {@link IFilterOpUnignoreAttributeFilter} operation.
  *
  * Dispatching this command will result in removal of one or more filters from KPI widget's attribute filter ignore-list.
  * Ignored attribute filters are not passed down to the KPI and will not be used to filter that KPI.
@@ -457,7 +457,7 @@ export function unignoreFilterOnKpiWidget(
     ref: ObjRef,
     oneOrMoreDisplayForms: ObjRef | ObjRef[],
     correlationId?: string,
-): ChangeKpiWidgetFilterSettings {
+): IChangeKpiWidgetFilterSettings {
     const displayFormRefs = isObjRef(oneOrMoreDisplayForms) ? [oneOrMoreDisplayForms] : oneOrMoreDisplayForms;
 
     return {
@@ -480,7 +480,7 @@ export function unignoreFilterOnKpiWidget(
 /**
  * @beta
  */
-export interface KpiWidgetComparison {
+export interface IKpiWidgetComparison {
     /**
      * Type of comparison to do. May be period-over-period, previous period or no
      * comparison.
@@ -499,10 +499,10 @@ export interface KpiWidgetComparison {
 }
 
 /**
- * Payload of the {@link ChangeKpiWidgetComparison} command.
+ * Payload of the {@link IChangeKpiWidgetComparison} command.
  * @beta
  */
-export interface ChangeKpiWidgetComparisonPayload {
+export interface IChangeKpiWidgetComparisonPayload {
     /**
      * Reference to KPI Widget whose filter settings to change.
      */
@@ -513,15 +513,15 @@ export interface ChangeKpiWidgetComparisonPayload {
      *
      * To disable comparison you can send empty object here.
      */
-    readonly comparison: KpiWidgetComparison;
+    readonly comparison: IKpiWidgetComparison;
 }
 
 /**
  * @beta
  */
-export interface ChangeKpiWidgetComparison extends IDashboardCommand {
+export interface IChangeKpiWidgetComparison extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON";
-    readonly payload: ChangeKpiWidgetComparisonPayload;
+    readonly payload: IChangeKpiWidgetComparisonPayload;
 }
 
 /**
@@ -539,9 +539,9 @@ export interface ChangeKpiWidgetComparison extends IDashboardCommand {
  */
 export function changeKpiWidgetComparison(
     ref: ObjRef,
-    comparison: KpiWidgetComparison,
+    comparison: IKpiWidgetComparison,
     correlationId?: string,
-): ChangeKpiWidgetComparison {
+): IChangeKpiWidgetComparison {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON",
         correlationId,
@@ -557,10 +557,10 @@ export function changeKpiWidgetComparison(
 //
 
 /**
- * Payload of the {@link RefreshKpiWidget} command.
+ * Payload of the {@link IRefreshKpiWidget} command.
  * @beta
  */
-export interface RefreshKpiWidgetPayload {
+export interface IRefreshKpiWidgetPayload {
     /**
      * Reference to KPI Widget to refresh.
      */
@@ -570,9 +570,9 @@ export interface RefreshKpiWidgetPayload {
 /**
  * @beta
  */
-export interface RefreshKpiWidget extends IDashboardCommand {
+export interface IRefreshKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.REFRESH";
-    readonly payload: RefreshKpiWidgetPayload;
+    readonly payload: IRefreshKpiWidgetPayload;
 }
 
 /**
@@ -584,7 +584,7 @@ export interface RefreshKpiWidget extends IDashboardCommand {
  *
  * @beta
  */
-export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKpiWidget {
+export function refreshKpiWidget(ref: ObjRef, correlationId?: string): IRefreshKpiWidget {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.REFRESH",
         correlationId,
@@ -599,10 +599,10 @@ export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKp
 //
 
 /**
- * Payload of the {@link SetDrillForKpiWidget} command.
+ * Payload of the {@link ISetDrillForKpiWidget} command.
  * @beta
  */
-export interface SetDrillForKpiWidgetPayload {
+export interface ISetDrillForKpiWidgetPayload {
     /**
      * Reference to KPI Widget to modify.
      */
@@ -614,9 +614,9 @@ export interface SetDrillForKpiWidgetPayload {
 /**
  * @beta
  */
-export interface SetDrillForKpiWidget extends IDashboardCommand {
+export interface ISetDrillForKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL";
-    readonly payload: SetDrillForKpiWidgetPayload;
+    readonly payload: ISetDrillForKpiWidgetPayload;
 }
 
 /**
@@ -635,7 +635,7 @@ export function setDrillForKpiWidget(
     legacyDashboardRef: ObjRef,
     legacyDashboardTabIdentifier: string,
     correlationId?: string,
-): SetDrillForKpiWidget {
+): ISetDrillForKpiWidget {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL",
         correlationId,
@@ -652,10 +652,10 @@ export function setDrillForKpiWidget(
 //
 
 /**
- * Payload of the {@link RemoveDrillForKpiWidget} command.
+ * Payload of the {@link IRemoveDrillForKpiWidget} command.
  * @beta
  */
-export interface RemoveDrillForKpiWidgetPayload {
+export interface IRemoveDrillForKpiWidgetPayload {
     /**
      * Reference to KPI Widget to modify.
      */
@@ -665,9 +665,9 @@ export interface RemoveDrillForKpiWidgetPayload {
 /**
  * @beta
  */
-export interface RemoveDrillForKpiWidget extends IDashboardCommand {
+export interface IRemoveDrillForKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL";
-    readonly payload: RemoveDrillForKpiWidgetPayload;
+    readonly payload: IRemoveDrillForKpiWidgetPayload;
 }
 
 /**
@@ -679,7 +679,7 @@ export interface RemoveDrillForKpiWidget extends IDashboardCommand {
  *
  * @beta
  */
-export function removeDrillForKpiWidget(ref: ObjRef, correlationId?: string): RemoveDrillForKpiWidget {
+export function removeDrillForKpiWidget(ref: ObjRef, correlationId?: string): IRemoveDrillForKpiWidget {
     return {
         type: "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL",
         correlationId,

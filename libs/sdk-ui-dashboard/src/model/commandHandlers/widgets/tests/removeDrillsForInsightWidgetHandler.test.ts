@@ -1,17 +1,17 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
 
 import {
-    type RemoveDrillsForInsightWidget,
+    type IRemoveDrillsForInsightWidget,
     addDrillTargets,
     modifyDrillsForInsightWidget,
     removeDrillsForInsightWidget,
 } from "../../../commands/index.js";
-import { type DashboardCommandFailed } from "../../../events/index.js";
-import { type DashboardInsightWidgetDrillsRemoved } from "../../../events/insight.js";
+import { type IDashboardCommandFailed } from "../../../events/index.js";
+import { type IDashboardInsightWidgetDrillsRemoved } from "../../../events/insight.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { BeforeTestCorrelation, TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -59,7 +59,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
         });
 
         it("should remove one drill for widget and emit event", async () => {
-            const event: DashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
                 removeDrillsForInsightWidget(SimpleSortedTableWidgetRef, [localIdentifier], TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
             );
@@ -74,7 +74,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
         });
 
         it("should remove all drills for widget and emit event", async () => {
-            const event: DashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardInsightWidgetDrillsRemoved = await Tester.dispatchAndWaitFor(
                 removeDrillsForInsightWidget(SimpleSortedTableWidgetRef, "*", TestCorrelation),
                 "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED",
             );
@@ -93,7 +93,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     describe("validate", () => {
         it("should fail if trying to remove drills of non-existent widget", async () => {
-            const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
+            const event: IDashboardCommandFailed<IRemoveDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
                     removeDrillsForInsightWidget(uriRef("missing"), [localIdentifier], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
@@ -105,7 +105,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
         });
 
         it("should fail if trying to remove drills where origin missing in widget drills", async () => {
-            const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
+            const event: IDashboardCommandFailed<IRemoveDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
                     removeDrillsForInsightWidget(
                         SimpleSortedTableWidgetRef,

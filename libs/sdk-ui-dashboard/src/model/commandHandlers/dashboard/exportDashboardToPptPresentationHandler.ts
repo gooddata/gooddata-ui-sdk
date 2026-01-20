@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -11,9 +11,9 @@ import {
 import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
-import { type ExportDashboardToPptPresentation } from "../../commands/index.js";
+import { type IExportDashboardToPptPresentation } from "../../commands/index.js";
 import {
-    type DashboardExportToPptPresentationResolved,
+    type IDashboardExportToPptPresentationResolved,
     dashboardExportToPptPresentationRequested,
     dashboardExportToPptPresentationResolved,
 } from "../../events/dashboard.js";
@@ -43,8 +43,8 @@ function exportDashboardToPptPresentation(
 
 export function* exportDashboardToPptPresentationHandler(
     ctx: DashboardContext,
-    cmd: ExportDashboardToPptPresentation,
-): SagaIterator<DashboardExportToPptPresentationResolved> {
+    cmd: IExportDashboardToPptPresentation,
+): SagaIterator<IDashboardExportToPptPresentationResolved> {
     yield put(dashboardExportToPptPresentationRequested(ctx, cmd.correlationId));
 
     const dashboardRef = yield select(selectDashboardRef);

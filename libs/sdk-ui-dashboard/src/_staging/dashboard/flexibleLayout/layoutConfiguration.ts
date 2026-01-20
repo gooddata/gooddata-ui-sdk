@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type IDashboardLayout,
@@ -17,7 +17,7 @@ import { findItem } from "../../layout/coordinates.js";
  *
  * @param layout - layout for which we want to get the configuration.
  */
-export function getLayoutConfiguration(layout: IDashboardLayout<ExtendedDashboardWidget | unknown>) {
+export function getLayoutConfiguration(layout: IDashboardLayout<unknown>) {
     // backward compatibility, assume the container direction is set to "row" when not set
     const direction = layout.configuration?.direction ?? "row";
     const sectionsConfiguration = layout.configuration?.sections;

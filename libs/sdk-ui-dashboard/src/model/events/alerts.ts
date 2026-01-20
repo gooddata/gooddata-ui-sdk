@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { type IDashboardEvent } from "./base.js";
@@ -6,10 +7,10 @@ import { eventGuard } from "./util.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link DashboardAlertCreated} event.
+ * Payload of the {@link IDashboardAlertCreated} event.
  * @beta
  */
-export interface DashboardAlertCreatedPayload {
+export interface IDashboardAlertCreatedPayload {
     /**
      * The alert created.
      */
@@ -21,16 +22,16 @@ export interface DashboardAlertCreatedPayload {
  *
  * @beta
  */
-export interface DashboardAlertCreated extends IDashboardEvent {
+export interface IDashboardAlertCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.CREATED";
-    readonly payload: DashboardAlertCreatedPayload;
+    readonly payload: IDashboardAlertCreatedPayload;
 }
 
 export function alertCreated(
     ctx: DashboardContext,
     alert: IAutomationMetadataObject,
     correlationId?: string,
-): DashboardAlertCreated {
+): IDashboardAlertCreated {
     return {
         type: "GDC.DASH/EVT.ALERT.CREATED",
         ctx,
@@ -42,18 +43,18 @@ export function alertCreated(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAlertCreated}.
+ * Tests whether the provided object is an instance of {@link IDashboardAlertCreated}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
+export const isDashboardAlertCreated = eventGuard<IDashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
 /**
- * Payload of the {@link DashboardAlertCreated} event.
+ * Payload of the {@link IDashboardAlertCreated} event.
  * @beta
  */
-export interface DashboardAlertSavedPayload {
+export interface IDashboardAlertSavedPayload {
     /**
      * The alert saved.
      */
@@ -65,16 +66,16 @@ export interface DashboardAlertSavedPayload {
  *
  * @beta
  */
-export interface DashboardAlertSaved extends IDashboardEvent {
+export interface IDashboardAlertSaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.SAVED";
-    readonly payload: DashboardAlertSavedPayload;
+    readonly payload: IDashboardAlertSavedPayload;
 }
 
 export function alertSaved(
     ctx: DashboardContext,
     alert: IAutomationMetadataObject,
     correlationId?: string,
-): DashboardAlertSaved {
+): IDashboardAlertSaved {
     return {
         type: "GDC.DASH/EVT.ALERT.SAVED",
         ctx,
@@ -86,9 +87,9 @@ export function alertSaved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAlertSaved}.
+ * Tests whether the provided object is an instance of {@link IDashboardAlertSaved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAlertSaved = eventGuard<DashboardAlertSaved>("GDC.DASH/EVT.ALERT.SAVED");
+export const isDashboardAlertSaved = eventGuard<IDashboardAlertSaved>("GDC.DASH/EVT.ALERT.SAVED");

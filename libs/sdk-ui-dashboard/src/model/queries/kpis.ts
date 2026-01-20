@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ICatalogDateDataset, type ObjRef } from "@gooddata/sdk-model";
 
 import { type IDashboardQuery } from "./base.js";
@@ -9,7 +10,7 @@ import { type IDashboardQuery } from "./base.js";
  *
  * @alpha
  */
-export interface QueryMeasureDateDatasets extends IDashboardQuery {
+export interface IQueryMeasureDateDatasets extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
     readonly payload: {
         readonly measureRef: ObjRef;
@@ -28,7 +29,7 @@ export interface QueryMeasureDateDatasets extends IDashboardQuery {
 export function queryDateDatasetsForMeasure(
     measureRef: ObjRef,
     correlationId?: string,
-): QueryMeasureDateDatasets {
+): IQueryMeasureDateDatasets {
     return {
         type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
         correlationId,
@@ -47,7 +48,7 @@ export function queryDateDatasetsForMeasure(
  *
  * @alpha
  */
-export interface MeasureDateDatasets {
+export interface IMeasureDateDatasets {
     /**
      * Date datasets that are available for filtering of the measure. The available datasets are obtained by inspecting
      * relation of measure and the different date datasets in the workspace's logical data model.

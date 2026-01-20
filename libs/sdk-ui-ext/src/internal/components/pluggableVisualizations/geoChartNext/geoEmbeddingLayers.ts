@@ -14,7 +14,6 @@ import {
     type IGeoLayerArea,
     type IGeoLayerPushpin,
     insightLayerToGeoLayer,
-    insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/next";
 
 import { routeLocalIdRefFiltersToLayers } from "../../../utils/filters/routeLocalIdRefFiltersToLayers.js";
@@ -38,7 +37,9 @@ export function buildGeoChartNextLayers(
     };
 
     const primaryLayer = insightLayerToGeoLayer(primaryLayerDefinition);
-    const additionalLayers = insightLayersToGeoLayers(insightLayers(insight));
+    const additionalLayers = insightLayers(insight)
+        .map((definition) => insightLayerToGeoLayer(definition))
+        .filter((layer): layer is IGeoLayer => layer !== null);
 
     const layers = primaryLayer ? [primaryLayer, ...additionalLayers] : additionalLayers;
     const layerContexts = [

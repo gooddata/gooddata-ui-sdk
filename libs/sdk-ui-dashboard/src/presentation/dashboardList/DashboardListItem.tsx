@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import cx from "classnames";
 import { type IntlShape, useIntl } from "react-intl";
@@ -13,7 +13,7 @@ const tooltipAlignPoints = [
     { align: "cr cl", offset: { x: 0, y: 10 } },
 ];
 
-export interface DashboardsListItemProps {
+export interface IDashboardsListItemProps {
     title: string;
     accessibilityLimitation?: DashboardAccessibilityLimitation;
     onClick: () => void;
@@ -36,7 +36,7 @@ function DropdownItem({
     accessibilityLimitation,
     title,
     isSelected = false,
-}: DashboardsListItemProps) {
+}: IDashboardsListItemProps) {
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
     const generatedTestClass = `s-dashboard-item s-${stringUtils.simplifyText(title)}`;
     const classNames = cx("gd-list-item gd-drill-dashboard-item", generatedTestClass, {
@@ -51,7 +51,7 @@ function DropdownItem({
     );
 }
 
-export function DashboardListItem(props: DashboardsListItemProps) {
+export function DashboardListItem(props: IDashboardsListItemProps) {
     const { accessibilityLimitation } = props;
     const intl = useIntl();
 

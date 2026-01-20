@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
-import { type DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
+import { type IDashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import { type IDashboardLayoutItemKeyGetter } from "./interfaces.js";
 import {
@@ -28,7 +28,7 @@ export function DashboardLayoutGridRowEdit<TWidget>({
     items,
     renderMode,
     itemsInRowsByIndex,
-}: DashboardLayoutGridRowProps<TWidget> & {
+}: IDashboardLayoutGridRowProps<TWidget> & {
     itemsInRowsByIndex: [number, IDashboardLayoutItemFacade<TWidget>[]][];
 }): ReactElement {
     const screen = useScreenSize();

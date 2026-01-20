@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -28,7 +28,7 @@ export const useGetSupportedMeasures = (insight: IInsight | undefined): AlertMet
     const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(undefined);
     useEffect(() => {
         if (insight) {
-            fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
+            void fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
         }
     }, [insight, locale]);
     return useMemo(

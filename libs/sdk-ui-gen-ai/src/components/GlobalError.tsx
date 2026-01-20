@@ -5,7 +5,7 @@ import { type ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Button, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { Button, UiCopyButton, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type GlobalErrorProps = {
     errorMessage?: string;
@@ -27,9 +27,6 @@ export function GlobalError({
     clearError,
 }: GlobalErrorProps) {
     const intl = useIntl();
-    const onCopyTraceId = () => {
-        void navigator.clipboard.writeText(errorTraceId ?? "");
-    };
 
     const [showMore, setShowMore] = useState(false);
     const hasShowMoreButton = Boolean(errorDetails && !showMore);
@@ -94,12 +91,9 @@ export function GlobalError({
                         </span>{" "}
                         {errorTraceId}
                     </div>
-                    <UiIconButton
+                    <UiCopyButton
                         label={intl.formatMessage({ id: "gd.gen-ai.global-error.traceId.copy" })}
-                        icon="copy"
-                        size="small"
-                        variant="tertiary"
-                        onClick={onCopyTraceId}
+                        clipboardContent={errorTraceId ?? ""}
                     />
                 </div>
             ) : null}

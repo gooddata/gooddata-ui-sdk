@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
@@ -30,7 +31,7 @@ import {
     selectFilterContextFilters,
     selectIsInEditMode,
 } from "../../model/store/index.js";
-import { type QueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
+import { type IQueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
 import { type FilterableDashboardWidget } from "../types/layoutTypes.js";
 
 /**
@@ -65,7 +66,7 @@ function useWidgetFiltersImpl(
     } = useNonIgnoredFilters(widget);
 
     const { run: runFiltersQuery, error } = useDashboardQueryProcessing<
-        QueryWidgetFilters,
+        IQueryWidgetFilters,
         IFilter[],
         Parameters<typeof queryWidgetFilters>
     >({

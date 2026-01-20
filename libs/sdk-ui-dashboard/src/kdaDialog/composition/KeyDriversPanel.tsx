@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useId } from "react";
 
@@ -18,15 +18,15 @@ import {
 import { KeyDriverItem } from "../components/items/KeyDriverItem.js";
 import { SummaryItem } from "../components/items/SummaryItem.js";
 import { useSignificantDrives } from "../hooks/useDriversList.js";
-import { type KdaState } from "../internalTypes.js";
+import { type IKdaState } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
-export interface KeyDriversPanelProps {
+export interface IKeyDriversPanelProps {
     detailsId: string;
     loading?: boolean;
 }
 
-export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
+export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
     const intl = useIntl();
     const listTitleId = useId();
     const listId = useId();
@@ -198,6 +198,6 @@ export function KeyDriversPanel({ loading, detailsId }: KeyDriversPanelProps) {
     );
 }
 
-function getSelectedItem(state: KdaState) {
+function getSelectedItem(state: IKdaState) {
     return typeof state.selectedItem === "string" ? undefined : state.selectedItem.id;
 }

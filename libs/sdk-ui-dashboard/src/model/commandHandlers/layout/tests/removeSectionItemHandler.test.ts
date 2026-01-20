@@ -1,18 +1,18 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
-    type RemoveSectionItem,
+    type IRemoveSectionItem,
     eagerRemoveSectionItem,
     removeSectionItem,
     undoLayoutChanges,
 } from "../../../commands/layout.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardLayoutChanged,
-    type DashboardLayoutSectionItemRemoved,
-    type DashboardLayoutSectionRemoved,
+    type IDashboardCommandFailed,
+    type IDashboardLayoutChanged,
+    type IDashboardLayoutSectionItemRemoved,
+    type IDashboardLayoutSectionRemoved,
 } from "../../../events/index.js";
 import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -35,7 +35,7 @@ describe("remove layout section item handler", () => {
 
         it("should fail if bad section index specified", async () => {
             const layout = selectLayout(Tester.state());
-            const fail: DashboardCommandFailed<RemoveSectionItem> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IRemoveSectionItem> = await Tester.dispatchAndWaitFor(
                 removeSectionItem(layout.sections.length, 0, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -45,7 +45,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should fail if bad item index specified", async () => {
-            const fail: DashboardCommandFailed<RemoveSectionItem> = await Tester.dispatchAndWaitFor(
+            const fail: IDashboardCommandFailed<IRemoveSectionItem> = await Tester.dispatchAndWaitFor(
                 removeSectionItem(0, 4, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -70,7 +70,7 @@ describe("remove layout section item handler", () => {
         const [ThirdSectionFirstItem] = ComplexDashboardWithReferences.dashboard.layout!.sections[2].items;
 
         it("should remove first item from a section", async () => {
-            const event: DashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
                 removeSectionItem(1, 0, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
             );
@@ -81,7 +81,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should remove last item from a section", async () => {
-            const event: DashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
                 removeSectionItem(1, 1, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
             );
@@ -92,7 +92,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should remove item from a section and leave the section empty", async () => {
-            const event: DashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
                 removeSectionItem(2, 0, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
             );
@@ -103,12 +103,12 @@ describe("remove layout section item handler", () => {
         });
 
         it("should eagerly remove last remaining item from a section and remove section", async () => {
-            const event: DashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
                 eagerRemoveSectionItem(2, 0, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
             );
 
-            const sectionRemovedEvent: DashboardLayoutSectionRemoved = await Tester.waitFor(
+            const sectionRemovedEvent: IDashboardLayoutSectionRemoved = await Tester.waitFor(
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
             );
 
@@ -120,7 +120,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should not eagerly remove section if it still has some items remaining", async () => {
-            const event: DashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
                 eagerRemoveSectionItem(1, 1, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
             );
@@ -132,7 +132,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should stash item that was removed", async () => {
-            const event: DashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
                 removeSectionItem(2, 0, TestStash),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
             );
@@ -143,7 +143,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should stash item that was removed during eager removal", async () => {
-            const event: DashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionItemRemoved = await Tester.dispatchAndWaitFor(
                 eagerRemoveSectionItem(2, 0, TestStash),
                 "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
             );
@@ -156,7 +156,7 @@ describe("remove layout section item handler", () => {
         it("should be undoable when doing single eager removal", async () => {
             Tester.dispatch(eagerRemoveSectionItem(2, 0, undefined, TestCorrelation));
 
-            const removalUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const removalUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -171,14 +171,14 @@ describe("remove layout section item handler", () => {
             Tester.dispatch(eagerRemoveSectionItem(1, 0, undefined, TestCorrelation));
             Tester.dispatch(eagerRemoveSectionItem(1, 0, undefined, TestCorrelation));
 
-            const lastRemoveUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const lastRemoveUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
             expect(lastRemoveUndone.payload.layout.sections[1]).toBeDefined();
             expect(lastRemoveUndone.payload.layout.sections[1].items).toEqual([SecondSectionSecondItem]);
 
-            const firstRemoveUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const firstRemoveUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );

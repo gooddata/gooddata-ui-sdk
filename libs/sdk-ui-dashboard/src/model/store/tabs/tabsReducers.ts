@@ -1,22 +1,22 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { initializeFilterContext } from "./filterContext/filterContextUtils.js";
-import { type TabState, type TabsState } from "./tabsState.js";
+import { type ITabState, type ITabsState } from "./tabsState.js";
 
 /**
  * @alpha
  */
-export type TabsReducer<A extends Action> = CaseReducer<TabsState, A>;
+export type TabsReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 type SetTabsPayload = {
     /**
      * Array of tabs with their configurations.
      */
-    tabs?: TabState[];
+    tabs?: ITabState[];
 
     /**
      * Local identifier of the currently active tab.
@@ -28,7 +28,7 @@ type SetTabsPayload = {
  * Applies initialization logic to a tab's filterContext if present.
  * Ensures filters have local identifiers and proper ordering.
  */
-function initializeTabFilterContext(tab: TabState): TabState {
+function initializeTabFilterContext(tab: ITabState): ITabState {
     if (!tab.filterContext?.filterContextDefinition) {
         return tab;
     }
@@ -84,7 +84,7 @@ const setActiveTabLocalIdentifier: TabsReducer<PayloadAction<string | undefined>
  * Updates a specific tab by identifier.
  * Applies initialization logic to ensure the tab's state is properly structured.
  */
-const updateTab: TabsReducer<PayloadAction<TabState>> = (state, action) => {
+const updateTab: TabsReducer<PayloadAction<ITabState>> = (state, action) => {
     const updatedTab = action.payload;
     if (state.tabs) {
         const index = state.tabs.findIndex((tab) => tab.localIdentifier === updatedTab.localIdentifier);
@@ -116,7 +116,7 @@ const clearTabs: TabsReducer<PayloadAction> = (state) => {
  * Payload of the {@link SetDashboardAttributeFilterConfigDisplayAsLabel} command.
  * @alpha
  */
-export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
+export interface ISetDashboardAttributeFilterConfigDisplayAsLabelPayload {
     /**
      * Local identifier of the filter to change display as label (= display form).
      */

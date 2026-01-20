@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -9,7 +9,7 @@ export const noOnlyTests: IConfiguration<"no-only-tests"> = {
             version: "2.6.0",
         },
     ],
-    plugin: "no-only-tests",
+    plugins: ["no-only-tests"],
     rules: {
         "no-only-tests/no-only-tests": ["error", { block: ["fixture"], focus: ["only"] }],
     },

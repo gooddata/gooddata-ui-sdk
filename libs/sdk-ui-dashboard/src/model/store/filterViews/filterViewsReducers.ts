@@ -1,12 +1,12 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { type FilterViewsState, type IFilterViews } from "./filterViewsState.js";
+import { type IFilterViews, type IFilterViewsState } from "./filterViewsState.js";
 
-type FilterViewsReducer<A extends Action> = CaseReducer<FilterViewsState, A>;
+type FilterViewsReducer<A extends Action> = CaseReducer<IFilterViewsState, A>;
 
 const setFilterViews: FilterViewsReducer<PayloadAction<IFilterViews>> = (state, action) => {
     state.filterViews = [

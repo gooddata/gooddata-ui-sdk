@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { useCallback, useEffect, useState } from "react";
 
 import {
@@ -25,7 +26,7 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
 
     useEffect(() => {
         if (execResult) {
-            execResult.executionResult?.readAll().then((data) => {
+            void execResult.executionResult?.readAll().then((data) => {
                 setDataView(DataViewFacade.for(data));
                 setIsResultLoading(false);
             });

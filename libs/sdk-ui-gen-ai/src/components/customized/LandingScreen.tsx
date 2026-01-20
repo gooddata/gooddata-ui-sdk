@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ComponentType, type FC } from "react";
 
@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 import { IconChatBubble, IconNewVisualization, IconSearch } from "@gooddata/sdk-ui-kit";
 
+import { DefaultLandingContainer, DefaultLandingQuestions } from "./LandingContainer.js";
 import { DefaultLandingQuestion } from "./LandingQuestion.js";
 import { DefaultLandingTitle, DefaultLandingTitleAscent } from "./LandingTitle.js";
 
@@ -36,9 +37,17 @@ const quickOptions = [
  */
 export type LandingScreenProps = {
     LandingScreen?: ComponentType;
+    isFullscreen?: boolean;
+    isBigScreen?: boolean;
+    isSmallScreen?: boolean;
 };
 
-function LandingScreenComponent({ LandingScreen }: LandingScreenProps) {
+function LandingScreenComponent({
+    LandingScreen,
+    isBigScreen,
+    isSmallScreen,
+    isFullscreen,
+}: LandingScreenProps) {
     const intl = useIntl();
 
     return (
@@ -46,7 +55,11 @@ function LandingScreenComponent({ LandingScreen }: LandingScreenProps) {
             {LandingScreen ? (
                 <LandingScreen />
             ) : (
-                <>
+                <DefaultLandingContainer
+                    isFullscreen={isFullscreen}
+                    isBigScreen={isBigScreen}
+                    isSmallScreen={isSmallScreen}
+                >
                     <DefaultLandingTitle>
                         <DefaultLandingTitleAscent>
                             <FormattedMessage id="gd.gen-ai.welcome.line-1" />
@@ -54,16 +67,22 @@ function LandingScreenComponent({ LandingScreen }: LandingScreenProps) {
                         <br />
                         <FormattedMessage id="gd.gen-ai.welcome.line-2" />
                     </DefaultLandingTitle>
-                    {quickOptions.map((option) => (
-                        <DefaultLandingQuestion
-                            key={option.title.id}
-                            icon={<option.Icon width={18} height={18} ariaHidden />}
-                            title={intl.formatMessage(option.title)}
-                            question={intl.formatMessage(option.question)}
-                            answer={intl.formatMessage(option.answer)}
-                        />
-                    ))}
-                </>
+                    <DefaultLandingQuestions
+                        isFullscreen={isFullscreen}
+                        isBigScreen={isBigScreen}
+                        isSmallScreen={isSmallScreen}
+                    >
+                        {quickOptions.map((option) => (
+                            <DefaultLandingQuestion
+                                key={option.title.id}
+                                icon={<option.Icon width={18} height={18} ariaHidden />}
+                                title={intl.formatMessage(option.title)}
+                                question={intl.formatMessage(option.question)}
+                                answer={intl.formatMessage(option.answer)}
+                            />
+                        ))}
+                    </DefaultLandingQuestions>
+                </DefaultLandingContainer>
             )}
         </div>
     );

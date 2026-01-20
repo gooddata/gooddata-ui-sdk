@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { readFileSync, writeFileSync } from "fs";
 
@@ -38,7 +38,13 @@ function applyConfiguration(eslintConfiguration: IEslintConfiguration, configura
     const newConfiguration: IEslintConfiguration = structuredClone(eslintConfiguration);
 
     if (configuration.parser) newConfiguration.parser = configuration.parser;
-    if (configuration.plugin) newConfiguration.plugins?.push(configuration.plugin);
+    if (configuration.plugins) {
+        for (const plugin of configuration.plugins) {
+            if (!newConfiguration.plugins?.includes(plugin)) {
+                newConfiguration.plugins?.push(plugin);
+            }
+        }
+    }
     if (configuration.extends)
         newConfiguration.extends = [...newConfiguration.extends, ...configuration.extends];
     if (configuration.parserOptions) newConfiguration.parserOptions = configuration.parserOptions;

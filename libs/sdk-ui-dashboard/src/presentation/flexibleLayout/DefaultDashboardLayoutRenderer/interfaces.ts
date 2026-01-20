@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -19,7 +19,7 @@ import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
-import { type DashboardFocusObject } from "../../../model/index.js";
+import { type IDashboardFocusObject } from "../../../model/index.js";
 import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
 import { type CommonExportDataAttributes, type HeaderExportData } from "../../export/index.js";
 
@@ -434,7 +434,7 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     /**
      * Dashboard focus object.
      */
-    focusObject?: DashboardFocusObject;
+    focusObject?: IDashboardFocusObject;
 
     /**
      * The size of layout item in which the layout is nested. Undefined, when the layout is the root layout.
@@ -451,7 +451,7 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      */
     exportTransformer?: <TWidget>(
         layout: IDashboardLayout<TWidget>,
-        focusObject?: DashboardFocusObject,
+        focusObject?: IDashboardFocusObject,
     ) => IDashboardLayout<TWidget> | undefined;
 }
 

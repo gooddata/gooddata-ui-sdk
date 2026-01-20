@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { type AddDrillTargets } from "../../commands/drillTargets.js";
-import { type DrillTargetsAdded, drillTargetsAdded } from "../../events/drillTargets.js";
+import { type IAddDrillTargets } from "../../commands/drillTargets.js";
+import { type IDrillTargetsAdded, drillTargetsAdded } from "../../events/drillTargets.js";
 import { drillTargetsActions } from "../../store/drillTargets/index.js";
 import { selectIsInEditMode } from "../../store/renderMode/renderModeSelectors.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -15,8 +15,8 @@ import { validateExistingInsightWidget } from "../widgets/validation/widgetValid
 
 export function* addDrillTargetsHandler(
     ctx: DashboardContext,
-    cmd: AddDrillTargets,
-): SagaIterator<DrillTargetsAdded> {
+    cmd: IAddDrillTargets,
+): SagaIterator<IDrillTargetsAdded> {
     const {
         payload: { availableDrillTargets },
         correlationId,

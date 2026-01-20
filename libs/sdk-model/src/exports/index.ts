@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -28,6 +28,7 @@ export interface IExportDefinitionDashboardSettings {
 export interface IExportDefinitionVisualizationObjectSettings {
     mergeHeaders?: boolean;
     exportInfo?: boolean;
+    pageSize?: "A3" | "A4" | "LETTER";
     orientation?: "portrait" | "landscape";
 }
 

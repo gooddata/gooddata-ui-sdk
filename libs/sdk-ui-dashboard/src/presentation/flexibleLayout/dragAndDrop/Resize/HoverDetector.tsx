@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, useEffect, useRef } from "react";
 
@@ -6,12 +6,12 @@ import { type ObjRef } from "@gooddata/sdk-model";
 
 import { HoveredWidgetContext } from "../../../dragAndDrop/index.js";
 
-interface HoverDetectorProps {
+interface IHoverDetectorProps {
     widgetRef: ObjRef;
     children?: ReactNode;
 }
 
-export function HoverDetector({ widgetRef, children }: HoverDetectorProps) {
+export function HoverDetector({ widgetRef, children }: IHoverDetectorProps) {
     const { addHoveredWidget, removeHoveredWidget } = HoveredWidgetContext.useContextStoreValues([
         "addHoveredWidget",
         "removeHoveredWidget",

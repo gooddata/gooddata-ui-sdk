@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
@@ -7,12 +8,12 @@ import {
 /**
  * @alpha
  */
-export interface NotificationChannelsState {
+export interface INotificationChannelsState {
     notificationChannelsCount: number;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 }
 
-export const notificationChannelsInitialState: NotificationChannelsState = {
+export const notificationChannelsInitialState: INotificationChannelsState = {
     notificationChannelsCount: 0,
     notificationChannels: [],
 };

@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { exportDashboardToPdf } from "../../../commands/index.js";
-import { type DashboardExportToPdfResolved } from "../../../events/index.js";
+import { type IDashboardExportToPdfResolved } from "../../../events/index.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
@@ -17,7 +18,7 @@ describe("export dashboard to PDF handler", () => {
 
     it("should emit event when dashboard successfully exported", async () => {
         Tester.dispatch(exportDashboardToPdf());
-        const event: DashboardExportToPdfResolved = await Tester.waitFor("GDC.DASH/EVT.EXPORT.PDF.RESOLVED");
+        const event: IDashboardExportToPdfResolved = await Tester.waitFor("GDC.DASH/EVT.EXPORT.PDF.RESOLVED");
 
         expect(event.payload.resultUri).toBeDefined();
     });

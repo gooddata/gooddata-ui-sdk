@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useEffect, useState } from "react";
 
@@ -147,7 +147,7 @@ export function AttributeDisplayFormParameterDetail({
         };
 
         if (showValues && supportsEnumeration) {
-            getValues();
+            void getValues();
         } else {
             setIsLoading(false);
         }

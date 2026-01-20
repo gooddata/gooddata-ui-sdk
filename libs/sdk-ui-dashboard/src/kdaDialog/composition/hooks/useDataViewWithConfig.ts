@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -7,11 +7,11 @@ import { useIntl } from "react-intl";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { selectColorPalette, selectSettings, useDashboardSelector } from "../../../model/index.js";
-import { type KdaItem, type KdaItemGroup } from "../../internalTypes.js";
+import { type IKdaItem, type IKdaItemGroup } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { createConfig, createDataView } from "../data/dataview.js";
 
-export function useDataViewWithConfig(group: KdaItemGroup | null, item: KdaItem | null) {
+export function useDataViewWithConfig(group: IKdaItemGroup | null, item: IKdaItem | null) {
     const intl = useIntl();
     const workspace = useWorkspaceStrict();
     const colorPalette = useDashboardSelector(selectColorPalette);

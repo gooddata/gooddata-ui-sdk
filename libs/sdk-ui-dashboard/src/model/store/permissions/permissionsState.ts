@@ -1,12 +1,12 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 /**
  * @public
  */
-export interface PermissionsState {
+export type PermissionsState = {
     permissions?: IWorkspacePermissions;
-}
+};
 
 export const permissionsInitialState: PermissionsState = { permissions: undefined };

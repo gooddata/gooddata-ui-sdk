@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IDashboard, idRef, insightRef } from "@gooddata/sdk-model";
@@ -7,7 +8,7 @@ import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultF
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import { EmptyDashboardLayout } from "../../commandHandlers/dashboard/common/dashboardInitialize.js";
 import { addLayoutSection } from "../../commands/index.js";
-import { type InsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
+import { type IInsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     EmptyDashboardIdentifier,
@@ -59,7 +60,7 @@ describe("query insight attributes meta", () => {
             "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
         );
 
-        const result: InsightAttributesMeta = await Tester.query(
+        const result: IInsightAttributesMeta = await Tester.query(
             queryInsightAttributesMeta(insightRef(PivotTableWithRowAndColumnAttributes)),
         );
 
@@ -76,7 +77,7 @@ describe("query insight attributes meta", () => {
             "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
         );
 
-        const result: InsightAttributesMeta = await Tester.query(
+        const result: IInsightAttributesMeta = await Tester.query(
             queryInsightAttributesMeta(insightRef(TreemapWithSingleMeasureAndViewByFilteredToOneElement)),
         );
 
@@ -93,7 +94,7 @@ describe("query insight attributes meta", () => {
             "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
         );
 
-        const result: InsightAttributesMeta = await Tester.query(
+        const result: IInsightAttributesMeta = await Tester.query(
             queryInsightAttributesMeta(insightRef(TreemapWithOneMeasureAndViewByDateAndSegmentByDate)),
         );
 

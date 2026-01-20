@@ -8,7 +8,7 @@ import { type IInputPureProps, Input } from "@gooddata/sdk-ui-kit";
 import { getDescription } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import { type AlertMetric } from "../../../../alerting/types.js";
 
-export interface AlertTitleProps {
+export interface IAlertTitleProps {
     id?: string;
     measures: AlertMetric[];
     alert: IAutomationMetadataObject | undefined;
@@ -16,7 +16,7 @@ export interface AlertTitleProps {
     onChange: IInputPureProps["onChange"];
 }
 
-export function AlertTitle({ id, alert, measures, separators, onChange }: AlertTitleProps) {
+export function AlertTitle({ id, alert, measures, separators, onChange }: IAlertTitleProps) {
     const intl = useIntl();
     const description = getDescription(intl, measures, alert, separators);
 

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode, type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -24,7 +24,7 @@ import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 import {
     applyFilterContextWorkingSelection,
-    isDashboardFilterContextSelectionReseted,
+    isDashboardFilterContextSelectionReset,
     selectEnableFilterViews,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsInEditMode,
@@ -265,7 +265,7 @@ function MeasuredDiv({
     // Listen for filter context working selection reset events
     useEffect(() => {
         const handler = {
-            eval: isDashboardFilterContextSelectionReseted,
+            eval: isDashboardFilterContextSelectionReset,
             handler: () => {
                 moveToFilterRegion();
             },

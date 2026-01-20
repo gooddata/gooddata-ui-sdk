@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type IAutomationMetadataObject,
@@ -8,10 +8,10 @@ import {
 import { type IDashboardCommand } from "./base.js";
 
 /**
- * Payload of the {@link CreateAlert} command.
+ * Payload of the {@link ICreateAlert} command.
  * @beta
  */
-export interface CreateAlertPayload {
+export interface ICreateAlertPayload {
     /**
      * The alert to be created.
      */
@@ -23,9 +23,9 @@ export interface CreateAlertPayload {
  *
  * @beta
  */
-export interface CreateAlert extends IDashboardCommand {
+export interface ICreateAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.CREATE";
-    readonly payload: CreateAlertPayload;
+    readonly payload: ICreateAlertPayload;
 }
 
 /**
@@ -36,7 +36,10 @@ export interface CreateAlert extends IDashboardCommand {
  *  events that will be emitted during the command processing
  * @beta
  */
-export function createAlert(alert: IAutomationMetadataObjectDefinition, correlationId?: string): CreateAlert {
+export function createAlert(
+    alert: IAutomationMetadataObjectDefinition,
+    correlationId?: string,
+): ICreateAlert {
     return {
         type: "GDC.DASH/CMD.ALERT.CREATE",
         correlationId,
@@ -51,10 +54,10 @@ export function createAlert(alert: IAutomationMetadataObjectDefinition, correlat
 //
 
 /**
- * Payload of the {@link SaveAlert} command.
+ * Payload of the {@link ISaveAlert} command.
  * @beta
  */
-export interface SaveAlertPayload {
+export interface ISaveAlertPayload {
     /**
      * The alert to be saved.
      */
@@ -66,9 +69,9 @@ export interface SaveAlertPayload {
  *
  * @beta
  */
-export interface SaveAlert extends IDashboardCommand {
+export interface ISaveAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.SAVE";
-    readonly payload: SaveAlertPayload;
+    readonly payload: ISaveAlertPayload;
 }
 
 /**
@@ -80,7 +83,7 @@ export interface SaveAlert extends IDashboardCommand {
 
  * @beta
  */
-export function saveAlert(alert: IAutomationMetadataObject, correlationId?: string): SaveAlert {
+export function saveAlert(alert: IAutomationMetadataObject, correlationId?: string): ISaveAlert {
     return {
         type: "GDC.DASH/CMD.ALERT.SAVE",
         correlationId,

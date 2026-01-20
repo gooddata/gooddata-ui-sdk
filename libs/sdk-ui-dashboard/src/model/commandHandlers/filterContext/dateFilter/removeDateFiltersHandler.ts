@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -8,7 +8,7 @@ import { invariant } from "ts-invariant";
 
 import { areObjRefsEqual, isUriRef, serializeObjRef } from "@gooddata/sdk-model";
 
-import { type RemoveDateFilters } from "../../../commands/filters.js";
+import { type IRemoveDateFilters } from "../../../commands/filters.js";
 import { dateFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -20,7 +20,10 @@ import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
-export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDateFilters): SagaIterator<void> {
+export function* removeDateFiltersHandler(
+    ctx: DashboardContext,
+    cmd: IRemoveDateFilters,
+): SagaIterator<void> {
     const { dataSets } = cmd.payload;
 
     const allDateFiltersWithDimension: ReturnType<typeof selectFilterContextDateFiltersWithDimension> =
@@ -85,7 +88,7 @@ export function* removeDateFiltersHandler(ctx: DashboardContext, cmd: RemoveDate
 
         yield put(batch);
 
-        yield dispatchDashboardEvent(dateFilterRemoved(ctx, removedFilter!, cmd.correlationId));
+        yield dispatchDashboardEvent(dateFilterRemoved(ctx, removedFilter, cmd.correlationId));
     }
 
     yield call(dispatchFilterContextChanged, ctx, cmd);

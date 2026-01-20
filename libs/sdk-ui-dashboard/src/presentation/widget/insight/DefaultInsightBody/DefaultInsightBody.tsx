@@ -1,8 +1,15 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
+import {
+    selectCatalogAttributes,
+    selectPreloadedAttributesWithReferences,
+    selectSettings,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
+import { getGeoDefaultDisplayFormRefs } from "../geoDefaultDisplayFormRefs.js";
 import { convertInsightToTableDefinition } from "../insightToTable.js";
 import { type IInsightBodyProps } from "../types.js";
 
@@ -14,8 +21,20 @@ import { type IInsightBodyProps } from "../types.js";
 export function DefaultInsightBody(props: IInsightBodyProps) {
     const { insight } = props;
     const { isWidgetAsTable } = useShowAsTable(props.widget);
-
-    const insightToShow = isWidgetAsTable ? convertInsightToTableDefinition(insight) : insight;
+    const settings = useDashboardSelector(selectSettings);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const preloadedAttributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
+    const defaultDisplayFormRefs = isWidgetAsTable
+        ? getGeoDefaultDisplayFormRefs(
+              insight,
+              settings,
+              catalogAttributes,
+              preloadedAttributesWithReferences,
+          )
+        : undefined;
+    const insightToShow = isWidgetAsTable
+        ? convertInsightToTableDefinition(insight, { settings, defaultDisplayFormRefs })
+        : insight;
 
     return <InsightRenderer {...props} insight={insightToShow} />;
 }

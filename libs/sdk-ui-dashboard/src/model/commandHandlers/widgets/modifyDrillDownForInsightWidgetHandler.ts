@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -8,9 +8,9 @@ import { getHierarchyRef } from "@gooddata/sdk-model";
 
 import { hierarchyToDrillDownReference } from "./common/drillDown.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type ModifyDrillDownForInsightWidget } from "../../commands/index.js";
+import { type IModifyDrillDownForInsightWidget } from "../../commands/index.js";
 import {
-    type DashboardInsightWidgetDrillDownModified,
+    type IDashboardInsightWidgetDrillDownModified,
     insightWidgetDrillDownModified,
 } from "../../events/insight.js";
 import { selectAllCatalogAttributeHierarchies } from "../../store/catalog/catalogSelectors.js";
@@ -21,8 +21,8 @@ import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchy
 
 export function* modifyDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: ModifyDrillDownForInsightWidget,
-): SagaIterator<DashboardInsightWidgetDrillDownModified> {
+    cmd: IModifyDrillDownForInsightWidget,
+): SagaIterator<IDashboardInsightWidgetDrillDownModified> {
     const {
         payload: {
             attributeIdentifier,

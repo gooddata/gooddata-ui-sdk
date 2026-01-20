@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { type IDashboardCommand } from "./base.js";
@@ -6,7 +7,7 @@ import { type IDashboardCommand } from "./base.js";
 /**
  * @beta
  */
-export interface SetShowWidgetAsTablePayload {
+export interface ISetShowWidgetAsTablePayload {
     ref: ObjRef;
     showAsTable: boolean;
 }
@@ -14,9 +15,9 @@ export interface SetShowWidgetAsTablePayload {
 /**
  * @beta
  */
-export interface SetShowWidgetAsTable extends IDashboardCommand {
+export interface ISetShowWidgetAsTable extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET";
-    readonly payload: SetShowWidgetAsTablePayload;
+    readonly payload: ISetShowWidgetAsTablePayload;
 }
 /**
  * Command to set a widget to show as table.
@@ -25,7 +26,7 @@ export interface SetShowWidgetAsTable extends IDashboardCommand {
  * @param showAsTable - whether to show as table or not
  * @beta
  */
-export function setShowWidgetAsTable(ref: ObjRef, showAsTable: boolean): SetShowWidgetAsTable {
+export function setShowWidgetAsTable(ref: ObjRef, showAsTable: boolean): ISetShowWidgetAsTable {
     return {
         type: "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET",
         payload: {

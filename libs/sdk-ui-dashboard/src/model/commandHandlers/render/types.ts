@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * @beta
  */
-export interface RenderingWorkerConfiguration {
+export interface IRenderingWorkerConfiguration {
     /**
      * Maximum time limit for rendering the dashboard.
      * Somehow in sync with limits of exporter

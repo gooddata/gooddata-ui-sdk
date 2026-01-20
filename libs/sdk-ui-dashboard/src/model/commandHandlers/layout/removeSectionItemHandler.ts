@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -15,7 +15,7 @@ import {
     serializeLayoutItemPath,
 } from "../../../_staging/layout/coordinates.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
-import { type RemoveSectionItem, type RemoveSectionItemByWidgetRef } from "../../commands/index.js";
+import { type IRemoveSectionItem, type IRemoveSectionItemByWidgetRef } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -49,8 +49,8 @@ function getResolvedSectionIndex(itemPath: ILayoutItemPath | undefined, sectionI
 
 type RemoveSectionItemContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: Omit<RemoveSectionItem, "type">;
-    originalCmd: RemoveSectionItem | RemoveSectionItemByWidgetRef;
+    readonly cmd: Omit<IRemoveSectionItem, "type">;
+    originalCmd: IRemoveSectionItem | IRemoveSectionItemByWidgetRef;
     readonly layout: ReturnType<typeof selectLayout>;
 };
 
@@ -120,14 +120,17 @@ function validateAndResolve(commandCtx: RemoveSectionItemContext) {
     }
 }
 
-export function* removeSectionItemHandler(ctx: DashboardContext, cmd: RemoveSectionItem): SagaIterator<void> {
+export function* removeSectionItemHandler(
+    ctx: DashboardContext,
+    cmd: IRemoveSectionItem,
+): SagaIterator<void> {
     return yield call(removeSectionItemSaga, ctx, cmd);
 }
 
 export function* removeSectionItemSaga(
     ctx: DashboardContext,
-    cmd: RemoveSectionItem | RemoveSectionItemContext["cmd"],
-    originalCmd: RemoveSectionItemByWidgetRef = cmd as any,
+    cmd: IRemoveSectionItem | RemoveSectionItemContext["cmd"],
+    originalCmd: IRemoveSectionItemByWidgetRef = cmd as any,
 ): SagaIterator<void> {
     const commandCtx: RemoveSectionItemContext = {
         ctx,

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type CaseReducer, type Draft, type PayloadAction } from "@reduxjs/toolkit";
 import { type Patch, applyPatches, enablePatches, original, produce, produceWithPatches } from "immer";
@@ -16,7 +16,7 @@ enablePatches();
  *
  * @alpha
  */
-export interface UndoEntry<T extends IDashboardCommand = IDashboardCommand> {
+export interface IUndoEntry<T extends IDashboardCommand = IDashboardCommand> {
     /**
      * Dashboard command that has initiated the state changes.
      */
@@ -38,17 +38,17 @@ export interface UndoEntry<T extends IDashboardCommand = IDashboardCommand> {
  *
  * @alpha
  */
-export interface UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> {
+export interface IUndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> {
     _undo: {
         undoPointer: number;
-        undoStack: UndoEntry<T>[];
+        undoStack: IUndoEntry<T>[];
     };
 }
 
 /**
  * Initial value of the undo state.
  */
-export const InitialUndoState: UndoEnhancedState<any> = {
+export const InitialUndoState: IUndoEnhancedState<any> = {
     _undo: {
         undoPointer: -1,
         undoStack: [],
@@ -60,7 +60,7 @@ export const InitialUndoState: UndoEnhancedState<any> = {
  *
  * * @internal
  */
-export interface UndoPayload<T extends IDashboardCommand = IDashboardCommand> {
+export interface IUndoPayload<T extends IDashboardCommand = IDashboardCommand> {
     /**
      * Undo-related information. If not specified, then no undo will be possible for the action
      */
@@ -81,10 +81,10 @@ export interface UndoPayload<T extends IDashboardCommand = IDashboardCommand> {
  * @internal
  */
 export type UndoEnabledReducer<
-    TState extends UndoEnhancedState<TCmd>,
+    TState extends IUndoEnhancedState<TCmd>,
     TPayload,
     TCmd extends IDashboardCommand = IDashboardCommand,
-> = CaseReducer<TState, PayloadAction<UndoPayload<TCmd> & TPayload>>;
+> = CaseReducer<TState, PayloadAction<IUndoPayload<TCmd> & TPayload>>;
 
 function unwrapProxy<T>(value: T): T | undefined {
     try {
@@ -94,7 +94,7 @@ function unwrapProxy<T>(value: T): T | undefined {
     }
 }
 
-function safeOriginal<TCmd extends IDashboardCommand, TState extends UndoEnhancedState<TCmd>>(
+function safeOriginal<TCmd extends IDashboardCommand, TState extends IUndoEnhancedState<TCmd>>(
     value: TState | Draft<TState>,
 ): TState {
     /*
@@ -114,12 +114,12 @@ function safeOriginal<TCmd extends IDashboardCommand, TState extends UndoEnhance
  * @param originalReducer - reducer to decorate
  */
 export const withUndo = <
-    TState extends UndoEnhancedState<TCmd>,
+    TState extends IUndoEnhancedState<TCmd>,
     TPayload,
     TCmd extends IDashboardCommand = IDashboardCommand,
 >(
     originalReducer: CaseReducer<TState, PayloadAction<TPayload>>,
-): UndoEnabledReducer<TState, UndoPayload<TCmd> & TPayload> => {
+): UndoEnabledReducer<TState, IUndoPayload<TCmd> & TPayload> => {
     return (state, action) => {
         const { undo } = action.payload;
 
@@ -159,12 +159,12 @@ type UndoActionPayload = {
  * Note that this reducer is not concerned by the transaction boundaries of command processing. It is responsibility
  * of the caller to create an undo action that
  */
-export const undoReducer = <TState extends UndoEnhancedState>(
+export const undoReducer = <TState extends IUndoEnhancedState>(
     state: Draft<TState>,
     action: PayloadAction<UndoActionPayload>,
 ): TState => {
     const { undoDownTo } = action.payload;
-    const originalState = safeOriginal(state) as TState;
+    const originalState = safeOriginal(state);
 
     const { _undo } = originalState;
 
@@ -190,7 +190,7 @@ export const undoReducer = <TState extends UndoEnhancedState>(
     /*
      * Apply patches to restore the state.
      */
-    const restoredState = applyPatches(originalState, allPatches) as TState;
+    const restoredState = applyPatches(originalState, allPatches);
 
     return produce(restoredState, (draft) => {
         draft._undo.undoPointer = undoDownTo - 1;
@@ -204,11 +204,11 @@ export const undoReducer = <TState extends UndoEnhancedState>(
  *
  * @param state - undo enhanced state whose undo to reset
  */
-export const resetUndoReducer = <TState extends UndoEnhancedState>(state: Draft<TState>): void => {
+export const resetUndoReducer = <TState extends IUndoEnhancedState>(state: Draft<TState>): void => {
     state._undo = InitialUndoState._undo;
 };
 
-export interface UndoableCommand<TCmd extends IDashboardCommand = IDashboardCommand> {
+export interface IUndoableCommand<TCmd extends IDashboardCommand = IDashboardCommand> {
     /**
      * Command that can be un-done.
      */
@@ -232,9 +232,9 @@ export interface UndoableCommand<TCmd extends IDashboardCommand = IDashboardComm
  * to roll back the command's effects.
  */
 export function createUndoableCommandsMapping<TCmd extends IDashboardCommand = IDashboardCommand>(
-    state: UndoEnhancedState<TCmd>,
-): UndoableCommand<TCmd>[] {
-    const result: UndoableCommand<TCmd>[] = [];
+    state: IUndoEnhancedState<TCmd>,
+): IUndoableCommand<TCmd>[] {
+    const result: IUndoableCommand<TCmd>[] = [];
     let lastCmdUuid: string = "";
     const seenCmdUuids = new Set<string>();
 

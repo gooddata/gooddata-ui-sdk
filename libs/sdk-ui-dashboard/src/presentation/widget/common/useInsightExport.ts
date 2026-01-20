@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -21,11 +21,11 @@ import { useImageExportHandler } from "./useImageExportHandler.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
 import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 import {
-    type DashboardInsightWidgetExportResolved,
-    type ExportImageInsightWidget,
-    type ExportInsightWidget,
-    type ExportRawInsightWidget,
-    type ExportSlidesInsightWidget,
+    type IDashboardInsightWidgetExportResolved,
+    type IExportImageInsightWidget,
+    type IExportInsightWidget,
+    type IExportRawInsightWidget,
+    type IExportSlidesInsightWidget,
     dispatchAndWaitFor,
     exportImageInsightWidget,
     exportInsightWidget,
@@ -49,14 +49,8 @@ import {
     useExportTabularPdfDialogContext,
     useExportXlsxDialogContext,
 } from "../../dashboardContexts/index.js";
+import { getDefaultPdfPageSize } from "../../scheduledEmail/utils/pdfPageSize.js";
 import { useExportToTabular } from "../../topBar/menuButton/useExportToTabular.js";
-
-function getDefaultPageSize(formatLocale?: string) {
-    const normalizedLocale = formatLocale?.replace("_", "-");
-    const region = normalizedLocale?.split("-")[1]?.toUpperCase();
-
-    return region === "US" || region === "CA" ? "LETTER" : "A4";
-}
 
 export const useInsightExport = (config: {
     title: string;
@@ -73,7 +67,7 @@ export const useInsightExport = (config: {
     const dispatch = useDashboardDispatch();
     const exportFunction = useCallback(
         (configToUse: IExtendedExportConfig) =>
-            dispatchAndWaitFor<ExportInsightWidget, DashboardInsightWidgetExportResolved>(
+            dispatchAndWaitFor<IExportInsightWidget, IDashboardInsightWidgetExportResolved>(
                 dispatch,
                 exportInsightWidget(
                     widgetRef,
@@ -95,7 +89,7 @@ export const useInsightExport = (config: {
 
     const exportRawFunction = useCallback(
         (title: string) =>
-            dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
+            dispatchAndWaitFor<IExportRawInsightWidget, IDashboardInsightWidgetExportResolved>(
                 dispatch,
                 exportRawInsightWidget(widgetRef, widget!, insight!, title, uuid()),
             ).then((result) => result.payload.result),
@@ -105,9 +99,9 @@ export const useInsightExport = (config: {
 
     const exportSlidesFunction = useCallback(
         (title: string, exportType: "pdf" | "pptx") =>
-            dispatchAndWaitFor<ExportSlidesInsightWidget, DashboardInsightWidgetExportResolved>(
+            dispatchAndWaitFor<IExportSlidesInsightWidget, IDashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportSlidesInsightWidget(widgetRef!, title, exportType, uuid()),
+                exportSlidesInsightWidget(widgetRef, title, exportType, uuid()),
             ).then((result) => result.payload.result),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef],
@@ -115,9 +109,9 @@ export const useInsightExport = (config: {
 
     const exportImageFunction = useCallback(
         (title: string) =>
-            dispatchAndWaitFor<ExportImageInsightWidget, DashboardInsightWidgetExportResolved>(
+            dispatchAndWaitFor<IExportImageInsightWidget, IDashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportImageInsightWidget(widgetRef!, title, uuid()),
+                exportImageInsightWidget(widgetRef, title, uuid()),
             ).then((result) => result.payload.result),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef],
@@ -144,7 +138,7 @@ export const useInsightExport = (config: {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
-        exportHandler(exportFunction, { format: "csv", title }).finally(() => setIsExporting(false));
+        void exportHandler(exportFunction, { format: "csv", title }).finally(() => setIsExporting(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportFunction, setIsExporting, title]);
 
@@ -152,7 +146,7 @@ export const useInsightExport = (config: {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportRawFunction);
-        exportRawHandler(exportRawFunction, title).finally(() => setIsExporting(false));
+        void exportRawHandler(exportRawFunction, title).finally(() => setIsExporting(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportRawFunction, title]);
 
@@ -160,7 +154,7 @@ export const useInsightExport = (config: {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
-        exportSlidesHandler(exportSlidesFunction, title, "pptx").finally(() => setIsExporting(false));
+        void exportSlidesHandler(exportSlidesFunction, title, "pptx").finally(() => setIsExporting(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportSlidesFunction, title]);
 
@@ -168,7 +162,7 @@ export const useInsightExport = (config: {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
-        exportSlidesHandler(exportSlidesFunction, title, "pdf").finally(() => setIsExporting(false));
+        void exportSlidesHandler(exportSlidesFunction, title, "pdf").finally(() => setIsExporting(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportSlidesFunction, title]);
 
@@ -176,13 +170,13 @@ export const useInsightExport = (config: {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportImageFunction);
-        exportImageHandler(exportImageFunction, title).finally(() => setIsExporting(false));
+        void exportImageHandler(exportImageFunction, title).finally(() => setIsExporting(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exportImageFunction, title]);
 
     const { exportToTabular } = useExportToTabular(() => setIsExporting(false));
     const onExportPdfTabular = useCallback(() => {
-        const defaultPageSize = getDefaultPageSize(formatLocale);
+        const defaultPageSize = getDefaultPdfPageSize(formatLocale);
         if (enableNewTabularExport) {
             openPdfDialog({
                 onSubmit: ({ pageSize, pageOrientation, showInfoPage }) => {
@@ -205,7 +199,7 @@ export const useInsightExport = (config: {
                     closePdfDialog();
                     // if this bombs there is an issue with the logic enabling the buttons
                     invariant(exportFunction);
-                    exportHandler(exportFunction, {
+                    void exportHandler(exportFunction, {
                         format: "pdf",
                         title,
                         pdfConfiguration: { pageSize, pageOrientation },
@@ -269,7 +263,7 @@ export const useInsightExport = (config: {
                     // if this bombs there is an issue with the logic enabling the buttons
                     invariant(exportFunction);
                     closeXlsxDialog();
-                    exportHandler(exportFunction, {
+                    void exportHandler(exportFunction, {
                         format: "xlsx",
                         mergeHeaders,
                         includeFilterContext,

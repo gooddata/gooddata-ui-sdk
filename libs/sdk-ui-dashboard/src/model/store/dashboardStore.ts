@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type EnhancedStore, type Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
@@ -54,6 +54,7 @@ import { type DashboardContext, type PrivateDashboardContext } from "../types/co
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const createSagaMiddleware = defaultImport(defaultReduxSaga);
 
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
     "GDC.DASH/EVT.COMMAND.FAILED",
@@ -119,7 +120,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
  */
 export type DashboardStore = EnhancedStore<DashboardState>;
 
-export interface DashboardStoreEventing {
+export interface IDashboardStoreEventing {
     /**
      * Specify event handlers to register during the initialization.
      */
@@ -145,7 +146,7 @@ export interface DashboardStoreEventing {
     ) => void;
 }
 
-export interface DashboardStoreConfig {
+export interface IDashboardStoreConfig {
     /**
      * Specifies context that will be hammered into the saga middleware.
      *
@@ -180,7 +181,7 @@ export interface DashboardStoreConfig {
     /**
      * Eventing configuration to apply during store initialization.
      */
-    eventing?: DashboardStoreEventing;
+    eventing?: IDashboardStoreEventing;
 
     /**
      * Specify query service implementations.
@@ -234,7 +235,7 @@ function* rootSaga(
 /**
  * Fully configured and initialized dashboard store realized by redux and with redux-sagas.
  */
-export interface ReduxedDashboardStore {
+export interface IReduxedDashboardStore {
     store: DashboardStore;
     registerEventHandler: (handler: DashboardEventHandler) => void;
     unregisterEventHandler: (handler: DashboardEventHandler) => void;
@@ -287,7 +288,7 @@ function mergeQueryServices(
  *
  * @param config - runtime configuration to apply on the middlewares and the store
  */
-export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashboardStore {
+export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDashboardStore {
     const queryProcessing = createQueryProcessingModule(
         mergeQueryServices(AllQueryServices, config.queryServices),
     );

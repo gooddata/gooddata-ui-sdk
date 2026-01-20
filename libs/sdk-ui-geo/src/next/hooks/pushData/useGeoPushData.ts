@@ -8,6 +8,7 @@ import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { useGeoLayers } from "../../context/GeoLayersContext.js";
 import { useInitialExecution } from "../../context/InitialExecutionContext.js";
+import { normalizeAttributeDescriptorLocalIdentifier } from "../../layers/common/drillUtils.js";
 import { type IAvailableLegends } from "../../types/common/legends.js";
 import { type GeoLayerType } from "../../types/layers/index.js";
 
@@ -97,8 +98,26 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
     // We can't use layers as dependency because they are not stable across renders resulting in infinite loop
     const availableDrillTargets = useMemo(() => {
         const baseDrillTargets = getMultiLayerDrillTargets(layerDataViews, initialDataView);
+        if (!baseDrillTargets) {
+            return undefined;
+        }
+
+        const normalizedAttributes =
+            baseDrillTargets.attributes?.map((attributeTarget) => ({
+                ...attributeTarget,
+                attribute: normalizeAttributeDescriptorLocalIdentifier(attributeTarget.attribute),
+                intersectionAttributes: attributeTarget.intersectionAttributes.map(
+                    normalizeAttributeDescriptorLocalIdentifier,
+                ),
+            })) ?? [];
+
+        const normalizedDrillTargets = {
+            ...baseDrillTargets,
+            attributes: normalizedAttributes,
+        };
+
         // Enhance drill targets with geo-specific display form preference
-        return enhanceDrillTargetsWithGeoDisplayForm(baseDrillTargets, geoLayerType);
+        return enhanceDrillTargetsWithGeoDisplayForm(normalizedDrillTargets, geoLayerType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fingerprintsKey, initialDataView, geoLayerType]);
 

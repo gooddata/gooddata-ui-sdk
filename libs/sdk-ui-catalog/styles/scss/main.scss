@@ -75,6 +75,11 @@ $content-font-size: 14px;
     }
 
     &__filter {
+        &__body {
+            border-radius: 4px;
+            border: 1px solid kit-variables.$gd-border-color;
+        }
+
         &__search-bar {
             margin-top: 10px;
         }

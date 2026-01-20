@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -6,18 +6,18 @@ import { invariant } from "ts-invariant";
 import { type IDashboardDateFilterConfigItem, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import {
-    type SetDashboardDateFilterWithDimensionConfigModePayload,
-    type SetDateFilterConfigTitlePayload,
+    type ISetDashboardDateFilterWithDimensionConfigModePayload,
+    type ISetDateFilterConfigTitlePayload,
 } from "../../../../model/commands/dashboard.js";
-import { type TabsState, getActiveTab } from "../tabsState.js";
+import { type ITabsState, getActiveTab } from "../tabsState.js";
 
-type DateFilterConfigReducer<A extends Action> = CaseReducer<TabsState, A>;
+type DateFilterConfigReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 /**
  * Changes the config mode for the date filter given by its data seet.
  */
 const changeDateFilterConfigsMode: DateFilterConfigReducer<
-    PayloadAction<SetDashboardDateFilterWithDimensionConfigModePayload>
+    PayloadAction<ISetDashboardDateFilterWithDimensionConfigModePayload>
 > = (state, action) => {
     const { dataSet } = action.payload;
 
@@ -58,7 +58,7 @@ const changeDateFilterConfigsMode: DateFilterConfigReducer<
  * Changes the config title for the filter given by its data set.
  */
 const changeDateFilterConfigsTitle: DateFilterConfigReducer<
-    PayloadAction<SetDateFilterConfigTitlePayload>
+    PayloadAction<ISetDateFilterConfigTitlePayload>
 > = (state, action) => {
     const { dataSet } = action.payload;
     invariant(dataSet, "Date data set needs to be provided.");

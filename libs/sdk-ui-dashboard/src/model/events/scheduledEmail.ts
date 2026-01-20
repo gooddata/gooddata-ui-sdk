@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { type IDashboardEvent } from "./base.js";
@@ -6,10 +7,10 @@ import { eventGuard } from "./util.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link DashboardScheduledEmailCreated} event.
+ * Payload of the {@link IDashboardScheduledEmailCreated} event.
  * @beta
  */
-export interface DashboardScheduledEmailCreatedPayload {
+export interface IDashboardScheduledEmailCreatedPayload {
     /**
      * The scheduled email created.
      */
@@ -21,16 +22,16 @@ export interface DashboardScheduledEmailCreatedPayload {
  *
  * @beta
  */
-export interface DashboardScheduledEmailCreated extends IDashboardEvent {
+export interface IDashboardScheduledEmailCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
-    readonly payload: DashboardScheduledEmailCreatedPayload;
+    readonly payload: IDashboardScheduledEmailCreatedPayload;
 }
 
 export function scheduledEmailCreated(
     ctx: DashboardContext,
     scheduledEmail: IAutomationMetadataObject,
     correlationId?: string,
-): DashboardScheduledEmailCreated {
+): IDashboardScheduledEmailCreated {
     return {
         type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED",
         ctx,
@@ -42,12 +43,12 @@ export function scheduledEmailCreated(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardScheduledEmailCreated}.
+ * Tests whether the provided object is an instance of {@link IDashboardScheduledEmailCreated}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardScheduledEmailCreated = eventGuard<DashboardScheduledEmailCreated>(
+export const isDashboardScheduledEmailCreated = eventGuard<IDashboardScheduledEmailCreated>(
     "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED",
 );
 
@@ -56,14 +57,14 @@ export const isDashboardScheduledEmailCreated = eventGuard<DashboardScheduledEma
  *
  * @beta
  */
-export interface DashboardScheduledEmailSaved extends IDashboardEvent {
+export interface IDashboardScheduledEmailSaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED";
 }
 
 export function scheduledEmailSaved(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardScheduledEmailSaved {
+): IDashboardScheduledEmailSaved {
     return {
         type: "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED",
         ctx,
@@ -72,12 +73,12 @@ export function scheduledEmailSaved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardScheduledEmailSaved}.
+ * Tests whether the provided object is an instance of {@link IDashboardScheduledEmailSaved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardScheduledEmailSaved = eventGuard<DashboardScheduledEmailSaved>(
+export const isDashboardScheduledEmailSaved = eventGuard<IDashboardScheduledEmailSaved>(
     "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED",
 );
 
@@ -86,14 +87,14 @@ export const isDashboardScheduledEmailSaved = eventGuard<DashboardScheduledEmail
  *
  * @beta
  */
-export interface DashboardAutomationsRefreshed extends IDashboardEvent {
+export interface IDashboardAutomationsRefreshed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.AUTOMATIONS.REFRESHED";
 }
 
 export function automationsRefreshed(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardAutomationsRefreshed {
+): IDashboardAutomationsRefreshed {
     return {
         type: "GDC.DASH/EVT.AUTOMATIONS.REFRESHED",
         ctx,
@@ -102,11 +103,11 @@ export function automationsRefreshed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAutomationsRefreshed}.
+ * Tests whether the provided object is an instance of {@link IDashboardAutomationsRefreshed}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAutomationsRefreshed = eventGuard<DashboardAutomationsRefreshed>(
+export const isDashboardAutomationsRefreshed = eventGuard<IDashboardAutomationsRefreshed>(
     "GDC.DASH/EVT.AUTOMATIONS.REFRESHED",
 );

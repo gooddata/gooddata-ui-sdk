@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ICatalogFact, type ICatalogMeasure } from "@gooddata/sdk-model";
 
@@ -15,7 +15,7 @@ export interface IMetricsAndFacts {
 /**
  * @alpha
  */
-export interface QueryMetricsAndFacts extends IDashboardQuery {
+export interface IQueryMetricsAndFacts extends IDashboardQuery {
     type: "GDC.DASH/QUERY.METRICS_AND_FACTS";
 }
 
@@ -28,7 +28,7 @@ export interface QueryMetricsAndFacts extends IDashboardQuery {
  *
  * @alpha
  */
-export function queryMetricsAndFacts(correlationId?: string): QueryMetricsAndFacts {
+export function queryMetricsAndFacts(correlationId?: string): IQueryMetricsAndFacts {
     return {
         type: "GDC.DASH/QUERY.METRICS_AND_FACTS",
         correlationId,

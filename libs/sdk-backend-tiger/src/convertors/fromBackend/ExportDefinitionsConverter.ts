@@ -8,6 +8,7 @@ import {
     type AutomationAutomationSlidesExport,
     type AutomationAutomationTabularExport,
     type AutomationAutomationVisualExport,
+    type AutomationDashboardExportSettings,
     type JsonApiAutomationOutAttributesDashboardTabularExportsInner,
     type JsonApiAutomationOutAttributesRawExportsInner,
     type JsonApiExportDefinitionOutIncludes,
@@ -18,6 +19,7 @@ import {
 import {
     type FilterContextItem,
     type IExportDefinitionDashboardRequestPayload,
+    type IExportDefinitionDashboardSettings,
     type IExportDefinitionMetadataObject,
     type IExportDefinitionRequestPayload,
     type IExportDefinitionVisualizationObjectRequestPayload,
@@ -29,6 +31,37 @@ import {
 import { convertFilter } from "./afm/FilterConverter.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
+
+type AutomationDashboardExportPageOrientation = NonNullable<
+    AutomationDashboardExportSettings["pageOrientation"]
+>;
+
+const mapPageOrientationToLegacyOrientation = (
+    value?: AutomationDashboardExportPageOrientation,
+): "portrait" | "landscape" | undefined => {
+    if (value === "PORTRAIT") {
+        return "portrait";
+    }
+    if (value === "LANDSCAPE") {
+        return "landscape";
+    }
+    return undefined;
+};
+
+const normalizeExportDefinitionSettings = (
+    settings?: AutomationDashboardExportSettings,
+): IExportDefinitionVisualizationObjectSettings | IExportDefinitionDashboardSettings | undefined => {
+    if (!settings) {
+        return undefined;
+    }
+    const { pageOrientation, ...rest } = settings;
+    const orientation = mapPageOrientationToLegacyOrientation(pageOrientation);
+
+    return {
+        ...rest,
+        ...(orientation ? { orientation } : {}),
+    };
+};
 
 type MetadataObjectDefinition = {
     widget?: string;
@@ -74,6 +107,8 @@ export const convertDashboardTabularExportRequest = (
         },
     } = exportRequest;
 
+    const normalizedSettings = normalizeExportDefinitionSettings(settings);
+
     if (widgetIds && widgetIds.length > 0) {
         const widgetId = widgetIds[0];
 
@@ -81,7 +116,7 @@ export const convertDashboardTabularExportRequest = (
             type: "visualizationObject",
             fileName,
             format: format === "PDF" ? "PDF_TABULAR" : format,
-            settings,
+            settings: normalizedSettings,
             content: {
                 dashboard: dashboardId,
                 visualizationObject: widgetId ?? "",
@@ -106,7 +141,7 @@ export const convertDashboardTabularExportRequest = (
         type: "dashboard",
         fileName,
         format,
-        settings,
+        settings: normalizedSettings,
         content: {
             dashboard: dashboardId,
             filters: dashboardFiltersOverride?.map(cloneWithSanitizedIds) ?? undefined,
@@ -352,9 +387,11 @@ const convertExportDefinitionRequestPayload = (
         const filters = exportRequest.visualizationObjectCustomFilters as IFilter[];
         const filtersObj = filters ? { filters: filters.map(cloneWithSanitizedIds) } : {};
 
-        const { mergeHeaders, pdfPageSize } = exportRequest.settings ?? {};
+        const { mergeHeaders, pdfPageSize, pageOrientation } = exportRequest.settings ?? {};
         const orientation =
-            pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait";
+            pdfPageSize === "portrait" || pdfPageSize === "landscape"
+                ? pdfPageSize
+                : (mapPageOrientationToLegacyOrientation(pageOrientation) ?? "portrait");
         const settings: IExportDefinitionVisualizationObjectSettings = {
             ...(exportRequest.format === "PDF" ? { orientation } : {}),
             ...(mergeHeaders ? { mergeHeaders } : {}),

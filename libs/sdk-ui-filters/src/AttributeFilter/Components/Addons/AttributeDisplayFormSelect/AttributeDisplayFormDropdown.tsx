@@ -7,6 +7,7 @@ import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";
 import { AttributeDisplayFormSelectItem } from "./AttributeDisplayFormSelectItem.js";
+import { ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS } from "../../../constants.js";
 
 const ITEM_HEIGHT = 23;
 const ALIGN_POINTS: IAlignPoint[] = [
@@ -60,7 +61,7 @@ export function AttributeDisplayFormDropdown({
             )}
             renderBody={({ closeDropdown }) => (
                 <DropdownList
-                    className="gd-attribute-display-form-dropdown-body s-attribute-display-form-dropdown-body"
+                    className={`${ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS} s-attribute-display-form-dropdown-body`}
                     items={displayForms}
                     itemHeight={ITEM_HEIGHT}
                     renderItem={({ item }) => {

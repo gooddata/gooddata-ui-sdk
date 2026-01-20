@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IDashboardFilterView, type ObjRef } from "@gooddata/sdk-model";
 
@@ -13,9 +13,9 @@ export interface IFilterViews {
 /**
  * @alpha
  */
-export interface FilterViewsState {
+export interface IFilterViewsState {
     filterViews: IFilterViews[];
     isLoading: boolean;
 }
 
-export const filterViewsInitialState: FilterViewsState = { filterViews: [], isLoading: false };
+export const filterViewsInitialState: IFilterViewsState = { filterViews: [], isLoading: false };

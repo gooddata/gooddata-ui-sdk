@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -7,7 +7,7 @@ import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { type QueryConnectingAttributes } from "../queries/connectingAttributes.js";
+import { type IQueryConnectingAttributes } from "../queries/connectingAttributes.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
 import { selectAttributeFilterDisplayFormsMap } from "../store/index.js";
 import { type IConnectingAttribute } from "../types/attributeFilterTypes.js";
@@ -16,7 +16,7 @@ import { type DashboardContext } from "../types/commonTypes.js";
 export const QueryConnectingAttributesService = createCachedQueryService(
     "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES",
     queryService,
-    (query: QueryConnectingAttributes) => {
+    (query: IQueryConnectingAttributes) => {
         const {
             payload: { refs },
         } = query;
@@ -69,7 +69,7 @@ function* mapDisplayFormsToAttributes(refs: ObjRef[][]) {
 
 function* queryService(
     ctx: DashboardContext,
-    query: QueryConnectingAttributes,
+    query: IQueryConnectingAttributes,
 ): SagaIterator<IConnectingAttribute[][]> {
     const {
         payload: { refs },

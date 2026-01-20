@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type MutableRefObject } from "react";
 
@@ -62,6 +62,7 @@ export function AlertDestinationSelect({
                         accessibilityConfig={{
                             ariaLabel: accessibilityAriaLabel,
                             ariaExpanded: isOpen,
+                            popupType: "listbox",
                         }}
                         dropdownId={dropdownId}
                         isOpen={isOpen}

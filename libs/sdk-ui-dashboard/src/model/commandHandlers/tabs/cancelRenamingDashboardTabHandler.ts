@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { type CancelRenamingDashboardTab } from "../../commands/tabs.js";
+import { type ICancelRenamingDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardTabRenamingCanceled, dashboardTabRenamingCanceled } from "../../events/tabs.js";
+import { type IDashboardTabRenamingCanceled, dashboardTabRenamingCanceled } from "../../events/tabs.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -15,8 +15,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
  */
 export function* cancelRenamingDashboardTabHandler(
     ctx: DashboardContext,
-    cmd: CancelRenamingDashboardTab,
-): SagaIterator<DashboardTabRenamingCanceled> {
+    cmd: ICancelRenamingDashboardTab,
+): SagaIterator<IDashboardTabRenamingCanceled> {
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
     const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
         selectActiveTabLocalIdentifier,

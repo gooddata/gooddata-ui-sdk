@@ -1,13 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import { type ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { type DrillState } from "./drillState.js";
+import { type IDrillState } from "./drillState.js";
 import { type ICrossFilteringItem } from "./types.js";
 
-type DrillReducer<A extends Action> = CaseReducer<DrillState, A>;
+type DrillReducer<A extends Action> = CaseReducer<IDrillState, A>;
 
 type SetDrillableItemsPayload = { items: ExplicitDrill[]; tabId: string };
 

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type KeyboardEvent,
@@ -177,6 +177,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
                             ariaLabelledBy,
                             ariaDescribedBy,
                             ariaLabel: accessibilityDropdownButtonLabel,
+                            popupType: "listbox",
                         }}
                         value={formatTime(timeObj.h, timeObj.m, timeFormat)}
                         isOpen={isOpen}

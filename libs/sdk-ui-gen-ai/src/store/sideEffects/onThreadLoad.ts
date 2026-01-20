@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { call, cancelled, getContext, put, race, select, take } from "redux-saga/effects";
 
@@ -10,7 +10,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { interactionsToMessages } from "./converters/interactionsToMessages.js";
-import { extractError } from "./utils.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     cancelAsyncAction,
@@ -46,7 +45,7 @@ export function* onThreadLoad() {
             );
         }
     } catch (e) {
-        yield put(loadThreadErrorAction({ error: extractError(e) }));
+        yield put(loadThreadErrorAction({ error: e as Error }));
     }
 }
 

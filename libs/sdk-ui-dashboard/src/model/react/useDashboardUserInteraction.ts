@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -8,8 +9,8 @@ import {
     type AutomationInteractionData,
     type DateFilterInteractionType,
     type DescriptionTooltipOpenedData,
+    type ISavedFilterViewInteractionData,
     type NestedLayoutInteractionType,
-    type SavedFilterViewInteractionData,
     type ShareDialogInteractionData,
     type VisualizationSwitcherInteractionType,
     userInteractionTriggered,
@@ -116,7 +117,7 @@ export const useDashboardUserInteraction = () => {
     );
 
     const savedFilterViewInteraction = useCallback(
-        (eventData: SavedFilterViewInteractionData) => {
+        (eventData: ISavedFilterViewInteractionData) => {
             eventDispatch(
                 userInteractionTriggered({ interaction: "savedFilterViewInteraction", data: eventData }),
             );

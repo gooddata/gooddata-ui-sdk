@@ -1,10 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { useEffect, useMemo } from "react";
 
 import { type IAttributeOrMeasure, type ICatalogDateDataset } from "@gooddata/sdk-model";
 
 import {
-    type QueryAvailableDatasetsForItems,
+    type IQueryAvailableDatasetsForItems,
     queryAvailableDatasetsForItems,
     selectBackendCapabilities,
     selectEnableKDAttributeFilterDatesValidation,
@@ -30,7 +31,7 @@ export function useAvailableDatasetsForItems(items: IAttributeOrMeasure[]) {
         status: availableDatasetForItemsLoadingStatus,
         error: availableDatasetForItemsError,
     } = useDashboardQueryProcessing<
-        QueryAvailableDatasetsForItems,
+        IQueryAvailableDatasetsForItems,
         ICatalogDateDataset[],
         Parameters<typeof queryAvailableDatasetsForItems>
     >({

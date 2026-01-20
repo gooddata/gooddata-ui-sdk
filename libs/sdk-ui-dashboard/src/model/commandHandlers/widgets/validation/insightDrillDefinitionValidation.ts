@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    type InsightDrillDefinitionValidationData,
+    type IInsightDrillDefinitionValidationData,
     extractDisplayFormIdentifiers,
     extractInsightRefs,
     validateDrillDefinitionOrigin,
@@ -36,11 +36,11 @@ import {
     type DisplayFormResolutionResult,
     resolveDisplayFormMetadata,
 } from "../../../utils/displayFormResolver.js";
-import { type InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
+import { type IInsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
 
 export function validateDrillDefinition(
     drillDefinition: InsightDrillDefinition,
-    validationData: DrillDefinitionValidationData,
+    validationData: IDrillDefinitionValidationData,
     ctx: DashboardContext,
     cmd: IDashboardCommand,
 ): InsightDrillDefinition {
@@ -64,12 +64,12 @@ export function validateDrillDefinition(
     }
 
     // validate drill
-    const validationContext: InsightDrillDefinitionValidationData = {
+    const validationContext: IInsightDrillDefinitionValidationData = {
         widgetInsightAttributes: validationData.widgetInsightAttributes,
         dashboardsMap: validationData.accessibleDashboardMap,
         insightsMap: validationData.resolvedInsights.resolved,
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
-        availableDrillTargets: validationData.drillTargets.availableDrillTargets!,
+        availableDrillTargets: validationData.drillTargets.availableDrillTargets,
         inaccessibleDashboardsMap: validationData.inaccessibleDashboardsMap,
         currentDashboardRef: validationData.currentDashboardRef,
         currentDashboardTabs: validationData.currentDashboardTabs,
@@ -85,10 +85,10 @@ export function validateDrillDefinition(
     return item;
 }
 
-export interface DrillDefinitionValidationData {
+export interface IDrillDefinitionValidationData {
     widgetInsightAttributes: IAttribute[];
     drillTargets: IDrillTargets | undefined;
-    resolvedInsights: InsightResolutionResult;
+    resolvedInsights: IInsightResolutionResult;
     resolvedDisplayForms: DisplayFormResolutionResult;
     accessibleDashboardMap: ObjRefMap<IListedDashboard>;
     inaccessibleDashboardsMap: ObjRefMap<IInaccessibleDashboard>;
@@ -100,7 +100,7 @@ export function* getValidationData(
     widgetRef: ObjRef,
     drillsToModify: InsightDrillDefinition[],
     ctx: DashboardContext,
-): SagaIterator<DrillDefinitionValidationData> {
+): SagaIterator<IDrillDefinitionValidationData> {
     const widgetInsight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
         selectInsightByWidgetRef(widgetRef),
     );

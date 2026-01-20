@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     DataViewFacade,
     type GoodDataSdkError,
@@ -13,6 +13,8 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
+import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
+import { type IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 import { createExecutionsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
 
@@ -48,14 +50,46 @@ interface ILayerDataViewEntry {
     dataView: DataViewFacade;
 }
 
+async function prepareExecution(
+    layerExecution: ILayerExecutionRecord,
+    backend: IAnalyticalBackend,
+    workspace: string,
+): Promise<ILayerExecutionRecord["execution"]> {
+    const adapter = getLayerAdapter(layerExecution.layer.type);
+    if (!adapter.prepareExecution) {
+        return layerExecution.execution;
+    }
+
+    const context: IGeoAdapterContext = {
+        backend,
+        workspace,
+    };
+
+    try {
+        const preparedExecution: IPreparedExecution = await adapter.prepareExecution(
+            layerExecution.layer,
+            context,
+            layerExecution.execution,
+        );
+        return preparedExecution;
+    } catch {
+        return layerExecution.execution;
+    }
+}
+
 /**
  * Executes a single layer and returns its data view.
  *
  * @internal
  */
-async function executeLayerData(layerExecution: ILayerExecutionRecord): Promise<ILayerDataViewEntry> {
+async function executeLayerData(
+    layerExecution: ILayerExecutionRecord,
+    backend: IAnalyticalBackend,
+    workspace: string,
+): Promise<ILayerDataViewEntry> {
     try {
-        const executionResult = await layerExecution.execution.execute();
+        const execution = await prepareExecution(layerExecution, backend, workspace);
+        const executionResult = await execution.execute();
         const dataView = await executionResult.readAll();
         return {
             layerId: layerExecution.layerId,
@@ -71,8 +105,14 @@ async function executeLayerData(layerExecution: ILayerExecutionRecord): Promise<
  *
  * @internal
  */
-async function executeAllLayers(layerExecutions: ILayerExecutionRecord[]): Promise<ILayerDataViewEntry[]> {
-    return Promise.all(layerExecutions.map(executeLayerData));
+async function executeAllLayers(
+    layerExecutions: ILayerExecutionRecord[],
+    backend: IAnalyticalBackend,
+    workspace: string,
+): Promise<ILayerDataViewEntry[]> {
+    return Promise.all(
+        layerExecutions.map((layerExecution) => executeLayerData(layerExecution, backend, workspace)),
+    );
 }
 
 /**
@@ -115,7 +155,10 @@ export function useLayersData(
 
     const { result, status, error } = useCancelablePromise<ILayerDataViewEntry[], GoodDataSdkError>(
         {
-            promise: layerExecutions.length > 0 ? () => executeAllLayers(layerExecutions) : undefined,
+            promise:
+                layerExecutions.length > 0
+                    ? () => executeAllLayers(layerExecutions, resolvedBackend, resolvedWorkspace)
+                    : undefined,
         },
         [resolvedBackend, resolvedWorkspace, executionsFingerprint, layersStructureFingerprint],
     );

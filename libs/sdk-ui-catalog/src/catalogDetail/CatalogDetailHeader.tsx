@@ -4,7 +4,7 @@ import { type ReactNode, type RefObject, useImperativeHandle, useRef } from "rea
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { EditableLabel, UiCard } from "@gooddata/sdk-ui-kit";
+import { EditableLabel, UiCard, UiCopyButton } from "@gooddata/sdk-ui-kit";
 
 import { CatalogItemLockMemo, type ICatalogItem } from "../catalogItem/index.js";
 import { ObjectTypeIconMemo, ObjectTypeTooltip } from "../objectType/index.js";
@@ -144,6 +144,7 @@ export function CatalogDetailHeader({
                         </div>
                         <div className="gd-analytics-catalog-detail__card__header__row__content">
                             {item.identifier}
+                            <UiCopyButton clipboardContent={item.identifier} />
                         </div>
                     </div>
                 </div>

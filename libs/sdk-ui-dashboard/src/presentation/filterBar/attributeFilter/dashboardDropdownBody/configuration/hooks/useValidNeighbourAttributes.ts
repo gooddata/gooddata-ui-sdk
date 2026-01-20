@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
@@ -6,7 +6,7 @@ import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
-    type QueryConnectedAttributes,
+    type IQueryConnectedAttributes,
     queryConnectedAttributes,
     selectAttributeFilterDisplayFormsMap,
     selectSupportsSettingConnectingAttributes,
@@ -41,7 +41,7 @@ export const useValidNeighbourAttributes = (
         status: validAttributesStatus,
         error: validAttributesError,
     } = useDashboardQueryProcessing<
-        QueryConnectedAttributes,
+        IQueryConnectedAttributes,
         ObjRef[],
         Parameters<typeof queryConnectedAttributes>
     >({

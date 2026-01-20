@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IDashboardAttributeFilter,
@@ -25,7 +25,7 @@ import { type DashboardContext } from "../types/commonTypes.js";
  *
  * @public
  */
-export interface DashboardDateFilterSelectionChangedPayload {
+export type DashboardDateFilterSelectionChangedPayload = {
     /**
      * Object with changed date filter selection.
      */
@@ -34,7 +34,7 @@ export interface DashboardDateFilterSelectionChangedPayload {
      * Optional local identifier of the new selected date filter option.
      */
     readonly dateFilterOptionLocalId?: string;
-}
+};
 
 /**
  * This event is emitted after the dashboard's date filter selection is changed.
@@ -47,10 +47,10 @@ export interface DashboardDateFilterSelectionChangedPayload {
  *
  * @public
  */
-export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
+export type DashboardDateFilterSelectionChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
     readonly payload: DashboardDateFilterSelectionChangedPayload;
-}
+};
 
 export function dateFilterChanged(
     ctx: DashboardContext,
@@ -84,10 +84,10 @@ export const isDashboardDateFilterSelectionChanged = eventGuard<DashboardDateFil
 //
 
 /**
- * Payload of the {@link DashboardAttributeFilterAdded} event.
+ * Payload of the {@link IDashboardAttributeFilterAdded} event.
  * @beta
  */
-export interface DashboardAttributeFilterAddedPayload {
+export interface IDashboardAttributeFilterAddedPayload {
     /**
      * Definition of the created attribute filter. The filter's local identifier can be used in subsequent
      * commands to identify this filter.
@@ -106,9 +106,9 @@ export interface DashboardAttributeFilterAddedPayload {
  *
  * @beta
  */
-export interface DashboardAttributeFilterAdded extends IDashboardEvent {
+export interface IDashboardAttributeFilterAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
-    readonly payload: DashboardAttributeFilterAddedPayload;
+    readonly payload: IDashboardAttributeFilterAddedPayload;
 }
 
 export function attributeFilterAdded(
@@ -116,7 +116,7 @@ export function attributeFilterAdded(
     added: IDashboardAttributeFilter,
     index: number,
     correlationId?: string,
-): DashboardAttributeFilterAdded {
+): IDashboardAttributeFilterAdded {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
         ctx,
@@ -129,12 +129,12 @@ export function attributeFilterAdded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterAdded}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeFilterAdded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAttributeFilterAdded = eventGuard<DashboardAttributeFilterAdded>(
+export const isDashboardAttributeFilterAdded = eventGuard<IDashboardAttributeFilterAdded>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
 );
 
@@ -143,10 +143,10 @@ export const isDashboardAttributeFilterAdded = eventGuard<DashboardAttributeFilt
 //
 
 /**
- * Payload of the {@link DashboardAttributeFilterRemoved} event.
+ * Payload of the {@link IDashboardAttributeFilterRemoved} event.
  * @beta
  */
-export interface DashboardAttributeFilterRemovedPayload {
+export interface IDashboardAttributeFilterRemovedPayload {
     /**
      * The dashboard attribute filter that has been removed.
      */
@@ -170,9 +170,9 @@ export interface DashboardAttributeFilterRemovedPayload {
  *
  * @beta
  */
-export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
+export interface IDashboardAttributeFilterRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
-    readonly payload: DashboardAttributeFilterRemovedPayload;
+    readonly payload: IDashboardAttributeFilterRemovedPayload;
 }
 
 export function attributeFilterRemoved(
@@ -180,7 +180,7 @@ export function attributeFilterRemoved(
     removed: IDashboardAttributeFilter,
     children?: IDashboardAttributeFilter[],
     correlationId?: string,
-): DashboardAttributeFilterRemoved {
+): IDashboardAttributeFilterRemoved {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
         ctx,
@@ -193,12 +193,12 @@ export function attributeFilterRemoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterRemoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeFilterRemoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAttributeFilterRemoved = eventGuard<DashboardAttributeFilterRemoved>(
+export const isDashboardAttributeFilterRemoved = eventGuard<IDashboardAttributeFilterRemoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
 );
 
@@ -207,10 +207,10 @@ export const isDashboardAttributeFilterRemoved = eventGuard<DashboardAttributeFi
 //
 
 /**
- * Payload of the {@link DashboardAttributeFilterMoved} event.
+ * Payload of the {@link IDashboardAttributeFilterMoved} event.
  * @beta
  */
-export interface DashboardAttributeFilterMovedPayload {
+export interface IDashboardAttributeFilterMovedPayload {
     /**
      * Definition of the dashboard attribute filter that was moved.
      */
@@ -233,9 +233,9 @@ export interface DashboardAttributeFilterMovedPayload {
  *
  * @beta
  */
-export interface DashboardAttributeFilterMoved extends IDashboardEvent {
+export interface IDashboardAttributeFilterMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED";
-    readonly payload: DashboardAttributeFilterMovedPayload;
+    readonly payload: IDashboardAttributeFilterMovedPayload;
 }
 
 export function attributeFilterMoved(
@@ -244,7 +244,7 @@ export function attributeFilterMoved(
     fromIndex: number,
     toIndex: number,
     correlationId?: string,
-): DashboardAttributeFilterMoved {
+): IDashboardAttributeFilterMoved {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
         ctx,
@@ -258,12 +258,12 @@ export function attributeFilterMoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterMoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeFilterMoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilterMoved>(
+export const isDashboardAttributeFilterMoved = eventGuard<IDashboardAttributeFilterMoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
 );
 
@@ -282,14 +282,14 @@ export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilt
  *
  * @public
  */
-export interface DashboardAttributeFilterSelectionChangedPayload {
+export type DashboardAttributeFilterSelectionChangedPayload = {
     /**
      * The update definition of the dashboard attribute filter.
      *
      * The attribute elements and/or the negativeSelection indicator values have changed.
      */
     readonly filter: IDashboardAttributeFilter;
-}
+};
 
 /**
  * This event is emitted after new elements are selected and applied in an attribute filter.
@@ -302,10 +302,10 @@ export interface DashboardAttributeFilterSelectionChangedPayload {
  *
  * @public
  */
-export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
+export type DashboardAttributeFilterSelectionChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
     readonly payload: DashboardAttributeFilterSelectionChangedPayload;
-}
+};
 
 export function attributeFilterSelectionChanged(
     ctx: DashboardContext,
@@ -338,10 +338,10 @@ export const isDashboardAttributeFilterSelectionChanged =
 //
 
 /**
- * Payload of the {@link DashboardAttributeFilterParentChanged} event.
+ * Payload of the {@link IDashboardAttributeFilterParentChanged} event.
  * @beta
  */
-export interface DashboardAttributeFilterParentChangedPayload {
+export interface IDashboardAttributeFilterParentChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
@@ -355,16 +355,16 @@ export interface DashboardAttributeFilterParentChangedPayload {
  *
  * @beta
  */
-export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
+export interface IDashboardAttributeFilterParentChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
-    readonly payload: DashboardAttributeFilterParentChangedPayload;
+    readonly payload: IDashboardAttributeFilterParentChangedPayload;
 }
 
 export function attributeFilterParentChanged(
     ctx: DashboardContext,
     filter: IDashboardAttributeFilter,
     correlationId?: string,
-): DashboardAttributeFilterParentChanged {
+): IDashboardAttributeFilterParentChanged {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
         ctx,
@@ -376,12 +376,12 @@ export function attributeFilterParentChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterParentChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeFilterParentChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttributeFilterParentChanged>(
+export const isDashboardAttributeFilterParentChanged = eventGuard<IDashboardAttributeFilterParentChanged>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",
 );
 
@@ -390,10 +390,10 @@ export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttri
 //
 
 /**
- * Payload of the {@link DashboardAttributeTitleChanged} event.
+ * Payload of the {@link IDashboardAttributeTitleChanged} event.
  * @beta
  */
-export interface DashboardAttributeTitleChangedPayload {
+export interface IDashboardAttributeTitleChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
@@ -407,16 +407,16 @@ export interface DashboardAttributeTitleChangedPayload {
  *
  * @beta
  */
-export interface DashboardAttributeTitleChanged extends IDashboardEvent {
+export interface IDashboardAttributeTitleChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED";
-    readonly payload: DashboardAttributeTitleChangedPayload;
+    readonly payload: IDashboardAttributeTitleChangedPayload;
 }
 
 export function attributeDisplayTitleChanged(
     ctx: DashboardContext,
     filter: IDashboardAttributeFilter,
     correlationId?: string,
-): DashboardAttributeTitleChanged {
+): IDashboardAttributeTitleChanged {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
         ctx,
@@ -428,16 +428,16 @@ export function attributeDisplayTitleChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeTitleChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeTitleChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAttributeFilterTitleChanged = eventGuard<DashboardAttributeTitleChanged>(
+export const isDashboardAttributeFilterTitleChanged = eventGuard<IDashboardAttributeTitleChanged>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
 );
 
-export interface DashboardAttributeDisplayFormChangedPayload {
+export interface IDashboardAttributeDisplayFormChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
@@ -446,16 +446,16 @@ export interface DashboardAttributeDisplayFormChangedPayload {
     readonly filter: IDashboardAttributeFilter;
 }
 
-export interface DashboardAttributeDisplayFormChanged extends IDashboardEvent {
+export interface IDashboardAttributeDisplayFormChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED";
-    readonly payload: DashboardAttributeDisplayFormChangedPayload;
+    readonly payload: IDashboardAttributeDisplayFormChangedPayload;
 }
 
 export function attributeDisplayFormChanged(
     ctx: DashboardContext,
     filter: IDashboardAttributeFilter,
     correlationId?: string,
-): DashboardAttributeDisplayFormChanged {
+): IDashboardAttributeDisplayFormChanged {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED",
         ctx,
@@ -467,11 +467,11 @@ export function attributeDisplayFormChanged(
 }
 
 /**
- * Payload of the {@link DashboardAttributeSelectionModeChanged} event.
+ * Payload of the {@link IDashboardAttributeSelectionModeChanged} event.
  *
  * @beta
  */
-export interface DashboardAttributeSelectionModeChangedPayload {
+export interface IDashboardAttributeSelectionModeChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
@@ -485,16 +485,16 @@ export interface DashboardAttributeSelectionModeChangedPayload {
  *
  * @beta
  */
-export interface DashboardAttributeSelectionModeChanged extends IDashboardEvent {
+export interface IDashboardAttributeSelectionModeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED";
-    readonly payload: DashboardAttributeSelectionModeChangedPayload;
+    readonly payload: IDashboardAttributeSelectionModeChangedPayload;
 }
 
 export function attributeSelectionModeChanged(
     ctx: DashboardContext,
     filter: IDashboardAttributeFilter,
     correlationId?: string,
-): DashboardAttributeSelectionModeChanged {
+): IDashboardAttributeSelectionModeChanged {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED",
         ctx,
@@ -506,13 +506,13 @@ export function attributeSelectionModeChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeSelectionModeChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeSelectionModeChanged}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardAttributeFilterSelectionModeChanged =
-    eventGuard<DashboardAttributeSelectionModeChanged>(
+    eventGuard<IDashboardAttributeSelectionModeChanged>(
         "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED",
     );
 
@@ -525,7 +525,7 @@ export const isDashboardAttributeFilterSelectionModeChanged =
  *
  * @alpha
  */
-export interface DashboardAttributeFilterConfigModeChangedPayload {
+export interface IDashboardAttributeFilterConfigModeChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
@@ -539,15 +539,15 @@ export interface DashboardAttributeFilterConfigModeChangedPayload {
  *
  * @alpha
  */
-export interface DashboardAttributeFilterConfigModeChanged extends IDashboardEvent {
+export interface IDashboardAttributeFilterConfigModeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED";
-    readonly payload: DashboardAttributeFilterConfigModeChangedPayload;
+    readonly payload: IDashboardAttributeFilterConfigModeChangedPayload;
 }
 
 export function dashboardAttributeConfigModeChanged(
     ctx: DashboardContext,
     filter: IDashboardAttributeFilter,
-): DashboardAttributeFilterConfigModeChanged {
+): IDashboardAttributeFilterConfigModeChanged {
     return {
         type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
         ctx,
@@ -558,13 +558,13 @@ export function dashboardAttributeConfigModeChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterConfigModeChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeFilterConfigModeChanged}.
  *
  * @param obj - object to test
  * @alpha
  */
 export const isDashboardAttributeFilterConfigModeChanged =
-    eventGuard<DashboardAttributeFilterConfigModeChanged>(
+    eventGuard<IDashboardAttributeFilterConfigModeChanged>(
         "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
     );
 
@@ -577,7 +577,7 @@ export const isDashboardAttributeFilterConfigModeChanged =
  *
  * @alpha
  */
-export interface DashboardAttributeFilterConfigDisplayAsLabelChangedPayload {
+export interface IDashboardAttributeFilterConfigDisplayAsLabelChangedPayload {
     /**
      * The definition of the dashboard attribute filter.
      */
@@ -593,9 +593,9 @@ export interface DashboardAttributeFilterConfigDisplayAsLabelChangedPayload {
  *
  * @alpha
  */
-export interface DashboardAttributeFilterConfigDisplayAsLabelChanged extends IDashboardEvent {
+export interface IDashboardAttributeFilterConfigDisplayAsLabelChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED";
-    readonly payload: DashboardAttributeFilterConfigDisplayAsLabelChangedPayload;
+    readonly payload: IDashboardAttributeFilterConfigDisplayAsLabelChangedPayload;
 }
 
 export function dashboardAttributeConfigDisplayAsLabelChanged(
@@ -603,7 +603,7 @@ export function dashboardAttributeConfigDisplayAsLabelChanged(
     filter: IDashboardAttributeFilter,
     displayAsLabel: ObjRef | undefined,
     correlationId?: string,
-): DashboardAttributeFilterConfigDisplayAsLabelChanged {
+): IDashboardAttributeFilterConfigDisplayAsLabelChanged {
     return {
         type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED",
         ctx,
@@ -616,13 +616,13 @@ export function dashboardAttributeConfigDisplayAsLabelChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterConfigDisplayAsLabelChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeFilterConfigDisplayAsLabelChanged}.
  *
  * @param obj - object to test
  * @alpha
  */
 export const isDashboardAttributeFilterConfigDisplayAsLabelChanged =
-    eventGuard<DashboardAttributeFilterConfigDisplayAsLabelChanged>(
+    eventGuard<IDashboardAttributeFilterConfigDisplayAsLabelChanged>(
         "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED",
     );
 
@@ -635,7 +635,7 @@ export const isDashboardAttributeFilterConfigDisplayAsLabelChanged =
  *
  * @alpha
  */
-export interface DashboardAttributeFilterConfigLimitingItemsChangedPayload {
+export interface IDashboardAttributeFilterConfigLimitingItemsChangedPayload {
     /**
      * The updated definition of the dashboard attribute filter.
      *
@@ -649,15 +649,15 @@ export interface DashboardAttributeFilterConfigLimitingItemsChangedPayload {
  *
  * @alpha
  */
-export interface DashboardAttributeFilterConfigLimitingItemsChanged extends IDashboardEvent {
+export interface IDashboardAttributeFilterConfigLimitingItemsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED";
-    readonly payload: DashboardAttributeFilterConfigLimitingItemsChangedPayload;
+    readonly payload: IDashboardAttributeFilterConfigLimitingItemsChangedPayload;
 }
 
 export function dashboardAttributeConfigLimitingItemsChanged(
     ctx: DashboardContext,
     filter: IDashboardAttributeFilter,
-): DashboardAttributeFilterConfigLimitingItemsChanged {
+): IDashboardAttributeFilterConfigLimitingItemsChanged {
     return {
         type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED",
         ctx,
@@ -668,13 +668,13 @@ export function dashboardAttributeConfigLimitingItemsChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAttributeFilterConfigLimitingItemsChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardAttributeFilterConfigLimitingItemsChanged}.
  *
  * @param obj - object to test
  * @alpha
  */
 export const isDashboardAttributeFilterConfigLimitingItemsChanged =
-    eventGuard<DashboardAttributeFilterConfigLimitingItemsChanged>(
+    eventGuard<IDashboardAttributeFilterConfigLimitingItemsChanged>(
         "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED",
     );
 
@@ -693,7 +693,7 @@ export const isDashboardAttributeFilterConfigLimitingItemsChanged =
  *
  * @public
  */
-export interface DashboardFilterContextChangedPayload {
+export type DashboardFilterContextChangedPayload = {
     /**
      * The new value of the filterContext.
      */
@@ -709,7 +709,7 @@ export interface DashboardFilterContextChangedPayload {
      * @internal
      */
     readonly tabLocalIdentifier?: string;
-}
+};
 
 /**
  * This event is emitted after _any_ change to dashboard filters (be it date or attribute filter).
@@ -717,7 +717,7 @@ export interface DashboardFilterContextChangedPayload {
  *
  * @remarks
  * This event is emitted as convenience - more granular events describe all the possible
- * changes to the dashboard filters and can be used to event source the state of filter context.
+ * changes to the dashboard filters and can be used to even source the state of filter context.
  *
  * See also {@link filterContextToDashboardFiltersByWidget} and {@link filterContextToDashboardFiltersByDateDataSet} convertors
  * – those allow you to convert the `filterContext` in the event payload to array of {@link @gooddata/sdk-model#IFilter} instances you can use
@@ -725,10 +725,10 @@ export interface DashboardFilterContextChangedPayload {
  *
  * @public
  */
-export interface DashboardFilterContextChanged extends IDashboardEvent {
+export type DashboardFilterContextChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED";
     readonly payload: DashboardFilterContextChangedPayload;
-}
+};
 
 export function filterContextChanged(
     ctx: DashboardContext,
@@ -764,10 +764,10 @@ export const isDashboardFilterContextChanged = eventGuard<DashboardFilterContext
 //
 
 /**
- * Payload of the {@link DashboardDateFilterTitleChanged} event.
+ * Payload of the {@link IDashboardDateFilterTitleChanged} event.
  * @beta
  */
-export interface DashboardDateTitleChangedPayload {
+export interface IDashboardDateTitleChangedPayload {
     /**
      * The updated definition of the dashboard date filter.
      */
@@ -780,9 +780,9 @@ export interface DashboardDateTitleChangedPayload {
  *
  * @beta
  */
-export interface DashboardDateFilterTitleChanged extends IDashboardEvent {
+export interface IDashboardDateFilterTitleChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED";
-    readonly payload: DashboardDateTitleChangedPayload;
+    readonly payload: IDashboardDateTitleChangedPayload;
 }
 
 export function dateFilterTitleChanged(
@@ -790,7 +790,7 @@ export function dateFilterTitleChanged(
     filter: IDashboardDateFilter,
     filterConfig: IDashboardDateFilterConfig,
     correlationId?: string,
-): DashboardDateFilterTitleChanged {
+): IDashboardDateFilterTitleChanged {
     return {
         type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED",
         ctx,
@@ -803,12 +803,12 @@ export function dateFilterTitleChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDateFilterTitleChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterTitleChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardDateFilterTitleChanged = eventGuard<DashboardDateFilterTitleChanged>(
+export const isDashboardDateFilterTitleChanged = eventGuard<IDashboardDateFilterTitleChanged>(
     "GDC.DASH/EVT.DATE_FILTER_CONFIG.TITLE_CHANGED",
 );
 
@@ -817,10 +817,10 @@ export const isDashboardDateFilterTitleChanged = eventGuard<DashboardDateFilterT
 //
 
 /**
- * Payload of the {@link DashboardDateFilterModeChanged} event.
+ * Payload of the {@link IDashboardDateFilterModeChanged} event.
  * @beta
  */
-export interface DashboardDateModeChangedPayload {
+export interface IDashboardDateModeChangedPayload {
     /**
      * The updated definition of the dashboard date filter.
      */
@@ -833,9 +833,9 @@ export interface DashboardDateModeChangedPayload {
  *
  * @beta
  */
-export interface DashboardDateFilterModeChanged extends IDashboardEvent {
+export interface IDashboardDateFilterModeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED";
-    readonly payload: DashboardDateModeChangedPayload;
+    readonly payload: IDashboardDateModeChangedPayload;
 }
 
 export function dateFilterModeChanged(
@@ -843,7 +843,7 @@ export function dateFilterModeChanged(
     filter: IDashboardDateFilter,
     filterConfig: IDashboardDateFilterConfig,
     correlationId?: string,
-): DashboardDateFilterModeChanged {
+): IDashboardDateFilterModeChanged {
     return {
         type: "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED",
         ctx,
@@ -856,12 +856,12 @@ export function dateFilterModeChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDateFilterModeChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterModeChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardDateFilterModeChanged = eventGuard<DashboardDateFilterModeChanged>(
+export const isDashboardDateFilterModeChanged = eventGuard<IDashboardDateFilterModeChanged>(
     "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED",
 );
 
@@ -870,10 +870,10 @@ export const isDashboardDateFilterModeChanged = eventGuard<DashboardDateFilterMo
 //
 
 /**
- * Payload of the {@link DashboardDateFilterAdded} event.
+ * Payload of the {@link IDashboardDateFilterAdded} event.
  * @beta
  */
-export interface DashboardDateFilterAddedPayload {
+export interface IDashboardDateFilterAddedPayload {
     /**
      * Definition of the created date filter. The filter's date data set ref can be used in subsequent
      * commands to identify this filter.
@@ -892,9 +892,9 @@ export interface DashboardDateFilterAddedPayload {
  *
  * @beta
  */
-export interface DashboardDateFilterAdded extends IDashboardEvent {
+export interface IDashboardDateFilterAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED";
-    readonly payload: DashboardDateFilterAddedPayload;
+    readonly payload: IDashboardDateFilterAddedPayload;
 }
 
 export function dateFilterAdded(
@@ -902,7 +902,7 @@ export function dateFilterAdded(
     added: IDashboardDateFilter,
     index: number,
     correlationId?: string,
-): DashboardDateFilterAdded {
+): IDashboardDateFilterAdded {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED",
         ctx,
@@ -915,12 +915,12 @@ export function dateFilterAdded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDateFilterAdded}.
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterAdded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardDateFilterAdded = eventGuard<DashboardDateFilterAdded>(
+export const isDashboardDateFilterAdded = eventGuard<IDashboardDateFilterAdded>(
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.ADDED",
 );
 
@@ -929,10 +929,10 @@ export const isDashboardDateFilterAdded = eventGuard<DashboardDateFilterAdded>(
 //
 
 /**
- * Payload of the {@link DashboardDateFilterRemoved} event.
+ * Payload of the {@link IDashboardDateFilterRemoved} event.
  * @beta
  */
-export interface DashboardDateFilterRemovedPayload {
+export interface IDashboardDateFilterRemovedPayload {
     /**
      * Definition of the removed date filter.
      */
@@ -945,16 +945,16 @@ export interface DashboardDateFilterRemovedPayload {
  *
  * @beta
  */
-export interface DashboardDateFilterRemoved extends IDashboardEvent {
+export interface IDashboardDateFilterRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED";
-    readonly payload: DashboardDateFilterRemovedPayload;
+    readonly payload: IDashboardDateFilterRemovedPayload;
 }
 
 export function dateFilterRemoved(
     ctx: DashboardContext,
     removed: IDashboardDateFilter,
     correlationId?: string,
-): DashboardDateFilterRemoved {
+): IDashboardDateFilterRemoved {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED",
         ctx,
@@ -966,12 +966,12 @@ export function dateFilterRemoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDateFilterRemoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterRemoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardDateFilterRemoved = eventGuard<DashboardDateFilterRemoved>(
+export const isDashboardDateFilterRemoved = eventGuard<IDashboardDateFilterRemoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED",
 );
 
@@ -980,10 +980,10 @@ export const isDashboardDateFilterRemoved = eventGuard<DashboardDateFilterRemove
 //
 
 /**
- * Payload of the {@link DashboardDateFilterMoved} event.
+ * Payload of the {@link IDashboardDateFilterMoved} event.
  * @beta
  */
-export interface DashboardDateFilterMovedPayload {
+export interface IDashboardDateFilterMovedPayload {
     /**
      * Definition of the dashboard date filter that was moved.
      */
@@ -1006,9 +1006,9 @@ export interface DashboardDateFilterMovedPayload {
  *
  * @beta
  */
-export interface DashboardDateFilterMoved extends IDashboardEvent {
+export interface IDashboardDateFilterMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED";
-    readonly payload: DashboardDateFilterMovedPayload;
+    readonly payload: IDashboardDateFilterMovedPayload;
 }
 
 export function dateFilterMoved(
@@ -1017,7 +1017,7 @@ export function dateFilterMoved(
     fromIndex: number,
     toIndex: number,
     correlationId?: string,
-): DashboardDateFilterMoved {
+): IDashboardDateFilterMoved {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED",
         ctx,
@@ -1031,21 +1031,21 @@ export function dateFilterMoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDateFilterMoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterMoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardDateFilterMoved = eventGuard<DashboardDateFilterMoved>(
+export const isDashboardDateFilterMoved = eventGuard<IDashboardDateFilterMoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED",
 );
 
 /**
- * Payload of the {@link DashboardFilterViewCreationSucceeded} event.
+ * Payload of the {@link IDashboardFilterViewCreationSucceeded} event.
  *
  * @alpha
  */
-export interface DashboardFilterViewCreationSucceededPayload {
+export interface IDashboardFilterViewCreationSucceededPayload {
     readonly filterView: IDashboardFilterView;
 }
 
@@ -1054,16 +1054,16 @@ export interface DashboardFilterViewCreationSucceededPayload {
  *
  * @alpha
  */
-export interface DashboardFilterViewCreationSucceeded extends IDashboardEvent {
+export interface IDashboardFilterViewCreationSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS";
-    readonly payload: DashboardFilterViewCreationSucceededPayload;
+    readonly payload: IDashboardFilterViewCreationSucceededPayload;
 }
 
 export function filterViewCreationSucceeded(
     ctx: DashboardContext,
     filterView: IDashboardFilterView,
     correlationId?: string,
-): DashboardFilterViewCreationSucceeded {
+): IDashboardFilterViewCreationSucceeded {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS",
         ctx,
@@ -1075,12 +1075,12 @@ export function filterViewCreationSucceeded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewCreationSucceeded}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewCreationSucceeded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardFilterViewCreationSucceeded = eventGuard<DashboardFilterViewCreationSucceeded>(
+export const isDashboardFilterViewCreationSucceeded = eventGuard<IDashboardFilterViewCreationSucceeded>(
     "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS",
 );
 
@@ -1089,14 +1089,14 @@ export const isDashboardFilterViewCreationSucceeded = eventGuard<DashboardFilter
  *
  * @alpha
  */
-export interface DashboardFilterViewCreationFailed extends IDashboardEvent {
+export interface IDashboardFilterViewCreationFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE";
 }
 
 export function filterViewCreationFailed(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardFilterViewCreationFailed {
+): IDashboardFilterViewCreationFailed {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE",
         ctx,
@@ -1105,22 +1105,22 @@ export function filterViewCreationFailed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewCreationFailed}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewCreationFailed}.
  *
  * @param obj - object to test
  *
  * @alpha
  */
-export const isDashboardFilterViewCreationFailed = eventGuard<DashboardFilterViewCreationFailed>(
+export const isDashboardFilterViewCreationFailed = eventGuard<IDashboardFilterViewCreationFailed>(
     "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE",
 );
 
 /**
- * Payload of the {@link DashboardFilterViewDeletionSucceeded} event.
+ * Payload of the {@link IDashboardFilterViewDeletionSucceeded} event.
  *
  * @alpha
  */
-export interface DashboardFilterViewDeletionSucceededPayload {
+export interface IDashboardFilterViewDeletionSucceededPayload {
     readonly filterView: IDashboardFilterView;
 }
 
@@ -1129,16 +1129,16 @@ export interface DashboardFilterViewDeletionSucceededPayload {
  *
  * @alpha
  */
-export interface DashboardFilterViewDeletionSucceeded extends IDashboardEvent {
+export interface IDashboardFilterViewDeletionSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS";
-    readonly payload: DashboardFilterViewDeletionSucceededPayload;
+    readonly payload: IDashboardFilterViewDeletionSucceededPayload;
 }
 
 export function filterViewDeletionSucceeded(
     ctx: DashboardContext,
     filterView: IDashboardFilterView,
     correlationId?: string,
-): DashboardFilterViewDeletionSucceeded {
+): IDashboardFilterViewDeletionSucceeded {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS",
         ctx,
@@ -1150,12 +1150,12 @@ export function filterViewDeletionSucceeded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewDeletionSucceeded}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewDeletionSucceeded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardFilterViewDeletionSucceeded = eventGuard<DashboardFilterViewDeletionSucceeded>(
+export const isDashboardFilterViewDeletionSucceeded = eventGuard<IDashboardFilterViewDeletionSucceeded>(
     "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS",
 );
 
@@ -1164,14 +1164,14 @@ export const isDashboardFilterViewDeletionSucceeded = eventGuard<DashboardFilter
  *
  * @alpha
  */
-export interface DashboardFilterViewDeletionFailed extends IDashboardEvent {
+export interface IDashboardFilterViewDeletionFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE";
 }
 
 export function filterViewDeletionFailed(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardFilterViewDeletionFailed {
+): IDashboardFilterViewDeletionFailed {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE",
         ctx,
@@ -1180,22 +1180,22 @@ export function filterViewDeletionFailed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewDeletionFailed}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewDeletionFailed}.
  *
  * @param obj - object to test
  *
  * @alpha
  */
-export const isDashboardFilterViewDeletionFailed = eventGuard<DashboardFilterViewDeletionFailed>(
+export const isDashboardFilterViewDeletionFailed = eventGuard<IDashboardFilterViewDeletionFailed>(
     "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE",
 );
 
 /**
- * Payload of the {@link DashboardFilterViewApplicationSucceeded} event.
+ * Payload of the {@link IDashboardFilterViewApplicationSucceeded} event.
  *
  * @alpha
  */
-export interface DashboardFilterViewApplicationSucceededPayload {
+export interface IDashboardFilterViewApplicationSucceededPayload {
     readonly filterView: IDashboardFilterView;
 }
 
@@ -1204,16 +1204,16 @@ export interface DashboardFilterViewApplicationSucceededPayload {
  *
  * @alpha
  */
-export interface DashboardFilterViewApplicationSucceeded extends IDashboardEvent {
+export interface IDashboardFilterViewApplicationSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS";
-    readonly payload: DashboardFilterViewApplicationSucceededPayload;
+    readonly payload: IDashboardFilterViewApplicationSucceededPayload;
 }
 
 export function filterViewApplicationSucceeded(
     ctx: DashboardContext,
     filterView: IDashboardFilterView,
     correlationId?: string,
-): DashboardFilterViewApplicationSucceeded {
+): IDashboardFilterViewApplicationSucceeded {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS",
         ctx,
@@ -1225,12 +1225,12 @@ export function filterViewApplicationSucceeded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewApplicationSucceeded}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewApplicationSucceeded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardFilterViewApplicationSucceeded = eventGuard<DashboardFilterViewApplicationSucceeded>(
+export const isDashboardFilterViewApplicationSucceeded = eventGuard<IDashboardFilterViewApplicationSucceeded>(
     "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS",
 );
 
@@ -1239,14 +1239,14 @@ export const isDashboardFilterViewApplicationSucceeded = eventGuard<DashboardFil
  *
  * @alpha
  */
-export interface DashboardFilterViewApplicationFailed extends IDashboardEvent {
+export interface IDashboardFilterViewApplicationFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE";
 }
 
 export function filterViewApplicationFailed(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardFilterViewApplicationFailed {
+): IDashboardFilterViewApplicationFailed {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE",
         ctx,
@@ -1255,22 +1255,22 @@ export function filterViewApplicationFailed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewApplicationFailed}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewApplicationFailed}.
  *
  * @param obj - object to test
  *
  * @alpha
  */
-export const isDashboardFilterViewApplicationFailed = eventGuard<DashboardFilterViewApplicationFailed>(
+export const isDashboardFilterViewApplicationFailed = eventGuard<IDashboardFilterViewApplicationFailed>(
     "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE",
 );
 
 /**
- * Payload of the {@link DashboardFilterViewDefaultStatusChangeSucceeded} event.
+ * Payload of the {@link IDashboardFilterViewDefaultStatusChangeSucceeded} event.
  *
  * @alpha
  */
-export interface DashboardFilterViewDefaultStatusChangeSucceededPayload {
+export interface IDashboardFilterViewDefaultStatusChangeSucceededPayload {
     readonly filterView: IDashboardFilterView;
 }
 
@@ -1280,16 +1280,16 @@ export interface DashboardFilterViewDefaultStatusChangeSucceededPayload {
  *
  * @alpha
  */
-export interface DashboardFilterViewDefaultStatusChangeSucceeded extends IDashboardEvent {
+export interface IDashboardFilterViewDefaultStatusChangeSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.SUCCESS";
-    readonly payload: DashboardFilterViewDefaultStatusChangeSucceededPayload;
+    readonly payload: IDashboardFilterViewDefaultStatusChangeSucceededPayload;
 }
 
 export function filterViewDefaultStatusChangeSucceeded(
     ctx: DashboardContext,
     filterView: IDashboardFilterView,
     correlationId?: string,
-): DashboardFilterViewDefaultStatusChangeSucceeded {
+): IDashboardFilterViewDefaultStatusChangeSucceeded {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.SUCCESS",
         ctx,
@@ -1301,22 +1301,22 @@ export function filterViewDefaultStatusChangeSucceeded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewDefaultStatusChangeSucceeded}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewDefaultStatusChangeSucceeded}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardFilterViewDefaultStatusChangeSucceeded =
-    eventGuard<DashboardFilterViewDefaultStatusChangeSucceeded>(
+    eventGuard<IDashboardFilterViewDefaultStatusChangeSucceeded>(
         "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.SUCCESS",
     );
 
 /**
- * Payload of the {@link DashboardFilterViewDefaultStatusChangeFailed} event.
+ * Payload of the {@link IDashboardFilterViewDefaultStatusChangeFailed} event.
  *
  * @alpha
  */
-export interface DashboardFilterViewDefaultStatusChangeFailedPayload {
+export interface IDashboardFilterViewDefaultStatusChangeFailedPayload {
     readonly filterView: IDashboardFilterView;
 }
 
@@ -1325,16 +1325,16 @@ export interface DashboardFilterViewDefaultStatusChangeFailedPayload {
  *
  * @alpha
  */
-export interface DashboardFilterViewDefaultStatusChangeFailed extends IDashboardEvent {
+export interface IDashboardFilterViewDefaultStatusChangeFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE";
-    readonly payload: DashboardFilterViewDefaultStatusChangeFailedPayload;
+    readonly payload: IDashboardFilterViewDefaultStatusChangeFailedPayload;
 }
 
 export function filterViewDefaultStatusChangeFailed(
     ctx: DashboardContext,
     filterView: IDashboardFilterView,
     correlationId?: string,
-): DashboardFilterViewDefaultStatusChangeFailed {
+): IDashboardFilterViewDefaultStatusChangeFailed {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE",
         ctx,
@@ -1346,14 +1346,14 @@ export function filterViewDefaultStatusChangeFailed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterViewDefaultStatusChangeFailed}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterViewDefaultStatusChangeFailed}.
  *
  * @param obj - object to test
  *
  * @alpha
  */
 export const isDashboardFilterViewDefaultStatusChangeFailed =
-    eventGuard<DashboardFilterViewDefaultStatusChangeFailed>(
+    eventGuard<IDashboardFilterViewDefaultStatusChangeFailed>(
         "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE",
     );
 
@@ -1362,16 +1362,16 @@ export const isDashboardFilterViewDefaultStatusChangeFailed =
  *
  * @alpha
  */
-export interface DashboardFilterContextSelectionReseted extends IDashboardEvent {
+export interface IDashboardFilterContextSelectionReset extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET";
 }
 
 /**
  * @alpha
  */
-export function filterContextSelectionReseted(
+export function filterContextSelectionReset(
     correlationId?: string,
-): DashboardEventBody<DashboardFilterContextSelectionReseted> {
+): DashboardEventBody<IDashboardFilterContextSelectionReset> {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET",
         correlationId,
@@ -1379,12 +1379,12 @@ export function filterContextSelectionReseted(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterContextSelectionReseted}.
+ * Tests whether the provided object is an instance of {@link IDashboardFilterContextSelectionReset}.
  *
  * @param obj - object to test
  *
  * @alpha
  */
-export const isDashboardFilterContextSelectionReseted = eventGuard<DashboardFilterContextSelectionReseted>(
+export const isDashboardFilterContextSelectionReset = eventGuard<IDashboardFilterContextSelectionReset>(
     "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET",
 );

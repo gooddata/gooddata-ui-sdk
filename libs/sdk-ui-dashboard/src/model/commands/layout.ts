@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IDashboardLayoutContainerDirection,
@@ -16,10 +16,10 @@ import {
 } from "../types/layoutTypes.js";
 
 /**
- * Payload of the {@link AddLayoutSection} command.
+ * Payload of the {@link IAddLayoutSection} command.
  * @beta
  */
-export interface AddLayoutSectionPayload {
+export interface IAddLayoutSectionPayload {
     /**
      * Index where to place the new section
      *
@@ -61,9 +61,9 @@ export interface AddLayoutSectionPayload {
 /**
  * @beta
  */
-export interface AddLayoutSection extends IDashboardCommand {
+export interface IAddLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
-    readonly payload: AddLayoutSectionPayload;
+    readonly payload: IAddLayoutSectionPayload;
 }
 
 /**
@@ -94,7 +94,7 @@ export function addLayoutSection(
     initialItems?: DashboardItemDefinition[],
     autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
-): AddLayoutSection {
+): IAddLayoutSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION",
         correlationId,
@@ -134,7 +134,7 @@ export function addNestedLayoutSection(
     initialItems?: DashboardItemDefinition[],
     autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
-): AddLayoutSection {
+): IAddLayoutSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION",
         correlationId,
@@ -152,10 +152,10 @@ export function addNestedLayoutSection(
 //
 
 /**
- * Payload of the {@link MoveLayoutSection} command.
+ * Payload of the {@link IMoveLayoutSection} command.
  * @beta
  */
-export interface MoveLayoutSectionPayload {
+export interface IMoveLayoutSectionPayload {
     /**
      * Index of the section to move.
      *
@@ -184,9 +184,9 @@ export interface MoveLayoutSectionPayload {
 /**
  * @beta
  */
-export interface MoveLayoutSection extends IDashboardCommand {
+export interface IMoveLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
-    readonly payload: MoveLayoutSectionPayload;
+    readonly payload: IMoveLayoutSectionPayload;
 }
 
 /**
@@ -207,7 +207,7 @@ export function moveLayoutSection(
     sectionIndex: number,
     toIndex: number,
     correlationId?: string,
-): MoveLayoutSection {
+): IMoveLayoutSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION",
         correlationId,
@@ -234,7 +234,7 @@ export function moveNestedLayoutSection(
     sectionIndex: ILayoutSectionPath,
     toIndex: ILayoutSectionPath,
     correlationId?: string,
-): MoveLayoutSection {
+): IMoveLayoutSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION",
         correlationId,
@@ -250,10 +250,10 @@ export function moveNestedLayoutSection(
 //
 
 /**
- * Payload of the {@link RemoveLayoutSection} command.
+ * Payload of the {@link IRemoveLayoutSection} command.
  * @beta
  */
-export interface RemoveLayoutSectionPayload {
+export interface IRemoveLayoutSectionPayload {
     /**
      * Index of section to remove.
      *
@@ -282,9 +282,9 @@ export interface RemoveLayoutSectionPayload {
 /**
  * @beta
  */
-export interface RemoveLayoutSection extends IDashboardCommand {
+export interface IRemoveLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
-    readonly payload: RemoveLayoutSectionPayload;
+    readonly payload: IRemoveLayoutSectionPayload;
 }
 
 /**
@@ -308,7 +308,7 @@ export function removeLayoutSection(
     index: number,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveLayoutSection {
+): IRemoveLayoutSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION",
         correlationId,
@@ -339,7 +339,7 @@ export function removeNestedLayoutSection(
     index: ILayoutSectionPath,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveLayoutSection {
+): IRemoveLayoutSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION",
         correlationId,
@@ -358,7 +358,7 @@ export function removeNestedLayoutSection(
  * Payload of the {@link ChangeLayoutSectionHeader} command.
  * @public
  */
-export interface ChangeLayoutSectionHeaderPayload {
+export type ChangeLayoutSectionHeaderPayload = {
     /**
      * Index of section whose header to set.
      *
@@ -383,15 +383,15 @@ export interface ChangeLayoutSectionHeaderPayload {
      * The default behavior is to overwrite the old header with the new header provided in this command.
      */
     readonly merge?: boolean;
-}
+};
 
 /**
  * @public
  */
-export interface ChangeLayoutSectionHeader extends IDashboardCommand {
+export type ChangeLayoutSectionHeader = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
     readonly payload: ChangeLayoutSectionHeaderPayload;
-}
+};
 
 /**
  * Creates the ChangeLayoutSectionHeader command.
@@ -463,17 +463,17 @@ export function changeNestedLayoutSectionHeader(
 //
 
 /**
- * Payload of the {@link AddSectionItems} command.
+ * Payload of the {@link IAddSectionItems} command.
  * @beta
  */
-export interface AddSectionItemsPayload {
+export interface IAddSectionItemsPayload {
     /**
      * Section to which the item should be added.
      *
      * @remarks
      * Index is zero-based.
      *
-     * {@link AddSectionItemsPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link AddSectionItemsPayload.itemPath} instead.
+     * {@link IAddSectionItemsPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link IAddSectionItemsPayload.itemPath} instead.
      *
      * TODO LX-648: Remove sectionIndex in the next major version.
      */
@@ -485,7 +485,7 @@ export interface AddSectionItemsPayload {
      * @remarks
      * Index is zero-based. For convenience, you may specify -1 to append the new item.
      *
-     * {@link AddSectionItemsPayload.itemIndex} support will be removed in the next major SDK version. Use {@link AddSectionItemsPayload.itemPath} instead.
+     * {@link IAddSectionItemsPayload.itemIndex} support will be removed in the next major SDK version. Use {@link IAddSectionItemsPayload.itemPath} instead.
      *
      * TODO LX-648: Remove itemIndex in the next major version.
      */
@@ -528,9 +528,9 @@ export interface AddSectionItemsPayload {
 /**
  * @beta
  */
-export interface AddSectionItems extends IDashboardCommand {
+export interface IAddSectionItems extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
-    readonly payload: AddSectionItemsPayload;
+    readonly payload: IAddSectionItemsPayload;
 }
 
 /**
@@ -560,7 +560,7 @@ export function addSectionItem(
     item: DashboardItemDefinition,
     autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
-): AddSectionItems {
+): IAddSectionItems {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS",
         correlationId,
@@ -597,7 +597,7 @@ export function addNestedLayoutSectionItem(
     item: DashboardItemDefinition,
     autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
-): AddSectionItems {
+): IAddSectionItems {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS",
         correlationId: correlationId,
@@ -616,15 +616,15 @@ export function addNestedLayoutSectionItem(
 //
 
 /**
- * Payload of the {@link ReplaceSectionItem} command.
+ * Payload of the {@link IReplaceSectionItem} command.
  * @beta
  */
-export interface ReplaceSectionItemPayload {
+export interface IReplaceSectionItemPayload {
     /**
      * Index of section where the item to modify resides.
      *
      * @remarks
-     * {@link ReplaceSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link ReplaceSectionItemPayload.itemPath} instead.
+     * {@link IReplaceSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link IReplaceSectionItemPayload.itemPath} instead.
      *
      * TODO LX-648: Remove sectionIndex in the next major version.
      */
@@ -634,7 +634,7 @@ export interface ReplaceSectionItemPayload {
      * Index of item within section that should be modified.
      *
      * @remarks
-     * {@link ReplaceSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link ReplaceSectionItemPayload.itemPath} instead.
+     * {@link IReplaceSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link IReplaceSectionItemPayload.itemPath} instead.
      *
      * TODO LX-648: Remove itemIndex in the next major version.
      */
@@ -678,9 +678,9 @@ export interface ReplaceSectionItemPayload {
 /**
  * @beta
  */
-export interface ReplaceSectionItem extends IDashboardCommand {
+export interface IReplaceSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
-    readonly payload: ReplaceSectionItemPayload;
+    readonly payload: IReplaceSectionItemPayload;
 }
 
 /**
@@ -711,7 +711,7 @@ export function replaceSectionItem(
     stashIdentifier?: StashedDashboardItemsId,
     autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
-): ReplaceSectionItem {
+): IReplaceSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM",
         correlationId,
@@ -747,7 +747,7 @@ export function replaceNestedLayoutSectionItem(
     stashIdentifier?: StashedDashboardItemsId,
     autoResolveDateFilterDataset?: boolean,
     correlationId?: string,
-): ReplaceSectionItem {
+): IReplaceSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM",
         correlationId,
@@ -767,17 +767,17 @@ export function replaceNestedLayoutSectionItem(
 //
 
 /**
- * Payload of the {@link MoveSectionItem} command.
+ * Payload of the {@link IMoveSectionItem} command.
  * @beta
  */
-export interface MoveSectionItemPayload {
+export interface IMoveSectionItemPayload {
     /**
      * Index of the section where the item to move is located.
      *
      * Index is zero-based.
      *
      * @remarks
-     * {@link MoveSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.fromPath} instead.
+     * {@link IMoveSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link IMoveSectionItemPayload.fromPath} instead.
      *
      * TODO LX-648: Remove sectionIndex in the next major version.
      */
@@ -789,7 +789,7 @@ export interface MoveSectionItemPayload {
      * Index is zero-based.
      *
      * @remarks
-     * {@link MoveSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.fromPath} instead.
+     * {@link IMoveSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link IMoveSectionItemPayload.fromPath} instead.
      *
      * TODO LX-648: Remove itemIndex in the next major version.
      */
@@ -801,7 +801,7 @@ export interface MoveSectionItemPayload {
      * Index is zero-based. For convenience you may specify -1 to move to last section.
      *
      * @remarks
-     * {@link MoveSectionItemPayload.toSectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.toPath} instead.
+     * {@link IMoveSectionItemPayload.toSectionIndex} support will be removed in the next major SDK version. Use {@link IMoveSectionItemPayload.toPath} instead.
      *
      * TODO LX-648: Remove toSectionIndex in the next major version.
      */
@@ -814,7 +814,7 @@ export interface MoveSectionItemPayload {
      * items.
      *
      * @remarks
-     * {@link MoveSectionItemPayload.toItemIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.toPath} instead.
+     * {@link IMoveSectionItemPayload.toItemIndex} support will be removed in the next major SDK version. Use {@link IMoveSectionItemPayload.toPath} instead.
      *
      * TODO LX-648: Remove toItemIndex in the next major version.
      */
@@ -847,9 +847,9 @@ export interface MoveSectionItemPayload {
 /**
  * @beta
  */
-export interface MoveSectionItem extends IDashboardCommand {
+export interface IMoveSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
-    readonly payload: MoveSectionItemPayload;
+    readonly payload: IMoveSectionItemPayload;
 }
 
 /**
@@ -878,7 +878,7 @@ export function moveSectionItem(
     toSectionIndex: number,
     toItemIndex: number,
     correlationId?: string,
-): MoveSectionItem {
+): IMoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
         correlationId,
@@ -912,7 +912,7 @@ export function moveNestedLayoutSectionItem(
     fromPath: ILayoutItemPath,
     toPath: ILayoutItemPath,
     correlationId?: string,
-): MoveSectionItem {
+): IMoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
         correlationId,
@@ -954,7 +954,7 @@ export function moveSectionItemAndRemoveOriginalSectionIfEmpty(
     toSectionIndex: number,
     toItemIndex: number,
     correlationId?: string,
-): MoveSectionItem {
+): IMoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
         correlationId,
@@ -988,7 +988,7 @@ export function moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(
     fromPath: ILayoutItemPath,
     toPath: ILayoutItemPath,
     correlationId?: string,
-): MoveSectionItem {
+): IMoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
         correlationId,
@@ -1009,17 +1009,17 @@ export function moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(
 //
 
 /**
- * Payload of the {@link MoveSectionItemToNewSection} command.
+ * Payload of the {@link IMoveSectionItemToNewSection} command.
  * @beta
  */
-export interface MoveSectionItemToNewSectionPayload {
+export interface IMoveSectionItemToNewSectionPayload {
     /**
      * Index of the section where the item to move is located.
      *
      * Index is zero-based.
      *
      * @remarks
-     * {@link MoveSectionItemToNewSectionPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemToNewSectionPayload.itemPath} instead.
+     * {@link IMoveSectionItemToNewSectionPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link IMoveSectionItemToNewSectionPayload.itemPath} instead.
      *
      * TODO LX-648: Remove sectionIndex in the next major version.
      */
@@ -1031,7 +1031,7 @@ export interface MoveSectionItemToNewSectionPayload {
      * Index is zero-based.
      *
      * @remarks
-     * {@link MoveSectionItemToNewSectionPayload.itemIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemToNewSectionPayload.itemPath} instead.
+     * {@link IMoveSectionItemToNewSectionPayload.itemIndex} support will be removed in the next major SDK version. Use {@link IMoveSectionItemToNewSectionPayload.itemPath} instead.
      *
      * TODO LX-648: Remove itemIndex in the next major version.
      */
@@ -1043,7 +1043,7 @@ export interface MoveSectionItemToNewSectionPayload {
      * Index is zero-based. For convenience you may specify -1 to move to last section.
      *
      * @remarks
-     * {@link MoveSectionItemToNewSectionPayload.toSectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemToNewSectionPayload.itemPath} instead.
+     * {@link IMoveSectionItemToNewSectionPayload.toSectionIndex} support will be removed in the next major SDK version. Use {@link IMoveSectionItemToNewSectionPayload.itemPath} instead.
      *
      * TODO LX-648: Remove toSectionIndex in the next major version.
      */
@@ -1074,9 +1074,9 @@ export interface MoveSectionItemToNewSectionPayload {
 /**
  * @beta
  */
-export interface MoveSectionItemToNewSection extends IDashboardCommand {
+export interface IMoveSectionItemToNewSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION";
-    readonly payload: MoveSectionItemToNewSectionPayload;
+    readonly payload: IMoveSectionItemToNewSectionPayload;
 }
 
 /**
@@ -1103,7 +1103,7 @@ export function moveSectionItemToNewSection(
     itemIndex: number,
     toSectionIndex: number,
     correlationId?: string,
-): MoveSectionItemToNewSection {
+): IMoveSectionItemToNewSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
         correlationId,
@@ -1136,7 +1136,7 @@ export function moveNestedLayoutSectionItemToNewSection(
     itemPath: ILayoutItemPath,
     toSection: ILayoutSectionPath,
     correlationId?: string,
-): MoveSectionItemToNewSection {
+): IMoveSectionItemToNewSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
         correlationId,
@@ -1175,7 +1175,7 @@ export function moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(
     itemIndex: number,
     toSectionIndex: number,
     correlationId?: string,
-): MoveSectionItemToNewSection {
+): IMoveSectionItemToNewSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
         correlationId,
@@ -1208,7 +1208,7 @@ export function moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionI
     itemPath: ILayoutItemPath,
     toSection: ILayoutSectionPath,
     correlationId?: string,
-): MoveSectionItemToNewSection {
+): IMoveSectionItemToNewSection {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
         correlationId,
@@ -1228,17 +1228,17 @@ export function moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionI
 //
 
 /**
- * Payload of the {@link RemoveSectionItem} command.
+ * Payload of the {@link IRemoveSectionItem} command.
  * @beta
  */
-export interface RemoveSectionItemPayload {
+export interface IRemoveSectionItemPayload {
     /**
      * Index of the section where the item to move is located.
      *
      * @remarks
      * Index is zero-based.
      *
-     * {@link RemoveSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link RemoveSectionItemPayload.itemPath} instead.
+     * {@link IRemoveSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link IRemoveSectionItemPayload.itemPath} instead.
      *
      * TODO LX-648: Remove sectionIndex in the next major version.
      */
@@ -1250,7 +1250,7 @@ export interface RemoveSectionItemPayload {
      * @remarks
      * Index is zero-based. For convenience you may use index of -1 to remove last item from section.
      *
-     * {@link RemoveSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link RemoveSectionItemPayload.itemPath} instead.
+     * {@link IRemoveSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link IRemoveSectionItemPayload.itemPath} instead.
      *
      * TODO LX-648: Remove itemIndex in the next major version.
      */
@@ -1291,9 +1291,9 @@ export interface RemoveSectionItemPayload {
 /**
  * @beta
  */
-export interface RemoveSectionItem extends IDashboardCommand {
+export interface IRemoveSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
-    readonly payload: RemoveSectionItemPayload;
+    readonly payload: IRemoveSectionItemPayload;
 }
 
 /**
@@ -1323,7 +1323,7 @@ export function removeSectionItem(
     itemIndex: number,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveSectionItem {
+): IRemoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
         correlationId,
@@ -1358,7 +1358,7 @@ export function removeNestedLayoutSectionItem(
     itemPath: ILayoutItemPath,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveSectionItem {
+): IRemoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
         correlationId,
@@ -1398,7 +1398,7 @@ export function eagerRemoveSectionItem(
     itemIndex: number,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveSectionItem {
+): IRemoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
         correlationId,
@@ -1432,7 +1432,7 @@ export function eagerRemoveNestedLayoutSectionItem(
     itemPath: ILayoutItemPath,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveSectionItem {
+): IRemoveSectionItem {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
         correlationId,
@@ -1451,10 +1451,10 @@ export function eagerRemoveNestedLayoutSectionItem(
 //
 
 /**
- * Payload of the {@link RemoveSectionItemByWidgetRef} command.
+ * Payload of the {@link IRemoveSectionItemByWidgetRef} command.
  * @beta
  */
-export interface RemoveSectionItemByWidgetRefPayload {
+export interface IRemoveSectionItemByWidgetRefPayload {
     /**
      * Widget reference of the item to remove.
      */
@@ -1485,9 +1485,9 @@ export interface RemoveSectionItemByWidgetRefPayload {
 /**
  * @beta
  */
-export interface RemoveSectionItemByWidgetRef extends IDashboardCommand {
+export interface IRemoveSectionItemByWidgetRef extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF";
-    readonly payload: RemoveSectionItemByWidgetRefPayload;
+    readonly payload: IRemoveSectionItemByWidgetRefPayload;
 }
 
 /**
@@ -1509,7 +1509,7 @@ export function removeSectionItemByWidgetRef(
     widgetRef: ObjRef,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveSectionItemByWidgetRef {
+): IRemoveSectionItemByWidgetRef {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF",
         correlationId,
@@ -1541,7 +1541,7 @@ export function eagerRemoveSectionItemByWidgetRef(
     widgetRef: ObjRef,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): RemoveSectionItemByWidgetRef {
+): IRemoveSectionItemByWidgetRef {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF",
         correlationId,
@@ -1557,15 +1557,15 @@ export function eagerRemoveSectionItemByWidgetRef(
  * @beta
  */
 export type DashboardLayoutCommands =
-    | AddLayoutSection
-    | MoveLayoutSection
-    | RemoveLayoutSection
+    | IAddLayoutSection
+    | IMoveLayoutSection
+    | IRemoveLayoutSection
     | ChangeLayoutSectionHeader
-    | AddSectionItems
-    | MoveSectionItem
-    | RemoveSectionItem
-    | RemoveSectionItemByWidgetRef
-    | ResizeHeight;
+    | IAddSectionItems
+    | IMoveSectionItem
+    | IRemoveSectionItem
+    | IRemoveSectionItemByWidgetRef
+    | IResizeHeight;
 
 //
 //
@@ -1584,10 +1584,10 @@ export type DashboardLayoutCommands =
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;
 
 /**
- * Payload of the {@link UndoLayoutChanges} command.
+ * Payload of the {@link IUndoLayoutChanges} command.
  * @beta
  */
-export interface UndoLayoutChangesPayload {
+export interface IUndoLayoutChangesPayload {
     /**
      * Specify a function that will be used to select a command up to which the undo should be done.
      *
@@ -1617,9 +1617,9 @@ export interface UndoLayoutChangesPayload {
 /**
  * @beta
  */
-export interface UndoLayoutChanges extends IDashboardCommand {
+export interface IUndoLayoutChanges extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
-    readonly payload: UndoLayoutChangesPayload;
+    readonly payload: IUndoLayoutChangesPayload;
 }
 
 /**
@@ -1641,7 +1641,7 @@ export interface UndoLayoutChanges extends IDashboardCommand {
 export function undoLayoutChanges(
     undoPointSelector?: UndoPointSelector,
     correlationId?: string,
-): UndoLayoutChanges {
+): IUndoLayoutChanges {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO",
         correlationId,
@@ -1669,7 +1669,7 @@ export function undoLayoutChanges(
  *
  * @alpha
  */
-export function revertLastLayoutChange(correlationId?: string): UndoLayoutChanges {
+export function revertLastLayoutChange(correlationId?: string): IUndoLayoutChanges {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO",
         correlationId,
@@ -1678,10 +1678,10 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
 }
 
 /**
- * Payload of the {@link ResizeHeight} command.
+ * Payload of the {@link IResizeHeight} command.
  * @beta
  */
-export interface ResizeHeightPayload {
+export interface IResizeHeightPayload {
     /**
      * Index of the section to resize.
      *
@@ -1710,9 +1710,9 @@ export interface ResizeHeightPayload {
 /**
  * @beta
  */
-export interface ResizeHeight extends IDashboardCommand {
+export interface IResizeHeight extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT";
-    readonly payload: ResizeHeightPayload;
+    readonly payload: IResizeHeightPayload;
 }
 
 /**
@@ -1734,7 +1734,7 @@ export function resizeHeight(
     itemIndexes: number[],
     height: number,
     correlationId?: string,
-): ResizeHeight {
+): IResizeHeight {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT",
         correlationId,
@@ -1763,7 +1763,7 @@ export function resizeNestedLayoutItemsHeight(
     itemIndexes: number[],
     height: number,
     correlationId?: string,
-): ResizeHeight {
+): IResizeHeight {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT",
         correlationId,
@@ -1776,17 +1776,17 @@ export function resizeNestedLayoutItemsHeight(
 }
 
 /**
- * Payload of the {@link ResizeWidth} command.
+ * Payload of the {@link IResizeWidth} command.
  * @beta
  */
-export interface ResizeWidthPayload {
+export interface IResizeWidthPayload {
     /**
      * Index of the section to resize.
      *
      * Index is zero-based.
      *
      * @remarks
-     * {@link ResizeWidthPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link ResizeWidthPayload.itemPath} instead.
+     * {@link IResizeWidthPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link IResizeWidthPayload.itemPath} instead.
      *
      * TODO LX-648: Remove sectionIndex in the next major version.
      */
@@ -1798,7 +1798,7 @@ export interface ResizeWidthPayload {
      * Index is zero-based.
      *
      * @remarks
-     * {@link ResizeWidthPayload.itemIndex} support will be removed in the next major SDK version. Use {@link ResizeWidthPayload.itemPath} instead.
+     * {@link IResizeWidthPayload.itemIndex} support will be removed in the next major SDK version. Use {@link IResizeWidthPayload.itemPath} instead.
      *
      * TODO LX-648: Remove itemIndex in the next major version.
      */
@@ -1821,9 +1821,9 @@ export interface ResizeWidthPayload {
 /**
  * @beta
  */
-export interface ResizeWidth extends IDashboardCommand {
+export interface IResizeWidth extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH";
-    readonly payload: ResizeWidthPayload;
+    readonly payload: IResizeWidthPayload;
 }
 
 /**
@@ -1847,7 +1847,7 @@ export function resizeWidth(
     itemIndex: number,
     width: number,
     correlationId?: string,
-): ResizeWidth {
+): IResizeWidth {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH",
         correlationId,
@@ -1874,7 +1874,7 @@ export function resizeNestedLayoutItemWidth(
     itemPath: ILayoutItemPath,
     width: number,
     correlationId?: string,
-): ResizeWidth {
+): IResizeWidth {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH",
         correlationId,
@@ -1890,19 +1890,19 @@ export function resizeNestedLayoutItemWidth(
 /////
 
 /**
- * Payload of the {@link SetScreenSize} command.
+ * Payload of the {@link ISetScreenSize} command.
  * @internal
  */
-export interface SetScreenSizePayload {
+export interface ISetScreenSizePayload {
     screenSize: ScreenSize;
 }
 
 /**
  * @internal
  */
-export interface SetScreenSize extends IDashboardCommand {
+export interface ISetScreenSize extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE";
-    readonly payload: SetScreenSizePayload;
+    readonly payload: ISetScreenSizePayload;
 }
 
 /**
@@ -1919,7 +1919,7 @@ export interface SetScreenSize extends IDashboardCommand {
  * @internal
  *
  */
-export function setScreenSize(screenSize: ScreenSize, correlationId?: string): SetScreenSize {
+export function setScreenSize(screenSize: ScreenSize, correlationId?: string): ISetScreenSize {
     return {
         type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE",
         correlationId,
@@ -1932,10 +1932,10 @@ export function setScreenSize(screenSize: ScreenSize, correlationId?: string): S
 /////
 
 /**
- * Payload of the {@link ToggleLayoutSectionHeaders} command.
+ * Payload of the {@link IToggleLayoutSectionHeaders} command.
  * @internal
  */
-export interface ToggleLayoutSectionHeadersPayload {
+export interface IToggleLayoutSectionHeadersPayload {
     layoutPath: ILayoutItemPath | undefined;
     enableSectionHeaders: boolean;
 }
@@ -1943,9 +1943,9 @@ export interface ToggleLayoutSectionHeadersPayload {
 /**
  * @internal
  */
-export interface ToggleLayoutSectionHeaders extends IDashboardCommand {
+export interface IToggleLayoutSectionHeaders extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS";
-    readonly payload: ToggleLayoutSectionHeadersPayload;
+    readonly payload: IToggleLayoutSectionHeadersPayload;
 }
 
 /**
@@ -1966,7 +1966,7 @@ export function toggleLayoutSectionHeaders(
     layoutPath: ILayoutItemPath | undefined,
     enableSectionHeaders: boolean,
     correlationId?: string,
-): ToggleLayoutSectionHeaders {
+): IToggleLayoutSectionHeaders {
     return {
         type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS",
         correlationId,
@@ -1980,10 +1980,10 @@ export function toggleLayoutSectionHeaders(
 /////
 
 /**
- * Payload of the {@link ToggleLayoutDirection} command.
+ * Payload of the {@link IToggleLayoutDirection} command.
  * @internal
  */
-export interface ToggleLayoutDirectionPayload {
+export interface IToggleLayoutDirectionPayload {
     layoutPath: ILayoutItemPath | undefined;
     direction: IDashboardLayoutContainerDirection;
 }
@@ -1991,9 +1991,9 @@ export interface ToggleLayoutDirectionPayload {
 /**
  * @internal
  */
-export interface ToggleLayoutDirection extends IDashboardCommand {
+export interface IToggleLayoutDirection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION";
-    readonly payload: ToggleLayoutDirectionPayload;
+    readonly payload: IToggleLayoutDirectionPayload;
 }
 
 /**
@@ -2013,7 +2013,7 @@ export function toggleLayoutDirection(
     layoutPath: ILayoutItemPath | undefined,
     direction: IDashboardLayoutContainerDirection,
     correlationId?: string,
-): ToggleLayoutDirection {
+): IToggleLayoutDirection {
     return {
         type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_DIRECTION",
         correlationId,

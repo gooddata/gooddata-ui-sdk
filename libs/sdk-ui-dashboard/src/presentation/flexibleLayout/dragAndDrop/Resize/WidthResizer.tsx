@@ -1,10 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import cx from "classnames";
 
-import { type ResizerProps } from "./types.js";
+import { type IResizerProps } from "./types.js";
 
-export function WidthResizer({ status }: ResizerProps) {
+export function WidthResizer({ status }: IResizerProps) {
     const boxClassName = cx("gd-fluidlayout-width-resizer", status, "s-gd-fluidlayout-width-resizer");
     const lineClassName = cx("width-resizer-line", status);
     const handlerClassName = cx("width-resizer-drag-handler", status);

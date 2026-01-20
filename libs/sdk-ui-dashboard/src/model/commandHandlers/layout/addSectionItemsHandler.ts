@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -21,9 +21,9 @@ import {
     updateItemIndex,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { type AddSectionItems } from "../../commands/index.js";
+import { type IAddSectionItems } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
+import { type IDashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
@@ -39,7 +39,7 @@ import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: AddSectionItems;
+    readonly cmd: IAddSectionItems;
     readonly items: InternalDashboardItemDefinition[];
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
@@ -135,8 +135,8 @@ function validateAndResolveItems(commandCtx: AddSectionItemsContext) {
 
 export function* addSectionItemsHandler(
     ctx: DashboardContext,
-    cmd: AddSectionItems,
-): SagaIterator<DashboardLayoutSectionItemsAdded> {
+    cmd: IAddSectionItems,
+): SagaIterator<IDashboardLayoutSectionItemsAdded> {
     const {
         payload: { items },
     } = cmd;

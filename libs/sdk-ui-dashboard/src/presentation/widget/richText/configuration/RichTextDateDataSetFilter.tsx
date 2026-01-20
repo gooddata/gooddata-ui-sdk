@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
 import { type IRichTextWidget, widgetRef } from "@gooddata/sdk-model";
 
 import {
-    type InsightDateDatasets,
-    type QueryInsightDateDatasets,
+    type IInsightDateDatasets,
+    type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     useDashboardQueryProcessing,
@@ -25,8 +25,8 @@ export function RichTextDateDataSetFilter({ widget }: IRichTextDateDataSetFilter
         run: queryDateDatasets,
         result,
     } = useDashboardQueryProcessing<
-        QueryInsightDateDatasets,
-        InsightDateDatasets,
+        IQueryInsightDateDatasets,
+        IInsightDateDatasets,
         Parameters<typeof queryDateDatasetsForInsight>
     >({
         queryCreator: queryDateDatasetsForInsight,

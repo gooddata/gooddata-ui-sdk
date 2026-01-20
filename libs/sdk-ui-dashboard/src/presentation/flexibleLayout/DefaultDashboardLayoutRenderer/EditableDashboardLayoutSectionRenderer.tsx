@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
@@ -34,7 +34,7 @@ export function EditableDashboardLayoutSectionRenderer({
     section,
     parentLayoutItemSize,
     showBorders,
-}: IDashboardLayoutSectionRenderProps<unknown & object>) {
+}: IDashboardLayoutSectionRenderProps<unknown>) {
     const style = isHidden ? isHiddenStyle : defaultStyle;
     const { status, renderBottomBorder } = useBorderStatus(section);
     return (

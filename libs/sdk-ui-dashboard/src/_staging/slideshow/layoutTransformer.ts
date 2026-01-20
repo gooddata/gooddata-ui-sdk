@@ -1,10 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type IDashboardLayout, type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 import { sectionLayoutSection } from "./sectionSlideTransformer.js";
 import { singleWidgetTransformer } from "./singleWidgetTransformer.js";
 import { findFocusedWidget } from "./utils/index.js";
-import { type DashboardFocusObject } from "../../model/index.js";
+import { type IDashboardFocusObject } from "../../model/index.js";
 
 /**
  * Transforms layout to export format
@@ -14,7 +15,7 @@ import { type DashboardFocusObject } from "../../model/index.js";
  */
 export function layoutTransformer<TWidget>(
     layout: IDashboardLayout<TWidget>,
-    focusObject?: DashboardFocusObject,
+    focusObject?: IDashboardFocusObject,
 ): IDashboardLayout<TWidget> {
     const focusedWidget = findFocusedWidget(layout, focusObject?.widgetId);
     if (focusedWidget) {

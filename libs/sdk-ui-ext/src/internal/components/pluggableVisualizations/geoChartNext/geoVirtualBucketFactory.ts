@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IBucket,
@@ -13,11 +13,10 @@ import { createAttributeRef, getAttributeMetadata, getLatitudeAttribute } from "
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
 /**
- * Creates all virtual buckets (tooltip, latitude, longitude) based on controls and backend capabilities.
+ * Creates virtual buckets (latitude, longitude) based on controls.
  *
  * @param insight - The insight definition
- * @param controls - Visualization controls containing tooltipText, latitude, longitude
- * @param supportsSeparateLatLong - Whether backend supports separate lat/long labels
+ * @param controls - Visualization controls containing latitude, longitude
  * @returns Array of virtual buckets
  * @internal
  */
@@ -26,17 +25,6 @@ export function createVirtualBuckets(
     controls: IVisualizationProperties,
 ): IBucket[] {
     const virtualBuckets: IBucket[] = [];
-
-    // Always add tooltip if configured
-    const tooltipBucket = tryCreateVirtualBucket(
-        insight,
-        controls["tooltipText"],
-        BucketNames.TOOLTIP_TEXT,
-        "tooltipText_df",
-    );
-    if (tooltipBucket) {
-        virtualBuckets.push(tooltipBucket);
-    }
 
     const latitudeBucket = tryCreateVirtualBucket(
         insight,
@@ -85,14 +73,14 @@ export function tryCreateVirtualBucket(
 
 /**
  * Creates a virtual bucket from the latitude attribute's display form.
- * Virtual buckets are used for tooltip, latitude, and longitude execution attributes.
+ * Virtual buckets are used for latitude and longitude execution attributes.
  *
  * @remarks
  * The latitude attribute is used as the base attribute for resolving related display forms
- * (tooltip text, latitude, longitude) since it represents the primary geo attribute.
+ * (latitude, longitude) since it represents the primary geo attribute.
  *
  * @param insight - The insight definition
- * @param bucketName - Name for the virtual bucket (e.g., TOOLTIP_TEXT, LATITUDE, LONGITUDE)
+ * @param bucketName - Name for the virtual bucket (e.g., LATITUDE, LONGITUDE)
  * @param attributeId - Display form ID or URI to use
  * @param attributeLocalIdentifier - Local identifier for the attribute
  * @returns Virtual bucket or undefined if latitude attribute is not present or bucket already exists

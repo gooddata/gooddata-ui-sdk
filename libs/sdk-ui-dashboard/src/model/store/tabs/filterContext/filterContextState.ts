@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
@@ -41,7 +41,7 @@ export interface IWorkingFilterContextDefinition {
 /**
  * @public
  */
-export interface FilterContextState {
+export type FilterContextState = {
     /**
      * Array of local IDs for filters that have invalid selections.
      * This is used to track and indicate filters that have selection problems.
@@ -115,7 +115,7 @@ export interface FilterContextState {
      * @beta
      */
     defaultFilterOverrides?: FilterContextItem[];
-}
+};
 
 export const filterContextInitialState: FilterContextState = {
     filtersWithInvalidSelection: [],

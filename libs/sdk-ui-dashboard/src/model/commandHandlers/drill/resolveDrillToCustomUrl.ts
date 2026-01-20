@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
 import { groupBy } from "lodash-es";
@@ -7,7 +7,7 @@ import { type CallEffect, type SagaReturnType, all, call, select } from "redux-s
 
 import {
     type IAttributeDisplayFormMetadataObject,
-    type IDrillToCustomUrl,
+    type IDrillToCustomUrl as IDrillToCustomUrlModel,
     type IFilter,
     type IInsightWidget,
     type ObjRef,
@@ -33,7 +33,7 @@ import {
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../_staging/drills/drillingUtils.js";
-import { type DrillToCustomUrl } from "../../commands/drill.js";
+import { type IDrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
@@ -437,11 +437,11 @@ const applyReplacements = (url: string, replacements: IDrillToUrlPlaceholderRepl
     );
 
 export function* resolveDrillToCustomUrl(
-    drillConfig: IDrillToCustomUrl,
+    drillConfig: IDrillToCustomUrlModel,
     widgetRef: ObjRef,
     event: IDrillEvent,
     ctx: DashboardContext,
-    cmd: DrillToCustomUrl,
+    cmd: IDrillToCustomUrl,
 ): SagaIterator<string> {
     const customUrl = drillConfig.target.url;
 

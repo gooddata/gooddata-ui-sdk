@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -29,7 +29,7 @@ export const storybook: IConfiguration<"storybook"> = {
             version: "19.1.1",
         },
     ],
-    plugin: "sonarjs",
+    plugins: ["sonarjs"],
     override: {
         files: ["**/*.stories.tsx"],
         extends: ["plugin:storybook/recommended"],

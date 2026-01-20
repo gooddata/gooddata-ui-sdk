@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 import { isEmpty } from "lodash-es";
@@ -10,9 +10,9 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type DateFilterValidationResult } from "../../../../types.js";
-import { type DateFilterConfigState, type TabsState, getActiveTab } from "../tabsState.js";
+import { type IDateFilterConfigState, type ITabsState, getActiveTab } from "../tabsState.js";
 
-type DateFilterConfigReducer<A extends Action> = CaseReducer<TabsState, A>;
+type DateFilterConfigReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 type SetDateFilterConfigPayload = {
     /**
@@ -34,7 +34,7 @@ type SetDateFilterConfigPayload = {
     isUsingDashboardOverrides: boolean;
 };
 
-const emptyDateFilterConfig: DateFilterConfigState = {
+const emptyDateFilterConfig: IDateFilterConfigState = {
     dateFilterConfig: undefined,
     effectiveDateFilterConfig: undefined,
     isUsingDashboardOverrides: undefined,

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ArithmeticMeasureOperator,
@@ -8,6 +8,9 @@ import {
     type IBucket,
     type IInsight,
     type IMeasure,
+    type ISettings,
+    type ObjRef,
+    areObjRefsEqual,
     attributeAlias,
     attributeDisplayFormRef,
     attributeLocalId,
@@ -24,9 +27,10 @@ import {
     isUriRef,
     newAttribute,
     newVirtualArithmeticMeasure,
+    serializeObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 /**
  * Determines if a visualization type supports the "Show as Table" UI button.
@@ -223,23 +227,22 @@ function createHeadlineComparisonMeasures(
 }
 
 /**
- * Transforms geochart location bucket to use tooltipText (location name) instead of lat/lon coordinates.
- * This makes the table view more readable by showing "New York" instead of "40.7128".
+ * Transforms a geo bucket attribute to use tooltipText display form (legacy pushpin only).
  *
- * @param locationBucket - The location bucket from geochart
- * @param insight - The insight containing properties with tooltipText reference
- * @returns Transformed attribute using location name, or original attribute if tooltipText not available
+ * @remarks
+ * This is used only when legacy pushpin behavior is active (new geo flags disabled).
  */
-function transformGeoLocationAttribute(
-    locationBucket: IBucket | undefined,
+function transformGeoBucketAttributeUsingTooltipText(
+    bucket: IBucket | undefined,
     insight: IInsight,
+    uniqueLocalIdSuffix: string,
 ): IAttribute | undefined {
-    if (!locationBucket) {
+    if (!bucket) {
         return undefined;
     }
 
-    const locationAttr = bucketAttribute(locationBucket);
-    if (!locationAttr) {
+    const geoAttr = bucketAttribute(bucket);
+    if (!geoAttr) {
         return undefined;
     }
 
@@ -247,18 +250,125 @@ function transformGeoLocationAttribute(
     const tooltipTextId = properties?.["controls"]?.["tooltipText"];
 
     if (!tooltipTextId) {
-        return locationAttr;
+        return geoAttr;
     }
 
-    const ref = isUriRef(attributeDisplayFormRef(locationAttr))
+    const ref = isUriRef(attributeDisplayFormRef(geoAttr))
         ? uriRef(tooltipTextId)
         : idRef(tooltipTextId, "displayForm");
 
     // Generate a unique localId to avoid conflicts with existing attributes
-    // Use the original location localId as base but add a suffix for table view
-    const uniqueLocalId = `${attributeLocalId(locationAttr)}_table_name`;
+    const uniqueLocalId = `${attributeLocalId(geoAttr)}_${uniqueLocalIdSuffix}`;
 
-    return newAttribute(ref, (m) => m.localId(uniqueLocalId).alias(attributeAlias(locationAttr)));
+    return newAttribute(ref, (m) => m.localId(uniqueLocalId).alias(attributeAlias(geoAttr)));
+}
+
+/**
+ * Transforms a geo bucket attribute to use the default display form.
+ *
+ * @remarks
+ * Used for new GeoChartNext variants when feature flags are enabled.
+ */
+function transformGeoBucketAttributeUsingDefaultDisplayForm(
+    bucket: IBucket | undefined,
+    defaultDisplayFormRefs: Map<string, ObjRef> | undefined,
+    uniqueLocalIdSuffix: string,
+): IAttribute | undefined {
+    if (!bucket) {
+        return undefined;
+    }
+
+    const geoAttr = bucketAttribute(bucket);
+    if (!geoAttr) {
+        return undefined;
+    }
+
+    const geoDisplayFormRef = attributeDisplayFormRef(geoAttr);
+    const defaultDisplayFormRef = defaultDisplayFormRefs?.get(serializeObjRef(geoDisplayFormRef));
+    if (!defaultDisplayFormRef || areObjRefsEqual(defaultDisplayFormRef, geoDisplayFormRef)) {
+        return geoAttr;
+    }
+
+    const uniqueLocalId = `${attributeLocalId(geoAttr)}_${uniqueLocalIdSuffix}`;
+    return newAttribute(defaultDisplayFormRef, (m) =>
+        m.localId(uniqueLocalId).alias(attributeAlias(geoAttr)),
+    );
+}
+
+function transformGeoLocationAttribute(
+    locationBucket: IBucket | undefined,
+    insight: IInsight,
+): IAttribute | undefined {
+    return transformGeoBucketAttributeUsingTooltipText(locationBucket, insight, "table_name");
+}
+
+type GeoTableConversionOptions = {
+    settings?: ISettings;
+    defaultDisplayFormRefs?: Map<string, ObjRef>;
+};
+
+function resolveGeoPrimaryAttribute(
+    options: GeoTableConversionOptions,
+    insight: IInsight,
+    buckets: IBucket[],
+): IAttribute | undefined {
+    const type = insightVisualizationType(insight);
+    const isLegacyGeoPushpin = type === VisualizationTypes.PUSHPIN && !options.settings?.enableNewGeoPushpin;
+    const isNewGeoPushpin = type === VisualizationTypes.PUSHPIN && options.settings?.enableNewGeoPushpin;
+    const isNewGeoArea = type === VisualizationTypes.CHOROPLETH && options.settings?.enableGeoArea;
+
+    if (isLegacyGeoPushpin) {
+        return transformGeoLocationAttribute(bucketsFind(buckets, BucketNames.LOCATION), insight);
+    }
+
+    if (isNewGeoPushpin) {
+        return transformGeoBucketAttributeUsingDefaultDisplayForm(
+            bucketsFind(buckets, BucketNames.LOCATION),
+            options.defaultDisplayFormRefs,
+            "table_default_label",
+        );
+    }
+
+    if (isNewGeoArea) {
+        return transformGeoBucketAttributeUsingDefaultDisplayForm(
+            bucketsFind(buckets, BucketNames.AREA),
+            options.defaultDisplayFormRefs,
+            "table_default_label",
+        );
+    }
+
+    return undefined;
+}
+
+function getGeoTableAttributes(
+    insight: IInsight,
+    buckets: IBucket[],
+    options: GeoTableConversionOptions,
+): { rowAttributes: IAttributeOrMeasure[]; columnAttributes: IAttributeOrMeasure[] } | null {
+    const type = insightVisualizationType(insight);
+    const isLegacyGeoPushpin = type === VisualizationTypes.PUSHPIN && !options.settings?.enableNewGeoPushpin;
+    const isNewGeoPushpin = type === VisualizationTypes.PUSHPIN && options.settings?.enableNewGeoPushpin;
+    const isNewGeoArea = type === VisualizationTypes.CHOROPLETH && options.settings?.enableGeoArea;
+
+    if (!isLegacyGeoPushpin && !isNewGeoPushpin && !isNewGeoArea) {
+        return null;
+    }
+
+    const segmentBucket = bucketsFind(buckets, BucketNames.SEGMENT);
+    const primaryAttribute = resolveGeoPrimaryAttribute(options, insight, buckets);
+    const rowAttributes = [];
+
+    if (segmentBucket) {
+        const segmentAttr = bucketAttribute(segmentBucket);
+        if (segmentAttr) {
+            rowAttributes.push(segmentAttr);
+        }
+    }
+    if (primaryAttribute) {
+        rowAttributes.push(primaryAttribute);
+    }
+
+    return { rowAttributes, columnAttributes: [] };
 }
 
 /**
@@ -269,7 +379,10 @@ function transformGeoLocationAttribute(
  * @returns IInsight with table visualization or the original insight if conversion is not supported.
  * @public
  */
-export function convertInsightToTableDefinition(insight: IInsight): IInsight {
+export function convertInsightToTableDefinition(
+    insight: IInsight,
+    options: GeoTableConversionOptions = {},
+): IInsight {
     const type = insightVisualizationType(insight);
     if (!canConvertToTable(type)) {
         return insight;
@@ -317,37 +430,36 @@ export function convertInsightToTableDefinition(insight: IInsight): IInsight {
 
     const measures = [...baseMeasures, ...comparisonMeasures];
 
-    // Helper to match bucket by common attribute bucket names
-    const isRowBucket = (bucket: IBucket) =>
-        ["attribute", "attributes", "attribute_from", "attribute_to", "view", "trend"].includes(
-            bucket.localIdentifier ?? "",
-        );
+    /**
+     * Keep conversion logic aligned with `PluggablePivotTable`:
+     * - row attributes: see `getRowAttributes` in `sdk-ui-ext`
+     * - column attributes: see `getColumnAttributes` in `sdk-ui-ext`
+     *
+     * Note: using `BucketNames.*` avoids fragile magic strings.
+     */
+    const rowBucketIdentifiers: string[] = [
+        BucketNames.ATTRIBUTE,
+        BucketNames.ATTRIBUTES,
+        BucketNames.ATTRIBUTE_FROM,
+        BucketNames.ATTRIBUTE_TO,
+        BucketNames.VIEW,
+        BucketNames.TREND,
+        BucketNames.LOCATION,
+        BucketNames.AREA,
+    ];
+    const columnBucketIdentifiers: string[] = [BucketNames.COLUMNS, BucketNames.STACK, BucketNames.SEGMENT];
+
+    const isRowBucket = (bucket: IBucket) => rowBucketIdentifiers.includes(bucket.localIdentifier ?? "");
     const isColumnBucket = (bucket: IBucket) =>
-        ["columns", "stack", "segment"].includes(bucket.localIdentifier ?? "");
+        columnBucketIdentifiers.includes(bucket.localIdentifier ?? "");
 
     let rowAttributes: IAttributeOrMeasure[];
     let columnAttributes: IAttributeOrMeasure[];
 
-    const isGeoChart = type === "pushpin";
-    if (isGeoChart) {
-        const locationBucket = bucketsFind(buckets, BucketNames.LOCATION);
-        const segmentBucket = bucketsFind(buckets, BucketNames.SEGMENT);
-
-        const transformedLocation = transformGeoLocationAttribute(locationBucket, insight);
-
-        const geoAttributes = [];
-        if (segmentBucket) {
-            const segmentAttr = bucketAttribute(segmentBucket);
-            if (segmentAttr) {
-                geoAttributes.push(segmentAttr);
-            }
-        }
-        if (transformedLocation) {
-            geoAttributes.push(transformedLocation);
-        }
-
-        rowAttributes = geoAttributes;
-        columnAttributes = [];
+    const geoAttributes = getGeoTableAttributes(insight, buckets, options);
+    if (geoAttributes) {
+        rowAttributes = geoAttributes.rowAttributes;
+        columnAttributes = geoAttributes.columnAttributes;
     } else {
         const rowBuckets = buckets.filter(isRowBucket);
         const columnBuckets = buckets.filter(isColumnBucket);
@@ -358,15 +470,15 @@ export function convertInsightToTableDefinition(insight: IInsight): IInsight {
 
     const tableBuckets = [
         {
-            localIdentifier: "measures",
+            localIdentifier: BucketNames.MEASURES,
             items: measures,
         },
         {
-            localIdentifier: "attribute",
+            localIdentifier: BucketNames.ATTRIBUTE,
             items: rowAttributes,
         },
         {
-            localIdentifier: "columns",
+            localIdentifier: BucketNames.COLUMNS,
             items: columnAttributes,
         },
     ];

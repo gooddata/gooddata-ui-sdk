@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IAttribute, type IColorPalette } from "@gooddata/sdk-model";
+import { type IColorPalette } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
@@ -46,11 +46,6 @@ export interface IGeoChartNextConfig {
      * Segment values that should stay visible when using legend-driven filtering.
      */
     selectedSegmentItems?: string[];
-
-    /**
-     * Attribute used for tooltip labeling.
-     */
-    tooltipText?: IAttribute;
 
     /**
      * MapLibre style URL or inline style specification.

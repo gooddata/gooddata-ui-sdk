@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { isEmpty, partition } from "lodash-es";
@@ -24,7 +24,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { type LayoutStash, type LayoutState, layoutInitialState } from "./layoutState.js";
+import { type ILayoutState, type LayoutStash, layoutInitialState } from "./layoutState.js";
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 import { type IDashboardFilter, type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
@@ -41,7 +41,7 @@ import {
     isExtendedDashboardLayoutWidget,
 } from "../../../types/layoutTypes.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
-import { type UndoableCommand, createUndoableCommandsMapping } from "../../_infra/undoEnhancer.js";
+import { type IUndoableCommand, createUndoableCommandsMapping } from "../../_infra/undoEnhancer.js";
 import { selectEnableIgnoreCrossFiltering } from "../../config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
@@ -117,7 +117,7 @@ export const selectBasicLayoutByTab: DashboardSelector<
  */
 export const selectStash: DashboardSelector<LayoutStash> = createSelector(
     selectSelf,
-    (layoutState: LayoutState) => {
+    (layoutState: ILayoutState) => {
         return layoutState.stash;
     },
 );
@@ -127,8 +127,8 @@ export const selectStash: DashboardSelector<LayoutStash> = createSelector(
  *
  * @internal
  */
-export const selectUndoableLayoutCommands: DashboardSelector<UndoableCommand<DashboardLayoutCommands>[]> =
-    createSelector(selectSelf, (layoutState: LayoutState) => {
+export const selectUndoableLayoutCommands: DashboardSelector<IUndoableCommand<DashboardLayoutCommands>[]> =
+    createSelector(selectSelf, (layoutState: ILayoutState) => {
         return createUndoableCommandsMapping(layoutState);
     });
 
@@ -140,7 +140,7 @@ export const selectUndoableLayoutCommands: DashboardSelector<UndoableCommand<Das
  */
 export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardWidget>> = createSelector(
     selectSelf,
-    (layoutState: LayoutState) => {
+    (layoutState: ILayoutState) => {
         invariant(layoutState.layout, "attempting to access uninitialized layout state");
 
         return layoutState.layout;
@@ -154,7 +154,7 @@ export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardW
  */
 export const selectScreen: DashboardSelector<ScreenSize | undefined> = createSelector(
     selectSelf,
-    (layoutState: LayoutState) => {
+    (layoutState: ILayoutState) => {
         return layoutState.screen;
     },
 );
@@ -710,7 +710,7 @@ export const selectWidgetLocalIdToTabIdMap: DashboardSelector<Record<string, str
             const widgets = getLayoutWidgets(tab.layout.layout);
             widgets.forEach((widget) => {
                 if (widget.localIdentifier) {
-                    acc[widget.localIdentifier] = tab.localIdentifier as string;
+                    acc[widget.localIdentifier] = tab.localIdentifier;
                 }
             });
 

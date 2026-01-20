@@ -1,16 +1,16 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type FC, type ReactNode, createContext, useContext } from "react";
 
 import { InsightWidgetDescriptionTrigger } from "./InsightWidgetDescriptionTrigger.js";
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 
-interface InsightWidgetDescriptionComponentContextType {
+interface IInsightWidgetDescriptionComponentContextType {
     InsightWidgetDescriptionComponent: FC<IInsightWidgetDescriptionTriggerProps>;
 }
 
 const InsightWidgetDescriptionComponentContext = createContext<
-    InsightWidgetDescriptionComponentContextType | undefined
+    IInsightWidgetDescriptionComponentContextType | undefined
 >(undefined);
 
 export function InsightWidgetDescriptionComponentProvider({
@@ -27,7 +27,7 @@ export function InsightWidgetDescriptionComponentProvider({
     );
 }
 
-export const useInsightWidgetDescriptionComponent = (): InsightWidgetDescriptionComponentContextType => {
+export const useInsightWidgetDescriptionComponent = (): IInsightWidgetDescriptionComponentContextType => {
     const context = useContext(InsightWidgetDescriptionComponentContext);
     if (!context) {
         return { InsightWidgetDescriptionComponent: InsightWidgetDescriptionTrigger };

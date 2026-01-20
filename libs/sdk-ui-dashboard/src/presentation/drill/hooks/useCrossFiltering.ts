@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
-    type CrossFiltering,
-    type DashboardCommandFailed,
-    type DashboardCrossFilteringResolved,
+    type ICrossFiltering,
+    type IDashboardCommandFailed,
+    type IDashboardCrossFilteringResolved,
     crossFiltering,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";
@@ -11,16 +11,16 @@ import {
 /**
  * @internal
  */
-export interface UseCrossFilteringProps {
-    onSuccess?: (event: DashboardCrossFilteringResolved) => void;
-    onError?: (event: DashboardCommandFailed<CrossFiltering>) => void;
-    onBeforeRun?: (cmd: CrossFiltering) => void;
+export interface IUseCrossFilteringProps {
+    onSuccess?: (event: IDashboardCrossFilteringResolved) => void;
+    onError?: (event: IDashboardCommandFailed<ICrossFiltering>) => void;
+    onBeforeRun?: (cmd: ICrossFiltering) => void;
 }
 
 /**
  * @internal
  */
-export const useCrossFiltering = ({ onSuccess, onError, onBeforeRun }: UseCrossFilteringProps = {}) => {
+export const useCrossFiltering = ({ onSuccess, onError, onBeforeRun }: IUseCrossFilteringProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: crossFiltering,
         successEvent: "GDC.DASH/EVT.DRILL.CROSS_FILTERING.RESOLVED",

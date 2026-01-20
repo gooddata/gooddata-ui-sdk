@@ -1,13 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type FilterContextItem,
-    type ICrossFiltering,
-    type IDrillToAttributeUrl,
-    type IDrillToCustomUrl,
-    type IDrillToDashboard,
-    type IDrillToInsight,
-    type IDrillToLegacyDashboard,
+    type ICrossFiltering as ICrossFilteringModel,
+    type IDrillToAttributeUrl as IDrillToAttributeUrlModel,
+    type IDrillToCustomUrl as IDrillToCustomUrlModel,
+    type IDrillToDashboard as IDrillToDashboardModel,
+    type IDrillToInsight as IDrillToInsightModel,
+    type IDrillToLegacyDashboard as IDrillToLegacyDashboardModel,
     type IInsight,
     type IKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
@@ -15,17 +15,17 @@ import { type ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { type IDashboardCommand } from "./base.js";
 import {
-    type DashboardDrillContext,
+    type IDashboardDrillContext,
     type IDashboardDrillEvent,
     type IDrillDownDefinition,
 } from "../../types.js";
-import { type DashboardKeyDriverCombinationItem } from "../events/drill.js";
+import { type IDashboardKeyDriverCombinationItem } from "../events/drill.js";
 
 /**
- * Payload of the {@link Drill} command.
+ * Payload of the {@link IDrill} command.
  * @alpha
  */
-export interface DrillPayload {
+export interface IDrillPayload {
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -33,20 +33,20 @@ export interface DrillPayload {
     /**
      * Context in which the drill interaction was triggered (widget and insight details - if available).
      */
-    readonly drillContext: DashboardDrillContext;
+    readonly drillContext: IDashboardDrillContext;
 }
 
 /**
  * @alpha
  */
-export interface Drill extends IDashboardCommand {
+export interface IDrill extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL";
-    readonly payload: DrillPayload;
+    readonly payload: IDrillPayload;
 }
 
 /**
- * Creates the {@link Drill} command.
- * Dispatching this command will result into dispatching {@link DashboardDrillResolved} event.
+ * Creates the {@link IDrill} command.
+ * Dispatching this command will result into dispatching {@link IDashboardDrillResolved} event.
  *
  * This is general dashboard drill command with details about all possible more granular drill interactions that can follow.
  * Reason for this general drill command is that it may happen that multiple drill interactions are possible for one drill event.
@@ -55,8 +55,8 @@ export interface Drill extends IDashboardCommand {
  * {@link @gooddata/sdk-ui-ext#IDrillDownDefinition} and {@link @gooddata/sdk-backend-spi#IDrillToInsight} definitions.
  *
  * - This must be always the first command that occurs after the drill interaction and must be dispatched before more granular drill commands.
- * - Specific drill commands that can follow this general drill command are: {@link DrillDown}, {@link DrillToInsight}, {@link DrillToDashboard},
- *   {@link DrillToCustomUrl}, {@link DrillToAttributeUrl}, {@link DrillToLegacyDashboard}
+ * - Specific drill commands that can follow this general drill command are: {@link IDrillDown}, {@link IDrillToInsight}, {@link IDrillToDashboard},
+ *   {@link IDrillToCustomUrl}, {@link IDrillToAttributeUrl}, {@link IDrillToLegacyDashboard}
  *
  *
  * @alpha
@@ -67,9 +67,9 @@ export interface Drill extends IDashboardCommand {
  */
 export function drill(
     drillEvent: IDashboardDrillEvent,
-    drillContext: DashboardDrillContext,
+    drillContext: IDashboardDrillContext,
     correlationId?: string,
-): Drill {
+): IDrill {
     return {
         type: "GDC.DASH/CMD.DRILL",
         correlationId,
@@ -85,10 +85,10 @@ export function drill(
 //
 
 /**
- * Payload of the {@link DrillDown} command.
+ * Payload of the {@link IDrillDown} command.
  * @alpha
  */
-export interface DrillDownPayload {
+export interface IDrillDownPayload {
     /**
      * Insight to which the drill down should be applied.
      */
@@ -106,15 +106,15 @@ export interface DrillDownPayload {
 /**
  * @alpha
  */
-export interface DrillDown extends IDashboardCommand {
+export interface IDrillDown extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_DOWN";
-    readonly payload: DrillDownPayload;
+    readonly payload: IDrillDownPayload;
 }
 
 /**
- * Creates the {@link DrillDown} command.
+ * Creates the {@link IDrillDown} command.
  * Dispatching this command will result into applying drill down definition to the provided insight (result of the drill down application
- * depends on the particular visualization type) and dispatching {@link DashboardDrillDownResolved} event that will contain it.
+ * depends on the particular visualization type) and dispatching {@link IDashboardDrillDownResolved} event that will contain it.
  *
  * In the default dashboard implementation dispatching this command will also result into opening drill dialog with the insight
  * that has this particular drill down definition applied.
@@ -131,7 +131,7 @@ export function drillDown(
     drillDefinition: IDrillDownDefinition,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DrillDown {
+): IDrillDown {
     return {
         type: "GDC.DASH/CMD.DRILL.DRILL_DOWN",
         correlationId,
@@ -148,14 +148,14 @@ export function drillDown(
 //
 
 /**
- * Payload of the {@link DrillToInsight} command.
+ * Payload of the {@link IDrillToInsight} command.
  * @alpha
  */
-export interface DrillToInsightPayload {
+export interface IDrillToInsightPayload {
     /**
      * Drill definition with the target insight.
      */
-    readonly drillDefinition: IDrillToInsight;
+    readonly drillDefinition: IDrillToInsightModel;
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -165,15 +165,15 @@ export interface DrillToInsightPayload {
 /**
  * @alpha
  */
-export interface DrillToInsight extends IDashboardCommand {
+export interface IDrillToInsight extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT";
-    readonly payload: DrillToInsightPayload;
+    readonly payload: IDrillToInsightPayload;
 }
 
 /**
- * Creates the {@link DrillToInsight} command.
+ * Creates the {@link IDrillToInsight} command.
  * Dispatching this command will result into applying the drill intersection filters to the target insight
- * and dispatching {@link DashboardDrillToInsightResolved} event that will contain it.
+ * and dispatching {@link IDashboardDrillToInsightResolved} event that will contain it.
  *
  * In the default dashboard implementation this command will also result into opening the drill dialog with the target insight
  * that has the drill intersection filters applied.
@@ -185,10 +185,10 @@ export interface DrillToInsight extends IDashboardCommand {
  * @returns drill to insight command
  */
 export function drillToInsight(
-    drillDefinition: IDrillToInsight,
+    drillDefinition: IDrillToInsightModel,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DrillToInsight {
+): IDrillToInsight {
     return {
         type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT",
         correlationId,
@@ -204,14 +204,14 @@ export function drillToInsight(
 //
 
 /**
- * Payload of the {@link DrillToDashboard} command.
+ * Payload of the {@link IDrillToDashboard} command.
  * @alpha
  */
-export interface DrillToDashboardPayload {
+export interface IDrillToDashboardPayload {
     /**
      * Drill definition with the target dashboard.
      */
-    readonly drillDefinition: IDrillToDashboard;
+    readonly drillDefinition: IDrillToDashboardModel;
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -221,15 +221,15 @@ export interface DrillToDashboardPayload {
 /**
  * @alpha
  */
-export interface DrillToDashboard extends IDashboardCommand {
+export interface IDrillToDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD";
-    readonly payload: DrillToDashboardPayload;
+    readonly payload: IDrillToDashboardPayload;
 }
 
 /**
- * Creates the {@link DrillToDashboard} command.
+ * Creates the {@link IDrillToDashboard} command.
  * Dispatching this command will result into getting the drill intersection filters that can be applied to the target dashboard
- * and dispatching {@link DashboardDrillToDashboardResolved} event that will contain them.
+ * and dispatching {@link IDashboardDrillToDashboardResolved} event that will contain them.
  *
  * @alpha
  * @param drillDefinition - drill definition with the target dashboard.
@@ -238,10 +238,10 @@ export interface DrillToDashboard extends IDashboardCommand {
  * @returns drill to dashboard command
  */
 export function drillToDashboard(
-    drillDefinition: IDrillToDashboard,
+    drillDefinition: IDrillToDashboardModel,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DrillToDashboard {
+): IDrillToDashboard {
     return {
         type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD",
         correlationId,
@@ -257,14 +257,14 @@ export function drillToDashboard(
 //
 
 /**
- * Payload of the {@link DrillToCustomUrl} command.
+ * Payload of the {@link IDrillToCustomUrl} command.
  * @alpha
  */
-export interface DrillToCustomUrlPayload {
+export interface IDrillToCustomUrlPayload {
     /**
      * Drill definition with the custom url to resolve.
      */
-    readonly drillDefinition: IDrillToCustomUrl;
+    readonly drillDefinition: IDrillToCustomUrlModel;
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -274,15 +274,15 @@ export interface DrillToCustomUrlPayload {
 /**
  * @alpha
  */
-export interface DrillToCustomUrl extends IDashboardCommand {
+export interface IDrillToCustomUrl extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL";
-    readonly payload: DrillToCustomUrlPayload;
+    readonly payload: IDrillToCustomUrlPayload;
 }
 
 /**
- * Creates the {@link DrillToCustomUrl} command.
+ * Creates the {@link IDrillToCustomUrl} command.
  * Dispatching this command will result into resolving the target url
- * and dispatching {@link DashboardDrillToCustomUrlResolved} event that will contain it.
+ * and dispatching {@link IDashboardDrillToCustomUrlResolved} event that will contain it.
  *
  * Custom url can contain various identifier or attribute title placeholders, see:
  * {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
@@ -295,10 +295,10 @@ export interface DrillToCustomUrl extends IDashboardCommand {
  * @alpha
  */
 export function drillToCustomUrl(
-    drillDefinition: IDrillToCustomUrl,
+    drillDefinition: IDrillToCustomUrlModel,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DrillToCustomUrl {
+): IDrillToCustomUrl {
     return {
         type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL",
         correlationId,
@@ -314,14 +314,14 @@ export function drillToCustomUrl(
 //
 
 /**
- * Payload of the {@link DrillToAttributeUrl} command.
+ * Payload of the {@link IDrillToAttributeUrl} command.
  * @alpha
  */
-export interface DrillToAttributeUrlPayload {
+export interface IDrillToAttributeUrlPayload {
     /**
      * Drill definition with the attribute url to resolve.
      */
-    readonly drillDefinition: IDrillToAttributeUrl;
+    readonly drillDefinition: IDrillToAttributeUrlModel;
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -331,15 +331,15 @@ export interface DrillToAttributeUrlPayload {
 /**
  * @alpha
  */
-export interface DrillToAttributeUrl extends IDashboardCommand {
+export interface IDrillToAttributeUrl extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL";
-    readonly payload: DrillToAttributeUrlPayload;
+    readonly payload: IDrillToAttributeUrlPayload;
 }
 
 /**
- * Creates the {@link DrillToAttributeUrl} command.
+ * Creates the {@link IDrillToAttributeUrl} command.
  * Dispatching this command will result into resolving the target attribute url
- * and dispatching {@link DashboardDrillToAttributeUrlResolved} event that will contain it.
+ * and dispatching {@link IDashboardDrillToAttributeUrlResolved} event that will contain it.
  *
  * For more details, see: {@link https://help.gooddata.com/pages/viewpage.action?pageId=86794855}
  *
@@ -351,10 +351,10 @@ export interface DrillToAttributeUrl extends IDashboardCommand {
  * @alpha
  */
 export function drillToAttributeUrl(
-    drillDefinition: IDrillToAttributeUrl,
+    drillDefinition: IDrillToAttributeUrlModel,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DrillToAttributeUrl {
+): IDrillToAttributeUrl {
     return {
         type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL",
         correlationId,
@@ -370,14 +370,14 @@ export function drillToAttributeUrl(
 //
 
 /**
- * Payload of the {@link DrillToLegacyDashboard} command.
+ * Payload of the {@link IDrillToLegacyDashboard} command.
  * @alpha
  */
-export interface DrillToLegacyDashboardPayload {
+export interface IDrillToLegacyDashboardPayload {
     /**
      * Drill definition with the target dashboard.
      */
-    readonly drillDefinition: IDrillToLegacyDashboard;
+    readonly drillDefinition: IDrillToLegacyDashboardModel;
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -387,14 +387,14 @@ export interface DrillToLegacyDashboardPayload {
 /**
  * @alpha
  */
-export interface DrillToLegacyDashboard extends IDashboardCommand {
+export interface IDrillToLegacyDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
-    readonly payload: DrillToLegacyDashboardPayload;
+    readonly payload: IDrillToLegacyDashboardPayload;
 }
 
 /**
- * Creates the {@link DrillToLegacyDashboard} command.
- * Dispatching this command will result into dispatching {@link DashboardDrillToLegacyDashboardResolved} event.
+ * Creates the {@link IDrillToLegacyDashboard} command.
+ * Dispatching this command will result into dispatching {@link IDashboardDrillToLegacyDashboardResolved} event.
  *
  * Drill to legacy dashboard can be configured for Kpi widgets only.
  *
@@ -406,10 +406,10 @@ export interface DrillToLegacyDashboard extends IDashboardCommand {
  * @alpha
  */
 export function drillToLegacyDashboard(
-    drillDefinition: IDrillToLegacyDashboard,
+    drillDefinition: IDrillToLegacyDashboardModel,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): DrillToLegacyDashboard {
+): IDrillToLegacyDashboard {
     return {
         type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD",
         correlationId,
@@ -425,10 +425,10 @@ export function drillToLegacyDashboard(
 //
 
 /**
- * Payload of the {@link ChangeDrillableItems} command.
+ * Payload of the {@link IChangeDrillableItems} command.
  * @alpha
  */
-export interface ChangeDrillableItemsPayload {
+export interface IChangeDrillableItemsPayload {
     /**
      * Additional items that can enable drilling of the widgets.
      * If the item (identifier/uri/predicate) matches attribute or measure in the widget, widget drilling will be enabled.
@@ -443,13 +443,13 @@ export interface ChangeDrillableItemsPayload {
 /**
  * @alpha
  */
-export interface ChangeDrillableItems extends IDashboardCommand {
+export interface IChangeDrillableItems extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE";
-    readonly payload: ChangeDrillableItemsPayload;
+    readonly payload: IChangeDrillableItemsPayload;
 }
 
 /**
- * Creates the {@link ChangeDrillableItems} command.
+ * Creates the {@link IChangeDrillableItems} command.
  * Dispatching this command will result into enabling drilling of the widgets, if they match some of the drillable item definition/predicate.
  *
  * @alpha
@@ -460,7 +460,7 @@ export interface ChangeDrillableItems extends IDashboardCommand {
 export function changeDrillableItems(
     drillableItems: ExplicitDrill[],
     correlationId?: string,
-): ChangeDrillableItems {
+): IChangeDrillableItems {
     return {
         type: "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE",
         correlationId,
@@ -475,10 +475,10 @@ export function changeDrillableItems(
 //
 
 /**
- * Payload of the {@link CrossFiltering} command.
+ * Payload of the {@link ICrossFiltering} command.
  * @beta
  */
-export interface CrossFilteringPayload {
+export interface ICrossFilteringPayload {
     /**
      * Insight from which the cross-filtering is coming.
      */
@@ -486,7 +486,7 @@ export interface CrossFilteringPayload {
     /**
      * Cross-filtering definition to apply.
      */
-    readonly drillDefinition: ICrossFiltering;
+    readonly drillDefinition: ICrossFilteringModel;
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -496,15 +496,15 @@ export interface CrossFilteringPayload {
 /**
  * @beta
  */
-export interface CrossFiltering extends IDashboardCommand {
+export interface ICrossFiltering extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.CROSS_FILTERING";
-    readonly payload: CrossFilteringPayload;
+    readonly payload: ICrossFilteringPayload;
 }
 
 /**
- * Creates the {@link CrossFiltering} command.
+ * Creates the {@link ICrossFiltering} command.
  * Dispatching this command will result into applying intersection attribute filters to the dashboard and insight will ignore these filters further
- * Eventually a {@link DashboardCrossFilteringResolved} event will be dispatched at the end.
+ * Eventually a {@link IDashboardCrossFilteringResolved} event will be dispatched at the end.
  *
  * @beta
  * @param insight - insight from which the cross filtering is coming.
@@ -515,10 +515,10 @@ export interface CrossFiltering extends IDashboardCommand {
  */
 export function crossFiltering(
     insight: IInsight,
-    drillDefinition: ICrossFiltering,
+    drillDefinition: ICrossFilteringModel,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
-): CrossFiltering {
+): ICrossFiltering {
     return {
         type: "GDC.DASH/CMD.DRILL.CROSS_FILTERING",
         correlationId,
@@ -535,14 +535,14 @@ export function crossFiltering(
 //
 
 /**
- * Payload of the {@link KeyDriverAnalysis} command.
+ * Payload of the {@link IKeyDriverAnalysis} command.
  * @beta
  */
-export interface KeyDriverAnalysisPayload {
+export interface IKeyDriverAnalysisPayload {
     /**
      * Key driver item to analyze.
      */
-    readonly keyDriveItem: DashboardKeyDriverCombinationItem;
+    readonly keyDriveItem: IDashboardKeyDriverCombinationItem;
     /**
      * Key driver analysis definition to apply.
      */
@@ -560,15 +560,15 @@ export interface KeyDriverAnalysisPayload {
 /**
  * @beta
  */
-export interface KeyDriverAnalysis extends IDashboardCommand {
+export interface IKeyDriverAnalysis extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS";
-    readonly payload: KeyDriverAnalysisPayload;
+    readonly payload: IKeyDriverAnalysisPayload;
 }
 
 /**
- * Creates the {@link KeyDriverAnalysis} command.
+ * Creates the {@link IKeyDriverAnalysis} command.
  * Dispatching this command will result into applying intersection attribute filters to the dashboard and insight will ignore these filters further
- * Eventually a {@link DashboardKeyDriverAnalysisResolved} event will be dispatched at the end.
+ * Eventually a {@link IDashboardKeyDriverAnalysisResolved} event will be dispatched at the end.
  *
  * @beta
  * @param drillDefinition - drill definition to apply.
@@ -582,9 +582,9 @@ export function keyDriverAnalysis(
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDashboardDrillEvent,
     filters: FilterContextItem[],
-    keyDriveItem: DashboardKeyDriverCombinationItem,
+    keyDriveItem: IDashboardKeyDriverCombinationItem,
     correlationId?: string,
-): KeyDriverAnalysis {
+): IKeyDriverAnalysis {
     return {
         type: "GDC.DASH/CMD.DRILL.KEY_DRIVER_ANALYSIS",
         correlationId,
@@ -605,12 +605,12 @@ export function keyDriverAnalysis(
  * @alpha
  */
 export type DashboardDrillCommand =
-    | Drill
-    | DrillDown
-    | DrillToAttributeUrl
-    | DrillToCustomUrl
-    | DrillToDashboard
-    | DrillToInsight
-    | DrillToLegacyDashboard
-    | CrossFiltering
-    | KeyDriverAnalysis;
+    | IDrill
+    | IDrillDown
+    | IDrillToAttributeUrl
+    | IDrillToCustomUrl
+    | IDrillToDashboard
+    | IDrillToInsight
+    | IDrillToLegacyDashboard
+    | ICrossFiltering
+    | IKeyDriverAnalysis;

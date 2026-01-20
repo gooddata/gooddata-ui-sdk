@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -146,7 +146,9 @@ export function InsightAlertsOld({ widget, onClose, onGoBack }: IInsightMenuSubm
                 {alertToDelete ? (
                     <AlertDeleteDialog
                         onCancel={cancelDeletingAlert}
-                        onDelete={() => deleteExistingAlert(alertToDelete)}
+                        onDelete={() => {
+                            void deleteExistingAlert(alertToDelete);
+                        }}
                         title={alertToDelete.title}
                     />
                 ) : null}

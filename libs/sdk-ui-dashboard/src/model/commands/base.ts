@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /**
  * All available command types.
@@ -136,12 +136,12 @@ export type DashboardCommandType =
 /**
  * @public
  */
-export interface CommandProcessingMeta {
+export type CommandProcessingMeta = {
     /**
      * Unique identifier assigned at the time command was submitted for processing.
      */
     readonly uuid: string;
-}
+};
 
 /**
  * Base type for all commands.

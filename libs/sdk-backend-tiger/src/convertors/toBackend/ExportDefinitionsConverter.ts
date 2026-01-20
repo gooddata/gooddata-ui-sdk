@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty, omitBy } from "lodash-es";
 
@@ -352,16 +352,16 @@ export const convertVisualizationToDashboardTabularExportRequest = (
         throw new UnexpectedError("Only XLSX and PDF_TABULAR formats are supported for tabular exports");
     }
 
-    const { mergeHeaders, exportInfo } = exportRequest.settings ?? {};
+    const { mergeHeaders, exportInfo, pageSize, orientation } = exportRequest.settings ?? {};
+    const resolvedPageOrientation: "PORTRAIT" | "LANDSCAPE" =
+        orientation === "landscape" ? "LANDSCAPE" : "PORTRAIT";
 
-    // Hardcoded settings for PDF_TABULAR for now
     const settings =
         exportRequest.format === "PDF_TABULAR"
             ? {
-                  mergeHeaders: true,
-                  exportInfo: true,
-                  pageSize: "A4" as const,
-                  pageOrientation: "PORTRAIT" as const,
+                  pageSize: pageSize ?? "A4",
+                  pageOrientation: resolvedPageOrientation,
+                  exportInfo: exportInfo ?? true,
               }
             : {
                   ...(mergeHeaders ? { mergeHeaders } : {}),

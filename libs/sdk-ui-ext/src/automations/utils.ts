@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { CronExpressionParser } from "cron-parser";
 import { type IntlShape } from "react-intl";
@@ -32,7 +32,13 @@ export const defaultEditAutomation = (
     dashboardId: string | undefined,
 ) => {
     const targetWorkspaceId = getWorkspaceId(automation, workspaceId);
-    navigate(buildAutomationUrl(targetWorkspaceId, dashboardId, automation.id));
+    navigate(
+        buildAutomationUrl({
+            workspaceId: targetWorkspaceId,
+            dashboardId,
+            automationId: automation.id,
+        }),
+    );
 };
 
 export const getRecipientName = (recipient: IAutomationRecipient): string => {

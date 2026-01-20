@@ -1,11 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { type ShowWidgetAsTableState } from "./showWidgetAsTableState.js";
+import { type IShowWidgetAsTableState } from "./showWidgetAsTableState.js";
 
-type ShowWidgetAsTableReducer<A extends Action> = CaseReducer<ShowWidgetAsTableState, A>;
+type ShowWidgetAsTableReducer<A extends Action> = CaseReducer<IShowWidgetAsTableState, A>;
 
 const setShowWidgetAsTable: ShowWidgetAsTableReducer<PayloadAction<ObjRef[]>> = (state, action) => {
     state.widgetRefs = action.payload;

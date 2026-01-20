@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -85,7 +85,7 @@ export const selectEffectiveDateFilterConfig: DashboardSelector<IDateFilterConfi
             "attempting to access uninitialized date filter config state",
         );
 
-        return activeTab!.dateFilterConfig!.effectiveDateFilterConfig!;
+        return activeTab.dateFilterConfig.effectiveDateFilterConfig;
     },
 );
 
@@ -131,7 +131,7 @@ const effectiveDateFilterConfigIsUsingOverrides = createSelector(
             "attempting to access uninitialized date filter config state",
         );
 
-        return activeTab!.dateFilterConfig!.isUsingDashboardOverrides!;
+        return activeTab.dateFilterConfig.isUsingDashboardOverrides;
     },
 );
 

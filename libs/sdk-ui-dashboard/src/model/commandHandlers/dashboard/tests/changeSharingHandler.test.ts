@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type ChangeSharing, changeSharing } from "../../../commands/index.js";
-import { type DashboardCommandFailed, type DashboardSharingChanged } from "../../../events/index.js";
+import { type IChangeSharing, changeSharing } from "../../../commands/index.js";
+import { type DashboardSharingChanged, type IDashboardCommandFailed } from "../../../events/index.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
 import { selectDashboardPermissions, selectDashboardShareStatus } from "../../../store/index.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -89,7 +90,7 @@ describe("change dashboard sharing handler", () => {
         });
 
         it("should fail", async () => {
-            const event: DashboardCommandFailed<ChangeSharing> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IChangeSharing> = await Tester.dispatchAndWaitFor(
                 changeSharing(
                     {
                         shareStatus: "public",
