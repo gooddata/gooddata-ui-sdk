@@ -1,10 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useEffect, useMemo } from "react";
 
 import { type IDataSetMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
 import {
-    type QueryAttributeDataSet,
+    type IQueryAttributeDataSet,
     queryAttributeDataSet,
     selectIsNewDashboard,
     selectPreloadedAttributesWithReferences,
@@ -22,7 +23,7 @@ export function useAttributeDataSet(displayForm: ObjRef, loadQuery = true) {
         status: attributesDataSetLoadingStatus,
         error: attributesDataSetLoadingError,
     } = useDashboardQueryProcessing<
-        QueryAttributeDataSet,
+        IQueryAttributeDataSet,
         IDataSetMetadataObject,
         Parameters<typeof queryAttributeDataSet>
     >({

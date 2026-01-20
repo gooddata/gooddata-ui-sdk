@@ -7,13 +7,15 @@ import {
     type JsonApiDatasetOutWithLinks,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import { EntitiesApi_GetEntityFacts } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import {
+    EntitiesApi_GetEntityFacts,
+    EntitiesApi_PatchEntityFacts,
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IFactsQuery, type IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import {
     type IDataSetMetadataObject,
     type IFactMetadataObject,
     type IMetadataObject,
-    type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type ObjRef,
     isIdentifierRef,
@@ -23,7 +25,6 @@ import { FactsQuery } from "./factsQuery.js";
 import { convertDatasetWithLinks, convertFact } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
-import { ldmItemUpdate } from "../../../utils/ldmItemUpdate.js";
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     constructor(
@@ -64,13 +65,40 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     }
 
     public updateFactMeta = async (
-        updatedFact: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+        updatedFact: Partial<IFactMetadataObject> & IMetadataObjectIdentity,
     ): Promise<IFactMetadataObject> => {
-        invariant(isIdentifierRef(updatedFact.ref), "tiger backend only supports referencing by identifier");
+        const ref = updatedFact.ref;
+        invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
         return this.authCall(async (client) => {
-            await ldmItemUpdate(client, this.workspace, updatedFact);
-            return this.getFact(updatedFact.ref);
+            const objectId = ref.identifier;
+            const response = await EntitiesApi_PatchEntityFacts(
+                client.axios,
+                client.basePath,
+                {
+                    objectId,
+                    workspaceId: this.workspace,
+                    jsonApiFactPatchDocument: {
+                        data: {
+                            id: objectId,
+                            type: "fact",
+                            attributes: {
+                                ...(updatedFact.title === undefined ? {} : { title: updatedFact.title }),
+                                ...(updatedFact.description === undefined
+                                    ? {}
+                                    : { description: updatedFact.description }),
+                                ...(updatedFact.tags === undefined ? {} : { tags: updatedFact.tags }),
+                                ...(updatedFact.isHidden === undefined
+                                    ? {}
+                                    : { isHidden: updatedFact.isHidden }),
+                            },
+                        },
+                    },
+                },
+                { headers: jsonApiHeaders },
+            );
+
+            return convertFact(response.data);
         });
     };
 }

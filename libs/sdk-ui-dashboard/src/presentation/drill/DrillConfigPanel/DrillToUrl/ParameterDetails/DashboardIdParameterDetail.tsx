@@ -1,15 +1,15 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { ParameterDetail } from "./ParameterDetail.js";
 import { selectDashboardId, useDashboardSelector } from "../../../../../model/index.js";
 
-interface IdentifierDetailProps {
+interface IIdentifierDetailProps {
     title: string;
 }
 
-export function DashboardIdParameterDetail({ title }: IdentifierDetailProps) {
+export function DashboardIdParameterDetail({ title }: IIdentifierDetailProps) {
     const value = useDashboardSelector(selectDashboardId);
     const intl = useIntl();
 

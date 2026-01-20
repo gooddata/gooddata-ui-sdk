@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type Ref, useRef } from "react";
 
@@ -257,7 +257,7 @@ export function DashboardLayoutWidget({
                             onDrill={onDrill}
                             onError={onError}
                             onFiltersChange={onFiltersChange}
-                            widget={widget as ExtendedDashboardWidget}
+                            widget={widget}
                             parentLayoutItemSize={item.size()}
                             parentLayoutPath={item.index()}
                             ErrorComponent={ErrorComponent}

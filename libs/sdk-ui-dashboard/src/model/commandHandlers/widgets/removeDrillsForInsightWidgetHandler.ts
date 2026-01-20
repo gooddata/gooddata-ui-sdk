@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -6,9 +6,9 @@ import { call, put, select } from "redux-saga/effects";
 import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils.js";
 import { validateRemoveDrillsByLocalIdentifier } from "./validation/removeDrillsSelectorValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type RemoveDrillsForInsightWidget } from "../../commands/index.js";
+import { type IRemoveDrillsForInsightWidget } from "../../commands/index.js";
 import {
-    type DashboardInsightWidgetDrillsRemoved,
+    type IDashboardInsightWidgetDrillsRemoved,
     insightWidgetDrillsRemoved,
 } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -19,8 +19,8 @@ import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomU
 
 export function* removeDrillsForInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: RemoveDrillsForInsightWidget,
-): SagaIterator<DashboardInsightWidgetDrillsRemoved> {
+    cmd: IRemoveDrillsForInsightWidget,
+): SagaIterator<IDashboardInsightWidgetDrillsRemoved> {
     const {
         payload: { localIdentifiers },
         correlationId,

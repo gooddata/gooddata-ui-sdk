@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -6,7 +6,7 @@ import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
     type CommandProcessingStatus,
-    type DashboardAlertSaved,
+    type IDashboardAlertSaved,
     saveAlert,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";
@@ -30,7 +30,7 @@ export const useUpdateAlert = ({
         onError: (event) => {
             onError?.(event.payload.error);
         },
-        onSuccess: (event: DashboardAlertSaved) => {
+        onSuccess: (event: IDashboardAlertSaved) => {
             onSuccess?.(event.payload.alert);
         },
         onBeforeRun: (cmd) => {

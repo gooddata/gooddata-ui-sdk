@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 import { useTrendDrivers } from "./useTrendDrivers.js";
-import { type KdaItem } from "../internalTypes.js";
+import { type IKdaItem } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 export function useSignificantDrives() {
@@ -13,7 +13,7 @@ export function useSignificantDrives() {
     const { trendUp, trendDown } = useTrendDrivers();
 
     const list = useMemo(() => {
-        const selected: IUiListboxInteractiveItem<KdaItem>[] = [];
+        const selected: IUiListboxInteractiveItem<IKdaItem>[] = [];
         if (state.selectedTrend.includes("up")) {
             selected.push(...trendUp);
         }

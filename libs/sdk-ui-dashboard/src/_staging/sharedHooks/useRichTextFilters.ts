@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
@@ -16,8 +16,8 @@ import {
 
 import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/index.js";
 import {
-    type InsightDateDatasets,
-    type QueryInsightDateDatasets,
+    type IInsightDateDatasets,
+    type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectFilterContextFilters,
     selectSectionHeadersDateDataSet,
@@ -92,8 +92,8 @@ export function useSectionDescriptionFilters(): IRichTextFiltersResult {
         status,
         error,
     } = useDashboardQueryProcessing<
-        QueryInsightDateDatasets,
-        InsightDateDatasets,
+        IQueryInsightDateDatasets,
+        IInsightDateDatasets,
         Parameters<typeof queryDateDatasetsForInsight>
     >({
         queryCreator: queryDateDatasetsForInsight,

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -7,9 +7,9 @@ import { objRefToString } from "@gooddata/sdk-model";
 
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type RefreshInsightWidget } from "../../commands/index.js";
+import { type IRefreshInsightWidget } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
+import { type IDashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -17,8 +17,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* refreshInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: RefreshInsightWidget,
-): SagaIterator<DashboardInsightWidgetRefreshed> {
+    cmd: IRefreshInsightWidget,
+): SagaIterator<IDashboardInsightWidgetRefreshed> {
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
     const { insight: insightRef } = insightWidget;

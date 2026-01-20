@@ -1,12 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
     type IAttributeDisplayFormMetadataObject,
-    type IDashboardAttributeFilter,
-    type IDashboardDateFilter,
     type IFilter,
     type IWidgetAlertDefinition,
     type IWidgetDefinition,
@@ -49,10 +47,7 @@ export function getBrokenAlertFiltersBasicInfo(
     }
 
     const result: IBrokenAlertFilterBasicInfo[] = [];
-    const [alertDateFilters, alertAttributeFilters] = partition(alertFilters, isDashboardDateFilter) as [
-        IDashboardDateFilter[],
-        IDashboardAttributeFilter[],
-    ];
+    const [alertDateFilters, alertAttributeFilters] = partition(alertFilters, isDashboardDateFilter);
 
     // attribute filters
     const appliedAttributeFilters = appliedFilters.filter(isAttributeFilter);

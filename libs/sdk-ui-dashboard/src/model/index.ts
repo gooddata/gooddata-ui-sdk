@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /*
  * The public API of the Dashboard model is exported from here.
@@ -19,8 +19,8 @@ export type {
     DashboardItemVisualizationContent,
     ObjectAvailabilityConfig,
     DashboardConfig,
-    DashboardExportSlideConfig,
-    DashboardFocusObject,
+    IDashboardExportSlideConfig,
+    IDashboardFocusObject,
     DashboardModelCustomizationFns,
     DashboardTransformFn,
     FiltersInfo,
@@ -64,19 +64,19 @@ export {
     isExtendedDashboardLayoutWidget,
 } from "./types/layoutTypes.js";
 export type {
-    FilterOp,
-    FilterOpReplaceAll,
-    FilterOpUnignoreAttributeFilter,
-    FilterOpIgnoreAttributeFilter,
-    FilterOpReplaceAttributeIgnores,
-    FilterOpDisableDateFilter,
-    FilterOpEnableDateFilter,
-    FilterOpUnignoreDateFilter,
-    FilterOpIgnoreDateFilter,
+    IFilterOp,
+    IFilterOpReplaceAll,
+    IFilterOpUnignoreAttributeFilter,
+    IFilterOpIgnoreAttributeFilter,
+    IFilterOpReplaceAttributeIgnores,
+    IFilterOpDisableDateFilter,
+    IFilterOpEnableDateFilter,
+    IFilterOpUnignoreDateFilter,
+    IFilterOpIgnoreDateFilter,
     FilterOperations,
-    WidgetFilterOperation,
-    WidgetHeader,
-    WidgetDescription,
+    IWidgetFilterOperation,
+    IWidgetHeader,
+    IWidgetDescription,
 } from "./types/widgetTypes.js";
 
 export type {
@@ -126,7 +126,7 @@ export {
     type selectDateDatasetsForMeasureType,
 } from "./queryServices/index.js";
 
-export type { RenderingWorkerConfiguration } from "./commandHandlers/render/types.js";
+export type { IRenderingWorkerConfiguration } from "./commandHandlers/render/types.js";
 export type {
     DashboardEventHandler,
     DashboardEventHandlerFn,

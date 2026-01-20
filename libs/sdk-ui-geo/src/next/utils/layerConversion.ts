@@ -29,7 +29,6 @@ import { type IGeoLayer, type IGeoLayerArea, type IGeoLayerPushpin } from "../ty
 interface IGeoLayerControls {
     latitude?: string;
     longitude?: string;
-    tooltipText?: string;
 }
 
 /**
@@ -201,22 +200,16 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
 
     let latitude = getAttributeFromBucket(buckets, BucketNames.LATITUDE);
     let longitude = getAttributeFromBucket(buckets, BucketNames.LONGITUDE);
-    let tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
     const location = getAttributeFromBucket(buckets, BucketNames.LOCATION);
 
     const controls = properties?.["controls"];
 
-    if (isGeoLayerControls(controls)) {
-        if (!latitude && !longitude && controls.latitude && controls.longitude) {
-            // Keep localId of the original LOCATION attribute so MVF/ranking filters that reference it
-            // (via localIdRef in dimensionality) do not become dangling when LOCATION is resolved to LAT/LNG.
-            const latitudeLocalId = location ? attributeLocalId(location) : "latitude_df";
-            latitude = createAttributeFromDisplayFormId(controls.latitude, latitudeLocalId);
-            longitude = createAttributeFromDisplayFormId(controls.longitude, "longitude_df");
-        }
-        if (!tooltipText && controls.tooltipText) {
-            tooltipText = createAttributeFromDisplayFormId(controls.tooltipText, "tooltipText_df");
-        }
+    if (isGeoLayerControls(controls) && !latitude && !longitude && controls.latitude && controls.longitude) {
+        // Keep localId of the original LOCATION attribute so MVF/ranking filters that reference it
+        // (via localIdRef in dimensionality) do not become dangling when LOCATION is resolved to LAT/LNG.
+        const latitudeLocalId = location ? attributeLocalId(location) : "latitude_df";
+        latitude = createAttributeFromDisplayFormId(controls.latitude, latitudeLocalId);
+        longitude = createAttributeFromDisplayFormId(controls.longitude, "longitude_df");
     }
 
     const size = getAttributeOrMeasureFromBucket(buckets, BucketNames.SIZE);
@@ -247,7 +240,6 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
         segmentBy,
         filters,
         sortBy: sorts,
-        tooltipText,
     };
 }
 
@@ -260,18 +252,12 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
  * @internal
  */
 function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerArea | null {
-    const { id, name, buckets, filters, sorts, properties } = insightLayer;
+    const { id, name, buckets, filters, sorts } = insightLayer;
 
     const area = getAttributeFromBucket(buckets, BucketNames.AREA);
-    let tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
 
     if (!area) {
         return null;
-    }
-
-    const controls = properties?.["controls"];
-    if (isGeoLayerControls(controls) && !tooltipText && controls.tooltipText) {
-        tooltipText = createAttributeFromDisplayFormId(controls.tooltipText, "tooltipText_df");
     }
 
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
@@ -286,7 +272,6 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
         segmentBy,
         filters,
         sortBy: sorts,
-        tooltipText,
     };
 }
 

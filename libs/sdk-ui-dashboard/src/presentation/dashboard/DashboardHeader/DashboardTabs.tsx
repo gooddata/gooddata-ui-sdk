@@ -31,7 +31,7 @@ import {
 
 import {
     DEFAULT_TAB_ID,
-    type TabState,
+    type ITabState,
     cancelRenamingDashboardTab,
     convertDashboardTabFromDefault,
     createDashboardTab,
@@ -49,19 +49,19 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 
-const EMPTY_TABS: TabState[] = [];
+const EMPTY_TABS: ITabState[] = [];
 
 type IDashboardUiTab = IUiTab<{ isRenaming?: boolean }>;
 
-interface TabActionsParams {
-    tab: TabState;
+interface ITabActionsParams {
+    tab: ITabState;
     index: number;
     totalTabs: number;
     intl: ReturnType<typeof useIntl>;
     dispatch: ReturnType<typeof useDashboardDispatch>;
 }
 
-function createRenameAction(params: TabActionsParams) {
+function createRenameAction(params: ITabActionsParams) {
     const { tab, intl, dispatch } = params;
     return {
         id: "rename",
@@ -74,7 +74,7 @@ function createRenameAction(params: TabActionsParams) {
     };
 }
 
-function createMoveLeftAction(params: TabActionsParams) {
+function createMoveLeftAction(params: ITabActionsParams) {
     const { index, intl, dispatch } = params;
     if (index <= 0) {
         return undefined;
@@ -95,7 +95,7 @@ function createMoveLeftAction(params: TabActionsParams) {
     };
 }
 
-function createMoveRightAction(params: TabActionsParams) {
+function createMoveRightAction(params: ITabActionsParams) {
     const { index, totalTabs, intl, dispatch } = params;
     if (index >= totalTabs - 1) {
         return undefined;
@@ -116,7 +116,7 @@ function createMoveRightAction(params: TabActionsParams) {
     };
 }
 
-function createDeleteAction(params: TabActionsParams, isOnlyOneTab: boolean) {
+function createDeleteAction(params: ITabActionsParams, isOnlyOneTab: boolean) {
     const { tab, intl, dispatch } = params;
     return {
         id: "delete",
@@ -135,7 +135,7 @@ function createDeleteAction(params: TabActionsParams, isOnlyOneTab: boolean) {
     };
 }
 
-function buildTabActions(params: TabActionsParams, isOnlyOneTab: boolean) {
+function buildTabActions(params: ITabActionsParams, isOnlyOneTab: boolean) {
     const actions = [
         createRenameAction(params),
         createMoveLeftAction(params),
@@ -173,7 +173,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
 
         return (
             tabs.map((tab, index) => {
-                const actionParams: TabActionsParams = { tab, index, totalTabs, intl, dispatch };
+                const actionParams: ITabActionsParams = { tab, index, totalTabs, intl, dispatch };
                 return {
                     id: tab.localIdentifier,
                     label: tab.title || intl.formatMessage({ id: "dashboard.tabs.default.label" }), // handles also empty string

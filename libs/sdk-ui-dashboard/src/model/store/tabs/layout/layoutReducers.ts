@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 import { type Draft } from "immer";
@@ -34,7 +34,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { type LayoutState, layoutInitialState } from "./layoutState.js";
+import { type ILayoutState, layoutInitialState } from "./layoutState.js";
 import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
 import { type IdentityMapping } from "../../../../_staging/dashboard/dashboardLayout.js";
 import {
@@ -55,28 +55,28 @@ import {
     type StashedDashboardItemsId,
     isCustomWidget,
 } from "../../../types/layoutTypes.js";
-import { type WidgetDescription, type WidgetHeader } from "../../../types/widgetTypes.js";
+import { type IWidgetDescription, type IWidgetHeader } from "../../../types/widgetTypes.js";
 import { addArrayElements, removeArrayElement } from "../../../utils/arrayOps.js";
 import { resetUndoReducer, undoReducer, withUndo } from "../../_infra/undoEnhancer.js";
-import { type TabsState } from "../tabsState.js";
+import { type ITabsState } from "../tabsState.js";
 
 // Core layout reducer type (operates directly on LayoutState, which extends UndoEnhancedState)
 // Use this type for reducers that will be wrapped with withUndo
-type CoreLayoutReducer<P> = CaseReducer<LayoutState, PayloadAction<P>>;
+type CoreLayoutReducer<P> = CaseReducer<ILayoutState, PayloadAction<P>>;
 
 // Generic layout reducer type (operates on TabsState and extracts LayoutState)
 // This is the most common type for reducers that manipulate layout through tabs
-type LayoutReducer<A> = CaseReducer<TabsState, PayloadAction<A>>;
+type LayoutReducer<A> = CaseReducer<ITabsState, PayloadAction<A>>;
 
 // Wrapped reducer type (operates on TabsState) - same as LayoutReducer
-type AdaptedLayoutReducer<P> = CaseReducer<TabsState, PayloadAction<P>>;
+type AdaptedLayoutReducer<P> = CaseReducer<ITabsState, PayloadAction<P>>;
 
 /**
  * Adapts a core layout reducer (for LayoutState) to a tabs reducer (for TabsState).
  * Automatically applies the reducer to the active tab's layout state.
  */
 function adaptLayoutReducer<P>(coreLayoutReducer: CoreLayoutReducer<P>): AdaptedLayoutReducer<P> {
-    return (state: Draft<TabsState>, action: PayloadAction<P>) => {
+    return (state: Draft<ITabsState>, action: PayloadAction<P>) => {
         const activeTab = state.tabs?.find((tab) => tab.localIdentifier === state.activeTabLocalIdentifier);
         if (!activeTab) return;
 
@@ -84,7 +84,7 @@ function adaptLayoutReducer<P>(coreLayoutReducer: CoreLayoutReducer<P>): Adapted
         if (!layoutState) return;
 
         // Call the reducer - it may mutate the draft or return a new state (e.g., when wrapped with withUndo)
-        const result = coreLayoutReducer(layoutState as Draft<LayoutState>, action);
+        const result = coreLayoutReducer(layoutState, action);
 
         // If the reducer returns a new state (like withUndo does), replace the layout
         if (result !== undefined) {
@@ -98,7 +98,7 @@ function adaptLayoutReducer<P>(coreLayoutReducer: CoreLayoutReducer<P>): Adapted
  * Initializes the layout if it doesn't exist.
  * Returns undefined if no active tab is found.
  */
-function getActiveTabLayout(state: Draft<TabsState>): Draft<LayoutState> | undefined {
+function getActiveTabLayout(state: Draft<ITabsState>): Draft<ILayoutState> | undefined {
     if (!state.tabs || !state.activeTabLocalIdentifier) {
         return undefined;
     }
@@ -626,7 +626,7 @@ const processSection = (section: IDashboardLayoutSection<ExtendedDashboardWidget
 };
 
 const getWidgetByRef = (
-    state: Draft<LayoutState>,
+    state: Draft<ILayoutState>,
     widgetRef: ObjRef,
 ): Draft<ExtendedDashboardWidget> | undefined => {
     const allWidgets = state?.layout?.sections.flatMap(processSection) ?? [];
@@ -640,7 +640,7 @@ const getWidgetByRef = (
 
 type ReplaceWidgetHeader = {
     ref: ObjRef;
-    header: WidgetHeader;
+    header: IWidgetHeader;
 };
 
 const replaceWidgetHeaderCore: CoreLayoutReducer<ReplaceWidgetHeader> = (state, action) => {
@@ -666,7 +666,7 @@ const replaceWidgetHeader = adaptLayoutReducer(withUndo(replaceWidgetHeaderCore)
 
 type ReplaceWidgetDescription = {
     ref: ObjRef;
-    description: WidgetDescription;
+    description: IWidgetDescription;
 };
 
 const replaceWidgetDescriptionCore: CoreLayoutReducer<ReplaceWidgetDescription> = (state, action) => {
@@ -862,7 +862,7 @@ type ReplaceWidgetInsight = {
     ref: ObjRef;
     insightRef: ObjRef;
     properties: VisualizationProperties | undefined;
-    header: WidgetHeader | undefined;
+    header: IWidgetHeader | undefined;
     newSize?: IVisualizationSizeInfo;
 };
 
@@ -1290,7 +1290,7 @@ export const layoutReducers = {
     addVisualizationSwitcherWidgetVisualization,
     updateVisualizationSwitcherWidgetVisualizations,
     undoLayout: adaptLayoutReducer(undoReducer),
-    clearLayoutHistory: adaptLayoutReducer((state: Draft<LayoutState>, _action: PayloadAction<void>) => {
+    clearLayoutHistory: adaptLayoutReducer((state: Draft<ILayoutState>, _action: PayloadAction<void>) => {
         resetUndoReducer(state);
     }),
     changeItemsHeight,

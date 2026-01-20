@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { type MoveAttributeFilter } from "../../../commands/filters.js";
+import { type IMoveAttributeFilter } from "../../../commands/filters.js";
 import { attributeFilterMoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -18,7 +18,7 @@ import { dispatchFilterContextChanged } from "../common.js";
 
 export function* moveAttributeFilterHandler(
     ctx: DashboardContext,
-    cmd: MoveAttributeFilter,
+    cmd: IMoveAttributeFilter,
 ): SagaIterator<void> {
     const { filterLocalId, index } = cmd.payload;
 

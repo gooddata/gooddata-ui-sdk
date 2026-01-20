@@ -15,6 +15,7 @@ import {
     EntitiesApi_GetAllEntitiesAttributes,
     EntitiesApi_GetAllEntitiesLabels,
     EntitiesApi_GetEntityAttributes,
+    EntitiesApi_PatchEntityAttributes,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ActionsApi_ComputeValidObjects } from "@gooddata/api-client-tiger/endpoints/validObjects";
 import {
@@ -29,7 +30,6 @@ import {
     type IAttributeMetadataObject,
     type IDataSetMetadataObject,
     type IMetadataObject,
-    type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IdentifierRef,
     type ObjRef,
@@ -54,7 +54,6 @@ import { getIdOrigin, isInheritedObject } from "../../../convertors/fromBackend/
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { ldmItemUpdate } from "../../../utils/ldmItemUpdate.js";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(
@@ -83,16 +82,45 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     };
 
     public updateAttributeMeta = async (
-        updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+        updatedAttribute: Partial<IAttributeMetadataObject> & IMetadataObjectIdentity,
     ): Promise<IAttributeMetadataObject> => {
-        invariant(
-            isIdentifierRef(updatedAttribute.ref),
-            "tiger backend only supports referencing by identifier",
-        );
+        const ref = updatedAttribute.ref;
+        invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
         return this.authCall(async (client) => {
-            await ldmItemUpdate(client, this.workspace, updatedAttribute);
-            return this.getAttribute(updatedAttribute.ref);
+            const objectId = ref.identifier;
+            const response = await EntitiesApi_PatchEntityAttributes(
+                client.axios,
+                client.basePath,
+                {
+                    objectId,
+                    workspaceId: this.workspace,
+                    include: ["labels", "defaultView"],
+                    jsonApiAttributePatchDocument: {
+                        data: {
+                            id: objectId,
+                            type: "attribute",
+                            attributes: {
+                                ...(updatedAttribute.title === undefined
+                                    ? {}
+                                    : { title: updatedAttribute.title }),
+                                ...(updatedAttribute.description === undefined
+                                    ? {}
+                                    : { description: updatedAttribute.description }),
+                                ...(updatedAttribute.tags === undefined
+                                    ? {}
+                                    : { tags: updatedAttribute.tags }),
+                                ...(updatedAttribute.isHidden === undefined
+                                    ? {}
+                                    : { isHidden: updatedAttribute.isHidden }),
+                            },
+                        },
+                    },
+                },
+                { headers: jsonApiHeaders },
+            );
+
+            return convertAttributeWithSideloadedLabels(response.data);
         });
     };
 

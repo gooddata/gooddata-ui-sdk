@@ -34,10 +34,10 @@ type MessagesSliceState = {
      */
     messageOrder: string[];
     /**
-     * A global error message. I.e. if something unexpected went wrong,
+     * A global error object. I.e. if something unexpected went wrong,
      * not on the interaction level.
      */
-    globalError?: string;
+    globalError?: Record<string, unknown>;
     /**
      * If the interface is busy, this specifies the details of the async operation.
      * Where:
@@ -128,8 +128,8 @@ const messagesSlice = createSlice({
         loadThreadAction: (state) => {
             state.asyncProcess = "loading";
         },
-        loadThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: string }>) => {
-            state.globalError = error;
+        loadThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
+            state.globalError = errorToObject(error);
             delete state.asyncProcess;
         },
         loadThreadSuccessAction: (
@@ -143,8 +143,8 @@ const messagesSlice = createSlice({
         clearThreadAction: (state) => {
             state.asyncProcess = "clearing";
         },
-        clearThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: string }>) => {
-            state.globalError = error;
+        clearThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
+            state.globalError = errorToObject(error);
             delete state.asyncProcess;
         },
         clearThreadSuccessAction: (state) => {
@@ -245,8 +245,8 @@ const messagesSlice = createSlice({
         setVerboseAction: (state, { payload: { verbose } }: PayloadAction<{ verbose: boolean }>) => {
             state.verbose = verbose;
         },
-        setGlobalErrorAction: (state, { payload: { error } }: PayloadAction<{ error: string }>) => {
-            state.globalError = error;
+        setGlobalErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
+            state.globalError = errorToObject(error);
         },
         cancelAsyncAction: (state) => {
             delete state.asyncProcess;
@@ -398,6 +398,9 @@ const messagesSlice = createSlice({
         ) => state,
     },
 });
+
+const errorToObject = (error: Error) =>
+    Object.fromEntries(Object.getOwnPropertyNames(error).map((key) => [key, (error as any)[key]]));
 
 export const messagesSliceReducer: Reducer<MessagesSliceState> = messagesSlice.reducer;
 export const {

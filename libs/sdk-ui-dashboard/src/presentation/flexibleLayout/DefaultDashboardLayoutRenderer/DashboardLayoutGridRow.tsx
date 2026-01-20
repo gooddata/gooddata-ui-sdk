@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -20,7 +20,7 @@ import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeCon
 /**
  * @alpha
  */
-export interface DashboardLayoutGridRowProps<TWidget> {
+export interface IDashboardLayoutGridRowProps<TWidget> {
     section: IDashboardLayoutSectionFacade<TWidget>;
     itemKeyGetter?: IDashboardLayoutItemKeyGetter<TWidget>;
     itemRenderer?: IDashboardLayoutItemRenderer<TWidget>;
@@ -44,7 +44,7 @@ export function DashboardLayoutGridRow<TWidget>({
     items,
     renderMode,
     rowIndex,
-}: DashboardLayoutGridRowProps<TWidget>): ReactElement {
+}: IDashboardLayoutGridRowProps<TWidget>): ReactElement {
     const screen = useScreenSize();
 
     const rowItems = items.map((item) => (

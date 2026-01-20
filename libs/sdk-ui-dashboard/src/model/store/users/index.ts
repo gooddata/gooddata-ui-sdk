@@ -1,8 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { usersReducers } from "./usersReducers.js";
-import { type UsersState, usersInitialState } from "./usersState.js";
+import { type IUsersState, usersInitialState } from "./usersState.js";
 
 const usersSlice = createSlice({
     name: "users",
@@ -10,7 +11,7 @@ const usersSlice = createSlice({
     reducers: usersReducers,
 });
 
-export const usersSliceReducer: Reducer<UsersState> = usersSlice.reducer;
+export const usersSliceReducer: Reducer<IUsersState> = usersSlice.reducer;
 
 // Spread "fixes" TS2742 error
 export const usersActions = { ...usersSlice.actions };

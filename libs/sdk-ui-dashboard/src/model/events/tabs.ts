@@ -1,13 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IDashboardEvent } from "./base.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link DashboardTabSwitched} event.
+ * Payload of the {@link IDashboardTabSwitched} event.
  * @alpha
  */
-export interface DashboardTabSwitchedPayload {
+export interface IDashboardTabSwitchedPayload {
     /**
      * Identifier of the previously active tab (undefined if no tab was active).
      */
@@ -24,9 +24,9 @@ export interface DashboardTabSwitchedPayload {
  *
  * @alpha
  */
-export interface DashboardTabSwitched extends IDashboardEvent {
+export interface IDashboardTabSwitched extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.SWITCHED";
-    readonly payload: DashboardTabSwitchedPayload;
+    readonly payload: IDashboardTabSwitchedPayload;
 }
 
 /**
@@ -45,7 +45,7 @@ export function dashboardTabSwitched(
     previousTabId: string | undefined,
     newTabId: string,
     correlationId?: string,
-): DashboardTabSwitched {
+): IDashboardTabSwitched {
     return {
         type: "GDC.DASH/EVT.TAB.SWITCHED",
         ctx,
@@ -65,14 +65,14 @@ export function dashboardTabSwitched(
  *
  * @alpha
  */
-export const isDashboardTabSwitched = (event: any): event is DashboardTabSwitched =>
+export const isDashboardTabSwitched = (event: any): event is IDashboardTabSwitched =>
     event.type === "GDC.DASH/EVT.TAB.SWITCHED";
 
 /**
- * Payload of the {@link DashboardTabRepositioned} event.
+ * Payload of the {@link IDashboardTabRepositioned} event.
  * @alpha
  */
-export interface DashboardTabRepositionedPayload {
+export interface IDashboardTabRepositionedPayload {
     /**
      * Old index of the tab before the reposition.
      */
@@ -89,9 +89,9 @@ export interface DashboardTabRepositionedPayload {
  *
  * @alpha
  */
-export interface DashboardTabRepositioned extends IDashboardEvent {
+export interface IDashboardTabRepositioned extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.REPOSITIONED";
-    readonly payload: DashboardTabRepositionedPayload;
+    readonly payload: IDashboardTabRepositionedPayload;
 }
 
 /**
@@ -110,7 +110,7 @@ export function dashboardTabRepositioned(
     oldIndex: number,
     newIndex: number,
     correlationId?: string,
-): DashboardTabRepositioned {
+): IDashboardTabRepositioned {
     return {
         type: "GDC.DASH/EVT.TAB.REPOSITIONED",
         ctx,
@@ -130,14 +130,14 @@ export function dashboardTabRepositioned(
  *
  * @alpha
  */
-export const isDashboardTabRepositioned = (event: any): event is DashboardTabRepositioned =>
+export const isDashboardTabRepositioned = (event: any): event is IDashboardTabRepositioned =>
     event.type === "GDC.DASH/EVT.TAB.REPOSITIONED";
 
 /**
- * Payload of the {@link DashboardTabCreated} event.
+ * Payload of the {@link IDashboardTabCreated} event.
  * @alpha
  */
-export interface DashboardTabCreatedPayload {
+export interface IDashboardTabCreatedPayload {
     /**
      * Identifier of the newly created tab.
      */
@@ -153,9 +153,9 @@ export interface DashboardTabCreatedPayload {
  *
  * @alpha
  */
-export interface DashboardTabCreated extends IDashboardEvent {
+export interface IDashboardTabCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.CREATED";
-    readonly payload: DashboardTabCreatedPayload;
+    readonly payload: IDashboardTabCreatedPayload;
 }
 
 /**
@@ -174,7 +174,7 @@ export function dashboardTabCreated(
     newTabId: string,
     index: number,
     correlationId?: string,
-): DashboardTabCreated {
+): IDashboardTabCreated {
     return {
         type: "GDC.DASH/EVT.TAB.CREATED",
         ctx,
@@ -191,14 +191,14 @@ export function dashboardTabCreated(
  *
  * @alpha
  */
-export const isDashboardTabCreated = (event: any): event is DashboardTabCreated =>
+export const isDashboardTabCreated = (event: any): event is IDashboardTabCreated =>
     event.type === "GDC.DASH/EVT.TAB.CREATED";
 
 /**
- * Payload of the {@link DashboardTabConvertedFromDefault} event.
+ * Payload of the {@link IDashboardTabConvertedFromDefault} event.
  * @alpha
  */
-export interface DashboardTabConvertedFromDefaultPayload {
+export interface IDashboardTabConvertedFromDefaultPayload {
     /**
      * Identifier of the newly created tab.
      */
@@ -214,9 +214,9 @@ export interface DashboardTabConvertedFromDefaultPayload {
  *
  * @alpha
  */
-export interface DashboardTabConvertedFromDefault extends IDashboardEvent {
+export interface IDashboardTabConvertedFromDefault extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT";
-    readonly payload: DashboardTabConvertedFromDefaultPayload;
+    readonly payload: IDashboardTabConvertedFromDefaultPayload;
 }
 
 /**
@@ -235,7 +235,7 @@ export function dashboardTabConvertedFromDefault(
     newTabId: string,
     index: number,
     correlationId?: string,
-): DashboardTabConvertedFromDefault {
+): IDashboardTabConvertedFromDefault {
     return {
         type: "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT",
         ctx,
@@ -252,14 +252,14 @@ export function dashboardTabConvertedFromDefault(
  *
  * @alpha
  */
-export const isDashboardTabConvertedFromDefault = (event: any): event is DashboardTabConvertedFromDefault =>
+export const isDashboardTabConvertedFromDefault = (event: any): event is IDashboardTabConvertedFromDefault =>
     event.type === "GDC.DASH/EVT.TAB.CONVERTED_FROM_DEFAULT";
 
 /**
- * Payload of the {@link DashboardTabDeleted} event.
+ * Payload of the {@link IDashboardTabDeleted} event.
  * @alpha
  */
-export interface DashboardTabDeletedPayload {
+export interface IDashboardTabDeletedPayload {
     /**
      * Identifier of the deleted tab.
      */
@@ -279,9 +279,9 @@ export interface DashboardTabDeletedPayload {
  *
  * @alpha
  */
-export interface DashboardTabDeleted extends IDashboardEvent {
+export interface IDashboardTabDeleted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.DELETED";
-    readonly payload: DashboardTabDeletedPayload;
+    readonly payload: IDashboardTabDeletedPayload;
 }
 
 /**
@@ -302,7 +302,7 @@ export function dashboardTabDeleted(
     previousIndex: number,
     nextActiveTabId?: string,
     correlationId?: string,
-): DashboardTabDeleted {
+): IDashboardTabDeleted {
     return {
         type: "GDC.DASH/EVT.TAB.DELETED",
         ctx,
@@ -323,14 +323,14 @@ export function dashboardTabDeleted(
  *
  * @alpha
  */
-export const isDashboardTabDeleted = (event: any): event is DashboardTabDeleted =>
+export const isDashboardTabDeleted = (event: any): event is IDashboardTabDeleted =>
     event.type === "GDC.DASH/EVT.TAB.DELETED";
 
 /**
- * Payload of the {@link DashboardTabRenamingStarted} event.
+ * Payload of the {@link IDashboardTabRenamingStarted} event.
  * @alpha
  */
-export interface DashboardTabRenamingStartedPayload {
+export interface IDashboardTabRenamingStartedPayload {
     /**
      * Identifier of the tab whose renaming has started.
      */
@@ -341,9 +341,9 @@ export interface DashboardTabRenamingStartedPayload {
  * This event is emitted when renaming mode is started for a dashboard tab.
  * @alpha
  */
-export interface DashboardTabRenamingStarted extends IDashboardEvent {
+export interface IDashboardTabRenamingStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED";
-    readonly payload: DashboardTabRenamingStartedPayload;
+    readonly payload: IDashboardTabRenamingStartedPayload;
 }
 
 /**
@@ -354,7 +354,7 @@ export function dashboardTabRenamingStarted(
     ctx: DashboardContext,
     tabId: string,
     correlationId?: string,
-): DashboardTabRenamingStarted {
+): IDashboardTabRenamingStarted {
     return {
         type: "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED",
         ctx,
@@ -364,17 +364,17 @@ export function dashboardTabRenamingStarted(
 }
 
 /**
- * Type guard for {@link DashboardTabRenamingStarted}.
+ * Type guard for {@link IDashboardTabRenamingStarted}.
  * @alpha
  */
-export const isDashboardTabRenamingStarted = (event: any): event is DashboardTabRenamingStarted =>
+export const isDashboardTabRenamingStarted = (event: any): event is IDashboardTabRenamingStarted =>
     event.type === "GDC.DASH/EVT.TAB.RENAME_MODE.STARTED";
 
 /**
- * Payload of the {@link DashboardTabRenamingCanceled} event.
+ * Payload of the {@link IDashboardTabRenamingCanceled} event.
  * @alpha
  */
-export interface DashboardTabRenamingCanceledPayload {
+export interface IDashboardTabRenamingCanceledPayload {
     /**
      * Identifier of the tab whose renaming has been canceled.
      */
@@ -385,9 +385,9 @@ export interface DashboardTabRenamingCanceledPayload {
  * This event is emitted when renaming mode is canceled for a dashboard tab.
  * @alpha
  */
-export interface DashboardTabRenamingCanceled extends IDashboardEvent {
+export interface IDashboardTabRenamingCanceled extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED";
-    readonly payload: DashboardTabRenamingCanceledPayload;
+    readonly payload: IDashboardTabRenamingCanceledPayload;
 }
 
 /**
@@ -398,7 +398,7 @@ export function dashboardTabRenamingCanceled(
     ctx: DashboardContext,
     tabId: string,
     correlationId?: string,
-): DashboardTabRenamingCanceled {
+): IDashboardTabRenamingCanceled {
     return {
         type: "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED",
         ctx,
@@ -408,17 +408,17 @@ export function dashboardTabRenamingCanceled(
 }
 
 /**
- * Type guard for {@link DashboardTabRenamingCanceled}.
+ * Type guard for {@link IDashboardTabRenamingCanceled}.
  * @alpha
  */
-export const isDashboardTabRenamingCanceled = (event: any): event is DashboardTabRenamingCanceled =>
+export const isDashboardTabRenamingCanceled = (event: any): event is IDashboardTabRenamingCanceled =>
     event.type === "GDC.DASH/EVT.TAB.RENAME_MODE.CANCELED";
 
 /**
- * Payload of the {@link DashboardTabRenamed} event.
+ * Payload of the {@link IDashboardTabRenamed} event.
  * @alpha
  */
-export interface DashboardTabRenamedPayload {
+export interface IDashboardTabRenamedPayload {
     /**
      * Identifier of the tab that was renamed.
      */
@@ -433,9 +433,9 @@ export interface DashboardTabRenamedPayload {
  * This event is emitted when a dashboard tab is renamed.
  * @alpha
  */
-export interface DashboardTabRenamed extends IDashboardEvent {
+export interface IDashboardTabRenamed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.TAB.RENAMED";
-    readonly payload: DashboardTabRenamedPayload;
+    readonly payload: IDashboardTabRenamedPayload;
 }
 
 /**
@@ -447,7 +447,7 @@ export function dashboardTabRenamed(
     tabId: string,
     title: string,
     correlationId?: string,
-): DashboardTabRenamed {
+): IDashboardTabRenamed {
     return {
         type: "GDC.DASH/EVT.TAB.RENAMED",
         ctx,
@@ -457,8 +457,8 @@ export function dashboardTabRenamed(
 }
 
 /**
- * Type guard for {@link DashboardTabRenamed}.
+ * Type guard for {@link IDashboardTabRenamed}.
  * @alpha
  */
-export const isDashboardTabRenamed = (event: any): event is DashboardTabRenamed =>
+export const isDashboardTabRenamed = (event: any): event is IDashboardTabRenamed =>
     event.type === "GDC.DASH/EVT.TAB.RENAMED";

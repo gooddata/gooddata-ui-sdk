@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, useMemo } from "react";
 
@@ -16,7 +16,6 @@ import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleL
 import { updateItem } from "../../../../_staging/layout/coordinates.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 import {
-    type ExtendedDashboardWidget,
     isCustomWidget,
     selectDraggingWidgetSource,
     selectSettings,
@@ -31,10 +30,7 @@ import { getRemainingHeightInColumn, getRemainingWidthInRow } from "../../rowEnd
 const MINIMUM_DROPZONE_WIDTH_TO_RENDER_TEXT = 2;
 const MINIMUM_DROPZONE_HEIGHT_TO_RENDER_TEXT = 7;
 
-export const useShouldShowRowEndHotspot = (
-    item: IDashboardLayoutItemFacade<ExtendedDashboardWidget | unknown>,
-    rowIndex: number,
-) => {
+export const useShouldShowRowEndHotspot = (item: IDashboardLayoutItemFacade<unknown>, rowIndex: number) => {
     const screen = useScreenSize();
     const settings = useDashboardSelector(selectSettings);
     const { layoutItem: parentLayoutItem } = useDashboardItemPathAndSize();
@@ -72,7 +68,7 @@ export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     rowIndex: number;
 };
 
-export function RowEndHotspot({ item, rowIndex }: RowEndHotspotProps<ExtendedDashboardWidget | unknown>) {
+export function RowEndHotspot({ item, rowIndex }: RowEndHotspotProps<unknown>) {
     const isDraggingWidget = useIsDraggingWidget();
     const { enableRowEndHotspot, gridWidth, gridHeight, hideDropzoneText } = useShouldShowRowEndHotspot(
         item,

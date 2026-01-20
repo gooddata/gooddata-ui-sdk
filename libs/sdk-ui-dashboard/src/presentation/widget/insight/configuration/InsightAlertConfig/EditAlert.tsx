@@ -389,7 +389,7 @@ export function EditAlert({
                                 </label>
                                 <AlertDestinationSelect
                                     id="alert.destination"
-                                    selectedDestination={updatedAlert.notificationChannel!}
+                                    selectedDestination={updatedAlert.notificationChannel}
                                     onDestinationChange={changeDestination}
                                     destinations={destinations}
                                     overlayPositionType={overlayPositionType}

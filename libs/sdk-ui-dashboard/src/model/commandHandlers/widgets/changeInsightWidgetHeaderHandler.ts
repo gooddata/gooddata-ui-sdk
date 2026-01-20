@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type ChangeInsightWidgetHeader } from "../../commands/index.js";
-import { type DashboardInsightWidgetHeaderChanged } from "../../events/index.js";
+import { type IChangeInsightWidgetHeader } from "../../commands/index.js";
+import { type IDashboardInsightWidgetHeaderChanged } from "../../events/index.js";
 import { insightWidgetHeaderChanged } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -13,8 +13,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetHeaderHandler(
     ctx: DashboardContext,
-    cmd: ChangeInsightWidgetHeader,
-): SagaIterator<DashboardInsightWidgetHeaderChanged> {
+    cmd: IChangeInsightWidgetHeader,
+): SagaIterator<IDashboardInsightWidgetHeaderChanged> {
     const {
         payload: { header },
         correlationId,

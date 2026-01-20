@@ -5,51 +5,18 @@ import { type IntlShape } from "react-intl";
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
-import { formatValueForTooltip } from "../../../map/style/tooltipFormatting.js";
 import { type IGeoAreaChartConfig } from "../../../types/config/areaChart.js";
-import { type JsonValue, isRecord } from "../../../utils/guards.js";
 import type { IPopupFacade } from "../../common/mapFacade.js";
+import {
+    type TooltipFormatConfig,
+    type TooltipPayload,
+    dedupeAttributePayloadsByAttrId,
+    formatAttributeHtml,
+    formatMeasureHtml,
+    getTooltipProperties,
+    parseTooltipPayload,
+} from "../../common/tooltipUtils.js";
 import type { IGeoTooltipConfig } from "../../registry/adapterTypes.js";
-
-type TooltipProperty = {
-    title?: string;
-    value?: string | number;
-    fill?: string;
-    format?: string;
-};
-
-function parseProperty(prop: JsonValue): TooltipProperty | undefined {
-    if (!prop) {
-        return undefined;
-    }
-
-    let value = prop;
-    if (typeof prop === "string") {
-        try {
-            value = JSON.parse(prop);
-        } catch {
-            return undefined;
-        }
-    }
-
-    if (!isRecord(value)) {
-        return undefined;
-    }
-
-    const title = typeof value["title"] === "string" ? value["title"] : undefined;
-    const rawValue = value["value"];
-    const normalizedValue =
-        typeof rawValue === "number" || typeof rawValue === "string" ? rawValue : undefined;
-    const fill = typeof value["fill"] === "string" ? value["fill"] : undefined;
-    const format = typeof value["format"] === "string" ? value["format"] : undefined;
-
-    return {
-        title,
-        value: normalizedValue,
-        fill,
-        format,
-    };
-}
 
 function escapeHtml(str: string): string {
     return str
@@ -60,54 +27,23 @@ function escapeHtml(str: string): string {
         .replace(/'/g, "&#039;");
 }
 
-function buildTooltipItemHtml(title: string, value: string): string {
-    return `
-            <div class="gd-viz-tooltip-item">
-                <span class="gd-viz-tooltip-title">${escapeHtml(title)}</span>
-                <div class="gd-viz-tooltip-value-wraper">
-                    <span class="gd-viz-tooltip-value">${value}</span>
-                </div>
-            </div>
-        `;
-}
-
-function addAttributeItem(items: string[], prop?: TooltipProperty): void {
-    if (!prop?.title) {
-        return;
-    }
-
-    const value = prop.value ?? "-";
-    items.push(buildTooltipItemHtml(prop.title, escapeHtml(String(value))));
-}
-
-function addMeasureItem(items: string[], prop: TooltipProperty | undefined, separators?: ISeparators): void {
-    if (!prop?.title) {
-        return;
-    }
-
-    const hasValue = prop.value !== undefined && prop.value !== null;
-    const rawValue = hasValue ? prop.value : "-";
-    const normalizedRawValue = typeof rawValue === "number" || typeof rawValue === "string" ? rawValue : "-";
-    const formattedValue =
-        hasValue && prop.format
-            ? formatValueForTooltip(normalizedRawValue, prop.format, separators)
-            : escapeHtml(String(normalizedRawValue));
-
-    items.push(buildTooltipItemHtml(prop.title, formattedValue));
-}
+const tooltipFormatConfig: TooltipFormatConfig = {
+    emptyValue: "-",
+    escape: escapeHtml,
+};
 
 function buildAreaTooltipHtml(
-    locationName: TooltipProperty | undefined,
-    color: TooltipProperty | undefined,
-    segment: TooltipProperty | undefined,
+    locationName: TooltipPayload | undefined,
+    color: TooltipPayload | undefined,
+    segment: TooltipPayload | undefined,
     strokeColor: string,
     separators?: ISeparators,
 ): string | null {
-    const items: string[] = [];
-
-    addAttributeItem(items, locationName);
-    addAttributeItem(items, segment);
-    addMeasureItem(items, color, separators);
+    const attributeItems = dedupeAttributePayloadsByAttrId([locationName, segment])
+        .map((payload) => formatAttributeHtml(payload, tooltipFormatConfig))
+        .filter((item): item is string => item !== null);
+    const measureItem = formatMeasureHtml(color, separators, tooltipFormatConfig);
+    const items = [...attributeItems, ...(measureItem ? [measureItem] : [])];
 
     if (items.length === 0) {
         return null;
@@ -146,12 +82,12 @@ export function createAreaTooltipConfig(
         layerIds,
 
         showTooltip(map, feature, lngLat) {
-            const properties = feature.properties ?? {};
+            const properties = getTooltipProperties(feature.properties);
 
             // Parse properties (MapLibre may have stringified nested objects)
-            const locationName = parseProperty(properties["locationName"]);
-            const segment = parseProperty(properties["segment"]);
-            const color = parseProperty(properties["color"]);
+            const locationName = parseTooltipPayload(properties["locationName"]);
+            const segment = parseTooltipPayload(properties["segment"]);
+            const color = parseTooltipPayload(properties["color"]);
 
             // Build tooltip HTML
             const fallbackStroke = properties["color_fill"];

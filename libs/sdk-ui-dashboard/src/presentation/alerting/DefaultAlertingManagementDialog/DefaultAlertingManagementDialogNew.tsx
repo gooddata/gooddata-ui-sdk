@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -15,6 +15,7 @@ import { DefaultAlertingManagementDialogContentEnhanced } from "./DefaultAlertin
 import {
     selectDashboardId,
     selectEnableAutomationManagement,
+    selectIsEmbedded,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { type IAlertingManagementDialogProps } from "../types.js";
@@ -39,6 +40,7 @@ export function DefaultAlertingManagementDialogNew({
     const workspace = useWorkspace();
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -51,12 +53,19 @@ export function DefaultAlertingManagementDialogNew({
     const handleAlertEdit = useCallback(
         (alert: IAutomationMetadataObject) => {
             if (enableAutomationManagement && alert.dashboard?.id !== dashboardId) {
-                navigate(buildAutomationUrl(workspace, alert.dashboard?.id, alert.id));
+                navigate(
+                    buildAutomationUrl({
+                        workspaceId: workspace,
+                        dashboardId: alert.dashboard?.id,
+                        automationId: alert.id,
+                        isEmbedded,
+                    }),
+                );
                 return;
             }
             onEdit?.(alert);
         },
-        [onEdit, enableAutomationManagement, dashboardId, workspace],
+        [onEdit, enableAutomationManagement, dashboardId, workspace, isEmbedded],
     );
 
     const handleAlertPause = useCallback((alert: IAutomationMetadataObject, pause: boolean) => {

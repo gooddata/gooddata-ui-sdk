@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -51,14 +51,14 @@ function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
 
 const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 
-export interface DrillUrlItemProps {
+export interface IDrillUrlItemProps {
     widgetRef: ObjRef;
     urlDrillTarget?: UrlDrillTarget;
     attributes: IAttributeDescriptor[];
     onSelect: (selectedTarget: UrlDrillTarget) => void;
 }
 
-export function DrillTargetUrlItem(props: DrillUrlItemProps) {
+export function DrillTargetUrlItem(props: IDrillUrlItemProps) {
     const { onSelect, urlDrillTarget, attributes, widgetRef } = props;
 
     const capabilities = useDashboardSelector(selectBackendCapabilities);

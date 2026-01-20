@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -7,7 +7,7 @@ import cx from "classnames";
 import { DateHeadline } from "./headlines/DateHeadline.js";
 import { DiffHeadline } from "./headlines/DiffHeadline.js";
 import { useDateAttribute } from "../hooks/useDateAttribute.js";
-import { type KdaDateOptions } from "../internalTypes.js";
+import { type IKdaDateOptions } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { formatKeyDriverAnalysisDateRange, formatValue } from "../utils.js";
 
@@ -26,7 +26,7 @@ export function KdaSummaryHeadline() {
             dateAttribute: dateAttributeFinder(def?.dateAttribute),
             period: def?.type ?? "previous_period",
             range: [from, from],
-        } as KdaDateOptions;
+        } as IKdaDateOptions;
     }, [dateAttributeFinder, def?.dateAttribute, def?.type, from]);
 
     const toOpts = useMemo(() => {
@@ -34,7 +34,7 @@ export function KdaSummaryHeadline() {
             dateAttribute: dateAttributeFinder(def?.dateAttribute),
             period: def?.type ?? "previous_period",
             range: [to, to],
-        } as KdaDateOptions;
+        } as IKdaDateOptions;
     }, [dateAttributeFinder, def?.dateAttribute, def?.type, to]);
 
     if (!definition || from?.value === undefined || to?.value === undefined) {

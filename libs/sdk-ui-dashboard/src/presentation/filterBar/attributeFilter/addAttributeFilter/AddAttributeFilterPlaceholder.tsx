@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -8,14 +8,14 @@ import { selectEnableMultipleDateFilters, useDashboardSelector } from "../../../
 /**
  * @internal
  */
-export interface AddAttributeFilterPlaceholderProps {
+export interface IAddAttributeFilterPlaceholderProps {
     disabled?: boolean;
 }
 
 /**
  * @internal
  */
-export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps) {
+export function AddAttributeFilterPlaceholder({ disabled }: IAddAttributeFilterPlaceholderProps) {
     const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
 
     const className = cx(

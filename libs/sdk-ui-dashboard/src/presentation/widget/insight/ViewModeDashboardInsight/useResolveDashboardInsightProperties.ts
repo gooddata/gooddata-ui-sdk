@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -16,7 +16,7 @@ import { selectSettings, useDashboardSelector } from "../../../../model/index.js
 /**
  * @internal
  */
-export interface UseResolveDashboardInsightFiltersProps {
+export interface IUseResolveDashboardInsightFiltersProps {
     insight: IInsight;
     widget: IInsightWidget;
 }
@@ -25,7 +25,7 @@ export interface UseResolveDashboardInsightFiltersProps {
  * @internal
  */
 export const useResolveDashboardInsightProperties = (
-    props: UseResolveDashboardInsightFiltersProps,
+    props: IUseResolveDashboardInsightFiltersProps,
 ): IInsight => {
     const { widget, insight } = props;
     const settings = useDashboardSelector(selectSettings);

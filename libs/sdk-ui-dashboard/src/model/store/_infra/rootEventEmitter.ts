@@ -1,4 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type SagaIterator } from "redux-saga";
 import { actionChannel, select, take } from "redux-saga/effects";
 
@@ -6,7 +7,7 @@ import { type DashboardEventHandler } from "../../eventHandlers/eventHandler.js"
 import { type DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events/index.js";
 import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
 
-export interface EventEmitter {
+export interface IEventEmitter {
     registerHandler: (handler: DashboardEventHandler) => void;
     unregisterHandler: (handler: DashboardEventHandler) => void;
     eventEmitterSaga: () => SagaIterator<void>;
@@ -25,7 +26,7 @@ export interface EventEmitter {
 export function createRootEventEmitter(
     initialHandlers: DashboardEventHandler[] = [],
     dispatch: DashboardDispatch,
-): EventEmitter {
+): IEventEmitter {
     let eventHandlers = [...initialHandlers];
 
     return {

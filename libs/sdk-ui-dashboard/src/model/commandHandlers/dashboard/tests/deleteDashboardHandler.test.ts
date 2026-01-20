@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { deleteDashboard } from "../../../commands/index.js";
-import { type DashboardCommandFailed, type DashboardDeleted } from "../../../events/index.js";
+import { type IDashboardCommandFailed, type IDashboardDeleted } from "../../../events/index.js";
 import { selectDateFilterConfig } from "../../../store/config/configSelectors.js";
 import { selectInsights } from "../../../store/insights/insightsSelectors.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
@@ -25,7 +25,7 @@ describe("delete dashboard handler", () => {
         });
 
         it("should fail", async () => {
-            const event: DashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
                 deleteDashboard(TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -45,7 +45,7 @@ describe("delete dashboard handler", () => {
         });
 
         it("should revert to empty dashboard after delete", async () => {
-            const event: DashboardDeleted = await Tester.dispatchAndWaitFor(
+            const event: IDashboardDeleted = await Tester.dispatchAndWaitFor(
                 deleteDashboard(TestCorrelation),
                 "GDC.DASH/EVT.DELETED",
             );

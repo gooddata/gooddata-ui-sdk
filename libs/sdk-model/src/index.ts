@@ -859,6 +859,9 @@ export type {
     IDashboardPermissions,
     IExistingDashboard,
     IDashboardTab,
+    IDashboardFilterGroup,
+    IDashboardFilterGroupItem,
+    IDashboardFilterGroupsConfig,
 } from "./dashboard/dashboard.js";
 export {
     DashboardDateFilterConfigModeValues,

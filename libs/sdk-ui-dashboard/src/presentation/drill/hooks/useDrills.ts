@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCrossFiltering } from "./useCrossFiltering.js";
 import { useDrill } from "./useDrill.js";
@@ -36,7 +36,7 @@ import { useKeyDriverAnalysis } from "./useKeyDriverAnalysis.js";
 /**
  * @internal
  */
-export interface UseDrillsProps {
+export interface IUseDrillsProps {
     onDrill?: OnDashboardDrill;
     onDrillSuccess?: OnDashboardDrillSuccess;
     onDrillError?: OnDashboardDrillError;
@@ -117,7 +117,7 @@ export function useDrills({
     onKeyDriverAnalysisError,
     //
     onError,
-}: UseDrillsProps) {
+}: IUseDrillsProps) {
     const drill = useDrill({
         onBeforeRun: onDrill,
         onSuccess: onDrillSuccess,

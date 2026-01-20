@@ -1,13 +1,13 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type AutomationsState } from "./automationsState.js";
+import { type IAutomationsState } from "./automationsState.js";
 
-type AutomationsReducer<A extends Action> = CaseReducer<AutomationsState, A>;
+type AutomationsReducer<A extends Action> = CaseReducer<IAutomationsState, A>;
 
 const setAllAutomationsCount: AutomationsReducer<PayloadAction<number>> = (state, action) => {
     state.allAutomationsCount = action.payload;

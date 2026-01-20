@@ -465,7 +465,7 @@ export function AlertingDialogRenderer({
                                                 selectedComparison={selectedComparator?.comparator}
                                                 onComparisonChange={(comparisonType) => {
                                                     onComparisonTypeChange(
-                                                        selectedMeasure!,
+                                                        selectedMeasure,
                                                         selectedRelativeOperator,
                                                         comparisonType,
                                                     );
@@ -662,7 +662,7 @@ function useDefaultAlertingDialogData() {
     };
 }
 
-interface AlertingDialogFooterProps {
+interface IAlertingDialogFooterProps {
     isWhiteLabeled: boolean;
     helpTextId: string;
     alertToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null;
@@ -676,7 +676,7 @@ function AlertingDialogFooter({
     alertToEdit,
     isSavingAlert,
     onDeleteClick,
-}: AlertingDialogFooterProps) {
+}: IAlertingDialogFooterProps) {
     const intl = useIntl();
 
     return (

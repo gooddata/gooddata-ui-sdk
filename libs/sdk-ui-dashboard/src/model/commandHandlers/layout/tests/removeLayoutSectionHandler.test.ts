@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -6,11 +6,15 @@ import { type IDashboard, idRef } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
-import { type RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardLayoutChanged,
-    type DashboardLayoutSectionRemoved,
+    type IRemoveLayoutSection,
+    removeLayoutSection,
+    undoLayoutChanges,
+} from "../../../commands/index.js";
+import {
+    type IDashboardCommandFailed,
+    type IDashboardLayoutChanged,
+    type IDashboardLayoutSectionRemoved,
 } from "../../../events/index.js";
 import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -56,7 +60,7 @@ describe("remove layout section handler", () => {
         });
 
         it("should fail the command", async () => {
-            const event: DashboardCommandFailed<RemoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IRemoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 removeLayoutSection(0, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -78,7 +82,7 @@ describe("remove layout section handler", () => {
         it("should remove the section", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const event: DashboardLayoutSectionRemoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionRemoved = await Tester.dispatchAndWaitFor(
                 removeLayoutSection(0, undefined),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
             );
@@ -111,7 +115,7 @@ describe("remove layout section handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
             );
 
-            const event: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -135,7 +139,7 @@ describe("remove layout section handler", () => {
 
         it("should fail command if the section does not exist", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const event: DashboardCommandFailed<RemoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IRemoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 removeLayoutSection(originalLayout.sections.length, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -8,14 +8,14 @@ import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 /**
  * @alpha
  */
-export interface ExportThemeProviderProps {
+export interface IExportThemeProviderProps {
     children: ReactNode;
 }
 
 /**
  * @alpha
  */
-export function ExportThemeProvider({ children }: ExportThemeProviderProps) {
+export function ExportThemeProvider({ children }: IExportThemeProviderProps) {
     const theme = useTheme();
 
     return (

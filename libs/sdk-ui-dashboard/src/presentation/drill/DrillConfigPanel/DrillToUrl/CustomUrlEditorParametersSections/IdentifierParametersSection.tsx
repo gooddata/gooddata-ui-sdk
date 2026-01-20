@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -65,18 +65,18 @@ const identifierParametersSection: IIdentifierParameter[] = [
 
 const getDetailContent = (type: string, title: string, widgetRef: ObjRef): ReactElement => {
     switch (type) {
-        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID:
-        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID as string:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID as string:
             return <ProjectIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID as string:
             return <DashboardIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID as string:
             return <WidgetIdParameterDetail title={title} widgetRef={widgetRef} />;
-        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID as string:
             return <InsightIdParameterDetail title={title} widgetRef={widgetRef} />;
-        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID as string:
             return <ClientIdParameterDetail title={title} />;
-        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID:
+        case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID as string:
             return <DataProductIdParameterDetail title={title} />;
         default:
             return <></>;
@@ -99,22 +99,26 @@ export function IdentifierParametersSection({
             {identifierParametersSection
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID ||
+                        placeholder !==
+                            (DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID as string) ||
                         enableClientIdParameter,
                 )
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID ||
+                        placeholder !==
+                            (DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID as string) ||
                         enableWidgetIdParameter,
                 )
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID ||
+                        placeholder !==
+                            (DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID as string) ||
                         enableDataProductIdParameter,
                 )
                 .filter(
                     ({ placeholder }) =>
-                        placeholder !== DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID,
+                        placeholder !==
+                        (DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID as string),
                 )
                 .map(({ placeholder, titleIntlKey }) => {
                     const title = intl.formatMessage({ id: titleIntlKey });

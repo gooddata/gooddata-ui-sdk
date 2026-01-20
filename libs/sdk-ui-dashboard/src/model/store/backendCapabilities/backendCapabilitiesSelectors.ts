@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
@@ -21,7 +22,7 @@ export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities> 
     (state) => {
         invariant(state.backendCapabilities, "attempting to access uninitialized backend capabilities");
 
-        return state.backendCapabilities!;
+        return state.backendCapabilities;
     },
 );
 

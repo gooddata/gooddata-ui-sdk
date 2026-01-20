@@ -2,17 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import {
-    type IAttributeFilter,
-    type IAttributeMetadataObject,
-    filterLocalIdentifier,
-    isNegativeAttributeFilter,
-    isPositiveAttributeFilter,
-    objRefToString,
-} from "@gooddata/sdk-model";
+import { type IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
-
-import { type IAttributeFilterButtonProps } from "../AttributeFilter/AttributeFilterButton.js";
 
 export interface IFilterStatus {
     loading?: boolean;
@@ -29,40 +20,32 @@ export type FiltersStatus = Record<string, IFilterStatus>;
  * Only defined properties of status are updated in state.
  * If some of the status properties are not provided, they kept their previous values in state.
  */
-export type SetFilterStatus = (filter: IAttributeFilter | undefined, status: IFilterStatus) => void;
+export type SetFilterStatus = (filterIdentifier: string | undefined, status: IFilterStatus) => void;
 
 export interface IUseFilterGroupStatus {
     setFilterStatus: SetFilterStatus;
-    getFilterStatus: (filter: IAttributeFilter) => IFilterStatus | undefined;
+    getFilterStatus: (filterIdentifier: string) => IFilterStatus | undefined;
     isAnyFilterLoading: boolean;
     isAnyFilterError: boolean;
 }
 
-export const useFilterGroupStatus = (
-    availableFilters: IAttributeFilterButtonProps[],
-): IUseFilterGroupStatus => {
+export const useFilterGroupStatus = (availableFilterIdentifiers: string[]): IUseFilterGroupStatus => {
     const [filtersStatus, setFiltersStatus] = useState<FiltersStatus>({});
 
     const availableStatusesEntries = useMemo(
         () =>
-            availableFilters
-                .filter((filter) => !!filter.filter)
-                .map((filter) => filter.filter)
-                .filter((filter) => !!filter)
-                .map(getFilterIdentifier)
-                .filter((localIdentifier): localIdentifier is string => !!localIdentifier)
-                .map(
-                    (localIdentifier) =>
-                        [
-                            localIdentifier,
-                            filtersStatus[localIdentifier] ?? {
-                                loading: false,
-                                error: null,
-                                attribute: undefined,
-                            },
-                        ] as const,
-                ),
-        [availableFilters, filtersStatus],
+            availableFilterIdentifiers.map(
+                (localIdentifier) =>
+                    [
+                        localIdentifier,
+                        filtersStatus[localIdentifier] ?? {
+                            loading: false,
+                            error: null,
+                            attribute: undefined,
+                        },
+                    ] as const,
+            ),
+        [availableFilterIdentifiers, filtersStatus],
     );
 
     const availableStatuses = useMemo(
@@ -70,23 +53,27 @@ export const useFilterGroupStatus = (
         [availableStatusesEntries],
     );
 
-    const setFilterStatus = useCallback((filter: IAttributeFilter | undefined, status: IFilterStatus) => {
+    const setFilterStatus = useCallback((filterIdentifier: string | undefined, status: IFilterStatus) => {
         setFiltersStatus((prev: FiltersStatus) => {
-            if (!filter) {
+            if (!filterIdentifier) {
                 return prev;
             }
-            const localIdentifier = getFilterIdentifier(filter);
-            if (!localIdentifier) {
-                return prev;
+            const prevStatus = prev[filterIdentifier];
+            const newStatus = {
+                loading: status.loading === undefined ? prevStatus?.loading : status.loading,
+                error: status.error === undefined ? prevStatus?.error : status.error,
+                attribute: status.attribute === undefined ? prevStatus?.attribute : status.attribute,
+            };
+            if (
+                prevStatus?.loading === newStatus.loading &&
+                prevStatus?.error === newStatus.error &&
+                prevStatus?.attribute === newStatus.attribute
+            ) {
+                return prev; // breaks potential infinite loop
             }
             return {
                 ...prev,
-                [localIdentifier]: {
-                    loading: status.loading === undefined ? prev[localIdentifier]?.loading : status.loading,
-                    error: status.error === undefined ? prev[localIdentifier]?.error : status.error,
-                    attribute:
-                        status.attribute === undefined ? prev[localIdentifier]?.attribute : status.attribute,
-                },
+                [filterIdentifier]: newStatus,
             };
         });
     }, []);
@@ -96,12 +83,11 @@ export const useFilterGroupStatus = (
     const isAnyFilterError = availableStatusesEntries.some(([_, status]) => !!status.error);
 
     const getFilterStatus = useCallback(
-        (filter: IAttributeFilter): IFilterStatus | undefined => {
-            const localIdentifier = getFilterIdentifier(filter);
-            if (!localIdentifier) {
+        (filterIdentifier: string): IFilterStatus | undefined => {
+            if (!filterIdentifier) {
                 return undefined;
             }
-            return availableStatuses[localIdentifier] ?? undefined;
+            return availableStatuses[filterIdentifier] ?? undefined;
         },
         [availableStatuses],
     );
@@ -113,17 +99,3 @@ export const useFilterGroupStatus = (
         isAnyFilterError,
     };
 };
-
-function getFilterIdentifier(filter: IAttributeFilter): string {
-    const localIdentifier = filterLocalIdentifier(filter);
-    if (localIdentifier) {
-        return localIdentifier;
-    }
-    if (isPositiveAttributeFilter(filter)) {
-        return objRefToString(filter.positiveAttributeFilter.displayForm);
-    }
-    if (isNegativeAttributeFilter(filter)) {
-        return objRefToString(filter.negativeAttributeFilter.displayForm);
-    }
-    throw new Error("Faild getting filter identifier: Invalid attribute filter");
-}

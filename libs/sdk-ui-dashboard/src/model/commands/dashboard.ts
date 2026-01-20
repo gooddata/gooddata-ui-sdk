@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDashboardExportPresentationOptions } from "@gooddata/sdk-backend-spi";
 import {
@@ -25,7 +25,7 @@ export const InitialLoadCorrelationId = "initialLoad";
  * Payload of the {@link InitializeDashboard} command.
  * @public
  */
-export interface InitializeDashboardPayload {
+export type InitializeDashboardPayload = {
     readonly config?: DashboardConfig;
     readonly permissions?: IWorkspacePermissions;
     /**
@@ -37,17 +37,17 @@ export interface InitializeDashboardPayload {
      * @alpha
      */
     readonly initialTabId?: string;
-}
+};
 
 /**
  * Loads dashboard from analytical backend.
  *
  * @public
  */
-export interface InitializeDashboard extends IDashboardCommand {
+export type InitializeDashboard = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.INITIALIZE";
     readonly payload: InitializeDashboardPayload;
-}
+};
 
 /**
  * Creates the InitializeDashboard command.
@@ -67,7 +67,7 @@ export interface InitializeDashboard extends IDashboardCommand {
  *
  * In both cases the essential configuration, permissions and additional metadata gets loaded from the backend.
  *
- * @param config - specify configuration to use for for the Dashboard; you MAY provide partial configuration.
+ * @param config - specify configuration to use for the Dashboard; you MAY provide partial configuration.
  *  During the LoadDashboard processing the Dashboard component will resolve all the missing parts by reading them
  *  from the backend.
  * @param permissions - specify permissions to use when determining whether the user is eligible for some
@@ -75,6 +75,7 @@ export interface InitializeDashboard extends IDashboardCommand {
  *  from the backend.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param initialTabId -
  *
  * @public
  */
@@ -113,7 +114,7 @@ export function initializeDashboard(
  *
  * In both cases the essential configuration, permissions and additional metadata gets loaded from the backend.
  *
- * @param config - specify configuration to use for for the Dashboard; you MAY provide partial configuration.
+ * @param config - specify configuration to use for the Dashboard; you MAY provide partial configuration.
  *  During the LoadDashboard processing the Dashboard component will resolve all the missing parts by reading them
  *  from the backend.
  * @param permissions - specify permissions to use when determining whether the user is eligible for some
@@ -151,10 +152,10 @@ export function initializeDashboardWithPersistedDashboard(
 //
 
 /**
- * Payload of the {@link SaveDashboard} command.
+ * Payload of the {@link ISaveDashboard} command.
  * @beta
  */
-export interface SaveDashboardPayload {
+export interface ISaveDashboardPayload {
     /**
      * Specify new title for the dashboard that will be created during the Save operation. If not specified,
      * the current dashboard title will be used.
@@ -165,9 +166,9 @@ export interface SaveDashboardPayload {
 /**
  * @beta
  */
-export interface SaveDashboard extends IDashboardCommand {
+export interface ISaveDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVE";
-    readonly payload: SaveDashboardPayload;
+    readonly payload: ISaveDashboardPayload;
 }
 
 /**
@@ -182,7 +183,7 @@ export interface SaveDashboard extends IDashboardCommand {
  *
  * @beta
  */
-export function saveDashboard(title?: string, correlationId?: string): SaveDashboard {
+export function saveDashboard(title?: string, correlationId?: string): ISaveDashboard {
     return {
         type: "GDC.DASH/CMD.SAVE",
         correlationId,
@@ -200,7 +201,7 @@ export function saveDashboard(title?: string, correlationId?: string): SaveDashb
  * Payload of the {@link SaveDashboardAs} command.
  * @public
  */
-export interface SaveDashboardAsPayload {
+export type SaveDashboardAsPayload = {
     /**
      * Specify new title for the dashboard that will be created during the Save As operation.
      */
@@ -217,15 +218,15 @@ export interface SaveDashboardAsPayload {
      * with current filter selection.
      */
     readonly useOriginalFilterContext?: boolean;
-}
+};
 
 /**
  * @public
  */
-export interface SaveDashboardAs extends IDashboardCommand {
+export type SaveDashboardAs = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.SAVEAS";
     readonly payload: SaveDashboardAsPayload;
-}
+};
 
 /**
  * Creates the SaveDashboardAs command.
@@ -269,10 +270,10 @@ export function saveDashboardAs(
 //
 
 /**
- * Payload of the {@link RenameDashboard} command.
+ * Payload of the {@link IRenameDashboard} command.
  * @beta
  */
-export interface RenameDashboardPayload {
+export interface IRenameDashboardPayload {
     /**
      * New title to use for the dashboard.
      */
@@ -282,9 +283,9 @@ export interface RenameDashboardPayload {
 /**
  * @beta
  */
-export interface RenameDashboard extends IDashboardCommand {
+export interface IRenameDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENAME";
-    readonly payload: RenameDashboardPayload;
+    readonly payload: IRenameDashboardPayload;
 }
 
 /**
@@ -296,7 +297,7 @@ export interface RenameDashboard extends IDashboardCommand {
  *  events that will be emitted during the command processing
  * @beta
  */
-export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard {
+export function renameDashboard(newTitle: string, correlationId?: string): IRenameDashboard {
     return {
         type: "GDC.DASH/CMD.RENAME",
         correlationId,
@@ -311,10 +312,10 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
 //
 
 /**
- * Payload of the {@link ChangeSharing} command.
+ * Payload of the {@link IChangeSharing} command.
  * @beta
  */
-export interface ChangeSharingPayload {
+export interface IChangeSharingPayload {
     /**
      * New sharing-related properties to use.
      */
@@ -324,9 +325,9 @@ export interface ChangeSharingPayload {
 /**
  * @beta
  */
-export interface ChangeSharing extends IDashboardCommand {
+export interface IChangeSharing extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
-    readonly payload: ChangeSharingPayload;
+    readonly payload: IChangeSharingPayload;
 }
 
 /**
@@ -341,7 +342,7 @@ export interface ChangeSharing extends IDashboardCommand {
 export function changeSharing(
     newSharingProperties: ISharingApplyPayload,
     correlationId?: string,
-): ChangeSharing {
+): IChangeSharing {
     return {
         type: "GDC.DASH/CMD.SHARING.CHANGE",
         correlationId,
@@ -358,7 +359,7 @@ export function changeSharing(
 /**
  * @beta
  */
-export interface ResetDashboard extends IDashboardCommand {
+export interface IResetDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RESET";
 }
 
@@ -370,14 +371,14 @@ export interface ResetDashboard extends IDashboardCommand {
  * Note: if a dashboard is not saved on a backend, then reset will clear the dashboard to an empty state.
  *
  * Limitation: reset command will have no impact on alerts or scheduled emails. These entites are persisted outside
- * of the dashboard and have their own lifecycle.
+ * the dashboard and have their own lifecycle.
  *
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @beta
  */
-export function resetDashboard(correlationId?: string): ResetDashboard {
+export function resetDashboard(correlationId?: string): IResetDashboard {
     return {
         type: "GDC.DASH/CMD.RESET",
         correlationId,
@@ -391,7 +392,7 @@ export function resetDashboard(correlationId?: string): ResetDashboard {
 /**
  * @beta
  */
-export interface DeleteDashboard extends IDashboardCommand {
+export interface IDeleteDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DELETE";
 }
 
@@ -405,7 +406,7 @@ export interface DeleteDashboard extends IDashboardCommand {
  *
  * @beta
  */
-export function deleteDashboard(correlationId?: string): DeleteDashboard {
+export function deleteDashboard(correlationId?: string): IDeleteDashboard {
     return {
         type: "GDC.DASH/CMD.DELETE",
         correlationId,
@@ -419,13 +420,13 @@ export function deleteDashboard(correlationId?: string): DeleteDashboard {
 /**
  * @beta
  */
-export interface ExportDashboardToPdf extends IDashboardCommand {
+export interface IExportDashboardToPdf extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PDF";
 }
 
 /**
- * Creates the {@link ExportDashboardToPdf} command. Dispatching this command will result in a request to export
- * the dashboard to a PDF file. If successful, an instance of {@link DashboardExportToPdfResolved} will be emitted
+ * Creates the {@link IExportDashboardToPdf} command. Dispatching this command will result in a request to export
+ * the dashboard to a PDF file. If successful, an instance of {@link IDashboardExportToPdfResolved} will be emitted
  * with the URL of the resulting file.
  *
  * @param correlationId - specify correlation id to use for this command. this will be included in all
@@ -433,7 +434,7 @@ export interface ExportDashboardToPdf extends IDashboardCommand {
  *
  * @beta
  */
-export function exportDashboardToPdf(correlationId?: string): ExportDashboardToPdf {
+export function exportDashboardToPdf(correlationId?: string): IExportDashboardToPdf {
     return {
         type: "GDC.DASH/CMD.EXPORT.PDF",
         correlationId,
@@ -443,9 +444,9 @@ export function exportDashboardToPdf(correlationId?: string): ExportDashboardToP
 /**
  * @beta
  */
-export interface ExportDashboardToExcel extends IDashboardCommand {
+export interface IExportDashboardToExcel extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.EXCEL";
-    readonly payload: ExportDashboardToExcelPayload;
+    readonly payload: IExportDashboardToExcelPayload;
 }
 
 /**
@@ -460,7 +461,7 @@ export type PdfConfiguration = {
 /**
  * @beta
  */
-export interface ExportDashboardToExcelPayload {
+export interface IExportDashboardToExcelPayload {
     mergeHeaders: boolean;
     exportInfo: boolean;
     widgetIds?: string[];
@@ -470,14 +471,16 @@ export interface ExportDashboardToExcelPayload {
 }
 
 /**
- * Creates the {@link ExportDashboardToExcel} command. Dispatching this command will result in a request to export
- * the dashboard to a EXCEL file. If successful, an instance of {@link DashboardExportToExcelResolved} will be emitted
+ * Creates the {@link IExportDashboardToExcel} command. Dispatching this command will result in a request to export
+ * the dashboard to a EXCEL file. If successful, an instance of {@link IDashboardExportToExcelResolved} will be emitted
  * with the URL of the resulting file.
  *
  * @param mergeHeaders - if true, the headers will be merged into a single row
  * @param exportInfo - if true, the export info will be included in the EXCEL file
  * @param widgetIds - if provided, the widgets with the given ids will be exported
  * @param fileName - if provided, the file will be saved with the given name
+ * @param format -
+ * @param pdfConfiguration -
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -491,7 +494,7 @@ export function exportDashboardToExcel(
     format?: "XLSX" | "PDF",
     pdfConfiguration?: PdfConfiguration,
     correlationId?: string,
-): ExportDashboardToExcel {
+): IExportDashboardToExcel {
     return {
         type: "GDC.DASH/CMD.EXPORT.EXCEL",
         correlationId,
@@ -509,7 +512,7 @@ export function exportDashboardToExcel(
 /**
  * @beta
  */
-export interface ExportDashboardToPresentationPayload {
+export interface IExportDashboardToPresentationPayload {
     /**
      * Overrides current filter context filters with provided custom filters
      */
@@ -524,14 +527,14 @@ export interface ExportDashboardToPresentationPayload {
 /**
  * @beta
  */
-export interface ExportDashboardToPdfPresentation extends IDashboardCommand {
+export interface IExportDashboardToPdfPresentation extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION";
-    readonly payload?: ExportDashboardToPresentationPayload;
+    readonly payload?: IExportDashboardToPresentationPayload;
 }
 
 /**
- * Creates the {@link ExportDashboardToPdfPresentation} command. Dispatching this command will result in a request to export
- * the dashboard to a Pdf presentation file. If successful, an instance of {@link DashboardExportToPdfPresentationResolved} will be emitted
+ * Creates the {@link IExportDashboardToPdfPresentation} command. Dispatching this command will result in a request to export
+ * the dashboard to a PDF presentation file. If successful, an instance of {@link IDashboardExportToPdfPresentationResolved} will be emitted
  * with the URL of the resulting file.
  *
  * @param payload - payload to override the dashboard export options. If not provided, the dashboard will be exported with the current filter context and options.
@@ -541,9 +544,9 @@ export interface ExportDashboardToPdfPresentation extends IDashboardCommand {
  * @beta
  */
 export function exportDashboardToPdfPresentation(
-    payload?: ExportDashboardToPresentationPayload,
+    payload?: IExportDashboardToPresentationPayload,
     correlationId?: string,
-): ExportDashboardToPdfPresentation {
+): IExportDashboardToPdfPresentation {
     return {
         type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION",
         correlationId,
@@ -554,14 +557,14 @@ export function exportDashboardToPdfPresentation(
 /**
  * @beta
  */
-export interface ExportDashboardToPptPresentation extends IDashboardCommand {
+export interface IExportDashboardToPptPresentation extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION";
-    readonly payload?: ExportDashboardToPresentationPayload;
+    readonly payload?: IExportDashboardToPresentationPayload;
 }
 
 /**
- * Creates the {@link ExportDashboardToPptPresentation} command. Dispatching this command will result in a request to export
- * the dashboard to a Ppt presentation file. If successful, an instance of {@link DashboardExportToPptPresentationResolved} will be emitted
+ * Creates the {@link IExportDashboardToPptPresentation} command. Dispatching this command will result in a request to export
+ * the dashboard to a Ppt presentation file. If successful, an instance of {@link IDashboardExportToPptPresentationResolved} will be emitted
  * with the URL of the resulting file.
  *
  * @param payload - payload to override the dashboard export options. If not provided, the dashboard will be exported with the current filter context and options.
@@ -571,9 +574,9 @@ export interface ExportDashboardToPptPresentation extends IDashboardCommand {
  * @beta
  */
 export function exportDashboardToPptPresentation(
-    payload?: ExportDashboardToPresentationPayload,
+    payload?: IExportDashboardToPresentationPayload,
     correlationId?: string,
-): ExportDashboardToPptPresentation {
+): IExportDashboardToPptPresentation {
     return {
         type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION",
         correlationId,
@@ -586,10 +589,10 @@ export function exportDashboardToPptPresentation(
 //
 
 /**
- * Payload of the {@link SetDashboardDateFilterConfigMode} command.
+ * Payload of the {@link ISetDashboardDateFilterConfigMode} command.
  * @alpha
  */
-export interface SetDashboardDateFilterConfigModePayload {
+export interface ISetDashboardDateFilterConfigModePayload {
     mode: DashboardDateFilterConfigMode;
 }
 
@@ -598,13 +601,13 @@ export interface SetDashboardDateFilterConfigModePayload {
  *
  * @alpha
  */
-export interface SetDashboardDateFilterConfigMode extends IDashboardCommand {
+export interface ISetDashboardDateFilterConfigMode extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE";
-    readonly payload: SetDashboardDateFilterConfigModePayload;
+    readonly payload: ISetDashboardDateFilterConfigModePayload;
 }
 
 /**
- * Creates the {@link SetDashboardDateFilterConfigMode} command.
+ * Creates the {@link ISetDashboardDateFilterConfigMode} command.
  *
  * @remarks
  * Dispatching this command will set the visibility mode of the dashboard date filter to the provided value.
@@ -615,7 +618,7 @@ export interface SetDashboardDateFilterConfigMode extends IDashboardCommand {
  */
 export function setDashboardDateFilterConfigMode(
     mode: DashboardDateFilterConfigMode,
-): SetDashboardDateFilterConfigMode {
+): ISetDashboardDateFilterConfigMode {
     return {
         type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE",
         payload: {
@@ -625,10 +628,10 @@ export function setDashboardDateFilterConfigMode(
 }
 
 /**
- * Payload of the {@link SetDashboardAttributeFilterConfigMode} command.
+ * Payload of the {@link ISetDashboardAttributeFilterConfigMode} command.
  * @alpha
  */
-export interface SetDashboardAttributeFilterConfigModePayload {
+export interface ISetDashboardAttributeFilterConfigModePayload {
     /**
      * Local identifier of the filter to change mode.
      */
@@ -643,13 +646,13 @@ export interface SetDashboardAttributeFilterConfigModePayload {
  * Command for changing attribute filter mode.
  * @alpha
  */
-export interface SetDashboardAttributeFilterConfigMode extends IDashboardCommand {
+export interface ISetDashboardAttributeFilterConfigMode extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE";
-    readonly payload: SetDashboardAttributeFilterConfigModePayload;
+    readonly payload: ISetDashboardAttributeFilterConfigModePayload;
 }
 
 /**
- * Creates the {@link SetDashboardAttributeFilterConfigMode} command.
+ * Creates the {@link ISetDashboardAttributeFilterConfigMode} command.
  *
  * @remarks
  * Dispatching the commands will result into setting provided the mode as a mode for the attribute filter.
@@ -663,7 +666,7 @@ export interface SetDashboardAttributeFilterConfigMode extends IDashboardCommand
 export function setDashboardAttributeFilterConfigMode(
     localIdentifier: string,
     mode?: DashboardAttributeFilterConfigMode,
-): SetDashboardAttributeFilterConfigMode {
+): ISetDashboardAttributeFilterConfigMode {
     return {
         type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE",
         payload: {
@@ -678,10 +681,10 @@ export function setDashboardAttributeFilterConfigMode(
 //
 
 /**
- * Payload of the {@link SetAttributeFilterLimitingItems} command.
+ * Payload of the {@link ISetAttributeFilterLimitingItems} command.
  * @alpha
  */
-export interface SetAttributeFilterLimitingItemsPayload {
+export interface ISetAttributeFilterLimitingItemsPayload {
     /**
      * Local identifier of the filter to change mode.
      */
@@ -696,13 +699,13 @@ export interface SetAttributeFilterLimitingItemsPayload {
  * Command for changing of attribute filter limiting items.
  * @alpha
  */
-export interface SetAttributeFilterLimitingItems extends IDashboardCommand {
+export interface ISetAttributeFilterLimitingItems extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS";
-    readonly payload: SetAttributeFilterLimitingItemsPayload;
+    readonly payload: ISetAttributeFilterLimitingItemsPayload;
 }
 
 /**
- * Creates the {@link SetAttributeFilterLimitingItems} command.
+ * Creates the {@link ISetAttributeFilterLimitingItems} command.
  *
  * @remarks
  * Dispatching the commands will result into setting of provided limiting items to a defined attribute filter.
@@ -718,7 +721,7 @@ export function setAttributeFilterLimitingItems(
     localIdentifier: string,
     limitingItems: ObjRef[],
     correlationId?: string,
-): SetAttributeFilterLimitingItems {
+): ISetAttributeFilterLimitingItems {
     return {
         type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS",
         correlationId,
@@ -730,10 +733,10 @@ export function setAttributeFilterLimitingItems(
 }
 
 /**
- * Payload of the {@link SetDashboardAttributeFilterConfigDisplayAsLabel} command.
+ * Payload of the {@link ISetDashboardAttributeFilterConfigDisplayAsLabel} command.
  * @alpha
  */
-export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
+export interface ISetDashboardAttributeFilterConfigDisplayAsLabelPayload {
     /**
      * Local identifier of the filter to change display as label (= display form).
      */
@@ -755,13 +758,13 @@ export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
  * Command for changing attribute filter mode.
  * @alpha
  */
-export interface SetDashboardAttributeFilterConfigDisplayAsLabel extends IDashboardCommand {
+export interface ISetDashboardAttributeFilterConfigDisplayAsLabel extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL";
-    readonly payload: SetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+    readonly payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
 }
 
 /**
- * Creates the {@link SetDashboardAttributeFilterConfigDisplayAsLabel} command.
+ * Creates the {@link ISetDashboardAttributeFilterConfigDisplayAsLabel} command.
  *
  * @remarks
  * Dispatching the command will result into setting provided label as new label (= display form) used for the displaying attribute filter elements.
@@ -775,7 +778,7 @@ export interface SetDashboardAttributeFilterConfigDisplayAsLabel extends IDashbo
 export function setDashboardAttributeFilterConfigDisplayAsLabel(
     localIdentifier: string,
     displayAsLabel: ObjRef,
-): SetDashboardAttributeFilterConfigDisplayAsLabel {
+): ISetDashboardAttributeFilterConfigDisplayAsLabel {
     return {
         type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL",
         payload: {
@@ -790,10 +793,10 @@ export function setDashboardAttributeFilterConfigDisplayAsLabel(
 //
 
 /**
- * Payload of the {@link SetDashboardDateFilterConfigMode} command.
+ * Payload of the {@link ISetDashboardDateFilterConfigMode} command.
  * @alpha
  */
-export interface SetDashboardDateFilterWithDimensionConfigModePayload {
+export interface ISetDashboardDateFilterWithDimensionConfigModePayload {
     /**
      * Date data set ref of the filter to change mode.
      */
@@ -808,13 +811,13 @@ export interface SetDashboardDateFilterWithDimensionConfigModePayload {
  * Command for changing date filter mode.
  * @alpha
  */
-export interface SetDashboardDateFilterWithDimensionConfigMode extends IDashboardCommand {
+export interface ISetDashboardDateFilterWithDimensionConfigMode extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE";
-    readonly payload: SetDashboardDateFilterWithDimensionConfigModePayload;
+    readonly payload: ISetDashboardDateFilterWithDimensionConfigModePayload;
 }
 
 /**
- * Creates the {@link SetDashboardDateFilterWithDimensionConfigMode} command.
+ * Creates the {@link ISetDashboardDateFilterWithDimensionConfigMode} command.
  *
  * @remarks
  * Dispatching the commands will result into setting provided the mode as a mode for the date filter.
@@ -828,7 +831,7 @@ export interface SetDashboardDateFilterWithDimensionConfigMode extends IDashboar
 export function setDashboardDateFilterWithDimensionConfigMode(
     dataSet: ObjRef,
     mode?: DashboardDateFilterConfigMode,
-): SetDashboardDateFilterWithDimensionConfigMode {
+): ISetDashboardDateFilterWithDimensionConfigMode {
     return {
         type: "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE",
         payload: {
@@ -843,10 +846,10 @@ export function setDashboardDateFilterWithDimensionConfigMode(
 //
 
 /**
- * Payload of the {@link SetDateFilterConfigTitle} command.
+ * Payload of the {@link ISetDateFilterConfigTitle} command.
  * @beta
  */
-export interface SetDateFilterConfigTitlePayload {
+export interface ISetDateFilterConfigTitlePayload {
     /**
      * Date data set ref of the filter to rename.
      * If not provided title is set to common date filter.
@@ -862,13 +865,13 @@ export interface SetDateFilterConfigTitlePayload {
  * Command for changing date filter title.
  * @beta
  */
-export interface SetDateFilterConfigTitle extends IDashboardCommand {
+export interface ISetDateFilterConfigTitle extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE";
-    readonly payload: SetDateFilterConfigTitlePayload;
+    readonly payload: ISetDateFilterConfigTitlePayload;
 }
 
 /**
- * Creates the {@link SetDateFilterConfigTitle} command.
+ * Creates the {@link ISetDateFilterConfigTitle} command.
  *
  * @remarks
  * Dispatching the commands will result into setting provided title as a selected
@@ -885,7 +888,7 @@ export function setDateFilterConfigTitle(
     dataSet?: ObjRef,
     title?: string,
     correlationId?: string,
-): SetDateFilterConfigTitle {
+): ISetDateFilterConfigTitle {
     return {
         type: "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE",
         correlationId,
@@ -897,10 +900,10 @@ export function setDateFilterConfigTitle(
 }
 
 /**
- * Payload of the {@link ChangeIgnoreExecutionTimestamp} command.
+ * Payload of the {@link IChangeIgnoreExecutionTimestamp} command.
  * @alpha
  */
-export interface ChangeIgnoreExecutionTimestampPayload {
+export interface IChangeIgnoreExecutionTimestampPayload {
     /**
      * New ignore execution timestamp value.
      */
@@ -915,25 +918,26 @@ export interface ChangeIgnoreExecutionTimestampPayload {
  *
  * @alpha
  */
-export interface ChangeIgnoreExecutionTimestamp extends IDashboardCommand {
+export interface IChangeIgnoreExecutionTimestamp extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP";
-    readonly payload: ChangeIgnoreExecutionTimestampPayload;
+    readonly payload: IChangeIgnoreExecutionTimestampPayload;
 }
 
 /**
- * Creates the {@link ChangeIgnoreExecutionTimestamp} command.
+ * Creates the {@link IChangeIgnoreExecutionTimestamp} command.
  *
  * @remarks
  * Dispatching the commands will result into setting state to ignore execution timestamp.
  *
  * @alpha
+ * @param ignoreExecutionTimestamp -
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change ignore execution timestamp command
  */
 export function changeIgnoreExecutionTimestamp(
     ignoreExecutionTimestamp: boolean,
     correlationId?: string,
-): ChangeIgnoreExecutionTimestamp {
+): IChangeIgnoreExecutionTimestamp {
     return {
         type: "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP",
         correlationId,

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -39,7 +39,7 @@ export function DragLayerComponent() {
     const { itemType, isDragging } = dragLayerProperties;
 
     const getDragLayerPosition = useCallback(() => {
-        return dragLayerRef.current?.getBoundingClientRect() ?? (emptyDOMRect as DOMRect);
+        return dragLayerRef.current?.getBoundingClientRect() ?? emptyDOMRect;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dragLayerRef.current]);
 

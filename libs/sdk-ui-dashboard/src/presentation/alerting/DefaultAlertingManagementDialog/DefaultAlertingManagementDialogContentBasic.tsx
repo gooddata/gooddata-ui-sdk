@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
@@ -81,7 +81,7 @@ export function DefaultAlertingManagementDialogContentBasic({
                 <div className="gd-notifications-channels-content">
                     <div className="gd-notifications-channels-content-header">
                         <Typography tagName="h3">
-                            <FormattedMessage id={messages.alertingManagementListTitle.id!} />
+                            <FormattedMessage id={messages.alertingManagementListTitle.id} />
                         </Typography>
                     </div>
                     <Alerts
@@ -90,7 +90,7 @@ export function DefaultAlertingManagementDialogContentBasic({
                         onPause={onPause}
                         isLoading={isLoadingAlertingData}
                         alerts={automations}
-                        noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
+                        noAlertsMessageId={messages.alertingManagementNoAlerts.id}
                     />
                 </div>
                 <div className="gd-content-divider"></div>

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -8,10 +8,10 @@ import { type IExecutionResult, type IExportResult } from "@gooddata/sdk-backend
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { type IExtendedExportConfig, createExportFunction } from "@gooddata/sdk-ui";
 
-import { type ExportInsightWidget } from "../../commands/index.js";
+import { type IExportInsightWidget } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    type DashboardInsightWidgetExportResolved,
+    type IDashboardInsightWidgetExportResolved,
     insightWidgetExportRequested,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
@@ -36,7 +36,7 @@ async function performExport(
 
 function* validateIsExportable(
     ctx: DashboardContext,
-    cmd: ExportInsightWidget,
+    cmd: IExportInsightWidget,
     ref: ObjRef,
 ): SagaIterator<void> {
     const isExportable: ReturnType<ReturnType<typeof selectIsExecutionResultReadyForExportByRef>> =
@@ -53,7 +53,7 @@ function* validateIsExportable(
 
 function* validateSettingsAndPermissions(
     ctx: DashboardContext,
-    cmd: ExportInsightWidget,
+    cmd: IExportInsightWidget,
 ): SagaIterator<void> {
     const { config, ref } = cmd.payload;
 
@@ -83,8 +83,8 @@ function* validateSettingsAndPermissions(
 
 export function* exportInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: ExportInsightWidget,
-): SagaIterator<DashboardInsightWidgetExportResolved> {
+    cmd: IExportInsightWidget,
+): SagaIterator<IDashboardInsightWidgetExportResolved> {
     const { config, ref } = cmd.payload;
 
     yield put(insightWidgetExportRequested(ctx, ref, config, cmd.correlationId));

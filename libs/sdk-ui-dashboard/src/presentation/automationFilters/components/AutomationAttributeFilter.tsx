@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MutableRefObject, type ReactNode, useCallback } from "react";
 
@@ -137,10 +137,10 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
             label={label}
             tag={tag}
             isLocked={isLocked}
-            isActive={props.isOpen}
+            isActive={props.isOpen ?? false}
             isDeletable={!isLocked}
             onClick={props.onClick}
-            onDelete={() => onDelete?.(filter!)}
+            onDelete={() => onDelete?.(filter)}
             onKeyDown={(event) => {
                 // In case the button is locked and not disabled we need to explicitly
                 // stop the event propagation to prevent dropdown from opening
@@ -155,7 +155,9 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
                 }
             }}
             accessibilityConfig={{
-                isExpanded: props.isOpen,
+                isExpanded: props.isOpen ?? false,
+                popupId: props.dropdownId,
+                popupType: "dialog",
                 ariaDescribedBy: attributeFilterTooltipId,
                 deleteAriaLabel: props.title ? `${deleteAriaLabel} ${props.title}` : deleteAriaLabel,
                 deleteAriaDescribedBy: attributeFilterTooltipId,

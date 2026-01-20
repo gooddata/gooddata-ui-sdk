@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
@@ -6,10 +6,10 @@ import { type RenderMode } from "../../types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link DashboardRenderModeChanged} event.
+ * Payload of the {@link IDashboardRenderModeChanged} event.
  * @beta
  */
-export interface DashboardRenderModeChangedPayload {
+export interface IDashboardRenderModeChangedPayload {
     /**
      * Current render mode value
      */
@@ -21,9 +21,9 @@ export interface DashboardRenderModeChangedPayload {
  *
  * @beta
  */
-export interface DashboardRenderModeChanged extends IDashboardEvent {
+export interface IDashboardRenderModeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER_MODE.CHANGED";
-    readonly payload: DashboardRenderModeChangedPayload;
+    readonly payload: IDashboardRenderModeChangedPayload;
 }
 
 /**
@@ -33,7 +33,7 @@ export function renderModeChanged(
     ctx: DashboardContext,
     renderMode: RenderMode,
     correlationId?: string,
-): DashboardRenderModeChanged {
+): IDashboardRenderModeChanged {
     return {
         type: "GDC.DASH/EVT.RENDER_MODE.CHANGED",
         ctx,
@@ -45,11 +45,11 @@ export function renderModeChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardRenderModeChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardRenderModeChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardRenderModeChanged = eventGuard<DashboardRenderModeChanged>(
+export const isDashboardRenderModeChanged = eventGuard<IDashboardRenderModeChanged>(
     "GDC.DASH/EVT.RENDER_MODE.CHANGED",
 );

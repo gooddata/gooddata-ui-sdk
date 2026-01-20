@@ -1,15 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import {
     type DashboardLayoutCommands,
-    type UndoLayoutChanges,
+    type IUndoLayoutChanges,
     type UndoPointSelector,
 } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutChanged, layoutChanged } from "../../events/layout.js";
+import { type IDashboardLayoutChanged, layoutChanged } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectUndoableLayoutCommands } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -25,8 +25,8 @@ const latestCommandUndoSelector: UndoPointSelector = (
 
 export function* undoLayoutChangesHandler(
     ctx: DashboardContext,
-    cmd: UndoLayoutChanges,
-): SagaIterator<DashboardLayoutChanged> {
+    cmd: IUndoLayoutChanges,
+): SagaIterator<IDashboardLayoutChanged> {
     const undoableCommands: ReturnType<typeof selectUndoableLayoutCommands> = yield select(
         selectUndoableLayoutCommands,
     );

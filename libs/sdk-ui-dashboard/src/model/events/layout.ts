@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type IDashboardLayout,
     type IDashboardLayoutContainerDirection,
@@ -18,10 +19,10 @@ import {
 } from "../types/layoutTypes.js";
 
 /**
- * Payload of the {@link DashboardLayoutSectionAdded} event.
+ * Payload of the {@link IDashboardLayoutSectionAdded} event.
  * @beta
  */
-export interface DashboardLayoutSectionAddedPayload {
+export interface IDashboardLayoutSectionAddedPayload {
     /**
      * The new section.
      */
@@ -32,7 +33,7 @@ export interface DashboardLayoutSectionAddedPayload {
      *
      * Index is zero-based.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionAddedPayload.path} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionAddedPayload.path} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -49,9 +50,9 @@ export interface DashboardLayoutSectionAddedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionAdded extends IDashboardEvent {
+export interface IDashboardLayoutSectionAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
-    readonly payload: DashboardLayoutSectionAddedPayload;
+    readonly payload: IDashboardLayoutSectionAddedPayload;
 }
 
 export function layoutSectionAdded(
@@ -60,7 +61,7 @@ export function layoutSectionAdded(
     index: number,
     path: ILayoutSectionPath,
     correlationId?: string,
-): DashboardLayoutSectionAdded {
+): IDashboardLayoutSectionAdded {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
         ctx,
@@ -74,12 +75,12 @@ export function layoutSectionAdded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionAdded}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionAdded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionAdded = eventGuard<DashboardLayoutSectionAdded>(
+export const isDashboardLayoutSectionAdded = eventGuard<IDashboardLayoutSectionAdded>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
 );
 
@@ -88,10 +89,10 @@ export const isDashboardLayoutSectionAdded = eventGuard<DashboardLayoutSectionAd
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionMoved} event.
+ * Payload of the {@link IDashboardLayoutSectionMoved} event.
  * @beta
  */
-export interface DashboardLayoutSectionMovedPayload {
+export interface IDashboardLayoutSectionMovedPayload {
     /**
      * The section moved.
      */
@@ -99,7 +100,7 @@ export interface DashboardLayoutSectionMovedPayload {
     /**
      * Index from which the section was moved.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionMovedPayload.fromPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionMovedPayload.fromPath} instead.
      *
      * TODO LX-648: Remove property in the next major SDK version.
      */
@@ -111,7 +112,7 @@ export interface DashboardLayoutSectionMovedPayload {
     /**
      * Zero-based index to which the section was moved.
      *
-     * @deprecated The prop will be removed in the next SDK major version. Use {@link DashboardLayoutSectionMovedPayload.toPath} instead.
+     * @deprecated The prop will be removed in the next SDK major version. Use {@link IDashboardLayoutSectionMovedPayload.toPath} instead.
      *
      * TODO LX-648: Remove property in the next major SDK version.
      */
@@ -127,9 +128,9 @@ export interface DashboardLayoutSectionMovedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionMoved extends IDashboardEvent {
+export interface IDashboardLayoutSectionMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
-    readonly payload: DashboardLayoutSectionMovedPayload;
+    readonly payload: IDashboardLayoutSectionMovedPayload;
 }
 
 export function layoutSectionMoved(
@@ -140,7 +141,7 @@ export function layoutSectionMoved(
     fromPath: ILayoutSectionPath,
     toPath: ILayoutSectionPath,
     correlationId?: string,
-): DashboardLayoutSectionMoved {
+): IDashboardLayoutSectionMoved {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
         ctx,
@@ -156,12 +157,12 @@ export function layoutSectionMoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionMoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionMoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionMoved = eventGuard<DashboardLayoutSectionMoved>(
+export const isDashboardLayoutSectionMoved = eventGuard<IDashboardLayoutSectionMoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
 );
 
@@ -170,10 +171,10 @@ export const isDashboardLayoutSectionMoved = eventGuard<DashboardLayoutSectionMo
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionRemoved} event.
+ * Payload of the {@link IDashboardLayoutSectionRemoved} event.
  * @beta
  */
-export interface DashboardLayoutSectionRemovedPayload {
+export interface IDashboardLayoutSectionRemovedPayload {
     /**
      * Section that was removed.
      *
@@ -184,7 +185,7 @@ export interface DashboardLayoutSectionRemovedPayload {
     /**
      * Index where the section originally resided.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionRemovedPayload.path} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionRemovedPayload.path} instead.
      *
      * TODO LX-648: Remove property in the next major SDK version.
      */
@@ -216,9 +217,9 @@ export interface DashboardLayoutSectionRemovedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
+export interface IDashboardLayoutSectionRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
-    readonly payload: DashboardLayoutSectionRemovedPayload;
+    readonly payload: IDashboardLayoutSectionRemovedPayload;
 }
 
 export function layoutSectionRemoved(
@@ -229,7 +230,7 @@ export function layoutSectionRemoved(
     eagerRemoval?: boolean,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): DashboardLayoutSectionRemoved {
+): IDashboardLayoutSectionRemoved {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
         ctx,
@@ -245,12 +246,12 @@ export function layoutSectionRemoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionRemoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionRemoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionRemoved = eventGuard<DashboardLayoutSectionRemoved>(
+export const isDashboardLayoutSectionRemoved = eventGuard<IDashboardLayoutSectionRemoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
 );
 
@@ -259,10 +260,10 @@ export const isDashboardLayoutSectionRemoved = eventGuard<DashboardLayoutSection
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionHeaderChanged} event.
+ * Payload of the {@link IDashboardLayoutSectionHeaderChanged} event.
  * @beta
  */
-export interface DashboardLayoutSectionHeaderChangedPayload {
+export interface IDashboardLayoutSectionHeaderChangedPayload {
     /**
      * The new header of the section.
      */
@@ -271,7 +272,7 @@ export interface DashboardLayoutSectionHeaderChangedPayload {
     /**
      * Index of the section which had the header updated.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionHeaderChangedPayload.sectionPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionHeaderChangedPayload.sectionPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -287,9 +288,9 @@ export interface DashboardLayoutSectionHeaderChangedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
+export interface IDashboardLayoutSectionHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
-    readonly payload: DashboardLayoutSectionHeaderChangedPayload;
+    readonly payload: IDashboardLayoutSectionHeaderChangedPayload;
 }
 
 export function layoutSectionHeaderChanged(
@@ -298,7 +299,7 @@ export function layoutSectionHeaderChanged(
     sectionIndex: number,
     sectionPath: ILayoutSectionPath,
     correlationId?: string,
-): DashboardLayoutSectionHeaderChanged {
+): IDashboardLayoutSectionHeaderChanged {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
         ctx,
@@ -312,10 +313,10 @@ export function layoutSectionHeaderChanged(
 }
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemsHeightResized} event.
+ * Payload of the {@link IDashboardLayoutSectionItemsHeightResized} event.
  * @beta
  */
-export interface DashboardLayoutSectionItemsHeightResizedPayload {
+export interface IDashboardLayoutSectionItemsHeightResizedPayload {
     /**
      * Index of the section which items height was changed.
      *
@@ -345,9 +346,9 @@ export interface DashboardLayoutSectionItemsHeightResizedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionItemsHeightResized extends IDashboardEvent {
+export interface IDashboardLayoutSectionItemsHeightResized extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED";
-    readonly payload: DashboardLayoutSectionItemsHeightResizedPayload;
+    readonly payload: IDashboardLayoutSectionItemsHeightResizedPayload;
 }
 
 export function layoutSectionItemsHeightResized(
@@ -357,7 +358,7 @@ export function layoutSectionItemsHeightResized(
     itemIndexes: number[],
     newHeight: number,
     correlationId?: string,
-): DashboardLayoutSectionItemsHeightResized {
+): IDashboardLayoutSectionItemsHeightResized {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED",
         ctx,
@@ -372,10 +373,10 @@ export function layoutSectionItemsHeightResized(
 }
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemWidthResized} event.
+ * Payload of the {@link IDashboardLayoutSectionItemWidthResized} event.
  * @beta
  */
-export interface DashboardLayoutSectionItemWidthResizedPayload {
+export interface IDashboardLayoutSectionItemWidthResizedPayload {
     /**
      * Index of the section which items height was changed.
      *
@@ -409,9 +410,9 @@ export interface DashboardLayoutSectionItemWidthResizedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionItemWidthResized extends IDashboardEvent {
+export interface IDashboardLayoutSectionItemWidthResized extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED";
-    readonly payload: DashboardLayoutSectionItemWidthResizedPayload;
+    readonly payload: IDashboardLayoutSectionItemWidthResizedPayload;
 }
 
 export function layoutSectionItemWidthResized(
@@ -421,7 +422,7 @@ export function layoutSectionItemWidthResized(
     path: ILayoutItemPath,
     newWidth: number,
     correlationId?: string,
-): DashboardLayoutSectionItemWidthResized {
+): IDashboardLayoutSectionItemWidthResized {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED",
         ctx,
@@ -436,12 +437,12 @@ export function layoutSectionItemWidthResized(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionHeaderChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionHeaderChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionHeaderChanged = eventGuard<DashboardLayoutSectionHeaderChanged>(
+export const isDashboardLayoutSectionHeaderChanged = eventGuard<IDashboardLayoutSectionHeaderChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
 );
 
@@ -450,14 +451,14 @@ export const isDashboardLayoutSectionHeaderChanged = eventGuard<DashboardLayoutS
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemsAdded} event.
+ * Payload of the {@link IDashboardLayoutSectionItemsAdded} event.
  * @beta
  */
-export interface DashboardLayoutSectionItemsAddedPayload {
+export interface IDashboardLayoutSectionItemsAddedPayload {
     /**
      * Index of the section to which the items were added.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemsAddedPayload.path} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemsAddedPayload.path} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -466,7 +467,7 @@ export interface DashboardLayoutSectionItemsAddedPayload {
     /**
      * Index within the section at which the items were inserted.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemsAddedPayload.path} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemsAddedPayload.path} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -482,7 +483,7 @@ export interface DashboardLayoutSectionItemsAddedPayload {
     readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
 
     /**
-     * If the items from one or more stashes were added and the stashes were cleared, the the list of
+     * If the items from one or more stashes were added and the stashes were cleared, the list of
      * stash identifiers will be included here.
      */
     readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
@@ -493,9 +494,9 @@ export interface DashboardLayoutSectionItemsAddedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
+export interface IDashboardLayoutSectionItemsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
-    readonly payload: DashboardLayoutSectionItemsAddedPayload;
+    readonly payload: IDashboardLayoutSectionItemsAddedPayload;
 }
 
 export function layoutSectionItemsAdded(
@@ -506,7 +507,7 @@ export function layoutSectionItemsAdded(
     itemsAdded: ExtendedDashboardItem[],
     stashesUsed?: StashedDashboardItemsId[],
     correlationId?: string,
-): DashboardLayoutSectionItemsAdded {
+): IDashboardLayoutSectionItemsAdded {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
         ctx,
@@ -522,12 +523,12 @@ export function layoutSectionItemsAdded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemsAdded}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionItemsAdded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionItemsAdded = eventGuard<DashboardLayoutSectionItemsAdded>(
+export const isDashboardLayoutSectionItemsAdded = eventGuard<IDashboardLayoutSectionItemsAdded>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
 );
 
@@ -536,14 +537,14 @@ export const isDashboardLayoutSectionItemsAdded = eventGuard<DashboardLayoutSect
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemReplaced} event.
+ * Payload of the {@link IDashboardLayoutSectionItemReplaced} event.
  * @beta
  */
-export interface DashboardLayoutSectionItemReplacedPayload {
+export interface IDashboardLayoutSectionItemReplacedPayload {
     /**
      * Index of section where the replacement happened.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemReplacedPayload.path} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemReplacedPayload.path} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -552,7 +553,7 @@ export interface DashboardLayoutSectionItemReplacedPayload {
     /**
      * Index of item within the section that was replaced.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemReplacedPayload.path} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemReplacedPayload.path} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -584,9 +585,9 @@ export interface DashboardLayoutSectionItemReplacedPayload {
  * This event is emitted when an item in a dashboard section is replaced.
  * @beta
  */
-export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
+export interface IDashboardLayoutSectionItemReplaced extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
-    readonly payload: DashboardLayoutSectionItemReplacedPayload;
+    readonly payload: IDashboardLayoutSectionItemReplacedPayload;
 }
 
 export function layoutSectionItemReplaced(
@@ -598,7 +599,7 @@ export function layoutSectionItemReplaced(
     previousItem: ExtendedDashboardItem,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): DashboardLayoutSectionItemReplaced {
+): IDashboardLayoutSectionItemReplaced {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
         ctx,
@@ -615,12 +616,12 @@ export function layoutSectionItemReplaced(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemReplaced}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionItemReplaced}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionItemReplaced = eventGuard<DashboardLayoutSectionItemReplaced>(
+export const isDashboardLayoutSectionItemReplaced = eventGuard<IDashboardLayoutSectionItemReplaced>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
 );
 
@@ -629,10 +630,10 @@ export const isDashboardLayoutSectionItemReplaced = eventGuard<DashboardLayoutSe
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemMoved} event.
+ * Payload of the {@link IDashboardLayoutSectionItemMoved} event.
  * @beta
  */
-export interface DashboardLayoutSectionItemMovedPayload {
+export interface IDashboardLayoutSectionItemMovedPayload {
     /**
      * Item that was moved.
      */
@@ -641,7 +642,7 @@ export interface DashboardLayoutSectionItemMovedPayload {
     /**
      * Index of section from which the item was moved.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.fromPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedPayload.fromPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -650,7 +651,7 @@ export interface DashboardLayoutSectionItemMovedPayload {
     /**
      * Index of section to which the item was moved.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.toPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedPayload.toPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      *
@@ -661,7 +662,7 @@ export interface DashboardLayoutSectionItemMovedPayload {
     /**
      * Index within the `fromSection` from where the item was moved.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.fromPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedPayload.fromPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -670,7 +671,7 @@ export interface DashboardLayoutSectionItemMovedPayload {
     /**
      * Index in `toSection` at which the item was inserted.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.toPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedPayload.toPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -697,9 +698,9 @@ export interface DashboardLayoutSectionItemMovedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
+export interface IDashboardLayoutSectionItemMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
-    readonly payload: DashboardLayoutSectionItemMovedPayload;
+    readonly payload: IDashboardLayoutSectionItemMovedPayload;
 }
 
 export function layoutSectionItemMoved(
@@ -713,7 +714,7 @@ export function layoutSectionItemMoved(
     toPath: ILayoutItemPath,
     originalSectionRemoved: boolean,
     correlationId?: string,
-): DashboardLayoutSectionItemMoved {
+): IDashboardLayoutSectionItemMoved {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
         ctx,
@@ -732,12 +733,12 @@ export function layoutSectionItemMoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemMoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionItemMoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionItemMoved = eventGuard<DashboardLayoutSectionItemMoved>(
+export const isDashboardLayoutSectionItemMoved = eventGuard<IDashboardLayoutSectionItemMoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
 );
 
@@ -746,10 +747,10 @@ export const isDashboardLayoutSectionItemMoved = eventGuard<DashboardLayoutSecti
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemMovedToNewSection} event.
+ * Payload of the {@link IDashboardLayoutSectionItemMovedToNewSection} event.
  * @beta
  */
-export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
+export interface IDashboardLayoutSectionItemMovedToNewSectionPayload {
     /**
      * Item that was moved.
      */
@@ -758,7 +759,7 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
     /**
      * Index of section from which the item was moved.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.fromPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedToNewSectionPayload.fromPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -769,7 +770,7 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
      *
      * This may be the same as `fromSectionIndex` - which means the move happened within the same section.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.toPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedToNewSectionPayload.toPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -778,7 +779,7 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
     /**
      * Index within the `fromSection` from where the item was moved.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.fromPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedToNewSectionPayload.fromPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -787,7 +788,7 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
     /**
      * Index in `toSection` at which the item was inserted.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.toPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemMovedToNewSectionPayload.toPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -814,9 +815,9 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionItemMovedToNewSection extends IDashboardEvent {
+export interface IDashboardLayoutSectionItemMovedToNewSection extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION";
-    readonly payload: DashboardLayoutSectionItemMovedToNewSectionPayload;
+    readonly payload: IDashboardLayoutSectionItemMovedToNewSectionPayload;
 }
 
 export function layoutSectionItemMovedToNewSection(
@@ -830,7 +831,7 @@ export function layoutSectionItemMovedToNewSection(
     toPath: ILayoutItemPath,
     originalSectionRemoved: boolean,
     correlationId?: string,
-): DashboardLayoutSectionItemMovedToNewSection {
+): IDashboardLayoutSectionItemMovedToNewSection {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION",
         ctx,
@@ -849,13 +850,13 @@ export function layoutSectionItemMovedToNewSection(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemMovedToNewSection}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionItemMovedToNewSection}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardLayoutSectionItemMovedToNewSection =
-    eventGuard<DashboardLayoutSectionItemMovedToNewSection>(
+    eventGuard<IDashboardLayoutSectionItemMovedToNewSection>(
         "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION",
     );
 
@@ -864,10 +865,10 @@ export const isDashboardLayoutSectionItemMovedToNewSection =
 //
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemRemoved} event.
+ * Payload of the {@link IDashboardLayoutSectionItemRemoved} event.
  * @beta
  */
-export interface DashboardLayoutSectionItemRemovedPayload {
+export interface IDashboardLayoutSectionItemRemovedPayload {
     /**
      * Item that was removed.
      */
@@ -876,7 +877,7 @@ export interface DashboardLayoutSectionItemRemovedPayload {
     /**
      * Index where the item resided.
      *
-     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemRemovedPayload.itemPath} instead.
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link IDashboardLayoutSectionItemRemovedPayload.itemPath} instead.
      *
      * TODO LX-648: Remove property in the next major version.
      */
@@ -890,7 +891,7 @@ export interface DashboardLayoutSectionItemRemovedPayload {
     /**
      * If the removal was eager and removed the entire section, then that section is included here.
      *
-     * NOTE: the {@link DashboardLayoutSectionRemoved} will be fired at the occasion as well.
+     * NOTE: the {@link IDashboardLayoutSectionRemoved} will be fired at the occasion as well.
      */
     readonly section?: ExtendedDashboardLayoutSection;
 
@@ -905,9 +906,9 @@ export interface DashboardLayoutSectionItemRemovedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
+export interface IDashboardLayoutSectionItemRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
-    readonly payload: DashboardLayoutSectionItemRemovedPayload;
+    readonly payload: IDashboardLayoutSectionItemRemovedPayload;
 }
 
 export function layoutSectionItemRemoved(
@@ -918,7 +919,7 @@ export function layoutSectionItemRemoved(
     section?: ExtendedDashboardLayoutSection,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
-): DashboardLayoutSectionItemRemoved {
+): IDashboardLayoutSectionItemRemoved {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
         ctx,
@@ -934,12 +935,12 @@ export function layoutSectionItemRemoved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemRemoved}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutSectionItemRemoved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutSectionItemRemoved = eventGuard<DashboardLayoutSectionItemRemoved>(
+export const isDashboardLayoutSectionItemRemoved = eventGuard<IDashboardLayoutSectionItemRemoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
 );
 
@@ -948,10 +949,10 @@ export const isDashboardLayoutSectionItemRemoved = eventGuard<DashboardLayoutSec
 //
 
 /**
- * Payload of the {@link DashboardLayoutChanged} event.
+ * Payload of the {@link IDashboardLayoutChanged} event.
  * @beta
  */
-export interface DashboardLayoutChangedPayload {
+export interface IDashboardLayoutChangedPayload {
     /**
      * Layout after the change.
      */
@@ -963,16 +964,16 @@ export interface DashboardLayoutChangedPayload {
  *
  * @beta
  */
-export interface DashboardLayoutChanged extends IDashboardEvent {
+export interface IDashboardLayoutChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
-    readonly payload: DashboardLayoutChangedPayload;
+    readonly payload: IDashboardLayoutChangedPayload;
 }
 
 export function layoutChanged(
     ctx: DashboardContext,
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     correlationId?: string,
-): DashboardLayoutChanged {
+): IDashboardLayoutChanged {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
         ctx,
@@ -984,12 +985,12 @@ export function layoutChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardLayoutChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardLayoutChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardLayoutChanged = eventGuard<DashboardLayoutChanged>(
+export const isDashboardLayoutChanged = eventGuard<IDashboardLayoutChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
 );
 
@@ -998,10 +999,10 @@ export const isDashboardLayoutChanged = eventGuard<DashboardLayoutChanged>(
 //
 
 /**
- * Payload of the {@link ScreenSizeChanged} event.
+ * Payload of the {@link IScreenSizeChanged} event.
  * @beta
  */
-export interface ScreenSizeChangedPayload {
+export interface IScreenSizeChangedPayload {
     /**
      * New screen size.
      */
@@ -1013,16 +1014,16 @@ export interface ScreenSizeChangedPayload {
  *
  * @beta
  */
-export interface ScreenSizeChanged extends IDashboardEvent {
+export interface IScreenSizeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED";
-    readonly payload: ScreenSizeChangedPayload;
+    readonly payload: IScreenSizeChangedPayload;
 }
 
 export function screenSizeChanged(
     ctx: DashboardContext,
     screenSize: ScreenSize,
     correlationId?: string,
-): ScreenSizeChanged {
+): IScreenSizeChanged {
     return {
         type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED",
         ctx,
@@ -1034,12 +1035,12 @@ export function screenSizeChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link ScreenSizeChanged}.
+ * Tests whether the provided object is an instance of {@link IScreenSizeChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isScreenSizeChanged = eventGuard<ScreenSizeChanged>(
+export const isScreenSizeChanged = eventGuard<IScreenSizeChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED",
 );
 
@@ -1048,10 +1049,10 @@ export const isScreenSizeChanged = eventGuard<ScreenSizeChanged>(
 //
 
 /**
- * Payload of the {@link LayoutSectionHeadersToggled} event.
+ * Payload of the {@link ILayoutSectionHeadersToggled} event.
  * @beta
  */
-export interface LayoutSectionHeadersToggledPayload {
+export interface ILayoutSectionHeadersToggledPayload {
     /**
      * Layout that got the section headers state toggled.
      */
@@ -1067,9 +1068,9 @@ export interface LayoutSectionHeadersToggledPayload {
  *
  * @alpha
  */
-export interface LayoutSectionHeadersToggled extends IDashboardEvent {
+export interface ILayoutSectionHeadersToggled extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED";
-    readonly payload: LayoutSectionHeadersToggledPayload;
+    readonly payload: ILayoutSectionHeadersToggledPayload;
 }
 
 export function layoutSectionHeadersToggled(
@@ -1077,7 +1078,7 @@ export function layoutSectionHeadersToggled(
     layoutPath: ILayoutItemPath | undefined,
     areSectionHeadersEnabled: boolean,
     correlationId?: string,
-): LayoutSectionHeadersToggled {
+): ILayoutSectionHeadersToggled {
     return {
         type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED",
         ctx,
@@ -1090,12 +1091,12 @@ export function layoutSectionHeadersToggled(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link LayoutSectionHeadersToggled}.
+ * Tests whether the provided object is an instance of {@link ILayoutSectionHeadersToggled}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isLayoutSectionHeadersToggled = eventGuard<LayoutSectionHeadersToggled>(
+export const isLayoutSectionHeadersToggled = eventGuard<ILayoutSectionHeadersToggled>(
     "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED",
 );
 
@@ -1104,10 +1105,10 @@ export const isLayoutSectionHeadersToggled = eventGuard<LayoutSectionHeadersTogg
 //
 
 /**
- * Payload of the {@link LayoutDirectionChanged} event.
+ * Payload of the {@link ILayoutDirectionChanged} event.
  * @beta
  */
-export interface LayoutDirectionChangedPayload {
+export interface ILayoutDirectionChangedPayload {
     /**
      * Layout section path whose direction was changed.
      */
@@ -1123,9 +1124,9 @@ export interface LayoutDirectionChangedPayload {
  *
  * @alpha
  */
-export interface LayoutDirectionChanged extends IDashboardEvent {
+export interface ILayoutDirectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED";
-    readonly payload: LayoutDirectionChangedPayload;
+    readonly payload: ILayoutDirectionChangedPayload;
 }
 
 export function layoutDirectionChanged(
@@ -1133,7 +1134,7 @@ export function layoutDirectionChanged(
     layoutPath: ILayoutItemPath | undefined,
     direction: IDashboardLayoutContainerDirection,
     correlationId?: string,
-): LayoutDirectionChanged {
+): ILayoutDirectionChanged {
     return {
         type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED",
         ctx,
@@ -1146,11 +1147,11 @@ export function layoutDirectionChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link LayoutDirectionChanged}.
+ * Tests whether the provided object is an instance of {@link ILayoutDirectionChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isLayoutDirectionChanged = eventGuard<LayoutDirectionChanged>(
+export const isLayoutDirectionChanged = eventGuard<ILayoutDirectionChanged>(
     "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_DIRECTION_CHANGED",
 );

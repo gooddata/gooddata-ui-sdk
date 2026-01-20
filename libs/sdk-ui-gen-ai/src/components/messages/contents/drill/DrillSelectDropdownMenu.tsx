@@ -6,14 +6,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { type IDrillEvent } from "@gooddata/sdk-ui";
 import {
-    type DashboardKeyDriverCombinationItem,
+    type IDashboardKeyDriverCombinationItem,
     getKeyDriverCombinationItemTitle,
 } from "@gooddata/sdk-ui-dashboard";
 import { type IUiMenuInteractiveItem, UiIcon, UiMenu } from "@gooddata/sdk-ui-kit";
 
 export type DrillSelectDropdownMenuProps = {
     drillState: {
-        keyDriverData: DashboardKeyDriverCombinationItem[];
+        keyDriverData: IDashboardKeyDriverCombinationItem[];
         event: IDrillEvent;
     } | null;
     onClose: () => void;

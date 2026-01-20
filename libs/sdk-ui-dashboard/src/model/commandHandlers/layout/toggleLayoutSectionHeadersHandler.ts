@@ -1,17 +1,17 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { type ToggleLayoutSectionHeaders } from "../../commands/layout.js";
-import { type LayoutSectionHeadersToggled, layoutSectionHeadersToggled } from "../../events/layout.js";
+import { type IToggleLayoutSectionHeaders } from "../../commands/layout.js";
+import { type ILayoutSectionHeadersToggled, layoutSectionHeadersToggled } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* toggleLayoutSectionHeadersHandler(
     ctx: DashboardContext,
-    cmd: ToggleLayoutSectionHeaders,
-): SagaIterator<LayoutSectionHeadersToggled> {
+    cmd: IToggleLayoutSectionHeaders,
+): SagaIterator<ILayoutSectionHeadersToggled> {
     const { layoutPath, enableSectionHeaders } = cmd.payload;
 
     yield put(

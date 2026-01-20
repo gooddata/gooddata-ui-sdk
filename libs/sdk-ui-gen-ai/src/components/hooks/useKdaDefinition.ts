@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IDrillEvent } from "@gooddata/sdk-ui";
 import {
-    type DashboardKeyDriverCombinationItem,
+    type IDashboardKeyDriverCombinationItem,
     type IKdaDefinition,
     type KdaPeriodType,
     formatKeyDriverAnalysisDateRange,
@@ -113,7 +113,7 @@ export function createKdaDefinition(
 
 export function createKdaDefinitionFromDrill(
     locale: string,
-    data: DashboardKeyDriverCombinationItem,
+    data: IDashboardKeyDriverCombinationItem,
     event: IDrillEvent,
     filters?: IDashboardAttributeFilter[],
 ) {

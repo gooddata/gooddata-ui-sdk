@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -12,7 +12,7 @@ import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
 type ToggleModalCallback = () => void;
 type CloseDropdownCallback = (e: MouseEvent) => void;
 
-interface CustomUrlSectionProps {
+interface ICustomUrlSectionProps {
     toggleModal: ToggleModalCallback;
     closeDropdown: CloseDropdownCallback;
     urlDrillTarget?: UrlDrillTarget;
@@ -55,7 +55,7 @@ function EditButton({ urlValue, toggleModal }: { urlValue?: string; toggleModal:
     );
 }
 
-export function CustomUrlSection(props: CustomUrlSectionProps) {
+export function CustomUrlSection(props: ICustomUrlSectionProps) {
     const { urlDrillTarget, closeDropdown } = props;
 
     const urlValue = isDrillToCustomUrlConfig(urlDrillTarget) ? urlDrillTarget.customUrl : undefined;

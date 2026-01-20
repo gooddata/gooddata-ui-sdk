@@ -1,14 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { type DashboardEventHandler } from "./eventHandler.js";
 import { changeFilterContextSelectionByParams } from "../commands/index.js";
-import { type DashboardDrillToDashboardResolved, newDashboardEventPredicate } from "../events/index.js";
+import { type IDashboardDrillToDashboardResolved, newDashboardEventPredicate } from "../events/index.js";
 
 /**
  * Event handler with the default implementation for drill to the same dashboard.
  *
- * When {@link DashboardDrillToDashboardResolved} event is fired and contains dashboard ref that matches the provided dashboard ref,
+ * When {@link IDashboardDrillToDashboardResolved} event is fired and contains dashboard ref that matches the provided dashboard ref,
  * or dashboard ref in the event is missing, it sets relevant drill intersection filters to the current dashboard.
  *
  * Note that only filters that are already stored in the dashboard filter context will be applied
@@ -20,7 +21,7 @@ import { type DashboardDrillToDashboardResolved, newDashboardEventPredicate } fr
  */
 export const newDrillToSameDashboardHandler = (
     dashboardRef: ObjRef,
-): DashboardEventHandler<DashboardDrillToDashboardResolved> => ({
+): DashboardEventHandler<IDashboardDrillToDashboardResolved> => ({
     eval: newDashboardEventPredicate(
         "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
         (e) =>

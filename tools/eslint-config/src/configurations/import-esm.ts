@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -9,6 +9,6 @@ export const importEsm: IConfiguration<"import-esm"> = {
             version: "1.2.1",
         },
     ],
-    plugin: "import-esm",
+    plugins: ["import-esm"],
     extends: ["plugin:import-esm/recommended"],
 };

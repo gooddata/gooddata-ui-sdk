@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
 import { type IntlShape, useIntl } from "react-intl";
@@ -8,17 +8,17 @@ import { type IUiListboxInteractiveItem, UiIcon, UiSkeleton } from "@gooddata/sd
 import { KdaKeyDriverChart } from "../components/KdaKeyDriverChart.js";
 import { KdaSummaryDrivers } from "../components/KdaSummaryDrivers.js";
 import { KdaSummaryHeadline } from "../components/KdaSummaryHeadline.js";
-import { type KdaItem, type KdaState } from "../internalTypes.js";
+import { type IKdaItem, type IKdaState } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { useDataViewWithConfig } from "./hooks/useDataViewWithConfig.js";
 import { useGroupAndItem } from "./hooks/useGroupAndItem.js";
 
-export interface KeyDriversOverviewProps {
+export interface IKeyDriversOverviewProps {
     loading?: boolean;
     detailsId?: string;
 }
 
-export function KeyDriversOverview({ loading, detailsId }: KeyDriversOverviewProps) {
+export function KeyDriversOverview({ loading, detailsId }: IKeyDriversOverviewProps) {
     const { state } = useKdaState();
 
     if (state.selectedItem === "summary" || loading) {
@@ -28,12 +28,12 @@ export function KeyDriversOverview({ loading, detailsId }: KeyDriversOverviewPro
     return <KeyDriversDetail detailsId={detailsId} />;
 }
 
-interface KeyDriversSummaryProps {
+interface IKeyDriversSummaryProps {
     loading?: boolean;
     detailsId?: string;
 }
 
-function KeyDriversSummary({ loading, detailsId }: KeyDriversSummaryProps) {
+function KeyDriversSummary({ loading, detailsId }: IKeyDriversSummaryProps) {
     const intl = useIntl();
     const { state } = useKdaState();
     const summaryLoading = getSummaryLoading(state, loading);
@@ -57,11 +57,11 @@ function KeyDriversSummary({ loading, detailsId }: KeyDriversSummaryProps) {
     );
 }
 
-interface KeyDriversDetailsProps {
+interface IKeyDriversDetailsProps {
     detailsId?: string;
 }
 
-function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
+function KeyDriversDetail({ detailsId }: IKeyDriversDetailsProps) {
     const intl = useIntl();
     const { state } = useKdaState();
 
@@ -96,7 +96,7 @@ function KeyDriversDetail({ detailsId }: KeyDriversDetailsProps) {
     );
 }
 
-function getTitle(intl: IntlShape, metric: string, item: IUiListboxInteractiveItem<KdaItem> | string) {
+function getTitle(intl: IntlShape, metric: string, item: IUiListboxInteractiveItem<IKdaItem> | string) {
     if (typeof item === "string") {
         return "";
     }
@@ -109,14 +109,14 @@ function getTitle(intl: IntlShape, metric: string, item: IUiListboxInteractiveIt
     );
 }
 
-function getCategory(item: IUiListboxInteractiveItem<KdaItem> | string) {
+function getCategory(item: IUiListboxInteractiveItem<IKdaItem> | string) {
     if (typeof item === "string") {
         return "";
     }
     return item.data.category;
 }
 
-function getSummaryLoading(state: KdaState, globalLoading?: boolean) {
+function getSummaryLoading(state: IKdaState, globalLoading?: boolean) {
     if (state.definition) {
         const from = state.fromValue;
         const to = state.toValue;

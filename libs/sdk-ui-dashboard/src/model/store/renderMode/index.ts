@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { renderModeReducers } from "./renderModeReducers.js";
-import { type RenderModeState, renderModeInitialState } from "./renderModeState.js";
+import { type IRenderModeState, renderModeInitialState } from "./renderModeState.js";
 
 const renderModeSlice = createSlice({
     name: "renderModeSlice",
@@ -10,7 +11,7 @@ const renderModeSlice = createSlice({
     reducers: renderModeReducers,
 });
 
-export const renderModeSliceReducer: Reducer<RenderModeState> = renderModeSlice.reducer;
+export const renderModeSliceReducer: Reducer<IRenderModeState> = renderModeSlice.reducer;
 
 // Spread "fixes" TS2742 error
 /**

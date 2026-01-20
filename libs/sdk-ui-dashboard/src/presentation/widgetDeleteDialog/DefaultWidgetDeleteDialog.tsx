@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -55,7 +55,7 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
 
     const onDelete = useCallback(() => {
         if (widget) {
-            dispatchAndWaitFor(dispatch, eagerRemoveSectionItemByWidgetRef(widget.ref)).finally(() => {
+            void dispatchAndWaitFor(dispatch, eagerRemoveSectionItemByWidgetRef(widget.ref)).finally(() => {
                 dispatch(uiActions.closeWidgetDeleteDialog());
             });
         }

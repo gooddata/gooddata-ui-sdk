@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -9,7 +9,7 @@ export const sonarjs: IConfiguration<"sonarjs"> = {
             version: "0.16.0",
         },
     ],
-    plugin: "sonarjs",
+    plugins: ["sonarjs"],
     extends: ["plugin:sonarjs/recommended"],
     rules: {
         // we don't mind duplicate string most of the time as they are often checked by TypeScript unions

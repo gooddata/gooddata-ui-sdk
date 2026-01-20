@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useRef, useState } from "react";
 
@@ -25,6 +25,7 @@ export interface IDashboardAttachmentsProps {
     onDashboardAttachmentsChange: (formats: DashboardAttachmentType[], filters?: FilterContextItem[]) => void;
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
 }
 
 export function DashboardAttachments({
@@ -34,6 +35,7 @@ export function DashboardAttachments({
     selectedAttachments,
     xlsxSettings,
     onXlsxSettingsChange,
+    defaultPdfPageSize,
 }: IDashboardAttachmentsProps) {
     const intl = useIntl();
     const attachmentListRef = useRef<HTMLDivElement>(null);
@@ -118,6 +120,7 @@ export function DashboardAttachments({
                         onDelete={handleDelete}
                         xlsxSettings={xlsxSettings}
                         onXlsxSettingsChange={onXlsxSettingsChange}
+                        defaultPdfPageSize={defaultPdfPageSize}
                         mode="dashboard"
                     />
                     <AttachmentsSelect<DashboardAttachmentType>

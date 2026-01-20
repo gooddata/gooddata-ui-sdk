@@ -1,8 +1,14 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { Component, type ErrorInfo, type FC, type PropsWithChildren, type ReactNode } from "react";
 
 import { connect } from "react-redux";
+
+import {
+    AnalyticalBackendErrorTypes,
+    isAnalyticalBackendError,
+    isUnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
 
 import { GlobalError } from "./GlobalError.js";
 import {
@@ -12,37 +18,36 @@ import {
     globalErrorSelector,
     setGlobalErrorAction,
 } from "../store/index.js";
-import { extractError } from "../store/sideEffects/utils.js";
 
 type ErrorBoundaryProps = {
     children: ReactNode;
-    globalError?: string;
+    globalError: Record<string, unknown> | null;
     isClearing: boolean;
     setGlobalError: typeof setGlobalErrorAction;
     clearThread: () => void;
 };
 
 type ErrorBoundaryState = {
-    ownError?: string;
+    ownError: Error | null;
 };
 
 class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     constructor(props: ErrorBoundaryProps) {
         super(props);
-        this.state = { ownError: "" };
+        this.state = { ownError: null };
     }
 
     static getDerivedStateFromError(error: unknown) {
-        return { ownError: extractError(error) };
+        return { ownError: error };
     }
 
     override componentDidCatch(error: Error, _errorInfo: ErrorInfo) {
-        this.props.setGlobalError({ error: extractError(error) });
+        this.props.setGlobalError({ error });
     }
 
     clearError() {
         this.props.clearThread();
-        this.setState({ ownError: "" });
+        this.setState({ ownError: null });
     }
 
     override render() {
@@ -50,9 +55,29 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
         // And treat them the same
         const error = this.props.globalError || this.state.ownError;
         if (error) {
+            if (isUnexpectedResponseError(error)) {
+                const traceId = (error.responseBody as any)?.traceId as string;
+                return (
+                    <GlobalError
+                        errorDetails={error.message}
+                        errorTraceId={error.traceId ?? traceId}
+                        clearError={this.clearError.bind(this)}
+                        clearing={this.props.isClearing}
+                    />
+                );
+            }
+            if (isAnalyticalBackendError(error) && error.abeType === AnalyticalBackendErrorTypes.UNEXPECTED) {
+                return (
+                    <GlobalError
+                        errorDetails={error.message}
+                        clearError={this.clearError.bind(this)}
+                        clearing={this.props.isClearing}
+                    />
+                );
+            }
             return (
                 <GlobalError
-                    errorDetails={error}
+                    errorDetails={error.message as string}
                     clearError={this.clearError.bind(this)}
                     clearing={this.props.isClearing}
                 />

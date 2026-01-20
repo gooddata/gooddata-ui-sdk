@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
@@ -7,8 +7,8 @@ import { invariant } from "ts-invariant";
 import { type IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 
 import {
-    type MeasureDateDatasets,
-    type QueryInsightDateDatasets,
+    type IMeasureDateDatasets,
+    type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectInsightByRef,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
@@ -28,8 +28,8 @@ export function InsightDateDataSetFilter({ widget }: IConfigurationPanelProps) {
         run: queryDateDatasets,
         result,
     } = useDashboardQueryProcessing<
-        QueryInsightDateDatasets,
-        MeasureDateDatasets,
+        IQueryInsightDateDatasets,
+        IMeasureDateDatasets,
         Parameters<typeof queryDateDatasetsForInsight>
     >({
         queryCreator: queryDateDatasetsForInsight,

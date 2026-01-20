@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
@@ -32,7 +33,7 @@ export const selectDashboardPermissions: DashboardSelector<IDashboardPermissions
             "attempting to access uninitialized dashboard permissions state",
         );
 
-        return state.dashboardPermissions!;
+        return state.dashboardPermissions;
     },
 );
 

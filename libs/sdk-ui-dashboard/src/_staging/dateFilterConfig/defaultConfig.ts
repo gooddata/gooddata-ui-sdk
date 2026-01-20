@@ -1,10 +1,21 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 
+/**
+ * Default date filter preset for standard calendar.
+ */
+export const DEFAULT_DATE_FILTER_PRESET = "THIS_MONTH";
+
+/**
+ * Default date filter preset for fiscal calendar.
+ * Used when fiscal calendar is set as the default calendar type.
+ */
+export const DEFAULT_FISCAL_DATE_FILTER_PRESET = "THIS_FISCAL_MONTH";
+
 export const defaultDateFilterConfig: IDateFilterConfig = {
     ref: idRef("defaultDateFilterProjectConfig"),
-    selectedOption: "THIS_MONTH",
+    selectedOption: DEFAULT_DATE_FILTER_PRESET,
     allTime: {
         localIdentifier: "ALL_TIME",
         type: "allTime",

@@ -5835,6 +5835,22 @@ export interface IUiComboboxState {
 }
 
 // @internal (undocumented)
+export interface IUiCopyButtonProps {
+    // (undocumented)
+    clipboardContent: string;
+    // (undocumented)
+    errorMessage?: MessageDescriptor;
+    // (undocumented)
+    errorMessageOptions?: MessageParameters;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    successMessage?: MessageDescriptor;
+    // (undocumented)
+    successMessageOptions?: MessageParameters;
+}
+
+// @internal (undocumented)
 export interface IUiDateProps {
     // (undocumented)
     absoluteOptions?: Intl.DateTimeFormatOptions;
@@ -7682,6 +7698,12 @@ export const UiAsyncTableCheckboxColumnWidth = 34;
 export function UiAsyncTableEmptyState({ title, description, icon, }: IUiAsyncTableEmptyStateProps): JSX.Element;
 
 // @internal (undocumented)
+export const UiAsyncTableMenuColumnWidth = 55;
+
+// @internal (undocumented)
+export const UiAsyncTableMenuColumnWidthLarge = 65;
+
+// @internal (undocumented)
 export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) => ReactNode;
 
 // @internal (undocumented)
@@ -7760,6 +7782,9 @@ export function UiComboboxPopup({ style, className, children, ...htmlProps }: Ui
 
 // @internal (undocumented)
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
+
+// @internal (undocumented)
+export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions, }: IUiCopyButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative, }: IUiDateProps): JSX.Element;

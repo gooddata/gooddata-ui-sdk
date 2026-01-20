@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -8,9 +8,9 @@ import {
     undoLayoutChanges,
 } from "../../../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardLayoutChanged,
-    type DashboardLayoutSectionHeaderChanged,
+    type IDashboardCommandFailed,
+    type IDashboardLayoutChanged,
+    type IDashboardLayoutSectionHeaderChanged,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -33,7 +33,7 @@ describe("change layout section header handler", () => {
         });
 
         it("should replace header with a new one", async () => {
-            const event: DashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
                 changeLayoutSectionHeader(0, FullHeader),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
             );
@@ -46,7 +46,7 @@ describe("change layout section header handler", () => {
         });
 
         it("should incrementally merge header", async () => {
-            const firstEvent: DashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
+            const firstEvent: IDashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
                 changeLayoutSectionHeader(0, HeaderWithJustTitle, true),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
             );
@@ -55,7 +55,7 @@ describe("change layout section header handler", () => {
             const firstLayout = selectLayout(Tester.state());
             expect(firstLayout.sections[0].header).toEqual(HeaderWithJustTitle);
 
-            const secondEvent: DashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
+            const secondEvent: IDashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
                 changeLayoutSectionHeader(0, HeaderWithJustDescription, true),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
             );
@@ -75,7 +75,7 @@ describe("change layout section header handler", () => {
 
             // then modify just title, keeping the original description
             const headerToUpdate = { title: "My Updated Section Title" };
-            const titleChanged: DashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
+            const titleChanged: IDashboardLayoutSectionHeaderChanged = await Tester.dispatchAndWaitFor(
                 changeLayoutSectionHeader(0, headerToUpdate, true),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
             );
@@ -110,7 +110,7 @@ describe("change layout section header handler", () => {
             // then undo changes, command after command
             //
 
-            const lastChangeUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const lastChangeUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -120,7 +120,7 @@ describe("change layout section header handler", () => {
             );
             expect(selectLayout(Tester.state())).toEqual(layoutAfterFirstUpdate);
 
-            const secondUndoFinished: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const secondUndoFinished: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -143,10 +143,16 @@ describe("change layout section header handler", () => {
         it("should fail if bad section index provided", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const failed: DashboardCommandFailed<ChangeLayoutSectionHeader> = await Tester.dispatchAndWaitFor(
-                changeLayoutSectionHeader(originalLayout.sections.length, FullHeader, false, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            const failed: IDashboardCommandFailed<ChangeLayoutSectionHeader> =
+                await Tester.dispatchAndWaitFor(
+                    changeLayoutSectionHeader(
+                        originalLayout.sections.length,
+                        FullHeader,
+                        false,
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.COMMAND.FAILED",
+                );
 
             expect(failed.payload.reason).toEqual("USER_ERROR");
             expect(failed.correlationId).toEqual(TestCorrelation);

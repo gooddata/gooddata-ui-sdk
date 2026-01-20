@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { Dialog, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { Dialog } from "@gooddata/sdk-ui-kit";
 
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { HeaderIcon } from "./HeaderIcon.js";
@@ -14,9 +14,9 @@ import {
     type RootState,
     clearThreadAction,
     hasMessagesSelector,
-    isFullscreenSelector,
     setFullscreenAction,
 } from "../store/index.js";
+import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
 type GenAIChatOverlayOwnProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
@@ -25,7 +25,6 @@ type GenAIChatOverlayOwnProps = {
 
 type GenAIChatOverlayStateProps = {
     hasMessages: boolean;
-    isFullscreen: boolean;
 };
 
 type GenAIChatOverlayDispatchProps = {
@@ -43,12 +42,10 @@ function GenAIChatOverlayComponent({
     hasMessages,
     clearThread,
     setFullscreen,
-    isFullscreen: isFullscreenCurrent,
 }: GenAIChatOverlayProps) {
     const intl = useIntl();
 
-    const isSmallScreen = useMediaQuery("mobileDevice");
-    const isFullscreen = isSmallScreen || isFullscreenCurrent;
+    const { isFullscreen, isSmallScreen } = useFullscreenCheck();
 
     const classNames = cx("gd-gen-ai-chat__window", {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
@@ -102,7 +99,6 @@ function GenAIChatOverlayComponent({
 
 const mapStateToProps = (state: RootState): GenAIChatOverlayStateProps => ({
     hasMessages: hasMessagesSelector(state),
-    isFullscreen: isFullscreenSelector(state),
 });
 
 const mapDispatchToProps: GenAIChatOverlayDispatchProps = {

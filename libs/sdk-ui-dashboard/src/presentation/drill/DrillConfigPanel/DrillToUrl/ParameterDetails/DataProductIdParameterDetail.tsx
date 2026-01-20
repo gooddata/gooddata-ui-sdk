@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -6,11 +6,11 @@ import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 
 import { ParameterDetail } from "./ParameterDetail.js";
 
-interface IdentifierDetailProps {
+interface IIdentifierDetailProps {
     title: string;
 }
 
-export function DataProductIdParameterDetail({ title }: IdentifierDetailProps) {
+export function DataProductIdParameterDetail({ title }: IIdentifierDetailProps) {
     const intl = useIntl();
     const { dataProduct } = useClientWorkspaceIdentifiers();
 

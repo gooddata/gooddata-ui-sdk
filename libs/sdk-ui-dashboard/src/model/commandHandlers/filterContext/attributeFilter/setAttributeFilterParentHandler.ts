@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { validateAttributeFilterParents } from "./validation/parentFiltersValidation.js";
-import { type SetAttributeFilterParents } from "../../../commands/filters.js";
+import { type ISetAttributeFilterParents } from "../../../commands/filters.js";
 import { attributeFilterParentChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -20,7 +20,7 @@ import { dispatchFilterContextChanged } from "../common.js";
 
 export function* setAttributeFilterParentsHandler(
     ctx: DashboardContext,
-    cmd: SetAttributeFilterParents,
+    cmd: ISetAttributeFilterParents,
 ): SagaIterator<void> {
     const { filterLocalId, parentFilters } = cmd.payload;
 

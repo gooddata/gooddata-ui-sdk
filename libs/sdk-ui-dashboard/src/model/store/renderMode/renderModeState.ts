@@ -1,13 +1,14 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type RenderMode } from "../../../types.js";
 
 /**
  * @beta
  */
-export interface RenderModeState {
+export interface IRenderModeState {
     renderMode: RenderMode;
 }
 
-export const renderModeInitialState: RenderModeState = {
+export const renderModeInitialState: IRenderModeState = {
     renderMode: "view",
 };

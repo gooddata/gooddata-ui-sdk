@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -8,12 +8,12 @@ import { type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 import { ParameterDetail } from "./ParameterDetail.js";
 import { selectInsightByRef, selectWidgetByRef, useDashboardSelector } from "../../../../../model/index.js";
 
-interface IdentifierDetailProps {
+interface IIdentifierDetailProps {
     title: string;
     widgetRef: ObjRef;
 }
 
-export function InsightIdParameterDetail({ title, widgetRef }: IdentifierDetailProps) {
+export function InsightIdParameterDetail({ title, widgetRef }: IIdentifierDetailProps) {
     const intl = useIntl();
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     invariant(isInsightWidget(widget), "must be insight widget selected");

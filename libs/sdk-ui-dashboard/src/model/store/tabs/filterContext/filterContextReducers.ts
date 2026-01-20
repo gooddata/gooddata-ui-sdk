@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -32,11 +32,11 @@ import {
 
 import { filterContextInitialState } from "./filterContextState.js";
 import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
-import { type AddDateFilterPayload } from "../../../commands/index.js";
+import { type IAddDateFilterPayload } from "../../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
-import { type TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
-type FilterContextReducer<A extends Action> = CaseReducer<TabsState, A>;
+type FilterContextReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 //
 //
@@ -750,14 +750,14 @@ const clearAttributeFiltersSelection: FilterContextReducer<
             targetTab.filterContext?.filterContextDefinition,
             "Attempt to edit uninitialized filter context",
         );
-        const currentFilterIndex = targetTab.filterContext!.filterContextDefinition.filters.findIndex(
+        const currentFilterIndex = targetTab.filterContext.filterContextDefinition.filters.findIndex(
             (item) =>
                 isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
         );
 
         invariant(currentFilterIndex >= 0, "Attempt to clear selection of a non-existing filter");
 
-        const currentFilter = targetTab.filterContext!.filterContextDefinition.filters[
+        const currentFilter = targetTab.filterContext.filterContextDefinition.filters[
             currentFilterIndex
         ] as IDashboardAttributeFilter;
 
@@ -928,7 +928,7 @@ const changeSelectionMode: FilterContextReducer<PayloadAction<IChangeAttributeSe
     (findFilter as IDashboardAttributeFilter).attributeFilter.selectionMode = selectionMode;
 };
 
-const addDateFilter: FilterContextReducer<PayloadAction<AddDateFilterPayload>> = (state, action) => {
+const addDateFilter: FilterContextReducer<PayloadAction<IAddDateFilterPayload>> = (state, action) => {
     const activeTab = getActiveTab(state);
     if (!activeTab) {
         return;

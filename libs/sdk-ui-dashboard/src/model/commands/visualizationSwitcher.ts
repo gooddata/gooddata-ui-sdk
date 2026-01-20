@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IInsight, type IInsightWidget, type ObjRef } from "@gooddata/sdk-model";
 import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
@@ -6,10 +6,10 @@ import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 import { type IDashboardCommand } from "./base.js";
 
 /**
- * Payload of the {@link AddVisualizationToVisualizationSwitcherWidgetContent} command.
+ * Payload of the {@link IAddVisualizationToVisualizationSwitcherWidgetContent} command.
  * @beta
  */
-export interface AddVisualizationToVisualizationSwitcherWidgetContentPayload {
+export interface IAddVisualizationToVisualizationSwitcherWidgetContentPayload {
     /**
      * Visualization switcher widget reference whose content to change.
      */
@@ -25,7 +25,7 @@ export interface AddVisualizationToVisualizationSwitcherWidgetContentPayload {
     readonly insight: IInsight;
 
     /**
-     * Size info of the added visualizaiton.
+     * Size info of the added visualization.
      */
     readonly sizeInfo: IVisualizationSizeInfo;
 }
@@ -33,9 +33,9 @@ export interface AddVisualizationToVisualizationSwitcherWidgetContentPayload {
 /**
  * @beta
  */
-export interface AddVisualizationToVisualizationSwitcherWidgetContent extends IDashboardCommand {
+export interface IAddVisualizationToVisualizationSwitcherWidgetContent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION";
-    readonly payload: AddVisualizationToVisualizationSwitcherWidgetContentPayload;
+    readonly payload: IAddVisualizationToVisualizationSwitcherWidgetContentPayload;
 }
 
 /**
@@ -43,6 +43,8 @@ export interface AddVisualizationToVisualizationSwitcherWidgetContent extends ID
  *
  * @param ref - reference of the visualization switcher widget to modify
  * @param visualization - visualization to add
+ * @param insight -
+ * @param sizeInfo -
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -54,7 +56,7 @@ export function addVisualizationToSwitcherWidgetContent(
     insight: IInsight,
     sizeInfo: IVisualizationSizeInfo,
     correlationId?: string,
-): AddVisualizationToVisualizationSwitcherWidgetContent {
+): IAddVisualizationToVisualizationSwitcherWidgetContent {
     return {
         type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION",
         correlationId,
@@ -68,10 +70,10 @@ export function addVisualizationToSwitcherWidgetContent(
 }
 
 /**
- * Payload of the {@link UpdateVisualizationsFromVisualizationSwitcherWidgetContent} command.
+ * Payload of the {@link IUpdateVisualizationsFromVisualizationSwitcherWidgetContent} command.
  * @beta
  */
-export interface UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload {
+export interface IUpdateVisualizationsFromVisualizationSwitcherWidgetContentPayload {
     /**
      * Visualization switcher widget reference whose content to change.
      */
@@ -86,9 +88,9 @@ export interface UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayloa
 /**
  * @beta
  */
-export interface UpdateVisualizationsFromVisualizationSwitcherWidgetContent extends IDashboardCommand {
+export interface IUpdateVisualizationsFromVisualizationSwitcherWidgetContent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS";
-    readonly payload: UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload;
+    readonly payload: IUpdateVisualizationsFromVisualizationSwitcherWidgetContentPayload;
 }
 
 /**
@@ -106,7 +108,7 @@ export function updateVisualizationsFromSwitcherWidgetContent(
     ref: ObjRef,
     visualizations: IInsightWidget[],
     correlationId?: string,
-): UpdateVisualizationsFromVisualizationSwitcherWidgetContent {
+): IUpdateVisualizationsFromVisualizationSwitcherWidgetContent {
     return {
         type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS",
         correlationId,

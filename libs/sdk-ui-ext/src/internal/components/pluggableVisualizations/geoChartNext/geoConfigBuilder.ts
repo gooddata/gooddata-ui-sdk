@@ -14,7 +14,6 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { type IGeoPushpinChartNextConfig } from "@gooddata/sdk-ui-geo/next";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { createAttributeRef } from "./geoAttributeHelper.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IVisProps, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
@@ -107,7 +106,6 @@ const supportedGeoConfigProperties = new Set<keyof IGeoPushpinChartNextConfig>([
     "points",
     "showLabels",
     "showLabels",
-    "tooltipText",
 ]);
 
 export function geoConfigFromInsight(
@@ -120,22 +118,13 @@ export function geoConfigFromInsight(
         ...controls,
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
     };
-    const tooltipText = controls["tooltipText"];
 
-    const configFromProperties = Object.fromEntries(
+    return Object.fromEntries(
         Object.entries(withValuesFromContext).filter(
             ([key, value]) =>
                 supportedGeoConfigProperties.has(key as any) && !(value === null || value === undefined),
         ),
     ) as unknown as IGeoPushpinChartNextConfig;
-
-    const tooltipTextAttribute =
-        typeof tooltipText === "string" ? buildTooltipTextAttribute(insight, tooltipText) : undefined;
-
-    return {
-        ...configFromProperties,
-        ...(tooltipTextAttribute ? { tooltipText: tooltipTextAttribute } : {}),
-    };
 }
 
 export function geoInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
@@ -185,28 +174,4 @@ export function isGeoChart(insightDefinition: IInsightDefinition): boolean {
     const type = insightVisualizationUrl(insightDefinition).split(":")[1];
 
     return type === "pushpin";
-}
-
-function buildTooltipTextAttribute(
-    insight: IInsightDefinition,
-    tooltipTextId: string,
-): IAttribute | undefined {
-    const baseAttribute = getTooltipBaseAttribute(insight);
-    if (!baseAttribute) {
-        return undefined;
-    }
-
-    const ref = createAttributeRef(baseAttribute, tooltipTextId);
-    return newAttribute(ref, (attribute) => attribute.localId("tooltipText_df"));
-}
-
-function getTooltipBaseAttribute(insight: IInsightDefinition): IAttribute | undefined {
-    const areaBucket = insightBucket(insight, BucketNames.AREA);
-    const areaAttribute = areaBucket && bucketAttribute(areaBucket);
-    if (areaAttribute) {
-        return areaAttribute;
-    }
-
-    const locationBucket = insightBucket(insight, BucketNames.LOCATION);
-    return locationBucket && bucketAttribute(locationBucket);
 }

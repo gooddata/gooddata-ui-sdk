@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -28,9 +28,9 @@ import {
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
-import { type MoveSectionItem } from "../../commands/index.js";
+import { type IMoveSectionItem } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
+import { type IDashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -40,7 +40,7 @@ import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOp
 
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: MoveSectionItem;
+    readonly cmd: IMoveSectionItem;
     readonly layout: ReturnType<typeof selectLayout>;
 };
 
@@ -248,8 +248,8 @@ export function getSectionPathWithItemsShifted(
 
 export function* moveSectionItemHandler(
     ctx: DashboardContext,
-    cmd: MoveSectionItem,
-): SagaIterator<DashboardLayoutSectionItemMoved> {
+    cmd: IMoveSectionItem,
+): SagaIterator<IDashboardLayoutSectionItemMoved> {
     const commandCtx: MoveSectionItemContext = {
         ctx,
         cmd,
@@ -342,7 +342,7 @@ export function* moveSectionItemHandler(
         targetIndex === undefined ? targetItemIndex : getItemIndex(targetIndex),
         fromPath === undefined ? [{ sectionIndex, itemIndex }] : fromPath,
         targetIndex === undefined
-            ? [{ sectionIndex: targetSectionIndexUpdated!, itemIndex: targetIndex! }]
+            ? [{ sectionIndex: targetSectionIndexUpdated, itemIndex: targetIndex! }]
             : targetIndex,
         shouldRemoveSection,
         cmd.correlationId,

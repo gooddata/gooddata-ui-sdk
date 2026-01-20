@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { type IExecutionDefinition, type ObjRef } from "@gooddata/sdk-model";
@@ -8,10 +8,10 @@ import { type DashboardEventBody, type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 
 /**
- * Payload of the {@link DashboardWidgetExecutionStarted} event.
+ * Payload of the {@link IDashboardWidgetExecutionStarted} event.
  * @beta
  */
-export interface DashboardWidgetExecutionStartedPayload {
+export interface IDashboardWidgetExecutionStartedPayload {
     /**
      * Reference to the widget that this event relates to.
      */
@@ -27,9 +27,9 @@ export interface DashboardWidgetExecutionStartedPayload {
  *
  * @beta
  */
-export interface DashboardWidgetExecutionStarted extends IDashboardEvent {
+export interface IDashboardWidgetExecutionStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED";
-    readonly payload: DashboardWidgetExecutionStartedPayload;
+    readonly payload: IDashboardWidgetExecutionStartedPayload;
 }
 
 /**
@@ -39,7 +39,7 @@ export function widgetExecutionStarted(
     widgetRef: ObjRef,
     executionDefinition: IExecutionDefinition,
     correlationId?: string,
-): DashboardEventBody<DashboardWidgetExecutionStarted> {
+): DashboardEventBody<IDashboardWidgetExecutionStarted> {
     return {
         type: "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED",
         correlationId,
@@ -51,12 +51,12 @@ export function widgetExecutionStarted(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardWidgetExecutionStarted}.
+ * Tests whether the provided object is an instance of {@link IDashboardWidgetExecutionStarted}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardWidgetExecutionStarted = eventGuard<DashboardWidgetExecutionStarted>(
+export const isDashboardWidgetExecutionStarted = eventGuard<IDashboardWidgetExecutionStarted>(
     "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED",
 );
 
@@ -65,10 +65,10 @@ export const isDashboardWidgetExecutionStarted = eventGuard<DashboardWidgetExecu
 //
 
 /**
- * Payload of the {@link DashboardWidgetExecutionFailed} event.
+ * Payload of the {@link IDashboardWidgetExecutionFailed} event.
  * @beta
  */
-export interface DashboardWidgetExecutionFailedPayload {
+export interface IDashboardWidgetExecutionFailedPayload {
     /**
      * Instance of {@link @gooddata/sdk-ui#GoodDataSdkError} with the information about the error the related execution failed with.
      */
@@ -84,9 +84,9 @@ export interface DashboardWidgetExecutionFailedPayload {
  *
  * @beta
  */
-export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
+export interface IDashboardWidgetExecutionFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED";
-    readonly payload: DashboardWidgetExecutionFailedPayload;
+    readonly payload: IDashboardWidgetExecutionFailedPayload;
 }
 
 /**
@@ -96,7 +96,7 @@ export function widgetExecutionFailed(
     widgetRef: ObjRef,
     error: GoodDataSdkError,
     correlationId?: string,
-): DashboardEventBody<DashboardWidgetExecutionFailed> {
+): DashboardEventBody<IDashboardWidgetExecutionFailed> {
     return {
         type: "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED",
         correlationId,
@@ -108,12 +108,12 @@ export function widgetExecutionFailed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardWidgetExecutionFailed}.
+ * Tests whether the provided object is an instance of {@link IDashboardWidgetExecutionFailed}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardWidgetExecutionFailed = eventGuard<DashboardWidgetExecutionFailed>(
+export const isDashboardWidgetExecutionFailed = eventGuard<IDashboardWidgetExecutionFailed>(
     "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED",
 );
 
@@ -122,10 +122,10 @@ export const isDashboardWidgetExecutionFailed = eventGuard<DashboardWidgetExecut
 //
 
 /**
- * Payload of the {@link DashboardWidgetExecutionSucceeded} event.
+ * Payload of the {@link IDashboardWidgetExecutionSucceeded} event.
  * @beta
  */
-export interface DashboardWidgetExecutionSucceededPayload {
+export interface IDashboardWidgetExecutionSucceededPayload {
     /**
      * Instance of {@link @gooddata/sdk-backend-spi#IDataView} with the data the widget first requested.
      */
@@ -141,9 +141,9 @@ export interface DashboardWidgetExecutionSucceededPayload {
  *
  * @beta
  */
-export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
+export interface IDashboardWidgetExecutionSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED";
-    readonly payload: DashboardWidgetExecutionSucceededPayload;
+    readonly payload: IDashboardWidgetExecutionSucceededPayload;
 }
 
 /**
@@ -153,7 +153,7 @@ export function widgetExecutionSucceeded(
     widgetRef: ObjRef,
     dataView: IDataView,
     correlationId?: string,
-): DashboardEventBody<DashboardWidgetExecutionSucceeded> {
+): DashboardEventBody<IDashboardWidgetExecutionSucceeded> {
     return {
         type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED",
         correlationId,
@@ -165,11 +165,11 @@ export function widgetExecutionSucceeded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardWidgetExecutionSucceeded}.
+ * Tests whether the provided object is an instance of {@link IDashboardWidgetExecutionSucceeded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardWidgetExecutionSucceeded = eventGuard<DashboardWidgetExecutionSucceeded>(
+export const isDashboardWidgetExecutionSucceeded = eventGuard<IDashboardWidgetExecutionSucceeded>(
     "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED",
 );

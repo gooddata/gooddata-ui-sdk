@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
@@ -6,9 +6,9 @@ import { put, select } from "redux-saga/effects";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
-import { type DrillToInsight } from "../../commands/drill.js";
+import { type IDrillToInsight } from "../../commands/drill.js";
 import {
-    type DashboardDrillToInsightResolved,
+    type IDashboardDrillToInsightResolved,
     drillToInsightRequested,
     drillToInsightResolved,
 } from "../../events/drill.js";
@@ -17,8 +17,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToInsightHandler(
     ctx: DashboardContext,
-    cmd: DrillToInsight,
-): SagaIterator<DashboardDrillToInsightResolved> {
+    cmd: IDrillToInsight,
+): SagaIterator<IDashboardDrillToInsightResolved> {
     const { drillDefinition, drillEvent } = cmd.payload;
     const insight = yield select(selectInsightByRef(drillDefinition.target));
     yield put(drillToInsightRequested(ctx, insight, drillDefinition, drillEvent, cmd.correlationId));
@@ -32,7 +32,7 @@ export function* drillToInsightHandler(
 
     const insightWithDrillsApplied = addIntersectionFiltersToInsight(
         insight,
-        filteredIntersection!,
+        filteredIntersection,
         ctx.backend.capabilities.supportsElementUris ?? true,
     );
 

@@ -10,11 +10,11 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { UiButton, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { UiButton, UiCopyButton, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { selectPermissions, useDashboardSelector } from "../../model/index.js";
 
-export interface KdaErrorComponentProps {
+export interface IKdaErrorComponentProps {
     type: KdaErrorType;
     error?: Error | AnalyticalBackendError;
 }
@@ -24,7 +24,7 @@ export enum KdaErrorType {
     Details = "details",
 }
 
-export function KdaErrorComponent({ error }: KdaErrorComponentProps) {
+export function KdaErrorComponent({ error }: IKdaErrorComponentProps) {
     const permissions = useDashboardSelector(selectPermissions);
     const detailShow = permissions.canManageProject ?? false;
 
@@ -63,15 +63,12 @@ function GeneralError() {
     );
 }
 
-interface TraceIdProps {
+interface ITraceIdProps {
     traceId?: string;
 }
 
-function TraceId({ traceId }: TraceIdProps) {
+function TraceId({ traceId }: ITraceIdProps) {
     const intl = useIntl();
-    const onCopyTraceId = () => {
-        void navigator.clipboard.writeText(traceId ?? "");
-    };
 
     if (!traceId) {
         return null;
@@ -85,23 +82,20 @@ function TraceId({ traceId }: TraceIdProps) {
                 </span>{" "}
                 {traceId}
             </div>
-            <UiIconButton
+            <UiCopyButton
                 label={intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.error.traceId.copy" })}
-                icon="copy"
-                size="small"
-                variant="tertiary"
-                onClick={onCopyTraceId}
+                clipboardContent={traceId ?? ""}
             />
         </div>
     );
 }
 
-interface TraceIdProps {
+interface ITraceIdProps {
     detailShow?: boolean;
     rawError?: object;
 }
 
-function DetailsShow({ detailShow, rawError }: TraceIdProps) {
+function DetailsShow({ detailShow, rawError }: ITraceIdProps) {
     const intl = useIntl();
     const [open, setOpen] = useState(false);
 

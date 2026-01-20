@@ -1,13 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
-import { type ConvertDashboardTabFromDefault, switchDashboardTab } from "../../commands/tabs.js";
+import { type IConvertDashboardTabFromDefault, switchDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardTabSwitched, dashboardTabConvertedFromDefault } from "../../events/tabs.js";
+import { type IDashboardTabSwitched, dashboardTabConvertedFromDefault } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { DEFAULT_TAB_ID, tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
@@ -15,7 +15,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* convertDashboardTabFromDefaultHandler(
     ctx: DashboardContext,
-    cmd: ConvertDashboardTabFromDefault,
+    cmd: IConvertDashboardTabFromDefault,
 ): SagaIterator<void> {
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
     const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
@@ -59,7 +59,7 @@ export function* convertDashboardTabFromDefaultHandler(
     );
 
     if (activeTabLocalIdentifier === DEFAULT_TAB_ID) {
-        const switchedEvent: DashboardTabSwitched = yield call(
+        const switchedEvent: IDashboardTabSwitched = yield call(
             switchDashboardTabHandler,
             ctx,
             switchDashboardTab(newTabId, cmd.correlationId),

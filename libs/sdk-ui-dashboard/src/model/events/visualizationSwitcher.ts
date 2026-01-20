@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IInsightWidget, type ObjRef } from "@gooddata/sdk-model";
 
@@ -7,10 +7,10 @@ import { eventGuard } from "./util.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link DashboardVisualizationSwitcherWidgetVisualizationAdded} event.
+ * Payload of the {@link IDashboardVisualizationSwitcherWidgetVisualizationAdded} event.
  * @beta
  */
-export interface DashboardVisualizationSwitcherWidgetVisualizationAddedPayload {
+export interface IDashboardVisualizationSwitcherWidgetVisualizationAddedPayload {
     /**
      * Reference to changed visualization switcher widget.
      */
@@ -25,9 +25,9 @@ export interface DashboardVisualizationSwitcherWidgetVisualizationAddedPayload {
  *
  * @beta
  */
-export interface DashboardVisualizationSwitcherWidgetVisualizationAdded extends IDashboardEvent {
+export interface IDashboardVisualizationSwitcherWidgetVisualizationAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED";
-    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationAddedPayload;
+    readonly payload: IDashboardVisualizationSwitcherWidgetVisualizationAddedPayload;
 }
 
 /**
@@ -38,7 +38,7 @@ export function visualizationSwitcherWidgetVisualizationAdded(
     ref: ObjRef,
     visualization: IInsightWidget,
     correlationId?: string,
-): DashboardVisualizationSwitcherWidgetVisualizationAdded {
+): IDashboardVisualizationSwitcherWidgetVisualizationAdded {
     return {
         type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED",
         ctx,
@@ -51,21 +51,21 @@ export function visualizationSwitcherWidgetVisualizationAdded(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardVisualizationSwitcherWidgetVisualizationAdded}.
+ * Tests whether the provided object is an instance of {@link IDashboardVisualizationSwitcherWidgetVisualizationAdded}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardVisualizationSwitcherWidgetVisualizationAdded =
-    eventGuard<DashboardVisualizationSwitcherWidgetVisualizationAdded>(
+    eventGuard<IDashboardVisualizationSwitcherWidgetVisualizationAdded>(
         "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED",
     );
 
 /**
- * Payload of the {@link DashboardVisualizationSwitcherWidgetVisualizationsUpdated} event.
+ * Payload of the {@link IDashboardVisualizationSwitcherWidgetVisualizationsUpdated} event.
  * @beta
  */
-export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload {
+export interface IDashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload {
     /**
      * Reference to changed visualization switcher widget.
      */
@@ -82,9 +82,9 @@ export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayloa
  *
  * @beta
  */
-export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdated extends IDashboardEvent {
+export interface IDashboardVisualizationSwitcherWidgetVisualizationsUpdated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED";
-    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload;
+    readonly payload: IDashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload;
 }
 
 /**
@@ -95,7 +95,7 @@ export function visualizationSwitcherWidgetVisualizationsUpdated(
     ref: ObjRef,
     visualizations: IInsightWidget[],
     correlationId?: string,
-): DashboardVisualizationSwitcherWidgetVisualizationsUpdated {
+): IDashboardVisualizationSwitcherWidgetVisualizationsUpdated {
     return {
         type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED",
         ctx,
@@ -108,12 +108,12 @@ export function visualizationSwitcherWidgetVisualizationsUpdated(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardVisualizationSwitcherWidgetVisualizationsUpdated}.
+ * Tests whether the provided object is an instance of {@link IDashboardVisualizationSwitcherWidgetVisualizationsUpdated}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardVisualizationSwitcherWidgetVisualizationsUpdated =
-    eventGuard<DashboardVisualizationSwitcherWidgetVisualizationsUpdated>(
+    eventGuard<IDashboardVisualizationSwitcherWidgetVisualizationsUpdated>(
         "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED",
     );

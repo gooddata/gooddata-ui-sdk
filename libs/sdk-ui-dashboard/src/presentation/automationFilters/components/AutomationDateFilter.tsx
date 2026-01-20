@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MutableRefObject, type ReactNode, useCallback, useMemo } from "react";
 
@@ -54,18 +54,27 @@ function AutomationDateFilterButton(props: IDateFilterButtonProps) {
     const accessibilityConfig = useMemo(
         () => ({
             ariaDescribedBy: dateFilterTooltipId,
-            isExpanded: props.isOpen,
+            isExpanded: props.isOpen ?? false,
+            popupId: props.dropdownId,
+            popupType: "dialog" as const,
             deleteAriaLabel: props.textTitle ? `${deleteAriaLabel} ${props.textTitle}` : deleteAriaLabel,
             deleteAriaDescribedBy: dateFilterDeleteTooltipId,
         }),
-        [dateFilterTooltipId, dateFilterDeleteTooltipId, props.isOpen, deleteAriaLabel, props.textTitle],
+        [
+            dateFilterTooltipId,
+            dateFilterDeleteTooltipId,
+            props.isOpen,
+            props.dropdownId,
+            deleteAriaLabel,
+            props.textTitle,
+        ],
     );
 
     return (
         <UiChip
             label={label}
             iconBefore="date"
-            isActive={props.isOpen}
+            isActive={props.isOpen ?? false}
             isLocked={isLocked}
             isDeletable={!isLocked && !isCommonDateFilter}
             onDelete={onDeleteHandler}

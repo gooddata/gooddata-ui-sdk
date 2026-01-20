@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
 import {
     type IMetricsAndFacts,
-    type QueryMetricsAndFacts,
+    type IQueryMetricsAndFacts,
     queryMetricsAndFacts,
     useDashboardQueryProcessing,
 } from "../../model/index.js";
@@ -19,7 +19,7 @@ export function useMetricsAndFacts() {
         status: metricsAndFactsLoadingStatus,
         error: metricsAndFactsLoadingError,
     } = useDashboardQueryProcessing<
-        QueryMetricsAndFacts,
+        IQueryMetricsAndFacts,
         IMetricsAndFacts,
         Parameters<typeof queryMetricsAndFacts>
     >({

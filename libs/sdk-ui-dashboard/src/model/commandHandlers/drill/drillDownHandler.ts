@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
@@ -8,9 +8,9 @@ import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
 
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_staging/drills/drillingUtils.js";
-import { type DrillDown } from "../../commands/drill.js";
+import { type IDrillDown } from "../../commands/drill.js";
 import {
-    type DashboardDrillDownResolved,
+    type IDashboardDrillDownResolved,
     drillDownRequested,
     drillDownResolved,
 } from "../../events/drill.js";
@@ -20,8 +20,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillDownHandler(
     ctx: DashboardContext,
-    cmd: DrillDown,
-): SagaIterator<DashboardDrillDownResolved> {
+    cmd: IDrillDown,
+): SagaIterator<IDashboardDrillDownResolved> {
     const { drillDefinition, drillEvent, insight } = cmd.payload;
 
     yield put(drillDownRequested(ctx, insight, drillDefinition, drillEvent, cmd.correlationId));

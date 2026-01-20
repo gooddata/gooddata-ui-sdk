@@ -1,21 +1,21 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import {
-    type SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
-    type SetDashboardAttributeFilterConfigModePayload,
+    type ISetDashboardAttributeFilterConfigDisplayAsLabelPayload,
+    type ISetDashboardAttributeFilterConfigModePayload,
 } from "../../../../model/commands/dashboard.js";
 import { type TabsReducer } from "../tabsReducers.js";
-import { type TabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
-type AttributeFilterConfigReducer<A extends Action> = CaseReducer<TabsState, A>;
+type AttributeFilterConfigReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 /**
  * Changes the config mode for the attribute filter given by its local identifier.
  */
 const changeAttributeFilterConfigMode: AttributeFilterConfigReducer<
-    PayloadAction<SetDashboardAttributeFilterConfigModePayload>
+    PayloadAction<ISetDashboardAttributeFilterConfigModePayload>
 > = (state, action) => {
     const { localIdentifier } = action.payload;
 
@@ -47,7 +47,7 @@ const changeAttributeFilterConfigMode: AttributeFilterConfigReducer<
  * Changes the config mode for the filter given by its local identifier.
  */
 const changeDisplayAsLabel: AttributeFilterConfigReducer<
-    PayloadAction<SetDashboardAttributeFilterConfigDisplayAsLabelPayload>
+    PayloadAction<ISetDashboardAttributeFilterConfigDisplayAsLabelPayload>
 > = (state, action) => {
     const { localIdentifier, displayAsLabel, tabLocalIdentifier } = action.payload;
 

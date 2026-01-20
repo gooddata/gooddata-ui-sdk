@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type DashboardEventBody, type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
@@ -10,16 +10,16 @@ import { eventGuard } from "./util.js";
  *
  * @internal
  */
-export interface CreateInsightRequested extends IDashboardEvent {
+export interface ICreateInsightRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED";
 }
 
 /**
- * Create {@link CreateInsightRequested} event
+ * Create {@link ICreateInsightRequested} event
  *
  * @internal
  */
-export function createInsightRequested(correlationId?: string): DashboardEventBody<CreateInsightRequested> {
+export function createInsightRequested(correlationId?: string): DashboardEventBody<ICreateInsightRequested> {
     return {
         type: "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED",
         correlationId,
@@ -27,11 +27,11 @@ export function createInsightRequested(correlationId?: string): DashboardEventBo
 }
 
 /**
- * Tests whether the provided object is an instance of {@link CreateInsightRequested}.
+ * Tests whether the provided object is an instance of {@link ICreateInsightRequested}.
  *
  * @param obj - object to test
  * @internal
  */
-export const isCreateInsightRequested = eventGuard<CreateInsightRequested>(
+export const isCreateInsightRequested = eventGuard<ICreateInsightRequested>(
     "GDC.DASH/EVT.CREATE_INSIGHT_REQUESTED",
 );

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { Fragment, useCallback, useMemo } from "react";
 
@@ -91,7 +91,7 @@ export function ParentFiltersListItem({
             {showConnectingAttributeSelect ? (
                 <ConnectingAttributeDropdown
                     itemLocalId={localIdentifier}
-                    connectingAttributes={connectingAttributes!}
+                    connectingAttributes={connectingAttributes}
                     selectedConnectingAttributeRef={
                         selectedConnectingAttribute || connectingAttributes[0].ref
                     }

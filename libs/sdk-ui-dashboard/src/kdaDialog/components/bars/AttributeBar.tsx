@@ -155,7 +155,7 @@ function KdaAttributeFilterDropdownButtonComponent(
                     isDeletable
                     tag={tag}
                     isLocked={false}
-                    isActive={props.isOpen}
+                    isActive={props.isOpen ?? false}
                     onClick={props.onClick}
                     onDelete={() => {
                         props.onDelete?.(props.currentFilter);
@@ -165,7 +165,7 @@ function KdaAttributeFilterDropdownButtonComponent(
                         event.stopPropagation();
                     }}
                     accessibilityConfig={{
-                        isExpanded: props.isOpen,
+                        isExpanded: props.isOpen ?? false,
                         popupId: props.dropdownId,
                         popupType: "dialog",
                         deleteAriaLabel: props.deleteAriaLabel,

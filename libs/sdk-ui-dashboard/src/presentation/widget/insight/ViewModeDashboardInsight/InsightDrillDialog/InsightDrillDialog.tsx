@@ -44,7 +44,7 @@ import {
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import {
-    type DrillStep,
+    type IDrillStep,
     type OnDashboardDrill,
     type OnDrillDownSuccess,
     WithDrillSelect,
@@ -61,13 +61,13 @@ const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAY
 /**
  * @internal
  */
-export interface InsightDrillDialogProps {
+export interface IInsightDrillDialogProps {
     enableDrillDescription: boolean;
     locale: ILocale;
     breadcrumbs: string[];
     widget: IInsightWidget;
     insight: IInsight;
-    drillStep: DrillStep;
+    drillStep: IDrillStep;
     onDrillDown?: OnDrillDownSuccess;
     onClose: () => void;
     onBackButtonClick: () => void;
@@ -109,7 +109,7 @@ const getInsightWidgetDescription = (
 
 const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
-export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement {
+export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElement {
     const {
         widget,
         locale,
@@ -299,7 +299,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
     );
 }
 
-interface InsightDrillDialogDescriptionButtonProps {
+interface IInsightDrillDialogDescriptionButtonProps {
     isMobileDevice: boolean;
     isOpen: boolean;
     descriptionId: string;
@@ -311,7 +311,7 @@ function InsightDrillDialogDescriptionButton({
     isMobileDevice,
     setIsOpen,
     descriptionId,
-}: InsightDrillDialogDescriptionButtonProps) {
+}: IInsightDrillDialogDescriptionButtonProps) {
     const { formatMessage } = useIntl();
 
     const accessibilityAriaLabel = formatMessage({ id: "widget.options.description" });
@@ -345,7 +345,7 @@ function InsightDrillDialogDescriptionButton({
     );
 }
 
-interface InsightDrillDialogDescriptionContentProps {
+interface IInsightDrillDialogDescriptionContentProps {
     id: string;
     isMobileDevice: boolean;
     isOpen: boolean;
@@ -361,7 +361,7 @@ function InsightDrillDialogDescriptionContent({
     description,
     widgetFilters,
     LoadingComponent,
-}: InsightDrillDialogDescriptionContentProps) {
+}: IInsightDrillDialogDescriptionContentProps) {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);

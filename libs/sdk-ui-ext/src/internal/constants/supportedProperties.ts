@@ -372,8 +372,19 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "chartConfigOverride",
 ];
 
+/**
+ * Next-gen GeoChartNext-based pushpin chart resolves tooltip text internally
+ * (default display form of the location/coordinate attribute), so we must not
+ * persist or accept `tooltipText` in visualization properties.
+ *
+ * Legacy pushpin chart still relies on `tooltipText` and therefore keeps it in
+ * {@link GEOPUSHPIN_SUPPORTED_PROPERTIES}.
+ */
+export const GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES = GEOPUSHPIN_SUPPORTED_PROPERTIES.filter(
+    (p) => p !== "tooltipText",
+);
+
 export const GEOAREA_SUPPORTED_PROPERTIES = [
-    "tooltipText",
     "legend",
     "viewport.area",
     "colorMapping",

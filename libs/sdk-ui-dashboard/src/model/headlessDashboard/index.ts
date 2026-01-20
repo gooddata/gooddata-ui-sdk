@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-export type { HeadlessDashboardConfig, MonitoredAction } from "./HeadlessDashboard.js";
+export type { IHeadlessDashboardConfig, IMonitoredAction } from "./HeadlessDashboard.js";
 export { HeadlessDashboard } from "./HeadlessDashboard.js";

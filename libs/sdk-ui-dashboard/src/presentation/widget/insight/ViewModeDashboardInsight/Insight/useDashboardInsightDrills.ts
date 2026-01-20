@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -28,7 +28,7 @@ import { type OnWidgetDrill } from "../../../../drill/types.js";
 /**
  * @internal
  */
-export interface UseDashboardInsightDrillsProps {
+export interface IUseDashboardInsightDrillsProps {
     widget: IInsightWidget;
     insight: IInsight;
     onDrill?: OnWidgetDrill;
@@ -41,7 +41,7 @@ export const useDashboardInsightDrills = ({
     widget,
     insight,
     onDrill: onDrillFn,
-}: UseDashboardInsightDrillsProps) => {
+}: IUseDashboardInsightDrillsProps) => {
     const dispatch = useDashboardDispatch();
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
     const disableDrillDownOnWidget = insight.insight.properties["controls"]?.["disableDrillDown"];

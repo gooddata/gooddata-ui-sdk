@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -13,10 +13,10 @@ import {
     serializeLayoutSectionPath,
 } from "../../../_staging/layout/coordinates.js";
 import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing.js";
-import { type ResizeHeight } from "../../commands/layout.js";
+import { type IResizeHeight } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    type DashboardLayoutSectionItemsHeightResized,
+    type IDashboardLayoutSectionItemsHeightResized,
     layoutSectionItemsHeightResized,
 } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
@@ -28,7 +28,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 function validateLayoutIndexes(
     ctx: DashboardContext,
     layout: ReturnType<typeof selectLayout>,
-    command: ResizeHeight,
+    command: IResizeHeight,
 ) {
     const {
         payload: { sectionIndex, itemIndexes },
@@ -83,8 +83,8 @@ function validateLayoutIndexes(
 
 export function* resizeHeightHandler(
     ctx: DashboardContext,
-    cmd: ResizeHeight,
-): SagaIterator<DashboardLayoutSectionItemsHeightResized> {
+    cmd: IResizeHeight,
+): SagaIterator<IDashboardLayoutSectionItemsHeightResized> {
     const {
         payload: { sectionIndex, itemIndexes, height },
     } = cmd;
@@ -125,7 +125,7 @@ function validateHeight(
     ctx: DashboardContext,
     layout: ReturnType<typeof selectLayout>,
     insightsMap: ReturnType<typeof selectInsightsMap>,
-    cmd: ResizeHeight,
+    cmd: IResizeHeight,
     screen: ReturnType<typeof selectScreen> = "xl",
     settings: ReturnType<typeof selectSettings>,
 ) {

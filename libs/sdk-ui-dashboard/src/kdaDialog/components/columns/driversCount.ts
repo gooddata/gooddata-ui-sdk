@@ -4,9 +4,9 @@ import { type IntlShape } from "react-intl";
 
 import { type IUiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
-import { type KdaItemGroup } from "../../internalTypes.js";
+import { type IKdaItemGroup } from "../../internalTypes.js";
 
-export const driversCountColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<KdaItemGroup> = (
+export const driversCountColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<IKdaItemGroup> = (
     intl,
     width,
 ) => {

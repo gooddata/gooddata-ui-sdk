@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
@@ -6,8 +6,8 @@ import { put, select } from "redux-saga/effects";
 import { type IKpiWidget } from "@gooddata/sdk-model";
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type ChangeKpiWidgetComparison } from "../../commands/index.js";
-import { type DashboardKpiWidgetComparisonChanged } from "../../events/index.js";
+import { type IChangeKpiWidgetComparison } from "../../commands/index.js";
+import { type IDashboardKpiWidgetComparisonChanged } from "../../events/index.js";
 import { kpiWidgetComparisonChanged } from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -15,8 +15,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeKpiWidgetComparisonHandler(
     ctx: DashboardContext,
-    cmd: ChangeKpiWidgetComparison,
-): SagaIterator<DashboardKpiWidgetComparisonChanged> {
+    cmd: IChangeKpiWidgetComparison,
+): SagaIterator<IDashboardKpiWidgetComparisonChanged> {
     const {
         payload: {
             comparison: { comparisonType, comparisonDirection },

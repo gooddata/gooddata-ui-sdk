@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ISettings, type ScreenSize } from "@gooddata/sdk-model";
 
@@ -31,7 +31,7 @@ export function getRemainingWidthInRow(
 }
 
 export function getRemainingHeightInColumn(
-    item: IDashboardLayoutItemFacade<ExtendedDashboardWidget | unknown>,
+    item: IDashboardLayoutItemFacade<unknown>,
     screen: ScreenSize,
     parentLayoutItem: IDashboardLayoutItemFacade<ExtendedDashboardWidget> | undefined,
     settings: ISettings,
@@ -42,7 +42,7 @@ export function getRemainingHeightInColumn(
     }
 
     const container = parentLayoutItem.raw();
-    const containerContentHeight = getContainerHeight(container!, screen, settings);
+    const containerContentHeight = getContainerHeight(container, screen, settings);
 
     const parentHeight = item.section().layout().size()?.gridHeight ?? 0;
     const remainingHeight = parentHeight - containerContentHeight;

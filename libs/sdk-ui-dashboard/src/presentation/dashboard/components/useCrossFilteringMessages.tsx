@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -6,7 +6,7 @@ import { type MessageDescriptor, defineMessages } from "react-intl";
 
 import { useEventToastMessage } from "../../../_staging/sharedHooks/useEventToastMessage.js";
 import {
-    type DashboardCrossFilteringResolved,
+    type IDashboardCrossFilteringResolved,
     isDashboardCrossFilteringResolved,
 } from "../../../model/index.js";
 
@@ -18,7 +18,7 @@ const crossFilterMessages: Record<string, MessageDescriptor> = defineMessages({
 
 export function useCrossFilteringMessages() {
     const getCrossFilterMessageParameters = useCallback(
-        (event: DashboardCrossFilteringResolved) => ({
+        (event: IDashboardCrossFilteringResolved) => ({
             values: { count: event.payload.filters.length },
         }),
         [],

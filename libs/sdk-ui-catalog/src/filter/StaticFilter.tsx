@@ -131,7 +131,11 @@ export function StaticFilter<T>(props: IStaticFilterProps<T>) {
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => {
                     return (
-                        <div {...ariaAttributes} aria-labelledby={popupTitleId}>
+                        <div
+                            {...ariaAttributes}
+                            aria-labelledby={popupTitleId}
+                            className="gd-analytics-catalog__filter__body"
+                        >
                             <Header id={popupTitleId}>{label}</Header>
                             <InvertableSelect
                                 className="gd-analytics-catalog__filter__select-list"

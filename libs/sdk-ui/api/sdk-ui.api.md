@@ -448,6 +448,7 @@ export const ErrorCodes: {
     BAD_REQUEST: string;
     UNAUTHORIZED: string;
     GEO_LOCATION_MISSING: string;
+    GEO_AREA_MISSING: string;
     GEO_MAPBOX_TOKEN_MISSING: string;
     DATA_TOO_LARGE_TO_DISPLAY: string;
     DATA_TOO_LARGE_TO_COMPUTE: string;
@@ -515,6 +516,11 @@ export class ForecastNotReceivedSdkError extends GoodDataSdkError {
 
 // @internal
 export function forwardRefWithGenerics<T, P>(render: (props: PropsWithoutRef<P>, ref: Ref<T>) => ReactNode): (props: PropsWithoutRef<P> & RefAttributes<T>) => ReactNode;
+
+// @public
+export class GeoAreaMissingSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
 
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
@@ -640,7 +646,12 @@ export interface IArithmeticMeasureTitleProps {
 }
 
 // @internal (undocumented)
-export type IAutomationUrlBuilder = (workspaceId?: string, dashboardId?: string, automationId?: string) => string | undefined;
+export type IAutomationUrlBuilder = (params: {
+    workspaceId?: string;
+    dashboardId?: string;
+    automationId?: string;
+    isEmbedded?: boolean;
+}) => string | undefined;
 
 // @internal (undocumented)
 export interface IAvailableDrillTargetAttribute {
@@ -788,7 +799,12 @@ export interface ICorrelationProviderProps {
 }
 
 // @internal (undocumented)
-export type IDashboardUrlBuilder = (workspaceId?: string, dashboardId?: string, tabId?: string) => string | undefined;
+export type IDashboardUrlBuilder = (params: {
+    workspaceId?: string;
+    dashboardId?: string;
+    tabId?: string;
+    isEmbedded?: boolean;
+}) => string | undefined;
 
 // @public
 export interface IDataAccessMethods {
@@ -1501,6 +1517,9 @@ export function isExplicitDrill(obj: unknown): obj is ExplicitDrill;
 export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError;
 
 // @public
+export function isGeoAreaMissing(obj: unknown): obj is GeoAreaMissingSdkError;
+
+// @public
 export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdkError;
 
 // @public
@@ -2057,7 +2076,13 @@ export interface IVisualizationProps {
 }
 
 // @internal (undocumented)
-export type IWidgetUrlBuilder = (workspaceId?: string, dashboardId?: string, widgetId?: string, tabId?: string) => string | undefined;
+export type IWidgetUrlBuilder = (params: {
+    workspaceId?: string;
+    dashboardId?: string;
+    widgetId?: string;
+    tabId?: string;
+    isEmbedded?: boolean;
+}) => string | undefined;
 
 // @internal
 export interface IWithExecution<T> {

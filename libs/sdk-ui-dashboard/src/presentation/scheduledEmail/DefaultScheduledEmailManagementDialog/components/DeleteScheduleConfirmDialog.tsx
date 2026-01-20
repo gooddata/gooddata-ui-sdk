@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode, type RefObject } from "react";
 
@@ -66,7 +66,9 @@ export function DeleteScheduleConfirmDialog({
             headline={intl.formatMessage({ id: "dialogs.schedule.management.delete.dialog" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "delete" })}
-            onSubmit={handleDeleteScheduledMail}
+            onSubmit={() => {
+                void handleDeleteScheduledMail();
+            }}
             onClose={onCancel}
             onCancel={onCancel}
             returnFocusTo={returnFocusTo}

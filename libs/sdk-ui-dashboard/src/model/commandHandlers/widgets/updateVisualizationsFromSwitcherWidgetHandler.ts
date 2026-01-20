@@ -1,12 +1,12 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
-import { type UpdateVisualizationsFromVisualizationSwitcherWidgetContent } from "../../commands/index.js";
+import { type IUpdateVisualizationsFromVisualizationSwitcherWidgetContent } from "../../commands/index.js";
 import {
-    type DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    type IDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
     visualizationSwitcherWidgetVisualizationsUpdated,
 } from "../../events/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -15,8 +15,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* updateVisualizationsFromSwticherWidgetContentHandler(
     ctx: DashboardContext,
-    cmd: UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
-): SagaIterator<DashboardVisualizationSwitcherWidgetVisualizationsUpdated> {
+    cmd: IUpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+): SagaIterator<IDashboardVisualizationSwitcherWidgetVisualizationsUpdated> {
     const {
         payload: { visualizations },
         correlationId,

@@ -31,6 +31,7 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
+import { type IScheduledEmailDialogProps } from "../types.js";
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
 import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
@@ -62,6 +63,7 @@ import {
     selectIsCrossFiltering,
     selectIsWhiteLabeled,
     selectLocale,
+    selectSettings,
     selectWeekStart,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -77,8 +79,8 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
-import { type IScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
+import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
@@ -89,7 +91,7 @@ const CLOSE_ON_PARENT_SCROLL = true;
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-interface ScheduledEmailDialogFooterProps {
+interface IScheduledEmailDialogFooterProps {
     isWhiteLabeled: boolean;
     helpTextId: string;
     scheduledExportToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null;
@@ -103,7 +105,7 @@ function ScheduledEmailDialogFooter({
     scheduledExportToEdit,
     isSavingScheduledEmail,
     onDeleteClick,
-}: ScheduledEmailDialogFooterProps) {
+}: IScheduledEmailDialogFooterProps) {
     const intl = useIntl();
 
     return (
@@ -200,6 +202,7 @@ export function ScheduledMailDialogRenderer({
         isExecutionTimestampMode,
         enableAutomationFilterContext,
         enableNewScheduledExport,
+        defaultPdfPageSize,
     } = useDefaultScheduledEmailDialogData({
         filters: availableFilters ?? [],
         filtersByTab: getAvailableFiltersFromFiltersByTab(filtersByTab),
@@ -210,7 +213,8 @@ export function ScheduledMailDialogRenderer({
         editedAutomation,
         originalAutomation,
         isSubmitDisabled,
-        settings,
+        xlsxSettings,
+        pdfSettings,
         startDate,
         allowExternalRecipients,
         allowOnlyLoggedUserRecipients,
@@ -225,7 +229,8 @@ export function ScheduledMailDialogRenderer({
         onDashboardAttachmentsChangeOld,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsChangeOld,
-        onAttachmentsSettingsChange,
+        onXlsxSettingsChange,
+        onPdfSettingsChange,
         onDestinationChange,
         onMessageChange,
         onRecipientsChange,
@@ -644,8 +649,11 @@ export function ScheduledMailDialogRenderer({
                                                         selectedAttachments as WidgetAttachmentType[]
                                                     }
                                                     onWidgetAttachmentsChange={onWidgetAttachmentsChange}
-                                                    xlsxSettings={settings}
-                                                    onXlsxSettingsChange={onAttachmentsSettingsChange}
+                                                    xlsxSettings={xlsxSettings}
+                                                    pdfSettings={pdfSettings}
+                                                    onXlsxSettingsChange={onXlsxSettingsChange}
+                                                    onPdfSettingsChange={onPdfSettingsChange}
+                                                    defaultPdfPageSize={defaultPdfPageSize}
                                                 />
                                             ) : (
                                                 <WidgetAttachmentsOld
@@ -655,11 +663,11 @@ export function ScheduledMailDialogRenderer({
                                                     scheduledExportToEdit={scheduledExportToEdit}
                                                     csvSelected={isCsvExportSelected}
                                                     xlsxSelected={isXlsxExportSelected}
-                                                    settings={settings}
+                                                    settings={xlsxSettings}
                                                     onWidgetAttachmentsSelectionChange={
                                                         onWidgetAttachmentsChangeOld
                                                     }
-                                                    onAttachmentsSettingsChange={onAttachmentsSettingsChange}
+                                                    onAttachmentsSettingsChange={onXlsxSettingsChange}
                                                     enableAutomationFilterContext={
                                                         enableAutomationFilterContext
                                                     }
@@ -675,8 +683,9 @@ export function ScheduledMailDialogRenderer({
                                                 dashboardFilters={dashboardFilters}
                                                 isCrossFiltering={isCrossFiltering}
                                                 onDashboardAttachmentsChange={onDashboardAttachmentsChange}
-                                                xlsxSettings={settings}
-                                                onXlsxSettingsChange={onAttachmentsSettingsChange}
+                                                xlsxSettings={xlsxSettings}
+                                                onXlsxSettingsChange={onXlsxSettingsChange}
+                                                defaultPdfPageSize={defaultPdfPageSize}
                                             />
                                         ) : (
                                             <DashboardAttachmentsOld
@@ -778,6 +787,8 @@ function useDefaultScheduledEmailDialogData({
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
+    const settings = useDashboardSelector(selectSettings);
+    const formatLocale = settings?.formatLocale;
     const weekStart = useDashboardSelector(selectWeekStart);
     const maxAutomationsRecipientsEntitlement = useDashboardSelector(
         selectEntitlementMaxAutomationRecipients,
@@ -808,6 +819,8 @@ function useDefaultScheduledEmailDialogData({
     }, [filters, filtersByTab, enableAutomationFilterContextFlag]);
     const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
 
+    const defaultPdfPageSize = getDefaultPdfPageSize(formatLocale);
+
     return {
         locale,
         dashboardTitle,
@@ -819,5 +832,6 @@ function useDefaultScheduledEmailDialogData({
         isExecutionTimestampMode,
         enableAutomationFilterContext,
         enableNewScheduledExport,
+        defaultPdfPageSize,
     };
 }

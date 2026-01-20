@@ -14,7 +14,6 @@ import {
     type IAutomationMetadataObjectDefinition,
     type IAutomationRecipient,
     type IAutomationVisibleFilter,
-    type IExportDefinitionDashboardSettings,
     type IExportDefinitionMetadataObjectDefinition,
     type IExportDefinitionVisualizationObjectSettings,
     type IFilter,
@@ -106,6 +105,7 @@ export interface IUseEditScheduledEmailProps {
     filtersForNewAutomation: FilterContextItem[];
     externalRecipientOverride?: string;
     enableNewScheduledExport: boolean;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
 }
 
 export function useEditScheduledEmail({
@@ -127,6 +127,7 @@ export function useEditScheduledEmail({
     filtersForNewAutomation,
     externalRecipientOverride,
     enableNewScheduledExport,
+    defaultPdfPageSize,
     filtersDataByTab,
     availableFiltersAsVisibleFiltersByTab,
 }: IUseEditScheduledEmailProps) {
@@ -256,6 +257,7 @@ export function useEditScheduledEmail({
                           dashboardFilters: effectiveDashboardFilters,
                           visibleFiltersMetadata: effectiveVisibleWidgetFilters,
                           enableNewScheduledExport,
+                          defaultPdfPageSize,
                           evaluationMode: "PER_RECIPIENT",
                           targetTabId,
                       }
@@ -270,6 +272,7 @@ export function useEditScheduledEmail({
                           visibleFiltersMetadata: effectiveVisibleDashboardFilters,
                           visibleFiltersByTab: effectiveVisibleDashboardFiltersByTab,
                           enableNewScheduledExport,
+                          defaultPdfPageSize,
                           evaluationMode: "PER_RECIPIENT",
                       },
             ),
@@ -425,6 +428,7 @@ export function useEditScheduledEmail({
                     widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
                     dashboardFilters: effectiveDashboardFilters,
                     enableNewScheduledExport,
+                    defaultPdfPageSize,
                 }),
             );
 
@@ -500,6 +504,7 @@ export function useEditScheduledEmail({
                     : widgetFilters,
                 dashboardFilters: effectiveDashboardFilters,
                 enableNewScheduledExport,
+                defaultPdfPageSize,
             });
 
             const exportDefinitionExists = automationTypeGuard(editedAutomation);
@@ -523,31 +528,62 @@ export function useEditScheduledEmail({
         }
     };
 
-    const onAttachmentsSettingsChange = ({
-        mergeHeaders,
-        exportInfo,
-    }: IExportDefinitionVisualizationObjectSettings | IExportDefinitionDashboardSettings) => {
-        setEditedAutomation((s) => ({
-            ...s,
-            exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                if (exportDefinition.requestPayload.format === "XLSX") {
+    const onXlsxSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "XLSX") {
+                        return exportDefinition;
+                    }
+
+                    const nextSettings = {
+                        ...exportDefinition.requestPayload?.settings,
+                        mergeHeaders: settings.mergeHeaders,
+                        exportInfo: settings.exportInfo,
+                    };
+
                     return {
                         ...exportDefinition,
                         requestPayload: {
                             ...exportDefinition.requestPayload,
-                            settings: {
-                                ...exportDefinition.requestPayload?.settings,
-                                mergeHeaders,
-                                exportInfo,
-                            },
+                            settings: nextSettings,
                         },
                     };
-                } else {
-                    return exportDefinition;
-                }
-            }),
-        }));
-    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
+    const onPdfSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "PDF_TABULAR") {
+                        return exportDefinition;
+                    }
+
+                    const nextSettings = {
+                        ...exportDefinition.requestPayload?.settings,
+                        pageSize: settings.pageSize,
+                        orientation: settings.orientation ?? "portrait",
+                        exportInfo: settings.exportInfo,
+                    };
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            settings: nextSettings,
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
 
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[], enableNewScheduledExport: boolean, storeFiltersParam?: boolean) => {
@@ -809,15 +845,28 @@ export function useEditScheduledEmail({
             return false;
         }) ?? false;
 
-    const settings = {
-        mergeHeaders:
-            editedAutomation.exportDefinitions?.some(
-                (exportDefinition) => exportDefinition.requestPayload.settings?.mergeHeaders,
-            ) ?? true,
-        exportInfo:
-            editedAutomation.exportDefinitions?.some(
-                (exportDefinition) => exportDefinition.requestPayload.settings?.exportInfo,
-            ) ?? true,
+    const xlsxExportSettings = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) => exportDefinition.requestPayload.format === "XLSX",
+    )?.requestPayload.settings;
+
+    const xlsxSettings = {
+        mergeHeaders: xlsxExportSettings?.mergeHeaders ?? true,
+        exportInfo: xlsxExportSettings?.exportInfo ?? true,
+    };
+
+    const pdfVisualizationSettings = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+            exportDefinition.requestPayload.format === "PDF_TABULAR",
+    )?.requestPayload.settings;
+    const pdfTabularSettings =
+        pdfVisualizationSettings && "pageSize" in pdfVisualizationSettings
+            ? pdfVisualizationSettings
+            : undefined;
+    const pdfSettings = {
+        pageSize: pdfTabularSettings?.pageSize ?? defaultPdfPageSize ?? "A4",
+        orientation: pdfTabularSettings?.orientation ?? "portrait",
+        exportInfo: pdfTabularSettings?.exportInfo ?? true,
     };
 
     const startDate = toNormalizedStartDate(
@@ -883,7 +932,8 @@ export function useEditScheduledEmail({
         isDashboardExportSelected,
         isCsvExportSelected,
         isXlsxExportSelected,
-        settings,
+        xlsxSettings,
+        pdfSettings,
         startDate,
         allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
@@ -903,7 +953,8 @@ export function useEditScheduledEmail({
         onDashboardAttachmentsChangeOld,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsChangeOld,
-        onAttachmentsSettingsChange,
+        onXlsxSettingsChange,
+        onPdfSettingsChange,
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
@@ -959,6 +1010,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     widgetFiltersWithInsight,
     dashboardFilters,
     enableNewScheduledExport,
+    defaultPdfPageSize,
 }: {
     insight: IInsight;
     widget: ExtendedDashboardWidget;
@@ -968,6 +1020,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     widgetFiltersWithInsight?: IFilter[];
     dashboardFilters?: FilterContextItem[];
     enableNewScheduledExport: boolean;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
 
@@ -989,7 +1042,18 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
         filtersObj = { filters: dashboardFilters };
     }
 
-    const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
+    const pdfSettings: IExportDefinitionVisualizationObjectSettings = {
+        pageSize: defaultPdfPageSize ?? "A4",
+        orientation: "portrait",
+        exportInfo: true,
+    };
+
+    const settingsObj =
+        format === "XLSX"
+            ? { settings: { mergeHeaders: true, exportInfo: true } }
+            : format === "PDF_TABULAR"
+              ? { settings: pdfSettings }
+              : {};
 
     return {
         type: "exportDefinition",
@@ -1024,6 +1088,7 @@ function newAutomationMetadataObjectDefinition({
     visibleFiltersMetadata,
     visibleFiltersByTab,
     enableNewScheduledExport,
+    defaultPdfPageSize,
     evaluationMode,
     targetTabId,
 }: {
@@ -1041,6 +1106,7 @@ function newAutomationMetadataObjectDefinition({
     visibleFiltersMetadata?: IAutomationVisibleFilter[];
     visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
     enableNewScheduledExport: boolean;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     evaluationMode: AutomationEvaluationMode;
     targetTabId?: string;
 }): IAutomationMetadataObjectDefinition {
@@ -1056,6 +1122,7 @@ function newAutomationMetadataObjectDefinition({
                   widgetFiltersWithInsight,
                   dashboardFilters,
                   enableNewScheduledExport,
+                  defaultPdfPageSize,
               })
             : newDashboardExportDefinitionMetadataObjectDefinition({
                   dashboardId,

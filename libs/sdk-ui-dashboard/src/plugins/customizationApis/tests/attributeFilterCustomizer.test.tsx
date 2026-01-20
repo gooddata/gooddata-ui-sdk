@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type FC } from "react";
 
@@ -78,7 +78,7 @@ function createTestDecoratorFactory(name: string, predicate: (filter: IDashboard
             }
 
             function Decorator(props: IDashboardAttributeFilterProps) {
-                const Decorated = next(filter)!;
+                const Decorated = next(filter);
 
                 return (
                     <div id={name}>

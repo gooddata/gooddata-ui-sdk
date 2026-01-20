@@ -1,9 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type Action, type AnyAction, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { type LoadingState } from "./loadingState.js";
+import { type ILoadingState } from "./loadingState.js";
 
-type LoadingReducer<A extends Action = AnyAction> = CaseReducer<LoadingState, A>;
+type LoadingReducer<A extends Action = AnyAction> = CaseReducer<ILoadingState, A>;
 
 const setLoadingStart: LoadingReducer = (state) => {
     state.loading = true;

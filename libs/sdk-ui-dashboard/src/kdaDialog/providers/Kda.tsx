@@ -5,10 +5,10 @@ import { type ReactNode, useMemo } from "react";
 import { type ISeparators, isAllValuesDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import { KdaStateProvider } from "./KdaState.js";
-import { type KdaState } from "../internalTypes.js";
+import { type IKdaState } from "../internalTypes.js";
 import { type IKdaDefinition } from "../types.js";
 
-export interface KdaProps {
+export interface IKdaProps {
     children: ReactNode;
     definition: IKdaDefinition;
     separators?: ISeparators;
@@ -16,8 +16,8 @@ export interface KdaProps {
     excludeTags?: string[];
 }
 
-export function KdaProvider({ children, definition, separators, includeTags, excludeTags }: KdaProps) {
-    const state = useMemo((): Partial<KdaState> => {
+export function KdaProvider({ children, definition, separators, includeTags, excludeTags }: IKdaProps) {
+    const state = useMemo((): Partial<IKdaState> => {
         return {
             separators,
             definition,

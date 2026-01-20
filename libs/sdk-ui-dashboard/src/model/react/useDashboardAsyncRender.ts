@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
@@ -9,7 +10,7 @@ import { requestAsyncRender, resolveAsyncRender } from "../commands/index.js";
  *
  * @public
  */
-export interface UseDashboardAsyncRender {
+export type UseDashboardAsyncRender = {
     /**
      * Callback that requests async rendering of the component.
      */
@@ -19,7 +20,7 @@ export interface UseDashboardAsyncRender {
      * Callback that resolves async rendering of the component.
      */
     onResolveAsyncRender: () => void;
-}
+};
 
 /**
  * A React hook that allows you to request and inform the dashboard about the rendering of a component

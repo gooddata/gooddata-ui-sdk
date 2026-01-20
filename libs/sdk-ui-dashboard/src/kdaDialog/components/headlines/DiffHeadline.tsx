@@ -1,16 +1,16 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
-export interface DiffHeadlineProps {
+export interface IDiffHeadlineProps {
     amount: string;
     change: number;
 }
 
-export function DiffHeadline({ change, amount }: DiffHeadlineProps) {
+export function DiffHeadline({ change, amount }: IDiffHeadlineProps) {
     return (
         <div className={cx("gd-kda-headline-diff")}>
             {change > 0 ? (

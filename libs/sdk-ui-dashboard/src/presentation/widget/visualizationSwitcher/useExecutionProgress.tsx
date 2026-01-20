@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useEffect, useState } from "react";
 
 import {
-    type DashboardCommandStarted,
     type DashboardEventHandler,
+    type IDashboardCommandStarted,
     type RequestAsyncRender,
     type ResolveAsyncRender,
     isDashboardCommandStarted,
@@ -40,7 +40,7 @@ export const useExecutionProgress = (): {
                     evt.payload.command.type === "GDC.DASH/CMD.RENDER.ASYNC.REQUEST"
                 );
             },
-            handler: (evt: DashboardCommandStarted<RequestAsyncRender>) => {
+            handler: (evt: IDashboardCommandStarted<RequestAsyncRender>) => {
                 setExecutionsProgress((prev) => ({
                     ...prev,
                     [evt.payload.command.payload.id]: true,
@@ -55,7 +55,7 @@ export const useExecutionProgress = (): {
                     evt.payload.command.type === "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE"
                 );
             },
-            handler: (evt: DashboardCommandStarted<ResolveAsyncRender>) => {
+            handler: (evt: IDashboardCommandStarted<ResolveAsyncRender>) => {
                 setExecutionsProgress((prev) => {
                     const newProgress = {
                         ...prev,

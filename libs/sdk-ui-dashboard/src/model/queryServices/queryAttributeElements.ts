@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call } from "redux-saga/effects";
@@ -7,7 +7,7 @@ import { type IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { type QueryAttributeElements } from "../queries/attributeElements.js";
+import { type IQueryAttributeElements } from "../queries/attributeElements.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
 import { type IUseAttributeElements } from "../types/attributeFilterTypes.js";
 import { type DashboardContext } from "../types/commonTypes.js";
@@ -15,7 +15,7 @@ import { type DashboardContext } from "../types/commonTypes.js";
 export const QueryAttributeElementsService = createCachedQueryService(
     "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE",
     queryService,
-    (query: QueryAttributeElements) => {
+    (query: IQueryAttributeElements) => {
         const {
             payload: { displayForm },
         } = query;
@@ -41,7 +41,7 @@ async function loadAttributeElements(
 
 function* queryService(
     ctx: DashboardContext,
-    query: QueryAttributeElements,
+    query: IQueryAttributeElements,
 ): SagaIterator<IUseAttributeElements> {
     const {
         payload: { displayForm, limit },

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -55,7 +55,7 @@ export function ItemsWrapper({
  * @internal
  */
 export function Separator(props: HTMLAttributes<HTMLDivElement>) {
-    return <div className="gd-list-item gd-list-item-separator" {...props} />;
+    return <div role="separator" className="gd-list-item gd-list-item-separator" {...props} />;
 }
 
 /**

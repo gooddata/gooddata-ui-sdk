@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -79,7 +79,7 @@ const useShareDialogDashboardHeader = () => {
 
     const onShareLinkCopy = useCallback(
         (shareLink: string) => {
-            navigator.clipboard.writeText(shareLink);
+            void navigator.clipboard.writeText(shareLink);
             addSuccess(messages.messagesShareLinkCopied);
         },
         [addSuccess],

@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
 import { type IDashboardQuery } from "./base.js";
@@ -6,7 +7,7 @@ import { type IDashboardQuery } from "./base.js";
 /**
  * @internal
  */
-export interface QueryAvailableDatasetsForItems extends IDashboardQuery {
+export interface IQueryAvailableDatasetsForItems extends IDashboardQuery {
     type: "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
     payload: {
         readonly items: IAttributeOrMeasure[];
@@ -26,7 +27,7 @@ export interface QueryAvailableDatasetsForItems extends IDashboardQuery {
 export function queryAvailableDatasetsForItems(
     items: IAttributeOrMeasure[],
     correlationId?: string,
-): QueryAvailableDatasetsForItems {
+): IQueryAvailableDatasetsForItems {
     return {
         type: "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS",
         correlationId,

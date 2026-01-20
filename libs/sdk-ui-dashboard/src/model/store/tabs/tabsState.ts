@@ -1,12 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import type { IDashboardFilterGroupsConfig } from "@gooddata/sdk-model";
 
-import { type AttributeFilterConfigsState } from "./attributeFilterConfigs/attrtibuteFilterConfigsState.js";
-import type { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
-import { type DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
+import { type IAttributeFilterConfigsState } from "./attributeFilterConfigs/attrtibuteFilterConfigsState.js";
+import type { IDateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
+import { type IDateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 import type { FilterContextState } from "./filterContext/filterContextState.js";
-import type { LayoutState } from "./layout/layoutState.js";
+import type { ILayoutState } from "./layout/layoutState.js";
 
 /**
  * Identifier used for dashboards without explicit tabs support and the first tab created automatically.
@@ -15,7 +16,7 @@ import type { LayoutState } from "./layout/layoutState.js";
  */
 export const DEFAULT_TAB_ID = "defaultTabId";
 
-export const getActiveTab = (state: TabsState): TabState | undefined => {
+export const getActiveTab = (state: ITabsState): ITabState | undefined => {
     if (!state.tabs || !state.activeTabLocalIdentifier) {
         return;
     }
@@ -31,7 +32,7 @@ export const getActiveTab = (state: TabsState): TabState | undefined => {
  *
  * @internal
  */
-export const getTabOrActive = (state: TabsState, tabLocalIdentifier?: string): TabState | undefined => {
+export const getTabOrActive = (state: ITabsState, tabLocalIdentifier?: string): ITabState | undefined => {
     if (!state.tabs) {
         return;
     }
@@ -42,20 +43,21 @@ export const getTabOrActive = (state: TabsState, tabLocalIdentifier?: string): T
 };
 
 // Re-export for convenience
-export type { DateFilterConfigState, FilterContextState, LayoutState };
+export type { IDateFilterConfigState, FilterContextState, ILayoutState };
 
 /**
  * @alpha
  */
-export interface TabState {
+export interface ITabState {
     title?: string;
     localIdentifier: string;
 
-    dateFilterConfig?: DateFilterConfigState;
-    dateFilterConfigs?: DateFilterConfigsState;
-    attributeFilterConfigs?: AttributeFilterConfigsState;
+    dateFilterConfig?: IDateFilterConfigState;
+    dateFilterConfigs?: IDateFilterConfigsState;
+    attributeFilterConfigs?: IAttributeFilterConfigsState;
     filterContext?: FilterContextState;
-    layout?: LayoutState;
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
+    layout?: ILayoutState;
 
     /**
      * UI-only flag indicating the tab is currently being renamed.
@@ -67,11 +69,11 @@ export interface TabState {
 /**
  * @alpha
  */
-export interface TabsState {
+export interface ITabsState {
     /**
      * Array of tabs with their configurations.
      */
-    tabs?: TabState[];
+    tabs?: ITabState[];
     /**
      * Local identifier of the currently active tab.
      */
@@ -83,7 +85,7 @@ export interface TabsState {
     attributesWithReferences?: IAttributeWithReferences[];
 }
 
-export const tabsInitialState: TabsState = {
+export const tabsInitialState: ITabsState = {
     tabs: undefined,
     activeTabLocalIdentifier: undefined,
     attributesWithReferences: undefined,

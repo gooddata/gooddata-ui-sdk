@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { type IDashboardQuery } from "./base.js";
@@ -6,7 +7,7 @@ import { type IDashboardQuery } from "./base.js";
 /**
  * @internal
  */
-export interface QueryAttributeElements extends IDashboardQuery {
+export interface IQueryAttributeElements extends IDashboardQuery {
     type: "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE";
     payload: {
         /**
@@ -36,7 +37,7 @@ export function queryAttributeElements(
     displayForm: ObjRef,
     limit?: number,
     correlationId?: string,
-): QueryAttributeElements {
+): IQueryAttributeElements {
     return {
         type: "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE",
         correlationId,

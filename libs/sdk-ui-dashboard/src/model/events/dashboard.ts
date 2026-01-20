@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IExportResult } from "@gooddata/sdk-backend-spi";
 import { type IDashboard, type IInsight, type IWorkspacePermissions, type ObjRef } from "@gooddata/sdk-model";
@@ -16,7 +16,7 @@ import { type DashboardConfig, type DashboardContext } from "../types/commonType
  * Payload of the {@link DashboardInitialized} event.
  * @public
  */
-export interface DashboardInitializedPayload {
+export type DashboardInitializedPayload = {
     /**
      * Loaded dashboard.
      */
@@ -42,10 +42,10 @@ export interface DashboardInitializedPayload {
      *
      * @remarks
      * If the permissions were provided via props, then those
-     * same permissions are included here. Otherwise the dashboard will load the permissions and include it here.
+     * same permissions are included here. Otherwise, the dashboard will load the permissions and include it here.
      */
     readonly permissions: IWorkspacePermissions;
-}
+};
 
 /**
  * This event is emitted when a dashboard is successfully initialized.
@@ -61,10 +61,10 @@ export interface DashboardInitializedPayload {
  *
  * @public
  */
-export interface DashboardInitialized extends IDashboardEvent {
+export type DashboardInitialized = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.INITIALIZED";
     readonly payload: DashboardInitializedPayload;
-}
+};
 
 export function dashboardInitialized(
     ctx: DashboardContext,
@@ -103,12 +103,12 @@ export const isDashboardInitialized = eventGuard<DashboardInitialized>("GDC.DASH
  * Payload of the {@link DashboardDeinitialized} event.
  * @public
  */
-export interface DashboardDeinitializedPayload {
+export type DashboardDeinitializedPayload = {
     /**
      * Reference of the dashboard being deinitialized (if the dashboard being deinitialized had one i.e. contained a persisted dashboard object).
      */
     dashboard: ObjRef | undefined;
-}
+};
 
 /**
  * This event is emitted when a dashboard is deinitialized. The event contains contextual information such as
@@ -122,10 +122,10 @@ export interface DashboardDeinitializedPayload {
  *
  * @public
  */
-export interface DashboardDeinitialized extends IDashboardEvent {
+export type DashboardDeinitialized = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.DEINITIALIZED";
     readonly payload: DashboardDeinitializedPayload;
-}
+};
 
 export function dashboardDeinitialized(
     ctx: DashboardContext,
@@ -158,7 +158,7 @@ export const isDashboardDeinitialized = eventGuard<DashboardDeinitialized>("GDC.
  * Payload of the {@link DashboardSaved} event.
  * @public
  */
-export interface DashboardSavedPayload {
+export type DashboardSavedPayload = {
     /**
      * Definition of the saved dashboard.
      */
@@ -169,7 +169,7 @@ export interface DashboardSavedPayload {
      * If false, an existing dashboard was updated.
      */
     readonly newDashboard: boolean;
-}
+};
 
 /**
  * This event is emitted at the end of successful dashboard save command processing. At this point, the
@@ -177,10 +177,10 @@ export interface DashboardSavedPayload {
  *
  * @public
  */
-export interface DashboardSaved extends IDashboardEvent {
+export type DashboardSaved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.SAVED";
     readonly payload: DashboardSavedPayload;
-}
+};
 
 export function dashboardSaved(
     ctx: DashboardContext,
@@ -215,7 +215,7 @@ export const isDashboardSaved = eventGuard<DashboardSaved>("GDC.DASH/EVT.SAVED")
  * Payload of the {@link DashboardCopySaved} event.
  * @public
  */
-export interface DashboardCopySavedPayload {
+export type DashboardCopySavedPayload = {
     /**
      * Definition of the newly created dashboard copy.
      */
@@ -225,7 +225,7 @@ export interface DashboardCopySavedPayload {
      * Flag describing whether a locked dashboard was copied.
      */
     readonly isOriginalDashboardLocked: boolean;
-}
+};
 
 /**
  * This event is emitted at the end of successful 'dashboard save as' command processing.
@@ -235,10 +235,10 @@ export interface DashboardCopySavedPayload {
  *
  * @public
  */
-export interface DashboardCopySaved extends IDashboardEvent {
+export type DashboardCopySaved = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.COPY_SAVED";
     readonly payload: DashboardCopySavedPayload;
-}
+};
 
 export function dashboardCopySaved(
     ctx: DashboardContext,
@@ -270,10 +270,10 @@ export const isDashboardCopySaved = eventGuard<DashboardCopySaved>("GDC.DASH/EVT
 //
 
 /**
- * Payload of the {@link DashboardRenamed} event.
+ * Payload of the {@link IDashboardRenamed} event.
  * @beta
  */
-export interface DashboardRenamedPayload {
+export interface IDashboardRenamedPayload {
     /**
      * The new title of the dashboard.
      */
@@ -286,16 +286,16 @@ export interface DashboardRenamedPayload {
  *
  * @beta
  */
-export interface DashboardRenamed extends IDashboardEvent {
+export interface IDashboardRenamed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENAMED";
-    readonly payload: DashboardRenamedPayload;
+    readonly payload: IDashboardRenamedPayload;
 }
 
 export function dashboardRenamed(
     ctx: DashboardContext,
     newTitle: string,
     correlationId?: string,
-): DashboardRenamed {
+): IDashboardRenamed {
     return {
         type: "GDC.DASH/EVT.RENAMED",
         ctx,
@@ -307,22 +307,22 @@ export function dashboardRenamed(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardRenamed}.
+ * Tests whether the provided object is an instance of {@link IDashboardRenamed}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardRenamed = eventGuard<DashboardRenamed>("GDC.DASH/EVT.RENAMED");
+export const isDashboardRenamed = eventGuard<IDashboardRenamed>("GDC.DASH/EVT.RENAMED");
 
 //
 //
 //
 
 /**
- * Payload of the {@link DashboardWasReset} event.
+ * Payload of the {@link IDashboardWasReset} event.
  * @beta
  */
-export interface DashboardWasResetPayload {
+export interface IDashboardWasResetPayload {
     /**
      * Persisted state to which the dashboard was reset. If a new (not yet saved) dashboard was reset
      * then this property will be undefined.
@@ -336,16 +336,16 @@ export interface DashboardWasResetPayload {
  *
  * @beta
  */
-export interface DashboardWasReset extends IDashboardEvent {
+export interface IDashboardWasReset extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RESET";
-    readonly payload: DashboardWasResetPayload;
+    readonly payload: IDashboardWasResetPayload;
 }
 
 export function dashboardWasReset(
     ctx: DashboardContext,
     dashboard: IDashboard | undefined,
     correlationId?: string,
-): DashboardWasReset {
+): IDashboardWasReset {
     return {
         type: "GDC.DASH/EVT.RESET",
         ctx,
@@ -357,22 +357,22 @@ export function dashboardWasReset(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardWasReset}.
+ * Tests whether the provided object is an instance of {@link IDashboardWasReset}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardWasReset = eventGuard<DashboardWasReset>("GDC.DASH/EVT.RESET");
+export const isDashboardWasReset = eventGuard<IDashboardWasReset>("GDC.DASH/EVT.RESET");
 
 //
 //
 //
 
 /**
- * Payload of the {@link DashboardDeleted} event.
+ * Payload of the {@link IDashboardDeleted} event.
  * @beta
  */
-export interface DashboardDeletedPayload {
+export interface IDashboardDeletedPayload {
     /**
      * Dashboard that was deleted.
      */
@@ -381,12 +381,12 @@ export interface DashboardDeletedPayload {
 
 /**
  * This event is emitted at the end of successful 'dashboard delete' command processing. At this point,
- * the dashboard no longer exist on the backend and the component is reset to a state when it shows
+ * the dashboard no longer exist on the backend and the component are reset to a state when it shows
  * an empty dashboard.
  *
  * @beta
  */
-export interface DashboardDeleted extends IDashboardEvent {
+export interface IDashboardDeleted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DELETED";
     readonly payload: {
         /**
@@ -400,7 +400,7 @@ export function dashboardDeleted(
     ctx: DashboardContext,
     dashboard: IDashboard,
     correlationId?: string,
-): DashboardDeleted {
+): IDashboardDeleted {
     return {
         type: "GDC.DASH/EVT.DELETED",
         ctx,
@@ -412,12 +412,12 @@ export function dashboardDeleted(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardDeleted}
+ * Tests whether the provided object is an instance of {@link IDashboardDeleted}
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardDeleted = eventGuard<DashboardDeleted>("GDC.DASH/EVT.DELETED");
+export const isDashboardDeleted = eventGuard<IDashboardDeleted>("GDC.DASH/EVT.DELETED");
 
 //
 //
@@ -427,12 +427,12 @@ export const isDashboardDeleted = eventGuard<DashboardDeleted>("GDC.DASH/EVT.DEL
  * Payload of the {@link DateFilterValidationFailed} event.
  * @public
  */
-export interface DateFilterValidationFailedPayload {
+export type DateFilterValidationFailedPayload = {
     /**
      * Result of the date filter validation.
      */
     readonly result: DateFilterValidationResult;
-}
+};
 
 /**
  * This event may occur while the dashboard is handling the Load Dashboard command and is loading and validating
@@ -442,15 +442,15 @@ export interface DateFilterValidationFailedPayload {
  * Part of that process is obtaining workspace's Date Filter configuration. If the date filter config stored in
  * workspace has issues, then this event will occur.
  *
- * Note that this event is not a show stopper. The dashboard load will recover and fall back to a safe date
+ * Note that this event is not a showstopper. The dashboard load will recover and fall back to a safe date
  * filter configuration.
  *
  * @public
  */
-export interface DateFilterValidationFailed extends IDashboardEvent {
+export type DateFilterValidationFailed = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED";
     readonly payload: DateFilterValidationFailedPayload;
-}
+};
 
 export function dateFilterValidationFailed(
     ctx: DashboardContext,
@@ -486,14 +486,14 @@ export const isDateFilterValidationFailed = eventGuard<DateFilterValidationFaile
  *
  * @beta
  */
-export interface DashboardExportToPdfRequested extends IDashboardEvent {
+export interface IDashboardExportToPdfRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PDF.REQUESTED";
 }
 
 export function dashboardExportToPdfRequested(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardExportToPdfRequested {
+): IDashboardExportToPdfRequested {
     return {
         type: "GDC.DASH/EVT.EXPORT.PDF.REQUESTED",
         ctx,
@@ -502,20 +502,20 @@ export function dashboardExportToPdfRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPdfRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPdfRequested}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardExportToPdfRequested = eventGuard<DashboardExportToPdfRequested>(
+export const isDashboardExportToPdfRequested = eventGuard<IDashboardExportToPdfRequested>(
     "GDC.DASH/EVT.EXPORT.PDF.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardExportToPdfResolved} event.
+ * Payload of the {@link IDashboardExportToPdfResolved} event.
  * @beta
  */
-export interface DashboardExportToPdfResolvedPayload {
+export interface IDashboardExportToPdfResolvedPayload {
     /**
      * URI of the resulting file that can be used to download it.
      */
@@ -528,20 +528,20 @@ export interface DashboardExportToPdfResolvedPayload {
 
 /**
  * This event is emitted at the end of successful 'dashboard export to PDF' command processing.
- * In its payload, there is an uri of the resulting PDF file.
+ * In its payload, there is a uri of the resulting PDF file.
  *
  * @beta
  */
-export interface DashboardExportToPdfResolved extends IDashboardEvent {
+export interface IDashboardExportToPdfResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED";
-    readonly payload: DashboardExportToPdfResolvedPayload;
+    readonly payload: IDashboardExportToPdfResolvedPayload;
 }
 
 export function dashboardExportToPdfResolved(
     ctx: DashboardContext,
     result: IExportResult,
     correlationId?: string,
-): DashboardExportToPdfResolved {
+): IDashboardExportToPdfResolved {
     return {
         type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
         ctx,
@@ -554,12 +554,12 @@ export function dashboardExportToPdfResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPdfResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPdfResolved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfResolved>(
+export const isDashboardExportToPdfResolved = eventGuard<IDashboardExportToPdfResolved>(
     "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
 );
 
@@ -568,14 +568,14 @@ export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfRes
  *
  * @beta
  */
-export interface DashboardExportToExcelRequested extends IDashboardEvent {
+export interface IDashboardExportToExcelRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED";
 }
 
 export function dashboardExportToExcelRequested(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardExportToExcelRequested {
+): IDashboardExportToExcelRequested {
     return {
         type: "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED",
         ctx,
@@ -584,20 +584,20 @@ export function dashboardExportToExcelRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToExcelRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToExcelRequested}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardExportToExcelRequested = eventGuard<DashboardExportToExcelRequested>(
+export const isDashboardExportToExcelRequested = eventGuard<IDashboardExportToExcelRequested>(
     "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardExportToExcelResolved} event.
+ * Payload of the {@link IDashboardExportToExcelResolved} event.
  * @beta
  */
-export interface DashboardExportToExcelResolvedPayload {
+export interface IDashboardExportToExcelResolvedPayload {
     /**
      * URI of the resulting file that can be used to download it.
      */
@@ -610,20 +610,20 @@ export interface DashboardExportToExcelResolvedPayload {
 
 /**
  * This event is emitted at the end of successful 'dashboard export to Excel' command processing.
- * In its payload, there is an uri of the resulting XLS file.
+ * In its payload, there is a uri of the resulting XLS file.
  *
  * @beta
  */
-export interface DashboardExportToExcelResolved extends IDashboardEvent {
+export interface IDashboardExportToExcelResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED";
-    readonly payload: DashboardExportToExcelResolvedPayload;
+    readonly payload: IDashboardExportToExcelResolvedPayload;
 }
 
 export function dashboardExportToExcelResolved(
     ctx: DashboardContext,
     result: IExportResult,
     correlationId?: string,
-): DashboardExportToExcelResolved {
+): IDashboardExportToExcelResolved {
     return {
         type: "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED",
         ctx,
@@ -636,12 +636,12 @@ export function dashboardExportToExcelResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToExcelResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToExcelResolved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardExportToExcelResolved = eventGuard<DashboardExportToExcelResolved>(
+export const isDashboardExportToExcelResolved = eventGuard<IDashboardExportToExcelResolved>(
     "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED",
 );
 
@@ -654,14 +654,14 @@ export const isDashboardExportToExcelResolved = eventGuard<DashboardExportToExce
  *
  * @beta
  */
-export interface DashboardExportToPdfPresentationRequested extends IDashboardEvent {
+export interface IDashboardExportToPdfPresentationRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED";
 }
 
 export function dashboardExportToPdfPresentationRequested(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardExportToPdfPresentationRequested {
+): IDashboardExportToPdfPresentationRequested {
     return {
         type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED",
         ctx,
@@ -670,19 +670,19 @@ export function dashboardExportToPdfPresentationRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPdfPresentationRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPdfPresentationRequested}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardExportToPdfPresentationRequested =
-    eventGuard<DashboardExportToPdfPresentationRequested>("GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED");
+    eventGuard<IDashboardExportToPdfPresentationRequested>("GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED");
 
 /**
- * Payload of the {@link DashboardExportToPdfPresentationResolved} event.
+ * Payload of the {@link IDashboardExportToPdfPresentationResolved} event.
  * @beta
  */
-export interface DashboardExportToPdfPresentationResolvedPayload {
+export interface IDashboardExportToPdfPresentationResolvedPayload {
     /**
      * URI of the resulting file that can be used to download it.
      */
@@ -695,20 +695,20 @@ export interface DashboardExportToPdfPresentationResolvedPayload {
 
 /**
  * This event is emitted at the end of successful 'dashboard export to PDF presentation' command processing.
- * In its payload, there is an uri of the resulting PDF file.
+ * In its payload, there is a uri of the resulting PDF file.
  *
  * @beta
  */
-export interface DashboardExportToPdfPresentationResolved extends IDashboardEvent {
+export interface IDashboardExportToPdfPresentationResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED";
-    readonly payload: DashboardExportToExcelResolvedPayload;
+    readonly payload: IDashboardExportToExcelResolvedPayload;
 }
 
 export function dashboardExportToPdfPresentationResolved(
     ctx: DashboardContext,
     result: IExportResult,
     correlationId?: string,
-): DashboardExportToPdfPresentationResolved {
+): IDashboardExportToPdfPresentationResolved {
     return {
         type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED",
         ctx,
@@ -721,13 +721,13 @@ export function dashboardExportToPdfPresentationResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPdfPresentationResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPdfPresentationResolved}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardExportToPdfPresentationResolved =
-    eventGuard<DashboardExportToPdfPresentationResolved>("GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED");
+    eventGuard<IDashboardExportToPdfPresentationResolved>("GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED");
 
 //
 //
@@ -738,14 +738,14 @@ export const isDashboardExportToPdfPresentationResolved =
  *
  * @beta
  */
-export interface DashboardExportToPptPresentationRequested extends IDashboardEvent {
+export interface IDashboardExportToPptPresentationRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED";
 }
 
 export function dashboardExportToPptPresentationRequested(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardExportToPptPresentationRequested {
+): IDashboardExportToPptPresentationRequested {
     return {
         type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED",
         ctx,
@@ -754,19 +754,19 @@ export function dashboardExportToPptPresentationRequested(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPptPresentationRequested}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardExportToPptPresentationRequested =
-    eventGuard<DashboardExportToPptPresentationRequested>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED");
+    eventGuard<IDashboardExportToPptPresentationRequested>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED");
 
 /**
- * Payload of the {@link DashboardExportToPptPresentationResolved} event.
+ * Payload of the {@link IDashboardExportToPptPresentationResolved} event.
  * @beta
  */
-export interface DashboardExportToPptPresentationResolvedPayload {
+export interface IDashboardExportToPptPresentationResolvedPayload {
     /**
      * URI of the resulting file that can be used to download it.
      */
@@ -779,20 +779,20 @@ export interface DashboardExportToPptPresentationResolvedPayload {
 
 /**
  * This event is emitted at the end of successful 'dashboard export to PPT presentation' command processing.
- * In its payload, there is an uri of the resulting PDF file.
+ * In its payload, there is a uri of the resulting PDF file.
  *
  * @beta
  */
-export interface DashboardExportToPptPresentationResolved extends IDashboardEvent {
+export interface IDashboardExportToPptPresentationResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED";
-    readonly payload: DashboardExportToExcelResolvedPayload;
+    readonly payload: IDashboardExportToExcelResolvedPayload;
 }
 
 export function dashboardExportToPptPresentationResolved(
     ctx: DashboardContext,
     result: IExportResult,
     correlationId?: string,
-): DashboardExportToPptPresentationResolved {
+): IDashboardExportToPptPresentationResolved {
     return {
         type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED",
         ctx,
@@ -805,39 +805,39 @@ export function dashboardExportToPptPresentationResolved(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPptPresentationResolved}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardExportToPptPresentationResolved =
-    eventGuard<DashboardExportToPptPresentationResolved>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED");
+    eventGuard<IDashboardExportToPptPresentationResolved>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED");
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationResolved}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPptPresentationResolved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardExportToImageResolved = eventGuard<DashboardExportToImageResolved>(
+export const isDashboardExportToImageResolved = eventGuard<IDashboardExportToImageResolved>(
     "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED",
 );
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationRequested}.
+ * Tests whether the provided object is an instance of {@link IDashboardExportToPptPresentationRequested}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardExportToImageRequested = eventGuard<DashboardExportToImageRequested>(
+export const isDashboardExportToImageRequested = eventGuard<IDashboardExportToImageRequested>(
     "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED",
 );
 
 /**
- * Payload of the {@link DashboardExportToPptPresentationResolved} event.
+ * Payload of the {@link IDashboardExportToPptPresentationResolved} event.
  * @beta
  */
-export interface DashboardExportToImageResolvedPayload {
+export interface IDashboardExportToImageResolvedPayload {
     /**
      * URI of the resulting file that can be used to download it.
      */
@@ -853,14 +853,14 @@ export interface DashboardExportToImageResolvedPayload {
  *
  * @beta
  */
-export interface DashboardExportToImageRequested extends IDashboardEvent {
+export interface IDashboardExportToImageRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED";
 }
 
 export function dashboardExportToImageRequested(
     ctx: DashboardContext,
     correlationId?: string,
-): DashboardExportToImageRequested {
+): IDashboardExportToImageRequested {
     return {
         type: "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED",
         ctx,
@@ -870,20 +870,20 @@ export function dashboardExportToImageRequested(
 
 /**
  * This event is emitted at the end of successful 'dashboard export to image' command processing.
- * In its payload, there is an uri of the resulting image file.
+ * In its payload, there is a uri of the resulting image file.
  *
  * @beta
  */
-export interface DashboardExportToImageResolved extends IDashboardEvent {
+export interface IDashboardExportToImageResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED";
-    readonly payload: DashboardExportToImageResolvedPayload;
+    readonly payload: IDashboardExportToImageResolvedPayload;
 }
 
 export function dashboardExportToImageResolved(
     ctx: DashboardContext,
     result: IExportResult,
     correlationId?: string,
-): DashboardExportToImageResolved {
+): IDashboardExportToImageResolved {
     return {
         type: "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED",
         ctx,
@@ -903,22 +903,22 @@ export function dashboardExportToImageResolved(
  * Payload of the {@link DashboardSharingChanged} event.
  * @public
  */
-export interface DashboardSharingChangedPayload {
+export type DashboardSharingChangedPayload = {
     /**
      * New properties related to the sharing.
      */
     newSharingProperties: ISharingProperties;
-}
+};
 
 /**
  * This event is emitted at the end of successful 'change sharing status of dashboard' command processing.
  *
  * @public
  */
-export interface DashboardSharingChanged extends IDashboardEvent {
+export type DashboardSharingChanged = IDashboardEvent & {
     readonly type: "GDC.DASH/EVT.SHARING.CHANGED";
     readonly payload: DashboardSharingChangedPayload;
-}
+};
 
 export function dashboardSharingChanged(
     ctx: DashboardContext,
@@ -944,10 +944,10 @@ export function dashboardSharingChanged(
 export const isDashboardSharingChanged = eventGuard<DashboardSharingChanged>("GDC.DASH/EVT.SHARING.CHANGED");
 
 /**
- * Payload of the {@link DashboardIgnoreExecutionTimestampChanged} event.
+ * Payload of the {@link IDashboardIgnoreExecutionTimestampChanged} event.
  * @alpha
  */
-export interface DashboardIgnoreExecutionTimestampChangedPayload {
+export interface IDashboardIgnoreExecutionTimestampChangedPayload {
     /**
      * New ignore execution timestamp value.
      */
@@ -962,16 +962,16 @@ export interface DashboardIgnoreExecutionTimestampChangedPayload {
  *
  * @alpha
  */
-export interface DashboardIgnoreExecutionTimestampChanged extends IDashboardEvent {
+export interface IDashboardIgnoreExecutionTimestampChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED";
-    readonly payload: DashboardIgnoreExecutionTimestampChangedPayload;
+    readonly payload: IDashboardIgnoreExecutionTimestampChangedPayload;
 }
 
 export function dashboardIgnoreExecutionTimestampChanged(
     ctx: DashboardContext,
     ignoreExecutionTimestamp: boolean,
     correlationId?: string,
-): DashboardIgnoreExecutionTimestampChanged {
+): IDashboardIgnoreExecutionTimestampChanged {
     return {
         type: "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED",
         ctx,
@@ -983,10 +983,10 @@ export function dashboardIgnoreExecutionTimestampChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardIgnoreExecutionTimestampChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardIgnoreExecutionTimestampChanged}.
  *
  * @param obj - object to test
  * @alpha
  */
 export const isDashboardIgnoreExecutionTimestampChanged =
-    eventGuard<DashboardIgnoreExecutionTimestampChanged>("GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED");
+    eventGuard<IDashboardIgnoreExecutionTimestampChanged>("GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED");

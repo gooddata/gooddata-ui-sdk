@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -174,7 +174,7 @@ describe("fluid layout customizer", () => {
             items: [],
         };
 
-        suppressConsole(() => Customizer.addSection(-1, emptySection), "warn", [
+        void suppressConsole(() => Customizer.addSection(-1, emptySection), "warn", [
             {
                 type: "regex",
                 value: /^Section to add at path .* contains no items.*/,
@@ -204,7 +204,7 @@ describe("fluid layout customizer", () => {
             ],
         };
 
-        suppressConsole(() => Customizer.addSection(-1, sectionWithBadItem), "warn", [
+        void suppressConsole(() => Customizer.addSection(-1, sectionWithBadItem), "warn", [
             {
                 type: "regex",
                 value: /^Section to add at path .* contains items that do not specify any widgets.*/,
@@ -257,8 +257,8 @@ describe("fluid layout customizer", () => {
         });
     });
 
-    it("should not add item without widget", async () => {
-        suppressConsole(
+    it("should not add item without widget", () => {
+        void suppressConsole(
             () =>
                 Customizer.addItem(0, -1, {
                     type: "IDashboardLayoutItem",

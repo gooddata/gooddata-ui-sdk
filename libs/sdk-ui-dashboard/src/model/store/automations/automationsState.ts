@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -6,7 +6,7 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 /**
  * @alpha
  */
-export interface AutomationsState {
+export interface IAutomationsState {
     isInitialized: boolean;
     isLoading: boolean;
     error?: GoodDataSdkError;
@@ -14,7 +14,7 @@ export interface AutomationsState {
     allAutomationsCount: number;
 }
 
-export const automationsInitialState: AutomationsState = {
+export const automationsInitialState: IAutomationsState = {
     isInitialized: false,
     isLoading: false,
     allAutomationsCount: 0,

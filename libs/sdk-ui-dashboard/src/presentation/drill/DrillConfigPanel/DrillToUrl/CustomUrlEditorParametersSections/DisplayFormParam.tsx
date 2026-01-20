@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -13,14 +13,14 @@ import {
 } from "../../../../../model/index.js";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
 
-interface XProps {
+interface IXProps {
     item: IAttributeDisplayFormMetadataObject;
     onAdd: (placeholder: string) => void;
     iconClassName?: string;
     isFilter?: boolean;
 }
 
-export function DisplayFormParam({ item, onAdd, iconClassName, isFilter }: XProps) {
+export function DisplayFormParam({ item, onAdd, iconClassName, isFilter }: IXProps) {
     const x = useDashboardSelector(selectAllCatalogAttributesMap);
     const y = x.get(item.attribute);
     const intl = useIntl();

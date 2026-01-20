@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
-import { type AddAttributeFilter } from "../../../commands/filters.js";
+import { type IAddAttributeFilter } from "../../../commands/filters.js";
 import { attributeFilterAdded } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -39,7 +39,7 @@ import { dispatchFilterContextChanged } from "../common.js";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
-    cmd: AddAttributeFilter,
+    cmd: IAddAttributeFilter,
     type: "normal" | "crossfilter" = "normal",
 ): SagaIterator<void> {
     const {

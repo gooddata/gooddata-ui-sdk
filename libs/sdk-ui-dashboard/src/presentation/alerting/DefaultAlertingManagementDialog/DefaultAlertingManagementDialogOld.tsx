@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -101,7 +101,7 @@ export function DefaultAlertingManagementDialogOld({
                 <div className="gd-notifications-channels-content">
                     <div className="gd-notifications-channels-content-header">
                         <Typography tagName="h3">
-                            <FormattedMessage id={messages.alertingManagementListTitle.id!} />
+                            <FormattedMessage id={messages.alertingManagementListTitle.id} />
                         </Typography>
                     </div>
                     <AlertsOld
@@ -110,7 +110,7 @@ export function DefaultAlertingManagementDialogOld({
                         onPause={handleAlertPause}
                         isLoading={isLoadingAlertingData}
                         alerts={automations}
-                        noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
+                        noAlertsMessageId={messages.alertingManagementNoAlerts.id}
                     />
                 </div>
                 <div className="gd-content-divider"></div>

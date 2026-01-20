@@ -8,7 +8,7 @@ import { type IUiMenuItem } from "@gooddata/sdk-ui-kit";
 
 import { selectEnableImplicitDrillToUrl, useDashboardSelector } from "../../../model/index.js";
 import { type DashboardDrillDefinition } from "../../../types.js";
-import { type DrillSelectItem, DrillType } from "../DrillSelect/types.js";
+import { DrillType, type IDrillSelectItem } from "../DrillSelect/types.js";
 
 const groupMenuItemMessages = defineMessages({
     drillDown: { id: "drill_modal_picker.drill-down" },
@@ -39,11 +39,11 @@ export const useDrillSelectDropdownMenuItems = ({
     drillToUrlItems,
     onSelect,
 }: {
-    drillDownItems: DrillSelectItem[];
-    drillItems: DrillSelectItem[];
-    crossFilteringItems: DrillSelectItem[];
-    keyDriverAnalysisItems: DrillSelectItem[];
-    drillToUrlItems: DrillSelectItem[];
+    drillDownItems: IDrillSelectItem[];
+    drillItems: IDrillSelectItem[];
+    crossFilteringItems: IDrillSelectItem[];
+    keyDriverAnalysisItems: IDrillSelectItem[];
+    drillToUrlItems: IDrillSelectItem[];
     onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
 }): IMenuInteractiveItem[] => {
     const { formatMessage } = useIntl();
@@ -51,7 +51,7 @@ export const useDrillSelectDropdownMenuItems = ({
 
     return useMemo<IMenuInteractiveItem[]>(() => {
         const createMenuGroup = (
-            items: DrillSelectItem[],
+            items: IDrillSelectItem[],
             groupId: string,
             groupTitle: string,
         ): IMenuInteractiveItem => ({

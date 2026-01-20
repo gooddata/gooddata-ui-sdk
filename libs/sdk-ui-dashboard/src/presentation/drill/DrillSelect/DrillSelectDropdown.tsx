@@ -29,7 +29,7 @@ import { type IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { type IAlignPoint, Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
 
 import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
-import { type DrillSelectContext, type DrillSelectItem, DrillType } from "./types.js";
+import { DrillType, type IDrillSelectContext, type IDrillSelectItem } from "./types.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
@@ -54,7 +54,7 @@ import {
 import { getDrillToCustomUrlMissingAttributes } from "../utils/drillToCustomUrlUtils.js";
 import { getKdaKeyDriverCombinations, getKeyDriverCombinationItemTitle } from "../utils/kdaUtils.js";
 
-export interface DrillSelectDropdownProps extends DrillSelectContext {
+export interface IDrillSelectDropdownProps extends IDrillSelectContext {
     dropDownAnchorClass: string;
     isOpen: boolean;
     onClose: () => void;
@@ -70,7 +70,7 @@ export function DrillSelectDropdown({
     onSelect,
     drillDefinitions,
     drillEvent,
-}: DrillSelectDropdownProps) {
+}: IDrillSelectDropdownProps) {
     const intl = useIntl();
 
     const dashboardList = useDashboardSelector(selectAccessibleDashboards);
@@ -270,6 +270,7 @@ function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLElement | null) {
  * This positions the dropdown near the clicked element rather than the center of the visualization.
  */
 function calculateDrillEventOffset(anchorSelector: string, drillEvent?: IDrillEvent) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const anchorElement = document.querySelector(anchorSelector) as HTMLElement | null;
     // Get the relative offset between the drill target element (e.g., chart container) and the anchor element
     const relativeOffset = getRelativeOffset(drillEvent?.target, anchorElement);
@@ -346,10 +347,10 @@ export const createDrillSelectItems = ({
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
     enableDashboardTabs: boolean;
-}): DrillSelectItem[] => {
+}): IDrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
-    return drillDefinitions.flatMap((drillDefinition): DrillSelectItem | DrillSelectItem[] => {
+    return drillDefinitions.flatMap((drillDefinition): IDrillSelectItem | IDrillSelectItem[] => {
         invariant(
             !isDrillToLegacyDashboard(drillDefinition),
             "Drill to pixel perfect dashboards from insight is not supported.",
@@ -472,7 +473,7 @@ export const createDrillSelectItems = ({
                     drillDefinition,
                     id: stringify(drillDefinition) || "undefined",
                     context: item,
-                } as DrillSelectItem;
+                } as IDrillSelectItem;
             });
         }
 

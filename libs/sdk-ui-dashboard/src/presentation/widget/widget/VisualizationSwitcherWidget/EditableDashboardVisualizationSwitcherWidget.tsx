@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -9,8 +9,8 @@ import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
 import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import {
-    type ChangeInsightWidgetFilterSettings,
-    type DashboardCommandFailed,
+    type IChangeInsightWidgetFilterSettings,
+    type IDashboardCommandFailed,
     addVisualizationToSwitcherWidgetContent,
     dispatchAndWaitFor,
     eagerRemoveSectionItemByWidgetRef,
@@ -66,14 +66,14 @@ export function EditableDashboardVisualizationSwitcherWidget({
         onSuccess: (event) => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
         },
-        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
+        onError: (event: IDashboardCommandFailed<IChangeInsightWidgetFilterSettings>) => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
         },
     });
 
     const addVisualization = useCallback(
         (insightWidget: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo) => {
-            dispatchAndWaitFor(
+            void dispatchAndWaitFor(
                 dispatch,
                 addVisualizationToSwitcherWidgetContent(widget.ref, insightWidget, insight, sizeInfo),
             ).then(() => {

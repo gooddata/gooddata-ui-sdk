@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IAutomationMetadataObject,
@@ -8,10 +8,10 @@ import {
 import { type IDashboardCommand } from "./base.js";
 
 /**
- * Payload of the {@link CreateScheduledEmail} command.
+ * Payload of the {@link ICreateScheduledEmail} command.
  * @beta
  */
-export interface CreateScheduledEmailPayload {
+export interface ICreateScheduledEmailPayload {
     /**
      * The scheduled email to create.
      */
@@ -23,9 +23,9 @@ export interface CreateScheduledEmailPayload {
  *
  * @beta
  */
-export interface CreateScheduledEmail extends IDashboardCommand {
+export interface ICreateScheduledEmail extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
-    readonly payload: CreateScheduledEmailPayload;
+    readonly payload: ICreateScheduledEmailPayload;
 }
 
 /**
@@ -42,7 +42,7 @@ export interface CreateScheduledEmail extends IDashboardCommand {
 export function createScheduledEmail(
     scheduledEmail: IAutomationMetadataObjectDefinition,
     correlationId?: string,
-): CreateScheduledEmail {
+): ICreateScheduledEmail {
     return {
         type: "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE",
         correlationId,
@@ -57,16 +57,16 @@ export function createScheduledEmail(
  *
  * @beta
  */
-export interface SaveScheduledEmail extends IDashboardCommand {
+export interface ISaveScheduledEmail extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE";
-    readonly payload: SaveScheduledEmailPayload;
+    readonly payload: ISaveScheduledEmailPayload;
 }
 
 /**
- * Payload of the {@link SaveScheduledEmail} command.
+ * Payload of the {@link ISaveScheduledEmail} command.
  * @beta
  */
-export interface SaveScheduledEmailPayload {
+export interface ISaveScheduledEmailPayload {
     /**
      * The scheduled email to save.
      */
@@ -77,7 +77,6 @@ export interface SaveScheduledEmailPayload {
  * Saves existing SaveScheduledEmail command. Dispatching this command will result in saving scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to save.
- * @param filters - optionally specify existing filter context filters to be used for all attachments
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
@@ -86,7 +85,7 @@ export interface SaveScheduledEmailPayload {
 export function saveScheduledEmail(
     scheduledEmail: IAutomationMetadataObject,
     correlationId?: string,
-): SaveScheduledEmail {
+): ISaveScheduledEmail {
     return {
         type: "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE",
         correlationId,
@@ -102,7 +101,7 @@ export function saveScheduledEmail(
  *
  * @beta
  */
-export interface InitializeAutomations extends IDashboardCommand {
+export interface IInitializeAutomations extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE";
 }
 
@@ -117,7 +116,7 @@ export interface InitializeAutomations extends IDashboardCommand {
 
  * @beta
  */
-export function initializeAutomations(correlationId?: string): InitializeAutomations {
+export function initializeAutomations(correlationId?: string): IInitializeAutomations {
     return {
         type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE",
         correlationId,
@@ -131,7 +130,7 @@ export function initializeAutomations(correlationId?: string): InitializeAutomat
  *
  * @beta
  */
-export interface RefreshAutomations extends IDashboardCommand {
+export interface IRefreshAutomations extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH";
 }
 
@@ -147,7 +146,7 @@ export interface RefreshAutomations extends IDashboardCommand {
 
  * @beta
  */
-export function refreshAutomations(correlationId?: string): RefreshAutomations {
+export function refreshAutomations(correlationId?: string): IRefreshAutomations {
     return {
         type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH",
         correlationId,

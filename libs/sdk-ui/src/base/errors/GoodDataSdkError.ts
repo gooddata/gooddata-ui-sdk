@@ -13,6 +13,7 @@ export const ErrorCodes = {
     BAD_REQUEST: "BAD_REQUEST",
     UNAUTHORIZED: "UNAUTHORIZED",
     GEO_LOCATION_MISSING: "GEO_LOCATION_MISSING",
+    GEO_AREA_MISSING: "GEO_AREA_MISSING",
     GEO_MAPBOX_TOKEN_MISSING: "GEO_MAPBOX_TOKEN_MISSING",
     DATA_TOO_LARGE_TO_DISPLAY: "DATA_TOO_LARGE_TO_DISPLAY",
     DATA_TOO_LARGE_TO_COMPUTE: "DATA_TOO_LARGE_TO_COMPUTE",
@@ -115,6 +116,17 @@ export class UnauthorizedSdkError extends GoodDataSdkError {
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
         super(ErrorCodes.GEO_LOCATION_MISSING as SdkErrorType, message, cause);
+    }
+}
+
+/**
+ * This error means that area bucket is missing
+ *
+ * @public
+ */
+export class GeoAreaMissingSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error) {
+        super(ErrorCodes.GEO_AREA_MISSING as SdkErrorType, message, cause);
     }
 }
 
@@ -302,6 +314,15 @@ export function isUnauthorized(obj: unknown): obj is UnauthorizedSdkError {
  */
 export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_LOCATION_MISSING";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link GeoAreaMissingSdkError};
+ *
+ * @public
+ */
+export function isGeoAreaMissing(obj: unknown): obj is GeoAreaMissingSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_AREA_MISSING";
 }
 
 /**

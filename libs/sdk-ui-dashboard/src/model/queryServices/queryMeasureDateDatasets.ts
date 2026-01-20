@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
@@ -17,7 +17,7 @@ import {
     sortByRelevanceAndTitle,
 } from "../../_staging/catalog/dateDatasetOrdering.js";
 import { invalidQueryArguments } from "../events/general.js";
-import { type MeasureDateDatasets, type QueryMeasureDateDatasets } from "../queries/kpis.js";
+import { type IMeasureDateDatasets, type IQueryMeasureDateDatasets } from "../queries/kpis.js";
 import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors.js";
 import { type DashboardState } from "../store/index.js";
@@ -26,7 +26,7 @@ import { type DashboardContext } from "../types/commonTypes.js";
 export const QueryDateDatasetsForMeasureService = createCachedQueryService(
     "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
     queryService,
-    (query: QueryMeasureDateDatasets) => serializeObjRef(query.payload.measureRef),
+    (query: IQueryMeasureDateDatasets) => serializeObjRef(query.payload.measureRef),
 );
 
 /**
@@ -34,18 +34,18 @@ export const QueryDateDatasetsForMeasureService = createCachedQueryService(
  * @internal
  */
 export type selectDateDatasetsForMeasureType = (
-    query: QueryMeasureDateDatasets,
-) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<MeasureDateDatasets> | undefined;
+    query: IQueryMeasureDateDatasets,
+) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<IMeasureDateDatasets> | undefined;
 
 /**
  * Selector that will return date datasets for a measure. The input to the selector is the dashboard query that is used
  * to obtain and cache the data.
  *
  * This selector will return undefined if the query to obtain the data for a particular measure was not yet fired or
- * processed. Otherwise will return object containing `status` of the data retrieval; if the `status` is
+ * processed. Otherwise, will return object containing `status` of the data retrieval; if the `status` is
  * `'success'` then the `result` prop will contain the data.
  *
- * @remarks see {@link QueryMeasureDateDatasets}
+ * @remarks see {@link IQueryMeasureDateDatasets}
  * @internal
  */
 export const selectDateDatasetsForMeasure: selectDateDatasetsForMeasureType =
@@ -57,8 +57,8 @@ export const selectDateDatasetsForMeasure: selectDateDatasetsForMeasureType =
 
 function* queryService(
     ctx: DashboardContext,
-    query: QueryMeasureDateDatasets,
-): SagaIterator<MeasureDateDatasets> {
+    query: IQueryMeasureDateDatasets,
+): SagaIterator<IMeasureDateDatasets> {
     const {
         payload: { measureRef },
     } = query;

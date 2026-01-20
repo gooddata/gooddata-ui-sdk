@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
@@ -11,7 +12,7 @@ import {
 /**
  * @public
  */
-export interface CatalogState {
+export type CatalogState = {
     /** @beta */
     attributes?: ICatalogAttribute[];
     /** @beta */
@@ -24,7 +25,7 @@ export interface CatalogState {
     attributeHierarchies?: ICatalogAttributeHierarchy[];
     /** @beta */
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
-}
+};
 
 export const catalogInitialState: CatalogState = {
     attributes: undefined,

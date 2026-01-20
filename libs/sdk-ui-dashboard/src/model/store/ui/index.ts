@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { uiReducers } from "./uiReducers.js";
-import { type UiState, uiInitialState } from "./uiState.js";
+import { type IUiState, uiInitialState } from "./uiState.js";
 
 const uiSlice = createSlice({
     name: "uiSlice",
@@ -10,7 +11,7 @@ const uiSlice = createSlice({
     reducers: uiReducers,
 });
 
-export const uiSliceReducer: Reducer<UiState> = uiSlice.reducer;
+export const uiSliceReducer: Reducer<IUiState> = uiSlice.reducer;
 
 // Spread "fixes" TS2742 error
 /**

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -152,7 +152,7 @@ export function extractInsightFilterDisplayFormIdentifiers(
     });
 }
 
-export interface InsightDrillDefinitionValidationData {
+export interface IInsightDrillDefinitionValidationData {
     widgetInsightAttributes: IAttribute[];
     dashboardsMap: ObjRefMap<IListedDashboard>;
     insightsMap: ObjRefMap<IInsight>;
@@ -165,7 +165,7 @@ export interface InsightDrillDefinitionValidationData {
 
 export function validateInsightDrillDefinition(
     drillDefinition: InsightDrillDefinition,
-    validationContext: InsightDrillDefinitionValidationData,
+    validationContext: IInsightDrillDefinitionValidationData,
 ): InsightDrillDefinition {
     if (isDrillToDashboard(drillDefinition)) {
         return validateDrillToDashboardDefinition(drillDefinition, validationContext);
@@ -188,7 +188,7 @@ export function validateInsightDrillDefinition(
 
 function validateDrillToDashboardDefinition(
     drillDefinition: IDrillToDashboard,
-    validationContext: InsightDrillDefinitionValidationData,
+    validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToDashboard {
     const { target, drillIntersectionIgnoredAttributes, targetTabLocalIdentifier } = drillDefinition;
     if (target) {
@@ -254,7 +254,7 @@ function validateDrillToDashboardDefinition(
 
 function validateDrillToInsightDefinition(
     drillDefinition: IDrillToInsight,
-    validationContext: InsightDrillDefinitionValidationData,
+    validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToInsight {
     const { target, drillIntersectionIgnoredAttributes } = drillDefinition;
     let result: IDrillToInsight | undefined = undefined;
@@ -292,7 +292,7 @@ function validateDrillToInsightDefinition(
 
 export function validateDrillToCustomURLDefinition(
     drillDefinition: IDrillToCustomUrl,
-    validationContext: InsightDrillDefinitionValidationData,
+    validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToCustomUrl {
     const ids = extractDisplayFormIdentifiers([drillDefinition]);
 
@@ -312,7 +312,7 @@ export function validateDrillToCustomURLDefinition(
 
 export function validateDrillToAttributeUrlDefinition(
     drillDefinition: IDrillToAttributeUrl,
-    validationContext: InsightDrillDefinitionValidationData,
+    validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToAttributeUrl {
     const displayForms = validationContext.displayFormsMap.get(drillDefinition.target.displayForm);
 

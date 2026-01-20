@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -7,13 +7,13 @@ import { type IDashboard, type IRichTextWidgetDefinition, idRef } from "@gooddat
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import {
-    type ChangeRichTextWidgetContent,
+    type IChangeRichTextWidgetContent,
     addLayoutSection,
     changeRichTextWidgetContent,
 } from "../../../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardRichTextWidgetContentChanged,
+    type IDashboardCommandFailed,
+    type IDashboardRichTextWidgetContentChanged,
 } from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -67,7 +67,7 @@ describe("rich text widget", () => {
     it("should set new rich text content", async () => {
         const UpdatedContent = "# Title";
 
-        const event: DashboardRichTextWidgetContentChanged = await Tester.dispatchAndWaitFor(
+        const event: IDashboardRichTextWidgetContentChanged = await Tester.dispatchAndWaitFor(
             changeRichTextWidgetContent(TestRichTextItem.widget!.ref, UpdatedContent),
             "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED",
         );
@@ -76,13 +76,13 @@ describe("rich text widget", () => {
         const widgetState = selectAnalyticalWidgetByRef(TestRichTextItem.widget!.ref)(
             Tester.state(),
         ) as IRichTextWidgetDefinition;
-        expect(widgetState!.content).toEqual(UpdatedContent);
+        expect(widgetState.content).toEqual(UpdatedContent);
     });
 
     it("should fail if trying to vis properties of non-existent widget", async () => {
         const UpdatedContent = "# Title";
 
-        const event: DashboardCommandFailed<ChangeRichTextWidgetContent> = await Tester.dispatchAndWaitFor(
+        const event: IDashboardCommandFailed<IChangeRichTextWidgetContent> = await Tester.dispatchAndWaitFor(
             changeRichTextWidgetContent(idRef("mising"), UpdatedContent, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );

@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { type RepositionDashboardTab } from "../../commands/tabs.js";
+import { type IRepositionDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardTabRepositioned, dashboardTabRepositioned } from "../../events/tabs.js";
+import { type IDashboardTabRepositioned, dashboardTabRepositioned } from "../../events/tabs.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -15,8 +15,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
  */
 export function* repositionDashboardTabHandler(
     ctx: DashboardContext,
-    cmd: RepositionDashboardTab,
-): SagaIterator<DashboardTabRepositioned> {
+    cmd: IRepositionDashboardTab,
+): SagaIterator<IDashboardTabRepositioned> {
     const { oldIndex, newIndex } = cmd.payload;
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);

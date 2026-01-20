@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { produce } from "immer";
 import { cloneDeep } from "lodash-es";
@@ -9,13 +9,13 @@ import {
     type IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 
-import { type TabsState, tabsActions } from "../../index.js";
+import { type ITabsState, tabsActions } from "../../index.js";
 import { attributeFilterConfigsReducers } from "../attributeFilterConfigsReducers.js";
 
 describe("attributeFilterConfigsReducers", () => {
     const createAttributeFilterConfigSliceInitialState = (
         attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
-    ): TabsState => {
+    ): ITabsState => {
         return {
             tabs: [
                 {

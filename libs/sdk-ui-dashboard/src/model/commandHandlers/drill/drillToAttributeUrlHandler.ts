@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
@@ -6,9 +6,9 @@ import { type SagaReturnType, all, call, put, select } from "redux-saga/effects"
 import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters.js";
 import { resolveDrillToAttributeUrl } from "./resolveDrillToAttributeUrl.js";
 import { isDrillConfigured } from "../../../_staging/drills/drillingUtils.js";
-import { type DrillToAttributeUrl } from "../../commands/drill.js";
+import { type IDrillToAttributeUrl } from "../../commands/drill.js";
 import {
-    type DashboardDrillToAttributeUrlResolved,
+    type IDashboardDrillToAttributeUrlResolved,
     drillToAttributeUrlRequested,
     drillToAttributeUrlResolved,
 } from "../../events/drill.js";
@@ -17,8 +17,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToAttributeUrlHandler(
     ctx: DashboardContext,
-    cmd: DrillToAttributeUrl,
-): SagaIterator<DashboardDrillToAttributeUrlResolved> {
+    cmd: IDrillToAttributeUrl,
+): SagaIterator<IDashboardDrillToAttributeUrlResolved> {
     yield put(
         drillToAttributeUrlRequested(
             ctx,

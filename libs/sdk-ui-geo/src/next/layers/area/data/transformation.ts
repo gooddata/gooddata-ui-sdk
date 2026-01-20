@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttributeDescriptor,
@@ -308,10 +308,16 @@ function processTooltipTextBucket(ctx: IAreaBucketProcessingContext): IGeoAttrib
         return undefined;
     }
 
+    const data = getAttributeData(
+        attributeHeaderItems,
+        tooltipTextIndex,
+        emptyHeaderString,
+        nullHeaderString,
+    );
     return {
         index: tooltipTextBucket.index,
         name: tooltipTextBucket.name,
-        data: getAttributeData(attributeHeaderItems, tooltipTextIndex, emptyHeaderString, nullHeaderString),
+        data,
     };
 }
 

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { type IResultWarning, type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
@@ -12,7 +12,7 @@ import { type IExecutionResultEnvelope } from "../store/executionResults/types.j
  *
  * @beta
  */
-export interface UpsertExecutionResult extends IDashboardCommand {
+export interface IUpsertExecutionResult extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
     readonly payload: IExecutionResultEnvelope;
 }
@@ -21,7 +21,7 @@ function upsertExecutionResult(
     id: ObjRef | string,
     envelopeData: Omit<IExecutionResultEnvelope, "id">,
     correlationId?: string,
-): UpsertExecutionResult {
+): IUpsertExecutionResult {
     return {
         type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT",
         correlationId,
@@ -33,14 +33,14 @@ function upsertExecutionResult(
 }
 
 /**
- * Creates an {@link UpsertExecutionResult} command that makes the relevant execution result indicate it is loading.
+ * Creates an {@link IUpsertExecutionResult} command that makes the relevant execution result indicate it is loading.
  *
  * @beta
  */
 export function setExecutionResultLoading(
     id: ObjRef | string,
     correlationId?: string,
-): UpsertExecutionResult {
+): IUpsertExecutionResult {
     return upsertExecutionResult(
         id,
         {
@@ -54,7 +54,7 @@ export function setExecutionResultLoading(
 }
 
 /**
- * Creates an {@link UpsertExecutionResult} command that makes the relevant execution result indicate an error and stop loading.
+ * Creates an {@link IUpsertExecutionResult} command that makes the relevant execution result indicate an error and stop loading.
  *
  * @beta
  */
@@ -62,7 +62,7 @@ export function setExecutionResultError(
     id: ObjRef | string,
     error: GoodDataSdkError,
     correlationId?: string,
-): UpsertExecutionResult {
+): IUpsertExecutionResult {
     return upsertExecutionResult(
         id,
         {
@@ -75,7 +75,7 @@ export function setExecutionResultError(
 }
 
 /**
- * Creates an {@link UpsertExecutionResult} command that makes the relevant execution result set new result data and stop loading.
+ * Creates an {@link IUpsertExecutionResult} command that makes the relevant execution result set new result data and stop loading.
  *
  * @beta
  */
@@ -84,7 +84,7 @@ export function setExecutionResultData(
     executionResult: IExecutionResult,
     executionWarnings: IResultWarning[] | undefined,
     correlationId?: string,
-): UpsertExecutionResult {
+): IUpsertExecutionResult {
     return upsertExecutionResult(
         id,
         {

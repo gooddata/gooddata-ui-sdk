@@ -1506,6 +1506,26 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly type: "IDashboard";
 }
 
+// @alpha
+export interface IDashboardFilterGroup {
+    // (undocumented)
+    filters: IDashboardFilterGroupItem[];
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
+export interface IDashboardFilterGroupItem {
+    // (undocumented)
+    filterLocalIdentifier: string;
+}
+
+// @alpha
+export interface IDashboardFilterGroupsConfig {
+    // (undocumented)
+    groups: IDashboardFilterGroup[];
+}
+
 // @public
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
@@ -1658,6 +1678,7 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     dateFilterConfig?: IDashboardDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     filterContext?: IFilterContext | ITempFilterContext;
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
     layout?: IDashboardLayout<TWidget>;
     localIdentifier: string;
     title: string;
@@ -2086,6 +2107,8 @@ export interface IExportDefinitionVisualizationObjectSettings {
     mergeHeaders?: boolean;
     // (undocumented)
     orientation?: "portrait" | "landscape";
+    // (undocumented)
+    pageSize?: "A3" | "A4" | "LETTER";
 }
 
 // @alpha
@@ -3779,6 +3802,7 @@ export interface ISettings {
     enableCrossFilteringAliasTitles?: boolean;
     enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
+    enableDashboardFilterGroups?: boolean;
     enableDashboardFilterViews?: boolean;
     // @alpha
     enableDashboardSectionHeadersDateDataSet?: boolean;

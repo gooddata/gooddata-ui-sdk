@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -6,10 +6,10 @@ import { call, select } from "redux-saga/effects";
 import { type IExportResult } from "@gooddata/sdk-backend-spi";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
-import { type ExportImageInsightWidget } from "../../commands/insight.js";
+import { type IExportImageInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    type DashboardInsightWidgetExportResolved,
+    type IDashboardInsightWidgetExportResolved,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
@@ -21,8 +21,8 @@ import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 export function* exportImageInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: ExportImageInsightWidget,
-): SagaIterator<DashboardInsightWidgetExportResolved> {
+    cmd: IExportImageInsightWidget,
+): SagaIterator<IDashboardInsightWidgetExportResolved> {
     const { ref, filename } = cmd.payload;
     const { workspace, backend } = ctx;
 

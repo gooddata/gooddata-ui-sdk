@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type RefObject, forwardRef, useCallback, useMemo } from "react";
 
@@ -98,7 +98,7 @@ export function VisualizationSwitcherNavigationHeader({
 type VisualizationSwitcherNavigationHeaderButtonProps = {
     title: string;
     isOpen: boolean;
-    toggleDropdown: (desiredState?: boolean | unknown) => void;
+    toggleDropdown: (desiredState?: unknown) => void;
     clientHeight?: number;
     exportData?: CommonExportDataAttributes;
     ariaAttributes: IDropdownButtonRenderProps["ariaAttributes"];

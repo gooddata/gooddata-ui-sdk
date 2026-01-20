@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -19,8 +19,8 @@ import {
     validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
-import { type DashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
+import { type IChangeInsightWidgetFilterSettings } from "../../commands/index.js";
+import { type IDashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
 import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -45,8 +45,8 @@ const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
  */
 export function* changeInsightWidgetFilterSettingsHandler(
     ctx: DashboardContext,
-    cmd: ChangeInsightWidgetFilterSettings,
-): SagaIterator<DashboardInsightWidgetFilterSettingsChanged> {
+    cmd: IChangeInsightWidgetFilterSettings,
+): SagaIterator<IDashboardInsightWidgetFilterSettingsChanged> {
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
 

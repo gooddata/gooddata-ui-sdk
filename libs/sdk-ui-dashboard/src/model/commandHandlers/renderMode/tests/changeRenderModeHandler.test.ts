@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
@@ -22,8 +23,8 @@ describe("changeRenderModeHandler", () => {
             }, SimpleDashboardNoDrillsIdentifier);
         });
 
-        it("should be view if initialRenderMode is not specified on config", async () => {
-            const renderMode = await Tester.select(selectRenderMode);
+        it("should be view if initialRenderMode is not specified on config", () => {
+            const renderMode = Tester.select(selectRenderMode);
             expect(renderMode).toBe("view");
         });
 
@@ -34,7 +35,7 @@ describe("changeRenderModeHandler", () => {
             );
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
 
-            const renderMode = await Tester.select(selectRenderMode);
+            const renderMode = Tester.select(selectRenderMode);
             expect(renderMode).toBe("edit");
         });
 
@@ -45,7 +46,7 @@ describe("changeRenderModeHandler", () => {
             );
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
 
-            const renderMode = await Tester.select(selectRenderMode);
+            const renderMode = Tester.select(selectRenderMode);
             expect(renderMode).toBe("edit");
         });
 
@@ -56,7 +57,7 @@ describe("changeRenderModeHandler", () => {
             );
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
 
-            const renderMode = await Tester.select(selectRenderMode);
+            const renderMode = Tester.select(selectRenderMode);
             expect(renderMode).toBe("view");
         });
     });
@@ -64,7 +65,7 @@ describe("changeRenderModeHandler", () => {
     describe("with initial config for new dashboard", () => {
         beforeEach(async () => {
             await preloadedTesterFactory(
-                async (tester) => {
+                (tester) => {
                     Tester = tester;
                 },
                 undefined,
@@ -76,8 +77,8 @@ describe("changeRenderModeHandler", () => {
             );
         });
 
-        it("should respect initialRenderMode config", async () => {
-            const renderMode = await Tester.select(selectRenderMode);
+        it("should respect initialRenderMode config", () => {
+            const renderMode = Tester.select(selectRenderMode);
             expect(renderMode).toBe("edit");
         });
     });
@@ -85,7 +86,7 @@ describe("changeRenderModeHandler", () => {
     describe("with initial config for existing dashboard", () => {
         beforeEach(async () => {
             await preloadedTesterFactory(
-                async (tester) => {
+                (tester) => {
                     Tester = tester;
                 },
                 SimpleDashboardNoDrillsIdentifier,
@@ -97,8 +98,8 @@ describe("changeRenderModeHandler", () => {
             );
         });
 
-        it("should respect initialRenderMode config", async () => {
-            const renderMode = await Tester.select(selectRenderMode);
+        it("should respect initialRenderMode config", () => {
+            const renderMode = Tester.select(selectRenderMode);
             expect(renderMode).toBe("edit");
         });
     });

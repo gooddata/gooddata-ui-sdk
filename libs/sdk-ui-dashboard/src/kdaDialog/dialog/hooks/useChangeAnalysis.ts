@@ -23,7 +23,7 @@ import { useTags } from "./useTags.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
-import { type KdaItem, type KdaState } from "../../internalTypes.js";
+import { type IKdaItem, type IKdaState } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { type DeepReadonly, type IKdaDefinition } from "../../types.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../utils.js";
@@ -132,7 +132,7 @@ function useChangeAnalysisResults(
 function useKdaStateWithList(
     { result, status, error }: ReturnType<typeof useChangeAnalysisResults>,
     definition: DeepReadonly<IKdaDefinition> | null,
-): Partial<KdaState> {
+): Partial<IKdaState> {
     const { state } = useKdaState();
     const loadingStatus = definition ? status : "pending";
 
@@ -162,7 +162,7 @@ function useKdaStateWithList(
         const toValue = result?.toValue;
         const fromValue = result?.fromValue;
         const list = result?.keyDrivers.map(mapKeyDrive) ?? [];
-        const items = list.filter(Boolean) as IUiListboxInteractiveItem<KdaItem>[];
+        const items = list.filter(Boolean) as IUiListboxInteractiveItem<IKdaItem>[];
 
         return {
             items,
@@ -186,7 +186,7 @@ function useKdaStateWithList(
         const currentTo = state.toValue?.value;
 
         const definition = state.definition;
-        const updatedState: Partial<KdaState> = {};
+        const updatedState: Partial<IKdaState> = {};
         // update from
         if (state.fromValue && currentFrom === undefined && fromValue !== undefined) {
             updatedState.fromValue = {
@@ -235,7 +235,7 @@ function createKdaItem(
     from: string,
     to: string,
     separators?: ISeparators,
-): IUiListboxInteractiveItem<KdaItem> {
+): IUiListboxInteractiveItem<IKdaItem> {
     const stringTitle = `${attribute.attribute.title}: ${driver.value}`;
     const id = `key_driver_${i}`;
 

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo, useRef, useState } from "react";
 
@@ -19,11 +19,11 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
-import { type DrillSelectContext } from "./types.js";
+import { type IDrillSelectContext } from "./types.js";
 import {
-    type DashboardCommandFailed,
     type DashboardDrillCommand,
-    type DashboardKeyDriverCombinationItem,
+    type IDashboardCommandFailed,
+    type IDashboardKeyDriverCombinationItem,
     selectBackendCapabilities,
     selectDashboardFiltersWithoutCrossFiltering,
     selectDisableDefaultDrills,
@@ -32,8 +32,8 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import {
-    type DashboardDrillContext,
     type DashboardDrillDefinition,
+    type IDashboardDrillContext,
     type IDashboardDrillEvent,
     isDrillDownDefinition,
 } from "../../../types.js";
@@ -55,7 +55,7 @@ import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
 /**
  * @internal
  */
-export interface WithDrillSelectProps {
+export interface IWithDrillSelectProps {
     widgetRef: ObjRef;
     insight: IInsight;
     visualizationId?: string;
@@ -87,9 +87,9 @@ export function WithDrillSelect({
     onDrillToCustomUrlSuccess,
     onKeyDriverAnalysisSuccess,
     onError,
-}: WithDrillSelectProps): ReactElement {
+}: IWithDrillSelectProps): ReactElement {
     const { current: drillPickerId } = useRef(uuid());
-    const [dropdownProps, setDropdownProps] = useState<DrillSelectContext | null>(null);
+    const [dropdownProps, setDropdownProps] = useState<IDrillSelectContext | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const locale = useDashboardSelector(selectLocale);
     const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills); // TODO: maybe remove?
@@ -130,7 +130,7 @@ export function WithDrillSelect({
         onDrillToDashboardSuccess,
         onDrillToAttributeUrlSuccess,
         onDrillToCustomUrlSuccess,
-        onError: (e: DashboardCommandFailed<DashboardDrillCommand>) => onError?.(e.payload.error),
+        onError: (e: IDashboardCommandFailed<DashboardDrillCommand>) => onError?.(e.payload.error),
     });
 
     const handleClose = useCallback(() => {
@@ -153,7 +153,7 @@ export function WithDrillSelect({
             context: unknown,
             drillEvent?: IDashboardDrillEvent,
             correlationId?: string,
-            drillContext?: DashboardDrillContext,
+            drillContext?: IDashboardDrillContext,
         ) => {
             const { drills, dropdownProps, insight, handleClose } = onSelectDepsRef.current;
 
@@ -223,7 +223,7 @@ export function WithDrillSelect({
                     drillDefinition,
                     effectiveDrillEvent,
                     filters,
-                    context as DashboardKeyDriverCombinationItem,
+                    context as IDashboardKeyDriverCombinationItem,
                     effectiveCorrelationId,
                 );
             }

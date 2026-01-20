@@ -1,10 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { call, getContext, put, race, take } from "redux-saga/effects";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { extractError } from "./utils.js";
 import {
     cancelAsyncAction,
     clearThreadErrorAction,
@@ -35,6 +34,6 @@ export function* onThreadClear() {
             yield put(clearThreadSuccessAction());
         }
     } catch (e) {
-        yield put(clearThreadErrorAction({ error: extractError(e) }));
+        yield put(clearThreadErrorAction({ error: e as Error }));
     }
 }

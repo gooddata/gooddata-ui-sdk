@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IAccessControlAware, type IDashboard } from "@gooddata/sdk-model";
 
@@ -28,7 +28,7 @@ export const EmptyDashboardDescriptor: DashboardDescriptor = {
 /**
  * @beta
  */
-export interface DashboardMetaState {
+export interface IDashboardMetaState {
     /**
      * This property contains current state of the dashboard's descriptive metadata. This descriptor can
      * be modified by the dashboard component and the new values will be used during save.
@@ -52,7 +52,7 @@ export interface DashboardMetaState {
     initialContent?: boolean;
 }
 
-export const metaInitialState: DashboardMetaState = {
+export const metaInitialState: IDashboardMetaState = {
     descriptor: EmptyDashboardDescriptor,
     persistedDashboard: undefined,
     initialContent: undefined,

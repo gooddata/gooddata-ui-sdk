@@ -10,13 +10,13 @@ import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 import { type DeepReadonly, type IKdaDataPoint, type IKdaDefinition, type KdaPeriodType } from "./types.js";
 
-export interface KdaDateOptions {
+export interface IKdaDateOptions {
     period: KdaPeriodType;
     dateAttribute?: ICatalogDateAttribute | null;
     range?: DeepReadonly<[IKdaDataPoint, IKdaDataPoint]>;
 }
 
-export interface KdaItem {
+export interface IKdaItem {
     id: string;
     title: string;
     description: string;
@@ -25,7 +25,7 @@ export interface KdaItem {
         value: number;
         date: string;
     };
-    to: KdaItem["from"];
+    to: IKdaItem["from"];
     attribute: ObjRef;
     displayForm: ObjRef;
     formatValue: (value: number) => string;
@@ -35,17 +35,17 @@ export interface KdaItem {
     mean: number;
 }
 
-export interface KdaItemGroup {
+export interface IKdaItemGroup {
     id: string;
     title: string;
     description: string;
     attribute: ObjRef;
     displayForm: ObjRef;
-    significantDrivers: KdaItem[];
-    allDrivers: KdaItem[];
+    significantDrivers: IKdaItem[];
+    allDrivers: IKdaItem[];
 }
 
-export interface KdaState {
+export interface IKdaState {
     //definition
     definition: DeepReadonly<IKdaDefinition> | null;
     fromValue: IKdaDataPoint | undefined;
@@ -60,11 +60,11 @@ export interface KdaState {
     separators?: ISeparators;
     //rest
     selectedTrend: ("up" | "down")[];
-    selectedItem: IUiListboxInteractiveItem<KdaItem> | "summary";
+    selectedItem: IUiListboxInteractiveItem<IKdaItem> | "summary";
     selectedStatus: KdaAsyncStatus;
     selectedError: Error | undefined;
     attributeFilters: IDashboardAttributeFilter[];
-    items: IUiListboxInteractiveItem<KdaItem>[];
+    items: IUiListboxInteractiveItem<IKdaItem>[];
     itemsStatus: KdaAsyncStatus;
     itemsError: Error | undefined;
     selectedAttributes: ObjRef[];

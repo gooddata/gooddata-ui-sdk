@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -18,7 +18,7 @@ import {
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 
 import { DEFAULT_MEASURE_FORMAT } from "./const.js";
-import { type KdaState } from "./internalTypes.js";
+import { type IKdaState } from "./internalTypes.js";
 import { type DeepReadonly, type IKdaDataPoint, type IKdaDefinition } from "./types.js";
 
 //Format value
@@ -124,7 +124,7 @@ export function updateExistingAttributeFilter(f: IDashboardAttributeFilter, val:
     } as IDashboardAttributeFilter;
 }
 
-export function clearSummaryValue(definition: DeepReadonly<IKdaDefinition> | null): Partial<KdaState> {
+export function clearSummaryValue(definition: DeepReadonly<IKdaDefinition> | null): Partial<IKdaState> {
     return {
         ...(definition
             ? {

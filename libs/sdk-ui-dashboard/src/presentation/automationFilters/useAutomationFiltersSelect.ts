@@ -157,7 +157,7 @@ export const useAutomationFiltersSelect = ({
     automationToEdit?: IAutomationMetadataObject;
 }): IUseAutomationFiltersSelect => {
     const availableFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
-    const availableFiltersWithoutIgnoredWidgetFilters = removeIgnoredWidgetFilters(availableFilters, widget!);
+    const availableFiltersWithoutIgnoredWidgetFilters = removeIgnoredWidgetFilters(availableFilters, widget);
 
     const availableFiltersAsVisibleFilters = useAutomationVisibleFilters(
         availableFiltersWithoutIgnoredWidgetFilters,

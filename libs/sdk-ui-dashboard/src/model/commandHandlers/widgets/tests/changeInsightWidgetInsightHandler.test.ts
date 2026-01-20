@@ -1,13 +1,13 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
 
-import { type ChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands/index.js";
+import { type IChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardInsightWidgetInsightSwitched,
+    type IDashboardCommandFailed,
+    type IDashboardInsightWidgetInsightSwitched,
 } from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -31,14 +31,14 @@ describe("change insight widget vis properties handler", () => {
         const ref = SimpleSortedTableWidgetRef;
         const insight = insightRef(PivotTableWithRowAndColumnAttributes);
 
-        const event: DashboardInsightWidgetInsightSwitched = await Tester.dispatchAndWaitFor(
+        const event: IDashboardInsightWidgetInsightSwitched = await Tester.dispatchAndWaitFor(
             changeInsightWidgetInsight(ref, insight, undefined, TestCorrelation),
             "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED",
         );
 
         expect(insightRef(event.payload.insight)).toEqual(insight);
         const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
-        expect(widgetState!.insight).toEqual(insight);
+        expect(widgetState.insight).toEqual(insight);
     });
 
     it("should change the insight and the visualization properties for existing insight widget", async () => {
@@ -52,13 +52,13 @@ describe("change insight widget vis properties handler", () => {
         );
 
         const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
-        expect(widgetState!.properties).toEqual(properties);
+        expect(widgetState.properties).toEqual(properties);
     });
 
     it("should fail if trying to change the insight of non-existent widget", async () => {
         const insight = insightRef(PivotTableWithRowAndColumnAttributes);
 
-        const event: DashboardCommandFailed<ChangeInsightWidgetInsight> = await Tester.dispatchAndWaitFor(
+        const event: IDashboardCommandFailed<IChangeInsightWidgetInsight> = await Tester.dispatchAndWaitFor(
             changeInsightWidgetInsight(uriRef("missing"), insight, undefined, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
@@ -70,7 +70,7 @@ describe("change insight widget vis properties handler", () => {
     it("should fail if trying to change the insight for non-existing insight", async () => {
         const ref = SimpleSortedTableWidgetRef;
 
-        const event: DashboardCommandFailed<ChangeInsightWidgetInsight> = await Tester.dispatchAndWaitFor(
+        const event: IDashboardCommandFailed<IChangeInsightWidgetInsight> = await Tester.dispatchAndWaitFor(
             changeInsightWidgetInsight(ref, uriRef("missing"), undefined, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );

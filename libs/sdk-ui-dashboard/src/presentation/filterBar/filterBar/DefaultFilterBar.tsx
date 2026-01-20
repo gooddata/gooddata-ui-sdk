@@ -3,11 +3,9 @@
 import { type ReactElement, useCallback } from "react";
 
 import classNames from "classnames";
-import { invariant } from "ts-invariant";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigModeValues,
     type FilterContextItem,
     type IDashboardAttributeFilter,
@@ -17,45 +15,32 @@ import {
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
-    objRefToString,
-    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
 import { HiddenFilterBar } from "./HiddenFilterBar.js";
 import { ResetFiltersButton } from "./ResetFiltersButton.js";
-import {
-    isFilterBarAttributeFilter,
-    isFilterBarFilterPlaceholder,
-    useFiltersWithAddedPlaceholder,
-} from "./useFiltersWithAddedPlaceholder.js";
-import {
-    convertDashboardAttributeFilterElementsUrisToValues,
-    convertDashboardAttributeFilterElementsValuesToUris,
-} from "../../../_staging/dashboard/legacyFilterConvertors.js";
+import { useFiltersWithAddedPlaceholder } from "./useFiltersWithAddedPlaceholder.js";
+import { convertDashboardAttributeFilterElementsValuesToUris } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
     clearDateFilterSelection,
-    selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectAttributeFilterDisplayFormsMap,
     selectCanAddMoreFilters,
-    selectCatalogAttributes,
-    selectCatalogDateDatasets,
-    selectCrossFilteringFiltersLocalIdentifiers,
     selectEffectiveAttributeFiltersModeMap,
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFiltersModeMap,
+    selectEnableDashboardFilterGroups,
     selectEnableDateFilterIdentifiers,
     selectFilterContextFilters,
+    selectFilterGroupsConfig,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsExport,
     selectIsInEditMode,
-    selectIsWorkingFilterContextChanged,
     selectSupportsElementUris,
     selectWorkingFilterContextFilters,
     setAttributeFilterDisplayForm,
@@ -64,15 +49,12 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import {
-    DraggableAttributeFilter,
-    DraggableDateFilter,
-    DraggableFilterDropZone,
-    DraggableFilterDropZoneHint,
-} from "../../dragAndDrop/index.js";
+import { DraggableFilterDropZone, DraggableFilterDropZoneHint } from "../../dragAndDrop/index.js";
 import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
 import { type IDashboardDateFilterConfig, type IFilterBarProps } from "../types.js";
 import { areAllFiltersHidden } from "../utils.js";
+import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
+import { groupFilterItems } from "./filterGroupUtils.js";
 
 /**
  * @alpha
@@ -81,6 +63,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
     const filters = useDashboardSelector(selectFilterContextFilters);
     const workingFilters = useDashboardSelector(selectWorkingFilterContextFilters);
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
+    const filterGroupsConfig = useDashboardSelector(selectFilterGroupsConfig);
 
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
@@ -217,14 +200,21 @@ export const useFilterBarProps = (): IFilterBarProps => {
         [dispatch, isApplyAllAtOnceEnabledAndSet, filters, enableDateFilterIdentifiers],
     );
 
-    return { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };
+    return {
+        filters,
+        workingFilters,
+        filterGroupsConfig,
+        onAttributeFilterChanged,
+        onDateFilterChanged,
+        DefaultFilterBar,
+    };
 };
 
 /**
  * @alpha
  */
 export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
-    const { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged } = props;
+    const { filters, workingFilters, filterGroupsConfig, onDateFilterChanged } = props;
 
     const [
         {
@@ -247,18 +237,11 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
-    const attributeFiltersDisplayAsLabelMap = useDashboardSelector(
-        selectAttributeFilterConfigsDisplayAsLabelMap,
-    );
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
-    const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const enableDashboardFilterGroups = useDashboardSelector(selectEnableDashboardFilterGroups);
 
     const isExport = useDashboardSelector(selectIsExport);
-    const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
-        useDashboardComponentsContext();
-    const supportElementUris = useDashboardSelector(selectSupportsElementUris);
-    const displayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const { DashboardDateFilterComponentProvider } = useDashboardComponentsContext();
     const canAddMoreFilters = useDashboardSelector(selectCanAddMoreFilters);
     const haveAllFiltersHidden = areAllFiltersHidden(
         draggableFiltersWithPlaceholder,
@@ -267,13 +250,16 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
         dateFiltersModeMap,
     );
 
-    const crossFilterLocalIds = useDashboardSelector(selectCrossFilteringFiltersLocalIdentifiers);
-    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
     if (isExport || haveAllFiltersHidden) {
         return <HiddenFilterBar {...props} />;
     }
+
+    const groupedFilterItems =
+        enableDashboardFilterGroups && !isInEditMode
+            ? groupFilterItems(draggableFiltersWithPlaceholder, filterGroupsConfig)
+            : draggableFiltersWithPlaceholder;
 
     const commonDateFilterComponentConfig: IDashboardDateFilterConfig = {
         availableGranularities,
@@ -312,119 +298,18 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
                     </>
                 )}
             </div>
-            {draggableFiltersWithPlaceholder.map((filterOrPlaceholder) => {
-                if (isFilterBarFilterPlaceholder(filterOrPlaceholder)) {
-                    const CreatingPlaceholderComponent =
-                        AttributeFilterComponentSet.creating.CreatingPlaceholderComponent!;
-                    return (
-                        <CreatingPlaceholderComponent
-                            key={filterOrPlaceholder.filterIndex}
-                            onClose={closeAttributeSelection}
-                            onSelect={selectDraggableFilter}
-                            attributes={attributes}
-                            dateDatasets={allDateDatasets}
-                        />
-                    );
-                } else if (isFilterBarAttributeFilter(filterOrPlaceholder)) {
-                    const { filter, filterIndex, workingFilter } = filterOrPlaceholder;
-                    const convertedFilter = supportElementUris
-                        ? filter
-                        : convertDashboardAttributeFilterElementsUrisToValues(filter);
-                    const CustomAttributeFilterComponent =
-                        AttributeFilterComponentSet.MainComponentProvider(convertedFilter);
-                    const attributeFilterMode = attributeFiltersModeMap.get(
-                        filter.attributeFilter.localIdentifier!,
-                    );
-                    const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(
-                        filter.attributeFilter.localIdentifier!,
-                    );
-
-                    /**
-                     * Use the attribute as key, not the display form.
-                     * This is to make sure we do not remount this when user changes the display form used:
-                     * it should just reload the elements, not close and remount the whole filter.
-                     *
-                     * This is fine because we do not allow multiple filters of the same attribute to be on
-                     * the same dashboard.
-                     */
-                    const displayForm = displayFormsMap.get(convertedFilter.attributeFilter.displayForm);
-                    invariant(displayForm, "inconsistent state, display form for a filter was not found");
-
-                    if (attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN) {
-                        return null;
-                    }
-
-                    if (
-                        filter.attributeFilter.localIdentifier &&
-                        crossFilterLocalIds.includes(filter.attributeFilter.localIdentifier) &&
-                        isWorkingFilterContextChanged &&
-                        isApplyAllAtOnceEnabledAndSet
-                    ) {
-                        return null;
-                    }
-
-                    return (
-                        <DraggableAttributeFilter
-                            key={`${objRefToString(displayForm.attribute)}-${
-                                filter.attributeFilter.localIdentifier
-                            }`}
-                            autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
-                            filter={filter}
-                            workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
-                            filterIndex={filterIndex}
-                            readonly={
-                                attributeFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
-                            }
-                            displayAsLabel={displayAsLabel}
-                            FilterComponent={CustomAttributeFilterComponent}
-                            onAttributeFilterChanged={onAttributeFilterChanged}
-                            onAttributeFilterAdded={addDraggableFilterPlaceholder}
-                            onAttributeFilterClose={onCloseAttributeFilter}
-                        />
-                    );
-                } else {
-                    if (filterOrPlaceholder.filter.dateFilter.dataSet) {
-                        const { filter, workingFilter, filterIndex } = filterOrPlaceholder;
-
-                        const CustomDateFilterComponent = DashboardDateFilterComponentProvider(filter);
-
-                        const dateFilterMode =
-                            dateFiltersModeMap.get(serializeObjRef(filter.dateFilter.dataSet!)) ||
-                            DashboardDateFilterConfigModeValues.ACTIVE;
-
-                        if (dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN) {
-                            return null;
-                        }
-
-                        const defaultDateFilterName = allDateDatasets.find((ds) =>
-                            areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
-                        )?.dataSet?.title;
-
-                        return (
-                            <DraggableDateFilter
-                                key={objRefToString(filterOrPlaceholder.filter.dateFilter.dataSet)}
-                                autoOpen={areObjRefsEqual(
-                                    filterOrPlaceholder.filter.dateFilter.dataSet,
-                                    autoOpenFilter,
-                                )}
-                                filter={filter}
-                                workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
-                                filterIndex={filterIndex}
-                                config={{
-                                    ...commonDateFilterComponentConfig,
-                                    customFilterName: defaultDateFilterName,
-                                }}
-                                readonly={dateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
-                                FilterComponent={CustomDateFilterComponent}
-                                onDateFilterChanged={onDateFilterChanged}
-                                onDateFilterAdded={addDraggableFilterPlaceholder}
-                                onDateFilterClose={onCloseAttributeFilter}
-                            />
-                        );
-                    }
-                    return null;
-                }
-            })}
+            {groupedFilterItems.map((filterItem) => (
+                <DefaultFilterBarItem
+                    key={filterItem.filterIndex}
+                    {...props}
+                    item={filterItem}
+                    autoOpenFilter={autoOpenFilter}
+                    addDraggableFilterPlaceholder={addDraggableFilterPlaceholder}
+                    closeAttributeSelection={closeAttributeSelection}
+                    selectDraggableFilter={selectDraggableFilter}
+                    onCloseAttributeFilter={onCloseAttributeFilter}
+                />
+            ))}
             {canAddMoreFilters ? (
                 <DraggableFilterDropZone
                     targetIndex={draggableFiltersCount}

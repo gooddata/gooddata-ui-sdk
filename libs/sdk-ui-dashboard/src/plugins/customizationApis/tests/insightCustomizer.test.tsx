@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type FC } from "react";
 
@@ -74,7 +74,7 @@ function createTestDecoratorFactory(
             }
 
             function Decorator(props: IDashboardInsightProps) {
-                const Decorated = next(insight, widget)!;
+                const Decorated = next(insight, widget);
 
                 return (
                     <div id={name}>
@@ -167,12 +167,12 @@ describe("insight customizer", () => {
 
         it("should override already registered component for a tag", () => {
             Customizer.withTag("tag1", createTestComponent("forTag1a"));
-            suppressConsole(
+            void suppressConsole(
                 () => Customizer.withTag("tag1", createTestComponent("forTag1b")),
                 "warn",
                 (message: string) => message === "Overriding insight component provider for tag 'tag1'. []",
             );
-            suppressConsole(
+            void suppressConsole(
                 () => Customizer.withTag("tag1", createTestComponent("forTag1c")),
                 "warn",
                 (message: string) => message === "Overriding insight component provider for tag 'tag1'. []",
@@ -195,7 +195,7 @@ describe("insight customizer", () => {
 
             const consoleSpy = vi.spyOn(logger, "warn");
 
-            suppressConsole(
+            void suppressConsole(
                 () => customizer.withTag("", createTestComponent("forTag1")),
                 "warn",
                 (message: string) =>

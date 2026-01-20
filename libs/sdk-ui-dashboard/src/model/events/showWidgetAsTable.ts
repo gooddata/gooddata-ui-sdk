@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
@@ -7,10 +7,10 @@ import { eventGuard } from "./util.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link ShowWidgetAsTableSet} event.
+ * Payload of the {@link IShowWidgetAsTableSet} event.
  * @beta
  */
-export interface ShowWidgetAsTableSetPayload {
+export interface IShowWidgetAsTableSetPayload {
     /**
      * Reference to the widget
      */
@@ -26,9 +26,9 @@ export interface ShowWidgetAsTableSetPayload {
  *
  * @beta
  */
-export interface ShowWidgetAsTableSet extends IDashboardEvent {
+export interface IShowWidgetAsTableSet extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SHOW_WIDGET_AS_TABLE.SET";
-    readonly payload: ShowWidgetAsTableSetPayload;
+    readonly payload: IShowWidgetAsTableSetPayload;
 }
 
 /**
@@ -45,7 +45,7 @@ export function showWidgetAsTableSet(
     ref: ObjRef,
     showAsTable: boolean,
     correlationId?: string,
-): ShowWidgetAsTableSet {
+): IShowWidgetAsTableSet {
     return {
         type: "GDC.DASH/EVT.SHOW_WIDGET_AS_TABLE.SET",
         ctx,
@@ -58,11 +58,11 @@ export function showWidgetAsTableSet(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link ShowWidgetAsTableSet}.
+ * Tests whether the provided object is an instance of {@link IShowWidgetAsTableSet}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isShowWidgetAsTableSet = eventGuard<ShowWidgetAsTableSet>(
+export const isShowWidgetAsTableSet = eventGuard<IShowWidgetAsTableSet>(
     "GDC.DASH/EVT.SHOW_WIDGET_AS_TABLE.SET",
 );

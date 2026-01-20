@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { DEFAULT_TAB_ID, type TabState } from "./tabsState.js";
+import { DEFAULT_TAB_ID, type ITabState } from "./tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -22,7 +22,7 @@ export const selectTabsState = selectSelf;
  *
  * @alpha
  */
-export const selectTabs: DashboardSelector<TabState[] | undefined> = createSelector(
+export const selectTabs: DashboardSelector<ITabState[] | undefined> = createSelector(
     selectSelf,
     (tabsState) => {
         return tabsState.tabs;
@@ -58,7 +58,7 @@ export const selectActiveOrDefaultTabLocalIdentifier: DashboardSelector<string> 
  *
  * @alpha
  */
-export const selectActiveTab: DashboardSelector<TabState | undefined> = createSelector(
+export const selectActiveTab: DashboardSelector<ITabState | undefined> = createSelector(
     selectTabs,
     selectActiveTabLocalIdentifier,
     (tabs, activeTabLocalIdentifier) => {
@@ -74,7 +74,7 @@ export const selectActiveTab: DashboardSelector<TabState | undefined> = createSe
  *
  * @alpha
  */
-export const selectTabById = (tabId: string): DashboardSelector<TabState | undefined> =>
+export const selectTabById = (tabId: string): DashboardSelector<ITabState | undefined> =>
     createSelector(selectTabs, (tabs) => {
         if (!tabs) {
             return undefined;

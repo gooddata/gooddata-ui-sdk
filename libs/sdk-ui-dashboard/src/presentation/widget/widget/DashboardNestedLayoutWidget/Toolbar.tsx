@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useRef } from "react";
 
@@ -27,7 +27,7 @@ const ARROW_STYLES = { display: "none" };
 const ALIGN_TOOLBAR_TO = ".s-dash-item.is-selected";
 const IGNORE_TOOLBAR_CLICKS_ON_BY_CLASS = [ALIGN_TOOLBAR_TO]; // do not close on click to the widget
 
-interface ToolbarProps {
+interface IToolbarProps {
     layout: IDashboardLayout<ExtendedDashboardWidget>;
     onWidgetDelete: () => void;
     onWidgetDirectionChanged: (direction: IDashboardLayoutContainerDirection) => void;
@@ -182,7 +182,7 @@ export function Toolbar({
     onWidgetDirectionChanged,
     onToggleHeaders,
     onClose,
-}: ToolbarProps) {
+}: IToolbarProps) {
     const { sections, direction } = getLayoutConfiguration(layout);
     return (
         <Bubble

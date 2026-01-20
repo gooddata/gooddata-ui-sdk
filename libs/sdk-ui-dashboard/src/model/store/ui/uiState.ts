@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Identifier, type ObjRef, type Uri } from "@gooddata/sdk-model";
 
@@ -16,7 +16,7 @@ import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 /**
  * @alpha
  */
-export interface InvalidCustomUrlDrillParameterInfo {
+export interface IInvalidCustomUrlDrillParameterInfo {
     widgetId: Identifier;
     widgetUri: Uri;
     widgetRef: ObjRef;
@@ -32,7 +32,7 @@ export type FilterViewDialogMode = "list" | "add";
 /**
  * @beta
  */
-export interface UiState {
+export interface IUiState {
     scheduleEmailManagementDialog: {
         open: boolean;
         context?: IScheduleEmailContext;
@@ -109,7 +109,7 @@ export interface UiState {
     /** @alpha */
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
-        invalidCustomUrlDrillParameterWidgets: InvalidCustomUrlDrillParameterInfo[];
+        invalidCustomUrlDrillParameterWidgets: IInvalidCustomUrlDrillParameterInfo[];
     };
     /** @internal */
     draggingWidgetSource: DraggableLayoutItem | undefined;
@@ -119,7 +119,7 @@ export interface UiState {
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
 }
 
-export const uiInitialState: UiState = {
+export const uiInitialState: IUiState = {
     scheduleEmailManagementDialog: {
         open: false,
     },

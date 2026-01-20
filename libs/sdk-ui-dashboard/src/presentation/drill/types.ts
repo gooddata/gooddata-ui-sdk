@@ -3,12 +3,12 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    type IDrillToAttributeUrl,
-    type IDrillToCustomUrl,
-    type IDrillToInsight,
-    type IInsight,
-    type IKeyDriveAnalysis,
-    type IListedDashboard,
+    type IDrillToAttributeUrl as IDrillToAttributeUrlModel,
+    type IDrillToCustomUrl as IDrillToCustomUrlModel,
+    type IDrillToInsight as IDrillToInsightModel,
+    type IInsight as IInsightModel,
+    type IKeyDriveAnalysis as IKeyDriveAnalysisModel,
+    type IListedDashboard as IListedDashboardModel,
     type ObjRef,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
@@ -17,29 +17,29 @@ import { type IAvailableDrillTargetMeasure, type IAvailableDrillTargets } from "
 
 import { type IKdaDefinition } from "../../kdaDialog/index.js";
 import {
-    type CrossFiltering,
-    type DashboardCommandFailed,
-    type DashboardCrossFilteringResolved,
     type DashboardDrillCommand,
-    type DashboardDrillDownResolved,
-    type DashboardDrillResolved,
-    type DashboardDrillToAttributeUrlResolved,
-    type DashboardDrillToCustomUrlResolved,
-    type DashboardDrillToDashboardResolved,
-    type DashboardDrillToInsightResolved,
-    type DashboardDrillToLegacyDashboardResolved,
-    type DashboardKeyDriverAnalysisResolved,
-    type Drill,
-    type DrillDown,
-    type DrillToAttributeUrl,
-    type DrillToCustomUrl,
-    type DrillToDashboard,
-    type DrillToInsight,
-    type DrillToLegacyDashboard,
-    type KeyDriverAnalysis,
+    type ICrossFiltering,
+    type IDashboardCommandFailed,
+    type IDashboardCrossFilteringResolved,
+    type IDashboardDrillDownResolved,
+    type IDashboardDrillResolved,
+    type IDashboardDrillToAttributeUrlResolved,
+    type IDashboardDrillToCustomUrlResolved,
+    type IDashboardDrillToDashboardResolved,
+    type IDashboardDrillToInsightResolved,
+    type IDashboardDrillToLegacyDashboardResolved,
+    type IDashboardKeyDriverAnalysisResolved,
+    type IDrill,
+    type IDrillDown,
+    type IDrillToAttributeUrl,
+    type IDrillToCustomUrl,
+    type IDrillToDashboard,
+    type IDrillToInsight,
+    type IDrillToLegacyDashboard,
+    type IKeyDriverAnalysis,
 } from "../../model/index.js";
 import {
-    type DashboardDrillContext,
+    type IDashboardDrillContext,
     type IDashboardDrillEvent,
     type IDrillDownDefinition,
 } from "../../types.js";
@@ -47,101 +47,101 @@ import {
 /**
  * @alpha
  */
-export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
+export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext) => void;
 
 /**
  * @internal
  */
-export type OnDashboardDrillError = (event: DashboardCommandFailed<DashboardDrillCommand>) => void;
+export type OnDashboardDrillError = (event: IDashboardCommandFailed<DashboardDrillCommand>) => void;
 
 /**
  * @internal
  */
-export type OnDashboardDrill = (cmd: Drill) => void;
+export type OnDashboardDrill = (cmd: IDrill) => void;
 
 /**
  * @internal
  */
-export type OnDashboardDrillSuccess = (event: DashboardDrillResolved) => void;
+export type OnDashboardDrillSuccess = (event: IDashboardDrillResolved) => void;
 
 /**
  * @internal
  */
-export type OnDrillDown = (cmd: DrillDown) => void;
+export type OnDrillDown = (cmd: IDrillDown) => void;
 
 /**
  * @alpha
  */
-export type OnDrillDownSuccess = (event: DashboardDrillDownResolved) => void;
+export type OnDrillDownSuccess = (event: IDashboardDrillDownResolved) => void;
 
 /**
  * @internal
  */
-export type OnDrillToInsight = (cmd: DrillToInsight) => void;
+export type OnDrillToInsight = (cmd: IDrillToInsight) => void;
 
 /**
  * @alpha
  */
-export type OnDrillToInsightSuccess = (event: DashboardDrillToInsightResolved) => void;
+export type OnDrillToInsightSuccess = (event: IDashboardDrillToInsightResolved) => void;
 
 /**
  * @internal
  */
-export type OnDrillToDashboard = (cmd: DrillToDashboard) => void;
+export type OnDrillToDashboard = (cmd: IDrillToDashboard) => void;
 
 /**
  * @alpha
  */
-export type OnDrillToDashboardSuccess = (event: DashboardDrillToDashboardResolved) => void;
+export type OnDrillToDashboardSuccess = (event: IDashboardDrillToDashboardResolved) => void;
 
 /**
  * @internal
  */
-export type OnDrillToAttributeUrl = (cmd: DrillToAttributeUrl) => void;
+export type OnDrillToAttributeUrl = (cmd: IDrillToAttributeUrl) => void;
 
 /**
  * @alpha
  */
-export type OnDrillToAttributeUrlSuccess = (event: DashboardDrillToAttributeUrlResolved) => void;
+export type OnDrillToAttributeUrlSuccess = (event: IDashboardDrillToAttributeUrlResolved) => void;
 
 /**
  * @internal
  */
-export type OnDrillToCustomUrl = (cmd: DrillToCustomUrl) => void;
+export type OnDrillToCustomUrl = (cmd: IDrillToCustomUrl) => void;
 
 /**
  * @alpha
  */
-export type OnDrillToCustomUrlSuccess = (event: DashboardDrillToCustomUrlResolved) => void;
+export type OnDrillToCustomUrlSuccess = (event: IDashboardDrillToCustomUrlResolved) => void;
 
 /**
  * @internal
  */
-export type OnDrillToLegacyDashboard = (cmd: DrillToLegacyDashboard) => void;
+export type OnDrillToLegacyDashboard = (cmd: IDrillToLegacyDashboard) => void;
 
 /**
  * @internal
  */
-export type OnDrillToLegacyDashboardSuccess = (event: DashboardDrillToLegacyDashboardResolved) => void;
+export type OnDrillToLegacyDashboardSuccess = (event: IDashboardDrillToLegacyDashboardResolved) => void;
 
 /**
  * @beta
  */
-export interface DrillStep {
+export interface IDrillStep {
     drillEvent: IDashboardDrillEvent;
-    drillDefinition: IDrillToInsight | IDrillDownDefinition;
-    insight: IInsight;
+    drillDefinition: IDrillToInsightModel | IDrillDownDefinition;
+    insight: IInsightModel;
 }
 
 /**
  * @internal
  */
-export type OnCrossFiltering = (cmd: CrossFiltering) => void;
+export type OnCrossFiltering = (cmd: ICrossFiltering) => void;
 
 /**
  * @internal
  */
-export type OnCrossFilteringSuccess = (event: DashboardCrossFilteringResolved) => void;
+export type OnCrossFilteringSuccess = (event: IDashboardCrossFilteringResolved) => void;
 
 /**
  * @internal
@@ -151,21 +151,21 @@ export type OnCrossFilteringError = OnDashboardDrillError;
 /**
  * @internal
  */
-export interface KeyDriveInfo {
+export interface IKeyDriveInfo {
     readonly keyDriveDefinition: IKdaDefinition;
     drillEvent: IDashboardDrillEvent;
-    drillDefinition: IKeyDriveAnalysis;
+    drillDefinition: IKeyDriveAnalysisModel;
 }
 
 /**
  * @internal
  */
-export type OnKeyDriverAnalysis = (cmd: KeyDriverAnalysis) => void;
+export type OnKeyDriverAnalysis = (cmd: IKeyDriverAnalysis) => void;
 
 /**
  * @internal
  */
-export type OnKeyDriverAnalysisSuccess = (event: DashboardKeyDriverAnalysisResolved) => void;
+export type OnKeyDriverAnalysisSuccess = (event: IDashboardKeyDriverAnalysisResolved) => void;
 
 /**
  * @internal
@@ -177,7 +177,7 @@ export type OnKeyDriverAnalysisError = OnDashboardDrillError;
 /**
  * @internal
  */
-export type IDrillToUrl = IDrillToCustomUrl | IDrillToAttributeUrl;
+export type IDrillToUrl = IDrillToCustomUrlModel | IDrillToAttributeUrlModel;
 
 export function isDrillToUrl(drillDefinition: unknown): drillDefinition is IDrillToUrl {
     return isDrillToCustomUrl(drillDefinition) || isDrillToAttributeUrl(drillDefinition);
@@ -306,7 +306,7 @@ export interface IAttributeDisplayForm {
 
 export interface IDefinitionValidationData {
     supportedDrillableItems: IAvailableDrillTargets;
-    dashboardsList: IListedDashboard[];
+    dashboardsList: IListedDashboardModel[];
     attributeDisplayForms?: IAttributeDisplayForm[];
 }
 

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -9,7 +9,7 @@ export const header: IConfiguration<"header"> = {
             version: "3.1.1",
         },
     ],
-    plugin: "header",
+    plugins: ["header"],
     rules: {
         "header/header": [
             2,

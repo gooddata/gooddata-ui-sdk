@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -9,7 +9,7 @@ import { objRefToString } from "@gooddata/sdk-model";
 // import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../../model/store/catalog/catalogSelectors.js";
-import { type AddDateFilter } from "../../../commands/filters.js";
+import { type IAddDateFilter } from "../../../commands/filters.js";
 import { dateFilterAdded } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -22,7 +22,7 @@ import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
-export function* addDateFilterHandler(ctx: DashboardContext, cmd: AddDateFilter): SagaIterator<void> {
+export function* addDateFilterHandler(ctx: DashboardContext, cmd: IAddDateFilter): SagaIterator<void> {
     const { index, dateDataset } = cmd.payload;
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> =

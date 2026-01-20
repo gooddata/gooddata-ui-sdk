@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -9,7 +9,7 @@ import { type IAttributeMetadataObject } from "@gooddata/sdk-model";
 
 import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
-import { type SetAttributeFilterDisplayForm } from "../../../commands/filters.js";
+import { type ISetAttributeFilterDisplayForm } from "../../../commands/filters.js";
 import { attributeDisplayFormChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
@@ -27,7 +27,7 @@ import { dispatchFilterContextChanged } from "../common.js";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
-    cmd: SetAttributeFilterDisplayForm,
+    cmd: ISetAttributeFilterDisplayForm,
 ): SagaIterator<void> {
     const { filterLocalId, displayForm, isWorkingSelectionChange, isResultOfMigration } = cmd.payload;
 

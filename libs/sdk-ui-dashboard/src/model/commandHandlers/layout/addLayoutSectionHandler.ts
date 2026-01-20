@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -12,7 +12,7 @@ import {
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation.js";
 import { validateSectionPlacement } from "./validation/layoutValidation.js";
-import { type ItemResolutionResult, validateAndResolveStashedItems } from "./validation/stashValidation.js";
+import { type IItemResolutionResult, validateAndResolveStashedItems } from "./validation/stashValidation.js";
 import {
     asLayoutItemPath,
     findSections,
@@ -20,9 +20,9 @@ import {
     updateSectionIndex,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { type AddLayoutSection } from "../../commands/index.js";
+import { type IAddLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout.js";
+import { type IDashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
@@ -38,14 +38,14 @@ import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: AddLayoutSection;
+    readonly cmd: IAddLayoutSection;
     readonly initialItems: InternalDashboardItemDefinition[];
     readonly layout: ReturnType<typeof selectLayout>;
     readonly stash: ReturnType<typeof selectStash>;
     readonly availableInsights: ReturnType<typeof selectInsightsMap>;
 };
 
-function validateAndResolveItems(commandCtx: AddLayoutSectionContext): ItemResolutionResult {
+function validateAndResolveItems(commandCtx: AddLayoutSectionContext): IItemResolutionResult {
     const {
         ctx,
         layout,
@@ -81,8 +81,8 @@ function validateAndResolveItems(commandCtx: AddLayoutSectionContext): ItemResol
 
 export function* addLayoutSectionHandler(
     ctx: DashboardContext,
-    cmd: AddLayoutSection,
-): SagaIterator<DashboardLayoutSectionAdded> {
+    cmd: IAddLayoutSection,
+): SagaIterator<IDashboardLayoutSectionAdded> {
     const {
         payload: { initialItems = [] },
     } = cmd;

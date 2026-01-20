@@ -1,12 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
+import { type IMoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardLayoutChanged,
-    type DashboardLayoutSectionMoved,
+    type IDashboardCommandFailed,
+    type IDashboardLayoutChanged,
+    type IDashboardLayoutSectionMoved,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
@@ -29,7 +29,7 @@ describe("move section command handler", () => {
 
         it("should fail if bad section index specified", async () => {
             const originalLayout = selectLayout(Tester.state());
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
+            const event: IDashboardCommandFailed<IMoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(originalLayout.sections.length, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
@@ -52,7 +52,7 @@ describe("move section command handler", () => {
         });
 
         it("should move first section to the end of the section list", async () => {
-            const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(0, -1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
@@ -65,7 +65,7 @@ describe("move section command handler", () => {
         });
 
         it("should move first section to the end of the section list using absolute index", async () => {
-            const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(0, 2),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
@@ -78,7 +78,7 @@ describe("move section command handler", () => {
         });
 
         it("should move first section to the middle of the section list", async () => {
-            const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(0, 1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
@@ -91,7 +91,7 @@ describe("move section command handler", () => {
         });
 
         it("should move second section to the end of the section list", async () => {
-            const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(1, -1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
@@ -104,7 +104,7 @@ describe("move section command handler", () => {
         });
 
         it("should move second section to the end of the section list using absolute index", async () => {
-            const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(1, 2),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
@@ -117,7 +117,7 @@ describe("move section command handler", () => {
         });
 
         it("should move second section to the beginning of the section list", async () => {
-            const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(1, 0),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
@@ -130,7 +130,7 @@ describe("move section command handler", () => {
         });
 
         it("should move third section to the middle of the section list", async () => {
-            const event: DashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
+            const event: IDashboardLayoutSectionMoved = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(2, 1),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
@@ -155,7 +155,7 @@ describe("move section command handler", () => {
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
             );
 
-            const lastMoveUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const lastMoveUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );
@@ -171,7 +171,7 @@ describe("move section command handler", () => {
                 ThirdSection,
             ]);
 
-            const firstMoveUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
+            const firstMoveUndone: IDashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
                 "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
             );

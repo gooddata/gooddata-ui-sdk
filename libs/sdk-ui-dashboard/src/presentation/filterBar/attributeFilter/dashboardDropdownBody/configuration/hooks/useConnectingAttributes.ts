@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useEffect, useMemo } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
@@ -6,7 +7,7 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     type IConnectingAttribute,
-    type QueryConnectingAttributes,
+    type IQueryConnectingAttributes,
     queryConnectingAttributes,
     selectSupportsSettingConnectingAttributes,
     useDashboardQueryProcessing,
@@ -43,7 +44,7 @@ export function useConnectingAttributes(
         status: connectingAttributesStatus,
         error: connectingAttributesError,
     } = useDashboardQueryProcessing<
-        QueryConnectingAttributes,
+        IQueryConnectingAttributes,
         IConnectingAttribute[][],
         Parameters<typeof queryConnectingAttributes>
     >({

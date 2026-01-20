@@ -331,6 +331,8 @@ export {
     ROW_HEIGHT_LARGE as UiAsyncTableRowHeightLarge,
     SCROLLBAR_WIDTH as UiAsyncTableScrollbarWidth,
     CHECKBOX_COLUMN_WIDTH as UiAsyncTableCheckboxColumnWidth,
+    MENU_COLUMN_WIDTH as UiAsyncTableMenuColumnWidth,
+    MENU_COLUMN_WIDTH_LARGE as UiAsyncTableMenuColumnWidthLarge,
 } from "./@ui/UiAsyncTable/UiAsyncTable/constants.js";
 export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";
@@ -413,3 +415,6 @@ export {
     type IUiComboboxState,
     useComboboxState,
 } from "./@ui/UiCombobox/index.js";
+
+export type { IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";
+export { UiCopyButton } from "./@ui/UiCopyButton/UiCopyButton.js";

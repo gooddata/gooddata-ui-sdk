@@ -14,11 +14,12 @@ import {
     newMeasure,
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { BucketNames, GeoLocationMissingSdkError } from "@gooddata/sdk-ui";
 import { GeoChartNextInternal, PUSHPIN_LAYER_ID } from "@gooddata/sdk-ui-geo/next";
 
-import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
+import { type IReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { PluggableGeoPushpinChartNext } from "../PluggableGeoPushpinChartNext.js";
 
@@ -98,6 +99,38 @@ describe("PluggableGeoPushpinChartNext", () => {
         expect(onError).toHaveBeenCalledWith(expect.any(GeoLocationMissingSdkError));
     });
 
+    it("should surface GeoLocationMissingSdkError when lat/long controls are missing", () => {
+        const onError = vi.fn();
+        const { visualization } = createComponent(onError);
+
+        const insightWithMissingLatLong: IInsightDefinition = newInsightDefinition(
+            visualizationUrl,
+            (builder) =>
+                builder
+                    .title("missing lat/long controls")
+                    .buckets([
+                        newBucket(
+                            BucketNames.LOCATION,
+                            newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                        ),
+                        newBucket(
+                            BucketNames.SIZE,
+                            newMeasure("m1", (m) => m.localId("m_size")),
+                        ),
+                    ])
+                    .properties({
+                        controls: {
+                            // Intentionally missing latitude/longitude
+                        },
+                    }),
+        );
+
+        visualization.update({ messages }, insightWithMissingLatLong, {}, executionFactory);
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(onError).toHaveBeenCalledWith(expect.any(GeoLocationMissingSdkError));
+    });
+
     it("should proceed without errors when location bucket is present", () => {
         const onError = vi.fn();
         const { visualization } = createComponent(onError);
@@ -107,6 +140,77 @@ describe("PluggableGeoPushpinChartNext", () => {
         ).not.toThrow();
 
         expect(onError).not.toHaveBeenCalled();
+    });
+
+    it("should not move a non-geo attribute into SEGMENT when switching (no valid location)", async () => {
+        const { visualization } = createComponent();
+
+        const referencePoint: IReferencePoint = {
+            buckets: [
+                {
+                    localIdentifier: BucketNames.VIEW,
+                    items: [
+                        {
+                            localIdentifier: "a_view",
+                            type: "attribute",
+                            attribute: "attr.region",
+                            dfRef: uriRef("/df/region"),
+                            // no locationDisplayFormRef => not geo-capable
+                        },
+                    ],
+                },
+            ],
+            filters: { localIdentifier: "filters", items: [] },
+            properties: {},
+        };
+
+        const extended = await visualization.getExtendedReferencePoint(referencePoint);
+        const segmentBucket = extended.buckets.find((b) => b.localIdentifier === BucketNames.SEGMENT);
+        expect(segmentBucket?.items ?? []).toEqual([]);
+    });
+
+    it("should not treat an area-only attribute as location when switching", async () => {
+        const { visualization } = createComponent();
+
+        const referencePoint: IReferencePoint = {
+            buckets: [
+                {
+                    localIdentifier: BucketNames.VIEW,
+                    items: [
+                        {
+                            localIdentifier: "a_region",
+                            type: "attribute",
+                            attribute: "attr.region",
+                            dfRef: uriRef("/df/region_text"),
+                            // This is set for geo-capable attributes, but for pushpin we must require lat+long.
+                            locationDisplayFormRef: uriRef("/df/region_area"),
+                            displayForms: [
+                                {
+                                    id: "attr.region_name",
+                                    ref: uriRef("/df/region_text"),
+                                    type: "GDC.text",
+                                    title: "Region name",
+                                    isDefault: true,
+                                },
+                                {
+                                    id: "attr.region_area",
+                                    ref: uriRef("/df/region_area"),
+                                    type: "GDC.geo.area",
+                                    title: "Region area",
+                                    isDefault: false,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            filters: { localIdentifier: "filters", items: [] },
+            properties: {},
+        };
+
+        const extended = await visualization.getExtendedReferencePoint(referencePoint);
+        const locationBucket = extended.buckets.find((b) => b.localIdentifier === BucketNames.LOCATION);
+        expect(locationBucket?.items ?? []).toEqual([]);
     });
 
     it("should render GeoChartNext with pushpin layer metadata", () => {

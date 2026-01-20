@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type IAttribute, type IColorPalette } from "@gooddata/sdk-model";
+import { type IColorPalette } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
@@ -21,7 +21,6 @@ export interface IGeoPushpinChartNextConfig {
     legend?: IGeoLegendConfigNext;
     limit?: number;
     selectedSegmentItems?: string[];
-    tooltipText?: IAttribute;
     zoom?: number; // in the 0-22 zoom range
     /**
      * Custom MapLibre style URL or inline specification.

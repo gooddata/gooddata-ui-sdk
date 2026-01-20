@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IDashboardCommand } from "./base.js";
 
 /**
- * Payload of the {@link SwitchDashboardTab} command.
+ * Payload of the {@link ISwitchDashboardTab} command.
  * @alpha
  */
-export interface SwitchDashboardTabPayload {
+export interface ISwitchDashboardTabPayload {
     /**
      * Identifier of the tab to switch to.
      */
@@ -14,11 +14,11 @@ export interface SwitchDashboardTabPayload {
 }
 
 /**
- * Payload of the {@link ConvertDashboardTabFromDefault} command.
+ * Payload of the {@link IConvertDashboardTabFromDefault} command.
  *
  * @alpha
  */
-export interface ConvertDashboardTabFromDefaultPayload {
+export interface IConvertDashboardTabFromDefaultPayload {
     /**
      * Optional title for the new tab.
      */
@@ -35,9 +35,9 @@ export interface ConvertDashboardTabFromDefaultPayload {
  *
  * @alpha
  */
-export interface ConvertDashboardTabFromDefault extends IDashboardCommand {
+export interface IConvertDashboardTabFromDefault extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT";
-    readonly payload: ConvertDashboardTabFromDefaultPayload;
+    readonly payload: IConvertDashboardTabFromDefaultPayload;
 }
 
 /**
@@ -52,7 +52,7 @@ export interface ConvertDashboardTabFromDefault extends IDashboardCommand {
 export function convertDashboardTabFromDefault(
     title?: string,
     correlationId?: string,
-): ConvertDashboardTabFromDefault {
+): IConvertDashboardTabFromDefault {
     return {
         type: "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT",
         correlationId,
@@ -71,9 +71,9 @@ export function convertDashboardTabFromDefault(
  *
  * @alpha
  */
-export interface SwitchDashboardTab extends IDashboardCommand {
+export interface ISwitchDashboardTab extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.SWITCH";
-    readonly payload: SwitchDashboardTabPayload;
+    readonly payload: ISwitchDashboardTabPayload;
 }
 
 /**
@@ -85,7 +85,7 @@ export interface SwitchDashboardTab extends IDashboardCommand {
  *
  * @alpha
  */
-export function switchDashboardTab(tabId: string, correlationId?: string): SwitchDashboardTab {
+export function switchDashboardTab(tabId: string, correlationId?: string): ISwitchDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.SWITCH",
         correlationId,
@@ -104,16 +104,16 @@ export function switchDashboardTab(tabId: string, correlationId?: string): Switc
  *
  * @alpha
  */
-export interface RepositionDashboardTab extends IDashboardCommand {
+export interface IRepositionDashboardTab extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.REPOSITION";
-    readonly payload: RepositionDashboardTabPayload;
+    readonly payload: IRepositionDashboardTabPayload;
 }
 
 /**
- * Payload of the {@link RepositionDashboardTab} command.
+ * Payload of the {@link IRepositionDashboardTab} command.
  * @alpha
  */
-export interface RepositionDashboardTabPayload {
+export interface IRepositionDashboardTabPayload {
     /**
      * Old index of the tab before the reposition.
      */
@@ -138,7 +138,7 @@ export function repositionDashboardTab(
     oldIndex: number,
     newIndex: number,
     correlationId?: string,
-): RepositionDashboardTab {
+): IRepositionDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.REPOSITION",
         correlationId,
@@ -150,10 +150,10 @@ export function repositionDashboardTab(
 }
 
 /**
- * Payload of the {@link CreateDashboardTab} command.
+ * Payload of the {@link ICreateDashboardTab} command.
  * @alpha
  */
-export interface CreateDashboardTabPayload {
+export interface ICreateDashboardTabPayload {
     /**
      * Optional title for the new tab. If not provided, empty title will be used.
      */
@@ -179,9 +179,9 @@ export interface CreateDashboardTabPayload {
  *
  * @alpha
  */
-export interface CreateDashboardTab extends IDashboardCommand {
+export interface ICreateDashboardTab extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.CREATE";
-    readonly payload: CreateDashboardTabPayload;
+    readonly payload: ICreateDashboardTabPayload;
 }
 
 /**
@@ -200,7 +200,7 @@ export function createDashboardTab(
     index?: number,
     shouldStartRenaming?: boolean,
     correlationId?: string,
-): CreateDashboardTab {
+): ICreateDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.CREATE",
         correlationId,
@@ -213,10 +213,10 @@ export function createDashboardTab(
 }
 
 /**
- * Payload of the {@link DeleteDashboardTab} command.
+ * Payload of the {@link IDeleteDashboardTab} command.
  * @alpha
  */
-export interface DeleteDashboardTabPayload {
+export interface IDeleteDashboardTabPayload {
     /**
      * Identifier of the tab to delete.
      */
@@ -234,9 +234,9 @@ export interface DeleteDashboardTabPayload {
  *
  * @alpha
  */
-export interface DeleteDashboardTab extends IDashboardCommand {
+export interface IDeleteDashboardTab extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.DELETE";
-    readonly payload: DeleteDashboardTabPayload;
+    readonly payload: IDeleteDashboardTabPayload;
 }
 
 /**
@@ -248,7 +248,7 @@ export interface DeleteDashboardTab extends IDashboardCommand {
  *
  * @alpha
  */
-export function deleteDashboardTab(tabId: string, correlationId?: string): DeleteDashboardTab {
+export function deleteDashboardTab(tabId: string, correlationId?: string): IDeleteDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.DELETE",
         correlationId,
@@ -259,10 +259,10 @@ export function deleteDashboardTab(tabId: string, correlationId?: string): Delet
 }
 
 /**
- * Payload of the {@link StartRenamingDashboardTab} command.
+ * Payload of the {@link IStartRenamingDashboardTab} command.
  * @alpha
  */
-export interface StartRenamingDashboardTabPayload {
+export interface IStartRenamingDashboardTabPayload {
     /**
      * Optional identifier of the tab to start renaming. If not provided, the active tab is used.
      */
@@ -278,9 +278,9 @@ export interface StartRenamingDashboardTabPayload {
  * Command to start renaming mode for a tab.
  * @alpha
  */
-export interface StartRenamingDashboardTab extends IDashboardCommand {
+export interface IStartRenamingDashboardTab extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.START";
-    readonly payload: StartRenamingDashboardTabPayload;
+    readonly payload: IStartRenamingDashboardTabPayload;
 }
 
 /**
@@ -291,7 +291,7 @@ export function startRenamingDashboardTab(
     tabId?: string,
     correlationId?: string,
     shouldSelectTab?: boolean,
-): StartRenamingDashboardTab {
+): IStartRenamingDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.RENAME_MODE.START",
         correlationId,
@@ -300,10 +300,10 @@ export function startRenamingDashboardTab(
 }
 
 /**
- * Payload of the {@link CancelRenamingDashboardTab} command.
+ * Payload of the {@link ICancelRenamingDashboardTab} command.
  * @alpha
  */
-export interface CancelRenamingDashboardTabPayload {
+export interface ICancelRenamingDashboardTabPayload {
     /**
      * Optional identifier of the tab to cancel renaming. If not provided, the active tab is used.
      */
@@ -314,9 +314,9 @@ export interface CancelRenamingDashboardTabPayload {
  * Command to cancel renaming mode for a tab.
  * @alpha
  */
-export interface CancelRenamingDashboardTab extends IDashboardCommand {
+export interface ICancelRenamingDashboardTab extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL";
-    readonly payload: CancelRenamingDashboardTabPayload;
+    readonly payload: ICancelRenamingDashboardTabPayload;
 }
 
 /**
@@ -326,7 +326,7 @@ export interface CancelRenamingDashboardTab extends IDashboardCommand {
 export function cancelRenamingDashboardTab(
     tabId?: string,
     correlationId?: string,
-): CancelRenamingDashboardTab {
+): ICancelRenamingDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL",
         correlationId,
@@ -335,10 +335,10 @@ export function cancelRenamingDashboardTab(
 }
 
 /**
- * Payload of the {@link RenameDashboardTab} command.
+ * Payload of the {@link IRenameDashboardTab} command.
  * @alpha
  */
-export interface RenameDashboardTabPayload {
+export interface IRenameDashboardTabPayload {
     /**
      * New title for the tab.
      */
@@ -353,9 +353,9 @@ export interface RenameDashboardTabPayload {
  * Command to rename a dashboard tab.
  * @alpha
  */
-export interface RenameDashboardTab extends IDashboardCommand {
+export interface IRenameDashboardTab extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.TAB.RENAME";
-    readonly payload: RenameDashboardTabPayload;
+    readonly payload: IRenameDashboardTabPayload;
 }
 
 /**
@@ -366,7 +366,7 @@ export function renameDashboardTab(
     title: string,
     tabId?: string,
     correlationId?: string,
-): RenameDashboardTab {
+): IRenameDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.RENAME",
         correlationId,

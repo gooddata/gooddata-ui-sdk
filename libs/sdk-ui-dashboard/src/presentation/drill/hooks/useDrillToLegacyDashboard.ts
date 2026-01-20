@@ -1,8 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import {
-    type DashboardCommandFailed,
-    type DashboardDrillToLegacyDashboardResolved,
-    type DrillToLegacyDashboard,
+    type IDashboardCommandFailed,
+    type IDashboardDrillToLegacyDashboardResolved,
+    type IDrillToLegacyDashboard,
     drillToLegacyDashboard,
     useDashboardCommandProcessing,
 } from "../../../model/index.js";
@@ -10,10 +11,10 @@ import {
 /**
  * @internal
  */
-export interface UseDrillToLegacyDashboardProps {
-    onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
-    onError?: (event: DashboardCommandFailed<DrillToLegacyDashboard>) => void;
-    onBeforeRun?: (cmd: DrillToLegacyDashboard) => void;
+export interface IUseDrillToLegacyDashboardProps {
+    onSuccess?: (event: IDashboardDrillToLegacyDashboardResolved) => void;
+    onError?: (event: IDashboardCommandFailed<IDrillToLegacyDashboard>) => void;
+    onBeforeRun?: (cmd: IDrillToLegacyDashboard) => void;
 }
 
 /**
@@ -23,7 +24,7 @@ export const useDrillToLegacyDashboard = ({
     onSuccess,
     onError,
     onBeforeRun,
-}: UseDrillToLegacyDashboardProps = {}) => {
+}: IUseDrillToLegacyDashboardProps = {}) => {
     return useDashboardCommandProcessing({
         commandCreator: drillToLegacyDashboard,
         successEvent: "GDC.DASH/EVT.DRILL.DRILL_TO_LEGACY_DASHBOARD.RESOLVED",

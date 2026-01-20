@@ -3,8 +3,8 @@
 import { type IAvailableDrillTargetAttribute, type IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
 import {
-    type DashboardDrillContext,
     type DashboardDrillDefinition,
+    type IDashboardDrillContext,
     type IDashboardDrillEvent,
 } from "../../../types.js";
 
@@ -20,7 +20,7 @@ export enum DrillType {
     KEY_DRIVER_ANALYSIS = "key-driver-analysis",
 }
 
-export interface DrillSelectItem {
+export interface IDrillSelectItem {
     type: DrillType;
     id: string;
     name: string;
@@ -31,10 +31,10 @@ export interface DrillSelectItem {
     tooltipText?: string;
 }
 
-export interface DrillSelectContext {
+export interface IDrillSelectContext {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDashboardDrillEvent;
-    drillContext?: DashboardDrillContext;
+    drillContext?: IDashboardDrillContext;
     correlationId?: string;
 }
 

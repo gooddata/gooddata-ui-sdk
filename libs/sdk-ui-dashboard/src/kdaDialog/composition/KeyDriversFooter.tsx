@@ -9,7 +9,7 @@ import { DropdownInvertableSelect, InvertableSelectItem, UiButton, UiSkeleton } 
 
 import { selectCatalogAttributes, selectCatalogIsLoaded, useDashboardSelector } from "../../model/index.js";
 import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
-import { type KdaItemGroup } from "../internalTypes.js";
+import { type IKdaItemGroup } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 export function KeyDriversFooter() {
@@ -30,7 +30,7 @@ export function KeyDriversFooter() {
 
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const { validAttributes, mapAttributes } = useMemo(() => {
-        const mapAttributes = new Map<ObjRef, KdaItemGroup | undefined>();
+        const mapAttributes = new Map<ObjRef, IKdaItemGroup | undefined>();
         const validAttributes = allAttributes
             .filter((a) => {
                 return state.relevantAttributes.some((attr) => areObjRefsEqual(attr, a.attribute.ref));

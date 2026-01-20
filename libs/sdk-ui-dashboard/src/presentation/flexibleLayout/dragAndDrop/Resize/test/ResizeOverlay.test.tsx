@@ -1,19 +1,19 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { IntlWrapper } from "../../../../localization/index.js";
-import { ResizeOverlay, type ResizeOverlayProps } from "../ResizeOverlay.js";
+import { type IResizeOverlayProps, ResizeOverlay } from "../ResizeOverlay.js";
 
-const defaultProps: ResizeOverlayProps = {
+const defaultProps: IResizeOverlayProps = {
     isResizingColumnOrRow: false,
     isActive: false,
     reachedWidthLimit: "none",
     reachedHeightLimit: "none",
 };
 
-function createComponent(customProps: Partial<ResizeOverlayProps> = {}) {
+function createComponent(customProps: Partial<IResizeOverlayProps> = {}) {
     const props = { ...defaultProps, ...customProps };
     return render(
         <IntlWrapper>

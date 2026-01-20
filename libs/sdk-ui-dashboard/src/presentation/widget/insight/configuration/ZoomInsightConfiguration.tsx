@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -15,11 +15,11 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 
-interface ZoomInsightConfigurationProps {
+interface IZoomInsightConfigurationProps {
     widget: IInsightWidget;
 }
 
-export function ZoomInsightConfiguration({ widget }: ZoomInsightConfigurationProps) {
+export function ZoomInsightConfiguration({ widget }: IZoomInsightConfigurationProps) {
     const intl = useIntl();
     // useState helps the status of checkbox change faster than using the zoomable value
     const [zoomInsightState, setZoomInsightStatus] = useState(widget.properties?.["controls"]?.zoomInsight);

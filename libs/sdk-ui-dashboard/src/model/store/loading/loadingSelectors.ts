@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { type LoadingState } from "./loadingState.js";
+import { type ILoadingState } from "./loadingState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
@@ -13,7 +13,7 @@ const selectSelf = createSelector(
 /**
  * @internal
  */
-export const selectDashboardLoading: DashboardSelector<LoadingState> = selectSelf;
+export const selectDashboardLoading: DashboardSelector<ILoadingState> = selectSelf;
 
 /**
  * @internal

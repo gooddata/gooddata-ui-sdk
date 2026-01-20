@@ -64,11 +64,11 @@ export {
     selectFirstTabLocalIdentifier,
 } from "./tabsSelectors.js";
 export type {
-    TabsState,
-    TabState,
+    ITabsState,
+    ITabState,
     FilterContextState,
-    DateFilterConfigState,
-    LayoutState,
+    IDateFilterConfigState,
+    ILayoutState,
 } from "./tabsState.js";
 
 export type {
@@ -77,3 +77,5 @@ export type {
     IWorkingFilterContextDefinition,
 } from "./filterContext/filterContextState.js";
 export { DEFAULT_TAB_ID } from "./tabsState.js";
+
+export { selectFilterGroupsConfig } from "./filterGroups/filterGroupsSelectors.js";

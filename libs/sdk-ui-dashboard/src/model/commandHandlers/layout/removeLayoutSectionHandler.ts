@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -12,9 +12,9 @@ import {
     serializeLayoutSectionPath,
     updateSectionIndex,
 } from "../../../_staging/layout/coordinates.js";
-import { type RemoveLayoutSection } from "../../commands/index.js";
+import { type IRemoveLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
+import { type IDashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -22,8 +22,8 @@ import { resolveRelativeIndex } from "../../utils/arrayOps.js";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,
-    cmd: RemoveLayoutSection,
-): SagaIterator<DashboardLayoutSectionRemoved> {
+    cmd: IRemoveLayoutSection,
+): SagaIterator<IDashboardLayoutSectionRemoved> {
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
     const { index, stashIdentifier } = cmd.payload;
     const isLegacyCommand = typeof index === "number";

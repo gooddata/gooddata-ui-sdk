@@ -66,7 +66,7 @@ const MENU_LIST_ID = "gd-recipients-menu-list-id";
 const { Menu, Input, MultiValueRemove, MenuList } = ReactSelectComponents;
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-interface RecipientTooltipOptions {
+interface IRecipientTooltipOptions {
     hasEmail?: boolean;
     noExternal?: boolean;
     invalidExternal?: boolean;
@@ -75,13 +75,13 @@ interface RecipientTooltipOptions {
     email?: string;
 }
 
-interface TooltipConfig {
+interface ITooltipConfig {
     content: ReactElement | string;
     variant: "error" | "default";
     arrowPlacement: "left" | "right";
 }
 
-function getRecipientTooltipConfig(options: RecipientTooltipOptions, label: string): TooltipConfig | null {
+function getRecipientTooltipConfig(options: IRecipientTooltipOptions, label: string): ITooltipConfig | null {
     if (options.invalidLoggedUser === true) {
         return {
             content: <FormattedMessage id="dialogs.schedule.email.user.notMe" />,
@@ -370,7 +370,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
     const getStyle = useCallback(() => {
         const { current } = recipientRef;
-        const { width } = (!isEmpty(current) && current!.getBoundingClientRect()) || { width: undefined };
+        const { width } = (!isEmpty(current) && current.getBoundingClientRect()) || { width: undefined };
 
         return {
             maxWidth: width ? width - PADDING : "100%",
@@ -656,6 +656,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
             const props: InputProps<IAutomationRecipient> = {
                 ...inputProps,
                 id: id,
+                "aria-haspopup": "listbox",
                 ...(inputProps["aria-expanded"] === true ? { "aria-controls": MENU_LIST_ID } : {}),
             };
 

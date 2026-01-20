@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -32,7 +32,7 @@ async function loadInsightsFromBackend(
     };
 }
 
-export interface InsightResolutionResult {
+export interface IInsightResolutionResult {
     /**
      * Map containing all resolved insights.
      */
@@ -60,7 +60,7 @@ export interface InsightResolutionResult {
 export function* resolveInsights(
     ctx: DashboardContext,
     insightRefs: ObjRef[],
-): SagaIterator<InsightResolutionResult> {
+): SagaIterator<IInsightResolutionResult> {
     const alreadyLoadedInsights: ReturnType<typeof selectInsightsMap> = yield select(selectInsightsMap);
     const foundInsights: IInsight[] = [];
     const missingInsightRefs: ObjRef[] = [];

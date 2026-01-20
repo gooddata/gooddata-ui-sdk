@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type ChangeKpiWidgetHeader } from "../../commands/index.js";
-import { type DashboardKpiWidgetHeaderChanged } from "../../events/index.js";
+import { type IChangeKpiWidgetHeader } from "../../commands/index.js";
+import { type IDashboardKpiWidgetHeaderChanged } from "../../events/index.js";
 import { kpiWidgetHeaderChanged } from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
@@ -13,8 +13,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeKpiWidgetHeaderHandler(
     ctx: DashboardContext,
-    cmd: ChangeKpiWidgetHeader,
-): SagaIterator<DashboardKpiWidgetHeaderChanged> {
+    cmd: IChangeKpiWidgetHeader,
+): SagaIterator<IDashboardKpiWidgetHeaderChanged> {
     const {
         payload: { header },
         correlationId,

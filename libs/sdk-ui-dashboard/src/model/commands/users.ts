@@ -1,4 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IDashboardCommand } from "./base.js";
 
 /**
@@ -6,7 +7,7 @@ import { type IDashboardCommand } from "./base.js";
  *
  * @internal
  */
-export interface LoadAllWorkspaceUsers extends IDashboardCommand {
+export interface ILoadAllWorkspaceUsers extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.USERS.LOAD_ALL";
 }
 
@@ -18,7 +19,7 @@ export interface LoadAllWorkspaceUsers extends IDashboardCommand {
  *
  * @internal
  */
-export function loadAllWorkspaceUsers(correlationId?: string): LoadAllWorkspaceUsers {
+export function loadAllWorkspaceUsers(correlationId?: string): ILoadAllWorkspaceUsers {
     return {
         type: "GDC.DASH/CMD.USERS.LOAD_ALL",
         correlationId,

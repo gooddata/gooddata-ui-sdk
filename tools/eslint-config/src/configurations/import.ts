@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -13,7 +13,7 @@ export const import_: IConfiguration<"import"> = {
             version: "4.4.4",
         },
     ],
-    plugin: "import",
+    plugins: ["import"],
     extends: ["plugin:import/errors"],
     rules: {
         "import/order": [

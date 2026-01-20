@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 export type Rules<Prefix extends string = ""> = {
     [key in `${Prefix}${string}`]: string | number | object | object[];
@@ -22,9 +22,9 @@ interface IConfigurationShared<RulePrefix extends string> {
      */
     parser?: string;
     /**
-     * Plugin to add for this configuration to work
+     * Plugins to add for this configuration to work
      */
-    plugin?: string;
+    plugins?: string[];
     /**
      * Configurations to extend as port of this configuration
      */

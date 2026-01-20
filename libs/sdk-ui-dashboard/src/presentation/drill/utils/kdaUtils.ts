@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
@@ -31,7 +31,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
-    type DashboardKeyDriverCombinationItem,
+    type IDashboardKeyDriverCombinationItem,
     keyDriverAnalysisSupportedStringGranularities,
     keyDriverYearGranularity,
 } from "../../../model/index.js";
@@ -42,7 +42,7 @@ import {
 export function getKdaKeyDriverCombinations(
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDrillEvent,
-): DashboardKeyDriverCombinationItem[] {
+): IDashboardKeyDriverCombinationItem[] {
     //TODO: Special implementation for headline
     const dv = DataViewFacade.for(drillEvent.dataView);
     const combinations = findHeadersCombinations(dv, drillDefinition, drillEvent);
@@ -79,7 +79,7 @@ export function getKdaKeyDriverCombinations(
     const previous = getDirectionValue(table.data, dateId, current, -1, isFirstColumn, isFirstRow);
     const next = getDirectionValue(table.data, dateId, current, 1, isLastColumn, isLastRow);
 
-    const res: DashboardKeyDriverCombinationItem[] = [];
+    const res: IDashboardKeyDriverCombinationItem[] = [];
 
     // There is a previous value in graph
     const before = createBefore(combinations, current, previous);
@@ -173,7 +173,7 @@ function getScopeValuesByDimensions(dimensions: IDrillEventIntersectionElement[]
             metrics,
             attributes: map,
         } as ScopeValues;
-    }) as ScopeValues[];
+    });
 }
 
 function getScopeColumnsValues(column: ITableValueColumnDefinition, dateId?: string) {
@@ -340,7 +340,7 @@ function createBefore(
     combinations: Combinations,
     current: CurrentValue | null,
     prev: CurrentValue | null,
-): DashboardKeyDriverCombinationItem | undefined {
+): IDashboardKeyDriverCombinationItem | undefined {
     const measure = combinations.metricHeader;
     if (measure && current && prev) {
         const currentValue = current.value as number;
@@ -362,7 +362,7 @@ function createAfter(
     combinations: Combinations,
     current: CurrentValue | null,
     next: CurrentValue | null,
-): DashboardKeyDriverCombinationItem | undefined {
+): IDashboardKeyDriverCombinationItem | undefined {
     const measure = combinations.metricHeader;
     if (measure && current && next) {
         const currentValue = current.value as number;
@@ -387,7 +387,7 @@ function createYearToYear(
     columns: ITableColumnDefinition[],
     dims: ScopeValues[],
     current: CurrentValue | null,
-): DashboardKeyDriverCombinationItem | undefined {
+): IDashboardKeyDriverCombinationItem | undefined {
     const measure = combinations.metricHeader;
     const dateId = combinations.dateHeader?.attributeHeader.localIdentifier;
 
@@ -441,7 +441,7 @@ function createYearToYear(
 /**
  * @internal
  */
-export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: DashboardKeyDriverCombinationItem) {
+export function getKeyDriverCombinationItemTitle(intl: IntlShape, item: IDashboardKeyDriverCombinationItem) {
     switch (item.type) {
         case "comparative": {
             const where =

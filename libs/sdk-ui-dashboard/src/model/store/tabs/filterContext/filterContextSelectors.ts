@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { compact, isEmpty, isEqual, keyBy, sortBy } from "lodash-es";
@@ -198,7 +198,7 @@ export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefi
             "attempting to access uninitialized applied filter context state",
         );
 
-        return filterContextState.filterContextDefinition!;
+        return filterContextState.filterContextDefinition;
     },
 );
 
@@ -220,7 +220,7 @@ export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterCont
             "attempting to access uninitialized working filter context state",
         );
 
-        return applyFilterContext(state.filterContextDefinition, state.workingFilterContextDefinition)!;
+        return applyFilterContext(state.filterContextDefinition, state.workingFilterContextDefinition);
     });
 
 /**

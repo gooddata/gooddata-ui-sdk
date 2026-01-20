@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -14,9 +14,9 @@ import {
     serializeLayoutSectionPath,
     updateSectionIndex,
 } from "../../../_staging/layout/coordinates.js";
-import { type MoveLayoutSection } from "../../commands/index.js";
+import { type IMoveLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout.js";
+import { type IDashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -24,7 +24,7 @@ import { resolveRelativeIndex } from "../../utils/arrayOps.js";
 
 type MoveLayoutSectionContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: MoveLayoutSection;
+    readonly cmd: IMoveLayoutSection;
     readonly layout: ReturnType<typeof selectLayout>;
 };
 
@@ -119,8 +119,8 @@ function validateAndResolve(commandCtx: MoveLayoutSectionContext) {
 
 export function* moveLayoutSectionHandler(
     ctx: DashboardContext,
-    cmd: MoveLayoutSection,
-): SagaIterator<DashboardLayoutSectionMoved> {
+    cmd: IMoveLayoutSection,
+): SagaIterator<IDashboardLayoutSectionMoved> {
     const layout = yield select(selectLayout);
     const commandCtx: MoveLayoutSectionContext = {
         ctx,

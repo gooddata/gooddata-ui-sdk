@@ -7,12 +7,12 @@ import { useIntl } from "react-intl";
 
 import { UiChip, UiListbox, UiPopover, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { type KdaDateOptions } from "../../internalTypes.js";
+import { type IKdaDateOptions } from "../../internalTypes.js";
 import { type KdaPeriodType } from "../../types.js";
 import { formatKeyDriverAnalysisDateRange } from "../../utils.js";
 
 interface IDateBarProps {
-    options: KdaDateOptions;
+    options: IKdaDateOptions;
     isAvailable: boolean;
     onPeriodChange: (period: KdaPeriodType) => void;
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
@@ -6,7 +6,7 @@ import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { isKpiWidget, objRefToString } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { type QueryWidgetAlertCount } from "../queries/widgets.js";
+import { type IQueryWidgetAlertCount } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
 import { selectWidgetByRef } from "../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../types/commonTypes.js";
@@ -17,7 +17,7 @@ export const QueryWidgetAlertCountService = createQueryService(
     queryService,
 );
 
-function* queryService(ctx: DashboardContext, query: QueryWidgetAlertCount): SagaIterator<number> {
+function* queryService(ctx: DashboardContext, query: IQueryWidgetAlertCount): SagaIterator<number> {
     const {
         payload: { widgetRef },
         correlationId,

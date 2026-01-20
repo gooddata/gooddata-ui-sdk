@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
-import { type StartRenamingDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
+import { type IStartRenamingDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardTabRenamingStarted, dashboardTabRenamingStarted } from "../../events/tabs.js";
+import { type IDashboardTabRenamingStarted, dashboardTabRenamingStarted } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
@@ -17,8 +17,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
  */
 export function* startRenamingDashboardTabHandler(
     ctx: DashboardContext,
-    cmd: StartRenamingDashboardTab,
-): SagaIterator<DashboardTabRenamingStarted> {
+    cmd: IStartRenamingDashboardTab,
+): SagaIterator<IDashboardTabRenamingStarted> {
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
     const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
         selectActiveTabLocalIdentifier,

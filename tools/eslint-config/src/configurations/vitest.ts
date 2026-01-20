@@ -6,10 +6,10 @@ export const vitest: IConfiguration<"@vitest"> = {
     packages: [
         {
             name: "@vitest/eslint-plugin",
-            version: "1.3.5",
+            version: "1.6.6",
         },
     ],
-    plugin: "@vitest",
+    plugins: ["@vitest"],
     extends: ["plugin:@vitest/legacy-recommended"],
     rules: {
         "@vitest/expect-expect": "off",

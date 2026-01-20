@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { type SwitchDashboardTab } from "../../commands/tabs.js";
-import { type DashboardTabSwitched, dashboardTabSwitched } from "../../events/tabs.js";
+import { type ISwitchDashboardTab } from "../../commands/tabs.js";
+import { type IDashboardTabSwitched, dashboardTabSwitched } from "../../events/tabs.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -15,8 +15,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
  */
 export function* switchDashboardTabHandler(
     ctx: DashboardContext,
-    cmd: SwitchDashboardTab,
-): SagaIterator<DashboardTabSwitched> {
+    cmd: ISwitchDashboardTab,
+): SagaIterator<IDashboardTabSwitched> {
     const { tabId } = cmd.payload;
 
     const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(

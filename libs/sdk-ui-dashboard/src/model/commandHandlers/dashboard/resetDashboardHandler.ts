@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { uniqWith } from "lodash-es";
@@ -23,9 +23,9 @@ import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "./common/stateInitializers.js";
-import { type ResetDashboard } from "../../commands/index.js";
+import { type IResetDashboard } from "../../commands/index.js";
 import { dashboardWasReset } from "../../events/dashboard.js";
-import { type DashboardWasReset } from "../../events/index.js";
+import { type IDashboardWasReset } from "../../events/index.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import {
     selectDateFilterConfig,
@@ -37,7 +37,7 @@ import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSe
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import {
     DEFAULT_TAB_ID,
-    type TabState,
+    type ITabState,
     selectActiveTabLocalIdentifier,
     selectTabs,
 } from "../../store/tabs/index.js";
@@ -46,8 +46,8 @@ import { resolveInsights } from "../../utils/insightResolver.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
-    cmd: ResetDashboard,
-): SagaIterator<DashboardWasReset> {
+    cmd: IResetDashboard,
+): SagaIterator<IDashboardWasReset> {
     const data: SagaReturnType<typeof resetDashboardFromPersisted> = yield call(
         resetDashboardFromPersisted,
         ctx,
@@ -56,7 +56,7 @@ export function* resetDashboardHandler(
     return dashboardWasReset(ctx, data.persistedDashboard, cmd.correlationId);
 }
 
-export function* resetDashboardRuntime(ctx: DashboardContext, cmd: ResetDashboard) {
+export function* resetDashboardRuntime(ctx: DashboardContext, cmd: IResetDashboard) {
     const data: SagaReturnType<typeof resetDashboardFromPersisted> = yield call(
         resetDashboardFromPersisted,
         ctx,
@@ -67,7 +67,7 @@ export function* resetDashboardRuntime(ctx: DashboardContext, cmd: ResetDashboar
     };
 }
 
-interface FilterRelatedParamsPerTab {
+interface IFilterRelatedParamsPerTab {
     migratedAttributeFilters: IDashboardAttributeFilter[];
     effectiveAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     effectiveOriginalFilterContext: IFilterContextDefinition | undefined;
@@ -79,9 +79,9 @@ function* getFilterRelatedParamsPerTab(
     persistedTab: Pick<IDashboardTab, "localIdentifier" | "attributeFilterConfigs"> & {
         filterContext?: IDashboardTab["filterContext"];
     },
-    currentTab: TabState | undefined,
+    currentTab: ITabState | undefined,
     isImmediateAttributeFilterMigrationEnabled: boolean,
-): SagaIterator<FilterRelatedParamsPerTab> {
+): SagaIterator<IFilterRelatedParamsPerTab> {
     const crossFilteringFiltersLocalIdentifiers: ReturnType<
         typeof selectCrossFilteringFiltersLocalIdentifiers
     > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
@@ -190,7 +190,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             const tabId = tab.localIdentifier;
             const currentTab = currentTabs?.find((t) => t.localIdentifier === tabId);
 
-            const filterParams: FilterRelatedParamsPerTab = yield call(
+            const filterParams: IFilterRelatedParamsPerTab = yield call(
                 getFilterRelatedParamsPerTab,
                 tab,
                 currentTab,

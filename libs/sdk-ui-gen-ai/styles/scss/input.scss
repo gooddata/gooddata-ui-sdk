@@ -8,16 +8,38 @@
 @use "variables" as variables;
 
 .gd-gen-ai-chat__input {
-    position: relative;
+    $root: &;
+
     transition: margin-top 0.2s ease-in-out;
     margin: 0 variables.$x-spacing;
     margin-top: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    &--fullscreen#{$root}--big-screen#{$root}--empty {
+        flex-grow: 1;
+
+        &.focused {
+            margin-top: 0;
+        }
+    }
 
     &.focused {
         margin-top: variables.$info-height;
     }
 
+    &__content {
+        position: relative;
+        max-width: 720px;
+        width: 100%;
+    }
+
     &__mc {
+        position: relative;
+        z-index: 1;
+
         .cm-editor {
             height: auto;
             padding: 3px 30px 3px 5px;
@@ -39,12 +61,14 @@
     }
 
     &__info {
+        z-index: 0;
         position: absolute;
         width: calc(100% + #{variables.$x-spacing * 2});
         margin-left: -#{variables.$x-spacing};
         margin-right: -#{variables.$x-spacing};
         padding: variables.$y-spacing variables.$x-spacing;
         background: kit-variables.$gd-color-light;
+        pointer-events: none;
 
         color: kit-variables.$gd-color-state-blank;
         text-align: left;
@@ -53,14 +77,28 @@
         font-style: normal;
         line-height: normal;
 
-        top: -#{variables.$info-height};
         opacity: 1;
         transition:
             top 0.2s ease-in-out,
+            bottom 0.2s ease-in-out,
             opacity 0.2s ease-in-out;
 
-        &.hidden {
+        &.bottom {
+            display: none;
+            bottom: -#{variables.$info-height};
+        }
+
+        &.top {
+            top: -#{variables.$info-height};
+        }
+
+        &.top.hidden {
             top: 0;
+            opacity: 0;
+        }
+
+        &.bottom.hidden {
+            bottom: 0;
             opacity: 0;
         }
 
@@ -77,6 +115,16 @@
             font-size: 11px;
             font-style: normal;
             line-height: normal;
+        }
+    }
+
+    &--fullscreen#{$root}--big-screen {
+        .gd-gen-ai-chat__input__info.top {
+            display: none;
+        }
+
+        .gd-gen-ai-chat__input__info.bottom {
+            display: block;
         }
     }
 

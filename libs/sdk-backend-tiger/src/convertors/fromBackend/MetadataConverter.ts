@@ -145,6 +145,7 @@ function convertAttributeDocument(
             .id(attribute.id)
             .title(attribute.attributes?.title || "")
             .description(attribute.attributes?.description || "")
+            .tags(attribute.attributes?.tags || [])
             .uri(attributeDoc.links?.self ?? "")
             .displayForms(convertAttributeLabels(attribute, labelMap))
             .isLocked(isInheritedObject(attribute))

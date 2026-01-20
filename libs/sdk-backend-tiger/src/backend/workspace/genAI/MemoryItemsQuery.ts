@@ -99,7 +99,7 @@ export class MemoryItemsQuery implements IMemoryItemsQuery {
                 const items = response.data.data.map((item) =>
                     convertMemoryItem(item, response.data.included ?? []),
                 );
-                return { items, totalCount: totalCount! };
+                return { items, totalCount: this.totalCount! };
             },
             this.size,
             this.page * this.size,

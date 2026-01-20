@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode, useState } from "react";
 
@@ -64,7 +64,7 @@ type AttachmentItem<T extends WidgetAttachmentType | DashboardAttachmentType> = 
     selected: boolean;
 };
 
-interface AttachmentsSelectProps<T extends WidgetAttachmentType | DashboardAttachmentType> {
+interface IAttachmentsSelectProps<T extends WidgetAttachmentType | DashboardAttachmentType> {
     attachments: AttachmentItem<T>[];
     onChange: (attachments: AttachmentItem<T>[]) => void;
     mode: "widget" | "dashboard";
@@ -76,7 +76,7 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
     onChange,
     mode,
     onAddButtonRef,
-}: AttachmentsSelectProps<T>) {
+}: IAttachmentsSelectProps<T>) {
     const [attachments, setAttachments] = useState<AttachmentItem<T>[]>(initialAttachments);
     const intl = useIntl();
 
@@ -106,7 +106,7 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                         setAttachments(initialAttachments);
                     }
                 }}
-                renderButton={({ toggleDropdown }) => (
+                renderButton={({ toggleDropdown, isOpen, dropdownId }) => (
                     <UiTooltip
                         arrowPlacement="left"
                         triggerBy={["hover", "focus"]}
@@ -117,6 +117,11 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                                 label={dialogTitle}
                                 onClick={toggleDropdown}
                                 variant="popout"
+                                accessibilityConfig={{
+                                    ariaExpanded: isOpen,
+                                    ariaHaspopup: "dialog",
+                                    ariaControls: isOpen ? dropdownId : undefined,
+                                }}
                                 ref={onAddButtonRef}
                             />
                         }

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
@@ -56,7 +57,7 @@ const selectSelf = createSelector(
 export const selectCurrentUser: DashboardSelector<IUser> = createSelector(selectSelf, (state) => {
     invariant(state.user, "attempting to access uninitialized user state");
 
-    return state.user!;
+    return state.user;
 });
 
 /**

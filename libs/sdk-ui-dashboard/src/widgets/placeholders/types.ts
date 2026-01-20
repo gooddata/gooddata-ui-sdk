@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type ICustomWidget, newCustomWidget } from "../../model/types/layoutTypes.js";
@@ -6,18 +7,18 @@ import { type ICustomWidget, newCustomWidget } from "../../model/types/layoutTyp
 /**
  * @alpha
  */
-export interface KpiPlaceholderWidget extends ICustomWidget {
+export interface IKpiPlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-kpi-placeholder";
 }
 
 /**
- * Tests whether an object is a {@link KpiPlaceholderWidget}.
+ * Tests whether an object is a {@link IKpiPlaceholderWidget}.
  *
  * @param obj - object to test
  * @alpha
  */
-export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget {
-    return !isEmpty(obj) && (obj as KpiPlaceholderWidget).customType === "gd-kpi-placeholder";
+export function isKpiPlaceholderWidget(obj: unknown): obj is IKpiPlaceholderWidget {
+    return !isEmpty(obj) && (obj as IKpiPlaceholderWidget).customType === "gd-kpi-placeholder";
 }
 
 /**
@@ -28,25 +29,25 @@ export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
 /**
  * @alpha
  */
-export function newKpiPlaceholderWidget(): KpiPlaceholderWidget {
+export function newKpiPlaceholderWidget(): IKpiPlaceholderWidget {
     return newCustomWidget(KPI_PLACEHOLDER_WIDGET_ID, "gd-kpi-placeholder");
 }
 
 /**
  * @alpha
  */
-export interface InsightPlaceholderWidget extends ICustomWidget {
+export interface IInsightPlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-insight-placeholder";
 }
 
 /**
- * Tests whether an object is a {@link InsightPlaceholderWidget}.
+ * Tests whether an object is a {@link IInsightPlaceholderWidget}.
  *
  * @param obj - object to test
  * @alpha
  */
-export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlaceholderWidget {
-    return !isEmpty(obj) && (obj as InsightPlaceholderWidget).customType === "gd-insight-placeholder";
+export function isInsightPlaceholderWidget(obj: unknown): obj is IInsightPlaceholderWidget {
+    return !isEmpty(obj) && (obj as IInsightPlaceholderWidget).customType === "gd-insight-placeholder";
 }
 
 /**
@@ -57,46 +58,46 @@ export const INSIGHT_PLACEHOLDER_WIDGET_ID = "__insightPlaceholder__";
 /**
  * @alpha
  */
-export function newInsightPlaceholderWidget(): InsightPlaceholderWidget {
+export function newInsightPlaceholderWidget(): IInsightPlaceholderWidget {
     return newCustomWidget(INSIGHT_PLACEHOLDER_WIDGET_ID, "gd-insight-placeholder");
 }
 
 /**
  * @alpha
  */
-export interface PlaceholderWidget extends ICustomWidget {
+export interface IPlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-widget-placeholder";
     readonly isInitial?: boolean;
     readonly isLoading?: boolean;
 }
 
 /**
- * Tests whether an object is a {@link PlaceholderWidget}.
+ * Tests whether an object is a {@link IPlaceholderWidget}.
  *
  * @param obj - object to test
  * @alpha
  */
-export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
-    return !isEmpty(obj) && (obj as PlaceholderWidget).customType === "gd-widget-placeholder";
+export function isPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget {
+    return !isEmpty(obj) && (obj as IPlaceholderWidget).customType === "gd-widget-placeholder";
 }
 
 /**
- * Tests whether an object is a {@link PlaceholderWidget} and is initial.
+ * Tests whether an object is a {@link IPlaceholderWidget} and is initial.
  *
  * @param obj - object to test
  * @internal
  */
-export function isInitialPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
+export function isInitialPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget {
     return isPlaceholderWidget(obj) && !!obj.isInitial;
 }
 
 /**
- * Tests whether an object is a {@link PlaceholderWidget} and is loading.
+ * Tests whether an object is a {@link IPlaceholderWidget} and is loading.
  *
  * @param obj - object to test
  * @internal
  */
-export function isLoadingPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
+export function isLoadingPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget {
     return isPlaceholderWidget(obj) && !!obj.isLoading;
 }
 
@@ -108,26 +109,26 @@ export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
 /**
  * @alpha
  */
-export function newPlaceholderWidget(): PlaceholderWidget {
+export function newPlaceholderWidget(): IPlaceholderWidget {
     return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder");
 }
 
 /**
  * @internal
  */
-export function newInitialPlaceholderWidget(): PlaceholderWidget {
+export function newInitialPlaceholderWidget(): IPlaceholderWidget {
     return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
         isInitial: true,
-    }) as PlaceholderWidget;
+    }) as IPlaceholderWidget;
 }
 
 /**
  * @internal
  */
-export function newLoadingPlaceholderWidget(): PlaceholderWidget {
+export function newLoadingPlaceholderWidget(): IPlaceholderWidget {
     return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
         isLoading: true,
-    }) as PlaceholderWidget;
+    }) as IPlaceholderWidget;
 }
 
 /**
@@ -138,6 +139,6 @@ export function newLoadingPlaceholderWidget(): PlaceholderWidget {
  */
 export function isAnyPlaceholderWidget(
     obj: unknown,
-): obj is PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget {
+): obj is IPlaceholderWidget | IInsightPlaceholderWidget | IKpiPlaceholderWidget {
     return isPlaceholderWidget(obj) || isInsightPlaceholderWidget(obj) || isKpiPlaceholderWidget(obj);
 }

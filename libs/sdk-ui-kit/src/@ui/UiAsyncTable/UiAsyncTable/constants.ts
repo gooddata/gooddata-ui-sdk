@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * @internal
@@ -16,7 +16,13 @@ export const ROW_HEIGHT_LARGE = 55;
 
 export const COLUMN_PADDING = 10;
 
+/**
+ * @internal
+ */
 export const MENU_COLUMN_WIDTH = 55;
+/**
+ * @internal
+ */
 export const MENU_COLUMN_WIDTH_LARGE = 65;
 
 export const SKELETON_ITEM_HEIGHT = 14;

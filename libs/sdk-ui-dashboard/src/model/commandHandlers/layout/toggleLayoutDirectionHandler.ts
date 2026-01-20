@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
@@ -19,8 +19,8 @@ import {
 } from "./containerWidthSanitization.js";
 import { findItem } from "../../../_staging/layout/coordinates.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { type ToggleLayoutDirection } from "../../commands/layout.js";
-import { type LayoutDirectionChanged, layoutDirectionChanged } from "../../events/layout.js";
+import { type IToggleLayoutDirection } from "../../commands/layout.js";
+import { type ILayoutDirectionChanged, layoutDirectionChanged } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
@@ -29,7 +29,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget, type IItemWithWidth } from "../../types/layoutTypes.js";
 
 function findChildItemsWithNewWidth(
-    { payload: { layoutPath, direction } }: ToggleLayoutDirection,
+    { payload: { layoutPath, direction } }: IToggleLayoutDirection,
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     insightMap: ObjRefMap<IInsight>,
     settings: ISettings,
@@ -51,8 +51,8 @@ function findChildItemsWithNewWidth(
 
 export function* toggleLayoutDirectionHandler(
     ctx: DashboardContext,
-    cmd: ToggleLayoutDirection,
-): SagaIterator<LayoutDirectionChanged> {
+    cmd: IToggleLayoutDirection,
+): SagaIterator<ILayoutDirectionChanged> {
     const { layoutPath, direction } = cmd.payload;
 
     // select necessary data from the state first, to not have a direction modified before children are queried

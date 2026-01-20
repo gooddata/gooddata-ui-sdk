@@ -1,17 +1,17 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type IDashboardDateFilterConfigItem } from "@gooddata/sdk-model";
 
 /**
  * @alpha
  */
-export interface DateFilterConfigsState {
+export interface IDateFilterConfigsState {
     /**
      * Dashboard-level overrides of the workspace-level date filter with dimension configs.
      */
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
 }
 
-export const dateFilterConfigsInitialState: DateFilterConfigsState = {
+export const dateFilterConfigsInitialState: IDateFilterConfigsState = {
     dateFilterConfigs: [],
 };

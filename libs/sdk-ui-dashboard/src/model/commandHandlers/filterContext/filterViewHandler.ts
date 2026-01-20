@@ -16,10 +16,10 @@ import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
 import { resetCrossFiltering } from "./common.js";
 import {
-    type ApplyFilterView,
-    type DeleteFilterView,
-    type SaveFilterView,
-    type SetFilterViewAsDefault,
+    type IApplyFilterView,
+    type IDeleteFilterView,
+    type ISaveFilterView,
+    type ISetFilterViewAsDefault,
     changeFilterContextSelectionByParams,
     reloadFilterViews,
 } from "../../commands/index.js";
@@ -56,7 +56,7 @@ function createFilterView(
     return ctx.backend.workspace(ctx.workspace).dashboards().createFilterView(filterView);
 }
 
-export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterView): SagaIterator<void> {
+export function* saveFilterViewHandler(ctx: DashboardContext, cmd: ISaveFilterView): SagaIterator<void> {
     yield put(filterViewsActions.setFilterLoading(true));
     if (!ctx.dashboardRef) {
         throw Error("Dashboard ref must be provided.");
@@ -124,7 +124,7 @@ function deleteFilterView(ctx: DashboardContext, ref: ObjRef): Promise<void> {
     return ctx.backend.workspace(ctx.workspace).dashboards().deleteFilterView(ref);
 }
 
-export function* deleteFilterViewHandler(ctx: DashboardContext, cmd: DeleteFilterView): SagaIterator<void> {
+export function* deleteFilterViewHandler(ctx: DashboardContext, cmd: IDeleteFilterView): SagaIterator<void> {
     yield put(filterViewsActions.setFilterLoading(true));
     try {
         const filterView: PromiseFnReturnType<typeof findFilterView> = yield call(
@@ -147,7 +147,7 @@ function* findFilterView(ref: ObjRef) {
     return filterViews.find((filterView) => areObjRefsEqual(filterView.ref, ref));
 }
 
-export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterView): SagaIterator<void> {
+export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilterView): SagaIterator<void> {
     const filterView: PromiseFnReturnType<typeof findFilterView> = yield call(
         findFilterView,
         cmd.payload.ref,
@@ -184,7 +184,7 @@ function setFilterViewAsDefault(ctx: DashboardContext, ref: ObjRef, isDefault: b
 
 export function* setFilterViewAsDefaultHandler(
     ctx: DashboardContext,
-    cmd: SetFilterViewAsDefault,
+    cmd: ISetFilterViewAsDefault,
 ): SagaIterator<void> {
     yield put(filterViewsActions.setFilterLoading(true));
     const filterView = yield call(findFilterView, cmd.payload.ref);

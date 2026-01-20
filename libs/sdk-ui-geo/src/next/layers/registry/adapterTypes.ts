@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IntlShape } from "react-intl";
 
@@ -287,6 +287,24 @@ export interface IGeoLayerAdapter<
      * @returns Prepared execution ready to be executed
      */
     buildExecution(layer: TLayer, context: IGeoAdapterContext): IPreparedExecution;
+
+    /**
+     * Prepare analytics execution before it is executed.
+     *
+     * @remarks
+     * Optional hook to enrich or adjust the execution (e.g., add buckets).
+     * Called right before execution is run.
+     *
+     * @param layer - Layer definition with buckets (measures, attributes, filters)
+     * @param context - Backend and configuration context
+     * @param execution - Prepared execution from buildExecution
+     * @returns Prepared execution ready to be executed
+     */
+    prepareExecution?(
+        layer: TLayer,
+        context: IGeoAdapterContext,
+        execution: IPreparedExecution,
+    ): Promise<IPreparedExecution>;
 
     /**
      * Prepare layer output from execution result.

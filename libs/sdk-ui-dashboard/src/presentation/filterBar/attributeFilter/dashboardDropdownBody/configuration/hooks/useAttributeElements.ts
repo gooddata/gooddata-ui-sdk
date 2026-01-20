@@ -1,11 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { useEffect, useMemo } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import {
+    type IQueryAttributeElements,
     type IUseAttributeElements,
-    type QueryAttributeElements,
     queryAttributeElements,
     useDashboardQueryProcessing,
 } from "../../../../../../model/index.js";
@@ -20,7 +21,7 @@ export function useAttributeElements(displayForm: ObjRef, limit?: number, loadQu
         status: attributeElementsLoadingStatus,
         error: attributeElementsLoadingError,
     } = useDashboardQueryProcessing<
-        QueryAttributeElements,
+        IQueryAttributeElements,
         IUseAttributeElements,
         Parameters<typeof queryAttributeElements>
     >({

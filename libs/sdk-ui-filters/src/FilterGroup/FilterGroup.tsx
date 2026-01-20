@@ -1,30 +1,43 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useMemo } from "react";
+import { type ComponentType, type ReactElement, useCallback, useMemo, useRef, useState } from "react";
 
+import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import {
-    type IAttributeMetadataObject,
-    filterAttributeElements,
-    getAttributeElementsItems,
-} from "@gooddata/sdk-model";
+import { type IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
-import { Dropdown, DropdownList, FilterGroupItem, type IAlignPoint, UiIcon } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    DropdownList,
+    FilterGroupItem,
+    type IAlignPoint,
+    type IDropdownButtonRenderProps,
+    UiIcon,
+} from "@gooddata/sdk-ui-kit";
 
 import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
-import {
-    AttributeFilterButton,
-    type IAttributeFilterButtonProps,
-} from "../AttributeFilter/AttributeFilterButton.js";
+import type { IAttributeFilterProps } from "../AttributeFilter/AttributeFilter.js";
+import { AttributeFilterButton } from "../AttributeFilter/AttributeFilterButton.js";
 import { AttributeFilterDropdownButton } from "../AttributeFilter/Components/DropdownButton/AttributeFilterDropdownButton.js";
+import {
+    ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS,
+    ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS,
+    ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
+} from "../AttributeFilter/constants.js";
 
 /**
  * @public
  */
-export interface IFilterGroupProps {
+export interface IFilterGroupProps<P> {
     title: string;
-    filters: IAttributeFilterButtonProps[];
+    filters: P[];
+    getFilterIdentifier: (filter: P) => string;
+    hasSelectedElements: (filter: P) => boolean;
+    renderFilter: (
+        filter: P,
+        AttributeFilterComponent?: ComponentType<IAttributeFilterProps>,
+    ) => ReactElement;
 }
 
 const GROUP_ALIGN_POINTS: IAlignPoint[] = [
@@ -42,15 +55,34 @@ const ITEM_ALIGN_POINTS: IAlignPoint[] = [
 ];
 
 /**
+ * FilterGroup contains nested dropdowns (attribute filter dropdown rendered in portal).
+ * Closing the group dropdown must be prevented when interacting with the nested filter dropdown content.
+ */
+const IGNORE_CLICKS_ON_BY_CLASS = [
+    ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS,
+    ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS,
+    ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
+];
+
+/**
  * FilterGroup is a component that renders a dropdown button with multiple attribute filters
  *
  * @public
  */
-export function FilterGroup(props: IFilterGroupProps) {
-    const { title, filters } = props;
-    const { isAnyFilterLoading, isAnyFilterError, getFilterStatus, setFilterStatus } =
-        useFilterGroupStatus(filters);
+export function FilterGroup<P>(props: IFilterGroupProps<P>) {
+    const { title, filters, getFilterIdentifier, hasSelectedElements, renderFilter } = props;
     const intl = useIntl();
+    const [isOpen, setIsOpen] = useState(false);
+    const filtersIdentifiersUnstable = useMemo(
+        () => filters.map(getFilterIdentifier),
+        [filters, getFilterIdentifier],
+    );
+    // we need to stabilize this, otherwise it will cause unnecessary re-renders of dropdown
+    // which will cause unexpected closing of dropdown content
+    const availableFilterIdentifiers = useDeepEqualRefStablizer(filtersIdentifiersUnstable);
+
+    const { isAnyFilterLoading, isAnyFilterError, getFilterStatus, setFilterStatus } =
+        useFilterGroupStatus(availableFilterIdentifiers);
 
     const subtitle = useMemo(() => {
         if (isAnyFilterLoading) {
@@ -59,32 +91,27 @@ export function FilterGroup(props: IFilterGroupProps) {
         if (isAnyFilterError) {
             return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
         }
-        const activeFilters = filters.filter((filter) => {
-            if (!filter.filter) {
-                return false;
-            }
-            const elements = getAttributeElementsItems(filterAttributeElements(filter.filter));
-            return elements.length > 0;
-        });
+        const activeFilters = filters.filter((filter) => hasSelectedElements(filter));
         const activeFiltersCount = activeFilters.length;
         if (activeFiltersCount === 0) {
             return intl.formatMessage({ id: "gs.list.allAndCount" }, { count: filters.length });
         } else {
             const listOfTitles = activeFilters
-                .map((filter) => {
-                    if (filter.title) {
-                        return filter.title;
-                    }
-                    if (!filter.filter) {
-                        return undefined;
-                    }
-                    return getFilterStatus(filter.filter)?.attribute?.title;
-                })
+                .map((filter) => getFilterStatus(getFilterIdentifier(filter))?.attribute?.title)
                 .filter((title) => !!title)
                 .join(", ");
-            return `${listOfTitles} (${activeFiltersCount}/${filters.length})`;
+            return `${listOfTitles} (${activeFiltersCount}/${availableFilterIdentifiers.length})`;
         }
-    }, [filters, isAnyFilterError, isAnyFilterLoading, getFilterStatus, intl]);
+    }, [
+        filters,
+        isAnyFilterError,
+        isAnyFilterLoading,
+        getFilterStatus,
+        hasSelectedElements,
+        intl,
+        availableFilterIdentifiers,
+        getFilterIdentifier,
+    ]);
 
     const { selectedItemsCount, totalItemsCount } = useMemo((): {
         selectedItemsCount?: number;
@@ -96,84 +123,142 @@ export function FilterGroup(props: IFilterGroupProps) {
         if (isAnyFilterError) {
             return {};
         }
-        const activeFilters = filters.filter((filter) => {
-            if (!filter.filter) {
-                return false;
-            }
-            const elements = getAttributeElementsItems(filterAttributeElements(filter.filter));
-            return elements.length > 0;
-        });
+        const activeFilters = filters.filter((filter) => hasSelectedElements(filter));
         const activeFiltersCount = activeFilters.length;
         if (activeFiltersCount === 0) {
             return { totalItemsCount: filters.length };
         } else {
             return { selectedItemsCount: activeFiltersCount, totalItemsCount: filters.length };
         }
-    }, [filters, isAnyFilterError, isAnyFilterLoading]);
+    }, [filters, isAnyFilterError, isAnyFilterLoading, hasSelectedElements]);
 
-    const errorHandler = (item: IAttributeFilterButtonProps) => (error: GoodDataSdkError) => {
-        setFilterStatus(item.filter, { error });
-        item.onError?.(error);
-    };
+    const errorHandler = useCallback(
+        (filterIdentifier: string) => (error: GoodDataSdkError) => {
+            setFilterStatus(filterIdentifier, { error });
+        },
+        [setFilterStatus],
+    );
 
-    const initLoadingChangedHandler =
-        (item: IAttributeFilterButtonProps) => (loading: boolean, attribute?: IAttributeMetadataObject) => {
-            setFilterStatus(item.filter, {
+    const initLoadingChangedHandler = useCallback(
+        (filterIdentifier: string) => (loading: boolean, attribute?: IAttributeMetadataObject) => {
+            setFilterStatus(filterIdentifier, {
                 loading,
                 error: loading ? null : undefined,
                 attribute,
             });
-            item.onInitLoadingChanged?.(loading, attribute);
-        };
+        },
+        [setFilterStatus],
+    );
+
+    /**
+     * We need to create a stable component type for each filter identifier.
+     * Not passing an inline component type created during render. It could cause a loop of re-renders.
+     */
+    const attributeFilterComponentsByIdentifier = useMemo(() => {
+        const result = new Map<string, ComponentType<IAttributeFilterProps>>();
+
+        availableFilterIdentifiers.forEach((filterIdentifier) => {
+            if (result.has(filterIdentifier)) {
+                return;
+            }
+
+            function AttributeFilterComponent(attributeFilterProps: IAttributeFilterProps) {
+                const onError = useCallback(
+                    (error: GoodDataSdkError) => errorHandler(filterIdentifier)(error),
+                    [],
+                );
+                const onInitLoadingChanged = useCallback(
+                    (loading: boolean, attribute?: IAttributeMetadataObject) => {
+                        initLoadingChangedHandler(filterIdentifier)(loading, attribute);
+                    },
+                    [],
+                );
+                return (
+                    <AttributeFilterButton
+                        {...attributeFilterProps}
+                        alignPoints={ITEM_ALIGN_POINTS}
+                        onError={onError}
+                        onInitLoadingChanged={onInitLoadingChanged}
+                        DropdownButtonComponent={FilterGroupItem}
+                        LoadingComponent={() => <FilterGroupItem isLoading />}
+                        ErrorComponent={() => <FilterGroupItem isError />}
+                    />
+                );
+            }
+
+            result.set(filterIdentifier, AttributeFilterComponent);
+        });
+
+        return result;
+    }, [errorHandler, availableFilterIdentifiers, initLoadingChangedHandler]);
+
+    const renderItem = useCallback(
+        ({ item }: { item: P }) => {
+            const identifier = getFilterIdentifier(item);
+            const AttributeFilterComponent = attributeFilterComponentsByIdentifier.get(identifier);
+            return renderFilter(item, AttributeFilterComponent);
+        },
+        [attributeFilterComponentsByIdentifier, getFilterIdentifier, renderFilter],
+    );
+
+    const renderBody = useCallback(
+        () => (
+            <DropdownList
+                className="gd-filter-group-body"
+                items={filters}
+                itemHeight={53}
+                renderItem={renderItem}
+            />
+        ),
+        [filters, renderItem],
+    );
+
+    const renderButton = useCallback(
+        ({ toggleDropdown, isOpen, buttonRef, dropdownId }: IDropdownButtonRenderProps) => (
+            <AttributeFilterDropdownButton
+                title={title}
+                subtitle={subtitle}
+                isLoaded={!isAnyFilterLoading && !isAnyFilterError}
+                isOpen={isOpen}
+                selectedItemsCount={selectedItemsCount}
+                totalItemsCount={totalItemsCount}
+                showSelectionCount={selectedItemsCount !== undefined || totalItemsCount !== undefined}
+                icon={<UiIcon type="folder" size={12} color="currentColor" />}
+                dropdownId={dropdownId}
+                buttonRef={buttonRef}
+                onClick={toggleDropdown}
+                isError={isAnyFilterError}
+                isLoading={isAnyFilterLoading}
+            />
+        ),
+        [title, subtitle, isAnyFilterLoading, isAnyFilterError, selectedItemsCount, totalItemsCount],
+    );
 
     return (
         <Dropdown
+            isOpen={isOpen}
             className="gd-filter-group"
             closeOnParentScroll
             closeOnMouseDrag
             closeOnOutsideClick
+            ignoreClicksOnByClass={IGNORE_CLICKS_ON_BY_CLASS}
             enableEventPropagation
             alignPoints={GROUP_ALIGN_POINTS}
             fullscreenOnMobile
             autofocusOnOpen
-            renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }) => (
-                <AttributeFilterDropdownButton
-                    title={title}
-                    subtitle={subtitle}
-                    isLoaded={!isAnyFilterLoading && !isAnyFilterError}
-                    isOpen={isOpen}
-                    selectedItemsCount={selectedItemsCount}
-                    totalItemsCount={totalItemsCount}
-                    showSelectionCount={selectedItemsCount !== undefined || totalItemsCount !== undefined}
-                    icon={<UiIcon type="folder" size={12} color="currentColor" />}
-                    dropdownId={dropdownId}
-                    buttonRef={buttonRef}
-                    onClick={toggleDropdown}
-                    isError={isAnyFilterError}
-                    isLoading={isAnyFilterLoading}
-                />
-            )}
-            renderBody={() => (
-                <DropdownList
-                    className="gd-filter-group-body"
-                    items={filters}
-                    itemHeight={53}
-                    renderItem={({ item }) => (
-                        <AttributeFilterButton
-                            {...item}
-                            resetOnParentFilterChange={item.resetOnParentFilterChange ?? false}
-                            fullscreenOnMobile={item.fullscreenOnMobile ?? false}
-                            selectFirst={item.selectFirst ?? false}
-                            alignPoints={item.alignPoints ?? ITEM_ALIGN_POINTS}
-                            onError={errorHandler(item)}
-                            onInitLoadingChanged={initLoadingChangedHandler(item)}
-                            DropdownButtonComponent={item.DropdownButtonComponent ?? FilterGroupItem}
-                            LoadingComponent={item.LoadingComponent ?? (() => <FilterGroupItem isLoading />)}
-                            ErrorComponent={item.ErrorComponent ?? (() => <FilterGroupItem isError />)}
-                        />
-                    )}
-                />
-            )}
+            renderButton={renderButton}
+            renderBody={renderBody}
+            onOpenStateChanged={setIsOpen}
         />
     );
+}
+
+function useDeepEqualRefStablizer<T>(unstableState: T): T {
+    const stableRef = useRef<T>(unstableState);
+    // Compare and update the ref synchronously to keep the reference stable
+    const prevState = stableRef.current;
+    if (!isEqual(prevState, unstableState)) {
+        stableRef.current = unstableState;
+    }
+    return stableRef.current;
 }

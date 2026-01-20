@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -15,8 +15,8 @@ import {
 import { fillMissingTitles, resolveMessages } from "@gooddata/sdk-ui";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
-import { type SaveScheduledEmail } from "../../commands/scheduledEmail.js";
-import { type DashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
+import { type ISaveScheduledEmail } from "../../commands/scheduledEmail.js";
+import { type IDashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
 import { selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
@@ -46,8 +46,8 @@ function saveScheduledEmail(
 
 export function* saveScheduledEmailHandler(
     ctx: DashboardContext,
-    cmd: SaveScheduledEmail,
-): SagaIterator<DashboardScheduledEmailSaved> {
+    cmd: ISaveScheduledEmail,
+): SagaIterator<IDashboardScheduledEmailSaved> {
     const scheduledEmail = cmd.payload.scheduledEmail;
     const csvRawRequest = scheduledEmail.exportDefinitions?.find(
         (def) => def.requestPayload.format === "CSV_RAW",

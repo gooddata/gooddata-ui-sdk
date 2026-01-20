@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { type SetAttributeFilterLimitingItems } from "../../commands/index.js";
+import { type ISetAttributeFilterLimitingItems } from "../../commands/index.js";
 import { dashboardAttributeConfigLimitingItemsChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -15,7 +15,7 @@ import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
 export function* changeAttributeFilterLimitingItemsHandler(
     ctx: DashboardContext,
-    cmd: SetAttributeFilterLimitingItems,
+    cmd: ISetAttributeFilterLimitingItems,
 ): SagaIterator<void> {
     const filterLocalId = yield call(getValidatedFilterLocalIdentifier, ctx, cmd);
 
@@ -40,7 +40,7 @@ export function* changeAttributeFilterLimitingItemsHandler(
 
 function* getValidatedFilterLocalIdentifier(
     ctx: DashboardContext,
-    cmd: SetAttributeFilterLimitingItems,
+    cmd: ISetAttributeFilterLimitingItems,
 ): SagaIterator<string> {
     const { localIdentifier } = cmd.payload;
 

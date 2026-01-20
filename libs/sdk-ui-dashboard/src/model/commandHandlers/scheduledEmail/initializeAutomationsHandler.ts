@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact, omit } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
@@ -27,6 +27,7 @@ import {
     isDateFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
+    isFilterContextItem,
     isInsightWidget,
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
@@ -37,7 +38,7 @@ import { loadNotificationChannels } from "./loadNotificationChannels.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
-import { type InitializeAutomations } from "../../commands/scheduledEmail.js";
+import { type IInitializeAutomations } from "../../commands/scheduledEmail.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import {
@@ -71,7 +72,7 @@ import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js"
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
-    _cmd: InitializeAutomations,
+    _cmd: IInitializeAutomations,
 ): SagaIterator {
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
@@ -336,9 +337,17 @@ function extractExportDefinitionFilters(
         return content.content.filters ? compact(content.content.filters) : undefined;
     }
     if (isExportDefinitionVisualizationObjectRequestPayload(content)) {
+        // There can either be execution filters or filter context items,
+        // so we need to make sure we convert them to filter context items.
         return compact(
-            content.content.filters?.filter(isDashboardFilter).map((filter) => {
-                return dashboardFilterToFilterContextItem(filter, true);
+            (content.content.filters ?? []).map((filter): FilterContextItem | undefined => {
+                if (isFilterContextItem(filter)) {
+                    return filter;
+                }
+                if (isDashboardFilter(filter)) {
+                    return dashboardFilterToFilterContextItem(filter, true);
+                }
+                return undefined;
             }),
         );
     }

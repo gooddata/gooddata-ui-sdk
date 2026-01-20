@@ -6,7 +6,7 @@ import { type IAttributeElement } from "@gooddata/sdk-model";
 import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { type IAttributeFilterDropdownBodyProps } from "./types.js";
-import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants.js";
+import { ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS, DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 
@@ -86,7 +86,7 @@ export function AttributeFilterDropdownBody({
     );
 
     return (
-        <div className="gd-attribute-filter-dropdown-body__next" style={style} onKeyDown={handleKeyDown}>
+        <div className={ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS} style={style} onKeyDown={handleKeyDown}>
             <ElementsSelectComponent
                 isInverted={isWorkingSelectionInverted}
                 isLoading={isLoadingInitialElementsPage}

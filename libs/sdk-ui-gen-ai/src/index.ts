@@ -76,3 +76,8 @@ export {
     DefaultLandingQuestion,
     type ILandingQuestionProps,
 } from "./components/customized/LandingQuestion.js";
+export {
+    DefaultLandingQuestions,
+    DefaultLandingContainer,
+    type ILandingContentProps,
+} from "./components/customized/LandingContainer.js";

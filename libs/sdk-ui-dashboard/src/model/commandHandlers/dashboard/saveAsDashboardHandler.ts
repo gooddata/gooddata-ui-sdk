@@ -53,7 +53,7 @@ import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { type TabState, tabsActions } from "../../store/tabs/index.js";
+import { type ITabState, tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
@@ -96,7 +96,10 @@ function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContex
  * @param tabs - Array of TabState objects from the dashboard state
  * @returns Array of IDashboardTab objects ready for saving to backend
  */
-function processExistingTabsForSaveAs(tabs: TabState[], useOriginalFilterContext?: boolean): IDashboardTab[] {
+function processExistingTabsForSaveAs(
+    tabs: ITabState[],
+    useOriginalFilterContext?: boolean,
+): IDashboardTab[] {
     return tabs.map((tab) => {
         const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
 

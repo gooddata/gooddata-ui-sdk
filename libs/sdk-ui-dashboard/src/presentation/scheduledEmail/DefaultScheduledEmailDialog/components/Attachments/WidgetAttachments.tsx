@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useRef, useState } from "react";
 
@@ -29,6 +29,9 @@ export interface IWidgetAttachmentsProps {
     onWidgetAttachmentsChange: (formats: WidgetAttachmentType[]) => void;
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    pdfSettings: IExportDefinitionVisualizationObjectSettings;
+    onPdfSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
 }
 
 export function WidgetAttachments({
@@ -36,6 +39,9 @@ export function WidgetAttachments({
     onWidgetAttachmentsChange,
     xlsxSettings,
     onXlsxSettingsChange,
+    pdfSettings,
+    onPdfSettingsChange,
+    defaultPdfPageSize,
 }: IWidgetAttachmentsProps) {
     const intl = useIntl();
     const attachmentListRef = useRef<HTMLDivElement>(null);
@@ -121,6 +127,9 @@ export function WidgetAttachments({
                         onDelete={handleDelete}
                         xlsxSettings={xlsxSettings}
                         onXlsxSettingsChange={onXlsxSettingsChange}
+                        pdfSettings={pdfSettings}
+                        onPdfSettingsChange={onPdfSettingsChange}
+                        defaultPdfPageSize={defaultPdfPageSize}
                         mode="widget"
                     />
                     <AttachmentsSelect<WidgetAttachmentType>

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useState } from "react";
 
@@ -6,7 +6,7 @@ import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { createContextStore } from "@gooddata/sdk-ui";
 
 // Define the shape of the context state
-interface HoveredWidgetContextState {
+interface IHoveredWidgetContextState {
     hoveredWidgets: ObjRef[];
     addHoveredWidget: (widgetRef: ObjRef | null) => void;
     removeHoveredWidget: (widgetRef: ObjRef | null) => void;
@@ -14,9 +14,9 @@ interface HoveredWidgetContextState {
 }
 
 // Create the context with a default value
-export const HoveredWidgetContext = createContextStore<HoveredWidgetContextState>("HoveredWidgets");
+export const HoveredWidgetContext = createContextStore<IHoveredWidgetContextState>("HoveredWidgets");
 
-export const useHoveredWidgetContextValue = (): HoveredWidgetContextState => {
+export const useHoveredWidgetContextValue = (): IHoveredWidgetContextState => {
     const [hoveredWidgets, setHoveredWidgets] = useState<ObjRef[]>([]);
 
     const addHoveredWidget = useCallback((widgetRef: ObjRef | null) => {

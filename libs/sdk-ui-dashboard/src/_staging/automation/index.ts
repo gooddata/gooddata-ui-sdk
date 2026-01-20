@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { isEqual, omit, pick } from "lodash-es";
 
@@ -139,7 +139,7 @@ export const getAutomationVisualizationFilters = (
         automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
-    )?.content.filters?.filter((f) => isFilterContextItem(f)) as FilterContextItem[] | undefined;
+    )?.content.filters?.filter((f) => isFilterContextItem(f));
 
     return {
         executionFilters: (executionFilters ?? []).length > 0 ? executionFilters : undefined,

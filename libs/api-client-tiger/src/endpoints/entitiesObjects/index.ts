@@ -115,8 +115,10 @@ export {
 export {
     EntitiesApi_GetAllEntitiesFacts,
     EntitiesApi_GetEntityFacts,
+    EntitiesApi_PatchEntityFacts,
     type EntitiesApiGetAllEntitiesFactsRequest,
     type EntitiesApiGetEntityFactsRequest,
+    type EntitiesApiPatchEntityFactsRequest,
 } from "../../generated/metadata-json-api/index.js";
 
 // EntitiesApi - ExportDefinitions
@@ -304,9 +306,11 @@ export {
     EntitiesApi_GetAllEntitiesAttributes,
     EntitiesApi_GetAllEntitiesLabels,
     EntitiesApi_GetEntityAttributes,
+    EntitiesApi_PatchEntityAttributes,
     type EntitiesApiGetAllEntitiesAttributesRequest,
     type EntitiesApiGetAllEntitiesLabelsRequest,
     type EntitiesApiGetEntityAttributesRequest,
+    type EntitiesApiPatchEntityAttributesRequest,
 } from "../../generated/metadata-json-api/index.js";
 
 // EntitiesApi - AttributeHierarchies

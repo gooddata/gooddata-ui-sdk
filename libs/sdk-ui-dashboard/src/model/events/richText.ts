@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type ICatalogDateDataset,
@@ -12,10 +12,10 @@ import { eventGuard } from "./util.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
- * Payload of the {@link DashboardRichTextWidgetContentChanged} event.
+ * Payload of the {@link IDashboardRichTextWidgetContentChanged} event.
  * @beta
  */
-export interface DashboardRichTextWidgetContentChangedPayload {
+export interface IDashboardRichTextWidgetContentChangedPayload {
     /**
      * Reference to changed rich text widget.
      */
@@ -32,9 +32,9 @@ export interface DashboardRichTextWidgetContentChangedPayload {
  *
  * @beta
  */
-export interface DashboardRichTextWidgetContentChanged extends IDashboardEvent {
+export interface IDashboardRichTextWidgetContentChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED";
-    readonly payload: DashboardRichTextWidgetContentChangedPayload;
+    readonly payload: IDashboardRichTextWidgetContentChangedPayload;
 }
 
 /**
@@ -45,7 +45,7 @@ export function richTextWidgetContentChanged(
     ref: ObjRef,
     content: string,
     correlationId?: string,
-): DashboardRichTextWidgetContentChanged {
+): IDashboardRichTextWidgetContentChanged {
     return {
         type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED",
         ctx,
@@ -58,12 +58,12 @@ export function richTextWidgetContentChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardRichTextWidgetContentChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardRichTextWidgetContentChanged}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardRichTextWidgetContentChanged = eventGuard<DashboardRichTextWidgetContentChanged>(
+export const isDashboardRichTextWidgetContentChanged = eventGuard<IDashboardRichTextWidgetContentChanged>(
     "GDC.DASH/EVT.RICH_TEXT_WIDGET.CONTENT_CHANGED",
 );
 
@@ -72,10 +72,10 @@ export const isDashboardRichTextWidgetContentChanged = eventGuard<DashboardRichT
 //
 
 /**
- * Payload of the {@link DashboardRichTextWidgetFilterSettingsChanged} event.
+ * Payload of the {@link IDashboardRichTextWidgetFilterSettingsChanged} event.
  * @beta
  */
-export interface DashboardRichTextWidgetFilterSettingsChangedPayload {
+export interface IDashboardRichTextWidgetFilterSettingsChangedPayload {
     /**
      * Reference to RichText Widget that was changed.
      */
@@ -112,9 +112,9 @@ export interface DashboardRichTextWidgetFilterSettingsChangedPayload {
  *
  * @beta
  */
-export interface DashboardRichTextWidgetFilterSettingsChanged extends IDashboardEvent {
+export interface IDashboardRichTextWidgetFilterSettingsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED";
-    readonly payload: DashboardRichTextWidgetFilterSettingsChangedPayload;
+    readonly payload: IDashboardRichTextWidgetFilterSettingsChangedPayload;
 }
 
 /**
@@ -127,7 +127,7 @@ export function richTextWidgetFilterSettingsChanged(
     dateDatasetForFiltering: ICatalogDateDataset | undefined,
     correlationId?: string,
     ignoredDateFilters?: IDashboardDateFilter[],
-): DashboardRichTextWidgetFilterSettingsChanged {
+): IDashboardRichTextWidgetFilterSettingsChanged {
     return {
         type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
         ctx,
@@ -142,12 +142,12 @@ export function richTextWidgetFilterSettingsChanged(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardInsightWidgetFilterSettingsChanged}.
+ * Tests whether the provided object is an instance of {@link IDashboardInsightWidgetFilterSettingsChanged}.
  *
  * @param obj - object to test
  * @beta
  */
 export const isDashboardRichTextWidgetFilterSettingsChanged =
-    eventGuard<DashboardRichTextWidgetFilterSettingsChanged>(
+    eventGuard<IDashboardRichTextWidgetFilterSettingsChanged>(
         "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
     );

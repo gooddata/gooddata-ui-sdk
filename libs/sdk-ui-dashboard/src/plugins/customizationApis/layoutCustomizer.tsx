@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
@@ -11,8 +11,8 @@ import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
 import { type CustomizerMutationsContext } from "./types.js";
 import { type DashboardTransformFn, type ExtendedDashboardWidget } from "../../model/index.js";
 import {
-    type DashboardFocusObject,
     type DashboardLayoutExportTransformFn,
+    type IDashboardFocusObject,
 } from "../../model/types/commonTypes.js";
 import {
     type CustomDashboardLayoutComponent,
@@ -256,7 +256,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
                     return currentLayout;
                 }
-            }, layoutToTransform as IDashboardLayout<ExtendedDashboardWidget>);
+            }, layoutToTransform);
 
             const firstTab = dashboard.tabs?.[0];
 
@@ -278,7 +278,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
         function handler<TWidget>(
             layout: IDashboardLayout<TWidget>,
-            focusedObject?: DashboardFocusObject,
+            focusedObject?: IDashboardFocusObject,
         ): IDashboardLayout<TWidget> | undefined {
             /*
              * Once the dashboard component supports multiple layout types, then the code here must only
@@ -328,7 +328,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
                         e,
                     );
 
-                    return currentLayout as IDashboardLayout<ExtendedDashboardWidget>;
+                    return currentLayout;
                 }
             }, layout as IDashboardLayout<ExtendedDashboardWidget>);
 

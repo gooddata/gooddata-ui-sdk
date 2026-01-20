@@ -6,6 +6,7 @@ import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
+    type IDashboardFilterGroupsConfig,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -22,6 +23,11 @@ export interface IFilterBarProps {
      * Working filters that are used to dispaly filter selected values. If undefined, filters are used instead.
      */
     workingFilters?: FilterContextItem[];
+
+    /**
+     * Filter groups config.
+     */
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
 
     /**
      * When value of an attribute filter that is part of the FilterBar changes, the filter bar MUST propagate the event

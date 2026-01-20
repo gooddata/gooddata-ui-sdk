@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 export { GeoPushpinChartNext } from "./GeoPushpinChartNext.js";
 export { PUSHPIN_LAYER_ID } from "./GeoPushpinChartNext.js";
@@ -39,5 +39,8 @@ export { createAreaLayer } from "./layers/area/layerFactory.js";
 
 export { GEO_CHART_DEFAULTS } from "./constants/defaults.js";
 export type { IGeoChartDefaults } from "./constants/defaults.js";
+
+// Constants
+export { TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID } from "./layers/common/constants.js";
 
 export type { CenterPositionChangedCallback, ZoomChangedCallback } from "./types/common/callbacks.js";

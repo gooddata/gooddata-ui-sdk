@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -25,7 +25,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
-    type DrillStep,
+    type IDrillStep,
     type OnDashboardDrill,
     type OnDrillDownSuccess,
     type OnDrillToAttributeUrlSuccess,
@@ -205,7 +205,7 @@ export interface IDashboardInsightProps {
      * It is undefined if rendered insight is placed directly in the dashboard.
      * It is defined when the insight is rendered in a drill dialog.
      */
-    drillStep?: DrillStep;
+    drillStep?: IDrillStep;
 
     /**
      * @internal
@@ -305,7 +305,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      * It is undefined if rendered insight is placed directly in the dashboard.
      * It is defined when the insight is rendered in a drill dialog.
      */
-    drillStep?: DrillStep;
+    drillStep?: IDrillStep;
 }
 
 ///

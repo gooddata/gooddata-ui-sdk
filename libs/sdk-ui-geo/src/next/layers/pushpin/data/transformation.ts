@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttributeDescriptor,
@@ -338,10 +338,16 @@ function processTooltipTextBucket(ctx: IBucketProcessingContext): IGeoAttributeI
         return undefined;
     }
 
+    const data = getAttributeData(
+        attributeHeaderItems,
+        tooltipTextIndex,
+        emptyHeaderString,
+        nullHeaderString,
+    );
     return {
         index: tooltipTextBucket.index,
         name: tooltipTextBucket.name,
-        data: getAttributeData(attributeHeaderItems, tooltipTextIndex, emptyHeaderString, nullHeaderString),
+        data,
     };
 }
 
@@ -491,7 +497,7 @@ function isGeoJsonProperties(value: unknown): value is GeoJSON.GeoJsonProperties
 /**
  * Parses a GeoJSON property item from JSON string
  */
-function parseGeoPropertyItem(item: JsonValue): GeoJSON.GeoJsonProperties {
+function parseGeoPropertyItem(item: JsonValue, propertyName: string): GeoJSON.GeoJsonProperties {
     if (item === null || item === undefined) {
         return {};
     }
@@ -502,8 +508,10 @@ function parseGeoPropertyItem(item: JsonValue): GeoJSON.GeoJsonProperties {
             if (isGeoJsonProperties(parsed)) {
                 return parsed;
             }
+            console.warn(`[GeoChartNext] Parsed tooltip property "${propertyName}" is not an object.`);
             return {};
         } catch {
+            console.warn(`[GeoChartNext] Failed to parse tooltip property "${propertyName}".`);
             return {};
         }
     }
@@ -527,20 +535,17 @@ function parseGeoPropertyItem(item: JsonValue): GeoJSON.GeoJsonProperties {
  * @internal
  */
 export function parsePushpinGeoProperties(properties: GeoJSON.GeoJsonProperties): GeoJSON.GeoJsonProperties {
-    const {
-        locationName = "{}",
-        color = "{}",
-        size = "{}",
-        segment = "{}",
-        tooltipText = "{}",
-    } = properties || {};
-    return {
-        locationName: parseGeoPropertyItem(locationName),
-        size: parseGeoPropertyItem(size),
-        color: parseGeoPropertyItem(color),
-        segment: parseGeoPropertyItem(segment),
-        tooltipText: parseGeoPropertyItem(tooltipText),
-    };
+    const rawProperties =
+        properties && typeof properties === "object"
+            ? (properties as Record<string, JsonValue>)
+            : ({} as Record<string, JsonValue>);
+    const tooltipKeys = ["locationName", "color", "size", "segment", "tooltipText"] as const;
+    const parsedProperties: Record<string, GeoJSON.GeoJsonProperties> = {};
+    for (const key of tooltipKeys) {
+        const item = rawProperties[key] ?? "{}";
+        parsedProperties[key] = parseGeoPropertyItem(item, key);
+    }
+    return parsedProperties;
 }
 
 /**

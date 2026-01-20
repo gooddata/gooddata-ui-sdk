@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { uniqBy } from "lodash-es";
 import { type BatchAction, batchActions } from "redux-batched-actions";
@@ -28,7 +28,7 @@ import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 import { loadFilterViews } from "./loadFilterViews.js";
 import { loadUser } from "./loadUser.js";
-import { type DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
+import { type IDateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
 import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
 import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
 import { resolveEntitlements } from "./resolveEntitlements.js";
@@ -227,11 +227,11 @@ function* getTabsFilterConfigs(
     // include default tab for case of old dashboard or turned off FeatureFlag for DashboardTabs
     const tabs = dashboard.tabs ? [...dashboard.tabs, defaultTab] : [defaultTab];
     for (const tab of tabs) {
-        const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
+        const effectiveDateFilterConfig: IDateFilterMergeResult = yield call(
             mergeDateFilterConfigWithOverrides,
             ctx,
             cmd,
-            config.dateFilterConfig!,
+            config.dateFilterConfig,
             tab.dateFilterConfig,
         );
         tabsDateFilterConfig[tab.localIdentifier] = effectiveDateFilterConfig.config;

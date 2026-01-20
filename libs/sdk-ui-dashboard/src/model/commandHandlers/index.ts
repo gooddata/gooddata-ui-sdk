@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 
@@ -131,6 +131,7 @@ function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): 
 }
 
 export const DefaultCommandHandlers: {
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
 } = {
     "GDC.DASH/CMD.INITIALIZE": initializeDashboardHandler,

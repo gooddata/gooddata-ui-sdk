@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -303,7 +303,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                     const displayForm = item.urlDrillTarget.insightAttributeDisplayForm;
                     dispatch(removeDrillToUrlForInsightWidget(widgetRef, [displayForm]));
                 } else {
-                    dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
+                    dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier)]));
                 }
             }
             deleteIncompleteItem(item);

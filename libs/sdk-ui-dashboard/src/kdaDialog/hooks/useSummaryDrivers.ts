@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import { type KdaItemGroup } from "../internalTypes.js";
+import { type IKdaItemGroup } from "../internalTypes.js";
 import { useAttribute } from "./useAttribute.js";
 import { useKdaState } from "../providers/KdaState.js";
 
@@ -14,7 +14,7 @@ export function useSummaryDrivers() {
 
     return useMemo(() => {
         //Groups
-        const groups = state.items.reduce<Record<string, KdaItemGroup>>((prev, { data }) => {
+        const groups = state.items.reduce<Record<string, IKdaItemGroup>>((prev, { data }) => {
             const ref = objRefToString(data.attribute);
             if (!prev[ref]) {
                 prev[ref] = createKdaGroup(
@@ -52,7 +52,7 @@ export function useSummaryDrivers() {
 
         return Object.values(groups).sort(
             (a, b) => b.significantDrivers.length - a.significantDrivers.length,
-        ) as KdaItemGroup[];
+        );
     }, [state.items, attributeFinder, state.selectedAttributes]);
 }
 
@@ -62,7 +62,7 @@ function createKdaGroup(
     displayForm: ObjRef,
     title: string,
     description: string,
-): KdaItemGroup {
+): IKdaItemGroup {
     return {
         id,
         significantDrivers: [],

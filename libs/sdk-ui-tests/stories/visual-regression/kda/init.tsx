@@ -1,14 +1,14 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { action } from "storybook/actions";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { type ObjRef } from "@gooddata/sdk-model";
 import {
+    type IKdaItem,
+    type IKdaState,
     IntlWrapper,
     KdaDialog,
-    type KdaItem,
-    type KdaState,
     KdaStateProvider,
     KdaStoreProvider,
 } from "@gooddata/sdk-ui-dashboard/internal";
@@ -128,7 +128,7 @@ const fewItems = [
             standardDeviation: 1,
         },
     },
-] as IUiListboxInteractiveItem<KdaItem>[];
+] as IUiListboxInteractiveItem<IKdaItem>[];
 
 const moreItems = [
     ...fewItems,
@@ -270,7 +270,7 @@ const moreItems = [
             standardDeviation: 1,
         },
     },
-] as IUiListboxInteractiveItem<KdaItem>[];
+] as IUiListboxInteractiveItem<IKdaItem>[];
 
 const oneItem = [
     {
@@ -293,15 +293,15 @@ const oneItem = [
             formatValue,
         },
     },
-] as IUiListboxInteractiveItem<KdaItem>[];
+] as IUiListboxInteractiveItem<IKdaItem>[];
 
-export const dialogFullLoadingState: Partial<KdaState> = {
+export const dialogFullLoadingState: Partial<IKdaState> = {
     separators: {
         thousand: ",",
         decimal: ".",
     },
 };
-export const dialogContentLoadingState: Partial<KdaState> = {
+export const dialogContentLoadingState: Partial<IKdaState> = {
     ...dialogFullLoadingState,
     definition: {
         metric: {
@@ -338,7 +338,7 @@ export const dialogContentLoadingState: Partial<KdaState> = {
     },
     definitionStatus: "success",
 };
-export const dialogDetailsLoadingState: Partial<KdaState> = {
+export const dialogDetailsLoadingState: Partial<IKdaState> = {
     ...dialogContentLoadingState,
     items: fewItems,
     itemsStatus: "success",
@@ -347,22 +347,22 @@ export const dialogDetailsLoadingState: Partial<KdaState> = {
         ReferenceMd.Account.Default.attribute.displayForm,
     ],
 };
-export const dialogFullyLoadedState: Partial<KdaState> = {
+export const dialogFullyLoadedState: Partial<IKdaState> = {
     ...dialogDetailsLoadingState,
     selectedStatus: "success",
 };
-export const dialogFullyLoadedScrollState: Partial<KdaState> = {
+export const dialogFullyLoadedScrollState: Partial<IKdaState> = {
     ...dialogFullyLoadedState,
     selectedStatus: "success",
     items: moreItems,
 };
-export const dialogFullyLoadedSmallState: Partial<KdaState> = {
+export const dialogFullyLoadedSmallState: Partial<IKdaState> = {
     ...dialogFullyLoadedState,
     selectedStatus: "success",
     items: oneItem,
 };
 
-export function DialogComponent(props: { state: Partial<KdaState> }) {
+export function DialogComponent(props: { state: Partial<IKdaState> }) {
     return (
         <div>
             <IntlWrapper>

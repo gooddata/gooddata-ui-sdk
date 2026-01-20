@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -10,7 +10,7 @@ export const chaiFriendly: IConfiguration = {
             version: "1.1.0",
         },
     ],
-    plugin: "chai-friendly",
+    plugins: ["chai-friendly"],
     rules: {
         "no-unused-expressions": "off",
         "chai-friendly/no-unused-expressions": "error",

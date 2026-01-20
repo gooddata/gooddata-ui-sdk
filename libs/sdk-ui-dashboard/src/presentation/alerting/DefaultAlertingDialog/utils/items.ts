@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type DateAttributeGranularity,
@@ -10,8 +10,6 @@ import {
     type IFilter,
     type IInsight,
     type IMeasure,
-    type IPoPMeasureDefinition,
-    type IPreviousPeriodMeasureDefinition,
     type IRelativeDateFilter,
     type ObjRef,
     areObjRefsEqual,
@@ -197,9 +195,7 @@ function mapAttribute(dateDatasets: ICatalogDateDataset[]) {
 }
 
 function mapPreviousPeriodMeasure(metrics: IMeasure[], simpleMetrics: AlertMetric[], isPrimary: boolean) {
-    const previousPeriodMetrics = metrics.filter((measure) =>
-        isPreviousPeriodMeasure(measure),
-    ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
+    const previousPeriodMetrics = metrics.filter((measure) => isPreviousPeriodMeasure(measure));
     previousPeriodMetrics.forEach((measure) => {
         const found = simpleMetrics.find(
             (simpleMetric) =>
@@ -217,9 +213,7 @@ function mapPreviousPeriodMeasure(metrics: IMeasure[], simpleMetrics: AlertMetri
 }
 
 function mapPoPMeasure(metrics: IMeasure[], simpleMetrics: AlertMetric[], isPrimary: boolean) {
-    const popMetrics = metrics.filter((measure) =>
-        isPoPMeasure(measure),
-    ) as IMeasure<IPoPMeasureDefinition>[];
+    const popMetrics = metrics.filter((measure) => isPoPMeasure(measure));
     popMetrics.forEach((measure) => {
         const found = simpleMetrics.find(
             (simpleMetric) =>

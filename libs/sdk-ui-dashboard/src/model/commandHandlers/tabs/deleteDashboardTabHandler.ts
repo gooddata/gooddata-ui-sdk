@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
-import { type DeleteDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
+import { type IDeleteDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    type DashboardTabDeleted,
-    type DashboardTabSwitched,
+    type IDashboardTabDeleted,
+    type IDashboardTabSwitched,
     dashboardTabDeleted,
 } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -23,8 +23,8 @@ import { validateDrills } from "../common/validateDrills.js";
  */
 export function* deleteDashboardTabHandler(
     ctx: DashboardContext,
-    cmd: DeleteDashboardTab,
-): SagaIterator<DashboardTabDeleted> {
+    cmd: IDeleteDashboardTab,
+): SagaIterator<IDashboardTabDeleted> {
     const { tabId } = cmd.payload;
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
@@ -61,7 +61,7 @@ export function* deleteDashboardTabHandler(
 
         if (nextActiveTabLocalIdentifier) {
             // Switch to the next tab first so the current active tab state is saved back
-            const switchedEvent: DashboardTabSwitched = yield call(
+            const switchedEvent: IDashboardTabSwitched = yield call(
                 switchDashboardTabHandler,
                 ctx,
                 switchDashboardTab(nextActiveTabLocalIdentifier, cmd.correlationId),

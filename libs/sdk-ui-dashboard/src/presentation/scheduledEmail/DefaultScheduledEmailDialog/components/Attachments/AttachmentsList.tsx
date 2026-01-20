@@ -1,59 +1,36 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type Ref, useState } from "react";
-
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
     type DashboardAttachmentType,
     type IExportDefinitionVisualizationObjectSettings,
     type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
-import {
-    Button,
-    ContentDivider,
-    Dropdown,
-    type IAlignPoint,
-    UiIcon,
-    isEscapeKey,
-} from "@gooddata/sdk-ui-kit";
 
+import { AttachmentSettings } from "./AttachmentSettings.js";
 import { attachmentIcons, dashboardAttachmentLabels, widgetAttachmentLabels } from "./AttachmentsSelect.js";
-
-const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
-    {
-        align: "bc tc",
-        offset: { x: 0, y: 0 },
-    },
-    {
-        align: "tc bc",
-        offset: { x: 0, y: 0 },
-    },
-];
-
-const OVERLAY_POSITION_TYPE = "sameAsTarget";
-const CLOSE_ON_PARENT_SCROLL = true;
 
 export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttachmentType>({
     attachments,
     onDelete,
     xlsxSettings,
     onXlsxSettingsChange,
+    pdfSettings,
+    onPdfSettingsChange,
+    defaultPdfPageSize,
     mode,
 }: {
     attachments: T[];
     onDelete: (attachment: T) => void;
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    pdfSettings?: IExportDefinitionVisualizationObjectSettings;
+    onPdfSettingsChange?: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     mode: "widget" | "dashboard";
 }) {
     const intl = useIntl();
-    const [mergeHeaders, setMergeHeaders] = useState(xlsxSettings.mergeHeaders ?? true);
-    const [exportInfo, setExportInfo] = useState(xlsxSettings.exportInfo ?? true);
-
-    const isSettingsDirty =
-        mergeHeaders !== (xlsxSettings.mergeHeaders ?? true) ||
-        exportInfo !== (xlsxSettings.exportInfo ?? true);
 
     return (
         <>
@@ -65,100 +42,20 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                             : dashboardAttachmentLabels[attachment]}
                     </span>
                     {attachment === "XLSX" && (
-                        <Dropdown
-                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                            overlayPositionType={OVERLAY_POSITION_TYPE}
-                            alignPoints={DROPDOWN_ALIGN_POINTS}
-                            autofocusOnOpen
-                            onOpenStateChanged={(isOpen) => {
-                                if (!isOpen) {
-                                    setMergeHeaders(xlsxSettings.mergeHeaders ?? true);
-                                    setExportInfo(xlsxSettings.exportInfo ?? true);
-                                }
-                            }}
-                            renderButton={({ toggleDropdown, buttonRef }) => (
-                                <button
-                                    className="gd-attachment-chip-button"
-                                    onClick={toggleDropdown}
-                                    ref={buttonRef as Ref<HTMLButtonElement>}
-                                    aria-label={intl.formatMessage({
-                                        id: "dialogs.schedule.management.attachments.xlsx.settings",
-                                    })}
-                                >
-                                    <UiIcon type="settings" size={14} color="complementary-8" />
-                                </button>
-                            )}
-                            renderBody={({ closeDropdown }) => (
-                                <div
-                                    className="gd-attachment-settings-dropdown"
-                                    onKeyDown={(e) => {
-                                        if (isEscapeKey(e)) {
-                                            e.stopPropagation();
-                                            closeDropdown();
-                                        }
-                                    }}
-                                >
-                                    <div className="gd-list-title">
-                                        <FormattedMessage id="dialogs.schedule.management.attachments.xlsx.settings" />
-                                        <div className="gd-close-button">
-                                            <Button
-                                                className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
-                                                value=""
-                                                onClick={closeDropdown}
-                                                accessibilityConfig={{
-                                                    ariaLabel: intl.formatMessage({ id: "close" }),
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="gd-attachment-settings-dropdown-content">
-                                        <label className="input-checkbox-label">
-                                            <input
-                                                type="checkbox"
-                                                className="input-checkbox"
-                                                onChange={() => setMergeHeaders(!mergeHeaders)}
-                                                checked={mergeHeaders}
-                                            />
-                                            <span className="input-label-text">
-                                                <FormattedMessage id="dialogs.schedule.management.attachments.cells.merged" />
-                                            </span>
-                                        </label>
-                                        <label className="input-checkbox-label">
-                                            <input
-                                                type="checkbox"
-                                                className="input-checkbox"
-                                                onChange={() => setExportInfo(!exportInfo)}
-                                                checked={exportInfo}
-                                            />
-                                            <span className="input-label-text">
-                                                <FormattedMessage id="dialogs.schedule.management.attachments.exportInfo" />
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <ContentDivider className="gd-divider-without-margin" />
-                                    <div className="gd-attachment-settings-dropdown-footer">
-                                        <Button
-                                            value={intl.formatMessage({ id: "cancel" })}
-                                            className="gd-button-secondary"
-                                            onClick={closeDropdown}
-                                        />
-                                        <Button
-                                            value={intl.formatMessage({ id: "save" })}
-                                            className="gd-button-action"
-                                            onClick={() => {
-                                                onXlsxSettingsChange({
-                                                    mergeHeaders,
-                                                    exportInfo,
-                                                });
-                                                closeDropdown();
-                                            }}
-                                            disabled={!isSettingsDirty}
-                                        />
-                                    </div>
-                                </div>
-                            )}
+                        <AttachmentSettings
+                            type="XLSX"
+                            settings={xlsxSettings}
+                            onSettingsChange={onXlsxSettingsChange}
                         />
                     )}
+                    {attachment === "PDF_TABULAR" && pdfSettings && onPdfSettingsChange ? (
+                        <AttachmentSettings
+                            type="PDF_TABULAR"
+                            settings={pdfSettings}
+                            onSettingsChange={onPdfSettingsChange}
+                            defaultPdfPageSize={defaultPdfPageSize}
+                        />
+                    ) : null}
                     <button
                         className="gd-attachment-chip-button gd-attachment-chip-delete"
                         aria-label={intl.formatMessage(

@@ -1,10 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useEffect, useMemo } from "react";
 
 import { type IAttributeMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
 import {
-    type QueryAttributeByDisplayForm,
+    type IQueryAttributeByDisplayForm,
     queryAttributeByDisplayForm,
     selectIsNewDashboard,
     selectPreloadedAttributesWithReferences,
@@ -22,7 +23,7 @@ export function useAttributes(displayForms: ObjRef[]) {
         status: attributesLoadingStatus,
         error: attributesLoadingError,
     } = useDashboardQueryProcessing<
-        QueryAttributeByDisplayForm,
+        IQueryAttributeByDisplayForm,
         IAttributeMetadataObject[],
         Parameters<typeof queryAttributeByDisplayForm>
     >({

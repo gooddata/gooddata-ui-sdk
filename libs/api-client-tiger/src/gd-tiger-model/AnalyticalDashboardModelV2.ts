@@ -5,6 +5,7 @@ import { isEmpty } from "lodash-es";
 import {
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfig,
+    type IDashboardFilterGroupsConfig,
     type IDashboardLayout,
     type IFilterContext as IFilterContextModel,
     type ObjRef,
@@ -62,6 +63,11 @@ export interface IDashboardTab {
      * Dashboard extended attribute filter configs
      */
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+
+    /**
+     * Dashboard filter groups config.
+     */
+    filterGroupsConfig?: IDashboardFilterGroupsConfig;
 }
 
 /**

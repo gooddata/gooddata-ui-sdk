@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { isEmpty } from "lodash-es";
@@ -15,19 +15,22 @@ import {
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
-import { type ChangeKpiWidgetMeasure } from "../../commands/index.js";
+import { type IChangeKpiWidgetMeasure } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardKpiWidgetMeasureChanged } from "../../events/index.js";
+import { type IDashboardKpiWidgetMeasureChanged } from "../../events/index.js";
 import { kpiWidgetMeasureChanged } from "../../events/kpi.js";
-import { type MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
+import { type IMeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
-import { type WidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
+import { type IWidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
 
-function* validateMeasure(ctx: DashboardContext, cmd: ChangeKpiWidgetMeasure): SagaIterator<ICatalogMeasure> {
+function* validateMeasure(
+    ctx: DashboardContext,
+    cmd: IChangeKpiWidgetMeasure,
+): SagaIterator<ICatalogMeasure> {
     const {
         payload: { measureRef },
     } = cmd;
@@ -50,9 +53,9 @@ function* validateMeasure(ctx: DashboardContext, cmd: ChangeKpiWidgetMeasure): S
 }
 
 function determineHeaderToUse(
-    cmd: ChangeKpiWidgetMeasure,
+    cmd: IChangeKpiWidgetMeasure,
     measure: ICatalogMeasure,
-): WidgetHeader | undefined {
+): IWidgetHeader | undefined {
     const {
         payload: { header },
     } = cmd;
@@ -76,7 +79,7 @@ function* determineDateDatasetToUse(
         return undefined;
     }
 
-    const measureDateDatasets: MeasureDateDatasets = yield call(
+    const measureDateDatasets: IMeasureDateDatasets = yield call(
         query,
         queryDateDatasetsForMeasure(measure.measure.ref),
     );
@@ -115,8 +118,8 @@ function* determineDateDatasetToUse(
  */
 export function* changeKpiWidgetMeasureHandler(
     ctx: DashboardContext,
-    cmd: ChangeKpiWidgetMeasure,
-): SagaIterator<DashboardKpiWidgetMeasureChanged> {
+    cmd: IChangeKpiWidgetMeasure,
+): SagaIterator<IDashboardKpiWidgetMeasureChanged> {
     const { correlationId } = cmd;
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const kpiWidget = validateExistingKpiWidget(widgets, cmd, ctx);

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -27,7 +27,7 @@ export function useKpiDeleteDialogProps(): IKpiDeleteDialogProps {
 
     const onDelete = useCallback(() => {
         if (layoutPath !== undefined) {
-            dispatchAndWaitFor(dispatch, eagerRemoveNestedLayoutSectionItem(layoutPath)).finally(() => {
+            void dispatchAndWaitFor(dispatch, eagerRemoveNestedLayoutSectionItem(layoutPath)).finally(() => {
                 dispatch(uiActions.closeKpiDeleteDialog());
             });
         }

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
@@ -20,7 +21,7 @@ async function loadAttributesMetadata(
     return ctx.backend.workspace(ctx.workspace).attributes().getAttributes(refs);
 }
 
-export interface AttributeResolutionResult {
+export interface IAttributeResolutionResult {
     resolved: ObjRefMap<IAttributeMetadataObject>;
     missing: ObjRef[];
 }
@@ -38,7 +39,7 @@ export function* resolveAttributeMetadata(
     ctx: DashboardContext,
     refs: ObjRef[],
     attributes?: ObjRefMap<IAttributeMetadataObject>,
-): SagaIterator<AttributeResolutionResult> {
+): SagaIterator<IAttributeResolutionResult> {
     const catalogAttributes: ReturnType<typeof selectAllCatalogAttributesMap> =
         attributes || (yield select(selectAllCatalogAttributesMap));
 

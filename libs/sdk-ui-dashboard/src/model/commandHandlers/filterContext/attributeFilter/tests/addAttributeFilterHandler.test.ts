@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -6,7 +6,7 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
 
 import { addAttributeFilter } from "../../../../commands/index.js";
-import { type DashboardCommandFailed } from "../../../../events/index.js";
+import { type IDashboardCommandFailed } from "../../../../events/index.js";
 import { selectAttributeFilterConfigsModeMap } from "../../../../store/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
@@ -49,7 +49,7 @@ describe("addAttributeFilterHandler", () => {
     });
 
     it("should emit the appropriate events when trying to add a duplicate attribute filter", async () => {
-        const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+        const event: IDashboardCommandFailed = await Tester.dispatchAndWaitFor(
             addAttributeFilter(ReferenceMd.Department.Default.attribute.displayForm, 0, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
@@ -58,7 +58,7 @@ describe("addAttributeFilterHandler", () => {
     });
 
     it("should fail if adding filter for invalid display form", async () => {
-        const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
+        const event: IDashboardCommandFailed = await Tester.dispatchAndWaitFor(
             addAttributeFilter(uriRef("does-not-exit"), 0, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );

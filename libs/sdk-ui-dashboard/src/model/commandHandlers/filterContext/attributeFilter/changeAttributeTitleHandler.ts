@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { type SetAttributeFilterTitle } from "../../../commands/filters.js";
+import { type ISetAttributeFilterTitle } from "../../../commands/filters.js";
 import { attributeDisplayTitleChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
@@ -15,7 +15,7 @@ import { dispatchFilterContextChanged } from "../common.js";
 
 export function* changeAttributeTitleHandler(
     ctx: DashboardContext,
-    cmd: SetAttributeFilterTitle,
+    cmd: ISetAttributeFilterTitle,
 ): SagaIterator<void> {
     const { filterLocalId, title } = cmd.payload;
 

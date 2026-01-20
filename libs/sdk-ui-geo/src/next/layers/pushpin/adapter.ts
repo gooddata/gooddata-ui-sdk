@@ -1,7 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { newBucket } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    attributeDisplayFormRef,
+    isIdentifierRef,
+    isUriRef,
+    newBucket,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { isClusteringAllowed } from "./clustering/clustering.js";
@@ -21,6 +27,7 @@ import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
+import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "../registry/adapterTypes.js";
 
 function getValidLocations(locations: Array<IGeoLngLat | null | undefined>): IGeoLngLat[] {
@@ -50,19 +57,24 @@ function computeInitialViewport(geoData: IPushpinGeoData): Partial<IMapViewport>
     return calculateViewport(validLocations, dataViewportConfig);
 }
 
+function getDisplayFormId(attribute?: IAttribute): string | undefined {
+    if (!attribute) {
+        return undefined;
+    }
+
+    const ref = attributeDisplayFormRef(attribute);
+    if (isIdentifierRef(ref)) {
+        return ref.identifier;
+    }
+    if (isUriRef(ref)) {
+        return ref.uri;
+    }
+    return undefined;
+}
+
 function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): IPreparedExecution {
-    const { backend, workspace, config, execConfig, globalFilters, executionFactory } = context;
-    const {
-        latitude,
-        longitude,
-        size,
-        color,
-        segmentBy,
-        filters = [],
-        sortBy = [],
-        tooltipText: layerTooltipText,
-    } = layer;
-    const tooltipText = layerTooltipText ?? config?.tooltipText;
+    const { backend, workspace, execConfig, globalFilters, executionFactory } = context;
+    const { latitude, longitude, size, color, segmentBy, filters = [], sortBy = [], tooltipText } = layer;
 
     const buckets = [];
 
@@ -109,7 +121,15 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         return createExecution(layer, context);
     },
 
-    async prepareLayer(_layer, dataView, context): Promise<IPushpinLayerOutput | null> {
+    async prepareExecution(
+        layer: IGeoLayerPushpin,
+        context: IGeoAdapterContext,
+        execution: IPreparedExecution,
+    ): Promise<IPreparedExecution> {
+        return prepareExecutionWithTooltipText(context, execution, layer.latitude);
+    },
+
+    async prepareLayer(layer, dataView, context): Promise<IPushpinLayerOutput | null> {
         if (!context.intl) {
             throw new Error("prepareLayer requires intl in adapter context");
         }
@@ -136,6 +156,10 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             colorStrategy,
             config: pushpinConfig,
             hasClustering,
+            tooltipAttrIds: {
+                locationName: getDisplayFormId(layer.tooltipText),
+                segment: getDisplayFormId(layer.segmentBy),
+            },
         });
 
         const legend = computeLegend(geoData, colorStrategy, {

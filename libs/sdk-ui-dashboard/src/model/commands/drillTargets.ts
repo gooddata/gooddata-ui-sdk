@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ObjRef } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
@@ -6,10 +6,10 @@ import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { type IDashboardCommand } from "./base.js";
 
 /**
- * Payload of the {@link AddDrillTargets} command.
+ * Payload of the {@link IAddDrillTargets} command.
  * @alpha
  */
-export interface AddDrillTargetsPayload {
+export interface IAddDrillTargetsPayload {
     readonly ref: ObjRef;
     readonly availableDrillTargets: IAvailableDrillTargets;
 }
@@ -19,13 +19,13 @@ export interface AddDrillTargetsPayload {
  *
  * @alpha
  */
-export interface AddDrillTargets extends IDashboardCommand {
+export interface IAddDrillTargets extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL_TARGETS.ADD";
-    readonly payload: AddDrillTargetsPayload;
+    readonly payload: IAddDrillTargetsPayload;
 }
 
 /**
- * Create AddDrillTargets {@link AddDrillTargets} command.
+ * Create AddDrillTargets {@link IAddDrillTargets} command.
  *
  * @param ref - Unique widget ref
  * @param availableDrillTargets - Available widget drill targets {@link @gooddata/sdk-ui#IAvailableDrillTargets}
@@ -38,7 +38,7 @@ export function addDrillTargets(
     ref: ObjRef,
     availableDrillTargets: IAvailableDrillTargets,
     correlationId?: string,
-): AddDrillTargets {
+): IAddDrillTargets {
     return {
         type: "GDC.DASH/CMD.DRILL_TARGETS.ADD",
         correlationId,

@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 
-import { type QueryWidgetBrokenAlerts } from "../queries/widgets.js";
+import { type IQueryWidgetBrokenAlerts } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
 import { type IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
 import { type DashboardContext } from "../types/commonTypes.js";
@@ -15,7 +15,7 @@ export const QueryWidgetBrokenAlertService = createQueryService(
 // eslint-disable-next-line require-yield
 function* queryService(
     _ctx: DashboardContext,
-    _query: QueryWidgetBrokenAlerts,
+    _query: IQueryWidgetBrokenAlerts,
 ): SagaIterator<IBrokenAlertFilterBasicInfo[]> {
     return [];
 }

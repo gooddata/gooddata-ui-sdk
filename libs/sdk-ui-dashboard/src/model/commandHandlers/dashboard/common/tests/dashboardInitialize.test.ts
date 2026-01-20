@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
@@ -8,7 +8,7 @@ import { type DashboardContext } from "../../../../types/commonTypes.js";
 import { dashboardInitialize } from "../dashboardInitialize.js";
 
 vi.mock("../../../widgets/common/loadInsight.js", () => ({
-    loadInsight: async (_ctx: DashboardContext, ref: any) => {
+    loadInsight: (_ctx: DashboardContext, ref: any) => {
         return {
             insight: {
                 ref,

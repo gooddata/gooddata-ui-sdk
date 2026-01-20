@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
@@ -21,6 +21,10 @@ export interface IPushpinDataSourceProps {
     config: IGeoPushpinChartNextConfig;
     geoData: IPushpinGeoData;
     hasClustering: boolean;
+    tooltipAttrIds?: {
+        locationName?: string;
+        segment?: string;
+    };
 }
 
 type IPushpinDataSourceFeature = GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties>;
@@ -46,6 +50,26 @@ interface IPushpinFeatureContext {
     minSizeFromData: number | undefined;
     maxSizeFromData: number | undefined;
     hasSize: boolean;
+    locationNameAttrId?: string;
+    segmentAttrId?: string;
+}
+
+const DEFAULT_LOCATION_TITLE = "Location";
+
+function formatCoordinate(value: number): string {
+    if (!Number.isFinite(value)) {
+        return "-";
+    }
+    return value.toFixed(6);
+}
+
+function buildFallbackLocationLabels(locations: IGeoLngLat[]): string[] {
+    return locations.map((coords) => {
+        if (!coords || !Number.isFinite(coords.lat) || !Number.isFinite(coords.lng)) {
+            return "-";
+        }
+        return `${formatCoordinate(coords.lat)}, ${formatCoordinate(coords.lng)}`;
+    });
 }
 
 /**
@@ -72,6 +96,8 @@ function buildPushpinFeatureProperties(
         minSizeFromData,
         maxSizeFromData,
         hasSize,
+        locationNameAttrId,
+        segmentAttrId,
     } = ctx;
 
     const canCalculateSize = hasSize && minSizeFromData !== undefined && maxSizeFromData !== undefined;
@@ -88,6 +114,7 @@ function buildPushpinFeatureProperties(
         locationName: {
             title: locationNameTitle,
             value: locationNameData[index],
+            attrId: locationNameAttrId,
         },
         locationIndex: index,
         color: {
@@ -105,6 +132,7 @@ function buildPushpinFeatureProperties(
             title: segmentTitle,
             value: segmentData[index],
             uri: segmentUris[index],
+            attrId: segmentAttrId,
         },
     };
 }
@@ -113,6 +141,7 @@ function createPushpinFeatures({
     config,
     geoData,
     colorStrategy,
+    tooltipAttrIds,
 }: IPushpinDataSourceProps): IPushpinDataSourceFeatures {
     const { color, location, segment, size, tooltipText } = geoData;
 
@@ -124,15 +153,17 @@ function createPushpinFeatures({
     const sizeData = size?.data ?? [];
     const colorData = color?.data ?? [];
     const { min: minSizeFromData, max: maxSizeFromData } = getMinMax(sizeData);
+    const fallbackLocationNameData = buildFallbackLocationLabels(location.data);
+    const locationNameData = tooltipText?.data?.length ? tooltipText.data : fallbackLocationNameData;
 
     const ctx: IPushpinFeatureContext = {
-        locationNameTitle: tooltipText?.name ?? "",
+        locationNameTitle: tooltipText?.name ?? DEFAULT_LOCATION_TITLE,
         colorTitle: color?.name ?? "",
         sizeTitle: size?.name ?? "",
         segmentTitle: segment?.name ?? "",
         sizeFormat: size?.format ?? "",
         colorFormat: color?.format ?? "",
-        locationNameData: tooltipText?.data ?? [],
+        locationNameData,
         segmentData: segment?.data ?? [],
         segmentUris: segment?.uris ?? [],
         sizeData,
@@ -142,6 +173,8 @@ function createPushpinFeatures({
         minSizeFromData,
         maxSizeFromData,
         hasSize: size !== undefined,
+        locationNameAttrId: tooltipAttrIds?.locationName,
+        segmentAttrId: tooltipAttrIds?.segment,
     };
 
     return location.data.reduce(

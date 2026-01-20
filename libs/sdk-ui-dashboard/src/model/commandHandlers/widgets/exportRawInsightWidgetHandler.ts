@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -20,9 +20,9 @@ import {
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
-import { type ExportRawInsightWidget } from "../../commands/index.js";
+import { type IExportRawInsightWidget } from "../../commands/index.js";
 import {
-    type DashboardInsightWidgetExportResolved,
+    type IDashboardInsightWidgetExportResolved,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
 import { selectExportResultPollingTimeout, selectLocale } from "../../store/config/configSelectors.js";
@@ -52,8 +52,8 @@ async function exportDashboardToCSVRaw(
 
 export function* exportRawInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: ExportRawInsightWidget,
-): SagaIterator<DashboardInsightWidgetExportResolved> {
+    cmd: IExportRawInsightWidget,
+): SagaIterator<IDashboardInsightWidgetExportResolved> {
     const { ref, widget, insight, filename } = cmd.payload;
     const { workspace } = ctx;
 
@@ -70,7 +70,7 @@ export function* exportRawInsightWidgetHandler(
     ];
 
     const definition = defWithDimensions(
-        newDefForInsight(workspace, insight!, mergedFilters),
+        newDefForInsight(workspace, insight, mergedFilters),
         defaultDimensionsGenerator,
     );
 

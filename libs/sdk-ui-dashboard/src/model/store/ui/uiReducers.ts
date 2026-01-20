@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Action, type AnyAction, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
@@ -15,8 +15,8 @@ import {
 
 import {
     type FilterViewDialogMode,
-    type InvalidCustomUrlDrillParameterInfo,
-    type UiState,
+    type IInvalidCustomUrlDrillParameterInfo,
+    type IUiState,
 } from "./uiState.js";
 import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility/elementId.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
@@ -31,7 +31,7 @@ import {
 } from "../../../types.js";
 import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 
-type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
+type UiReducer<A extends Action = AnyAction> = CaseReducer<IUiState, A>;
 
 const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext & { openedFrom?: string }>> = (
     state,
@@ -325,7 +325,7 @@ const setInvalidCustomUrlDrillParameterWidgets: UiReducer<
             (i) => i.widgetId === widgetId(item.widget),
         );
 
-        const itemToStore: InvalidCustomUrlDrillParameterInfo = {
+        const itemToStore: IInvalidCustomUrlDrillParameterInfo = {
             drillsWithInvalidParametersLocalIds: item.invalidDrills.map(getDrillOriginLocalIdentifier),
             widgetId: widgetId(item.widget),
             widgetRef: widgetRef(item.widget),

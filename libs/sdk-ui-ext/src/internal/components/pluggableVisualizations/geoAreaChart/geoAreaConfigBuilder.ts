@@ -12,6 +12,13 @@ interface IBuildAreaVisualizationConfigParams {
     environment: string;
 }
 
+interface IGeoAreaControls {
+    legend?: IGeoAreaChartConfig["legend"];
+    viewport?: IGeoAreaChartConfig["viewport"];
+    mapStyle?: IGeoAreaChartConfig["mapStyle"];
+    maxZoomLevel?: IGeoAreaChartConfig["maxZoomLevel"];
+}
+
 /**
  * Builds visualization configuration for geo area chart.
  * Extends base chart config with geo area-specific properties.
@@ -28,14 +35,10 @@ export function buildAreaVisualizationConfig({
 }: IBuildAreaVisualizationConfigParams): IGeoAreaChartConfig {
     const { config = {} } = options;
     const { colorPalette, separators, maxZoomLevel: configMaxZoomLevel, isInEditMode, isExportMode } = config;
-    const controls = supportedControls.controls ?? supportedControls ?? {};
-    const {
-        legend = {},
-        viewport = {},
-        tooltipText,
-        mapStyle,
-        maxZoomLevel: controlsMaxZoomLevel,
-    } = controls;
+    const controls = (supportedControls.controls ?? supportedControls ?? {}) as IGeoAreaControls;
+    const { legend = {}, viewport = {}, mapStyle, maxZoomLevel: controlsMaxZoomLevel } = controls;
+    const legendEnabled = legend?.enabled;
+    const legendPosition = legend?.position;
     // Explicit undefined check - null is a meaningful value that clears the zoom limit
     const maxZoomLevel = configMaxZoomLevel === undefined ? controlsMaxZoomLevel : configMaxZoomLevel;
 
@@ -53,10 +56,9 @@ export function buildAreaVisualizationConfig({
         colorPalette,
         colorMapping,
         legend: {
-            enabled: legend.enabled,
-            position: legend.position,
+            enabled: legendEnabled,
+            position: legendPosition,
         },
-        tooltipText,
         ...viewportProp,
         mapStyle,
         maxZoomLevel,

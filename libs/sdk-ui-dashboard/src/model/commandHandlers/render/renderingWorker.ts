@@ -1,10 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { omit } from "lodash-es";
 import { type SagaIterator, type Task } from "redux-saga";
 import { actionChannel, all, call, cancel, delay, join, put, race, spawn, take } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
 
-import { type RenderingWorkerConfiguration } from "./types.js";
+import { type IRenderingWorkerConfiguration } from "./types.js";
 import { newDashboardEventPredicate } from "../../events/index.js";
 import { renderRequested, renderResolvedWithDetails } from "../../events/render.js";
 import { executedActions } from "../../store/executed/index.js";
@@ -27,7 +28,7 @@ const isAsyncRenderRequestedEvent = (id?: string) =>
         id ? (e) => e.payload.id === id : () => true,
     );
 
-const baseConfig: RenderingWorkerConfiguration = {
+const baseConfig: IRenderingWorkerConfiguration = {
     asyncRenderRequestedTimeout: 5000,
     asyncRenderResolvedTimeout: 2000,
     maxTimeout: 20 * 60000,
@@ -35,7 +36,7 @@ const baseConfig: RenderingWorkerConfiguration = {
     isExport: false,
 };
 
-export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorkerConfiguration>) {
+export function newRenderingWorker(renderingWorkerConfig: Partial<IRenderingWorkerConfiguration>) {
     return function* renderingWorker(ctx: DashboardContext): SagaIterator<void> {
         const config = { ...baseConfig, ...renderingWorkerConfig };
         try {
@@ -68,7 +69,7 @@ export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorke
     };
 }
 
-function* collectAsyncRenderTasks(config: RenderingWorkerConfiguration): SagaIterator<Map<string, Task>> {
+function* collectAsyncRenderTasks(config: IRenderingWorkerConfiguration): SagaIterator<Map<string, Task>> {
     const asyncRenderTasks = new Map<string, Task>();
     const timeout: Task = yield spawn(wait, config.asyncRenderRequestedTimeout);
     const renderRequestedChannel = yield actionChannel(isAsyncRenderRequestedEvent());
@@ -119,7 +120,7 @@ function* collectAsyncRenderTasks(config: RenderingWorkerConfiguration): SagaIte
 
 function* waitForAsyncRenderTasksResolution(
     asyncRenderTasks: Map<string, Task>,
-    config: RenderingWorkerConfiguration,
+    config: IRenderingWorkerConfiguration,
 ): SagaIterator<void> {
     const timeout: Task = yield spawn(wait, config.maxTimeout - config.asyncRenderRequestedTimeout);
     const renderRequestedChannel = yield actionChannel(isAsyncRenderRequestedEvent());
@@ -158,7 +159,10 @@ function* waitForAsyncRenderTasksResolution(
     }
 }
 
-function* waitForAsyncRenderResolution(id: string, config: RenderingWorkerConfiguration): SagaIterator<void> {
+function* waitForAsyncRenderResolution(
+    id: string,
+    config: IRenderingWorkerConfiguration,
+): SagaIterator<void> {
     // Avoid infinite loop
     const maxRetries = 3;
     let retries = 0;

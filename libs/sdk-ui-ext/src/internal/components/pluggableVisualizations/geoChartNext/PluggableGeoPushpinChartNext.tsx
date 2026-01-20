@@ -49,7 +49,7 @@ import {
     sanitizeMeasures,
 } from "./geoPushpinBucketHelper.js";
 import { BUCKETS } from "../../../constants/bucket.js";
-import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
     EmptyAfmSdkError,
@@ -135,7 +135,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     }
 
     protected override getSupportedPropertiesList(): string[] {
-        return GEOPUSHPIN_SUPPORTED_PROPERTIES;
+        return GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES;
     }
 
     /**
@@ -199,13 +199,29 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
      * @throws GeoLocationMissingSdkError if latitude attribute is not defined
      */
     protected override checkBeforeRender(insight: IInsightDefinition): boolean {
-        if (!getLatitudeAttribute(insight)) {
-            throw new GeoLocationMissingSdkError();
-        }
-
         if (!insightHasDataDefined(insight)) {
             throw new EmptyAfmSdkError();
         }
+
+        const latitudeFromBucket = getLatitudeAttribute(insight);
+        if (!latitudeFromBucket) {
+            throw new GeoLocationMissingSdkError();
+        }
+
+        const supportedControls = this.visualizationProperties.controls || {};
+        const controlsWithFallback: Record<string, unknown> = {
+            ...this.getInsightControlsWithFallback(insight),
+            ...supportedControls,
+        };
+        const latitudeCandidate = controlsWithFallback?.["latitude"];
+        const longitudeCandidate = controlsWithFallback?.["longitude"];
+        const latitudeId = typeof latitudeCandidate === "string" ? latitudeCandidate : undefined;
+        const longitudeId = typeof longitudeCandidate === "string" ? longitudeCandidate : undefined;
+
+        if (!latitudeId || !longitudeId) {
+            throw new GeoLocationMissingSdkError();
+        }
+
         return true;
     }
 
@@ -223,8 +239,14 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ) {
-        const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+    ): IPreparedExecution {
+        const ctx = this.buildPrimaryLayerContext(options, insight);
+        if (!ctx) {
+            // Never throw outside checkBeforeRender(). This fallback execution should be unreachable
+            // when called from update()-driven rendering (validation happens in checkBeforeRender).
+            return executionFactory.forInsight(insight).withExecConfig(options.executionConfig!);
+        }
+        const { primaryLayer, config, filters } = ctx;
         const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
             { id: primaryLayer.id, buckets: insightBuckets(insight) },
             ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
@@ -246,7 +268,11 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): IPreparedExecution[] {
-        const { primaryLayer, config, filters } = this.buildPrimaryLayerContext(options, insight);
+        const ctx = this.buildPrimaryLayerContext(options, insight);
+        if (!ctx) {
+            return [];
+        }
+        const { primaryLayer, config, filters } = ctx;
         const { globalFilters, routedByLayerId } = routeLocalIdRefFiltersToLayers(filters, [
             { id: primaryLayer.id, buckets: insightBuckets(insight) },
             ...insightLayers(insight).map((l) => ({ id: l.id, buckets: l.buckets })),
@@ -318,7 +344,11 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     ): void {
         const { custom = {}, locale, theme } = options;
         const { drillableItems } = custom;
-        const { config: configWithResolvedTooltip } = this.buildPrimaryLayerContext(options, insight);
+        const ctx = this.buildPrimaryLayerContext(options, insight);
+        if (!ctx) {
+            return;
+        }
+        const { config: configWithResolvedTooltip } = ctx;
         const primaryExecution = this.getExecution(options, insight, executionFactory);
         const additionalLayerExecutions = this.getExecutions(options, insight, executionFactory) ?? [];
         const geoChartProps: GeoChartNextExecutionProps = {
@@ -346,10 +376,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private buildPrimaryLayerContext(
         options: IVisProps,
         insight: IInsightDefinition,
-    ): { primaryLayer: IGeoLayer; config: IGeoPushpinChartNextConfig; filters: IFilter[] } {
+    ): { primaryLayer: IGeoLayer; config: IGeoPushpinChartNextConfig; filters: IFilter[] } | undefined {
         const supportedControls = this.visualizationProperties.controls || {};
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
-        const controlsWithFallback = {
+        const controlsWithFallback: Record<string, unknown> = {
             ...this.getInsightControlsWithFallback(insight),
             ...supportedControls,
         };
@@ -365,15 +395,11 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         const color = colorBucket ? bucketItems(colorBucket)[0] : undefined;
         const segmentBy = segmentBucket ? bucketAttribute(segmentBucket) : undefined;
 
-        const tooltipTextId = controlsWithFallback?.["tooltipText"] as string | undefined;
-        const latitudeId = controlsWithFallback?.["latitude"] as string | undefined;
-        const longitudeId = controlsWithFallback?.["longitude"] as string | undefined;
+        const latitudeCandidate = controlsWithFallback?.["latitude"];
+        const longitudeCandidate = controlsWithFallback?.["longitude"];
+        const latitudeId = typeof latitudeCandidate === "string" ? latitudeCandidate : undefined;
+        const longitudeId = typeof longitudeCandidate === "string" ? longitudeCandidate : undefined;
 
-        const tooltipTextAttribute = this.createAttributeFromId(
-            latitudeFromBucket,
-            tooltipTextId,
-            "tooltipText_df",
-        );
         // IMPORTANT: keep localId of the original LOCATION attribute so MVF/ranking filters that reference it
         // (via localIdRef in dimensionality) do not become dangling when LOCATION bucket is replaced by LAT/LNG.
         const latitudeLocalId = latitudeFromBucket ? attributeLocalId(latitudeFromBucket) : "latitude_df";
@@ -385,13 +411,11 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         );
 
         if (!latitudeAttribute || !longitudeAttribute) {
-            throw new Error("Pushpin layer requires latitude and longitude attributes");
+            // Invalid or incomplete geo config; validation is handled in checkBeforeRender().
+            return undefined;
         }
 
-        const configWithResolvedTooltip = {
-            ...fullConfig,
-            tooltipText: tooltipTextAttribute ?? undefined,
-        };
+        const configWithResolvedTooltip = fullConfig;
 
         // Set primary layer name to the insight title so legend/title logic is consistent for all layers.
         const title = insightTitle(insight);

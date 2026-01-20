@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { type IUiListboxInteractiveItemProps, UiIcon } from "@gooddata/sdk-ui-kit";
 
-import { type KdaItem } from "../../internalTypes.js";
+import { type IKdaItem } from "../../internalTypes.js";
 
 export function KeyDriverItem({
     maximum,
@@ -14,7 +14,7 @@ export function KeyDriverItem({
     onSelect,
     isSelected,
     isFocused,
-}: IUiListboxInteractiveItemProps<KdaItem> & { maximum: number }): ReactNode {
+}: IUiListboxInteractiveItemProps<IKdaItem> & { maximum: number }): ReactNode {
     const trend = item.data.from.value < item.data.to.value ? "up" : "down";
     const width = `${(Math.abs(item.data.to.value - item.data.from.value) / maximum) * 100}%`;
 

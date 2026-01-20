@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type MutableRefObject, useRef } from "react";
 
@@ -125,6 +125,7 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
                             isOpen={isOpen}
                             accessibilityConfig={{
                                 ariaExpanded: isOpen,
+                                popupType: "listbox",
                             }}
                         />
                     </div>
@@ -163,7 +164,7 @@ export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSel
                 )?.toString();
 
                 return (
-                    <UiListbox<OperatorItemType<string | IAlertComparisonOperator>, StaticItemData>
+                    <UiListbox<OperatorItemType<string>, StaticItemData>
                         shouldKeyboardActionStopPropagation
                         shouldKeyboardActionPreventDefault
                         dataTestId="s-alert-operator-select-list"

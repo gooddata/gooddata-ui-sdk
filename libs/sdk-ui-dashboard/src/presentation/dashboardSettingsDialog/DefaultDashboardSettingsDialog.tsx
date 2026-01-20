@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode, useCallback, useEffect, useState } from "react";
 
@@ -22,8 +22,8 @@ import {
 import { type IDashboardSettingsDialogProps } from "./types.js";
 import { useDialogData } from "./useDialogData.js";
 import {
-    type InsightDateDatasets,
-    type QueryInsightDateDatasets,
+    type IInsightDateDatasets,
+    type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
     selectCrossFilteringEnabledAndSupported,
     selectDateFormat,
@@ -70,8 +70,8 @@ export function DefaultDashboardSettingsDialog({
         result,
         status,
     } = useDashboardQueryProcessing<
-        QueryInsightDateDatasets,
-        InsightDateDatasets,
+        IQueryInsightDateDatasets,
+        IInsightDateDatasets,
         Parameters<typeof queryDateDatasetsForInsight>
     >({
         queryCreator: queryDateDatasetsForInsight,
@@ -364,7 +364,7 @@ function DateDatasetDropdown({
                             items={items}
                             selectedItemId={selectedItemId}
                             onSelect={(item) => {
-                                onChange(item.data as ObjRef | undefined);
+                                onChange(item.data);
                                 closeDropdown();
                             }}
                             onClose={closeDropdown}

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
@@ -12,9 +12,9 @@ import {
 
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 import { type IDashboardDrillEvent } from "../../../types.js";
-import { type KeyDriverAnalysis } from "../../commands/drill.js";
+import { type IKeyDriverAnalysis } from "../../commands/drill.js";
 import {
-    type DashboardKeyDriverAnalysisResolved,
+    type IDashboardKeyDriverAnalysisResolved,
     keyDriverAnalysisRequested,
     keyDriverAnalysisResolved,
 } from "../../events/drill.js";
@@ -27,8 +27,8 @@ import { removeDateFilters, removeIgnoredWidgetFilters } from "../../utils/widge
 
 export function* keyDriverAnalysisHandler(
     ctx: DashboardContext,
-    cmd: KeyDriverAnalysis,
-): SagaIterator<DashboardKeyDriverAnalysisResolved> {
+    cmd: IKeyDriverAnalysis,
+): SagaIterator<IDashboardKeyDriverAnalysisResolved> {
     const { drillDefinition, drillEvent, keyDriveItem, filters: availableFilters } = cmd.payload;
 
     yield put(keyDriverAnalysisRequested(ctx, drillDefinition, drillEvent, keyDriveItem, cmd.correlationId));
@@ -101,7 +101,7 @@ export function* keyDriverAnalysisHandler(
     });
 
     const widget = yield select(selectWidgetByRef(drillEvent.widgetRef));
-    const attributeFilters = removeDateFilters(removeIgnoredWidgetFilters(availableFilters, widget!));
+    const attributeFilters = removeDateFilters(removeIgnoredWidgetFilters(availableFilters, widget));
 
     const filters = mergeFilters(intersectionFilters, attributeFilters);
 

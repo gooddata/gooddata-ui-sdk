@@ -20,13 +20,17 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
+import { getAreaLayerIds } from "../../layers/area/operations.js";
 import {
     COORDINATE_FORM_TYPES,
     GEO_LAYER_DRILL_ELEMENT,
     GEO_LAYER_DRILL_TYPE,
-    MAPLIBRE_LAYER_TYPE_PREFIXES,
+    TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID,
 } from "../../layers/common/constants.js";
+import { normalizeAttributeDescriptorLocalIdentifier } from "../../layers/common/drillUtils.js";
 import type { IMapFacade, MapMouseEvent } from "../../layers/common/mapFacade.js";
+import { getTooltipProperties } from "../../layers/common/tooltipUtils.js";
+import { getPushpinLayerIds } from "../../layers/pushpin/operations.js";
 import type { IParentAttributeInfo } from "../../types/common/drilling.js";
 
 /**
@@ -40,11 +44,28 @@ function getClickedLayerByMapLibreLayerId(
         return undefined;
     }
     const clickedLayerEntry = Array.from(layers.entries()).find(([key, layer]) => {
-        const prefix = MAPLIBRE_LAYER_TYPE_PREFIXES[layer.layerType];
-        const layerId = `${prefix}-${key}`;
-        return layerId === mapLibreLayerId;
+        if (layer.layerType === "pushpin") {
+            const ids = getPushpinLayerIds(key);
+            return (
+                mapLibreLayerId === ids.pointLayerId ||
+                mapLibreLayerId === ids.unclusterLayerId ||
+                mapLibreLayerId === ids.clusterLayerId ||
+                mapLibreLayerId === ids.clusterLabelsLayerId
+            );
+        }
+
+        const ids = getAreaLayerIds(key);
+        return mapLibreLayerId === ids.fillLayerId || mapLibreLayerId === ids.outlineLayerId;
     });
     return clickedLayerEntry?.[1];
+}
+
+function getLocationIndexFromProperties(
+    properties: GeoJSON.GeoJsonProperties | undefined,
+): number | undefined {
+    const props = getTooltipProperties(properties);
+    const value = props["locationIndex"];
+    return typeof value === "number" && Number.isFinite(value) ? value : undefined;
 }
 
 /**
@@ -52,6 +73,10 @@ function getClickedLayerByMapLibreLayerId(
  */
 function isCoordinateFormType(labelType: AttributeDisplayFormType | undefined): boolean {
     return labelType !== undefined && COORDINATE_FORM_TYPES.includes(labelType);
+}
+
+function isGeoDisplayFormType(labelType: AttributeDisplayFormType | undefined): boolean {
+    return typeof labelType === "string" && labelType.startsWith("GDC.geo.");
 }
 
 /**
@@ -90,6 +115,19 @@ function normalizeCoordinateAttribute(
     };
 }
 
+function normalizeGeoDisplayFormAttribute(descriptor: IAttributeDescriptor): IAttributeDescriptor {
+    const parentInfo = getParentAttributeInfo(descriptor);
+    return {
+        ...descriptor,
+        attributeHeader: {
+            ...descriptor.attributeHeader,
+            // Use primary label (default display form) for cross-filter labeling and filter identity
+            ref: parentInfo.ref,
+            name: parentInfo.name,
+        },
+    };
+}
+
 /**
  * Build drill headers for a clicked location.
  * Includes attribute headers (excluding auxiliary geo attributes) and measure descriptors.
@@ -104,6 +142,16 @@ function getDrillHeaders(
 
     const descriptors = dataView.meta().dimensionItemDescriptors(geoAttributesDimensionIndex);
     const drillHeaders: IMappingHeader[] = [];
+    const tooltipDescriptor = typeof tooltipIndex === "number" ? descriptors[tooltipIndex] : undefined;
+    const useTooltipValue =
+        typeof tooltipIndex === "number" &&
+        isAttributeDescriptor(tooltipDescriptor) &&
+        tooltipDescriptor.attributeHeader.localIdentifier === TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID;
+    const tooltipRowHeader = useTooltipValue
+        ? headerItems[geoAttributesDimensionIndex]?.[tooltipIndex]?.[locationIndex]
+        : undefined;
+    const resolvedTooltipRowHeader =
+        tooltipRowHeader && isResultAttributeHeader(tooltipRowHeader) ? tooltipRowHeader : undefined;
 
     // Track processed coordinate attributes by their parent attribute key
     // This ensures we only include one coordinate attribute per parent (e.g., City, not City lat + City lon)
@@ -121,6 +169,10 @@ function getDrillHeaders(
             }
 
             const labelType = descriptor.attributeHeader.labelType;
+            const resolvedRowHeader =
+                resolvedTooltipRowHeader && isGeoDisplayFormType(labelType)
+                    ? resolvedTooltipRowHeader
+                    : rowHeader;
 
             // Handle coordinate display forms (lat/lon/pin) - deduplicate by parent attribute
             if (isCoordinateFormType(labelType)) {
@@ -133,13 +185,20 @@ function getDrillHeaders(
                 processedCoordinateParents.add(parentInfo.key);
 
                 // Normalize to use parent attribute's name and primary display form
-                const normalized = normalizeCoordinateAttribute(descriptor, rowHeader, parentInfo);
+                const normalized = normalizeCoordinateAttribute(descriptor, resolvedRowHeader, parentInfo);
+                const normalizedDescriptor = normalizeAttributeDescriptorLocalIdentifier(
+                    normalized.descriptor,
+                );
                 drillHeaders.push(normalized.rowHeader);
-                drillHeaders.push(normalized.descriptor);
+                drillHeaders.push(normalizedDescriptor);
             } else {
                 // Regular attributes - include as-is
-                drillHeaders.push(rowHeader);
-                drillHeaders.push(descriptor);
+                drillHeaders.push(resolvedRowHeader);
+                const descriptorForDrill =
+                    isGeoDisplayFormType(labelType) && descriptor.attributeHeader.primaryLabel
+                        ? normalizeGeoDisplayFormAttribute(descriptor)
+                        : descriptor;
+                drillHeaders.push(normalizeAttributeDescriptorLocalIdentifier(descriptorForDrill));
             }
         }
     });
@@ -174,50 +233,64 @@ export function useLayerClickEvent(
         const handleClick = (e: MapMouseEvent) => {
             const features = map.queryRenderedFeatures(e.point);
 
-            if (features && features.length > 0) {
-                const topFeature = features[0];
-                const mapLibreLayerId = topFeature.layer?.id;
-                const clickedLayer = getClickedLayerByMapLibreLayerId(layers, mapLibreLayerId);
-                const locationIndex = topFeature.properties?.["locationIndex"];
-                if (!clickedLayer?.dataView || locationIndex === undefined) {
-                    return;
-                }
-
-                const { dataView, geoData, layerType } = clickedLayer;
-                const tooltipIndex = geoData?.tooltipText?.index;
-                const drillHeaders = getDrillHeaders(dataView, locationIndex, tooltipIndex);
-                if (drillHeaders.length === 0) {
-                    return;
-                }
-
-                const isDrillable = drillHeaders.some((header) =>
-                    isSomeHeaderPredicateMatched(drillablePredicates, header, dataView),
-                );
-                if (!isDrillable) {
-                    return;
-                }
-
-                const intersection = getDrillIntersection(drillHeaders);
-
-                const drillEvent = {
-                    dataView: dataView.dataView,
-                    drillContext: {
-                        type: GEO_LAYER_DRILL_TYPE[layerType],
-                        element: GEO_LAYER_DRILL_ELEMENT[layerType],
-                        intersection,
-                    },
-                    ...(enableDrillMenuPositioningAtCursor
-                        ? {
-                              // Click coordinates relative to the map container
-                              chartX: e.point.x,
-                              chartY: e.point.y,
-                              enableDrillMenuPositioningAtCursor: true,
-                          }
-                        : {}),
-                };
-
-                onDrill(drillEvent);
+            if (!features || features.length === 0) {
+                return;
             }
+
+            // Find the first feature that belongs to one of our layers
+            let layerData: IGeoLayerData | undefined;
+            let locationIndex: number | undefined;
+
+            for (const feature of features) {
+                const mapLibreLayerId = (feature as GeoJSON.Feature & { layer?: { id?: string } }).layer?.id;
+                layerData = getClickedLayerByMapLibreLayerId(layers, mapLibreLayerId);
+                if (layerData?.dataView) {
+                    locationIndex = getLocationIndexFromProperties(feature.properties);
+                    if (locationIndex !== undefined) {
+                        break;
+                    }
+                }
+            }
+
+            if (!layerData?.dataView || locationIndex === undefined) {
+                return;
+            }
+
+            const { dataView, geoData, layerType } = layerData;
+            const tooltipIndex = geoData?.tooltipText?.index;
+            const drillHeaders = getDrillHeaders(dataView, locationIndex, tooltipIndex);
+
+            if (drillHeaders.length === 0) {
+                return;
+            }
+
+            const isDrillable = drillHeaders.some((header) =>
+                isSomeHeaderPredicateMatched(drillablePredicates, header, dataView),
+            );
+            if (!isDrillable) {
+                return;
+            }
+
+            const intersection = getDrillIntersection(drillHeaders);
+
+            const drillEvent = {
+                dataView: dataView.dataView,
+                drillContext: {
+                    type: GEO_LAYER_DRILL_TYPE[layerType],
+                    element: GEO_LAYER_DRILL_ELEMENT[layerType],
+                    intersection,
+                },
+                ...(enableDrillMenuPositioningAtCursor
+                    ? {
+                          // Click coordinates relative to the map container
+                          chartX: e.point.x,
+                          chartY: e.point.y,
+                          enableDrillMenuPositioningAtCursor: true,
+                      }
+                    : {}),
+            };
+
+            onDrill(drillEvent);
         };
 
         map.on("click", handleClick);

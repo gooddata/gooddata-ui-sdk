@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -20,7 +20,7 @@ import {
 import {
     changeFilterContextSelection,
     drillActions,
-    filterContextSelectionReseted,
+    filterContextSelectionReset,
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
     selectActiveTabLocalIdentifier,
@@ -262,7 +262,7 @@ export const useResetFiltersButton = (): {
             dispatch(removeAttributeFilters(newlyAddedFiltersLocalIds));
             dispatch(drillActions.resetCrossFiltering(activeTabId));
         }
-        dispatchEvent(filterContextSelectionReseted());
+        dispatchEvent(filterContextSelectionReset());
         // Report the reset as user interaction
         filterContextStateReset();
         // eslint-disable-next-line react-hooks/exhaustive-deps

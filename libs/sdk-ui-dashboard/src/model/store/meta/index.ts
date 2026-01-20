@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { metaReducers } from "./metaReducers.js";
-import { type DashboardMetaState, metaInitialState } from "./metaState.js";
+import { type IDashboardMetaState, metaInitialState } from "./metaState.js";
 
 const metaSlice = createSlice({
     name: "meta",
@@ -10,7 +11,7 @@ const metaSlice = createSlice({
     reducers: metaReducers,
 });
 
-export const metaSliceReducer: Reducer<DashboardMetaState> = metaSlice.reducer;
+export const metaSliceReducer: Reducer<IDashboardMetaState> = metaSlice.reducer;
 // Spread "fixes" TS2742 error
 
 /**

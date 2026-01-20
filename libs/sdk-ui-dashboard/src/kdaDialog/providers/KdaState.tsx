@@ -2,9 +2,9 @@
 
 import { type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-import type { KdaState } from "../internalTypes.js";
+import type { IKdaState } from "../internalTypes.js";
 
-const defaultState: KdaState = {
+const defaultState: IKdaState = {
     //main items
     definition: null,
     toValue: undefined,
@@ -34,8 +34,8 @@ const defaultState: KdaState = {
 };
 
 type KdaStateContextType = {
-    state: KdaState;
-    setState: (newState: Partial<KdaState>) => void;
+    state: IKdaState;
+    setState: (newState: Partial<IKdaState>) => void;
 };
 
 const KdaStateContext = createContext<KdaStateContextType>({
@@ -43,8 +43,8 @@ const KdaStateContext = createContext<KdaStateContextType>({
     setState: () => undefined,
 });
 
-export function KdaStateProvider({ children, value }: { children: ReactNode; value?: Partial<KdaState> }) {
-    const [state, setStateInternal] = useState<KdaState>({ ...defaultState, ...value });
+export function KdaStateProvider({ children, value }: { children: ReactNode; value?: Partial<IKdaState> }) {
+    const [state, setStateInternal] = useState<IKdaState>({ ...defaultState, ...value });
 
     useEffect(() => {
         setStateInternal({ ...defaultState, ...value });

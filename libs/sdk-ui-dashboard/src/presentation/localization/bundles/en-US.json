@@ -235,6 +235,38 @@
         "text": "Export",
         "crowdinContext": "Start to export data to file"
     },
+    "dialogs.export.pdf.pageSize": {
+        "text": "Page size",
+        "crowdinContext": "Label for the page size dropdown in the export PDF dialog"
+    },
+    "dialogs.export.pdf.pageSize.option.a3": {
+        "text": "A3",
+        "crowdinContext": "Export PDF dialog: Page size dropdown option representing the A3 paper format."
+    },
+    "dialogs.export.pdf.pageSize.option.a4": {
+        "text": "A4",
+        "crowdinContext": "Export PDF dialog: Page size dropdown option representing the A4 paper format."
+    },
+    "dialogs.export.pdf.pageSize.option.letter": {
+        "text": "Letter",
+        "crowdinContext": "Export PDF dialog: Page size dropdown option representing the Letter paper format."
+    },
+    "dialogs.export.pdf.pageOrientation": {
+        "text": "Orientation",
+        "crowdinContext": "Label for the orientation dropdown in the export PDF dialog"
+    },
+    "dialogs.export.pdf.pageOrientation.option.portrait": {
+        "text": "Portrait",
+        "crowdinContext": "Export PDF dialog: Orientation dropdown option showing the portrait page orientation."
+    },
+    "dialogs.export.pdf.pageOrientation.option.landscape": {
+        "text": "Landscape",
+        "crowdinContext": "Export PDF dialog: Orientation dropdown option showing the landscape page orientation."
+    },
+    "dialogs.export.pdf.includePageExportInfo": {
+        "text": "Include page export info",
+        "crowdinContext": "Label for the include page export info checkbox in the export PDF dialog"
+    },
     "dialogs.schedule.email.accessibilityTitle": {
         "text": "Scheduled emails",
         "crowdinContext": "Accessibility title for scheduled emails dialog"

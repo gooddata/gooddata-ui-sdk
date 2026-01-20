@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact, isEmpty, isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -35,10 +35,10 @@ import {
     dashboardDateFilterToDateFilterByWidget,
 } from "../../../converters/index.js";
 import { type IDashboardFilter } from "../../../types.js";
-import { type DrillToDashboard } from "../../commands/drill.js";
+import { type IDrillToDashboard } from "../../commands/drill.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import {
-    type DashboardDrillToDashboardResolved,
+    type IDashboardDrillToDashboardResolved,
     drillToDashboardRequested,
     drillToDashboardResolved,
 } from "../../events/drill.js";
@@ -62,8 +62,8 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
-    cmd: DrillToDashboard,
-): SagaIterator<DashboardDrillToDashboardResolved> {
+    cmd: IDrillToDashboard,
+): SagaIterator<IDashboardDrillToDashboardResolved> {
     // put start event
     yield put(
         drillToDashboardRequested(
@@ -76,7 +76,7 @@ export function* drillToDashboardHandler(
 
     // decide if we should use date filter (only if enabled and connected to a dataset)
     const widget: IInsightWidget = yield select(
-        selectAnalyticalWidgetByRef(cmd.payload.drillEvent.widgetRef!),
+        selectAnalyticalWidgetByRef(cmd.payload.drillEvent.widgetRef),
     );
     const insight: IInsight = yield select(selectInsightByRef(widget.insight));
 

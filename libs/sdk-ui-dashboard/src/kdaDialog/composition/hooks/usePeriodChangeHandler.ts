@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
 import { type DateAttributeGranularity, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
-import { type KdaDateOptions } from "../../internalTypes.js";
+import { type IKdaDateOptions } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { type DeepReadonly, type IKdaDefinition, type KdaPeriodType } from "../../types.js";
 import { clearSummaryValue } from "../../utils.js";
@@ -20,7 +20,7 @@ export function usePeriodChangeHandler() {
         return dateAttributeFinder(def?.dateAttribute);
     }, [dateAttributeFinder, def?.dateAttribute]);
 
-    const options = useMemo((): KdaDateOptions => {
+    const options = useMemo((): IKdaDateOptions => {
         return {
             dateAttribute,
             period: def?.type ?? "previous_period",

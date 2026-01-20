@@ -1,12 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type AnyAction, type Dispatch } from "@reduxjs/toolkit";
 
 import { type IDashboardCommand } from "../commands/index.js";
 import {
-    type DashboardCommandFailed,
-    type DashboardCommandStarted,
     type DashboardEvents,
     type ICustomDashboardEvent,
+    type IDashboardCommandFailed,
+    type IDashboardCommandStarted,
     isDashboardCommandFailed,
     isDashboardCommandStarted,
     isDashboardEvent,
@@ -36,7 +37,7 @@ export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEve
  *
  * @public
  */
-export interface DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> {
+export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
     /**
      * Specify event evaluation function.
      *
@@ -59,7 +60,7 @@ export interface DashboardEventHandler<TEvents extends DashboardEvents | ICustom
      * @param stateSelect - callback to execute arbitrary selectors against the dashboard state
      */
     handler: DashboardEventHandlerFn<TEvents>;
-}
+};
 
 /**
  * Creates a {@link DashboardEventHandler} instance that will be invoked for any event (event for custom events).
@@ -113,8 +114,8 @@ export function singleEventTypeHandler(
  */
 export function commandStartedEventHandler<TCommand extends IDashboardCommand>(
     type: TCommand["type"],
-    handler: DashboardEventHandler<DashboardCommandStarted<TCommand>>["handler"],
-): DashboardEventHandler<DashboardCommandStarted<TCommand>> {
+    handler: DashboardEventHandler<IDashboardCommandStarted<TCommand>>["handler"],
+): DashboardEventHandler<IDashboardCommandStarted<TCommand>> {
     return {
         eval: (e) => isDashboardCommandStarted(e) && e.payload.command.type === type,
         handler,
@@ -130,8 +131,8 @@ export function commandStartedEventHandler<TCommand extends IDashboardCommand>(
  */
 export function commandFailedEventHandler<TCommand extends IDashboardCommand>(
     type: TCommand["type"],
-    handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"],
-): DashboardEventHandler<DashboardCommandFailed<TCommand>> {
+    handler: DashboardEventHandler<IDashboardCommandFailed<TCommand>>["handler"],
+): DashboardEventHandler<IDashboardCommandFailed<TCommand>> {
     return {
         eval: (e) => isDashboardCommandFailed(e) && e.payload.command.type === type,
         handler,

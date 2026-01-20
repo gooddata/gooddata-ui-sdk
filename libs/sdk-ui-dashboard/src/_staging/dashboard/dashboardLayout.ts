@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact, keyBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
@@ -163,7 +163,7 @@ function newIdentityMapping(items: ReadonlyArray<IdentityMapping>): ObjRefMap<Id
     return map.fromItems(items);
 }
 
-function getWidgetIdentity(widget: any | undefined): IDashboardObjectIdentity | undefined {
+function getWidgetIdentity(widget: any): IDashboardObjectIdentity | undefined {
     const { ref, uri, identifier } = widget ?? {};
 
     if (!ref || !uri || !identifier) {

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -11,7 +11,7 @@ import {
     renameDashboard,
     resetDashboard,
 } from "../../../commands/index.js";
-import { type DashboardWasReset } from "../../../events/index.js";
+import { type IDashboardWasReset } from "../../../events/index.js";
 import { selectDashboardTitle } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextAttributeFilters,
@@ -64,7 +64,7 @@ describe("reset dashboard handler", () => {
         });
 
         it("should reset back to empty state", async () => {
-            const event: DashboardWasReset = await Tester.dispatchAndWaitFor(
+            const event: IDashboardWasReset = await Tester.dispatchAndWaitFor(
                 resetDashboard(),
                 "GDC.DASH/EVT.RESET",
             );
@@ -103,7 +103,7 @@ describe("reset dashboard handler", () => {
         });
 
         it("should reset to last persisted state", async () => {
-            const event: DashboardWasReset = await Tester.dispatchAndWaitFor(
+            const event: IDashboardWasReset = await Tester.dispatchAndWaitFor(
                 resetDashboard(),
                 "GDC.DASH/EVT.RESET",
             );

@@ -1,7 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ICatalogDateAttribute, type ICatalogDateDataset } from "@gooddata/sdk-model";
 
-import { ObjRefMap, type ObjRefMapConfig } from "../metadata/objRefMap.js";
+import { type IObjRefMapConfig, ObjRefMap } from "../metadata/objRefMap.js";
 
 /**
  * @internal
@@ -22,7 +23,7 @@ export function newCatalogDateAttributeWithDatasetMap(
     items: ReadonlyArray<CatalogDateAttributeWithDataset>,
     strictTypeCheck: boolean = false,
 ): ObjRefMap<CatalogDateAttributeWithDataset> {
-    const config: ObjRefMapConfig<CatalogDateAttributeWithDataset> = {
+    const config: IObjRefMapConfig<CatalogDateAttributeWithDataset> = {
         type: "attribute",
         strictTypeCheck,
         idExtract: (i) => i.attribute.attribute.id,

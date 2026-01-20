@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -15,12 +15,13 @@ import {
 
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
-import { type CreateDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
-import { type DashboardTabSwitched, dashboardTabCreated } from "../../events/tabs.js";
+import { DEFAULT_FISCAL_DATE_FILTER_PRESET } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import { type ICreateDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
+import { type IDashboardTabSwitched, dashboardTabCreated } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { InitialUndoState } from "../../store/_infra/undoEnhancer.js";
-import { selectDateFilterConfig } from "../../store/config/configSelectors.js";
-import { type TabState, tabsActions } from "../../store/tabs/index.js";
+import { selectActiveCalendars, selectDateFilterConfig } from "../../store/config/configSelectors.js";
+import { type ITabState, tabsActions } from "../../store/tabs/index.js";
 import { selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -47,7 +48,7 @@ const getTabState = ({
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     layout: IDashboardLayout<ExtendedDashboardWidget>;
     screen: ScreenSize;
-}): TabState => {
+}): ITabState => {
     return {
         title,
         localIdentifier,
@@ -80,7 +81,7 @@ const getTabState = ({
 /**
  * @internal
  */
-export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDashboardTab): SagaIterator {
+export function* createDashboardTabHandler(ctx: DashboardContext, cmd: ICreateDashboardTab): SagaIterator {
     const { title = "", index, shouldStartRenaming = true } = cmd.payload;
 
     // 1. Get current state from main dashboard slices
@@ -89,16 +90,22 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDas
         selectActiveTabLocalIdentifier,
     );
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(selectDateFilterConfig);
+    const activeCalendars: ReturnType<typeof selectActiveCalendars> = yield select(selectActiveCalendars);
 
     const screen: ScreenSize = yield select(selectScreen);
 
     const updatedTabs = (tabs ?? []).slice();
 
     // 2. Create new tab with an empty filter context and layout
-    const newTabId = uuid();
-    const newTabFilterContext = createDefaultFilterContext(dateFilterConfig, true);
+    const effectiveDateFilterConfig =
+        activeCalendars?.default === "FISCAL"
+            ? { ...dateFilterConfig, selectedOption: DEFAULT_FISCAL_DATE_FILTER_PRESET }
+            : dateFilterConfig;
 
-    const newTab: TabState = getTabState({
+    const newTabId = uuid();
+    const newTabFilterContext = createDefaultFilterContext(effectiveDateFilterConfig, true);
+
+    const newTab: ITabState = getTabState({
         localIdentifier: newTabId,
         title,
         layout: EmptyDashboardLayout,
@@ -130,7 +137,7 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: CreateDas
     yield dispatchDashboardEvent(dashboardTabCreated(ctx, newTabId, insertionIndex, cmd.correlationId));
 
     // 7. Switch to the newly created tab
-    const switchedEvent: DashboardTabSwitched = yield call(
+    const switchedEvent: IDashboardTabSwitched = yield call(
         switchDashboardTabHandler,
         ctx,
         switchDashboardTab(newTabId, cmd.correlationId),

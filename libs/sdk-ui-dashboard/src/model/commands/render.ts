@@ -1,24 +1,25 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link RequestAsyncRender} command.
  * @public
  */
-export interface RequestAsyncRenderPayload {
+export type RequestAsyncRenderPayload = {
     /**
      * Async render identifier (eg stringified widget {@link @gooddata/sdk-model#ObjRef}).
      */
     readonly id: string;
-}
+};
 
 /**
  * @public
  */
-export interface RequestAsyncRender extends IDashboardCommand {
+export type RequestAsyncRender = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.REQUEST";
     readonly payload: RequestAsyncRenderPayload;
-}
+};
 
 /**
  * Notify the dashboard about asynchronous rendering (eg when the component needs to load some asynchronous data to be rendered) of the component.
@@ -64,20 +65,20 @@ export function requestAsyncRender(id: string, correlationId?: string): RequestA
  * Payload of the {@link ResolveAsyncRender} command.
  * @public
  */
-export interface ResolveAsyncRenderPayload {
+export type ResolveAsyncRenderPayload = {
     /**
      * Async render identifier (eg stringified widget {@link @gooddata/sdk-model#ObjRef}).
      */
     readonly id: string;
-}
+};
 
 /**
  * @public
  */
-export interface ResolveAsyncRender extends IDashboardCommand {
+export type ResolveAsyncRender = IDashboardCommand & {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
     readonly payload: ResolveAsyncRenderPayload;
-}
+};
 
 /**
  * Notify the dashboard about resolved asynchronous rendering of the component.

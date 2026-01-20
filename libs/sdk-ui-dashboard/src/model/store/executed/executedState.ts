@@ -1,10 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 /**
  * @beta
  */
-export interface ExecutedState {
+export interface IExecutedState {
     executed: boolean;
 }
 
-export const executedInitialState: ExecutedState = { executed: false };
+export const executedInitialState: IExecutedState = { executed: false };

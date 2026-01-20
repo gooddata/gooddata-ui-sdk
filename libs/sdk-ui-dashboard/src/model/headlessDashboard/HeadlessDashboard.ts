@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Middleware, type PayloadAction } from "@reduxjs/toolkit";
 import { type SagaIterator } from "redux-saga";
@@ -8,14 +8,14 @@ import { type DashboardEventType, type DashboardEvents } from "../events/index.j
 import { type IDashboardQuery } from "../queries/index.js";
 import { queryEnvelopeWithPromise } from "../store/_infra/queryProcessing.js";
 import { type IDashboardQueryService } from "../store/_infra/queryService.js";
-import { type ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
+import { type IReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { type DashboardState } from "../store/index.js";
 import { type DashboardContext, type DashboardModelCustomizationFns } from "../types/commonTypes.js";
 
 /**
  * @internal
  */
-export interface MonitoredAction {
+export interface IMonitoredAction {
     calls: number;
     promise: Promise<PayloadAction<any>>;
     resolve: (action: PayloadAction<any>) => void;
@@ -25,7 +25,7 @@ export interface MonitoredAction {
 /**
  * @internal
  */
-export interface HeadlessDashboardConfig {
+export interface IHeadlessDashboardConfig {
     queryServices?: IDashboardQueryService<any, any>[];
     backgroundWorkers?: ((context: DashboardContext) => SagaIterator<void>)[];
     customizationFns?: DashboardModelCustomizationFns;
@@ -35,12 +35,12 @@ export interface HeadlessDashboardConfig {
  * @internal
  */
 export class HeadlessDashboard {
-    private readonly reduxedStore: ReduxedDashboardStore;
-    protected monitoredActions: Record<string, MonitoredAction> = {};
+    private readonly reduxedStore: IReduxedDashboardStore;
+    protected monitoredActions: Record<string, IMonitoredAction> = {};
     protected capturedActions: Array<PayloadAction<any>> = [];
     protected capturedEvents: Array<DashboardEvents> = [];
 
-    constructor(ctx: DashboardContext, config?: HeadlessDashboardConfig) {
+    constructor(ctx: DashboardContext, config?: IHeadlessDashboardConfig) {
         // Middleware to store the actions and create promises
         const actionsMiddleware: Middleware = () => (next) => (action: unknown) => {
             const typedAction = action as PayloadAction;
@@ -72,8 +72,8 @@ export class HeadlessDashboard {
         });
     }
 
-    protected getOrCreateMonitoredAction = (actionType: string): MonitoredAction => {
-        const existingAction: MonitoredAction = this.monitoredActions[actionType];
+    protected getOrCreateMonitoredAction = (actionType: string): IMonitoredAction => {
+        const existingAction: IMonitoredAction = this.monitoredActions[actionType];
 
         if (existingAction) {
             return existingAction;
@@ -90,7 +90,7 @@ export class HeadlessDashboard {
             partialAction.reject = reject;
         });
 
-        const newAction: MonitoredAction = {
+        const newAction: IMonitoredAction = {
             ...partialAction,
             promise,
         };
@@ -132,6 +132,7 @@ export class HeadlessDashboard {
      */
     public dispatchAndWaitFor(
         action: DashboardCommands | PayloadAction<any>,
+        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         actionType: DashboardEventType | DashboardCommandType | string,
         timeout: number = 1000,
     ): Promise<any> {
@@ -181,6 +182,7 @@ export class HeadlessDashboard {
      * @param timeout - timeout after which the wait fails, default is 1000
      */
     public waitFor(
+        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         actionType: DashboardEventType | DashboardCommandType | string,
         timeout: number = 1000,
     ): Promise<any> {

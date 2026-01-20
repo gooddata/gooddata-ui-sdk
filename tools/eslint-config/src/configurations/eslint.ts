@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IConfiguration } from "../types.js";
 
@@ -322,9 +322,17 @@ export const eslint: IConfiguration = {
 
         // this rule is in direct conflict with the regexp plugin
         "no-useless-escape": "off",
+
         "no-negated-condition": "error",
         "no-unneeded-ternary": ["error", { defaultAssignment: false }],
         "no-extra-boolean-cast": "error",
         "no-unexpected-multiline": "off",
+        "no-warning-comments": [
+            "warn",
+            {
+                terms: ["todo"],
+                location: "start",
+            },
+        ],
     },
 };

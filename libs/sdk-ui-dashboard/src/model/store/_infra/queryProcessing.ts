@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Action, type Reducer, combineReducers } from "@reduxjs/toolkit";
 import { compact, keyBy } from "lodash-es";
@@ -21,7 +21,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 /**
  * Query processing component has multiple pieces that need to be integrated into the redux store.
  */
-export interface QueryProcessingModule {
+export interface IQueryProcessingModule {
     /**
      * Query services may store the results in state for caching purposes. All services that use caching implement
      * the cache as a separate slice of the internal `_queryCache` part of the state. This reducer is a combined
@@ -176,7 +176,7 @@ function ensureQueryWrappedInEnvelope(action: Action): QueryEnvelope<any, any> {
  */
 export function createQueryProcessingModule(
     queryServices: IDashboardQueryService<any, any>[],
-): QueryProcessingModule {
+): IQueryProcessingModule {
     const servicesByType = keyBy(queryServices, (service) => service.name);
     const queryToReducers = Object.fromEntries(
         compact(

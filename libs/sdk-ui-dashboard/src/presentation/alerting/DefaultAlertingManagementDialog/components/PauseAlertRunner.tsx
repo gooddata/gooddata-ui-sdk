@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useEffect } from "react";
 
@@ -42,7 +42,7 @@ export function PauseAlertRunner({ alert, pause, onSuccess, onError }: IPauseAle
         },
     });
 
-    const handlerPauseAlert = useCallback(async () => {
+    const handlerPauseAlert = useCallback(() => {
         if (!alert) {
             return;
         }
@@ -63,7 +63,7 @@ export function PauseAlertRunner({ alert, pause, onSuccess, onError }: IPauseAle
     }, [alert, handlePauseAlert, handleResumeAlert, pause]);
 
     useEffect(() => {
-        void handlerPauseAlert();
+        handlerPauseAlert();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [alert]);
 

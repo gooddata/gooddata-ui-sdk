@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -46,7 +46,7 @@ export function DrillTargetType(props: IDrillTargetProps) {
         : intl.formatMessage({ id: "configurationPanel.drillConfig.select" });
 
     const onSelect = (target: IDrillTargetType) => {
-        props.onSelect(target.id as DRILL_TARGET_TYPE);
+        props.onSelect(target.id);
     };
 
     return (

@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { v4 as uuidv4 } from "uuid";
@@ -7,8 +8,8 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import {
-    type ChangeInsightWidgetFilterSettings,
-    type DashboardCommandFailed,
+    type IChangeInsightWidgetFilterSettings,
+    type IDashboardCommandFailed,
     addNestedLayoutSectionItem,
     enableRichTextWidgetDateFilter,
     uiActions,
@@ -29,7 +30,7 @@ export function useRichTextPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
         onSuccess: (event) => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
         },
-        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
+        onError: (event: IDashboardCommandFailed<IChangeInsightWidgetFilterSettings>) => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
         },
     });

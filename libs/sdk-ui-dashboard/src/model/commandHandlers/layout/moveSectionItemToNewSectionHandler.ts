@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
@@ -25,10 +25,10 @@ import {
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { type ILayoutItemPath } from "../../../types.js";
-import { type MoveSectionItemToNewSection } from "../../commands/layout.js";
+import { type IMoveSectionItemToNewSection } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
-    type DashboardLayoutSectionItemMovedToNewSection,
+    type IDashboardLayoutSectionItemMovedToNewSection,
     layoutSectionItemMovedToNewSection,
 } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
@@ -40,7 +40,7 @@ import { type ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js"
 
 type MoveSectionItemToNewSectionContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: MoveSectionItemToNewSection;
+    readonly cmd: IMoveSectionItemToNewSection;
     readonly layout: ReturnType<typeof selectLayout>;
 };
 
@@ -231,8 +231,8 @@ function computeRemoveSectionIndex(
 
 export function* moveSectionItemToNewSectionHandler(
     ctx: DashboardContext,
-    cmd: MoveSectionItemToNewSection,
-): SagaIterator<DashboardLayoutSectionItemMovedToNewSection> {
+    cmd: IMoveSectionItemToNewSection,
+): SagaIterator<IDashboardLayoutSectionItemMovedToNewSection> {
     const commandCtx: MoveSectionItemToNewSectionContext = {
         ctx,
         cmd,
@@ -335,10 +335,9 @@ export function* moveSectionItemToNewSectionHandler(
 
     const resultSectionIndex = itemPath === undefined ? sectionIndex : getSectionIndex(itemPath);
     const resultTargetSectionIndex =
-        targetSectionIndex === undefined ? getSectionIndex(toItemIndex!) : targetSectionIndex;
+        targetSectionIndex === undefined ? getSectionIndex(toItemIndex) : targetSectionIndex;
     const resultItemIndex = itemPath === undefined ? itemIndex : getItemIndex(itemPath);
-    const resultTargetItemIndex =
-        targetItemIndex === undefined ? getItemIndex(toItemIndex!) : targetItemIndex;
+    const resultTargetItemIndex = targetItemIndex === undefined ? getItemIndex(toItemIndex) : targetItemIndex;
     const resultItemPath = computeSourceItemIndex(itemPath, sectionIndex, itemIndex);
     const resultToItemPath = computeDestinationItemIndex(toItemIndex, targetSectionIndex, targetItemIndex);
 

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { merge } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -11,7 +11,10 @@ import { validateSectionExists } from "./validation/layoutValidation.js";
 import { findSection, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
 import { type ChangeLayoutSectionHeader } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout.js";
+import {
+    type IDashboardLayoutSectionHeaderChanged,
+    layoutSectionHeaderChanged,
+} from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -19,7 +22,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 export function* changeLayoutSectionHeaderHandler(
     ctx: DashboardContext,
     cmd: ChangeLayoutSectionHeader,
-): SagaIterator<DashboardLayoutSectionHeaderChanged> {
+): SagaIterator<IDashboardLayoutSectionHeaderChanged> {
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
     const { index, header, merge: mergeHeaders } = cmd.payload;
 
@@ -46,7 +49,7 @@ export function* changeLayoutSectionHeaderHandler(
     }
 
     const existingHeader: IDashboardLayoutSectionHeader = isLegacyCommand
-        ? (layout.sections[index]!.header ?? {})
+        ? (layout.sections[index].header ?? {})
         : (findSection(layout, index).header ?? {});
     const newHeader = mergeHeaders ? merge({}, existingHeader, header) : header;
     const sanitizedHeader = sanitizeHeader(newHeader);

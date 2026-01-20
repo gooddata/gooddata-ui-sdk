@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -47,7 +47,7 @@ export function DeleteAlertConfirmDialog({
                     ? automationService.deleteAutomation.bind(automationService)
                     : automationService.unsubscribeAutomation.bind(automationService);
 
-            await deleteMethod(alert.id!);
+            await deleteMethod(alert.id);
             onSuccess?.(alert);
         } catch (err) {
             onError?.(convertError(err));
@@ -61,7 +61,9 @@ export function DeleteAlertConfirmDialog({
             headline={intl.formatMessage({ id: "dialogs.alerting.management.delete.dialog" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "delete" })}
-            onSubmit={handleDeleteAlert}
+            onSubmit={() => {
+                void handleDeleteAlert();
+            }}
             onClose={onCancel}
             onCancel={onCancel}
             className="gd-notifications-channel-delete-dialog s-alert-delete-dialog"

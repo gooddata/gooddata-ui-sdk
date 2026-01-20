@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type LayoutStash } from "../../../store/tabs/layout/layoutState.js";
 import {
@@ -8,7 +8,7 @@ import {
     isStashedDashboardItemsId,
 } from "../../../types/layoutTypes.js";
 
-export interface ItemResolutionResult {
+export interface IItemResolutionResult {
     /**
      * Existing layout stashes that were used by the item definitions.
      */
@@ -53,8 +53,8 @@ export interface ItemResolutionResult {
 export function validateAndResolveStashedItems(
     stash: LayoutStash,
     itemDefinitions: ReadonlyArray<InternalDashboardItemDefinition>,
-): ItemResolutionResult {
-    const result: ItemResolutionResult = {
+): IItemResolutionResult {
+    const result: IItemResolutionResult = {
         missing: [],
         existing: [],
         resolved: [],

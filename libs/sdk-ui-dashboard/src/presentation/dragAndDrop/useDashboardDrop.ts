@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type DropTargetHookSpec, type DropTargetMonitor, useDrop } from "@evil-internetmann/react-dnd";
 
@@ -13,7 +13,7 @@ const basicDropCollect = <DraggableObject = DraggableItem>(monitor: DropTargetMo
     isOver: monitor.isOver(),
     canDrop: monitor.canDrop(),
     itemType: monitor.getItemType() as DraggableItemType,
-    item: monitor.getItem() as DraggableObject,
+    item: monitor.getItem(),
 });
 
 class BasicDropCollectTypeWrapper<DraggableObject = DraggableItem> {

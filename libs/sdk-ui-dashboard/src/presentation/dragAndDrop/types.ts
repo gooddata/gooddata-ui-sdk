@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentType, type ReactElement } from "react";
 
@@ -353,7 +353,7 @@ export type DraggableLayoutItem =
 /**
  * @internal
  */
-export type DraggableInternalItem = HeightResizerDragItem | WidthResizerDragItem;
+export type DraggableInternalItem = IHeightResizerDragItem | IWidthResizerDragItem;
 
 /**
  * @internal
@@ -389,7 +389,7 @@ export type DraggableItemComponentTypeMapping = {
 /**
  * @internal
  */
-export interface HeightResizerDragItem {
+export interface IHeightResizerDragItem {
     type: "internal-height-resizer";
     // TODO LX-608: remove
     sectionIndex: number;
@@ -405,7 +405,7 @@ export interface HeightResizerDragItem {
 /**
  * @internal
  */
-export interface WidthResizerDragItem {
+export interface IWidthResizerDragItem {
     type: "internal-width-resizer";
     // TODO LX-608: remove
     sectionIndex: number;
@@ -427,8 +427,8 @@ export interface WidthResizerDragItem {
  * @internal
  */
 export type DraggableItemInternalTypeMapping = {
-    "internal-width-resizer": WidthResizerDragItem;
-    "internal-height-resizer": HeightResizerDragItem;
+    "internal-width-resizer": IWidthResizerDragItem;
+    "internal-height-resizer": IHeightResizerDragItem;
 };
 
 /**

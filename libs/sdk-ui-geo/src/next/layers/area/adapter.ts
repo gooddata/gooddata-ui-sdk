@@ -1,7 +1,14 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { type IAttribute, type IGeoJsonFeature, newBucket } from "@gooddata/sdk-model";
+import {
+    type IAttribute,
+    type IGeoJsonFeature,
+    attributeDisplayFormRef,
+    isIdentifierRef,
+    isUriRef,
+    newBucket,
+} from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { deriveCollectionBoundingBox } from "./boundingBox.js";
@@ -18,6 +25,7 @@ import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
+import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import {
     type IAreaLayerOutput,
     type IGeoAdapterContext,
@@ -28,14 +36,28 @@ const COLLECTION_OVERRIDES: Record<string, { collectionId?: string }> = {
     region: { collectionId: "regions" },
 };
 
+function getDisplayFormId(attribute?: IAttribute): string | undefined {
+    if (!attribute) {
+        return undefined;
+    }
+
+    const ref = attributeDisplayFormRef(attribute);
+    if (isIdentifierRef(ref)) {
+        return ref.identifier;
+    }
+    if (isUriRef(ref)) {
+        return ref.uri;
+    }
+    return undefined;
+}
+
 function normalizeCollectionId(collectionId: string): string {
     return COLLECTION_OVERRIDES[collectionId]?.collectionId ?? collectionId;
 }
 
 function createExecution(layer: IGeoLayerArea, context: IGeoAdapterContext): IPreparedExecution {
-    const { backend, workspace, config, execConfig, globalFilters, executionFactory } = context;
-    const { area, color, segmentBy, filters = [], sortBy = [], tooltipText: layerTooltipText } = layer;
-    const tooltipText = layerTooltipText ?? config?.tooltipText;
+    const { backend, workspace, execConfig, globalFilters, executionFactory } = context;
+    const { area, color, segmentBy, filters = [], sortBy = [], tooltipText } = layer;
 
     const buckets = [];
     if (area) {
@@ -104,6 +126,14 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         return createExecution(layer, context);
     },
 
+    async prepareExecution(
+        layer: IGeoLayerArea,
+        context: IGeoAdapterContext,
+        execution: IPreparedExecution,
+    ): Promise<IPreparedExecution> {
+        return prepareExecutionWithTooltipText(context, execution, layer.area);
+    },
+
     async prepareLayer(layer, dataView, context): Promise<IAreaLayerOutput | null> {
         if (!context.intl) {
             throw new Error("prepareLayer requires intl in adapter context");
@@ -139,6 +169,10 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
             colorStrategy,
             config: areaConfig,
             features: boundaryFeatures,
+            tooltipAttrIds: {
+                locationName: getDisplayFormId(layer.area),
+                segment: getDisplayFormId(layer.segmentBy),
+            },
         });
         const legend = computeLegend(geoData, colorStrategy, {
             layerType: "area",

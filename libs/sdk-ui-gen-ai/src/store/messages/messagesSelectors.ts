@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import { messagesSliceName } from "./messagesSlice.js";
@@ -35,9 +36,9 @@ export const hasMessagesSelector: (state: RootState) => boolean = createSelector
 export const asyncProcessSelector: (state: RootState) => RootState[typeof messagesSliceName]["asyncProcess"] =
     createSelector(messagesSliceSelector, (state) => state.asyncProcess);
 
-export const globalErrorSelector: (state: RootState) => string | undefined = createSelector(
+export const globalErrorSelector: (state: RootState) => Record<string, unknown> | null = createSelector(
     messagesSliceSelector,
-    (state) => state.globalError,
+    (state) => state.globalError ?? null,
 );
 
 export const lastMessageIdSelector: (state: RootState) => string | undefined = createSelector(
