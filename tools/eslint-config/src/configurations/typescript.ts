@@ -40,7 +40,7 @@ export const typescript: IConfiguration = {
                 2,
                 { varsIgnorePattern: "^_.*$", argsIgnorePattern: "^_.*$" },
             ],
-            "@typescript-eslint/no-explicit-any": 0,
+            "@typescript-eslint/no-explicit-any": "error",
 
             "@typescript-eslint/array-type": "off",
             "@typescript-eslint/ban-ts-comment": ["error", { "ts-expect-error": "allow-with-description" }],

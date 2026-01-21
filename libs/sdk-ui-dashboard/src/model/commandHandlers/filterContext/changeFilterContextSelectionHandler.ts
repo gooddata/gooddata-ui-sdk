@@ -1,4 +1,4 @@
-// (C) 2021-2026 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { type AnyAction } from "@reduxjs/toolkit";
 import { compact, partition, uniqBy } from "lodash-es";
@@ -27,13 +27,11 @@ import {
     updateAttributeElementsItems,
 } from "@gooddata/sdk-model";
 
-import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "./common.js";
+import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type ChangeFilterContextSelection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectEnableDashboardTabs } from "../../store/config/configSelectors.js";
-import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -85,11 +83,8 @@ export function* changeFilterContextSelectionHandler(
         }
     }
 
-    const isCrossFiltering = yield select(selectIsCrossFiltering);
-    const enableDashboardTabs = yield select(selectEnableDashboardTabs);
-    if (isCrossFiltering && !enableDashboardTabs) {
-        yield call(resetCrossFiltering, cmd);
-    }
+    // Cross-filtering is always compatible with dashboard tabs now
+    // (removed the check that prevented cross-filtering without tabs)
 
     const normalizedFilters: FilterContextItem[] = filters.map((filter) => {
         if (isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter)) {

@@ -120,6 +120,7 @@ function InputComponent({
     }, [isBusy, editorApi, updates]);
     useEffect(
         () => () => {
+            // When unmount occurred, reset the autofocus
             forceFocusOnce.current = true;
         },
         [],

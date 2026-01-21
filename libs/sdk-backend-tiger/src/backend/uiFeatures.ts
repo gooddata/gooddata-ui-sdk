@@ -56,6 +56,7 @@ export enum TigerFeaturesNames {
     EnableFlexAi = "enableFlexAi",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
+    EnableAthenaDataSource = "enableAthenaDataSource",
     EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
@@ -124,7 +125,6 @@ export enum TigerFeaturesNames {
     EnableGenAIMemory = "enableGenAIMemory",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     AIChatSearchLimit = "aiChatSearchLimit",
-    EnableDashboardTabs = "enableDashboardTabs",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
     EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
@@ -182,6 +182,7 @@ export type ITigerFeatureFlags = {
     enableFlexAi: (typeof FeatureFlagsValues)["enableFlexAi"][number];
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
+    enableAthenaDataSource: (typeof FeatureFlagsValues)["enableAthenaDataSource"][number];
     enableSnowflakeKeyPairAuthentication: (typeof FeatureFlagsValues)["enableSnowflakeKeyPairAuthentication"][number];
     enableMultipleDataSourcesInWorkspace: (typeof FeatureFlagsValues)["enableMultipleDataSourcesInWorkspace"][number];
     enableScatterPlotSegmentation: (typeof FeatureFlagsValues)["enableScatterPlotSegmentation"][number];
@@ -253,7 +254,6 @@ export type ITigerFeatureFlags = {
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
-    enableDashboardTabs: (typeof FeatureFlagsValues)["enableDashboardTabs"][number];
     enableEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableEmptyDateValuesFilter"][number];
     enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
@@ -311,6 +311,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFlexAi: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
+    enableAthenaDataSource: false,
     enableSnowflakeKeyPairAuthentication: true,
     enableMultipleDataSourcesInWorkspace: true,
     enableScatterPlotSegmentation: true,
@@ -382,7 +383,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIMemory: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
-    enableDashboardTabs: true,
     enableEmptyDateValuesFilter: true,
     enablePivotTableAutoSizeReset: true,
     enableRichTextWidgetFilterConfiguration: false,
@@ -440,6 +440,7 @@ export const FeatureFlagsValues = {
     enableFlexAi: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
+    enableAthenaDataSource: [true, false] as const,
     enableSnowflakeKeyPairAuthentication: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableScatterPlotSegmentation: [true, false] as const,
@@ -512,7 +513,6 @@ export const FeatureFlagsValues = {
     enableGenAIMemory: [false, true] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
-    enableDashboardTabs: [true, false] as const,
     enableEmptyDateValuesFilter: [true, false] as const,
     enablePivotTableAutoSizeReset: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,

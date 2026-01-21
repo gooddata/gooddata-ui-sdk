@@ -15,6 +15,7 @@ module.exports = {
             "@typescript-eslint/no-unsafe-argument": "warn",
             "@typescript-eslint/no-unsafe-return": "warn",
             "@typescript-eslint/unbound-method": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
         }),
     ],
 };

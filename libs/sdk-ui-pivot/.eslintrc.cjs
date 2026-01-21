@@ -17,6 +17,7 @@ module.exports = {
             "@typescript-eslint/no-unsafe-call": "warn",
             "@typescript-eslint/no-misused-promises": "warn",
             "@typescript-eslint/unbound-method": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
         }),
     ],
 };

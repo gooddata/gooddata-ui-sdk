@@ -19,6 +19,7 @@ module.exports = {
             "@typescript-eslint/unbound-method": "warn",
             "@typescript-eslint/restrict-template-expressions": "warn",
             "@typescript-eslint/no-base-to-string": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
         }),
     ],
 };

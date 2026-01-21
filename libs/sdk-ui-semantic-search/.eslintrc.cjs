@@ -8,6 +8,7 @@ module.exports = {
         tsOverride(__dirname, {
             "@typescript-eslint/no-unsafe-assignment": "warn",
             "@typescript-eslint/restrict-template-expressions": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
         }),
     ],
 };
