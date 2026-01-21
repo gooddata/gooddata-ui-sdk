@@ -13,6 +13,7 @@ module.exports = {
             "@typescript-eslint/no-unsafe-assignment": "warn",
             "@typescript-eslint/no-implied-eval": "warn",
             "@typescript-eslint/restrict-template-expressions": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
         }),
     ],
 };

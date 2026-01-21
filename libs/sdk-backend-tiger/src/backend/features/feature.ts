@@ -333,6 +333,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAthenaDataSource,
+            "enableAthenaDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAthenaDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableSnowflakeKeyPairAuthentication,
             "enableSnowflakeKeyPairAuthentication",
             "BOOLEAN",
@@ -813,13 +820,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "aiChatSearchLimit",
             "NUMBER",
             FeatureFlagsValues.aiChatSearchLimit,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableDashboardTabs,
-            "enableDashboardTabs",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDashboardTabs,
         ),
         ...loadFeature(
             features,

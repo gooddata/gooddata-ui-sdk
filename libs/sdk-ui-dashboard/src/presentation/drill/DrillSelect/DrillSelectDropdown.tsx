@@ -36,7 +36,6 @@ import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
     selectDashboardTitle,
-    selectEnableDashboardTabs,
     selectEnableImplicitDrillToUrl,
     selectInsightsMap,
     selectWidgetByRef,
@@ -78,7 +77,6 @@ export function DrillSelectDropdown({
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
-    const enableDashboardTabs = useDashboardSelector(selectEnableDashboardTabs);
     const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
@@ -146,7 +144,6 @@ export function DrillSelectDropdown({
                 attributeDisplayForms,
                 intl,
                 widget: widget as IWidget,
-                enableDashboardTabs,
             }),
         [
             drillDefinitions,
@@ -157,7 +154,6 @@ export function DrillSelectDropdown({
             intl,
             widget,
             attributeDisplayForms,
-            enableDashboardTabs,
         ],
     );
 
@@ -336,7 +332,6 @@ export const createDrillSelectItems = ({
     intl,
     widget,
     attributeDisplayForms,
-    enableDashboardTabs,
 }: {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
@@ -346,7 +341,6 @@ export const createDrillSelectItems = ({
     intl: IntlShape;
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
-    enableDashboardTabs: boolean;
 }): IDrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
@@ -395,7 +389,7 @@ export const createDrillSelectItems = ({
 
             // If targetTab is specified, append tab name to the title
             let fullTitle = title;
-            if (drillDefinition.targetTabLocalIdentifier && enableDashboardTabs) {
+            if (drillDefinition.targetTabLocalIdentifier) {
                 const dashboard = dashboardList.find((d) => areObjRefsEqual(d.ref, drillDefinition.target));
                 const tabTitle =
                     dashboard?.tabs?.find(

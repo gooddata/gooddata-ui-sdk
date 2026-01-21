@@ -312,6 +312,7 @@ export interface ISettings {
     enableMongoDbDataSource?: boolean;
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
+    enableAthenaDataSource?: boolean;
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.
@@ -647,11 +648,6 @@ export interface ISettings {
      * Registered pluggable applications
      */
     registeredPluggableApplications?: string;
-
-    /**
-     * Enable dashboard tabs feature
-     */
-    enableDashboardTabs?: boolean;
 
     /**
      * Enable automatic reset of column sizing in pivot table when container width changes or column structure changes.

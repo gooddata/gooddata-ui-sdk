@@ -33,10 +33,7 @@ import {
     filterViewDeletionFailed,
     filterViewDeletionSucceeded,
 } from "../../events/filters.js";
-import {
-    selectEnableDashboardTabs,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-} from "../../store/config/configSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { filterViewsActions, selectFilterViews } from "../../store/filterViews/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -62,12 +59,10 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: ISaveFilterVi
         throw Error("Dashboard ref must be provided.");
     }
 
-    // Get active tab ID and tabs feature flag
+    // Get active tab ID
     const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
         selectActiveTabLocalIdentifier,
     );
-    const enableDashboardTabs: ReturnType<typeof selectEnableDashboardTabs> =
-        yield select(selectEnableDashboardTabs);
 
     const appliedFilterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
         selectFilterContextDefinition,
@@ -99,10 +94,8 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: ISaveFilterVi
         dashboard: ctx.dashboardRef,
         filterContext: sanitizedFilterContext,
         isDefault: cmd.payload.isDefault,
-        // Include tabId if tabs are enabled and there's an active tab
-        ...(enableDashboardTabs && activeTabLocalIdentifier
-            ? { tabLocalIdentifier: activeTabLocalIdentifier }
-            : {}),
+        // Include tabId if there's an active tab
+        ...(activeTabLocalIdentifier ? { tabLocalIdentifier: activeTabLocalIdentifier } : {}),
     };
 
     try {

@@ -10,6 +10,7 @@ module.exports = {
     overrides: [
         tsOverride(__dirname, {
             "@typescript-eslint/no-unsafe-member-access": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
         }),
     ],
     ignorePatterns: [

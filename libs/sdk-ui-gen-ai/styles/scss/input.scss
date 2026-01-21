@@ -24,6 +24,14 @@
         &.focused {
             margin-top: 0;
         }
+
+        .gd-gen-ai-chat__input__info.top {
+            display: none;
+        }
+
+        .gd-gen-ai-chat__input__info.bottom {
+            display: block;
+        }
     }
 
     &.focused {
@@ -115,16 +123,6 @@
             font-size: 11px;
             font-style: normal;
             line-height: normal;
-        }
-    }
-
-    &--fullscreen#{$root}--big-screen {
-        .gd-gen-ai-chat__input__info.top {
-            display: none;
-        }
-
-        .gd-gen-ai-chat__input__info.bottom {
-            display: block;
         }
     }
 
