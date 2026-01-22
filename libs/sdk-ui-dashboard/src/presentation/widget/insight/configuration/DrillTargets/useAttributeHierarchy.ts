@@ -1,16 +1,16 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useRef, useState } from "react";
 
 import { type ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
 
 import {
-    catalogActions,
     createAttributeHierarchyRequested,
     deleteAttributeHierarchyRequested,
-    useDashboardDispatch,
-    useDashboardEventDispatch,
-} from "../../../../../model/index.js";
+} from "../../../../../model/events/attributeHierarchies.js";
+import { useDashboardDispatch } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardEventDispatch } from "../../../../../model/react/useDashboardEventDispatch.js";
+import { catalogActions } from "../../../../../model/store/catalog/index.js";
 
 interface IUseAttributeHierarchy {
     onDeleteInteraction: () => void;

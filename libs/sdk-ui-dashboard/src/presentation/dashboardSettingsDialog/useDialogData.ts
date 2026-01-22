@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
 import { isEqual } from "lodash-es";
 
 import { type IDashboardSettingsApplyPayload } from "./types.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardUserFilterReset,
@@ -12,8 +13,7 @@ import {
     selectDisableFilterViews,
     selectEvaluationFrequency,
     selectSectionHeadersDateDataSet,
-    useDashboardSelector,
-} from "../../model/index.js";
+} from "../../model/store/meta/metaSelectors.js";
 
 export function useDialogData() {
     const disableCrossFiltering = useDashboardSelector(selectDisableDashboardCrossFiltering) ?? false;

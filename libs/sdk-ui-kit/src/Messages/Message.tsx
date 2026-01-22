@@ -4,7 +4,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IMessageProps } from "./typings.js";
-import { Button } from "../Button/index.js";
+import { Button } from "../Button/Button.js";
 
 /**
  * @internal

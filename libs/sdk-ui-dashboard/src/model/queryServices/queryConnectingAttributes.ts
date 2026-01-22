@@ -9,7 +9,7 @@ import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { invalidQueryArguments } from "../events/general.js";
 import { type IQueryConnectingAttributes } from "../queries/connectingAttributes.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
-import { selectAttributeFilterDisplayFormsMap } from "../store/index.js";
+import { selectAttributeFilterDisplayFormsMap } from "../store/tabs/filterContext/filterContextSelectors.js";
 import { type IConnectingAttribute } from "../types/attributeFilterTypes.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 

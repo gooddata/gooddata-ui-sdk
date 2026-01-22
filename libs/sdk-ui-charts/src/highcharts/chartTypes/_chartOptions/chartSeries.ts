@@ -10,7 +10,7 @@ import {
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { getChartFillProperties, getColorOrPatternFillIndex, isSolidFill } from "./patternFillOptions.js";
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import {

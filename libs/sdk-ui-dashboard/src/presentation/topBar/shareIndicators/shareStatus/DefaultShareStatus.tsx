@@ -1,14 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
 import { ShareStatusIndicator } from "./ShareStatusIndicator.js";
 import { type IShareStatusProps } from "./types.js";
-import {
-    selectCanManageAnalyticalDashboard,
-    selectSupportsAccessControlCapability,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsAccessControlCapability } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectCanManageAnalyticalDashboard } from "../../../../model/store/permissions/permissionsSelectors.js";
 
 /**
  * @alpha

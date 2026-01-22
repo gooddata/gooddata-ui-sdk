@@ -21,18 +21,18 @@ import {
     isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
+    type IDrillToUrlPlaceholder,
+    getAttributeIdentifiersPlaceholdersFromUrl,
+    getDashboardAttributeFilterPlaceholdersFromUrl,
+    getInsightAttributeFilterPlaceholdersFromUrl,
+} from "@gooddata/sdk-model/internal";
+import {
     type IDrillEvent,
     type IDrillEventIntersectionElement,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
 
 import { getElementTitle, getElementsSecondaryTitles } from "./getElementTitle.js";
-import {
-    type IDrillToUrlPlaceholder,
-    getAttributeIdentifiersPlaceholdersFromUrl,
-    getDashboardAttributeFilterPlaceholdersFromUrl,
-    getInsightAttributeFilterPlaceholdersFromUrl,
-} from "../../../_staging/drills/drillingUtils.js";
 import { type IDrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";

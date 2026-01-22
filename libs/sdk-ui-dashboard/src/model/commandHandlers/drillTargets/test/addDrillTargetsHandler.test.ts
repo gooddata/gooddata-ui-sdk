@@ -8,7 +8,7 @@ import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { type IAddDrillTargets, addDrillTargets } from "../../../commands/drillTargets.js";
 import { changeRenderMode } from "../../../commands/renderMode.js";
 import { type IDrillTargetsAdded } from "../../../events/drillTargets.js";
-import { type IDashboardCommandFailed } from "../../../events/index.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors.js";
 import { selectInvalidDrillWidgetRefs } from "../../../store/ui/uiSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";

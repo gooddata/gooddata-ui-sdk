@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import { type IDashboardLayout } from "@gooddata/sdk-model";
 
 import { NESTED_LAYOUT } from "./coordinates.mock.js";
-import { type ExtendedDashboardWidget } from "../../../model/index.js";
+import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
 import {
     areItemsInSameSection,

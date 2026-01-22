@@ -6,9 +6,9 @@ import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import { isInsightWidget } from "@gooddata/sdk-model";
 
-import { type IChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands/index.js";
-import { type IDashboardRenderModeChanged } from "../../events/index.js";
-import { renderModeChanged } from "../../events/renderMode.js";
+import { resetDashboard as resetDashboardCommand } from "../../commands/dashboard.js";
+import { type IChangeRenderMode } from "../../commands/renderMode.js";
+import { type IDashboardRenderModeChanged, renderModeChanged } from "../../events/renderMode.js";
 import { renderModeActions } from "../../store/renderMode/index.js";
 import { clearShowWidgetAsTable } from "../../store/showWidgetAsTable/index.js";
 import { selectAllAnalyticalWidgets } from "../../store/tabs/layout/layoutSelectors.js";

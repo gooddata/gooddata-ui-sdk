@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -6,7 +6,7 @@ import { type IDataView, type IExecutionFactory, type IPreparedExecution } from 
 import { type IBucket, type IExecutionConfig, type IFilter, type ISortItem } from "@gooddata/sdk-model";
 import { type ExplicitDrill, type IDrillEventCallback } from "@gooddata/sdk-ui";
 
-import { type IChartConfig } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
 
 /**
  * @internal

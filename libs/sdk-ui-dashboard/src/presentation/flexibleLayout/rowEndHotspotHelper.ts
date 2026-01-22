@@ -3,10 +3,10 @@
 import { type ISettings, type ScreenSize } from "@gooddata/sdk-model";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/flexibleLayout/config.js";
-import { type IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { areLayoutPathsEqual } from "../../_staging/layout/coordinates.js";
 import { getContainerHeight } from "../../_staging/layout/sizing.js";
-import { type ExtendedDashboardWidget } from "../../model/index.js";
+import { type ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { type ILayoutItemPath } from "../../types.js";
 
 export function getRemainingWidthInRow(

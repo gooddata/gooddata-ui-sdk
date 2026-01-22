@@ -5,7 +5,7 @@ import { type AriaAttributes, type MouseEvent, type MutableRefObject, type React
 import cx from "classnames";
 
 import { Button } from "../Button/Button.js";
-import { type IButtonAccessibilityConfig } from "../Button/index.js";
+import { type IButtonAccessibilityConfig } from "../Button/typings.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 /**

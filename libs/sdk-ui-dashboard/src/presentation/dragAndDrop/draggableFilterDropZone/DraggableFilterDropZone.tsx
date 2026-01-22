@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Ref } from "react";
 
@@ -9,12 +9,10 @@ import { Bubble, BubbleHoverTrigger, IconAttributeFilter } from "@gooddata/sdk-u
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { messages } from "../../../locales.js";
-import {
-    selectEnableMultipleDateFilters,
-    selectIsInEditMode,
-    selectSupportsMultipleDateFilters,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsMultipleDateFilters } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableMultipleDateFilters } from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 

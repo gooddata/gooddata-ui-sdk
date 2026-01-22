@@ -6,7 +6,7 @@ import { call, put, select } from "redux-saga/effects";
 import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils.js";
 import { validateRemoveDrillsByLocalIdentifier } from "./validation/removeDrillsSelectorValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type IRemoveDrillsForInsightWidget } from "../../commands/index.js";
+import { type IRemoveDrillsForInsightWidget } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetDrillsRemoved,
     insightWidgetDrillsRemoved,

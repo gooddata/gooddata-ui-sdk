@@ -1,9 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands/index.js";
-import { type DashboardCopySaved, type DashboardSaved } from "../../../events/index.js";
+import { saveDashboard, saveDashboardAs } from "../../../commands/dashboard.js";
+import { addLayoutSection } from "../../../commands/layout.js";
+import { type DashboardCopySaved, type DashboardSaved } from "../../../events/dashboard.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../../../store/tabs/layout/layoutSelectors.js";

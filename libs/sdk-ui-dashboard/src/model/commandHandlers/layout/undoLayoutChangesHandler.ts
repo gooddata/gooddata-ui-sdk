@@ -7,7 +7,7 @@ import {
     type DashboardLayoutCommands,
     type IUndoLayoutChanges,
     type UndoPointSelector,
-} from "../../commands/index.js";
+} from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardLayoutChanged, layoutChanged } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";

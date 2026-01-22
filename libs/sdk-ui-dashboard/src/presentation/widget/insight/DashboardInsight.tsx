@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { type IInsight } from "@gooddata/sdk-model";
 
 import { type IDashboardInsightProps } from "./types.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 /**
  * @internal

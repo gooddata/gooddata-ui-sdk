@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo } from "react";
 
@@ -16,32 +16,29 @@ import {
 } from "@gooddata/sdk-model";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
+import { DashboardLayout } from "./DefaultDashboardLayoutRenderer/DashboardLayout.js";
 import {
-    DashboardLayout,
-    DashboardLayoutBuilder,
     type IDashboardLayoutItemKeyGetter,
     type IDashboardLayoutWidgetRenderer,
-} from "./DefaultDashboardLayoutRenderer/index.js";
+} from "./DefaultDashboardLayoutRenderer/interfaces.js";
 import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
 import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
-import { type IDashboardLayoutProps } from "./types.js";
+import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/builder/layout.js";
 import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
-import {
-    type ExtendedDashboardWidget,
-    selectFocusObject,
-    selectInsightsMap,
-    selectIsExport,
-    selectLayout,
-    selectRenderMode,
-    useDashboardSelector,
-} from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectFocusObject, selectIsExport } from "../../model/store/config/configSelectors.js";
+import { selectInsightsMap } from "../../model/store/insights/insightsSelectors.js";
+import { selectRenderMode } from "../../model/store/renderMode/renderModeSelectors.js";
+import { selectLayout } from "../../model/store/tabs/layout/layoutSelectors.js";
+import { type ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { useDashboardItemPathAndSize } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
-import { useDashboardCustomizationsContext } from "../dashboardContexts/index.js";
-import { DefaultDashboardExportVariables } from "../export/index.js";
+import { useDashboardCustomizationsContext } from "../dashboardContexts/DashboardCustomizationsContext.js";
+import { DefaultDashboardExportVariables } from "../export/DefaultDashboardExportVariables.js";
+import { type IDashboardLayoutProps } from "../widget/dashboardLayout/types.js";
 
 /**
  * Get dashboard layout for exports.

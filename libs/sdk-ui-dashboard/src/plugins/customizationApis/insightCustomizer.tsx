@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
@@ -8,14 +8,14 @@ import { insightTags } from "@gooddata/sdk-model";
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
 import {
-    type CustomDashboardInsightComponent,
-    DefaultDashboardInsight,
-    DefaultInsightBody,
     type InsightBodyComponentProvider,
     type InsightComponentProvider,
     type OptionalInsightBodyComponentProvider,
     type OptionalInsightComponentProvider,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
+import { DefaultDashboardInsight } from "../../presentation/widget/insight/DefaultDashboardInsight.js";
+import { DefaultInsightBody } from "../../presentation/widget/insight/DefaultInsightBody/DefaultInsightBody.js";
+import { type CustomDashboardInsightComponent } from "../../presentation/widget/insight/types.js";
 import { type IDashboardInsightCustomizer } from "../customizer.js";
 
 const DefaultDashboardInsightComponentProvider: InsightComponentProvider = () => {

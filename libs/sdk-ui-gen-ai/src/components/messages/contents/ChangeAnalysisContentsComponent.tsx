@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { type ChangeAnalysisContents } from "../../../model.js";
-import { type RootState, setKeyDriverAnalysisAction, settingsSelector } from "../../../store/index.js";
+import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import { setKeyDriverAnalysisAction } from "../../../store/chatWindow/chatWindowSlice.js";
+import { type RootState } from "../../../store/types.js";
 import { useKdaDefinition, useKdaInfo } from "../../hooks/useKdaDefinition.js";
 
 export type ChangeAnalysisContentsProps = {

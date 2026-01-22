@@ -40,16 +40,14 @@ import {
     AGGRID_ON_RESIZE_TIMEOUT,
     PIVOT_TABLE_DEFAULT_PROPS,
 } from "./components/utils/pivotTableDefaults.js";
-import { TableConfigAccessors } from "./impl/config/index.js";
-import {
-    AggregationEventHandlers,
-    DataLoadingEventHandlers,
-    DataRenderHandlers,
-    GridEventHandlers,
-    ResizeEventHandlers,
-    ScrollEventHandlers,
-    SortingEventHandlers,
-} from "./impl/eventHandlers/index.js";
+import { TableConfigAccessors } from "./impl/config/tableConfigAccessors.js";
+import { AggregationEventHandlers } from "./impl/eventHandlers/aggregationEventHandlers.js";
+import { DataLoadingEventHandlers } from "./impl/eventHandlers/dataLoadingEventHandlers.js";
+import { DataRenderHandlers } from "./impl/eventHandlers/dataRenderHandlers.js";
+import { GridEventHandlers } from "./impl/eventHandlers/gridEventHandlers.js";
+import { ResizeEventHandlers } from "./impl/eventHandlers/resizeEventHandlers.js";
+import { ScrollEventHandlers } from "./impl/eventHandlers/scrollEventHandlers.js";
+import { SortingEventHandlers } from "./impl/eventHandlers/sortingEventHandlers.js";
 import { ExecutionAbortManager } from "./impl/execution/executionAbortManager.js";
 import { createGridOptions } from "./impl/gridOptions.js";
 import { HeightCalculationManager } from "./impl/height/heightCalculationManager.js";

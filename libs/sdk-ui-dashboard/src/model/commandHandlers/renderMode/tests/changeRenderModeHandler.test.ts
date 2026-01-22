@@ -2,13 +2,13 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { initializeDashboard } from "../../../commands/dashboard.js";
 import {
     cancelEditRenderMode,
     changeRenderMode,
-    initializeDashboard,
     switchToEditRenderMode,
-} from "../../../commands/index.js";
-import { selectRenderMode } from "../../../store/index.js";
+} from "../../../commands/renderMode.js";
+import { selectRenderMode } from "../../../store/renderMode/renderModeSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";

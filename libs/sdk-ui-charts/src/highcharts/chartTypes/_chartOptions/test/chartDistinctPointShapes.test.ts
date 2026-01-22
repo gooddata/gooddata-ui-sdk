@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
-import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { type IChartOptions } from "../../../typings/unsafe.js";
 import { setupDistinctPointShapesToSeries } from "../chartDistinctPointShapes.js";
 

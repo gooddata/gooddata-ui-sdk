@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { withBubble } from "../../../../Bubble/index.js";
+import { withBubble } from "../../../../Bubble/withBubble.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { type GranteeItem, type IGranularGrantee, type IGranularPermissionTypeItem } from "../types.js";
 

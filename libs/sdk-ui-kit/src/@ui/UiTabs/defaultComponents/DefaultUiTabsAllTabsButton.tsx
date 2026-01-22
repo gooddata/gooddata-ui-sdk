@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
 import { type EmptyObject } from "@gooddata/util";
 
-import { useMediaQuery } from "../../../responsive/index.js";
+import { useMediaQuery } from "../../../responsive/useMediaQuery.js";
 import { UiButton } from "../../UiButton/UiButton.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { messages } from "../messages.js";

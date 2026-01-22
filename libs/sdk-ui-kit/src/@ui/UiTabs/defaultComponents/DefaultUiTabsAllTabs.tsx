@@ -4,7 +4,7 @@ import { type RefObject, useCallback, useEffect, useState } from "react";
 
 import { type EmptyObject } from "@gooddata/util";
 
-import { useMediaQuery } from "../../../responsive/index.js";
+import { useMediaQuery } from "../../../responsive/useMediaQuery.js";
 import { useFocusWithinContainer } from "../../hooks/useFocusWithinContainer.js";
 import {
     SELECT_ITEM_ACTION,

@@ -1,7 +1,7 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { EmptyDashboardError } from "./EmptyDashboardError.js";
-import { useDashboardExportData } from "../export/index.js";
+import { useDashboardExportData } from "../export/useExportData.js";
 
 export function ExportEmptyDashboardError() {
     const exportData = useDashboardExportData("export", "empty", "root");

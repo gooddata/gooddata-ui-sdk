@@ -3,7 +3,7 @@
 import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { type IUpsertExecutionResult } from "../../commands/index.js";
+import { type IUpsertExecutionResult } from "../../commands/executionResults.js";
 import { executionResultsActions } from "../../store/executionResults/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 

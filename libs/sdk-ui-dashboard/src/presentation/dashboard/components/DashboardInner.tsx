@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
@@ -12,27 +12,23 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
-import {
-    selectAccessibleDashboardsLoaded,
-    selectCatalogIsLoaded,
-    selectIsInEditMode,
-    selectLocale,
-    useDashboardAutomations,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardAutomations } from "../../../model/react/useDashboardAutomations/useDashboardAutomations.js";
+import { selectAccessibleDashboardsLoaded } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
+import { selectCatalogIsLoaded } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectLocale } from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import {
     DASHBOARD_HEADER_OVERLAYS_Z_INDEX,
     DASHBOARD_TOASTS_OVERLAY_Z_INDEX,
-} from "../../constants/index.js";
-import {
-    DeleteDropZone,
-    WrapInsightListItemWithDrag,
-    useDashboardDragScroll,
-} from "../../dragAndDrop/index.js";
+} from "../../constants/zIndex.js";
+import { DeleteDropZone } from "../../dragAndDrop/DeleteDropZone.js";
+import { useDashboardDragScroll } from "../../dragAndDrop/useDashboardDragScroll.js";
 import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelItemWithDrag.js";
+import { WrapInsightListItemWithDrag } from "../../dragAndDrop/WrapInsightListItemWithDrag.js";
 import { DragLayerComponent as FlexibleDragLayerComponent } from "../../flexibleLayout/dragAndDrop/DragLayer.js";
-import { IntlWrapper } from "../../localization/index.js";
-import { Toolbar } from "../../toolbar/index.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
+import { Toolbar } from "../../toolbar/Toolbar.js";
 import { DashboardContent } from "../DashboardContent.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";

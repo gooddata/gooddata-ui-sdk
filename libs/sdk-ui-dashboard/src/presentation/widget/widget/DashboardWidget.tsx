@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
@@ -6,14 +6,14 @@ import { isDashboardWidget } from "@gooddata/sdk-model";
 
 import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
 import { type CustomDashboardWidgetComponent, type IDashboardWidgetProps } from "./types.js";
-import { extendedWidgetDebugStr } from "../../../model/index.js";
+import { extendedWidgetDebugStr } from "../../../model/types/layoutTypes.js";
 import {
     isInitialPlaceholderWidget,
     isInsightPlaceholderWidget,
     isLoadingPlaceholderWidget,
-} from "../../../widgets/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/index.js";
+} from "../../../widgets/placeholders/types.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/draggableWidget/LoadingDashboardWidget.js";
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 
 function BadWidgetType() {

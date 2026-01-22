@@ -1,14 +1,13 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import {
-    setDateFilterConfigTitle,
-    useDashboardCommandProcessing,
-    useDashboardUserInteraction,
-} from "../../../../../model/index.js";
-import { useCurrentDateFilterConfig } from "../../../../dragAndDrop/index.js";
+import { setDateFilterConfigTitle } from "../../../../../model/commands/dashboard.js";
+import { useDashboardCommandProcessing } from "../../../../../model/react/useDashboardCommandProcessing.js";
+import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
+import { useCurrentDateFilterConfig } from "../../../../dragAndDrop/useCurrentDateFilterConfig.js";
 
 export function useDateFilterTitleConfiguration(
     dateDataSet: ObjRef | undefined,

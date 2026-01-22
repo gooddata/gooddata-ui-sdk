@@ -1,10 +1,13 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import { type DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
-import { AttributeColorStrategy, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import {
+    AttributeColorStrategy,
+    type IColorMapping,
+    type IColorStrategy,
+} from "@gooddata/sdk-ui-vis-commons";
 
-import { type IColorMapping } from "../../../interfaces/index.js";
 import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 import {
     isBubbleChart,

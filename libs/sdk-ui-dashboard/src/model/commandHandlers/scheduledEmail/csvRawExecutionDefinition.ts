@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type FilterContextItem,
@@ -12,7 +12,7 @@ import {
     mergeFilters,
 } from "@gooddata/sdk-model";
 
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 
 export function prepareCsvRawExecutionDefinition(

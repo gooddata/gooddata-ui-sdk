@@ -2,12 +2,9 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type IMoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
-import {
-    type IDashboardCommandFailed,
-    type IDashboardLayoutChanged,
-    type IDashboardLayoutSectionMoved,
-} from "../../../events/index.js";
+import { type IMoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
+import { type IDashboardLayoutChanged, type IDashboardLayoutSectionMoved } from "../../../events/layout.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {

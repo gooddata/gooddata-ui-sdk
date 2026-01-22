@@ -6,8 +6,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { EditableLabel, UiCard, UiCopyButton } from "@gooddata/sdk-ui-kit";
 
-import { CatalogItemLockMemo, type ICatalogItem } from "../catalogItem/index.js";
-import { ObjectTypeIconMemo, ObjectTypeTooltip } from "../objectType/index.js";
+import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
+import { type ICatalogItem } from "../catalogItem/types.js";
+import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
+import { ObjectTypeTooltip } from "../objectType/ObjectTypeTooltip.js";
 
 export interface ICatalogDetailHeaderRef {
     focusTitle: () => void;

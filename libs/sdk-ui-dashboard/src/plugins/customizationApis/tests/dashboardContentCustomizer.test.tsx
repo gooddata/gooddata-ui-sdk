@@ -9,11 +9,11 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { type IDashboard, type ObjRef } from "@gooddata/sdk-model";
 
 import { EMPTY_MUTATIONS } from "./utils.js";
+import { type IDashboardBaseProps } from "../../../presentation/dashboard/types.js";
 import {
     type DashboardContentComponentProvider,
-    type IDashboardBaseProps,
     type OptionalDashboardContentComponentProvider,
-} from "../../../presentation/index.js";
+} from "../../../presentation/dashboardContexts/types.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultDashboardContentCustomizer } from "../dashboardContentCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";

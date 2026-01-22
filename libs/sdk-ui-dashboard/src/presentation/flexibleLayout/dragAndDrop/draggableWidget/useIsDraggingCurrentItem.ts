@@ -1,8 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { areLayoutPathsEqual } from "../../../../_staging/layout/coordinates.js";
-import { selectDraggingWidgetSource, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectDraggingWidgetSource } from "../../../../model/store/ui/uiSelectors.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 
 export function useIsDraggingCurrentItem(layoutPath: ILayoutItemPath) {

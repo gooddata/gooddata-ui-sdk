@@ -17,6 +17,7 @@ import { exportDashboardToPdfHandler } from "./dashboard/exportDashboardToPdfHan
 import { exportDashboardToPdfPresentationHandler } from "./dashboard/exportDashboardToPdfPresentationHandler.js";
 import { exportDashboardToPptPresentationHandler } from "./dashboard/exportDashboardToPptPresentationHandler.js";
 import { exportToTabularHandler } from "./dashboard/exportToTabularHandler.js";
+import { type IDashboardCommand } from "../commands/base.js";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler/index.js";
 import { renameDashboardHandler } from "./dashboard/renameDashboardHandler.js";
 import { resetDashboardHandler } from "./dashboard/resetDashboardHandler.js";
@@ -115,7 +116,7 @@ import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidge
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
 import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler.js";
 import { updateVisualizationsFromSwticherWidgetContentHandler } from "./widgets/updateVisualizationsFromSwitcherWidgetHandler.js";
-import { type DashboardCommands, type IDashboardCommand } from "../commands/index.js";
+import { type DashboardCommands } from "../commands/index.js";
 import { commandRejected } from "../events/general.js";
 import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher.js";
 import { type DashboardContext } from "../types/commonTypes.js";

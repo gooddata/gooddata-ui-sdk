@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -16,17 +16,18 @@ import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatas
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 import {
     disableInsightWidgetDateFilter,
-    disableKpiWidgetDateFilter,
-    disableRichTextWidgetDateFilter,
     enableInsightWidgetDateFilter,
-    enableKpiWidgetDateFilter,
-    enableRichTextWidgetDateFilter,
     ignoreDateFilterOnInsightWidget,
-    ignoreDateFilterOnRichTextWidget,
     unignoreDateFilterOnInsightWidget,
+} from "../../../../model/commands/insight.js";
+import { disableKpiWidgetDateFilter, enableKpiWidgetDateFilter } from "../../../../model/commands/kpi.js";
+import {
+    disableRichTextWidgetDateFilter,
+    enableRichTextWidgetDateFilter,
+    ignoreDateFilterOnRichTextWidget,
     unignoreDateFilterOnRichTextWidget,
-    useDashboardCommandProcessing,
-} from "../../../../model/index.js";
+} from "../../../../model/commands/richText.js";
+import { useDashboardCommandProcessing } from "../../../../model/react/useDashboardCommandProcessing.js";
 
 export function useDateFilterConfigurationHandling(
     widget: IWidget,

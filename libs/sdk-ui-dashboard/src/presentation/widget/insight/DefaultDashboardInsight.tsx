@@ -1,11 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { EditModeDashboardInsight } from "./EditModeDashboardInsight/index.js";
-import { ExportModeDashboardInsight } from "./ExportModeDashboardInsight/index.js";
+import { EditModeDashboardInsight } from "./EditModeDashboardInsight/EditModeDashboardInsight.js";
+import { ExportModeDashboardInsight } from "./ExportModeDashboardInsight/ExportModeDashboardInsight.js";
 import { type IDashboardInsightProps } from "./types.js";
 import { useBackendWithInsightWidgetCorrelation } from "./useBackendWithInsightWidgetCorrelation.js";
-import { ViewModeDashboardInsight } from "./ViewModeDashboardInsight/index.js";
-import { renderModeAware } from "../../componentDefinition/index.js";
+import { ViewModeDashboardInsight } from "./ViewModeDashboardInsight/ViewModeDashboardInsight.js";
+import { renderModeAware } from "../../componentDefinition/renderModeAware.js";
 
 /**
  * @internal

@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Button } from "../../Button/index.js";
-import { Hyperlink } from "../../Hyperlink/index.js";
-import { LoadingSpinner } from "../../LoadingSpinner/index.js";
+import { Button } from "../../Button/Button.js";
+import { Hyperlink } from "../../Hyperlink/Hyperlink.js";
+import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner.js";
 import { Footer } from "../Footer.js";
 import { FooterButtons } from "../FooterButtons.js";
 import { Header } from "../Header.js";

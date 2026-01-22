@@ -7,11 +7,11 @@ import { type IDataSetMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 import {
     type IQueryAttributeDataSet,
     queryAttributeDataSet,
-    selectIsNewDashboard,
-    selectPreloadedAttributesWithReferences,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/queries/attributeDataSet.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
+import { selectIsNewDashboard } from "../../../../../../model/store/meta/metaSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
  * @internal

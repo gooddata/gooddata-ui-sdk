@@ -22,14 +22,14 @@ import {
 
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { invalidQueryArguments } from "../events/general.js";
-import { type IInsightAttributesMeta, type IQueryInsightAttributesMeta } from "../queries/index.js";
+import { type IInsightAttributesMeta, type IQueryInsightAttributesMeta } from "../queries/insights.js";
 import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
 } from "../store/catalog/catalogSelectors.js";
-import { type DashboardState } from "../store/index.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
+import { type DashboardState } from "../store/types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryInsightAttributesMetaService = createCachedQueryService(

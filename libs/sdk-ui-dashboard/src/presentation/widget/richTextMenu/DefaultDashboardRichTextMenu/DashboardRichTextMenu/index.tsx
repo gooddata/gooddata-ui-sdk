@@ -1,11 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Dispatch, type SetStateAction, useState } from "react";
 
 import { Separator } from "@gooddata/sdk-ui-kit";
 
 import { DashboardRichTextMenuContainer } from "./DashboardRichTextMenuContainer.js";
-import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectRenderMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { type RenderMode } from "../../../../../types.js";
 import { DashboardInsightEditMenuBubble } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightEditMenuBubble.js";
 import { DashboardInsightMenuBubble } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightMenuBubble.js";

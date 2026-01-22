@@ -5,7 +5,8 @@ import { type ChangeEvent } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger } from "../../../../Bubble/index.js";
+import { Bubble } from "../../../../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../../../../Bubble/BubbleHoverTrigger.js";
 import { type InsightCodeType } from "../types.js";
 
 const HEADER_TOOLTIP_ALIGN_POINTS = [{ align: "cr tl" }];

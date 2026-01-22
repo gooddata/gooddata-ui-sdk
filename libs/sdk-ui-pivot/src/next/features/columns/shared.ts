@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IRowNode, type ValueGetterParams } from "ag-grid-enterprise";
 import { type IntlShape } from "react-intl";
@@ -20,8 +20,6 @@ import {
 import { totalTypeMessages } from "../../../locales.js";
 import { type AgGridCellRendererParams } from "../../types/agGrid.js";
 import { type AgGridRowData } from "../../types/internal.js";
-
-export { isTableGrandTotalHeaderValue, isTableTotalHeaderValue };
 
 export const isTableTotalCellData = (cellData: ITableDataValue | undefined) => {
     if (!cellData) {

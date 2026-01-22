@@ -32,7 +32,7 @@ import {
 
 import { filterContextInitialState } from "./filterContextState.js";
 import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
-import { type IAddDateFilterPayload } from "../../../commands/index.js";
+import { type IAddDateFilterPayload } from "../../../commands/filters.js";
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
 import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 

@@ -9,7 +9,7 @@ import { type IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 import { sanitizeHeader } from "./utils.js";
 import { validateSectionExists } from "./validation/layoutValidation.js";
 import { findSection, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
-import { type ChangeLayoutSectionHeader } from "../../commands/index.js";
+import { type ChangeLayoutSectionHeader } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
     type IDashboardLayoutSectionHeaderChanged,

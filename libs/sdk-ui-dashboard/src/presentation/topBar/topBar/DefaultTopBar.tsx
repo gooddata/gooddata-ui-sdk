@@ -1,32 +1,35 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
 import { HiddenTopBar } from "./HiddenTopBar.js";
 import { type ITopBarProps } from "./types.js";
+import { renameDashboard } from "../../../model/commands/dashboard.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    renameDashboard,
-    selectDashboardShareInfo,
-    selectDashboardTitle,
     selectEnableSnapshotExportAccessibility,
     selectIsExport,
     selectIsReadOnly,
-    selectPersistedDashboard,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
 import {
-    useCancelButtonProps,
-    useEditButtonProps,
-    useSaveAsNewButtonProps,
-    useSaveButtonProps,
-    useSettingButtonProps,
-    useShareButtonProps,
-} from "../buttonBar/button/index.js";
-import { ButtonBar, DefaultButtonBar } from "../buttonBar/index.js";
-import { DefaultMenuButton, MenuButton, useDefaultMenuItems } from "../menuButton/index.js";
-import { DefaultLockedStatus, DefaultShareStatus } from "../shareIndicators/index.js";
-import { Title } from "../title/index.js";
+    selectDashboardShareInfo,
+    selectDashboardTitle,
+    selectPersistedDashboard,
+} from "../../../model/store/meta/metaSelectors.js";
+import { useCancelButtonProps } from "../buttonBar/button/cancelButton/DefaultCancelButton.js";
+import { useEditButtonProps } from "../buttonBar/button/editButton/DefaultEditButton.js";
+import { useSaveAsNewButtonProps } from "../buttonBar/button/saveAsButton/DefaultSaveAsNewButton.js";
+import { useSaveButtonProps } from "../buttonBar/button/saveButton/DefaultSaveButton.js";
+import { useSettingButtonProps } from "../buttonBar/button/settingButton/DefaultSettingButton.js";
+import { useShareButtonProps } from "../buttonBar/button/shareButton/DefaultShareButton.js";
+import { ButtonBar } from "../buttonBar/ButtonBar.js";
+import { DefaultButtonBar } from "../buttonBar/DefaultButtonBar.js";
+import { DefaultMenuButton } from "../menuButton/DefaultMenuButton.js";
+import { MenuButton } from "../menuButton/MenuButton.js";
+import { useDefaultMenuItems } from "../menuButton/useDefaultMenuItems.js";
+import { DefaultLockedStatus } from "../shareIndicators/lockedStatus/DefaultLockedStatus.js";
+import { DefaultShareStatus } from "../shareIndicators/shareStatus/DefaultShareStatus.js";
+import { Title } from "../title/Title.js";
 
 /**
  * @alpha

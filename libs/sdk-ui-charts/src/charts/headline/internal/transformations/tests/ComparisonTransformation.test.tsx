@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -7,7 +7,8 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type ExplicitDrill, createIntlMock, withIntl } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
-import { type IChartConfig, type IComparison } from "../../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../../interfaces/chartConfig.js";
+import { type IComparison } from "../../../../../interfaces/comparison.js";
 import { type IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
 import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../../tests/TestData.fixtures.js";

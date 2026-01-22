@@ -1,14 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { useCallback, useMemo } from "react";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import {
-    selectShowWidgetAsTable,
-    setShowWidgetAsTable,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { setShowWidgetAsTable } from "../../../model/commands/showWidgetAsTable.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectShowWidgetAsTable } from "../../../model/store/showWidgetAsTable/showWidgetAsTableSelectors.js";
 
 /**
  * Hook for toggling and checking if a widget should be shown as table.

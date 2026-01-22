@@ -1,7 +1,8 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { vi } from "vitest";
 
-import { type IChartConfig } from "../../../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../../../interfaces/chartConfig.js";
 import { type FiredDrillEventCallback } from "../../../interfaces/DrillEvents.js";
 import * as BaseHeadlineContext from "../BaseHeadlineContext.js";
 

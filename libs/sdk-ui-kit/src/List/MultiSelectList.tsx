@@ -6,8 +6,8 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { List } from "./List.js";
-import { Button } from "../Button/index.js";
-import { FlexDimensions } from "../FlexDimensions/index.js";
+import { Button } from "../Button/Button.js";
+import { FlexDimensions } from "../FlexDimensions/FlexDimensions.js";
 
 /**
  * @internal

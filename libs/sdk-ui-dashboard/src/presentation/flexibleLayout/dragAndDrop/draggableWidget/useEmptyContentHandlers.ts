@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
@@ -18,8 +18,8 @@ import {
     isRichTextDraggableListItem,
     isVisualizationSwitcherDraggableItem,
     isVisualizationSwitcherDraggableListItem,
-    useDashboardDrop,
-} from "../../../dragAndDrop/index.js";
+} from "../../../dragAndDrop/types.js";
+import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 
 export const useEmptyContentHandlers = (sectionPath: ILayoutSectionPath) => {
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(sectionPath);

@@ -1,11 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import {
     initializeAutomations as initializeAutomationsCommand,
     refreshAutomations as refreshAutomationsCommand,
-} from "../../commands/index.js";
-import { selectEnableAutomations } from "../../store/index.js";
+} from "../../commands/scheduledEmail.js";
+import { selectEnableAutomations } from "../../store/config/configSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
 

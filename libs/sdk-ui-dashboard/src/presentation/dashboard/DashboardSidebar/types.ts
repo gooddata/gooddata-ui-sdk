@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -8,7 +8,7 @@ import {
     type InsightWidgetComponentSet,
     type RichTextWidgetComponentSet,
     type VisualizationSwitcherWidgetComponentSet,
-} from "../../componentDefinition/index.js";
+} from "../../componentDefinition/types.js";
 import {
     type IWrapCreatePanelItemWithDragComponent,
     type IWrapInsightListItemWithDragComponent,

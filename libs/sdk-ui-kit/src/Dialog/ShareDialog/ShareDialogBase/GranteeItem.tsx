@@ -31,7 +31,7 @@ import {
     isGranularGranteeUser,
 } from "./types.js";
 import { getGranteeItemTestId, getGranteeLabel } from "./utils.js";
-import { Button } from "../../../Button/index.js";
+import { Button } from "../../../Button/Button.js";
 import { useIdPrefixed } from "../../../utils/useId.js";
 
 interface IGranteeUserItemProps {

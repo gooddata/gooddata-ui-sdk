@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep, range, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
@@ -16,7 +16,7 @@ import {
 
 import * as fixtures from "../../../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     PIE_CHART_LIMIT,

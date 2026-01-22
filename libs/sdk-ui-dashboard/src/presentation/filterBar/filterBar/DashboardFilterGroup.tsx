@@ -15,12 +15,10 @@ import {
     isFilterBarAttributeFilter,
 } from "./useFiltersWithAddedPlaceholder.js";
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
-import {
-    selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectSupportsElementUris,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { DefaultDashboardAttributeFilter } from "../attributeFilter/DefaultDashboardAttributeFilter.js";
 
 /**

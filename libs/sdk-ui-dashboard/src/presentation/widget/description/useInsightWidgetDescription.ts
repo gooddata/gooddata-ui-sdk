@@ -1,9 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
-import { selectEnableRichTextDescriptions, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectEnableRichTextDescriptions } from "../../../model/store/config/configSelectors.js";
 
 export const useInsightWidgetDescription = (props: IInsightWidgetDescriptionTriggerProps) => {
     const { widget, insight } = props;

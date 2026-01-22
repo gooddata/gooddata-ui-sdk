@@ -12,6 +12,7 @@ import {
     insightHasMeasures,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import type { GeoTileset } from "@gooddata/sdk-ui-geo/next";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
@@ -25,15 +26,18 @@ import {
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { DropdownControl } from "../configurationControls/DropdownControl.js";
 import { LegendSection } from "../configurationControls/legend/LegendSection.js";
 import { PushpinSizeControl } from "../configurationControls/PushpinSizeControl.js";
 import { PushpinViewportControl } from "../configurationControls/PushpinViewportControl.js";
 
 export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
-    protected getControlProperties(): { groupNearbyPoints: boolean } {
+    protected getControlProperties(): { groupNearbyPoints: boolean; tileset: GeoTileset } {
         const groupNearbyPoints = this.props.properties?.controls?.["points"]?.groupNearbyPoints ?? true;
+        const tileset = (this.props.properties?.controls?.["tileset"] as GeoTileset | undefined) ?? "default";
         return {
             groupNearbyPoints,
+            tileset,
         };
     }
 
@@ -55,7 +59,10 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     }
 
     protected renderViewportSection(): ReactElement {
-        const { properties, propertiesMeta, pushData } = this.props;
+        const { properties, propertiesMeta, pushData, featureFlags } = this.props;
+        const { tileset } = this.getControlProperties();
+        const isControlDisabled = this.isControlDisabled();
+        const isBasemapConfigEnabled = !!featureFlags?.["enableGeoBasemapConfig"];
         return (
             <ConfigSection
                 id="map_section"
@@ -66,9 +73,24 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
             >
                 <PushpinViewportControl
                     properties={properties}
-                    disabled={this.isControlDisabled()}
+                    disabled={isControlDisabled}
                     pushData={pushData}
                 />
+                {isBasemapConfigEnabled ? (
+                    <DropdownControl
+                        valuePath="tileset"
+                        labelText={messages["basemapTitle"].id}
+                        properties={properties}
+                        value={tileset}
+                        items={[
+                            { title: "Default", value: "default" },
+                            { title: "Satellite", value: "satellite" },
+                        ]}
+                        disabled={isControlDisabled}
+                        showDisabledMessage={isControlDisabled}
+                        pushData={pushData}
+                    />
+                ) : null}
             </ConfigSection>
         );
     }

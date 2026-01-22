@@ -7,10 +7,11 @@ import cx from "classnames";
 import { DialogBase } from "./DialogBase.js";
 import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
 import { type IConfirmDialogBaseProps } from "./typings.js";
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
-import { Button } from "../Button/index.js";
-import { LoadingSpinner } from "../LoadingSpinner/index.js";
-import { Typography } from "../Typography/index.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { Button } from "../Button/Button.js";
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
+import { Typography } from "../Typography/Typography.js";
 import { useId } from "../utils/useId.js";
 
 /**

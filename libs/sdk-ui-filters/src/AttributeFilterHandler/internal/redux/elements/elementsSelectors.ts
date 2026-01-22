@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { compact } from "lodash-es";
@@ -16,11 +16,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import {
-    type AsyncOperationStatus,
-    type AttributeElementKey,
-    type ILoadElementsOptions,
-} from "../../../types/index.js";
+import { type AsyncOperationStatus, type AttributeElementKey } from "../../../types/common.js";
+import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 import { selectState, toCacheKey } from "../common/selectors.js";
 import { type FilterSelector } from "../common/types.js";
 

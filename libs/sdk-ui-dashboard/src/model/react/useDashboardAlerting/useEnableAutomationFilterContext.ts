@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { useMemo } from "react";
 
 import {
@@ -7,9 +8,9 @@ import {
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { selectEnableAutomationFilterContext } from "../../store/index.js";
+import { selectEnableAutomationFilterContext } from "../../store/config/configSelectors.js";
+import { selectDashboardFiltersWithoutCrossFiltering } from "../../store/filtering/dashboardFilterSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
-import { selectDashboardFiltersWithoutCrossFiltering } from "../filtering/selectors.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
     if (isDashboardAttributeFilter(filter)) {

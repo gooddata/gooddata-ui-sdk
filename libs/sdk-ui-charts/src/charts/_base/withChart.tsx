@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
 import { withContexts, wrapDisplayName } from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 import { type IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition.js";
 
 /**

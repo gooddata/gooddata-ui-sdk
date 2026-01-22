@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Ref } from "react";
 
@@ -6,16 +6,14 @@ import classNames from "classnames";
 
 import { type IDashboardDateFilter } from "@gooddata/sdk-model";
 
-import {
-    selectCanAddMoreFilters,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsInEditMode,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectCanAddMoreFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import {
     type CustomDashboardDateFilterComponent,
     type IDashboardDateFilterConfig,
-} from "../../filterBar/types.js";
+} from "../../filterBar/dateFilter/types.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
 

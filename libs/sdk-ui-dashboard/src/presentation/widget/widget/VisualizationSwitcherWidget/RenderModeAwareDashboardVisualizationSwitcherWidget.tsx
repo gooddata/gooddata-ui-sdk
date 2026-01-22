@@ -1,9 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { DefaultDashboardVisualizationSwitcherWidget } from "./DefaultDashboardVisualizationSwitcherWidget.js";
 import { EditableDashboardVisualizationSwitcherWidget } from "./EditableDashboardVisualizationSwitcherWidget.js";
 import { ExportableDashboardVisualizationSwitcherWidget } from "./ExportableDashboardVisualizationSwitcherWidget.js";
-import { renderModeAware } from "../../../componentDefinition/index.js";
+import { renderModeAware } from "../../../componentDefinition/renderModeAware.js";
 
 /**
  * @internal

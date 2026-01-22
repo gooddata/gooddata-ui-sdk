@@ -13,7 +13,10 @@ import { objectUtils } from "@gooddata/util";
 
 import { type IDashboardStoreProviderProps } from "./types.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
-import { InitialLoadCorrelationId, initializeDashboardWithPersistedDashboard } from "../commands/index.js";
+import {
+    InitialLoadCorrelationId,
+    initializeDashboardWithPersistedDashboard,
+} from "../commands/dashboard.js";
 import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
 import { type IReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Ref, useEffect } from "react";
 
@@ -15,12 +15,12 @@ import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRich
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { isItemInSection } from "../../../../_staging/layout/coordinates.js";
-import { useDashboardDispatch } from "../../../../model/index.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
 import { type ILayoutSectionPath } from "../../../../types.js";
 import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
-import { useDashboardDrop } from "../../../dragAndDrop/index.js";
 import { isBaseDraggableMovingItem } from "../../../dragAndDrop/types.js";
+import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 
 export type RowPosition = "above" | "below";
 

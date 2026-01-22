@@ -1,6 +1,46 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 15 Jan 2026 09:13:41 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jan 2026 10:30:55 GMT and should not be manually modified.
+
+## 11.17.0
+
+Thu, 22 Jan 2026 10:30:55 GMT
+
+### Patches
+
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
+
+### Updates
+
+- sdk-ui-dashboard: Initialize new dashboard with default calendar.
+- Fix `AppHeader` responsive measurement.
+- sdk-ui-kit: Fix mobile `UiDrawer` layout to render full-width.
+- sdk-ui-kit: Add `role` attribute to `Separator` component.
+- sdk-ui-kit: Export `UiAsyncTable` menu column widths constants.
+- sdk-backend-tiger: Fix missing attribute tags in Tiger metadata conversion.
+- sdk-ui-gen-ai: Add tooltip for close button in AI assistant.
+- sdk-ui-catalog: Fix catalog semantic quality gating for users without AI Assistant permission.
+- sdk-client-tiger: Use PATCH endpoints for `attribute` and `fact` metadata updates.
+- sdk-ui-kit: Add support for `data-testid` attribute to `Dialog` component.
+- sdk-ui-dashboard: Add `data-testid` attributes to `KdaDialog` component.
+- sdk-ui-all: Support anomaly detection in line visualization
+- sdk-backend-tiger: add isLocked into memory item
+- sdk-ui-catalog: Design changes and repairs based on latest design reviews
+- sdk-ui-kit: New button component for copy paste content into clipboard
+- sdk-ui-gen-ai: update fullscreen experience of ai chatbot
+- sdk-ui-gen-ai: update markdown styling in chatbot messages
+- Added support for tables in AI Asisstant response
+- sdk-ui-kit: Enhance dropdown accessibility props.
+- sdk-ui-dashboard: Add settings to tabular pdf scheduling option.
+- sdk-ui: Extend dashboard url builders to accept isEmbedded option. Switch to single object argument.
+- Add Amazon Athena data source support
+- chore: Rename various @internal, @alpha and @beta interfaces to conform with naming standards (added I to start of names)
+- chore: Remove barrel files from all packages
+- Integrate new FilterGroup into a dashboard
+- sdk-ui-filters: Allow metric value filter in headline visualization type and empty insights
+- sdk-ui-ext: Enable enableImprovedAdFilters by default
+- sdk-ui-gen-ai: Merging reasoning thoughts under steps
+- sdk-ui-gen-ai: Change the logic for handling multiple interaction IDs in the assistant message stream.
 
 ## 11.16.0
 

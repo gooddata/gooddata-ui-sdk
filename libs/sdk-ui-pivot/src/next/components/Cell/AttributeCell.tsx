@@ -8,15 +8,12 @@ import {
     type ITableAttributeColumnDefinition,
     type ITableAttributeHeaderValue,
     emptyHeaderTitleFromIntl,
+    isTableGrandTotalHeaderValue,
+    isTableTotalHeaderValue,
 } from "@gooddata/sdk-ui";
 
 import { ImageCell } from "./ImageCell.js";
-import {
-    getAttributeColIds,
-    isTableGrandTotalHeaderValue,
-    isTableTotalHeaderValue,
-    shouldGroupAttribute,
-} from "../../features/columns/shared.js";
+import { getAttributeColIds, shouldGroupAttribute } from "../../features/columns/shared.js";
 import { e } from "../../features/styling/bem.js";
 import {
     getPivotCellAttributeImageTestIdProps,

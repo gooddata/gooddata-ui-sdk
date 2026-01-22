@@ -36,7 +36,7 @@ import {
     type OnKeyDriverAnalysisSuccess,
     type OnWidgetDrill,
 } from "../../drill/types.js";
-import { type WidgetExportDataAttributes } from "../../export/index.js";
+import { type WidgetExportDataAttributes } from "../../export/types.js";
 
 ///
 /// Component props

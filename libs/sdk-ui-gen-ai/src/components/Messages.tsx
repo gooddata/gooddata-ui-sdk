@@ -7,10 +7,12 @@ import { connect } from "react-redux";
 
 import { isAssistantMessage, isUserMessage } from "../model.js";
 import { useCustomization } from "./CustomizationProvider.js";
-import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
-import { useMessageScroller } from "./messages/MessageScroller.js";
-import { type RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
+import { useMessageScroller } from "./messages/MessageScroller.js";
+import { UserMessageComponent } from "./messages/UserMessage.js";
+import { asyncProcessSelector, messagesSelector } from "../store/messages/messagesSelectors.js";
+import { type RootState } from "../store/types.js";
+import { AssistantMessageComponent } from "./messages/AssistantMessage.js";
 
 type MessagesComponentProps = {
     messages: ReturnType<typeof messagesSelector>;

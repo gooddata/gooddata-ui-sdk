@@ -7,11 +7,11 @@ import { type IAttributeOrMeasure, type ICatalogDateDataset } from "@gooddata/sd
 import {
     type IQueryAvailableDatasetsForItems,
     queryAvailableDatasetsForItems,
-    selectBackendCapabilities,
-    selectEnableKDAttributeFilterDatesValidation,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/queries/availableDatasetsForItems.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
+import { selectBackendCapabilities } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableKDAttributeFilterDatesValidation } from "../../../../../../model/store/config/configSelectors.js";
 
 /**
  * @internal

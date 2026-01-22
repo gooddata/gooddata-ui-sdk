@@ -1,8 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IInsight } from "@gooddata/sdk-model";
 
-import { useWidgetSelection } from "../../../model/index.js";
+import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import {
     type CustomDashboardInsightListItemComponent,
     type CustomDashboardInsightListItemComponentProps,

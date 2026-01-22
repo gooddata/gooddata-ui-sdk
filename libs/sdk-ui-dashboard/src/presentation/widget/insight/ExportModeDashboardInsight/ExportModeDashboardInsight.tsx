@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
-import { EXPORT_VIS_MINIMAL_HEIGHT, EXPORT_VIS_MINIMAL_WIDTH } from "../../../export/index.js";
+import { EXPORT_VIS_MINIMAL_HEIGHT, EXPORT_VIS_MINIMAL_WIDTH } from "../../../export/const.js";
 import { type IDashboardInsightProps } from "../types.js";
 import { DashboardInsight } from "../ViewModeDashboardInsight/Insight/DashboardInsight.js";
 

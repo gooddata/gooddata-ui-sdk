@@ -3,7 +3,7 @@
 import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { type ISetScreenSize } from "../../commands/index.js";
+import { type ISetScreenSize } from "../../commands/layout.js";
 import { type IScreenSizeChanged, screenSizeChanged } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

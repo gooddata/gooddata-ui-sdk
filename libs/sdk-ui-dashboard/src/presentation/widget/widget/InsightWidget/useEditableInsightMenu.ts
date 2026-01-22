@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -7,17 +7,22 @@ import { useIntl } from "react-intl";
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import {
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardEventDispatch } from "../../../../model/react/useDashboardEventDispatch.js";
+import {
     selectDashboardUserAutomationAlertsInContext,
     selectDashboardUserAutomationSchedulesInContext,
-    selectDrillTargetsByWidgetRef,
+} from "../../../../model/store/automations/automationsSelectors.js";
+import {
     selectEnableAlerting,
     selectEnableScheduling,
-    useDashboardDispatch,
-    useDashboardEventDispatch,
-    useDashboardSelector,
-} from "../../../../model/index.js";
-import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
-import { type IInsightMenuItem, getDefaultInsightEditMenuItems } from "../../insightMenu/index.js";
+} from "../../../../model/store/config/configSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../../../../model/store/drillTargets/drillTargetsSelectors.js";
+import { useDashboardCustomizationsContext } from "../../../dashboardContexts/DashboardCustomizationsContext.js";
+import { getDefaultInsightEditMenuItems } from "../../insightMenu/DefaultDashboardInsightMenu/getDefaultInsightEditMenuItems.js";
+import { type IInsightMenuItem } from "../../insightMenu/types.js";
 
 type UseEditableInsightMenuConfig = {
     insight?: IInsight;

@@ -17,6 +17,7 @@ interface IGeoAreaControls {
     viewport?: IGeoAreaChartConfig["viewport"];
     mapStyle?: IGeoAreaChartConfig["mapStyle"];
     maxZoomLevel?: IGeoAreaChartConfig["maxZoomLevel"];
+    tileset?: IGeoAreaChartConfig["tileset"];
 }
 
 /**
@@ -36,7 +37,7 @@ export function buildAreaVisualizationConfig({
     const { config = {} } = options;
     const { colorPalette, separators, maxZoomLevel: configMaxZoomLevel, isInEditMode, isExportMode } = config;
     const controls = (supportedControls.controls ?? supportedControls ?? {}) as IGeoAreaControls;
-    const { legend = {}, viewport = {}, mapStyle, maxZoomLevel: controlsMaxZoomLevel } = controls;
+    const { legend = {}, viewport = {}, mapStyle, maxZoomLevel: controlsMaxZoomLevel, tileset } = controls;
     const legendEnabled = legend?.enabled;
     const legendPosition = legend?.position;
     // Explicit undefined check - null is a meaningful value that clears the zoom limit
@@ -61,6 +62,7 @@ export function buildAreaVisualizationConfig({
         },
         ...viewportProp,
         mapStyle,
+        tileset,
         maxZoomLevel,
     };
 }

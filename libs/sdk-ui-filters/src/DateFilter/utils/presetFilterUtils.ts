@@ -126,7 +126,7 @@ export function getDefaultCalendarTab(
     }
 
     // Shared granularities or no preset → use settings default
-    return activeCalendars?.default === "FISCAL" ? "fiscal" : "standard";
+    return activeCalendars?.fiscal && activeCalendars?.default === "FISCAL" ? "fiscal" : "standard";
 }
 
 /**

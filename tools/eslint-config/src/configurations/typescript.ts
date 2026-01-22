@@ -90,6 +90,14 @@ export const typescript: IConfiguration = {
                     selector: "TSTypeReference[typeName.type='TSQualifiedName'][typeName.left.name='React']",
                     message: "Do not use `React.*` types. Use named imports instead.",
                 },
+                {
+                    selector: "ExportNamespaceSpecifier",
+                    message: "Usage of 'export * as …' is forbidden.",
+                },
+                {
+                    selector: "ExportAllDeclaration",
+                    message: "Usage of `export * from` is forbidden.",
+                },
             ],
             "@typescript-eslint/consistent-type-imports": [
                 "error",

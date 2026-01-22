@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type AnyAction } from "@reduxjs/toolkit";
 
@@ -16,7 +16,7 @@ import {
 } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getParentPath } from "../../../_staging/layout/coordinates.js";
 import { type ILayoutItemPath } from "../../../types.js";
-import { type IDashboardCommand } from "../../commands/index.js";
+import { type IDashboardCommand } from "../../commands/base.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 

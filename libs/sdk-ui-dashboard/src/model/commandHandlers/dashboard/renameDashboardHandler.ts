@@ -3,9 +3,8 @@
 import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { type IRenameDashboard } from "../../commands/index.js";
-import { dashboardRenamed } from "../../events/dashboard.js";
-import { type IDashboardRenamed } from "../../events/index.js";
+import { type IRenameDashboard } from "../../commands/dashboard.js";
+import { type IDashboardRenamed, dashboardRenamed } from "../../events/dashboard.js";
 import { metaActions } from "../../store/meta/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 

@@ -6,7 +6,7 @@ import { call, put, select } from "redux-saga/effects";
 import { type IWorkspaceCatalog, type IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
 import { type DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
 
-import { type IAttributeHierarchyModified } from "../../commands/index.js";
+import { type IAttributeHierarchyModified } from "../../commands/insight.js";
 import {
     type IAttributeHierarchyModifiedEvent,
     attributeHierarchyModifiedEvent,

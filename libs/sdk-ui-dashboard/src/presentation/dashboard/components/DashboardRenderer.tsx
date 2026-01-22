@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { DndProvider } from "@evil-internetmann/react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -14,39 +14,32 @@ import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
 import { DashboardLoading } from "./DashboardLoading.js";
-import { DashboardStoreProvider } from "../../../model/index.js";
-import { DefaultAlertingDialogNew, DefaultAlertingManagementDialogNew } from "../../alerting/index.js";
-import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
-import {
-    DashboardComponentsProvider,
-    DashboardConfigProvider,
-    DashboardCustomizationsProvider,
-    ExportTabularPdfDialogContextProvider,
-    ExportXlsxDialogContextProvider,
-} from "../../dashboardContexts/index.js";
-import { DefaultDashboardSettingsDialog } from "../../dashboardSettingsDialog/index.js";
-import {
-    DefaultEmptyLayoutDropZoneBody,
-    HoveredWidgetProvider,
-    LayoutResizeStateProvider,
-} from "../../dragAndDrop/index.js";
-import { RenderModeAwareFilterBar } from "../../filterBar/index.js";
-import { DefaultDashboardLayout } from "../../flexibleLayout/index.js";
-import { DefaultSaveAsDialog } from "../../saveAs/index.js";
-import {
-    DefaultScheduledEmailDialog,
-    DefaultScheduledEmailManagementDialog,
-} from "../../scheduledEmail/index.js";
-import { DefaultShareDialog } from "../../shareDialog/index.js";
-import { HiddenToolbar } from "../../toolbar/index.js";
-import {
-    DefaultButtonBar,
-    DefaultMenuButton,
-    DefaultSaveButton,
-    DefaultSettingButton,
-    RenderModeAwareTitle,
-    RenderModeAwareTopBar,
-} from "../../topBar/index.js";
+import { DashboardStoreProvider } from "../../../model/react/DashboardStoreProvider.js";
+import { DefaultAlertingDialogNew } from "../../alerting/DefaultAlertingDialog/DefaultAlertingDialogNew.js";
+import { DefaultAlertingManagementDialogNew } from "../../alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
+import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/zIndex.js";
+import { DashboardComponentsProvider } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { DashboardConfigProvider } from "../../dashboardContexts/DashboardConfigContext.js";
+import { DashboardCustomizationsProvider } from "../../dashboardContexts/DashboardCustomizationsContext.js";
+import { ExportTabularPdfDialogContextProvider } from "../../dashboardContexts/ExportTabularPdfDialogContext.js";
+import { ExportXlsxDialogContextProvider } from "../../dashboardContexts/ExportXlsxDialogContext.js";
+import { DefaultDashboardSettingsDialog } from "../../dashboardSettingsDialog/DefaultDashboardSettingsDialog.js";
+import { DefaultEmptyLayoutDropZoneBody } from "../../dragAndDrop/draggableWidget/DefaultEmptyLayoutDropZoneBody.js";
+import { HoveredWidgetProvider } from "../../dragAndDrop/HoveredWidgetContext.js";
+import { LayoutResizeStateProvider } from "../../dragAndDrop/LayoutResizeContext.js";
+import { RenderModeAwareFilterBar } from "../../filterBar/filterBar/RenderModeAwareFilterBar.js";
+import { DefaultDashboardLayout } from "../../flexibleLayout/DefaultDashboardLayout.js";
+import { DefaultSaveAsDialog } from "../../saveAs/DefaultSaveAsDialog/index.js";
+import { DefaultScheduledEmailDialog } from "../../scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
+import { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "../../scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
+import { DefaultShareDialog } from "../../shareDialog/DefaultShareDialog.js";
+import { HiddenToolbar } from "../../toolbar/HiddenToolbar.js";
+import { DefaultSaveButton } from "../../topBar/buttonBar/button/saveButton/DefaultSaveButton.js";
+import { DefaultSettingButton } from "../../topBar/buttonBar/button/settingButton/DefaultSettingButton.js";
+import { DefaultButtonBar } from "../../topBar/buttonBar/DefaultButtonBar.js";
+import { DefaultMenuButton } from "../../topBar/menuButton/DefaultMenuButton.js";
+import { RenderModeAwareTitle } from "../../topBar/title/RenderModeAwareTitle.js";
+import { RenderModeAwareTopBar } from "../../topBar/topBar/RenderModeAwareTopBar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
 import { useDashboard } from "../hooks/useDashboard.js";

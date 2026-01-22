@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type RefObject } from "react";
 
@@ -9,7 +9,7 @@ import { type ClientColors, ClientFormatterFacade } from "@gooddata/number-forma
 import { type ISeparators } from "@gooddata/sdk-model";
 import { getHeadlineResponsiveClassName } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { type IBaseHeadlineValueItem } from "../interfaces/BaseHeadlines.js";
 import { type IFormattedHeadlineDataItem, type IHeadlineDataItem } from "../interfaces/Headlines.js";
 

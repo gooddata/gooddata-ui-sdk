@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo, useRef } from "react";
 
@@ -16,14 +16,14 @@ import {
 import { getResizedItemPositions, unifyDashboardLayoutItemHeights } from "./utils/sizing.js";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import { getItemIndex, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
-import { layoutTransformer } from "../../../_staging/slideshow/index.js";
+import { layoutTransformer } from "../../../_staging/slideshow/layoutTransformer.js";
 import { type ILayoutSectionPath } from "../../../types.js";
-import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
+import { isInitialPlaceholderWidget } from "../../../widgets/placeholders/types.js";
 import { emptyDOMRect } from "../../constants.js";
 import { useDashboardItemPathAndSize } from "../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
-import { useDashboardExportData } from "../../export/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
+import { useDashboardExportData } from "../../export/useExportData.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
 
 const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ section }) =>

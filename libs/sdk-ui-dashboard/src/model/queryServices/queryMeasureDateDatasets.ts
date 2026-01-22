@@ -20,7 +20,7 @@ import { invalidQueryArguments } from "../events/general.js";
 import { type IMeasureDateDatasets, type IQueryMeasureDateDatasets } from "../queries/kpis.js";
 import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors.js";
-import { type DashboardState } from "../store/index.js";
+import { type DashboardState } from "../store/types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryDateDatasetsForMeasureService = createCachedQueryService(

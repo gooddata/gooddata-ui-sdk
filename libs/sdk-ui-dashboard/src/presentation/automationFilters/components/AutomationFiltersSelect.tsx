@@ -34,13 +34,13 @@ import {
 
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
-import { type IAutomationFiltersTab } from "../../../model/index.js";
+import type { IAutomationFiltersTab } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import {
     AUTOMATION_FILTERS_DIALOG_ID,
     AUTOMATION_FILTERS_DIALOG_TITLE_ID,
     AUTOMATION_FILTERS_GROUP_LABEL_ID,
 } from "../../constants/automations.js";
-import { AttributesDropdown } from "../../filterBar/index.js";
+import { AttributesDropdown } from "../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
 import { useAutomationFilters, useAutomationFiltersByTab } from "../useAutomationFilters.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;

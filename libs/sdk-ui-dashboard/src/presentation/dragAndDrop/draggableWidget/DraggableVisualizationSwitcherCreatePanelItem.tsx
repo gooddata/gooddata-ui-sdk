@@ -1,12 +1,12 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
 
-import { useWidgetSelection } from "../../../model/index.js";
-import { type CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
+import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
+import { type CustomCreatePanelItemComponent } from "../../componentDefinition/types.js";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";
 import { type DraggableItem, type IWrapCreatePanelItemWithDragComponent } from "../types.js";
 

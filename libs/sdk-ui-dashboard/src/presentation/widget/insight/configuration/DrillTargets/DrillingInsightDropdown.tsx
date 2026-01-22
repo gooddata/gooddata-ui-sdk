@@ -1,10 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type IInsight, type ObjRef, insightVisualizationType, isInsight } from "@gooddata/sdk-model";
 
-import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectInsightsMap } from "../../../../../model/store/insights/insightsSelectors.js";
 import { type IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types.js";
 import { InsightDropdown } from "../../../../widget/common/InsightDropdown.js";
 

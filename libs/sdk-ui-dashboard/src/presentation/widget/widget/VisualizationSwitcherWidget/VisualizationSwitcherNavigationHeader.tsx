@@ -13,9 +13,9 @@ import {
     UiListbox,
 } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardUserInteraction } from "../../../../model/index.js";
-import { type CommonExportDataAttributes } from "../../../export/index.js";
-import { DashboardItemHeadline } from "../../../presentationComponents/index.js";
+import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
+import { type CommonExportDataAttributes } from "../../../export/types.js";
+import { DashboardItemHeadline } from "../../../presentationComponents/DashboardItems/DashboardItemHeadline.js";
 
 interface IVisualizationSwitcherNavigationHeaderProps {
     clientWidth: number | undefined;

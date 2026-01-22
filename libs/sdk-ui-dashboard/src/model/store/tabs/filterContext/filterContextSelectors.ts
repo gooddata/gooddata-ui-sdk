@@ -30,7 +30,8 @@ import { selectSupportsCircularDependencyInFilters } from "../../backendCapabili
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../drill/drillSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../../types.js";
-import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs, selectTabsState } from "../index.js";
+import { selectActiveTabLocalIdentifier, selectTabs, selectTabsState } from "../tabsSelectors.js";
+import { DEFAULT_TAB_ID } from "../tabsState.js";
 import { type FilterContextState, filterContextInitialState } from "./filterContextState.js";
 
 const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {

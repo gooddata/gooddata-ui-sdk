@@ -173,6 +173,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     pointsTitle: { id: "properties.points.title" },
     pointsGroupNearbyPoints: { id: "properties.points.groupNearbyPoints" },
     pointsMapTitle: { id: "properties.map.title" },
+    basemapTitle: { id: "properties.map.basemap.title" },
     viewportAreaTitle: { id: "properties.viewport.area.title" },
     autoPlaceholder: { id: "properties.auto_placeholder" },
     dataLabels: { id: "properties.canvas.dataLabels" },

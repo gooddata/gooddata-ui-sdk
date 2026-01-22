@@ -1,9 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
-import { selectAlertingDialogReturnFocusTo, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectAlertingDialogReturnFocusTo } from "../../../model/store/ui/uiSelectors.js";
 
 export const useAlertingDialogAccessibility = () => {
     const alertingDialogReturnFocusTo = useDashboardSelector(selectAlertingDialogReturnFocusTo);

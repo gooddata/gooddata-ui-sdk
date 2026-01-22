@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -6,7 +6,7 @@ import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
-import { type IConnectingAttribute } from "../../../../../../model/index.js";
+import { type IConnectingAttribute } from "../../../../../../model/types/attributeFilterTypes.js";
 
 interface IConnectingAttributeDropdownProps {
     itemLocalId: string;

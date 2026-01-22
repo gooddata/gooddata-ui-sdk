@@ -675,7 +675,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/cancel": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Computation", "actions"],
                 "summary": "Applies all the given cancel tokens.",
                 "description": "Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.",
                 "operationId": "cancelExecutions",
@@ -4930,13 +4930,13 @@
                             "nullable": true
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"

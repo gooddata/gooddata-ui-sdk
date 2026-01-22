@@ -10,7 +10,7 @@ import {
     type WithLoadingResult,
     withExecutionLoading,
 } from "./withExecutionLoading.js";
-import { DataViewFacade } from "../base/index.js";
+import { DataViewFacade } from "../base/results/facade.js";
 
 /**
  * Configuration for the withExecution HOC. All configuration parameters can be either actual parameter values

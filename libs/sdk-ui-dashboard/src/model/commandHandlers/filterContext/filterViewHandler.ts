@@ -22,7 +22,7 @@ import {
     type ISetFilterViewAsDefault,
     changeFilterContextSelectionByParams,
     reloadFilterViews,
-} from "../../commands/index.js";
+} from "../../commands/filters.js";
 import {
     filterViewApplicationFailed,
     filterViewApplicationSucceeded,
@@ -35,13 +35,15 @@ import {
 } from "../../events/filters.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
-import { filterViewsActions, selectFilterViews } from "../../store/filterViews/index.js";
+import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import { filterViewsActions } from "../../store/filterViews/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextDefinition,
     selectWorkingFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { selectActiveTabLocalIdentifier, tabsActions } from "../../store/tabs/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
+import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";

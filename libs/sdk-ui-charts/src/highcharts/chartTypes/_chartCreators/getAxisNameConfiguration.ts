@@ -1,9 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type XAxisTitleOptions, type YAxisTitleOptions } from "highcharts";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type IAxisNameConfig } from "../../../interfaces/index.js";
+import { type IAxisNameConfig } from "../../../interfaces/chartConfig.js";
 import { ALIGN_LEFT, ALIGN_RIGHT, ROTATE_NEGATIVE_90_DEGREES } from "../../constants/axisLabel.js";
 import { type IAxis, type IChartOptions } from "../../typings/unsafe.js";
 import { isOneOfTypes } from "../_util/common.js";

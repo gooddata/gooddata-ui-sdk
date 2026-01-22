@@ -5,8 +5,9 @@ import { type IntlShape, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { type IHeaderMenuItem } from "./typings.js";
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
-import { Button } from "../Button/index.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { Button } from "../Button/Button.js";
 
 /**
  * @internal

@@ -10,12 +10,21 @@
  * @packageDocumentation
  */
 
+// DateFilter main component and types
 export {
+    DateFilter,
     type IDateFilterCallbackProps,
     type IDateFilterOwnProps,
     type IDateFilterProps,
     type IDateFilterState,
     type IDateFilterStatePropsIntersection,
+} from "./DateFilter/DateFilter.js";
+
+// DateFilter helpers (aggregated object)
+export { DateFilterHelpers } from "./DateFilter/index.js";
+
+// DateFilter interfaces
+export {
     type AbsoluteDateFilterOption,
     type DateFilterOption,
     type DateFilterRelativeOptionGroup,
@@ -25,26 +34,30 @@ export {
     type RelativeDateFilterOption,
     type IUiAbsoluteDateFilterForm,
     type IUiRelativeDateFilterForm,
-    type GranularityIntlKey,
-    type DateFilterLabelMode,
-    type IDateAndMessageTranslator,
-    type IDateTranslator,
-    type IMessageTranslator,
-    type IFilterConfigurationProps,
-    type IDateFilterAbsoluteDateTimeFormErrors,
     type DateRangePosition,
-    type CalendarTabType,
-    type IFiscalTabsConfig,
-    type IUiRelativeDateFilterFormLike,
-    DateFilter,
-    DateFilterHelpers,
-    defaultDateFilterOptions,
+    type IDateFilterAbsoluteDateTimeFormErrors,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
     isRelativeDateFilterWithBoundOption,
-    filterVisibleDateFilterOptions,
     isUiRelativeDateFilterForm,
-    getLocalizedIcuDateFormatPattern,
+} from "./DateFilter/interfaces/index.js";
+
+// DateFilter constants
+export { defaultDateFilterOptions } from "./DateFilter/constants/config.js";
+export { type GranularityIntlKey, type DateFilterLabelMode } from "./DateFilter/constants/i18n.js";
+
+// DateFilter utils
+export type {
+    IDateAndMessageTranslator,
+    IDateTranslator,
+    IMessageTranslator,
+} from "./DateFilter/utils/Translations/Translators.js";
+export { filterVisibleDateFilterOptions } from "./DateFilter/utils/OptionUtils.js";
+export { getLocalizedIcuDateFormatPattern } from "./DateFilter/utils/FormattingUtils.js";
+export {
+    type CalendarTabType,
+    type IFiscalTabsConfig,
+    type IUiRelativeDateFilterFormLike,
     getFiscalTabsConfig,
     getDefaultCalendarTab,
     getFilteredPresets,
@@ -58,7 +71,10 @@ export {
     getTabForPreset,
     isFiscalGranularity,
     ensureCompatibleGranularity,
-} from "./DateFilter/index.js";
+} from "./DateFilter/utils/presetFilterUtils.js";
+
+// DateFilter body types
+export type { IFilterConfigurationProps } from "./DateFilter/DateFilterBody/types.js";
 export {
     type IMeasureValueFilterProps,
     type IMeasureValueFilterState,
@@ -89,145 +105,225 @@ export type {
     ICustomGranularitySelection,
 } from "./RankingFilter/types.js";
 
+export type {
+    Correlation,
+    CallbackRegistration,
+    Callback,
+    CallbackPayloadWithCorrelation,
+    Unsubscribe,
+    AsyncOperationStatus,
+    AttributeElementKey,
+} from "./AttributeFilterHandler/types/common.js";
+export type {
+    ISingleSelectionHandler,
+    IStagedSingleSelectionHandler,
+    InvertableSelection,
+    IInvertableSelectionHandler,
+    IStagedInvertableSelectionHandler,
+    OnSelectionChangedCallbackPayload,
+    OnSelectionCommittedCallbackPayload,
+} from "./AttributeFilterHandler/types/selectionHandler.js";
+export type {
+    IAttributeLoader,
+    OnLoadAttributeStartCallbackPayload,
+    OnLoadAttributeSuccessCallbackPayload,
+    OnLoadAttributeErrorCallbackPayload,
+    OnLoadAttributeCancelCallbackPayload,
+} from "./AttributeFilterHandler/types/attributeLoader.js";
+export type {
+    ILoadElementsResult,
+    ILoadIrrelevantElementsResult,
+    ILoadElementsOptions,
+    IAttributeElementLoader,
+    OnLoadInitialElementsPageStartCallbackPayload,
+    OnLoadInitialElementsPageSuccessCallbackPayload,
+    OnLoadInitialElementsPageErrorCallbackPayload,
+    OnLoadInitialElementsPageCancelCallbackPayload,
+    OnLoadNextElementsPageStartCallbackPayload,
+    OnLoadNextElementsPageSuccessCallbackPayload,
+    OnLoadNextElementsPageErrorCallbackPayload,
+    OnLoadNextElementsPageCancelCallbackPayload,
+    OnLoadCustomElementsStartCallbackPayload,
+    OnLoadCustomElementsSuccessCallbackPayload,
+    OnLoadCustomElementsErrorCallbackPayload,
+    OnLoadCustomElementsCancelCallbackPayload,
+    OnLoadIrrelevantElementsStartCallbackPayload,
+    OnLoadIrrelevantElementsSuccessCallbackPayload,
+    OnLoadIrrelevantElementsErrorCallbackPayload,
+    OnLoadIrrelevantElementsCancelCallbackPayload,
+    OnInitTotalCountStartCallbackPayload,
+    OnInitTotalCountSuccessCallbackPayload,
+    OnInitTotalCountErrorCallbackPayload,
+    OnInitTotalCountCancelCallbackPayload,
+} from "./AttributeFilterHandler/types/elementsLoader.js";
+export type {
+    IAttributeFilterLoader,
+    OnInitStartCallbackPayload,
+    OnInitSuccessCallbackPayload,
+    OnInitErrorCallbackPayload,
+    OnInitCancelCallbackPayload,
+} from "./AttributeFilterHandler/types/attributeFilterLoader.js";
+export type {
+    InvertableAttributeElementSelection,
+    IMultiSelectAttributeFilterHandler,
+    ISingleSelectAttributeFilterHandler,
+    IAttributeFilterHandler,
+} from "./AttributeFilterHandler/types/attributeFilterHandler.js";
 export {
-    type Correlation,
-    type CallbackRegistration,
-    type Callback,
-    type CallbackPayloadWithCorrelation,
-    type Unsubscribe,
-    type AsyncOperationStatus,
-    type IAttributeLoader,
-    type IAttributeElementLoader,
-    type IAttributeFilterLoader,
-    type ILoadElementsResult,
-    type ILoadElementsOptions,
-    type ILoadIrrelevantElementsResult,
-    type OnInitCancelCallbackPayload,
-    type OnInitErrorCallbackPayload,
-    type OnInitStartCallbackPayload,
-    type OnInitSuccessCallbackPayload,
-    type OnLoadAttributeCancelCallbackPayload,
-    type OnLoadAttributeErrorCallbackPayload,
-    type OnLoadAttributeStartCallbackPayload,
-    type OnLoadAttributeSuccessCallbackPayload,
-    type OnLoadCustomElementsCancelCallbackPayload,
-    type OnLoadCustomElementsErrorCallbackPayload,
-    type OnLoadCustomElementsStartCallbackPayload,
-    type OnLoadCustomElementsSuccessCallbackPayload,
-    type OnLoadInitialElementsPageCancelCallbackPayload,
-    type OnLoadInitialElementsPageErrorCallbackPayload,
-    type OnLoadInitialElementsPageStartCallbackPayload,
-    type OnLoadInitialElementsPageSuccessCallbackPayload,
-    type OnLoadNextElementsPageCancelCallbackPayload,
-    type OnLoadNextElementsPageErrorCallbackPayload,
-    type OnLoadNextElementsPageStartCallbackPayload,
-    type OnLoadNextElementsPageSuccessCallbackPayload,
-    type OnInitTotalCountStartCallbackPayload,
-    type OnInitTotalCountSuccessCallbackPayload,
-    type OnInitTotalCountErrorCallbackPayload,
-    type OnInitTotalCountCancelCallbackPayload,
-    type OnSelectionChangedCallbackPayload,
-    type OnSelectionCommittedCallbackPayload,
-    type OnLoadIrrelevantElementsStartCallbackPayload,
-    type OnLoadIrrelevantElementsSuccessCallbackPayload,
-    type OnLoadIrrelevantElementsCancelCallbackPayload,
-    type OnLoadIrrelevantElementsErrorCallbackPayload,
     type IAttributeFilterHandlerOptions,
     type IAttributeFilterHandlerOptionsBase,
-    type AttributeElementKey,
-    type ISingleSelectionHandler,
-    type IStagedSingleSelectionHandler,
     type ISingleSelectAttributeFilterHandlerOptions,
-    type InvertableSelection,
-    type IInvertableSelectionHandler,
-    type IStagedInvertableSelectionHandler,
     type IMultiSelectAttributeFilterHandlerOptions,
-    type InvertableAttributeElementSelection,
-    type IAttributeFilterHandler,
-    type ISingleSelectAttributeFilterHandler,
-    type IMultiSelectAttributeFilterHandler,
     newAttributeFilterHandler,
-} from "./AttributeFilterHandler/index.js";
+} from "./AttributeFilterHandler/factory.js";
 
+// AttributeFilter types
+export type {
+    ParentFilterOverAttributeType,
+    OnApplyCallbackType,
+    OnSelectCallbackType,
+    IAttributeFilterBaseProps,
+    IAttributeFilterCoreProps,
+    IAttributeFilterCustomComponentProps,
+} from "./AttributeFilter/types.js";
+
+// AttributeFilter main components
+export { type IAttributeFilterProps, AttributeFilter } from "./AttributeFilter/AttributeFilter.js";
 export {
-    type IAttributeFilterProps,
     type IAttributeFilterButtonProps,
-    type IAttributeFilterBaseProps,
-    type IAttributeFilterErrorProps,
-    type IAttributeFilterLoadingProps,
-    type IAttributeFilterDropdownButtonProps,
-    type IAttributeFilterDropdownBodyProps,
-    type IAttributeFilterDropdownActionsProps,
-    type IAttributeFilterElementsSearchBarProps,
-    type IAttributeFilterElementsActionsProps,
-    type IAttributeFilterElementsSelectProps,
-    type IAttributeFilterElementsSelectItemProps,
-    type IAttributeFilterElementsSelectErrorProps,
-    type IAttributeFilterElementsSelectLoadingProps,
-    type IAttributeFilterEmptyResultProps,
-    type IAttributeFilterStatusBarProps,
-    type OnApplyCallbackType,
-    type OnSelectCallbackType,
-    type ParentFilterOverAttributeType,
-    type IAttributeFilterCoreProps,
-    type IAttributeFilterCustomComponentProps,
-    type IUseAttributeFilterControllerProps,
-    type IUseAttributeFilterHandlerProps,
-    type IAttributeFilterContext,
-    type IAttributeDatasetInfoProps,
-    type IAttributeDisplayFormSelectProps,
-    type IAttributeFilterAllValuesFilteredResultProps,
-    type IAttributeFilterConfigurationButtonProps,
-    type IAttributeFilterDeleteButtonProps,
-    type IAttributeFilterFilteredStatusProps,
-    type IAttributeFilterSelectionStatusProps,
-    type IUseAttributeFilterSearchProps,
-    type AttributeFilterController,
-    type AttributeFilterControllerData,
-    type AttributeFilterControllerCallbacks,
-    type IAttributeFilterDependencyTooltipProps,
-    AttributeFilter,
     AttributeFilterButton,
+} from "./AttributeFilter/AttributeFilterButton.js";
+
+// AttributeFilter hooks
+export {
+    type IUseAttributeFilterControllerProps,
     useAttributeFilterController,
+} from "./AttributeFilter/hooks/useAttributeFilterController.js";
+export type {
+    AttributeFilterController,
+    AttributeFilterControllerData,
+    AttributeFilterControllerCallbacks,
+} from "./AttributeFilter/hooks/types.js";
+export {
+    type IUseAttributeFilterHandlerProps,
     useAttributeFilterHandler,
+} from "./AttributeFilter/hooks/useAttributeFilterHandler.js";
+export {
+    type IAttributeFilterContext,
     useAttributeFilterContext,
-    AttributeDisplayFormSelect,
-    AttributeFilterAllValuesFilteredResult,
-    AttributeFilterConfigurationButton,
-    AttributeFilterDeleteButton,
-    AttributeFilterDropdownActions,
-    AttributeFilterDropdownBody,
+} from "./AttributeFilter/Context/AttributeFilterContext.js";
+export {
+    type IUseAttributeFilterSearchProps,
+    useAttributeFilterSearch,
+} from "./AttributeFilter/hooks/useAttributeFilterSearch.js";
+export { getAttributeFilterSubtitle } from "./AttributeFilter/utils.js";
+
+// AttributeFilter Components - DropdownButton
+export {
+    type IAttributeFilterDropdownButtonProps,
     AttributeFilterDropdownButton,
-    AttributeFilterElementsActions,
-    AttributeFilterElementsSearchBar,
-    AttributeFilterElementsSelect,
-    AttributeFilterElementsSelectError,
-    AttributeFilterElementsSelectItem,
-    SingleSelectionAttributeFilterElementsSelectItem,
-    AttributeFilterElementsSelectLoading,
-    AttributeFilterEmptyAttributeResult,
-    AttributeFilterEmptyResult,
-    AttributeFilterEmptySearchResult,
-    AttributeFilterError,
-    AttributeFilterFilteredStatus,
-    AttributeFilterLoading,
-    AttributeFilterSelectionStatus,
+} from "./AttributeFilter/Components/DropdownButton/AttributeFilterDropdownButton.js";
+export { AttributeFilterButtonTooltip } from "./AttributeFilter/Components/DropdownButton/AttributeFilterButtonTooltip.js";
+export {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
-    AttributeFilterStatusBar,
-    SingleSelectionAttributeFilterStatusBar,
+} from "./AttributeFilter/Components/DropdownButton/AttributeFilterSimpleDropdownButton.js";
+
+// AttributeFilter Components - Dropdown
+export { AttributeFilterDropdownBody } from "./AttributeFilter/Components/Dropdown/AttributeFilterDropdownBody.js";
+export type { IAttributeFilterDropdownBodyProps } from "./AttributeFilter/Components/Dropdown/types.js";
+export {
+    type IAttributeFilterDropdownActionsProps,
+    AttributeFilterDropdownActions,
+} from "./AttributeFilter/Components/Dropdown/AttributeFilterDropdownActions.js";
+
+// AttributeFilter Components - ElementsSelect
+export type {
+    IAttributeFilterElementsSelectProps,
+    IAttributeFilterElementsSelectItemProps,
+} from "./AttributeFilter/Components/ElementsSelect/types.js";
+export {
+    type IAttributeFilterElementsSearchBarProps,
+    AttributeFilterElementsSearchBar,
+} from "./AttributeFilter/Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
+export { AttributeFilterElementsSelect } from "./AttributeFilter/Components/ElementsSelect/AttributeFilterElementsSelect.js";
+export {
+    type IAttributeFilterElementsSelectErrorProps,
+    AttributeFilterElementsSelectError,
+} from "./AttributeFilter/Components/ElementsSelect/AttributeFilterElementsSelectError.js";
+export { AttributeFilterElementsSelectItem } from "./AttributeFilter/Components/ElementsSelect/AttributeFilterElementsSelectItem.js";
+export { SingleSelectionAttributeFilterElementsSelectItem } from "./AttributeFilter/Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem.js";
+export {
+    type IAttributeFilterElementsSelectLoadingProps,
+    AttributeFilterElementsSelectLoading,
+} from "./AttributeFilter/Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
+export {
+    type IAttributeFilterElementsActionsProps,
+    AttributeFilterElementsActions,
+} from "./AttributeFilter/Components/ElementsSelect/AttributeFilterElementsActions.js";
+
+// AttributeFilter Components - ElementsSelect EmptyResult
+export { AttributeFilterEmptyAttributeResult } from "./AttributeFilter/Components/ElementsSelect/EmptyResult/AttributeFilterEmptyAttributeResult.js";
+export {
+    type IAttributeFilterAllValuesFilteredResultProps,
+    AttributeFilterAllValuesFilteredResult,
+} from "./AttributeFilter/Components/ElementsSelect/EmptyResult/AttributeFilterEmptyFilteredResult.js";
+export {
+    type IAttributeFilterEmptyResultProps,
+    AttributeFilterEmptyResult,
+} from "./AttributeFilter/Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
+export { AttributeFilterEmptySearchResult } from "./AttributeFilter/Components/ElementsSelect/EmptyResult/AttributeFilterEmptySearchResult.js";
+
+// AttributeFilter Components - ElementsSelect StatusBar
+export {
+    type IAttributeFilterFilteredStatusProps,
+    AttributeFilterFilteredStatus,
+} from "./AttributeFilter/Components/ElementsSelect/StatusBar/AttributeFilterFilteredStatus.js";
+export {
+    type IAttributeFilterSelectionStatusProps,
+    AttributeFilterSelectionStatus,
+} from "./AttributeFilter/Components/ElementsSelect/StatusBar/AttributeFilterSelectionStatus.js";
+export type { IAttributeFilterStatusBarProps } from "./AttributeFilter/Components/ElementsSelect/StatusBar/types.js";
+export { AttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
+export { SingleSelectionAttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
+
+// AttributeFilter Components - Error and Loading
+export {
+    type IAttributeFilterErrorProps,
+    AttributeFilterError,
+} from "./AttributeFilter/Components/AttributeFilterError.js";
+export {
+    type IAttributeFilterLoadingProps,
+    AttributeFilterLoading,
+} from "./AttributeFilter/Components/AttributeFilterLoading.js";
+
+// AttributeFilter Components - Addons
+export {
+    type IAttributeDisplayFormSelectProps,
+    AttributeDisplayFormSelect,
+} from "./AttributeFilter/Components/Addons/AttributeDisplayFormSelect/AttributeDisplayFormSelect.js";
+export { EmptyElementsSearchBar } from "./AttributeFilter/Components/Addons/EmptyElementsSearchBar.js";
+export {
+    type IAttributeFilterConfigurationButtonProps,
+    AttributeFilterConfigurationButton,
+} from "./AttributeFilter/Components/Addons/AttributeFilterConfigurationButton.js";
+export {
+    type IAttributeDatasetInfoProps,
     AttributeDatasetInfo,
-    AttributeFilterButtonTooltip,
-    EmptyElementsSearchBar,
-    useAutoOpenAttributeFilterDropdownButton,
-    useOnCloseAttributeFilterDropdownButton,
-    useAttributeFilterSearch,
+} from "./AttributeFilter/Components/Addons/AttributeDatasetInfo.js";
+export {
+    type IAttributeFilterDeleteButtonProps,
+    AttributeFilterDeleteButton,
+} from "./AttributeFilter/Components/Addons/AttributeFilterDeleteButton.js";
+export { useAutoOpenAttributeFilterDropdownButton } from "./AttributeFilter/Components/Addons/hooks/useAutoOpenAttributeFilterDropdownButton.js";
+export { useOnCloseAttributeFilterDropdownButton } from "./AttributeFilter/Components/Addons/hooks/useOnCloseAttributeFilterDropdownButton.js";
+export {
+    type IAttributeFilterDependencyTooltipProps,
     AttributeFilterDependencyTooltip,
-    getAttributeFilterSubtitle,
-} from "./AttributeFilter/index.js";
+} from "./AttributeFilter/Components/Addons/AttributeFilterDependencyTooltip.js";
 
-export { FilterGroup, type IFilterGroupProps } from "./FilterGroup/index.js";
+export { FilterGroup, type IFilterGroupProps } from "./FilterGroup/FilterGroup.js";
 
-export type { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";
+export type { IFilterButtonCustomIcon, VisibilityMode } from "./shared/interfaces/index.js";
 
 export type { IDateFilterButtonProps } from "./DateFilter/DateFilterButton/DateFilterButton.js";

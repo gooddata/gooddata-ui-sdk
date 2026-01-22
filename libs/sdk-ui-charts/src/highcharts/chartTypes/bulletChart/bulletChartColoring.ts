@@ -13,6 +13,7 @@ import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import {
     ColorStrategy,
+    type IColorMapping,
     type ICreateColorAssignmentReturnValue,
     getColorByGuid,
     getColorFromMapping,
@@ -29,7 +30,6 @@ import {
     isPrimarySeries,
     isTargetSeries,
 } from "./bulletChartSeries.js";
-import { type IColorMapping } from "../../../interfaces/index.js";
 import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 

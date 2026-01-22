@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { type IChartConfig } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
 
 function isItemsArray(obj: any): obj is IAttributeOrMeasure[] {
     return !isEmpty(obj) && (isMeasure(obj[0]) || isAttribute(obj));

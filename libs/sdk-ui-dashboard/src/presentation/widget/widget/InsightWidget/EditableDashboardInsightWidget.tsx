@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -11,19 +11,15 @@ import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
-import {
-    selectIsDashboardSaving,
-    useDashboardSelector,
-    useWidgetSelection,
-} from "../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
-import {
-    DashboardItem,
-    DashboardItemVisualization,
-    getVisTypeCssClass,
-} from "../../../presentationComponents/index.js";
-import { DashboardInsight } from "../../insight/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useWidgetSelection } from "../../../../model/react/useWidgetSelection.js";
+import { selectIsDashboardSaving } from "../../../../model/store/saving/savingSelectors.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
+import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemVisualization } from "../../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
+import { getVisTypeCssClass } from "../../../presentationComponents/DashboardItems/utils.js";
+import { DashboardInsight } from "../../insight/DashboardInsight.js";
 
 export function EditableDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={EditableDashboardInsightWidgetCore} />;

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
@@ -35,6 +35,10 @@ const options = {
         depCruiser.moduleWithDependencies("internal", "src/internal", ["src/kdaDialog/internal.ts"]),
         depCruiser.moduleWithDependencies("insightView", "src/insightView", [
             "src/dataLoaders",
+            "src/dataLoaders/ColorPaletteDataLoader.ts",
+            "src/dataLoaders/InsightDataLoader.ts",
+            "src/dataLoaders/UserWorkspaceSettingsDataLoader.ts",
+            "src/dataLoaders/WorkspacePermissionsDataLoader.ts",
             "src/internal",
             "src/internal/createRootProvider.ts",
             "src/internal/utils/embeddingCodeGenerator",

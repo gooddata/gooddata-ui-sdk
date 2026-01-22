@@ -7,16 +7,16 @@ import { invariant } from "ts-invariant";
 import { type IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 
 import {
-    type IMeasureDateDatasets,
     type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
-    selectInsightByRef,
-    selectIsWidgetLoadingAdditionalDataByWidgetRef,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/queries/insights.js";
+import { type IMeasureDateDatasets } from "../../../../model/queries/kpis.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../../../model/react/useDashboardQueryProcessing.js";
+import { selectInsightByRef } from "../../../../model/store/insights/insightsSelectors.js";
+import { selectIsWidgetLoadingAdditionalDataByWidgetRef } from "../../../../model/store/ui/uiSelectors.js";
+import { DateDatasetFilter } from "../../common/configuration/DateDatasetFilter.js";
 import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter.js";
-import { DateDatasetFilter } from "../../common/index.js";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;

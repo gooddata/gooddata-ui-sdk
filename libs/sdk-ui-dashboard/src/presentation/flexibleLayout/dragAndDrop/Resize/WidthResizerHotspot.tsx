@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type Ref, useEffect, useMemo, useState } from "react";
 
@@ -12,24 +12,21 @@ import {
 
 import { WidthResizer } from "./WidthResizer.js";
 import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../../../_staging/dashboard/flexibleLayout/config.js";
-import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getMinWidth } from "../../../../_staging/layout/sizing.js";
+import { resizeNestedLayoutItemWidth } from "../../../../model/commands/layout.js";
 import {
-    resizeNestedLayoutItemWidth,
-    selectInsightsMap,
-    selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import {
-    HoveredWidgetContext,
-    useDashboardDrag,
-    useResizeHandlers,
-    useResizeWidthItemStatus,
-} from "../../../dragAndDrop/index.js";
-import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/index.js";
+import { HoveredWidgetContext } from "../../../dragAndDrop/HoveredWidgetContext.js";
+import { useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDrop/LayoutResizeContext.js";
+import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
+import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview.js";
 
 export type WidthResizerHotspotProps = {

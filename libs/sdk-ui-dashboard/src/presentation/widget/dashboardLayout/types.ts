@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -10,7 +10,10 @@ import {
 } from "@gooddata/sdk-model";
 import { type IErrorProps, type OnError } from "@gooddata/sdk-ui";
 
-import { type ExtendedDashboardLayoutWidget, type ExtendedDashboardWidget } from "../../../model/index.js";
+import {
+    type ExtendedDashboardLayoutWidget,
+    type ExtendedDashboardWidget,
+} from "../../../model/types/layoutTypes.js";
 import {
     type IDashboardFilter,
     type ILayoutItemPath,

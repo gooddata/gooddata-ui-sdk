@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import { DefaultColorPalette, type VisType } from "@gooddata/sdk-ui";
 
-import { type IAnomalies, type IChartConfig } from "../../../interfaces/index.js";
+import { type IAnomalies, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
 
 export function assignOutliersAxes(

@@ -4,15 +4,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { type EmptyObject } from "@gooddata/util";
 
-import {
-    DefaultUiTabsAllTabs,
-    DefaultUiTabsAllTabsButton,
-    DefaultUiTabsContainer,
-    DefaultUiTabsTab,
-    DefaultUiTabsTabActions,
-    DefaultUiTabsTabActionsButton,
-    DefaultUiTabsTabValue,
-} from "./defaultComponents/index.js";
+import { DefaultUiTabsAllTabs } from "./defaultComponents/DefaultUiTabsAllTabs.js";
+import { DefaultUiTabsAllTabsButton } from "./defaultComponents/DefaultUiTabsAllTabsButton.js";
+import { DefaultUiTabsContainer } from "./defaultComponents/DefaultUiTabsContainer.js";
+import { DefaultUiTabsTab } from "./defaultComponents/DefaultUiTabsTab.js";
+import { DefaultUiTabsTabActions } from "./defaultComponents/DefaultUiTabsTabActions.js";
+import { DefaultUiTabsTabActionsButton } from "./defaultComponents/DefaultUiTabsTabActionsButton.js";
+import { DefaultUiTabsTabValue } from "./defaultComponents/DefaultUiTabsTabValue.js";
 import { type IUiTabActionEventContext, type IUiTabContext, type IUiTabsProps } from "./types.js";
 
 let actionIdCounter = 0;

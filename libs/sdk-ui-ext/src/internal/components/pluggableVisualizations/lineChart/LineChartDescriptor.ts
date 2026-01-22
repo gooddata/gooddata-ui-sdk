@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IInsight } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent } from "@gooddata/sdk-ui";
@@ -11,16 +11,16 @@ import {
     type IVisualizationMeta,
     type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator/getReactEmbeddingCodeGenerator.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
-    getInsightToPropsConverter,
-    getReactEmbeddingCodeGenerator,
     localeInsightConversion,
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     chartAdditionalFactories,

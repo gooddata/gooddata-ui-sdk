@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -27,13 +27,11 @@ import {
     type WidgetExportData,
     type WidgetExportDataAttributes,
 } from "./types.js";
-import {
-    type ExtendedDashboardWidget,
-    selectCatalogAttributes,
-    selectInsightByWidgetRef,
-    selectIsInExportMode,
-    useDashboardSelector,
-} from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectCatalogAttributes } from "../../model/store/catalog/catalogSelectors.js";
+import { selectInsightByWidgetRef } from "../../model/store/insights/insightsSelectors.js";
+import { selectIsInExportMode } from "../../model/store/renderMode/renderModeSelectors.js";
+import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { type RenderMode } from "../../types.js";
 
 const getAttributeDisplayName = (attribute: IAttribute, catalogAttributes: ICatalogAttribute[]) => {

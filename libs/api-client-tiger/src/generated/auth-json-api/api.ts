@@ -1,3 +1,5 @@
+// (C) 2026 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -92,6 +94,10 @@ export interface Invitation {
     userId: string;
     firstName?: string;
     lastName?: string;
+    /**
+     * Force resend invitation email even if a pending invitation exists. Maximum 3 emails can be sent per invitation (1 initial + 2 resends)
+     */
+    forceSend?: boolean;
 }
 
 export interface LiveFeatureFlagConfiguration {

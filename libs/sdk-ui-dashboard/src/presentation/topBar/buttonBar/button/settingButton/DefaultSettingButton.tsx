@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -9,12 +9,12 @@ import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk
 import { type ISettingButtonProps } from "./types.js";
 import { messages } from "../../../../../locales.js";
 import {
-    selectIsDashboardSaving,
-    selectIsInEditMode,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
+import { uiActions } from "../../../../../model/store/ui/index.js";
 
 /**
  * @internal

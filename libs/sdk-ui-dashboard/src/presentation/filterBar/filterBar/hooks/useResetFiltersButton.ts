@@ -19,28 +19,36 @@ import {
 
 import {
     changeFilterContextSelection,
-    drillActions,
-    filterContextSelectionReset,
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
-    selectActiveTabLocalIdentifier,
-    selectDisableDashboardCrossFiltering,
-    selectDisableDashboardUserFilterReset,
+} from "../../../../model/commands/filters.js";
+import { filterContextSelectionReset } from "../../../../model/events/filters.js";
+import {
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardEventDispatch } from "../../../../model/react/useDashboardEventDispatch.js";
+import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
+import { selectSupportsCrossFiltering } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import {
     selectEnableDateFilterIdentifiers,
     selectEnableKDCrossFiltering,
-    selectFilterContextFilters,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsDisableUserFilterReset,
     selectIsDisabledCrossFiltering,
-    selectIsInEditMode,
+} from "../../../../model/store/config/configSelectors.js";
+import { drillActions } from "../../../../model/store/drill/index.js";
+import {
+    selectDisableDashboardCrossFiltering,
+    selectDisableDashboardUserFilterReset,
+} from "../../../../model/store/meta/metaSelectors.js";
+import { selectIsInEditMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
+import {
+    selectFilterContextFilters,
     selectIsWorkingFilterContextChanged,
     selectOriginalFilterContextFilters,
-    selectSupportsCrossFiltering,
-    useDashboardDispatch,
-    useDashboardEventDispatch,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../model/index.js";
+} from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectActiveTabLocalIdentifier } from "../../../../model/store/tabs/tabsSelectors.js";
 
 const normalizeFiltersForComparison = (filters: FilterContextItem[]): FilterContextItem[] => {
     // Remove any "all time" common date filters to normalize the comparison

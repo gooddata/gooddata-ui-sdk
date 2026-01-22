@@ -1,10 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type Correlation, type ILoadIrrelevantElementsResult } from "../../../types/index.js";
+import { type Correlation } from "../../../types/common.js";
+import { type ILoadIrrelevantElementsResult } from "../../../types/elementsLoader.js";
 import { type AttributeFilterReducer } from "../store/state.js";
 
 const loadIrrelevantElementsRequest: AttributeFilterReducer<

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -26,7 +26,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { CoreXirr } from "./CoreXirr.js";
-import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 
 //
 // Public interface

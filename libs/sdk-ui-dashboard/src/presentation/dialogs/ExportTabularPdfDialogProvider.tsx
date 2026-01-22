@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { ExportTabularPdfDialog } from "@gooddata/sdk-ui-kit";
 
-import { useExportTabularPdfDialogContext } from "../dashboardContexts/index.js";
+import { useExportTabularPdfDialogContext } from "../dashboardContexts/ExportTabularPdfDialogContext.js";
 
 /**
  * @internal

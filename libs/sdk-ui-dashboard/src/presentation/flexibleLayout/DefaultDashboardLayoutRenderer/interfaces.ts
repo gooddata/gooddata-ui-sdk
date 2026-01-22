@@ -19,9 +19,9 @@ import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
-import { type IDashboardFocusObject } from "../../../model/index.js";
+import { type IDashboardFocusObject } from "../../../model/types/commonTypes.js";
 import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
-import { type CommonExportDataAttributes, type HeaderExportData } from "../../export/index.js";
+import { type CommonExportDataAttributes, type HeaderExportData } from "../../export/types.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.

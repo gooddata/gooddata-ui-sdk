@@ -11,7 +11,7 @@ import { QualityScoreCardDate } from "./QualityScoreCardDate.js";
 import { QualityScoreCardMenu } from "./QualityScoreCardMenu.js";
 import { QualityScoreCardScore } from "./QualityScoreCardScore.js";
 import { getQualityIssueCodes } from "./utils.js";
-import { useFilterActions } from "../filter/index.js";
+import { useFilterActions } from "../filter/FilterContext.js";
 
 export function QualityScoreCard() {
     const intl = useIntl();

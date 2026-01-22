@@ -28,7 +28,7 @@ import {
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
-import { type IMoveSectionItem } from "../../commands/index.js";
+import { type IMoveSectionItem } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";

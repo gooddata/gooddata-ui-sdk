@@ -19,8 +19,8 @@ import {
     isSelectErrorOption,
 } from "./types.js";
 import { getGranteeItemTestId } from "./utils.js";
-import { LoadingMask } from "../../../LoadingMask/index.js";
-import { Typography } from "../../../Typography/index.js";
+import { LoadingMask } from "../../../LoadingMask/LoadingMask.js";
+import { Typography } from "../../../Typography/Typography.js";
 
 export function EmptyRenderer(): ReactElement | null {
     return null;

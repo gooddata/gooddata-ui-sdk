@@ -17,10 +17,8 @@ import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IVisProps, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import {
-    type IInsightToPropConversion,
-    sdkModelPropMetas,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+import { sdkModelPropMetas } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import { type IInsightToPropConversion } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 export interface IBuildGeoConfigParams {
     options: IVisProps;
     supportedControls: IVisualizationProperties;
@@ -100,6 +98,7 @@ const supportedGeoConfigProperties = new Set<keyof IGeoPushpinChartNextConfig>([
     "legend",
     "limit",
     "mapStyle",
+    "tileset",
     "selectedSegmentItems",
     "separators",
     "viewport",

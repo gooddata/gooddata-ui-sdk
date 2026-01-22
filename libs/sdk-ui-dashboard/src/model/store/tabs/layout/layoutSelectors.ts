@@ -26,14 +26,14 @@ import {
 
 import { type ILayoutState, type LayoutStash, layoutInitialState } from "./layoutState.js";
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/filterConverters.js";
 import { type IDashboardFilter, type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
 import {
     isInsightPlaceholderWidget,
     isKpiPlaceholderWidget,
     isPlaceholderWidget,
-} from "../../../../widgets/index.js";
-import { type DashboardLayoutCommands } from "../../../commands/index.js";
+} from "../../../../widgets/placeholders/types.js";
+import { type DashboardLayoutCommands } from "../../../commands/layout.js";
 import {
     type ExtendedDashboardWidget,
     type ICustomWidget,
@@ -50,8 +50,8 @@ import {
 import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/layoutUtils.js";
 import { type DashboardSelector } from "../../types.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
-import { DEFAULT_TAB_ID } from "../index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
+import { DEFAULT_TAB_ID } from "../tabsState.js";
 
 const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
     if (!tabs || !activeTabId) {

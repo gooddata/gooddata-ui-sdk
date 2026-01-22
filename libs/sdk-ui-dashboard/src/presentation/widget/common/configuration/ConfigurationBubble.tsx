@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -13,7 +13,7 @@ import {
     type OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
-import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";
+import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/classes.js";
 
 interface IConfigurationBubbleProps {
     id?: string;

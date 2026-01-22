@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type HTMLProps } from "react";
 
@@ -7,7 +7,7 @@ import { MediaQuery } from "react-responsive";
 
 import { CustomizableCheckmark } from "@gooddata/sdk-ui-kit";
 
-import { MediaQueries } from "../../constants/index.js";
+import { MediaQueries } from "../../constants/MediaQueries.js";
 import { DATE_FILTER_SELECTED_LIST_ITEM_ID } from "../accessibility/elementId.js";
 
 export function ListItem({

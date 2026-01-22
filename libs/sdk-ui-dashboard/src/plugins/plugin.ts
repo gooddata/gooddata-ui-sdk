@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type IDashboardCustomizer, type IDashboardEventHandling } from "./customizer.js";
-import { type DashboardContext } from "../model/index.js";
+import type { DashboardContext } from "../model/types/commonTypes.js";
 
 /**
  * Basic set of information about a Dashboard plugin.

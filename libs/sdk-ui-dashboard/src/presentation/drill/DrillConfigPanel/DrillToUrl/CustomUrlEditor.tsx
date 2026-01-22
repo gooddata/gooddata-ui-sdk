@@ -31,17 +31,15 @@ import {
 
 import { ParametersPanel } from "./CustomUrlEditorParameters.js";
 import { type IAttributeWithDisplayForm } from "./types.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/index.js";
-import {
-    selectAllCatalogDisplayFormsMap,
-    selectAttributeFilterConfigsOverrides,
-    selectFilterContextAttributeFilters,
-    selectFilterableWidgetByRef,
-    selectIsWhiteLabeled,
-    useDashboardSelector,
-    useWidgetFilters,
-} from "../../../../model/index.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/filterConverters.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useWidgetFilters } from "../../../../model/react/useWidgetFilters.js";
+import { selectAllCatalogDisplayFormsMap } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectIsWhiteLabeled } from "../../../../model/store/config/configSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterableWidgetByRef } from "../../../../model/store/tabs/layout/layoutSelectors.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
 import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
 

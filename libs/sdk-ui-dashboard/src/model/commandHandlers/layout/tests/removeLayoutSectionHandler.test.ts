@@ -10,12 +10,9 @@ import {
     type IRemoveLayoutSection,
     removeLayoutSection,
     undoLayoutChanges,
-} from "../../../commands/index.js";
-import {
-    type IDashboardCommandFailed,
-    type IDashboardLayoutChanged,
-    type IDashboardLayoutSectionRemoved,
-} from "../../../events/index.js";
+} from "../../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
+import { type IDashboardLayoutChanged, type IDashboardLayoutSectionRemoved } from "../../../events/layout.js";
 import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {

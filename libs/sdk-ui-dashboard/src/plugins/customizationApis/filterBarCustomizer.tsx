@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
@@ -6,12 +6,12 @@ import { InvariantError } from "ts-invariant";
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
 import {
-    type CustomFilterBarComponent,
     type FilterBarComponentProvider,
-    HiddenFilterBar,
     type OptionalFilterBarComponentProvider,
-    RenderModeAwareFilterBar,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
+import { HiddenFilterBar } from "../../presentation/filterBar/filterBar/HiddenFilterBar.js";
+import { RenderModeAwareFilterBar } from "../../presentation/filterBar/filterBar/RenderModeAwareFilterBar.js";
+import { type CustomFilterBarComponent } from "../../presentation/filterBar/filterBar/types.js";
 import { type FilterBarRenderingMode, type IFilterBarCustomizer } from "../customizer.js";
 
 const DefaultFilterBarRendererProvider: FilterBarComponentProvider = () => {

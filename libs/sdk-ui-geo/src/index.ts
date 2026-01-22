@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 /**
  * This package provides the components that you can use to visualize location-based data.
@@ -44,9 +44,9 @@ export type {
     IGeoChartInnerProps,
     ICoreGeoChartProps,
     IGeoChartInnerOptions,
-    IGeoChartLegendRendererProps,
-    IGeoChartRendererProps,
 } from "./core/geoChart/GeoChartInner.js";
+export type { IGeoChartRendererProps } from "./core/geoChart/GeoChartRenderer.js";
+export type { IGeoChartLegendRendererProps } from "./core/geoChart/GeoChartLegendRenderer.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons
 export { getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";

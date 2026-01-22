@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { omit } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -9,7 +9,7 @@ import { type ObjRef } from "@gooddata/sdk-model";
 
 import { selectStaticElements } from "./elementsSelectors.js";
 import { loadElements } from "./loadElements.js";
-import { type ILoadElementsOptions, type ILoadElementsResult } from "../../../types/index.js";
+import { type ILoadElementsOptions, type ILoadElementsResult } from "../../../types/elementsLoader.js";
 import { type PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
 import {
     selectAttributeFilterDisplayAsLabel,

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
@@ -25,12 +25,9 @@ import {
 import { useAttributeFilterDisplayFormFromMap } from "./useAttributeFilterDisplayFormFromMap.js";
 import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
 import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
-import {
-    selectAllCatalogAttributesMap,
-    selectLocale,
-    selectSettings,
-    useDashboardSelector,
-} from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogAttributesMap } from "../../model/store/catalog/catalogSelectors.js";
+import { selectLocale, selectSettings } from "../../model/store/config/configSelectors.js";
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../dateFilterConfig/dateFilterOptionMapping.js";
 import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";

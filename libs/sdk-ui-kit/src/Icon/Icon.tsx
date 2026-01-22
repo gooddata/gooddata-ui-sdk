@@ -18,7 +18,7 @@ import { BurgerMenu } from "./icons/BurgerMenu.js";
 import { ChatBubble } from "./icons/ChatBubble.js";
 import { Close } from "./icons/Close.js";
 import { ColumnContainer } from "./icons/ColumnContainer.js";
-import { Columns, type IColumnsIconProps } from "./icons/Columns.js";
+import { Columns } from "./icons/Columns.js";
 import { Contract } from "./icons/Contract.js";
 import { Copy } from "./icons/Copy.js";
 import { Dashboard } from "./icons/Dashboard.js";
@@ -89,7 +89,7 @@ import { QuestionMark } from "./icons/QuestionMark.js";
 import { Refresh } from "./icons/Refresh.js";
 import { Reset } from "./icons/Reset.js";
 import { RichText } from "./icons/RichText.js";
-import { type IRowsIconProps, Rows } from "./icons/Rows.js";
+import { Rows } from "./icons/Rows.js";
 import { Run } from "./icons/Run.js";
 import { Save } from "./icons/Save.js";
 import { Schedule } from "./icons/Schedule.js";
@@ -225,5 +225,3 @@ export const Icon: Record<string, FC<IIconProps>> = {
     Save,
     Edit,
 };
-
-export type { IRowsIconProps, IColumnsIconProps };

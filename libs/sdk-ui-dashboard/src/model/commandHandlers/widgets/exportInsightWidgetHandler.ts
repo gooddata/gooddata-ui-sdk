@@ -8,7 +8,7 @@ import { type IExecutionResult, type IExportResult } from "@gooddata/sdk-backend
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { type IExtendedExportConfig, createExportFunction } from "@gooddata/sdk-ui";
 
-import { type IExportInsightWidget } from "../../commands/index.js";
+import { type IExportInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
     type IDashboardInsightWidgetExportResolved,

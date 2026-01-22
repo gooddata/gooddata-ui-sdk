@@ -20,15 +20,14 @@ import { translationUtils } from "@gooddata/util";
 import { type SelectedTime } from "./typings.js";
 import { HOURS_IN_DAY, TIME_ANCHOR, formatTime, normalizeTime, updateTime } from "./utils/timeUtilities.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
-import { Dropdown, DropdownButton } from "../Dropdown/index.js";
-import { SingleSelectListItem } from "../List/index.js";
+import { Dropdown } from "../Dropdown/Dropdown.js";
+import { DropdownButton } from "../Dropdown/DropdownButton.js";
+import { SingleSelectListItem } from "../List/ListItem.js";
 import { type OverlayPositionType } from "../typings/overlay.js";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;
 const MAX_HEIGHT = 140;
-
-export { normalizeTime, formatTime };
 
 /**
  * @internal

@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { omit } from "lodash-es";
@@ -12,7 +13,8 @@ import {
 
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
-import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
 
 /**
  * @internal

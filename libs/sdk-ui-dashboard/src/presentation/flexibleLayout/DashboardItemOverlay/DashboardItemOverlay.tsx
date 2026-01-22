@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -10,11 +10,9 @@ import DefaultMeasure from "react-measure";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import {
-    type IDashboardWidgetOverlay,
-    selectEnableCustomizedDashboardsWithoutPluginOverlay,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectEnableCustomizedDashboardsWithoutPluginOverlay } from "../../../model/store/config/configSelectors.js";
+import { type IDashboardWidgetOverlay } from "../../../model/types/commonTypes.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

@@ -10,8 +10,8 @@ import { LegacyList } from "./LegacyList.js";
 import { LegacyListItem } from "./LegacyListItem.js";
 import { LegacyMultiSelectListItem } from "./LegacyMultiSelectListItem.js";
 import { type ScrollCallback } from "./List.js";
-import { Button } from "../Button/index.js";
-import { FlexDimensions } from "../FlexDimensions/index.js";
+import { Button } from "../Button/Button.js";
+import { FlexDimensions } from "../FlexDimensions/FlexDimensions.js";
 
 /**
  * @internal

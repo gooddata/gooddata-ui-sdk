@@ -1,10 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { parseValue, unwrap } from "../_util/common.js";

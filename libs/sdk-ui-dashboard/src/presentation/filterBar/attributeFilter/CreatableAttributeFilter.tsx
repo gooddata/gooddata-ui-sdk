@@ -1,20 +1,20 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { AddAttributeFilterPlaceholder } from "./addAttributeFilter/index.js";
+import { AddAttributeFilterPlaceholder } from "./addAttributeFilter/AddAttributeFilterPlaceholder.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsMultipleDateFilters } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectCanAddMoreFilters,
     selectHasCatalogAttributes,
     selectHasCatalogDateDatasets,
-    selectIsWhiteLabeled,
-    selectSupportsMultipleDateFilters,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { type ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
-import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/index.js";
+} from "../../../model/store/catalog/catalogSelectors.js";
+import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
+import { selectCanAddMoreFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import type { ICreatePanelItemComponentProps } from "../../componentDefinition/types.js";
+import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/draggableAttributeFilter/DraggableAttributeFilterCreatePanelItem.js";
 
 /**
  * @internal

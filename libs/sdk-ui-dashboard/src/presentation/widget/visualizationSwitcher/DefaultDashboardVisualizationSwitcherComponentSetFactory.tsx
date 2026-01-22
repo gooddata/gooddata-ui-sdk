@@ -1,9 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { CreatableVisualizationSwitcher } from "./CreatableVisualizationSwitcher.js";
-import { type VisualizationSwitcherWidgetComponentSet } from "../../componentDefinition/index.js";
-import { type VisualizationSwitcherComponentProvider } from "../../dashboardContexts/index.js";
-import { VisualizationSwitcherDraggingComponent } from "../../dragAndDrop/index.js";
+import { type VisualizationSwitcherWidgetComponentSet } from "../../componentDefinition/types.js";
+import { type VisualizationSwitcherComponentProvider } from "../../dashboardContexts/types.js";
+import { VisualizationSwitcherDraggingComponent } from "../../dragAndDrop/draggableWidget/VisualizationSwitcherDraggingComponent.js";
 
 /**
  * @internal

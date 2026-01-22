@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
-import { testIds } from "../automation/index.js";
+import { filterReset } from "../automation/testIds.js";
 
 export function FilterResetButton() {
     const intl = useIntl();
@@ -21,7 +21,7 @@ export function FilterResetButton() {
     const resetLabel = intl.formatMessage({ id: "analyticsCatalog.filter.reset" });
 
     return (
-        <div className="gd-analytics-catalog__filter__reset" data-testid={testIds.filterReset}>
+        <div className="gd-analytics-catalog__filter__reset" data-testid={filterReset}>
             <UiTooltip
                 triggerBy={["hover", "focus"]}
                 anchor={

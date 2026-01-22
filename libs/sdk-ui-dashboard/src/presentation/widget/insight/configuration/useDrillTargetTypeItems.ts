@@ -1,11 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { messages as uiMessages } from "@gooddata/sdk-ui";
 
 import { messages } from "../../../../locales.js";
-import { selectSupportsAttributeHierarchies, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsAttributeHierarchies } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { DRILL_TARGET_TYPE } from "../../../drill/types.js";
 
 export interface IDrillTargetType {

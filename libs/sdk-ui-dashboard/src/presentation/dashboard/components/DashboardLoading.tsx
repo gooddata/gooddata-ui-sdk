@@ -1,8 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { DashboardInner } from "./DashboardInner.js";
-import { selectDashboardLoading, useDashboardSelector } from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectDashboardLoading } from "../../../model/store/loading/loadingSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { type IDashboardProps } from "../types.js";
 
 export function DashboardLoading(props: IDashboardProps) {

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ComponentType, type ReactElement, useMemo } from "react";
 
@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type IHeadlineTransformationProps } from "./HeadlineProvider.js";
-import { type ICoreChartProps } from "../../interfaces/index.js";
+import { type ICoreChartProps } from "../../interfaces/chartProps.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 
 /**

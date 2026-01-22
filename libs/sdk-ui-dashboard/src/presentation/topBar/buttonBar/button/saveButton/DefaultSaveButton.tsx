@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -8,19 +8,23 @@ import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
 import { type ISaveButtonProps } from "./types.js";
 import { messages } from "../../../../../locales.js";
+import { saveDashboard } from "../../../../../model/commands/dashboard.js";
 import {
-    dispatchAndWaitFor,
-    saveDashboard,
-    selectCanSaveDashboard,
-    selectDashboardTitle,
-    selectIsDashboardDirty,
-    selectIsDashboardSaving,
-    selectIsInEditMode,
-    selectIsPrivateDashboard,
-    selectLayoutHasAnalyticalWidgets,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import { dispatchAndWaitFor } from "../../../../../model/store/_infra/dispatchAndWaitFor.js";
+import {
+    selectDashboardTitle,
+    selectIsDashboardDirty,
+} from "../../../../../model/store/meta/metaSelectors.js";
+import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
+import { selectLayoutHasAnalyticalWidgets } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import {
+    selectCanSaveDashboard,
+    selectIsPrivateDashboard,
+} from "../../../../../model/store/topBar/topBarSelectors.js";
 
 /**
  * @internal

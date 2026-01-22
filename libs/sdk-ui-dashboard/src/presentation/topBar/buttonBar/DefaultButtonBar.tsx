@@ -1,15 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
-import {
-    CancelButton,
-    EditButton,
-    SaveAsNewButton,
-    SaveButton,
-    SettingButton,
-    ShareButton,
-} from "./button/index.js";
+import { CancelButton } from "./button/cancelButton/CancelButton.js";
+import { EditButton } from "./button/editButton/EditButton.js";
+import { SaveAsNewButton } from "./button/saveAsButton/SaveAsNewButton.js";
+import { SaveButton } from "./button/saveButton/SaveButton.js";
+import { SettingButton } from "./button/settingButton/SettingButton.js";
+import { ShareButton } from "./button/shareButton/ShareButton.js";
 import { type IButtonBarProps } from "./types.js";
 
 /**

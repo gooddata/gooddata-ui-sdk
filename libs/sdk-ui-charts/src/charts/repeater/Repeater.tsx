@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -24,7 +24,7 @@ import {
 
 import { CoreRepeater } from "./CoreRepeater.js";
 import { constructRepeaterBuckets, constructRepeaterDimensions } from "./internal/repeaterExecution.js";
-import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 
 //
 // Public interface

@@ -8,12 +8,12 @@ import { type ObjRef } from "@gooddata/sdk-model";
 
 import { StylingSettingList } from "./StylingSettingList.js";
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
+import { DialogListHeader } from "../../Dialog/DialogList/DialogListHeader.js";
 import { DialogListLoading } from "../../Dialog/DialogList/DialogListLoading.js";
 import {
-    DialogListHeader,
     type IStylingPickerItem,
     type StylingPickerItemContent,
-} from "../../Dialog/index.js";
+} from "../../Dialog/StylingEditorDialog/StylingEditorDialog.js";
 
 interface IStylingSettingBodyProps<T extends StylingPickerItemContent> {
     isMobile: boolean;

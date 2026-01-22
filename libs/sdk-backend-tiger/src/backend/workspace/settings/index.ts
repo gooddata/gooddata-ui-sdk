@@ -42,7 +42,8 @@ import {
     getControlledFeatureRollout,
     getOrganizationTier,
 } from "../../features/index.js";
-import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
+import { mapTypeToKey } from "../../settings/mapping.js";
+import { TigerSettingsService } from "../../settings/settings.js";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 

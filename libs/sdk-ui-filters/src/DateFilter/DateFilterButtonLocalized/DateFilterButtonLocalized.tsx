@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ComponentType, type MutableRefObject } from "react";
 
@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
-import { type IFilterButtonCustomIcon } from "../../shared/index.js";
+import { type IFilterButtonCustomIcon } from "../../shared/interfaces/index.js";
 import { DateFilterButton, type IDateFilterButtonProps } from "../DateFilterButton/DateFilterButton.js";
 import {
     DateFilterTextLocalized,

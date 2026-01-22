@@ -8,22 +8,18 @@ import { type IDashboardWidget } from "@gooddata/sdk-model";
 
 import { Hotspot } from "./Hotspot.js";
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
-import {
-    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    type IDashboardLayoutItemFacade,
-} from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
+import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { updateItem } from "../../../../_staging/layout/coordinates.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
-import {
-    isCustomWidget,
-    selectDraggingWidgetSource,
-    selectSettings,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectDraggingWidgetSource } from "../../../../model/store/ui/uiSelectors.js";
+import { isCustomWidget } from "../../../../model/types/layoutTypes.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
 import { getRemainingHeightInColumn, getRemainingWidthInRow } from "../../rowEndHotspotHelper.js";
 

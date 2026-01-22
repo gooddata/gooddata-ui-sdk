@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { Fragment, type ReactNode, useRef } from "react";
 
@@ -8,7 +8,7 @@ import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js"
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
-} from "../../../DefaultDashboardLayoutRenderer/index.js";
+} from "../../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 
 export interface IDashboardEditLayoutRowRendererOwnProps {
     layoutItems: IDashboardLayoutItemFacade<IDashboardEditLayoutContent>[];

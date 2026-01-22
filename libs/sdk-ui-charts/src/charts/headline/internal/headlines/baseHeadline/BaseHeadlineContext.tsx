@@ -1,8 +1,8 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { createContext, useContext } from "react";
 
-import { type IChartConfig } from "../../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../../interfaces/chartConfig.js";
 import { type FiredDrillEventCallback } from "../../interfaces/DrillEvents.js";
 
 interface IBaseHeadlineContextData {

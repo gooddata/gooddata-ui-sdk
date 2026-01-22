@@ -42,7 +42,7 @@ import {
     DETAILED_ANNOUNCEMENT_THRESHOLD,
     UiSearchResultsAnnouncement,
 } from "../../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
-import { LoadingMask } from "../../LoadingMask/index.js";
+import { LoadingMask } from "../../LoadingMask/LoadingMask.js";
 import { isEnterKey, isEscapeKey, isSpaceKey } from "../../utils/events.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).

@@ -5,7 +5,7 @@ import { type KeyboardEvent } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Input } from "../../Form/index.js";
+import { Input } from "../../Form/Input.js";
 
 /**
  * @internal

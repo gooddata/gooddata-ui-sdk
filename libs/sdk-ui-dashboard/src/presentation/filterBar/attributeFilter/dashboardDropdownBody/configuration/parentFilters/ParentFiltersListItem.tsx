@@ -9,12 +9,12 @@ import { type ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { selectIsCircularDependency } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import {
     type IConnectingAttribute,
     type IDashboardAttributeFilterParentItem,
-    selectIsCircularDependency,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/types/attributeFilterTypes.js";
 import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown.js";
 
 export interface IConfigurationParentItemProps {

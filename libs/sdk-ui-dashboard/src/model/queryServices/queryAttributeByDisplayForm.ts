@@ -15,7 +15,8 @@ import {
 import { invalidQueryArguments } from "../events/general.js";
 import { type IQueryAttributeByDisplayForm } from "../queries/attributes.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
-import { selectCatalogAttributes, selectPreloadedAttributesWithReferences } from "../store/index.js";
+import { selectCatalogAttributes } from "../store/catalog/catalogSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryAttributeByDisplayFormService = createCachedQueryService(

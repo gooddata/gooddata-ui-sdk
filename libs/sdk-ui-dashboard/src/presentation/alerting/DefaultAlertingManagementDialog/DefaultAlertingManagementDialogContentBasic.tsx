@@ -16,12 +16,10 @@ import {
 
 import { Alerts } from "./components/AlertsList.js";
 import { messages } from "../../../locales.js";
-import {
-    selectIsAlertingDialogOpen,
-    selectIsWhiteLabeled,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../presentation/constants/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
+import { selectIsAlertingDialogOpen } from "../../../model/store/ui/uiSelectors.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
 

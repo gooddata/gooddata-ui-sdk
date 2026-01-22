@@ -1,7 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
-import { uiActions, useDashboardDispatch } from "../../../model/index.js";
+import { useDashboardDispatch } from "../../../model/react/DashboardStoreProvider.js";
+import { uiActions } from "../../../model/store/ui/index.js";
 
 /**
  * @internal

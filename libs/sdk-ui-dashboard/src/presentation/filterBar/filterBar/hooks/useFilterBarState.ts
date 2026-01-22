@@ -1,14 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback, useEffect, useState } from "react";
 
 import { type CalculatedRows, CalculatedRowsDefault } from "./useRowsCalculator.js";
 import {
-    selectFilterBarExpanded,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
+import { selectFilterBarExpanded } from "../../../../model/store/ui/uiSelectors.js";
 
 //NOTE: This 1px is size of border bottom on filter bar
 const BorderWidth = 1;

@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 
-import { ShortenedText } from "../ShortenedText/index.js";
+import { ShortenedText } from "../ShortenedText/ShortenedText.js";
 
 /**
  * @internal

@@ -8,15 +8,16 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { Catalog } from "./catalog/Catalog.js";
 import type { OpenHandlerEvent } from "./catalogDetail/CatalogDetailContent.js";
-import type { ICatalogItemRef } from "./catalogItem/index.js";
-import { CatalogResourceProvider } from "./catalogResource/index.js";
-import { FilterProvider } from "./filter/index.js";
+import { type ICatalogItemRef } from "./catalogItem/types.js";
+import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvider.js";
+import { FilterProvider } from "./filter/FilterContext.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
-import { ObjectTypeProvider } from "./objectType/index.js";
+import { ObjectTypeProvider } from "./objectType/ObjectTypeContext.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
-import { PermissionsProvider, usePermissionsQuery } from "./permission/index.js";
-import { QualityProvider } from "./quality/index.js";
-import { FullTextSearchProvider } from "./search/index.js";
+import { PermissionsProvider } from "./permission/PermissionsContext.js";
+import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
+import { QualityProvider } from "./quality/QualityContext.js";
+import { FullTextSearchProvider } from "./search/FullTextSearchContext.js";
 
 /**
  * @internal

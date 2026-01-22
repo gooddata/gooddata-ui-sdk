@@ -34,7 +34,7 @@ import {
     shouldYAxisStartOnTickOnBubbleScatter,
 } from "./helpers.js";
 import { styleVariables } from "./styles/variables.js";
-import { type IAxisConfig, type IChartConfig } from "../../../interfaces/index.js";
+import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
     type AxisLabelsFormatterCallbackFunction,
     type HighchartsOptions,

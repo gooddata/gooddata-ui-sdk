@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useEffect, useMemo, useRef, useState } from "react";
 
@@ -17,6 +17,7 @@ import {
 import { initializeMapLibreMap } from "../../map/runtime/mapInitialization.js";
 import { type IGeoChartNextConfig } from "../../types/config/unified.js";
 import { type IMapViewport } from "../../types/map/provider.js";
+import type { GeoTileset } from "../../types/map/tileset.js";
 import { generateMapLibreLocale } from "../../utils/mapLocale.js";
 
 /**
@@ -128,6 +129,7 @@ export function useMapInitialization(
     const isExportMode = config?.isExportMode ?? false;
     const isViewportFrozen = Boolean(config?.viewport?.frozen);
     const maxZoom = typeof config?.maxZoomLevel === "number" ? config.maxZoomLevel : undefined;
+    const tileset: GeoTileset = config?.tileset ?? "default";
 
     useEffect(() => {
         const container = containerRef.current;
@@ -148,6 +150,7 @@ export function useMapInitialization(
                 preserveDrawingBuffer: isExportMode,
                 maxZoom,
                 style: config?.mapStyle,
+                tileset,
             },
             locale,
             backend,
@@ -188,6 +191,7 @@ export function useMapInitialization(
         locale,
         backend,
         maxZoom,
+        tileset,
     ]);
 
     return { map, tooltip, isMapReady, error };

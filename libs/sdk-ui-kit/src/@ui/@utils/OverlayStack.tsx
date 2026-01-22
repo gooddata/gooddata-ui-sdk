@@ -2,7 +2,7 @@
 
 import { type ReactNode, createContext, useContext, useMemo } from "react";
 
-import { useOverlayZIndexWithRegister } from "../../Overlay/index.js";
+import { useOverlayZIndexWithRegister } from "../../Overlay/OverlayContext.js";
 
 type OverlayContextType = {
     zIndex: number;

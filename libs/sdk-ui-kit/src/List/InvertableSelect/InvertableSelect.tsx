@@ -14,7 +14,7 @@ import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch
 import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
 import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
 import { useInvertableSelect } from "./useInvertableSelect.js";
-import { LoadingMask } from "../../LoadingMask/index.js";
+import { LoadingMask } from "../../LoadingMask/LoadingMask.js";
 import { AsyncList } from "../AsyncList.js";
 import { type IRenderListItemProps } from "../List.js";
 

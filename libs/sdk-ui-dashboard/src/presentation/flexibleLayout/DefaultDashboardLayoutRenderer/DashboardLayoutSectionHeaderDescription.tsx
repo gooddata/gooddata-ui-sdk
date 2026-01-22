@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -8,14 +8,14 @@ import { type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { useSectionDescriptionFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
-    selectExecutionTimestamp,
     selectSeparators,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { type DescriptionExportData } from "../../export/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
+import { type DescriptionExportData } from "../../export/types.js";
 
 /**
  * @alpha

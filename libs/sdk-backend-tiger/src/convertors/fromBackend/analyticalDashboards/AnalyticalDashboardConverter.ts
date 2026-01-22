@@ -139,6 +139,3 @@ export function convertDashboardPluginWithLinksFromBackend(
 
     invariant(false, "Unknown dashboard plugin version");
 }
-
-// Re-export common utilities for backward compatibility
-export { getFilterContextFromIncluded, getFilterContextsFromIncluded } from "./common/filterContextUtils.js";

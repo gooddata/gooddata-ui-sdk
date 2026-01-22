@@ -7,7 +7,7 @@ import { type KpiDrillDefinition } from "@gooddata/sdk-model";
 
 import { validateKpiDrill } from "./validation/kpiDrillValidation.js";
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type ISetDrillForKpiWidget } from "../../commands/index.js";
+import { type ISetDrillForKpiWidget } from "../../commands/kpi.js";
 import { type IDashboardKpiWidgetDrillSet, kpiWidgetDrillSet } from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";

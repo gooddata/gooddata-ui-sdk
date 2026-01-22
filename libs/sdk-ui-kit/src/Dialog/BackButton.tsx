@@ -3,7 +3,7 @@
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Button } from "../Button/index.js";
+import { Button } from "../Button/Button.js";
 
 /**
  * @internal

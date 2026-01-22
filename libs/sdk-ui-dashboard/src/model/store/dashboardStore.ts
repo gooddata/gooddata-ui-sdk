@@ -43,9 +43,9 @@ import { uiSliceReducer } from "./ui/index.js";
 import { userSliceReducer } from "./user/index.js";
 import { usersSliceReducer } from "./users/index.js";
 import { type RenderMode } from "../../types.js";
-import { type DashboardCommandType } from "../commands/index.js";
+import { type DashboardCommandType } from "../commands/base.js";
 import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
-import { type DashboardEventType } from "../events/index.js";
+import { type DashboardEventType } from "../events/base.js";
 import { AllQueryServices } from "../queryServices/index.js";
 import { type DashboardContext, type PrivateDashboardContext } from "../types/commonTypes.js";
 

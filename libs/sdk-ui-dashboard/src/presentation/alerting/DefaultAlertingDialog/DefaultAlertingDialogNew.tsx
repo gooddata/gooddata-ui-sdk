@@ -41,40 +41,40 @@ import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodS
 import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
 import { AlertGranularitySelect } from "./components/AlertGranularitySelect.js";
 import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
+import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
 import { AlertThresholdInput } from "./components/AlertThresholdInput.js";
 import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
+import { ALERTING_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isMobileView } from "./utils/responsive.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useEnableAlertingAutomationFilterContext } from "../../../model/react/useDashboardAlerting/useEnableAutomationFilterContext.js";
 import {
-    getWidgetTitle,
-    selectCanUseAiAssistant,
     selectEnableAnomalyDetectionAlert,
     selectEnableAutomationManagement,
-    selectEntitlementMaxAutomationRecipients,
-    selectExecutionTimestamp,
     selectExternalRecipient,
-    selectIsAutomationDialogSecondaryTitleVisible,
     selectIsWhiteLabeled,
     selectLocale,
-    useDashboardSelector,
-    useEnableAlertingAutomationFilterContext,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { selectEntitlementMaxAutomationRecipients } from "../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectCanUseAiAssistant } from "../../../model/store/permissions/permissionsSelectors.js";
+import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../model/store/topBar/topBarSelectors.js";
+import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
+import { getWidgetTitle } from "../../../model/utils/dashboardItemUtils.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
-import { IntlWrapper } from "../../localization/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { type IAlertingDialogProps } from "../types.js";
-import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
-import { ALERTING_DIALOG_ID } from "./constants.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;

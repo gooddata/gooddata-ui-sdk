@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { idRef, newInsightDefinition, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 
-import { getReactEmbeddingCodeGenerator } from "../index.js";
+import { getReactEmbeddingCodeGenerator } from "../getReactEmbeddingCodeGenerator.js";
 
 describe("getReactEmbeddingCodeGenerator", () => {
     const mockInsight = newInsightDefinition("foo");

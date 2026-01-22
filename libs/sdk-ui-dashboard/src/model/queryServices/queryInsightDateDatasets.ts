@@ -33,7 +33,7 @@ import {
     type IInsightDateDatasets,
     type IQueryInsightDateDatasets,
     queryInsightAttributesMeta,
-} from "../queries/index.js";
+} from "../queries/insights.js";
 import { query } from "../store/_infra/queryCall.js";
 import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import { selectBackendCapabilities } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -41,8 +41,8 @@ import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateAttributeToDataset,
 } from "../store/catalog/catalogSelectors.js";
-import { type DashboardState } from "../store/index.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
+import { type DashboardState } from "../store/types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(

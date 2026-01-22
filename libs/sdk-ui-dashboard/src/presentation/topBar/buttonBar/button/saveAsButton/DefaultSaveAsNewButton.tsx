@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -8,11 +8,11 @@ import { Button } from "@gooddata/sdk-ui-kit";
 
 import { type ISaveAsNewButtonProps } from "./types.js";
 import {
-    selectIsSaveAsNewButtonVisible,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectIsSaveAsNewButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
+import { uiActions } from "../../../../../model/store/ui/index.js";
 
 /**
  * @internal

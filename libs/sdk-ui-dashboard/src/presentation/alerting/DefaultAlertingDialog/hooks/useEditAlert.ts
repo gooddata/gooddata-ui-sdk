@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -35,29 +35,32 @@ import {
     convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
 } from "../../../../_staging/automation/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
-    type ExtendedDashboardWidget,
-    selectAutomationCommonDateFilterId,
     selectCatalogAttributes,
     selectCatalogDateDatasets,
-    selectCurrentUser,
-    selectDashboardDescriptor,
-    selectDashboardHiddenFilters,
-    selectDashboardId,
+} from "../../../../model/store/catalog/catalogSelectors.js";
+import {
     selectEnableAlertAttributes,
     selectEnableComparisonInAlerting,
     selectEnableExternalRecipients,
-    selectEntitlementMinimumRecurrenceMinutes,
-    selectExecutionResultByRef,
     selectLocale,
     selectSeparators,
     selectSettings,
     selectTimezone,
-    selectUsers,
     selectWeekStart,
-    selectWidgetLocalIdToTabIdMap,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/store/config/configSelectors.js";
+import { selectEntitlementMinimumRecurrenceMinutes } from "../../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectExecutionResultByRef } from "../../../../model/store/executionResults/executionResultsSelectors.js";
+import {
+    selectAutomationCommonDateFilterId,
+    selectDashboardHiddenFilters,
+} from "../../../../model/store/filtering/dashboardFilterSelectors.js";
+import { selectDashboardDescriptor, selectDashboardId } from "../../../../model/store/meta/metaSelectors.js";
+import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
+import { selectUsers } from "../../../../model/store/users/usersSelectors.js";
+import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
 import { isEmail } from "../../../scheduledEmail/utils/validate.js";
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";

@@ -1,9 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
-import { DashboardItem, DashboardItemBase } from "../presentationComponents/index.js";
+import { DashboardItem } from "../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemBase } from "../presentationComponents/DashboardItems/DashboardItemBase.js";
 
 /**
  * @internal

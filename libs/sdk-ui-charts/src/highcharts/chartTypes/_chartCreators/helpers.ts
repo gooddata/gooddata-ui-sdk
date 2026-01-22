@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { compact, initial, isEmpty, max, maxBy, min, minBy, pick, tail, unzip, zip } from "lodash-es";
 
 import { type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type ChartAlignTypes, type IChartConfig } from "../../../interfaces/index.js";
+import { type ChartAlignTypes, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments.js";
 import { type ChartOptions, type OptionsStackingValue, type PlotOptions } from "../../lib/index.js";
 import {

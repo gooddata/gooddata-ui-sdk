@@ -1,5 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
+import type { GeoTileset } from "./tileset.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../common/coordinates.js";
 import { type IGeoPushpinChartNextConfig } from "../config/pushpinChart.js";
@@ -56,6 +57,11 @@ export interface IMapOptions {
      * Map style URL or style object (provider-specific)
      */
     style?: string | StyleSpecification;
+
+    /**
+     * Basemap tileset identifier.
+     */
+    tileset: GeoTileset;
 }
 
 /**

@@ -3,7 +3,7 @@
 import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { type IDrillToLegacyDashboard } from "../../commands/index.js";
+import { type IDrillToLegacyDashboard } from "../../commands/drill.js";
 import {
     type IDashboardDrillToLegacyDashboardResolved,
     drillToLegacyDashboardRequested,

@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback, useMemo } from "react";
 
 import { idRef } from "@gooddata/sdk-model";
@@ -6,16 +7,19 @@ import { idRef } from "@gooddata/sdk-model";
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { getInsightPlaceholderSizeInfo } from "../../../../_staging/layout/sizing.js";
+import { addNestedLayoutSection } from "../../../../model/commands/layout.js";
 import {
-    addNestedLayoutSection,
-    selectSettings,
-    uiActions,
-    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../../model/react/useDashboardCommandProcessing.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutSectionPath } from "../../../../types.js";
-import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../../widgets/index.js";
+import {
+    INSIGHT_PLACEHOLDER_WIDGET_ID,
+    newInsightPlaceholderWidget,
+} from "../../../../widgets/placeholders/types.js";
 
 export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

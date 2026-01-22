@@ -8,8 +8,8 @@ import { ErrorComponent } from "@gooddata/sdk-ui";
 
 import type { ICatalogItem, ICatalogItemFeedOptions } from "./types.js";
 import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
-import type { AsyncStatus } from "../async/index.js";
-import { useObjectTypeCounterSync } from "../objectType/index.js";
+import { type AsyncStatus } from "../async/types.js";
+import { useObjectTypeCounterSync } from "../objectType/ObjectTypeContext.js";
 
 type Props = ICatalogItemFeedOptions & {
     children: (props: {

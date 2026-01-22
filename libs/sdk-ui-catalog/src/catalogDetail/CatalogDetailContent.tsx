@@ -13,10 +13,12 @@ import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
-import { type ICatalogItem, type ICatalogItemRef, canEditCatalogItem } from "../catalogItem/index.js";
-import { type ObjectType } from "../objectType/index.js";
-import { usePermissionsState } from "../permission/index.js";
-import { useQualityIssuesById, useQualityReportState } from "../quality/index.js";
+import { canEditCatalogItem } from "../catalogItem/permission.js";
+import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
+import { type ObjectType } from "../objectType/types.js";
+import { usePermissionsState } from "../permission/PermissionsContext.js";
+import { useIsCatalogQualityEnabled } from "../quality/gate.js";
+import { useQualityIssuesById, useQualityReportState } from "../quality/QualityContext.js";
 
 const Tabs = {
     METADATA: "metadata",
@@ -128,7 +130,7 @@ export function CatalogDetailContent({
     // Quality
     const { status: qualityStatus } = useQualityReportState();
 
-    const isQualityEnabled = Boolean(settings?.["enableGenAICatalogQualityChecker"]);
+    const isQualityEnabled = useIsCatalogQualityEnabled();
     const isQualityVisible = isQualityEnabled && qualityStatus !== "error";
     const isQualityLoading = qualityStatus === "loading" || qualityStatus === "pending";
 

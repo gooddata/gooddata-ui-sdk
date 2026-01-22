@@ -1,13 +1,14 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type IInsightWidget } from "@gooddata/sdk-model";
 import { type OnError, type OnExportReady, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
-import { selectInsightsMap, useDashboardSelector } from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
-import { type WidgetExportDataAttributes } from "../../export/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type WidgetExportDataAttributes } from "../../export/types.js";
 import { DashboardInsight } from "../insight/DashboardInsight.js";
 
 export interface IAllVisualizationsDashInsightsProps {

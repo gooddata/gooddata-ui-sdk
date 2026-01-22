@@ -8,7 +8,9 @@ import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mocki
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
 
-import { type AttributeMeasureOrPlaceholder, DataViewFacade, LoadingComponent } from "../../base/index.js";
+import { LoadingComponent } from "../../base/react/LoadingComponent.js";
+import { type AttributeMeasureOrPlaceholder } from "../../base/react/placeholders/aliases.js";
+import { DataViewFacade } from "../../base/results/facade.js";
 import { type CreateExecutionOptions, createExecution } from "../createExecution.js";
 import { Execute, type IExecuteProps } from "../Execute.js";
 import { type IExecuteErrorComponentProps } from "../interfaces.js";

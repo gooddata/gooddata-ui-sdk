@@ -1,9 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
-import { type cancelAsyncAction, type loadThreadAction, loadedSelector } from "../../store/index.js";
+import { loadedSelector } from "../../store/messages/messagesSelectors.js";
+import { type cancelAsyncAction, type loadThreadAction } from "../../store/messages/messagesSlice.js";
 
 type ThreadLoadingProps = {
     initializing?: boolean;

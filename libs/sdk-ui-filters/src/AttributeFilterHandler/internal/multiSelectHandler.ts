@@ -1,13 +1,16 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { AttributeFilterLoader } from "./loader.js";
 import { type AttributeFilterHandlerConfig } from "./types.js";
 import {
-    type CallbackRegistration,
     type IMultiSelectAttributeFilterHandler,
     type InvertableAttributeElementSelection,
+} from "../types/attributeFilterHandler.js";
+import { type CallbackRegistration } from "../types/common.js";
+import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
-} from "../types/index.js";
+} from "../types/selectionHandler.js";
 
 /**
  * @internal

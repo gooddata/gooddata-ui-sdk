@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, memo } from "react";
 
@@ -6,7 +6,7 @@ import {
     type ILegendColorScaleItem,
     type ILegendGroup,
     isLegendColorScaleItem,
-} from "../../types/legend/index.js";
+} from "../../types/legend/model.js";
 
 /**
  * Props for LegendGroupColorScale component.

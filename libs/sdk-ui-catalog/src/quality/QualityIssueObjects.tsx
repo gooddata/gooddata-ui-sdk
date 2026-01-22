@@ -9,8 +9,9 @@ import { type ISemanticQualityIssueObject } from "@gooddata/sdk-model";
 import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { QualityIssueObjectDetail } from "./QualityIssueObjectDetail.js";
-import { type ICatalogItemRef } from "../catalogItem/index.js";
-import { ObjectTypeIconMemo, mapObjectType } from "../objectType/index.js";
+import { type ICatalogItemRef } from "../catalogItem/types.js";
+import { mapObjectType } from "../objectType/mapping.js";
+import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
 
 type Props = {
     objects: ISemanticQualityIssueObject[];

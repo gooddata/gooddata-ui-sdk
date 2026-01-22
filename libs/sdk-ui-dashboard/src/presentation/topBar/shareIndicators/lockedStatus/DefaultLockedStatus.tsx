@@ -1,14 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
 import { LockedStatusIndicator } from "./LockedStatusIndicator.js";
 import { type ILockedStatusProps } from "./types.js";
-import {
-    selectCanManageAnalyticalDashboard,
-    selectSettings,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectCanManageAnalyticalDashboard } from "../../../../model/store/permissions/permissionsSelectors.js";
 
 /**
  * @alpha

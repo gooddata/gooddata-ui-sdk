@@ -4,12 +4,12 @@ import { useCallback } from "react";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
+import { saveAlert } from "../../../../model/commands/alerts.js";
+import type { IDashboardAlertSaved } from "../../../../model/events/alerts.js";
 import {
     type CommandProcessingStatus,
-    type IDashboardAlertSaved,
-    saveAlert,
     useDashboardCommandProcessing,
-} from "../../../../model/index.js";
+} from "../../../../model/react/useDashboardCommandProcessing.js";
 
 export const useUpdateAlert = ({
     onBeforeRun,

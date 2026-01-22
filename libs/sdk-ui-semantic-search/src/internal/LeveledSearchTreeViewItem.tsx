@@ -13,7 +13,7 @@ import { GroupResultCounter } from "./GroupResultCounter.js";
 import { SearchItemDetails } from "./SearchItemDetails.js";
 import { SearchItemIcon } from "./SearchItemIcon.js";
 import { UpdatedDate } from "./UpdateDate.js";
-import { testIds } from "../automation/index.js";
+import { semanticSearchItemDate, semanticSearchItemTitle } from "../automation/testIds.js";
 import { SearchItem } from "../SearchItem.js";
 import { getAriaLabel } from "../utils/getAriaLabel.js";
 
@@ -46,14 +46,14 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
                 {item.isDisabled ? <UiIcon type="lock" color="complementary-7" size={16} /> : null}
                 <span
                     className="gd-semantic-search__results-item__text__ellipsis"
-                    data-testid={testIds.semanticSearchItemTitle}
+                    data-testid={semanticSearchItemTitle}
                 >
                     {item.stringTitle}
                 </span>
             </span>
             <span
                 className="gd-semantic-search__results-item__text__row"
-                data-testid={testIds.semanticSearchItemDate}
+                data-testid={semanticSearchItemDate}
             >
                 {isSemanticSearchResultItem(item.data) && level === 1 && (
                     <UpdatedDate createdAt={item.data.createdAt} modifiedAt={item.data.modifiedAt} />

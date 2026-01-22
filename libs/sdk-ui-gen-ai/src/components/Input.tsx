@@ -20,11 +20,14 @@ import { type CatalogItem } from "@gooddata/sdk-model";
 import { SyntaxHighlightingInput, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { makeTextContents, makeUserMessage } from "../model.js";
-import { collectReferences, useCompletion } from "./completion/index.js";
-import { useHighlight } from "./highlight/index.js";
-import { type RootState, asyncProcessSelector, messagesSelector, newMessageAction } from "../store/index.js";
+import { collectReferences } from "./completion/references.js";
+import { useCompletion } from "./completion/useCompletion.js";
+import { useHighlight } from "./highlight/useHighlight.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { escapeMarkdown } from "./utils/markdownUtils.js";
+import { asyncProcessSelector, messagesSelector } from "../store/messages/messagesSelectors.js";
+import { newMessageAction } from "../store/messages/messagesSlice.js";
+import { type RootState } from "../store/types.js";
 
 export type InputOwnProps = {
     autofocus?: boolean;

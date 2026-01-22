@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { stringUtils } from "@gooddata/util";
 
-import { Button } from "../Button/index.js";
+import { Button } from "../Button/Button.js";
 
 interface IHeaderWorkspacePickerButtonProps {
     title: string;

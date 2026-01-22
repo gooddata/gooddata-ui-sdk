@@ -11,7 +11,7 @@ import {
 
 import { type EmptyObject } from "@gooddata/util";
 
-import { type IDropdownButtonRenderProps } from "../../Dropdown/index.js";
+import { type IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type SizeLarge, type SizeMedium, type SizeSmall } from "../@types/size.js";
 import { type separatorStaticItem } from "../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";

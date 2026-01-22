@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type DependencyList } from "react";
 
@@ -14,16 +14,18 @@ import {
 import { useExecutionDataView } from "./useExecutionDataView.js";
 import { useInsight } from "./useInsight.js";
 import { type DataViewWindow } from "./withExecutionLoading.js";
+import { type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
+import { useBackendStrict } from "../base/react/BackendContext.js";
 import {
-    type DataViewFacade,
-    type GoodDataSdkError,
     type UseCancelablePromiseCallbacks,
     type UseCancelablePromiseState,
+} from "../base/react/useCancelablePromise.js";
+import {
     resolveUseCancelablePromisesError,
     resolveUseCancelablePromisesStatus,
-    useBackendStrict,
-    useWorkspaceStrict,
-} from "../base/index.js";
+} from "../base/react/useCancelablePromiseUtils.js";
+import { useWorkspaceStrict } from "../base/react/WorkspaceContext.js";
+import { type DataViewFacade } from "../base/results/facade.js";
 
 /**
  * Configuration for {@link useInsightDataView} hook.

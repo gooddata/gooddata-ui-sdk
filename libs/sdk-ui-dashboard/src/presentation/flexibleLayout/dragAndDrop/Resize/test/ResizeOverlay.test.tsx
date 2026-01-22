@@ -3,7 +3,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { IntlWrapper } from "../../../../localization/index.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 import { type IResizeOverlayProps, ResizeOverlay } from "../ResizeOverlay.js";
 
 const defaultProps: IResizeOverlayProps = {

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
@@ -12,12 +12,10 @@ import {
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
-import {
-    type ICustomWidget,
-    selectEnableExecutionCancelling,
-    useDashboardSelector,
-    useWidgetFilters,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useWidgetFilters } from "../../../model/react/useWidgetFilters.js";
+import { selectEnableExecutionCancelling } from "../../../model/store/config/configSelectors.js";
+import { type ICustomWidget } from "../../../model/types/layoutTypes.js";
 
 type DataViewResult = UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 

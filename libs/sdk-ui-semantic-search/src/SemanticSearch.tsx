@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -20,11 +20,14 @@ import {
     UiTreeViewEventsProvider,
 } from "@gooddata/sdk-ui-kit";
 
-import { useElementWidth, useSearchIds, useSemanticSearch } from "./hooks/index.js";
+import { useElementWidth } from "./hooks/useElementWidth.js";
+import { useSearchIds } from "./hooks/useSearchIds.js";
+import { useSemanticSearch } from "./hooks/useSemanticSearch.js";
 import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
 import { buildSemanticSearchItems } from "./itemsBuilder.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
-import { PermissionsProvider, usePermissions } from "./permissions/index.js";
+import { PermissionsProvider } from "./permissions/PermissionsContext.js";
+import { usePermissions } from "./permissions/usePermissions.js";
 import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 
 /**

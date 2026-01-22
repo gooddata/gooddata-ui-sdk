@@ -90,10 +90,29 @@ export type { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./in
 export type { ISortConfig, IAvailableSortsGroup } from "./interfaces/SortConfig.js";
 
 export { addIntersectionFiltersToInsight } from "./components/pluggableVisualizations/drillDownUtil.js";
-export * from "./components/pluggableVisualizations/constants.js";
+export {
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX,
+    MAX_VISUALIZATION_HEIGHT,
+    MAX_NEW_VISUALIZATION_HEIGHT,
+    MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
+    MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT,
+    MIDDLE_VISUALIZATION_HEIGHT,
+    MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
+    MIN_VISUALIZATION_WIDTH,
+    MIN_RICH_TEXT_WIDTH,
+    INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
+    INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
+    RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
+    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
+    KPI_WIDGET_SIZE_INFO_DEFAULT,
+    WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
+} from "./components/pluggableVisualizations/constants.js";
 export { LabelFormatControl } from "./components/configurationControls/axis/LabelFormatControl.js";
 
-export * from "./FluidLayoutDescriptor.js";
+export { FluidLayoutDescriptor, fluidLayoutDescriptor } from "./FluidLayoutDescriptor.js";
 
 export {
     EmbedInsightDialog,

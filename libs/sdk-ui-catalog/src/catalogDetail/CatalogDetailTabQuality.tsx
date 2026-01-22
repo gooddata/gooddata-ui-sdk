@@ -7,8 +7,8 @@ import { FormattedMessage } from "react-intl";
 import { type ISemanticQualityIssue, type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
-import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/index.js";
-import { QualityIssue } from "../quality/index.js";
+import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
+import { QualityIssue } from "../quality/QualityIssue.js";
 
 type Props = {
     item: ICatalogItem;

@@ -10,7 +10,8 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { type ITabsState, tabsActions } from "../../index.js";
+import { tabsActions } from "../../index.js";
+import { type ITabsState } from "../../tabsState.js";
 import { dateFilterConfigsReducers } from "../dateFilterConfigsReducers.js";
 
 describe("dateFilterConfigsReducers", () => {

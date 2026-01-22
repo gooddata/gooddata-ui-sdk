@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IFilterButtonCustomIcon } from "../../../shared/index.js";
-import * as shared from "../../../shared/index.js";
+import * as shared from "../../../shared/components/internal/FilterButtonCustomIcon.js";
+import { type IFilterButtonCustomIcon } from "../../../shared/interfaces/index.js";
 import { DateFilterButton } from "../DateFilterButton.js";
 
 describe("DateFilterButton", () => {

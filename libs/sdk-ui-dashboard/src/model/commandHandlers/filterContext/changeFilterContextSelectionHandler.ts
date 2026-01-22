@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type AnyAction } from "@reduxjs/toolkit";
 import { compact, partition, uniqBy } from "lodash-es";
@@ -29,7 +29,7 @@ import {
 
 import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
-import { type ChangeFilterContextSelection } from "../../commands/index.js";
+import { type ChangeFilterContextSelection } from "../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import {

@@ -6,8 +6,8 @@ import { describe, expect, it, vi } from "vitest";
 import { dummyDataView } from "@gooddata/sdk-backend-base";
 import { emptyDef } from "@gooddata/sdk-model";
 
-import { DataViewFacade } from "../../base/index.js";
 import { type IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit.js";
+import { DataViewFacade } from "../../base/results/facade.js";
 import {
     type IWithExecutionLoading,
     type WithLoadingResult,

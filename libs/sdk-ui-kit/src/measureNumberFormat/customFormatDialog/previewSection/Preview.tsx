@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { ExtendedPreview } from "./ExtendedPreview.js";
-import { InputWithNumberFormat } from "../../../Form/index.js";
+import { InputWithNumberFormat } from "../../../Form/InputWithNumberFormat.js";
 import { FormattedPreview } from "../shared/FormattedPreview.js";
 
 const DEFAULT_PREVIEW_VALUE = -1234.5678;

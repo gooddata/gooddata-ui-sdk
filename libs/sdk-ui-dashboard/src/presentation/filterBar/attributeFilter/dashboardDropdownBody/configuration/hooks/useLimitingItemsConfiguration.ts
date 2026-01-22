@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -6,12 +6,10 @@ import { isEqual } from "lodash-es";
 
 import { type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
-import {
-    selectAttributeFilterConfigsOverrides,
-    setAttributeFilterLimitingItems,
-    useDashboardCommandProcessing,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+import { setAttributeFilterLimitingItems } from "../../../../../../model/commands/dashboard.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
+import { selectAttributeFilterConfigsOverrides } from "../../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export const useLimitingItemsConfiguration = (currentFilter: IDashboardAttributeFilter) => {
     const { run: changeAttributeFilterLimitingItems } = useDashboardCommandProcessing({

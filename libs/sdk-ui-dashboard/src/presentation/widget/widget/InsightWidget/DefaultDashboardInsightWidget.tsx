@@ -13,27 +13,23 @@ import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useInsightMenu } from "./useInsightMenu.js";
-import {
-    selectCatalogAttributes,
-    selectPreloadedAttributesWithReferences,
-    selectRenderMode,
-    selectSettings,
-    useDashboardAlerts,
-    useDashboardScheduledEmails,
-    useDashboardSelector,
-} from "../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import {
-    DashboardItem,
-    DashboardItemHeadline,
-    DashboardItemVisualization,
-    getVisTypeCssClass,
-} from "../../../presentationComponents/index.js";
-import { useInsightExport } from "../../common/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardScheduledEmails } from "../../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
+import { useDashboardAlerts } from "../../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
+import { selectCatalogAttributes } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectRenderMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
+import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemHeadline } from "../../../presentationComponents/DashboardItems/DashboardItemHeadline.js";
+import { DashboardItemVisualization } from "../../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
+import { getVisTypeCssClass } from "../../../presentationComponents/DashboardItems/utils.js";
+import { useInsightExport } from "../../common/useInsightExport.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
+import { DashboardInsight } from "../../insight/DashboardInsight.js";
 import { getGeoDefaultDisplayFormRefs } from "../../insight/geoDefaultDisplayFormRefs.js";
-import { DashboardInsight } from "../../insight/index.js";
 import {
     canConvertToTable,
     convertInsightToTableDefinition,

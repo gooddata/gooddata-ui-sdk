@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -8,8 +8,8 @@ import { useIntl } from "react-intl";
 import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody.js";
-import { withBubble } from "../../../../Bubble/index.js";
-import { Dropdown } from "../../../../Dropdown/index.js";
+import { withBubble } from "../../../../Bubble/withBubble.js";
+import { Dropdown } from "../../../../Dropdown/Dropdown.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { type IAccessibilityConfigBase } from "../../../../typings/accessibility.js";
 import {

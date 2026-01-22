@@ -1,11 +1,12 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ComponentType } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IRichTextWidget } from "@gooddata/sdk-model";
 import { type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
-import { type RichTextExportData, type WidgetExportDataAttributes } from "../../export/index.js";
+import { type RichTextExportData, type WidgetExportDataAttributes } from "../../export/types.js";
 
 ///
 /// Component props

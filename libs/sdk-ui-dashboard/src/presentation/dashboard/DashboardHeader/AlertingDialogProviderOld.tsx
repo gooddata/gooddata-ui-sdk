@@ -1,7 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { useDashboardAlertsOld } from "../../../model/index.js";
-import { DefaultAlertingDialogOld, DefaultAlertingManagementDialogOld } from "../../alerting/index.js";
+import { useDashboardAlertsOld } from "../../../model/react/useDashboardAlertsOld.js";
+import { DefaultAlertingDialogOld } from "../../alerting/DefaultAlertingDialog/DefaultAlertingDialogOld.js";
+import { DefaultAlertingManagementDialogOld } from "../../alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogOld.js";
 
 export function AlertingDialogProviderOld() {
     const {

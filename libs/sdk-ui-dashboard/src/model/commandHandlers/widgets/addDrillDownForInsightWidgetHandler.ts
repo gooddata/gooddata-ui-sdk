@@ -8,7 +8,7 @@ import { getHierarchyRef } from "@gooddata/sdk-model";
 
 import { hierarchyToDrillDownReference } from "./common/drillDown.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type IAddDrillDownForInsightWidget } from "../../commands/index.js";
+import { type IAddDrillDownForInsightWidget } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetDrillDownAdded,
     insightWidgetDrillDownAdded,

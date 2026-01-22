@@ -1,5 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
-import { type IChartConfig } from "../../../interfaces/index.js";
+// (C) 2023-2026 GoodData Corporation
+
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";

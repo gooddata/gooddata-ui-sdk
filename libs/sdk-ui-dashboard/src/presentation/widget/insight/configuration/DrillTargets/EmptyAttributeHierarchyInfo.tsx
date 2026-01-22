@@ -1,15 +1,13 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import {
-    selectCanManageAttributeHierarchy,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
+import { selectCanManageAttributeHierarchy } from "../../../../../model/store/permissions/permissionsSelectors.js";
 
 interface IEmptyAttributeHierarchyInfoProps {
     onOpenAttributeHierarchyDialog: () => void;

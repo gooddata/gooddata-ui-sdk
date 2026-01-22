@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { type IColorConfig } from "../../../../../../../../interfaces/index.js";
+import { type IColorConfig } from "../../../../../../../../interfaces/comparison.js";
 import { EvaluationType, type IComparisonDataWithSubItem } from "../../../../../interfaces/BaseHeadlines.js";
 import {
     COMPARISON_HEADLINE_VALUE_SELECTOR,

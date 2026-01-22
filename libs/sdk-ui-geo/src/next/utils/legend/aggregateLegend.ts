@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { computeAreaLegend } from "./computeAreaLegend.js";
 import { computePushpinLegend } from "./computePushpinLegend.js";
@@ -6,7 +6,7 @@ import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import type { EnabledItemsByLayer } from "../../context/GeoLegendContext.js";
 import type { IAreaGeoData } from "../../types/geoData/area.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
-import type { ILegendModel, ILegendSection } from "../../types/legend/index.js";
+import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
 
 /**

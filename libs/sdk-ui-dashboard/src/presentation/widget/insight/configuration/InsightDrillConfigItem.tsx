@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode, useMemo } from "react";
 
@@ -24,12 +24,10 @@ import { DrillOriginItem } from "./DrillOriginItem.js";
 import { DrillTargets } from "./DrillTargets/DrillTargets.js";
 import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
 import { type IDrillTargetType } from "./useDrillTargetTypeItems.js";
-import {
-    selectCatalogDateDatasets,
-    selectDrillTargetsByWidgetRef,
-    selectWidgetDrills,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../../../../model/store/drillTargets/drillTargetsSelectors.js";
+import { selectWidgetDrills } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     DRILL_TARGET_TYPE,
     type IDrillConfigItem,

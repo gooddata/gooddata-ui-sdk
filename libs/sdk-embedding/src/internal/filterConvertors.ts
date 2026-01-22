@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -8,22 +8,24 @@ import {
     type AttributeFilterItem,
     type DateFilterItem,
     type FilterItem,
-    type ILocalIdentifierQualifier,
     type IRankingFilter,
-    type ObjQualifier,
-    type RankingFilterOperator,
     isAbsoluteDateFilter,
     isAttributeFilter,
     isDateFilter,
-    isLocalIdentifierQualifier,
-    isObjIdentifierQualifier,
-    isObjectUriQualifier,
     isPositiveAttributeFilter,
     isRankingFilter,
     isRemoveAttributeFilter,
     isRemoveDateFilter,
     isRemoveRankingFilter,
-} from "../iframe/index.js";
+} from "../iframe/EmbeddedGdc.js";
+import {
+    type ILocalIdentifierQualifier,
+    type ObjQualifier,
+    type RankingFilterOperator,
+    isLocalIdentifierQualifier,
+    isObjIdentifierQualifier,
+    isObjectUriQualifier,
+} from "../iframe/legacyTypes.js";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 

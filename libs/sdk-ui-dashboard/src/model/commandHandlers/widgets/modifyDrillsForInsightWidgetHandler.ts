@@ -10,7 +10,7 @@ import {
 } from "./validation/insightDrillDefinitionUtils.js";
 import { getValidationData, validateDrillDefinition } from "./validation/insightDrillDefinitionValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type IModifyDrillsForInsightWidget } from "../../commands/index.js";
+import { type IModifyDrillsForInsightWidget } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetDrillsModified,
     insightWidgetDrillsModified,

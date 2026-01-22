@@ -42,7 +42,8 @@ import {
 import { ColorFactory } from "./colorFactory.js";
 import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
 import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
-import { type IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
+import { ViewByAttributesLimit } from "../../../interfaces/limits.js";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,

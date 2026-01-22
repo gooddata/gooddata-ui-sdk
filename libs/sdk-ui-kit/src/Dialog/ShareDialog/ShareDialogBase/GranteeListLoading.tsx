@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { LoadingMask } from "../../../LoadingMask/index.js";
+import { LoadingMask } from "../../../LoadingMask/LoadingMask.js";
 
 /**
  * @internal

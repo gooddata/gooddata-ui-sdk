@@ -5,7 +5,8 @@ import { type ChangeEvent, type FocusEvent, useCallback, useState } from "react"
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 interface ICronExpressionProps {

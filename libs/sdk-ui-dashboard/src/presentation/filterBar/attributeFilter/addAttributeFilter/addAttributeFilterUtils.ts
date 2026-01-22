@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type IInsight, type IInsightWidget, insightVisualizationType } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
 
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { type ExtendedDashboardWidget } from "../../../../model/index.js";
+import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 
 const SUPPORTED_LOCATION_ICON_CHART_TYPES: VisType[] = ["pushpin"];
 

@@ -20,7 +20,8 @@ import {
 
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
 import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
-import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
+import { mapTypeToKey } from "../settings/mapping.js";
+import { TigerSettingsService } from "../settings/settings.js";
 
 export class OrganizationSettingsService
     extends TigerSettingsService<ISettings>

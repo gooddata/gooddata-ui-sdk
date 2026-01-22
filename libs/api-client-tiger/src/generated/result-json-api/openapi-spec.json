@@ -22,6 +22,10 @@
         {
             "name": "OGC API Features",
             "description": "OGC API Features implementation for GeoCollections collections"
+        },
+        {
+            "name": "actions",
+            "description": "Action API endpoints"
         }
     ],
     "paths": {
@@ -267,6 +271,172 @@
                 },
                 "x-gdc-security-info": {
                     "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/customGeoCollection/{collectionId}/import": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Import custom geo collection",
+                "description": "Import a geo collection file from the staging area to be available for use.",
+                "operationId": "importCustomGeoCollection",
+                "parameters": [
+                    {
+                        "name": "collectionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImportGeoCollectionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful import.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ImportGeoCollectionResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/customGeoCollection/staging/upload": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Upload a geo collection file to the staging area",
+                "description": "Provides a location for uploading staging files for custom geo collections.",
+                "operationId": "customGeoCollectionStagingUpload",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": ["file"],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "description": "The geo collection file to upload.",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Upload was successful.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UploadGeoCollectionFileResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/location/custom/collections/{collectionId}/items": {
+            "get": {
+                "tags": ["OGC API Features"],
+                "summary": "Get custom collection features",
+                "description": "Retrieve features from a custom (organization-scoped) GeoCollections collection as GeoJSON",
+                "operationId": "getCustomCollectionItems",
+                "parameters": [
+                    {
+                        "name": "collectionId",
+                        "in": "path",
+                        "description": "Collection identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "my-custom-collection"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Maximum number of features to return",
+                        "required": false,
+                        "schema": {
+                            "maximum": 100,
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "example": 100
+                    },
+                    {
+                        "name": "bbox",
+                        "in": "query",
+                        "description": "Bounding box filter (minx,miny,maxx,maxy)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "-180,-90,180,90"
+                    },
+                    {
+                        "name": "values",
+                        "in": "query",
+                        "description": "List of values to filter features by",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "example": "US,CA,MX"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Features retrieved successfully",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeoJsonFeatureCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Collection not found",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeoJsonFeatureCollection"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["VIEW"],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
@@ -886,6 +1056,40 @@
                     }
                 },
                 "description": "Request to delete files from the storage."
+            },
+            "ImportGeoCollectionRequest": {
+                "required": ["location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the file in the staging area."
+                    }
+                },
+                "description": "Request to import a geo collection file from the staging area."
+            },
+            "ImportGeoCollectionResponse": {
+                "required": ["version"],
+                "type": "object",
+                "properties": {
+                    "version": {
+                        "type": "integer",
+                        "description": "The version of the imported geo collection.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Response after successfully importing a geo collection."
+            },
+            "UploadGeoCollectionFileResponse": {
+                "required": ["location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location to use when referencing the uploaded file in subsequent requests."
+                    }
+                },
+                "description": "Information related to the geo collection file uploaded to the staging area."
             },
             "GeoJsonFeature": {
                 "required": ["properties", "type"],

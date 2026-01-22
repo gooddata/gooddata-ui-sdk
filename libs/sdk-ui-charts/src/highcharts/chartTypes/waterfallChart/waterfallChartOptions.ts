@@ -14,7 +14,7 @@ import { type IColorAssignment } from "@gooddata/sdk-ui";
 import { type IChartFillConfig, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
 import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
-import { type IChartConfig, type ITotalConfig } from "../../../interfaces/index.js";
+import { type IChartConfig, type ITotalConfig } from "../../../interfaces/chartConfig.js";
 import { type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 import { getChartFillProperties } from "../_chartOptions/patternFillOptions.js";
 import { unwrap } from "../_util/common.js";

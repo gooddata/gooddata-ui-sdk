@@ -1,7 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { useDashboardAlerts, useWorkspaceUsers } from "../../../model/index.js";
-import { AlertingDialog, AlertingManagementDialog, type IAlertingDialogProps } from "../../alerting/index.js";
+import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
+import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
+import { AlertingDialog } from "../../alerting/AlertingDialog.js";
+import { AlertingManagementDialog } from "../../alerting/AlertingManagementDialog.js";
+import { type IAlertingDialogProps } from "../../alerting/types.js";
 
 export function AlertingDialogProviderNew() {
     const {

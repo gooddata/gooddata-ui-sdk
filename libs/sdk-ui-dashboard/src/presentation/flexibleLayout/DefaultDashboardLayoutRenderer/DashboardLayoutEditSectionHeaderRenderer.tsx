@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -6,9 +6,9 @@ import { DashboardLayoutEditSectionHeader } from "./DashboardLayoutEditSectionHe
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { type IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
-import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
-import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
+import { isInitialPlaceholderWidget } from "../../../widgets/placeholders/types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 const containsOnlyPlaceholders = (section: IDashboardLayoutSectionFacade<any>) => {

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo, useCallback, useMemo } from "react";
 
@@ -6,7 +6,7 @@ import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
-import { testIds } from "../automation/index.js";
+import { filterVisibility } from "../automation/testIds.js";
 
 type VisibilityOption = "visible" | "hidden";
 
@@ -46,7 +46,7 @@ export function FilterVisibility() {
             isSelectionInverted={isHidden === undefined}
             onSelectionChange={handleChange}
             getItemTitle={getItemTitle}
-            dataTestId={testIds.filterVisibility}
+            dataTestId={filterVisibility}
             noDataMessage={null}
         />
     );

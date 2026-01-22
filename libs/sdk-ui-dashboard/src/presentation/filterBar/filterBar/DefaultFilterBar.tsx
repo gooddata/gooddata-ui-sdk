@@ -18,43 +18,50 @@ import {
 } from "@gooddata/sdk-model";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
+import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
+import { groupFilterItems } from "./filterGroupUtils.js";
 import { HiddenFilterBar } from "./HiddenFilterBar.js";
 import { ResetFiltersButton } from "./ResetFiltersButton.js";
+import { type IFilterBarProps } from "./types.js";
 import { useFiltersWithAddedPlaceholder } from "./useFiltersWithAddedPlaceholder.js";
 import { convertDashboardAttributeFilterElementsValuesToUris } from "../../../_staging/dashboard/legacyFilterConvertors.js";
+import { setDashboardAttributeFilterConfigDisplayAsLabel } from "../../../model/commands/dashboard.js";
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
     clearDateFilterSelection,
-    selectCanAddMoreFilters,
-    selectEffectiveAttributeFiltersModeMap,
+    setAttributeFilterDisplayForm,
+} from "../../../model/commands/filters.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import {
+    selectEnableDashboardFilterGroups,
+    selectEnableDateFilterIdentifiers,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsExport,
+} from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectEffectiveAttributeFiltersModeMap } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
-    selectEffectiveDateFiltersModeMap,
-    selectEnableDashboardFilterGroups,
-    selectEnableDateFilterIdentifiers,
+} from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectEffectiveDateFiltersModeMap } from "../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectCanAddMoreFilters,
     selectFilterContextFilters,
-    selectFilterGroupsConfig,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsExport,
-    selectIsInEditMode,
-    selectSupportsElementUris,
     selectWorkingFilterContextFilters,
-    setAttributeFilterDisplayForm,
-    setDashboardAttributeFilterConfigDisplayAsLabel,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import { DraggableFilterDropZone, DraggableFilterDropZoneHint } from "../../dragAndDrop/index.js";
-import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
-import { type IDashboardDateFilterConfig, type IFilterBarProps } from "../types.js";
+} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterGroupsConfig } from "../../../model/store/tabs/filterGroups/filterGroupsSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { DraggableFilterDropZone } from "../../dragAndDrop/draggableFilterDropZone/DraggableFilterDropZone.js";
+import { DraggableFilterDropZoneHint } from "../../dragAndDrop/draggableFilterDropZone/DraggableFilterDropZoneHint.js";
+import { HiddenDashboardDateFilter } from "../dateFilter/HiddenDashboardDateFilter.js";
+import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
 import { areAllFiltersHidden } from "../utils.js";
-import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
-import { groupFilterItems } from "./filterGroupUtils.js";
 
 /**
  * @alpha

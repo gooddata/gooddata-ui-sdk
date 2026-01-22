@@ -1,17 +1,14 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type DependencyList } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import {
-    type GoodDataSdkError,
-    type UseCancelablePromiseState,
-    useBackendStrict,
-    useCancelablePromise,
-    useWorkspaceStrict,
-} from "../base/index.js";
+import { type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
+import { useBackendStrict } from "../base/react/BackendContext.js";
+import { type UseCancelablePromiseState, useCancelablePromise } from "../base/react/useCancelablePromise.js";
+import { useWorkspaceStrict } from "../base/react/WorkspaceContext.js";
 
 /**
  * @internal

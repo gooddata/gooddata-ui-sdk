@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -6,7 +6,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { setMeasuresToSecondaryAxis } from "../dualAxis.js";
 
 describe("setMeasuresToSecondaryAxis", () => {

@@ -9,10 +9,10 @@ import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
 import { makeMenuKeyboardNavigation } from "../../../../@ui/@utils/keyboardNavigation.js";
-import { withBubble } from "../../../../Bubble/index.js";
-import { ItemsWrapper, Separator } from "../../../../List/index.js";
+import { withBubble } from "../../../../Bubble/withBubble.js";
+import { ItemsWrapper, Separator } from "../../../../List/MenuList.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
-import { Overlay } from "../../../../Overlay/index.js";
+import { Overlay } from "../../../../Overlay/Overlay.js";
 import { type IAlignPoint } from "../../../../typings/positioning.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 import {

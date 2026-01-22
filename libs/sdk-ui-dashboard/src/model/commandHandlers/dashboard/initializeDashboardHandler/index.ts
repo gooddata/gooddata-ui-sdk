@@ -54,7 +54,8 @@ import { loadingActions } from "../../../store/loading/index.js";
 import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
 import { permissionsActions } from "../../../store/permissions/index.js";
 import { renderModeActions } from "../../../store/renderMode/index.js";
-import { DEFAULT_TAB_ID, tabsActions } from "../../../store/tabs/index.js";
+import { tabsActions } from "../../../store/tabs/index.js";
+import { DEFAULT_TAB_ID } from "../../../store/tabs/tabsState.js";
 import { uiActions } from "../../../store/ui/index.js";
 import { userActions } from "../../../store/user/index.js";
 import {

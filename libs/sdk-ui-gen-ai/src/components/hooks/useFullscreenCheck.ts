@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { isFullscreenSelector } from "../../store/index.js";
+import { isFullscreenSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 
 export function useFullscreenCheck() {
     const isFullscreenCurrent = useSelector(isFullscreenSelector);

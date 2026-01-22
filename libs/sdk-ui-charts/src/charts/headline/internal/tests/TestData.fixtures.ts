@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type IColorPalette, measureIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
@@ -8,7 +9,7 @@ import {
     ComparisonPositionValues,
     type IColorConfig,
     type IComparison,
-} from "../../../../interfaces/index.js";
+} from "../../../../interfaces/comparison.js";
 import { ComparisonColorType } from "../../headlineHelper.js";
 import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import {

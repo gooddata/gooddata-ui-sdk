@@ -1,8 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { ErrorComponent, LoadingComponent, defaultErrorHandler } from "@gooddata/sdk-ui";
 
-import { type ICoreChartProps } from "../../interfaces/index.js";
+import { type ICoreChartProps } from "../../interfaces/chartProps.js";
 
 const defaultCoreChartProps: Pick<
     ICoreChartProps,

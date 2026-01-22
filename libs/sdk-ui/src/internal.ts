@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 export { useDebugEquality } from "./base/react/useDebugEquality.js";
 export { useDeepMemo } from "./base/react/useDeepMemo.js";

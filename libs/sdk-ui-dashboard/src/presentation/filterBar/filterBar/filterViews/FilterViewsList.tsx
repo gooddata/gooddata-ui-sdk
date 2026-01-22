@@ -28,12 +28,14 @@ import { FilterViewDeleteConfirm } from "./FilterViewDeleteConfirm.js";
 import {
     applyFilterView,
     deleteFilterView,
-    selectCanCreateFilterView,
-    selectFilterViewsAreLoading,
     setFilterViewAsDefault,
+} from "../../../../model/commands/filters.js";
+import {
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { selectFilterViewsAreLoading } from "../../../../model/store/filterViews/filterViewsReducersSelectors.js";
+import { selectCanCreateFilterView } from "../../../../model/store/permissions/permissionsSelectors.js";
 
 type IAction = "setDefault" | "delete" | typeof SELECT_ITEM_ACTION;
 

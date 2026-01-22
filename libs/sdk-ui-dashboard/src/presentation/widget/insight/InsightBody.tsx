@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type IInsightBodyProps } from "./types.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 /**
  * @internal

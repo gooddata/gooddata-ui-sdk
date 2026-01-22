@@ -2,8 +2,8 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { exportDashboardToPdf } from "../../../commands/index.js";
-import { type IDashboardExportToPdfResolved } from "../../../events/index.js";
+import { exportDashboardToPdf } from "../../../commands/dashboard.js";
+import { type IDashboardExportToPdfResolved } from "../../../events/dashboard.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

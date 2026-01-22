@@ -10,22 +10,27 @@ import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import {
     type IChangeInsightWidgetFilterSettings,
-    type IDashboardCommandFailed,
-    addVisualizationToSwitcherWidgetContent,
-    dispatchAndWaitFor,
-    eagerRemoveSectionItemByWidgetRef,
     enableInsightWidgetDateFilter,
-    selectIsDashboardSaving,
-    uiActions,
+} from "../../../../model/commands/insight.js";
+import { eagerRemoveSectionItemByWidgetRef } from "../../../../model/commands/layout.js";
+import {
+    addVisualizationToSwitcherWidgetContent,
     updateVisualizationsFromSwitcherWidgetContent,
-    useDashboardCommandProcessing,
+} from "../../../../model/commands/visualizationSwitcher.js";
+import { type IDashboardCommandFailed } from "../../../../model/events/general.js";
+import {
     useDashboardDispatch,
     useDashboardSelector,
-    useWidgetSelection,
-} from "../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../../model/react/useDashboardCommandProcessing.js";
+import { useWidgetSelection } from "../../../../model/react/useWidgetSelection.js";
+import { dispatchAndWaitFor } from "../../../../model/store/_infra/dispatchAndWaitFor.js";
+import { selectIsDashboardSaving } from "../../../../model/store/saving/savingSelectors.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
+import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
 
 /**

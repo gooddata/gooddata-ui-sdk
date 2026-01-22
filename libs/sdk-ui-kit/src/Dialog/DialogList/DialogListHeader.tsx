@@ -4,8 +4,9 @@ import { useCallback } from "react";
 
 import cx from "classnames";
 
-import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
-import { Typography } from "../../Typography/index.js";
+import { Bubble } from "../../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
+import { Typography } from "../../Typography/Typography.js";
 
 const BUTTON_TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: 0 } },

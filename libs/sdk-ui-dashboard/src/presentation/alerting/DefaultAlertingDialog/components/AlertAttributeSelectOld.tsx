@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useMemo, useRef, useState } from "react";
 
@@ -20,10 +20,8 @@ import {
     SubMenu,
 } from "@gooddata/sdk-ui-kit";
 
-import {
-    DASHBOARD_DIALOG_OVERS_Z_INDEX,
-    IGNORED_CONFIGURATION_MENU_CLICK_CLASS,
-} from "../../../constants/index.js";
+import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/classes.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type AlertAttribute } from "../../types.js";
 import { type AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
 import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../utils/getters.js";

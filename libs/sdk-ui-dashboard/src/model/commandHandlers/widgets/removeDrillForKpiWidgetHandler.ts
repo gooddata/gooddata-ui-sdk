@@ -4,7 +4,7 @@ import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type IRemoveDrillForKpiWidget } from "../../commands/index.js";
+import { type IRemoveDrillForKpiWidget } from "../../commands/kpi.js";
 import { type IDashboardKpiWidgetDrillRemoved, kpiWidgetDrillRemoved } from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";

@@ -1,13 +1,14 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
+import { saveScheduledEmail } from "../../../../model/commands/scheduledEmail.js";
 import {
     type CommandProcessingStatus,
-    saveScheduledEmail,
     useDashboardCommandProcessing,
-} from "../../../../model/index.js";
+} from "../../../../model/react/useDashboardCommandProcessing.js";
 
 export const useUpdateScheduledEmail = ({
     onBeforeRun,

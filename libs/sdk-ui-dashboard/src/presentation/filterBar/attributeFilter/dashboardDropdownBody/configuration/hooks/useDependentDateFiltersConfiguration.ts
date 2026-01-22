@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { useCallback, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
@@ -10,11 +11,9 @@ import {
     useDependentCommonDateFilterConfigurationState,
     useDependentDateFilterConfigurationState,
 } from "./useDependentDateFilterConfigurationState.js";
-import {
-    type IDashboardDependentDateFilter,
-    setAttributeFilterDependentDateFilters,
-    useDispatchDashboardCommand,
-} from "../../../../../../model/index.js";
+import { setAttributeFilterDependentDateFilters } from "../../../../../../model/commands/filters.js";
+import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
+import { type IDashboardDependentDateFilter } from "../../../../../../model/types/dateFilterTypes.js";
 
 export function useDependentDateFiltersConfiguration(
     neighborDateFilters: IDashboardDateFilter[],

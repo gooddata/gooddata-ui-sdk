@@ -21,7 +21,7 @@ import {
     validateInsightDrillDefinition,
 } from "./insightDrillDefinitionUtils.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { type IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors.js";

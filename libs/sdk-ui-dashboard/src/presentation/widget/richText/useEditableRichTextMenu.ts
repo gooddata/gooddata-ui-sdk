@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -6,14 +6,12 @@ import { useIntl } from "react-intl";
 
 import { type IRichTextWidget } from "@gooddata/sdk-model";
 
-import {
-    selectEnableRichTextWidgetFilterConfiguration,
-    useDashboardDispatch,
-    useDashboardEventDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { useDashboardCustomizationsContext } from "../../dashboardContexts/index.js";
-import { type IRichTextMenuItem, getDefaultRichTextEditMode } from "../richTextMenu/index.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardEventDispatch } from "../../../model/react/useDashboardEventDispatch.js";
+import { selectEnableRichTextWidgetFilterConfiguration } from "../../../model/store/config/configSelectors.js";
+import { useDashboardCustomizationsContext } from "../../dashboardContexts/DashboardCustomizationsContext.js";
+import { getDefaultRichTextEditMode } from "../richTextMenu/DefaultDashboardRichTextMenu/getDefaultRichTextEditMenuItems.js";
+import { type IRichTextMenuItem } from "../richTextMenu/types.js";
 
 type UseEditableRichTextMenuConfig = {
     widget: IRichTextWidget;

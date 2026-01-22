@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { clamp, isEqual, round } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -18,9 +19,9 @@ import {
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
 import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/flexibleLayout/builder/layout.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
 import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { DashboardLayoutFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/layout.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
 import {
     type MeasurableWidgetContent,
@@ -38,7 +39,7 @@ import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
-} from "../../../constants/index.js";
+} from "../../../constants/layout.js";
 
 /**
  * Unify dashboard layout items height for all screens.

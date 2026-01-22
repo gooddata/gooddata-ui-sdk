@@ -4,7 +4,7 @@ import { memo } from "react";
 
 import { DialogBase } from "./DialogBase.js";
 import { type IDialogProps } from "./typings.js";
-import { Overlay } from "../Overlay/index.js";
+import { Overlay } from "../Overlay/Overlay.js";
 
 /**
  * @internal

@@ -18,8 +18,11 @@ import {
 } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
-import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown/index.js";
+import { Bubble } from "../../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
+import { Dropdown } from "../../Dropdown/Dropdown.js";
+import { DropdownButton } from "../../Dropdown/DropdownButton.js";
+import { DropdownList } from "../../Dropdown/DropdownList.js";
 import {
     type IAvailableSortsGroup,
     type IBucketItemDescriptors,

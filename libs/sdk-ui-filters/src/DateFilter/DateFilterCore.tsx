@@ -42,8 +42,8 @@ import {
 } from "./interfaces/index.js";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
-import { MediaQueries } from "../constants/index.js";
-import { type IFilterButtonCustomIcon } from "../shared/index.js";
+import { MediaQueries } from "../constants/MediaQueries.js";
+import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
 
 export interface IDateFilterCoreProps {
     dateFormat: string;

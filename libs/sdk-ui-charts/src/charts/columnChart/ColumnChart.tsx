@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -19,7 +19,8 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { CoreColumnChart } from "./CoreColumnChart.js";
-import { type IBucketChartProps, ViewByAttributesLimit } from "../../interfaces/index.js";
+import { type IBucketChartProps } from "../../interfaces/chartProps.js";
+import { ViewByAttributesLimit } from "../../interfaces/limits.js";
 import { withChart } from "../_base/withChart.js";
 import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { stackedChartDimensions } from "../_commons/dimensions.js";

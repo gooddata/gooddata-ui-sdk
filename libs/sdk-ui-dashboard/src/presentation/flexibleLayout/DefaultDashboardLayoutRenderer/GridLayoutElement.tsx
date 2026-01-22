@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type CSSProperties, type MouseEventHandler, type ReactNode, forwardRef, useMemo } from "react";
 
@@ -7,7 +7,7 @@ import cx from "classnames";
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { useWidthValidation } from "./useItemWidthValidation.js";
-import { type CommonExportDataAttributes } from "../../export/index.js";
+import { type CommonExportDataAttributes } from "../../export/types.js";
 
 export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 

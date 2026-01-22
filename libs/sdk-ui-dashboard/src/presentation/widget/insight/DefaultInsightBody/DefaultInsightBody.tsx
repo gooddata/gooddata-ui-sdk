@@ -2,12 +2,10 @@
 
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
-import {
-    selectCatalogAttributes,
-    selectPreloadedAttributesWithReferences,
-    selectSettings,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogAttributes } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 import { getGeoDefaultDisplayFormRefs } from "../geoDefaultDisplayFormRefs.js";
 import { convertInsightToTableDefinition } from "../insightToTable.js";

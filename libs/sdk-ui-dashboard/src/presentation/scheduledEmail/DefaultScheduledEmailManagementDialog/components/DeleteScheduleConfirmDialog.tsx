@@ -11,11 +11,9 @@ import {
 import { type GoodDataSdkError, convertError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
-import {
-    selectCanManageWorkspace,
-    selectCurrentUser,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectCanManageWorkspace } from "../../../../model/store/permissions/permissionsSelectors.js";
+import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 
 interface IDeleteScheduleConfirmDialogProps {
     scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;

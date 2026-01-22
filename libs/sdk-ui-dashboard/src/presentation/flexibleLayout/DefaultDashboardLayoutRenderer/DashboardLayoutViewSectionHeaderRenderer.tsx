@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
@@ -7,15 +7,15 @@ import { type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
-import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableSnapshotExportAccessibility,
     selectIsExport,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import { type HeaderExportData } from "../../export/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type HeaderExportData } from "../../export/types.js";
 
 export interface IDashboardLayoutSectionHeaderProps {
     section: IDashboardLayoutSectionFacade<unknown>;

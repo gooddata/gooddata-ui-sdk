@@ -10,7 +10,7 @@
  * @packageDocumentation
  */
 
-/* eslint-disable no-duplicate-imports */
+/* eslint-disable no-duplicate-imports,no-restricted-syntax */
 
 export * from "@gooddata/sdk-model";
 export type { IExportResult as IExportResultModel } from "@gooddata/sdk-model";

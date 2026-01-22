@@ -4,8 +4,8 @@ import { type MouseEvent } from "react";
 
 import cx from "classnames";
 
-import { ShortenedText } from "../../ShortenedText/index.js";
-import { Typography } from "../../Typography/index.js";
+import { ShortenedText } from "../../ShortenedText/ShortenedText.js";
+import { Typography } from "../../Typography/Typography.js";
 import { type SizeLarge, type SizeMedium } from "../@types/size.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 

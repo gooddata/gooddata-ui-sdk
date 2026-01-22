@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { DashboardLayoutSectionBorder } from "./DashboardLayoutSectionBorder/index.js";
+import { DashboardLayoutSectionBorder } from "./DashboardLayoutSectionBorder/DashboardLayoutSectionBorder.js";
 
 export interface ISectionDropZoneBoxProps {
     isOver: boolean;

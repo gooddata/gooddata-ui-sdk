@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -10,8 +10,8 @@ import {
     ScrollablePanel,
 } from "@gooddata/sdk-ui-kit";
 
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
-import { ConfigurationBubble } from "../../widget/common/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
+import { ConfigurationBubble } from "../../widget/common/configuration/ConfigurationBubble.js";
 import { EditAlert } from "../../widget/insight/configuration/InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "../../widget/insight/configuration/InsightAlertConfig/hooks/useInsightWidgetAlerting.js";
 import { type IAlertingDialogOldProps } from "../types.js";

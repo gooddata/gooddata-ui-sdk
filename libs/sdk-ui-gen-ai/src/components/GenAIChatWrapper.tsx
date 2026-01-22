@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type FC, type MouseEvent, useCallback } from "react";
 
@@ -15,15 +15,11 @@ import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
 import { useThreadLoading } from "./hooks/useThreadLoading.js";
 import { Input } from "./Input.js";
 import { Messages } from "./Messages.js";
-import {
-    type RootState,
-    asyncProcessSelector,
-    cancelAsyncAction,
-    clearThreadAction,
-    loadThreadAction,
-} from "../store/index.js";
 import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
+import { asyncProcessSelector } from "../store/messages/messagesSelectors.js";
+import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store/messages/messagesSlice.js";
+import { type RootState } from "../store/types.js";
 
 export type GenAIChatOwnProps = {
     autofocus?: boolean;

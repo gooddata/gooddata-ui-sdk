@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -21,7 +21,7 @@ import { type IAlignPoint, type OverlayPositionType } from "@gooddata/sdk-ui-kit
 
 import { type IAttributeFilterErrorProps } from "./Components/AttributeFilterError.js";
 import { type IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading.js";
-import { type IFilterButtonCustomIcon } from "../shared/index.js";
+import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
 import { type IAttributeFilterDropdownActionsProps } from "./Components/Dropdown/AttributeFilterDropdownActions.js";
 import { type IAttributeFilterDropdownBodyProps } from "./Components/Dropdown/types.js";
 import { type IAttributeFilterDropdownButtonProps } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";

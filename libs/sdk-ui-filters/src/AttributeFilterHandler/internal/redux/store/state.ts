@@ -10,11 +10,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import {
-    type AsyncOperationStatus,
-    type AttributeElementKey,
-    type ILoadElementsOptions,
-} from "../../../types/index.js";
+import { type AsyncOperationStatus, type AttributeElementKey } from "../../../types/common.js";
+import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 
 /**
  * @internal

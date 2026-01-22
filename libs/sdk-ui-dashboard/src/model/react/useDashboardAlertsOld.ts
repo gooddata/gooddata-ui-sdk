@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -8,23 +8,24 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import { messages } from "../../locales.js";
-import { refreshAutomations } from "../commands/index.js";
+import { refreshAutomations } from "../commands/scheduledEmail.js";
 import {
     selectAutomationsError,
     selectAutomationsIsInitialized,
     selectAutomationsIsLoading,
-    selectCanManageWorkspace,
-    selectDashboardRef,
     selectDashboardUserAutomationAlertsInContext,
-    selectEnableAlerting,
+} from "../store/automations/automationsSelectors.js";
+import { selectEnableAlerting, selectIsReadOnly } from "../store/config/configSelectors.js";
+import { selectDashboardRef } from "../store/meta/metaSelectors.js";
+import { selectNotificationChannelsCount } from "../store/notificationChannels/notificationChannelsSelectors.js";
+import { selectCanManageWorkspace } from "../store/permissions/permissionsSelectors.js";
+import { selectIsInViewMode } from "../store/renderMode/renderModeSelectors.js";
+import { uiActions } from "../store/ui/index.js";
+import {
     selectIsAlertingDialogOpen,
     selectIsAlertsManagementDialogOpen,
-    selectIsInViewMode,
-    selectIsReadOnly,
     selectMenuButtonItemsVisibility,
-    selectNotificationChannelsCount,
-    uiActions,
-} from "../store/index.js";
+} from "../store/ui/uiSelectors.js";
 
 /**
  * Hook that handles alerts dialog

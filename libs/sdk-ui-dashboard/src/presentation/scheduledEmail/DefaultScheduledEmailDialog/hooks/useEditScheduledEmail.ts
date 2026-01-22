@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -42,21 +42,22 @@ import {
     isXlsxVisualizationAutomation,
     isXlsxVisualizationExportDefinition,
 } from "../../../../_staging/automation/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
-    type ExtendedDashboardWidget,
-    type IAutomationFiltersTab,
-    selectAutomationCommonDateFilterId,
-    selectCurrentUser,
-    selectDashboardHiddenFilters,
-    selectDashboardId,
-    selectDashboardTitle,
     selectEnableAutomationEvaluationMode,
     selectEnableExternalRecipients,
     selectTimezone,
-    selectUsers,
-    selectWidgetLocalIdToTabIdMap,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/store/config/configSelectors.js";
+import {
+    type IAutomationFiltersTab,
+    selectAutomationCommonDateFilterId,
+    selectDashboardHiddenFilters,
+} from "../../../../model/store/filtering/dashboardFilterSelectors.js";
+import { selectDashboardId, selectDashboardTitle } from "../../../../model/store/meta/metaSelectors.js";
+import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
+import { selectUsers } from "../../../../model/store/users/usersSelectors.js";
+import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,

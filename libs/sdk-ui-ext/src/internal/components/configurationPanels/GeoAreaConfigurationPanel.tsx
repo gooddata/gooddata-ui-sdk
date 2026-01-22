@@ -4,11 +4,13 @@ import { type ReactElement, type ReactNode } from "react";
 
 import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import type { GeoTileset } from "@gooddata/sdk-ui-geo/next";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
+import { DropdownControl } from "../configurationControls/DropdownControl.js";
 import { GeoViewportControl } from "../configurationControls/GeoViewportControl.js";
 
 /**
@@ -24,8 +26,17 @@ import { GeoViewportControl } from "../configurationControls/GeoViewportControl.
  * @internal
  */
 export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
+    protected getControlProperties(): { tileset: GeoTileset } {
+        const tileset = (this.props.properties?.controls?.["tileset"] as GeoTileset | undefined) ?? "default";
+        return {
+            tileset,
+        };
+    }
+
     protected renderViewportSection(): ReactElement {
-        const { properties, propertiesMeta, pushData } = this.props;
+        const { properties, propertiesMeta, pushData, featureFlags } = this.props;
+        const { tileset } = this.getControlProperties();
+        const isBasemapConfigEnabled = !!featureFlags?.["enableGeoBasemapConfig"];
         return (
             <ConfigSection
                 id="map_section"
@@ -39,6 +50,21 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
                     disabled={this.isControlDisabled()}
                     pushData={pushData}
                 />
+                {isBasemapConfigEnabled ? (
+                    <DropdownControl
+                        valuePath="tileset"
+                        labelText={messages["basemapTitle"].id}
+                        properties={properties}
+                        value={tileset}
+                        items={[
+                            { title: "Default", value: "default" },
+                            { title: "Satellite", value: "satellite" },
+                        ]}
+                        disabled={this.isControlDisabled()}
+                        showDisabledMessage={this.isControlDisabled()}
+                        pushData={pushData}
+                    />
+                ) : null}
             </ConfigSection>
         );
     }

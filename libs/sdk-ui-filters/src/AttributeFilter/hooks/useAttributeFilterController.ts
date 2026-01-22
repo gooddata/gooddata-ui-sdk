@@ -48,7 +48,7 @@ import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState
 import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
 import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
-import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
+import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 import {
     type IAttributeFilterCoreProps,
     type OnApplyCallbackType,

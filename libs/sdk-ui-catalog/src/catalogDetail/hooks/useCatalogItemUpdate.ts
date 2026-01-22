@@ -13,7 +13,7 @@ import { getDisplayName } from "../../catalogItem/converter.js";
 import { updateCatalogItem } from "../../catalogItem/query.js";
 import type { ICatalogItem, ICatalogItemRef } from "../../catalogItem/types.js";
 import { useMounted } from "../../hooks/useMounted.js";
-import type { ObjectType } from "../../objectType/index.js";
+import { type ObjectType } from "../../objectType/types.js";
 
 export interface IUseCatalogItemUpdate {
     currentUser: IUser | null | undefined;

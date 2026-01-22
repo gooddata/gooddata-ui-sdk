@@ -22,17 +22,17 @@ import {
 
 import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
 import { messages } from "../../../locales.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { DEFAULT_MAX_AUTOMATIONS } from "../../../model/react/useDashboardAutomations/constants.js";
+import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
 import {
-    DEFAULT_MAX_AUTOMATIONS,
-    selectCanCreateAutomation,
-    selectCurrentUser,
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
-    selectExecutionTimestamp,
-    selectIsWhiteLabeled,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+} from "../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectCanCreateAutomation } from "../../../model/store/permissions/permissionsSelectors.js";
+import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
+import { selectCurrentUser } from "../../../model/store/user/userSelectors.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { isMobileView } from "../utils/responsive.js";
 

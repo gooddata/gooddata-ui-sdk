@@ -1,8 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
-import { useDashboardDrop } from "../../../dragAndDrop/index.js";
+import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 
 export function useFilterExpansionByDragAndDrop(
     containsMultipleRows: boolean,

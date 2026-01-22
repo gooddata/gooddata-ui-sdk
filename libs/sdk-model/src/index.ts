@@ -680,75 +680,92 @@ export type {
 } from "./dashboard/analyticalWidgets.js";
 
 export {
-    type CatalogItemType,
-    type CatalogItem,
-    type ICatalogGroup,
-    type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
-    type ICatalogFact,
-    type ICatalogMeasure,
-    type ICatalogDateDataset,
-    type ICatalogDateAttribute,
-    type ICatalogItemBase,
-    type IGroupableCatalogItemBase,
-    type GroupableCatalogItem,
     type ICatalogDateAttributeHierarchy,
-    isCatalogAttribute,
     isCatalogAttributeHierarchy,
     isCatalogDateAttributeHierarchy,
-    isCatalogFact,
-    isCatalogMeasure,
-    isCatalogDateDataset,
-    isCatalogDateAttribute,
-    catalogItemMetadataObject,
     getHierarchyRef,
     getHierarchyTitle,
     getHierarchyAttributes,
-} from "./ldm/catalog/index.js";
+} from "./ldm/catalog/attributeHierarchy/index.js";
 
 export {
-    type IAttributeDisplayFormMetadataObject,
-    type IAttributeDisplayFormGeoAreaConfig,
+    type ICatalogDateDataset,
+    type ICatalogDateAttribute,
+    isCatalogDateDataset,
+    isCatalogDateAttribute,
+} from "./ldm/catalog/dateDataset/index.js";
+
+export type { CatalogItemType, ICatalogItemBase } from "./ldm/catalog/types.js";
+
+export type { ICatalogGroup, IGroupableCatalogItemBase } from "./ldm/catalog/group/index.js";
+
+export { type ICatalogAttribute, isCatalogAttribute } from "./ldm/catalog/attribute/index.js";
+
+export { type ICatalogFact, isCatalogFact } from "./ldm/catalog/fact/index.js";
+
+export { type ICatalogMeasure, isCatalogMeasure } from "./ldm/catalog/measure/index.js";
+
+export {
+    type CatalogItem,
+    type GroupableCatalogItem,
+    catalogItemMetadataObject,
+} from "./ldm/catalog/index.js";
+
+export { type IAttributeMetadataObject, isAttributeMetadataObject } from "./ldm/metadata/attribute/index.js";
+export {
     type AttributeDisplayFormType,
-    type IAttributeMetadataObject,
-    type IDataSetMetadataObject,
+    type IAttributeDisplayFormGeoAreaConfig,
+    type IAttributeDisplayFormMetadataObject,
+    attributeDisplayFormMetadataObjectAttributeRef,
+    attributeDisplayFormMetadataObjectRef,
+    attributeDisplayFormMetadataObjectTitle,
+    isAttributeDisplayFormMetadataObject,
+} from "./ldm/metadata/attributeDisplayForm/index.js";
+export {
+    type IAttributeHierarchyMetadataObject,
+    type IDateHierarchyTemplate,
+    isAttributeHierarchyMetadataObject,
+} from "./ldm/metadata/attributeHierarchy/index.js";
+export { type IDashboardMetadataObject, isDashboardMetadataObject } from "./ldm/metadata/dashboard/index.js";
+export {
     type IDataSetAttributeMetadataObject,
-    type IVariableMetadataObject,
-    type IFactMetadataObject,
-    type IMetadataObjectDefinition,
+    type IDataSetMetadataObject,
+    isDataSetMetadataObject,
+} from "./ldm/metadata/dataSet/index.js";
+export { type IFactMetadataObject, isFactMetadataObject } from "./ldm/metadata/fact/index.js";
+export {
     type IMeasureMetadataObject,
     type IMeasureMetadataObjectBase,
     type IMeasureMetadataObjectDefinition,
     type MetricType,
-    type IMetadataObject,
-    type IMetadataObjectBase,
-    type IMetadataObjectIdentity,
-    type MetadataObject,
-    type IDashboardMetadataObject,
-    type IAttributeHierarchyMetadataObject,
-    type IDateHierarchyTemplate,
-    type IMdObject,
-    type IMdObjectBase,
-    type IMdObjectDefinition,
-    type IMdObjectIdentity,
-    type ToMdObjectDefinition,
-    isAttributeDisplayFormMetadataObject,
-    isAttributeMetadataObject,
-    isDataSetMetadataObject,
-    isVariableMetadataObject,
-    isFactMetadataObject,
     isMeasureMetadataObject,
     isMeasureMetadataObjectDefinition,
+} from "./ldm/metadata/measure/index.js";
+export {
+    type IMemoryItemDefinition,
+    type IMemoryItemMetadataObject,
+    type MemoryItemStrategy,
+} from "./ldm/metadata/memoryItem/index.js";
+export {
+    type IMetadataObject,
+    type IMetadataObjectBase,
+    type IMetadataObjectDefinition,
+    type IMetadataObjectIdentity,
     isMetadataObject,
-    metadataObjectId,
-    isDashboardMetadataObject,
-    attributeDisplayFormMetadataObjectAttributeRef,
-    attributeDisplayFormMetadataObjectRef,
-    attributeDisplayFormMetadataObjectTitle,
-    isAttributeHierarchyMetadataObject,
+} from "./ldm/metadata/types.js";
+export {
+    type IMdObjectBase,
+    type IMdObjectIdentity,
+    type IMdObject,
+    type IMdObjectDefinition,
+    type ToMdObjectDefinition,
     isMdObject,
     isMdObjectDefinition,
-} from "./ldm/metadata/index.js";
+} from "./ldm/metadata/next.js";
+export { type IVariableMetadataObject, isVariableMetadataObject } from "./ldm/metadata/variable/index.js";
+
+export { type MetadataObject, metadataObjectId } from "./ldm/metadata/index.js";
 
 export type {
     DataColumnType,
@@ -1098,11 +1115,6 @@ export {
     isAutomationUnknownUserRecipient,
 } from "./automations/index.js";
 
-export type {
-    IMemoryItemDefinition,
-    IMemoryItemMetadataObject,
-    MemoryItemStrategy,
-} from "./ldm/metadata/memoryItem/index.js";
 export {
     type ISemanticSearchResult,
     type ISemanticSearchResultItem,

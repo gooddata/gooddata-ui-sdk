@@ -15,11 +15,10 @@ import {
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
-import { type IChangeKpiWidgetMeasure } from "../../commands/index.js";
+import { type IChangeKpiWidgetMeasure } from "../../commands/kpi.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type IDashboardKpiWidgetMeasureChanged } from "../../events/index.js";
-import { kpiWidgetMeasureChanged } from "../../events/kpi.js";
-import { type IMeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
+import { type IDashboardKpiWidgetMeasureChanged, kpiWidgetMeasureChanged } from "../../events/kpi.js";
+import { type IMeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/kpis.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";

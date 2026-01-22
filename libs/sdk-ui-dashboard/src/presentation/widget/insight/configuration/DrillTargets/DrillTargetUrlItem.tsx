@@ -11,13 +11,13 @@ import { Button, Dropdown, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms.js";
 import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectBackendCapabilities } from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-    selectBackendCapabilities,
-    selectSettings,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectSettings } from "../../../../../model/store/config/configSelectors.js";
 import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection.js";
 import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlEditor.js";
 import { CustomUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlSection.js";

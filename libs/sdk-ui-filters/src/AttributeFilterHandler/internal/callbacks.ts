@@ -1,30 +1,28 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type AnyAction } from "@reduxjs/toolkit";
 
 import { type GoodDataSdkError, isGoodDataSdkError } from "@gooddata/sdk-ui";
 
+import { type InvertableAttributeElementSelection } from "../types/attributeFilterHandler.js";
 import {
-    type AttributeFilterHandlerEventListener,
-    actions,
-    selectInvertableCommittedSelection,
-    selectInvertableWorkingSelection,
-} from "./redux/index.js";
-import {
-    type Callback,
-    type CallbackRegistration,
-    type InvertableAttributeElementSelection,
     type OnInitCancelCallbackPayload,
     type OnInitErrorCallbackPayload,
     type OnInitStartCallbackPayload,
     type OnInitSuccessCallbackPayload,
-    type OnInitTotalCountCancelCallbackPayload,
-    type OnInitTotalCountErrorCallbackPayload,
-    type OnInitTotalCountStartCallbackPayload,
-    type OnInitTotalCountSuccessCallbackPayload,
+} from "../types/attributeFilterLoader.js";
+import {
     type OnLoadAttributeCancelCallbackPayload,
     type OnLoadAttributeErrorCallbackPayload,
     type OnLoadAttributeStartCallbackPayload,
     type OnLoadAttributeSuccessCallbackPayload,
+} from "../types/attributeLoader.js";
+import { type Callback, type CallbackRegistration, type Unsubscribe } from "../types/common.js";
+import {
+    type OnInitTotalCountCancelCallbackPayload,
+    type OnInitTotalCountErrorCallbackPayload,
+    type OnInitTotalCountStartCallbackPayload,
+    type OnInitTotalCountSuccessCallbackPayload,
     type OnLoadCustomElementsCancelCallbackPayload,
     type OnLoadCustomElementsErrorCallbackPayload,
     type OnLoadCustomElementsStartCallbackPayload,
@@ -41,10 +39,17 @@ import {
     type OnLoadNextElementsPageErrorCallbackPayload,
     type OnLoadNextElementsPageStartCallbackPayload,
     type OnLoadNextElementsPageSuccessCallbackPayload,
+} from "../types/elementsLoader.js";
+import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
-    type Unsubscribe,
-} from "../types/index.js";
+} from "../types/selectionHandler.js";
+import {
+    selectInvertableCommittedSelection,
+    selectInvertableWorkingSelection,
+} from "./redux/selection/selectionSelectors.js";
+import { actions } from "./redux/store/slice.js";
+import { type AttributeFilterHandlerEventListener } from "./redux/store/types.js";
 
 const newCallbackRegistrations = () => {
     return {

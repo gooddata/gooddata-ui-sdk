@@ -9,7 +9,7 @@ import { type IMetadataObject, type ObjRef, areObjRefsEqual, serializeObjRef } f
 import { invalidQueryArguments } from "../events/general.js";
 import { type IQueryAttributeDataSet } from "../queries/attributeDataSet.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
-import { selectPreloadedAttributesWithReferences } from "../store/index.js";
+import { selectPreloadedAttributesWithReferences } from "../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryAttributeDataSetService = createCachedQueryService(

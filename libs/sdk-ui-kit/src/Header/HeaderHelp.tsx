@@ -7,8 +7,8 @@ import { isEmpty } from "lodash-es";
 import { FormattedMessage, type IntlShape, injectIntl } from "react-intl";
 
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
-import { Button } from "../Button/index.js";
-import { Overlay } from "../Overlay/index.js";
+import { Button } from "../Button/Button.js";
+import { Overlay } from "../Overlay/Overlay.js";
 import { type HelpMenuDropdownAlignPoints, type IAlignPoint } from "../typings/positioning.js";
 import { useIdPrefixed } from "../utils/useId.js";
 

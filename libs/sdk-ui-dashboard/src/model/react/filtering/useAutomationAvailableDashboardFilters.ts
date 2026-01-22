@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { isEqual } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
@@ -10,14 +11,16 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    type ICrossFilteringItem,
-    selectCrossFilteringItems,
-    selectDefaultFilterOverrides,
     selectEnableAutomationFilterContext,
     selectEnableDateFilterIdentifiers,
+} from "../../store/config/configSelectors.js";
+import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
+import { type ICrossFilteringItem } from "../../store/drill/types.js";
+import {
+    selectDefaultFilterOverrides,
     selectFilterContextFilters,
     selectOriginalFilterContextFilters,
-} from "../../store/index.js";
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
 /**

@@ -1,8 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type KpiDrillDefinition } from "@gooddata/sdk-model";
 
 import { validateKpiDrillTarget } from "./kpiDrillValidationUtils.js";
-import { type IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 

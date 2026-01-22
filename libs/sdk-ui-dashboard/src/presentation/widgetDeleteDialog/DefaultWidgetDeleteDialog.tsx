@@ -8,20 +8,20 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
 import { type IWidgetDeleteDialogProps } from "./types.js";
+import { eagerRemoveSectionItemByWidgetRef } from "../../model/commands/layout.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { dispatchAndWaitFor } from "../../model/store/_infra/dispatchAndWaitFor.js";
 import {
-    dispatchAndWaitFor,
-    eagerRemoveSectionItemByWidgetRef,
-    selectAnalyticalWidgetByRef,
     selectDashboardUserAutomationAlertsInContext,
     selectDashboardUserAutomationSchedulesInContext,
-    selectEnableAlerting,
-    selectEnableScheduling,
+} from "../../model/store/automations/automationsSelectors.js";
+import { selectEnableAlerting, selectEnableScheduling } from "../../model/store/config/configSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../model/store/tabs/layout/layoutSelectors.js";
+import { uiActions } from "../../model/store/ui/index.js";
+import {
     selectIsWidgetDeleteDialogOpen,
     selectWidgetDeleteDialogWidgetRef,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../model/index.js";
+} from "../../model/store/ui/uiSelectors.js";
 
 const deleteMessages = defineMessages({
     headline: {

@@ -1,17 +1,18 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useEffect } from "react";
 
 import { type IKpiWidget, type IWidgetAlert } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
+import { queryWidgetBrokenAlerts } from "../../../model/queries/widgets.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    type IBrokenAlertFilterBasicInfo,
     type QueryProcessingStatus,
-    queryWidgetBrokenAlerts,
-    selectFilterContextFilters,
     useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/react/useDashboardQueryProcessing.js";
+import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { type IBrokenAlertFilterBasicInfo } from "../../../model/types/alertTypes.js";
 
 export const useWidgetBrokenAlertsQuery = (
     widget: IKpiWidget,

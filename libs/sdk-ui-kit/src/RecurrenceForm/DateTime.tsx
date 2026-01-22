@@ -14,9 +14,9 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { DEFAULT_DROPDOWN_ZINDEX, TIME_ANCHOR } from "./constants.js";
-import { parseDate } from "../Datepicker/Datepicker.js";
-import { Datepicker } from "../Datepicker/index.js";
-import { Timepicker, normalizeTime } from "../Timepicker/index.js";
+import { Datepicker, parseDate } from "../Datepicker/Datepicker.js";
+import { Timepicker } from "../Timepicker/Timepicker.js";
+import { normalizeTime } from "../Timepicker/utils/timeUtilities.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
 interface IDateTimeProps {

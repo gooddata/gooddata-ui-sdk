@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -10,8 +10,9 @@ import {
 } from "@gooddata/sdk-model";
 
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
-import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../../tabs/index.js";
 import { type DashboardSelector } from "../../types.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
+import { DEFAULT_TAB_ID } from "../tabsState.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 

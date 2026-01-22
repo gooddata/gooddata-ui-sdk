@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     insightCreated,
@@ -10,7 +10,7 @@ import {
 import { type VisType } from "@gooddata/sdk-ui";
 
 import { type IInsightDraggingComponentProps } from "../../componentDefinition/types.js";
-import { DraggableInsightListItemBody } from "../../dashboard/DashboardSidebar/DraggableInsightList/index.js";
+import { DraggableInsightListItemBody } from "../../dashboard/DashboardSidebar/DraggableInsightList/DraggableInsightListItemWrapper.js";
 
 /*
  * @internal

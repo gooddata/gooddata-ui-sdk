@@ -21,12 +21,12 @@ import {
 
 import { DrillDialogExportDropdown } from "./DrillDialogExportDropdown.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
-    selectCanExportTabular,
     selectEnableExportToPdfTabular,
     selectSettings,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/store/config/configSelectors.js";
+import { selectCanExportTabular } from "../../../../../model/store/permissions/permissionsSelectors.js";
 
 export interface IDrillDialogProps
     extends Pick<

@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions.js";
-import { type IChangeSharing } from "../../commands/index.js";
+import { type IChangeSharing } from "../../commands/dashboard.js";
 import { type DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dashboardPermissionsActions } from "../../store/dashboardPermissions/index.js";

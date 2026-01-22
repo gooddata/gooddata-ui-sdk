@@ -1,9 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
 
 /**

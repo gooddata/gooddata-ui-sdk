@@ -32,15 +32,13 @@ import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
 import { DrillType, type IDrillSelectContext, type IDrillSelectItem } from "./types.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import {
-    selectAccessibleDashboards,
-    selectCatalogAttributeDisplayFormsById,
-    selectDashboardTitle,
-    selectEnableImplicitDrillToUrl,
-    selectInsightsMap,
-    selectWidgetByRef,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectAccessibleDashboards } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
+import { selectCatalogAttributeDisplayFormsById } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectEnableImplicitDrillToUrl } from "../../../model/store/config/configSelectors.js";
+import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
+import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
+import { selectWidgetByRef } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import { type DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import { useDrillSelectDropdownMenuItems } from "../hooks/useDrillSelectDropdownMenuItems.js";
 import { isDrillToUrl } from "../types.js";

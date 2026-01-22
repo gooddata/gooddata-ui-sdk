@@ -30,11 +30,11 @@ import {
     isValueRowDefinition,
 } from "@gooddata/sdk-ui";
 
+import type { IDashboardKeyDriverCombinationItem } from "../../../model/events/drill.js";
 import {
-    type IDashboardKeyDriverCombinationItem,
     keyDriverAnalysisSupportedStringGranularities,
     keyDriverYearGranularity,
-} from "../../../model/index.js";
+} from "../../../model/store/keyDriverAnalysis/const.js";
 
 /**
  * @internal

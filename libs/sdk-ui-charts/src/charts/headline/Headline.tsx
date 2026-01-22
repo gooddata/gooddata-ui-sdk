@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -19,7 +19,7 @@ import {
 import { CoreHeadline, type ICoreHeadlineExtendedProps } from "./CoreHeadline.js";
 import { type IHeadlineProvider } from "./HeadlineProvider.js";
 import { createHeadlineProvider } from "./HeadlineProviderFactory.js";
-import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 
 //
 // Public interface

@@ -1,15 +1,13 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type MouseEvent, useCallback } from "react";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
-import {
-    selectConfigurationPanelOpened,
-    selectIsInEditMode,
-    selectSelectedWidgetRef,
-    uiActions,
-} from "../store/index.js";
+import { selectIsInEditMode } from "../store/renderMode/renderModeSelectors.js";
+import { uiActions } from "../store/ui/index.js";
+import { selectConfigurationPanelOpened, selectSelectedWidgetRef } from "../store/ui/uiSelectors.js";
 
 /**
  * @internal

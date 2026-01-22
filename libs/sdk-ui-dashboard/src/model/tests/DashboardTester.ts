@@ -14,21 +14,18 @@ import { type Identifier, type ObjRef, idRef, uriRef } from "@gooddata/sdk-model
 
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import { type IRenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
+import { type DashboardCommandType } from "../commands/base.js";
+import { type InitializeDashboard, initializeDashboard } from "../commands/dashboard.js";
+import { type DashboardEventType } from "../events/base.js";
 import {
-    type DashboardCommandType,
-    type InitializeDashboard,
-    initializeDashboard,
-} from "../commands/index.js";
-import {
-    type DashboardEventType,
-    type DashboardEvents,
     isDashboardCommandStarted,
     isDashboardQueryCompleted,
     isDashboardQueryStarted,
-} from "../events/index.js";
-import { HeadlessDashboard, type IHeadlessDashboardConfig } from "../headlessDashboard/index.js";
+} from "../events/general.js";
+import { type DashboardEvents } from "../events/index.js";
+import { HeadlessDashboard, type IHeadlessDashboardConfig } from "../headlessDashboard/HeadlessDashboard.js";
 import { type IDashboardQueryService } from "../store/_infra/queryService.js";
-import { type DashboardState } from "../store/index.js";
+import { type DashboardState } from "../store/types.js";
 import { type DashboardContext, type DashboardModelCustomizationFns } from "../types/commonTypes.js";
 
 type DashboardTesterConfig = {

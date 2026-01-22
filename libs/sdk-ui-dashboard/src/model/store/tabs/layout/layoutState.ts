@@ -2,7 +2,7 @@
 
 import { type IDashboardLayout, type ScreenSize } from "@gooddata/sdk-model";
 
-import { type DashboardLayoutCommands } from "../../../commands/index.js";
+import { type DashboardLayoutCommands } from "../../../commands/layout.js";
 import { type ExtendedDashboardItem, type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { type IUndoEnhancedState, InitialUndoState } from "../../_infra/undoEnhancer.js";
 

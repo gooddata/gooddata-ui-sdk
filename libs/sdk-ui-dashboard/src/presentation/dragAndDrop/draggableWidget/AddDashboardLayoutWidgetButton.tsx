@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -14,8 +14,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { selectIsWhiteLabeled, useDashboardSelector } from "../../../model/index.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

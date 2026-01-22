@@ -17,10 +17,12 @@ import {
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
-import { type IChangeInsightWidgetInsight } from "../../commands/index.js";
+import { type IChangeInsightWidgetInsight } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type IDashboardInsightWidgetInsightSwitched } from "../../events/index.js";
-import { insightWidgetInsightChanged } from "../../events/insight.js";
+import {
+    type IDashboardInsightWidgetInsightSwitched,
+    insightWidgetInsightChanged,
+} from "../../events/insight.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";

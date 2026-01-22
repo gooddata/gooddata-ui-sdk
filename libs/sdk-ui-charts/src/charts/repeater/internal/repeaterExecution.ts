@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type DimensionItem,
@@ -32,7 +32,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import {
     type ChartInlineVisualizationType,
     type IInlineVisualizationsConfig,
-} from "../../../interfaces/index.js";
+} from "../../../interfaces/chartConfig.js";
 
 /**
  * Returns an inline measure definition created from a standalone measure.

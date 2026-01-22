@@ -4,7 +4,7 @@ import { AddUserOrGroupButton } from "./AddGranteeButton.js";
 import { GranteeList } from "./GranteeList.js";
 import { GranteeListLoading } from "./GranteeListLoading.js";
 import { type IShareGranteeContentProps } from "./types.js";
-import { Typography } from "../../../Typography/index.js";
+import { Typography } from "../../../Typography/Typography.js";
 
 /**
  * @internal

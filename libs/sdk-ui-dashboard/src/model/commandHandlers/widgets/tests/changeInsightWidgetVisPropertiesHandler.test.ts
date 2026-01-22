@@ -7,11 +7,9 @@ import { type IInsightWidget, idRef, uriRef } from "@gooddata/sdk-model";
 import {
     type IChangeInsightWidgetVisProperties,
     changeInsightWidgetVisProperties,
-} from "../../../commands/index.js";
-import {
-    type IDashboardCommandFailed,
-    type IDashboardInsightWidgetVisPropertiesChanged,
-} from "../../../events/index.js";
+} from "../../../commands/insight.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
+import { type IDashboardInsightWidgetVisPropertiesChanged } from "../../../events/insight.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {

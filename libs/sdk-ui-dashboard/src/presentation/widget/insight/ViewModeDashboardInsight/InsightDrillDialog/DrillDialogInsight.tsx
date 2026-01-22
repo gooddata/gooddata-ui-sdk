@@ -24,23 +24,23 @@ import {
 
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
+import { selectCatalogAttributes } from "../../../../../model/store/catalog/catalogSelectors.js";
 import {
     selectAgGridToken,
-    selectCatalogAttributes,
     selectColorPalette,
-    selectDrillableItems,
-    selectExecutionTimestamp,
     selectIsExport,
     selectLocale,
     selectMapboxToken,
-    selectPermissions,
-    selectPreloadedAttributesWithReferences,
     selectSeparators,
     selectSettings,
-    useDashboardSelector,
-    useWidgetFilters,
-} from "../../../../../model/index.js";
-import { IntlWrapper } from "../../../../localization/index.js";
+} from "../../../../../model/store/config/configSelectors.js";
+import { selectDrillableItems } from "../../../../../model/store/drill/drillSelectors.js";
+import { selectPermissions } from "../../../../../model/store/permissions/permissionsSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 import { getGeoDefaultDisplayFormRefs } from "../../geoDefaultDisplayFormRefs.js";
 import { InsightBody } from "../../InsightBody.js";
 import { convertInsightToTableDefinition } from "../../insightToTable.js";

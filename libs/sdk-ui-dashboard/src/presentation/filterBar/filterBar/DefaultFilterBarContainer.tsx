@@ -22,21 +22,22 @@ import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDra
 import { type CalculatedRows, useRowsCalculator } from "./hooks/useRowsCalculator.js";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
+import { applyFilterContextWorkingSelection } from "../../../model/commands/filters.js";
+import { isDashboardFilterContextSelectionReset } from "../../../model/events/filters.js";
+import { useDashboardEventsContext } from "../../../model/react/DashboardEventsContext.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    applyFilterContextWorkingSelection,
-    isDashboardFilterContextSelectionReset,
     selectEnableFilterViews,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsInEditMode,
-    selectIsWorkingFilterContextChanged,
     selectLocale,
+} from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import {
+    selectIsWorkingFilterContextChanged,
     selectNamesOfFiltersWithInvalidSelection,
-    useDashboardDispatch,
-    useDashboardEventsContext,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
-import { IntlWrapper } from "../../localization/index.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
