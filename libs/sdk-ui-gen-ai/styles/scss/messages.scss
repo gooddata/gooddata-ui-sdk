@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-@use "sass:color";
 @use "variables" as variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
@@ -114,8 +113,30 @@
             height: 0;
         }
 
-        & p {
+        & h1,
+        & h2,
+        & h3,
+        & h4,
+        & h5,
+        & h6,
+        & p,
+        & li,
+        & th,
+        & td {
             color: kit-variables.$gd-color-white;
+        }
+
+        & table {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        & th,
+        & td {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        & th {
+            background: rgba(255, 255, 255, 0.12);
         }
     }
 
@@ -206,6 +227,76 @@
         &.date .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("date");
         }
+    }
+}
+
+.gd-gen-ai-chat__messages__content--text {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    ol {
+        margin: 0 0 8px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-top: 12px;
+    }
+
+    h1:first-child,
+    h2:first-child,
+    h3:first-child,
+    h4:first-child,
+    h5:first-child,
+    h6:first-child {
+        margin-top: 0;
+    }
+
+    ul,
+    ol {
+        padding-left: 20px;
+    }
+
+    li {
+        margin-bottom: 4px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    p:last-child,
+    ul:last-child,
+    ol:last-child {
+        margin-bottom: 0;
+    }
+
+    table {
+        @include typo-mixins.gd-paragraph;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0;
+    }
+
+    th,
+    td {
+        border: 1px solid kit-variables.$gd-border-color;
+        padding: 4px 8px;
+        text-align: left;
+    }
+
+    th {
+        background: kit-variables.$is-focused-background;
+        font-weight: 600;
     }
 }
 

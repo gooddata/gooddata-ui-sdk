@@ -1,7 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 export * from "./ScrollablePanel.js";
-export type { isElementInvisibleType } from "./ScrollContext.js";
-export { useScrollContext, scrollContextDefault } from "./ScrollContext.js";
-export type { IScrollableItemProps } from "./ScrollableItem.js";
-export { ScrollableItem } from "./ScrollableItem.js";
+export { useScrollContext, scrollContextDefault, type isElementInvisibleType } from "./ScrollContext.js";
+export { ScrollableItem, type IScrollableItemProps } from "./ScrollableItem.js";

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 export type {
     IDashboardLayoutItemKeyGetter,
@@ -20,12 +20,10 @@ export type {
 } from "./interfaces.js";
 
 export { DashboardLayout } from "./DashboardLayout.js";
-export type { IDashboardLayoutItemProps } from "./DashboardLayoutItem.js";
-export { DashboardLayoutItem } from "./DashboardLayoutItem.js";
+export { DashboardLayoutItem, type IDashboardLayoutItemProps } from "./DashboardLayoutItem.js";
 export { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer.js";
 export { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
-export type { IDashboardLayoutSectionProps } from "./DashboardLayoutSection.js";
-export { DashboardLayoutSection } from "./DashboardLayoutSection.js";
+export { type IDashboardLayoutSectionProps, DashboardLayoutSection } from "./DashboardLayoutSection.js";
 export { DashboardLayoutEditSectionHeader } from "./DashboardLayoutEditSectionHeader.js";
 export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 export { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";

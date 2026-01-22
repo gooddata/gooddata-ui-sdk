@@ -1,7 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { Chart, type IChartProps } from "./adapter/Chart.js";
 import { ChartTransformation, type IChartTransformationProps } from "./ChartTransformation.js";
-export type { IHighChartsRendererProps } from "./adapter/HighChartsRenderer.js";
+export { type IHighChartsRendererProps, FLUID_LEGEND_THRESHOLD } from "./adapter/HighChartsRenderer.js";
 export type { IChartTransformationProps, IChartProps };
 export { Chart, ChartTransformation };
 
@@ -9,8 +10,6 @@ export { Chart, ChartTransformation };
  * TODO: none of the stuff below this comment should be exported from highcharts. it should either be hidden
  *  or moved elsewhere.
  */
-
-export { FLUID_LEGEND_THRESHOLD } from "./adapter/HighChartsRenderer.js";
 export { COMBO_SUPPORTED_CHARTS } from "./chartTypes/comboChart/comboChartOptions.js";
 export { updateConfigWithSettings } from "./chartTypes/_chartOptions/chartOptionsForSettings.js";
 export { updateForecastWithSettings } from "./chartTypes/_chartOptions/chartForecast.js";

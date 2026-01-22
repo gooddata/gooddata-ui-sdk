@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 /**
  * This package provides tools to make your application support themes.
  *
@@ -9,13 +10,14 @@
  *
  * @packageDocumentation
  */
-export type { IThemeProviderProps, ThemeModifier } from "./ThemeProvider/ThemeProvider.js";
-export { ThemeProvider } from "./ThemeProvider/ThemeProvider.js";
-export { ScopedThemeProvider } from "./ThemeProvider/ScopedThemeProvider.js";
+export {
+    ThemeProvider,
+    type IThemeProviderProps,
+    type ThemeModifier,
+} from "./ThemeProvider/ThemeProvider.js";
+export { ScopedThemeProvider, type IScopedThemeProviderProps } from "./ThemeProvider/ScopedThemeProvider.js";
 export { ConditionalScopedThemeProvider } from "./ThemeProvider/ConditionalScopedThemeProvider.js";
 export { isDarkTheme } from "./ThemeProvider/isDarkTheme.js";
-export type { IScopedThemeProviderProps } from "./ThemeProvider/ScopedThemeProvider.js";
-export type { IThemeContextProviderProps, ThemeStatus } from "./ThemeProvider/Context.js";
 export {
     withTheme,
     useTheme,
@@ -24,4 +26,6 @@ export {
     useThemeStatus,
     useIsDarkTheme,
     ThemeContextProvider,
+    type IThemeContextProviderProps,
+    type ThemeStatus,
 } from "./ThemeProvider/Context.js";

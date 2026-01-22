@@ -1,16 +1,19 @@
-// (C) 2007-2024 GoodData Corporation
-export type { IDropdownProps, IDropdownButtonRenderProps, IDropdownBodyRenderProps } from "./Dropdown.js";
-export { Dropdown } from "./Dropdown.js";
-export type { IDropdownButtonProps } from "./DropdownButton.js";
-export { DropdownButton } from "./DropdownButton.js";
-export type { IDropdownListProps, IDropdownListNoDataRenderProps } from "./DropdownList.js";
+// (C) 2007-2026 GoodData Corporation
+
+export {
+    Dropdown,
+    type IDropdownProps,
+    type IDropdownButtonRenderProps,
+    type IDropdownBodyRenderProps,
+} from "./Dropdown.js";
+export { DropdownButton, type IDropdownButtonProps } from "./DropdownButton.js";
 export {
     DropdownList,
     DEFAULT_ITEM_HEIGHT,
     DEFAULT_MOBILE_ITEM_HEIGHT,
     LOADING_HEIGHT,
+    type IDropdownListProps,
+    type IDropdownListNoDataRenderProps,
 } from "./DropdownList.js";
-export type { IDropdownTagsProps } from "./DropdownTabs.js";
-export { DropdownTabs } from "./DropdownTabs.js";
-export type { IDropdownInvertableSelectProps } from "./DropdownInvertableSelect.js";
-export { DropdownInvertableSelect } from "./DropdownInvertableSelect.js";
+export { DropdownTabs, type IDropdownTagsProps } from "./DropdownTabs.js";
+export { DropdownInvertableSelect, type IDropdownInvertableSelectProps } from "./DropdownInvertableSelect.js";

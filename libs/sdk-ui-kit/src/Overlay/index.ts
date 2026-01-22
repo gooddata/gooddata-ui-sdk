@@ -1,18 +1,23 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 export type * from "./typings.js";
 export { Overlay } from "./Overlay.js";
 export * from "./ZoomAwareOverlay.js";
 export { FullScreenOverlay } from "./FullScreenOverlay.js";
 export { OverlayController } from "./OverlayController.js";
-export type { IOverlayControllerProviderProps } from "./OverlayContext.js";
 export {
     OverlayContext,
     OverlayControllerProvider,
     useOverlayController,
     useOverlayZIndex,
     useOverlayZIndexWithRegister,
+    type IOverlayControllerProviderProps,
 } from "./OverlayContext.js";
-export type { IErrorOverlayProps } from "./ErrorOverlay.js";
-export { ErrorOverlay } from "./ErrorOverlay.js";
-export { alignConfigToAlignPoint } from "./utils.js";
-export type { AlignConfig, HorizontalPosition, VerticalPosition, PositionPoint } from "./utils.js";
+export { ErrorOverlay, type IErrorOverlayProps } from "./ErrorOverlay.js";
+export {
+    alignConfigToAlignPoint,
+    type AlignConfig,
+    type HorizontalPosition,
+    type VerticalPosition,
+    type PositionPoint,
+} from "./utils.js";

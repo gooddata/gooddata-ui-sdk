@@ -1,3 +1,3 @@
-// (C) 2022-2024 GoodData Corporation
-export type { ISimpleSettingWidgetProps } from "./SimpleSettingWidget.js";
-export { SimpleSettingWidget } from "./SimpleSettingWidget.js";
+// (C) 2022-2026 GoodData Corporation
+
+export { SimpleSettingWidget, type ISimpleSettingWidgetProps } from "./SimpleSettingWidget.js";

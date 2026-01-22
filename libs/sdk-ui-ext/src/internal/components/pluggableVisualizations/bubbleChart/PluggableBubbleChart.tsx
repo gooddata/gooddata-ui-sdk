@@ -181,6 +181,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     panelConfig={panelConfig}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,

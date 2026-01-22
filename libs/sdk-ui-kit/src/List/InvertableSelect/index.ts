@@ -1,39 +1,47 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
-export type {
-    IInvertableSelectProps,
-    IInvertableSelectRenderItemProps,
-    IInvertableSelectRenderErrorProps,
-    IInvertableSelectRenderLoadingProps,
-    IInvertableSelectRenderNoDataProps,
-    IInvertableSelectRenderSearchBarProps,
-    IInvertableSelectRenderStatusBarProps,
-    IInvertableSelectRenderActionsProps,
+export {
+    InvertableSelect,
+    type IInvertableSelectProps,
+    type IInvertableSelectRenderItemProps,
+    type IInvertableSelectRenderErrorProps,
+    type IInvertableSelectRenderLoadingProps,
+    type IInvertableSelectRenderNoDataProps,
+    type IInvertableSelectRenderSearchBarProps,
+    type IInvertableSelectRenderStatusBarProps,
+    type IInvertableSelectRenderActionsProps,
 } from "./InvertableSelect.js";
-export { InvertableSelect } from "./InvertableSelect.js";
-export type { IInvertableSelectStatusBarProps } from "./InvertableSelectStatusBar.js";
-export { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
-export type { IInvertableSelectLimitWarningProps } from "./InvertableSelectLimitWarning.js";
-export { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning.js";
-export type {
-    IInvertableSelectItem,
-    IInvertableSelectItemRenderOnlyProps,
-    IInvertableSelectItemAccessibilityConfig,
+export {
+    InvertableSelectStatusBar,
+    type IInvertableSelectStatusBarProps,
+} from "./InvertableSelectStatusBar.js";
+export {
+    InvertableSelectLimitWarning,
+    type IInvertableSelectLimitWarningProps,
+} from "./InvertableSelectLimitWarning.js";
+export {
+    InvertableSelectItem,
+    type IInvertableSelectItem,
+    type IInvertableSelectItemRenderOnlyProps,
+    type IInvertableSelectItemAccessibilityConfig,
 } from "./InvertableSelectItem.js";
-export { InvertableSelectItem } from "./InvertableSelectItem.js";
-export type { IInvertableSelectSearchBarProps } from "./InvertableSelectSearchBar.js";
-export { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
-export type { IInvertableSelectAllCheckboxProps } from "./InvertableSelectAllCheckbox.js";
-export { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
-export type { IInvertableSelectStatusProps } from "./InvertableSelectSelectionStatus.js";
+export {
+    InvertableSelectSearchBar,
+    type IInvertableSelectSearchBarProps,
+} from "./InvertableSelectSearchBar.js";
+export {
+    InvertableSelectAllCheckbox,
+    type IInvertableSelectAllCheckboxProps,
+} from "./InvertableSelectAllCheckbox.js";
 export {
     InvertableSelectStatus,
     useInvertableSelectionStatusText,
+    type IInvertableSelectStatusProps,
 } from "./InvertableSelectSelectionStatus.js";
 
-export type {
-    IInvertableSelectVirtualisedProps,
-    IInvertableSelectVirtualisedRenderItemProps,
-    IInvertableSelectVirtualisedRenderActionsProps,
+export {
+    InvertableSelectVirtualised,
+    type IInvertableSelectVirtualisedProps,
+    type IInvertableSelectVirtualisedRenderItemProps,
+    type IInvertableSelectVirtualisedRenderActionsProps,
 } from "./InvertableSelectVirtualised.js";
-export { InvertableSelectVirtualised } from "./InvertableSelectVirtualised.js";

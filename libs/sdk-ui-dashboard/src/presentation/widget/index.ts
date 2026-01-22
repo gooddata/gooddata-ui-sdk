@@ -1,13 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
-export type {
-    IUseCustomWidgetExecutionDataViewConfig,
-    IUseCustomWidgetInsightDataViewConfig,
-    IUseInsightWidgetDataView,
-    UseCustomWidgetExecutionDataViewCallbacks,
-    UseCustomWidgetInsightDataViewCallbacks,
-    UseInsightWidgetInsightDataViewCallbacks,
-} from "./common/index.js";
+// (C) 2021-2026 GoodData Corporation
+
 export {
+    type IUseCustomWidgetExecutionDataViewConfig,
+    type IUseCustomWidgetInsightDataViewConfig,
+    type IUseInsightWidgetDataView,
+    type UseCustomWidgetExecutionDataViewCallbacks,
+    type UseCustomWidgetInsightDataViewCallbacks,
+    type UseInsightWidgetInsightDataViewCallbacks,
     useCustomWidgetExecutionDataView,
     useCustomWidgetInsightDataView,
     useInsightWidgetDataView,

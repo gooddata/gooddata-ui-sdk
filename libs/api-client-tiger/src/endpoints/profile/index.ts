@@ -5,5 +5,8 @@ export {
     isStaticFeatures,
     ProfileApi_GetCurrent,
     ProfileApi_GetCurrentWithDetails,
+    type IUserProfile,
+    type IStaticFeatures,
+    type ILiveFeatures,
+    type FeatureContext,
 } from "../../profile.js";
-export type { IUserProfile, IStaticFeatures, ILiveFeatures, FeatureContext } from "../../profile.js";

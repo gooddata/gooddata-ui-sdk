@@ -17,31 +17,58 @@ import { type IDrillEvent } from "@gooddata/sdk-ui";
 
 export type { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 import {
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX,
+    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
+    EmbedInsightDialog,
+    EmptyAfmSdkError,
+    FluidLayoutDescriptor,
     FullVisualizationCatalog,
     type IDrillDownDefinition,
+    type IEmbedInsightDialogProps,
+    type IFluidLayoutDescriptor,
+    type ILayoutDescriptor,
+    INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
+    INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    type ISizeInfo,
+    type ISizeInfoDefault,
+    type IVisualizationDefaultSizeInfo,
     type IVisualizationMeta,
     type IVisualizationSizeInfo,
+    KPI_WIDGET_SIZE_INFO_DEFAULT,
+    type LayoutType,
+    MIN_VISUALIZATION_WIDTH,
+    PluggableVisualizationErrorCodes,
+    type PluggableVisualizationErrorType,
+    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
+    RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
+    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
+    addIntersectionFiltersToInsight,
     fluidLayoutDescriptor,
+    isDrillDownDefinition,
+    isEmptyAfm,
+    isSizeInfo,
+    isSizeInfoDefault,
+    isVisualizationDefaultSizeInfo,
 } from "./internal/index.js";
 
 export { clearInsightViewCaches } from "./dataLoaders/index.js";
 export * from "./insightView/index.js";
 export * from "./automations/index.js";
 // exported for sdk-ui-dashboard
-export type {
-    IDrillDownDefinition,
-    IVisualizationSizeInfo,
-    IVisualizationDefaultSizeInfo,
-    IVisualizationMeta,
-    ISizeInfo,
-    ISizeInfoDefault,
-    IFluidLayoutDescriptor,
-    ILayoutDescriptor,
-    LayoutType,
-    PluggableVisualizationErrorType,
-    IEmbedInsightDialogProps,
-} from "./internal/index.js";
 export {
+    type IDrillDownDefinition,
+    type IVisualizationSizeInfo,
+    type IVisualizationDefaultSizeInfo,
+    type IVisualizationMeta,
+    type ISizeInfo,
+    type ISizeInfoDefault,
+    type IFluidLayoutDescriptor,
+    type ILayoutDescriptor,
+    type LayoutType,
+    type PluggableVisualizationErrorType,
+    type IEmbedInsightDialogProps,
     isDrillDownDefinition,
     fluidLayoutDescriptor,
     FluidLayoutDescriptor,
@@ -64,7 +91,7 @@ export {
     isSizeInfo,
     isSizeInfoDefault,
     isVisualizationDefaultSizeInfo,
-} from "./internal/index.js";
+};
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog
 /**
@@ -123,27 +150,43 @@ export * from "./internal/components/attributeHierarchies/index.js";
 export * from "./internal/components/pluggableVisualizations/alerts.js";
 export * from "./internal/components/pluggableVisualizations/keyDriverAnalysis.js";
 
-export { NotificationsPanel } from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
-export type {
-    INotificationsPanelProps,
-    INotificationsPanelCustomComponentsProps,
+export {
+    NotificationsPanel,
+    type INotificationsPanelProps,
+    type INotificationsPanelCustomComponentsProps,
 } from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
-export { DefaultNotificationsPanel } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanel.js";
-export type { INotificationsPanelComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanel.js";
-export { DefaultNotificationsPanelButton } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelButton.js";
-export type { INotificationsPanelButtonComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelButton.js";
-export { DefaultNotificationsPanelHeader } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelHeader.js";
-export type { INotificationsPanelHeaderComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelHeader.js";
-export { DefaultNotificationsList } from "./notificationsPanel/NotificationsList/DefaultNotificationsList.js";
-export type { INotificationsListComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsList.js";
-export { DefaultNotificationsListEmptyState } from "./notificationsPanel/NotificationsList/DefaultNotificationsListEmptyState.js";
-export type { INotificationsListEmptyStateComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsListEmptyState.js";
-export { DefaultNotificationsListErrorState } from "./notificationsPanel/NotificationsList/DefaultNotificationsListErrorState.js";
-export type { INotificationsListErrorStateComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsListErrorState.js";
-export { DefaultNotification } from "./notificationsPanel/Notification/DefaultNotification.js";
-export type { INotificationComponentProps } from "./notificationsPanel/Notification/DefaultNotification.js";
-export { DefaultNotificationSkeletonItem } from "./notificationsPanel/NotificationsList/DefaultSkeletonItem.js";
-export type { INotificationSkeletonItemComponentProps } from "./notificationsPanel/NotificationsList/DefaultSkeletonItem.js";
+export {
+    DefaultNotificationsPanel,
+    type INotificationsPanelComponentProps,
+} from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanel.js";
+export {
+    DefaultNotificationsPanelButton,
+    type INotificationsPanelButtonComponentProps,
+} from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelButton.js";
+export {
+    DefaultNotificationsPanelHeader,
+    type INotificationsPanelHeaderComponentProps,
+} from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelHeader.js";
+export {
+    DefaultNotificationsList,
+    type INotificationsListComponentProps,
+} from "./notificationsPanel/NotificationsList/DefaultNotificationsList.js";
+export {
+    DefaultNotificationsListEmptyState,
+    type INotificationsListEmptyStateComponentProps,
+} from "./notificationsPanel/NotificationsList/DefaultNotificationsListEmptyState.js";
+export {
+    DefaultNotificationsListErrorState,
+    type INotificationsListErrorStateComponentProps,
+} from "./notificationsPanel/NotificationsList/DefaultNotificationsListErrorState.js";
+export {
+    DefaultNotification,
+    type INotificationComponentProps,
+} from "./notificationsPanel/Notification/DefaultNotification.js";
+export {
+    DefaultNotificationSkeletonItem,
+    type INotificationSkeletonItemComponentProps,
+} from "./notificationsPanel/NotificationsList/DefaultSkeletonItem.js";
 export type { INotificationsPanelView } from "./notificationsPanel/types.js";
 
 /**

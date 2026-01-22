@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -47,6 +47,7 @@ describe("CustomError", () => {
             new ProtectedReportSdkError(),
             "Protected Headline",
             "Protected Text",
+            true,
         ],
         [
             DataTooLargeToDisplaySdkError.name,
@@ -54,6 +55,7 @@ describe("CustomError", () => {
             new DataTooLargeToDisplaySdkError(),
             "Data too large Headline",
             "Data too large Text",
+            true,
         ],
         [
             DataTooLargeToComputeSdkError.name,
@@ -61,24 +63,31 @@ describe("CustomError", () => {
             new DataTooLargeToComputeSdkError(),
             "Data too large Headline",
             "Data too large Text",
+            true,
         ],
-        [NoDataSdkError.name, NoDataError, new NoDataSdkError(), "Empty Headline", ""],
+        [NoDataSdkError.name, NoDataError, new NoDataSdkError(), "Empty Headline", "", false],
         [
             UnexpectedSdkError.name,
             OtherError,
             new UnexpectedSdkError(),
             "Other Error Headline",
             "Other Error Text",
+            true,
         ],
     ])(
         "should render correct error component for %s error",
-        (_errorName: string, component: any, error: GoodDataSdkError, headline: string, text: string) => {
+        (
+            _errorName: string,
+            _component: any,
+            error: GoodDataSdkError,
+            headline: string,
+            text: string,
+            hasText: boolean,
+        ) => {
             renderComponent(error);
 
             expect(screen.getByText(headline)).toBeInTheDocument();
-            if (component !== NoDataError) {
-                expect(screen.getByText(text)).toBeInTheDocument();
-            }
+            expect(hasText === false || screen.queryByText(text) !== null).toBe(true);
         },
     );
 });

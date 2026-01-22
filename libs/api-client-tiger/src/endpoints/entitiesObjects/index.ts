@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
-// DashboardsApi
 export {
+    // DashboardsApi
     DashboardsApi_GetAllEntitiesAnalyticalDashboards,
     DashboardsApi_GetEntityAnalyticalDashboards,
     DashboardsApi_CreateEntityAnalyticalDashboards,
@@ -14,9 +14,7 @@ export {
     type DashboardsApiUpdateEntityAnalyticalDashboardsRequest,
     type DashboardsApiPatchEntityAnalyticalDashboardsRequest,
     type DashboardsApiDeleteEntityAnalyticalDashboardsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-export {
+    // EntitiesApi - Search
     EntitiesApi_SearchEntitiesAnalyticalDashboards,
     type EntitiesApiSearchEntitiesAnalyticalDashboardsRequest,
     EntitiesApi_SearchEntitiesVisualizationObjects,
@@ -27,10 +25,7 @@ export {
     type EntitiesApiSearchEntitiesAttributesRequest,
     EntitiesApi_SearchEntitiesFacts,
     type EntitiesApiSearchEntitiesFactsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - DashboardPlugins
-export {
+    // EntitiesApi - DashboardPlugins
     EntitiesApi_CreateEntityDashboardPlugins,
     EntitiesApi_DeleteEntityDashboardPlugins,
     EntitiesApi_GetEntityDashboardPlugins,
@@ -39,10 +34,7 @@ export {
     type EntitiesApiDeleteEntityDashboardPluginsRequest,
     type EntitiesApiGetEntityDashboardPluginsRequest,
     type EntitiesApiGetAllEntitiesDashboardPluginsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// FilterViewsApi
-export {
+    // FilterViewsApi
     FilterViewsApi_GetAllEntitiesFilterViews,
     FilterViewsApi_GetEntityFilterViews,
     FilterViewsApi_CreateEntityFilterViews,
@@ -53,20 +45,14 @@ export {
     type FilterViewsApiCreateEntityFilterViewsRequest,
     type FilterViewsApiDeleteEntityFilterViewsRequest,
     type FilterViewsApiPatchEntityFilterViewsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// ContextFiltersApi
-export {
+    // ContextFiltersApi
     FilterContextApi_CreateEntityFilterContexts,
     FilterContextApi_GetEntityFilterContexts,
     FilterContextApi_UpdateEntityFilterContexts,
     type FilterContextApiCreateEntityFilterContextsRequest,
     type FilterContextApiGetEntityFilterContextsRequest,
     type FilterContextApiUpdateEntityFilterContextsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Workspaces
-export {
+    // EntitiesApi - Workspaces
     EntitiesApi_GetEntityWorkspaces,
     EntitiesApi_GetAllEntitiesWorkspaces,
     EntitiesApi_CreateEntityWorkspaces,
@@ -77,10 +63,7 @@ export {
     type EntitiesApiCreateEntityWorkspacesRequest,
     type EntitiesApiPatchEntityWorkspacesRequest,
     type EntitiesApiDeleteEntityWorkspacesRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - VisualizationObjects
-export {
+    // EntitiesApi - VisualizationObjects
     EntitiesApi_GetAllEntitiesVisualizationObjects,
     EntitiesApi_GetEntityVisualizationObjects,
     EntitiesApi_CreateEntityVisualizationObjects,
@@ -93,10 +76,7 @@ export {
     type EntitiesApiUpdateEntityVisualizationObjectsRequest,
     type EntitiesApiPatchEntityVisualizationObjectsRequest,
     type EntitiesApiDeleteEntityVisualizationObjectsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Metrics
-export {
+    // EntitiesApi - Metrics
     EntitiesApi_GetAllEntitiesMetrics,
     EntitiesApi_GetEntityMetrics,
     EntitiesApi_CreateEntityMetrics,
@@ -109,20 +89,14 @@ export {
     type EntitiesApiUpdateEntityMetricsRequest,
     type EntitiesApiPatchEntityMetricsRequest,
     type EntitiesApiDeleteEntityMetricsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Facts
-export {
+    // EntitiesApi - Facts
     EntitiesApi_GetAllEntitiesFacts,
     EntitiesApi_GetEntityFacts,
     EntitiesApi_PatchEntityFacts,
     type EntitiesApiGetAllEntitiesFactsRequest,
     type EntitiesApiGetEntityFactsRequest,
     type EntitiesApiPatchEntityFactsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - ExportDefinitions
-export {
+    // EntitiesApi - ExportDefinitions
     EntitiesApi_GetAllEntitiesExportDefinitions,
     EntitiesApi_GetEntityExportDefinitions,
     EntitiesApi_CreateEntityExportDefinitions,
@@ -133,20 +107,14 @@ export {
     type EntitiesApiCreateEntityExportDefinitionsRequest,
     type EntitiesApiUpdateEntityExportDefinitionsRequest,
     type EntitiesApiDeleteEntityExportDefinitionsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - ApiTokens
-export {
+    // EntitiesApi - ApiTokens
     EntitiesApi_GetAllEntitiesApiTokens,
     EntitiesApi_CreateEntityApiTokens,
     EntitiesApi_DeleteEntityApiTokens,
     type EntitiesApiGetAllEntitiesApiTokensRequest,
     type EntitiesApiCreateEntityApiTokensRequest,
     type EntitiesApiDeleteEntityApiTokensRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Themes
-export {
+    // EntitiesApi - Themes
     EntitiesApi_GetAllEntitiesThemes,
     EntitiesApi_CreateEntityThemes,
     EntitiesApi_UpdateEntityThemes,
@@ -155,10 +123,7 @@ export {
     type EntitiesApiCreateEntityThemesRequest,
     type EntitiesApiUpdateEntityThemesRequest,
     type EntitiesApiDeleteEntityThemesRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - ColorPalettes
-export {
+    // EntitiesApi - ColorPalettes
     EntitiesApi_GetAllEntitiesColorPalettes,
     EntitiesApi_CreateEntityColorPalettes,
     EntitiesApi_UpdateEntityColorPalettes,
@@ -167,24 +132,15 @@ export {
     type EntitiesApiCreateEntityColorPalettesRequest,
     type EntitiesApiUpdateEntityColorPalettesRequest,
     type EntitiesApiDeleteEntityColorPalettesRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Organizations
-export {
+    // EntitiesApi - Organizations
     EntitiesApi_GetEntityOrganizations,
     EntitiesApi_PatchEntityOrganizations,
     type EntitiesApiGetEntityOrganizationsRequest,
     type EntitiesApiPatchEntityOrganizationsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Entitlements
-export {
+    // EntitiesApi - Entitlements
     EntitiesApi_GetAllEntitiesEntitlements,
     type EntitiesApiGetAllEntitiesEntitlementsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - DataSources
-export {
+    // EntitiesApi - DataSources
     EntitiesApi_CreateEntityDataSources,
     EntitiesApi_DeleteEntityDataSources,
     EntitiesApi_GetAllEntitiesDataSourceIdentifiers,
@@ -201,16 +157,10 @@ export {
     type EntitiesApiGetEntityDataSourcesRequest,
     type EntitiesApiPatchEntityDataSourcesRequest,
     type EntitiesApiUpdateEntityDataSourcesRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Datasets
-export {
+    // EntitiesApi - Datasets
     EntitiesApi_GetAllEntitiesDatasets,
     type EntitiesApiGetAllEntitiesDatasetsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - WorkspaceDataFilters
-export {
+    // EntitiesApi - WorkspaceDataFilters
     EntitiesApi_GetEntityWorkspaceDataFilters,
     EntitiesApi_GetAllEntitiesWorkspaceDataFilters,
     EntitiesApi_CreateEntityWorkspaceDataFilters,
@@ -221,10 +171,7 @@ export {
     type EntitiesApiCreateEntityWorkspaceDataFiltersRequest,
     type EntitiesApiPatchEntityWorkspaceDataFiltersRequest,
     type EntitiesApiDeleteEntityWorkspaceDataFiltersRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - WorkspaceDataFilterSettings
-export {
+    // EntitiesApi - WorkspaceDataFilterSettings
     EntitiesApi_GetEntityWorkspaceDataFilterSettings,
     EntitiesApi_GetAllEntitiesWorkspaceDataFilterSettings,
     EntitiesApi_CreateEntityWorkspaceDataFilterSettings,
@@ -233,10 +180,7 @@ export {
     type EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest,
     type EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest,
     type EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - CspDirectives
-export {
+    // EntitiesApi - CspDirectives
     EntitiesApi_GetAllEntitiesCspDirectives,
     EntitiesApi_GetEntityCspDirectives,
     EntitiesApi_CreateEntityCspDirectives,
@@ -247,10 +191,7 @@ export {
     type EntitiesApiCreateEntityCspDirectivesRequest,
     type EntitiesApiUpdateEntityCspDirectivesRequest,
     type EntitiesApiDeleteEntityCspDirectivesRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - CustomApplicationSettings
-export {
+    // EntitiesApi - CustomApplicationSettings
     EntitiesApi_GetAllEntitiesCustomApplicationSettings,
     EntitiesApi_GetEntityCustomApplicationSettings,
     EntitiesApi_CreateEntityCustomApplicationSettings,
@@ -259,10 +200,7 @@ export {
     type EntitiesApiGetEntityCustomApplicationSettingsRequest,
     type EntitiesApiCreateEntityCustomApplicationSettingsRequest,
     type EntitiesApiDeleteEntityCustomApplicationSettingsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Users
-export {
+    // EntitiesApi - Users
     EntitiesApi_GetAllEntitiesUsers,
     EntitiesApi_GetEntityUsers,
     EntitiesApi_CreateEntityUsers,
@@ -271,10 +209,7 @@ export {
     type EntitiesApiGetEntityUsersRequest,
     type EntitiesApiCreateEntityUsersRequest,
     type EntitiesApiPatchEntityUsersRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - UserGroups
-export {
+    // EntitiesApi - UserGroups
     EntitiesApi_CreateEntityUserGroups,
     EntitiesApi_DeleteEntityUserGroups,
     EntitiesApi_GetAllEntitiesUserGroups,
@@ -287,10 +222,7 @@ export {
     type EntitiesApiGetEntityUserGroupsRequest,
     type EntitiesApiPatchEntityUserGroupsRequest,
     type EntitiesApiUpdateEntityUserGroupsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - WorkspaceSettings
-export {
+    // EntitiesApi - WorkspaceSettings
     EntitiesApi_GetAllEntitiesWorkspaceSettings,
     EntitiesApi_UpdateEntityWorkspaceSettings,
     EntitiesApi_CreateEntityWorkspaceSettings,
@@ -299,10 +231,7 @@ export {
     type EntitiesApiUpdateEntityWorkspaceSettingsRequest,
     type EntitiesApiCreateEntityWorkspaceSettingsRequest,
     type EntitiesApiDeleteEntityWorkspaceSettingsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Attributes
-export {
+    // EntitiesApi - Attributes
     EntitiesApi_GetAllEntitiesAttributes,
     EntitiesApi_GetAllEntitiesLabels,
     EntitiesApi_GetEntityAttributes,
@@ -311,20 +240,14 @@ export {
     type EntitiesApiGetAllEntitiesLabelsRequest,
     type EntitiesApiGetEntityAttributesRequest,
     type EntitiesApiPatchEntityAttributesRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - AttributeHierarchies
-export {
+    // EntitiesApi - AttributeHierarchies
     EntitiesApi_CreateEntityAttributeHierarchies,
     EntitiesApi_UpdateEntityAttributeHierarchies,
     EntitiesApi_DeleteEntityAttributeHierarchies,
     type EntitiesApiCreateEntityAttributeHierarchiesRequest,
     type EntitiesApiUpdateEntityAttributeHierarchiesRequest,
     type EntitiesApiDeleteEntityAttributeHierarchiesRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - Automations
-export {
+    // EntitiesApi - Automations
     EntitiesApi_GetAllEntitiesAutomations,
     EntitiesApi_GetEntityAutomations,
     EntitiesApi_CreateEntityAutomations,
@@ -335,10 +258,7 @@ export {
     type EntitiesApiCreateEntityAutomationsRequest,
     type EntitiesApiUpdateEntityAutomationsRequest,
     type EntitiesApiDeleteEntityAutomationsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - LlmEndpoints
-export {
+    // EntitiesApi - LlmEndpoints
     EntitiesApi_GetAllEntitiesLlmEndpoints,
     EntitiesApi_GetEntityLlmEndpoints,
     EntitiesApi_CreateEntityLlmEndpoints,
@@ -351,10 +271,7 @@ export {
     type EntitiesApiUpdateEntityLlmEndpointsRequest,
     type EntitiesApiPatchEntityLlmEndpointsRequest,
     type EntitiesApiDeleteEntityLlmEndpointsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - MemoryItems
-export {
+    // EntitiesApi - MemoryItems
     EntitiesApi_GetAllEntitiesMemoryItems,
     EntitiesApi_CreateEntityMemoryItems,
     EntitiesApi_UpdateEntityMemoryItems,
@@ -365,10 +282,7 @@ export {
     type EntitiesApiUpdateEntityMemoryItemsRequest,
     type EntitiesApiPatchEntityMemoryItemsRequest,
     type EntitiesApiDeleteEntityMemoryItemsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - NotificationChannels
-export {
+    // EntitiesApi - NotificationChannels
     EntitiesApi_GetAllEntitiesNotificationChannels,
     EntitiesApi_GetAllEntitiesNotificationChannelIdentifiers,
     EntitiesApi_GetEntityNotificationChannels,
@@ -383,10 +297,7 @@ export {
     type EntitiesApiUpdateEntityNotificationChannelsRequest,
     type EntitiesApiPatchEntityNotificationChannelsRequest,
     type EntitiesApiDeleteEntityNotificationChannelsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - OrganizationSettings
-export {
+    // EntitiesApi - OrganizationSettings
     EntitiesApi_GetAllEntitiesOrganizationSettings,
     EntitiesApi_UpdateEntityOrganizationSettings,
     EntitiesApi_CreateEntityOrganizationSettings,
@@ -395,10 +306,7 @@ export {
     type EntitiesApiUpdateEntityOrganizationSettingsRequest,
     type EntitiesApiCreateEntityOrganizationSettingsRequest,
     type EntitiesApiDeleteEntityOrganizationSettingsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// EntitiesApi - UserSettings
-export {
+    // EntitiesApi - UserSettings
     EntitiesApi_GetAllEntitiesUserSettings,
     EntitiesApi_UpdateEntityUserSettings,
     EntitiesApi_CreateEntityUserSettings,
@@ -407,11 +315,7 @@ export {
     type EntitiesApiUpdateEntityUserSettingsRequest,
     type EntitiesApiCreateEntityUserSettingsRequest,
     type EntitiesApiDeleteEntityUserSettingsRequest,
-} from "../../generated/metadata-json-api/index.js";
-
-// AutomationOrganizationViewControllerApi
-
-export {
+    // AutomationOrganizationViewControllerApi
     AutomationOrganizationViewControllerApi_GetAllAutomationsWorkspaceAutomations,
     type AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
 } from "../../generated/metadata-json-api/index.js";

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 //share dialog
 export type {
@@ -15,34 +15,31 @@ export type {
 export { ShareDialog } from "./ShareDialog.js";
 
 // export of internal base dialogs
-export type {
-    GranteeType,
-    GranteeStatus,
-    GranteeItem,
-    IGranteeBase,
-    IGranteeUser,
-    IGranteeGroup,
-    IGranteeGroupAll,
-    IGranularGranteeUser,
-    IGranularGranteeGroup,
-    IGranteeRules,
-    IGranteeInactiveOwner,
-    IShareDialogBaseProps,
-    IGranteeItemProps,
-    IShareGranteeBaseProps,
-    IShareGranteeContentProps,
-    IAddGranteeBaseProps,
-    DialogModeType,
-    IAffectedSharedObject,
-    IComponentLabelsProviderProps,
-} from "./ShareDialogBase/types.js";
-
 export {
     isGranteeUser,
     isGranteeGroup,
     isGranularGranteeUser,
     isGranularGranteeGroup,
     isGranteeRules,
+    type GranteeType,
+    type GranteeStatus,
+    type GranteeItem,
+    type IGranteeBase,
+    type IGranteeUser,
+    type IGranteeGroup,
+    type IGranteeGroupAll,
+    type IGranularGranteeUser,
+    type IGranularGranteeGroup,
+    type IGranteeRules,
+    type IGranteeInactiveOwner,
+    type IShareDialogBaseProps,
+    type IGranteeItemProps,
+    type IShareGranteeBaseProps,
+    type IShareGranteeContentProps,
+    type IAddGranteeBaseProps,
+    type DialogModeType,
+    type IAffectedSharedObject,
+    type IComponentLabelsProviderProps,
 } from "./ShareDialogBase/types.js";
 
 export { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase.js";

@@ -1,7 +1,8 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import Markdown, { type Components } from "react-markdown";
 import remarkEmoji from "remark-emoji";
+import remarkGfm from "remark-gfm";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
@@ -35,7 +36,7 @@ export function MarkdownComponent({ children, references, allowMarkdown = false 
     if (allowMarkdown) {
         return (
             <Markdown
-                remarkPlugins={[remarkEmoji, remarkReferences()]}
+                remarkPlugins={[remarkEmoji, remarkGfm, remarkReferences()]}
                 rehypePlugins={[rehypeReferences(references ?? [])]}
                 components={componentMap}
                 urlTransform={customUrlTransform}

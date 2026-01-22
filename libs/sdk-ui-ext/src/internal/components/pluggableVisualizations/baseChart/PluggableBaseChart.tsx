@@ -348,6 +348,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     axis={this.axis}
                     panelConfig={panelConfig}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -21,7 +21,17 @@ import {
 import { AnalyticalWorkspaceDecorator } from "./analyticalWorkspace.js";
 import { OrganizationDecorator } from "./organization.js";
 import { OrganizationsDecorator } from "./organizations.js";
-import { type DecoratorFactories } from "./types.js";
+import {
+    type AttributesDecoratorFactory,
+    type AutomationsDecoratorFactory,
+    type CatalogDecoratorFactory,
+    type DashboardsDecoratorFactory,
+    type DecoratorFactories,
+    type ExecutionDecoratorFactory,
+    type GeoDecoratorFactory,
+    type SecuritySettingsDecoratorFactory,
+    type WorkspaceSettingsDecoratorFactory,
+} from "./types.js";
 
 export type {
     ExecutionDecoratorFactory,
@@ -33,7 +43,7 @@ export type {
     DashboardsDecoratorFactory,
     GeoDecoratorFactory,
     DecoratorFactories,
-} from "./types.js";
+};
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {
     public capabilities: IBackendCapabilities;

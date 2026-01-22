@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -21,6 +21,7 @@ import {
     type ITheme,
     type ITotal,
     type IUpperBoundedFilter,
+    type IWorkspacePermissions,
     type LocalIdRef,
     type ObjRef,
     type VisualizationProperties,
@@ -63,6 +64,7 @@ export interface IVisConstruct {
     messages: Record<string, string>;
     // TODO: rename to settings
     featureFlags?: ISettings;
+    permissions?: IWorkspacePermissions;
     visualizationProperties: VisualizationProperties;
     renderFun: RenderFunction;
     unmountFun: UnmountFunction;

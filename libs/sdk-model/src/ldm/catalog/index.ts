@@ -1,7 +1,21 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
-import { type ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";
-import { type ICatalogDateDataset } from "./dateDataset/index.js";
+import {
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
+    getHierarchyAttributes,
+    getHierarchyRef,
+    getHierarchyTitle,
+    isCatalogAttributeHierarchy,
+    isCatalogDateAttributeHierarchy,
+} from "./attributeHierarchy/index.js";
+import {
+    type ICatalogDateAttribute,
+    type ICatalogDateDataset,
+    isCatalogDateAttribute,
+    isCatalogDateDataset,
+} from "./dateDataset/index.js";
 import { type ICatalogFact, isCatalogFact } from "./fact/index.js";
 import { type ICatalogMeasure, isCatalogMeasure } from "./measure/index.js";
 import { type MetadataObject } from "../metadata/index.js";
@@ -55,23 +69,17 @@ export const catalogItemMetadataObject = (catalogItem: CatalogItem): MetadataObj
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
 export type { CatalogItemType, ICatalogItemBase } from "./types.js";
-export type { ICatalogAttribute } from "./attribute/index.js";
-export { isCatalogAttribute } from "./attribute/index.js";
-export type { ICatalogMeasure } from "./measure/index.js";
-export { isCatalogMeasure } from "./measure/index.js";
-export type { ICatalogFact } from "./fact/index.js";
-export { isCatalogFact } from "./fact/index.js";
-export type { ICatalogDateDataset, ICatalogDateAttribute } from "./dateDataset/index.js";
-export { isCatalogDateDataset, isCatalogDateAttribute } from "./dateDataset/index.js";
+export { type ICatalogAttribute, isCatalogAttribute };
+export { type ICatalogMeasure, isCatalogMeasure };
+export { type ICatalogFact, isCatalogFact };
+export { type ICatalogDateDataset, type ICatalogDateAttribute, isCatalogDateDataset, isCatalogDateAttribute };
 export type { ICatalogGroup, IGroupableCatalogItemBase } from "./group/index.js";
-export type {
-    ICatalogAttributeHierarchy,
-    ICatalogDateAttributeHierarchy,
-} from "./attributeHierarchy/index.js";
 export {
+    type ICatalogAttributeHierarchy,
+    type ICatalogDateAttributeHierarchy,
     isCatalogAttributeHierarchy,
     isCatalogDateAttributeHierarchy,
     getHierarchyRef,
     getHierarchyTitle,
     getHierarchyAttributes,
-} from "./attributeHierarchy/index.js";
+};

@@ -1,6 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
-export type { IStylingSettingWidgetProps } from "./StylingSettingWidget.js";
-export { StylingSettingWidget } from "./StylingSettingWidget.js";
+// (C) 2022-2026 GoodData Corporation
+
+export { StylingSettingWidget, type IStylingSettingWidgetProps } from "./StylingSettingWidget.js";
 export {
     defaultThemeMetadataObject,
     defaultColorPaletteMetadataObject,

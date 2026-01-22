@@ -258,6 +258,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     references={this.references}
                     dataLabelDefaultValue="auto"
                     panelConfig={panelConfig}

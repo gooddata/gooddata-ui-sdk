@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 export { DefaultDashboardInsightMenu } from "./DefaultDashboardInsightMenu.js";
 export { DefaultDashboardInsightMenuButton } from "./DefaultDashboardInsightMenuButton.js";
@@ -10,5 +10,7 @@ export type {
     DisabledReason,
 } from "./types.js";
 export { getDefaultInsightMenuItems } from "./getDefaultInsightMenuItems.js";
-export type { InsightMenuItemDependencies } from "./getDefaultInsightEditMenuItems.js";
-export { getDefaultInsightEditMenuItems } from "./getDefaultInsightEditMenuItems.js";
+export {
+    getDefaultInsightEditMenuItems,
+    type InsightMenuItemDependencies,
+} from "./getDefaultInsightEditMenuItems.js";

@@ -1,14 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-export { aggregateLegend } from "./aggregateLegend.js";
-export type { IAggregateLegendOptions } from "./aggregateLegend.js";
+export { aggregateLegend, type IAggregateLegendOptions } from "./aggregateLegend.js";
 
 export {
     computePushpinLegend,
     computeSizeAnchors,
     convertToColorCategories,
+    type IComputePushpinLegendParams,
 } from "./computePushpinLegend.js";
-export type { IComputePushpinLegendParams } from "./computePushpinLegend.js";
 
-export { computeAreaLegend } from "./computeAreaLegend.js";
-export type { IComputeAreaLegendParams } from "./computeAreaLegend.js";
+export { computeAreaLegend, type IComputeAreaLegendParams } from "./computeAreaLegend.js";

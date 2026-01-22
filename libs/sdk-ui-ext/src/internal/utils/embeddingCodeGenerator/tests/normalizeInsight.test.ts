@@ -3,6 +3,8 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type IMeasureValueFilter,
+    type LocalIdRef,
     bucketItems,
     idRef,
     insightBuckets,
@@ -40,14 +42,12 @@ describe("normalizeInsight", () => {
 
         const [filter] = insightFilters(normalized);
         expect(isMeasureValueFilter(filter)).toBe(true);
-        if (isMeasureValueFilter(filter)) {
-            const measureRef = filter.measureValueFilter.measure;
-            expect(isLocalIdRef(measureRef)).toBe(true);
-            if (isLocalIdRef(measureRef)) {
-                // unknown/dangling localIdRef cannot be normalized, must remain intact
-                expect(measureRef.localIdentifier).toBe("dangling_local_id");
-            }
-        }
+        const measureValueFilter = filter as IMeasureValueFilter;
+        const measureRef = measureValueFilter.measureValueFilter.measure;
+        expect(isLocalIdRef(measureRef)).toBe(true);
+        // unknown/dangling localIdRef cannot be normalized, must remain intact
+        const localRef = measureRef as LocalIdRef;
+        expect(localRef.localIdentifier).toBe("dangling_local_id");
     });
 
     it("rewrites MVF localIdRef to match normalized bucket item localId", () => {
@@ -70,12 +70,10 @@ describe("normalizeInsight", () => {
 
         const [filter] = insightFilters(normalized);
         expect(isMeasureValueFilter(filter)).toBe(true);
-        if (normalizedMeasure && isMeasureValueFilter(filter)) {
-            const measureRef = filter.measureValueFilter.measure;
-            expect(isLocalIdRef(measureRef)).toBe(true);
-            if (isLocalIdRef(measureRef)) {
-                expect(measureRef.localIdentifier).toBe(measureLocalId(normalizedMeasure));
-            }
-        }
+        const measureValueFilter = filter as IMeasureValueFilter;
+        const measureRef = measureValueFilter.measureValueFilter.measure;
+        expect(isLocalIdRef(measureRef)).toBe(true);
+        const localRef = measureRef as LocalIdRef;
+        expect(localRef.localIdentifier).toBe(measureLocalId(normalizedMeasure!));
     });
 });

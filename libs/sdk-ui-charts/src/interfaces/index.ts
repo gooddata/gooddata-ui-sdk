@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 export type {
     IForecast,
@@ -43,15 +43,16 @@ export type {
     ILegendItem,
 } from "./chartProps.js";
 
-export type {
-    CalculationType,
-    ComparisonPosition,
-    ComparisonFormat,
-    ILabelConfig,
-    IComparison,
-    IColorConfig,
+export {
+    type CalculationType,
+    type ComparisonPosition,
+    type ComparisonFormat,
+    type ILabelConfig,
+    type IComparison,
+    type IColorConfig,
+    CalculateAs,
+    ComparisonPositionValues,
 } from "./comparison.js";
-export { CalculateAs, ComparisonPositionValues } from "./comparison.js";
 
 export { ViewByAttributesLimit } from "./limits.js";
 

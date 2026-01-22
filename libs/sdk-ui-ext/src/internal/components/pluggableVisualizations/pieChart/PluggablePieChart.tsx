@@ -235,6 +235,7 @@ export class PluggablePieChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     references={this.references}
                     panelConfig={panelConfig}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}

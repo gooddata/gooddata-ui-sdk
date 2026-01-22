@@ -11,8 +11,13 @@
  */
 
 export { AttributeColorStrategy } from "./coloring/attribute.js";
-export type { IColorStrategy, ICreateColorAssignmentReturnValue } from "./coloring/base.js";
-export { ColorStrategy, getAttributeColorAssignment, isValidMappedColor } from "./coloring/base.js";
+export {
+    ColorStrategy,
+    type IColorStrategy,
+    type ICreateColorAssignmentReturnValue,
+    getAttributeColorAssignment,
+    isValidMappedColor,
+} from "./coloring/base.js";
 export {
     getColorByGuid,
     getColorFromMapping,
@@ -40,53 +45,43 @@ export type {
     IPatternObject,
 } from "./coloring/types.js";
 
-export type { ILegendProps } from "./legend/Legend.js";
-export { Legend } from "./legend/Legend.js";
+export { Legend, type ILegendProps } from "./legend/Legend.js";
 
-export type { IStaticLegendProps } from "./legend/StaticLegend.js";
-export { StaticLegend } from "./legend/StaticLegend.js";
+export { StaticLegend, type IStaticLegendProps } from "./legend/StaticLegend.js";
 
-export type { IPopUpLegendProps } from "./legend/PopUpLegend/PopUpLegend.js";
-export { PopUpLegend } from "./legend/PopUpLegend/PopUpLegend.js";
+export { PopUpLegend, type IPopUpLegendProps } from "./legend/PopUpLegend/PopUpLegend.js";
 
-export type { IFluidLegendProps } from "./legend/FluidLegend.js";
-export { FluidLegend } from "./legend/FluidLegend.js";
+export { FluidLegend, type IFluidLegendProps } from "./legend/FluidLegend.js";
 
-export type { IHeatmapLegendProps } from "./legend/HeatmapLegend.js";
-export { HeatmapLegend } from "./legend/HeatmapLegend.js";
+export { HeatmapLegend, type IHeatmapLegendProps } from "./legend/HeatmapLegend.js";
 
-export type { IColorLegendProps } from "./legend/ColorLegend.js";
-export { ColorLegend } from "./legend/ColorLegend.js";
+export { ColorLegend, type IColorLegendProps } from "./legend/ColorLegend.js";
 
-export type { IPagingProps, ButtonsOrientationType } from "./legend/Paging.js";
-export { Paging } from "./legend/Paging.js";
+export { Paging, type IPagingProps, type ButtonsOrientationType } from "./legend/Paging.js";
 
-export type { IHeadlinePaginationProps } from "./compactSize/HeadlinePagination.js";
-export { HeadlinePagination } from "./compactSize/HeadlinePagination.js";
+export { HeadlinePagination, type IHeadlinePaginationProps } from "./compactSize/HeadlinePagination.js";
 
 export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./legend/helpers.js";
 
-export type {
-    PositionType,
-    IColorLegendItem,
-    IGeoCategoryLegendItem,
-    IGeoChartLegendData,
-    IHeatmapLegendItem,
-    ILegendOptions,
-    IPushpinCategoryLegendItem,
-    IRange,
-    LegendOptionsItemType,
-    ItemBorderRadiusPredicate,
-    IColorLegendSize,
-    ISeriesItem,
-    ILegendGroup,
-    IGroupedSeries,
-    IGroupedSeriesItem,
-    ISeriesItemMetric,
-    ISeriesItemSeparator,
-    ISeriesItemAxisIndicator,
-} from "./legend/types.js";
 export {
+    type PositionType,
+    type IColorLegendItem,
+    type IGeoCategoryLegendItem,
+    type IGeoChartLegendData,
+    type IHeatmapLegendItem,
+    type ILegendOptions,
+    type IPushpinCategoryLegendItem,
+    type IRange,
+    type LegendOptionsItemType,
+    type ItemBorderRadiusPredicate,
+    type IColorLegendSize,
+    type ISeriesItem,
+    type ILegendGroup,
+    type IGroupedSeries,
+    type IGroupedSeriesItem,
+    type ISeriesItemMetric,
+    type ISeriesItemSeparator,
+    type ISeriesItemAxisIndicator,
     DEFAULT_LEGEND_CONFIG,
     LegendPosition,
     SupportedLegendPositions,
@@ -105,15 +100,19 @@ export { valueWithEmptyHandling } from "./utils/valueWithEmptyHandling.js";
 export { shouldRenderPagination, calculateHeadlineHeightFontSize } from "./utils/calculateCustomHeight.js";
 export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassName.js";
 
-export type { ILegendDetails, ILegendDetailOptions } from "./legend/PopUpLegend/helpers.js";
-export { getLegendDetails } from "./legend/PopUpLegend/helpers.js";
+export {
+    getLegendDetails,
+    type ILegendDetails,
+    type ILegendDetailOptions,
+} from "./legend/PopUpLegend/helpers.js";
 
 export {
     PATTERN_FILLS,
     getPatternFillByIndex,
     getPatternFillByName,
     getPatternFill,
+    type IPatternFill,
+    type PatternFillName,
+    type IChartFillConfig,
 } from "./coloring/patternFills.js";
-export type { IPatternFill, PatternFillName, IChartFillConfig } from "./coloring/patternFills.js";
-export { PatternFill } from "./coloring/PatternFill.js";
-export type { IPatternFillProps } from "./coloring/PatternFill.js";
+export { PatternFill, type IPatternFillProps } from "./coloring/PatternFill.js";

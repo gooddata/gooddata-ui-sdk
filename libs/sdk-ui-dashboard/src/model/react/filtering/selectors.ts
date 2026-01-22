@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 export {
     isFilterContextItemHidden,
@@ -11,5 +11,5 @@ export {
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
+    type IAutomationFiltersTab,
 } from "../../store/filtering/dashboardFilterSelectors.js";
-export type { IAutomationFiltersTab } from "../../store/filtering/dashboardFilterSelectors.js";

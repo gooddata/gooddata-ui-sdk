@@ -1,4 +1,3 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-export type { IFilterGroupItemProps } from "./FilterGroupItem.js";
-export { FilterGroupItem } from "./FilterGroupItem.js";
+export { FilterGroupItem, type IFilterGroupItemProps } from "./FilterGroupItem.js";

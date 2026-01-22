@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { LabelRotationControl } from "./components/configurationControls/axis/LabelRotationControl.js";
 import { LabelSubsection } from "./components/configurationControls/axis/LabelSubsection.js";
@@ -23,38 +23,38 @@ export {
     LegendSection,
 };
 
-export type { IBaseVisualizationProps } from "./components/BaseVisualization.js";
-export { BaseVisualization } from "./components/BaseVisualization.js";
+export { BaseVisualization, type IBaseVisualizationProps } from "./components/BaseVisualization.js";
 
-export type { IVisualizationCatalog } from "./components/VisualizationCatalog.js";
-export { DefaultVisualizationCatalog, FullVisualizationCatalog } from "./components/VisualizationCatalog.js";
+export {
+    DefaultVisualizationCatalog,
+    FullVisualizationCatalog,
+    type IVisualizationCatalog,
+} from "./components/VisualizationCatalog.js";
 export { resolveMessages, DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "./utils/translations.js";
 export { createIntlMock } from "./tests/testIntlProvider.js";
-export type {
-    IVisualization,
-    IVisConstruct,
-    IVisCallbacks,
-    IVisProps,
-    IVisualizationProperties,
-    IVisualizationOptions,
-    IGdcConfig,
-    PluggableVisualizationErrorType,
-    PluggableVisualizationError,
-    IExtendedReferencePoint,
-    IBucketItem,
-    IReferencePoint,
-    IFilters,
-    IFiltersBucketItem,
-    IMeasureValueFilter,
-    IRankingFilter,
-    IAttributeFilter,
-    IDateFilter,
-    IDrillDownContext,
-    IDrillDownDefinition,
-    ICustomProps,
-    IConfigurationPanelRenderers,
-} from "./interfaces/Visualization.js";
 export {
+    type IVisualization,
+    type IVisConstruct,
+    type IVisCallbacks,
+    type IVisProps,
+    type IVisualizationProperties,
+    type IVisualizationOptions,
+    type IGdcConfig,
+    type PluggableVisualizationErrorType,
+    type PluggableVisualizationError,
+    type IExtendedReferencePoint,
+    type IBucketItem,
+    type IReferencePoint,
+    type IFilters,
+    type IFiltersBucketItem,
+    type IMeasureValueFilter,
+    type IRankingFilter,
+    type IAttributeFilter,
+    type IDateFilter,
+    type IDrillDownContext,
+    type IDrillDownDefinition,
+    type ICustomProps,
+    type IConfigurationPanelRenderers,
     ConfigPanelClassName,
     PluggableVisualizationErrorCodes,
     InvalidBucketsSdkError,
@@ -75,14 +75,12 @@ export {
 } from "./utils/bucketHelper.js";
 export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlProvider.js";
 
-export type {
-    IVisualizationSizeInfo,
-    ISizeInfo,
-    IVisualizationDefaultSizeInfo,
-    ISizeInfoDefault,
-    IVisualizationMeta,
-} from "./interfaces/VisualizationDescriptor.js";
 export {
+    type IVisualizationSizeInfo,
+    type ISizeInfo,
+    type IVisualizationDefaultSizeInfo,
+    type ISizeInfoDefault,
+    type IVisualizationMeta,
     isSizeInfo,
     isSizeInfoDefault,
     isVisualizationDefaultSizeInfo,
@@ -97,8 +95,9 @@ export { LabelFormatControl } from "./components/configurationControls/axis/Labe
 
 export * from "./FluidLayoutDescriptor.js";
 
-export { EmbedInsightDialog } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog.js";
-
-export type { IEmbedInsightDialogProps } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog.js";
+export {
+    EmbedInsightDialog,
+    type IEmbedInsightDialogProps,
+} from "./components/dialogs/embedInsightDialog/EmbedInsightDialog.js";
 
 export type { IInsightTitleProps, IInsightViewProps } from "./interfaces/InsightView.js";

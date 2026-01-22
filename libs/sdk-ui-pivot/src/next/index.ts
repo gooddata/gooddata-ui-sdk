@@ -20,10 +20,7 @@ export type {
 } from "./types/grandTotalsPosition.js";
 export type { PivotTableNextLayoutConfig } from "./types/layout.js";
 export type { PivotTableNextAgGridLicenseConfig } from "./types/license.js";
-export type { PivotTableNextMenuConfig } from "./types/menu.js";
 export type { PivotTableNextPaginationConfig, IPagination } from "./types/pagination.js";
-export type { PivotTableNextColumnsSizingConfig } from "./types/resizing.js";
-export type { PivotTableNextTextWrappingConfig } from "./types/textWrapping.js";
 export type {
     PivotTableNextTranspositionConfig,
     MeasureGroupDimension,
@@ -34,16 +31,14 @@ export type { PivotTableNextExperimentalConfig } from "./types/experimental.js";
 // Pluggable Visualization
 export { CorePivotTableNext } from "./PivotTableNextPluggable.js";
 export type { ICorePivotTableNextProps } from "./types/internal.js";
-export type {
-    ColumnLocator,
-    IAttributeColumnLocator,
-    IAttributeColumnLocatorBody,
-    IMeasureColumnLocator,
-    IMeasureColumnLocatorBody,
-    ITotalColumnLocator,
-    ITotalColumnLocatorBody,
-} from "./types/locators.js";
 export {
+    type ColumnLocator,
+    type IAttributeColumnLocator,
+    type IAttributeColumnLocatorBody,
+    type IMeasureColumnLocator,
+    type IMeasureColumnLocatorBody,
+    type ITotalColumnLocator,
+    type ITotalColumnLocatorBody,
     isAttributeColumnLocator,
     isMeasureColumnLocator,
     isTotalColumnLocator,
@@ -51,30 +46,29 @@ export {
     newMeasureColumnLocator,
     newTotalColumnLocator,
 } from "./types/locators.js";
-export type {
-    IColumnSizing,
-    ColumnWidth,
-    ColumnWidthItem,
-    ColumnResizedCallback,
-    DefaultColumnWidth,
-    IAbsoluteColumnWidth,
-    IAllMeasureColumnWidthItem,
-    IAllMeasureColumnWidthItemBody,
-    IAttributeColumnWidthItem,
-    IAttributeColumnWidthItemBody,
-    IAutoColumnWidth,
-    IManuallyResizedColumnsItem,
-    IMeasureColumnWidthItem,
-    IMeasureColumnWidthItemBody,
-    IMixedValuesColumnWidthItem,
-    IMixedValuesColumnWidthItemBody,
-    IResizedColumns,
-    ISliceMeasureColumnWidthItem,
-    ISliceMeasureColumnWidthItemBody,
-    IWeakMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItemBody,
-} from "./types/resizing.js";
 export {
+    type PivotTableNextColumnsSizingConfig,
+    type IColumnSizing,
+    type ColumnWidth,
+    type ColumnWidthItem,
+    type ColumnResizedCallback,
+    type DefaultColumnWidth,
+    type IAbsoluteColumnWidth,
+    type IAllMeasureColumnWidthItem,
+    type IAllMeasureColumnWidthItemBody,
+    type IAttributeColumnWidthItem,
+    type IAttributeColumnWidthItemBody,
+    type IAutoColumnWidth,
+    type IManuallyResizedColumnsItem,
+    type IMeasureColumnWidthItem,
+    type IMeasureColumnWidthItemBody,
+    type IMixedValuesColumnWidthItem,
+    type IMixedValuesColumnWidthItemBody,
+    type IResizedColumns,
+    type ISliceMeasureColumnWidthItem,
+    type ISliceMeasureColumnWidthItemBody,
+    type IWeakMeasureColumnWidthItem,
+    type IWeakMeasureColumnWidthItemBody,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
@@ -87,5 +81,9 @@ export {
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "./types/resizing.js";
-export type { ITextWrapping, IColumnTextWrappingItem } from "./types/textWrapping.js";
-export type { IMenu } from "./types/menu.js";
+export type {
+    PivotTableNextTextWrappingConfig,
+    ITextWrapping,
+    IColumnTextWrappingItem,
+} from "./types/textWrapping.js";
+export type { PivotTableNextMenuConfig, IMenu } from "./types/menu.js";

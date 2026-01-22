@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-1-19
+Date generated: 2026-1-21
 
-Revision ID: 90e4fd472a4c65fcc89ec2c91f5061cd9cf4e937
+Revision ID: 2db620b6b2b709e0ee52408db48bca610de2dc21
 
 ================================================================================
 ================================================================================
@@ -647,10 +647,17 @@ Revision ID: 90e4fd472a4c65fcc89ec2c91f5061cd9cf4e937
 - make-dir (2.1.0) [MIT]
 - mapbox-gl (2.15.0) [BSD-3-Clause, MIT]
 - maplibre-gl (4.7.1) [MIT, BSD-3-Clause, ISC, 0BSD]
+- markdown-table (3.0.4) [MIT]
 - matchmediaquery (0.4.2) [MIT]
 - math-intrinsics (1.1.0) [MIT]
 - mdast-util-find-and-replace (3.0.2) [MIT]
 - mdast-util-from-markdown (2.0.2) [MIT]
+- mdast-util-gfm (3.1.0) [MIT]
+- mdast-util-gfm-autolink-literal (2.0.1) [MIT]
+- mdast-util-gfm-footnote (2.1.0) [MIT]
+- mdast-util-gfm-strikethrough (2.0.0) [MIT]
+- mdast-util-gfm-table (2.0.0) [MIT]
+- mdast-util-gfm-task-list-item (2.0.0) [MIT]
 - mdast-util-mdx-expression (2.0.1) [MIT]
 - mdast-util-mdx-jsx (3.2.0) [MIT]
 - mdast-util-mdxjs-esm (2.0.1) [MIT]
@@ -667,6 +674,13 @@ Revision ID: 90e4fd472a4c65fcc89ec2c91f5061cd9cf4e937
 - methods (1.1.2) [MIT]
 - micromark (4.0.2) [MIT]
 - micromark-core-commonmark (2.0.3) [MIT]
+- micromark-extension-gfm (3.0.0) [MIT]
+- micromark-extension-gfm-autolink-literal (2.1.0) [MIT]
+- micromark-extension-gfm-footnote (2.1.0) [MIT]
+- micromark-extension-gfm-strikethrough (2.1.0) [MIT]
+- micromark-extension-gfm-table (2.1.1) [MIT]
+- micromark-extension-gfm-tagfilter (2.0.0) [MIT]
+- micromark-extension-gfm-task-list-item (2.1.0) [MIT]
 - micromark-factory-destination (2.0.1) [MIT]
 - micromark-factory-label (2.0.1) [MIT]
 - micromark-factory-space (2.0.1) [MIT]
@@ -813,8 +827,10 @@ Revision ID: 90e4fd472a4c65fcc89ec2c91f5061cd9cf4e937
 - regjsgen (0.8.0) [MIT]
 - regjsparser (0.12.0) [BSD-2-Clause]
 - remark-emoji (5.0.2) [MIT]
+- remark-gfm (4.0.1) [MIT]
 - remark-parse (11.0.0) [MIT]
 - remark-rehype (11.1.2) [MIT]
+- remark-stringify (11.0.0) [MIT]
 - require-from-string (2.0.2) [MIT]
 - requires-port (1.0.0) [MIT]
 - reselect (5.1.1) [MIT]
@@ -8517,6 +8533,18 @@ ISC, 0BSD
 
 
 --------------------------------------------------------------------------------
+Package Title: markdown-table (3.0.4)
+
+Package Locator: npm+markdown-table$3.0.4
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: matchmediaquery (0.4.2)
 
 Package Locator: npm+matchmediaquery$0.4.2
@@ -8556,6 +8584,78 @@ MIT
 Package Title: mdast-util-from-markdown (2.0.2)
 
 Package Locator: npm+mdast-util-from-markdown$2.0.2
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: mdast-util-gfm (3.1.0)
+
+Package Locator: npm+mdast-util-gfm$3.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: mdast-util-gfm-autolink-literal (2.0.1)
+
+Package Locator: npm+mdast-util-gfm-autolink-literal$2.0.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: mdast-util-gfm-footnote (2.1.0)
+
+Package Locator: npm+mdast-util-gfm-footnote$2.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: mdast-util-gfm-strikethrough (2.0.0)
+
+Package Locator: npm+mdast-util-gfm-strikethrough$2.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: mdast-util-gfm-table (2.0.0)
+
+Package Locator: npm+mdast-util-gfm-table$2.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: mdast-util-gfm-task-list-item (2.0.0)
+
+Package Locator: npm+mdast-util-gfm-task-list-item$2.0.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8748,6 +8848,90 @@ MIT
 Package Title: micromark-core-commonmark (2.0.3)
 
 Package Locator: npm+micromark-core-commonmark$2.0.3
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: micromark-extension-gfm (3.0.0)
+
+Package Locator: npm+micromark-extension-gfm$3.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: micromark-extension-gfm-autolink-literal (2.1.0)
+
+Package Locator: npm+micromark-extension-gfm-autolink-literal$2.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: micromark-extension-gfm-footnote (2.1.0)
+
+Package Locator: npm+micromark-extension-gfm-footnote$2.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: micromark-extension-gfm-strikethrough (2.1.0)
+
+Package Locator: npm+micromark-extension-gfm-strikethrough$2.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: micromark-extension-gfm-table (2.1.1)
+
+Package Locator: npm+micromark-extension-gfm-table$2.1.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: micromark-extension-gfm-tagfilter (2.0.0)
+
+Package Locator: npm+micromark-extension-gfm-tagfilter$2.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: micromark-extension-gfm-task-list-item (2.1.0)
+
+Package Locator: npm+micromark-extension-gfm-task-list-item$2.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10539,6 +10723,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: remark-gfm (4.0.1)
+
+Package Locator: npm+remark-gfm$4.0.1
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: remark-parse (11.0.0)
 
 Package Locator: npm+remark-parse$11.0.0
@@ -10554,6 +10750,18 @@ MIT
 Package Title: remark-rehype (11.1.2)
 
 Package Locator: npm+remark-rehype$11.1.2
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: remark-stringify (11.0.0)
+
+Package Locator: npm+remark-stringify$11.0.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -35173,4 +35381,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-1-19
+Report Generated by FOSSA on 2026-1-21

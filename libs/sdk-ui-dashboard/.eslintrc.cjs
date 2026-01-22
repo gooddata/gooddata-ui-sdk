@@ -6,7 +6,6 @@ module.exports = {
     extends: ["@gooddata/eslint-config/esm-react-vitest"],
     rules: {
         "import/export": "warn",
-        "@vitest/no-conditional-expect": "warn",
     },
     overrides: [
         tsOverride(__dirname, {

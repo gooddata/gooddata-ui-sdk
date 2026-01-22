@@ -1,7 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 export { getReactEmbeddingCodeGenerator } from "./getReactEmbeddingCodeGenerator.js";
-export type { IInsightToPropConversion } from "./insightToPropsConverter/index.js";
 export {
+    type IInsightToPropConversion,
     bucketConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,

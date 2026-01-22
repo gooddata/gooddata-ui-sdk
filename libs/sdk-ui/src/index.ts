@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 /**
  * This package provides base functionality useful for building React visualizations on top of GoodData.
  *
@@ -31,8 +32,6 @@ export {
     useCorrelationData,
     useBackendWithCorrelation,
     BackendProviderWithCorrelation,
-} from "./base/react/CorrelationContext.js";
-export type {
-    ICorrelationProviderProps,
-    IBackendProviderWithCorrelationProps,
+    type ICorrelationProviderProps,
+    type IBackendProviderWithCorrelationProps,
 } from "./base/react/CorrelationContext.js";

@@ -11,6 +11,7 @@ import { DefaultScheduledEmailManagementDialogContentEnhanced } from "./DefaultS
 import {
     selectDashboardId,
     selectEnableAutomationManagement,
+    selectExternalRecipient,
     selectIsEmbedded,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -37,6 +38,7 @@ export function ScheduledEmailManagementDialog({
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -51,13 +53,16 @@ export function ScheduledEmailManagementDialog({
                         dashboardId: scheduledEmail.dashboard?.id,
                         automationId: scheduledEmail.id,
                         isEmbedded,
+                        queryParams: externalRecipientOverride
+                            ? { recipient: externalRecipientOverride }
+                            : undefined,
                     }),
                 );
                 return;
             }
             onEdit?.(scheduledEmail);
         },
-        [onEdit, enableAutomationManagement, dashboardId, workspace, isEmbedded],
+        [onEdit, enableAutomationManagement, dashboardId, workspace, isEmbedded, externalRecipientOverride],
     );
 
     const handleScheduleDeleteSuccess = useCallback(() => {

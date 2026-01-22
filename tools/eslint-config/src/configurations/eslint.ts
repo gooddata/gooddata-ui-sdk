@@ -18,7 +18,7 @@ export const eslint: IConfiguration = {
                 },
             },
         ],
-        "no-duplicate-imports": "error",
+        "no-duplicate-imports": ["error", { includeExports: true }],
         "no-restricted-imports": [
             "error",
             {

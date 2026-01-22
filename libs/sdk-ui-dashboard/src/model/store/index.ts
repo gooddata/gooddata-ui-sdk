@@ -204,8 +204,8 @@ export {
     selectWorkingFilterContextDateFilterForTab,
 } from "./tabs/filterContext/filterContextSelectors.js";
 export { getFilterIdentifier } from "./tabs/filterContext/filterContextUtils.js";
-export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";
 export {
+    type IImplicitDrillWithPredicates,
     selectImplicitDrillsDownByWidgetRef,
     selectConfiguredDrillsByWidgetRef,
     selectDrillableItemsByWidgetRef,
@@ -247,7 +247,7 @@ export {
     selectIsAutomationDialogSecondaryTitleVisible,
 } from "./topBar/topBarSelectors.js";
 
-export type { IUndoEnhancedState, IUndoEntry } from "./_infra/undoEnhancer.js";
+export type { IUndoEnhancedState, IUndoEntry, IUndoPayload } from "./_infra/undoEnhancer.js";
 
 export {
     selectLayout,
@@ -302,40 +302,36 @@ export {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectAttributeFilterConfigsModeMapByTab,
 } from "./tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-export { DEFAULT_TAB_ID } from "./tabs/tabsState.js";
-export type { ITabsState, ITabState } from "./tabs/tabsState.js";
+export { DEFAULT_TAB_ID, type ITabsState, type ITabState } from "./tabs/tabsState.js";
 export type { IDateFilterConfigsState } from "./tabs/dateFilterConfigs/dateFilterConfigsState.js";
 export type { IAttributeFilterConfigsState } from "./tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";
 export type { ILayoutState, LayoutStash } from "./tabs/layout/layoutState.js";
 export type { TabsReducer } from "./tabs/tabsReducers.js";
 export type { IItemWithHeight, IItemWithWidth } from "../types/layoutTypes.js";
 export type { IdentityMapping } from "../../_staging/dashboard/dashboardLayout.js";
-export type { IUndoPayload } from "./_infra/undoEnhancer.js";
-export type {
-    IAddAttributeFilterPayload,
-    IRemoveAttributeFilterPayload,
-    ISetAttributeFilterDependentDateFiltersPayload,
-    ISetAttributeFilterParentsPayload,
-    IMoveAttributeFilterPayload,
-    IRemoveDateFilterPayload,
-    IMoveDateFilterPayload,
-    IUpdateAttributeFilterSelectionPayload,
-    IClearAttributeFiltersSelectionPayload,
-    IUpsertDateFilterPayload,
-    IUpsertDateFilterAllTimePayload,
-    IUpsertDateFilterNonAllTimePayload,
-    IChangeAttributeDisplayFormPayload,
-    IChangeAttributeTitlePayload,
-    IChangeAttributeSelectionModePayload,
-    IChangeAttributeLimitingItemsPayload,
-    IApplyWorkingSelectionPayload,
-    IAddAttributeFilterDisplayFormPayload,
-    FilterContextState,
-    IWorkingFilterContextDefinition,
-    WorkingDashboardAttributeFilter,
-    WorkingFilterContextItem,
-} from "./tabs/index.js";
 export {
+    type IAddAttributeFilterPayload,
+    type IRemoveAttributeFilterPayload,
+    type ISetAttributeFilterDependentDateFiltersPayload,
+    type ISetAttributeFilterParentsPayload,
+    type IMoveAttributeFilterPayload,
+    type IRemoveDateFilterPayload,
+    type IMoveDateFilterPayload,
+    type IUpdateAttributeFilterSelectionPayload,
+    type IClearAttributeFiltersSelectionPayload,
+    type IUpsertDateFilterPayload,
+    type IUpsertDateFilterAllTimePayload,
+    type IUpsertDateFilterNonAllTimePayload,
+    type IChangeAttributeDisplayFormPayload,
+    type IChangeAttributeTitlePayload,
+    type IChangeAttributeSelectionModePayload,
+    type IChangeAttributeLimitingItemsPayload,
+    type IApplyWorkingSelectionPayload,
+    type IAddAttributeFilterDisplayFormPayload,
+    type FilterContextState,
+    type IWorkingFilterContextDefinition,
+    type WorkingDashboardAttributeFilter,
+    type WorkingFilterContextItem,
     selectTabs,
     selectActiveTabLocalIdentifier,
     selectActiveTab,
@@ -383,8 +379,11 @@ export {
     selectAllCatalogAttributeHierarchies,
     selectCatalogAttributeDisplayFormsById,
 } from "./catalog/catalogSelectors.js";
-export type { SetCatalogMeasuresAndFactsPayload, SetCatalogItemsPayload } from "./catalog/index.js";
-export { catalogActions } from "./catalog/index.js";
+export {
+    type SetCatalogMeasuresAndFactsPayload,
+    type SetCatalogItemsPayload,
+    catalogActions,
+} from "./catalog/index.js";
 export { drillActions } from "./drill/index.js";
 export {
     selectDrillableItems,
@@ -566,8 +565,12 @@ export {
     keyDriverAnalysisSupportedStringGranularities,
 } from "./keyDriverAnalysis/const.js";
 
-export type { IFilterViews, IFilterViewsState } from "./filterViews/index.js";
-export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";
+export {
+    type IFilterViews,
+    type IFilterViewsState,
+    selectFilterViews,
+    selectFilterViewsAreLoading,
+} from "./filterViews/index.js";
 
 export type { IExecutedState } from "./executed/executedState.js";
 export { selectIsDashboardExecuted } from "./executed/executedSelectors.js";

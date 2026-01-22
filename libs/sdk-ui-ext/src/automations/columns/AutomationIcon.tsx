@@ -13,6 +13,7 @@ import { AUTOMATION_ICON_CONFIGS } from "../constants.js";
 import { formatAutomationSubtitle, formatCellValue } from "../format.js";
 import { messages } from "../messages.js";
 import { type IAutomationIconProps } from "../types.js";
+import { getRecipientName } from "../utils.js";
 
 const { e } = bem("gd-ui-ext-automation-icon-tooltip");
 
@@ -113,7 +114,7 @@ function TooltipRecipientsList({ automation }: { automation: IAutomationMetadata
         <div className={e("recipients-list")}>
             {automation.recipients?.map((recipient) => (
                 <span className={e("recipient")} key={recipient.id}>
-                    {recipient.name}
+                    {getRecipientName(recipient)}
                 </span>
             ))}
         </div>

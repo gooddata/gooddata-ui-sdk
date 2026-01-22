@@ -332,22 +332,24 @@ function loadAttributeByDisplayForm(
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return getAllEntitiesAttributesWithFilter(client, workspaceId, ref, ["labels"]).then((res) => {
-        const convertedAttributes = convertAttributesWithSideloadedLabels(res.data);
-        const match = convertedAttributes.find((attr) =>
-            attr.displayForms.some((df) => df.id === ref.identifier),
-        );
-
-        if (!match) {
-            throw new UnexpectedResponseError(
-                `The displayForm with id ${ref.identifier} was not found`,
-                404,
-                res,
+    return getAllEntitiesAttributesWithFilter(client, workspaceId, ref, ["labels", "defaultView"]).then(
+        (res) => {
+            const convertedAttributes = convertAttributesWithSideloadedLabels(res.data);
+            const match = convertedAttributes.find((attr) =>
+                attr.displayForms.some((df) => df.id === ref.identifier),
             );
-        }
 
-        return match;
-    });
+            if (!match) {
+                throw new UnexpectedResponseError(
+                    `The displayForm with id ${ref.identifier} was not found`,
+                    404,
+                    res,
+                );
+            }
+
+            return match;
+        },
+    );
 }
 
 function loadAttributes(client: ITigerClientBase, workspaceId: string): Promise<IAttributeMetadataObject[]> {

@@ -462,6 +462,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     axis={this.axis}
                     panelConfig={panelConfig}
                     dataLabelDefaultValue="auto"

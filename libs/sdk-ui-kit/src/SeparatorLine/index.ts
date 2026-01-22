@@ -1,3 +1,3 @@
-// (C) 2024 GoodData Corporation
-export type { ISeparatorLineProps } from "./SeparatorLine.js";
-export { SeparatorLine } from "./SeparatorLine.js";
+// (C) 2024-2026 GoodData Corporation
+
+export { SeparatorLine, type ISeparatorLineProps } from "./SeparatorLine.js";

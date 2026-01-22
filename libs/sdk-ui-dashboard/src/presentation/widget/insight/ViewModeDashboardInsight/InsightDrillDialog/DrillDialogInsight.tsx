@@ -33,6 +33,7 @@ import {
     selectIsExport,
     selectLocale,
     selectMapboxToken,
+    selectPermissions,
     selectPreloadedAttributesWithReferences,
     selectSeparators,
     selectSettings,
@@ -97,6 +98,7 @@ export function DrillDialogInsight({
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
+    const permissions = useDashboardSelector(selectPermissions);
     const chartConfig = useDashboardSelector(selectChartConfig);
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
     const preloadedAttributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
@@ -212,6 +214,7 @@ export function DrillDialogInsight({
                                 onLoadingChanged={handleLoadingChanged}
                                 locale={locale}
                                 settings={settings as IUserWorkspaceSettings}
+                                permissions={permissions}
                                 colorPalette={colorPalette}
                                 onError={handleError}
                                 onExportReady={onExportReady}

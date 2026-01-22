@@ -100,8 +100,14 @@ export function DefaultAlertingManagementDialogContentEnhanced({
 
     const dashboardUrlBuilder: IDashboardUrlBuilder = useCallback(
         ({ workspaceId, dashboardId, tabId }) =>
-            buildDashboardUrl({ workspaceId, dashboardId, tabId, isEmbedded }),
-        [isEmbedded],
+            buildDashboardUrl({
+                workspaceId,
+                dashboardId,
+                tabId,
+                isEmbedded,
+                queryParams: externalRecipientOverride ? { recipient: externalRecipientOverride } : undefined,
+            }),
+        [isEmbedded, externalRecipientOverride],
     );
 
     const titleElementId = useId();

@@ -237,8 +237,6 @@ export type {
     QualityIssuesCalculationStatusResponse as AfmQualityIssuesCalculationStatusResponse,
     QualityIssuesCalculationStatusResponseStatusEnum as AfmQualityIssuesCalculationStatusResponseStatusEnum,
     ChangeAnalysisRequest as AfmChangeAnalysisRequest,
-} from "./generated/afm-rest-api/api.js";
-export type {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,
     AfmObjectIdentifierCoreIdentifierTypeEnum as AfmModelObjectIdentifierCoreIdentifierTypeEnum,
     AfmObjectIdentifierDatasetIdentifierTypeEnum as AfmModelObjectIdentifierDatasetIdentifierTypeEnum,
@@ -277,8 +275,7 @@ export type {
     Invitation,
 } from "./generated/auth-json-api/api.js";
 // export { ActionsApiFactory as AuthActionsApiFactory } from "./generated/auth-json-api/api.js";
-export type { ConfigurationParameters } from "./generated/auth-json-api/configuration.js";
-export { Configuration } from "./generated/auth-json-api/configuration.js";
+export { type ConfigurationParameters, Configuration } from "./generated/auth-json-api/configuration.js";
 export type {
     AutomationNotificationFilter,
     AutomationNotificationContent,
@@ -438,8 +435,6 @@ export type {
     NotificationChannelsAutomationTestNotificationChannelRequest,
     ActionsAutomationTestExistingNotificationChannelRequest,
     NotificationChannelsAutomationTestExistingNotificationChannelRequest,
-} from "./generated/automation-json-api/index.js";
-export type {
     ActionsAutomation,
     AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum,
     AutomationAfmObjectIdentifierCoreIdentifierTypeEnum,
@@ -487,8 +482,6 @@ export type {
     // NotificationChannelsAutomationFactory,
     NotificationChannelsAutomation,
     //NotificationChannelsAutomationFp,
-} from "./generated/automation-json-api/index.js";
-export type {
     Configuration as AutomationConfiguration,
     ConfigurationParameters as AutomationConfigurationParameters,
 } from "./generated/automation-json-api/index.js";
@@ -534,8 +527,6 @@ export type {
     FrequencyBucket,
     FrequencyProperties,
     ColumnStatisticsRequestFrom,
-} from "./generated/scan-json-api/api.js";
-export type {
     DeclarativeColumnDataTypeEnum as ScanModelDeclarativeColumnDataTypeEnum,
     TestDefinitionRequestTypeEnum,
     SqlColumnDataTypeEnum as ScanApiSqlColumnDataTypeEnum,
@@ -580,8 +571,8 @@ export type {
     WorkspaceCacheSettings,
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
+    GdStorageFileTypeEnum,
 } from "./generated/result-json-api/api.js";
-export type { GdStorageFileTypeEnum } from "./generated/result-json-api/api.js";
 
 export * from "./generated/export-json-api/index.js";
 export type {
@@ -597,25 +588,25 @@ export * from "./client.js";
 
 export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants.js";
 
-export type {
-    MetadataGetEntitiesResult,
-    MetadataGetEntitiesFn,
-    MetadataGetEntitiesOptions,
-    MetadataGetEntitiesParams,
-    MetadataGetEntitiesThemeParams,
-    MetadataGetEntitiesColorPaletteParams,
-    MetadataGetEntitiesWorkspaceParams,
-    MetadataGetEntitiesUserParams,
+export {
+    type MetadataGetEntitiesResult,
+    type MetadataGetEntitiesFn,
+    type MetadataGetEntitiesOptions,
+    type MetadataGetEntitiesParams,
+    type MetadataGetEntitiesThemeParams,
+    type MetadataGetEntitiesColorPaletteParams,
+    type MetadataGetEntitiesWorkspaceParams,
+    type MetadataGetEntitiesUserParams,
+    MetadataUtilities,
 } from "./metadataUtilities.js";
-export { MetadataUtilities } from "./metadataUtilities.js";
 
-export type {
-    OrganizationGetEntitiesResult,
-    OrganizationGetEntitiesSupportingIncludedResult,
-    OrganizationGetEntitiesFn,
-    OrganizationGetEntitiesParams,
+export {
+    type OrganizationGetEntitiesResult,
+    type OrganizationGetEntitiesSupportingIncludedResult,
+    type OrganizationGetEntitiesFn,
+    type OrganizationGetEntitiesParams,
+    OrganizationUtilities,
 } from "./organizationUtilities.js";
-export { OrganizationUtilities } from "./organizationUtilities.js";
 
 export { ActionsUtilities } from "./actionsUtilities.js";
 
@@ -624,15 +615,13 @@ export {
     AacApi_GetLogicalModelAac,
     AacApi_SetAnalyticsModelAac,
     AacApi_SetLogicalModelAac,
-} from "./endpoints/aac/index.js";
-export type {
-    IAacAnalyticsModel,
-    AacAnalyticsModelExclude,
-    IAacLogicalModel,
-    IAacApiGetAnalyticsModelAacRequest,
-    IAacApiGetLogicalModelAacRequest,
-    IAacApiSetAnalyticsModelAacRequest,
-    IAacApiSetLogicalModelAacRequest,
+    type IAacAnalyticsModel,
+    type AacAnalyticsModelExclude,
+    type IAacLogicalModel,
+    type IAacApiGetAnalyticsModelAacRequest,
+    type IAacApiGetLogicalModelAacRequest,
+    type IAacApiSetAnalyticsModelAacRequest,
+    type IAacApiSetLogicalModelAacRequest,
 } from "./endpoints/aac/index.js";
 
 export const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);

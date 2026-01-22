@@ -47,11 +47,9 @@ export {
     getPatternFillByIndex,
     getPatternFillByName,
     getPatternFill,
-} from "@gooddata/sdk-ui-vis-commons";
-export type {
-    IPatternOptionsObject,
-    IPatternFill,
-    PatternFillName,
-    IChartFillConfig,
-    ChartFillType,
+    type IPatternOptionsObject,
+    type IPatternFill,
+    type PatternFillName,
+    type IChartFillConfig,
+    type ChartFillType,
 } from "@gooddata/sdk-ui-vis-commons";

@@ -1,9 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 export { DialogList } from "./DialogList.js";
 export { DialogListItemBasic } from "./DialogListItemBasic.js";
-export type { IDialogListHeaderProps } from "./DialogListHeader.js";
-export { DialogListHeader } from "./DialogListHeader.js";
+export { DialogListHeader, type IDialogListHeaderProps } from "./DialogListHeader.js";
 export type {
     DialogListItemComponent,
     IDialogListItem,

@@ -8,6 +8,7 @@ import {
     type IInsight,
     type IInsightDefinition,
     type ISettings,
+    type IWorkspacePermissions,
     insightHasDataDefined,
     insightProperties,
 } from "@gooddata/sdk-model";
@@ -55,6 +56,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected intl: IntlShape;
     protected locale: ILocale;
     protected featureFlags: ISettings;
+    protected permissions: IWorkspacePermissions | undefined;
 
     /**
      * Standard callback
@@ -104,6 +106,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
         this.featureFlags = props.featureFlags ?? {};
+        this.permissions = props.permissions;
         this.propertiesAffectingReferencePoint = [];
     }
 
